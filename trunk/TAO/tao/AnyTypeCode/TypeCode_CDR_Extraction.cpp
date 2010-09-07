@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/TypeCode_CDR_Extraction.h"
@@ -27,11 +28,6 @@
 
 #include "ace/Array_Base.h"
 #include "ace/Value_Ptr.h"
-
-
-ACE_RCSID (AnyTypeCode,
-           TypeCode_CDR_Extraction,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

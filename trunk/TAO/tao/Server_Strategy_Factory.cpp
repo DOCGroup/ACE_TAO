@@ -3,11 +3,6 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/orbconf.h"
 
-ACE_RCSID (tao, 
-           Server_Strategy_Factory, 
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Server_Strategy_Factory::TAO_Server_Strategy_Factory (void)

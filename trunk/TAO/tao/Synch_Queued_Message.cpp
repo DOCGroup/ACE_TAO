@@ -1,4 +1,5 @@
-// "$Id$"
+// -*- C++ -*-
+// $Id$
 
 #include "tao/Synch_Queued_Message.h"
 #include "tao/debug.h"
@@ -6,10 +7,6 @@
 
 #include "ace/Malloc_T.h"
 #include "ace/Message_Block.h"
-
-ACE_RCSID (tao,
-           Synch_Queued_Message,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

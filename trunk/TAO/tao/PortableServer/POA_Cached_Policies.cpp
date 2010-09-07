@@ -14,10 +14,6 @@
 # include "tao/PortableServer/POA_Cached_Policies.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(PortableServer,
-          POA_Cached_Policies,
-          "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

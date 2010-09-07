@@ -1,4 +1,5 @@
-// @(#) $Id$
+// -*- C++ -*-
+// $Id$
 
 #include "tao/DiffServPolicy/DiffServPolicy.h"
 #include "tao/DiffServPolicy/DiffServPolicy_ORBInitializer.h"
@@ -6,8 +7,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/PI/PI.h"
-
-ACE_RCSID (DiffServPolicy, DiffServPolicy, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

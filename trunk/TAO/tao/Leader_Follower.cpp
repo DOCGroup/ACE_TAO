@@ -17,11 +17,6 @@
 # include "tao/Leader_Follower.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Leader_Follower,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Leader_Follower::~TAO_Leader_Follower (void)

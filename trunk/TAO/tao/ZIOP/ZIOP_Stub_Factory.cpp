@@ -10,10 +10,6 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (ZIOP,
-           ZIOP_Stub_Factory,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ZIOP_Stub_Factory::~TAO_ZIOP_Stub_Factory (void)

@@ -6,11 +6,6 @@
 #include "tao/ORB_Constants.h"
 #include "tao/CORBA_methods.h"
 
-
-ACE_RCSID (ObjRefTemplate,
-           ORT_Adapter_Impl,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 char *

@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/BiDir_GIOP/BiDir_ORBInitializer.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/BiDir_GIOP/BiDirPolicy_Validator.h"
@@ -5,12 +8,6 @@
 #include "tao/debug.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "ace/CORBA_macros.h"
-
-ACE_RCSID (BiDir_GIOP,
-           BiDirGIOP,
-           "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_BiDirGIOP_Loader::TAO_BiDirGIOP_Loader (void)
   : initialized_ (false)

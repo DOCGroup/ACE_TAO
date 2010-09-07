@@ -1,19 +1,12 @@
 //$Id$
-// -- PortableServer Include --
+
 #include "tao/PortableServer/Collocated_Object_Proxy_Broker.h"
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/PortableServer/Servant_Upcall.h"
 #include "tao/PortableServer/Servant_Base.h"
-
-
-// -- TAO Include --
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
-
-ACE_RCSID (PortableServer,
-           Collocated_Object_Proxy_Broker,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -907,7 +907,7 @@ Routing_Slip::reconnect (void)
   enter_state_saved (guard);
 
   //@@todo is there a worker_task available to do this?
-  size_t count = this->delivery_methods_.size ();
+  size_t const count = this->delivery_methods_.size ();
   for (size_t nmethod = 0; nmethod < count; ++nmethod)
   {
     this->delivery_methods_[nmethod]->execute ();

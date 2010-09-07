@@ -3,7 +3,6 @@
 #include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 #include "tao/PortableServer/POAC.h"
-#include "ace/Synch_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -15,7 +14,6 @@ FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::FT_ProxyAdmin(
 {
 }
 
-
 template <class EC_PROXY_ADMIN, class Proxy,
           class ProxyInterface, class State>
 void
@@ -24,12 +22,11 @@ FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface,State>::obtain_proxy (
 {
   Request_Context_Repository().set_object_id(op.object_id);
 
-  ProxyInterface_var result
-    =  admin_->obtain();
+  ProxyInterface_var result =  admin_->obtain();
 
   FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
   try{
-    ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
+    ACE_READ_GUARD (FTRTEC::Replication_Service, locker, *svc);
 
     svc->replicate_request(op,
       Proxy::rollback_obtain);
@@ -64,7 +61,7 @@ FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::obtain_proxy (void)
 
   try{
     FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
-    ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
+    ACE_READ_GUARD_RETURN (FTRTEC::Replication_Service, locker, *svc, 0);
     obj = IOGR_Maker::instance()->forge_iogr(result.in());
 
     result = ProxyInterface::_narrow(obj.in());

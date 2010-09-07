@@ -1,15 +1,12 @@
-//$Id$
+// -*- C++ -*-
+// $Id$
+
 #include "tao/Refcounted_ObjectKey.h"
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Refcounted_ObjectKey.inl"
 #endif /* defined INLINE */
-
-ACE_RCSID(tao,
-          Refcounted_ObjectKey,
-          "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

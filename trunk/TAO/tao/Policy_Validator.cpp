@@ -2,13 +2,7 @@
 
 #include "tao/Policy_Validator.h"
 #include "tao/debug.h"
-
 #include "ace/Log_Msg.h"
-
-ACE_RCSID (tao,
-           Policy_Validator,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

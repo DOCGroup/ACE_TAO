@@ -1,12 +1,9 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/ORB_Core.h"
 #include "tao/Codeset_Manager.h"
 #include "tao/Codeset_Manager_Factory_Base.h"
-
-ACE_RCSID (tao,
-           Codeset_Manager_Factory_Base,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

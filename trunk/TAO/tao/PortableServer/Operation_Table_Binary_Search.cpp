@@ -1,12 +1,9 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/PortableServer/Operation_Table_Binary_Search.h"
 #include "tao/Timeprobe.h"
 #include "ace/Log_Msg.h"
-
-ACE_RCSID(PortableServer,
-          Operation_Table_Binary_Search,
-          "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 

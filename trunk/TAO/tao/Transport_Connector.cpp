@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/Transport_Connector.h"
 #include "tao/Transport.h"
 #include "tao/ORB_Core.h"
@@ -22,10 +25,6 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/Transport_Connector.inl"
 #endif /* __ACE_INLINE__ */
-
-ACE_RCSID (tao,
-           Connector,
-           "$Id$")
 
 namespace
 {

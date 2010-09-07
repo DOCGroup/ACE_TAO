@@ -6,10 +6,6 @@
 # include "tao/Queued_Message.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Queued_Message,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Queued_Message::TAO_Queued_Message (TAO_ORB_Core *oc,

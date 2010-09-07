@@ -1,11 +1,8 @@
-// @(#) $Id$
+// -*- C++ -*-
+// $Id$
 
 #include "tao/PortableServer/Acceptor_Filter_Factory.h"
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
-
-ACE_RCSID(PortableServer,
-          Acceptor_Filter_Factory,
-          "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 

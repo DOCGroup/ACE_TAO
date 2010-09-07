@@ -1,6 +1,5 @@
-//
 // $Id$
-//
+
 #include "tao/Monitor/Monitor_Impl.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
@@ -8,10 +7,6 @@
 #include "ace/Monitor_Point_Registry.h"
 #include "ace/Monitor_Control_Action.h"
 #include "ace/Monitor_Control/Monitor_Control.h"
-
-ACE_RCSID (Monitor,
-           Monitor_Impl,
-           "$Id$")
 
 class TAO_Control_Action : public Control_Action
 {

@@ -1,11 +1,6 @@
 // $Id$
 
 #include "tao/Service_Context_Handler_Registry.h"
-
-ACE_RCSID (tao,
-           Service_Context_Handler_Registry,
-           "$Id$")
-
 #include "tao/TAO_Server_Request.h"
 #include "tao/Service_Context_Handler.h"
 

@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/LF_Connect_Strategy.h"
 #include "tao/LF_Multi_Event.h"
 #include "tao/Connection_Handler.h"
@@ -6,11 +8,6 @@
 #include "tao/Transport.h"
 #include "tao/ORB_Core.h"
 #include "ace/Synch_Options.h"
-
-ACE_RCSID(tao,
-          LF_Connect_Strategy,
-          "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

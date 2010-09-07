@@ -11,10 +11,6 @@
 #include "ace/Acceptor.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (EventChannel,
-           Fault_Detector_Loader,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRTEC {

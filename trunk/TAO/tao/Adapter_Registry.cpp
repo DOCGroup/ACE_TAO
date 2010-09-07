@@ -12,10 +12,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/CORBA_macros.h"
 
-ACE_RCSID (tao,
-           Adapter_Registry,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Adapter_Registry::TAO_Adapter_Registry (TAO_ORB_Core *oc)

@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 // -- PortableServer Include --
@@ -6,10 +7,6 @@
 
 // -- TAO Include --
 #include "tao/TSS_Resources.h"
-
-ACE_RCSID (PortableServer,
-           POA_Current,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

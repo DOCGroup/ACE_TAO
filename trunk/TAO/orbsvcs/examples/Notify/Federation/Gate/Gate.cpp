@@ -1,29 +1,19 @@
-// file      : Gate.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
+// $Id$
 
 #include "Gate.h"
 #include "ace/Truncate.h"
-
-/*
-#include <iostream>
-
-using std::cerr;
-using std::endl;
-*/
 
 using namespace CORBA;
 using namespace CosNotifyComm;
 using namespace CosNotification;
 using namespace CosNotifyChannelAdmin;
 
-Gate::
-~Gate ()
+Gate::~Gate ()
 {
   // Stop tracker thread.
-  //
   {
-    Lock l (mutex_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     stop_ = true;
   }
 
@@ -249,15 +239,14 @@ push_structured_event (StructuredEvent const& e)
 }
 
 
-void Gate::
-disconnect_structured_push_consumer (void)
+void
+Gate::disconnect_structured_push_consumer (void)
 {
   // We don't care.
 }
 
-void Gate::
-offer_change (EventTypeSeq const&,
-              EventTypeSeq const&)
+void
+Gate::offer_change (EventTypeSeq const&, EventTypeSeq const&)
 {
   // We don't care.
 }

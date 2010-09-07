@@ -6,9 +6,6 @@
 // = LIBRARY
 //    TAO/orbsvcs/examples/PSS
 //
-// = FILENAME
-//    Server_i.h
-//
 // = DESCRIPTION
 //      This class implements the get_status method in server.idl
 //

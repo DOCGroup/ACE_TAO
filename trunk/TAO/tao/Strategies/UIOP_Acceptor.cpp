@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/Strategies/UIOP_Acceptor.h"
 
 #if TAO_HAS_UIOP == 1
@@ -14,10 +16,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_RCSID (Strategies,
-           UIOP_Acceptor,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

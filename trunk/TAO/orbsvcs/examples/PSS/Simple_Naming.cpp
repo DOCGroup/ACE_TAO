@@ -5,9 +5,6 @@
 // = LIBRARY
 //    TAO/orbsvcs/examples/PSS
 //
-// = FILENAME
-//    server.cpp
-//
 // = DESCRIPTION
 //      This class implements a simple CORBA server which uses the
 //      simple_naming.idl to bind and find a object reference and uses
@@ -20,8 +17,6 @@
 
 #include "Simple_Naming_i.h"
 #include "ace/Get_Opt.h"
-
-ACE_RCSID (PSS, client, "$Id$")
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("simple_naming.ior");
 

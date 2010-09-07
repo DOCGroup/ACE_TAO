@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/CORBALOC_Parser.h"
 
 #if (TAO_HAS_CORBALOC_PARSER == 1)
@@ -19,10 +22,6 @@
 #if !defined(__ACE_INLINE__)
 #include "tao/CORBALOC_Parser.inl"
 #endif /* __ACE_INLINE__ */
-
-ACE_RCSID (tao,
-           CORBALOC_Parser,
-           "$Id$")
 
 static const char prefix[] = "corbaloc:";
 static const size_t prefix_len = sizeof prefix - 1;

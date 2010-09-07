@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 /*
  * Add all include files within the following
  * two markers.
@@ -17,10 +20,6 @@
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
-
-ACE_RCSID (tao,
-           IIOP_Endpoint,
-           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Endpoint.inl"

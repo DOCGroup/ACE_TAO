@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/Incoming_Message_Queue.h"
 #include "tao/Queued_Data.h"
 #include "tao/debug.h"
@@ -8,10 +10,6 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/Incoming_Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
-
-ACE_RCSID (tao,
-           Incoming_Message_Queue,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

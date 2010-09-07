@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/Reactive_Connect_Strategy.h"
 #include "tao/Connection_Handler.h"
 #include "tao/ORB_Core.h"
@@ -6,11 +9,6 @@
 #include "tao/LF_Multi_Event.h"
 
 #include "ace/Synch_Options.h"
-
-ACE_RCSID(tao,
-          Reactive_Connect_Strategy,
-          "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

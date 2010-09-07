@@ -74,12 +74,7 @@ FooServantList::create_and_activate(PortableServer::POA_ptr poa)
 void
 FooServantList::client_done(void)
 {
-  unsigned num_left;
-
-  {
-    GuardType guard(this->num_clients_lock_);
-    num_left = --this->num_clients_;
-  }
+  unsigned num_left = --this->num_clients_;
 
   if (num_left == 0)
     {

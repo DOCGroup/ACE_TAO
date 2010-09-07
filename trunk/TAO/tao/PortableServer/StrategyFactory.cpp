@@ -1,11 +1,8 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/PortableServer/StrategyFactory.h"
 #include "ace/Dynamic_Service.h"
-
-ACE_RCSID (PortableServer,
-           StrategyFactory,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

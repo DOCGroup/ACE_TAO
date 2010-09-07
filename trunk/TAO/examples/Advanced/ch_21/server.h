@@ -25,7 +25,6 @@
 
 #include "CCSS.h"
 #include "icp.h"
-#include <ace/Synch_T.h>
 #include <set>
 #include <list>
 #include <map>
@@ -180,7 +179,7 @@ public:
                     const PortableServer::ObjectId & oid,
                     PortableServer::POA_ptr          /* poa */ ,
                     const char *                     operation,
-                    void * &                         /* cookie */ 
+                    void * &                         /* cookie */
                 );
 
     virtual void

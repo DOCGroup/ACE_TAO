@@ -1,9 +1,671 @@
+Tue Sep  7 10:52:59 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * PROBLEM-REPORT-FORM:
+        * VERSION:
+          Updated support email addresses
+
+        * examples/CSD_Strategy/ThreadPool2/FooServantList.h:
+        * examples/CSD_Strategy/ThreadPool2/FooServantList.cpp:
+          Use ACE_Atomic_Op instead of a mutex with a guard
+
+        * examples/CSD_Strategy/ThreadPool5/FooServantList.h:
+        * examples/CSD_Strategy/ThreadPool5/FooServantList.cpp:
+          Use ACE_GUARD
+
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+          Use ACE_GUARD
+
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.h:
+          Removed not used members
+
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+          Unicode fixes
+
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.h:
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.cpp:
+          Use ACE_GUARD, removed commented out code
+
+        * orbsvcs/examples/PSS/Server.idl:
+        * orbsvcs/examples/PSS/Server_i.h:
+        * orbsvcs/examples/PSS/Server_i.cpp:
+        * orbsvcs/examples/PSS/Simple_Naming.idl:
+        * orbsvcs/examples/PSS/Simple_Naming.cpp:
+        * orbsvcs/examples/PSS/Simple_Naming_i.h:
+        * orbsvcs/examples/PSS/client.cpp:
+          Removed ACE_RCSID
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Replication_Strategy.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_Base.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_T.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/create_persistent_poa.cpp:
+          Removed ACE_RCSID, use ACE_GUARD macros
+
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Consumer.h:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Queue.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Queue.cpp:
+          Use ACE_GUARD
+
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+          Disable ACE_Guard fuzz check for some parts of this file
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.h:
+          Removed not used members
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+          Layout and unicode changes
+
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.cpp:
+          Initialize pointer with 0
+
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+          Use ACE_GUARD
+
+        * tao/Abstract_Servant_Base.cpp:
+        * tao/Acceptor_Filter.cpp:
+        * tao/Acceptor_Registry.cpp:
+        * tao/Adapter.cpp:
+        * tao/Adapter_Registry.cpp:
+          Removed ACE_RCSID
+
+        * tao/AnyTypeCode/Alias_TypeCode_Static.cpp:
+        * tao/AnyTypeCode/Any.cpp:
+        * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.cpp:
+        * tao/AnyTypeCode/Any_Basic_Impl.cpp:
+        * tao/AnyTypeCode/Any_Impl.cpp:
+        * tao/AnyTypeCode/Any_SystemException.cpp:
+        * tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp:
+        * tao/AnyTypeCode/Empty_Param_TypeCode.cpp:
+        * tao/AnyTypeCode/Enum_TypeCode_Static.cpp:
+        * tao/AnyTypeCode/ExceptionA.cpp:
+        * tao/AnyTypeCode/Marshal.cpp:
+        * tao/AnyTypeCode/NVList_Adapter_Impl.cpp:
+        * tao/AnyTypeCode/Objref_TypeCode_Static.cpp:
+        * tao/AnyTypeCode/Sequence_TypeCode_Static.cpp:
+        * tao/AnyTypeCode/String_TypeCode_Static.cpp:
+        * tao/AnyTypeCode/Struct_TypeCode_Static.cpp:
+        * tao/AnyTypeCode/SystemExceptionA.cpp:
+        * tao/AnyTypeCode/True_RefCount_Policy.cpp:
+        * tao/AnyTypeCode/TypeCodeA.cpp:
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+        * tao/AnyTypeCode/TypeCode_Constants.cpp:
+        * tao/AnyTypeCode/Union_TypeCode_Static.cpp:
+        * tao/AnyTypeCode/Value_TypeCode_Static.cpp:
+        * tao/AnyTypeCode/append.cpp:
+        * tao/AnyTypeCode/skip.cpp:
+          Removed ACE_RCSID
+
+        * tao/AnyTypeCode_Adapter.cpp:
+        * tao/Asynch_Queued_Message.cpp:
+        * tao/Asynch_Reply_Dispatcher_Base.cpp:
+        * tao/Base_Transport_Property.cpp:
+        * tao/BiDir_Adapter.cpp:
+          Removed ACE_RCSID
+
+        * tao/BiDir_GIOP/BiDirGIOP.cpp:
+        * tao/BiDir_GIOP/BiDirPolicy_Validator.cpp:
+        * tao/BiDir_GIOP/BiDir_ORBInitializer.cpp:
+        * tao/BiDir_GIOP/BiDir_PolicyFactory.cpp:
+        * tao/BiDir_GIOP/BiDir_Policy_i.cpp:
+        * tao/BiDir_GIOP/BiDir_Service_Context_Handler.cpp:
+          Removed ACE_RCSID
+
+        * tao/Bind_Dispatcher_Guard.cpp:
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Blocked_Connect_Strategy.cpp:
+        * tao/CDR.cpp:
+        * tao/CORBALOC_Parser.cpp:
+        * tao/CORBA_String.cpp:
+          Removed ACE_RCSID
+
+        * tao/CSD_Framework/CSD_Default_Servant_Dispatcher.cpp:
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+        * tao/CSD_Framework/CSD_Framework_Loader.cpp:
+        * tao/CSD_Framework/CSD_ORBInitializer.cpp:
+        * tao/CSD_Framework/CSD_Object_Adapter.cpp:
+        * tao/CSD_Framework/CSD_Object_Adapter_Factory.cpp:
+        * tao/CSD_Framework/CSD_POA.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Base.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Proxy.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Repository.cpp:
+          Removed ACE_RCSID
+
+        * tao/CSD_ThreadPool/CSD_TP_Cancel_Visitor.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Collocated_Asynch_Request.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_With_Server_Request.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Corba_Request.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Custom_Asynch_Request.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Custom_Request.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Custom_Request_Operation.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Custom_Synch_Request.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Queue.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Queue_Visitor.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Remote_Request.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Request.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Servant_State.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Servant_State_Map.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Strategy.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Synch_Helper.h:
+        * tao/CSD_ThreadPool/CSD_TP_Synch_Helper.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Synch_Helper.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Task.h:
+        * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
+          Removed ACE_RCSID
+
+        * tao/Cleanup_Func_Registry.cpp:
+        * tao/ClientRequestInterceptor_Adapter.cpp:
+        * tao/ClientRequestInterceptor_Adapter_Factory.cpp:
+        * tao/Client_Strategy_Factory.cpp:
+        * tao/Codeset_Manager.cpp:
+        * tao/Codeset_Manager_Factory_Base.cpp:
+        * tao/Codeset_Translator_Base.cpp:
+        * tao/Collocated_Invocation.cpp:
+        * tao/Collocation_Proxy_Broker.cpp:
+        * tao/Collocation_Resolver.cpp:
+          Removed ACE_RCSID
+
+        * tao/Compression/Base_Compressor.cpp:
+        * tao/Compression/Compression.cpp:
+        * tao/Compression/Compression_Manager.cpp:
+        * tao/Compression/Compressor_Factory.cpp:
+          Removed ACE_RCSID
+
+        * tao/Compression/bzip2/Bzip2Compressor.cpp:
+        * tao/Compression/bzip2/Bzip2Compressor_Factory.cpp:
+          Removed ACE_RCSID
+
+        * tao/Compression/lzo/LzoCompressor.cpp:
+        * tao/Compression/lzo/LzoCompressor_Factory.cpp:
+          Removed ACE_RCSID
+
+        * tao/Compression/zlib/ZlibCompressor.cpp:
+        * tao/Compression/zlib/ZlibCompressor_Factory.cpp:
+          Removed ACE_RCSID
+
+        * tao/Connection_Handler.cpp:
+          Fixed bugzilla 3658
+
+        * tao/Configurable_Refcount.cpp:
+        * tao/Connection_Purging_Strategy.cpp:
+        * tao/Connector_Registry.cpp:
+        * tao/DLL_Parser.cpp:
+        * tao/Default_Collocation_Resolver.cpp:
+        * tao/Default_Endpoint_Selector_Factory.cpp:
+        * tao/Default_Thread_Lane_Resources_Manager.cpp:
+          Removed ACE_RCSID
+
+        * tao/DiffServPolicy/Client_Network_Priority_Policy.cpp:
+        * tao/DiffServPolicy/DiffServPolicy.cpp:
+        * tao/DiffServPolicy/DiffServPolicy_Factory.cpp:
+        * tao/DiffServPolicy/DiffServPolicy_ORBInitializer.cpp:
+        * tao/DiffServPolicy/DiffServ_Network_Priority_Hook.cpp:
+        * tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
+        * tao/DiffServPolicy/DiffServ_Service_Context_Handler.cpp:
+        * tao/DiffServPolicy/Server_Network_Priority_Policy.cpp:
+          Removed ACE_RCSID
+
+        * tao/DynamicAny/DynAnyFactory.cpp:
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/DynamicAny/DynEnum_i.cpp:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+        * tao/DynamicAny/DynValueBox_i.cpp:
+        * tao/DynamicAny/DynValueCommon_i.cpp:
+        * tao/DynamicAny/DynValue_i.cpp:
+        * tao/DynamicAny/DynamicAny.cpp:
+          Removed ACE_RCSID
+
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.cpp:
+        * tao/DynamicInterface/Context.cpp:
+        * tao/DynamicInterface/DII_Arguments.cpp:
+        * tao/DynamicInterface/DII_Arguments_Converter_Impl.cpp:
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * tao/DynamicInterface/DII_Reply_Handler.cpp:
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
+        * tao/DynamicInterface/Dynamic_Implementation.cpp:
+        * tao/DynamicInterface/ExceptionList.cpp:
+        * tao/DynamicInterface/Request.cpp:
+        * tao/DynamicInterface/Server_Request.cpp:
+        * tao/DynamicInterface/Unknown_User_Exception.cpp:
+          Removed ACE_RCSID
+
+        * tao/Dynamic_Adapter.cpp:
+        * tao/Endpoint.cpp:
+          Removed ACE_RCSID
+
+        * tao/EndpointPolicy/EndpointPolicy.cpp:
+        * tao/EndpointPolicy/EndpointPolicy_Factory.cpp:
+        * tao/EndpointPolicy/EndpointPolicy_ORBInitializer.cpp:
+        * tao/EndpointPolicy/EndpointPolicy_i.cpp:
+        * tao/EndpointPolicy/Endpoint_Acceptor_Filter.cpp:
+        * tao/EndpointPolicy/Endpoint_Acceptor_Filter_Factory.cpp:
+        * tao/EndpointPolicy/IIOPEndpointValue_i.cpp:
+        * tao/Endpoint_Selector_Factory.cpp:
+        * tao/Exception.cpp:
+        * tao/Exclusive_TMS.cpp:
+        * tao/FILE_Parser.cpp:
+        * tao/Fault_Tolerance_Service.cpp:
+        * tao/Flushing_Strategy.cpp:
+        * tao/FoxResource/FoxResource_Factory.cpp:
+        * tao/FoxResource/FoxResource_Loader.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Generator_Parser_11.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_Generator_Parser_Impl.cpp:
+        * tao/GIOP_Message_Locate_Header.cpp:
+        * tao/GIOP_Message_State.cpp:
+        * tao/GIOP_Message_Version.cpp:
+        * tao/HTTP_Parser.cpp:
+        * tao/IFR_Client_Adapter.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/IIOP_Transport.cpp:
+        * tao/IORInterceptor_Adapter.cpp:
+        * tao/IORInterceptor_Adapter_Factory.cpp:
+        * tao/IORManipulation/IORManip_Filter.cpp:
+        * tao/IORManipulation/IORManip_IIOP_Filter.cpp:
+        * tao/IORManipulation/IORManip_Loader.cpp:
+        * tao/IORManipulation/IORManipulation.cpp:
+        * tao/IORTable/IORTable.cpp:
+        * tao/IORTable/IOR_Table_Impl.cpp:
+        * tao/IORTable/Table_Adapter.cpp:
+        * tao/IOR_Parser.cpp:
+        * tao/ImR_Client/ImR_Client.cpp:
+        * tao/Incoming_Message_Queue.cpp:
+        * tao/Incoming_Message_Stack.cpp:
+        * tao/Invocation_Adapter.cpp:
+        * tao/Invocation_Base.cpp:
+        * tao/Invocation_Endpoint_Selectors.cpp:
+        * tao/LF_CH_Event.cpp:
+        * tao/LF_Connect_Strategy.cpp:
+        * tao/LF_Event.cpp:
+        * tao/LF_Event_Binder.cpp:
+        * tao/LF_Follower.cpp:
+        * tao/LF_Follower_Auto_Adder.cpp:
+        * tao/LF_Invocation_Event.cpp:
+        * tao/LF_Multi_Event.cpp:
+        * tao/LF_Strategy.cpp:
+        * tao/LF_Strategy_Complete.cpp:
+        * tao/LRU_Connection_Purging_Strategy.cpp:
+        * tao/Leader_Follower.cpp:
+        * tao/Leader_Follower_Flushing_Strategy.cpp:
+        * tao/LocalObject.cpp:
+        * tao/MCAST_Parser.cpp:
+        * tao/MProfile.cpp:
+        * tao/Messaging/AMI_Arguments_Converter_Impl.cpp:
+        * tao/Messaging/Asynch_Invocation.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * tao/Messaging/Asynch_Timeout_Handler.cpp:
+        * tao/Messaging/Buffering_Constraint_Policy.cpp:
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp:
+        * tao/Messaging/ExceptionHolder_i.cpp:
+        * tao/Messaging/Messaging.cpp:
+        * tao/Messaging/Messaging_Loader.cpp:
+        * tao/Messaging/Messaging_ORBInitializer.cpp:
+        * tao/Messaging/Messaging_PolicyFactory.cpp:
+        * tao/Messaging/Messaging_Policy_i.cpp:
+        * tao/Messaging/Messaging_Queueing_Strategies.cpp:
+        * tao/Monitor/Monitor.cpp:
+        * tao/Monitor/Monitor_Impl.cpp:
+        * tao/Muxed_TMS.cpp:
+        * tao/NVList_Adapter.cpp:
+        * tao/Network_Priority_Protocols_Hooks.cpp:
+        * tao/ORB.cpp:
+        * tao/ORBInitializer_Registry.cpp:
+        * tao/ORBInitializer_Registry_Adapter.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core_Auto_Ptr.cpp:
+        * tao/ORB_Table.cpp:
+        * tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.cpp:
+        * tao/ObjRefTemplate/ORT_Adapter_Impl.cpp:
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_i.cpp:
+        * tao/ObjectKey_Table.cpp:
+        * tao/Object_Loader.cpp:
+        * tao/Object_Proxy_Broker.cpp:
+        * tao/Object_Ref_Table.cpp:
+        * tao/PI/ClientRequestDetails.cpp:
+        * tao/PI/ClientRequestInfo.cpp:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.cpp:
+        * tao/PI/ClientRequestInterceptor_Factory_Impl.cpp:
+        * tao/PI/DLL_Resident_ORB_Initializer.cpp:
+        * tao/PI/ORBInitInfo.cpp:
+        * tao/PI/ORBInitializer_Registry_Impl.cpp:
+        * tao/PI/PI.cpp:
+        * tao/PI/PICurrent.cpp:
+        * tao/PI/PICurrent_Impl.cpp:
+        * tao/PI/PICurrent_Loader.cpp:
+        * tao/PI/PI_ORBInitializer.cpp:
+        * tao/PI/PI_PolicyFactory.cpp:
+        * tao/PI/PolicyFactory_Loader.cpp:
+        * tao/PI/PolicyFactory_Registry.cpp:
+        * tao/PI/ProcessingModePolicy.cpp:
+        * tao/PI/RequestInfo_Util.cpp:
+        * tao/PI/RequestInterceptor_Adapter_Impl.cpp:
+        * tao/PI_Server/PICurrent_Guard.cpp:
+        * tao/PI_Server/PI_Server.cpp:
+        * tao/PI_Server/PI_Server_Loader.cpp:
+        * tao/PI_Server/PortableServer_ORBInitializer.cpp:
+        * tao/PI_Server/PortableServer_PolicyFactory.cpp:
+        * tao/PI_Server/ServerInterceptorAdapter.cpp:
+        * tao/PI_Server/ServerRequestDetails.cpp:
+        * tao/PI_Server/ServerRequestInfo.cpp:
+        * tao/PI_Server/ServerRequestInterceptor_Factory_Impl.cpp:
+        * tao/Pluggable_Messaging_Utils.cpp:
+        * tao/PolicyFactory_Registry_Adapter.cpp:
+        * tao/PolicyFactory_Registry_Factory.cpp:
+        * tao/Policy_Current.cpp:
+        * tao/Policy_Manager.cpp:
+        * tao/Policy_Set.cpp:
+        * tao/Policy_Validator.cpp:
+        * tao/PortableServer/Acceptor_Filter_Factory.cpp:
+        * tao/PortableServer/Active_Object_Map.cpp:
+        * tao/PortableServer/Active_Object_Map_Entry.cpp:
+        * tao/PortableServer/Active_Policy_Strategies.cpp:
+        * tao/PortableServer/Adapter_Activator.cpp:
+        * tao/PortableServer/Collocated_Arguments_Converter.cpp:
+        * tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
+        * tao/PortableServer/Creation_Time.cpp:
+        * tao/PortableServer/Default_Acceptor_Filter.cpp:
+        * tao/PortableServer/Default_Policy_Validator.cpp:
+        * tao/PortableServer/Default_Servant_Dispatcher.cpp:
+        * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.cpp:
+        * tao/PortableServer/IdAssignmentPolicy.cpp:
+        * tao/PortableServer/IdAssignmentStrategy.cpp:
+        * tao/PortableServer/IdAssignmentStrategyFactoryImpl.cpp:
+        * tao/PortableServer/IdAssignmentStrategySystem.cpp:
+        * tao/PortableServer/IdAssignmentStrategyUser.cpp:
+        * tao/PortableServer/IdUniquenessPolicy.cpp:
+        * tao/PortableServer/IdUniquenessStrategyFactoryImpl.cpp:
+        * tao/PortableServer/IdUniquenessStrategyMultiple.cpp:
+        * tao/PortableServer/IdUniquenessStrategyUnique.cpp:
+        * tao/PortableServer/IdUniquenessStrategyUniqueFactoryImpl.cpp:
+        * tao/PortableServer/ImR_Client_Adapter.cpp:
+        * tao/PortableServer/ImplicitActivationPolicy.cpp:
+        * tao/PortableServer/ImplicitActivationStrategy.cpp:
+        * tao/PortableServer/ImplicitActivationStrategyExplicit.cpp:
+        * tao/PortableServer/ImplicitActivationStrategyFactoryImpl.cpp:
+        * tao/PortableServer/ImplicitActivationStrategyImplicit.cpp:
+        * tao/PortableServer/Key_Adapters.cpp:
+        * tao/PortableServer/LifespanPolicy.cpp:
+        * tao/PortableServer/LifespanStrategy.cpp:
+        * tao/PortableServer/LifespanStrategyFactoryImpl.cpp:
+        * tao/PortableServer/LifespanStrategyPersistent.cpp:
+        * tao/PortableServer/LifespanStrategyPersistentFactoryImpl.cpp:
+        * tao/PortableServer/LifespanStrategyTransient.cpp:
+        * tao/PortableServer/LifespanStrategyTransientFactoryImpl.cpp:
+        * tao/PortableServer/Local_Servant_Base.cpp:
+        * tao/PortableServer/Network_Priority_Hook.cpp:
+        * tao/PortableServer/Non_Servant_Upcall.cpp:
+        * tao/PortableServer/ORT_Adapter_Factory.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Operation_Table.cpp:
+        * tao/PortableServer/Operation_Table_Binary_Search.cpp:
+        * tao/PortableServer/Operation_Table_Dynamic_Hash.cpp:
+        * tao/PortableServer/Operation_Table_Linear_Search.cpp:
+        * tao/PortableServer/Operation_Table_Perfect_Hash.cpp:
+        * tao/PortableServer/POAManager.cpp:
+        * tao/PortableServer/POAManagerFactory.cpp:
+        * tao/PortableServer/POA_Cached_Policies.cpp:
+        * tao/PortableServer/POA_Current.cpp:
+        * tao/PortableServer/POA_Current_Impl.cpp:
+        * tao/PortableServer/POA_Guard.h:
+        * tao/PortableServer/POA_Guard.cpp:
+        * tao/PortableServer/POA_Policy_Set.cpp:
+        * tao/PortableServer/PortableServer.cpp:
+        * tao/PortableServer/PortableServer_Functions.cpp:
+        * tao/PortableServer/PortableServer_WFunctions.cpp:
+        * tao/PortableServer/Regular_POA.cpp:
+        * tao/PortableServer/RequestProcessingPolicy.cpp:
+        * tao/PortableServer/RequestProcessingStrategy.cpp:
+        * tao/PortableServer/RequestProcessingStrategyAOMOnly.cpp:
+        * tao/PortableServer/RequestProcessingStrategyAOMOnlyFactoryImpl.cpp:
+        * tao/PortableServer/RequestProcessingStrategyDefaultServant.cpp:
+        * tao/PortableServer/RequestProcessingStrategyDefaultServantFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyFactoryImpl.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantActivatorFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantLocator.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantLocatorFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantManager.cpp:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/ServantRetentionPolicy.cpp:
+        * tao/PortableServer/ServantRetentionStrategyFactoryImpl.cpp:
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+        * tao/PortableServer/ServantRetentionStrategyNonRetainFactoryImpl.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetainFactoryImpl.cpp:
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/PortableServer/Servant_Dispatcher.cpp:
+        * tao/PortableServer/Servant_Upcall.cpp:
+        * tao/PortableServer/StrategyFactory.cpp:
+        * tao/PortableServer/ThreadPolicy.cpp:
+        * tao/PortableServer/ThreadStrategy.cpp:
+        * tao/PortableServer/ThreadStrategyFactoryImpl.cpp:
+        * tao/PortableServer/ThreadStrategyORBControl.cpp:
+        * tao/PortableServer/ThreadStrategySingle.cpp:
+        * tao/PortableServer/ThreadStrategySingleFactoryImpl.cpp:
+        * tao/PortableServer/Upcall_Command.cpp:
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+        * tao/Profile.cpp:
+        * tao/Protocol_Factory.cpp:
+        * tao/Protocols_Hooks.cpp:
+        * tao/QtResource/QtResource_Factory.cpp:
+        * tao/QtResource/QtResource_Loader.cpp:
+        * tao/Queued_Data.cpp:
+        * tao/Queued_Message.cpp:
+        * tao/RTCORBA/Continuous_Priority_Mapping.cpp:
+        * tao/RTCORBA/Direct_Priority_Mapping.cpp:
+        * tao/RTCORBA/Linear_Network_Priority_Mapping.cpp:
+        * tao/RTCORBA/Linear_Priority_Mapping.cpp:
+        * tao/RTCORBA/Multi_Priority_Mapping.cpp:
+        * tao/RTCORBA/Network_Priority_Mapping.cpp:
+        * tao/RTCORBA/Network_Priority_Mapping_Manager.cpp:
+        * tao/RTCORBA/Priority_Mapping.cpp:
+        * tao/RTCORBA/Priority_Mapping_Manager.cpp:
+        * tao/RTCORBA/RTCORBA.cpp:
+        * tao/RTCORBA/RT_Current.cpp:
+        * tao/RTCORBA/RT_Endpoint_Selector_Factory.cpp:
+        * tao/RTCORBA/RT_Endpoint_Utils.cpp:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+        * tao/RTCORBA/RT_Mutex.cpp:
+        * tao/RTCORBA/RT_ORB.cpp:
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+        * tao/RTCORBA/RT_ORB_Loader.cpp:
+        * tao/RTCORBA/RT_PolicyFactory.cpp:
+        * tao/RTCORBA/RT_Policy_i.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/RTCORBA/RT_Service_Context_Handler.cpp:
+        * tao/RTCORBA/RT_Stub.cpp:
+        * tao/RTCORBA/RT_Stub_Factory.cpp:
+        * tao/RTCORBA/RT_Thread_Lane_Resources_Manager.cpp:
+        * tao/RTCORBA/RT_Transport_Descriptor.cpp:
+        * tao/RTCORBA/RT_Transport_Descriptor_Property.cpp:
+        * tao/RTCORBA/Thread_Pool.cpp:
+        * tao/RTPortableServer/RTPortableServer.cpp:
+        * tao/RTPortableServer/RT_Acceptor_Filters.cpp:
+        * tao/RTPortableServer/RT_Collocation_Resolver.cpp:
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.cpp:
+        * tao/RTPortableServer/RT_POA.cpp:
+        * tao/RTPortableServer/RT_Policy_Validator.cpp:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+        * tao/RTScheduling/Current.cpp:
+        * tao/RTScheduling/RTScheduler.cpp:
+        * tao/RTScheduling/RTScheduler_Initializer.cpp:
+        * tao/RTScheduling/RTScheduler_Loader.cpp:
+        * tao/RTScheduling/RTScheduler_Manager.cpp:
+        * tao/RTScheduling/Request_Interceptor.cpp:
+        * tao/Reactive_Connect_Strategy.cpp:
+        * tao/Reactive_Flushing_Strategy.cpp:
+        * tao/Refcounted_ObjectKey.cpp:
+        * tao/Remote_Invocation.cpp:
+        * tao/Remote_Object_Proxy_Broker.cpp:
+        * tao/Reply_Dispatcher.cpp:
+        * tao/RequestInterceptor_Adapter.cpp:
+        * tao/Request_Dispatcher.cpp:
+        * tao/Resource_Factory.cpp:
+        * tao/Resume_Handle.cpp:
+        * tao/ServerRequestInterceptor_Adapter.cpp:
+        * tao/ServerRequestInterceptor_Adapter_Factory.cpp:
+        * tao/Server_Strategy_Factory.cpp:
+        * tao/Service_Callbacks.cpp:
+        * tao/Service_Context.cpp:
+        * tao/Service_Context_Handler_Registry.cpp:
+        * tao/SmartProxies/Smart_Proxies.cpp:
+        * tao/Strategies/COIOP_Acceptor.cpp:
+        * tao/Strategies/COIOP_Connection_Handler.cpp:
+        * tao/Strategies/COIOP_Connector.cpp:
+        * tao/Strategies/COIOP_Endpoint.cpp:
+        * tao/Strategies/COIOP_Factory.cpp:
+        * tao/Strategies/COIOP_Profile.cpp:
+        * tao/Strategies/COIOP_Transport.cpp:
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connector.cpp:
+        * tao/Strategies/DIOP_Endpoint.cpp:
+        * tao/Strategies/DIOP_Factory.cpp:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tao/Strategies/FIFO_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/LFU_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/LF_Strategy_Null.cpp:
+        * tao/Strategies/NULL_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/OC_Endpoint_Selector_Factory.cpp:
+        * tao/Strategies/OC_Endpoint_Selector_Loader.cpp:
+        * tao/Strategies/Optimized_Connection_Endpoint_Selector.cpp:
+        * tao/Strategies/SCIOP_Acceptor.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/SCIOP_Endpoint.cpp:
+        * tao/Strategies/SCIOP_Factory.cpp:
+        * tao/Strategies/SCIOP_Profile.cpp:
+        * tao/Strategies/SCIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connector.cpp:
+        * tao/Strategies/SHMIOP_Endpoint.cpp:
+        * tao/Strategies/SHMIOP_Factory.cpp:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/Strategies_ORBInitializer.cpp:
+        * tao/Strategies/UIOP_Acceptor.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Endpoint.cpp:
+        * tao/Strategies/UIOP_Factory.cpp:
+        * tao/Strategies/UIOP_Profile.cpp:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * tao/Strategies/advanced_resource.cpp:
+        * tao/String_Alloc.cpp:
+        * tao/Stub.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/Synch_Queued_Message.cpp:
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/SystemException.cpp:
+        * tao/TAO_Internal.cpp:
+        * tao/TAO_Singleton_Manager.cpp:
+        * tao/TSS_Resources.cpp:
+        * tao/Tagged_Components.cpp:
+        * tao/Tagged_Profile.cpp:
+        * tao/Thread_Lane_Resources.cpp:
+        * tao/Thread_Lane_Resources_Manager.cpp:
+        * tao/Thread_Per_Connection_Handler.cpp:
+        * tao/TkResource/TkResource_Factory.cpp:
+        * tao/TkResource/TkResource_Loader.cpp:
+        * tao/Transport.cpp:
+        * tao/TransportCurrent/Current_Loader.cpp:
+        * tao/TransportCurrent/IIOP_Current_Loader.cpp:
+        * tao/Transport_Cache_Manager_T.cpp:
+        * tao/Transport_Connector.cpp:
+        * tao/Transport_Descriptor_Interface.cpp:
+        * tao/Transport_Mux_Strategy.cpp:
+        * tao/TypeCodeFactory/Recursive_TypeCode.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_Loader.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory_Adapter.cpp:
+        * tao/UserException.cpp:
+        * tao/Utils/Implicit_Deactivator.cpp:
+        * tao/Utils/ORB_Destroyer.cpp:
+        * tao/Utils/ORB_Manager.cpp:
+        * tao/Utils/PolicyList_Destroyer.cpp:
+        * tao/Utils/Servant_Var.cpp:
+        * tao/Utils/Synch_Refcountable.cpp:
+        * tao/Valuetype_Adapter.cpp:
+        * tao/Valuetype_Adapter_Factory.cpp:
+        * tao/Wait_On_LF_No_Upcall.cpp:
+        * tao/Wait_On_Leader_Follower.cpp:
+        * tao/Wait_On_Reactor.cpp:
+        * tao/Wait_On_Read.cpp:
+        * tao/Wait_Strategy.cpp:
+        * tao/XtResource/XtResource_Factory.cpp:
+        * tao/XtResource/XtResource_Loader.cpp:
+        * tao/ZIOP/ZIOP.cpp:
+        * tao/ZIOP/ZIOP_ORBInitializer.cpp:
+        * tao/ZIOP/ZIOP_PolicyFactory.cpp:
+        * tao/ZIOP/ZIOP_Policy_Validator.cpp:
+        * tao/ZIOP/ZIOP_Policy_i.cpp:
+        * tao/ZIOP/ZIOP_Service_Context_Handler.cpp:
+        * tao/ZIOP/ZIOP_Stub.cpp:
+        * tao/ZIOP/ZIOP_Stub_Factory.cpp:
+        * tao/debug.cpp:
+        * tao/default_client.cpp:
+        * tao/default_resource.cpp:
+        * tao/default_server.cpp:
+        * tao/operation_details.cpp:
+        * tao/params.cpp:
+        * tao/target_specification.cpp:
+          Removed ACE_RCSID
+
+        * tests/Bug_1361_Regression/Server_Thread_Pool.cpp:
+          Initialise pointer with 0
+
+        * tests/CSD_Strategy_Tests/TP_Common/AppShutdown.h:
+        * tests/CSD_Strategy_Tests/TP_Common/AppShutdown.cpp:
+          Use ACE_Atomic_Op
+
+        * tests/CSD_Strategy_Tests/TP_Common/ClientTask.h:
+        * tests/CSD_Strategy_Tests/TP_Common/ClientTask.cpp:
+          Use ACE_GUARD
+
+        * tests/Faults/client.cpp:
+          Don't use ACE_UNUSED_ARG
+
+        * tests/Oneway_Send_Timeouts/Test_i.cpp:
+          Unicode fix
+
 Sat Sep 04 11:30:18 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO version 1.8.2 released.
+        * TAO version 1.8.2 released.
 
 Wed Sep  1 11:43:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
-  
+
         * tao/Connection_Handler.cpp:
           Reverted my changes to show that the change in behaviour in the
           Faults test is not related to this.
@@ -56,7 +718,7 @@ Mon Aug 30 10:00:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 Mon Aug 30 07:44:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Connection_Handler.cpp:
-          Readded some code that I zapped by accidennt, this fixes the crashing
+          Readded some code that I zapped by accident, this fixes the crashing
           of the Faults test
 
 Fri Aug 27 19:09:02 UTC 2010  Brian Johnson  <johnsonb@ociweb.com>

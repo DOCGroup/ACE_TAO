@@ -19,8 +19,6 @@
 #include "tao/Resume_Handle.h"
 #include "tao/GIOP_Message_Base.h"
 
-ACE_RCSID (tao, COIOP_Transport, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_COIOP_Transport::TAO_COIOP_Transport (TAO_COIOP_Connection_Handler *handler,

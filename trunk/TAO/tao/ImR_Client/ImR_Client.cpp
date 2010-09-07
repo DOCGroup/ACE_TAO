@@ -11,10 +11,6 @@
 #include "tao/ImR_Client/ServerObject_i.h"
 #include "tao/ImR_Client/ImplRepoC.h"
 
-ACE_RCSID (ImR_Client,
-           ImR_Client,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

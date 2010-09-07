@@ -14,10 +14,6 @@
 #include "tao/debug.h"
 #include "PortableServer_Functions.h"
 
-ACE_RCSID(PortableServer,
-          Active_Object_Map,
-          "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /* static */

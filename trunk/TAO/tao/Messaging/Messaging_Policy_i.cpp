@@ -11,10 +11,6 @@
 #include "tao/Messaging/Messaging_Policy_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Messaging,
-           Messaging_Policy_i,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)

@@ -1,8 +1,6 @@
-#include "tao/PortableServer/Regular_POA.h"
+// $Id$
 
-ACE_RCSID (PortableServer,
-           POA,
-           "$Id$")
+#include "tao/PortableServer/Regular_POA.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/Regular_POA.inl"

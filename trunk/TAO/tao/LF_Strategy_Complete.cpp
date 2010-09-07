@@ -6,10 +6,6 @@
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (tao,
-           LF_Strategy_Complete,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LF_Strategy_Complete::~TAO_LF_Strategy_Complete (void)

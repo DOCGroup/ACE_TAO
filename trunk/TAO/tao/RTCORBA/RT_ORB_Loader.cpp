@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/RTCORBA/RT_ORB_Loader.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -10,10 +12,6 @@
 #include "tao/SystemException.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/Arg_Shifter.h"
-
-ACE_RCSID (RTCORBA,
-           RT_ORB_Loader,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

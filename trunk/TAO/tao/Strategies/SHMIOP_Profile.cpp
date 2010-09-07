@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/Strategies/SHMIOP_Profile.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
@@ -12,11 +14,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
-
-ACE_RCSID (Strategies,
-           SHMIOP_Profile,
-           "$Id$")
-
 #include "ace/os_include/os_netdb.h"
 
 static const char prefix_[] = "shmiop";

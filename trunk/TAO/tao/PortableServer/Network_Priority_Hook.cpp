@@ -1,12 +1,8 @@
-// @(#) $Id$
+// $Id$
 
 #include "tao/PortableServer/Network_Priority_Hook.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/POA_Cached_Policies.h"
-
-ACE_RCSID(PortableServer,
-          Network_Priority_Hook,
-          "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

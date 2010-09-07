@@ -3,11 +3,6 @@
 #include "tao/PortableServer/Default_Servant_Dispatcher.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/Network_Priority_Hook.h"
-
-ACE_RCSID(PortableServer,
-          Default_Servant_Dispatcher,
-          "$Id$")
-
 #include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

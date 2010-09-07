@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/Strategies/SHMIOP_Factory.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
@@ -10,12 +12,6 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_strings.h"
-
-
-ACE_RCSID (Strategies,
-           SHMIOP_Factory,
-           "$Id$")
-
 
 static const char prefix_[] = "shmiop";
 

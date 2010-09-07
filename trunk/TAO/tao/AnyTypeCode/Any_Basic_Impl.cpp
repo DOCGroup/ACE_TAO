@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/Any_Basic_Impl.h"
@@ -9,10 +10,6 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID (AnyTypeCode,
-           Any_Basic_Impl,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

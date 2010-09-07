@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/Asynch_Queued_Message.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -9,10 +12,6 @@
 #include "ace/Message_Block.h"
 #include "ace/Malloc_Base.h"
 #include "ace/High_Res_Timer.h"
-
-ACE_RCSID (tao,
-           Asynch_Queued_Message,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/Strategies/SHMIOP_Connector.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
@@ -16,10 +15,6 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Blocked_Connect_Strategy.h"
 #include "ace/OS_NS_strings.h"
-
-ACE_RCSID (Strategies,
-           SHMIOP_Connector,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

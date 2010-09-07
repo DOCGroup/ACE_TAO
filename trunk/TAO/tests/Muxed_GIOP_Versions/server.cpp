@@ -3,7 +3,6 @@
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include "ace/Synch_T.h"
 
 ACE_RCSID(MT_Server, server, "server.cpp,v 1.7 2002/01/29 20:21:08 okellogg Exp")
 

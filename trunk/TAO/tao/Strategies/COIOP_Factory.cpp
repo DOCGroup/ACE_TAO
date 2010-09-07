@@ -11,10 +11,6 @@
 
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (Strategies,
-           COIOP_Factory,
-           "$Id$")
-
 static const char the_prefix[] = "COIOP";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

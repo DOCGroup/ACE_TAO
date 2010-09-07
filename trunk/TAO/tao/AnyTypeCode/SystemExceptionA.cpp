@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/SystemExceptionA.h"
@@ -11,11 +12,6 @@
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 
 #include "tao/CORBA_String.h"
-
-ACE_RCSID (AnyTypeCode,
-           SystemExceptionA,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

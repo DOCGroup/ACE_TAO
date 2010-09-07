@@ -9,10 +9,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/OS.h"
 
-ACE_RCSID (tao,
-           OC_Endpoint_Selector_Factory,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_OC_Endpoint_Selector_Factory::TAO_OC_Endpoint_Selector_Factory (void)

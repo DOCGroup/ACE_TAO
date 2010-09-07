@@ -9,11 +9,6 @@
 #include "tao/SystemException.h"
 #include "tao/ORB_Constants.h"
 
-
-ACE_RCSID (TypeCodeFactory,
-           Recursive_TypeCode,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool

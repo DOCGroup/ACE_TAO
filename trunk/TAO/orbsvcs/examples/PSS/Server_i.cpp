@@ -2,8 +2,6 @@
 
 #include "Server_i.h"
 
-ACE_RCSID (PSS, Server_i, "$Id$")
-
 Server_i::Server_i (void)
 {
 }

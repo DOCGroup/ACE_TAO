@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/RequestProcessingStrategyAOMOnly.h"
@@ -6,10 +7,6 @@
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/PortableServer/Root_POA.h"
-
-ACE_RCSID (PortableServer,
-           Request_Processing,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

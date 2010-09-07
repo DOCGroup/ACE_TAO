@@ -1,10 +1,8 @@
+// $Id$
+
 #include "tao/Compression/Compression.h"
 #include "tao/Compression/Compression_Manager.h"
 #include "tao/debug.h"
-
-ACE_RCSID (Compression,
-           Compression,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

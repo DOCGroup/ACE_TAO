@@ -1,10 +1,7 @@
 // -*- C++ -*-
+// $Id$
 
 #include "tao/PortableServer/ImplicitActivationStrategyExplicit.h"
-
-ACE_RCSID (PortableServer,
-           ImplicitActivationStrategyExplicit,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -19,8 +16,6 @@ namespace TAO
     }
   }
 }
-
-
 
 ACE_FACTORY_NAMESPACE_DEFINE (
   ACE_Local_Service,

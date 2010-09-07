@@ -1,7 +1,7 @@
 // -*- C++ -*-
+// $Id$
 
 #include "tao/Messaging/Messaging_ORBInitializer.h"
-
 #include "tao/Messaging/Messaging_Policy_i.h"
 #include "tao/Messaging/Connection_Timeout_Policy_i.h"
 #include "tao/Messaging/Messaging_PolicyFactory.h"
@@ -11,10 +11,6 @@
 #include "tao/Transport_Queueing_Strategies.h"
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/Valuetype/ValueFactory.h"
-
-ACE_RCSID (Messaging,
-           Messaging_ORBInitializer,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

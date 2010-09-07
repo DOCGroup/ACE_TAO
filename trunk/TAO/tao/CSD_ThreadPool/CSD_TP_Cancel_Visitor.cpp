@@ -3,10 +3,6 @@
 #include "tao/CSD_ThreadPool/CSD_TP_Cancel_Visitor.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Request.h"
 
-ACE_RCSID (CSD_TP,
-           Cancel_Visitor,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 # include "tao/CSD_ThreadPool/CSD_TP_Cancel_Visitor.inl"
 #endif /* ! __ACE_INLINE__ */

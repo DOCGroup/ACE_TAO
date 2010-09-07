@@ -13,12 +13,6 @@
 
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (RTCORBA,
-           RT_Policy_i,
-           "$Id$")
-
-// ****************************************************************
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (
