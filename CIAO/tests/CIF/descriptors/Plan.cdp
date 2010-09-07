@@ -1,0 +1,161 @@
+<Deployment:DeploymentPlan
+                          xmlns:Deployment="http://www.omg.org/Deployment"
+                          xmlns:xmi="http://www.omg.org/XMI"
+                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>CIF_Test_Depl</label>
+  <UUID>CIF_Test_Depl</UUID>
+
+  <implementation xmi:id="ProviderComponentImplementation">
+    <name>ProviderComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Component_ExecArtifact" />
+    <artifact xmi:idref="Component_SvntArtifact" />
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIF_CIF_Provider_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIF_CIF_Provider_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CIF_Component_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CIF_Component_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="UserComponentImplementation">
+    <name>UserComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Component_ExecArtifact" />
+    <artifact xmi:idref="Component_SvntArtifact" />
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIF_CIF_User_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIF_CIF_User_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CIF_Component_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CIF_Component_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <instance xmi:id="ProviderComponent">
+    <name>ProviderComponent</name>
+    <node>ProviderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ProviderComponentImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ProviderComponentInstance</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="UserComponent">
+    <name>UserComponent</name>
+    <node>UserNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="UserComponentImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>UserComponentInstance</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <artifact xmi:id="Component_ExecArtifact">
+    <name>CIF_Component_exec</name>
+    <source/>
+    <node/>
+    <location>CIF_Component_exec</location>
+  </artifact>
+  <artifact xmi:id="Component_SvntArtifact">
+    <name>CIF_Component_svnt</name>
+    <source/>
+    <node/>
+    <location>CIF_Component_svnt</location>
+  </artifact>
+</Deployment:DeploymentPlan>

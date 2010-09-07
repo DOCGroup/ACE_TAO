@@ -39,7 +39,7 @@ namespace CIAO
     ::DDS::DomainParticipant_ptr
     CCM_DDS_TopicDescription_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_participant (void)
     {
-      ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+      ::DDS::DomainParticipant_var retval;
       DDSDomainParticipant* p = this->impl ()->get_participant ();
       if (p)
         {

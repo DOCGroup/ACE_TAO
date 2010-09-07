@@ -64,7 +64,7 @@ CIAO::DDS4CCM::CCM_DDS_QueryCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_da
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DDS_QueryCondition_T::get_datareader");
 
-  ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
+  ::DDS::DataReader_var dds_reader;
   DDSDataReader* reader = this->impl ()->get_datareader ();
   if (reader)
     {

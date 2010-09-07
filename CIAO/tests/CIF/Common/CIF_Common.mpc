@@ -1,18 +1,18 @@
 // $Id$
 
-project (CIF_Common) : ccm_configvalue, ciao_logger {
+project (CIF_Common) : ccm_configvalue, ciao_logger, naming {
   dynamicflags += CIF_COMMON_BUILD_DLL
   sharedname = CIF_Common
-  requires += dummy_label
-   libout = ../lib
-   IDL_Files {
-   }
+  includes += ..
+  libout = ../lib
 
-   Source_Files {
-     CIF_Common.cpp
-   }
+  IDL_Files {
+  }
+  Source_Files {
+    CIF_Common.cpp
+  }
 
-   Header_Files {
-     CIF_Common.h
-   }
+  Header_Files {
+    CIF_Common.h
+  }
 }

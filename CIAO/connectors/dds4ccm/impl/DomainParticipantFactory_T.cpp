@@ -87,7 +87,7 @@ namespace CIAO
               throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
             }
 
-          ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+          ::DDS::DomainParticipant_var retval;
           ACE_NEW_THROW_EX (retval,
                             DomainParticipant_type (dds_dp),
                             ::CORBA::NO_MEMORY ());
@@ -105,7 +105,7 @@ namespace CIAO
                         "for QOS profile <%C> and domain <%d>.\n",
                         qos_profile.c_str (),
                         domain_id));
-          ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+          ::DDS::DomainParticipant_var retval;
           ACE_NEW_THROW_EX (retval,
                             DomainParticipant_type (dds_dp),
                             ::CORBA::NO_MEMORY ());
@@ -177,7 +177,7 @@ namespace CIAO
                             "Error: Unable to create DomainParticipant\n"));
               throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
             }
-          ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+          ::DDS::DomainParticipant_var retval;
           ACE_NEW_THROW_EX (retval,
                             DomainParticipant_type (dds_dp),
                             ::CORBA::NO_MEMORY ());
@@ -200,7 +200,7 @@ namespace CIAO
                         "participant for QOS profile <%C> and domain <%d>.\n",
                         qos_profile.c_str (),
                         domain_id));
-          ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+          ::DDS::DomainParticipant_var retval;
           ACE_NEW_THROW_EX (retval,
                             DomainParticipant_type (dds_dp),
                             ::CORBA::NO_MEMORY ());
@@ -276,7 +276,7 @@ namespace CIAO
     CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::lookup_participant (
       ::DDS::DomainId_t domain_id)
     {
-      ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+      ::DDS::DomainParticipant_var retval;
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDSDomainParticipant* dp = DDSDomainParticipantFactory::get_instance ()
         ->lookup_participant (domain_id);

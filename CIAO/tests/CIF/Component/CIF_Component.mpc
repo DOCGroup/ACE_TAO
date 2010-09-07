@@ -1,0 +1,162 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -c CIF_TestDriver CIF_Component"
+
+project(CIF_Component_idl_gen) : componentidldefaults   {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=CIF_COMPONENT_STUB_Export \
+              -Wb,stub_export_include=CIF_Component_stub_export.h \
+              -Wb,skel_export_macro=CIF_COMPONENT_SVNT_Export \
+              -Wb,skel_export_include=CIF_Component_svnt_export.h \
+              -Wb,exec_export_macro=CIF_COMPONENT_EXEC_Export \
+              -Wb,exec_export_include=CIF_Component_exec_export.h \
+              -Gxhex -Gxhsk -Gxhst
+
+  IDL_Files {
+    CIF_Component.idl
+  }
+}
+
+project(CIF_Component_lem_gen) : ciaoidldefaults   {
+  after += CIF_Component_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=CIF_COMPONENT_LEM_STUB_Export \
+              -Wb,stub_export_include=CIF_Component_lem_stub_export.h \
+              -SS -Gxhst
+
+  IDL_Files {
+    CIF_ComponentE.idl
+  }
+}
+
+project(CIF_Component_lem_stub) : ccm_svnt   {
+  after += CIF_Component_lem_gen CIF_Component_stub
+  libs  +=  CIF_Component_stub
+
+  libpaths += ../lib
+  libout = ../lib
+
+  sharedname = CIF_Component_lem_stub
+  dynamicflags += CIF_COMPONENT_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    CIF_ComponentEC.cpp
+  }
+
+  Header_Files {
+    CIF_ComponentEC.h
+    CIF_Component_lem_stub_export.h
+  }
+
+  Inline_Files {
+    CIF_ComponentEC.inl
+  }
+}
+
+project(CIF_Component_stub) : ccm_stub   {
+  after += CIF_Component_idl_gen
+  libs  += 
+
+  libpaths += ../lib
+  libout = ../lib
+
+  sharedname = CIF_Component_stub
+  dynamicflags += CIF_COMPONENT_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    CIF_ComponentC.cpp
+  }
+
+  Header_Files {
+    CIF_ComponentC.h
+    CIF_Component_stub_export.h
+  }
+
+  Inline_Files {
+    CIF_ComponentC.inl
+  }
+}
+
+project(CIF_Component_exec) : ciao_executor   {
+  after   += CIF_Component_lem_stub CIF_Component_stub
+  sharedname = CIF_Component_exec
+  libs += CIF_Component_stub CIF_Component_lem_stub
+
+  libpaths += ../lib
+  libout = ../lib
+
+  dynamicflags += CIF_COMPONENT_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    CIF_Component_exec.cpp
+  }
+
+  Header_Files {
+    CIF_Component_exec.h
+    CIF_Component_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(CIF_Component_svnt) : ciao_servant   {
+  after      +=   CIF_Component_lem_stub
+  sharedname  = CIF_Component_svnt
+  libs       += CIF_Component_stub CIF_Component_lem_stub
+
+  libpaths += ../lib
+  libout = ../lib
+
+  dynamicflags += CIF_COMPONENT_SVNT_BUILD_DLL
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    CIF_ComponentS.cpp
+    CIF_Component_svnt.cpp
+  }
+
+  Header_Files {
+    CIF_ComponentS.h
+    CIF_Component_svnt.h
+    CIF_Component_svnt_export.h
+  }
+
+  Inline_Files {
+    CIF_ComponentS.inl
+  }
+}
+
+// project (CIF_TestDriver) : ccm_stub, valuetype, naming {
+//   exename = CIF_TestDriver
+//   after += CIF_Component_stub
+//   libs  += CIF_Component_stub
+// 
+//   libpaths += ../lib
+//   exeout = ../lib
+// 
+//   IDL_Files {
+//   }
+// 
+//   Source_Files {
+//     CIF_TestDriver.cpp
+//   }
+// 
+//   Header_Files {
+//   }
+// 
+//   Inline_Files {
+//   }
+// }
+

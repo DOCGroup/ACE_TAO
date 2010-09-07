@@ -91,7 +91,7 @@ namespace CIAO
     ::DDS::Topic_ptr
     CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_topic (void)
     {
-      ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
+      ::DDS::Topic_var retval;
       DDSTopic* t = this->impl ()->get_topic ();
       ACE_NEW_THROW_EX (retval,
                         Topic_type (t),
@@ -103,7 +103,7 @@ namespace CIAO
     ::DDS::Publisher_ptr
     CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_publisher (void)
     {
-      ::DDS::Publisher_var retval = ::DDS::Publisher::_nil ();
+      ::DDS::Publisher_var retval;
       DDSPublisher* p = this->impl ()->get_publisher ();
       ACE_NEW_THROW_EX (retval,
                         Publisher_type (p),
@@ -216,7 +216,7 @@ namespace CIAO
     ::DDS::StatusCondition_ptr
     CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_statuscondition (void)
     {
-      ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
+      ::DDS::StatusCondition_var retval;
       DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
       ACE_NEW_THROW_EX (retval,
                         CCM_DDS_StatusCondition_i (sc),

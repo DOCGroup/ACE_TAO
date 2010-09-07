@@ -1,14 +1,11 @@
 // $Id$
 
 #include "CIF_Common.h"
-#include "ciao/Logger/Logger_Service.h"
-#include "ciao/ComponentServer/Client_init.h"
 #include "ace/Get_Opt.h"
+#include "Component/CIF_ComponentC.h"
 
 CIF_Common::CIF_Common (void)
-  : artifact_name_ (""),
-    cs_path_ ("ciao_componentserver"),
-    spawn_delay_ (30)
+  : naming_ ("")
 {
 }
 
@@ -19,211 +16,164 @@ CIF_Common::~CIF_Common (void)
 int
 CIF_Common::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:d:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("n:"));
   int c;
-
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 's':
-        this->cs_path_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
-        break;
+    {
+      switch (c)
+        {
+          case 'n':
+            this->naming_ = get_opts.opt_arg ();
+            break;
 
-      case 'd':
-        this->spawn_delay_ = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+          case '?':
+          default:
+            ACE_ERROR_RETURN ((LM_ERROR,
+                              "usage:  %s\n"
+                              "-n (naming service)\n"
+                              "\n",
+                              argv [0]),
+                              -1);
+        }
+    }
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage: %s "
-                           "-s <path> "
-                           "-d <uint> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
   return 0;
 }
 
 int
-CIF_Common::init (int argc, ACE_TCHAR *argv[],
-                  const char * artifact_name)
+CIF_Common::init_provider_component (::CosNaming::NamingContext_ptr naming_context)
 {
-  if (this->parse_args (argc, argv) != 0)
-    return 1;
+  ::CosNaming::Name name (1);
+  name.length (1);
+  name[0].id = ::CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ("ProviderComponentInstance"));
 
-  this->artifact_name_ = artifact_name;
-  ::CIAO::Logger_Service logger;
-  logger.init (argc, argv);
-  this->orb_ = CORBA::ORB_init (argc, argv);
-  ::CIAO::Client_init (this->orb_);
+  ::CORBA::Object_var obj_ref = naming_context->resolve (name);
 
-  CORBA::Object_var object =
-    this->orb_->resolve_initial_references ("RootPOA");
+  ::CIF::CIF_Provider_var provider_object =
+    ::CIF::CIF_Provider::_narrow (obj_ref.in ());
 
-  this->root_poa_ =
-    PortableServer::POA::_narrow (object.in ());
-
-  PortableServer::POAManager_var poa_manager =
-    this->root_poa_->the_POAManager ();
-
-  poa_manager->activate ();
+  if (! ::CORBA::is_nil (provider_object.in ()))
+    {
+      ACE_DEBUG ((LM_DEBUG, "Established connection with Provider Component.\n"));
+      this->provider_cmp_ = provider_object->_get_component ();
+      if (::CORBA::is_nil (this->provider_cmp_.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "_get_component returned a nil component for Provider component\n"),
+                            1);
+        }
+    }
+  else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        "Error resolving CIF component object for Provider component\n"),
+                        1);
+    }
   return 0;
 }
 
-void
-CIF_Common::shutdown (::CIAO::Deployment::ComponentServer_ptr server,
-                      ::CIAO::Deployment::Container_ptr cont,
-                      ::Components::CCMObject_ptr comp,
-                      bool orb_shutdown)
+int
+CIF_Common::init_user_component (::CosNaming::NamingContext_ptr naming_context)
 {
-  cont->remove_component (comp);
-  server->remove_container (cont);
+  ::CosNaming::Name name (1);
+  name.length (1);
+  name[0].id = ::CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ("UserComponentInstance"));
 
-  this->sa_->remove_component_server (server);
-  if (orb_shutdown)
+  ::CORBA::Object_var obj_ref = naming_context->resolve (name);
+
+  ::CIF::CIF_User_var user_object =
+    ::CIF::CIF_User::_narrow (obj_ref.in ());
+
+  if (! ::CORBA::is_nil (user_object.in ()))
     {
-      this->orb_->shutdown ();
+      ACE_DEBUG ((LM_DEBUG, "Established connection with User Component.\n"));
+      this->user_cmp_ = user_object->_get_component ();
+      if (::CORBA::is_nil (this->user_cmp_.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "_get_component returned a nil component for User component\n"),
+                            1);
+        }
     }
-}
-
-::CIAO::Deployment::ComponentServer_ptr
-CIF_Common::create_componentserver ()
-{
-  ::CIAO::Deployment::ComponentInstallation_Impl *tmp_ci = 0;
-
-  ACE_NEW_THROW_EX (tmp_ci,
-                    CIAO::Deployment::ComponentInstallation_Impl (),
-                    CORBA::NO_MEMORY ());
-
-  this->root_poa_->activate_object (tmp_ci);
-
-  ::CIAO::Deployment::CIAO_ServerActivator_i *sa_tmp = 0;
-  ACE_NEW_THROW_EX (
-    sa_tmp,
-    ::CIAO::Deployment::CIAO_ServerActivator_i (this->spawn_delay_,
-                                                this->cs_path_,
-                                                0,
-                                                false,
-                                                tmp_ci->_this (),
-                                                this->orb_.in (),
-                                                this->root_poa_.in ()),
-    CORBA::NO_MEMORY ());
-
-  if (::CORBA::is_nil (this->sa_.in ()))
-    {
-      this->sa_ = sa_tmp->_this ();
-    }
-  // Make a componentserver with no configvalues
-  ::CIAO::Deployment::ComponentServer_var
-    server (::CIAO::Deployment::ComponentServer::_narrow
-      (this->sa_->create_component_server (0)));
-
-  if (CORBA::is_nil (server.in ()))
+  else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                          "Nil componentserver reference"),
-                         0);
+                        "Error resolving CIF component object with User component\n"),
+                        1);
     }
-
-  ACE_CString svnt = this->artifact_name_;
-  ACE_CString exec = this->artifact_name_;
-  svnt += "_svnt";
-  exec += "_exec";
-  tmp_ci->install (svnt.c_str (), svnt.c_str ());
-  tmp_ci->install (exec.c_str (), exec.c_str ());
-
-  return server._retn ();
+  return 0;
 }
 
-::CIAO::Deployment::Container_ptr
-CIF_Common::create_container (::CIAO::Deployment::ComponentServer_ptr server)
+
+int
+CIF_Common::init (int argc, ACE_TCHAR *argv[])
 {
-  ::Components::Deployment::Container_var tmp = server->create_container (0);
-  ::CIAO::Deployment::Container_var cont =
-    ::CIAO::Deployment::Container::_narrow (tmp.in ());
-  return cont._retn ();
-}
+  int ret = 0;
 
-::Components::CCMObject_ptr
-CIF_Common::install_component (::CIAO::Deployment::Container_ptr cont,
-                               const char * entrypoint_name)
-{
-  CORBA::Any val;
-  ::Components::ConfigValues configs(3);
-  configs.length (3);
+  if (this->parse_args (argc, argv) != 0)
+    return 1;
 
-  ACE_CString tmp = "create_";
-  ACE_CString impl_name = tmp;
-
-  tmp       += entrypoint_name;
-  impl_name += entrypoint_name;
-  tmp += "_Servant";
-  impl_name += "_Impl";
-
-  val <<= tmp.c_str();
-  ACE_NEW_THROW_EX (
-    configs[0],
-    CIAO::ConfigValue_impl (CIAO::Deployment::SVNT_ENTRYPT,
-                            val),
-    CORBA::NO_MEMORY ());
-  tmp = this->artifact_name_;
-  tmp += "_svnt";
-  val <<= tmp.c_str ();
-  ACE_NEW_THROW_EX (
-    configs[1],
-    CIAO::ConfigValue_impl (CIAO::Deployment::SVNT_ARTIFACT,
-                            val),
-    CORBA::NO_MEMORY ());
-
-  tmp = this->artifact_name_;
-  tmp += "_exec";
-  val <<= tmp.c_str ();
-  ACE_NEW_THROW_EX (
-    configs[2],
-    CIAO::ConfigValue_impl (CIAO::Deployment::EXEC_ARTIFACT,
-                            val),
-    CORBA::NO_MEMORY ());
-
-  // Install Component
-  Components::CCMObject_var cmp = Components::CCMObject::_nil ();
   try
     {
-      cmp = cont->install_component (tmp.c_str (),
-                                     impl_name.c_str (),
-                                     configs);
-    }
-  catch (const ::Components::Deployment::UnknownImplId &)
-    {
-      ACE_ERROR ((LM_ERROR, "CIF_Common::install_component - "
-                  "::Components::Deployment::UnknownImplId caught.\n"));
-      return ::Components::CCMObject::_nil ();
-    }
-  catch (const ::Components::Deployment::ImplEntryPointNotFound &)
-    {
-      ACE_ERROR ((LM_ERROR, "CIF_Common::install_component - "
-                  "::Components::Deployment::ImplEntryPointNotFound caught\n"));
-      return ::Components::CCMObject::_nil ();
-    }
-  catch (const ::Components::Deployment::InstallationFailure &)
-    {
-      ACE_ERROR ((LM_ERROR, "CIF_Common::install_component - "
-                  "::Components::Deployment::InstallationFailure caught\n"));
-      return ::Components::CCMObject::_nil ();
-    }
-  catch (const ::Components::Deployment::InvalidConfiguration &)
-    {
-      ACE_ERROR ((LM_ERROR, "CIF_Common::install_component - "
-                  "::Components::Deployment::InvalidConfiguration caught\n"));
-      return ::Components::CCMObject::_nil ();
-    }
+      this->orb_ = ::CORBA::ORB_init (argc, argv);
+      // Resolving naming service
+      ::CORBA::Object_var naming_context_object =
+        this->orb_->string_to_object (naming_);
+      if (::CORBA::is_nil (naming_context_object.in ()))
+          return -1;
+      CosNaming::NamingContext_var naming_context =
+        CosNaming::NamingContext::_narrow (naming_context_object.in ());
 
-  if (CORBA::is_nil (cmp))
-    {
-      ACE_ERROR ((LM_ERROR, "CIF_Common::install_component - "
-                  "Got back a nil component ref from install_component\n"));
-      return ::Components::CCMObject::_nil ();
+      if (::CORBA::is_nil (naming_context.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "Unable to connect to naming service\n"),
+                            1);
+        }
+
+      ret += init_provider_component (naming_context.in ());
+      ret += init_user_component (naming_context.in ());
     }
-  return cmp._retn ();
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("CIF_Common::init");
+      return 1;
+    }
+  return ret;
+}
+
+::Components::Navigation_ptr
+CIF_Common::get_navigation_interface ()
+{
+  ::Components::Navigation_var nav =
+    ::Components::Navigation::_narrow (this->provider_cmp_.in ());
+
+  if (::CORBA::is_nil (nav.in ()))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Narrow failed from CCMObject to Navigation\n"));
+      return ::Components::Navigation::_nil ();
+    }
+  return ::Components::Navigation::_duplicate (nav.in ());
+}
+
+Components::Receptacles_ptr
+CIF_Common::get_receptacle_interface()
+{
+  ::Components::Receptacles_var rec =
+    ::Components::Receptacles::_narrow (this->user_cmp_.in ());
+
+  if (::CORBA::is_nil (rec.in ()))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Narrow failed from CCMObject to Receptacles\n"));
+      return ::Components::Receptacles::_nil ();
+    }
+  return ::Components::Receptacles::_duplicate (rec.in ());
+}
+
+void
+CIF_Common::shutdown ()
+{
+  this->orb_->shutdown ();
 }

@@ -62,7 +62,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_related_topic");
 
-      ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
+      ::DDS::Topic_var retval;
       DDSTopic *topic = this->impl ()->get_related_topic ();
       ACE_NEW_THROW_EX (retval,
                         Topic_type (topic),
@@ -88,7 +88,7 @@ namespace CIAO
     ::DDS::DomainParticipant_ptr
     CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_participant (void)
     {
-      ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+      ::DDS::DomainParticipant_var retval;
       DDSDomainParticipant * p = this->impl ()->get_participant ();
       ACE_NEW_THROW_EX (retval,
                         DomainParticipant_type (p),

@@ -58,7 +58,7 @@ CIAO::DDS4CCM::CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_dat
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DDS_ReadCondition_T::get_datareader");
 
-  ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
+  ::DDS::DataReader_var retval;
   DDSDataReader* rd = this->impl ()->get_datareader ();
   if (rd)
     {

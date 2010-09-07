@@ -1,3 +1,75 @@
+Tue Sep  7 12:06:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added CIF and TopicName tests.
+
+        * connectors/dds4ccm/impl/ContentFilteredTopic_T.cpp:
+        * connectors/dds4ccm/impl/DDSPublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/DDSSubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/DDSTopicListener_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/DataWriter_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipantFactory_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipant_T.cpp:
+        * connectors/dds4ccm/impl/Publisher_T.cpp:
+        * connectors/dds4ccm/impl/QueryCondition_T.cpp:
+        * connectors/dds4ccm/impl/ReadCondition_T.cpp:
+        * connectors/dds4ccm/impl/Subscriber_T.cpp:
+        * connectors/dds4ccm/impl/TopicDescription_T.cpp:
+        * connectors/dds4ccm/impl/Topic_T.cpp:
+          Removed initialization for _var variables.
+          The create_* methods in DomainParticipant_T won't throw an exception but
+          will return a _nil when the DDS vendor returns nil on the creation of
+          a DDS entity. In DDS_TopicBase_Connector_T, the return value is checked
+          and an exception is thrown when the return value is nil.
+
+        * connectors/dds4ccm/tests/TopicName:
+        * connectors/dds4ccm/tests/TopicName/Base:
+        * connectors/dds4ccm/tests/TopicName/Base/TopicName_Test_Base.idl:
+        * connectors/dds4ccm/tests/TopicName/Base/TopicName_Test_Base.mpc:
+        * connectors/dds4ccm/tests/TopicName/Component:
+        * connectors/dds4ccm/tests/TopicName/Component/TopicName_Test_Component.idl:
+        * connectors/dds4ccm/tests/TopicName/Component/TopicName_Test_Component.mpc:
+        * connectors/dds4ccm/tests/TopicName/Component/TopicName_Test_Component_exec.h:
+        * connectors/dds4ccm/tests/TopicName/Component/TopicName_Test_Component_exec.cpp:
+        * connectors/dds4ccm/tests/TopicName/Connector:
+        * connectors/dds4ccm/tests/TopicName/Connector/TopicName_Test_Connector.idl:
+        * connectors/dds4ccm/tests/TopicName/Connector/TopicName_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/TopicName/descriptors:
+        * connectors/dds4ccm/tests/TopicName/descriptors/Empty.cdp:
+        * connectors/dds4ccm/tests/TopicName/descriptors/TooLong.cdp:
+        * connectors/dds4ccm/tests/TopicName/descriptors/run_test.pl:
+          Added test which tests a empty and very long topic name.
+
+        * tests/CIF/Common/CIF_Common.h:
+        * tests/CIF/Common/CIF_Common.cpp:
+        * tests/CIF/Common/CIF_Common.mpc:
+        * tests/CIF/Component:
+        * tests/CIF/Component/CIF_Component.idl:
+        * tests/CIF/Component/CIF_Component.mpc:
+        * tests/CIF/Component/CIF_Component_exec.h:
+        * tests/CIF/Component/CIF_Component_exec.cpp:
+        * tests/CIF/Navigation/Navigation.mpc:
+        * tests/CIF/Navigation/client.cpp:
+        * tests/CIF/Receptacle/Receptacle.mpc:
+        * tests/CIF/Receptacle/client.cpp:
+        * tests/CIF/descriptors:
+        * tests/CIF/descriptors/Plan.cdp:
+        * tests/CIF/descriptors/run_test.pl:
+        * tests/CIF/Navigation/Navigation.idl:
+        * tests/CIF/Navigation/Navigation_exec.h:
+        * tests/CIF/Navigation/Navigation_exec.cpp:
+        * tests/CIF/Navigation/run_test.pl:
+        * tests/CIF/Receptacle/Receptacle.idl:
+        * tests/CIF/Receptacle/Receptacle_exec.h:
+        * tests/CIF/Receptacle/Receptacle_exec.cpp:
+        * tests/CIF/Receptacle/run_test.pl:
+          Rewritten CIF test. Using a deployment plan and a component to test
+          the Component Implementation Framework.
+
 Tue Sep  7 10:52:59 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ChangeLog:
