@@ -232,6 +232,13 @@ public:
   pid_t setgroup (pid_t pgrp);
 
   /// Allows disabling of handle inheritance, default is TRUE.
+  ///
+  /// @remarks @b Windows: the handle_inheritance value is passed as the
+  /// bInheritHandles value to the CreateProcess() system function. Therefore,
+  /// if you redirect standard input, output, or error via
+  /// ACE_Process_Options::set_handles() you must not call
+  /// handle_inheritance(false). Doing so will prevent the duplicated handles
+  /// from surviving in the created process.
   int handle_inheritance (void);
   void handle_inheritance (int);
 
