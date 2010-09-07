@@ -1,6 +1,19 @@
 // $Id$
 
 #include "tao/StringSeq.pidl"
+#include "tao/LongSeq.pidl"
+#include "tao/OctetSeq.pidl"
+
+interface Coffee
+{
+  struct Desc
+  {
+    string name;
+  };
+
+  attribute Desc description;
+  /// Provides us the coffee object type.s
+};
 
 interface Alt_Mapping
 {
@@ -28,6 +41,14 @@ interface Alt_Mapping
   CORBA::StringSeq test_strseq (in CORBA::StringSeq s1,
                                 inout CORBA::StringSeq s2,
                                 out CORBA::StringSeq s3);
+
+  CORBA::LongSeq test_long_sequence (in CORBA::LongSeq s1,
+                                     inout CORBA::LongSeq s2,
+                                     out CORBA::LongSeq s3);
+
+  CORBA::OctetSeq test_octet_sequence (in CORBA::OctetSeq s1,
+                                       inout CORBA::OctetSeq s2,
+                                       out CORBA::OctetSeq s3);
 
   void shutdown ();
   // Shutdown the server: this is useful to check for memory leaks,

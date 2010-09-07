@@ -50,6 +50,8 @@ project(*Client): taoexe, codeset {
     helper.cpp
     options.cpp
     results.cpp
+    ub_octet_seq.cpp
+    ub_long_seq.cpp
     ub_string.cpp
     ub_struct_seq.cpp
     ub_str_seq.cpp
@@ -60,6 +62,9 @@ project(*Client): taoexe, codeset {
     helper.h
     options.h
     results.h
+    tests.h
+    ub_octet_seq.h
+    ub_long_seq.h
     ub_string.h
     ub_struct_seq.h
     ub_str_seq.h
