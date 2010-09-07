@@ -1,12 +1,8 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/CSD_Framework/CSD_Strategy_Repository.h"
 #include "tao/debug.h"
-
-ACE_RCSID (CSD_Framework,
-           CSD_Strategy_Factory,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

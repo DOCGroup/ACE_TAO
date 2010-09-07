@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/Fault_Tolerance_Service.h"
 #include "tao/Services_Activate.h"
 #include "tao/ORB_Core.h"
@@ -8,10 +10,6 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/Fault_Tolerance_Service.inl"
 #endif /* __ACE_INLINE__ */
-
-ACE_RCSID (tao,
-           Fault_Tolerance_Service,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

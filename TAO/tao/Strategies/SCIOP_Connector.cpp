@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/Strategies/SCIOP_Connector.h"
 #include "tao/Strategies/SCIOP_Profile.h"
 
@@ -18,12 +20,6 @@
 
 #include "ace/OS_NS_strings.h"
 #include "ace/Strategies_T.h"
-
-
-ACE_RCSID (TAO,
-           SCIOP_Connector,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

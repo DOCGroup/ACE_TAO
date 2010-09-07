@@ -1,13 +1,9 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/CSD_Framework/CSD_Strategy_Proxy.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/debug.h"
-
-ACE_RCSID (CSD_Framework,
-           CSD_Strategy_Base,
-           "$Id$")
-
 
 #if !defined (__ACE_INLINE__)
 # include "tao/CSD_Framework/CSD_Strategy_Proxy.inl"

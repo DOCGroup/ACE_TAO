@@ -6,9 +6,6 @@
 // = LIBRARY
 //    TAO/orbsvcs/examples/PSS
 //
-// = FILENAME
-//    simple_naming_i.h
-//
 // = DESCRIPTION
 //      This class implements the bind and find methods in
 //      simple_naming.idl which in turn use the PSDL implementation.

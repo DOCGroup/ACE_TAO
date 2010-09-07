@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/Utils/Synch_Refcountable.h"
 
 #if !defined (__ACE_INLINE__)
@@ -5,11 +7,6 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Msg.h"
-
-ACE_RCSID (Utils,
-           Synch_Refcountable,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

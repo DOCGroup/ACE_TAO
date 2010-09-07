@@ -6,8 +6,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"
 
-ACE_RCSID (IORManip_Filter, IORManip_Filter, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IORManip_Filter::TAO_IORManip_Filter (void)

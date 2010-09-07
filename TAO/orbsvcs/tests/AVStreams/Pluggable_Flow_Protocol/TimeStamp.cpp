@@ -51,7 +51,7 @@ TimeStamp_Protocol_Object::handle_input (void)
 //                n,
 //                frame_size));
 
-//        ACE_Message_Block* mb;
+//        ACE_Message_Block* mb = 0;
 //        ACE_NEW_RETURN (mb,
 //                    ACE_Message_Block(frame_size),
 //                    -1);
@@ -93,7 +93,7 @@ TimeStamp_Protocol_Object::handle_input (void)
 //                  "(%N|%l) Frame Size %d\n",
 //                  n));
 
-//      ACE_Message_Block* mb;
+//      ACE_Message_Block* mb = 0;
 //      ACE_NEW_RETURN (mb,
 //                      ACE_Message_Block (frame_size),
 //                      -1);

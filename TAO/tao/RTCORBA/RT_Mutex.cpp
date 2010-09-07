@@ -7,10 +7,6 @@
 #include "tao/SystemException.h"
 #include "ace/OS_NS_sys_time.h"
 
-ACE_RCSID(RTCORBA,
-          RT_Mutex,
-          "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_Mutex::~TAO_RT_Mutex (void)

@@ -6,6 +6,3 @@
 # include "tao/GIOP_Message_Locate_Header.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           GIOP_Message_Locate_Header,
-           "$Id$")

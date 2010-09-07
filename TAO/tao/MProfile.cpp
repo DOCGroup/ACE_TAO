@@ -1,6 +1,6 @@
 // -*- C++ -*-
-//
 // $Id$
+
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
 #include "tao/PolicyC.h"
@@ -10,10 +10,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
 #include "ace/CORBA_macros.h"
-
-ACE_RCSID (tao,
-           MProfile,
-           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "tao/MProfile.inl"

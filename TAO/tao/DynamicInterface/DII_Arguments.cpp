@@ -1,17 +1,11 @@
 // $Id$
 
 #include "tao/DynamicInterface/DII_Arguments.h"
-
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/Any_Impl.h"
 #include "tao/AnyTypeCode/DynamicC.h"
 #include "tao/Exception.h"
 #include "tao/CDR.h"
-
-
-ACE_RCSID (DynamicInterface,
-           DII_Arguments,
-           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "tao/DynamicInterface/DII_Arguments.inl"

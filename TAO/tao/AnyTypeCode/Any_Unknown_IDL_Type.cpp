@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
@@ -11,10 +12,6 @@
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID (AnyTypeCode,
-           Any_Unknown_IDL_Type,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

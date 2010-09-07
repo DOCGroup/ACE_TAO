@@ -93,8 +93,10 @@ TAO_Notify_SequencePushConsumer::release (void)
   //@@ inform factory
 }
 
+// FUZZ: disable check_for_ACE_Guard
 bool
 TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, ACE_Guard <TAO_SYNCH_MUTEX> & ace_mon)
+// FUZZ: enable check_for_ACE_Guard
 {
   bool result = true;
   if (DEBUG_LEVEL > 0)

@@ -1,10 +1,7 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
-
-ACE_RCSID (DynamicInterface,
-           Dynamic_Implementation,
-           "$Id$")
-
-
 #include "tao/DynamicInterface/Server_Request.h"
 #include "tao/ORB_Core.h"
 #include "tao/TSS_Resources.h"

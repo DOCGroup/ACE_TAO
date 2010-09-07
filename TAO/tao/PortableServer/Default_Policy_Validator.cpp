@@ -6,11 +6,6 @@
 #include "tao/PolicyFactory_Registry_Adapter.h"
 #include "tao/PortableServer/PortableServer.h"
 
-ACE_RCSID (PortableServer,
-           Default_Policy_Validator,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_POA_Default_Policy_Validator::TAO_POA_Default_Policy_Validator (

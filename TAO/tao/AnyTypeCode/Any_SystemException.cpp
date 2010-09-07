@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/Any_SystemException.h"
@@ -12,11 +13,6 @@
 #include "tao/SystemException.h"
 
 #include "ace/Auto_Ptr.h"
-
-ACE_RCSID (AnyTypeCode,
-           Any_SystemException,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,14 +1,11 @@
 // $Id$
 
 #include "tao/Messaging/Asynch_Reply_Dispatcher.h"
-
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Transport.h"
-
-ACE_RCSID(Messaging, Asynch_Reply_Dispatcher, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

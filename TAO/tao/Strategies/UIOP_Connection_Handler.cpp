@@ -18,10 +18,6 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Protocols_Hooks.h"
 
-ACE_RCSID (Strategies,
-           UIOP_Connection_Handler,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (ACE_Thread_Manager *t)

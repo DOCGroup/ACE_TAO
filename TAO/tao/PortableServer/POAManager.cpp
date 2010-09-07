@@ -12,10 +12,6 @@
 # include "tao/PortableServer/POAManager.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (PortableServer,
-           POAManager,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_POA_Manager::TAO_POA_Manager (

@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/PortableServer/POAManagerFactory.h"
@@ -5,10 +6,6 @@
 
 #include "ace/OS_NS_string.h"
 #include "ace/CORBA_macros.h"
-
-ACE_RCSID (PortableServer,
-           POAManagerFactory,
-           "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 

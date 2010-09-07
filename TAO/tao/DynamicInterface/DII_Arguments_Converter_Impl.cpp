@@ -7,10 +7,6 @@
 #include "tao/SystemException.h"
 #include "tao/CDR.h"
 
-ACE_RCSID (DynamicInterface,
-           DII_Arguments_Converter_Impl,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void

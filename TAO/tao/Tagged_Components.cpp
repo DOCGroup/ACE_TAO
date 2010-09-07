@@ -9,11 +9,6 @@
 
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (tao,
-           Tagged_Components,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void

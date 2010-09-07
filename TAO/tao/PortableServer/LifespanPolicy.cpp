@@ -1,9 +1,8 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/PortableServer/LifespanPolicy.h"
 #include "tao/PortableServer/PortableServer.h"
-
-ACE_RCSID (PortableServer,
-           LifespanPolicy,
-           "$Id$")
 
 #include "ace/CORBA_macros.h"
 

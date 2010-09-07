@@ -2,10 +2,6 @@
 
 #include "tao/PortableServer/ImR_Client_Adapter.h"
 
-ACE_RCSID (tao,
-           ImR_Client_Adapter,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

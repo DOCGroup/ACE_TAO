@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/default_resource.h"
@@ -26,10 +27,6 @@
 #include "ace/Local_Memory_Pool.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
-
-ACE_RCSID (tao,
-           default_resource,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

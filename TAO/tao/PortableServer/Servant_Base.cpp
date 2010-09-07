@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/PortableServer/Servant_Base.h"
@@ -16,10 +17,6 @@
 #include "ace/OS_NS_string.h"
 
 //@@ TAO_SERVANT_BASE_INCLUDE_ADD_HOOK
-
-ACE_RCSID (PortableServer,
-           Servant_Base,
-           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/Servant_Base.inl"

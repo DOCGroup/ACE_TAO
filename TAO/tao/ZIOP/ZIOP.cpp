@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/ZIOP/ZIOP_ORBInitializer.h"
 #include "tao/ZIOP/ZIOP_Policy_Validator.h"
 #include "tao/ZIOP/ZIOP.h"
@@ -7,10 +9,6 @@
 #include "tao/operation_details.h"
 #include "tao/Stub.h"
 #include "tao/Transport.h"
-
-ACE_RCSID (ZIOP,
-           ZIOP,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

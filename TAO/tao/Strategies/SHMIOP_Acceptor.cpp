@@ -15,10 +15,6 @@
 #include "ace/os_include/os_netdb.h"
 #include "ace/OS_NS_ctype.h"
 
-ACE_RCSID (Strategies,
-           SHMIOP_Acceptor,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SHMIOP_Acceptor::TAO_SHMIOP_Acceptor (void)

@@ -3,10 +3,6 @@
 
 #include "tao/Messaging/ExceptionHolder_i.h"
 
-ACE_RCSID (Messaging,
-           ExceptionHolder_i,
-           "$Id$")
-
 #include "tao/Messaging/Messaging.h"
 #include "tao/Exception_Data.h"
 #include "tao/CDR.h"

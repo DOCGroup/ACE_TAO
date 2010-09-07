@@ -20,10 +20,6 @@
 #include "tao/PI/PICurrent.h"
 #include "tao/PI/PICurrent_Impl.h"
 
-ACE_RCSID (tao,
-           TAO_RequestInterceptorAdapter_Impl,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RequestInterceptor_Adapter_Impl::~TAO_RequestInterceptor_Adapter_Impl (void)

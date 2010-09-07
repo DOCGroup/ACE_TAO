@@ -10,10 +10,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (tao,
-           ProcessingModePolicy,
-           "$Id$")
-
 // Should this all be wrapped in #if (TAO_HAS_MINIMUM_POA == 0)?
 
 TAO_ProcessingModePolicy::TAO_ProcessingModePolicy

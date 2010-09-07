@@ -1,8 +1,6 @@
-#include "tao/Compression/Compressor_Factory.h"
+// $Id$
 
-ACE_RCSID (Compression,
-           Compressor_Factory,
-           "$Id$")
+#include "tao/Compression/Compressor_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -10,10 +10,6 @@
 # include "tao/GIOP_Message_State.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           GIOP_Message_State,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int

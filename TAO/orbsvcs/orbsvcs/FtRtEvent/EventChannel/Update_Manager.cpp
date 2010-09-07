@@ -1,6 +1,7 @@
 // $Id$
 
 #include "orbsvcs/FtRtEvent/EventChannel/Update_Manager.h"
+#include "ace/Guard_T.h"
 
 ACE_RCSID (EventChannel,
            Update_Manager,

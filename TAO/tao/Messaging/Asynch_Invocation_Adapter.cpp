@@ -1,4 +1,6 @@
-//$Id$
+// -*- C++ -*-
+// $Id$
+
 #include "tao/Messaging/Asynch_Invocation_Adapter.h"
 #include "tao/Messaging/Asynch_Reply_Dispatcher.h"
 #include "tao/Messaging/Asynch_Invocation.h"
@@ -14,12 +16,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/GIOP_Utils.h"
-
-
-ACE_RCSID (Messaging,
-           Asynch_Invocation_Adapter,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

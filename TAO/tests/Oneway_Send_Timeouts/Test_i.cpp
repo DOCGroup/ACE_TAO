@@ -67,7 +67,7 @@ void
 Test_i::dummy_one_way (const char* msg)
 {
   if (msg != 0) {
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Test_i::dummy_one_way> %.25s\n", msg));
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Test_i::dummy_one_way> %.25C\n", msg));
   }
   // do nothing
 }

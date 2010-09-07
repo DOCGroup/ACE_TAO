@@ -8,11 +8,6 @@
 # include "tao/Policy_Manager.inl"
 #endif /* ! __ACE_INLINE__ */
 
-
-ACE_RCSID (tao,
-           Policy_Manager,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::PolicyList *

@@ -17,10 +17,6 @@
 #include "tao/ORB_Constants.h"
 #include "tao/PI/PI.h"
 
-ACE_RCSID (Transport_Current,
-           IIOP_Current_Loader,
-           "$Id$")
-
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 
 #include "tao/TransportCurrent/Current_ORBInitializer.h"

@@ -14,10 +14,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (tao,
-           DLL_Parser,
-           "$Id$")
-
 static const char dll_prefix[] = "DLL:";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

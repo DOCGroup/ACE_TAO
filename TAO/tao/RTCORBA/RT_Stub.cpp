@@ -10,11 +10,6 @@
 #include "tao/Policy_Manager.h"
 #include "tao/SystemException.h"
 
-ACE_RCSID (RTCORBA,
-           RT_Stub,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_Stub::TAO_RT_Stub (const char *repository_id,

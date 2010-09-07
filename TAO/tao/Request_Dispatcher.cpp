@@ -4,10 +4,6 @@
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (tao,
-           Request_Dispatcher,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Request_Dispatcher::~TAO_Request_Dispatcher (void)

@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h"
@@ -5,10 +6,6 @@
 #include "tao/AnyTypeCode/WrongTransactionA.h"
 #include "tao/AnyTypeCode/PolicyA.h"
 #include "tao/AnyTypeCode/Any.h"
-
-ACE_RCSID (AnyTypeCode,
-           TAO_AnyTypeCode_Adapter,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

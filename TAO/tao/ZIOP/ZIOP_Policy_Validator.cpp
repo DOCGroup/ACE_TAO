@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/ZIOP/ZIOP_Policy_Validator.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -5,10 +7,6 @@
 #include "tao/ZIOP/ZIOP_Policy_i.h"
 #include "tao/Policy_Set.h"
 #include "tao/ORB_Core.h"
-
-ACE_RCSID (ZIOP_GIOP,
-           ZIOPPolicy_Validator,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

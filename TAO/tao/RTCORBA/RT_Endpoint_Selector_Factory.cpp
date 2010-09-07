@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/RTCORBA/RT_Endpoint_Selector_Factory.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -9,14 +11,6 @@
 #include "tao/Protocols_Hooks.h"
 
 #include "ace/Log_Msg.h"
-
-
-ACE_RCSID (RTCORBA,
-           RT_Endpoint_Selector_Factory,
-           "$Id$")
-
-
-// ****************************************************************
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -7,10 +7,6 @@
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/debug.h"
 
-ACE_RCSID(tao,
-          Wait_On_LF_No_Upcall,
-          "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Transport;

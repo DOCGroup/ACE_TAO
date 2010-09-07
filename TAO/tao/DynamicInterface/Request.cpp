@@ -1,11 +1,6 @@
 // $Id$
 
 #include "tao/DynamicInterface/Request.h"
-
-ACE_RCSID (DynamicInterface,
-           Request,
-           "$Id$")
-
 #include "tao/DynamicInterface/DII_Invocation_Adapter.h"
 #include "tao/DynamicInterface/DII_Arguments.h"
 #include "tao/DynamicInterface/Context.h"

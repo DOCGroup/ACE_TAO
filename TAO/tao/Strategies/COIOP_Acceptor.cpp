@@ -16,10 +16,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (Strategies,
-           COIOP_Acceptor,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_COIOP_Acceptor::TAO_COIOP_Acceptor (void)

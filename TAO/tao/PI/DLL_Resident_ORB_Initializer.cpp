@@ -11,10 +11,6 @@
 
 #include "tao/PI/DLL_Resident_ORB_Initializer.h"
 
-ACE_RCSID (TAO,
-           DLL_Resident_ORBInitializer,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 PortableInterceptor::DLL_Resident_ORB_Initializer::DLL_Resident_ORB_Initializer (

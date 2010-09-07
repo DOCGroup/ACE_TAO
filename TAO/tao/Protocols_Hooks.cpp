@@ -3,10 +3,6 @@
 #include "tao/Protocols_Hooks.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (tao,
-           Protocols_Hooks,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IIOP_Protocol_Properties::TAO_IIOP_Protocol_Properties (void)

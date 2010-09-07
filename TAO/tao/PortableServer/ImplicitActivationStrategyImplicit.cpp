@@ -1,10 +1,6 @@
-// -*- C++ -*-
+// $Id$
 
 #include "tao/PortableServer/ImplicitActivationStrategyImplicit.h"
-
-ACE_RCSID (PortableServer,
-           ImplicitActivationStrategyImplicit,
-           "$Id$")
 
 #if !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
 

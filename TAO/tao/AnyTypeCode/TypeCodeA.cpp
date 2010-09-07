@@ -1,13 +1,8 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
-
-
-ACE_RCSID (AnyTypeCode,
-           TypeCode,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,7 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 #include "tao/Strategies/DIOP_Endpoint.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
@@ -12,12 +11,6 @@
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-
-
-ACE_RCSID (Strategies,
-           DIOP_Endpoint,
-           "$Id$")
-
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Strategies/DIOP_Endpoint.inl"

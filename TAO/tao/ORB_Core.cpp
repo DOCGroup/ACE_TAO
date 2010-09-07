@@ -82,10 +82,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (tao,
-           ORB_Core,
-           "$Id$")
-
 ACE_STATIC_SVC_DEFINE(TAO_ORB_Core_Static_Resources,
                       ACE_TEXT ("TAO_ORB_Core_Static_Resources"),
                       ACE_SVC_OBJ_T,

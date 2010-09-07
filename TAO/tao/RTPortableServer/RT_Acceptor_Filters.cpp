@@ -8,11 +8,6 @@
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
 
-ACE_RCSID (RTPortableServer,
-           RT_Acceptor_Filter,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Server_Protocol_Acceptor_Filter::TAO_Server_Protocol_Acceptor_Filter (

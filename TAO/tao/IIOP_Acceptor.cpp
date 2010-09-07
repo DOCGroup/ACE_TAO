@@ -1,3 +1,5 @@
+// $Id$
+
 /*
  * Hook to copy all include and forward declarations.
  */
@@ -22,10 +24,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
-
-ACE_RCSID (tao,
-           IIOP_Acceptor,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

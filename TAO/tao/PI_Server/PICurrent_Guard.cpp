@@ -1,12 +1,9 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/PI_Server/PICurrent_Guard.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-
-
-ACE_RCSID (PortableServer,
-           PICurrent_Guard,
-           "$Id$")
-
 
 #include "tao/ORB_Core.h"
 #include "tao/TAO_Server_Request.h"

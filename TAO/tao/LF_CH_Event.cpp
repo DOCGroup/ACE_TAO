@@ -1,12 +1,10 @@
+// $Id$
+
 #include "tao/LF_CH_Event.h"
 #include "tao/LF_Follower.h"
 #include "tao/debug.h"
 #include "tao/Connection_Handler.h"
 #include "tao/Transport.h"
-
-ACE_RCSID(tao,
-          LF_Invocation_Event,
-          "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

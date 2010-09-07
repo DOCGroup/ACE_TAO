@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/PI_Server/ServerRequestDetails.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -7,10 +10,6 @@
 #endif /* defined INLINE */
 
 #include "tao/SystemException.h"
-
-ACE_RCSID (PI_Server,
-           ServerRequestDetails,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

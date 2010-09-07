@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/IIOP_Transport.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
@@ -16,10 +18,6 @@
 #include "tao/MMAP_Allocator.h"
 
 #include "ace/OS_NS_sys_sendfile.h"
-
-ACE_RCSID (tao,
-           IIOP_Transport,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

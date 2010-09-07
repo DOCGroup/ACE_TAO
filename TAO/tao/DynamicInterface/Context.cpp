@@ -1,13 +1,9 @@
+// $Id$
+
 #include "tao/DynamicInterface/Context.h"
-
-ACE_RCSID (DynamicInterface,
-           Context,
-           "$Id$")
-
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/CORBA_String.h"
 #include "tao/SystemException.h"
-
 #include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)

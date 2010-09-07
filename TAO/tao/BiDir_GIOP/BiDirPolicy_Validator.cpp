@@ -1,11 +1,10 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/BiDir_GIOP/BiDirPolicy_Validator.h"
 #include "tao/BiDir_GIOP/BiDir_Policy_i.h"
 #include "tao/Policy_Set.h"
 #include "tao/ORB_Core.h"
-
-ACE_RCSID (BiDir_GIOP,
-           BiDirPolicy_Validator,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

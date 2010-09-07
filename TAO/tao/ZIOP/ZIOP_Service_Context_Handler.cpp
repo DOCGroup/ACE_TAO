@@ -4,10 +4,6 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-ACE_RCSID (ZIOP,
-           ZIOP_Service_Context_Handler,
-           "$Id$")
-
 #include "tao/CDR.h"
 #include "tao/Transport.h"
 #include "tao/ORB_Core.h"

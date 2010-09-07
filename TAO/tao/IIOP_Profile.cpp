@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/IIOP_Profile.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
@@ -7,14 +10,8 @@
 #include "tao/IIOP_EndpointsC.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
-
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
-
-ACE_RCSID (tao,
-           IIOP_Profile,
-           "$Id$")
-
 #include "ace/os_include/os_netdb.h"
 
 static const char the_prefix[] = "iiop";

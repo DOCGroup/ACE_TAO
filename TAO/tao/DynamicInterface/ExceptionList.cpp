@@ -1,9 +1,6 @@
+// $Id$
+
 #include "tao/DynamicInterface/ExceptionList.h"
-
-ACE_RCSID (DynamicInterface,
-           ExceptionList,
-           "$Id$")
-
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/SystemException.h"
 

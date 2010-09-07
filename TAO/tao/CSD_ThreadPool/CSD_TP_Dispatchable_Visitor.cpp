@@ -2,10 +2,6 @@
 
 #include "tao/CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.h"
 
-ACE_RCSID (CSD_TP,
-           Dispatchable_Visitor,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 # include "tao/CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.inl"
 #endif /* ! __ACE_INLINE__ */

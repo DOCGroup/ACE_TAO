@@ -8,10 +8,6 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (CSD_ThreadPool,
-           TP_Strategy_Factory,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::CSD::TP_Strategy_Factory::TP_Strategy_Factory()

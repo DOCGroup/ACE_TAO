@@ -4,10 +4,6 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-ACE_RCSID (RTCORBA,
-           RT_Thread_Lane_Resources_Manager,
-           "$Id$")
-
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/Acceptor_Registry.h"

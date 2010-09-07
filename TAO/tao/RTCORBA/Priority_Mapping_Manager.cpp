@@ -8,10 +8,6 @@
 #include "tao/RTCORBA/Priority_Mapping_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (RTCORBA,
-           Priority_Mapping_Manager,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Priority_Mapping_Manager::~TAO_Priority_Mapping_Manager (void)

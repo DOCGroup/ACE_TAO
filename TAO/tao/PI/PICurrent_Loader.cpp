@@ -21,10 +21,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
-ACE_RCSID (PI,
-           PICurrent_Loader,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Object_ptr

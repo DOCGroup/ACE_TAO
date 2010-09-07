@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/Service_Context.h"
@@ -8,11 +9,6 @@
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID (tao,
-           Service_Context,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

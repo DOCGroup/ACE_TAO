@@ -1,10 +1,8 @@
+// $Id$
+
 #include "tao/PI/PICurrent_Impl.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-
-ACE_RCSID (tao,
-           PICurrent,
-           "$Id$")
 
 #include "tao/ORB_Core.h"
 

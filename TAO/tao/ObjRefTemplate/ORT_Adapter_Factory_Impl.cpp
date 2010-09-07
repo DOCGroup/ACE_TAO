@@ -4,10 +4,6 @@
 #include "tao/ObjRefTemplate/ORT_Adapter_Impl.h"
 #include "tao/PortableServer/Root_POA.h"
 
-ACE_RCSID (ORT,
-           ORT_Adapter_Factory_Impl,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

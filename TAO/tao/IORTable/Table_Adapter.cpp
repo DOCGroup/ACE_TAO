@@ -17,10 +17,6 @@
 #include "tao/Profile.h"
 #include "tao/TAO_Server_Request.h"
 
-ACE_RCSID (IORTable,
-           Table_Adapter,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Table_Adapter::TAO_Table_Adapter (TAO_ORB_Core &orb_core)
