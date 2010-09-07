@@ -5,7 +5,7 @@
 #include "tao/LocalObject.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sample_History.h"
-#include "ace/Array.h"
+#include "ace/Containers_T.h"
 
 namespace CIDL_ReceiverImpl
 {

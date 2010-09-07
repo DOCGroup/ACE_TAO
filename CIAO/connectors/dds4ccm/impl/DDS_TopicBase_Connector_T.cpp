@@ -118,7 +118,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::key_fields (void)
      if (ptr->is_member_key (i, ex))
      {
        const char* name = ptr->member_name (i, ex);
-       printf ("Name: %s\n", name);
+       ACE_OS::printf ("Name: %s\n", name);
      }
     }
  */

@@ -1,0 +1,24 @@
+Sun Sep  5 18:17:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/DAnCE/DAnCE_Properties.idl:
+          Doxygen changes
+
+        * DAnCE/DAnCE/DAnCE_Utility.h:
+          Doxygen and layout changes
+
+        * DAnCE/LocalityManager/Configuration/CPU_Affinity.cpp:
+        * DAnCE/LocalityManager/Configuration/Process_Name.cpp:
+          Const changes
+
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+          Initialise pointer with 0
+
+Sat Sep 04 11:30:18 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 0.8.2 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

@@ -81,8 +81,8 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
                           ACE_TEXT ("Received datum for <%C> at %u\n"),
                           data.key.in (),
                           data.x));
-    //one of the data must have the key 'KEY_1' with x == 1
-    if (strcmp (data.key.in(), "KEY_1") == 0 && data.x == 1L)
+    // One of the data must have the key 'KEY_1' with x == 1
+    if (ACE_OS::strcmp (data.key.in(), "KEY_1") == 0 && data.x == 1L)
       {
         this->create_data_ = true;
       }
@@ -126,8 +126,8 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
                               i,
                               data[i].key.in (),
                               data[i].x));
-        //one of the data must have the key 'KEY_1' with x == 2
-        if (strcmp(data[i].key,"KEY_1") == 0 && data[i].x == 2L)
+        // one of the data must have the key 'KEY_1' with x == 2
+        if (ACE_OS::strcmp(data[i].key,"KEY_1") == 0 && data[i].x == 2L)
           {
             this->update_data_ = true;
           }

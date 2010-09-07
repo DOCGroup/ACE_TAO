@@ -1,15 +1,44 @@
+Tue Sep  7 10:52:59 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/ChangeLog:
+        * DAnCE/ChangeLogs:
+          Give DAnCE its own changelog
+
+        * PROBLEM-REPORT-FORM:
+        * VERSION:
+          Updated email addresses for obtaining support
+
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+          Layout changes
+
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+          Removed return statements that are never reached
+
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+          Use ACE_OS::printf
+
+        * connectors/dds4ccm/impl/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/Publisher_T.h:
+          Layout changes
+
+        * connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver_exec.cpp:
+        * connectors/ami4ccm/tests/InterInOutArgs/Receiver/InterInOutT_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp:
+          Use ACE_OS
+
 Sat Sep 04 11:30:18 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* CIAO version 0.8.2 released.
+        * CIAO version 0.8.2 released.
 
 Thu Sep  2 21:17:35 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/docs/LocalityManager-Plugins.txt:
         * NEWS:
-        
-          Added documentation on how LocalityManager plugins are 
-          created and loaded. 
-        
+
+          Added documentation on how LocalityManager plugins are
+          created and loaded.
+
 Thu Sep  2 16:28:56 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * NEWS:

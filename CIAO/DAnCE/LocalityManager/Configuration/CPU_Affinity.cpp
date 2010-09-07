@@ -52,7 +52,7 @@ namespace DAnCE
     ACE_Tokenizer_T<char> tokenizer(affinity);
     tokenizer.delimiter (',');
       
-    char *token;
+    char *token = 0;
     cpu_set_t mask;
     
     CPU_ZERO (&mask);
@@ -79,7 +79,7 @@ namespace DAnCE
           }
       }
     
-    pid_t pid = ACE_OS::getpid ();
+    pid_t const pid = ACE_OS::getpid ();
 
     int retval = ::sched_setaffinity (pid,
                                       sizeof (cpu_set_t),

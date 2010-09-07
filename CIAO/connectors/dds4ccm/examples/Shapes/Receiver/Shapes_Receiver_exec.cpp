@@ -124,7 +124,7 @@ namespace CIAO_Shapes_Receiver_Impl
       {
         this->reader_->read_one_last (shape_info, readinfo, ::DDS::HANDLE_NIL);
         time_t tim = readinfo.source_timestamp.sec;
-        tm* time = localtime(&tim);
+        tm* time = ACE_OS::localtime(&tim);
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ONE Read_Info ")
                   ACE_TEXT (" -> date = %02d:%02d:%02d.%d\n"),
                             time->tm_hour,

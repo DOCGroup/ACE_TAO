@@ -60,8 +60,7 @@ namespace DAnCE
     else
       arg = reinterpret_cast<unsigned long> (pname.in ());
 
-    int retval = ::prctl (PR_SET_NAME,
-                          arg);
+    int const retval = ::prctl (PR_SET_NAME, arg);
     
     if (retval != 0)
       {

@@ -454,7 +454,7 @@ namespace DAnCE
     if (ACE_OS::strstr (baseLocation, "http://"))
       {
         //TODO: how can I incorporate a Auto_Ptr is explicit release is needed
-        ACE_Message_Block* mb;
+        ACE_Message_Block* mb = 0;
         ACE_NEW_THROW_EX (mb, ACE_Message_Block (), CORBA::NO_MEMORY ());
 
         //get the remote file

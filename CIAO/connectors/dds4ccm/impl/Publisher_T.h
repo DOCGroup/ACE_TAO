@@ -64,12 +64,12 @@ namespace CIAO
                                                  ::DDS::DataWriterListener_ptr a_listener,
                                                  ::DDS::StatusMask mask);
 
-      virtual
-        ::DDS::DataWriter_ptr create_datawriter_with_profile (::DDS::Topic_ptr a_topic,
-        const char* library_name,
-        const char *profile_name,
-                                                 ::DDS::DataWriterListener_ptr a_listener,
-                                                 ::DDS::StatusMask mask);
+      virtual ::DDS::DataWriter_ptr create_datawriter_with_profile (
+          ::DDS::Topic_ptr a_topic,
+          const char* library_name,
+          const char *profile_name,
+          ::DDS::DataWriterListener_ptr a_listener,
+          ::DDS::StatusMask mask);
 
       virtual
         ::DDS::ReturnCode_t delete_datawriter (::DDS::DataWriter_ptr a_datawriter);
