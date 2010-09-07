@@ -9,6 +9,8 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "ace/CORBA_macros.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_BiDirGIOP_Loader::TAO_BiDirGIOP_Loader (void)
   : initialized_ (false)
 {

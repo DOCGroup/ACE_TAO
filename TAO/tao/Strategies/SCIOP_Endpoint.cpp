@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/Strategies/SCIOP_Endpoint.h"
 
 #if TAO_HAS_SCIOP == 1
