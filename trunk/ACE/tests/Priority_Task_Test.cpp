@@ -24,8 +24,6 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(tests, Priority_Task_Test, "$Id$")
-
 static const ACE_TCHAR *usage = ACE_TEXT ("usage: %s [-d]\n");
 
 #if defined (ACE_HAS_THREADS)

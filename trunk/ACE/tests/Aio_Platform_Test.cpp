@@ -21,8 +21,6 @@
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Aio_Platform_Test, "$Id$")
-
 #if defined (_POSIX_ASYNCHRONOUS_IO)
 static int do_sysconf (void)
 {

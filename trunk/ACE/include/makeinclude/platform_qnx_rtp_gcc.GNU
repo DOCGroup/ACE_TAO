@@ -1,6 +1,6 @@
 # $Id$
 #
-# QNX/RTP hosted, using gcc-2.95.2
+# QNX/RTP hosted, using GCC
 
 inline ?= 1
 debug ?= 1
@@ -43,3 +43,6 @@ PRELIB  = @true
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
+
+CFLAGS  += $(FLAGS_C_CC)
+CCFLAGS += $(FLAGS_C_CC) 

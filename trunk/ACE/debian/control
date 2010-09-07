@@ -3,7 +3,7 @@ Section: devel
 Priority: optional
 Maintainer: Debian ACE+TAO maintainers <pkg-ace-devel@lists.alioth.debian.org>
 Uploaders: Thomas Girard <thomas.g.girard@free.fr>, Pau Garcia i Quiles <pgquiles@elpauer.org>
-Build-Depends: debhelper (>= 5), libssl-dev (>= 0.9.7d), dpatch (>= 2.0.10), libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), libqt4-dev (>= 4.4~rc1-4), tk-dev (>= 8.4.7), libfox-1.6-dev, zlib1g-dev, libzzip-dev, docbook-to-man, bzip2, autoconf, automake, libtool, autotools-dev, doxygen, graphviz
+Build-Depends: debhelper (>= 5), libssl-dev (>= 0.9.7d), dpatch (>= 2.0.10), libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), libqt4-dev (>= 4.4~rc1-4), tk-dev (>= 8.4.7), zlib1g-dev, docbook-to-man, bzip2, autoconf, automake, libtool, autotools-dev, doxygen, graphviz
 Standards-Version: 3.8.4
 Vcs-Svn: svn://svn.debian.org/svn/pkg-ace/trunk
 Vcs-Browser: http://svn.debian.org/wsvn/pkg-ace/trunk
@@ -54,7 +54,7 @@ Architecture: any
 Section: libdevel
 Depends: libace-5.8.2 (= ${binary:Version}), ${misc:Depends}
 Suggests: libace-doc, libtao-dev, pkg-config
-Replaces: mpc-ace (<< 5.6.3-4)
+#Replaces: mpc-ace (<< 5.6.3-4)
 Description: C++ network programming framework development files
  This package contains the header files and static library for the ACE
  framework.
@@ -107,9 +107,9 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: ACE transactional multicast library
- The TMCast library is a transaction multicast protocol implementation. 
+ The TMCast library is a transaction multicast protocol implementation.
  .
- Each message is delivered to multicast group members as a transaction: 
+ Each message is delivered to multicast group members as a transaction:
  an atomic, consistent and isolated action.
 
 Package: libace-tmcast-dev
@@ -308,7 +308,7 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: ACE based CORBA ORB core libraries
- The ACE ORB (TAO) is an open-source Common Object Request Broker 
+ The ACE ORB (TAO) is an open-source Common Object Request Broker
  Architecture (CORBA) 2.x-compliant Object Request Broker (ORB).  It
  supports real-time extensions.
  .

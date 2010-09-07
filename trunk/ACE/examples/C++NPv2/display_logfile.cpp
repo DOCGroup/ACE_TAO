@@ -223,7 +223,7 @@ public:
 
   virtual int svc () {
     int stop = 0;
-    for (ACE_Message_Block *mb; !stop && getq (mb) != -1; ) {
+    for (ACE_Message_Block *mb = 0; !stop && getq (mb) != -1; ) {
       if (mb->msg_type () == ACE_Message_Block::MB_STOP)
         stop = 1;
       else

@@ -2,7 +2,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include "ace/Array.h"
+#include "ace/Containers_T.h"
 #include "ace/Reactor.h"
 #include "ace/INet/HTTP_URL.h"
 #include "ace/INet/HTTP_ClientRequestHandler.h"

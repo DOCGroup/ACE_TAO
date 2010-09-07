@@ -47,10 +47,6 @@
 #include "ace/Thread_Semaphore.h"
 #include "ace/TSS_Adapter.h"
 
-// Include the templates here.
-// FUZZ: disable check_for_synch_include
-#include "ace/Synch_T.h"
-
 #if defined (ACE_LEGACY_MODE)
 # include "ace/File_Lock.h"
 # include "ace/Process_Semaphore.h"

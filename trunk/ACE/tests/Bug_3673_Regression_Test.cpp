@@ -11,10 +11,6 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (tests,
-           Bug_3673_Regression_Test,
-           "$Id$")
-
 static bool construct_alpha = false;
 static bool destruct_alpha = false;
 static bool construct_beta = false;

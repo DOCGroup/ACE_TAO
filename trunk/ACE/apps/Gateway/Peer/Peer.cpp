@@ -116,7 +116,7 @@ Peer_Handler::transmit_stdin (void)
   int result = 0;
   if (this->connection_id_ != -1)
     {
-      ACE_Message_Block *mb;
+      ACE_Message_Block *mb = 0;
 
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (sizeof (Event)),
@@ -551,7 +551,7 @@ Peer_Handler::await_connection_id (void)
 int
 Peer_Handler::subscribe (void)
 {
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
 
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (sizeof (Event)),

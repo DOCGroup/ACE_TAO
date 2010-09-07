@@ -9,7 +9,7 @@
 INSTALL := install -o root -g root
 INSTALL_755 := $(INSTALL) -m 755
 ACE_SUBDIR := ACE_wrappers
-ACE_ARCHIVE := $(shell ls -1 ACE+TAO+CIAO-src-*.tar.bz2 2>/dev/null || echo ace-archive-missing)
+ACE_ARCHIVE := $(shell ls -1 ACE+TAO+CIAO-src-*.tar.gz 2>/dev/null || echo ace-archive-missing)
 MPC_SUBDIR := MPC
 MPC_ARCHIVE := $(shell ls -1 MPC*.tar.gz 2>/dev/null || echo mpc-archive-missing)
 MWCFLAGS := -type gnuace -features "ssl=1,zlib=1,zzip=1,xt=1,tk=1,fl=1,fox=1,qt4=1,exceptions=1,ace_qt4reactor=1" -noreldefs -genins
@@ -87,7 +87,7 @@ pl-stamp: extract-stamp
 	for fn in `find "$(ACE_ROOT)" -name "*.pl"`; do (echo '#!/usr/bin/perl'; cat "$$fn") > "$${fn}T"; mv "$${fn}T" "$$fn"; chmod a+x "$$fn"; done
 	touch $@
 
-patch-stamp: prepatch pl-stamp 
+patch-stamp: prepatch pl-stamp
 	dpatch apply-all
 	touch $@
 
@@ -104,8 +104,8 @@ manpages-stamp: $(MAN1) $(MAN5)
 
 doxygen-stamp: extract-stamp
 	cd $(ACE_ROOT) && bin/generate_doxygen.pl -is_release
-	find $(ACE_ROOT)/html/ace $(DOXYGEN_FILES_TO_REMOVE) | xargs -r rm -f
-	find $(ACE_ROOT)/html/tao $(DOXYGEN_FILES_TO_REMOVE) | xargs -r rm -f
+	find $(ACE_ROOT)/html/libace-doc $(DOXYGEN_FILES_TO_REMOVE) | xargs -r rm -f
+	find $(ACE_ROOT)/html/libtao-doc $(DOXYGEN_FILES_TO_REMOVE) | xargs -r rm -f
 	touch $@
 
 doxygen: doxygen-stamp
@@ -118,6 +118,7 @@ build-stamp: patch-stamp
 
 clean:
 	dh_testdir
+	dh_testroot
 	rm -rf $(ACE_SUBDIR) $(MPC_SUBDIR) debian/patched $(MAN1) $(MAN5) *-stamp debian/mpc-ace.sgml
 	dh_clean
 
@@ -132,14 +133,14 @@ install: build
 	cd $(TAO_ROOT) &&  ../bin/mwc.pl $(MWCFLAGS) TAO-DPKG.mwc
 #	Install ACE files in $(CURDIR)/$(DT)
 	echo Installing..
-	cd $(ACE_ROOT) && MPC/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) ace 
-	cd $(ACE_ROOT) && MPC/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) apps 
-	cd $(ACE_ROOT) && MPC/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) ACEXML  
+	cd $(ACE_ROOT) && MPC/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) ace
+	cd $(ACE_ROOT) && MPC/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) apps
+	cd $(ACE_ROOT) && MPC/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) ACEXML
 	cd $(ACE_ROOT) && MPC/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) Kokyu
 	cd $(ACE_ROOT)/protocols && ../MPC/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) ace
 
 #	Install TAO files in $(CURDIR)/$(DT)
-	cd $(TAO_ROOT) && ../MPC/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) tao 
+	cd $(TAO_ROOT) && ../MPC/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) tao
 	cd $(TAO_ROOT) && ../MPC/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) orbsvcs
 	cd $(TAO_ROOT) && ../MPC/prj_install.pl -k -s man_files,exe_output,lib_output  -b exe_output=usr/bin -b man_files=usr/share/man -b lib_output=usr/lib  $(CURDIR)/$(DT) TAO_IDL
 	cd $(TAO_ROOT) && ../MPC/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) utils
@@ -156,7 +157,7 @@ install: build
 	cd $(CURDIR)/$(DT)/usr/share/man && find . -iname *.1 -exec mv {}  man1 ';' && rm -rf apps
 
 #	Move orbsvcs files from include/tao/orbsvcs into include/orbsvcs
-	cd $(CURDIR)/$(DT)/usr/include/orbsvcs && mv -f orbsvcs/* . && rm -rf orbsvcs  
+	cd $(CURDIR)/$(DT)/usr/include/orbsvcs && mv -f orbsvcs/* . && rm -rf orbsvcs
 
 #	We provide scripts replacement for tao_idl and tao_ifr ; they
 #	automatically define ACE_ROOT and TAO_ROOT
@@ -168,8 +169,6 @@ install: build
 #       Install mpc scripts
 	$(INSTALL_755) -D $(ACE_ROOT)/bin/mpc.pl $(DT)/usr/bin/mpc-ace
 	$(INSTALL_755) -D $(ACE_ROOT)/bin/mwc.pl $(DT)/usr/bin/mwc-ace
-
-	rm -f $(ACE_SUBDIR)/MPC/config/.cvsignore
 
 #	Be lintian clean, fix permissions on examples
 #       But find returns nothing..

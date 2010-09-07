@@ -14,8 +14,8 @@ Static_Log_Message_Receiver<ACE_SYNCH_USE>::log_record (const ACE_TCHAR *hostnam
                                                         ACE_Log_Record &record)
 {
 #if defined (ACE_HAS_THREADS)
-    static ACE_SYNCH_MUTEX_T lock_;
-    ACE_GUARD (ACE_SYNCH_MUTEX_T, guard, lock_);
+  static ACE_SYNCH_MUTEX_T lock_;
+  ACE_GUARD (ACE_SYNCH_MUTEX_T, guard, lock_);
 #endif /* ACE_HAS_THREADS */
 
   record.print (hostname,
@@ -68,15 +68,10 @@ Log_Message_Receiver_Impl<ACE_SYNCH_USE>::attach (Log_Message_Receiver_Impl<ACE_
 
 #if defined (ACE_HAS_THREADS)
 #  if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  Guard guard (copy_lock_);
-  if (guard.locked () == 0)
-    return 0;
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, guard, copy_lock_, 0);
 #  else
   // Use the "body"s print lock as copy lock.
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
-                    guard,
-                    global_copy_lock_,
-                    0);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, global_copy_lock_, 0);
 #  endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 #endif /* ACE_HAS_THREADS */
   ++body->count_;
@@ -90,14 +85,10 @@ Log_Message_Receiver_Impl<ACE_SYNCH_USE>::detach (Log_Message_Receiver_Impl<ACE_
 
 #if defined (ACE_HAS_THREADS)
 #  if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  Guard guard (copy_lock_);
-  if (guard.locked () == 0)
-    return;
+  ACE_GUARD (ACE_SYNCH_MUTEX_T, guard, copy_lock_);
 #  else
   // Use the "body"s print lock as copy lock.
-  ACE_GUARD (ACE_SYNCH_MUTEX,
-             guard,
-             global_copy_lock_);
+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, global_copy_lock_);
 #  endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 #endif /* ACE_HAS_THREADS */
   if (body->count_-- == 0)
@@ -109,7 +100,7 @@ template<ACE_SYNCH_DECL> void
 Log_Message_Receiver_Impl<ACE_SYNCH_USE>::log_record (const ACE_TCHAR *hostname,
                                                       ACE_Log_Record &record)
 {
-  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX_T, guard, print_lock_));
+  ACE_GUARD (ACE_SYNCH_MUTEX_T, guard, print_lock_);
   record.print (hostname,
                 ACE_Log_Msg::instance ()->flags (),
                 stderr);
@@ -122,7 +113,7 @@ Log_Message_Receiver_Impl<ACE_SYNCH_USE>::log_output (const ACE_TCHAR *hostname,
 {
   if (outputfile != 0)
     {
-      ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX_T, guard, print_lock_));
+      ACE_GUARD (ACE_SYNCH_MUTEX_T, guard, print_lock_);
       record.print (hostname,
                     ACE_Log_Msg::instance ()->flags (),
                     *outputfile);

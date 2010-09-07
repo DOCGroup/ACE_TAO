@@ -26,8 +26,6 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Synch_Traits.h"
 
-ACE_RCSID(tests, Svc_Handler_Test, "$Id$")
-
 typedef ACE_Buffered_Svc_Handler <ACE_FILE_STREAM, ACE_NULL_SYNCH> SVC_HANDLER;
 
 static void

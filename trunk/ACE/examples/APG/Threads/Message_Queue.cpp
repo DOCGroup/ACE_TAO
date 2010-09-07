@@ -13,7 +13,7 @@ HA_CommandHandler::svc (void)
 {
   while(1)
     {
-      ACE_Message_Block *mb;
+      ACE_Message_Block *mb = 0;
       if (this->getq (mb) == -1)
         break;
       if (mb->msg_type () == ACE_Message_Block::MB_HANGUP)
@@ -47,7 +47,7 @@ HA_CommandHandler::svc (void)
 ACE_Message_Block *
 Message_Receiver::shut_down_message (void)
 {
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN
     (mb, ACE_Message_Block (0, ACE_Message_Block::MB_HANGUP), 0);
   return mb;
@@ -98,7 +98,7 @@ Message_Receiver::handle_input (ACE_HANDLE)
       return -1;
     }
 
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN
     (mb, ACE_Message_Block (dch.length_ + sizeof dch), -1);
   // Copy the header.

@@ -76,7 +76,7 @@ int CommandStream::open (void *arg,
 // Listing 04 code/ch18
 Command *CommandStream::execute (Command *command)
 {
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN (mb, ACE_Message_Block (command), 0);
   if (this->put (mb) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

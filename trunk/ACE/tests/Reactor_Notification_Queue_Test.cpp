@@ -23,9 +23,6 @@
 #include "ace/Select_Reactor.h"
 #include "ace/WFMO_Reactor.h"
 
-ACE_RCSID(tests,
-          Reactor_Notification_Queue_Test, "$Id$")
-
 class Event_Handler : public ACE_Event_Handler
 {
 public:

@@ -328,24 +328,16 @@ ACE_Message_Queue_Vx::dequeue_deadline_i (ACE_Message_Block *& /*dequeued*/)
 // Take a look at the first item without removing it.
 
 int
-ACE_Message_Queue_Vx::wait_not_full_cond (ACE_Guard<ACE_Null_Mutex> &mon,
-                                          ACE_Time_Value *tv)
+ACE_Message_Queue_Vx::wait_not_full_cond (ACE_Time_Value *)
 {
   // Always return here, and let the VxWorks message queue handle blocking.
-  ACE_UNUSED_ARG (mon);
-  ACE_UNUSED_ARG (tv);
-
   return 0;
 }
 
 int
-ACE_Message_Queue_Vx::wait_not_empty_cond (ACE_Guard<ACE_Null_Mutex> &mon,
-                                           ACE_Time_Value *tv)
+ACE_Message_Queue_Vx::wait_not_empty_cond (ACE_Time_Value *)
 {
   // Always return here, and let the VxWorks message queue handle blocking.
-  ACE_UNUSED_ARG (mon);
-  ACE_UNUSED_ARG (tv);
-
   return 0;
 }
 

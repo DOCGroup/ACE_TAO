@@ -173,9 +173,9 @@ Reader_Task::svc (void)
 
       {
 #if defined (RW_MUTEX)
-        ACE_Read_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
+        ACE_READ_GUARD_RETURN (ACE_RW_Thread_Mutex, g, rw_mutex, 1);
 #else
-        ACE_Guard<ACE_Thread_Mutex> g (mutex);
+        ACE_GUARD (ACE_Thread_Mutex, g, mutex, 1);
 #endif /* RW_MUTEX */
         find_last ();
 #if defined (RW_MUTEX)
@@ -198,9 +198,9 @@ Reader_Task::svc (void)
           || !use_try_upgrade)             // we did not try at all
         {
 #if defined (RW_MUTEX)
-          ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
+          ACE_WRITE_GUARD (ACE_RW_Thread_Mutex, g, rw_mutex, 1);
 #else
-          ACE_Guard<ACE_Thread_Mutex> g (mutex);
+          ACE_GUARD (ACE_Thread_Mutex, g, mutex, 1);
 #endif /* RW_MUTEX */
 
           not_upgraded++;
@@ -245,9 +245,9 @@ Writer_Task::svc (void)
       ACE_Thread::yield ();
 
 #if defined (RW_MUTEX)
-      ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
+      ACE_WRITE_GUARD (ACE_RW_Thread_Mutex, g, rw_mutex, 0);
 #else
-      ACE_Guard<ACE_Thread_Mutex> g (mutex);
+      ACE_GUARD (ACE_Thread_Mutex, g, mutex, 0);
 #endif /* RW_MUTEX */
 
       find_last ();
@@ -267,7 +267,7 @@ Writer_Task::svc (void)
 void
 Time_Calculation::report_time (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time)
 {
-  ACE_Guard<ACE_Thread_Mutex> g (mutex_);
+  ACE_GUARD (ACE_Thread_Mutex, g, mutex_);
 
   this->times_.real_time += elapsed_time.real_time;
   this->times_.user_time += elapsed_time.user_time;

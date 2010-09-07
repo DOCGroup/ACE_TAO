@@ -5,6 +5,7 @@ It is now maintained by:
  Brian Nelson <pyro@debian.org>
  Konstantinos Margaritis <markos@debian.org>
  Thomas Girard <thomas.g.girard@free.fr>
+ Johnny Willemsen <jwillemsen@remedy.nl>
 
 It was downloaded from: <http://download.dre.vanderbilt.edu/>
 
@@ -15,7 +16,7 @@ Copyright: © 1993-2008 Douglas C. Schmidt and his research group at
 License: other-BSD
  Copyright and Licensing Information for ACE(TM), TAO(TM), CIAO(TM), and
  CoSMIC(TM)
- 
+
  [1]ACE(TM), [2]TAO(TM), [3]CIAO(TM), and [4]CoSMIC(TM) (henceforth
  referred to as "DOC software") are copyrighted by [5]Douglas C.
  Schmidt and his [6]research group at [7]Washington University,
@@ -28,7 +29,7 @@ License: other-BSD
  include this copyright statement along with any code built using DOC
  software that you release. No copyright statement needs to be provided
  if you just ship binary executables of your software products.
- 
+
  You can use DOC software in commercial and/or binary software releases
  and are under no obligation to redistribute any of your source code
  that is built using DOC software. Note, however, that you may not do
@@ -39,7 +40,7 @@ License: other-BSD
  software in your software, though we encourage you to let [10]us know
  so we can promote your project in the [11]DOC software success
  stories.
- 
+
  The [12]ACE, [13]TAO, [14]CIAO, and [15]CoSMIC web sites are
  maintained by the [16]DOC Group at the [17]Institute for Software
  Integrated Systems (ISIS) and the [18]Center for Distributed Object
@@ -57,7 +58,7 @@ License: other-BSD
  modification of such Submissions is entirely at the discretion of the
  moderators of the open-source DOC software projects or their
  designees.
- 
+
  Submissions are provided by the submitter ``as is'' with no warranties
  whatsoever, including any warranty of merchantability, noninfringement
  of third party intellectual property, or fitness for any particular
@@ -75,13 +76,13 @@ License: other-BSD
  University, UC Irvine, or Vanderbilt University, their employees, or
  students be liable for any lost revenue or profits or other special,
  indirect and consequential damages.
- 
+
  DOC software is provided with no support and without any obligation on
  the part of Washington University, UC Irvine, Vanderbilt University,
  their employees, or students to assist in its use, correction,
  modification, or enhancement. A [19]number of companies around the
  world provide commercial support for DOC software, however.
- 
+
  DOC software is Y2K-compliant, as long as the underlying OS platform
  is Y2K-compliant. Likewise, DOC software is compliant with the new US
  daylight savings rule passed by Congress as "The Energy Policy Act of
@@ -90,7 +91,7 @@ License: other-BSD
  obtains time/date and calendaring information from operating systems
  users will not be affected by the new DST rules as long as they
  upgrade their operating systems accordingly.
- 
+
  The names ACE(TM), TAO(TM), CIAO(TM), CoSMIC(TM), Washington
  University, UC Irvine, and Vanderbilt University, may not be used to
  endorse or promote products or services derived from this source
@@ -101,15 +102,15 @@ License: other-BSD
  Vanderbilt University appear in their names, without express written
  permission from Washington University, UC Irvine, and Vanderbilt
  University.
- 
+
  If you have any suggestions, additions, comments, or questions, please
  let [20]me know.
- 
+
  [21]Douglas C. Schmidt
   _________________________________________________________________
 
  Back to the [22]ACE home page.
- 
+
  References
   1. http://www.cs.wustl.edu/~schmidt/ACE.html
   2. http://www.cs.wustl.edu/~schmidt/TAO.html
@@ -145,7 +146,7 @@ Copyright: © 2003-2006 OCI. St. Louis MO USA
 License: other-BSD
  MPC (Licensed Product) is protected by copyright, and is distributed under
  the following terms.
- 
+
  MPC (Make, Project and workspace Creator) is an open source tool, developed
  by OCI and written in Perl. It is designed to generate a variety of tool
  specific project files from a common baseline. Through the powerful
@@ -157,44 +158,44 @@ License: other-BSD
  usually experienced by developer groups, by replacing it with a singular
  robust build environment, and an active community of users committed to its
  evolution.
- 
+
  Since MPC is open source and free of licensing fees, you are free to use,
  modify, and distribute the source code, as long as you include this
  copyright statement.
- 
+
  In particular, you can use MPC to build proprietary software and are under
  no obligation to redistribute any of your source code that is built using
  MPC. Note, however, that you may not do anything to the MPC code, such as
  copyrighting it yourself or claiming authorship of the MPC code, that will
  prevent MPC from being distributed freely using an open source development
  model.
- 
+
  Warranty
- 
+
  LICENSED PRODUCT IS PROVIDED AS IS WITH NO WARRANTIES OF ANY KIND INCLUDING
  THE WARRANTIES OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR
  PURPOSE, NON-INFRINGEMENT, OR ARISING FROM A COURSE OF DEALING, USAGE OR
  TRADE PRACTICE.
- 
+
  Support
- 
+
  LICENSED PRODUCT IS PROVIDED WITH NO SUPPORT AND WITHOUT ANY OBLIGATION ON
  THE PART OF OCI OR ANY OF ITS SUBSIDIARIES OR AFFILIATES TO ASSIST IN ITS
  USE, CORRECTION, MODIFICATION OR ENHANCEMENT.
- 
+
  Support may be available from OCI to users who have agreed to a support
  contract.
- 
+
  Liability
- 
+
  OCI OR ANY OF ITS SUBSIDIARIES OR AFFILIATES SHALL HAVE NO LIABILITY WITH
  RESPECT TO THE INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR ANY PATENTS BY
  LICENSED PRODUCT OR ANY PART THEREOF.
- 
+
  IN NO EVENT WILL OCI OR ANY OF ITS SUBSIDIARIES OR AFFILIATES BE LIABLE FOR
  ANY LOST REVENUE OR PROFITS OR OTHER SPECIAL, INDIRECT AND CONSEQUENTIAL
  DAMAGES, EVEN IF OCI HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
- 
+
  MPC copyright OCI. St. Louis MO USA, 2003-2006
 
 Files: ACE_wrappers/contrib/minizip/*.[ch]
@@ -203,11 +204,11 @@ License: ZLIB
  This software is provided 'as-is', without any express or implied
  warranty.  In no event will the authors be held liable for any damages
  arising from the use of this software.
- 
+
  Permission is granted to anyone to use this software for any purpose,
  including commercial applications, and to alter it and redistribute it
  freely, subject to the following restrictions:
- 
+
  1. The origin of this software must not be misrepresented; you must not
     claim that you wrote the original software. If you use this software
     in a product, an acknowledgment in the product documentation would be
@@ -223,27 +224,27 @@ License: other-BSD
  express or implied warranty.  In no event will the author or contributors
  be held liable for any damages arising from the use of this software
  or documentation.
- 
+
  Permission is granted to anyone to use this software or documentation
  for any purpose, including commercial applications, and to alter it and
  redistribute it freely, subject to the following restrictions:
- 
+
  1. The origin of this software or documentation must not be
     misrepresented; you must not claim that you wrote the original
     software or documentation. If you use this software or
     documentation in a product, an acknowledgment in the product
     documentation would be appreciated but is not required.
- 
+
  2. Altered source versions must be plainly marked as such, and must
     not be misrepresented as being the original software or documentation.
     Altered source versions may be contributed back to the author to be
-    integrated into the original software or documentation at the 
+    integrated into the original software or documentation at the
     author's discretion.
- 
+
  3. Neither this notice or reference to it nor any copyright, author or
-    contributor clause may be removed from or altered in any software 
+    contributor clause may be removed from or altered in any software
     source distribution or documentation covered by this license.
- 
+
  4. Neither the name of the author, nor the names of contributors may be
    used to endorse or promote products derived from this software or
    documentation without specific prior written permission.
@@ -255,13 +256,13 @@ Files: ACE_wrappers/TAO/TAO_IDL/*
 Copyright: © 1992-1995 Sun Micosystems, Inc
 License: other
  COPYRIGHT
- 
+
  Copyright 1992, 1993, 1994 Sun Microsystems, Inc.  Printed in the
  United States of America.  All Rights Reserved.
- 
+
  This product is protected by copyright and distributed under the
  following license restricting its use.
- 
+
  The Interface Definition Language Compiler Front End (CFE) is made
  available for your use provided that you include this license and
  copyright notice on all media and documentation and the software
@@ -271,49 +272,49 @@ License: other
  not authorized to license or distribute it to anyone else except as
  part of a product or program developed by you or with the express
  written consent of Sun Microsystems, Inc. ("Sun").
- 
+
  The names of Sun Microsystems, Inc. and any of its subsidiaries or
  affiliates may not be used in advertising or publicity pertaining to
  distribution of Interface Definition Language CFE as permitted herein.
- 
+
  This license is effective until terminated by Sun for failure to
  comply with this license.  Upon termination, you shall destroy or
  return all code and documentation for the Interface Definition
  Language CFE.
- 
+
  INTERFACE DEFINITION LANGUAGE CFE IS PROVIDED AS IS WITH NO WARRANTIES
  OF ANY KIND INCLUDING THE WARRANTIES OF DESIGN, MERCHANTIBILITY AND
  FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT, OR ARISING FROM A
  COURSE OF DEALING, USAGE OR TRADE PRACTICE.
- 
+
  INTERFACE DEFINITION LANGUAGE CFE IS PROVIDED WITH NO SUPPORT AND
  WITHOUT ANY OBLIGATION ON THE PART OF Sun OR ANY OF ITS SUBSIDIARIES
  OR AFFILIATES TO ASSIST IN ITS USE, CORRECTION, MODIFICATION OR
  ENHANCEMENT.
- 
+
  SUN OR ANY OF ITS SUBSIDIARIES OR AFFILIATES SHALL HAVE NO LIABILITY
  WITH RESPECT TO THE INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR ANY
  PATENTS BY INTERFACE DEFINITION LANGUAGE CFE OR ANY PART THEREOF.
- 
+
  IN NO EVENT WILL SUN OR ANY OF ITS SUBSIDIARIES OR AFFILIATES BE
  LIABLE FOR ANY LOST REVENUE OR PROFITS OR OTHER SPECIAL, INDIRECT AND
  CONSEQUENTIAL DAMAGES, EVEN IF SUN HAS BEEN ADVISED OF THE POSSIBILITY
  OF SUCH DAMAGES.
- 
+
  Use, duplication, or disclosure by the government is subject to
  restrictions as set forth in subparagraph (c)(1)(ii) of the Rights in
  Technical Data and Computer Software clause at DFARS 252.227-7013 and
  FAR 52.227-19.
- 
+
  Sun, Sun Microsystems and the Sun logo are trademarks or registered
  trademarks of Sun Microsystems, Inc.
- 
- SunSoft, Inc.  
- 2550 Garcia Avenue 
+
+ SunSoft, Inc.
+ 2550 Garcia Avenue
  Mountain View, California  94043
- 
+
  NOTE:
-  
+
  SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
  trademarks or registered trademarks of Sun Microsystems, Inc.
 
@@ -341,68 +342,68 @@ License: other
  This notice applies to all files in this software distribution that
  were originally derived from SunSoft IIOP code (these files contain
  Sun Microsystems copyright notices).
- 
+
  COPYRIGHT AND LICENSING
  -----------------------
- 
+
  Copyright 1995 Sun Microsystems, Inc.
  Printed in the United States of America.
  All Rights Reserved.
- 
+
  This software product (LICENSED PRODUCT), implementing the Object
  Management Group's "Internet Inter-ORB Protocol", is protected by
  copyright and is distributed under the following license restricting
  its use.  Portions of LICENSED PRODUCT may be protected by one or more
  U.S. or foreign patents, or pending applications.
- 
+
  LICENSED PRODUCT is made available for your use provided that you
  include this license and copyright notice on all media and
  documentation and the software program in which this product is
  incorporated in whole or part.
- 
+
  You may copy, modify, distribute, or sublicense the LICENSED PRODUCT
  without charge as part of a product or software program developed by
  you, so long as you preserve the functionality of interoperating with
  the Object Management Group's "Internet Inter-ORB Protocol" version
  one.  However, any uses other than the foregoing uses shall require
  the express written consent of Sun Microsystems, Inc.
- 
+
  The names of Sun Microsystems, Inc. and any of its subsidiaries or
  affiliates may not be used in advertising or publicity pertaining to
  distribution of the LICENSED PRODUCT as permitted herein.
- 
+
  This license is effective until terminated by Sun for failure to
  comply with this license.  Upon termination, you shall destroy or
  return all code and documentation for the LICENSED PRODUCT.
- 
+
  LICENSED PRODUCT IS PROVIDED AS IS WITH NO WARRANTIES OF ANY KIND
  INCLUDING THE WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS FOR A
  PARTICULAR PURPOSE, NONINFRINGEMENT, OR ARISING FROM A COURSE OF
  DEALING, USAGE OR TRADE PRACTICE.
- 
+
  LICENSED PRODUCT IS PROVIDED WITH NO SUPPORT AND WITHOUT ANY
  OBLIGATION ON THE PART OF SUN OR ANY OF ITS SUBSIDIARIES OR AFFILIATES
  TO ASSIST IN ITS USE, CORRECTION, MODIFICATION OR ENHANCEMENT.
- 
+
  SUN OR ANY OF ITS SUBSIDIARIES OR AFFILIATES SHALL HAVE NO LIABILITY
  WITH RESPECT TO THE INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR ANY
  PATENTS BY LICENSED PRODUCT OR ANY PART THEREOF.
- 
+
  IN NO EVENT WILL SUN OR ANY OF ITS SUBSIDIARIES OR AFFILIATES BE
  LIABLE FOR ANY LOST REVENUE OR PROFITS OR OTHER SPECIAL, INDIRECT AND
  CONSEQUENTIAL DAMAGES, EVEN IF SUN HAS BEEN ADVISED OF THE POSSIBILITY
  OF SUCH DAMAGES.
- 
+
  Use, duplication, or disclosure by the government is subject to
  restrictions as set forth in subparagraph (c)(1)(ii) of the Rights in
  Technical Data and Computer Software clause at DFARS 252.227-7013 and
  FAR 52.227-19.
- 
+
  SunOS, SunSoft, Sun, Solaris, Sun Microsystems and the Sun logo are
  trademarks or registered trademarks of Sun Microsystems, Inc.
- 
- SunSoft, Inc.  
- 2550 Garcia Avenue 
+
+ SunSoft, Inc.
+ 2550 Garcia Avenue
  Mountain View, California  94043
 
 Files: ACE_wrappers/ace/OS_NS_unistd.inl (swab function)
@@ -415,7 +416,7 @@ Files: ACE_wrappers/ace/UTF32_Encoding_Converter.cpp
 Copyright: © 2001-2004 Unicode, Inc.
 License: other
  Limitations on Rights to Redistribute This Code
- 
+
  Unicode, Inc. hereby grants the right to freely use the information
  supplied in this file in the creation of products supporting the
  Unicode Standard, and to make copies of this file in any form
@@ -427,14 +428,14 @@ Copyright: © 2000 James Hu and Entera, Inc.
 License: other
  Copyright and Licensing Information for JAWS Adaptive Web Server,
  version 3 (JAWS3).
- 
+
  JAWS3 is copyrighted by James Hu and Entera, Inc., Copyright (c)
  2000, all rights reserved.  Since JAWS3 is open source, free
  software, you are free to use, modify, and distribute the JAWS3
  source code and object code produced or otherwise derived from
  JAWS3, provided you include this copyright statement in all versions
  of such code.
- 
+
  In particular, you can use JAWS3 in proprietary software and are
  under no obligation to redistribute any of your source code that is
  derived from JAWS3.  Note, however, that you may not modify the
@@ -442,20 +443,20 @@ License: other
  it yourself or claiming authorship of the JAWS3 code, that will
  prevent JAWS3 from being distributed freely using an open source
  development model.
- 
+
  JAWS3 is provided as is with no warranties of any kind, including
  the warranties of design, merchantibility and fitness for a
  particular purpose, noninfringement, or arising from a course of
  dealing, usage or trade practice.  Moreover, JAWS3 is provided with
  no support and without any obligation on the part of Entera, Inc.,
  or its employees.
- 
+
  Entera, Inc., and its employees shall have no liability with respect
  to the infringement of copyrights, trade secrets or any patents by
  JAWS3 or any part thereof.  Moreover, in no event will Entera, Inc.,
  or its employees, be liable for any lost revenue or profits or other
  special, indirect and consequential damages.
- 
+
  By submitting comments, suggestions, code, code snippets, techniques
  (including that of usage), and algorithms, submitters acknowledge
  that they have the right to do so, that any such submissions are
@@ -467,17 +468,17 @@ License: other
  submitters acknowledge that the incorporation or modification of
  such submissions is entirely at the discretion of the moderators of
  the open source JAWS3 project or their designees.
- 
+
  The names JAWS3 and Entera, Inc., may not be used to endorse or
  promote products or services derived from this source without
  express written permission from Entera, Inc.  Further, products or
  services derived from this source may not be called JAWS3 nor may
  the name Entera, Inc., appear in their names, without express
  written permission from Entera, Inc.
- 
+
  If you have any suggestions, additions, comments, or questions,
  please let me know.
- 
+
  James C. Hu
  Entera, Inc.
  jxh@entera.com
@@ -485,20 +486,20 @@ License: other
 Files: ACE_wrappers/apps/JAWS/clients/WebSTONE/*
 Copyright: © 1995 Silicon Graphics, Inc.
 License: other
- This file and all files contained in this directory are 
+ This file and all files contained in this directory are
  copyright 1995, Silicon Graphics, Inc.
- 
- This software is provided without support and without any obligation on the 
- part of Silicon Graphics, Inc. to assist in its use, correction, modification 
- or enhancement. There is no guarantee that this software will be included in 
+
+ This software is provided without support and without any obligation on the
+ part of Silicon Graphics, Inc. to assist in its use, correction, modification
+ or enhancement. There is no guarantee that this software will be included in
  future software releases, and it probably will not be included.
- 
- THIS SOFTWARE IS PROVIDED "AS IS" WITH NO WARRANTIES OF ANY KIND INCLUDING THE 
- WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE, 
- OR ARISING FROM A COURSE OF DEALING, USAGE OR TRADE PRACTICE. 
- 
- In no event will Silicon Graphics, Inc. be liable for any lost revenue or 
- profits or other special, indirect and consequential damages, even if 
+
+ THIS SOFTWARE IS PROVIDED "AS IS" WITH NO WARRANTIES OF ANY KIND INCLUDING THE
+ WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE,
+ OR ARISING FROM A COURSE OF DEALING, USAGE OR TRADE PRACTICE.
+
+ In no event will Silicon Graphics, Inc. be liable for any lost revenue or
+ profits or other special, indirect and consequential damages, even if
  Silicon Graphics, Inc. has been advised of the possibility of such damages.
 
 Files: ACE_wrappers/ASNMP/*
@@ -507,37 +508,37 @@ Copyright: © 1996 Hewlett-Packard Company
            © 1997 Cisco Systems, Inc.
 License: other-BSD
  These copyrights apply to the SNMP++ module shipped with the ACE library:
- 
+
  /*===================================================================
    Copyright (c) 1996
    Hewlett-Packard Company
-   
+
    ATTENTION: USE OF THIS SOFTWARE IS SUBJECT TO THE FOLLOWING TERMS.
-   Permission to use, copy, modify, distribute and/or sell this software 
-   and/or its documentation is hereby granted without fee. User agrees 
-   to display the above copyright notice and this license notice in all 
-   copies of the software and any documentation of the software. User 
-   agrees to assume all liability for the use of the software; Hewlett-Packard 
-   makes no representations about the suitability of this software for any 
-   purpose. It is provided "AS-IS without warranty of any kind,either express 
-   or implied. User hereby grants a royalty-free license to any and all 
-   derivatives based upon this software code base. 
-   
+   Permission to use, copy, modify, distribute and/or sell this software
+   and/or its documentation is hereby granted without fee. User agrees
+   to display the above copyright notice and this license notice in all
+   copies of the software and any documentation of the software. User
+   agrees to assume all liability for the use of the software; Hewlett-Packard
+   makes no representations about the suitability of this software for any
+   purpose. It is provided "AS-IS without warranty of any kind,either express
+   or implied. User hereby grants a royalty-free license to any and all
+   derivatives based upon this software code base.
+
  =====================================================================*/
- 
+
  /**********************************************************************
 	Copyright 1988, 1989, 1991, 1992 by Carnegie Mellon University
- 
+
                       All Rights Reserved
- 
- Permission to use, copy, modify, and distribute this software and its 
- documentation for any purpose and without fee is hereby granted, 
+
+ Permission to use, copy, modify, and distribute this software and its
+ documentation for any purpose and without fee is hereby granted,
  provided that the above copyright notice appear in all copies and that
- both that copyright notice and this permission notice appear in 
+ both that copyright notice and this permission notice appear in
  supporting documentation, and that the name of CMU not be
  used in advertising or publicity pertaining to distribution of the
- software without specific, written prior permission.  
- 
+ software without specific, written prior permission.
+
  CMU DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
  ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL
  CMU BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR
@@ -546,12 +547,12 @@ License: other-BSD
  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
  SOFTWARE.
  ******************************************************************/
- 
+
  Certain portions of this version of HP's SNMP++ are:
- 
+
  /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
  Copyright 1997 Cisco Systems, Inc.
- 
+
  Permission to use, copy, modify, and distribute this software for any
  purpose and without fee is hereby granted, provided that this
  copyright and permission notice appear on all copies of the software and
@@ -560,7 +561,7 @@ License: other-BSD
  program without specific prior permission, and notice be given
  in supporting documentation that modification, copying and distribution is by
  permission of Cisco Systems, Inc.
- 
+
  Cisco Systems, Inc. makes no representations about the suitability of this
  software for any purpose.  THIS SOFTWARE IS PROVIDED ``AS IS''
  AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, WITHOUT
@@ -576,10 +577,10 @@ Copyright: © 1991, 1993 The Regents of the University of California
 License: BSD-4
  Copyright (c) 1991, 1993
       The Regents of the University of California.  All rights reserved.
- 
+
  This code is derived from software contributed to Berkeley by
  James W. Williams of NASA Goddard Space Flight Center.
- 
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
  are met:
@@ -595,7 +596,7 @@ License: BSD-4
  4. Neither the name of the University nor the names of its contributors
     may be used to endorse or promote products derived from this software
     without specific prior written permission.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -614,7 +615,7 @@ Copyright: © 1987, 1993, 1994 The Regents of the University of California
 License: BSD-4
  Copyright (c) 1987, 1993, 1994
       The Regents of the University of California.  All rights reserved.
- 
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
  are met:
@@ -630,7 +631,7 @@ License: BSD-4
  4. Neither the name of the University nor the names of its contributors
     may be used to endorse or promote products derived from this software
     without specific prior written permission.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -642,15 +643,15 @@ License: BSD-4
  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  SUCH DAMAGE.
- 
+
  ******************************************************************
- 
+
  Copyright (c) 2000 The NetBSD Foundation, Inc.
  All rights reserved.
- 
+
  This code is derived from software contributed to The NetBSD Foundation
  by Dieter Baron and Thomas Klausner.
- 
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
  are met:
@@ -666,7 +667,7 @@ License: BSD-4
  4. Neither the name of The NetBSD Foundation nor the names of its
     contributors may be used to endorse or promote products derived
     from this software without specific prior written permission.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
  ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
  TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR

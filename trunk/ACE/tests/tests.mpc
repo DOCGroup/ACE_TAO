@@ -417,6 +417,13 @@ project(Bug_3758_Regression_Test) : acetest {
   }
 }
 
+project(Bug_3878_Regression_Test) : acetest {
+  exename = Bug_3878_Regression_Test
+  Source_Files {
+    Bug_3878_Regression_Test.cpp
+  }
+}
+
 project(Cache Map Manager Test) : acetest {
   exename = Cache_Map_Manager_Test
   Source_Files {
@@ -1908,7 +1915,7 @@ project(Bug_3334_Regression_Test) : acetest {
 }
 
 project(Missing_Svc_Conf_Test) : acetest {
-  exename = Missing_Svc_Conf_Test  
+  exename = Missing_Svc_Conf_Test
   Source_Files {
     Missing_Svc_Conf_Test.cpp
   }

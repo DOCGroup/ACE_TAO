@@ -43,7 +43,6 @@ class ACE_Time_Value;
 class ACE_Export ACE_SOCK_Connector
 {
 public:
-  // = Initialization and termination methods.
   /// Default constructor.
   ACE_SOCK_Connector (void);
 
@@ -249,7 +248,7 @@ public:
                int perms = 0);
 #endif  // ACE_HAS_WINCE
 
-  /// Default dtor.
+  /// Default destructor.
   ~ACE_SOCK_Connector (void);
 
   // = Completion routine.

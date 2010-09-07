@@ -1,6 +1,5 @@
-// file      : ace/RMCast/Fragment.h
+// $Id$
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// cvs-id    : $Id$
 
 #ifndef ACE_RMCAST_FRAGMENT_H
 #define ACE_RMCAST_FRAGMENT_H

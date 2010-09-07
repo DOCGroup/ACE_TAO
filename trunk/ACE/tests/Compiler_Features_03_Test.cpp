@@ -18,8 +18,6 @@
 // does not compile the platform is just too broken.
 #include <vector>
 
-ACE_RCSID(tests, Compiler_Features_03_Test, "$Id$")
-
 int
 run_main (int, ACE_TCHAR *[])
 {

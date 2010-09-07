@@ -114,31 +114,6 @@ endif # ssl
 
 SYSARCH := $(shell uname -m)
 
-ifeq ($(insure),1)
-  CC  = insure
-  CXX = insure
-else
-  ifneq ($(CROSS_COMPILE),)
-    # Build using the cross-tools
-    CC  = ${CROSS_COMPILE}gcc
-    CXX = ${CROSS_COMPILE}g++
-    AR  = ${CROSS_COMPILE}ar
-    # Cross-linker requires this for linked in shared libs that depend
-    # themselves on other shared libs (not directly linked in)
-    LDFLAGS += -Wl,-rpath-link,$(ACE_ROOT)/lib
-    ifneq (,$(HOST_ROOT))
-      TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
-      TAO_IDL = $(HOST_ROOT)/bin/tao_idl
-      TAO_IDL_DEP = $(TAO_IDL)
-      TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/TAO/CIAO/bin/tao_idl3_to_idl2
-      TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
-      # make sure to use the target compiler, not the cross-compiler
-      # as preprocessor for the cross-compiled idl tools
-      TAO_IDL_PREPROCESSOR = gcc
-    endif
-  endif
-endif
-
 PIC      = -fPIC
 AR      ?= ar
 ARFLAGS ?= rsuv

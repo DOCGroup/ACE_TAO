@@ -20,8 +20,6 @@
 #include "ace/Process.h"
 #include "ace/Env_Value_T.h"
 
-ACE_RCSID(tests, Env_Value_Test, "$Id$")
-
 #define TEST_THIS(type, varname, defval, expval) \
 do { \
   ACE_Env_Value<type> val (varname, (defval)); \

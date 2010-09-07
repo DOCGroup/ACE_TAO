@@ -382,7 +382,6 @@ nobase_include_HEADERS += \
   Arg_Shifter.h \
   Argv_Type_Converter.h \
   Argv_Type_Converter.inl \
-  Array.h \
   Array_Base.cpp \
   Array_Base.h \
   Array_Base.inl \
@@ -1014,8 +1013,6 @@ nobase_include_HEADERS += \
   Svc_Handler.h \
   Synch.h \
   Synch_Options.h \
-  Synch_T.cpp \
-  Synch_T.h \
   Synch_Traits.h \
   System_Time.h \
   TLI.h \

@@ -197,7 +197,7 @@ Worker_Task<BARRIER>::producer (void)
   for (;;)
     {
       // Allocate a new message.
-      ACE_Message_Block *mb;
+      ACE_Message_Block *mb = 0;
 
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (BUFSIZ),

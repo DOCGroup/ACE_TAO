@@ -141,7 +141,7 @@
 #define ACE_LACKS_STRRECVFD 1
 #define ACE_LACKS_T_ERRNO 1
 
-/* POSIX threads ompatibilities */
+/* POSIX threads compatibilities */
 #define ACE_LACKS_RWLOCK_T 1
 #define ACE_LACKS_PTHREAD_KILL 1
 #define ACE_LACKS_THREAD_PROCESS_SCOPING 1

@@ -84,7 +84,7 @@ Text_Input_Device_Wrapper::create_input_message (void)
 {
 
   // Construct a new message block to send.
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (read_length_),
                   0);

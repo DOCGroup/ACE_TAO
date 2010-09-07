@@ -21,7 +21,7 @@ JAWS_Reaper::open (void *)
 {
   if (this->waiting_ == 0)
     {
-      ACE_Guard<ACE_SYNCH_MUTEX> g (this->lock_);
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g ,this->lock_, -1);
       if (this->waiting_ == 0)
         {
           if (this->activate () == -1)

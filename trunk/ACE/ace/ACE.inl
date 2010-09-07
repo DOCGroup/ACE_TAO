@@ -238,36 +238,21 @@ ACE::recv_i (ACE_HANDLE handle, void *buf, size_t len)
 }
 
 ACE_INLINE int
-ACE::handle_read_ready (ACE_HANDLE handle,
-                        const ACE_Time_Value *timeout)
+ACE::handle_read_ready (ACE_HANDLE handle, const ACE_Time_Value *timeout)
 {
-  return ACE::handle_ready (handle,
-                            timeout,
-                            1,
-                            0,
-                            0);
+  return ACE::handle_ready (handle, timeout, 1, 0, 0);
 }
 
 ACE_INLINE int
-ACE::handle_write_ready (ACE_HANDLE handle,
-                         const ACE_Time_Value *timeout)
+ACE::handle_write_ready (ACE_HANDLE handle, const ACE_Time_Value *timeout)
 {
-  return ACE::handle_ready (handle,
-                            timeout,
-                            0,
-                            1,
-                            0);
+  return ACE::handle_ready (handle, timeout, 0, 1, 0);
 }
 
 ACE_INLINE int
-ACE::handle_exception_ready (ACE_HANDLE handle,
-                             const ACE_Time_Value *timeout)
+ACE::handle_exception_ready (ACE_HANDLE handle, const ACE_Time_Value *timeout)
 {
-  return ACE::handle_ready (handle,
-                            timeout,
-                            0,
-                            0,
-                            1);
+  return ACE::handle_ready (handle, timeout, 0, 0, 1);
 }
 
 ACE_INLINE void

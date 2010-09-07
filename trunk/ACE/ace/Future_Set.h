@@ -41,7 +41,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * using the ACE_Future_Set::next_readable() method.
  */
 template <class T>
-class ACE_Future_Set : public ACE_Future_Observer<T>
+class ACE_Future_Set : public ACE_Future_Observer<T>,
+                       private ACE_Copy_Disabled
 {
 public:
   // = Initialization and termination methods.
@@ -99,10 +100,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Future_Set<T> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Future_Set (const ACE_Future_Set<T> &))
-
   typedef ACE_Future<T> FUTURE;
 
   typedef ACE_Future_Rep<T> FUTURE_REP;

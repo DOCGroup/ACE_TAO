@@ -1,23 +1,14 @@
 // $Id$
 
-// This test program illustrates the performance of ACE_Guard and
-// ACE_Thread_Mutex_Guard.
+// This test program illustrates the performance of ACE_GUARD
 
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
 #include "ace/Profile_Timer.h"
 
-#if !defined (ACE_USES_OBSOLETE_GUARD_CLASSES)
-#error You must compile ACE and this program with ACE_USES_OBSOLETE_GUARD_CLASSES defined!
-#endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */
-
 ACE_RCSID(Misc, test_guard, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
-
-# define ACE_THREAD_GUARD(OBJ,LOCK) \
-  ACE_Thread_Mutex_Guard OBJ (LOCK); \
-    if (OBJ.locked () == 0) return;
 
 static const int DEFAULT_ITERATIONS = 100000000;
 
@@ -39,13 +30,9 @@ void guard (void)
   dummy++;
 }
 
-void thr_guard (void)
-{
-  ACE_THREAD_GUARD (_ace_mon, lock_);
-  dummy++;
-}
-
-char *test_name[TEST_END] = { "ACE_Guard", "ACE_Thread_Mutex_Guard" };
+// FUZZ: disable check_for_ACE_Guard
+char *test_name[TEST_END] = { "ACE_Guard" };
+// FUZZ: enable check_for_ACE_Guard
 
 guard_func test_function=guard;
 
@@ -54,30 +41,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_Profile_Timer timer;
 
-  //FUZZ: disable check_for_lack_ACE_OS
-  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("gtn:"));
-  //FUZZ: enable check_for_lack_ACE_OS
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("gn:"));
 
   int iterations = DEFAULT_ITERATIONS;
   int c, i;
 
-  //FUZZ: disable check_for_lack_ACE_OS
-  while ((c = getopt()) != -1)
-  //FUZZ: enable check_for_lack_ACE_OS
+  while ((c = get_opt()) != -1)
     switch (c)
       {
-#if defined (ACE_USES_OBSOLETE_GUARD_CLASSES)
-      case 't':
-        test_type = TEST_THR_GUARD;
-        test_function = thr_guard;
-        break;
-#endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */
       case 'g':
         test_type = TEST_GUARD;
         test_function = guard;
         break;
       case 'n':
-        iterations = ACE_OS::atoi (getopt.opt_arg ());
+        iterations = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,

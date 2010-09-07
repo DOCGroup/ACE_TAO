@@ -1,6 +1,5 @@
-// file      : ace/RMCast/Stack.cpp
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// cvs-id    : $Id$
+// $Id$
 
 #include "Stack.h"
 

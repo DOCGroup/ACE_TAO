@@ -270,7 +270,7 @@ Acceptor::Acceptor (void)
     total_w_  (0),
     total_r_  (0)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
+  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
   for (size_t i = 0; i < MAX_RECEIVERS; ++i)
      this->list_receivers_[i] =0;
@@ -288,7 +288,7 @@ Acceptor::stop (void)
   // this method can be called only after reactor event loop id done
   // in all threads
 
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
+  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
   for (size_t i = 0; i < MAX_RECEIVERS; ++i)
     {
@@ -300,7 +300,7 @@ Acceptor::stop (void)
 void
 Acceptor::on_new_receiver (Receiver &rcvr)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
+  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
   this->sessions_++;
   this->list_receivers_[rcvr.index_] = & rcvr;
   ACE_DEBUG ((LM_DEBUG,
@@ -311,7 +311,7 @@ Acceptor::on_new_receiver (Receiver &rcvr)
 void
 Acceptor::on_delete_receiver (Receiver &rcvr)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
+  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
   this->sessions_--;
 
@@ -359,7 +359,7 @@ Acceptor::start (const ACE_INET_Addr &addr)
 int
 Acceptor::make_svc_handler (Receiver *&sh)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
   if (sessions_ >= MAX_RECEIVERS)
     return -1;
@@ -423,7 +423,7 @@ Receiver::check_destroy (void)
 int
 Receiver::open (void *)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
   ACE_Reactor *TPReactor = ACE_Reactor::instance ();
 
@@ -481,7 +481,7 @@ Receiver::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 int
 Receiver::handle_input (ACE_HANDLE h)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
   ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN (mb,
@@ -564,7 +564,7 @@ Receiver::handle_input (ACE_HANDLE h)
 int
 Receiver::handle_output (ACE_HANDLE h)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
   ACE_Time_Value tv = ACE_Time_Value::zero;
   ACE_Message_Block *mb = 0;
@@ -629,7 +629,7 @@ Connector::Connector (void)
     total_w_  (0),
     total_r_  (0)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
+  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
   for (size_t i = 0; i < MAX_SENDERS; ++i)
      this->list_senders_[i] = 0;
@@ -648,7 +648,7 @@ Connector::stop ()
   // after reactor event loop id done
   // in all threads
 
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
+  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
   for (size_t i = 0; i < MAX_SENDERS; ++i)
     {
@@ -660,7 +660,7 @@ Connector::stop ()
 void
 Connector::on_new_sender (Sender & sndr)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
+  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
   this->sessions_++;
   this->list_senders_[sndr.index_] = &sndr;
   ACE_DEBUG ((LM_DEBUG,
@@ -671,7 +671,7 @@ Connector::on_new_sender (Sender & sndr)
 void
 Connector::on_delete_sender (Sender & sndr)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
+  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
   this->sessions_--;
   this->total_snd_ += sndr.get_total_snd();
@@ -735,7 +735,7 @@ Connector::start (const ACE_INET_Addr & addr, int num)
 int
 Connector::make_svc_handler (Sender * & sh)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
   if (sessions_ >= MAX_SENDERS)
     return -1;
@@ -801,7 +801,7 @@ Sender::check_destroy (void)
 
 int Sender::open (void *)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
   ACE_Reactor * TPReactor = ACE_Reactor::instance ();
 
@@ -894,7 +894,7 @@ Sender::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 int
 Sender::handle_input (ACE_HANDLE h)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
   ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN (mb,
@@ -961,7 +961,7 @@ Sender::handle_input (ACE_HANDLE h)
 int
 Sender::handle_output (ACE_HANDLE h)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
   ACE_Time_Value tv = ACE_Time_Value::zero;
   ACE_Message_Block *mb = 0;

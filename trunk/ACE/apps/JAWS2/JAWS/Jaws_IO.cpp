@@ -562,7 +562,7 @@ JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
   JAWS_Asynch_IO_Handler *aioh =
     dynamic_cast<JAWS_Asynch_IO_Handler *> (ioh);
 
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
   ACE_NEW (mb, ACE_Message_Block (buffer, length));
 
   if (mb == 0)

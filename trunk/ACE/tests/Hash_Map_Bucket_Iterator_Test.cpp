@@ -24,8 +24,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Functor.h"
 
-ACE_RCSID(tests, Hash_Map_Bucket_Iterator_Test, "$Id$")
-
 static ACE_UINT32 iterations = ACE_MAX_ITERATIONS * 10;
 static ACE_UINT32 table_size = ACE_MAX_ITERATIONS;
 

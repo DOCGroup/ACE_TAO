@@ -168,7 +168,7 @@ worker (void *c)
 
       // Demonstrate use of ACE_TSS_Type_Adapter to wrap built-in
       // types when used with ACE_TSS.  See DESCRIPTION of template
-      // class ACE_TSS_Type_Adapter in ace/Synch_T.h for what this
+      // class ACE_TSS_Type_Adapter for what this
       // should look like.  Unfortunately, some compilers have trouble
       // with the implicit type conversions.  Others have problems with
       // the *explicit* type conversions.

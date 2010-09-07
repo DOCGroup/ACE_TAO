@@ -223,7 +223,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_OS::sleep (2);
   ACE_Time_Value tv (1L);
 
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
   for (int i = 0; i < 30; i++)
     {
       ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof(int)), -1);
