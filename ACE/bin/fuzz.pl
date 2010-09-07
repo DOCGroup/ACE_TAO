@@ -347,6 +347,7 @@ sub check_for_ACE_SYNCH_MUTEX ()
                 }
                 if (/FUZZ\: enable check_for_ACE_SYNCH_MUTEX/) {
                     $disable = 0;
+                    next;
                 }
                 if ($disable == 0 and /ACE_SYNCH_MUTEX/) {
                     # It is okay to use ACE_SYNCH_MUTEX in ACE
