@@ -110,7 +110,7 @@ namespace CIAO
     ::DDS::StatusCondition_ptr
     CCM_DDS_Topic_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_statuscondition (void)
     {
-      ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
+      ::DDS::StatusCondition_var retval;
       DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
       ACE_NEW_THROW_EX (retval,
                         CCM_DDS_StatusCondition_i (sc),
@@ -154,7 +154,7 @@ namespace CIAO
     ::DDS::DomainParticipant_ptr
     CCM_DDS_Topic_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_participant (void)
     {
-      ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+      ::DDS::DomainParticipant_var retval;
       DDSDomainParticipant * p = this->impl ()->get_participant ();
       if (p)
         {

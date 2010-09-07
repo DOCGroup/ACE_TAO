@@ -1,20 +1,17 @@
 // $Id$
 
 #include "Common/CIF_Common.h"
-#include "NavigationEC.h"
-
-const char * artifact_name = "Navigation";
 
 int
-run_test (::Navigation_ptr nav)
+run_test (::Components::Navigation_ptr nav)
 {
   int ret = 0;
   try
     {
       try
         {
-          nav->provide_facet ("navigation_foo");
-          nav->provide_facet ("inherited_foo");
+          nav->provide_facet ("provide_cif_foo");
+          nav->provide_facet ("provide_cif_inherited_foo");
         }
       catch (const ::Components::InvalidName &)
         {
@@ -135,67 +132,39 @@ run_test (::Navigation_ptr nav)
 int
 ACE_TMAIN (int argc,  ACE_TCHAR **argv)
 {
-  using namespace ::CIAO::Deployment;
-
   CIF_Common cmd;
   int ret = 0;
   try
     {
-      if (cmd.init (argc, argv, artifact_name) != 0)
+      if (cmd.init (argc, argv) != 0)
         {
-          ACE_ERROR ((LM_ERROR, "ACE_TMAIN : Initialisation failed.\n"));
-          return 1;
-        }
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "Error: Unable to initalize\n"),
+                            1);
 
-      ComponentServer_var server = cmd.create_componentserver ();
-      if (CORBA::is_nil (server.in ()))
+        }
+      ::Components::Navigation_var nav = cmd.get_navigation_interface ();
+
+      if (::CORBA::is_nil (nav.in ()))
         {
-          ACE_ERROR ((LM_ERROR, "Error: Got nil object reference from create_component_server "
-                                "operation\n"));
-          return 1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "Unable to get navigation interface\n"),
+                            1);
         }
-
-      Container_var cont = cmd.create_container (server.in ());
-      if (CORBA::is_nil (cont.in ()))
-        {
-          ACE_ERROR ((LM_ERROR, "Error: Got nil object reference from create_container "
-                                "operation on server\n"));
-          return 1;
-        }
-
-      Components::CCMObject_var comp = cmd.install_component (cont.in (),
-                                                              artifact_name);
-      if (CORBA::is_nil (comp.in ()))
-        {
-          ACE_ERROR ((LM_ERROR, "Error: Installing component failed.\n"));
-          return 1;
-        }
-      ::Navigation_var nav = ::Navigation::_narrow (comp.in ());
-
-      if (CORBA::is_nil (nav.in ()))
-        {
-          ACE_ERROR ((LM_ERROR, "Narrow failed from CCMObject to Navigation\n"));
-          return 1;
-        }
-
       ret = run_test (nav.in ());
 
-      cmd.shutdown (server.in (), cont.in (), comp.in ());
+      cmd.shutdown ();
     }
-  catch (const ::Components::CreateFailure &)
+  catch (const ::CORBA::Exception &ex)
     {
-      ACE_ERROR ((LM_ERROR, "Error: Caught CreateFailure exception.\n"));
-      return  1;
-    }
-  catch (const ::Components::RemoveFailure &)
-    {
-      ACE_ERROR ((LM_ERROR, "Error: Caught RemoveFailure exception.\n"));
-      return  1;
+      ex._tao_print_exception ("Navigation main");
+      return 1;
     }
   catch (...)
     {
-      ACE_ERROR ((LM_ERROR, "Error: Caught unknown exception\n"));
-      return  1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        "Error: Caught unknown exception\n"),
+                        1);
     }
   if (ret != 0)
     {

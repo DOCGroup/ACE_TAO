@@ -36,7 +36,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_on_readers");
 
-      ::DDS::Subscriber_var sub = ::DDS::Subscriber::_nil ();
+      ::DDS::Subscriber_var sub;
       ACE_NEW (sub,
                Subscriber_type (the_subscriber));
       this->impl_->on_data_on_readers (sub.in ());
@@ -49,7 +49,7 @@ namespace CIAO
       ::DDSDataReader * the_reader)
     {
       DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_datareader_proxy");
-      ::DDS::CCM_DataReader_var dds_reader = ::DDS::CCM_DataReader::_nil ();
+      ::DDS::CCM_DataReader_var dds_reader;
       ACE_NEW_NORETURN (dds_reader,
                         DataReader_type (the_reader));
       return dds_reader._retn ();

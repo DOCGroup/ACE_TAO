@@ -1,22 +1,18 @@
 // $Id$
 
 #include "Common/CIF_Common.h"
-#include "ReceptacleEC.h"
 
-
-const char * artifact_name = "Receptacle";
-
-const char * entrypoint_name1 = "Receptacle";
-const char * entrypoint_name2 = "Provider";
-
+//============================================================
+// connect
+//============================================================
 ::Components::Cookie *
-connect (Receptacle_ptr rec,
+connect (::Components::Receptacles_ptr rec,
          ::CORBA::Object_ptr facet)
 {
   ::Components::Cookie_var ck;
   try
     {
-      ck = rec->connect ("rec_foo", facet);
+      ck = rec->connect ("use_cif_foo", facet);
     }
   catch (const ::Components::InvalidName &)
     {
@@ -45,76 +41,211 @@ connect (Receptacle_ptr rec,
   return ck._retn ();
 }
 
+//============================================================
+// disconnect
+//============================================================
 ::CORBA::Object_ptr
-disconnect (Receptacle_ptr rec,
+disconnect (::Components::Receptacles_ptr rec,
             ::Components::Cookie * ck)
 {
   ::CORBA::Object_var obj;
   try
     {
-      obj = rec->disconnect ("rec_foo", ck);
+      obj = rec->disconnect ("use_cif_foo", ck);
     }
   catch (const ::Components::InvalidName &)
     {
       ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
                             "Error: InvalidName "
-                            "exception during connect\n"));
+                            "exception during disconnect\n"));
     }
   catch (const ::Components::InvalidConnection &)
     {
       ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
                             "Error: InvalidConnection "
-                            "exception during connect\n"));
+                            "exception during disconnect\n"));
     }
   catch (const ::Components::CookieRequired &)
     {
       ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
                             "Error: CookieRequired "
-                            "exception during connect\n"));
+                            "exception during disconnect\n"));
     }
   catch (const ::Components::NoConnection &)
     {
       ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
                             "Error: NoConnection "
-                            "exception during connect\n"));
+                            "exception during disconnect\n"));
     }
   return obj._retn ();
 }
 
+//============================================================
+// test_connect_disconnect
+//============================================================
 int
-run_test (Receptacle_ptr rec,
-          Provider_ptr ,
+test_connect_disconnect (::Components::Receptacles_ptr rec,
+                         ::CORBA::Object_ptr facet)
+{
+  ::Components::Cookie_var ck = connect (rec, facet);
+  ::CORBA::Object_var obj = disconnect (rec, ck.in ());
+  if (!::CORBA::is_nil (obj.in ()))
+    {
+      ACE_DEBUG ((LM_DEBUG, "Receptacle run_test - "
+                            "disconnect test passed !\n"));
+      return 0;
+    }
+  else
+    return 1;
+}
+
+//============================================================
+// test_invalid_name_exception
+//============================================================
+int
+test_invalid_name_exception (::Components::Receptacles_ptr rec,
+                             ::CORBA::Object_ptr facet)
+{
+  ::Components::Cookie_var ck;
+  try
+    {
+      ck = rec->connect ("use_cif_foo_invalid_name", facet);
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Receptacle test_invalid_name_exception - "
+                            "Received expected InvalidName "
+                            "exception during connect\n"));
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_invalid_name_exception - "
+                            "Error: exception during connect\n"));
+      return 1;
+    }
+  //connect an excisting receptacle
+  ck = connect (rec, facet);
+  //disconnect a wrong receptacle
+  ::CORBA::Object_var obj;
+  try
+    {
+      obj = rec->disconnect ("use_cif_foo_invalid_name", ck);
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Receptacle test_invalid_name_exception - "
+                            "Received expected InvalidName "
+                            "exception during disconnect\n"));
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_invalid_name_exception - "
+                            "Error: exception during disconnect\n"));
+      return 1;
+    }
+  return 0;
+}
+
+//============================================================
+// test_already_connected_exception
+//============================================================
+int
+test_already_connected_exception (::Components::Receptacles_ptr rec,
+                                  ::CORBA::Object_ptr facet)
+{
+  ::Components::Cookie_var ck;
+  try
+    {
+      ck = rec->connect ("use_cif_foo", facet);
+    }
+  catch (const ::Components::AlreadyConnected &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Receptacle test_already_connected_exception - "
+                            "Received expected AlreadyConnected "
+                            "exception during connect\n"));
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_already_connected_exception - "
+                            "Error: exception during connect\n"));
+      return 1;
+    }
+  return 0;
+}
+
+#if !defined (CCM_LW)
+int
+test_get_connections (::Components::Receptacles_ptr rec)
+{
+  ::Components::ConnectionDescriptions descriptions;
+  try
+    {
+      descriptions = rec->get_connections ("use_cif_foo");
+      for (::CORBA::ULong i = 0; i < descriptions.length (); ++i)
+        {
+          ::Components::ConnectionDescription description = descriptions[i];
+
+        }
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_get_connections - "
+                            "Error: Received InvalidName "
+                            "exception during invocation of "
+                            "get_connections.\n"));
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_get_connections - "
+                            "Error: exception during invocation of "
+                            "get_connections.\n"));
+    }
+
+  // test invalid name exception during invocation of get_connections
+  try
+    {
+      descriptions = rec->get_connections ("use_cif_foo_invalid_name");
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_connections - "
+                            "Received expected InvalidName "
+                            "exception during connect\n"));
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_get_connections - "
+                            "Error: exception during invocation of "
+                            "get_connections.\n"));
+    }
+}
+#endif
+
+int
+run_test (::Components::Receptacles_ptr rec,
           ::CORBA::Object_ptr facet)
 {
   int ret = 0;
   try
     {
-      ::Components::Cookie_var ck = connect (rec, facet);
-      if (ck.in ())
-        {
-          ACE_DEBUG ((LM_DEBUG, "Receptacle run_test - "
-                                "connect test passed !\n"));
-        }
-      ::CORBA::Object_var obj = disconnect (rec, ck.in ());
-      if (!::CORBA::is_nil (obj.in ()))
-        {
-          ACE_DEBUG ((LM_DEBUG, "Receptacle run_test - "
-                                "disconnect test passed !\n"));
-        }
+      ret += test_connect_disconnect (rec, facet);
+      ret += test_invalid_name_exception (rec, facet);
+      ret += test_already_connected_exception (rec, facet);
 
 //       TODO:
-//       Exception tests for connect/disconnect
-//       #if !defined (CCM_LW)
-//           ConnectionDescriptions get_connections (in FeatureName name)
-//             raises (InvalidName);
-//       #endif
+//       ret += test_invalid_connection_exception ();
+//       ret += test_exceeded_limit_exception ();
+#if !defined (CCM_LW)
+      ret += test_get_connections (rec);
+           ConnectionDescriptions get_connections (in FeatureName name)
+             raises (InvalidName);
 //       #if !defined (CCM_LW)
 //           ReceptacleDescriptions get_all_receptacles ();
 //       #endif
 //       #if !defined (CCM_LW)
 //           ReceptacleDescriptions get_named_receptacles (in NameList names)
 //             raises (InvalidName);
-//       #endif
+#endif
     }
   catch (...)
     {
@@ -126,89 +257,59 @@ run_test (Receptacle_ptr rec,
   return ret;
 }
 
+
 int
 ACE_TMAIN (int argc,  ACE_TCHAR **argv)
 {
-  using namespace ::CIAO::Deployment;
-
   CIF_Common cmd;
   int ret = 0;
   try
     {
-      if (cmd.init (argc, argv, artifact_name) != 0)
-        return 1;
-
-      ComponentServer_var server1 = cmd.create_componentserver ();
-
-      ComponentServer_var server2 = cmd.create_componentserver ();
-      if (CORBA::is_nil (server1.in ()) ||
-          CORBA::is_nil (server2.in ()))
+      if (cmd.init (argc, argv) != 0)
         {
-          ACE_ERROR ((LM_ERROR, "Error: Got nil object references from create_component_server "
-                                "operation\n"));
-          return 1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "Error: Unable to initalize\n"),
+                            1);
+
+        }
+      ::Components::Receptacles_var rec = cmd.get_receptacle_interface ();
+      ::Components::Navigation_var nav = cmd.get_navigation_interface ();
+
+      if (::CORBA::is_nil (rec.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "Unable to get receptacles interface\n"),
+                            1);
+        }
+      if (::CORBA::is_nil (nav.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "Unable to get navigation interface\n"),
+                            1);
         }
 
-      Container_var cont1 = cmd.create_container (server1.in ());
-      Container_var cont2 = cmd.create_container (server2.in ());
-      if (CORBA::is_nil (cont1.in ()) ||
-          CORBA::is_nil (cont2.in ()))
+      ::CORBA::Object_var facet = nav->provide_facet ("provide_cif_foo");
+      if (::CORBA::is_nil (facet.in ()))
         {
-          ACE_ERROR ((LM_ERROR, "Error: Got nil object references from create_container "
-                                "operation on server\n"));
-          return 1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "Unable to get Provide facet 'provide_cif_foo'\n"),
+                            1);
         }
 
-      Components::CCMObject_var comp1 = cmd.install_component (cont1.in (),
-                                                               entrypoint_name1);
-      Components::CCMObject_var comp2 = cmd.install_component (cont2.in (),
-                                                               entrypoint_name2);
-      if (CORBA::is_nil (comp1.in ()) ||
-          CORBA::is_nil (comp2.in ()))
-        {
-          ACE_ERROR ((LM_ERROR, "Error: Installing components failed.\n"));
-          return 1;
-        }
-      Receptacle_var rec = Receptacle::_narrow (comp1.in ());
-      Provider_var prov = Provider::_narrow (comp2.in ());
+      ret = run_test (rec.in (), facet.in ());
 
-      if (CORBA::is_nil (rec.in ()) ||
-          CORBA::is_nil (prov.in ()))
-        {
-          ACE_ERROR ((LM_ERROR, "Narrow failed from CCMObjects to Receptacles\n"));
-          return 1;
-        }
-
-      ::CORBA::Object_var facet;
-      try
-        {
-          facet = prov->provide_facet ("prov_foo");
-        }
-      catch (const ::Components::InvalidName &)
-        {
-          ACE_ERROR ((LM_ERROR, "Error: Unexpected InvalidName exception caught "
-                                "while providing facet\n"));
-        }
-
-      ret = run_test (rec.in (), prov.in (), facet.in ());
-
-      cmd.shutdown (server1.in (), cont1.in (), comp1.in (), false);
-      cmd.shutdown (server2.in (), cont2.in (), comp2.in ());
+      cmd.shutdown ();
     }
-  catch (const ::Components::CreateFailure &)
+  catch (const ::CORBA::Exception &ex)
     {
-      ACE_ERROR ((LM_ERROR, "Error: Caught CreateFailure exception.\n"));
-      return  1;
-    }
-  catch (const ::Components::RemoveFailure &)
-    {
-      ACE_ERROR ((LM_ERROR, "Error: Caught RemoveFailure exception.\n"));
-      return  1;
+      ex._tao_print_exception ("Navigation main");
+      return 1;
     }
   catch (...)
     {
-      ACE_ERROR ((LM_ERROR, "Error: Caught unknown exception\n"));
-      return  1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        "Error: Caught unknown exception\n"),
+                        1);
     }
   if (ret != 0)
     {

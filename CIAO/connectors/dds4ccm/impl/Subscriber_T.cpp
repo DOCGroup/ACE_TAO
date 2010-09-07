@@ -46,7 +46,7 @@ namespace CIAO
     ::DDS::StatusCondition_ptr
     CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_statuscondition (void)
     {
-      ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
+      ::DDS::StatusCondition_var retval;
       DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
       if (sc)
         {
@@ -151,7 +151,7 @@ namespace CIAO
       ::DDS::StatusMask mask)
     {
       DDS4CCM_TRACE ("CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datareader");
-      ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
+      ::DDS::DataReader_var retval;
       DDSDataReaderListener *ccm_dds_drl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
@@ -174,7 +174,7 @@ namespace CIAO
                           "VENDOR_TYPE>::create_datareader - Error: Unable to "
                           "cast provided topic to one of its servant.\n"));
               delete ccm_dds_drl;
-              throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+              return ::DDS::DataReader::_nil ();
             }
           else
             ccm_dds_dr = this->create_datareader (cf_topic->get_impl (),
@@ -194,7 +194,7 @@ namespace CIAO
                        "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datareader - "
                        "Error: RTI Topic returned a nil datareader.\n"));
           delete ccm_dds_drl;
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          return ::DDS::DataReader::_nil ();
         }
       else
         {
@@ -244,7 +244,7 @@ namespace CIAO
                             "Error: Unable to cast provided topic to one "
                             "of its servant.\n"));
               delete ccm_dds_drl;
-              throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+              return ::DDS::DataReader::_nil ();
             }
           else
             {
@@ -283,7 +283,7 @@ namespace CIAO
                         profile_name));
         }
 
-      ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
+      ::DDS::DataReader_var retval;
       ACE_NEW_THROW_EX (retval,
                         DataReader_type (ccm_dds_dr),
                         ::CORBA::NO_MEMORY ());
@@ -347,7 +347,7 @@ namespace CIAO
     CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::lookup_datareader (
       const char * impl_name)
     {
-      ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
+      ::DDS::DataReader_var retval;
       DDSDataReader* dr = this->impl ()->lookup_datareader (impl_name);
       if (dr)
         {
@@ -479,7 +479,7 @@ namespace CIAO
     ::DDS::DomainParticipant_ptr
     CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_participant (void)
     {
-      ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+      ::DDS::DomainParticipant_var retval;
       DDSDomainParticipant* p = this->impl ()->get_participant ();
       if (p)
         {

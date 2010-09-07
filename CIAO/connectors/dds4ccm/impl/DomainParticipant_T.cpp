@@ -82,10 +82,10 @@ namespace CIAO
                         "VENDOR_TYPE>::create_publisher_with_profile - "
                         "Error: Unable to create Publisher\n"));
           delete ccm_dds_pl;
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          return ::DDS::Publisher::_nil ();
         }
 
-      ::DDS::Publisher_var retval = ::DDS::Publisher::_nil ();
+      ::DDS::Publisher_var retval;
       ACE_NEW_THROW_EX (retval,
                         Publisher_type (ccm_dds_pub),
                         ::CORBA::NO_MEMORY ());
@@ -136,10 +136,11 @@ namespace CIAO
                        "CCM_DDS_DomainParticipant_T"
                        "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_publisher - "
                        "Error: Unable to create Publisher\n"));
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          delete ccm_dds_pl;
+          return ::DDS::Publisher::_nil ();
         }
 
-      ::DDS::Publisher_var retval = ::DDS::Publisher::_nil ();
+      ::DDS::Publisher_var retval;
       ACE_NEW_THROW_EX (retval,
                         Publisher_type (ccm_dds_pub),
                         ::CORBA::NO_MEMORY ());
@@ -229,15 +230,15 @@ namespace CIAO
 
       if (!ccm_dds_sub)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                        "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
-                        "VENDOR_TYPE>::create_subscriber_with_profile - "
-                        "Error: Unable to create Subscriber\n"));
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, CLINFO
+                        "CCM_DDS_DomainParticipant_T::"
+                        "create_subscriber_with_profile - "
+                        "Error: RTI DDS returned a nil subscriber.\n"));
           delete ccm_dds_sl;
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          return ::DDS::Subscriber::_nil ();
         }
 
-      ::DDS::Subscriber_var retval = ::DDS::Subscriber::_nil ();
+      ::DDS::Subscriber_var retval;
       ACE_NEW_THROW_EX (retval,
                         Subscriber_type (ccm_dds_sub),
                         ::CORBA::NO_MEMORY ());
@@ -284,15 +285,15 @@ namespace CIAO
 
       if (!ccm_dds_sub)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                        "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
-                        "VENDOR_TYPE>::create_subscriber - "
-                        "Error: Unable to create Subscriber\n"));
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, CLINFO
+                        "CCM_DDS_DomainParticipant_T::"
+                        "create_subscriber_with_profile - "
+                        "Error: RTI DDS returned a nil subscriber.\n"));
           delete ccm_dds_sl;
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          return ::DDS::Subscriber::_nil ();
         }
 
-      ::DDS::Subscriber_var retval = ::DDS::Subscriber::_nil ();
+      ::DDS::Subscriber_var retval;
       ACE_NEW_THROW_EX (retval,
                         Subscriber_type (ccm_dds_sub),
                         ::CORBA::NO_MEMORY ());
@@ -352,7 +353,7 @@ namespace CIAO
     ::DDS::Subscriber_ptr
     CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_builtin_subscriber (void)
     {
-      ::DDS::Subscriber_var retval = ::DDS::Subscriber::_nil ();
+      ::DDS::Subscriber_var retval;
       DDSSubscriber* sub = this->impl ()->get_builtin_subscriber ();
       if (sub)
         {
@@ -375,24 +376,6 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::create_topic");
 
       ACE_UNUSED_ARG (qos);
-
-      if (impl_name == 0)
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                        "CCM_DDS_DomainParticipant_T::create_topic - "
-                        "Error: provided nil topic name\n"));
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER,
-                                        0);
-        }
-
-      if (type_name == 0)
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                        "CCM_DDS_DomainParticipant_T::create_topic - "
-                        "Error: provided nil type name\n"));
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER,
-                                        0);
-        }
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_DEBUG, CLINFO
                     "CCM_DDS_DomainParticipant_T::create_topic - "
@@ -431,10 +414,10 @@ namespace CIAO
                             "CCM_DDS_DomainParticipant_T::create_topic - "
                             "Error: RTI DDS returned a nil topic\n"));
               delete ccm_dds_tl;
-              throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+              return ::DDS::Topic::_nil ();
             }
 
-          ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
+          ::DDS::Topic_var retval;
           ACE_NEW_THROW_EX (retval,
                             Topic_type (dds_tp),
                             ::CORBA::NO_MEMORY ());
@@ -461,7 +444,7 @@ namespace CIAO
 
           DPMANAGER->_inc_ref (this->impl (), dds_tp);
 
-          ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
+          ::DDS::Topic_var retval;
           ACE_NEW_THROW_EX (retval,
                             Topic_type (dds_tp),
                             ::CORBA::NO_MEMORY ());
@@ -536,10 +519,10 @@ namespace CIAO
                             "CCM_DDS_DomainParticipant_T::create_topic_with_profile - "
                             "Error: RTI DDS returned a nil topic\n"));
               delete ccm_dds_tl;
-              throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+              return ::DDS::Topic::_nil ();
             }
 
-          ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
+          ::DDS::Topic_var retval;
           ACE_NEW_THROW_EX (retval,
                             Topic_type (dds_tp),
                             ::CORBA::NO_MEMORY ());
@@ -565,7 +548,7 @@ namespace CIAO
                         impl_name, type_name));
           DPMANAGER->_inc_ref (this->impl (), dds_tp);
 
-          ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
+          ::DDS::Topic_var retval;
           ACE_NEW_THROW_EX (retval,
                             Topic_type (dds_tp),
                             ::CORBA::NO_MEMORY ());
@@ -635,7 +618,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::find_topic (const char * impl_name,
                                          const ::DDS::Duration_t & timeout)
     {
-      ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
+      ::DDS::Topic_var retval;
       ::DDS_Duration_t ddstimeout;
       ddstimeout <<= timeout;
       ::DDSTopic* topic = this->impl ()->find_topic (impl_name, ddstimeout);
@@ -660,7 +643,7 @@ namespace CIAO
                     "Looking up topic: name <%C>\n",
                     name));
 
-      ::DDS::TopicDescription_var retval = ::DDS::TopicDescription::_nil ();
+      ::DDS::TopicDescription_var retval;
       ::DDSTopicDescription* topic = this->impl ()->lookup_topicdescription (name);
       if (topic)
         {
@@ -736,7 +719,7 @@ namespace CIAO
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
 
-      ::DDS::ContentFilteredTopic_var retval = ::DDS::ContentFilteredTopic::_nil ();
+      ::DDS::ContentFilteredTopic_var retval;
       ACE_NEW_THROW_EX (retval,
                         ContentFilteredTopic_type (ccm_dds_cft),
                         ::CORBA::NO_MEMORY ());
@@ -1108,7 +1091,7 @@ namespace CIAO
     ::DDS::StatusCondition_ptr
     CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_statuscondition (void)
     {
-      ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
+      ::DDS::StatusCondition_var retval;
       DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
       if (sc)
         {

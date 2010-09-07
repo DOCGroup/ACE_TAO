@@ -1,0 +1,34 @@
+// $Id$
+
+#ifndef CIF_COMPONENT_IDL_
+#define CIF_COMPONENT_IDL_
+
+#include <Components.idl>
+
+module CIF
+{
+  interface foo
+  {
+    void do_foo ();
+  };
+
+  interface inherited_foo : foo
+  {
+    void do_inherited_foo ();
+  };
+
+  component CIF_Provider
+  {
+    provides foo           provide_cif_foo;
+    provides inherited_foo provide_cif_inherited_foo;
+  };
+
+  component CIF_User
+  {
+    uses foo           use_cif_foo;
+    uses inherited_foo use_cif_inherited_foo;
+  };
+
+};
+
+#endif /* CIF_COMPONENT_IDL_ */

@@ -49,6 +49,14 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
               ::DDS::DataWriterListener::_nil (),
               0);
         }
+      if (::CORBA::is_nil (dwv_tmp.in ()))
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, CLINFO
+                        "DDS_Update_T::configuration_complete - "
+                        "Error: Proxy returned a nil datawriter.\n"));
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+        }
+
       DataWriter_type  *rw = dynamic_cast < DataWriter_type *> (dwv_tmp.in ());
 
       if (!rw)
