@@ -31,7 +31,7 @@ void guard (void)
 }
 
 // FUZZ: disable check_for_ACE_Guard
-char *test_name[TEST_END] = { "ACE_Guard" };
+const char *test_name[TEST_END] = { "ACE_Guard" };
 // FUZZ: enable check_for_ACE_Guard
 
 guard_func test_function=guard;
