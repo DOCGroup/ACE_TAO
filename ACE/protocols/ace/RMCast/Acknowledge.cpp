@@ -1,6 +1,5 @@
-// file      : ace/RMCast/Acknowledge.cpp
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// cvs-id    : $Id$
+// $Id$
 
 #include "ace/Time_Value.h"     // ACE_Time_Value
 #include "ace/OS_NS_unistd.h"
@@ -8,12 +7,6 @@
 #include "ace/OS_NS_sys_time.h" // gettimeofday
 
 #include "Acknowledge.h"
-
-/*
-#include <iostream>
-using std::cerr;
-using std::endl;
-*/
 
 namespace ACE_RMCast
 {

@@ -25,12 +25,6 @@ static ACE_TSS<Errno> tss_error;
 // Serializes output via cout.
 static ACE_SYNCH_MUTEX printf_lock;
 
-#if defined (ACE_HAS_THREADS)
-typedef ACE_TSS_Guard<ACE_Thread_Mutex> GUARD;
-#else
-typedef ACE_Guard<ACE_Null_Mutex> GUARD;
-#endif /* ACE_HAS_THREADS */
-
 extern "C" void
 cleanup (void *ptr)
 {

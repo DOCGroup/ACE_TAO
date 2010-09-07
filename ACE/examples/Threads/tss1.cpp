@@ -42,12 +42,6 @@ int Errno::flags_;
 // (Sun C++ 4.2 with -O3 won't link if the following is static.)
 ACE_TSS<Errno> TSS_Error;
 
-#if defined (ACE_HAS_THREADS)
-  typedef ACE_TSS_Guard<ACE_Thread_Mutex> GUARD;
-#else
-  typedef ACE_Guard<ACE_Null_Mutex> GUARD;
-#endif /* ACE_HAS_THREADS */
-
 // Keeps track of whether Tester::close () has started.
 // (Sun C++ 4.2 with -O3 won't link if the following is static.)
 int close_started = 0;

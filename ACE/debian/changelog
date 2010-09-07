@@ -1,3 +1,10 @@
+ace (5.8.2-1) unstable; urgency=low
+
+  [ Johnny Wilemsen ]
+  * New upstream release
+
+ -- Johnny Willemsen <jwillemsen@remedy.nl>  Mon, 4 Sep 2010 20:00:00 +0100
+
 ace (5.7.7-1) unstable; urgency=low
 
   [ Marek Brudka ]
@@ -8,7 +15,7 @@ ace (5.7.7-1) unstable; urgency=low
   * Added PerlACE to mpc-ace. This should resolve #522557
   * Replaced find [C,S,A].[h,inl] by 2-pass mpc generation
   * Remove obsolete patches
-  
+
  -- Marek Brudka <mbrudka@aster.pl>  Sat, 27 Mar 2010 20:00:00 +0100
 
 ace (5.7.5-2) unstable; urgency=low
@@ -58,9 +65,9 @@ ace (5.7.5-1) unstable; urgency=low
   * fixed fidone once again
   * created gperf-ace-5.7.5 and gperf-ace-dev package for gperf runtime libraries
   * included number of runtime and static libraries with headers (Monitor, ZIOP, ETCL, Catior) to libtao-orbsvcs-* packages
-  * renamed split-cpp to split-cpp.pl in libace-dev to follow the upstream 
+  * renamed split-cpp to split-cpp.pl in libace-dev to follow the upstream
     conventions
-  * renamed utilities (ns{add,del,list> to tao_ns{add,del,list}) in tao-utils 
+  * renamed utilities (ns{add,del,list> to tao_ns{add,del,list}) in tao-utils
     to follow the upstream changes
   * removed permission fixes for example in debian/rules as there is nothing to fix
   * created libace_gperf runtime and devel libraries
@@ -91,7 +98,7 @@ ace (5.6.3-6) unstable; urgency=low
   [ Pau Garcia i Quiles ]
   * Add new patches:
     - Remove duplicate files from .mpc files so that Makefile.am files do
-      not have duplicates 
+      not have duplicates
     - Run autoupdate and autoreconf in the ACE and TAO directories in order
       to update from libtool 1.5 (what upstream uses) to libtool 2.2
 
@@ -332,9 +339,9 @@ ace (5.4.7-6) unstable; urgency=low
   * debian/patches/16-g++4-visibility-tweaks.dpatch:
     Backport upstream tweaks for g++ 4 visibility feature and disable
     visibility hiding for now. (Closes: #324271).
-  * debian/rules: g++ 4.0.2 was ICE'ing on #pragma once. This is no 
+  * debian/rules: g++ 4.0.2 was ICE'ing on #pragma once. This is no
     longer true as of g++-4.0_4.0.2-4, so we can use g++4 again. For the
-    record, another possible fix was to #define ACE_LACKS_PRAGMA_ONCE in 
+    record, another possible fix was to #define ACE_LACKS_PRAGMA_ONCE in
     `$ACE_ROOT/ace/config.h`.
   * Add `c2a` suffix to all libs for libstdc++ allocator change.
     (Closes: #339142).
@@ -385,7 +392,7 @@ ace (5.4.7-1) unstable; urgency=low
  -- Konstantinos Margaritis <markos@debian.org>  Fri, 12 Aug 2005 12:45:13 +0300
 
 ace (5.4.2.1.0-4) unstable; urgency=high
-  
+
     * Thomas Girard <thomas.g.girard@free.fr>
       - debian/control:
         o libacexml-dev depends on libace-dev.
@@ -396,7 +403,7 @@ ace (5.4.2.1.0-4) unstable; urgency=high
         reported by lintian.
       - debian/libciao-dev.install: add missing .idl and .pidl files.
         (Closes: #307258)
-  
+
  -- Thomas Girard <thomas.g.girard@free.fr>  Mon,  2 May 2005 19:30:01 +0200
 
 ace (5.4.2.1.0-3) unstable; urgency=high
@@ -490,9 +497,9 @@ ace (5.4.2.1-1) unstable; urgency=low
   * Konstantinos Margaritis
     - Fixed missed path for libACE.so.5.4.2 in dh_shlibdeps
     - Fixed incorrect timestamp of original archive (1970 etc).
- 
+
  -- Konstantinos Margaritis <markos@debian.org>  Thu,  2 Sep 2004 23:04:56 +0200
- 
+
 ace (5.4.0.1-1.1) unstable; urgency=low
 
   * Fixed ACE_NDEBUG configuration of ACE. (Closes: #242881)
@@ -558,7 +565,7 @@ ace (5.3.1-7) unstable; urgency=low
 
 ace (5.3.1-6) unstable; urgency=low
 
-  * Added the ORB services .idl files that were left out from the 
+  * Added the ORB services .idl files that were left out from the
     libtao-orbsvcs-dev package. (Closes: #213568)
 
  -- Konstantinos Margaritis <markos@debian.org>  Sun,  5 Oct 2003 12:31:21 +0300
@@ -584,7 +591,7 @@ ace (5.3.1-3) unstable; urgency=low
 
   * Updated to new standards version 3.6.1
   * Fixed the section of a couple of packages.
-  * Now the getrlimit, etc functions are always defined 
+  * Now the getrlimit, etc functions are always defined
     as ints. g++ 3.x does not complain anymore (Closes: #104681).
 
  -- Konstantinos Margaritis <markos@debian.org>  Tue, 16 Sep 2003 10:31:03 +0300
@@ -599,7 +606,7 @@ ace (5.3.1-2) unstable; urgency=low
   * Full doxygen documentation not included due to size concerns.
     (Closes: #108749).
   * tao-config included in libtao-dev. (Closes: #159234).
-  * All -dev packages carry their respective examples in full and 
+  * All -dev packages carry their respective examples in full and
     uncompressed. (Closes: #52145, #76967).
   * libACE.a is compiled with thread support enabled. (Closes: #126717).
     dbbalancer now builds successfully with -static.
@@ -640,7 +647,7 @@ ace (5.2.4-1.2) unstable; urgency=low
 
 ace (5.2.4-1.1) unstable; urgency=low
 
-  * gcc-3.2 transition, NMU patch by Andreas Metzler <ametzler@debian.org> 
+  * gcc-3.2 transition, NMU patch by Andreas Metzler <ametzler@debian.org>
   * (Closes: #188328)
 
  -- Konstantinos Margaritis <markos@debian.org>  Fri, 11 Apr 2003 23:25:38 +0200
@@ -710,7 +717,7 @@ ace (5.1.8-5) unstable; urgency=low
     5.0 debian packages, since both sets of packages have files with the
     same name.  libace5.1-dev also conflicts with libace4.6-dev.  (#74031)
   * Added xlib6g-dev to the list of build dependencies.  The X11 libraries
-    aren't strictly necessary to build ACE, but the Debian packages enable    
+    aren't strictly necessary to build ACE, but the Debian packages enable
     ACE's XtReactor support.
   * Updated `README.Debian'.  The Debian ACE packages are no longer built
     using experimental ACE Configuration Project distributions.  They are

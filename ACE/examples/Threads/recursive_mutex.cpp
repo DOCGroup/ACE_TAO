@@ -62,7 +62,7 @@ recursive_worker (size_t nesting_level,
                   "(%P|%t) = trying to acquire, nesting = %d, thread id = %u\n",
       rm->get_nesting_level (), rm->get_thread_id ()));
       {
-        // This illustrates the use of the ACE_Guard<LOCK> with an
+        // This illustrates the use of the ACE_GUARD with an
         // ACE_Recursive_Thread_Mutex.
         ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, *rm);
         ACE_DEBUG ((LM_DEBUG,

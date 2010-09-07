@@ -299,7 +299,7 @@ Message_Handler::svc (void)
 {
   for (int i = 0;; i++)
     {
-      ACE_Message_Block *mb;
+      ACE_Message_Block *mb = 0;
 
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (1),
@@ -334,7 +334,7 @@ Message_Handler::handle_input (ACE_HANDLE)
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Message_Handler::handle_input\n"));
 
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
 
   if (this->getq (mb, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
     ACE_ERROR ((LM_ERROR,

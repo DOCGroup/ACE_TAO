@@ -557,12 +557,10 @@ protected:
   // = Helper methods to factor out common #ifdef code.
 
   /// Wait for the queue to become non-full.
-  virtual int wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon,
-                                  ACE_Time_Value *timeout);
+  virtual int wait_not_full_cond (ACE_Time_Value *timeout);
 
   /// Wait for the queue to become non-empty.
-  virtual int wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon,
-                                   ACE_Time_Value *timeout);
+  virtual int wait_not_empty_cond (ACE_Time_Value *timeout);
 
   /// Inform any threads waiting to enqueue that they can procede.
   virtual int signal_enqueue_waiters (void);

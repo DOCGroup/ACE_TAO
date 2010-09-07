@@ -1745,7 +1745,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   }
 #else
                   ACE_hthread_t t_id;
-                  ACE_Thread::self (t_id);
+                  ACE_OS::thr_self (t_id);
 
 #  if defined (ACE_MVS) || defined (ACE_TANDEM_T1248_PTHREADS)
                   // MVS's pthread_t is a struct... yuck. So use the ACE 5.0

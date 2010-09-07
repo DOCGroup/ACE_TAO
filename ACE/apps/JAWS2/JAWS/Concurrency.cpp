@@ -30,7 +30,7 @@ JAWS_Concurrency_Base::singleton_mb (void)
 {
   if (this->mb_acquired_ == 0)
     {
-      ACE_Guard<ACE_SYNCH_MUTEX> g(this->lock_);
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, this->lock_, 0);
 
       if (this->mb_acquired_ == 0)
         {

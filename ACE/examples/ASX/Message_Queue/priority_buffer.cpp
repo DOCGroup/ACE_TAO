@@ -36,7 +36,7 @@ consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 
   for (;;)
     {
-      ACE_Message_Block *mb;
+      ACE_Message_Block *mb = 0;
 
       if (msg_queue->dequeue_head (mb) == -1)
         break;
@@ -75,7 +75,7 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
       // Allocate a new buffer.
       char *buffer = rb.read ('\n');
 
-      ACE_Message_Block *mb;
+      ACE_Message_Block *mb = 0;
 
       if (buffer == 0)
         {

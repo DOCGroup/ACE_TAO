@@ -1,15 +1,8 @@
-// file      : ace/RMCast/Reassemble.cpp
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// cvs-id    : $Id$
+// $Id$
 
 #include "Reassemble.h"
 #include "ace/OS_NS_stdlib.h"
-
-/*
-#include <iostream>
-using std::cerr;
-using std::endl;
-*/
 
 namespace ACE_RMCast
 {

@@ -34,6 +34,7 @@ typedef ACE_Select_Reactor_T<ACE_Select_Reactor_Token> ACE_Select_Reactor;
 //@@ TAO_REACTOR_SPL_COMMENT_HOOK_END
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE == 0)
+// FUZZ: disable check_for_ACE_Guard
 /**
  * @class ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> >
  *
@@ -65,6 +66,7 @@ private:
   void operator= (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &);
 
 };
+// FUZZ: enable check_for_ACE_Guard
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE == 0 */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

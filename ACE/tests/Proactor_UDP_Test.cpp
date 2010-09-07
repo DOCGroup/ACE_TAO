@@ -15,10 +15,6 @@
 
 #include "test_config.h"
 
-ACE_RCSID (tests,
-           Proactor_UDP_Test,
-           "$Id$")
-
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS))
   // This only works on Win32 platforms and on Unix platforms
   // supporting POSIX aio calls.

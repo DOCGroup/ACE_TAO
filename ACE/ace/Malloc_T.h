@@ -213,14 +213,7 @@ class ACE_Allocator_Adapter : public ACE_Allocator
 public:
   // Trait.
   typedef MALLOC ALLOCATOR;
-
-#if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-  // The following code will break C++ compilers that don't support
-  // template typedefs correctly.
   typedef const typename MALLOC::MEMORY_POOL_OPTIONS *MEMORY_POOL_OPTIONS;
-#else
-  typedef const void *MEMORY_POOL_OPTIONS;
-#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
   // = Initialization.
   /**
@@ -747,8 +740,7 @@ public:
    * the set that hasn't yet been visited.  Returns 0 when all items
    * have been seen, else 1.
    */
-  int next (void *&next_entry,
-            const char *&name);
+  int next (void *&next_entry, const char *&name);
 
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
@@ -767,8 +759,10 @@ private:
   /// Keeps track of how far we've advanced...
   NAME_NODE *curr_;
 
+// FUZZ: disable check_for_ACE_Guard
   /// Lock Malloc for the lifetime of the iterator.
   ACE_Read_Guard<ACE_LOCK> guard_;
+// FUZZ: enable check_for_ACE_Guard
 
   /// Name that we are searching for.
   const char *name_;
@@ -792,7 +786,6 @@ public:
   typedef typename ACE_CB::ACE_Name_Node NAME_NODE;
   typedef typename ACE_CB::ACE_Malloc_Header MALLOC_HEADER;
 
-  // = Initialization method.
   /// If @a name = 0 it will iterate through everything else only
   /// through those entries whose @a name match.
   ACE_Malloc_FIFO_Iterator_T (ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB> &malloc,
@@ -815,8 +808,7 @@ public:
    * the set that hasn't yet been visited.  Returns 0 when all items
    * have been seen, else 1.
    */
-  int next (void *&next_entry,
-            const char *&name);
+  int next (void *&next_entry, const char *&name);
 
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
@@ -839,8 +831,10 @@ private:
   /// Keeps track of how far we've advanced...
   NAME_NODE *curr_;
 
+// FUZZ: disable check_for_ACE_Guard
   /// Lock Malloc for the lifetime of the iterator.
   ACE_Read_Guard<ACE_LOCK> guard_;
+// FUZZ: enable check_for_ACE_Guard
 
   /// Name that we are searching for.
   const char *name_;
@@ -888,7 +882,6 @@ template <ACE_MEM_POOL_1, class ACE_LOCK>
 class ACE_Malloc_LIFO_Iterator : public ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block>
 {
 public:
-  // = Initialization method.
   /// If @a name = 0 it will iterate through everything else only
   /// through those entries whose @a name match.
   ACE_Malloc_LIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
@@ -899,7 +892,6 @@ template <ACE_MEM_POOL_1, class ACE_LOCK>
 class ACE_Malloc_FIFO_Iterator : public ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block>
 {
 public:
-  // = Initialization method.
   /// If @a name = 0 it will iterate through everything else only
   /// through those entries whose @a name match.
   ACE_Malloc_FIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,

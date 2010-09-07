@@ -41,7 +41,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * The Remote_Token_Proxy class implements the mechanisms for
  * distributed token operations.  It is similar to the
  * ACE_Token_Proxy.
- * = BUGS
+ * @todo
  * Distributed sleep_hooks have not been implemented.  <owner_id>
  * is not implemented.
  */
@@ -56,8 +56,8 @@ public:
 
   /**
    * Same as Token_Proxy. @a name is the string uniquely identifying
-   * the token.  <ignore_deadlock> can be 1 to disable deadlock
-   * notifications.  <debug> prints debug messages.
+   * the token.  @a ignore_deadlock can be 1 to disable deadlock
+   * notifications.  @a debug prints debug messages.
    */
   int open (const ACE_TCHAR *name,
             int ignore_deadlock = 0,
@@ -120,10 +120,9 @@ public:
   virtual int release (ACE_Synch_Options &options =
                        ACE_Synch_Options::synch);
 
-  /// Become interface compliant for ACE_Guard<>.  This has no
+  /// Become interface compliant for our guards.  This has no
   /// functionality.
-  virtual int remove (ACE_Synch_Options &options =
-                      ACE_Synch_Options::synch);
+  virtual int remove (ACE_Synch_Options &options = ACE_Synch_Options::synch);
 
   /// Override the default to do nothing.
   virtual void token_acquired (ACE_TPQ_Entry *);

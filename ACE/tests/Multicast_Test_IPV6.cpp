@@ -560,7 +560,7 @@ MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,
                       -1);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Joined %C\n"), buf));
 
-  ACE_CString *str;
+  ACE_CString *str = 0;
   ACE_NEW_RETURN (str, ACE_CString (buf), -1);
   this->address_vec_.push_back (str);
   return 0;

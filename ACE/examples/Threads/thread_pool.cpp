@@ -104,7 +104,7 @@ Thread_Pool::svc (void)
 
   for (;; count++)
     {
-      ACE_Message_Block *mb;
+      ACE_Message_Block *mb = 0;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) in iteration %d before getq ()\n",

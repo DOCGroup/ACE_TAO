@@ -86,20 +86,6 @@ PRELIB  = @true
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-ifneq ($(TCPU),)
-  ifeq ($(tunemodelflag),1)
-    FLAGS_C_CC += -mtune=$(TCPU)
-  endif
-  
-  ifeq ($(cpumodelflag),1)
-    FLAGS_C_CC += -mcpu=$(TCPU)
-  endif
-
-  ifeq ($(archmodelflag),1)
-    FLAGS_C_CC += -march=$(TCPU)
-  endif
-endif
-
 # TAO with GCC 4.0.2 and -O3 seems to result in runtime issues, for example
 # the ForwardRequest PI test will fail. For GCC 4.0.2 we default to -O2
 ifeq ($(CXX_VERSION),4.0.2)

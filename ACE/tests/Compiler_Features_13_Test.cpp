@@ -16,8 +16,6 @@
 
 #include <stdexcept>
 
-ACE_RCSID(tests, Compiler_Features_13_Test, "$Id$")
-
 namespace
 {
   /**

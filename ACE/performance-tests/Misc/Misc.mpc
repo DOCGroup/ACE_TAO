@@ -58,10 +58,9 @@ project(*preempt) : aceexe {
   }
 }
 
-// May need to add an ace_obsolete_guard_class feature
-//project(*test_guard) : aceexe {
-//  exename = test_guard
-//  Source_Files {
-//    test_guard.cpp
-//  }
-//}
+project(*test_guard) : aceexe {
+  exename = test_guard
+  Source_Files {
+    test_guard.cpp
+  }
+}

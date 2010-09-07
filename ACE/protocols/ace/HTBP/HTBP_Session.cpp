@@ -25,7 +25,7 @@ ACE_SYNCH_MUTEX ACE::HTBP::Session::session_id_lock_;
 ACE_UINT32
 ACE::HTBP::Session::next_session_id ()
 {
-  ACE_Guard<ACE_SYNCH_MUTEX> g(ACE::HTBP::Session::session_id_lock_);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, ACE::HTBP::Session::session_id_lock_, 0);
   return ++last_session_id_;
 }
 

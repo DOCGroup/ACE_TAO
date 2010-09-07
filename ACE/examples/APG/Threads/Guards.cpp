@@ -50,7 +50,9 @@ HA_Device_Repository::update_device (int device_id)
   // Construct a guard specifying the type of the mutex as
   // a template parameter and passing in the mutex to hold
   // as a parameter.
+  // FUZZ: disable check_for_ACE_Guard
   ACE_Guard<ACE_Thread_Mutex> guard (this->mutex_);
+  // FUZZ: enable check_for_ACE_Guard
 
   // This can throw an exception that is not caught here.
   ACE_NEW_RETURN (object, Object, -1);

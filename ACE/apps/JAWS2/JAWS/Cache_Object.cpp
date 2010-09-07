@@ -173,7 +173,7 @@ JAWS_Counted_Cache_Object::lock (void)
 unsigned int
 JAWS_Counted_Cache_Object::count_i (void) const
 {
-  ACE_Guard<ACE_SYNCH_MUTEX> g (this->lock_);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g ,this->lock_, 0);
 
   return this->count_;
 }
@@ -181,18 +181,18 @@ JAWS_Counted_Cache_Object::count_i (void) const
 int
 JAWS_Counted_Cache_Object::acquire_i (void)
 {
-  ACE_Guard<ACE_SYNCH_MUTEX> g (this->lock_);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g ,this->lock_, 0);
 
-  this->new_count_++;
+  ++this->new_count_;
   return 0;
 }
 
 int
 JAWS_Counted_Cache_Object::release_i (void)
 {
-  ACE_Guard<ACE_SYNCH_MUTEX> g (this->lock_);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g ,this->lock_, 0);
 
-  this->new_count_--;
+  --this->new_count_;
   this->count_ = this->new_count_;
   return 0;
 }

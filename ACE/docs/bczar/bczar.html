@@ -12,64 +12,64 @@
           Scoreboard </a>
       as one of the primary source of information.
       <li>
-      Notify developers who broke compilation to fix the errors as soon as possible, 
-      ideally by the next day. A red color in the "Compile" column is not at all 
-      acceptable - the Build Czar needs to ensure that these problems are identified 
-      and fixed in a timely manner. If possible, the Build Czar should let developers 
-      know what the source of problems might be. It is quite possible that developers 
-      who checked in the code or users who provided the patch may not have resources 
-      to investigate the issues, so the Builds Czar's help is essential to keep 
+      Notify developers who broke compilation to fix the errors as soon as possible,
+      ideally by the next day. A red color in the "Compile" column is not at all
+      acceptable - the Build Czar needs to ensure that these problems are identified
+      and fixed in a timely manner. If possible, the Build Czar should let developers
+      know what the source of problems might be. It is quite possible that developers
+      who checked in the code or users who provided the patch may not have resources
+      to investigate the issues, so the Builds Czar's help is essential to keep
       things moving ahead.
       <li>
-      Keep an eye on the tests that are run in every build. Anything abnormal needs 
-      to be notified to the right developer. The Build Czar should try helping the 
-      developer by providing stack traces (in case of crashes) or other details like 
+      Keep an eye on the tests that are run in every build. Anything abnormal needs
+      to be notified to the right developer. The Build Czar should try helping the
+      developer by providing stack traces (in case of crashes) or other details like
       printouts with debugging level turned on.
       <li>
-        Some tests fail in the daily builds for many reasons like known bugs, transient 
+        Some tests fail in the daily builds for many reasons like known bugs, transient
         timeouts etc. Make sure that no new test failures show up. This <a href="mailto:jwillemsen@remedy.nl">
           guy</a>
       knows most of the information. Ask him to help you out with known problems.
       <li>
-        Keep an eye on the <a href="http://www.dre.vanderbilt.edu/Stats">footprint and 
-          performance</a> stats. Any abnormal changes should be brought to the 
+        Keep an eye on the <a href="http://www.dre.vanderbilt.edu/Stats">footprint and
+          performance</a> stats. Any abnormal changes should be brought to the
         attention of the developer resposible for it or to the <a href="mailto:devo-group@list.isis.vanderbilt.edu">
           devo group</a>.
       <li>
-      Keep the builds ticking. Any red on the "Last Finished" column in the 
-      Scoreboard should be fixed. The link to the "Build Name" indicates the machine 
+      Keep the builds ticking. Any red on the "Last Finished" column in the
+      Scoreboard should be fixed. The link to the "Build Name" indicates the machine
       where the build is being run.
       <li>
-      The builds don't cover all the possible configurations. If you get a bug report 
-      about a compile error in a particular configuration, try setting up a build to 
+      The builds don't cover all the possible configurations. If you get a bug report
+      about a compile error in a particular configuration, try setting up a build to
       make sure that it doesn't show up again if it has been fixed.
       <li>
         Keep an eye on the <a href="http://bugzilla.dre.vanderbilt.edu/">bugzilla
         </a>
-      entries that are registered by users and developers. Decide on the bugs that 
+      entries that are registered by users and developers. Decide on the bugs that
       need to be fixed for the beta and pain developers for an ETA.
     </p>
     <P>
-      The document <a href="./privileges.html">here </a>talks about the powers of a 
+      The document <a href="./privileges.html">here </a>talks about the powers of a
       build Czar.
     </P>
     <P>
-      The Build Czar is empowered to set up more builds on his own for his 
+      The Build Czar is empowered to set up more builds on his own for his
       convenience. This <a href="https://svn.dre.vanderbilt.edu/viewvc/autobuild/trunk/README?revision=HEAD">
         page </a>has a step by step instructions on how to do that.
     </P>
     <P>
-      The build czar can get the build configuration by looking at the config portion 
+      The build czar can get the build configuration by looking at the config portion
       of the scoreboard.
     </P>
-    <p>Pro-active involvement by the build czar is necessary. Being a pro-active 
-      build czar requires monitoring the subversion archive carefully and responding 
+    <p>Pro-active involvement by the build czar is necessary. Being a pro-active
+      build czar requires monitoring the subversion archive carefully and responding
       quickly to suspected changes to keep the repo stays stable.</p>
     <hr>
     <h2>Recipe for Cutting a Beta/Minor Kit</h2>
     <P>
-      The build czar is also in charge for the release of the beta. Cutting a beta is 
-      as simple as cutting butter if things go well. Here is the procedure followed 
+      The build czar is also in charge for the release of the beta. Cutting a beta is
+      as simple as cutting butter if things go well. Here is the procedure followed
       while cutting a beta:
       <ol>
         <li>
@@ -82,7 +82,7 @@
             <li>
               type <code>screen</code> to start screen.</li>
             <li>
-              execute commands as normal. Note that Ctrl-A is special in screen, so you need 
+              execute commands as normal. Note that Ctrl-A is special in screen, so you need
               to type Ctrl-A-A to send a Ctrl-A to the shell</li>
             <li>
               should your session be interrupted, reconnect and type <code>screen -x</code></li>
@@ -95,7 +95,7 @@
             <code>ssh bczar@download.dre.vanderbilt.edu</code><br>
             to ensure that this succeeds. If not fix the problem, if ok exit again back to
         <li>
-          Prior to starting this, gather aggregate release notes from all developers. 
+          Prior to starting this, gather aggregate release notes from all developers.
           This is usually in the form of an email plea asking to update all NEWS files in
           the archive. These NEWS files are used as part of the release notes for the release.</li>
         <li>
@@ -108,8 +108,8 @@
         </li>
         <li>
           Checkout a new workspace on a Fedora system with the last public release and with
-          all patches installed. 
-          
+          all patches installed.
+
         </li>
         <ul>
           <li>
@@ -120,23 +120,23 @@
             Checkout like this:
             <ul>
               <li>
-                <code>svn co --username &lt;your user id&gt; 
+                <code>svn co --username &lt;your user id&gt;
                 https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk DOC_ROOT</code></li>
               <li>
-                <code>svn co --username &lt;your user id&gt; 
+                <code>svn co --username &lt;your user id&gt;
                 https://svn.dre.vanderbilt.edu/DOC/MPC/trunk DOC_ROOT/ACE/MPC</code></li>
             </ul>
         </ul>
         <li>
           Set $DOC_ROOT to point to the new workspace you checked out.</li>
         <li>
-          Set an environment variable SIGNATURE indicating your full name. This is used 
+          Set an environment variable SIGNATURE indicating your full name. This is used
           to fill the ChangeLog entry.</li>
         <ul>
           <li>
             For example,<tt>export SIGNATURE="Johnny Willemsen"</tt></li></ul>
         <li>
-          Set an environment variable MAILID indicating your mail id. This is used to 
+          Set an environment variable MAILID indicating your mail id. This is used to
           fill the mail id portion of the ChangeLog entry.</li>
         <ul>
           <li>
@@ -147,16 +147,16 @@
         <li>
           Tag the release by executing<br>
           <code>ACE/bin/make_release.py --beta --update --tag</code><br>
-          This will only take a couple minutes to complete and once done successfully, 
-          you can carry on with BOTH creating the kits and generating the doxygen 
-          documentation in parallel. NOTE that <code>--beta</code> should be replaced 
+          This will only take a couple minutes to complete and once done successfully,
+          you can carry on with BOTH creating the kits and generating the doxygen
+          documentation in parallel. NOTE that <code>--beta</code> should be replaced
           with <code>--minor</code> or <code>--major</code> as appropriate.</li>
         <br>
         After the repository has been tagged check each file listed below to make
         sure version numbers are updated as expected.<br>
         <br>
         In the <em>EXTREMELY</em> unlikely event that something goes wrong during the <em>
-          tagging</em> of the repo, the following files must be returned to the state 
+          tagging</em> of the repo, the following files must be returned to the state
         they were in before the release process started and then checked back into SVN:<br>
         <ul>
           <code>
@@ -187,16 +187,16 @@
         In most cases, a<br>
         <code>svn revert -R *</code><br>
         from DOC_ROOT will suffice.<br />
-    The tag will also need to be removed (both in Middleware and MPC): 
-    ACE+TAO+CIAO-X_Y_Z (where X is the ACE Major version number, and Y & Z are the 
+    The tag will also need to be removed (both in Middleware and MPC):
+    ACE+TAO+CIAO-X_Y_Z (where X is the ACE Major version number, and Y & Z are the
     Minor and Beta release numbers of the release that is to be restarted).<p>
       E.g.:<br>
-      <code>svn rm 
+      <code>svn rm
         https://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z<br />
         svn rm https://svn.dre.vanderbilt.edu/DOC/MPC/tags/ACE+TAO+CIAO-X_Y_Z<br />
       </code>
       <br>
-      Note that this <em>only</em> needs to be done if the <em>tagging</em> fails. If 
+      Note that this <em>only</em> needs to be done if the <em>tagging</em> fails. If
       kit creation fails, simply restart that process.
       <li>
         Create the kits by executing<br>
@@ -204,14 +204,14 @@
         This will take somewhere arround 2-4 hours to complete.
         <ul>
           <li>
-            These commands only tags and creates the kits for the software itself, not 
+            These commands only tags and creates the kits for the software itself, not
             documentation, this can be started in parrellel with this activity.
           </li>
           <li>
             The kits end up in <tt>$DOC_ROOT/packages</tt></li>
         </ul>
     <p>
-    To summarize, the following is a transcript of the steps up to this point 
+    To summarize, the following is a transcript of the steps up to this point
     executing successfully:
     <p><code>$ ssh ..<br>
         No default printer<br>
@@ -231,17 +231,17 @@
     <p>
       Feel free to cut and paste with suitable edits.
       <li>
-        The packages end up by default under $DOC_ROOT/package-&lt;PID&gt;, you can 
-        copy them to the webserver using the following commands. (Note that &lt;PID&gt; 
+        The packages end up by default under $DOC_ROOT/package-&lt;PID&gt;, you can
+        copy them to the webserver using the following commands. (Note that &lt;PID&gt;
         needs to be the numerical pid of the process that created the kit, use<br>
         <code>ls -ald</code>
-        to determine the correct filename.) At the moment you execute these commands 
+        to determine the correct filename.) At the moment you execute these commands
         all users can download these packages.</li>
-      <code>scp $DOC_ROOT/package-&lt;PID&gt;/ACE* 
+      <code>scp $DOC_ROOT/package-&lt;PID&gt;/ACE*
         bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution<br>
       </code>
       <li>
-        After the repository is tagged you can also start generating the doxygen 
+        After the repository is tagged you can also start generating the doxygen
         documentation in parrellel with the kit generation above.<br>
         <ul>
           <li>
@@ -251,7 +251,7 @@
             After login check that you can,
             <br>
             <code>ssh bczar@download.dre.vanderbilt.edu</code><br>
-            to ensure that this succeeds. If not fix the problem, if ok exit again back to 
+            to ensure that this succeeds. If not fix the problem, if ok exit again back to
             your release system. </li>
           <li>
             <code>cd /tmp</code><br>
@@ -263,15 +263,15 @@
           than make sure you use <code>/web/users/isisbuilds/tmp/ACE_wrappers</code>
           as working directory
           <li>
-            Update the workspace with the right version tag (replace the X_Y_Z with the ACE 
+            Update the workspace with the right version tag (replace the X_Y_Z with the ACE
             version number being released e.g. 5_6_7)
             <br>
-            <code>svn co 
-              svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/ACE 
+            <code>svn co
+              svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/ACE
               ACE_wrappers<br>
-              svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/TAO 
+              svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/TAO
               ACE_wrappers/TAO<br>
-              svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/CIAO 
+              svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/CIAO
               ACE_wrappers/TAO/CIAO </code>
           </li>
           <li>Change to the ACE_wrappers directory using <br>
@@ -313,51 +313,51 @@
  </code>
 <br>
       <li>
-        While doxygen churns, format a release announcement, including the release 
+        While doxygen churns, format a release announcement, including the release
         notes gathered from developers.
         <ul>
-          <li>Get from bugzilla the bugs fixed. Use the following 
+          <li>Get from bugzilla the bugs fixed. Use the following
               <a href="http://bugzilla.dre.vanderbilt.edu/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=ACE&product=CIAO&product=CoSMIC&product=MPC&product=OpenDDS&product=TAO&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailassigned_to1=1&emailtype1=substring&email1=&emailreporter2=1&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=2010-07-04&chfieldto=Now&chfield=resolution&chfieldvalue=FIXED&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">query</a> as start query and update the start date.</li>
           <li>
-            Let <a href="mailto:schmidt@cs.wustl.edu">Doug Schmidt</a> review these before 
+            Let <a href="mailto:schmidt@cs.wustl.edu">Doug Schmidt</a> review these before
             you do anything with them.</li></ul>
-      
+
       <li>
         Make sure the new version is available in Bugzilla.</li>
       <ul>
         <li>
-          We now have a bczar Bugzilla user (bczar@dre.vanderbilt.edu) with full 
-          privileges which points to the bczar user at ISIS. To gain access to this 
-          account as a new build czar, you could update the ~/.forward file on one of the 
-          ISIS hosts (for example bczar@naboo.dre.vanderbilt.edu) with your own email 
-          address (but be aware that if you leave this ~/.forward file in effect, you 
-          will get innundated with cron mail messages from all of the ISIS lab build 
-          machines, so it is probably best to remove it after obtaining the Bugzilla 
-          password). From the "Bugzilla - Main Page" 
-          (http://bugzilla.dre.vanderbilt.edu/index.cgi) click on one of the various 
-          "LogIn" links, and from this login page you should be able to "Submit Request" 
-          to change a forgotten password. If you enter bczar@dre.vanderbilt.edu and click 
-          "Submit Request" this will email you the password change link to 
-          bczar@dre.vanderbilt.edu, which will then in turn be forwarded to your own 
-          email account. Simply copy this link into your browser to set your own bczar 
+          We now have a bczar Bugzilla user (bczar@dre.vanderbilt.edu) with full
+          privileges which points to the bczar user at ISIS. To gain access to this
+          account as a new build czar, you could update the ~/.forward file on one of the
+          ISIS hosts (for example bczar@naboo.dre.vanderbilt.edu) with your own email
+          address (but be aware that if you leave this ~/.forward file in effect, you
+          will get innundated with cron mail messages from all of the ISIS lab build
+          machines, so it is probably best to remove it after obtaining the Bugzilla
+          password). From the "Bugzilla - Main Page"
+          (http://bugzilla.dre.vanderbilt.edu/index.cgi) click on one of the various
+          "LogIn" links, and from this login page you should be able to "Submit Request"
+          to change a forgotten password. If you enter bczar@dre.vanderbilt.edu and click
+          "Submit Request" this will email you the password change link to
+          bczar@dre.vanderbilt.edu, which will then in turn be forwarded to your own
+          email account. Simply copy this link into your browser to set your own bczar
           password for the next steps.</li>
         <li>
           here is the description of how to add a new version through Bugzilla.</li>
         <li>
-          go to any Bugzilla "Query" page, you should see a grey box at the bottom. click 
+          go to any Bugzilla "Query" page, you should see a grey box at the bottom. click
           "Log in" link to log in as bczar@dre.vanderbilt.edu.</li>
         <li>
-          look at the grey box at bottom again. You will see several links following 
+          look at the grey box at bottom again. You will see several links following
           "Edit". Click on the "Product" link.</li>
         <li>
-          you are then at "Select product" page. You should see a list components, i.e., 
+          you are then at "Select product" page. You should see a list components, i.e.,
           ACE CIAO TAO. Click on the product you want to edit.</li>
         <li>
-          you are then at "Edit product" page. Scroll down a bit, you should see a list 
-          of all versions coming with this product. At the very beginning of the list, 
+          you are then at "Edit product" page. Scroll down a bit, you should see a list
+          of all versions coming with this product. At the very beginning of the list,
           you should see "Edit versions" link. Click this link.</li>
         <li>
-          you should see a "Add a new version" text box and a "Add" link just above the 
+          you should see a "Add a new version" text box and a "Add" link just above the
           grey box at the bottom. Click on this link</li>
         <li>
           you are then at "Add version of [Name of the product]" page.</li>
@@ -372,7 +372,7 @@
         <li>
           Create a temporary directory. eg. tmp and change Directory to this- <br><code>mkdir tmp</code><br><code>cd tmp</code></li>
         <li>
-          scp file from the download server -<br><code>scp 
+          scp file from the download server -<br><code>scp
           bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution/ACE-html.tar.bz2 .</code>
           </li>
         <li>
@@ -411,12 +411,12 @@
         one build where you run the TAO Hello world test and check if the libraries are having the
         correct version number.</li>
       <li>
-        Update in the autobuild archive the file configs/scoreboard/releases.xml with 
+        Update in the autobuild archive the file configs/scoreboard/releases.xml with
         the made release (version number and release date). This is used by the integrated scoreboard on http://scoreboard.theaceorb.nl  Remember to do a changelog entry.</li>
       <li>
         Update the ACE_wrappers repo (remember to create a changelog entry, and possiably archive the old changelog to the changelog directory if this has become too long):<ul>
-        <li>docs/Download.html to show the new release. Make sure you refer to the 
-        previous_versions directory, that way we can exactly track how many people 
+        <li>docs/Download.html to show the new release. Make sure you refer to the
+        previous_versions directory, that way we can exactly track how many people
         download a specific version.</li>
       <li>
         etc/index.hml to show the new doxygen package you installed</li>
@@ -424,12 +424,25 @@
       <li>
         Update the NEWS, TAO/NEWS, and TAO/CIAO/NEWS files to have a new section for the next release.</li>
       <li>
+        Update OpenSuSE Build service using
+        <code>
+        osc checkout devel:libraries:ACE
+        osc add <new release>
+        cp rpmbuild/ace-tao.spec .
+        cp debian/control debian.control
+        cp debian/dsc ace.dsc
+        cp debian/changelog debian.changelog
+        cp debian/rules debian.rules
+        osc commit
+        </code>
+      </li>
+      <li>
         Mail the approved release announcement out to, at minimum the following: <tt>ciao-users@list.isis.vanderbilt.edu</tt>,
         <tt>tao-users@list.isis.vanderbilt.edu</tt>, <tt>tao-announce@list.isis.vanderbilt.edu</tt>,
-        <tt>ace-users@list.isis.vanderbilt.edu</tt>, <tt>ace-announce@list.isis.vanderbilt.edu</tt>. 
+        <tt>ace-users@list.isis.vanderbilt.edu</tt>, <tt>ace-announce@list.isis.vanderbilt.edu</tt>.
         Do this as yourself (not as bugzilla). <b>N.B.</b>
-      You will not be able to post to the users' lists unless you are subscribed to 
-      them. Odds are you will not be able to post to the announce lists at all. Ask 
+      You will not be able to post to the users' lists unless you are subscribed to
+      them. Odds are you will not be able to post to the announce lists at all. Ask
       someone else (like Doug or Johnny) to do this step.<br>
       </ol>
     </p>
@@ -438,37 +451,37 @@
       Tips to being a Build Czar</h2>
     <p><ol>
       <li>Trust no one.</li>
-      <li>Be careful with <a href="http://www.cs.wustl.edu/~schmidt">this guy</a>, he 
-      is notorious in breaking builds (and fixing them as well...Rumour has it that 
-      it's actually a super-scalar, super-pipelined processor capable of out-of-order 
+      <li>Be careful with <a href="http://www.cs.wustl.edu/~schmidt">this guy</a>, he
+      is notorious in breaking builds (and fixing them as well...Rumour has it that
+      it's actually a super-scalar, super-pipelined processor capable of out-of-order
       execution, in human incarnation).</li>
       <li>Don't forgive people who break ACE :-)</li>
-      <li>If a build hasn't run in a long time (symptoms are a "red" in the Last Run 
-      column of the build scoreboard), delete the .disable file in 
+      <li>If a build hasn't run in a long time (symptoms are a "red" in the Last Run
+      column of the build scoreboard), delete the .disable file in
       /path/to/build/directory/BUILD_NAME/ by hand.</li>
-      <li>Think of the group who wrote the scoreboard update script, every time you 
+      <li>Think of the group who wrote the scoreboard update script, every time you
       catch an otherwise not so obvious error with the help of the scoreboard. Tell <a href="mailto:devo-group@list.isis.vanderbilt.edu">
         DEVO group</a> about it.</li>
       <li>Send a note to  <a href="mailto:sysadmin@isis.vanderbilt.edu">sysadmin@isis.vanderbilt.edu</a> asking for the repo to be frozen. Provide them a list of names, including yourself and bczar to be granted write permission.
       </li>
       <li>Compile once on Win32, Linux and Solaris before cutting a beta.</li>
-      <li>Trust the release script when making a release. Don't make tar balls by 
-      hand. Make sure that the public ftp directories 
-      (/project/beguine/ftp/pub/ACE+TAO-distribution and 
-      /project/beguine/ftp/pub/ACE+TAO-distribution/diffs) have the right 
+      <li>Trust the release script when making a release. Don't make tar balls by
+      hand. Make sure that the public ftp directories
+      (/project/beguine/ftp/pub/ACE+TAO-distribution and
+      /project/beguine/ftp/pub/ACE+TAO-distribution/diffs) have the right
       permissions, so that the release script can copy the tar balls.</li>
-      <li>When all hell breaks loose, don't wait for the nightly builds to monitor 
+      <li>When all hell breaks loose, don't wait for the nightly builds to monitor
       improvement. Instead manually start the builds.</li>
-      <li>Maintain private up-to-date workspaces for problem platforms (read as 
+      <li>Maintain private up-to-date workspaces for problem platforms (read as
       Solaris).</li>
       <li>Don't hesitate to ask for help.</li>
-      <li>When you get an account to access the svn repo, make sure you are added to 
-      the correct groups, for example, 
-      gid=100(users),5000(doc),5002(acetaodev),5003(cvs). Otherwise you will have 
+      <li>When you get an account to access the svn repo, make sure you are added to
+      the correct groups, for example,
+      gid=100(users),5000(doc),5002(acetaodev),5003(cvs). Otherwise you will have
       problem to checkout various modules.</li>
-      <li>Install your public key to the different machines you have frequent access 
+      <li>Install your public key to the different machines you have frequent access
       to avoid typing password.</li>
-      <li>Update this page if you have any more tips for future build czars :-). This 
+      <li>Update this page if you have any more tips for future build czars :-). This
       page is in svn under <code>ACE_wrappres/docs/bczar/bczar.html</code></li>
     </p></ol>
     <hr>
@@ -477,8 +490,8 @@
     </Center>
     <hr>
     <h2>Build Czar Arthur</h2>
-    <p>Many years have passes since the days of the legendary Build Czar Arthur. His 
-      duties were given to him by the mystical Lady of the Lake, who outlined the 
+    <p>Many years have passes since the days of the legendary Build Czar Arthur. His
+      duties were given to him by the mystical Lady of the Lake, who outlined the
       first responsibilities of the Build Czar.</p>
     <tt>
       <br>

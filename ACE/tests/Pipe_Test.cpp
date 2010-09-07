@@ -25,8 +25,6 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Pipe_Test, "$Id$")
-
 // Indicates whether we should close the pipe or not.
 static int close_pipe = 1;
 

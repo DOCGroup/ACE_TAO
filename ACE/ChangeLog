@@ -1,3 +1,338 @@
+Tue Sep  7 10:52:59 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp:
+          Use ACE_GUARD
+
+        * Kokyu/Dispatcher_Task.cpp:
+          Initialise pointer with 0
+
+        * PROBLEM-REPORT-FORM:
+        * VERSION:
+          Updated support email addresses
+
+        * ace/ACE.inl:
+          Layout changes
+
+        * ace/ACE.cpp:
+          Layout changes, simplified some ifdef checks
+
+        * ace/Auto_IncDec_T.h:
+        * ace/Env_Value_T.h:
+          Use ACE_Copy_Disabled
+
+        * ace/Bound_Ptr.inl:
+          Documentation updates
+
+        * ace/CORBA_macros.h:
+          Removed all deprecated macros
+
+        * ace/Dynamic_Service_Base.cpp:
+          Use ACE_GUARD_RETURN
+
+        * ace/Event_Handler_T.h:
+        * ace/Event_Handler_T.inl:
+        * ace/Event_Handler_T.cpp:
+          Removed checks for ACE_HAS_TEMPLATE_TYPEDEFS, I think all compilers
+          have this now, let us see if nothing breaks
+
+        * ace/FILE.h:
+          Doxygen updates
+
+        * ace/Future.h:
+        * ace/Future.cpp:
+          Use mutex defines
+
+        * ace/Future_Set.h:
+          Use ACE_Copy_Disabled
+
+        * ace/Future_Set.cpp:
+          Initialise pointer with 0
+
+        * ace/Global_Macros.h:
+          Removed checks for ACE_HAS_TEMPLATE_TYPEDEFS, doxygen changes, make it
+          possible for users to redefine ACE_GUARD macros
+
+        * ace/Guard_T.h:
+        * ace/Guard_T.inl:
+        * ace/Guard_T.cpp:
+          Doxygen changes, disable ACE_Guard checks for this file
+
+        * ace/Hash_Map_Manager_T.h:
+        * ace/Hash_Multi_Map_Manager_T.h:
+        * ace/Map_Manager.h:
+          Update to indicate the usage of ACE_GUARD
+
+        * ace/INET_Addr.h:
+          Doxygen changes
+
+        * ace/Local_Tokens.h:
+          Disable part of this file for ACE_Guard fuzz check
+
+        * ace/Log_Msg.cpp:
+          Use ACE_OS::thr_self
+
+        * ace/Malloc_T.h:
+          Disable part of this file for ACE_Guard fuzz check, doxygen changes
+
+        * ace/Message_Queue_T.h:
+        * ace/Message_Queue_T.cpp:
+        * ace/Message_Queue_Vx.h:
+        * ace/Message_Queue_Vx.cpp:
+          Removed ACE_Guard argument to some methods, not used and now cause
+          fuzz to fail
+
+        * ace/Mutex.h:
+        * ace/Mutex.inl:
+          Added non const lock(), this fixes bugzilla 3878. Thanks to
+          Susan Finster <sfinster at daetwyler-rd dot com> for reporting this
+
+        * ace/Null_Barrier.h:
+        * ace/Null_Condition.h:
+        * ace/Null_Mutex.h:
+        * ace/Null_Semaphore.h:
+          Removed old comments, disable part for ACE_Guard, removed
+          ACE_Null_Mutex_Guard
+
+        * ace/OS_NS_Thread.cpp:
+          Layout changes, use ACE_Guard
+
+        * ace/OS_NS_poll.cpp:
+        * ace/OS_NS_sys_select.cpp:
+          Layout changes
+
+        * ace/OS_NS_sys_socket.inl:
+          Comment change
+
+        * ace/Read_Buffer.h:
+        * ace/Remote_Tokens.h:
+        * ace/SOCK.h:
+          Doxygen changes
+
+        * ace/SOCK_Connector.h:
+        * ace/SOCK_Dgram_Mcast.h:
+          Doxygen changes
+
+        * ace/SOCK_Connector.cpp:
+          Layout and const changes
+
+        * ace/Select_Reactor.h:
+          Disable part of this file for ACE_Guard fuzz check
+
+        * ace/Service_Gestalt.h:
+          Use ACE_Copy_Disabled
+
+        * ace/Sig_Handler.cpp:
+          Use ACE_GUARD macros
+
+        * ace/Synch_Traits.h:
+          Removed ACE_HAS_TEMPLATE_TYPEDEFS checks
+
+        * ace/TSS_T.h:
+        * ace/TSS_T.cpp:
+          Use ACE_Copy_Disabled, reworked some code to fix ACE_Guard fuzz
+          checks
+
+        * ace/Task_Ex_T.h:
+          Use ACE_Copy_Disabled
+
+        * apps/Gateway/Peer/Peer.cpp:
+        * apps/JAWS/server/HTTP_Server.cpp:
+        * apps/JAWS/server/JAWS_IO.cpp:
+          Initialise pointers with 0
+
+        * apps/JAWS/server/HTTP_Helpers.cpp:
+          Use ACE_GUARD macros
+
+        * apps/JAWS2/JAWS/Cache_Hash_T.cpp:
+        * apps/JAWS2/JAWS/Cache_Manager_T.cpp:
+        * apps/JAWS2/JAWS/Cache_Object.cpp:
+        * apps/JAWS2/JAWS/Concurrency.cpp:
+        * apps/JAWS2/JAWS/FILE.cpp:
+        * apps/JAWS2/JAWS/Jaws_IO.cpp:
+        * apps/JAWS2/JAWS/Reaper.cpp:
+        * apps/JAWS3/jaws3/FILE.cpp:
+          Use ACE_GUARD macros
+
+        * apps/gperf/src/Options.cpp:
+          Rename of local variable so that we don't need to disable ACE_OS
+          fuzz check
+
+        * bin/fuzz.pl:
+          Improved ACE_Guard checks and enable this one by default
+
+        * bin/generate_doxygen.pl:
+          Let DANCE use the CIAO version file for the moment
+
+        * bin/make_release.py:
+          Don't create static and wince solutions as part of the release anymore,
+          if you use these, generate them by hand in the future. Added vc10
+          project files
+
+        * examples/APG/Proactor/HA_Proactive_Status.cpp:
+        * examples/APG/Reactor/Client.cpp:
+        * examples/APG/Reactor/HAStatus.cpp:
+        * examples/APG/Streams/Answerer.cpp:
+        * examples/APG/Streams/CommandStream.cpp:
+        * examples/APG/ThreadManagement/Pool.cpp:
+        * examples/APG/ThreadPools/LF_ThreadPool.cpp:
+        * examples/APG/ThreadPools/Task_ThreadPool.cpp:
+        * examples/APG/ThreadSafety/Semaphore.cpp:
+        * examples/APG/Threads/Message_Blocks.cpp:
+        * examples/APG/Threads/Message_Queue.cpp:
+        * examples/ASX/Message_Queue/bounded_buffer.cpp:
+        * examples/ASX/Message_Queue/priority_buffer.cpp:
+        * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.cpp:
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/display_logfile.cpp:
+        * examples/IPC_SAP/UPIPE_SAP/ex1.cpp:
+        * examples/Reactor/Misc/test_demuxing.cpp:
+        * examples/Reactor/WFMO_Reactor/Talker.cpp:
+        * examples/Threads/barrier2.cpp:
+        * examples/Threads/thread_pool.cpp:
+          Initialise pointers with 0
+
+        * examples/APG/ThreadPools/ThreadPool.cpp:
+          Use ACE_Thread_ID to store a print a thread id using ACE_DEBUG, that
+          is the only way that is 100% portable
+
+        * examples/APG/Threads/Guards.cpp:
+          Disable ACE_Guard fuzz
+
+        * examples/Threads/reader_writer.cpp:
+        * examples/Threads/recursive_mutex.cpp:
+          Use ACE_GUARD macros
+
+        * examples/Threads/thread_specific.cpp:
+        * examples/Threads/tss1.cpp:
+          Removed code not used
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Added CROSS_COMPILE support to this file
+
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/platform_linux_common.GNU:
+          Moved some bits to platform_g++_common.GNU, works with G++ in
+          general
+
+        * include/makeinclude/platform_qnx_neutrino.GNU:
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
+          Cleanup
+
+        * netsvcs/lib/Log_Message_Receiver.h:
+        * netsvcs/lib/Log_Message_Receiver.cpp:
+          Use ACE_GUARD macros
+
+        * performance-tests/Misc/Misc.mpc:
+          Enable test_guard
+
+        * performance-tests/Misc/test_guard.cpp:
+          Made this compiling again
+
+        * performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.cpp:
+        * performance-tests/TCP/tcp_test.cpp:
+          Renamed variable to not need ACE_OS fuzz disable code
+
+        * protocols/ace/HTBP/HTBP_ID_Requestor.cpp:
+        * protocols/ace/HTBP/HTBP_Session.cpp:
+          Use ACE_GUARD macros
+
+        * protocols/ace/RMCast/Acknowledge.h:
+        * protocols/ace/RMCast/Acknowledge.cpp:
+        * protocols/ace/RMCast/Bits.h:
+        * protocols/ace/RMCast/Flow.h:
+        * protocols/ace/RMCast/Flow.cpp:
+        * protocols/ace/RMCast/Fragment.h:
+        * protocols/ace/RMCast/Fragment.cpp:
+        * protocols/ace/RMCast/Link.h:
+        * protocols/ace/RMCast/Link.cpp:
+        * protocols/ace/RMCast/Parameters.h:
+        * protocols/ace/RMCast/Protocol.h:
+        * protocols/ace/RMCast/Protocol.cpp:
+        * protocols/ace/RMCast/Reassemble.h:
+        * protocols/ace/RMCast/Reassemble.cpp:
+        * protocols/ace/RMCast/Retransmit.h:
+        * protocols/ace/RMCast/Retransmit.cpp:
+        * protocols/ace/RMCast/Simulator.h:
+        * protocols/ace/RMCast/Simulator.cpp:
+        * protocols/ace/RMCast/Socket.h:
+        * protocols/ace/RMCast/Socket.cpp:
+        * protocols/ace/RMCast/Stack.h:
+        * protocols/ace/RMCast/Stack.cpp:
+        * protocols/ace/TMCast/FaultDetector.hpp:
+        * protocols/ace/TMCast/Group.cpp:
+        * protocols/ace/TMCast/Group.hpp:
+        * protocols/ace/TMCast/GroupFwd.hpp:
+        * protocols/ace/TMCast/LinkListener.hpp:
+        * protocols/ace/TMCast/MTQueue.hpp:
+        * protocols/ace/TMCast/MTQueue.cpp:
+        * protocols/ace/TMCast/Messaging.hpp:
+        * protocols/ace/TMCast/Protocol.hpp:
+        * protocols/ace/TMCast/Protocol.cpp:
+        * protocols/ace/TMCast/TransactionController.hpp:
+          Removed commented out code, Id changes, disable ACE_Guard check
+          for this project
+
+        * rpmbuild/ace-tao.spec:
+          Fixed some problems in this spec file
+
+        * tests/Aio_Platform_Test.cpp:
+        * tests/Basic_Types_Test.cpp:
+        * tests/Bug_1576_Regression_Test.cpp:
+        * tests/Bug_3532_Regression_Test.cpp:
+        * tests/Bug_3673_Regression_Test.cpp:
+        * tests/Bug_3709_Regression_Test.cpp:
+        * tests/Bug_3744_Regression_Test.cpp:
+        * tests/Compiler_Features_03_Test.cpp:
+        * tests/Compiler_Features_09_Test.cpp:
+        * tests/Compiler_Features_13_Test.cpp:
+        * tests/Compiler_Features_14_Test.cpp:
+        * tests/Env_Value_Test.cpp:
+        * tests/Hash_Map_Bucket_Iterator_Test.cpp:
+        * tests/Logging_Strategy_Test.cpp:
+        * tests/MT_SOCK_Test.cpp:
+        * tests/Pipe_Test.cpp:
+        * tests/Priority_Task_Test.cpp:
+        * tests/Proactor_UDP_Test.cpp:
+        * tests/QtReactor_Test.cpp:
+        * tests/Reactor_Notification_Queue_Test.cpp:
+        * tests/Reactor_Registration_Test.cpp:
+        * tests/Reference_Counted_Event_Handler_Test.cpp:
+        * tests/Time_Service_Test.cpp:
+          Zapped ACE_RCSID
+
+        * tests/Message_Block_Test.cpp:
+        * tests/Multicast_Test_IPV6.cpp:
+          Initialise pointer with 0
+
+        * tests/Reader_Writer_Test.cpp:
+          Use ACE_GUARD
+
+        * tests/Recursive_Mutex_Test.cpp:
+          Disable ACE_Guard fuzz for part of this file
+
+        * tests/Bug_3878_Regression_Test.cpp:
+          New test for bugzilla 3878
+
+        * tests/SSL/Bug_2912_Regression_Test.cpp:
+        * tests/TP_Reactor_Test.cpp:
+          Use ACE_GUARD
+
+        * tests/Simple_Message_Block_Test.cpp:
+        * tests/Svc_Handler_Test.cpp:
+        * tests/Thread_Pool_Test.cpp:
+        * tests/UPIPE_SAP_Test.cpp:
+          Initialise pointers with 0
+
+        * tests/Thread_Mutex_Test.cpp:
+          Disable ACE_Guard fuzz
+
+        * tests/Upgradable_RW_Test.cpp:
+          Use ACE_GUARD
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added 3878
+
 Mon Sep  6 09:30:00 UTC 2010  Simon Massey  <buildczar at prismtech dot com>
 
         * ace/Acceptor.cpp:

@@ -348,7 +348,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Stream_Modules.cpp
     String_Base.cpp
     Svc_Handler.cpp
-    Synch_T.cpp
     Refcountable_T.cpp
     TSS_T.cpp
     Task_Ex_T.cpp
@@ -390,7 +389,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     recurse = 1
 
     ACE_export.h
-    Array.h
     Bound_Ptr.h
     CE_Screen_Output.h
     Codeset_Symbols.h

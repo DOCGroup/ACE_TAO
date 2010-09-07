@@ -17,7 +17,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Array.h"
+#include "ace/Containers_T.h"
 #include "ace/INet/INet_Export.h"
 #include "ace/INet/Response.h"
 #include "ace/INet/HTTP_Header.h"

@@ -52,8 +52,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_time.h"
 
-ACE_RCSID(tests, Logging_Strategy_Test, "$Id$")
-
 // Considering UNIX OS to be default. On Win32 platforms, the symbols
 // are got form the .exe as one cant have .exe and .dll for the same
 // .cpp. Also, on Win32 platforms one cant use the .obj to obtain

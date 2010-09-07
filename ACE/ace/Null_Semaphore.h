@@ -16,8 +16,6 @@
 #define ACE_NULL_SEMAPHORE_H
 #include /**/ "ace/pre.h"
 
-// All methods in this class are inline, so there is no
-// need to import or export on Windows. -- CAE 12/18/2003
 #include "ace/os_include/os_errno.h"
 #include "ace/os_include/sys/os_types.h"
 

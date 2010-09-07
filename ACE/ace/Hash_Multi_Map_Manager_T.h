@@ -744,7 +744,7 @@ protected:
  * @c ACE_Hash_Multi_Map_Manager it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * @c ACE_Guard or @c ACE_Read_Guard on the @c ACE_Hash_Multi_Map_Manager's
+ * @c ACE_GUARD or @c ACE_READ_GUARD on the @c ACE_Hash_Multi_Map_Manager's
  * internal lock, which is accessible via its @c mutex method.
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
@@ -790,8 +790,8 @@ public:
  * @c ACE_Hash_Multi_Map_Manager it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * @c ACE_Guard or @c ACE_Read_Guard on the @c ACE_Hash_Multi_Map_Manager's
- * internal lock, which is accessible via its @c mutex method.
+ * @c ACE_GUARD or @c ACE_READ_GUARD on the @c ACE_Hash_Multi_Map_Manager's
+ * internal lock, which is accessible via its @c mutex() method.
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_Hash_Multi_Map_Const_Iterator : public ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
@@ -838,7 +838,7 @@ public:
  * @c ACE_Hash_Multi_Map_Manager it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * @c ACE_Guard or @c ACE_Read_Guard on the @c ACE_Hash_Multi_Map_Manager's
+ * @c ACE_GUARD or @c ACE_READ_GUARD on the @c ACE_Hash_Multi_Map_Manager's
  * internal lock, which is accessible via its @c mutex method.
  *
  * Note that a creation method for this new iterator cannot be added
@@ -912,7 +912,7 @@ protected:
  * @c ACE_Hash_Multi_Map_Manager it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * @c ACE_Guard or @c ACE_Read_Guard on the @c ACE_Hash_Multi_Map_Manager's
+ * @c ACE_GUARD or @c ACE_READ_GUARD on the @c ACE_Hash_Multi_Map_Manager's
  * internal lock, which is accessible via its @c mutex method.
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>

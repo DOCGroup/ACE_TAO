@@ -85,13 +85,13 @@ public:
 
   /**
    * Sets the file pointer as follows:
-   *    o If <whence> is <SEEK_SET>, the pointer is set to @a offset
+   *    o If @ whence is @c SEEK_SET, the pointer is set to @a offset
    *      bytes.
    *
-   *    o  If <whence> is <SEEK_CUR>, the pointer is set to its
-   *       current location plus @a offset.
+   *    o If @a whence> is @c SEEK_CUR, the pointer is set to its
+   *      current location plus @a offset.
    *
-   *    o  If <whence> is <SEEK_END>, the pointer is set to the size
+   *    o If @a whence is @c SEEK_END, the pointer is set to the size
    *       of the file plus offset.
    */
   ACE_OFF_T seek (ACE_OFF_T offset,

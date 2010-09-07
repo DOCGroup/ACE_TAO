@@ -89,7 +89,7 @@ reader (void *)
   for (int iterations = 1;
        iterations <= n_iterations; iterations++)
     {
-      ACE_Read_Guard<ACE_RW_Mutex> g(rw_mutex);
+      ACE_READ_GUARD_RETURN (ACE_RW_Mutex, g, rw_mutex, 0);
 
       ++current_readers;
 
@@ -127,7 +127,7 @@ writer (void *)
        iterations <= n_iterations;
        iterations++)
     {
-      ACE_Write_Guard<ACE_RW_Mutex> g(rw_mutex);
+      ACE_WRITE_GUARD_RETURN (ACE_RW_Mutex, g, rw_mutex, 0);
 
       ++current_writers;
 

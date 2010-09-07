@@ -104,7 +104,7 @@ ACE_OS::bind (ACE_HANDLE handle, struct sockaddr *addr, int addrlen)
   ACE_UNUSED_ARG (addrlen);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640)
-  // VxWorks clears the sin_port member after a succesfull bind when
+  // VxWorks clears the sin_port member after a successful bind when
   // sin_addr != INADDR_ANY, so after the bind we do retrieve the
   // original address so that user code can safely check the addr
   // after the bind. See bugzilla 3107 for more details

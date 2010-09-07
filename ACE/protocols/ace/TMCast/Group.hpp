@@ -1,6 +1,5 @@
-// file      : ACE_TMCast/Group.hpp
+// $Id$
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
 
 #ifndef TMCAST_GROUP_HPP
 #define TMCAST_GROUP_HPP

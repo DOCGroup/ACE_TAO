@@ -98,11 +98,11 @@ if (!-r "$ACE_ROOT/ace/config.h") {
     $wrote_configh = 1;
 }
 
-&generate_doxy_files ('ACE',  " $ACE_ROOT", @ACE_DOCS) if (!$exclude_ace);
-&generate_doxy_files ('TAO',  " $TAO_ROOT", @TAO_DOCS) if (!$exclude_tao);
-&generate_doxy_files ('CIAO', " $CIAO_ROOT", @CIAO_DOCS) if (!$exclude_ciao);
-&generate_doxy_files ('DANCE'," $DANCE_ROOT", @DANCE_DOCS) if (!$exclude_dance);
-&generate_doxy_files ('DDS',   "$DDS_ROOT", @DDS_DOCS) if $dds;
+&generate_doxy_files ('ACE',  " $ACE_ROOT", " $ACE_ROOT/VERSION", @ACE_DOCS) if (!$exclude_ace);
+&generate_doxy_files ('TAO',  " $TAO_ROOT", " $TAO_ROOT/VERSION" @TAO_DOCS) if (!$exclude_tao);
+&generate_doxy_files ('CIAO', " $CIAO_ROOT", " $CIAO_ROOT/VERSION" @CIAO_DOCS) if (!$exclude_ciao);
+&generate_doxy_files ('DANCE'," $DANCE_ROOT", " $CIAO_ROOT/VERSION" @DANCE_DOCS) if (!$exclude_dance);
+&generate_doxy_files ('DDS',   "$DDS_ROOT", " $DDS_ROOT/VERSION" @DDS_DOCS) if $dds;
 
 unlink "$ACE_ROOT/ace/config.h" if $wrote_configh;
 
@@ -154,8 +154,8 @@ sub generate_doxy_files {
 
   my $KIT = shift;
   my $ROOT_DIR = shift;
+  my $VERSION_FILE= shift;
   my @DOCS = @_;
-  my $VERSION_FILE = "$ROOT_DIR/VERSION";
 
   my $VERSION = 'Snapshot ('.
     POSIX::strftime("%Y/%m/%d-%H:%M", localtime)
@@ -301,7 +301,7 @@ sub get_versions () {
   my ($major_version, $minor_version, $beta_version);
 
   open (VERSION, '<'.$VERSION_FILE)  ||
-    die "$0: unable to open VERSION\n";
+    die "$0: unable to open $VERSION_FILE\n";
   while (<VERSION>) {
     chomp;
     if (/$KIT version (\d+)\.(\d+)\.(\d+)/) {
