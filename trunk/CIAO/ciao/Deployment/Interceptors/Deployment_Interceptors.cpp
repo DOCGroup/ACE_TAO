@@ -14,9 +14,9 @@ namespace CIAO
   // Implementation skeleton constructor
   CIAO_StoreReferences_i::CIAO_StoreReferences_i (void)
   {
-    this->orb_ = 
+    this->orb_ =
       DAnCE::PLUGIN_MANAGER::instance ()->get_orb ();
-    
+
     if (CORBA::is_nil (this->orb_))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
@@ -45,12 +45,12 @@ namespace CIAO
   {
     const ::Deployment::InstanceDeploymentDescription &inst =
       plan.instance[index];
-    
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO
                      ACE_TEXT ("CIAO_StoreReferences_i::post_install - ")
                      ACE_TEXT ("Interceptor post install for instance %C\n"),
                      plan.instance[index].name.in ()));
-    
+
     if (reference.type() == ::CORBA::_tc_null)
       {
         DANCE_ERROR (3, (LM_WARNING, DLINFO
@@ -60,7 +60,7 @@ namespace CIAO
                          inst.name.in ()));
         return;
       }
-    
+
     for (CORBA::ULong i = 0;
          i < inst.configProperty.length ();
          ++i)
@@ -69,18 +69,18 @@ namespace CIAO
                             DAnCE::REGISTER_NAMING) == 0)
           {
             CORBA::Object_var obj;
-            
+
             if (!(reference >>= CORBA::Any::to_object (obj)))
               {
                 DANCE_ERROR (1, (LM_WARNING, DLINFO
                                  ACE_TEXT ("CIAO_StoreReferences_i::post_install - ")
                                  ACE_TEXT ("Unable to extract instance reference from Any\n")));
               }
-            
+
             const char * name = 0;
             inst.configProperty[i].value >>= CORBA::Any::to_string (name, 0);
-            
-            DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+
+            DANCE_DEBUG (9, (LM_TRACE, DLINFO
                              ACE_TEXT ("CIAO_StoreReferences_i::post_install - ")
                              ACE_TEXT ("Registering name %C for instance %C\n"),
                              name,
@@ -98,7 +98,7 @@ namespace CIAO
 
             const char * name = 0;
             inst.configProperty[i].value >>= CORBA::Any::to_string (name, 0);
-            
+
             CORBA::String_var ior = this->orb_->object_to_string (obj.in ());
 
             DAnCE::Utility::write_IOR (ACE_TEXT_CHAR_TO_TCHAR (name), ior.in ());
@@ -116,7 +116,7 @@ namespace CIAO
           {
             CORBA::Object_var obj;
             props[i].value >>= CORBA::Any::to_object (obj);
-                
+
             ctx_ = CosNaming::NamingContext::_narrow (obj.in ());
           }
       }
@@ -132,17 +132,17 @@ namespace CIAO
   {
   }
 
-  void 
+  void
   CIAO_ReferenceLookup_i::pre_connect (::Deployment::DeploymentPlan &,
-                                                 ::CORBA::ULong,
-                                                 ::CORBA::Any &)
+                                       ::CORBA::ULong,
+                                       ::CORBA::Any &)
   {
     // Add your implementation here
   }
 
   void CIAO_ReferenceLookup_i::post_connect (const ::Deployment::DeploymentPlan &,
-                                                       ::CORBA::ULong,
-                                                       const ::CORBA::Any &)
+                                             ::CORBA::ULong,
+                                             const ::CORBA::Any &)
   {
     // Add your implementation here
   }
@@ -155,7 +155,7 @@ namespace CIAO
 
 extern "C"
 {
-  ::DAnCE::DeploymentInterceptor_ptr 
+  ::DAnCE::DeploymentInterceptor_ptr
   CIAO_Deployment_Interceptors_Export create_CIAO_StoreReferences (void)
   {
     return new CIAO::CIAO_StoreReferences_i ();

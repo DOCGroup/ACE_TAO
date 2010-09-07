@@ -297,7 +297,6 @@ namespace CIAO
     ::Components::EventConsumerBase_ptr /* subscriber */)
   {
     throw ::Components::InvalidName ();
-    return 0;
   }
 
   ::Components::EventConsumerBase_ptr
@@ -306,7 +305,6 @@ namespace CIAO
     ::Components::Cookie * /* ck */)
   {
     throw ::Components::InvalidName ();
-    return ::Components::EventConsumerBase::_nil ();
   }
 
   void

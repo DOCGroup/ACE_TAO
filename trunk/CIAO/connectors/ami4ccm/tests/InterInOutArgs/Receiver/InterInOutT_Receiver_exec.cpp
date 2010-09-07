@@ -63,7 +63,7 @@ namespace CIAO_InterInOutT_Receiver_Impl
          ++nr_of_received;
        }
      answer = CORBA::string_alloc(20); 
-     sprintf(answer,"double was %2.2f",cmd);
+     ACE_OS::sprintf(answer,"double was %2.2f",cmd);
      cmd = 3.2;
   }
 

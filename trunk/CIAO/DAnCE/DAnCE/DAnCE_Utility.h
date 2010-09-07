@@ -71,7 +71,7 @@ namespace DAnCE
                             const ::Deployment::Properties &src);
 
     /// Write a string (usually a stringified IOR) to a file
-    /// designated by the @c pathname.  The file named will always get
+    /// designated by the @a pathname.  The file named will always get
     /// overwritten.
     DANCE_STUB_Export int write_IOR (const ACE_TCHAR *pathname,
                                      const char *IOR);
@@ -89,14 +89,13 @@ namespace DAnCE
 
     DANCE_STUB_Export CORBA::Any*
     create_any_from_user_exception (const CORBA::UserException& ex);
-    
+
     template <typename EXCEPTION>
     bool stringify_exception (const CORBA::Any &excep,
                               std::string &result);
 
     DANCE_STUB_Export bool
-    stringify_exception_from_any (const CORBA::Any &excep,
-                                  std::string &result);
+    stringify_exception_from_any (const CORBA::Any &excep, std::string &result);
   }
 }
 
