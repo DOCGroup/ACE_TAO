@@ -24,7 +24,7 @@ $status = 0;
 
 # Parse the arguments
 
-@types = ("ubstring", "ub_struct_seq", "ub_strseq");
+@types = ("ubstring", "ub_struct_seq", "ub_strseq", "ub_long_seq", "ub_octet_seq");
 
 
 for ($i = 0; $i <= $#ARGV; $i++) {

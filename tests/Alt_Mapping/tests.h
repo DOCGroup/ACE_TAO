@@ -19,5 +19,7 @@
 #include "ub_struct_seq.h"
 #include "ub_string.h"
 #include "ub_str_seq.h"
+#include "ub_long_seq.h"
+#include "ub_octet_seq.h"
 
 #endif /* if !defined */

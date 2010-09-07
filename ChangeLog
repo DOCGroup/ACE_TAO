@@ -1,3 +1,30 @@
+Tue Sep  7 16:00:49 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Alt_Mapping/ub_long_seq.h:
+        * tests/Alt_Mapping/ub_octet_seq.cpp:
+        * tests/Alt_Mapping/ub_octet_seq.h:
+        * tests/Alt_Mapping/ub_long_seq.cpp:
+
+          New files, adding test coverage for
+          sequences of longs and octets.
+
+        * tests/Alt_Mapping/options.h:
+        * tests/Alt_Mapping/ub_string.h:
+        * tests/Alt_Mapping/alt_mapping_i.cpp:
+        * tests/Alt_Mapping/tests.h:
+        * tests/Alt_Mapping/alt_mapping_i.h:
+        * tests/Alt_Mapping/ub_str_seq.h:
+        * tests/Alt_Mapping/helper.cpp:
+        * tests/Alt_Mapping/alt_mapping.idl:
+        * tests/Alt_Mapping/helper.h:
+        * tests/Alt_Mapping/ub_struct_seq.h:
+        * tests/Alt_Mapping/alt_mapping.mpc:
+        * tests/Alt_Mapping/options.cpp:
+        * tests/Alt_Mapping/driver.cpp:
+        * tests/Alt_Mapping/run_test.pl:
+
+          Related and cosmetic changes.
+
 Mon Sep  6 19:42:08 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Alt_Mapping/ub_str_seq.cpp:

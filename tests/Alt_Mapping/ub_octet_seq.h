@@ -6,10 +6,10 @@
 //    TAO/tests/Param_Test
 //
 // = FILENAME
-//    ub_str_seq.h
+//    ub_octet_seq.h
 //
 // = DESCRIPTION
-//     Tests sequences of strings
+//     Tests unbounded octet sequences
 //
 // = AUTHORS
 //      Aniruddha Gokhale
@@ -17,44 +17,57 @@
 //
 // ============================================================================
 
-#ifndef ALT_MAPPING_TEST_UNBOUNDED_STRING_SEQUENCE_H
-#define ALT_MAPPING_TEST_UNBOUNDED_STRING_SEQUENCE_H
+#ifndef ALT_MAPPING_UNBOUNDED_OCTET_SEQUENCE_H
+#define ALT_MAPPING_UNBOUNDED_OCTET_SEQUENCE_H
 
 #include "alt_mappingC.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test typedefed sequences (in our case, sequences of strings)
+//           test sequences of octete
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
-class Test_String_Sequence
+class Test_Octet_Sequence
 {
 public:
-  Test_String_Sequence (void);
+  Test_Octet_Sequence (void);
+  // ctor
 
-  ~Test_String_Sequence (void);
+  ~Test_Octet_Sequence (void);
+  // dtor
 
   int run_sii_test (Alt_Mapping_ptr objref);
+  // run the SII test
 
   const char *opname (void) const;
+  // return operation name
 
   int init_parameters (Alt_Mapping_ptr objref);
+  // set values for parameters
 
   int reset_parameters (void);
+  // reset values for CORBA
 
   CORBA::Boolean check_validity (void);
+  // check if results are valid
 
   void print_values (void);
+  // print all the values
 
 private:
-  char *opname_;
+  std::string opname_;
+  // operation name
 
-  CORBA::StringSeq in_;
+  CORBA::OctetSeq in_;
+  // in parameter
 
-  CORBA::StringSeq inout_;
+  CORBA::OctetSeq inout_;
+  // inout parameter
 
-  CORBA::StringSeq out_;
+  CORBA::OctetSeq out_;
+  // out parameter
 
-  CORBA::StringSeq ret_;
+  CORBA::OctetSeq ret_;
+  // return value
 };
 
-#endif /* ALT_MAPPING_TEST_UNBOUNDED_STRING_SEQUENCE_H */
+#endif /* ALT_MAPPING_UNBOUNDED_OCTET_SEQUENCE_H */

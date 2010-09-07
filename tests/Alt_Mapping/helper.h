@@ -30,6 +30,7 @@ public:
 
   ~Generator (void);
 
+  CORBA::Octet gen_octet (void);
   CORBA::Short gen_short (void);
   CORBA::Long gen_long (void);
   char* gen_string (void);

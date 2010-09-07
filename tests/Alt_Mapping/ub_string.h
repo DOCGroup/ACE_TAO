@@ -13,11 +13,12 @@
 //
 // = AUTHORS
 //      Aniruddha Gokhale
+//      Jeff Parsons
 //
 // ============================================================================
 
-#ifndef PARAM_TEST_UNBOUNDED_STRING_H
-#define PARAM_TEST_UNBOUNDED_STRING_H
+#ifndef ALT_MAPPING_TEST_UNBOUNDED_STRING_H
+#define ALT_MAPPING_TEST_UNBOUNDED_STRING_H
 
 #include "alt_mappingC.h"
 
@@ -64,4 +65,4 @@ private:
   std::string ret_;
 };
 
-#endif /* PARAM_TEST_UNBOUNDED_STRING_H */
+#endif /* ALT_MAPPING_TEST_UNBOUNDED_STRING_H */

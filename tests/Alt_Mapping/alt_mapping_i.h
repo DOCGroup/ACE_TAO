@@ -40,7 +40,17 @@ public:
     const CORBA::StringSeq & s1,
     CORBA::StringSeq & s2,
     CORBA::StringSeq & s3);
-      
+    
+  virtual CORBA::LongSeq test_long_sequence (
+      const CORBA::LongSeq & s1,
+      CORBA::LongSeq & s2,
+      CORBA::LongSeq & s3);
+
+  virtual CORBA::OctetSeq test_octet_sequence (
+      const CORBA::OctetSeq & s1,
+      CORBA::OctetSeq & s2,
+      CORBA::OctetSeq & s3);
+
   void shutdown (void);
 
 private:

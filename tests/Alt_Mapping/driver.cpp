@@ -122,7 +122,7 @@ Driver::run (void)
           new
             Alt_Mapping_Client<Test_Unbounded_String> (
               this->orb_.in (),
-              this->objref_.in(),
+              this->objref_.in (),
               new Test_Unbounded_String);
               
         retstatus = client->run_sii_test ();
@@ -136,7 +136,7 @@ Driver::run (void)
           new
             Alt_Mapping_Client<Test_Unbounded_Struct_Sequence> (
               this->orb_.in (),
-              this->objref_.in(),
+              this->objref_.in (),
               new Test_Unbounded_Struct_Sequence);
                                                    
         retstatus = client->run_sii_test ();
@@ -150,8 +150,36 @@ Driver::run (void)
           new
             Alt_Mapping_Client<Test_String_Sequence> (
               this->orb_.in (),
-              this->objref_.in(),
+              this->objref_.in (),
               new Test_String_Sequence);
+              
+        retstatus = client->run_sii_test ();
+
+        delete client;
+      }
+      break;
+    case Options::TEST_UB_LONG_SEQUENCE:
+      {
+        Alt_Mapping_Client<Test_Long_Sequence> *client =
+          new
+            Alt_Mapping_Client<Test_Long_Sequence> (
+              this->orb_.in (),
+              this->objref_.in (),
+              new Test_Long_Sequence);
+              
+        retstatus = client->run_sii_test ();
+
+        delete client;
+      }
+      break;
+    case Options::TEST_UB_OCTET_SEQUENCE:
+      {
+        Alt_Mapping_Client<Test_Octet_Sequence> *client =
+          new
+            Alt_Mapping_Client<Test_Octet_Sequence> (
+              this->orb_.in (),
+              this->objref_.in (),
+              new Test_Octet_Sequence);
               
         retstatus = client->run_sii_test ();
 

@@ -54,13 +54,37 @@ Alt_Mapping_i::test_struct_sequence (
 
 CORBA::StringSeq
 Alt_Mapping_i::test_strseq (
-    const CORBA::StringSeq & s1,
-    CORBA::StringSeq & s2,
-    CORBA::StringSeq & s3)
+  const CORBA::StringSeq & s1,
+  CORBA::StringSeq & s2,
+  CORBA::StringSeq & s3)
 {
   s2 = s1;
   s3 = s1;
   return s1;
+}
+
+CORBA::LongSeq
+Alt_Mapping_i::test_long_sequence (const CORBA::LongSeq & s1,
+                                   CORBA::LongSeq & s2,
+                                   CORBA::LongSeq & s3)
+{
+  s2 = s1;
+  s3 = s1;
+  CORBA::LongSeq ret (s1);
+  
+  return ret;
+}
+
+CORBA::OctetSeq
+Alt_Mapping_i::test_octet_sequence (const CORBA::OctetSeq & s1,
+                                    CORBA::OctetSeq & s2,
+                                    CORBA::OctetSeq & s3)
+{
+  s2 = s1;
+  s3 = s1;
+  CORBA::OctetSeq ret (s1);
+  
+  return ret;
 }
 
 void

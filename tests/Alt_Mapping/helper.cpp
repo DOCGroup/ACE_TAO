@@ -27,6 +27,12 @@ Generator::~Generator (void)
 {
 }
 
+CORBA::Octet
+Generator::gen_octet (void)
+{
+  return (CORBA::Octet) (ACE_OS::rand () % TEST_BUFSIZE);
+}
+
 CORBA::Short
 Generator::gen_short (void)
 {
