@@ -1,3 +1,8 @@
+Tue Sep  7 11:35:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Fix fuzz problem
+
 Tue Sep  7 10:52:59 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp:
