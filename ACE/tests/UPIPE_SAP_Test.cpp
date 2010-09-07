@@ -48,7 +48,7 @@ connector (void *)
   if (con.connect (c_stream, addr) == -1)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) connector ACE_UPIPE_Connector failed\n")));
 
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
 
   ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof ("hello thanks") * sizeof (char)), 0);
 

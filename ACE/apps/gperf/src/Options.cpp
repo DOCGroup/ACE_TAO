@@ -261,15 +261,13 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   if (ACE_LOG_MSG->open (argv[0]) == -1)
     return -1;
 
-  //FUZZ: disable check_for_lack_ACE_OS
-  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("abBcCdDe:Ef:F:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:"));
-  //FUZZ: enable check_for_lack_ACE_OS
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("abBcCdDe:Ef:F:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:"));
 
   argc_ = argc;
   argv_ = argv;
 
   int option_char;
-  while ((option_char = getopt ()) != -1)
+  while ((option_char = get_opt ()) != -1)
     {
       switch (option_char)
         {
@@ -321,7 +319,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Allows user to provide keyword/attribute separator
         case 'e':
           {
-            delimiters_ = ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ());
+            delimiters_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
             break;
           }
         case 'E':
@@ -333,7 +331,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         case 'f':
           {
             ACE_SET_BITS (option_word_, FAST);
-            iterations_ = ACE_OS::atoi (getopt.opt_arg ());
+            iterations_ = ACE_OS::atoi (get_opt.opt_arg ());
             if (iterations_ < 0)
               {
                 ACE_ERROR ((LM_ERROR, "iterations value must not be negative, assuming 0\n"));
@@ -453,13 +451,13 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Sets the name for the hash function.
         case 'H':
           {
-            hash_name_ = ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ());
+            hash_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
             break;
           }
         // Sets the initial value for the associated values array.
         case 'i':
           {
-            initial_asso_value_ = ACE_OS::atoi (getopt.opt_arg ());
+            initial_asso_value_ = ACE_OS::atoi (get_opt.opt_arg ());
             if (initial_asso_value_ < 0)
               ACE_ERROR ((LM_ERROR,
                           "Initial value %d should be non-zero, ignoring and continuing.\n",
@@ -477,7 +475,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
          // Sets the jump value, must be odd for later algorithms.
         case 'j':
           {
-            jump_ = ACE_OS::atoi (getopt.opt_arg ());
+            jump_ = ACE_OS::atoi (get_opt.opt_arg ());
             if (jump_ < 0)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Jump value %d must be a positive number.\n%r",
@@ -501,7 +499,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
           {
             const int BAD_VALUE = -1;
             int value;
-            Iterator expand (ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ()),
+            Iterator expand (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()),
                              1,
                              MAX_KEY_POS - 1,
                              WORD_END,
@@ -509,7 +507,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                              EOS);
 
             // Use all the characters for hashing!!!!
-            if (*getopt.opt_arg () == '*')
+            if (*get_opt.opt_arg () == '*')
               option_word_ = (option_word_ & ~DEFAULTCHARS) | ALLCHARS;
             else
               {
@@ -550,7 +548,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Make this the keyname for the keyword component field.
         case 'K':
           {
-            key_name_ = ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ());
+            key_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
             break;
           }
         // Create length table to avoid extra string compares.
@@ -563,15 +561,15 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         case 'L':
           {
             option_word_ &= ~C;
-            if (!ACE_OS::strcmp (getopt.opt_arg (), ACE_TEXT("C++")))
+            if (!ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT("C++")))
               ACE_SET_BITS (option_word_, (CPLUSPLUS | ANSI));
-            else if (!ACE_OS::strcmp (getopt.opt_arg (), ACE_TEXT("C")))
+            else if (!ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT("C")))
               ACE_SET_BITS (option_word_, C);
             else
               {
                 ACE_ERROR ((LM_ERROR,
                             "unsupported language option %s, defaulting to C\n",
-                            getopt.opt_arg ()));
+                            get_opt.opt_arg ()));
                 ACE_SET_BITS (option_word_, C);
               }
             break;
@@ -597,13 +595,13 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Make generated lookup function name be.opt_arg ()
         case 'N':
           {
-            function_name_ = ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ());
+            function_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
             break;
           }
         // Make fill_default be.opt_arg ()
         case 'F':
           {
-            fill_default_ = ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ());
+            fill_default_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
             break;
           }
         // Order input by frequency of key set occurrence.
@@ -636,7 +634,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Range of associated values, determines size of final table.
         case 's':
           {
-            size_ = ACE_OS::atoi (getopt.opt_arg ());
+            size_ = ACE_OS::atoi (get_opt.opt_arg ());
             if (abs (size_) > 50)
               ACE_ERROR ((LM_ERROR,
                           "%d is excessive, did you really mean this?! (type %n -h for help)\n",
@@ -647,11 +645,11 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         case 'S':
           {
             ACE_SET_BITS (option_word_, SWITCH);
-            total_switches_ = ACE_OS::atoi (getopt.opt_arg ());
+            total_switches_ = ACE_OS::atoi (get_opt.opt_arg ());
             if (total_switches_ <= 0)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "number of switches %s must be a positive number\n%r",
-                                 getopt.opt_arg (),
+                                 get_opt.opt_arg (),
                                  &Options::usage),
                                 -1);
             break;
@@ -685,7 +683,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Set the class name.
         case 'Z':
           {
-            class_name_ = ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ());
+            class_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
             break;
           }
         default:
@@ -697,16 +695,16 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
     }
 
-  if (argv[getopt.opt_ind ()] &&
-    ACE_OS::freopen (argv[getopt.opt_ind ()],
+  if (argv[get_opt.opt_ind ()] &&
+    ACE_OS::freopen (argv[get_opt.opt_ind ()],
                      ACE_TEXT("r"),
                      stdin) == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open keyword file %p\n%r",
-                       argv[getopt.opt_ind ()],
+                       argv[get_opt.opt_ind ()],
                        &Options::usage),
                       -1);
-  if (getopt.opt_ind () + 1 < argc)
+  if (get_opt.opt_ind () + 1 < argc)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Extra trailing arguments to %n.\n%r",
                        usage),

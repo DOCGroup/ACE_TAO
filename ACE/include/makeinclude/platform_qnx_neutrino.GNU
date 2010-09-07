@@ -8,7 +8,6 @@ static_libs_only = 1
 debug ?= 1
 optimize ?= 1
 pipes ?= 1
-
 CC      ?= i386-nto-gcc
 CXX     ?= i386-nto-g++
 

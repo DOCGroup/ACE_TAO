@@ -26,8 +26,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
 
-ACE_RCSID(tests, Reference_Counted_Event_Handler_Test, "$Id$")
-
 static const char message[] = "abcdefghijklmnopqrstuvwxyz";
 static const int message_size = 26;
 static int test_select_reactor = 1;

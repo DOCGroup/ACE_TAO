@@ -14,7 +14,7 @@
 #include "ace/INet/INet_Export.h"
 #include "ace/INet/Response.h"
 #include "ace/SString.h"
-#include "ace/Array.h"
+#include "ace/Containers_T.h"
 #include <iostream>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

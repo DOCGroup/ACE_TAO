@@ -113,7 +113,7 @@ reader (void *)
   for (size_t iterations = 1; iterations <= n_iterations; iterations++)
     {
       ACE_OS::sleep (pause);
-      ACE_Read_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
+      ACE_READ_GUARD_RETURN (ACE_RW_Thread_Mutex, g, rw_mutex, 0);
       // int n = ++current_readers;
       // ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) I'm reader number %d\n"), n));
 
@@ -213,7 +213,7 @@ writer (void *)
     {
       ACE_OS::sleep (pause);
 
-      ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
+      ACE_WRITE_GUARD_RETURN (ACE_RW_Thread_Mutex, g, rw_mutex, 0);
 
       ++current_writers;
 

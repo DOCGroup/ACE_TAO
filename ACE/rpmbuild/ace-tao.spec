@@ -1393,7 +1393,7 @@ ln -sfn %{_datadir}/ace/bin/mwc.pl %{buildroot}%{_bindir}/mwc.pl
 install -d %{buildroot}%{_mandir}
 install -d %{buildroot}%{_mandir}/man1
 install ${TAO_ROOT}/TAO_IDL/tao_idl.1 %{buildroot}%{_mandir}/man1
-install ${ACE_ROOT}/apps/gperf/ACE_gperf.1 %{buildroot}%{_mandir}/man1
+install ${ACE_ROOT}/apps/gperf/ace_gperf.1 %{buildroot}%{_mandir}/man1
 install -d  %{buildroot}%{_infodir}
 install ${ACE_ROOT}/apps/gperf/ace_gperf.info %{buildroot}%{_infodir}
 
@@ -1962,6 +1962,7 @@ fi
 %{_libdir}/libACE_TMCast.so.%{ACEVERSO}
 %{_libdir}/libACE_SSL.so.%{ACEVERSO}
 %{_libdir}/libACE_INet.so.%{ACEVERSO}
+%{_libdir}/libACE_INet_SSL.so.%{ACEVERSO}
 
 %doc ACE-INSTALL.html
 %doc AUTHORS
@@ -1985,6 +1986,7 @@ fi
 %{_libdir}/libACE_TMCast.so
 %{_libdir}/libACE_SSL.so
 %{_libdir}/libACE_INet.so
+%{_libdir}/libACE_INet_SSL.so
 %dir %{_datadir}/ace
 %{_datadir}/ace/include
 %{_datadir}/ace/include/makeinclude

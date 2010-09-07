@@ -11,7 +11,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Array.h"
+#include "ace/Containers_T.h"
 #include "ace/INet/INet_Export.h"
 #include "ace/INet/Request.h"
 #include "ace/SString.h"

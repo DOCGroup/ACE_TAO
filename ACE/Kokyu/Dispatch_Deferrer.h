@@ -20,7 +20,6 @@
 #include "Kokyu_defs.h"
 #include "ace/Event_Handler.h"
 #include "ace/Thread_Mutex.h"
-#include "ace/Synch_T.h"
 #include "ace/Message_Block.h"
 #include "ace/Message_Queue.h"
 #include "ace/Reactor.h"

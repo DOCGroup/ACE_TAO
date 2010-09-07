@@ -56,8 +56,6 @@ public:
 };
 }
 
-ACE_RCSID(tests, Compiler_Features_09_Test, "$Id$")
-
 int
 run_main (int, ACE_TCHAR *[])
 {

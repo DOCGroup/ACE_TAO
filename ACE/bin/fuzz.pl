@@ -347,7 +347,6 @@ sub check_for_ACE_SYNCH_MUTEX ()
                 }
                 if (/FUZZ\: enable check_for_ACE_SYNCH_MUTEX/) {
                     $disable = 0;
-                    next ITERATION;
                 }
                 if ($disable == 0 and /ACE_SYNCH_MUTEX/) {
                     # It is okay to use ACE_SYNCH_MUTEX in ACE
@@ -403,7 +402,6 @@ sub check_for_ACE_Thread_Mutex ()
                 }
                 if (/FUZZ\: enable check_for_ACE_Thread_Mutex/) {
                     $disable = 0;
-                    next ITERATION;
                 }
                 if ($disable == 0 and /ACE_Thread_Mutex/) {
                     # It is okay to use ACE_Thread_Mutex in ACE
@@ -438,12 +436,18 @@ sub check_for_ACE_Guard ()
                 if (/FUZZ\: disable check_for_ACE_Guard/) {
                     $disable = 1;
                 }
-                if (/FUZZ\: enable check_for_ACE_Thread_Mutex/) {
+                if (/FUZZ\: enable check_for_ACE_Guard/) {
                     $disable = 0;
-                    next ITERATION;
+                    next;
                 }
                 if ($disable == 0 and /ACE_Guard/) {
                     print_error ("$file:$.: found ACE_Guard, use ACE_GUARD");
+                }
+                if ($disable == 0 and /ACE_Read_Guard/) {
+                    print_error ("$file:$.: found ACE_Read_Guard, use ACE_READ_GUARD");
+                }
+                if ($disable == 0 and /ACE_Write_Guard/) {
+                    print_error ("$file:$.: found ACE_Write_Guard, use ACE_WRITE_GUARD");
                 }
             }
             close (FILE);
@@ -1984,7 +1988,6 @@ sub check_for_TAO_Local_RefCounted_Object ()
                 }
                 if (/FUZZ\: enable check_for_TAO_Local_RefCounted_Object/) {
                     $disable = 0;
-                    next ITERATION;
                 }
 
                 if ($disable == 0 and /TAO_Local_RefCounted_Object/) {
@@ -2167,6 +2170,8 @@ if ($opt_t) {
 print "--------------------Configuration: Fuzz - Level ",$opt_l,
       "--------------------\n";
 
+check_for_lack_ACE_OS () if ($opt_l >= 6);
+check_for_ACE_Guard () if ($opt_l >= 1);
 check_for_generated_headers () if ($opt_l >= 6);
 check_for_bad_run_test () if ($opt_l >= 5);
 check_for_deprecated_macros () if ($opt_l >= 1);
@@ -2183,7 +2188,6 @@ check_for_newline () if ($opt_l >= 1);
 check_for_ACE_Thread_Mutex () if ($opt_l >= 1);
 check_for_ACE_SYNCH_MUTEX () if ($opt_l >= 1);
 check_for_tab () if ($opt_l >= 1);
-check_for_lack_ACE_OS () if ($opt_l >= 6);
 check_for_exception_spec () if ($opt_l >= 1);
 check_for_NULL () if ($opt_l >= 1);
 check_for_inline () if ($opt_l >= 2);
@@ -2209,7 +2213,6 @@ check_for_TAO_Local_RefCounted_Object () if ($opt_l >= 1);
 check_for_ORB_init () if ($opt_l >= 1);
 check_for_export_file () if ($opt_l >= 6);
 check_for_trailing_whitespace () if ($opt_l >= 6);
-check_for_ACE_Guard () if ($opt_l >= 8);
 
 print "\nfuzz.pl - $errors error(s), $warnings warning(s)\n";
 

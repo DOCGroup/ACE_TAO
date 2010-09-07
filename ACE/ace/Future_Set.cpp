@@ -83,7 +83,7 @@ ACE_Future_Set<T>::insert (ACE_Future<T> &future)
 template <class T> void
 ACE_Future_Set<T>::update (const ACE_Future<T> &future)
 {
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
   FUTURE &local_future = const_cast<ACE_Future<T> &> (future);
 
   ACE_NEW (mb,

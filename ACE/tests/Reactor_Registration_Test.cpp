@@ -24,8 +24,6 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/ACE.h"
 
-ACE_RCSID(tests, Reactor_Registration_Test, "$Id$")
-
 static const char message[] = "abcdefghijklmnopqrstuvwxyz";
 static const size_t message_size = 26;
 static int iteration = 1;

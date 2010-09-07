@@ -11,7 +11,7 @@
 #ifndef KOKYU_DEFS_H
 #define KOKYU_DEFS_H
 #include /**/ "ace/pre.h"
-#include "ace/Array.h"
+#include "ace/Containers_T.h"
 #include "ace/Time_Value.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Message_Block.h"

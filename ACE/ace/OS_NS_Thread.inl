@@ -3600,7 +3600,7 @@ ACE_Thread_ID::ACE_Thread_ID (const ACE_Thread_ID &id)
 }
 
 ACE_INLINE
-ACE_Thread_ID& 
+ACE_Thread_ID&
 ACE_Thread_ID::operator= (const ACE_Thread_ID &id)
 {
   if (this != &id)

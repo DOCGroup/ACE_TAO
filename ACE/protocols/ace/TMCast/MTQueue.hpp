@@ -1,6 +1,5 @@
-// file      : ACE_TMCast/MTQueue.hpp
+// $Id$
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
 
 #ifndef TMCAST_MT_QUEUE_HPP
 #define TMCAST_MT_QUEUE_HPP

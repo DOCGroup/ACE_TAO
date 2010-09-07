@@ -27,8 +27,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Time_Service_Test, "$Id$")
-
 #define APPLICATION \
 ACE_TEXT ("..") ACE_DIRECTORY_SEPARATOR_STR \
 ACE_TEXT ("netsvcs") ACE_DIRECTORY_SEPARATOR_STR \

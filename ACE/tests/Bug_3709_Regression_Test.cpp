@@ -14,10 +14,6 @@
 
 using namespace std;
 
-ACE_RCSID (tests,
-           Bug_3709_Regression_Test,
-           "$Id$")
-
 #if defined(_MSC_VER) && _MSC_VER < 1400
 #define MSVC_71_OR_OLDER
 #endif

@@ -1762,7 +1762,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
     {
       // Try to transfer as much of the remaining data as possible.
       ssize_t n = ACE_OS::sendv (handle, iov + s, iovcnt - s);
-      
+
       // Check EOF.
       if (n == 0)
         return 0;
@@ -2184,18 +2184,14 @@ ACE::handle_ready (ACE_HANDLE handle,
 
   fds.revents = 0;
 
-  int result = ACE_OS::poll (&fds, 1, timeout);
+  int const result = ACE_OS::poll (&fds, 1, timeout);
 #else
   ACE_Handle_Set handle_set;
   handle_set.set_bit (handle);
 
   // Wait for data or for the timeout to elapse.
-  int select_width;
-#  if defined (ACE_WIN32)
-  // This arg is ignored on Windows and causes pointer truncation
-  // warnings on 64-bit compiles.
-  select_width = 0;
-#  else
+  int select_width = 0;
+#if !defined (ACE_WIN32)
   select_width = int (handle) + 1;
 #  endif /* ACE_WIN64 */
   int result = ACE_OS::select (select_width,
@@ -2205,7 +2201,6 @@ ACE::handle_ready (ACE_HANDLE handle,
                                timeout);
 
 #endif /* ACE_HAS_POLL */
-
   switch (result)
     {
     case 0:  // Timer expired.
@@ -2226,14 +2221,12 @@ ACE::enter_recv_timedwait (ACE_HANDLE handle,
                            const ACE_Time_Value *timeout,
                            int &val)
 {
-  int result = ACE::handle_read_ready (handle,
-                                       timeout);
+  int const result = ACE::handle_read_ready (handle, timeout);
 
   if (result == -1)
     return -1;
 
-  ACE::record_and_set_non_blocking_mode (handle,
-                                         val);
+  ACE::record_and_set_non_blocking_mode (handle, val);
 
   return result;
 }
@@ -2243,21 +2236,18 @@ ACE::enter_send_timedwait (ACE_HANDLE handle,
                            const ACE_Time_Value *timeout,
                            int &val)
 {
-  int result = ACE::handle_write_ready (handle,
-                                        timeout);
+  int const result = ACE::handle_write_ready (handle, timeout);
 
   if (result == -1)
     return -1;
 
-  ACE::record_and_set_non_blocking_mode (handle,
-                                         val);
+  ACE::record_and_set_non_blocking_mode (handle, val);
 
   return result;
 }
 
 void
-ACE::record_and_set_non_blocking_mode (ACE_HANDLE handle,
-                                       int &val)
+ACE::record_and_set_non_blocking_mode (ACE_HANDLE handle, int &val)
 {
   // We need to record whether we are already *in* nonblocking mode,
   // so that we can correctly reset the state when we're done.
@@ -2270,11 +2260,9 @@ ACE::record_and_set_non_blocking_mode (ACE_HANDLE handle,
 }
 
 void
-ACE::restore_non_blocking_mode (ACE_HANDLE handle,
-                                int val)
+ACE::restore_non_blocking_mode (ACE_HANDLE handle, int val)
 {
-  if (ACE_BIT_DISABLED (val,
-                        ACE_NONBLOCK))
+  if (ACE_BIT_DISABLED (val, ACE_NONBLOCK))
     {
       // Save/restore errno.
       ACE_Errno_Guard error (errno);
@@ -2435,7 +2423,7 @@ ACE::timestamp (const ACE_Time_Value& time_value,
         ACE_TEXT ("Fri"),
         ACE_TEXT ("Sat")
       };
-  
+
     static const ACE_TCHAR *month_name[] =
       {
         ACE_TEXT ("Jan"),
@@ -2451,10 +2439,10 @@ ACE::timestamp (const ACE_Time_Value& time_value,
         ACE_TEXT ("Nov"),
         ACE_TEXT ("Dec")
       };
-  
+
     SYSTEMTIME local;
     ::GetLocalTime (&local);
-  
+
     ACE_OS::sprintf (date_and_time,
                     ACE_TEXT ("%3s %3s %2d %04d %02d:%02d:%02d.%06d"),
                     day_of_week_name[local.wDayOfWeek],
@@ -2469,8 +2457,8 @@ ACE::timestamp (const ACE_Time_Value& time_value,
   }
 #endif  /* WIN32 */
   ACE_TCHAR timebuf[26]; // This magic number is based on the ctime(3c) man page.
-  ACE_Time_Value cur_time = 
-    (time_value == ACE_Time_Value::zero) ? 
+  ACE_Time_Value cur_time =
+    (time_value == ACE_Time_Value::zero) ?
         ACE_Time_Value (ACE_OS::gettimeofday ()) : time_value;
   time_t secs = cur_time.sec ();
 
@@ -2714,12 +2702,8 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
       int n = ACE_OS::poll (&fds, 1, timeout);
 
 #else
-      int select_width;
-#  if defined (ACE_WIN32)
-      // This arg is ignored on Windows and causes pointer truncation
-      // warnings on 64-bit compiles.
-      select_width = 0;
-#  else
+      int select_width = 0;
+#  if !defined (ACE_WIN32)
       select_width = int (listener) + 1;
 #  endif /* ACE_WIN32 */
       int n = ACE_OS::select (select_width,

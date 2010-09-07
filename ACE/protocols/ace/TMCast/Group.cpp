@@ -1,6 +1,5 @@
-// file      : ACE_TMCast/Group.cpp
+// $Id$
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
 
 #include "Group.hpp"
 
@@ -298,7 +297,9 @@ namespace ACE_TMCast
     ACE_Thread_Mutex mutex_;
     ACE_Condition<ACE_Thread_Mutex> cond_;
 
+// FUZZ: disable check_for_ACE_Guard
     typedef ACE_Guard<ACE_Thread_Mutex> AutoLock;
+// FUZZ: enable check_for_ACE_Guard
 
     char id_[Protocol::MEMBER_ID_LENGTH];
 
@@ -463,7 +464,9 @@ namespace ACE_TMCast
     ACE_Condition<ACE_Thread_Mutex> send_cond_;
     ACE_Condition<ACE_Thread_Mutex> recv_cond_;
 
+    // FUZZ: disable check_for_ACE_Guard
     typedef ACE_Guard<ACE_Thread_Mutex> AutoLock;
+    // FUZZ: enable check_for_ACE_Guard
 
     bool failed_;
 

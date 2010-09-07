@@ -33,8 +33,6 @@
 #include "ace/Handle_Set.h"
 #include "ace/Time_Value.h"
 
-ACE_RCSID(tests, MT_SOCK_Test, "$Id$")
-
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 // Normally the test will have BACKLOG < NUM_CLIENTS to force some

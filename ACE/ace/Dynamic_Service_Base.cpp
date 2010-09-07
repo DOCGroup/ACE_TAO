@@ -78,7 +78,7 @@ ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
 
   if (ACE::debug ())
     {
-      ACE_Guard <ACE_Log_Msg> log_guard (*ACE_Log_Msg::instance ());
+      ACE_GUARD_RETURN (ACE_Log_Msg, log_guard, *ACE_Log_Msg::instance (), 0);
 
       if (repo->repo_ != repo_found->repo_)
         {

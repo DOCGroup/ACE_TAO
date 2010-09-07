@@ -1,7 +1,6 @@
 // $Id$
 
 #include "ace/config-lite.h"
-#if defined (ACE_HAS_THREADS)
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
@@ -12,6 +11,7 @@
 #include "ace/Method_Request.h"
 #include "ace/Future.h"
 #include "ace/Activation_Queue.h"
+#include "test_config.h"
 
 class Worker;
 
@@ -54,11 +54,10 @@ public:
 
     return 0;
   }
-  // Listing 2
 
   const ACE_Thread_ID& thread_id (void)
   {
-    return this->thread_id_;
+    return thread_id_;
   }
 
 private:
@@ -119,7 +118,7 @@ public:
         // Choose a worker.
         Worker *worker = 0;
         {
-          ACE_GUARD_RETURN (ACE_Thread_Mutex,
+          ACE_GUARD_RETURN (ACE_Mutex,
                             worker_mon, this->workers_lock_, -1);
 
           while (this->workers_.is_empty ())
@@ -141,7 +140,7 @@ public:
 
   virtual int return_to_work (Worker *worker)
   {
-    ACE_GUARD_RETURN (ACE_Thread_Mutex,
+    ACE_GUARD_RETURN (ACE_Mutex,
                       worker_mon, this->workers_lock_, -1);
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Worker %t returning to work.\n")));
@@ -154,13 +153,13 @@ public:
 private:
   int create_worker_pool (void)
   {
-    ACE_GUARD_RETURN (ACE_Thread_Mutex,
+    ACE_GUARD_RETURN (ACE_Mutex,
                       worker_mon,
                       this->workers_lock_,
                       -1);
     for (int i = 0; i < POOL_SIZE; i++)
       {
-        Worker *worker = 0;
+        Worker *worker;
         ACE_NEW_RETURN (worker, Worker (this), -1);
         this->workers_.enqueue_tail (worker);
         worker->activate ();
@@ -173,8 +172,8 @@ private:
 
 private:
   int shutdown_;
-  ACE_Thread_Mutex workers_lock_;
-  ACE_Condition<ACE_Thread_Mutex> workers_cond_;
+  ACE_Mutex workers_lock_;
+  ACE_Condition<ACE_Mutex> workers_cond_;
   ACE_Unbounded_Queue<Worker* > workers_;
 };
 // Listing 1
@@ -233,8 +232,12 @@ Manager::thread_id (Worker *worker)
   return worker->thread_id ();
 }
 
-int ACE_TMAIN (int, ACE_TCHAR *[])
+int
+run_main (int, ACE_TCHAR *[])
 {
+  ACE_START_TEST (ACE_TEXT ("Bug_3878_Regression_Test"));
+
+#if defined (ACE_HAS_THREADS)
   Manager tp;
   tp.activate ();
 
@@ -243,7 +246,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   tv.msec (100);
 
   ACE_Message_Block *mb = 0;
-  for (int i = 0; i < 30; i++)
+  for (int i = 0; i < 3; i++)
     {
       ACE_NEW_RETURN
         (mb, ACE_Message_Block(sizeof(int)), -1);
@@ -257,17 +260,10 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
     }
 
   ACE_Thread_Manager::instance ()->wait ();
+#endif
+
+  ACE_END_TEST;
+
   return 0;
 }
 
-#else
-#include "ace/OS_main.h"
-#include "ace/OS_NS_stdio.h"
-
-int ACE_TMAIN (int, ACE_TCHAR *[])
-{
-  ACE_OS::puts (ACE_TEXT ("This example requires threads."));
-  return 0;
-}
-
-#endif /* ACE_HAS_THREADS */

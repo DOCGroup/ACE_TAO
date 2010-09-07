@@ -262,7 +262,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Stream_Modules.cpp
     String_Base.cpp
     Svc_Handler.cpp
-    Synch_T.cpp
     TSS_T.cpp
     Task_Ex_T.cpp
     Task_T.cpp
@@ -300,7 +299,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
 
   Header_Files {
     ACE_export.h
-    Array.h
     Based_Pointer_Repository.h
     Bound_Ptr.h
     CORBA_macros.h

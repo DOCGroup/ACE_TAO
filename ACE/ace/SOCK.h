@@ -63,7 +63,7 @@ public:
    */
   int close (void);
 
-  /// Return the local endpoint address in the referenced <ACE_Addr>.
+  /// Return the local endpoint address in the referenced ACE_Addr.
   /// Returns 0 if successful, else -1.
   int get_local_addr (ACE_Addr &) const;
 
@@ -120,7 +120,7 @@ protected:
 
   /// Protected destructor.
   /**
-   * Not a virtual destructor.  Protected destructor to prevent
+   * Not a virtual destructor. Protected destructor to prevent
    * operator delete() from being called through a base class ACE_SOCK
    * pointer/reference.
    */

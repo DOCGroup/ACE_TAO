@@ -14,8 +14,6 @@
 
 #include "test_config.h"
 
-ACE_RCSID(tests, Compiler_Features_14_Test, "$Id$")
-
 // We are going to test if partial template specializations work by
 // demonstrating a standard technique in generic programming, i.e.,
 // using the specialization to detect if a type is a pointer.

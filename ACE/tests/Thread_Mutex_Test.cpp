@@ -126,6 +126,7 @@ test (void *args)
                   ACE_TEXT ("(%P|%t) = released on iteration %d\n"),
                   i));
 
+      // FUZZ: disable check_for_ACE_Guard
       // Basic ACE_Guard usage - automatically acquire the mutex on
       // guard construction and automatically release it on
       // destruction.
@@ -233,6 +234,7 @@ test (void *args)
           // ACE_Guard object is destroyed when exiting scope and guard
           // destructor automatically releases mutex.
         }
+      // FUZZ: enable check_for_ACE_Guard
     }
 
   return 0;

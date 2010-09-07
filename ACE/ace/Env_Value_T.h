@@ -22,6 +22,7 @@
 #include /**/ "ace/config-all.h"
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_stdlib.h"
+#include "ace/Copy_Disabled.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,7 +39,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * value.
  */
 template <class T>
-class ACE_Env_Value
+class ACE_Env_Value : private ACE_Copy_Disabled
 {
 public:
   /**
@@ -48,9 +49,8 @@ public:
    */
   ACE_Env_Value (void);
 
-  /// Constructor that calls <open>.
-  ACE_Env_Value (const ACE_TCHAR *varname,
-                 const T &vardefault);
+  /// Constructor that calls open().
+  ACE_Env_Value (const ACE_TCHAR *varname, const T &vardefault);
 
   /// Destroy the value.
   ~ACE_Env_Value (void);
@@ -66,10 +66,6 @@ public:
   const ACE_TCHAR *varname (void) const;
 
 private:
-  /// Disallow copying and assignment.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Env_Value(const ACE_Env_Value<T> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Env_Value<T> operator=(const ACE_Env_Value<T> &))
-
   void fetch_value (void);
 
   const ACE_TCHAR *varname_;

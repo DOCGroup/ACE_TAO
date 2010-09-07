@@ -248,7 +248,7 @@ static int
 produce (Worker_Task &worker_task,
          ACE_Allocator *alloc_strategy)
 {
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
   int status;
 
   // Send <n_iteration> messages through the pipeline.

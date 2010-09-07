@@ -44,7 +44,7 @@ public:
   ACE_Dumpable_Adapter (const Concrete *t);
   ~ACE_Dumpable_Adapter (void);
 
-  /// Concrete dump method (simply delegates to the <dump> method of
+  /// Concrete dump method (simply delegates to the dump() method of
   /// <class Concrete>).
   virtual void dump (void) const;
 

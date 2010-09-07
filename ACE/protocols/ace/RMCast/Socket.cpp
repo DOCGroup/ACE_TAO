@@ -1,6 +1,5 @@
-// file      : ace/RMCast/Socket.cpp
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// cvs-id    : $Id$
+// $Id$
 
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_stdio.h"

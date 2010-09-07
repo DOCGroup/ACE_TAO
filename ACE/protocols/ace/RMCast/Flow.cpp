@@ -1,6 +1,5 @@
-// file      : ace/RMCast/Flow.cpp
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// cvs-id    : $Id$
+// $Id$
 
 #include "Flow.h"
 
@@ -8,12 +7,6 @@
 #include "ace/OS_NS_sys_time.h" // gettimeofday
 
 #include "ace/os_include/os_math.h" // exp
-
-/*
-#include <iostream>
-using std::cerr;
-using std::endl;
-*/
 
 namespace ACE_RMCast
 {

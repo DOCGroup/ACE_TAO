@@ -101,7 +101,7 @@ ACE::HTBP::ID_Requestor::get_HTID ()
   if (ACE::HTBP::ID_Requestor::htid_.length() != 0)
     return ACE::HTBP::ID_Requestor::htid_.rep();
 
-  ACE_Guard<ACE_SYNCH_MUTEX> guard (ACE::HTBP::ID_Requestor::htid_lock_);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, ACE::HTBP::ID_Requestor::htid_lock_, 0);
 
   if (ACE::HTBP::ID_Requestor::htid_.length() != 0)
     return ACE::HTBP::ID_Requestor::htid_.rep();

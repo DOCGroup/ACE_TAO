@@ -412,7 +412,7 @@ Peer_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 int
 Peer_Handler::handle_output (ACE_HANDLE)
 {
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
 
   ACE_Time_Value tv (ACE_Time_Value::zero);
 
