@@ -1,3 +1,17 @@
+Tue Sep  7 14:23:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Message_Queue_T.cpp:
+        * examples/APG/ThreadPools/LF_ThreadPool.cpp:
+        * examples/APG/ThreadPools/ThreadPool.cpp:
+        * examples/APG/ThreadSafety/Mutex.cpp:
+        * examples/APG/Threads/Condition_Variables.cpp:
+        * protocols/ace/HTBP/HTBP_ID_Requestor.h:
+        * protocols/ace/TMCast/Group.cpp:
+        * protocols/ace/TMCast/MTQueue.hpp:
+        * tests/Bug_3878_Regression_Test.cpp:
+        * tests/Upgradable_RW_Test.cpp:
+          Fixed compile problems
+
 Tue Sep  7 11:35:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:

@@ -9,7 +9,7 @@
 INSTALL := install -o root -g root
 INSTALL_755 := $(INSTALL) -m 755
 ACE_SUBDIR := ACE_wrappers
-ACE_ARCHIVE := $(shell ls -1 ACE+TAO+CIAO-src-*.tar.gz 2>/dev/null || echo ace-archive-missing)
+ACE_ARCHIVE := pwd ls -al $(shell ls -1 ACE+TAO+CIAO-src-*.tar.gz 2>/dev/null || echo ace-archive-missing)
 MPC_SUBDIR := MPC
 MPC_ARCHIVE := $(shell ls -1 MPC*.tar.gz 2>/dev/null || echo mpc-archive-missing)
 MWCFLAGS := -type gnuace -features "ssl=1,zlib=1,zzip=1,xt=1,tk=1,fl=1,fox=1,qt4=1,exceptions=1,ace_qt4reactor=1" -noreldefs -genins
@@ -119,6 +119,7 @@ build-stamp: patch-stamp
 clean:
 	dh_testdir
 	dh_testroot
+	ls -alR
 	rm -rf $(ACE_SUBDIR) $(MPC_SUBDIR) debian/patched $(MAN1) $(MAN5) *-stamp debian/mpc-ace.sgml
 	dh_clean
 

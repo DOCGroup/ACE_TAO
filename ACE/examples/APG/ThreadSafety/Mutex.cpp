@@ -4,6 +4,7 @@
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Synch.h"
+#include "ace/Guard_T.h"
 
 class LogMessage
 {

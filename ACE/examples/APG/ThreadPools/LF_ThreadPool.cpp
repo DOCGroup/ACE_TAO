@@ -8,6 +8,7 @@
 #include "ace/Task.h"
 #include "ace/Containers.h"
 #include "ace/Synch.h"
+#include "ace/Condition_T.h"
 
 // Listing 4 code/ch16
 class Follower
