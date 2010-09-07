@@ -11,6 +11,7 @@
 #include "ace/Method_Request.h"
 #include "ace/Future.h"
 #include "ace/Activation_Queue.h"
+#include "ace/Condition_T.h"
 #include "test_config.h"
 
 class Worker;

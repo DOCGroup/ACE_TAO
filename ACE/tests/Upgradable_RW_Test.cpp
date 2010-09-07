@@ -175,7 +175,7 @@ Reader_Task::svc (void)
 #if defined (RW_MUTEX)
         ACE_READ_GUARD_RETURN (ACE_RW_Thread_Mutex, g, rw_mutex, 1);
 #else
-        ACE_GUARD (ACE_Thread_Mutex, g, mutex, 1);
+        ACE_GUARD_RETURN (ACE_Thread_Mutex, g, mutex, 1);
 #endif /* RW_MUTEX */
         find_last ();
 #if defined (RW_MUTEX)
@@ -200,7 +200,7 @@ Reader_Task::svc (void)
 #if defined (RW_MUTEX)
           ACE_WRITE_GUARD (ACE_RW_Thread_Mutex, g, rw_mutex, 1);
 #else
-          ACE_GUARD (ACE_Thread_Mutex, g, mutex, 1);
+          ACE_GUARD_RETURN (ACE_Thread_Mutex, g, mutex, 1);
 #endif /* RW_MUTEX */
 
           not_upgraded++;
@@ -247,7 +247,7 @@ Writer_Task::svc (void)
 #if defined (RW_MUTEX)
       ACE_WRITE_GUARD (ACE_RW_Thread_Mutex, g, rw_mutex, 0);
 #else
-      ACE_GUARD (ACE_Thread_Mutex, g, mutex, 0);
+      ACE_GUARD_RETURN (ACE_Thread_Mutex, g, mutex, 0);
 #endif /* RW_MUTEX */
 
       find_last ();
