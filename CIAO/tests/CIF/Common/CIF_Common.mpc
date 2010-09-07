@@ -3,6 +3,7 @@
 project (CIF_Common) : ccm_configvalue, ciao_logger, naming {
   dynamicflags += CIF_COMMON_BUILD_DLL
   sharedname = CIF_Common
+  after += CIF_Component_lem_stub
   includes += ..
   libout = ../lib
 
