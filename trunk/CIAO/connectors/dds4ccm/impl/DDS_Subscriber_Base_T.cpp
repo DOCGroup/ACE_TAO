@@ -53,6 +53,14 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
                                                  library_name,
                                                  profile_name);
         }
+      if (!this->data_reader_->get_impl ())
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+                      "CCM_DDS_Subscriber_Base_T::create_datareader - "
+                      "Error: Proxy returned a nil DataReader.\n"));
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+        }
+
       this->dds_read_->set_impl (this->data_reader_,
                                 &this->condition_manager_);
       this->dds_read_->_set_component (component);

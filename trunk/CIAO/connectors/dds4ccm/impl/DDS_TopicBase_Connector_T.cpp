@@ -182,6 +182,13 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_topic (
                   ::DDS::TopicListener::_nil (),
                   0);
             }
+          if (::CORBA::is_nil (this->topic_.in ()))
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, CLINFO
+                            "DDS_TopicBase_Connector_T::init_default_topic - "
+                            "Error: Proxy returned a nil topic\n"));
+              throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+            }
         }
       else
         {
@@ -216,6 +223,13 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_subscriber (voi
               ::DDS::SubscriberListener::_nil (),
               0);
         }
+      if (::CORBA::is_nil (this->subscriber_.in ()))
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, CLINFO
+                        "DDS_TopicBase_Connector_T::init_subscriber - "
+                        "Error: Proxy returned a nil subscriber.\n"));
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+        }
     }
 }
 
@@ -245,6 +259,13 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_publisher (void
               ::DDS::PublisherListener::_nil (),
               0);
         }
+      if (::CORBA::is_nil (this->publisher_.in ()))
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, CLINFO
+                        "DDS_TopicBase_Connector_T::init_publisher - "
+                        "Error: Proxy returned a nil publisher.\n"));
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+        }
     }
 }
 
@@ -273,7 +294,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_default_top
                     "DDS_TopicBase_Connector_T::activate_default_topic - "
                     "Error while setting the listener on the topic - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
-      throw ::CORBA::INTERNAL ();                    
+      throw ::CORBA::INTERNAL ();
     }
 }
 
@@ -302,7 +323,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_subscriber 
                     "DDS_TopicBase_Connector_T::activate_subscriber - "
                     "Error while setting the listener on the subscriber - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
-      throw ::CORBA::INTERNAL ();                    
+      throw ::CORBA::INTERNAL ();
     }
 }
 
@@ -332,7 +353,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_publisher (
                     "DDS_TopicBase_Connector_T::activate_publisher - "
                     "Error while setting the listener on the publisher - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
-      throw ::CORBA::INTERNAL ();                    
+      throw ::CORBA::INTERNAL ();
     }
 }
 

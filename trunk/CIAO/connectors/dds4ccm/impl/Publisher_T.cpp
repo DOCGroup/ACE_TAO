@@ -78,10 +78,10 @@ namespace CIAO
                         "VENDOR_TYPE>::create_datawriter - "
                         "Error: RTI Topic returned a nil datawriter.\n"));
           delete ccm_dds_drl;
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          return ::DDS::DataWriter::_nil ();
         }
 
-      ::DDS::DataWriter_var retval = ::DDS::DataWriter::_nil ();
+      ::DDS::DataWriter_var retval;
       ACE_NEW_THROW_EX (retval,
                         DataWriter_type (ccm_dds_dw),
                         ::CORBA::NO_MEMORY ());
@@ -133,7 +133,7 @@ namespace CIAO
                         "VENDOR_TYPE>::create_datawriter_with_profile - "
                         "Error: RTI Topic returned a nil datawriter.\n"));
           delete ccm_dds_drl;
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          return ::DDS::DataWriter::_nil ();
         }
       else
         {
@@ -145,7 +145,7 @@ namespace CIAO
                         profile_name));
         }
 
-      ::DDS::DataWriter_var retval = ::DDS::DataWriter::_nil ();
+      ::DDS::DataWriter_var retval;
       ACE_NEW_THROW_EX (retval,
                         DataWriter_type (ccm_dds_dw),
                         ::CORBA::NO_MEMORY ());
@@ -202,7 +202,7 @@ namespace CIAO
     ::DDS::DataWriter_ptr
     CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::lookup_datawriter (const char * impl_name)
     {
-      ::DDS::DataWriter_var retval = ::DDS::DataWriter::_nil ();
+      ::DDS::DataWriter_var retval;
       DDSDataWriter* dw = this->impl ()->lookup_datawriter (impl_name);
       ACE_NEW_THROW_EX (retval,
                         DataWriter_type (dw),
@@ -325,7 +325,7 @@ namespace CIAO
     CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_participant (void)
     {
       DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_participant");
-      ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+      ::DDS::DomainParticipant_var retval;
       DDSDomainParticipant* p = this->impl ()->get_participant ();
       ACE_NEW_THROW_EX (retval,
                         DomainParticipant_type (p),
@@ -383,7 +383,7 @@ namespace CIAO
     ::DDS::StatusCondition_ptr
     CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_statuscondition (void)
     {
-      ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
+      ::DDS::StatusCondition_var retval;
       DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
       ACE_NEW_THROW_EX (retval,
                         CCM_DDS_StatusCondition_i (sc),
