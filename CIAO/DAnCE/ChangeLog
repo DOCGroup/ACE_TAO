@@ -1,3 +1,10 @@
+Wed Sep  8 15:29:55 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/dance_tests.lst:
+        * tests/CIAO:
+
+          Moved all CIAO specific tests to CIAO.
+
 Wed Sep  8 15:07:04 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/dance_tests.lst:
