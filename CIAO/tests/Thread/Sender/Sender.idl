@@ -1,0 +1,31 @@
+//$Id$
+
+#ifndef SENDER_IDL
+#define SENDER_IDL
+
+
+#include "../Thread_Base/Thread_Base.idl"
+#include "tao/StringSeq.pidl"
+
+module Thread
+{
+  /* This is a Sender specific interface which will be used to get the
+   * process start.
+   */
+
+  interface trigger
+  {
+    void start ();
+  };
+
+  component Sender supports trigger
+  {
+    provides ReadMessage push_message;
+    publishes TimeOut click_out;
+  };
+
+  home SenderHome manages Sender
+  {
+  };
+};
+#endif /*SENDER_IDL*/

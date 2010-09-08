@@ -22,6 +22,7 @@ TAO/CIAO/tests/Bug_3834_Regression/descriptors/run_test.pl: !STATIC !MINIMUM !CO
 TAO/CIAO/tests/Bug_3834_Regression/descriptors/run_test_without_ns.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
 TAO/CIAO/tests/IDL3/Events/Any/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
 TAO/CIAO/tests/Bug_3769_Regression/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
+TAO/CIAO/tests/Thread/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
 TAO/CIAO/tests/CIF/descriptors/run_test.pl: !ACE_FOR_TAO !ST
 #TAO/CIAO/DevGuideExamples/Messenger/descriptors/run_test.pl: !LabVIEW_RT !WinCE !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !ST !NOXERCES
 TAO/CIAO/tests/IDL3_to_XMI/Bug_3607_Regression/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !NO_IDL3_TO_XMI

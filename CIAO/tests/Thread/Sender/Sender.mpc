@@ -1,0 +1,140 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p Thread_Base -u Thread -c starter Sender"
+
+project(Thread_Sender_idl_gen) : componentidldefaults {
+  custom_only = 1
+  after += Thread_Base_idl_gen
+  idlflags +=  \
+              -Wb,stub_export_macro=SENDER_STUB_Export \
+              -Wb,stub_export_include=Sender_stub_export.h \
+              -Wb,skel_export_macro=SENDER_SVNT_Export \
+              -Wb,skel_export_include=Sender_svnt_export.h \
+              -Wb,svnt_export_macro=SENDER_SVNT_Export \
+              -Wb,svnt_export_include=Sender_svnt_export.h \
+              -Wb,exec_export_macro=SENDER_EXEC_Export \
+              -Wb,exec_export_include=Sender_exec_export.h
+
+  IDL_Files {
+    Sender.idl
+  }
+}
+
+project(Thread_Sender_lem_gen) : ciaoidldefaults {
+  after += Thread_Sender_idl_gen Thread_Base_lem_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro=SENDER_EXEC_Export \
+              -Wb,export_include=Sender_exec_export.h \
+              -SS
+
+  IDL_Files {
+    SenderE.idl
+  }
+}
+
+project(Thread_Sender_stub) : ccm_stub {
+  after += Thread_Sender_idl_gen Thread_Base_stub
+  libs  += Thread_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  sharedname = Thread_Sender_stub
+  dynamicflags += SENDER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SenderC.cpp
+  }
+
+  Header_Files {
+    SenderC.h
+    Sender_stub_export.h
+  }
+
+  Inline_Files {
+    SenderC.inl
+  }
+}
+
+project(Thread_Sender_exec) : ciao_executor {
+  after   += Thread_Sender_lem_gen Thread_Sender_stub
+  sharedname = Thread_Sender_exec
+  libs += Thread_Sender_stub Thread_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  dynamicflags += SENDER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SenderEC.cpp
+    Sender_exec.cpp
+  }
+
+  Header_Files {
+    SenderEC.h
+    Sender_exec.h
+    Sender_exec_export.h
+  }
+
+  Inline_Files {
+    SenderEC.inl
+  }
+}
+
+
+project(Thread_Sender_svnt) : ciao_servant {
+  after      += Thread_Base_skel Thread_Sender_exec
+  sharedname  = Thread_Sender_svnt
+  libs       += Thread_Sender_exec \
+                Thread_Sender_stub \
+                Thread_Base_skel \
+                Thread_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  dynamicflags += SENDER_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SenderS.cpp
+    Sender_svnt.cpp
+  }
+
+  Header_Files {
+    SenderS.h
+    Sender_svnt.h
+    Sender_svnt_export.h
+  }
+
+  Inline_Files {
+    SenderS.inl
+  }
+}
+
+project (Thread_starter) : ccm_stub, valuetype {
+  exename = starter
+  after += Thread_Sender_stub
+  libs  += Thread_Sender_stub Thread_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    starter.cpp
+  }
+
+  Header_Files {
+  }
+
+  Inline_Files {
+  }
+}
+
