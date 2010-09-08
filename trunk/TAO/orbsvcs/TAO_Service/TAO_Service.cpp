@@ -26,11 +26,6 @@
 #include "ace/Time_Value.h"
 #include "ace/Argv_Type_Converter.h"
 
-ACE_RCSID (TAO_Service,
-           TAO_Service,
-           "$Id$")
-
-
 extern "C" void handler (int)
 {
   ACE_Service_Config::reconfig_occurred (1);

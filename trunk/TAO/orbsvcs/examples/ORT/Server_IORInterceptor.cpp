@@ -3,11 +3,6 @@
 #include "Server_IORInterceptor.h"
 #include "Gateway_ObjRef_Factory.h"
 
-ACE_RCSID (ORT,
-           Server_IORInterceptor,
-           "$Id$")
-
-
 Server_IORInterceptor::
 Server_IORInterceptor (Gateway::Object_Factory_ptr factory)
   : gateway_object_factory_ (Gateway::Object_Factory::_duplicate (factory))

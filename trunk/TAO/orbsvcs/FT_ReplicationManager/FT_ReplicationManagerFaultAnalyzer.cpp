@@ -22,10 +22,6 @@
 #include "tao/debug.h"
 #include <iostream>
 
-ACE_RCSID (FT_ReplicationManagerFaultAnalyzer,
-           FT_ReplicationManagerFaultAnalyzer,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Constructor.

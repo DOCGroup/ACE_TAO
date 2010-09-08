@@ -1,13 +1,10 @@
+// $Id$
+
 #include "RTEvent_Logging_Service.h"
 #include "tao/IORTable/IORTable.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_RCSID (RTEvent_Logging_Service,
-           RTEvent_Logging_Service,
-           "$Id$")
-
 
 RTEvent_Logging_Service::RTEvent_Logging_Service (void)
   : service_name_ ("RTEventLogFactory"),
