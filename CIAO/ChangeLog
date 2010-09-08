@@ -1,3 +1,21 @@
+Wed Sep  8 15:10:24 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/ciao_xml_utils.mpb:
+        * tools/XML:
+        * tools/XML/CIAO_XML_Utils_Export.h:
+        * tools/XML/XML.mpc:
+        * tools/XML/XML_Error_Handler.h:
+        * tools/XML/XML_Error_Handler.cpp:
+        * tools/XML/XML_Helper.h:
+        * tools/XML/XML_Helper.tpp:
+        * tools/XML/XML_Schema_Resolver.h:
+        * tools/XML/XML_Schema_Resolver.tpp:
+        * tools/XML/XML_Schema_Resolver.cpp:
+        * tools/XML/XercesString.h:
+        * tools/XML/XercesString.cpp:
+
+          Moved XML utils to DAnCE.
+
 Wed Sep  8 15:09:06 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/ciao_tests.lst:
