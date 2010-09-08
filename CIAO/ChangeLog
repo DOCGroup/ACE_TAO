@@ -1,3 +1,11 @@
+Wed Sep  8 06:34:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/TopicName/descriptors/run_test.pl:
+          Hiding output since plan_launcher should return expected errors.
+
+        * connectors/dds4ccm/tests/TopicName/descriptors/Empty.cdp:
+          Removed this file.
+
 Tue Sep  7 17:38:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Common/CIF_Common.mpc:
