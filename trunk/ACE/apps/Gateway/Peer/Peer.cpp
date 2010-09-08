@@ -8,8 +8,6 @@
 #include "ace/Signal.h"
 #include "Peer.h"
 
-ACE_RCSID(Peer, Peer, "$Id$")
-
 Peer_Handler::Peer_Handler (void)
   : connection_id_ (-1),  // Maybe it's better than 0.
     msg_frag_ (0),

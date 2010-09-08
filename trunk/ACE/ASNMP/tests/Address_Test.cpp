@@ -44,8 +44,6 @@ DAMAGES.
 #include "asnmp/address.h"
 #include "test_config.h"
 
-ACE_RCSID(tests, Address_Test, "$Id$")
-
 // test the GenAddress interface
 /*
  */

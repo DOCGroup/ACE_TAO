@@ -14,8 +14,6 @@
 #include "URL_Array_Helper.h"
 #include "URL_Locator.h"
 
-ACE_RCSID(Caching, Locator_Request_Reply, "$Id$")
-
 int
 ACE_URL_Locator_Request::url_query (const int how,
                                     const ACE_URL_Property_Seq &pseq,

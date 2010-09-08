@@ -42,8 +42,6 @@ DAMAGES.
 #include "asnmp/oid.h"
 #include "test_config.h"
 
-ACE_RCSID(tests, Oid_Test, "$Id$")
-
 /*
   Oid( const char * dotted_oid_string = "", size_t size = -1);
   Oid ( const Oid &oid);

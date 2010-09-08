@@ -13,8 +13,6 @@
 #include "HTTP_Config.h"
 #include "JAWS_IO.h"
 
-ACE_RCSID(server, HTTP_Response, "$Id$")
-
 #if defined (ACE_JAWS_BASELINE)
 static char * const EMPTY_HEADER = "";
 #else

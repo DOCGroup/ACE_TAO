@@ -7,8 +7,6 @@
 
 #include "URL_Array_Helper.h"
 
-ACE_RCSID(Caching, URL_Array_Helper, "$Id$")
-
 // Some helper functions for encoding/decoding
 
 template <class T>

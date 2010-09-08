@@ -2,8 +2,6 @@
 
 #include "Handle_L_Dgram.h"
 
-ACE_RCSID(server, Handle_L_Dgram, "$Id$")
-
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 const ACE_TCHAR *Handle_L_Dgram::DEFAULT_RENDEZVOUS =

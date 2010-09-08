@@ -40,8 +40,6 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/os_include/os_ctype.h"
 
-ACE_RCSID(asnmp, octet, "$Id$")
-
 //============[ syntax type ]=========================================
 SmiUINT32 OctetStr::get_syntax()
 {

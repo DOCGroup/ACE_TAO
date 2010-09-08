@@ -9,8 +9,6 @@
 #include "ace/Truncate.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(Threads, thread_specific, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 #include "thread_specific.h"
@@ -77,27 +75,27 @@ worker (void *c)
                   "(%t) in worker 1, key = %d, ip = %x\n",
                   key,
                   ip));
-      
+
       {
         // tmp is workaround for gcc strict aliasing warning.
         void *tmp = reinterpret_cast <void *> (ip);
-        
+
         if (ACE_Thread::setspecific (key, tmp) == -1)
           ACE_ERROR ((LM_ERROR,
                       "(%t) %p\n",
                       "ACE_Thread::setspecific"));
-        
+
         if (ACE_Thread::getspecific (key, &tmp) == -1)
           ACE_ERROR ((LM_ERROR,
                       "(%t) %p\n",
                       "ACE_Thread::setspecific"));
-        
+
         if (ACE_Thread::setspecific (key, (void *) 0) == -1)
           ACE_ERROR ((LM_ERROR,
                       "(%t) %p\n",
                       "ACE_Thread::setspecific"));
       }
-      
+
       delete ip;
 
       if (ACE_Thread::keyfree (key) == -1)
@@ -146,7 +144,7 @@ worker (void *c)
                   "(%t) in worker 2, key = %d, ip = %x\n",
                   key,
                   ip));
-      
+
       {
         // Tmp is workaround for GCC strict aliasing warning.
         void *tmp (reinterpret_cast <void *> (ip));
@@ -155,20 +153,20 @@ worker (void *c)
           ACE_ERROR ((LM_ERROR,
                       "(%t) %p\n",
                       "ACE_Thread::setspecific"));
-        
+
         if (ACE_Thread::getspecific (key, &tmp) == -1)
           ACE_ERROR ((LM_ERROR,
                       "(%t) %p\n",
                       "ACE_Thread::setspecific"));
-        
+
         if (ACE_Thread::setspecific (key, (void *) 0) == -1)
           ACE_ERROR ((LM_ERROR,
                       "(%t) %p\n",
                       "ACE_Thread::setspecific"));
       }
-      
+
       delete ip;
-        
+
       if (ACE_Thread::keyfree (key) == -1)
         ACE_ERROR ((LM_ERROR,
                     "(%t) %p\n",

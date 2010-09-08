@@ -41,8 +41,6 @@ DAMAGES.
 #include "asnmp/counter.h"
 #include "test_config.h"
 
-ACE_RCSID(tests, Counter_Test, "$Id$")
-
 /*
    Counter32( void);
    Counter32( const unsigned long i);

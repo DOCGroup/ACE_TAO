@@ -25,9 +25,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(Misc, test_naming, "$Id$")
-
-
 #define ACE_NS_MAX_ENTRIES 4000
 
 static char name[BUFSIZ];

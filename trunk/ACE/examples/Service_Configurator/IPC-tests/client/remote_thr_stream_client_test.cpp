@@ -11,8 +11,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(client, remote_thr_stream_client_test, "$Id$")
-
 #if defined (ACE_HAS_TLI)
 
 // Name of the program.

@@ -61,8 +61,6 @@ static const char usage [] = "[-? |\n"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID(Misc, context_switch_time, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 #if !defined (ACE_DEBUG_CST)

@@ -9,8 +9,6 @@
 #include "ace/Signal.h"
 #include "ace/Sig_Adapter.h"
 
-ACE_RCSID(server, server_test, "$Id$")
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

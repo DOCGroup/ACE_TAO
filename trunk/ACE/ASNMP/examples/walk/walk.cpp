@@ -39,8 +39,6 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID(walk, walk, "$Id$")
-
 //
 // SNMPv1 Walk Mib Application
 //

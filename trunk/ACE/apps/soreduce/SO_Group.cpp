@@ -12,9 +12,6 @@
 #include "Library.h"
 #include "SO_Group.h"
 
-ACE_RCSID(src, SO_Group, "$Id$")
-
-
 SO_Group::SO_Group ()
   : undef_wrapper_ ("nothing"),
     undefs_(undef_wrapper_.imports()),
@@ -31,7 +28,7 @@ SO_Group::~SO_Group (void)
     {
       // No action.
     }
-  
+
   delete [] libs_;
 }
 
@@ -66,7 +63,7 @@ SO_Group::add_executable (const char * path)
     int len = 0;
     int nread = 0;
     int bogus = 0;
-    
+
     // Skip initial whitespace.
     while ((nread = ACE_OS::read (pipe[0], line,1)) == 1
            && (*line == ' ' || *line == '\t'))
@@ -81,7 +78,7 @@ SO_Group::add_executable (const char * path)
 
     // read the library name
     len = 1;
-    
+
     while ((nread = ACE_OS::read (pipe[0], line + len, 1)) == 1
            && (line[len] != ' '))
       {
@@ -91,25 +88,25 @@ SO_Group::add_executable (const char * path)
             break;
           }
       }
-      
+
     if (nread != 1 || bogus)
       {
         break;
       }
-      
+
     line[len] = 0;
     char * dot = ACE_OS::strchr (line,'.');
-    
+
     if (dot != 0)
       {
         *dot = 0;
       }
-      
+
     char * libname = line + 3; // skip over "lib"
 
     // check to see if this is a new library
     int found = 0;
-    
+
     for (int i = 0; !found && i < num_libs_; ++i)
       {
         found = (libs_[i]->name() == libname);
@@ -128,7 +125,7 @@ SO_Group::add_executable (const char * path)
 
       // get library path
       len = 0;
-      
+
       while ((nread = ACE_OS::read(pipe[0],line + len,1)) == 1 &&
              (line[len] != ' '))
         {
@@ -138,25 +135,25 @@ SO_Group::add_executable (const char * path)
               break;
             }
         }
-          
+
       if (nread != 1 || bogus)
         {
           break;
         }
-        
+
       line[len] = 0;
       nlib->set_path (line);
       libs_[num_libs_++] = nlib;
       ACE_ASSERT (num_libs_ < max_libs_); // grow max libs?
     }
-    
+
     // Skip the rest of the line.
     while ((nread = ACE_OS::read (pipe[0], line, 1)) == 1
            && *line != '\n')
       {
         // No action.
       }
-    
+
     if (nread != 1)
       {
         break;
@@ -178,7 +175,7 @@ SO_Group::analize (void)
                   "pass %d, undef count = %d\n",
                   passcount,
                   undefs_.size ()));
-                  
+
       for (int i = 0; i < num_libs_; libs_[i++]->resolve (undefs_))
         {
           // No action.
@@ -208,7 +205,7 @@ void
 SO_Group::list_libs (void)
 {
   ACE_DEBUG ((LM_DEBUG, "Libs subject to analysis:\n"));
-  
+
   for (int i = 0; i < num_libs_; ++i)
   {
     if (libs_[i]->has_modules ())

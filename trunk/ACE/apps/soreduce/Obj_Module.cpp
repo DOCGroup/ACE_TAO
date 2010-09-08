@@ -17,10 +17,6 @@
 
 #include "Obj_Module.h"
 
-
-ACE_RCSID(src, Obj_Module, "$Id$")
-
-
 //----------------------------------------------------------------------------
 
 Obj_Module::Obj_Module (const ACE_CString &name, int cap)
@@ -181,17 +177,17 @@ Obj_Module::populate_sig_list (Sig_List &siglist,
 {
   char *c;
   ACE_CString temp;
-  
+
   for (int i = 0; i < lines; i++)
     {
       for (c = buf->rd_ptr (); c != buf->wr_ptr () && *c != '\n'; ++c)
         {
           // No action.
         }
-        
+
       temp += ACE_CString (buf->rd_ptr (), (c - buf->rd_ptr ()));
       buf->rd_ptr (c + 1);
-      
+
       if (*c == '\n')
         {
           //      ACE_DEBUG ((LM_DEBUG, "%s\n",temp.c_str()));
@@ -201,7 +197,7 @@ Obj_Module::populate_sig_list (Sig_List &siglist,
       else
         {
           buf = buf->cont ();
-          
+
           if (buf == 0)
             {
               siglist.add (temp);

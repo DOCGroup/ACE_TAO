@@ -6,8 +6,6 @@
 #include "Blob_Handler.h"
 #include "Options.h"
 
-ACE_RCSID(Blobby, Options, "$Id$")
-
 Options *Options::instance_ = 0;
 
 Options *

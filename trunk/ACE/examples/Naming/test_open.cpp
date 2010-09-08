@@ -6,8 +6,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Naming, test_open, "$Id$")
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {

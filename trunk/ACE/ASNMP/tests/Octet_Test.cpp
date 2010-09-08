@@ -44,8 +44,6 @@ DAMAGES.
 #include "asnmp/octet.h"
 #include "test_config.h"
 
-ACE_RCSID(tests, Octet_Test, "$Id$")
-
 /*
   OctetStr( const char *string, long size = -1);
   OctetStr ( const OctetStr &octet);

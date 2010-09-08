@@ -41,10 +41,6 @@ DAMAGES.
 #include "asnmp/gauge.h"
 #include "test_config.h"
 
-ACE_RCSID (tests,
-           Gauge_Test,
-           "$Id$")
-
 /*
    Gauge32( void);
    Gauge32( const unsigned long i);

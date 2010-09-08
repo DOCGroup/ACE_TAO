@@ -36,8 +36,6 @@
 
 #include "test_singleton.h"
 
-ACE_RCSID(Misc, test_singleton, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 static const int DEFAULT_ITERATIONS = 100000000;
