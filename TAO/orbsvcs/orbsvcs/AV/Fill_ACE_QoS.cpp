@@ -4,7 +4,7 @@
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
-ACE_RCSID(QOS, Fill_ACE_QoS,"$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

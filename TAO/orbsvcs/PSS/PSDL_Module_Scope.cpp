@@ -4,7 +4,7 @@
 #include "PSDL_Module_Scope.h"
 #include "PSDL_Interface_Scope.h"
 
-ACE_RCSID (PSS, PSDL_Module_Scope, "$Id$")
+
 
 TAO_PSDL_Module_Scope::TAO_PSDL_Module_Scope (TAO_PSDL_Scope *parent_scope)
   : module_scope_ (),

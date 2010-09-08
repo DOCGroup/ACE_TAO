@@ -5,7 +5,7 @@
 #include "tao/debug.h"
 #include "Filter.h"
 
-ACE_RCSID (Notify_Tests, Filter, "$Id$")
+
 
 Filter::Filter (void)
   : event_count_ (5)

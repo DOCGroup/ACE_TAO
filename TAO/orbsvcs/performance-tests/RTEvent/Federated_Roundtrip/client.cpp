@@ -28,7 +28,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/Barrier.h"
 
-ACE_RCSID(TAO_RTEC_PERF_Roundtrip, client, "$Id$")
+
 
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 int nthreads   = 0;

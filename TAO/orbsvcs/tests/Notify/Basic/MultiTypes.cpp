@@ -5,7 +5,7 @@
 #include "tao/debug.h"
 #include "MultiTypes.h"
 
-ACE_RCSID (Notify_Tests, MultiTypes, "$Id$")
+
 
 //*****************************************************************************************************
 

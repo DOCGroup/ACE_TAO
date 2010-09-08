@@ -4,7 +4,7 @@
 #include "orbsvcs/Event/EC_QOS_Info.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(Event, EC_Kokyu_Filter, "$Id$")
+
 
 TAO_EC_Kokyu_Filter::
     TAO_EC_Kokyu_Filter (const char* name,

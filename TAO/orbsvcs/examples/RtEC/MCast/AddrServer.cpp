@@ -2,7 +2,7 @@
 
 #include "AddrServer.h"
 
-ACE_RCSID(EC_Examples, AddrServer, "$Id$")
+
 
 AddrServer::AddrServer (const RtecUDPAdmin::UDP_Addr& addr)
   : addr_ (addr)

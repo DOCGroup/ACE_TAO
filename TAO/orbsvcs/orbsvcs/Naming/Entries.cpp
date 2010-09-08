@@ -12,7 +12,7 @@
 
 #include "orbsvcs/Naming/Entries.h"
 
-ACE_RCSID(Naming, Entries, "$Id$")
+
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

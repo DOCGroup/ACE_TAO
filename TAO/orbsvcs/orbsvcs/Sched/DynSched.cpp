@@ -21,7 +21,7 @@
 #include "orbsvcs/Sched/DynSched.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Sched, DynSched, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

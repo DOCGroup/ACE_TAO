@@ -2,7 +2,7 @@
 
 #include "RT_POA_Command.h"
 
-ACE_RCSID(lib, TAO_RT_POA_Command, "$Id$")
+
 
 #include "tao/debug.h"
 #include "../lib/LookupManager.h"

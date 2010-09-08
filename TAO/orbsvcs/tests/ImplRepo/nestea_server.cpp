@@ -2,7 +2,7 @@
 
 #include "nestea_server_i.h"
 
-ACE_RCSID(ImplRepo, nestea_server, "$Id$")
+
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

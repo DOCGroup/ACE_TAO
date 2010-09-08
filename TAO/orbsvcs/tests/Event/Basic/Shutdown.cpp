@@ -4,7 +4,7 @@
 #include "Consumer.h"
 #include "Supplier.h"
 
-ACE_RCSID(EC_Tests_Basic, Shutdown, "$Id$")
+
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

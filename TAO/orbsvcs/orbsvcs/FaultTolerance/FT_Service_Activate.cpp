@@ -6,7 +6,7 @@
 #include "tao/Service_Callbacks.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID(FaultTolerance, FT_Service_Activate, "$Id$")
+
 
 static bool initialized = false;
 

@@ -22,7 +22,7 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Simple_Naming, client, "$Id$")
+
 
 #if defined (_MSC_VER)
 # pragma warning (disable : 4250)

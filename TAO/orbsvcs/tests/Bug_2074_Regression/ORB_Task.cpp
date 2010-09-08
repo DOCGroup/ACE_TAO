@@ -10,7 +10,7 @@
 #include "tao/Messaging/Messaging.h"
 #include "orbsvcs/CosNamingC.h"
 
-ACE_RCSID(Bug_2074_Regression, ORB_Task, "$Id$")
+
 
 ORB_Task::ORB_Task (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))

@@ -11,7 +11,7 @@
 
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (PSS, PSDL_Datastore, "$Id$")
+
 
 TAO_PSDL_Datastore::TAO_PSDL_Datastore ()
   : allocator_ (0),

@@ -14,7 +14,7 @@
 #include "orbsvcs/Sched/Scheduler_Generic.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(Sched, Scheduler_Generic, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

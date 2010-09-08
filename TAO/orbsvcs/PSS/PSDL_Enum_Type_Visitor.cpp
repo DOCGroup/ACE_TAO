@@ -4,7 +4,7 @@
 #include "PSDL_Enum_Type_Visitor.h"
 #include "PSDL_Stream.h"
 
-ACE_RCSID (PSS, PSDL_Enum_Type_Visitor, "$Id$")
+
 
 TAO_PSDL_Enum_Type_Visitor::TAO_PSDL_Enum_Type_Visitor (void)
 {
@@ -36,7 +36,7 @@ TAO_PSDL_Enum_Type_Visitor::visit_enumerator (TAO_PSDL_Enumerator *enumerator)
 
   // Get a pointer to PSDL_Stream of the stub header.
   TAO_PSDL_Stream *ps_sh = TAO_PSDL_Scope::instance ()->get_sh ();
-  
+
   *ps_sh<< "  " << this->identifiers_ [this->count_ - 1]
        << ";\n";
 
@@ -61,7 +61,7 @@ TAO_PSDL_Enum_Type_Visitor::visit_predefined_type (TAO_PSDL_Predefined_Type *pre
 
   // Get a pointer to PSDL_Stream of the stub header.
   TAO_PSDL_Stream *ps_sh = TAO_PSDL_Scope::instance ()->get_sh ();
-  
+
   *ps_sh<< "enum " << enum_type_name.c_str () << "\n";
   *ps_sh<< "{\n";
 
@@ -86,7 +86,7 @@ TAO_PSDL_Enum_Type_Visitor::print_class_for_enum_type (ACE_CString enum_type_nam
 {
 // Get a pointer to PSDL_Stream of the stub header.
   TAO_PSDL_Stream *ps_sh = TAO_PSDL_Scope::instance ()->get_sh ();
-  
+
   ps_sh->nl ();
 
   *ps_sh << "typedef " << enum_type_name << " &"

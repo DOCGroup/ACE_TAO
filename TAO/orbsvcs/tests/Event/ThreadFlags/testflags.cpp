@@ -9,7 +9,7 @@
 #include "ace/OS_NS_Thread.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID(EC_Tests, testflags, "$Id$")
+
 
 /*
   Here are the scenarios we need to test:

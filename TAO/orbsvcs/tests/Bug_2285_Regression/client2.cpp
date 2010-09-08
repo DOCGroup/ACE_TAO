@@ -9,7 +9,7 @@
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(Hello, client, "$Id$")
+
 
 //const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;

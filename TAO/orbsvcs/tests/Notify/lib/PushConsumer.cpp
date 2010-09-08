@@ -6,7 +6,7 @@
 #include "PushConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(lib, TAO_PushConsumer, "$Id$")
+
 
 TAO_Notify_Tests_PushConsumer_Traits::TAO_Notify_Tests_PushConsumer_Traits (void)
   :type_ (CosNotifyChannelAdmin::ANY_EVENT)

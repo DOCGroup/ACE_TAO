@@ -10,7 +10,7 @@
 
 #include "ace/Sched_Params.h"
 
-ACE_RCSID(Event, EC_Priority_Dispatching, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

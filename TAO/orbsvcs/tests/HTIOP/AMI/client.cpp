@@ -23,7 +23,7 @@
 #include "ami_testC.h"
 #include "ami_testS.h"
 
-ACE_RCSID(AMI, client, "$Id$")
+
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;

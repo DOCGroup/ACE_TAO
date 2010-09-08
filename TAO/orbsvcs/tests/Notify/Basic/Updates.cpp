@@ -5,7 +5,7 @@
 #include "tao/debug.h"
 #include "Updates.h"
 
-ACE_RCSID (Notify_Tests, Updates, "$Id$")
+
 
 Updates_StructuredPushConsumer::Updates_StructuredPushConsumer (Updates *test_client)
   : test_client_ (test_client)

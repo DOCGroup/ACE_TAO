@@ -2,7 +2,7 @@
 
 #include "orbsvcs/Event/EC_ConsumerControl.h"
 
-ACE_RCSID(Event, EC_ConsumerControl, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

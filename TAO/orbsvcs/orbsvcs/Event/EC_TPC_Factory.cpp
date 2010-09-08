@@ -12,7 +12,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID(Event, EC_TPC_Factory, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

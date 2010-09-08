@@ -3,7 +3,7 @@
 //
 #include "Hello.h"
 
-ACE_RCSID(Hello, Hello, "$Id$")
+
 
 CORBA::Boolean
 Hello::normal_context_ok_ = 0;

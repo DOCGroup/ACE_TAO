@@ -4,7 +4,7 @@
 #include "orbsvcs/CosTypedEventChannelAdminC.h"
 #include "CountryC.h"
 
-ACE_RCSID(CosEC_Examples, Supplier, "$Id:")
+
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

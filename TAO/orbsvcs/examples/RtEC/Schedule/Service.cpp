@@ -16,7 +16,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(EC_Examples, Service, "$Id$")
+
 
 int config_run = 0;
 

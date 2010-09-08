@@ -3,7 +3,7 @@
 //
 #include "McastHello.h"
 
-ACE_RCSID(McastHello, McastHello, "$Id$")
+
 
 McastHello::McastHello (CORBA::ORB_ptr orb,
                         int instance)

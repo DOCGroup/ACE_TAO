@@ -3,7 +3,7 @@
 #include "orbsvcs/CosEvent/CEC_Dispatching.h"
 #include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.h"
 
-ACE_RCSID(CosEvent, CEC_Dispatching, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -2,7 +2,7 @@
 
 #include "orbsvcs/Event/EC_MT_Dispatching.h"
 
-ACE_RCSID(Event, EC_MT_Dispatching, "$Id$")
+
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

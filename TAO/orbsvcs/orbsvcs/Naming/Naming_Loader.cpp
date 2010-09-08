@@ -17,7 +17,7 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Argv_Type_Converter.h"
 
-ACE_RCSID (Naming, Naming_Loader, "$Id$")
+
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

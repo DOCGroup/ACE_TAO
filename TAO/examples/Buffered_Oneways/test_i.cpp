@@ -2,7 +2,7 @@
 
 #include "test_i.h"
 
-ACE_RCSID(Buffered_Oneways, test_i, "$Id$")
+
 
 test_i::test_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))

@@ -9,7 +9,7 @@
 #include "orbsvcs/Event/ECG_UDP_Out_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, ECG_UDP_Out_Endpoint, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

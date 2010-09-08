@@ -2,7 +2,7 @@
 
 #include "RT_Test_Filter.h"
 
-ACE_RCSID(Notify, TAO_RT_Test_Filter, "$Id$")
+
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"

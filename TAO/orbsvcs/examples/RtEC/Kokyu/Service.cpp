@@ -21,7 +21,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/Thread.h"
 
-ACE_RCSID(EC_Examples, Service, "$Id$")
+
 
 namespace
 {

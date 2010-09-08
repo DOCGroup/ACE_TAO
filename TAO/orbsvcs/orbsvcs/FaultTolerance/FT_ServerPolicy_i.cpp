@@ -10,7 +10,7 @@
 #include "orbsvcs/FaultTolerance/FT_ServerPolicy_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(FaultTolerance, FT_ServerPolicy_i, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
