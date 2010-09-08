@@ -18,10 +18,6 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_main.h"
 
-ACE_RCSID (LifeCycle_Service,
-           LifeCycle_Service,
-           "$Id$")
-
 Life_Cycle_Service_Server::Life_Cycle_Service_Server (void)
 :   debug_level_ (1)
 {

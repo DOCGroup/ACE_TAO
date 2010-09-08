@@ -31,11 +31,6 @@
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.h"
 
-ACE_RCSID (FT_ReplicationManager,
-           FT_ReplicationManager,
-           "$Id$")
-
-
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.
 #define METHOD_ENTRY(name)    \

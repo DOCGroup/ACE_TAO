@@ -1,14 +1,11 @@
+// $Id$
+
 #include "Basic_Logging_Service.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/Log/BasicLogFactory_i.h"
 #include "tao/IORTable/IORTable.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_RCSID (Basic_Logging_Service,
-           Basic_Logging_Service,
-           "$Id$")
-
 
 Basic_Logging_Service::Basic_Logging_Service (void)
   : service_name_ ("BasicLogFactory"),

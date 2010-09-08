@@ -22,10 +22,6 @@
 #include "Factory_Trader.h"
 #include "orbsvcs/CosTradingC.h"
 
-ACE_RCSID (LifeCycle_Service,
-           Factory_Trader,
-           "$Id$")
-
 // This const char * is used for adding a new type to the service repository
 // the added types will be subclasses of this.
 const char * Factory_Trader::GENERIC_FACTORY_INTERFACE_REPOSITORY_ID =

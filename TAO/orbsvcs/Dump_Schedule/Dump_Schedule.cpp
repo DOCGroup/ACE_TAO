@@ -1,4 +1,3 @@
-
 // $Id$
 
 #include "ace/Sched_Params.h"
@@ -8,10 +7,6 @@
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Scheduler_Factory.h"
-
-ACE_RCSID (Dump_Schedule,
-           Dump_Schedule,
-           "$Id$")
 
 // This program dumps the results of one scheduling in a C++ file.
 
