@@ -1,3 +1,41 @@
+Wed Sep  8 14:59:18 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * Config_Handlers/*:
+
+          Moved config handlers into the DAnCE namespace.
+
+        * tools/XML:
+        * tools/XML/XML.mpc:
+        * tools/XML/XML_Error_Handler.h:
+        * tools/XML/XML_Error_Handler.cpp:
+        * tools/XML/XML_Helper.h:
+        * tools/XML/XML_Helper.tpp:
+        * tools/XML/XML_Schema_Resolver.h:
+        * tools/XML/XML_Schema_Resolver.tpp:
+        * tools/XML/XML_Schema_Resolver.cpp:
+        * tools/XML/XercesString.h:
+        * tools/XML/XercesString.cpp:
+
+          Moved XML utils from CIAO.
+
+        * MPC/config/dance_config_handlers.mpb:
+        * MPC/config/dance_config_handlers_base.mpb:
+        * MPC/config/dance_xml_utils.mpb:
+
+          Updated to reflect move of XML Utils from CIAO.
+
+        * TargetManager/DomainDataManager.cpp:
+        * tests/DeploymentPlanDump/test.cpp:
+        * tests/DeploymentPlanTestReferences/test.cpp:
+        * tests/DeploymentTest1/test.cpp:
+        * tests/NameServiceTest/clt_main.cpp:
+        * tests/NameServiceTest/srv_main.cpp:
+        * tests/Parsing/domain.cpp:
+        * tests/Parsing/test.cpp:
+        * tools/Convert_Plan/Convert_Plan_Impl.cpp:
+
+          Fallout from the namespace change.
+
 Wed Sep  8 14:57:25 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Version.h:
