@@ -22,7 +22,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, High_Res_Timer_Test, "$Id$")
+
 
 static
 u_int

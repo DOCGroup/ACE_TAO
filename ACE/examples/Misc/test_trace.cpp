@@ -11,14 +11,14 @@
 // = DESCRIPTION
 //    This example illustrates how to use the ACE tracing feature and
 //    the ACE_TRACE macro.  It also shows the use of the ACE_Task_Base
-//    class running as an "active object".  
-// 
+//    class running as an "active object".
+//
 //    When adding ACE tracing to an application one option is to add
-// 
+//
 //    #define ACE_NTRACE 0
-// 
+//
 //    in the line above #include "ace/Log_Msg.h".  That's the approach shown below.
-// 
+//
 //    Another option is to add this line in $ACE_ROOT/ace/config.h.
 //    Note, however, that if you add the line in config.h, you need to
 //    add it *after* you've built ACE, i.e., don't build ACE with it
@@ -43,7 +43,7 @@
 #include "ace/Signal.h"
 #include "ace/Task.h"
 
-ACE_RCSID(Misc, test_trace, "$Id$")
+
 
 class My_Task : public ACE_Task_Base
 {

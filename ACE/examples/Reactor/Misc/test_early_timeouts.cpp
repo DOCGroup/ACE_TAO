@@ -25,7 +25,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_sys_select.h"
 
-ACE_RCSID(Misc, test_early_timeouts, "$Id$")
+
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])

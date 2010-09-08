@@ -42,7 +42,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(WFMO_Reactor, Registration, "$Id$")
+
 
 // Globals for this test
 int stop_test = 0;

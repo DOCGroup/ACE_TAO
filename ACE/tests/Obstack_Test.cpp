@@ -21,7 +21,7 @@
 #include "ace/Obstack.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(tests, Obstack_Test, "$Id$")
+
 
 
 int run_main (int, ACE_TCHAR *[])

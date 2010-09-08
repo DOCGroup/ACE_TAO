@@ -26,7 +26,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "BPR_Drivers.h"
 
-ACE_RCSID(Bounded_Packet_Relay, BPR_Drivers, "$Id$")
+
 
 // Constructor.
 

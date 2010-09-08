@@ -25,7 +25,7 @@
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 
-ACE_RCSID(WFMO_Reactor, Suspended_Removals, "$Id$")
+
 
 class Event_Handler : public ACE_Event_Handler
 {

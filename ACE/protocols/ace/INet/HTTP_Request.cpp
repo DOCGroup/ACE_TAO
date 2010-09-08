@@ -10,7 +10,7 @@
 
 #include "ace/INet/INet_Log.h"
 
-ACE_RCSID(NET_CLIENT,ACE_HTTP_Request,"$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

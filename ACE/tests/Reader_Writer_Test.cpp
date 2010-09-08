@@ -28,7 +28,7 @@
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/Time_Value.h"
 
-ACE_RCSID(tests, Reader_Writer_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

@@ -25,7 +25,7 @@
 
 #include "Iterator.h"
 
-ACE_RCSID(src, Iterator, "$Id$")
+
 
 #if defined (ACE_HAS_GPERF)
 

@@ -10,7 +10,7 @@
 #include "Server_Logging_Handler_T.h"
 #include "ace/Signal.h"
 
-ACE_RCSID(lib, Server_Logging_Handler_T, "$Id$")
+
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
 // Track number of requests.

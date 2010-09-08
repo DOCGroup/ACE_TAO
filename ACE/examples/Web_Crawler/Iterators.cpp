@@ -4,7 +4,7 @@
 #include "Options.h"
 #include "Iterators.h"
 
-ACE_RCSID(Web_Crawler, Iterators, "$Id$")
+
 
 URL_Iterator::~URL_Iterator (void)
 {
@@ -53,7 +53,7 @@ HTML_Body_Iterator::next (ACE_CString &url)
           int start_index =
             ACE_Utils::truncate_cast<int> (
               buffer.find ('\"', href_index));
-              
+
           if (start_index <= 0)
             break;
 
@@ -62,7 +62,7 @@ HTML_Body_Iterator::next (ACE_CString &url)
           int end_index =
             ACE_Utils::truncate_cast<int> (
               buffer.find ('\"', start_index + 1));
-              
+
           if (end_index <= 0)
             break;
 

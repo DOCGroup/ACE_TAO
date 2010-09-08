@@ -32,7 +32,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_time.h"
 
-ACE_RCSID(WFMO_Reactor, Multithreading, "$Id$")
+
 
 static int concurrent_threads = 1;
 static int number_of_handles = static_cast<int> (ACE_Reactor::instance ()->size ());

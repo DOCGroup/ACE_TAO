@@ -28,7 +28,7 @@
 #include "ace/Signal.h"
 #include "TSS_Test_Errno.h"
 
-ACE_RCSID(tests, TSS_Test, "$Id$")
+
 
 static u_int errors = 0;
 

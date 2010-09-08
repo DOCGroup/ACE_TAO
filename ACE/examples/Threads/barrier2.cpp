@@ -16,7 +16,7 @@
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
 
-ACE_RCSID(Threads, barrier2, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

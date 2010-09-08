@@ -49,7 +49,7 @@
 #include "ace/Signal.h"
 #include "ace/Min_Max.h"
 
-ACE_RCSID(tests, Multicast_Test, "$Id$")
+
 
 #if defined (ACE_HAS_IP_MULTICAST) && defined (ACE_HAS_THREADS)
 

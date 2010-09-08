@@ -13,7 +13,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_Memory.h"
 
-ACE_RCSID(tests, Bug_3710_Regression, "$Id$")
+
 
 // Main function.
 

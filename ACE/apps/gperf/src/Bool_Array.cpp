@@ -28,7 +28,7 @@
 #include "Bool_Array.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(src, Bool_Array, "$Id$")
+
 
 #if defined (ACE_HAS_GPERF)
 

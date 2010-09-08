@@ -31,7 +31,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/SString.h"
 
-ACE_RCSID(tests, Signal_Test, "$Id$")
+
 
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
 

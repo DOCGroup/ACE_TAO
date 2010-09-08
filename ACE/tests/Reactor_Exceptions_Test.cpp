@@ -24,7 +24,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Select_Reactor.h"
 
-ACE_RCSID(tests, Reactor_Exceptions_Test, "$Id$")
+
 
 // Just need a simple exception class.
 class Except {};

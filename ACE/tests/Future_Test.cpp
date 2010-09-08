@@ -36,7 +36,7 @@
 #include "ace/Atomic_Op.h"
 
 
-ACE_RCSID(tests, Future_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

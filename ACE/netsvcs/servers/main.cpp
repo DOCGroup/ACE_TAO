@@ -10,7 +10,7 @@
 #include "Token_Handler.h"
 #include "Server_Logging_Handler.h"
 
-ACE_RCSID(servers, main, "$Id$")
+
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

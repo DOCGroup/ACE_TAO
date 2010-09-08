@@ -48,7 +48,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/TP_Reactor.h"
 
-ACE_RCSID(tests, Thread_Pool_Reactor_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

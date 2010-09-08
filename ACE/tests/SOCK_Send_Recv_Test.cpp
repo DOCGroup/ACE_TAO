@@ -34,7 +34,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
 
-ACE_RCSID(tests, SOCK_Send_Recv_Test, "$Id$")
+
 
 // Change to non-zero if test fails
 static int Test_Result = 0;

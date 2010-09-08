@@ -22,7 +22,7 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Pipe.h"
 
-ACE_RCSID(tests, WFMO_Reactor_Test, "$Id$")
+
 
 #if defined (ACE_WIN32)
 

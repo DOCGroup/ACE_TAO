@@ -8,7 +8,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/os_include/os_netdb.h"
 
-ACE_RCSID(lib, TS_Clerk_Handler, "$Id$")
+
 
 ACE_TS_Clerk_Handler::ACE_TS_Clerk_Handler (ACE_TS_Clerk_Processor *processor,
                                             ACE_INET_Addr &addr)

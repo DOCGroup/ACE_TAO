@@ -24,7 +24,7 @@
 #include "ace/Message_Queue.h"
 #include "ace/Thread_Manager.h"
 
-ACE_RCSID(tests, Priority_Buffer_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

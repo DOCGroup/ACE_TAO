@@ -10,7 +10,7 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/Default_Constants.h"
 
-ACE_RCSID(SOCK_SAP, C_inserver, "$Id$")
+
 
 /* BSD socket server. */
 

@@ -6,7 +6,7 @@
 #include "ace/SPIPE_Addr.h"
 #include "CPP-connector.h"
 
-ACE_RCSID(non_blocking, test_spipe_connector, "$Id$")
+
 
 #if !defined (ACE_WIN32)
 typedef Peer_Handler<ACE_SPIPE_STREAM> PEER_HANDLER;

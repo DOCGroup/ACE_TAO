@@ -2,7 +2,7 @@
 
 #include "HTTP_Policy.h"
 
-ACE_RCSID(PROTOTYPE, HTTP_Policy, "$Id$")
+
 
 HTTP_Policy::HTTP_Policy (JAWS_Concurrency_Base *concurrency)
   : concurrency_ (concurrency)

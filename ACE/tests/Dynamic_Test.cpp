@@ -21,7 +21,7 @@
 #include "ace/Dynamic.h"
 #include "ace/OS_Memory.h"
 
-ACE_RCSID(tests, Dynamic_Test, "$Id$")
+
 
 class A
 {

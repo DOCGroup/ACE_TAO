@@ -27,7 +27,7 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(WFMO_Reactor, Directory_Changes, "$Id$")
+
 
 static int stop_test = 0;
 static const ACE_TCHAR *directory = ACE_TEXT (".");

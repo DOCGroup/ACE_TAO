@@ -36,7 +36,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/SString.h"
 
-ACE_RCSID(tests, Process_Semaphore_Test, "$Id$")
+
 
 #if !defined (ACE_LACKS_FORK)
 static int iterations = 10;

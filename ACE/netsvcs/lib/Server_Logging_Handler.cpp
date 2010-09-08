@@ -5,7 +5,7 @@
 
 #include "Server_Logging_Handler.h"
 
-ACE_RCSID(lib, Server_Logging_Handler, "$Id$")
+
 
 // The following are "Factories" used by the ACE_Service_Config and
 // svc.conf file to dynamically initialize the state of the

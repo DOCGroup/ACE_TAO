@@ -2,7 +2,7 @@
 
 #include "ACEXML/common/URL_Addr.h"
 
-ACE_RCSID(common, ACEXML_URL_Addr, "$Id$")
+
 
 #if !defined (__ACEXML_INLINE__)
 #include "ACEXML/common/URL_Addr.inl"

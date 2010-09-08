@@ -29,7 +29,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Intrusive_Auto_Ptr.h"
 
-ACE_RCSID(tests, Object_Manager_Flipping_Test, "$Id$")
+
 
 static u_int *ip;
 

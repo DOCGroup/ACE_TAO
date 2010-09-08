@@ -41,7 +41,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
 
-ACE_RCSID(tests, Conn_Test, "$Id$")
+
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 

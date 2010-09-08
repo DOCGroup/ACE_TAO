@@ -37,7 +37,7 @@
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Priority_Reactor_Test, "$Id$")
+
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 

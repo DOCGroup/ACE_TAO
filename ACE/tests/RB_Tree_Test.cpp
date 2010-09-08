@@ -33,7 +33,7 @@
 
 #include "RB_Tree_Test.h"
 
-ACE_RCSID(tests, RB_Tree_Test, "$Id$")
+
 
 // Type definitions for the four distinct parameterizations of the
 // test.

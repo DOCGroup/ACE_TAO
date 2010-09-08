@@ -7,7 +7,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Time_Value.h"
 
-ACE_RCSID(TLI_SAP, CPP_client, "$Id$")
+
 
 #if defined (ACE_HAS_TLI)
 

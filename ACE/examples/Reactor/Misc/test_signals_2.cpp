@@ -103,7 +103,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
 
-ACE_RCSID(Misc, test_signals_2, "$Id$")
+
 
 class Sig_Handler_1 : public ACE_Event_Handler
 {

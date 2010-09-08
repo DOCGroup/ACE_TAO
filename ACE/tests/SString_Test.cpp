@@ -23,7 +23,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
-ACE_RCSID(tests, SString_Test, "$Id$")
+
 
 static int testConcatenation() {
 #ifdef ACE_HAS_WCHAR

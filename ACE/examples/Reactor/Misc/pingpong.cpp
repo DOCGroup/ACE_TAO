@@ -48,7 +48,7 @@
 #  include "ace/Thread.h"
 #endif
 
-ACE_RCSID(Misc, pingpong, "$Id$")
+
 
 class Ping_Pong : public ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>
 {

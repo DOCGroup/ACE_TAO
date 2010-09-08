@@ -11,7 +11,7 @@
 #include "ace/Signal.h"
 #include "SPIPE-acceptor.h"
 
-ACE_RCSID(blocking, SPIPE_acceptor, "$Id$")
+
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 

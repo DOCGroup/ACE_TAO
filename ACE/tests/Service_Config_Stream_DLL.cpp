@@ -4,7 +4,7 @@
 #include "ace/Service_Repository.h"
 #include "ace/Service_Types.h"
 
-ACE_RCSID(tests, Service_Config_Stream_DLL, "$Id$")
+
 
 int
 Test_Task::open (void *)

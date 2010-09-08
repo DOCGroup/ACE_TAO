@@ -24,7 +24,7 @@
 #include "ace/OS_main.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(WFMO_Reactor, Console_Input, "$Id$")
+
 
 class Event_Handler : public ACE_Event_Handler
 {

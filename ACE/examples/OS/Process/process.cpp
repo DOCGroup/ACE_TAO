@@ -31,7 +31,7 @@
 #include "ace/Truncate.h"
 #include "ace/Tokenizer_T.h"
 
-ACE_RCSID(Process, process, "$Id$")
+
 
 #if defined (ACE_WIN32)
 #define EXEC_NAME ACE_TEXT ("MORE.COM")

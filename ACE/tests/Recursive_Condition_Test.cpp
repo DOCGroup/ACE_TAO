@@ -28,7 +28,7 @@
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Queue_Adapters.h"
 
-ACE_RCSID(tests, Recursive_Condition_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

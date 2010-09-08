@@ -38,7 +38,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/OS_main.h"
 
-ACE_RCSID(WFMO_Reactor, Network_Events, "$Id$")
+
 
 class Network_Handler : public ACE_Event_Handler
 {

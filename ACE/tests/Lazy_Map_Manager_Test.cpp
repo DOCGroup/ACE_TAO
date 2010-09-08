@@ -22,7 +22,7 @@
 #include "ace/Map_Manager.h"
 #include "ace/Active_Map_Manager.h"
 
-ACE_RCSID(tests, Map_Manager_Test, "$Id$")
+
 
 // Simple map manager.
 typedef ACE_Map_Manager<int, int, ACE_Null_Mutex> LAZY_MAP;

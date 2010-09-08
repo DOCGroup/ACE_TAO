@@ -21,7 +21,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "test_config.h"
 
-ACE_RCSID(tests, Get_Opt_Test, "$Id$")
+
 
 /*
  * This is the heart of the test. It sets up the optstring, instantiates

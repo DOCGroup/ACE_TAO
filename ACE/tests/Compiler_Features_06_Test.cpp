@@ -23,7 +23,7 @@
 // header.  Only a few platforms enforce this though...
 #include <functional>
 
-ACE_RCSID(tests, Compiler_Features_06_Test, "$Id$")
+
 
 int
 run_main (int, ACE_TCHAR *[])

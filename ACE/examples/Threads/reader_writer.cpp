@@ -9,7 +9,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Atomic_Op.h"
 
-ACE_RCSID(Threads, reader_writer, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

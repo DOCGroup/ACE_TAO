@@ -24,7 +24,7 @@
 #include "ace/Handle_Set.h"
 #include "ace/Containers.h"
 
-ACE_RCSID(tests, Handle_Set_Test, "$Id$")
+
 
 static void
 test_duplicates (size_t count)

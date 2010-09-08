@@ -18,7 +18,7 @@
 
 #include "ace/ACE.h"
 
-ACE_RCSID(tests, ACE_Test, "$Id$")
+
 
 int
 log2_test (void)

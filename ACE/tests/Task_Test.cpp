@@ -24,7 +24,7 @@
 #include "ace/Task.h"
 #include "ace/Thread_Hook.h"
 
-ACE_RCSID(tests, Task_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 #include "ace/Atomic_Op.h"

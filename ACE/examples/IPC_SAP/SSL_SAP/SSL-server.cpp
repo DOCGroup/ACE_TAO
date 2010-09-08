@@ -12,7 +12,7 @@
 
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
 
-ACE_RCSID(SSL_SAP, SSL_server, "$Id$")
+
 
 // Are we running verbosely?
 static int verbose = 0;

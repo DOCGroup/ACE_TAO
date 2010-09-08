@@ -9,7 +9,7 @@
 #include "ace/Log_Msg.h"
 #include "IO_Test.h"
 
-ACE_RCSID(IO_tests, IO_Test, "$Id$")
+
 
 
 

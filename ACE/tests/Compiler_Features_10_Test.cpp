@@ -127,7 +127,7 @@ namespace
   };
 }
 
-ACE_RCSID(tests, Compiler_Features_10_Test, "$Id$")
+
 
 int
 run_main (int, ACE_TCHAR *[])

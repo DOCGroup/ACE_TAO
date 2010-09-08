@@ -38,7 +38,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 
-ACE_RCSID(Proactor, test_proactor, "$Id$")
+
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
@@ -537,7 +537,7 @@ Sender::handle_read_file (const ACE_Asynch_Read_File::Result &result)
 
       this->file_offset_ +=
         ACE_Utils::truncate_cast<u_long> (result.bytes_transferred ());
-      
+
       if (this->ws_.write (result.message_block (),
                            result.bytes_transferred ()) == -1)
         {
@@ -584,7 +584,7 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
       int unsent_data =
         ACE_Utils::truncate_cast<int> (
           result.bytes_to_write () - result.bytes_transferred ());
-      
+
       if (unsent_data != 0)
         {
           // Reset pointers

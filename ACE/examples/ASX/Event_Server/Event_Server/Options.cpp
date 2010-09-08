@@ -10,7 +10,7 @@
 
 #include "Options.h"
 
-ACE_RCSID(Event_Server, Options, "$Id$")
+
 
 /* static */
 Options *Options::instance_ = 0;

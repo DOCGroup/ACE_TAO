@@ -13,7 +13,7 @@
 #include "JAWS/Waiter.h"
 #include "JAWS/Filecache.h"
 
-ACE_RCSID(JAWS, IO_Handler, "$Id$")
+
 
 JAWS_Abstract_IO_Handler::~JAWS_Abstract_IO_Handler (void)
 {

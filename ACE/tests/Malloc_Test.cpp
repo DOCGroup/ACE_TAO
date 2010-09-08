@@ -30,7 +30,7 @@
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Malloc_Test, "Malloc_Test.cpp,v 4.22 1999/12/13 22:24:42 nanbor Exp")
+
 
 #if defined (ACE_HAS_PROCESS_SPAWN)
 

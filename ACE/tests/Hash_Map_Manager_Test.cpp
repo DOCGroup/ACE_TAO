@@ -26,7 +26,7 @@
 #include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
 
-ACE_RCSID(tests, Hash_Map_Manager_Test, "$Id$")
+
 
 static const size_t STRING_TABLE_ENTRIES = 3 * 2;
 static const size_t MAX_HASH = 6;

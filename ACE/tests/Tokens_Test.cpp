@@ -36,7 +36,7 @@
 #include "ace/Barrier.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Tokens_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_TOKENS_LIBRARY)
 
@@ -235,7 +235,7 @@ run_main (int, ACE_TCHAR *[])
 
   int status = ACE_OS::access (token_exe, F_OK);
   if (status == -1)
-    ACE_ERROR ((LM_ERROR, 
+    ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 token_exe));
   else

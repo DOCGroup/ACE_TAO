@@ -3,7 +3,7 @@
 
 #include "Fill_ACE_QoS.h"
 
-ACE_RCSID(QOS, Fill_ACE_QoS,"$Id$")
+
 
 const iovec Fill_ACE_QoS::iov_ = {0,0};
 

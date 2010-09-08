@@ -5,7 +5,7 @@
 #include "Options.h"
 #include "Event_Analyzer.h"
 
-ACE_RCSID(Event_Server, Event_Analyzer, "$Id$")
+
 
 int
 Event_Analyzer::open (void *)
@@ -77,6 +77,6 @@ Event_Analyzer::info (ACE_TCHAR **strp, size_t length) const
     return -1;
   else
     ACE_OS::strncpy (*strp, mod_name, length);
-    
+
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (mod_name));
 }

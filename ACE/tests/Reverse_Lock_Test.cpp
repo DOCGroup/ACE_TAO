@@ -24,7 +24,7 @@
 #include "ace/Guard_T.h"
 #include "ace/Reverse_Lock_T.h"
 
-ACE_RCSID(tests, Reverse_Lock_Test, "$Id$")
+
 
 typedef ACE_Reverse_Lock<ACE_SYNCH_MUTEX> REVERSE_MUTEX;
 

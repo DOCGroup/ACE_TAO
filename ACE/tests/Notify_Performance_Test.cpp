@@ -30,7 +30,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Atomic_Op.h"
 
-ACE_RCSID(tests, Notify_Performance_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

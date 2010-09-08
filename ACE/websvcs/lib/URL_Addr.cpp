@@ -10,7 +10,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(ace, URL_Addr, "$Id$")
+
 
 static ACE_TCHAR http[] = ACE_TEXT ("http:");
 static size_t http_size = sizeof(http)/sizeof(http[0]) - 1;
@@ -335,7 +335,7 @@ path_copy (const ACE_TCHAR *begin,
   for (; *src != 0; ++src)
     {
       ACE_TCHAR c = *src;
-      
+
       switch (c)
         {
         case '/':
@@ -345,7 +345,7 @@ path_copy (const ACE_TCHAR *begin,
                 {
                   // No action.
                 }
-                
+
               src += 3;
             }
           else if (src[1] == '.' && src[2] == '/')
@@ -405,12 +405,12 @@ ACE_HTTP_Addr::create_relative_address (const ACE_TCHAR *url) const
         {
           // Remove any # from the path
           ACE_TCHAR *p = target;
-          
+
           while (p != buf && *(--p) != '#')
             {
               // No action.
             }
-          
+
           if (p != buf)
             target = p;
         }
@@ -421,7 +421,7 @@ ACE_HTTP_Addr::create_relative_address (const ACE_TCHAR *url) const
             {
               // No action.
             }
-            
+
           // Go back if we begin with '../'
           while ((url[0] == '.' && url[1] == '.' && url[2] == '/')
                  || (url[0] == '.' && url[1] == '/'))
@@ -433,7 +433,7 @@ ACE_HTTP_Addr::create_relative_address (const ACE_TCHAR *url) const
                     {
                       // No action.
                     }
-                  
+
                   url += 3;
                 }
               else
@@ -456,7 +456,7 @@ ACE_HTTP_Addr::create_relative_address (const ACE_TCHAR *url) const
                       0);
       delete[] buf;
     }
-    
+
   return addr;
 }
 

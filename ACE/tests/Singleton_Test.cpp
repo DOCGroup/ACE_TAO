@@ -19,7 +19,7 @@
 #include "test_config.h"
 #include "ace/Singleton.h"
 
-ACE_RCSID(tests, Singleton_Test, "$Id$")
+
 
 int
 run_main (int, ACE_TCHAR *[])

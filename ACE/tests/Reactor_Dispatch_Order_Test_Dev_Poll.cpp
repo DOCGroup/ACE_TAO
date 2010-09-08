@@ -26,7 +26,7 @@
 #include "ace/Pipe.h"
 #include "ace/ACE.h"
 
-ACE_RCSID(tests, Reactor_Dispatch_Order_Test, "$Id$")
+
 
 #if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
 

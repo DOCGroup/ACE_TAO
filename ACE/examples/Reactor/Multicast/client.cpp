@@ -12,7 +12,7 @@
 #include "ace/Log_Msg.h"
 #include "Log_Wrapper.h"
 
-ACE_RCSID(Multicast, client, "$Id$")
+
 
 // Multi-cast address.
 static const char *MCAST_ADDR = ACE_DEFAULT_MULTICAST_ADDR;
@@ -105,7 +105,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           if (nbytes <= 0)
             break; // End of file or error.
-          
+
           buf[nbytes - 1] = '\0';
 
           // Quitting?
@@ -120,10 +120,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           // Send the message to the logger.
           if (log.log_message (Log_Wrapper::LM_DEBUG, buf) == -1)
             ACE_ERROR_RETURN ((LM_ERROR, "%p\n" "log_message"), -1);
-          
+
           ACE_DEBUG ((LM_DEBUG, "finished sending message %d\n", count++));
         }
-    } 
+    }
 
   ACE_DEBUG ((LM_DEBUG, "Client done.\n"));
   return 0;

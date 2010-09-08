@@ -4,7 +4,7 @@
 #include "ace/TTY_IO.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(writer, writer, "$Id$")
+
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

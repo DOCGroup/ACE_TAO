@@ -50,7 +50,7 @@
 #include "ace/SSL/SSL_SOCK_Connector.h"
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
 
-ACE_RCSID(tests, Atomic_Op_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

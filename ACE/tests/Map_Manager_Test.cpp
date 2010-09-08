@@ -29,7 +29,7 @@
 #include "ace/Caching_Strategies_T.h"
 #include "ace/Pair_T.h"
 
-ACE_RCSID(tests, Map_Manager_Test, "$Id$")
+
 
 typedef ACE_Null_Mutex MUTEX;
 typedef ACE_UINT32 TYPE;
