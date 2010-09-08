@@ -1,0 +1,23 @@
+//$Id$:
+
+#ifndef CIAO_HELLO_IDL
+#define CIAO_HELLO_IDL
+
+#include <Components.idl>
+
+#pragma ciao lem "../Thread_Base/Thread_BaseE.idl"
+
+module Thread
+{
+  interface ReadMessage
+  {
+    string get_message();
+  };
+
+  eventtype TimeOut
+  {
+    public string data;
+  };
+};
+
+#endif /* CIAO_HELLO_IDL */

@@ -1,0 +1,364 @@
+<Deployment:DeploymentPlan
+ xmlns:Deployment="http://www.omg.org/Deployment"
+ xmlns:xmi="http://www.omg.org/XMI"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>Thread_Deployment_1</label>
+  <UUID>Thread_Deployment_1</UUID>
+
+  <!-- Implementations declarations -->
+
+  <!-- Home implementation -->
+  <implementation xmi:id="Thread_ReceiverHomeImplementation">
+    <name>Thread_ReceiverHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="Thread_Receiver_ExecArtifact" />
+    <artifact xmi:idref="Thread_Receiver_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>home factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Thread_ReceiverHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Thread_ReceiverHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Thread_Receiver_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Thread_Receiver_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="Thread_ReceiverComponentImplementation">
+    <name>Thread_ReceiverComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Thread_Receiver_ExecArtifact" />
+    <artifact xmi:idref="Thread_Receiver_SvntArtifact" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="Thread_SenderHomeImplementation">
+    <name>Thread_SenderHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="Thread_Sender_ExecArtifact" />
+    <artifact xmi:idref="Thread_Sender_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>home factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Thread_SenderHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Thread_SenderHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Thread_Sender_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Thread_Sender_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="Thread_SenderComponentImplementation">
+    <name>Thread_SenderComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Thread_Sender_ExecArtifact" />
+    <artifact xmi:idref="Thread_Sender_SvntArtifact" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <instance xmi:id="Thread_ReceiverHomeInstance">
+    <name>Thread_ReceiverHome</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Thread_ReceiverHomeImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ReceiverHome.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ReceiverHome</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Thread_ReceiverComponentInstance">
+    <name>Thread_ReceiverComponent</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Thread_ReceiverComponentImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Thread_ReceiverHome</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>iterations</name>
+      <value>
+        <type>
+          <kind>tk_short</kind>
+        </type>
+        <value>
+          <short>3</short>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Thread_SenderHomeInstance">
+    <name>Thread_SenderHome</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Thread_SenderHomeImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderHome.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderHome</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Thread_SenderComponentInstance">
+    <name>Thread_SenderComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Thread_SenderComponentImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Thread_SenderHome</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <connection>
+    <name>MessageConnection</name>
+    <internalEndpoint>
+      <portName>read_message</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Thread_ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_message</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Thread_SenderComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>EventConnection</name>
+    <internalEndpoint>
+      <portName>click_out</portName>
+      <provider>false</provider>
+      <kind>EventPublisher</kind>
+      <instance xmi:idref="Thread_SenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>click_in</portName>
+      <provider>true</provider>
+      <kind>EventConsumer</kind>
+      <instance xmi:idref="Thread_ReceiverComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <!-- Artifacts declarations -->
+  <artifact xmi:id="Thread_Receiver_ExecArtifact">
+    <name>Thread_Receiver_exec</name>
+    <source/>
+    <node/>
+    <location>Thread_Receiver_exec</location>
+  </artifact>
+  <artifact xmi:id="Thread_Receiver_SvntArtifact">
+    <name>Thread_Receiver_svnt</name>
+    <source/>
+    <node/>
+    <location>Thread_Receiver_svnt</location>
+  </artifact>
+
+  <artifact xmi:id="Thread_Sender_ExecArtifact">
+    <name>Thread_Sender_exec</name>
+    <source/>
+    <node/>
+    <location>Thread_Sender_exec</location>
+  </artifact>
+  <artifact xmi:id="Thread_Sender_SvntArtifact">
+    <name>Thread_Sender_svnt</name>
+    <source/>
+    <node/>
+    <location>Thread_Sender_svnt</location>
+  </artifact>
+
+</Deployment:DeploymentPlan>
