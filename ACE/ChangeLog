@@ -1,3 +1,8 @@
+Wed Sep  8 09:11:03 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/SSL/Bug_2912_Regression_Test.cpp:
+          Fixed compile error
+
 Wed Sep  8 05:53:24 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/ThreadPools/Futures.cpp:
