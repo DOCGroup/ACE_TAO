@@ -1,3 +1,9 @@
+Wed Sep  8 15:07:31 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * Release:
+
+          Removed obsolete Release makefile.
+
 Wed Sep  8 14:41:52 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst:
