@@ -4,8 +4,6 @@
 
 #include "Client_Task.h"
 
-ACE_RCSID(Muxing, Client_Task, "$Id$")
-
 Client_Task::Client_Task (Test::Receiver_ptr receiver,
                           CORBA::Long event_count,
                           CORBA::ULong event_size,

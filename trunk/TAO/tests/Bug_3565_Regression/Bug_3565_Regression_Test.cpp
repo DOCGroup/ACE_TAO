@@ -8,10 +8,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/ACE.h"
 
-ACE_RCSID (Bug_3559_Regression,
-           server,
-           "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

@@ -3,8 +3,6 @@
 //
 #include "Service.h"
 
-ACE_RCSID(Crashed_Callback, Service, "$Id$")
-
 Service::Service (void)
   : orb_ (CORBA::ORB::_nil ()),
     test_count_ (0)

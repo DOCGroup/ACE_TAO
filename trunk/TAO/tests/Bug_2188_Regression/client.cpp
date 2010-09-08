@@ -3,8 +3,6 @@
 #include "brokenC.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Hello, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://broken.ior");
 
 int

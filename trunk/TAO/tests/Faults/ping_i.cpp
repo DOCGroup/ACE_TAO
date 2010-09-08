@@ -6,8 +6,6 @@
 #include "ping_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Faults, test_i, "$Id$")
-
 void
 PingObject_i::ping (PingObject_ptr callback)
 {

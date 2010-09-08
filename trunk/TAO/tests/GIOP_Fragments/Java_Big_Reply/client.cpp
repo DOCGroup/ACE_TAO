@@ -3,8 +3,6 @@
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Muxing, client, "$Id$")
-
 static const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
 static size_t nthreads = 1;
 

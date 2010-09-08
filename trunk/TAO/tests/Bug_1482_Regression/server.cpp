@@ -3,10 +3,6 @@
 #include "Hello.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (LongUpcall_Crash_Test,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int

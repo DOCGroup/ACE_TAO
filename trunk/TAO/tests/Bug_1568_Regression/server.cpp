@@ -13,8 +13,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
 
-ACE_RCSID(Bug_1568_Regression, server, "$Id$")
-
 /**
  * @class Simple_C
  *

@@ -25,8 +25,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
 
-ACE_RCSID(Timed_Buffered_Oneways, client, "$Id$")
-
 // Eager buffering option.
 static int eager_buffering = 0;
 

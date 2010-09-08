@@ -3,10 +3,6 @@
 //
 #include "Receiver_i.h"
 
-ACE_RCSID(MT_BiDir,
-          Receiver_i,
-          "$Id$")
-
 Receiver_i::Receiver_i (void)
   :  message_count_ (0)
   ,  byte_count_ (0)

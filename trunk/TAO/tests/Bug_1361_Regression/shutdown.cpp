@@ -3,8 +3,6 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Bug_1361_Regression, shutdown, "$Id$")
-
 #if defined (ACE_OPENVMS)
 // need this to circumvent link error on OpenVMS
 // has to do with interference in template instantiations

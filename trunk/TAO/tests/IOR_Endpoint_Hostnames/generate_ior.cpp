@@ -10,10 +10,6 @@
 
 #include "bogus_i.h"
 
-ACE_RCSID (IOR_Endpoint_Hostnames,
-           generate_ior,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
 
 int

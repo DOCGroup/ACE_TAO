@@ -3,8 +3,6 @@
 //
 #include "Server_Task.h"
 
-ACE_RCSID(Muxing, Server_Task, "$Id$")
-
 Server_Task::Server_Task (CORBA::ORB_ptr orb,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)

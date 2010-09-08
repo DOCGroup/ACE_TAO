@@ -8,9 +8,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_resource.h"
 
-ACE_RCSID (ConnectionSpinning,
-           server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
 
 class Test_i: public virtual POA_Test

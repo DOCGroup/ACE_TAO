@@ -8,8 +8,6 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 
-ACE_RCSID (Bug_3068_Regression, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = 0;
 int iterations = 10;
 

@@ -6,12 +6,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/ACE.h"
 
-ACE_RCSID (Bug_3559_Regression,
-           server,
-           "$Id$")
-
 const ACE_TCHAR* log_file_;
-
 
 int
 parse_args (int argc, ACE_TCHAR* argv[])
@@ -203,15 +198,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  
+
   result += check_logging ();
-  
+
   if (result == 0)
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Test passed!")));
   else
-    ACE_ERROR ((LM_ERROR, 
-                ACE_TEXT ("Test failed. Result: %d\n"), 
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Test failed. Result: %d\n"),
                 result));
   return result;
 }

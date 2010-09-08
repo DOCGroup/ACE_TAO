@@ -21,8 +21,6 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(Triangle_Test, server_A, "$Id$")
-
 Object_A_Server::Object_A_Server (void)
   : ior_output_file_ (0)
 {

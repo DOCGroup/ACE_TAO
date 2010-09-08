@@ -30,8 +30,6 @@
 // executable and initialized for static builds.
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(AMI, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 unsigned int msec = 500;
 unsigned int iterations = 1;

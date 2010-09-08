@@ -4,8 +4,6 @@
 #include "Hello.h"
 #include "HelloWorld.h"
 
-ACE_RCSID(ICMG_Any_Bug, Hello, "$Id")
-
 Hello::Hello (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
   : poa_ (PortableServer::POA::_duplicate (poa)),
     orb_ (CORBA::ORB::_duplicate (orb))

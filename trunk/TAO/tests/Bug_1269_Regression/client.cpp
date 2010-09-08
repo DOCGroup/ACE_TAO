@@ -7,8 +7,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Bug_1269_Regression, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 bool do_shutdown = false;
 

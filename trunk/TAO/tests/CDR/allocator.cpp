@@ -27,8 +27,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
-ACE_RCSID(CDR, allocator, "$Id$")
-
 #define DEFAULT_BUFFER_SIZE 512
 
 class Application_Simulator

@@ -11,10 +11,6 @@
 #include "tao/Policy_CurrentC.h"
 #include "tao/Transport.h"
 
-ACE_RCSID (Hello,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 int test = 1;
 

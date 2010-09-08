@@ -5,12 +5,6 @@
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/PortableServer.h"
 
-
-ACE_RCSID (ORT,
-           ServerORBInitializer,
-           "$Id$")
-
-
 void
 ServerORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr /* info */)

@@ -5,8 +5,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "testC.h"
 
-ACE_RCSID(MT_Server, client, "$Id$")
-
 const ACE_TCHAR *ior_input_file = 0;
 
 int

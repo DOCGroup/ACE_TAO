@@ -4,8 +4,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "testImpl.h"
 
-ACE_RCSID(MT_Client, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
 
 int

@@ -4,10 +4,6 @@
 
 #include "HelloWorld.h"
 
-
-ACE_RCSID (ICMG_Any_Bug, HelloWorld, "$Id$")
-
-
 HelloWorld::HelloWorld (void)
 {
 }

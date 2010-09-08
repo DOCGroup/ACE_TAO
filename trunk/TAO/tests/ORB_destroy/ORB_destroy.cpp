@@ -21,8 +21,6 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(ORB_destroy, ORB_destroy, "$Id$")
-
 int
 test_with_regular_poa_manager (int argc,
                                ACE_TCHAR **argv,

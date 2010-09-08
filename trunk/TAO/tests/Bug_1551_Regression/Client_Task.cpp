@@ -4,8 +4,6 @@
 
 #include "Client_Task.h"
 
-ACE_RCSID(Bug_1XXX_Regression, Client_Task, "$Id$")
-
 Client_Task::Client_Task (Test::Hello_ptr receiver,
                           CORBA::ORB_ptr orb,
                           ACE_Thread_Manager *thr_mgr)

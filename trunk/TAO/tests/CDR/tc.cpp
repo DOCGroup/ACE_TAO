@@ -25,14 +25,8 @@
 
 #include "ace/Log_Msg.h"
 
-
-ACE_RCSID (CDR,
-           tc,
-           "$Id$")
-
 // In this version of TAO typecodes are based on CDR, we have to
 // verify that CDR offers the services needed for Typecode...
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

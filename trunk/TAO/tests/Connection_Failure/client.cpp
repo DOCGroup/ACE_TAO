@@ -5,10 +5,6 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (Connection_Failure,
-           client,
-           "$Id$")
-
 const char *ior =
   "corbaloc:iiop:192.3.47/10007/RandomObject";
 
