@@ -10,11 +10,6 @@
  */
 
 #include "test_config.h"
-
-ACE_RCSID (tests,
-           Bug_2609_Regression_Test,
-           "$Id$")
-
 #include "ace/Svc_Handler.h"
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Stream.h"

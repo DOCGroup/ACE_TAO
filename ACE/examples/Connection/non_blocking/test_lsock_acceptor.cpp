@@ -23,10 +23,6 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
 #include "ace/UNIX_Addr.h"
 #include "CPP-acceptor.h"
 
-ACE_RCSID (non_blocking,
-           test_lsock_acceptor,
-           "$Id$")
-
 typedef Svc_Handler<ACE_LSOCK_STREAM> SVC_HANDLER;
 typedef IPC_Server<SVC_HANDLER, ACE_LSOCK_ACCEPTOR> IPC_SERVER;
 

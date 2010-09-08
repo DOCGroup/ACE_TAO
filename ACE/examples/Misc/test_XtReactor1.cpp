@@ -11,11 +11,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 
-ACE_RCSID (Misc,
-           test_XtReactor1,
-           "$Id$")
-
-//#define String XtString
 #include <Xm/PushB.h>
 
 class Stdout : public ACE_Event_Handler

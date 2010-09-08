@@ -7,11 +7,6 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_Memory.h"
 
-ACE_RCSID (Web_Crawler,
-           URL_Addr,
-           "$Id$")
-
-
 ACE_URL_Addr::ACE_URL_Addr (void)
   : path_name_ (0),
     addr_string_ (0),

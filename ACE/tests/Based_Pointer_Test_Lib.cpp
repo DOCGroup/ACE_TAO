@@ -20,10 +20,6 @@
 #include "ace/svc_export.h"
 #include "ace/Based_Pointer_Repository.h"
 
-ACE_RCSID (tests,
-           Based_Pointer_Repository_DLL_Test,
-           "$Id$")
-
 #if defined (ACE_OPENVMS)
     // with OPENVMS symbol names > 31 cause us trouble with dlsym()
 extern "C" ACE_Svc_Export void *

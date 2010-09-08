@@ -21,10 +21,6 @@
 #include "ace/Process.h"
 #include "ace/SString.h"
 
-ACE_RCSID(tests,
-          Process_Env_Test,
-          "$Id$")
-
 typedef void (*setenvfn_t) (const ACE_TCHAR *name, const ACE_TCHAR *value,
                             void *ctx);
 

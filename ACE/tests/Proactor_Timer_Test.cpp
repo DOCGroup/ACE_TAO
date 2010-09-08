@@ -23,10 +23,6 @@
 #include "test_config.h"
 #include "ace/Trace.h"
 
-ACE_RCSID (tests,
-           Proactor_Timer_Test,
-           "$Id$")
-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms
   // supporting POSIX aio calls.

@@ -20,11 +20,6 @@
 
 #include "SSL-client-simple.h"
 
-ACE_RCSID (SSL_SAP,
-           SSL_client_simple,
-           "$Id$")
-
-
 Options::Options (void)
   : host_ (ACE_DEFAULT_SERVER_HOST),
     port_ (ACE_DEFAULT_SERVER_PORT),

@@ -18,10 +18,6 @@
 #include "ace/Select_Reactor.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (tests,
-           Bug_1890_Regression_Test,
-           "$Id$")
-
 int const nhandlers = 3;
 
 /**

@@ -24,10 +24,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Atomic_Op_T.h"
 
-ACE_RCSID(tests,
-          Bug_3539_Regression_Test,
-          "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 struct ObjectWithTSS

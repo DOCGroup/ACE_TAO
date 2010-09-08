@@ -30,10 +30,6 @@
 #include "ace/Timer_Queue_Adapters.h"
 #include "ace/Condition_Recursive_Thread_Mutex.h"
 
-ACE_RCSID (tests,
-           Recursive_Condition_Bug_Test,
-           "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 // Number of iterations for the performance tests.

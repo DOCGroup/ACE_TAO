@@ -6,12 +6,6 @@
 
 #include "CPP-acceptor.h"
 
-
-ACE_RCSID (non_blocking,
-           test_sock_acceptor,
-           "$Id$")
-
-
 typedef Svc_Handler<ACE_SOCK_STREAM> SVC_HANDLER;
 typedef IPC_Server<SVC_HANDLER, ACE_SOCK_ACCEPTOR> IPC_SERVER;
 

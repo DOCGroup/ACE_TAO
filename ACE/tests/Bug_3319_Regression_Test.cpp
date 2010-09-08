@@ -13,10 +13,6 @@
 #include "ace/ARGV.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (tests,
-           Bug_3319_Regression_Test,
-           "$Id$")
-
 int
 run_main (int, ACE_TCHAR *[])
 {

@@ -28,10 +28,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/ARGV.h"
 
-ACE_RCSID (tests,
-           Service_Config_Test,
-           "$Id$")
-
 static const u_int VARIETIES = 3;
 
 static u_int error = 0;

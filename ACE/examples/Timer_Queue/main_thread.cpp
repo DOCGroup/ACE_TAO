@@ -20,10 +20,6 @@
 #include "Driver.h"
 #include "Thread_Timer_Queue_Test.h"
 
-ACE_RCSID (Timer_Queue,
-           main_thread,
-           "$Id$")
-
 typedef Timer_Queue_Test_Driver<Thread_Timer_Queue,
                                 Input_Task,
                                 Input_Task::ACTION>

@@ -3,10 +3,6 @@
 #include "HTBP_Addr.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (HTBP,
-           ACE_HTBP_Addr,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor
