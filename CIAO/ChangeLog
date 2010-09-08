@@ -1,3 +1,57 @@
+Wed Sep  8 15:09:06 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/ciao_tests.lst:
+        * tests/IDL3_to_XMI:
+        * tests/IDL3_to_XMI/Bug_3607_Regression:
+        * tests/IDL3_to_XMI/Bug_3607_Regression/run_test.pl:
+        * tests/IDL3_to_XMI/Bug_3607_Regression/test.idl:
+        * tests/IDL3_to_XMI/IDL2XMI_Test:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/IDL2XMI_Test.mpc:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/XML_Helper.h:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/XML_Helper.cpp:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/run_test.pl:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/xmlvalidator.cpp:
+        * tests/IDL3_to_XMI/XMI.dtd:
+        * tests/IDL3_to_XMI/XMI_For_Array:
+        * tests/IDL3_to_XMI/XMI_For_Array/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Array/test.idl:
+        * tests/IDL3_to_XMI/XMI_For_Included_File:
+        * tests/IDL3_to_XMI/XMI_For_Included_File/File1.idl:
+        * tests/IDL3_to_XMI/XMI_For_Included_File/File2.idl:
+        * tests/IDL3_to_XMI/XMI_For_Included_File/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Module_Reopen:
+        * tests/IDL3_to_XMI/XMI_For_Module_Reopen/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Module_Reopen/test.idl:
+        * tests/IDL3_to_XMI/XMI_For_Native:
+        * tests/IDL3_to_XMI/XMI_For_Native/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Native/test.idl:
+        * tests/IDL3_to_XMI/XMI_For_Sequence:
+        * tests/IDL3_to_XMI/XMI_For_Sequence/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Sequence/test.idl:
+        * tools/IDL3_to_XMI:
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.h:
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.cpp:
+        * tools/IDL3_to_XMI/Literals.h:
+        * tools/IDL3_to_XMI/Literals.cpp:
+        * tools/IDL3_to_XMI/be_extern.h:
+        * tools/IDL3_to_XMI/be_global.h:
+        * tools/IDL3_to_XMI/be_global.cpp:
+        * tools/IDL3_to_XMI/be_helper.h:
+        * tools/IDL3_to_XMI/be_helper.cpp:
+        * tools/IDL3_to_XMI/be_init.cpp:
+        * tools/IDL3_to_XMI/be_produce.cpp:
+        * tools/IDL3_to_XMI/be_sunsoft.h:
+        * tools/IDL3_to_XMI/be_sunsoft.cpp:
+        * tools/IDL3_to_XMI/be_util.h:
+        * tools/IDL3_to_XMI/be_util.cpp:
+        * tools/IDL3_to_XMI/identifier_helper.h:
+        * tools/IDL3_to_XMI/identifier_helper.cpp:
+
+          Moved IDL3_to_XMI to DAnCE.
+
 Wed Sep  8 15:07:31 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * Release:
