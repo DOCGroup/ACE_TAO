@@ -7,7 +7,7 @@
 #include "IDREF_Base.h"
 #include <iostream>
 
-namespace CIAO
+namespace DAnCE
   {
     namespace Config_Handlers
     {

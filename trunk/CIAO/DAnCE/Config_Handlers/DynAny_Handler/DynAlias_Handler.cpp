@@ -12,7 +12,7 @@
 #include "tao/AnyTypeCode/Enum_TypeCode.h"
 #include "tao/IFR_Client/IFR_BasicC.h"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

@@ -11,7 +11,7 @@
 #include "DAnCE/Deployment/Deployment_TargetDataC.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -55,7 +55,7 @@ namespace CIAO
           DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
                        ACE_TEXT ("Parsing XML file with XSC\n")));
           deploymentPlan dp =
-            CIAO::Config_Handlers::reader::DeploymentPlan (dom);
+            DAnCE::Config_Handlers::reader::DeploymentPlan (dom);
 
           DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
                        ACE_TEXT ("Processing using config handlers\n")));
@@ -118,7 +118,7 @@ namespace CIAO
           DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_domain - ")
                        ACE_TEXT ("Parsing XML file with XSC\n")));
           Domain dp =
-            CIAO::Config_Handlers::reader::domain (dom);
+            DAnCE::Config_Handlers::reader::domain (dom);
 
           DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_domain - ")
                        ACE_TEXT ("Processing using config handlers\n")));

@@ -27,7 +27,7 @@ struct ResourceDeploymentDescription;
 }
 
 
-namespace CIAO
+namespace DAnCE
 {
 
 namespace Config_Handlers

@@ -10,7 +10,7 @@
 
 using namespace std;
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

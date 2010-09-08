@@ -4,7 +4,7 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "DAnCE/Logger/Log_Macros.h"
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -16,7 +16,7 @@ namespace CIAO
     {
     }
 
-    ///This method takes a <CIAO::Config_Handlers::DataType>
+    ///This method takes a <DAnCE::Config_Handlers::DataType>
     ///and returns the corresponding CORBA::TypeCode.
     void
     DataType_Handler::data_type (const DataType& desc,

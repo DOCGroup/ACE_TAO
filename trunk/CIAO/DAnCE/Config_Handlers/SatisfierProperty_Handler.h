@@ -26,7 +26,7 @@ namespace Deployment
   class SatisfierProperties;
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
     {
@@ -50,7 +50,7 @@ namespace CIAO
       virtual ~SatisfierProperty_Handler (void);
 
       /// This method maps the values from the XSC object
-      /// <CIAO::Config_Handlers::SatisfierProperty> to the CORBA IDL type
+      /// <DAnCE::Config_Handlers::SatisfierProperty> to the CORBA IDL type
       /// <Deployment::SatisfierProperty>.
       static void handle_sat_property (const SatisfierProperty& desc,
                        ::Deployment::SatisfierProperty& toconfig);

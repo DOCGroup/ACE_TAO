@@ -24,7 +24,7 @@ namespace Deployment
   struct PackageConfiguration;
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

@@ -17,7 +17,7 @@
 
 #include "cdp.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -26,11 +26,11 @@ namespace CIAO
 
     PlanSubcomponentPropertyReference::
     PlanSubcomponentPropertyReference (::XMLSchema::string< ACE_TCHAR > const& propertyName__,
-                                       ::CIAO::Config_Handlers::InstanceDeploymentDescription const& instance__)
+                                       ::DAnCE::Config_Handlers::InstanceDeploymentDescription const& instance__)
     : 
     ::XSCRT::Type (), 
     propertyName_ (new ::XMLSchema::string< ACE_TCHAR > (propertyName__)),
-    instance_ (new ::CIAO::Config_Handlers::InstanceDeploymentDescription (instance__)),
+    instance_ (new ::DAnCE::Config_Handlers::InstanceDeploymentDescription (instance__)),
     regulator__ ()
     {
       propertyName_->container (this);
@@ -42,7 +42,7 @@ namespace CIAO
     :
     ::XSCRT::Type (),
     propertyName_ (new ::XMLSchema::string< ACE_TCHAR > (*s.propertyName_)),
-    instance_ (new ::CIAO::Config_Handlers::InstanceDeploymentDescription (*s.instance_)),
+    instance_ (new ::DAnCE::Config_Handlers::InstanceDeploymentDescription (*s.instance_)),
     regulator__ ()
     {
       propertyName_->container (this);
@@ -76,14 +76,14 @@ namespace CIAO
 
     // PlanSubcomponentPropertyReference
     // 
-    ::CIAO::Config_Handlers::InstanceDeploymentDescription const& PlanSubcomponentPropertyReference::
+    ::DAnCE::Config_Handlers::InstanceDeploymentDescription const& PlanSubcomponentPropertyReference::
     instance () const
     {
       return *instance_;
     }
 
     void PlanSubcomponentPropertyReference::
-    instance (::CIAO::Config_Handlers::InstanceDeploymentDescription const& e)
+    instance (::DAnCE::Config_Handlers::InstanceDeploymentDescription const& e)
     {
       *instance_ = e;
     }
@@ -95,7 +95,7 @@ namespace CIAO
     PlanPropertyMapping::
     PlanPropertyMapping (::XMLSchema::string< ACE_TCHAR > const& name__,
                          ::XMLSchema::string< ACE_TCHAR > const& externalName__,
-                         ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPropertyReference, ACE_Null_Mutex > > const& delegatesTo__)
+                         ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PlanSubcomponentPropertyReference, ACE_Null_Mutex > > const& delegatesTo__)
     : 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     externalName_ (new ::XMLSchema::string< ACE_TCHAR > (externalName__)),
@@ -228,7 +228,7 @@ namespace CIAO
     }
 
     void PlanPropertyMapping::
-    add_delegatesTo (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPropertyReference, ACE_Null_Mutex >  const& e)
+    add_delegatesTo (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PlanSubcomponentPropertyReference, ACE_Null_Mutex >  const& e)
     {
       delegatesTo_.push_back (e);
     }
@@ -256,7 +256,7 @@ namespace CIAO
     ::XSCRT::Type (),
     label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
     UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
-    realizes_ (s.realizes_.get () ? new ::CIAO::Config_Handlers::ComponentInterfaceDescription (*s.realizes_) : 0),
+    realizes_ (s.realizes_.get () ? new ::DAnCE::Config_Handlers::ComponentInterfaceDescription (*s.realizes_) : 0),
     implementation_ (s.implementation_),
     instance_ (s.instance_),
     connection_ (s.connection_),
@@ -376,14 +376,14 @@ namespace CIAO
       return realizes_.get () != 0;
     }
 
-    ::CIAO::Config_Handlers::ComponentInterfaceDescription const& deploymentPlan::
+    ::DAnCE::Config_Handlers::ComponentInterfaceDescription const& deploymentPlan::
     realizes () const
     {
       return *realizes_;
     }
 
     void deploymentPlan::
-    realizes (::CIAO::Config_Handlers::ComponentInterfaceDescription const& e)
+    realizes (::DAnCE::Config_Handlers::ComponentInterfaceDescription const& e)
     {
       if (realizes_.get ())
       {
@@ -392,7 +392,7 @@ namespace CIAO
 
       else
       {
-        realizes_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (e));
+        realizes_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::ComponentInterfaceDescription > (new ::DAnCE::Config_Handlers::ComponentInterfaceDescription (e));
         realizes_->container (this);
       }
     }
@@ -424,7 +424,7 @@ namespace CIAO
     }
 
     void deploymentPlan::
-    add_implementation (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::MonolithicDeploymentDescription, ACE_Null_Mutex >  const& e)
+    add_implementation (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::MonolithicDeploymentDescription, ACE_Null_Mutex >  const& e)
     {
       implementation_.push_back (e);
     }
@@ -462,7 +462,7 @@ namespace CIAO
     }
 
     void deploymentPlan::
-    add_instance (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceDeploymentDescription, ACE_Null_Mutex >  const& e)
+    add_instance (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::InstanceDeploymentDescription, ACE_Null_Mutex >  const& e)
     {
       instance_.push_back (e);
     }
@@ -500,7 +500,7 @@ namespace CIAO
     }
 
     void deploymentPlan::
-    add_connection (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanConnectionDescription, ACE_Null_Mutex >  const& e)
+    add_connection (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PlanConnectionDescription, ACE_Null_Mutex >  const& e)
     {
       connection_.push_back (e);
     }
@@ -538,7 +538,7 @@ namespace CIAO
     }
 
     void deploymentPlan::
-    add_externalProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanPropertyMapping, ACE_Null_Mutex >  const& e)
+    add_externalProperty (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PlanPropertyMapping, ACE_Null_Mutex >  const& e)
     {
       externalProperty_.push_back (e);
     }
@@ -576,7 +576,7 @@ namespace CIAO
     }
 
     void deploymentPlan::
-    add_dependsOn (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex >  const& e)
+    add_dependsOn (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ImplementationDependency, ACE_Null_Mutex >  const& e)
     {
       dependsOn_.push_back (e);
     }
@@ -614,7 +614,7 @@ namespace CIAO
     }
 
     void deploymentPlan::
-    add_artifact (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ArtifactDeploymentDescription, ACE_Null_Mutex >  const& e)
+    add_artifact (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ArtifactDeploymentDescription, ACE_Null_Mutex >  const& e)
     {
       artifact_.push_back (e);
     }
@@ -652,7 +652,7 @@ namespace CIAO
     }
 
     void deploymentPlan::
-    add_infoProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
+    add_infoProperty (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       infoProperty_.push_back (e);
     }
@@ -690,7 +690,7 @@ namespace CIAO
     }
 
     void deploymentPlan::
-    add_localityConstraint (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanLocality, ACE_Null_Mutex >  const& e)
+    add_localityConstraint (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PlanLocality, ACE_Null_Mutex >  const& e)
     {
       localityConstraint_.push_back (e);
     }
@@ -703,7 +703,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -730,7 +730,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("instance"))
         {
-          instance_ = ::std::auto_ptr< ::CIAO::Config_Handlers::InstanceDeploymentDescription > (new ::CIAO::Config_Handlers::InstanceDeploymentDescription (e));
+          instance_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::InstanceDeploymentDescription > (new ::DAnCE::Config_Handlers::InstanceDeploymentDescription (e));
           instance_->container (this);
         }
 
@@ -775,7 +775,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("delegatesTo"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPropertyReference, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PlanSubcomponentPropertyReference (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PlanSubcomponentPropertyReference, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::PlanSubcomponentPropertyReference (e));
           add_delegatesTo (t);
         }
 
@@ -814,55 +814,55 @@ namespace CIAO
 
         else if (n == ACE_TEXT("realizes"))
         {
-          ::CIAO::Config_Handlers::ComponentInterfaceDescription t (e);
+          ::DAnCE::Config_Handlers::ComponentInterfaceDescription t (e);
           realizes (t);
         }
 
         else if (n == ACE_TEXT("implementation"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::MonolithicDeploymentDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::MonolithicDeploymentDescription (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::MonolithicDeploymentDescription, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::MonolithicDeploymentDescription (e));
           add_implementation (t);
         }
 
         else if (n == ACE_TEXT("instance"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceDeploymentDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::InstanceDeploymentDescription (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::InstanceDeploymentDescription, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::InstanceDeploymentDescription (e));
           add_instance (t);
         }
 
         else if (n == ACE_TEXT("connection"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanConnectionDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PlanConnectionDescription (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PlanConnectionDescription, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::PlanConnectionDescription (e));
           add_connection (t);
         }
 
         else if (n == ACE_TEXT("externalProperty"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanPropertyMapping, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PlanPropertyMapping (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PlanPropertyMapping, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::PlanPropertyMapping (e));
           add_externalProperty (t);
         }
 
         else if (n == ACE_TEXT("dependsOn"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ImplementationDependency (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ImplementationDependency, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::ImplementationDependency (e));
           add_dependsOn (t);
         }
 
         else if (n == ACE_TEXT("artifact"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ArtifactDeploymentDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ArtifactDeploymentDescription (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ArtifactDeploymentDescription, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::ArtifactDeploymentDescription (e));
           add_artifact (t);
         }
 
         else if (n == ACE_TEXT("infoProperty"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::Property (e));
           add_infoProperty (t);
         }
 
         else if (n == ACE_TEXT("localityConstraint"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanLocality, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PlanLocality (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PlanLocality, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::PlanLocality (e));
           add_localityConstraint (t);
         }
 
@@ -874,7 +874,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -883,7 +883,7 @@ namespace CIAO
 
 #include "XMLSchema/TypeInfo.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -895,7 +895,7 @@ namespace CIAO
       {
         PlanSubcomponentPropertyReferenceTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::PlanSubcomponentPropertyReference));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::PlanSubcomponentPropertyReference));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -909,7 +909,7 @@ namespace CIAO
       {
         PlanPropertyMappingTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::PlanPropertyMapping));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::PlanPropertyMapping));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -923,7 +923,7 @@ namespace CIAO
       {
         deploymentPlanTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::deploymentPlan));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::deploymentPlan));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -936,7 +936,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -1061,7 +1061,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PlanPropertyMapping::source_iterator b (o.begin_source()), e (o.end_source());
+        ::DAnCE::Config_Handlers::PlanPropertyMapping::source_iterator b (o.begin_source()), e (o.end_source());
 
         if (b != e)
         {
@@ -1083,7 +1083,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PlanPropertyMapping::source_const_iterator b (o.begin_source()), e (o.end_source());
+        ::DAnCE::Config_Handlers::PlanPropertyMapping::source_const_iterator b (o.begin_source()), e (o.end_source());
 
         if (b != e)
         {
@@ -1157,7 +1157,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PlanPropertyMapping::delegatesTo_iterator b (o.begin_delegatesTo()), e (o.end_delegatesTo());
+        ::DAnCE::Config_Handlers::PlanPropertyMapping::delegatesTo_iterator b (o.begin_delegatesTo()), e (o.end_delegatesTo());
 
         if (b != e)
         {
@@ -1177,7 +1177,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PlanPropertyMapping::delegatesTo_const_iterator b (o.begin_delegatesTo()), e (o.end_delegatesTo());
+        ::DAnCE::Config_Handlers::PlanPropertyMapping::delegatesTo_const_iterator b (o.begin_delegatesTo()), e (o.end_delegatesTo());
 
         if (b != e)
         {
@@ -1359,7 +1359,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::deploymentPlan::implementation_iterator b (o.begin_implementation()), e (o.end_implementation());
+        ::DAnCE::Config_Handlers::deploymentPlan::implementation_iterator b (o.begin_implementation()), e (o.end_implementation());
 
         if (b != e)
         {
@@ -1381,7 +1381,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::deploymentPlan::implementation_const_iterator b (o.begin_implementation()), e (o.end_implementation());
+        ::DAnCE::Config_Handlers::deploymentPlan::implementation_const_iterator b (o.begin_implementation()), e (o.end_implementation());
 
         if (b != e)
         {
@@ -1443,7 +1443,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::deploymentPlan::instance_iterator b (o.begin_instance()), e (o.end_instance());
+        ::DAnCE::Config_Handlers::deploymentPlan::instance_iterator b (o.begin_instance()), e (o.end_instance());
 
         if (b != e)
         {
@@ -1465,7 +1465,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::deploymentPlan::instance_const_iterator b (o.begin_instance()), e (o.end_instance());
+        ::DAnCE::Config_Handlers::deploymentPlan::instance_const_iterator b (o.begin_instance()), e (o.end_instance());
 
         if (b != e)
         {
@@ -1527,7 +1527,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::deploymentPlan::connection_iterator b (o.begin_connection()), e (o.end_connection());
+        ::DAnCE::Config_Handlers::deploymentPlan::connection_iterator b (o.begin_connection()), e (o.end_connection());
 
         if (b != e)
         {
@@ -1549,7 +1549,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::deploymentPlan::connection_const_iterator b (o.begin_connection()), e (o.end_connection());
+        ::DAnCE::Config_Handlers::deploymentPlan::connection_const_iterator b (o.begin_connection()), e (o.end_connection());
 
         if (b != e)
         {
@@ -1611,7 +1611,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::deploymentPlan::externalProperty_iterator b (o.begin_externalProperty()), e (o.end_externalProperty());
+        ::DAnCE::Config_Handlers::deploymentPlan::externalProperty_iterator b (o.begin_externalProperty()), e (o.end_externalProperty());
 
         if (b != e)
         {
@@ -1633,7 +1633,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::deploymentPlan::externalProperty_const_iterator b (o.begin_externalProperty()), e (o.end_externalProperty());
+        ::DAnCE::Config_Handlers::deploymentPlan::externalProperty_const_iterator b (o.begin_externalProperty()), e (o.end_externalProperty());
 
         if (b != e)
         {
@@ -1695,7 +1695,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::deploymentPlan::dependsOn_iterator b (o.begin_dependsOn()), e (o.end_dependsOn());
+        ::DAnCE::Config_Handlers::deploymentPlan::dependsOn_iterator b (o.begin_dependsOn()), e (o.end_dependsOn());
 
         if (b != e)
         {
@@ -1717,7 +1717,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::deploymentPlan::dependsOn_const_iterator b (o.begin_dependsOn()), e (o.end_dependsOn());
+        ::DAnCE::Config_Handlers::deploymentPlan::dependsOn_const_iterator b (o.begin_dependsOn()), e (o.end_dependsOn());
 
         if (b != e)
         {
@@ -1779,7 +1779,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::deploymentPlan::artifact_iterator b (o.begin_artifact()), e (o.end_artifact());
+        ::DAnCE::Config_Handlers::deploymentPlan::artifact_iterator b (o.begin_artifact()), e (o.end_artifact());
 
         if (b != e)
         {
@@ -1801,7 +1801,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::deploymentPlan::artifact_const_iterator b (o.begin_artifact()), e (o.end_artifact());
+        ::DAnCE::Config_Handlers::deploymentPlan::artifact_const_iterator b (o.begin_artifact()), e (o.end_artifact());
 
         if (b != e)
         {
@@ -1863,7 +1863,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::deploymentPlan::infoProperty_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
+        ::DAnCE::Config_Handlers::deploymentPlan::infoProperty_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
 
         if (b != e)
         {
@@ -1885,7 +1885,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::deploymentPlan::infoProperty_const_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
+        ::DAnCE::Config_Handlers::deploymentPlan::infoProperty_const_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
 
         if (b != e)
         {
@@ -1947,7 +1947,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::deploymentPlan::localityConstraint_iterator b (o.begin_localityConstraint()), e (o.end_localityConstraint());
+        ::DAnCE::Config_Handlers::deploymentPlan::localityConstraint_iterator b (o.begin_localityConstraint()), e (o.end_localityConstraint());
 
         if (b != e)
         {
@@ -1969,7 +1969,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::deploymentPlan::localityConstraint_const_iterator b (o.begin_localityConstraint()), e (o.end_localityConstraint());
+        ::DAnCE::Config_Handlers::deploymentPlan::localityConstraint_const_iterator b (o.begin_localityConstraint()), e (o.end_localityConstraint());
 
         if (b != e)
         {
@@ -2039,7 +2039,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -2357,7 +2357,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

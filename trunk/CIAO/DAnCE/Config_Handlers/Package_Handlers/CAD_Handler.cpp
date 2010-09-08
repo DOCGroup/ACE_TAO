@@ -12,7 +12,7 @@
 
 #include "Package_Handlers/SID_Handler.h"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

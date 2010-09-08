@@ -22,7 +22,7 @@ namespace Deployment
   class SubcomponentInstantiationDescriptions;
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

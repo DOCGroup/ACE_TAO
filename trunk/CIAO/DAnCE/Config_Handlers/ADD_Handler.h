@@ -28,7 +28,7 @@ namespace Deployment
 }
 
 
-namespace CIAO
+namespace DAnCE
 {
 
   namespace Config_Handlers

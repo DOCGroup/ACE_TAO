@@ -21,7 +21,7 @@
 #include "XSC_XML_Handlers_Export.h"
 // Forward declarations.
 //
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -46,7 +46,7 @@ namespace CIAO
 
 #include "Basic_Deployment_Data.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -80,85 +80,85 @@ namespace CIAO
       // node
       // 
       public:
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > >::iterator node_iterator;
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > >::const_iterator node_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Node, ACE_Null_Mutex > >::iterator node_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Node, ACE_Null_Mutex > >::const_iterator node_const_iterator;
       node_iterator begin_node ();
       node_iterator end_node ();
       node_const_iterator begin_node () const;
       node_const_iterator end_node () const;
-      void add_node ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > const& );
+      void add_node ( ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Node, ACE_Null_Mutex > const& );
       XSCRT::Type* node_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_node (void) const;
 
       protected:
-      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > > node_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Node, ACE_Null_Mutex > > node_;
 
       // interconnect
       // 
       public:
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > >::iterator interconnect_iterator;
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > >::const_iterator interconnect_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Interconnect, ACE_Null_Mutex > >::iterator interconnect_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Interconnect, ACE_Null_Mutex > >::const_iterator interconnect_const_iterator;
       interconnect_iterator begin_interconnect ();
       interconnect_iterator end_interconnect ();
       interconnect_const_iterator begin_interconnect () const;
       interconnect_const_iterator end_interconnect () const;
-      void add_interconnect ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > const& );
+      void add_interconnect ( ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Interconnect, ACE_Null_Mutex > const& );
       XSCRT::Type* interconnect_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_interconnect (void) const;
 
       protected:
-      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > > interconnect_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Interconnect, ACE_Null_Mutex > > interconnect_;
 
       // bridge
       // 
       public:
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex > >::iterator bridge_iterator;
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex > >::const_iterator bridge_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Bridge, ACE_Null_Mutex > >::iterator bridge_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Bridge, ACE_Null_Mutex > >::const_iterator bridge_const_iterator;
       bridge_iterator begin_bridge ();
       bridge_iterator end_bridge ();
       bridge_const_iterator begin_bridge () const;
       bridge_const_iterator end_bridge () const;
-      void add_bridge ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex > const& );
+      void add_bridge ( ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Bridge, ACE_Null_Mutex > const& );
       XSCRT::Type* bridge_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_bridge (void) const;
 
       protected:
-      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex > > bridge_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Bridge, ACE_Null_Mutex > > bridge_;
 
       // sharedResource
       // 
       public:
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex > >::iterator sharedResource_iterator;
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex > >::const_iterator sharedResource_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::SharedResource, ACE_Null_Mutex > >::iterator sharedResource_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::SharedResource, ACE_Null_Mutex > >::const_iterator sharedResource_const_iterator;
       sharedResource_iterator begin_sharedResource ();
       sharedResource_iterator end_sharedResource ();
       sharedResource_const_iterator begin_sharedResource () const;
       sharedResource_const_iterator end_sharedResource () const;
-      void add_sharedResource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex > const& );
+      void add_sharedResource ( ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::SharedResource, ACE_Null_Mutex > const& );
       XSCRT::Type* sharedResource_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_sharedResource (void) const;
 
       protected:
-      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex > > sharedResource_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::SharedResource, ACE_Null_Mutex > > sharedResource_;
 
       // infoProperty
       // 
       public:
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator infoProperty_iterator;
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator infoProperty_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex > >::iterator infoProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator infoProperty_const_iterator;
       infoProperty_iterator begin_infoProperty ();
       infoProperty_iterator end_infoProperty ();
       infoProperty_const_iterator begin_infoProperty () const;
       infoProperty_const_iterator end_infoProperty () const;
-      void add_infoProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      void add_infoProperty ( ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex > const& );
       XSCRT::Type* infoProperty_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_infoProperty (void) const;
 
       protected:
-      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > infoProperty_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex > > infoProperty_;
 
       public:
-      Domain (::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > > const& node__);
+      Domain (::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Node, ACE_Null_Mutex > > const& node__);
 
       Domain (::XSCRT::XML::Element< ACE_TCHAR > const&);
       Domain (Domain const& s);
@@ -200,38 +200,38 @@ namespace CIAO
       // connect
       // 
       public:
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > >::iterator connect_iterator;
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > >::const_iterator connect_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Interconnect, ACE_Null_Mutex > >::iterator connect_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Interconnect, ACE_Null_Mutex > >::const_iterator connect_const_iterator;
       connect_iterator begin_connect ();
       connect_iterator end_connect ();
       connect_const_iterator begin_connect () const;
       connect_const_iterator end_connect () const;
-      void add_connect ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > const& );
+      void add_connect ( ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Interconnect, ACE_Null_Mutex > const& );
       XSCRT::Type* connect_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_connect (void) const;
 
       protected:
-      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > > connect_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Interconnect, ACE_Null_Mutex > > connect_;
 
       // resource
       // 
       public:
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > >::iterator resource_iterator;
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > >::const_iterator resource_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Resource, ACE_Null_Mutex > >::iterator resource_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Resource, ACE_Null_Mutex > >::const_iterator resource_const_iterator;
       resource_iterator begin_resource ();
       resource_iterator end_resource ();
       resource_const_iterator begin_resource () const;
       resource_const_iterator end_resource () const;
-      void add_resource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > const& );
+      void add_resource ( ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Resource, ACE_Null_Mutex > const& );
       XSCRT::Type* resource_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_resource (void) const;
 
       protected:
-      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > > resource_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Resource, ACE_Null_Mutex > > resource_;
 
       public:
       Bridge (::XMLSchema::string< ACE_TCHAR > const& name__,
-              ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > > const& connect__);
+              ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Interconnect, ACE_Null_Mutex > > const& connect__);
 
       Bridge (::XSCRT::XML::Element< ACE_TCHAR > const&);
       Bridge (Bridge const& s);
@@ -273,54 +273,54 @@ namespace CIAO
       // connection
       // 
       public:
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex > >::iterator connection_iterator;
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex > >::const_iterator connection_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Bridge, ACE_Null_Mutex > >::iterator connection_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Bridge, ACE_Null_Mutex > >::const_iterator connection_const_iterator;
       connection_iterator begin_connection ();
       connection_iterator end_connection ();
       connection_const_iterator begin_connection () const;
       connection_const_iterator end_connection () const;
-      void add_connection ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex > const& );
+      void add_connection ( ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Bridge, ACE_Null_Mutex > const& );
       XSCRT::Type* connection_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_connection (void) const;
 
       protected:
-      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex > > connection_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Bridge, ACE_Null_Mutex > > connection_;
 
       // connect
       // 
       public:
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > >::iterator connect_iterator;
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > >::const_iterator connect_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Node, ACE_Null_Mutex > >::iterator connect_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Node, ACE_Null_Mutex > >::const_iterator connect_const_iterator;
       connect_iterator begin_connect ();
       connect_iterator end_connect ();
       connect_const_iterator begin_connect () const;
       connect_const_iterator end_connect () const;
-      void add_connect ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > const& );
+      void add_connect ( ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Node, ACE_Null_Mutex > const& );
       XSCRT::Type* connect_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_connect (void) const;
 
       protected:
-      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > > connect_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Node, ACE_Null_Mutex > > connect_;
 
       // resource
       // 
       public:
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > >::iterator resource_iterator;
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > >::const_iterator resource_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Resource, ACE_Null_Mutex > >::iterator resource_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Resource, ACE_Null_Mutex > >::const_iterator resource_const_iterator;
       resource_iterator begin_resource ();
       resource_iterator end_resource ();
       resource_const_iterator begin_resource () const;
       resource_const_iterator end_resource () const;
-      void add_resource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > const& );
+      void add_resource ( ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Resource, ACE_Null_Mutex > const& );
       XSCRT::Type* resource_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_resource (void) const;
 
       protected:
-      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > > resource_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Resource, ACE_Null_Mutex > > resource_;
 
       public:
       Interconnect (::XMLSchema::string< ACE_TCHAR > const& name__,
-                    ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > > const& connect__);
+                    ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Node, ACE_Null_Mutex > > const& connect__);
 
       Interconnect (::XSCRT::XML::Element< ACE_TCHAR > const&);
       Interconnect (Interconnect const& s);
@@ -362,50 +362,50 @@ namespace CIAO
       // connection
       // 
       public:
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > >::iterator connection_iterator;
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > >::const_iterator connection_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Interconnect, ACE_Null_Mutex > >::iterator connection_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Interconnect, ACE_Null_Mutex > >::const_iterator connection_const_iterator;
       connection_iterator begin_connection ();
       connection_iterator end_connection ();
       connection_const_iterator begin_connection () const;
       connection_const_iterator end_connection () const;
-      void add_connection ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > const& );
+      void add_connection ( ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Interconnect, ACE_Null_Mutex > const& );
       XSCRT::Type* connection_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_connection (void) const;
 
       protected:
-      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > > connection_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Interconnect, ACE_Null_Mutex > > connection_;
 
       // sharedResource
       // 
       public:
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex > >::iterator sharedResource_iterator;
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex > >::const_iterator sharedResource_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::SharedResource, ACE_Null_Mutex > >::iterator sharedResource_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::SharedResource, ACE_Null_Mutex > >::const_iterator sharedResource_const_iterator;
       sharedResource_iterator begin_sharedResource ();
       sharedResource_iterator end_sharedResource ();
       sharedResource_const_iterator begin_sharedResource () const;
       sharedResource_const_iterator end_sharedResource () const;
-      void add_sharedResource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex > const& );
+      void add_sharedResource ( ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::SharedResource, ACE_Null_Mutex > const& );
       XSCRT::Type* sharedResource_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_sharedResource (void) const;
 
       protected:
-      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex > > sharedResource_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::SharedResource, ACE_Null_Mutex > > sharedResource_;
 
       // resource
       // 
       public:
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > >::iterator resource_iterator;
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > >::const_iterator resource_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Resource, ACE_Null_Mutex > >::iterator resource_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Resource, ACE_Null_Mutex > >::const_iterator resource_const_iterator;
       resource_iterator begin_resource ();
       resource_iterator end_resource ();
       resource_const_iterator begin_resource () const;
       resource_const_iterator end_resource () const;
-      void add_resource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > const& );
+      void add_resource ( ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Resource, ACE_Null_Mutex > const& );
       XSCRT::Type* resource_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_resource (void) const;
 
       protected:
-      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > > resource_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Resource, ACE_Null_Mutex > > resource_;
 
       public:
       Node (::XMLSchema::string< ACE_TCHAR > const& name__);
@@ -449,26 +449,26 @@ namespace CIAO
       // node
       // 
       public:
-      ::CIAO::Config_Handlers::Node const& node () const;
-      void node (::CIAO::Config_Handlers::Node const& );
+      ::DAnCE::Config_Handlers::Node const& node () const;
+      void node (::DAnCE::Config_Handlers::Node const& );
 
       protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::Node > node_;
+      ::std::auto_ptr< ::DAnCE::Config_Handlers::Node > node_;
 
       // property
       // 
       public:
-      ::CIAO::Config_Handlers::SatisfierProperty const& property () const;
-      void property (::CIAO::Config_Handlers::SatisfierProperty const& );
+      ::DAnCE::Config_Handlers::SatisfierProperty const& property () const;
+      void property (::DAnCE::Config_Handlers::SatisfierProperty const& );
 
       protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierProperty > property_;
+      ::std::auto_ptr< ::DAnCE::Config_Handlers::SatisfierProperty > property_;
 
       public:
       SharedResource (::XMLSchema::string< ACE_TCHAR > const& name__,
                       ::XMLSchema::string< ACE_TCHAR > const& resourceType__,
-                      ::CIAO::Config_Handlers::Node const& node__,
-                      ::CIAO::Config_Handlers::SatisfierProperty const& property__);
+                      ::DAnCE::Config_Handlers::Node const& node__,
+                      ::DAnCE::Config_Handlers::SatisfierProperty const& property__);
 
       SharedResource (::XSCRT::XML::Element< ACE_TCHAR > const&);
       SharedResource (SharedResource const& s);
@@ -482,7 +482,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -491,13 +491,13 @@ namespace CIAO
 
 #include "XMLSchema/Traversal.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
     namespace Traversal
     {
-      struct XSC_XML_Handlers_Export Domain : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Domain >
+      struct XSC_XML_Handlers_Export Domain : ::XMLSchema::Traversal::Traverser< ::DAnCE::Config_Handlers::Domain >
       {
         virtual void
         traverse (Type&);
@@ -686,7 +686,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct XSC_XML_Handlers_Export Bridge : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Bridge >
+      struct XSC_XML_Handlers_Export Bridge : ::XMLSchema::Traversal::Traverser< ::DAnCE::Config_Handlers::Bridge >
       {
         virtual void
         traverse (Type&);
@@ -779,7 +779,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct XSC_XML_Handlers_Export Interconnect : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Interconnect >
+      struct XSC_XML_Handlers_Export Interconnect : ::XMLSchema::Traversal::Traverser< ::DAnCE::Config_Handlers::Interconnect >
       {
         virtual void
         traverse (Type&);
@@ -902,7 +902,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct XSC_XML_Handlers_Export Node : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Node >
+      struct XSC_XML_Handlers_Export Node : ::XMLSchema::Traversal::Traverser< ::DAnCE::Config_Handlers::Node >
       {
         virtual void
         traverse (Type&);
@@ -1031,7 +1031,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct XSC_XML_Handlers_Export SharedResource : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::SharedResource >
+      struct XSC_XML_Handlers_Export SharedResource : ::XMLSchema::Traversal::Traverser< ::DAnCE::Config_Handlers::SharedResource >
       {
         virtual void
         traverse (Type&);
@@ -1081,7 +1081,7 @@ namespace CIAO
 
 #include "XMLSchema/Writer.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -1090,7 +1090,7 @@ namespace CIAO
       struct Domain : Traversal::Domain, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
-        typedef ::CIAO::Config_Handlers::Domain Type;
+        typedef ::DAnCE::Config_Handlers::Domain Type;
         Domain (::XSCRT::XML::Element< ACE_TCHAR >&);
 
         virtual void 
@@ -1262,7 +1262,7 @@ namespace CIAO
       struct Bridge : Traversal::Bridge, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
-        typedef ::CIAO::Config_Handlers::Bridge Type;
+        typedef ::DAnCE::Config_Handlers::Bridge Type;
         Bridge (::XSCRT::XML::Element< ACE_TCHAR >&);
 
         virtual void 
@@ -1353,7 +1353,7 @@ namespace CIAO
       struct Interconnect : Traversal::Interconnect, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
-        typedef ::CIAO::Config_Handlers::Interconnect Type;
+        typedef ::DAnCE::Config_Handlers::Interconnect Type;
         Interconnect (::XSCRT::XML::Element< ACE_TCHAR >&);
 
         virtual void 
@@ -1471,7 +1471,7 @@ namespace CIAO
       struct Node : Traversal::Node, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
-        typedef ::CIAO::Config_Handlers::Node Type;
+        typedef ::DAnCE::Config_Handlers::Node Type;
         Node (::XSCRT::XML::Element< ACE_TCHAR >&);
 
         virtual void 
@@ -1589,7 +1589,7 @@ namespace CIAO
       struct SharedResource : Traversal::SharedResource, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
-        typedef ::CIAO::Config_Handlers::SharedResource Type;
+        typedef ::DAnCE::Config_Handlers::SharedResource Type;
         SharedResource (::XSCRT::XML::Element< ACE_TCHAR >&);
 
         virtual void 
@@ -1644,7 +1644,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

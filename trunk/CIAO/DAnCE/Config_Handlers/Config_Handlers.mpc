@@ -6,7 +6,7 @@ project (XSC_XML_Generation) : install, xscdefaults {
   xscflags += --cxx-banner-file $(DANCE_ROOT)/docs/schema/xsc-banner.cpp
   xscflags += --cxx-header-banner-file $(DANCE_ROOT)/docs/schema/xsc-banner.h
   xscflags += --cxx-export-symbol XSC_XML_Handlers_Export
-  xscflags += --cxx-namespace-regex  "%.*Deployment.*%CIAO/Config_Handlers%" //<%quote%>
+  xscflags += --cxx-namespace-regex  "%.*Deployment.*DAnCE/Config_Handlers%" //<%quote%>
   xscflags += --cxx-export-header XSC_XML_Handlers_Export.h
   xscflags += --search-path "$(DANCE_ROOT)/docs/schema"
 
@@ -14,24 +14,24 @@ project (XSC_XML_Generation) : install, xscdefaults {
 
   XSC_Files {
     gendir = .
-    $(CIAO_ROOT)/docs/schema/Basic_Deployment_Data.xsd
-    $(CIAO_ROOT)/docs/schema/Deployment.xsd
-    $(CIAO_ROOT)/docs/schema/XMI.xsd
-    $(CIAO_ROOT)/docs/schema/ccd.xsd
-    $(CIAO_ROOT)/docs/schema/cdd.xsd
-    $(CIAO_ROOT)/docs/schema/cdp.xsd
-    $(CIAO_ROOT)/docs/schema/cid.xsd
-    $(CIAO_ROOT)/docs/schema/cpd.xsd
-    $(CIAO_ROOT)/docs/schema/iad.xsd
-    $(CIAO_ROOT)/docs/schema/pcd.xsd
-    $(CIAO_ROOT)/docs/schema/toplevel.xsd
+    $(DANCE_ROOT)/docs/schema/Basic_Deployment_Data.xsd
+    $(DANCE_ROOT)/docs/schema/Deployment.xsd
+    $(DANCE_ROOT)/docs/schema/XMI.xsd
+    $(DANCE_ROOT)/docs/schema/ccd.xsd
+    $(DANCE_ROOT)/docs/schema/cdd.xsd
+    $(DANCE_ROOT)/docs/schema/cdp.xsd
+    $(DANCE_ROOT)/docs/schema/cid.xsd
+    $(DANCE_ROOT)/docs/schema/cpd.xsd
+    $(DANCE_ROOT)/docs/schema/iad.xsd
+    $(DANCE_ROOT)/docs/schema/pcd.xsd
+    $(DANCE_ROOT)/docs/schema/toplevel.xsd
   }
 
   Source_Files {
   }
 }
 
-project (XSC_XML_Handlers) : install, acelib, xerces, dance_lib, ciao_xml_utils {
+project (XSC_XML_Handlers) : install, acelib, xerces, dance_lib, dance_xml_utils {
   sharedname    += XSC_XML_Handlers
   dynamicflags += XSC_XML_HANDLERS_BUILD_DLL
   macros += XML_USE_PTHREADS
@@ -64,13 +64,13 @@ project (XSC_XML_Handlers) : install, acelib, xerces, dance_lib, ciao_xml_utils 
 
 }
 
-project (XSC_Config_Handlers) : install, dance_deployment_stub, dance_config_handlers_base, ciao_lib, dance, dance_logger {
+project (XSC_Config_Handlers) : install, dance_deployment_stub, dance_config_handlers_base, dance_lib, dance, dance_logger {
   after += XSC_DynAny_Handler \
            XSC_Config_Handlers_Common
 
   sharedname = XSC_Config_Handlers
   dynamicflags += CONFIG_HANDLERS_BUILD_DLL
-  libs += CIAO_XML_Utils \
+  libs += DAnCE_XML_Utils \
           XSC_XML_Handlers \
           XSC_DynAny_Handler \
           XSC_Config_Handlers_Common
@@ -106,7 +106,7 @@ project (XSC_Config_Handlers) : install, dance_deployment_stub, dance_config_han
 
 }
 
-project (XSC_Config_Handlers_Common) : install, dance_deployment_stub, dance_config_handlers_base, ciao_lib, dance {
+project (XSC_Config_Handlers_Common) : install, dance_deployment_stub, dance_config_handlers_base, dance_lib, dance {
   after += XSC_DynAny_Handler
   sharedname = XSC_Config_Handlers_Common
   dynamicflags += CONFIG_HANDLERS_COMMON_BUILD_DLL

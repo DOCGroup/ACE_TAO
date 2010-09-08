@@ -6,7 +6,7 @@
 
 #include "iad.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
