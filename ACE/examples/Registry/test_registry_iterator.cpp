@@ -16,7 +16,7 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID(Registry, test_registry_iterator, "$Id$")
+
 
 // Indentation while printing names
 static const u_long INDENTATION_LEVEL = 3;

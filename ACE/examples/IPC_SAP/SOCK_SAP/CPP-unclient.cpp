@@ -8,7 +8,7 @@
 #include "ace/OS_main.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(SOCK_SAP, CPP_unclient, "$Id$")
+
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 int

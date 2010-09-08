@@ -6,7 +6,7 @@
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(Misc, test_timestamp, "$Id$")
+
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])

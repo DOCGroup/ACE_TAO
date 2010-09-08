@@ -21,7 +21,7 @@
 #include "ace/Barrier.h"
 #include "ace/Thread_Manager.h"
 
-ACE_RCSID(tests, Barrier_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

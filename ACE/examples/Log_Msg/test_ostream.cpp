@@ -24,7 +24,7 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(Log_Msg, test_ostream, "$Id$")
+
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
@@ -76,7 +76,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   if (infile.bad ())
     return 1;
 
-  // This loop should print out the contents of file "output", which should 
+  // This loop should print out the contents of file "output", which should
   // have the strings "fourth\n" and "fifth\n" in them.
 
   char line[BUFSIZ];

@@ -46,7 +46,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Message_Queue_Notifications_Test, "$Id$")
+
 
 static int iterations = 10;
 

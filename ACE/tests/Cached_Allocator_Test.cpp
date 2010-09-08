@@ -21,7 +21,7 @@
 #include "ace/Malloc_T.h"
 #include "ace/High_Res_Timer.h"
 
-ACE_RCSID(tests, Cached_Allocator_Test, "$Id$")
+
 
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"

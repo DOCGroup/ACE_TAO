@@ -25,7 +25,7 @@
 #include "ace/Atomic_Op.h"
 #include "ace/Recursive_Thread_Mutex.h"
 
-ACE_RCSID(tests, Reactors_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

@@ -7,7 +7,7 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_time.h"
 
-ACE_RCSID(Threads, token, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

@@ -33,7 +33,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(Dgram, Dgram, "$Id$")
+
 
 // Port used to receive for dgrams.
 static u_short port1;

@@ -13,7 +13,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Dump_Restore, Dump_Restore, "$Id$")
+
 
 Dump_Restore::Dump_Restore (int argc, ACE_TCHAR *argv[])
   : infile_ (0)

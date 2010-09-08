@@ -18,7 +18,7 @@
 #include "ace/Condition_Recursive_Thread_Mutex.h"
 #include "ace/Thread.h"
 
-ACE_RCSID(tests, Bug_2772_Regression_Test, "$Id$")
+
 
 class ThreadTest
 {

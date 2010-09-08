@@ -24,7 +24,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Atomic_Op.h"
 
-ACE_RCSID(tests, Upgradable_RW_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

@@ -26,7 +26,7 @@
 #include "ace/Pipe.h"
 #include "ace/ACE.h"
 
-ACE_RCSID(tests, Refcounted_Event_Handler_Test_DevPoll, "$Id$")
+
 
 #if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
 

@@ -6,7 +6,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"
 
-ACE_RCSID(Shared_Memory, test_MM, "$Id$")
+
 
 #define SHMSZ 27
 ACE_TCHAR shm_key[] = ACE_TEXT ("/tmp/fooXXXXXX");

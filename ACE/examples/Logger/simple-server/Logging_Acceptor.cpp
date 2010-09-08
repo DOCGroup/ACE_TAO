@@ -7,7 +7,7 @@
 #include "Logging_Handler.h"
 #include "Reactor_Singleton.h"
 
-ACE_RCSID(simple_server, Logging_Acceptor, "$Id$")
+
 
 // Initialize peer_acceptor object.
 

@@ -53,7 +53,7 @@
 #error "Can't define USE_GETRUSAGE on this platform."
 #endif
 
-ACE_RCSID(tests, CDR_Array_Test, "$Id$")
+
 
 // Default number of elements for check buffer, for each tested CDR type.
 // Be aware that time will be affected by the buffer fitting/not fitting

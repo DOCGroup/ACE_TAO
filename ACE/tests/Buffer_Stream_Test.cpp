@@ -28,7 +28,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
 
-ACE_RCSID(tests, Buffer_Stream_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

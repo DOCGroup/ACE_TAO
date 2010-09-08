@@ -9,7 +9,7 @@
 #include "JAWS/Waiter.h"
 #include "JAWS/Reaper.h"
 
-ACE_RCSID(JAWS, Concurrency, "$Id$")
+
 
 JAWS_Concurrency_Base::JAWS_Concurrency_Base (void)
   : ACE_Task<ACE_SYNCH> (new ACE_Thread_Manager),

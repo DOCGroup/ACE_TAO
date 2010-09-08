@@ -23,7 +23,7 @@
 #include "ace/Atomic_Op.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Auto_IncDec_Test, "Auto_IncDec_Test.cpp, by Edan Ayal")
+
 
 #if defined (ACE_HAS_THREADS)
 

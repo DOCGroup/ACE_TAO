@@ -26,7 +26,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"
 
-ACE_RCSID(Log_Msg, test_log_msg, "$Id$")
+
 
 static void
 cleanup (void)

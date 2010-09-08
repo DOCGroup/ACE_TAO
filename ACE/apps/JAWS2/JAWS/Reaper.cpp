@@ -4,7 +4,7 @@
 #include "JAWS/Concurrency.h"
 #include "JAWS/IO_Acceptor.h"
 
-ACE_RCSID(JAWS, Reaper, "$Id$")
+
 
 JAWS_Reaper::JAWS_Reaper (JAWS_Concurrency_Base *concurrency)
   : concurrency_ (concurrency),

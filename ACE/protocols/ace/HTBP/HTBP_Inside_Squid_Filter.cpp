@@ -12,7 +12,7 @@
 #include "HTBP_Inside_Squid_Filter.inl"
 #endif
 
-ACE_RCSID(HTBP,ACE_HTBP_Inside_Squid_Filter,"$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

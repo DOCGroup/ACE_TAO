@@ -25,7 +25,7 @@
 #include "TSS_Obj.h"
 #include "TSS_Task.h"
 
-ACE_RCSID(Threads, tss2, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

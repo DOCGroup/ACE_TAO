@@ -30,7 +30,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
 
-ACE_RCSID(tests, MT_Reactor_Upcall_Test, "$Id$")
+
 
 int number_of_event_loop_threads = 3;
 int number_of_messages = 10;

@@ -10,7 +10,7 @@
 #include "ACEXML/common/ZipCharStream.h"
 #endif /* USE_ZZIP */
 
-ACE_RCSID (common, StreamFactory, "$Id$")
+
 
 ACEXML_CharStream*
 ACEXML_StreamFactory::create_stream (const ACEXML_Char* uri)

@@ -21,7 +21,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/ACE.h"
 
-ACE_RCSID(tests, Codecs_Test, "$Id$")
+
 
 // Don't change the strings thinking that they are typos
 

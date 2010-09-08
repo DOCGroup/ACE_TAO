@@ -16,7 +16,7 @@
 #include "ace/Date_Time.h"
 #include "test_config.h"
 
-ACE_RCSID(tests, Date_Time_Test, "$Id$")
+
 
 static ACE_Date_Time static_dt;   // Making sure it doesn't crash.
 

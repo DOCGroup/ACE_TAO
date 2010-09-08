@@ -31,7 +31,7 @@
 #include "ace/Select_Reactor.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(tests, Reactor_Performance_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

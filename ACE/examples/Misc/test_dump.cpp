@@ -10,7 +10,7 @@
 
 #include "ace/Reactor.h"
 
-ACE_RCSID(Misc, test_dump, "$Id$")
+
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])

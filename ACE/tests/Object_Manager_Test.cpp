@@ -21,7 +21,7 @@
 #include "ace/OS_Memory.h"
 #include "ace/ACE.h"
 
-ACE_RCSID(tests, Object_Manager_Test, "$Id$")
+
 
 static u_int *ip;
 

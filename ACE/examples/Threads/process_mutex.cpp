@@ -10,7 +10,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Process_Mutex.h"
 
-ACE_RCSID(Threads, process_mutex, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

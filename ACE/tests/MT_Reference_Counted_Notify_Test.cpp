@@ -28,7 +28,7 @@
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(tests, MT_Reference_Counted_Notify_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

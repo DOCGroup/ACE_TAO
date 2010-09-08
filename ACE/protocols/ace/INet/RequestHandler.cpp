@@ -2,7 +2,7 @@
 
 #include "ace/INet/RequestHandler.h"
 
-ACE_RCSID(NET_CLIENT,ACE_INet_RequestHandler,"$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

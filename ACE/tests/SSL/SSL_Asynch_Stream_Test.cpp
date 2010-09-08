@@ -44,7 +44,7 @@
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
 #include "ace/SSL/SSL_SOCK_Stream.h"
 
-ACE_RCSID(tests, SSL_Asynch_Stream_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS) && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
   // This only works on Win32 platforms and on Unix platforms

@@ -7,7 +7,7 @@
 #include "ace/INet/ClientRequestHandler.inl"
 #endif
 
-ACE_RCSID(NET_CLIENT,ACE_INet_ClientRequestHandler,"$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

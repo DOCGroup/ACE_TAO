@@ -24,7 +24,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(tests, Task_Test_Ex, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

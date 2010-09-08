@@ -36,7 +36,7 @@
 #pragma warning(disable:4503)
 #endif /* _MSC_VER */
 
-ACE_RCSID(tests, Cached_Accept_Conn_Test, "$Id$")
+
 
 // Note: To keep both sunCC5.0 without debugging symbols and gcc2.7.3
 // happy, it was necessary to have the definitions of the methods of

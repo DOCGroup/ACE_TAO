@@ -30,7 +30,7 @@
 #include "ace/OS_NS_unistd.h"
 
 
-ACE_RCSID(tests, SV_Shared_Memory_Test, "$Id$")
+
 
 #if defined (ACE_HAS_SYSV_IPC) && !defined(ACE_LACKS_SYSV_SHMEM)
 

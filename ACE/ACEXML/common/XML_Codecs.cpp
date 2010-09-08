@@ -5,7 +5,7 @@
 #include "ace/OS_NS_string.h"
 #include "ACEXML/common/XML_Codecs.h"
 
-ACE_RCSID (common, XML_Codecs, "$Id$")
+
 
 ACEXML_Char*
 ACEXML_Base64::encode (const ACEXML_Char* input,

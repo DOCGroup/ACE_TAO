@@ -22,7 +22,7 @@
 #include "ace/TP_Reactor.h"
 #include "ace/Task.h"
 
-ACE_RCSID(tests, Timer_Cancellation_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

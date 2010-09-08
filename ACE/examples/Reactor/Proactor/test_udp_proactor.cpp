@@ -29,7 +29,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(Proactor, test_udp_proactor, "test_proactor.cpp,v 1.29 2001/02/02 23:41:16 shuston Exp")
+
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on asynch I/O-capable platforms.

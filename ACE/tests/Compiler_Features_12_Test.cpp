@@ -14,7 +14,7 @@
 
 #include "test_config.h"
 
-ACE_RCSID(tests, Compiler_Features_12_Test, "$Id$")
+
 
 template<typename T>
 struct Pair

@@ -10,7 +10,7 @@
 
 #include "Options.h"
 
-ACE_RCSID(UPIPE_Event_Server, Options, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

@@ -25,7 +25,7 @@
 #include "ace/Atomic_Op.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Proactor, test_multiple_loops, "$Id$")
+
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 

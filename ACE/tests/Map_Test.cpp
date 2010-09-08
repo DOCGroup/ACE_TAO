@@ -22,7 +22,7 @@
 #include "ace/Map_T.h"
 #include "ace/Profile_Timer.h"
 
-ACE_RCSID(tests, Map_Test, "$Id$")
+
 
 #undef THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL
 #define THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL(X) \

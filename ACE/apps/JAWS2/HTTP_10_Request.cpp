@@ -4,7 +4,7 @@
 #include "HTTP_10_Request.h"
 #include "ace/OS_NS_pwd.h"
 
-ACE_RCSID(PROTOTYPE, HTTP_10_Request, "$Id$")
+
 
 static int dummy;
 

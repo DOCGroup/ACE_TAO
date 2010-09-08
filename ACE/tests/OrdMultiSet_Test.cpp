@@ -25,7 +25,7 @@
 #include "test_config.h"
 #include "ace/Containers.h"
 
-ACE_RCSID(tests, OrdMultiSet_Test, "$Id$")
+
 
 int
 run_main (int, ACE_TCHAR *[])

@@ -8,7 +8,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Time_Value.h"
 
-ACE_RCSID(SPIPE_SAP, consumer_read, "$Id$")
+
 
 #if defined (ACE_HAS_STREAM_PIPES)
 

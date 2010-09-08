@@ -24,7 +24,7 @@
 
 #include "Connection_Handler.h"
 
-ACE_RCSID(misc, Connection_Handler, "$Id$")
+
 
 int
 Connection_Handler::open (void *)

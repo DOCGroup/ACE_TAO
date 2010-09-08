@@ -22,7 +22,7 @@
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID(tests, Sigset_Ops_Test, "$Id$")
+
 
 void
 siglistset (sigset_t x, int *sigset, int can_miss = 0)

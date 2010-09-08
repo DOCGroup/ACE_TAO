@@ -5,7 +5,7 @@
 #include "URL_Visitor.h"
 #include "Command_Processor.h"
 
-ACE_RCSID(Web_Crawler, URL_Visitor, "$Id$")
+
 
 URL_Processing_Strategy::URL_Processing_Strategy (URL &url,
                                                   URL_Iterator &iterator)

@@ -10,7 +10,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Atomic_Op.h"
 
-ACE_RCSID(Threads, task_two, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

@@ -55,7 +55,7 @@
 // Counting_Service and Options in here
 #include "Process_Strategy_Test.h"
 
-ACE_RCSID(tests, Process_Strategy_Test, "$Id$")
+
 
 // This test does not function properly when fork() is used on HP-UX
 #if defined(__hpux)
@@ -591,7 +591,7 @@ client (void *arg)
                   ACE_TEXT ("(%P|%t) count = %d\n"),
                   count));
       // Make sure that the count is correct.
-      if (count != ACE_MAX_ITERATIONS) 
+      if (count != ACE_MAX_ITERATIONS)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Error: Count invalid, has %d expected %d\n"),

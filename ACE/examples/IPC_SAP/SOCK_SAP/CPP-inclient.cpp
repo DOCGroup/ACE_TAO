@@ -20,7 +20,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 
-ACE_RCSID(SOCK_SAP, CPP_inclient, "$Id$")
+
 
 Options::Options (void)
   : host_ (ACE_DEFAULT_SERVER_HOST),
@@ -69,7 +69,7 @@ Options::init (void)
   // Copy the length into the beginning of the message.
   ACE_UINT32 length =
     ACE_NTOHL (ACE_Utils::truncate_cast<ACE_UINT32> (this->message_len_));
-    
+
   ACE_OS::memcpy ((void *) this->message_buf_,
                   (void *) &length,
                   sizeof length);

@@ -26,7 +26,7 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/os_include/os_dirent.h"
 
-ACE_RCSID(tests, Process_Mutex_Test, "$Id$")
+
 
 static int release_mutex = 1;
 static int child_process = 0;

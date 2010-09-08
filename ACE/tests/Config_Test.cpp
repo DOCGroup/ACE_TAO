@@ -28,7 +28,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Config_Test, "$Id$")
+
 
 static int
 test (ACE_Configuration *config,

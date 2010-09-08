@@ -30,7 +30,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, MM_Shared_Memory_Test, "$Id$")
+
 
 #if !defined (ACE_LACKS_MMAP)
 

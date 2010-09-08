@@ -27,6 +27,6 @@
 
 #include "ace/ACE.h"
 
-ACE_RCSID(src, Version, "$Id$")
+
 
 const char *version_string = "2.8 (ACE version)";

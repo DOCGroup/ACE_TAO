@@ -16,7 +16,7 @@
 #include "ace/Arg_Shifter.h"
 #include "test_config.h"
 
-ACE_RCSID(tests, Arg_Shifter_Test, "$Id$")
+
 
 int
 run_main (int, ACE_TCHAR *[])

@@ -28,7 +28,7 @@
 #include "ace/Pipe.h"
 #include "ace/OS_main.h"
 
-ACE_RCSID(WFMO_Reactor, Handle_Close, "$Id: ")
+
 
 // Use the WFMO_Reactor
 static int opt_wfmo_reactor = 0;

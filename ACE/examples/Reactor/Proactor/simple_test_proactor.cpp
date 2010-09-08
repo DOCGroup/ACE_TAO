@@ -24,7 +24,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_main.h"
 
-ACE_RCSID(Proactor, test_proactor, "simple_test_proactor.cpp,v 1.1 1999/05/18 22:15:30 alex Exp")
+
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting

@@ -26,7 +26,7 @@
 #include "ace/Pipe.h"
 #include "ace/ACE.h"
 
-ACE_RCSID(tests, Reactor_Dispatch_Order_Test, "$Id$")
+
 
 static const char *message =
 "Hello there! Hope you get this message";

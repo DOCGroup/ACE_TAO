@@ -7,7 +7,7 @@
 #include "ace/Module.h"
 #include "ace/svc_export.h"
 
-ACE_RCSID(CCM_App, CCM_App, "$Id$")
+
 
 typedef ACE_Task<ACE_SYNCH> MT_Task;
 typedef ACE_Stream<ACE_SYNCH> MT_Stream;

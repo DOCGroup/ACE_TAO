@@ -20,7 +20,7 @@
 
 // #include "HTTP_Helpers.h"
 
-ACE_RCSID(JAWS, IO, "$Id$")
+
 
 JAWS_IO::JAWS_IO (void)
   : handle_ (ACE_INVALID_HANDLE),

@@ -17,7 +17,7 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Misc, test_demuxing, "$Id$")
+
 
 // Default is to have a 2 second timeout.
 static int timeout = 2;

@@ -14,7 +14,7 @@
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
 
-ACE_RCSID(NET_CLIENT,ACE_FTP_ClientRequestHandler,"$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

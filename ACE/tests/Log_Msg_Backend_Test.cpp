@@ -24,7 +24,7 @@
 #include "ace/Log_Msg_Backend.h"
 #include "ace/Log_Record.h"
 
-ACE_RCSID(tests, Log_Msg_Backend_Test, "$Id$")
+
 
 class Backend : public ACE_Log_Msg_Backend
 {

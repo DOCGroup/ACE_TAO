@@ -29,7 +29,7 @@
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Timer_Queue_Reference_Counting_Test, "$Id$")
+
 
 static int debug = 0;
 static const char *one_second_timeout = "one second timeout";

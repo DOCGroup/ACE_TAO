@@ -28,7 +28,7 @@
 #include "ace/OS_Memory.h"
 #include "ace/CORBA_macros.h"
 
-ACE_RCSID(tests, New_Fail_Test, "$Id$")
+
 
 #if (!defined (__SUNPRO_CC) && !defined (__GNUG__)) || \
   defined (ACE_HAS_EXCEPTIONS)
