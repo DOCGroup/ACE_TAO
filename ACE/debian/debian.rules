@@ -82,7 +82,8 @@ unpatch: patch-stamp
 	dpatch unpatch
 	rm -f $<
 
-build: build-stamp manpages-stamp
+build: build-stamp
+#manpages-stamp
 
 manpages-stamp: $(MAN1) $(MAN5)
 	touch $@
