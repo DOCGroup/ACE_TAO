@@ -237,8 +237,8 @@ run_test (::Components::Receptacles_ptr rec,
 //       ret += test_exceeded_limit_exception ();
 #if !defined (CCM_LW)
       ret += test_get_connections (rec);
-           ConnectionDescriptions get_connections (in FeatureName name)
-             raises (InvalidName);
+//           ConnectionDescriptions get_connections (in FeatureName name)
+             //raises (InvalidName);
 //       #if !defined (CCM_LW)
 //           ReceptacleDescriptions get_all_receptacles ();
 //       #endif
