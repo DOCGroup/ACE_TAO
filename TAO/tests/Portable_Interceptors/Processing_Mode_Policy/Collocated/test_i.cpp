@@ -3,8 +3,6 @@
 #include "test_i.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Dynamic, test_i, "$Id$")
-
 Visual_i::Visual_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

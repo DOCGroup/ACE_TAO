@@ -16,8 +16,6 @@
 #include "ami_test_i.h"
 #include "tao/debug.h"
 
-ACE_RCSID(AMI, ami_test_i, "$Id$")
-
 AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb,
                         CORBA::Long in_l,
                         const char * in_str,

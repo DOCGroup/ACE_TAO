@@ -6,10 +6,6 @@
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (Bug_2510_Regression,
-           client_interceptor,
-           "$Id$")
-
 const IOP::ServiceId service_id = 0x08154711;
 const char * const request_msg = "TEST 0123456789 TEST";
 

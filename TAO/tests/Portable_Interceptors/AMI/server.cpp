@@ -1,16 +1,10 @@
+// $Id$
+
 #include "Echo.h"
 #include "Server_ORBInitializer.h"
-
 #include "tao/ORBInitializer_Registry.h"
-
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-
-
-ACE_RCSID (Portable_Interceptors,
-           AMI,
-           "$Id$")
-
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 

@@ -16,12 +16,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-
 #include "ami_testS.h"
-
-ACE_RCSID (AMI,
-           simple_client,
-           "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;

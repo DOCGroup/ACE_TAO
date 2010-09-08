@@ -7,8 +7,6 @@
 #include "simple_test_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tests, simple_test_i, "$Id$")
-
 CORBA::Boolean
 Simple_Server_i::print_status (void)
 {

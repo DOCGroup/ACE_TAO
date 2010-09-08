@@ -1,9 +1,7 @@
+// $Id$
+
 #include "Echo_Caller.h"
 #include "Server_Task.h"
-
-ACE_RCSID (Bug_1020_Basic_Regression,
-           Echo_Caller,
-           "$Id$")
 
 Echo_Caller::Echo_Caller(CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate(orb))

@@ -3,10 +3,6 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Connect_Strategy_Test,
-          client,
-          "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int do_shutdown = 0;
 int

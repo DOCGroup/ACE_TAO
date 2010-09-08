@@ -9,12 +9,6 @@
 
 #include "ace/OS_NS_string.h"
 
-
-ACE_RCSID (PolicyFactory,
-           Server_ORBInitializer,
-           "$Id$")
-
-
 void
 Server_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr /* info */

@@ -5,11 +5,6 @@
 
 extern PortableInterceptor::SlotId slotId;
 
-ACE_RCSID (Bug_2510_Regression,
-           test_i,
-           "$Id$")
-
-
 Visual_i::Visual_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

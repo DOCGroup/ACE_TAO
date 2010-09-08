@@ -1,14 +1,8 @@
 // -*- C++ -*-
+// $Id$
 
 #include "ace/Get_Opt.h"
-
 #include "testC.h"
-
-
-ACE_RCSID (ORB_Shutdown,
-           client,
-           "$Id$")
-
 
 const ACE_TCHAR *ior = 0;
 

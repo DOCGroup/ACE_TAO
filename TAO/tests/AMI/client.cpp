@@ -18,10 +18,6 @@
 #include "ace/Task.h"
 #include "ami_test_i.h"
 
-ACE_RCSID (AMI,
-           client,
-           "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;
 int niterations = 5;

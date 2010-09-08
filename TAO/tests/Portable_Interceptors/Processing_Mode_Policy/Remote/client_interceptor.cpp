@@ -7,10 +7,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (Remote,
-           client_interceptor,
-           "$Id$")
-
 const char *request_msg = "The Echo_Client_Request_Interceptor request message";
 const char *reply_msg = "The Echo_Client_Request_Interceptor reply message";
 CORBA::ULong Echo_Client_Request_Interceptor::client_interceptor_check_ = 0;

@@ -1,15 +1,9 @@
+// $Id$
+
 #include "Client_ORBInitializer.h"
-
-ACE_RCSID (Request_Interceptor_Flow,
-           Client_ORBInitializer,
-           "$Id$")
-
-
 #include "tao/Exception.h"
 #include "tao/ORB_Constants.h"
-
 #include "Client_Request_Interceptor.h"
-
 
 void
 Client_ORBInitializer::pre_init (

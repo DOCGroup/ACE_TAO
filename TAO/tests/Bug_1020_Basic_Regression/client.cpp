@@ -7,10 +7,6 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
 
-ACE_RCSID (Bug_1020_Basic_Regression,
-           client,
-           "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int

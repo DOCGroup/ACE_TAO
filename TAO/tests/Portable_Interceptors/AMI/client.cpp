@@ -1,3 +1,5 @@
+// $Id$
+
 #include "Echo_Handler.h"
 #include "Client_ORBInitializer.h"
 #include "Client_Interceptor.h"
@@ -7,11 +9,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include <iostream>
-
-ACE_RCSID (AMI,
-           client,
-           "$Id$")
-
 
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 static int exit_status = 0;
