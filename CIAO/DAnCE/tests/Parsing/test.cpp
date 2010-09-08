@@ -33,7 +33,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
           return 1;
         }
 
-      CIAO::Config_Handlers::XML_File_Intf file (argv[1]);
+      DAnCE::Config_Handlers::XML_File_Intf file (argv[1]);
       file.add_search_path (ACE_TEXT ("DANCE_ROOT"), ACE_TEXT ("/docs/schema/"));
       file.add_search_path (ACE_TEXT ("CIAO_ROOT"), ACE_TEXT ("/docs/schema/"));
       file.add_search_path (ACE_TEXT ("TAO_ROOT"), ACE_TEXT ("/docs/schema/"));
@@ -45,7 +45,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
           return 1;
         }
     }
-  catch (const CIAO::Config_Handlers::Config_Error &ex)
+  catch (const DAnCE::Config_Handlers::Config_Error &ex)
     {
       DANCE_ERROR (1, (LM_ERROR, "Caught config error while parsing XML into IDL: %C:%C\n",
                       ex.name_.c_str (), ex.error_.c_str ()));
