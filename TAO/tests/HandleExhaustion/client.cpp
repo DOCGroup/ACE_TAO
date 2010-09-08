@@ -4,9 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(ConnectionSpinning,
-          client, "$Id$")
-
 static const ACE_TCHAR *ior = ACE_TEXT ("file://server.ior");
 
 int

@@ -4,8 +4,6 @@
 
 #include "Reply_Handler.h"
 
-ACE_RCSID(Bug_1XXX_Regression, Reply_Handler, "$Id$")
-
 Reply_Handler::Reply_Handler (
     Test::Hello_ptr hello, CORBA::ORB_ptr orb)
   : counter_(1000)

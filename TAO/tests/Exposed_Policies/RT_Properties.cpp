@@ -7,8 +7,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (ExposedPolicies, RT_Properties, "$Id$")
-
 RT_Properties::RT_Properties (void)
   : priority_ (10)
 {

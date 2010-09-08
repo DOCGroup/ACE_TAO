@@ -26,8 +26,6 @@
 #include "tao/CDR.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(CDR, growth, "$Id$")
-
 static int
 test_write (TAO_OutputCDR &cdr, int n)
 {

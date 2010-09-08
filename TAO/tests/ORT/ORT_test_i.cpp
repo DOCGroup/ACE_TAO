@@ -1,10 +1,6 @@
+// $Id$
+
 #include "ORT_test_i.h"
-
-
-ACE_RCSID (ORT,
-           ORT_test_i,
-           "$Id$")
-
 
 ORT_test_i::ORT_test_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))

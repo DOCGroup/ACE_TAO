@@ -5,8 +5,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Faults, server, "$Id$")
-
 int iterations = 60;
 int period = 10;
 int kill_on = 30;

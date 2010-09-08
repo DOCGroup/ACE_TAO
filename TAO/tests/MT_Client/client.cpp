@@ -5,8 +5,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_RCSID(MT_Client, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;
 int niterations = 5;

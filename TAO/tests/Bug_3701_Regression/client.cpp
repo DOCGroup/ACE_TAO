@@ -2,8 +2,6 @@
 
 #include "tao/SystemException.h"
 
-ACE_RCSID(Hello, client, "$Id$")
-
 int
 ACE_TMAIN(int, ACE_TCHAR *[])
 {

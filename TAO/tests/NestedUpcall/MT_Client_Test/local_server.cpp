@@ -24,8 +24,6 @@
 #include "ace/OS_NS_fcntl.h"
 #include "tao/Utils/ORB_Manager.h"
 
-ACE_RCSID(MT_Client_Test, local_server, "$Id$")
-
 MT_Server_Task::MT_Server_Task (ACE_Thread_Manager* thr_mgr_ptr,
                                 int argc,
                                 ACE_TCHAR **argv,

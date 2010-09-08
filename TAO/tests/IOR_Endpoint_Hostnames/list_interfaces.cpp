@@ -12,10 +12,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (IOR_Endpoint_Hostnames,
-           list_interfaces,
-           "$Id$")
-
 #if defined (ACE_HAS_IPV6) && !defined (ACE_USES_IPV4_IPV6_MIGRATION)
 ACE_INET_Addr default_address (static_cast<unsigned short> (0), ACE_IPV6_ANY, AF_INET6);
 #else

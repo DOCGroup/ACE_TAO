@@ -4,8 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "tao/QtResource/QtResource_Loader.h"
 
-ACE_RCSID(QtTests, client, "$Id$")
-
 #include "client.h"
 
 int

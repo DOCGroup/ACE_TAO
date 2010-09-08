@@ -3,11 +3,6 @@
 
 #include "tao/ORB_Constants.h"
 
-ACE_RCSID (ORT,
-           ORT_test_IORInterceptor,
-           "$Id$")
-
-
 ORT_test_IORInterceptor::ORT_test_IORInterceptor (void)
   : establish_count_ (0),
     components_establish_count_ (0)

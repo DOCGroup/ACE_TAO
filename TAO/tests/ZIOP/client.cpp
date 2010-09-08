@@ -8,8 +8,6 @@
 #include "tao/Compression/bzip2/Bzip2Compressor_Factory.h"
 #include "TestCompressor//TestCompressor_Factory.h"
 
-ACE_RCSID(Hello, client, "$Id$")
-
 #define DEFAULT_COMPRESSION_LEVEL 6
 ::Compression::CompressionManager_var compression_manager = 0;
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");

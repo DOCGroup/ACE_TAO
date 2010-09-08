@@ -7,8 +7,6 @@
 #include "Server_Thread_Pool.h"
 #include "ORB_Task.h"
 
-ACE_RCSID(Bug_1270_Regression, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int

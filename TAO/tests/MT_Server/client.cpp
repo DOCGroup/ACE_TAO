@@ -4,8 +4,6 @@
 #include "ace/Task.h"
 #include "testC.h"
 
-ACE_RCSID(MT_Server, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
 int do_shutdown = 0;

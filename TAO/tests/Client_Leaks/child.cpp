@@ -3,8 +3,6 @@
 #include "Process.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Client_Leaks, server, "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

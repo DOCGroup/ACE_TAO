@@ -3,8 +3,6 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Bug_1270_Regression, shutdown, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int

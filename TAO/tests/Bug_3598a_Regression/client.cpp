@@ -8,8 +8,6 @@
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/Strategies/OC_Endpoint_Selector_Loader.h"
 
-ACE_RCSID(Hello, client, "client.cpp,v 1.5 2002/01/29 20:21:07 okellogg Exp")
-
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 
 int

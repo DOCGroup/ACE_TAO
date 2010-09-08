@@ -5,8 +5,6 @@
 #include "Client_Task.h"
 #include "tao/Stub.h"
 
-ACE_RCSID(Muxing, Client_Task, "$Id$")
-
 Client_Task::Client_Task (Test::Hello_ptr receiver,
                           CORBA::ORB_ptr o,
                           ACE_Thread_Manager *thr_mgr)

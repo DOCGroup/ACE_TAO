@@ -18,8 +18,6 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(AMI, ami_test_i, "$Id$")
-
 AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb)
   :  orb_ (CORBA::ORB::_duplicate (orb))
 {

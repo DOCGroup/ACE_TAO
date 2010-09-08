@@ -4,8 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(Hello, client, "$Id$")
-
 const ACE_TCHAR *server_ior = ACE_TEXT("file://server.ior");
 const ACE_TCHAR *ior_output_file = ACE_TEXT("client.ior");
 

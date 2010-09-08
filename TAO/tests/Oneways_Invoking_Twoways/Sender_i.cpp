@@ -1,6 +1,6 @@
-#include "Sender_i.h"
+// $Id$
 
-ACE_RCSID(Oneways_Invoking_Twoways, Sender_i, "$Id$")
+#include "Sender_i.h"
 
 Sender_i::Sender_i (CORBA::ORB_ptr orb,
                     CORBA::ULong no)

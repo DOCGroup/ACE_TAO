@@ -23,8 +23,6 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Triangle_Test, initiator, "$Id$")
-
 Initiator_Server::Initiator_Server (void)
   : object_A_key_ (0),
     object_B_key_ (0),

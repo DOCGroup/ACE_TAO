@@ -21,8 +21,6 @@
 
 #include "tao/Exception.h"
 
-ACE_RCSID(MT_Client_Test, MT_Object_i, "$Id$")
-
 #define MAX_HOP_COUNT 20
 
 // CTOR

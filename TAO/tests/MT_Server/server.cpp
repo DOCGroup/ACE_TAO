@@ -4,8 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_RCSID(MT_Server, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = 0;
 
 int nthreads = 4;

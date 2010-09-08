@@ -21,8 +21,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
-ACE_RCSID(Triangle_Test, Object_A_i, "$Id$")
-
 // CTOR
 Object_A_i::Object_A_i (void)
   : finish_two_way_call_ (0)

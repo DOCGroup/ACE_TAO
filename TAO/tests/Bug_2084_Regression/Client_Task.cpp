@@ -8,10 +8,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/PortableServer/PortableServer.h"
 
-ACE_RCSID(Bug_2084_Regression,
-          Client_Task,
-          "$Id$")
-
 Client_Task::Client_Task (const ACE_TCHAR *ior,
                           CORBA::ORB_ptr corb,
                           ACE_Thread_Manager *thr_mgr)

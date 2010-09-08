@@ -19,8 +19,6 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Default_Servant, File_i, "File_i.cpp,v 1.14 2001/03/04 19:27:53 irfan Exp")
-
 // IDL File::System constructor
 FileImpl::System::System (PortableServer::POA_ptr poa)
   : poa_ (PortableServer::POA::_duplicate (poa)),
