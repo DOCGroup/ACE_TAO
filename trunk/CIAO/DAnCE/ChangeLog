@@ -1,3 +1,13 @@
+Wed Sep  8 14:57:25 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Version.h:
+        * DAnCE/install_versionh.mpc:
+        * DAnCE_TAO.mwc:
+        * PROBLEM-REPORT-FORM:
+        * VERSION:
+
+          Initial files necessary to make DAnCE separate from CIAO.
+
 Tue Sep  7 11:46:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * LocalityManager/Handler/LocalityActivator_Impl.cpp:
