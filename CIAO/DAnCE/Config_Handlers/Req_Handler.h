@@ -26,7 +26,7 @@ namespace Deployment
   class Requirements;
 }
 
-namespace CIAO
+namespace DAnCE
 {
 
   namespace Config_Handlers

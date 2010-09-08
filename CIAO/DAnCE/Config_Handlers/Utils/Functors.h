@@ -13,7 +13,7 @@
 #include "tao/StringSeqC.h"
 
 #include "XMLSchema/Types.hpp"
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

@@ -5,7 +5,7 @@
 #include "Property_Handler.h"
 #include "ace/UUID.h"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

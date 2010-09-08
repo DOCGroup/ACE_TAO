@@ -26,7 +26,7 @@ namespace Deployment
   class Properties;
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
     {
@@ -50,7 +50,7 @@ namespace CIAO
       virtual ~Property_Handler (void);
 
       /// This method maps the values from the XSC object
-      /// <CIAO::Config_Handlers::Property> to the CORBA IDL type
+      /// <DAnCE::Config_Handlers::Property> to the CORBA IDL type
       /// <Deployment::Property>.
       static void handle_property (const Property& desc,
                        ::Deployment::Property& toconfig);

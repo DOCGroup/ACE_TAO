@@ -21,7 +21,7 @@
 #include "XSC_XML_Handlers_Export.h"
 // Forward declarations.
 //
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -49,21 +49,21 @@ namespace CIAO
 
 #include "toplevel.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
     namespace reader
     {
       XSC_XML_Handlers_Export
-      ::CIAO::Config_Handlers::Domain
+      ::DAnCE::Config_Handlers::Domain
       domain (xercesc::DOMDocument const*);
     }
 
@@ -71,7 +71,7 @@ namespace CIAO
     namespace reader
     {
       XSC_XML_Handlers_Export
-      ::CIAO::Config_Handlers::deploymentPlan
+      ::DAnCE::Config_Handlers::deploymentPlan
       DeploymentPlan (xercesc::DOMDocument const*);
     }
 
@@ -79,7 +79,7 @@ namespace CIAO
     namespace reader
     {
       XSC_XML_Handlers_Export
-      ::CIAO::Config_Handlers::ImplementationArtifactDescription
+      ::DAnCE::Config_Handlers::ImplementationArtifactDescription
       implementationArtifactDescription (xercesc::DOMDocument const*);
     }
 
@@ -87,7 +87,7 @@ namespace CIAO
     namespace reader
     {
       XSC_XML_Handlers_Export
-      ::CIAO::Config_Handlers::ComponentInterfaceDescription
+      ::DAnCE::Config_Handlers::ComponentInterfaceDescription
       componentInterfaceDescription (xercesc::DOMDocument const*);
     }
 
@@ -95,7 +95,7 @@ namespace CIAO
     namespace reader
     {
       XSC_XML_Handlers_Export
-      ::CIAO::Config_Handlers::ComponentImplementationDescription
+      ::DAnCE::Config_Handlers::ComponentImplementationDescription
       componentImplementationDescription (xercesc::DOMDocument const*);
     }
 
@@ -103,7 +103,7 @@ namespace CIAO
     namespace reader
     {
       XSC_XML_Handlers_Export
-      ::CIAO::Config_Handlers::ComponentPackageDescription
+      ::DAnCE::Config_Handlers::ComponentPackageDescription
       componentPackageDescription (xercesc::DOMDocument const*);
     }
 
@@ -111,7 +111,7 @@ namespace CIAO
     namespace reader
     {
       XSC_XML_Handlers_Export
-      ::CIAO::Config_Handlers::PackageConfiguration
+      ::DAnCE::Config_Handlers::PackageConfiguration
       packageConfiguration (xercesc::DOMDocument const*);
     }
 
@@ -119,7 +119,7 @@ namespace CIAO
     namespace reader
     {
       XSC_XML_Handlers_Export
-      ::CIAO::Config_Handlers::TopLevelPackageDescription
+      ::DAnCE::Config_Handlers::TopLevelPackageDescription
       topLevelPackageDescription (xercesc::DOMDocument const*);
     }
   }
@@ -127,7 +127,7 @@ namespace CIAO
 
 #include "XMLSchema/Traversal.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -139,7 +139,7 @@ namespace CIAO
 
 #include "XMLSchema/Writer.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -149,7 +149,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -157,7 +157,7 @@ namespace CIAO
     {
       XSC_XML_Handlers_Export
       void
-      domain (::CIAO::Config_Handlers::Domain const&, xercesc::DOMDocument*);
+      domain (::DAnCE::Config_Handlers::Domain const&, xercesc::DOMDocument*);
     }
 
 
@@ -165,7 +165,7 @@ namespace CIAO
     {
       XSC_XML_Handlers_Export
       void
-      DeploymentPlan (::CIAO::Config_Handlers::deploymentPlan const&, xercesc::DOMDocument*);
+      DeploymentPlan (::DAnCE::Config_Handlers::deploymentPlan const&, xercesc::DOMDocument*);
     }
 
 
@@ -173,7 +173,7 @@ namespace CIAO
     {
       XSC_XML_Handlers_Export
       void
-      implementationArtifactDescription (::CIAO::Config_Handlers::ImplementationArtifactDescription const&, xercesc::DOMDocument*);
+      implementationArtifactDescription (::DAnCE::Config_Handlers::ImplementationArtifactDescription const&, xercesc::DOMDocument*);
     }
 
 
@@ -181,7 +181,7 @@ namespace CIAO
     {
       XSC_XML_Handlers_Export
       void
-      componentInterfaceDescription (::CIAO::Config_Handlers::ComponentInterfaceDescription const&, xercesc::DOMDocument*);
+      componentInterfaceDescription (::DAnCE::Config_Handlers::ComponentInterfaceDescription const&, xercesc::DOMDocument*);
     }
 
 
@@ -189,7 +189,7 @@ namespace CIAO
     {
       XSC_XML_Handlers_Export
       void
-      componentImplementationDescription (::CIAO::Config_Handlers::ComponentImplementationDescription const&, xercesc::DOMDocument*);
+      componentImplementationDescription (::DAnCE::Config_Handlers::ComponentImplementationDescription const&, xercesc::DOMDocument*);
     }
 
 
@@ -197,7 +197,7 @@ namespace CIAO
     {
       XSC_XML_Handlers_Export
       void
-      componentPackageDescription (::CIAO::Config_Handlers::ComponentPackageDescription const&, xercesc::DOMDocument*);
+      componentPackageDescription (::DAnCE::Config_Handlers::ComponentPackageDescription const&, xercesc::DOMDocument*);
     }
 
 
@@ -205,7 +205,7 @@ namespace CIAO
     {
       XSC_XML_Handlers_Export
       void
-      packageConfiguration (::CIAO::Config_Handlers::PackageConfiguration const&, xercesc::DOMDocument*);
+      packageConfiguration (::DAnCE::Config_Handlers::PackageConfiguration const&, xercesc::DOMDocument*);
     }
 
 
@@ -213,7 +213,7 @@ namespace CIAO
     {
       XSC_XML_Handlers_Export
       void
-      topLevelPackageDescription (::CIAO::Config_Handlers::TopLevelPackageDescription const&, xercesc::DOMDocument*);
+      topLevelPackageDescription (::DAnCE::Config_Handlers::TopLevelPackageDescription const&, xercesc::DOMDocument*);
     }
   }
 }

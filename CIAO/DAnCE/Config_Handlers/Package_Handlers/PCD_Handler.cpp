@@ -14,9 +14,9 @@
 
 #include <memory>
 
-using CIAO::XML::XStr;
+using DAnCE::XML::XStr;
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

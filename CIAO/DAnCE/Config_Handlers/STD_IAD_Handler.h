@@ -24,7 +24,7 @@ namespace Deployment
   struct ImplementationArtifactDescription;
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

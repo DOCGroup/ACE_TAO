@@ -21,7 +21,7 @@
 #include "XSC_XML_Handlers_Export.h"
 // Forward declarations.
 //
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -42,7 +42,7 @@ namespace CIAO
 
 #include "pcd.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -56,18 +56,18 @@ namespace CIAO
       // package
       // 
       public:
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex > >::iterator package_iterator;
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex > >::const_iterator package_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PackageConfiguration, ACE_Null_Mutex > >::iterator package_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PackageConfiguration, ACE_Null_Mutex > >::const_iterator package_const_iterator;
       package_iterator begin_package ();
       package_iterator end_package ();
       package_const_iterator begin_package () const;
       package_const_iterator end_package () const;
-      void add_package ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex > const& );
+      void add_package ( ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PackageConfiguration, ACE_Null_Mutex > const& );
       XSCRT::Type* package_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_package (void) const;
 
       protected:
-      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex > > package_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PackageConfiguration, ACE_Null_Mutex > > package_;
 
       public:
       TopLevelPackageDescription ();
@@ -84,7 +84,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -93,13 +93,13 @@ namespace CIAO
 
 #include "XMLSchema/Traversal.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
     namespace Traversal
     {
-      struct XSC_XML_Handlers_Export TopLevelPackageDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::TopLevelPackageDescription >
+      struct XSC_XML_Handlers_Export TopLevelPackageDescription : ::XMLSchema::Traversal::Traverser< ::DAnCE::Config_Handlers::TopLevelPackageDescription >
       {
         virtual void
         traverse (Type&);
@@ -155,7 +155,7 @@ namespace CIAO
 
 #include "XMLSchema/Writer.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -164,7 +164,7 @@ namespace CIAO
       struct TopLevelPackageDescription : Traversal::TopLevelPackageDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
-        typedef ::CIAO::Config_Handlers::TopLevelPackageDescription Type;
+        typedef ::DAnCE::Config_Handlers::TopLevelPackageDescription Type;
         TopLevelPackageDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
         virtual void 
@@ -210,7 +210,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

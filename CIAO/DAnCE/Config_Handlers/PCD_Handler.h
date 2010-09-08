@@ -24,7 +24,7 @@ namespace Deployment
   class PlanConnectionDescriptions;
 }
 
-namespace CIAO
+namespace DAnCE
 {
 
   namespace Config_Handlers

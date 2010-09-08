@@ -17,7 +17,7 @@
 
 #include "pcd.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -105,10 +105,10 @@ namespace CIAO
     ::XSCRT::Type (),
     label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
     UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
-    basePackage_ (s.basePackage_.get () ? new ::CIAO::Config_Handlers::ComponentPackageDescription (*s.basePackage_) : 0),
-    specializedConfig_ (s.specializedConfig_.get () ? new ::CIAO::Config_Handlers::PackageConfiguration (*s.specializedConfig_) : 0),
-    importedPackage_ (s.importedPackage_.get () ? new ::CIAO::Config_Handlers::ComponentPackageImport (*s.importedPackage_) : 0),
-    referencedPackage_ (s.referencedPackage_.get () ? new ::CIAO::Config_Handlers::ComponentPackageReference (*s.referencedPackage_) : 0),
+    basePackage_ (s.basePackage_.get () ? new ::DAnCE::Config_Handlers::ComponentPackageDescription (*s.basePackage_) : 0),
+    specializedConfig_ (s.specializedConfig_.get () ? new ::DAnCE::Config_Handlers::PackageConfiguration (*s.specializedConfig_) : 0),
+    importedPackage_ (s.importedPackage_.get () ? new ::DAnCE::Config_Handlers::ComponentPackageImport (*s.importedPackage_) : 0),
+    referencedPackage_ (s.referencedPackage_.get () ? new ::DAnCE::Config_Handlers::ComponentPackageReference (*s.referencedPackage_) : 0),
     selectRequirement_ (s.selectRequirement_),
     configProperty_ (s.configProperty_),
     contentLocation_ (s.contentLocation_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.contentLocation_) : 0),
@@ -235,14 +235,14 @@ namespace CIAO
       return basePackage_.get () != 0;
     }
 
-    ::CIAO::Config_Handlers::ComponentPackageDescription const& PackageConfiguration::
+    ::DAnCE::Config_Handlers::ComponentPackageDescription const& PackageConfiguration::
     basePackage () const
     {
       return *basePackage_;
     }
 
     void PackageConfiguration::
-    basePackage (::CIAO::Config_Handlers::ComponentPackageDescription const& e)
+    basePackage (::DAnCE::Config_Handlers::ComponentPackageDescription const& e)
     {
       if (basePackage_.get ())
       {
@@ -251,7 +251,7 @@ namespace CIAO
 
       else
       {
-        basePackage_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageDescription > (new ::CIAO::Config_Handlers::ComponentPackageDescription (e));
+        basePackage_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::ComponentPackageDescription > (new ::DAnCE::Config_Handlers::ComponentPackageDescription (e));
         basePackage_->container (this);
       }
     }
@@ -264,14 +264,14 @@ namespace CIAO
       return specializedConfig_.get () != 0;
     }
 
-    ::CIAO::Config_Handlers::PackageConfiguration const& PackageConfiguration::
+    ::DAnCE::Config_Handlers::PackageConfiguration const& PackageConfiguration::
     specializedConfig () const
     {
       return *specializedConfig_;
     }
 
     void PackageConfiguration::
-    specializedConfig (::CIAO::Config_Handlers::PackageConfiguration const& e)
+    specializedConfig (::DAnCE::Config_Handlers::PackageConfiguration const& e)
     {
       if (specializedConfig_.get ())
       {
@@ -280,7 +280,7 @@ namespace CIAO
 
       else
       {
-        specializedConfig_ = ::std::auto_ptr< ::CIAO::Config_Handlers::PackageConfiguration > (new ::CIAO::Config_Handlers::PackageConfiguration (e));
+        specializedConfig_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::PackageConfiguration > (new ::DAnCE::Config_Handlers::PackageConfiguration (e));
         specializedConfig_->container (this);
       }
     }
@@ -293,14 +293,14 @@ namespace CIAO
       return importedPackage_.get () != 0;
     }
 
-    ::CIAO::Config_Handlers::ComponentPackageImport const& PackageConfiguration::
+    ::DAnCE::Config_Handlers::ComponentPackageImport const& PackageConfiguration::
     importedPackage () const
     {
       return *importedPackage_;
     }
 
     void PackageConfiguration::
-    importedPackage (::CIAO::Config_Handlers::ComponentPackageImport const& e)
+    importedPackage (::DAnCE::Config_Handlers::ComponentPackageImport const& e)
     {
       if (importedPackage_.get ())
       {
@@ -309,7 +309,7 @@ namespace CIAO
 
       else
       {
-        importedPackage_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageImport > (new ::CIAO::Config_Handlers::ComponentPackageImport (e));
+        importedPackage_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::ComponentPackageImport > (new ::DAnCE::Config_Handlers::ComponentPackageImport (e));
         importedPackage_->container (this);
       }
     }
@@ -322,14 +322,14 @@ namespace CIAO
       return referencedPackage_.get () != 0;
     }
 
-    ::CIAO::Config_Handlers::ComponentPackageReference const& PackageConfiguration::
+    ::DAnCE::Config_Handlers::ComponentPackageReference const& PackageConfiguration::
     referencedPackage () const
     {
       return *referencedPackage_;
     }
 
     void PackageConfiguration::
-    referencedPackage (::CIAO::Config_Handlers::ComponentPackageReference const& e)
+    referencedPackage (::DAnCE::Config_Handlers::ComponentPackageReference const& e)
     {
       if (referencedPackage_.get ())
       {
@@ -338,7 +338,7 @@ namespace CIAO
 
       else
       {
-        referencedPackage_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageReference > (new ::CIAO::Config_Handlers::ComponentPackageReference (e));
+        referencedPackage_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::ComponentPackageReference > (new ::DAnCE::Config_Handlers::ComponentPackageReference (e));
         referencedPackage_->container (this);
       }
     }
@@ -370,7 +370,7 @@ namespace CIAO
     }
 
     void PackageConfiguration::
-    add_selectRequirement (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  const& e)
+    add_selectRequirement (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Requirement, ACE_Null_Mutex >  const& e)
     {
       selectRequirement_.push_back (e);
     }
@@ -408,7 +408,7 @@ namespace CIAO
     }
 
     void PackageConfiguration::
-    add_configProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
+    add_configProperty (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       configProperty_.push_back (e);
     }
@@ -450,7 +450,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -510,37 +510,37 @@ namespace CIAO
 
         else if (n == ACE_TEXT("basePackage"))
         {
-          ::CIAO::Config_Handlers::ComponentPackageDescription t (e);
+          ::DAnCE::Config_Handlers::ComponentPackageDescription t (e);
           basePackage (t);
         }
 
         else if (n == ACE_TEXT("specializedConfig"))
         {
-          ::CIAO::Config_Handlers::PackageConfiguration t (e);
+          ::DAnCE::Config_Handlers::PackageConfiguration t (e);
           specializedConfig (t);
         }
 
         else if (n == ACE_TEXT("importedPackage"))
         {
-          ::CIAO::Config_Handlers::ComponentPackageImport t (e);
+          ::DAnCE::Config_Handlers::ComponentPackageImport t (e);
           importedPackage (t);
         }
 
         else if (n == ACE_TEXT("referencedPackage"))
         {
-          ::CIAO::Config_Handlers::ComponentPackageReference t (e);
+          ::DAnCE::Config_Handlers::ComponentPackageReference t (e);
           referencedPackage (t);
         }
 
         else if (n == ACE_TEXT("selectRequirement"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Requirement (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::Requirement (e));
           add_selectRequirement (t);
         }
 
         else if (n == ACE_TEXT("configProperty"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
@@ -558,7 +558,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -567,7 +567,7 @@ namespace CIAO
 
 #include "XMLSchema/TypeInfo.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -579,7 +579,7 @@ namespace CIAO
       {
         ComponentPackageImportTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::ComponentPackageImport));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::ComponentPackageImport));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -593,7 +593,7 @@ namespace CIAO
       {
         PackageConfigurationTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::PackageConfiguration));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::PackageConfiguration));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -606,7 +606,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -647,7 +647,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ComponentPackageImport::location_iterator b (o.begin_location()), e (o.end_location());
+        ::DAnCE::Config_Handlers::ComponentPackageImport::location_iterator b (o.begin_location()), e (o.end_location());
 
         if (b != e)
         {
@@ -669,7 +669,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ComponentPackageImport::location_const_iterator b (o.begin_location()), e (o.end_location());
+        ::DAnCE::Config_Handlers::ComponentPackageImport::location_const_iterator b (o.begin_location()), e (o.end_location());
 
         if (b != e)
         {
@@ -933,7 +933,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PackageConfiguration::selectRequirement_iterator b (o.begin_selectRequirement()), e (o.end_selectRequirement());
+        ::DAnCE::Config_Handlers::PackageConfiguration::selectRequirement_iterator b (o.begin_selectRequirement()), e (o.end_selectRequirement());
 
         if (b != e)
         {
@@ -955,7 +955,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PackageConfiguration::selectRequirement_const_iterator b (o.begin_selectRequirement()), e (o.end_selectRequirement());
+        ::DAnCE::Config_Handlers::PackageConfiguration::selectRequirement_const_iterator b (o.begin_selectRequirement()), e (o.end_selectRequirement());
 
         if (b != e)
         {
@@ -1017,7 +1017,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PackageConfiguration::configProperty_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+        ::DAnCE::Config_Handlers::PackageConfiguration::configProperty_iterator b (o.begin_configProperty()), e (o.end_configProperty());
 
         if (b != e)
         {
@@ -1039,7 +1039,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PackageConfiguration::configProperty_const_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+        ::DAnCE::Config_Handlers::PackageConfiguration::configProperty_const_iterator b (o.begin_configProperty()), e (o.end_configProperty());
 
         if (b != e)
         {
@@ -1131,7 +1131,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -1295,7 +1295,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

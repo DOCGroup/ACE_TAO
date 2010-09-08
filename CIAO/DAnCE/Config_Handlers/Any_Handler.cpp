@@ -11,7 +11,7 @@
 
 #include "ace/Null_Mutex.h"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

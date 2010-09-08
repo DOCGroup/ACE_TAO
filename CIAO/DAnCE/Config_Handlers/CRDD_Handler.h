@@ -23,7 +23,7 @@ namespace Deployment
   struct ConnectionResourceDeploymentDescription;
 }
 
-namespace CIAO
+namespace DAnCE
 {
 
   namespace Config_Handlers

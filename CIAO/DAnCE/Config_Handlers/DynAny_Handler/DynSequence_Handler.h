@@ -18,7 +18,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

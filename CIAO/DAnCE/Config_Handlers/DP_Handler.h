@@ -27,7 +27,7 @@ namespace Deployment
   struct DeploymentPlan ;
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
     {
