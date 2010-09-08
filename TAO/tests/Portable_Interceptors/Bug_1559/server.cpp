@@ -6,10 +6,6 @@
 #include "Server_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_RCSID (Service_Context_Manipulation,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int

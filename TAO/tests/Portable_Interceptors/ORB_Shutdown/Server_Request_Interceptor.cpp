@@ -1,10 +1,7 @@
+// $Id$
+
 #include "Server_Request_Interceptor.h"
-
 #include "ace/Log_Msg.h"
-
-ACE_RCSID (ORB_Shutdown,
-           Server_Request_Interceptor,
-           "$Id$")
 
 Server_Request_Interceptor::Server_Request_Interceptor (bool & destroy_called)
   : destroy_called_ (destroy_called)

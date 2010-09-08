@@ -1,14 +1,9 @@
+// $Id$
+
 #include "ClientRequestInterceptor2.h"
-
 #include "tao/CORBA_String.h"
-
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID (PICurrent,
-           ClientRequestInterceptor2,
-           "$Id$")
-
 
 ClientRequestInterceptor2::ClientRequestInterceptor2 (
   PortableInterceptor::SlotId id)

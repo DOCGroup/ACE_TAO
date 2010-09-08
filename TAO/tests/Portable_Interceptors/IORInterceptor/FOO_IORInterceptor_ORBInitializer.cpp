@@ -1,14 +1,11 @@
 // -*- C++ -*-
+// $Id$
 
 #include "FOO_IORInterceptor_ORBInitializer.h"
 #include "FOO_IORInterceptor.h"
 
 #include "tao/ORB_Constants.h"
 #include "tao/CodecFactory/CodecFactory.h"
-
-ACE_RCSID (IORInterceptor,
-           FOO_IORInterceptor_ORBInitializer,
-           "$Id$")
 
 void
 FOO_IORInterceptor_ORBInitializer::pre_init (

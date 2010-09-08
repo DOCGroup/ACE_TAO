@@ -3,8 +3,6 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Bug_2174_Regression, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 int min_timeout = 0;
 int max_timeout = 20;

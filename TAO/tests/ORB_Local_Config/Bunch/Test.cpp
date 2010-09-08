@@ -9,9 +9,6 @@
 #include "ace/Service_Config.h"
 #include "ace/Intrusive_Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
-
-ACE_RCSID (tests, server, "$Id$")
-
 #include "Service_Configuration_Per_ORB.h"
 
 int

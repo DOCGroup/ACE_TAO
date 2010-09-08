@@ -3,11 +3,6 @@
 #include "PolicyFactory.h"
 #include "Policy.h"
 
-ACE_RCSID (PolicyFactory,
-           PolicyFactory,
-           "$Id$")
-
-
 CORBA::Policy_ptr
 PolicyFactory::create_policy (CORBA::PolicyType type,
                               const CORBA::Any & value)

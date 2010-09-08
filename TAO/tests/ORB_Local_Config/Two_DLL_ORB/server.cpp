@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "Test_i.h"
 #include "ORB_DLL.h"
 
@@ -9,12 +8,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Argv_Type_Converter.h"
 
-
-ACE_RCSID (Hello,
-           server,
-           "$Id$")
-
-//
 Server_Worker::Server_Worker ()
   : Abstract_Worker (ACE_TEXT ("test.ior"))
 {

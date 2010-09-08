@@ -7,10 +7,6 @@
 
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_RCSID (Dynamic,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int

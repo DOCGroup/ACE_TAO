@@ -1,13 +1,7 @@
 // -*- C++ -*-
-//
 // $Id$
-//
 
 #include "Server_ORBInitializer.h"
-
-ACE_RCSID (Bug_1559,
-           Server_ORBInitializer,
-           "$Id$")
 
 Server_ORBInitializer::Server_ORBInitializer (void)
 {

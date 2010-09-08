@@ -1,12 +1,9 @@
 // -*- C++ -*-
+// $Id$
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "test_i.h"
-
-ACE_RCSID (Redirection,
-           server,
-           "$Id$")
 
 const ACE_TCHAR *ior_file = 0;
 

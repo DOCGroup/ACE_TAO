@@ -3,10 +3,6 @@
 #include "Client_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_RCSID(Recursive_ORBInitializer,
-          client,
-          "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

@@ -7,10 +7,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (Benchmark,
-           client_interceptors,
-           "$Id$")
-
 const CORBA::ULong request_ctx_id = 0xdead;
 //const CORBA::ULong reply_ctx_id = 0xbeef;   // Never used.
 

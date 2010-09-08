@@ -1,10 +1,6 @@
-//
 // $Id$
-//
 
 #include "Client_Task.h"
-
-ACE_RCSID(Muxing, Client_Task, "$Id$")
 
 Client_Task::Client_Task (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))

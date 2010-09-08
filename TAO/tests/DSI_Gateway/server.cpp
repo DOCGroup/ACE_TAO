@@ -4,8 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_RCSID(DSI_Gateway, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
 
 int nthreads = 4;

@@ -1,13 +1,10 @@
 // -*- C++ -*-
+// $Id$
 
 #include "ace/Get_Opt.h"
 #include "testC.h"
 #include "Client_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
-
-ACE_RCSID (Redirection,
-           client,
-           "$Id$")
 
 const ACE_TCHAR *ior1 = 0;
 const ACE_TCHAR *ior2 = 0;

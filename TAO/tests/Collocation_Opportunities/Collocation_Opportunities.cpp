@@ -6,8 +6,6 @@
 #include "tao/PortableServer/POA_Current.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
 
-ACE_RCSID(Collocation_Opportunities, Collocation_Opportunities, "$Id$")
-
 class test_i :
   public POA_test
 {

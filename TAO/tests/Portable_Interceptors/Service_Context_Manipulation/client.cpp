@@ -6,8 +6,6 @@
 
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_RCSID(Interceptors, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int

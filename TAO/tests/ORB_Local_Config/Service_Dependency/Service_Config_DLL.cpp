@@ -5,10 +5,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (tests,
-           Service_Config_DLL,
-           "$Id$")
-
 static ACE_THR_FUNC_RETURN
 invoke_service_config (void *arg)
 {
