@@ -8,10 +8,6 @@
 
 #include "Iterator_Factory_i.h"
 
-ACE_RCSID (AMI_Iterator,
-           server,
-           "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

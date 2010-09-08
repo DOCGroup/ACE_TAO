@@ -23,10 +23,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Concurrency_Service,
-          Concurrency_Service,
-          "$Id$")
-
 // Default Constructor.
 
 Concurrency_Service::Concurrency_Service (void)

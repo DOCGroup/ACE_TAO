@@ -20,10 +20,6 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (Event_Service,
-           Event_Service,
-           "$Id$")
-
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   bool use_thread_per_consumer = false;

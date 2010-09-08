@@ -19,10 +19,6 @@
 
 #include "LifeCycle_Service_i.h"
 
-ACE_RCSID (LifeCycle_Service,
-           LifeCycle_Service_i,
-           "$Id$")
-
 // Constructor
 Life_Cycle_Service_i::Life_Cycle_Service_i (int debug_level)
   : factory_trader_ptr_ (0),

@@ -1,3 +1,5 @@
+// $Id$
+
 #include "Event_Logging_Service.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/Log/EventLogFactory_i.h"
@@ -5,11 +7,6 @@
 #include "tao/IORTable/IORTable.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_RCSID (Event_Logging_Service,
-           Event_Logging_Service,
-           "$Id$")
-
 
 Event_Logging_Service::Event_Logging_Service (void)
   : service_name_ ("EventLogFactory"),

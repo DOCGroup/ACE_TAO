@@ -1,12 +1,8 @@
+// $Id$
+
 #include "FT_Property_Validator.h"
 #include "orbsvcs/PortableGroup/PG_Operators.h"
 #include "orbsvcs/FT_ReplicationManagerC.h"
-
-
-ACE_RCSID (PortableGroup,
-           FT_Property_Validator,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
