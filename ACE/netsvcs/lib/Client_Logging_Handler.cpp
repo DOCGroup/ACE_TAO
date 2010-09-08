@@ -16,10 +16,6 @@
 #include "ace/INET_Addr.h"
 #include "Client_Logging_Handler.h"
 
-ACE_RCSID(lib,
-          Client_Logging_Handler,
-          "$Id$")
-
 ACE_Client_Logging_Handler::ACE_Client_Logging_Handler (ACE_HANDLE output_handle)
   : logging_output_ (output_handle)
 {

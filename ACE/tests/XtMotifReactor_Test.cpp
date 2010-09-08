@@ -28,9 +28,6 @@
 
 #include "test_config.h"
 
-ACE_RCSID (tests,
-           XtMotifReactor_Test,
-           "$Id$")
 #include "ace/XtReactor/XtReactor.h"
 #include "ace/Event_Handler.h"
 #include "ace/Acceptor.h"

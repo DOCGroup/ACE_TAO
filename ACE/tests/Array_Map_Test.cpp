@@ -19,12 +19,6 @@
 #include <algorithm>
 //#include <map>  /* For STL portability testing. */
 
-
-ACE_RCSID (tests,
-           Array_Map_Test,
-           "$Id$")
-
-
 static char const letters[] =
   { 'A', 'C', 'E', ' ', 'r', 'u', 'l', 'e', 'z', '!' };
 

@@ -11,10 +11,6 @@
 
 #include "test_config.h"
 
-ACE_RCSID (tests,
-           Bug_2740_Regression_Test,
-           "$Id$")
-
 #if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
 
 #include "ace/Atomic_Op.h"

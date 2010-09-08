@@ -15,10 +15,6 @@
 
 #include "Client_Test.h"
 
-ACE_RCSID (Client,
-           Client_Test,
-           "$Id$")
-
 // Get the instance of Name_Service using Dynamic_Service
 
 //inline Name_Service *

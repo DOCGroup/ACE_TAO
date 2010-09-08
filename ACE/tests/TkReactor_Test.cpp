@@ -24,10 +24,6 @@
 
 #include "test_config.h"
 
-ACE_RCSID (tests,
-           TkReactor_Test,
-           "$Id$")
-
 #include "ace/Event_Handler.h"
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"

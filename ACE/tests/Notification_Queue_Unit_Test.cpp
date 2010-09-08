@@ -12,9 +12,6 @@
 #include "test_config.h"
 #include "ace/Notification_Queue.h"
 
-ACE_RCSID(tests,
-          Notification_Queue_Unit_Test, "$Id$")
-
 #define TEST_LIST \
   ACTION(null_test) \
   ACTION(pop_returns_element_pushed) \

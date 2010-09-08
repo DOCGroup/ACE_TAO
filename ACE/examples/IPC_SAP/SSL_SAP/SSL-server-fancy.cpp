@@ -16,10 +16,6 @@
 
 #include "SSL-server-fancy.h"
 
-ACE_RCSID (SSL_SAP,
-           SSL_server_fancy,
-           "$Id$")
-
 // Forward declaration.
 class Handler;
 

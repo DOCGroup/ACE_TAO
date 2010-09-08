@@ -26,10 +26,6 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Free_List.h"
 
-ACE_RCSID (tests,
-           Message_Block_Test,
-           "$Id$")
-
 // Number of memory allocation strategies used in this test.
 static const int ACE_ALLOC_STRATEGY_NO = 2;
 

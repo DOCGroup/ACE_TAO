@@ -14,10 +14,6 @@
 #include "ace/Task.h"
 #include "ace/Stream.h"
 
-ACE_RCSID (tests,
-           Bug_2497_Regression_Test,
-           "$Id$")
-
 class Test_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
