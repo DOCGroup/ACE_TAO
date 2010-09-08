@@ -37,10 +37,6 @@
 #include "ace/Asynch_Connector.h"
 #include "ace/Manual_Event.h"
 
-ACE_RCSID (tests,
-           Bug_2912_Regression_Test,
-           "$Id$")
-
 /* Linux kernels can't hack multiple outstanding I/O, which this
    test requires */
 #if defined (ACE_HAS_THREADS) && \

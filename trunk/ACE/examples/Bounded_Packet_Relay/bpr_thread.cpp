@@ -26,10 +26,6 @@
 #include "ace/Auto_Ptr.h"
 #include "Thread_Bounded_Packet_Relay.h"
 
-ACE_RCSID (Bounded_Packet_Relay,
-           bpr_thread,
-           "$Id$")
-
 typedef Bounded_Packet_Relay_Driver<Thread_Timer_Queue>
   THREAD_BOUNDED_PACKET_RELAY_DRIVER;
 

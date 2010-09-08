@@ -19,10 +19,6 @@
 #include "ace/Sig_Adapter.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (UPIPE_Event_Server,
-           event_server,
-           "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 typedef ACE_Stream<ACE_MT_SYNCH> MT_Stream;
@@ -238,7 +234,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("push (setting low watermark)")), -1);
 
   wm = ACE_Utils::truncate_cast<int> (options.high_water_mark ());
-  
+
   if (event_server.control (ACE_IO_Cntl_Msg::SET_HWM, &wm) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("push (setting high watermark)")), -1);

@@ -15,10 +15,6 @@
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (tests,
-           Bug_3102_Regression_Test,
-           "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 void mutexTest(void)

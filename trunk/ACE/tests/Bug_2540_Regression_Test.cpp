@@ -18,10 +18,6 @@
 #include "ace/Select_Reactor.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (tests,
-           Bug_2540_Regression_Test,
-           "$Id$")
-
 int const nhandlers = 3;
 
 /**
@@ -268,7 +264,7 @@ int Timer::handle_timeout(ACE_Time_Value const &, void const *)
       // The first iterations are there just to prime things.
       return 0;
     }
-    
+
     if (iteration_ == initial_iterations)
     {
       // We expect the special_handler() to work normally after this

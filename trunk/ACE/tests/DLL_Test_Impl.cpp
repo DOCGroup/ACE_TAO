@@ -22,10 +22,6 @@
 #include "ace/svc_export.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (tests,
-           DLL_Test_Impl,
-           "$Id$")
-
 Hello_Impl::Hello_Impl (void)
 {
   ACE_DEBUG ((LM_DEBUG, "Hello_Impl::Hello_Impl\n"));

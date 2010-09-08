@@ -13,10 +13,6 @@
 #include "ace/SString.h"
 #include "test_config.h"
 
-ACE_RCSID (tests,
-           Bug_3500_Regression_Test,
-           "$Id$")
-
 int
 run_main (int, ACE_TCHAR *[])
 {

@@ -30,10 +30,6 @@
 #include "ace/Based_Pointer_T.h"
 #include "ace/SString.h"
 
-ACE_RCSID (tests,
-           Based_Pointer_Repository_Test,
-           "$Id$")
-
 class Foo
 {
 private:

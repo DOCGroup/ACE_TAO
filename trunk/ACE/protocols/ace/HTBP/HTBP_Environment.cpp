@@ -2,10 +2,6 @@
 
 #include "HTBP_Environment.h"
 
-ACE_RCSID (HTBP,
-           ACE_HTBP_Environment,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE::HTBP::Environment::Environment (ACE_Configuration *config,

@@ -9,10 +9,6 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/UUID.h"
 
-ACE_RCSID(HTBP,
-          ACE_HTBP_ID_Requestor,
-          "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_TString ACE::HTBP::ID_Requestor::htid_;

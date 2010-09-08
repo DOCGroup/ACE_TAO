@@ -7,12 +7,6 @@
 #include "ace/Malloc_T.h"
 #include "ace/OS_NS_unistd.h"
 
-
-ACE_RCSID (SV_Semaphores,
-           Semaphores_1,
-           "$Id$")
-
-
 #if defined (ACE_HAS_SYSV_IPC) && !defined(ACE_LACKS_SYSV_SHMEM)
 
 // Shared memory allocator (note that this chews up the

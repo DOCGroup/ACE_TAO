@@ -23,10 +23,6 @@
 #include "ace/Service_Object.h"
 #include "ace/Framework_Component_T.h"
 
-ACE_RCSID (tests,
-           Framework_Component_DLL,
-           "$Id$")
-
 ACE_DLL_UNLOAD_POLICY (Framework_Component_DLL, ACE_DLL_UNLOAD_POLICY_LAZY)
 
 Simple_Service::Simple_Service (void)

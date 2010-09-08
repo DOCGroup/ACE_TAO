@@ -32,10 +32,6 @@
 #include "ace/OS_String.h"
 #include "ace/SString.h"
 
-ACE_RCSID (tests,
-           Dirent_Test,
-           "$Id Dirent_Test.cpp,v 4.10 2003/05/18 19:17:34 dhinton Exp$")
-
 #if (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
 #  define TEST_DIR "log"
 #  define TEST_ENTRY ".."

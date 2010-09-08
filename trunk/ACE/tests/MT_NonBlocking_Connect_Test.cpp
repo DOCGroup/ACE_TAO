@@ -37,10 +37,6 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Thread_Mutex.h"
 
-ACE_RCSID(tests,
-          MT_NonBlocking_Connect_Test,
-          "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 static int test_select_reactor = 1;

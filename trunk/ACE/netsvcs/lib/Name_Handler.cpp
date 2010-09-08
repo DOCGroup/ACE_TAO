@@ -8,10 +8,6 @@
 #include "ace/Signal.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(lib,
-          Name_Handler,
-          "$Id$")
-
 // Simple macro that does bitwise AND -- useful in table lookup
 #define ACE_TABLE_MAP(INDEX, MASK) (INDEX & MASK)
 
