@@ -1,3 +1,14 @@
+Wed Sep  8 10:13:52 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Navigation/client.cpp:
+          Optimized logging
+
+        * tests/CIF/Receptacle/client.cpp:
+          Resolved compile error on full ccm.
+
+        * tests/CIF/descriptors/run_test.pl:
+          Enabled Navigation test.
+
 Wed Sep  8 09:06:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
