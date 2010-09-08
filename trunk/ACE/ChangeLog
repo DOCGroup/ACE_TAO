@@ -1,3 +1,15 @@
+Wed Sep  8 10:57:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/ace.dsc:
+        * debian/debian.changelog:
+        * debian/debian.control:
+        * debian/debian.rules:
+        * debian/changelog:
+        * debian/control:
+        * debian/dsc:
+        * debian/rules:
+          Renamed to the names we use on OBS
+
 Wed Sep  8 09:11:03 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/SSL/Bug_2912_Regression_Test.cpp:
