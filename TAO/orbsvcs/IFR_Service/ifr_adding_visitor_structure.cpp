@@ -10,10 +10,6 @@
 #include "ifr_adding_visitor_structure.h"
 #include "ifr_adding_visitor_union.h"
 
-ACE_RCSID (IFR_Service,
-           ifr_adding_visitor_structure,
-           "$Id$")
-
 ifr_adding_visitor_structure::ifr_adding_visitor_structure (AST_Decl *scope)
   : ifr_adding_visitor (scope)
 {
@@ -140,7 +136,7 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
           dummyMembers.length (0);
 
           CORBA::Container_ptr current_scope = CORBA::Container::_nil ();
-          
+
           if (be_global->ifr_scopes ().top (current_scope) != 0)
             {
               ACE_ERROR_RETURN ((
@@ -208,7 +204,7 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
           // entries referencing the UnionDef will stay valid.
           // Also we know node->ifr_fwd_added_ is true.
           struct_def = CORBA::StructDef::_narrow (prev_def.in ());
-      
+
           if (be_global->ifr_scopes ().push (struct_def.in ()) != 0)
             {
               ACE_ERROR_RETURN ((
@@ -230,7 +226,7 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
                 ACE_TEXT (" visit_scope failed\n")),
                -1);
             }
-           
+
           this->ir_current_ = CORBA::IDLType::_narrow (prev_def.in ());
 
           CORBA::Container_ptr used_scope =

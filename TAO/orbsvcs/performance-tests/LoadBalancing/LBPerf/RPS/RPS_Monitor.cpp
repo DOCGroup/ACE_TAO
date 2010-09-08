@@ -4,10 +4,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "tao/ORB_Constants.h"
 
-ACE_RCSID (LoadBalancing,
-           RPS_Monitor,
-           "$Id$")
-
 RPS_Monitor::RPS_Monitor (ServerRequestInterceptor * interceptor)
   : location_ (1),
     interceptor_ (interceptor),

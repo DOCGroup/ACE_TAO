@@ -1,10 +1,7 @@
+// $Id$
+
 #include "Simple.h"
 #include "ace/OS.h"
-
-
-ACE_RCSID (DeadMemberDetection_Inf_Ctrl,
-           Simple,
-           "$Id$")
 
 extern int pong_delay;
 
@@ -18,7 +15,7 @@ Simple::Simple (int server_id)
 }
 
 /// Default _non_existent: always returns false.
-CORBA::Boolean 
+CORBA::Boolean
 Simple::_non_existent (void)
 {
   if (pong_delay > 0)
@@ -53,7 +50,7 @@ Simple::get_string (void)
   }
 }
 
-void 
+void
 Simple::exit (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t)%T - Simple::exit  server %d exit \n",

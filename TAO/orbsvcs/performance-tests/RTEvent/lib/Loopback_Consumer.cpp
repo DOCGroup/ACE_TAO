@@ -10,10 +10,6 @@
 #include "Implicit_Deactivator.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-ACE_RCSID (PERF_RTEC,
-           Loopback_Consumer,
-           "$Id$")
-
 Loopback_Consumer::
 Loopback_Consumer (CORBA::Long experiment_id,
                    CORBA::Long event_type,

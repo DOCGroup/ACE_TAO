@@ -16,10 +16,6 @@
 #include "RTServer_Setup.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC,
-           RTServer_Setup,
-           "$Id$")
-
 RTServer_Setup::RTServer_Setup (int use_rt_corba,
                                 CORBA::ORB_ptr orb,
                                 const RT_Class &rt_class,

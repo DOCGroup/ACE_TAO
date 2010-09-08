@@ -30,10 +30,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/CORBA_macros.h"
 
-ACE_RCSID (tests_svc_loader,
-           tests_svc_loader,
-           "$Id$")
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
   try

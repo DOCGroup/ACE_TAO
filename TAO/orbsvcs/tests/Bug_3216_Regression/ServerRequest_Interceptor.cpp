@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "ServerRequest_Interceptor.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
@@ -10,10 +11,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 #include "Hello.h"
-
-ACE_RCSID (FaultTolerance,
-           TAO249_ServerRequest_Interceptor,
-           "$Id$")
 
 TAO249_ServerRequest_Interceptor::TAO249_ServerRequest_Interceptor (void)
 : orb_ (0),

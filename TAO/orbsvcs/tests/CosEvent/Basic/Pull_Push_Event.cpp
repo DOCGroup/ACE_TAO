@@ -6,10 +6,6 @@
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (CEC_Tests_Basic,
-           Pull_Push_Event,
-           "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

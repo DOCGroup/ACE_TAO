@@ -1,12 +1,8 @@
-#include "Signal_Handler.h"
+// $Id$
 
+#include "Signal_Handler.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
-
-ACE_RCSID (LoadBalancer,
-           Signal_Handler,
-           "$Id$")
-
 
 TAO_LB_Signal_Handler::TAO_LB_Signal_Handler (CORBA::ORB_ptr orb,
                                               PortableServer::POA_ptr poa)

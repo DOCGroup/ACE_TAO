@@ -1,13 +1,10 @@
 // -*- C++ -*-
+// $Id$
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "Foo_i.h"
 #include "ace/SString.h"
-
-ACE_RCSID (Bug_1107_Regression,
-           server,
-           "$Id$")
 
 const ACE_TCHAR *ior_output_file = 0;
 const char *cert_file = "cacert.pem";

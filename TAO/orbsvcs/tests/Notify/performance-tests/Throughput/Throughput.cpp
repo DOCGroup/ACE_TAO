@@ -12,10 +12,6 @@
 #include "orbsvcs/Notify/Service.h"
 #include "orbsvcs/Time_Utilities.h"
 
-ACE_RCSID (Notify_Tests,
-           Throughput,
-           "$Id$")
-
 /***************************************************************************/
 
 Throughput_StructuredPushConsumer::Throughput_StructuredPushConsumer (

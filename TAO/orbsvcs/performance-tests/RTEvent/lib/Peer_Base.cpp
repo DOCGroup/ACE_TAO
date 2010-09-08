@@ -18,10 +18,6 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Gateway_IIOP.h"
 
-ACE_RCSID (TAO_RTEC_Perf,
-           Peer_Base,
-           "$Id$")
-
 Peer_Base::Peer_Base (CORBA::ORB_ptr orb,
                       RTServer_Setup &rtserver_setup)
   : orb_ (CORBA::ORB::_duplicate (orb))

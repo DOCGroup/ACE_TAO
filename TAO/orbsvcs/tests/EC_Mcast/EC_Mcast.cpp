@@ -23,10 +23,6 @@
 #include "EC_Mcast.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (EC_Mcast,
-           EC_Mcast,
-           "$Id$")
-
 ECM_Driver::ECM_Driver (void)
   : event_period_ (250000),
     event_count_ (100),

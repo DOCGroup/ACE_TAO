@@ -1,13 +1,11 @@
+// $Id$
+
 #include "LB_server.h"
 #include "Simple.h"
 #include "Factory.h"
 
 #include "TestC.h"
 #include "ace/OS_NS_stdio.h"
-
-ACE_RCSID (Infrastructure_Controlled,
-           LB_server,
-           "$Id$")
 
 LB_server::LB_server (int argc, ACE_TCHAR **argv)
   : argc_ (argc)

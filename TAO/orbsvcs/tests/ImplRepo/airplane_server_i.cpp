@@ -12,10 +12,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
 
-ACE_RCSID (ImplRepo,
-           airplane_server_i,
-           "$Id$")
-
 // The server name of the Aiprlane Server
 const char SERVER_NAME[] = "airplane_server";
 

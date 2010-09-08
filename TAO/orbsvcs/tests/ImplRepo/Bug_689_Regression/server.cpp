@@ -8,10 +8,6 @@
 
 #include "bug_689_regression_i.h"
 
-ACE_RCSID (Bug_689_Regression,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
 
 int

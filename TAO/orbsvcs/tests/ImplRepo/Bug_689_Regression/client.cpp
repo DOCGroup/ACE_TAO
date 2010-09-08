@@ -5,10 +5,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Argv_Type_Converter.h"
 
-ACE_RCSID(Bug_689_Regression,
-          client,
-          "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT ("file://server.ior");
 
 int

@@ -12,10 +12,6 @@
 #include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (MT_IIOP_SSL,
-           test_i,
-           "$Id$")
-
 void
 Simple_Server_i::ping (void)
 {

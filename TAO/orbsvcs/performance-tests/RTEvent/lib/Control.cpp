@@ -18,10 +18,6 @@
 #include "ace/Basic_Stats.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (TAO_RTEC_Perf,
-           Control,
-           "$Id$")
-
 Control::Control (size_t peers_expected,
                   size_t iterations,
                   int do_dump_history,

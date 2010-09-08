@@ -1,3 +1,5 @@
+// $Id$
+
 #include "LB_Factory_Server.h"
 #include "Simple.h"
 #include "Factory.h"
@@ -5,10 +7,6 @@
 #include "TestC.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
-
-ACE_RCSID (DeadMemberDetection_Inf_Ctrl,
-           LB_Factory_Server,
-           "$Id$")
 
 const ACE_TCHAR* factory1_file = ACE_TEXT ("factory1.ior");
 const ACE_TCHAR* factory2_file = ACE_TEXT ("factory2.ior");
@@ -164,16 +162,16 @@ LB_Factory_Server::init (void)
                            " (%P|%t) Unable to get Load Manager Reference\n"),
                           1);
 
-     
+
       Factory* servant = new Factory(server_id_);
       PortableServer::ServantBase_var owner_transfer(servant);
       obj = servant->_this ();
-      PortableGroup::GenericFactory_var factory_obj 
+      PortableGroup::GenericFactory_var factory_obj
         = PortableGroup::GenericFactory::_narrow (obj.in ());
       CORBA::String_var ior =
         this->orb_->object_to_string (factory_obj.in ());
 
-      this->write_ior_to_file (ior.in (), 
+      this->write_ior_to_file (ior.in (),
         ACE_TEXT_ALWAYS_CHAR (this->factory_ior_file_.c_str ()));
 
       if (this->server_id_ == 2)
@@ -188,7 +186,7 @@ LB_Factory_Server::init (void)
 
         CORBA::Object_var obj = simple_servant->_this ();
         CORBA::String_var ior = this->orb_->object_to_string (obj.in ());
-        this->write_ior_to_file (ior.in (), 
+        this->write_ior_to_file (ior.in (),
           ACE_TEXT_ALWAYS_CHAR (direct_obj2_file));
       }
     }

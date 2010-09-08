@@ -1,11 +1,7 @@
 // -*- C++ -*-
+// $Id$
 
 #include "TX_Object_i.h"
-
-ACE_RCSID (Big_Request,
-           TX_Object_i,
-           "$Id$")
-
 
 TX_Object_i::TX_Object_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb)),

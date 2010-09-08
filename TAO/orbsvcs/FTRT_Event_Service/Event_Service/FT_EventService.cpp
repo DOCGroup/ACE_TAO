@@ -13,10 +13,6 @@
 #include "orbsvcs/FtRtEvent/Utils/Log.h"
 #include "ace/OS_main.h"
 
-ACE_RCSID (Event_Service,
-           FT_EventService,
-           "$Id$")
-
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   FT_EventService event_service;

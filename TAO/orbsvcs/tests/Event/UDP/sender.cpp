@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "Supplier.h"
 #include "AddrServer.h"
 #include "orbsvcs/Event_Service_Constants.h"
@@ -12,10 +11,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_RCSID (EC_Examples,
-           MCast,
-           "$Id$")
 
 const ACE_TCHAR *udp_mcast_address =
     ACE_TEXT (ACE_DEFAULT_MULTICAST_ADDR) ACE_TEXT(":10001");

@@ -8,10 +8,6 @@
 #include "ace/Sched_Params.h"
 #include "ace/Arg_Shifter.h"
 
-ACE_RCSID (EC_Tests_Performance,
-           Inversion,
-           "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

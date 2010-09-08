@@ -17,10 +17,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (TAO_PERF_RTEC_RTCORBA_Baseline,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
 int use_rt_corba = 0;
 int nthreads = 0;

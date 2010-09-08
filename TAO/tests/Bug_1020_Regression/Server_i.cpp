@@ -1,8 +1,7 @@
+// $Id$
+
 #include "Server_i.h"
 #include "Server_Task.h"
-
-ACE_RCSID (Bug_1230_Regression,
-           Server, "$Id$")
 
 Server::Server(CORBA::ORB_ptr orb)
   : orb_(CORBA::ORB::_duplicate(orb))

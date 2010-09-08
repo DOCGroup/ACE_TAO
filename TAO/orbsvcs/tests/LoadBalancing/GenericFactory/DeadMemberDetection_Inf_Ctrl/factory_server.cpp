@@ -1,10 +1,8 @@
+// $Id$
+
 #include "LB_Factory_Server.h"
 #include "Factory.h"
 #include "Simple.h"
-
-ACE_RCSID (DeadMemberDetection_Inf_Ctrl,
-           server,
-           "$Id$")
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

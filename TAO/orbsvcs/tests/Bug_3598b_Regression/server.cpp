@@ -4,10 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (Hello,
-           server,
-           "server.cpp,v 1.6 2003/11/01 11:15:11 dhinton Exp")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int

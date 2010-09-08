@@ -14,10 +14,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (TAO_PERF_RTEC_Federated_Roundtrip,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
 int iterations = 10000;
 int nthreads   = 1;

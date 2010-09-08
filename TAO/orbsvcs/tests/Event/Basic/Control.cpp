@@ -10,10 +10,6 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
-ACE_RCSID (EC_Tests,
-           Control,
-           "$Id$")
-
 const int event_type = 20;
 const int event_source = 10;
 

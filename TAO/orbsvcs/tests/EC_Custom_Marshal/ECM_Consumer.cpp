@@ -18,10 +18,6 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_Custom_Marshal,
-           ECM_Consumer,
-           "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
