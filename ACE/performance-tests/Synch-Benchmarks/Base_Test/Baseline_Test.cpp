@@ -15,10 +15,6 @@
 #include "Baseline_Test.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Base_Test,
-           Baseline_Test,
-           "$Id$")
-
 Baseline_Test_Options baseline_options;
 // Static Baseline Options holds the test configuration information
 // and the test statistics.

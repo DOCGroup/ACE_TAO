@@ -45,8 +45,6 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_Memory.h"
 
-ACE_RCSID(asnmp, address, "$Id$")
-
 //=================================================================
 //======== Abstract Address Class Implementation ==================
 //=================================================================
@@ -672,7 +670,7 @@ Address_Iter::Address_Iter (const char *hostname)
 {
   ACE_OS::memset (&buffer_, 0, sizeof (ACE_HOSTENT_DATA));
   ACE_OS::memset (&lookupResult_, 0, sizeof (struct hostent));
-  
+
   if (ACE_OS::inet_addr (hostname) == (unsigned long) -1)
     {
       valid_ = query_dns (hostname);

@@ -44,7 +44,6 @@ DAMAGES.
 #include "asnmp/vb.h"
 #include "test_config.h"
 
-ACE_RCSID(tests, Varbind_Test, "$Id$")
 /*
   Vb( void);
   Vb( const Oid &oid);

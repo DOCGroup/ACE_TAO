@@ -6,8 +6,6 @@
 #include "ace/Object_Manager.h"
 #include "ID_Generator.h"
 
-ACE_RCSID(Caching, ID_Generator, "$Id$")
-
 time_t ACE_ID_Generator::last_time_ = 0;
 
 size_t ACE_ID_Generator::last_number_ = 0;

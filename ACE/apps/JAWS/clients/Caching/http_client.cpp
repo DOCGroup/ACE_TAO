@@ -22,8 +22,6 @@
 #include "ace/OS_NS_ctype.h"
 #include "http_handler.h"
 
-ACE_RCSID(Caching, http_client, "$Id$")
-
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {

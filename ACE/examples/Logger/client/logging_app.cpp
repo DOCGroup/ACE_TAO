@@ -13,8 +13,6 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(client, logging_app, "$Id$")
-
 static u_short LOGGER_PORT = ACE_DEFAULT_SERVER_PORT;
 static const ACE_TCHAR *const LOGGER_HOST = ACE_DEFAULT_SERVER_HOST;
 static const int MAX_ITERATIONS = 10;
@@ -35,8 +33,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   for (int i = 0; i < max_iterations; i++)
     {
-      ACE_Log_Record log_record (LM_DEBUG, 
-                                 ACE_OS::time ((time_t *) 0), 
+      ACE_Log_Record log_record (LM_DEBUG,
+                                 ACE_OS::time ((time_t *) 0),
                                  ACE_OS::getpid ());
 
       ACE_TCHAR buf[BUFSIZ];
@@ -68,7 +66,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       header << ACE_CDR::ULong (length);
 
       // Use an iovec to send both buffer and payload simultaneously.
-      iovec iov[2];  
+      iovec iov[2];
       iov[0].iov_base = header.begin ()->rd_ptr ();
       iov[0].iov_len  = 8;
       iov[1].iov_base = payload.begin ()->rd_ptr ();

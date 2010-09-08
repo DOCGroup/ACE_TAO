@@ -39,11 +39,7 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID(get, get_async, "$Id$")
-
-//
 // SNMPv1 Get Application
-//
 class getapp : public Snmp_Result {
   public:
   getapp(int argc, char **argv); // process command line args

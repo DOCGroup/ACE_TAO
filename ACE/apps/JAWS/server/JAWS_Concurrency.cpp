@@ -2,8 +2,6 @@
 
 #include "JAWS_Concurrency.h"
 
-ACE_RCSID(server, JAWS_Concurrency, "$Id$")
-
 JAWS_Concurrency_Base::JAWS_Concurrency_Base (void)
 {
 }

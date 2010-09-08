@@ -5,8 +5,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID(Blobby, Blob_Handler, "$Id$")
-
 // Empty constructor for compliance with new Connector behavior.
 ACE_Blob_Handler::ACE_Blob_Handler (void)
 {

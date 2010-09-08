@@ -42,10 +42,6 @@ DAMAGES.
 #include "asnmp/integer.h"
 #include "test_config.h"
 
-ACE_RCSID (tests,
-           Integer_Test,
-           "$Id$")
-
 #if !defined (ACE_WIN32)
 static long l = LONG_MAX, nl = LONG_MIN;  // limits.h
 static unsigned long ul = ULONG_MAX, def = 0;

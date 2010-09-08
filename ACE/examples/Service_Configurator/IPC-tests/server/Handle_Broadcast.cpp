@@ -2,8 +2,6 @@
 
 #include "Handle_Broadcast.h"
 
-ACE_RCSID(server, Handle_Broadcast, "$Id$")
-
 #if defined (SunOS4)
 extern "C"
 {

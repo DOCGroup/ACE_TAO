@@ -47,8 +47,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_time.h"
 
-ACE_RCSID(asnmp, snmp, "$Id$")
-
 const coldStartOid coldStart;
 const warmStartOid warmStart;
 const linkDownOid linkDown;

@@ -54,8 +54,6 @@
 #include "asnmp/snmp.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(asnmp, asn1, "$Id$")
-
 /*
  * parse_int - pulls a long out of an ASN int type.
  *  On entry, datalength is input as the number of valid bytes following
@@ -1031,7 +1029,7 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
         {
           // Do nothing.
         }
-        
+
       // create one
       ACE_NEW(vars->next_variable, variable_list);
       // bump ptr
@@ -1370,7 +1368,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                           sizeof(pdu->agent_addr.sin_addr.s_addr));
     if (cp == 0)
       return -1;
-    
+
     long tmp (static_cast <long> (pdu->trap_type));
     // generic trap
     cp = asn1::build_int(cp,
@@ -1380,7 +1378,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                          sizeof(pdu->trap_type));
     if (cp == 0)
       return -1;
-    
+
     tmp = static_cast <long> (pdu->specific_type);
     // specific trap
     cp = asn1::build_int( cp,
@@ -1628,9 +1626,9 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
                             &four);
     if (data == 0)
       return -1;
-    
+
     long tmp (static_cast <long> (pdu->trap_type));
-    
+
     // get trap type
     data = asn1::parse_int(data, &length, &type, &tmp,
                          sizeof(pdu->trap_type));

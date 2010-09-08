@@ -23,8 +23,6 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Threads, task_five, "$Id$")
-
 static const int DEFAULT_TASKS = 100;
 static const int DEFAULT_ITERATIONS = 10;
 

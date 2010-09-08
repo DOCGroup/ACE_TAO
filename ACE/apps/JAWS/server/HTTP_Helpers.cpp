@@ -9,8 +9,6 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(server, HTTP_Helpers, "$Id$")
-
 // = Static initialization.
 const char *const
 HTTP_Helper::months_[12]=

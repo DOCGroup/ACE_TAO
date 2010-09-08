@@ -7,8 +7,6 @@
 #include "ace/Log_Msg.h"
 #include "Benchmark_Base.h"
 
-ACE_RCSID(Synch_Benchmarks, Benchmark_Base, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 // Initialize the static variables.

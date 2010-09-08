@@ -19,10 +19,6 @@
 //#include "DSRT_Sched_Queue_T.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Kokyu,
-          DSRT_Sched_Queue_T,
-          "$Id$")
-
 namespace Kokyu
 {
 /*
@@ -115,15 +111,15 @@ insert (DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item)
 #ifdef KOKYU_DSRT_LOGGING
   ACE_hthread_t thr_handle = item->thread_handle ();
 
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%t|%T) about to insert %d in sched queue\n", 
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t|%T) about to insert %d in sched queue\n",
               thr_handle));
 #endif
 
   if (dispatch_items_hash_map_.find (guid, rb_tree_node) == -1)
     {
 #ifdef KOKYU_DSRT_LOGGING
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "(%t|%T) %d not found in hashmap\n", thr_handle));
 #endif
       if (dispatch_items_prio_queue_.bind (item_var,
@@ -142,7 +138,7 @@ insert (DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item)
               dispatch_items_hash_map_.dump ();
               ACE_DEBUG ((LM_DEBUG,
                           "<===Hash Table contents End=====>\n"));
-#endif              
+#endif
               return 0;
             }
         }
@@ -150,35 +146,35 @@ insert (DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item)
   else
     {
 #ifdef KOKYU_DSRT_LOGGING
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "(%t|%T) %d found in hashmap\n", thr_handle));
 #endif
       dispatch_items_hash_map_.unbind (guid);
       dispatch_items_prio_queue_.unbind (rb_tree_node);
 
 #ifdef KOKYU_DSRT_LOGGING
-      ACE_DEBUG ((LM_DEBUG, 
-                  "(%t|%T) %d removed from hashmap and rbtree\n", thr_handle));      
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t|%T) %d removed from hashmap and rbtree\n", thr_handle));
 #endif
       if (dispatch_items_prio_queue_.bind (item_var,
                                            item_var,
                                            rb_tree_node) == 0)
         {
 #ifdef KOKYU_DSRT_LOGGING
-          ACE_DEBUG ((LM_DEBUG, 
-                      "(%t|%T) %d bound to rbtree\n", thr_handle));      
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t|%T) %d bound to rbtree\n", thr_handle));
 #endif
           if (dispatch_items_hash_map_.bind (guid, rb_tree_node) == 0)
             {
 #ifdef KOKYU_DSRT_LOGGING
-              ACE_DEBUG ((LM_DEBUG, 
-                          "(%t|%T) %d bound to hashmap\n", thr_handle));      
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%t|%T) %d bound to hashmap\n", thr_handle));
               ACE_DEBUG ((LM_DEBUG,
                           "<===Hash Table contents Begin===>\n"));
               dispatch_items_hash_map_.dump ();
               ACE_DEBUG ((LM_DEBUG,
                           "<===Hash Table contents End===>\n"));
-#endif              
+#endif
               return 0;
             }
         }
@@ -207,7 +203,7 @@ remove (Guid_t guid)
       ACE_DEBUG ((LM_DEBUG,
                   "<===Hash Table contents End===>\n"));
 #endif
-      
+
       return 0;
     }
 
@@ -235,13 +231,13 @@ dump ()
           PRIO_QUEUE_ENTRY &ent = (*iter);
           DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>
             item_var = ent.item ();
-          /*          
+          /*
           int guid;
           ACE_OS::memcpy (&guid,
                   item_var->guid ().get_buffer (),
                   item_var->guid ().length ());
 
-          ACE_DEBUG ((LM_DEBUG, "(%t|%T):guid %d, thr_handle = %d\n", 
+          ACE_DEBUG ((LM_DEBUG, "(%t|%T):guid %d, thr_handle = %d\n",
                       guid, item_var->thread_handle ()));
           */
           ++iter;

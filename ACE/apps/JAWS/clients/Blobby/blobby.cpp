@@ -27,8 +27,6 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Blobby, blobby, "$Id$")
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

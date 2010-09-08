@@ -40,8 +40,6 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID(set, set, "$Id$")
-
 //
 // SNMPv1 Set Application
 //

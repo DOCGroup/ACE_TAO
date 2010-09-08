@@ -6,8 +6,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Profile_Timer.h"
 
-ACE_RCSID(Misc, test_guard, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 static const int DEFAULT_ITERATIONS = 100000000;

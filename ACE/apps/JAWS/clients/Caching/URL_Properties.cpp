@@ -12,8 +12,6 @@
 #include "ace/Auto_Ptr.h"
 #include "URL_Array_Helper.h"
 
-ACE_RCSID(Caching, URL_Properties, "$Id$")
-
 size_t
 ACE_WString_Helper::encode (void *buf, const ACE_WString &wstr)
 {

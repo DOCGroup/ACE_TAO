@@ -10,8 +10,6 @@
 #include "Kokyu_dsrt.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Kokyu, Kokyu, "$Id$")
-
 namespace Kokyu
 {
 
@@ -70,23 +68,23 @@ create_DSRT_dispatcher (const DSRT_ConfigInfo& config_info)
   switch (config_info.impl_type_)
     {
     case DSRT_OS_BASED:
-      ACE_NEW_RETURN (tmp, 
+      ACE_NEW_RETURN (tmp,
                       DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits> (
-                      config_info.sched_policy_, 
-                      config_info.sched_scope_), 
+                      config_info.sched_policy_,
+                      config_info.sched_scope_),
                       0);
       break;
 
     case DSRT_CV_BASED:
     default:
-      ACE_NEW_RETURN (tmp, 
+      ACE_NEW_RETURN (tmp,
                       DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>(
-                      config_info.sched_policy_, 
-                      config_info.sched_scope_), 
+                      config_info.sched_policy_,
+                      config_info.sched_scope_),
                       0);
       break;
     }
-    
+
   ACE_ASSERT (tmp != 0);
   ACE_NEW_RETURN (disp, DSRT_Dispatcher<DSRT_Scheduler_Traits>, 0);
   disp->implementation (tmp);
@@ -138,10 +136,10 @@ operator ()(const QoSDescriptor& qos1,
             const QoSDescriptor& qos2)
 {
 #ifdef KOKYU_DSRT_LOGGING
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "(%t|%T):qos1.importance = %d, qos2.importance = %d\n",
               qos1.importance_, qos2.importance_));
-#endif  
+#endif
 
   if (qos1.importance_ > qos2.importance_)
     {

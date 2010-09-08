@@ -8,8 +8,6 @@
 #include "ace/Service_Repository.h"
 #include "Synch_Lib/Benchmark_Base.h"
 
-ACE_RCSID(Synch_Benchmarks, synch_driver, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

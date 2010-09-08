@@ -21,8 +21,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "Peer.h"
 
-ACE_RCSID(Peer, peerd, "$Id$")
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

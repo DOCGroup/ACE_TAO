@@ -25,10 +25,6 @@
 #include "ace/Reactor.h"
 #include "Gateway.h"
 
-ACE_RCSID (Gateway,
-           gatewayd,
-           "$Id$")
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

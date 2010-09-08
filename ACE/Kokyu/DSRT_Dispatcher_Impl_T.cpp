@@ -9,14 +9,12 @@
 #include "DSRT_Dispatcher_Impl_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Kokyu, DSRT_Dispatcher_Impl, "$Id$")
-
 namespace Kokyu
 {
 
 template <class DSRT_Scheduler_Traits>
 DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>::
-DSRT_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy, 
+DSRT_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
                           int sched_scope)
   : sched_policy_ (sched_policy),
     sched_scope_ (sched_scope),

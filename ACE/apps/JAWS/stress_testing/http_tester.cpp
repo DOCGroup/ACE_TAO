@@ -2,8 +2,6 @@
 
 #include "client.h"
 
-ACE_RCSID(stress_testing, http_tester, "$Id$")
-
 int Client_Parameters::tcp_nodelay;
 int Client_Parameters::sockbufsiz;
 Stats *Client_Parameters::stats;

@@ -12,8 +12,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(client, broadcast_client_test, "$Id$")
-
 /* Name of the program. */
 static ACE_TCHAR *program_name;
 

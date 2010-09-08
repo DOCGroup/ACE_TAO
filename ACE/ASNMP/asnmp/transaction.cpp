@@ -20,8 +20,6 @@
 #include "asnmp/transaction.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(asnmp, transaction, "$Id$")
-
 // pre: pdu, target report  valid() == 1
 // post: pdu sent out over the wire
 inline void reset_receive_buffer(iovec& io)

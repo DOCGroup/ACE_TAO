@@ -7,8 +7,6 @@
 #include "snmp_agent.h"
 #include "ace/ACE.h"
 
-ACE_RCSID(agent, main, "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

@@ -35,8 +35,6 @@
 #include "asnmp/integer.h"        // header file for gauge class
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(asnmp, integer, "$Id$")
-
 // constructor with value
 SnmpUInt32::SnmpUInt32 (const unsigned long i)
 {
