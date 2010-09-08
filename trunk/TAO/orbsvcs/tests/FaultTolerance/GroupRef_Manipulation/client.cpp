@@ -1,14 +1,11 @@
 // -*- C++ -*-
+// $Id$
 
 #include "ace/Get_Opt.h"
 #include "testC.h"
 // Ensure that the PI library is linked in when building statically
 #include "tao/PI/PI.h"
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
-
-ACE_RCSID (Group_Ref_Manip,
-           client,
-           "$Id$")
 
 const ACE_TCHAR *ior = 0;
 

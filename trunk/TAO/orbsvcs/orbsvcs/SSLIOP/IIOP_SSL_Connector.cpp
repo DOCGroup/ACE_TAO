@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/SSLIOP/IIOP_SSL_Connector.h"
 
 #include "tao/debug.h"
@@ -11,11 +13,6 @@
 #include "tao/Transport.h"
 #include "tao/Transport_Descriptor_Interface.h"
 #include "ace/Strategies_T.h"
-
-
-ACE_RCSID (SSLIOP,
-           IIOP_SSL_Connector,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

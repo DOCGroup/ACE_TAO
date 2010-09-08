@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.h"
 
@@ -7,12 +8,6 @@
 #include <openssl/dsa.h>
 #include <openssl/dh.h>
 #include "orbsvcs/SSLIOP/params_dup.h"
-
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_EVP_PKEY,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

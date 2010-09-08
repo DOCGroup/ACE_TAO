@@ -1,5 +1,4 @@
 // This may look like C, but it's really -*- C++ -*-
-//
 // $Id$
 
 #include "orbsvcs/PortableGroup/UIPMC_Profile.h"
@@ -17,10 +16,6 @@
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/PortableGroup/UIPMC_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
-
-ACE_RCSID (PortableGroup,
-           UIPMC_Acceptor,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,9 +1,6 @@
+// $Id$
+
 #include "orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.h"
-
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_Accept_Strategy,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

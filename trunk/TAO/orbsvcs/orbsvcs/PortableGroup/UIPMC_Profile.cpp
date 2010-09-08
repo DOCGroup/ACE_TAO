@@ -12,10 +12,6 @@
 #include "orbsvcs/miopC.h"
 #include "orbsvcs/PortableGroupC.h"
 
-ACE_RCSID (PortableGroup,
-           UIPMC_Profile,
-           "$Id$")
-
 static const char the_prefix[] = "miop";
 
 // UIPMC doesn't support object keys, so send profiles by default in the GIOP 1.2 target

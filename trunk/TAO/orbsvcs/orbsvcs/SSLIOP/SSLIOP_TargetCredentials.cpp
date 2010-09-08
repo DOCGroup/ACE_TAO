@@ -1,9 +1,6 @@
+// $Id$
+
 #include "orbsvcs/SSLIOP/SSLIOP_TargetCredentials.h"
-
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_TargetCredentials,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

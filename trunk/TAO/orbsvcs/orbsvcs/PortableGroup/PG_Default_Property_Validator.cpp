@@ -1,11 +1,7 @@
+// $Id$
+
 #include "orbsvcs/PortableGroup/PG_Default_Property_Validator.h"
 #include "orbsvcs/PortableGroup/PG_Operators.h"
-
-
-ACE_RCSID (PortableGroup,
-           PG_Default_Property_Validator,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

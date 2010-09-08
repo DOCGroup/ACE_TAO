@@ -1,12 +1,9 @@
+// $Id$
+
 #include "orbsvcs/SSLIOP/SSLIOP_Profile.h"
 #include "orbsvcs/SSLIOP/ssl_endpointsC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_Profile,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

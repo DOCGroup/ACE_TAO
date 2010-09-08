@@ -14,10 +14,6 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_Throughput,
-           ECT_Consumer,
-           "$Id$")
-
 Test_Consumer::Test_Consumer (ECT_Driver *driver,
                               void *cookie,
                               int n_suppliers,

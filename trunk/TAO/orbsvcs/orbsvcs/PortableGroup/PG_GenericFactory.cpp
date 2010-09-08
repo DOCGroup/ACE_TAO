@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/PortableGroup/PG_GenericFactory.h"
 #include "orbsvcs/PortableGroup/PG_MemberInfo.h"
 #include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
@@ -8,11 +10,6 @@
 #include "ace/OS_NS_stdio.h"
 
 #include "tao/ORB_Constants.h"
-
-ACE_RCSID (PortableGroup,
-           PG_GenericFactory,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -306,7 +303,7 @@ TAO_PG_GenericFactory::delete_member (
               }
               catch (const CORBA::Exception& ex)
               {
-                 // Common failure is CORBA::TRANSIENT due to remote factory 
+                 // Common failure is CORBA::TRANSIENT due to remote factory
                  // is shutdown.
                  // We just ignore the exception and continue.
                  if (TAO_debug_level > 0)

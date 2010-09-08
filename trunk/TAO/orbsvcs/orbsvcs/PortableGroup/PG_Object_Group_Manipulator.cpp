@@ -16,11 +16,6 @@
 #include "tao/debug.h"
 #include <ace/OS_NS_stdio.h>
 
-ACE_RCSID (PortableGroup,
-           PG_Object_Group_Manipulator,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PG_Object_Group_Manipulator::PG_Object_Group_Manipulator ()

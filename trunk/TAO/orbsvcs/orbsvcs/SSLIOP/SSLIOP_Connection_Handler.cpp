@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Endpoint.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Util.h"
@@ -17,12 +19,6 @@
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.inl"
 #endif /* ! __ACE_INLINE__ */
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_Connection_Handler,
-           "$Id$")
-
-// ****************************************************************
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -92,7 +88,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
   protocol_properties.no_delay_ =
     this->orb_core ()->orb_params ()->nodelay ();
   protocol_properties.keep_alive_ =
-    this->orb_core ()->orb_params ()->sock_keepalive (); 
+    this->orb_core ()->orb_params ()->sock_keepalive ();
 
   TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
@@ -128,7 +124,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
-  //support ORBKeepalive in SSL mode 
+  //support ORBKeepalive in SSL mode
   if (protocol_properties.keep_alive_)
     {
       if (this->peer ().
@@ -140,7 +136,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
         {
           return -1;
         }
-    } 
+    }
 
   if (this->transport ()->wait_strategy ()->non_blocking ())
     {
