@@ -1,3 +1,154 @@
+Wed Sep  8 15:02:14 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * Config_Handlers/ADD_Handler.h:
+        * Config_Handlers/ADD_Handler.cpp:
+        * Config_Handlers/Any_Handler.h:
+        * Config_Handlers/Any_Handler.cpp:
+        * Config_Handlers/Basic_Deployment_Data.hpp:
+        * Config_Handlers/Basic_Deployment_Data.cpp:
+        * Config_Handlers/CCD_Handler.h:
+        * Config_Handlers/CCD_Handler.cpp:
+        * Config_Handlers/CEPE_Handler.h:
+        * Config_Handlers/CEPE_Handler.cpp:
+        * Config_Handlers/CPD_Handler.h:
+        * Config_Handlers/CPD_Handler.cpp:
+        * Config_Handlers/CRDD_Handler.h:
+        * Config_Handlers/CRDD_Handler.cpp:
+        * Config_Handlers/Common.h:
+        * Config_Handlers/ComponentPropertyDescription_Handler.h:
+        * Config_Handlers/ComponentPropertyDescription_Handler.cpp:
+        * Config_Handlers/Config_Handlers.mpc:
+        * Config_Handlers/DD_Handler.h:
+        * Config_Handlers/DD_Handler.cpp:
+        * Config_Handlers/DP_Handler.h:
+        * Config_Handlers/DP_Handler.cpp:
+        * Config_Handlers/DP_PCD_Handler.h:
+        * Config_Handlers/DP_PCD_Handler.cpp:
+        * Config_Handlers/DataType_Handler.h:
+        * Config_Handlers/DataType_Handler.cpp:
+        * Config_Handlers/Deployment.hpp:
+        * Config_Handlers/Deployment.cpp:
+
+        * Config_Handlers/DynAny_Handler/DataType_Handler.h:
+        * Config_Handlers/DynAny_Handler/DataType_Handler.cpp:
+        * Config_Handlers/DynAny_Handler/DynAlias_Handler.h:
+        * Config_Handlers/DynAny_Handler/DynAlias_Handler.cpp:
+        * Config_Handlers/DynAny_Handler/DynAny_Handler.h:
+        * Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+        * Config_Handlers/DynAny_Handler/DynEnum_Handler.h:
+        * Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp:
+        * Config_Handlers/DynAny_Handler/DynSequence_Handler.h:
+        * Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp:
+        * Config_Handlers/DynAny_Handler/DynStruct_Handler.h:
+        * Config_Handlers/DynAny_Handler/DynStruct_Handler.cpp:
+
+        * Config_Handlers/ERE_Handler.h:
+        * Config_Handlers/ERE_Handler.cpp:
+        * Config_Handlers/ESD_Handler.h:
+        * Config_Handlers/ESD_Handler.cpp:
+        * Config_Handlers/IDD_Handler.h:
+        * Config_Handlers/IDD_Handler.cpp:
+        * Config_Handlers/IDREF_Base.h:
+        * Config_Handlers/IDREF_Base.cpp:
+        * Config_Handlers/ID_Handler.h:
+        * Config_Handlers/ID_Handler.cpp:
+        * Config_Handlers/IRDD_Handler.h:
+        * Config_Handlers/IRDD_Handler.cpp:
+        * Config_Handlers/MDD_Handler.h:
+        * Config_Handlers/MDD_Handler.cpp:
+        * Config_Handlers/PCD_Handler.h:
+        * Config_Handlers/PCD_Handler.cpp:
+        * Config_Handlers/PL_Handler.h:
+        * Config_Handlers/PL_Handler.cpp:
+        * Config_Handlers/PSPE_Handler.h:
+        * Config_Handlers/PSPE_Handler.cpp:
+
+        * Config_Handlers/Package_Handlers/CAD_Handler.h:
+        * Config_Handlers/Package_Handlers/CAD_Handler.cpp:
+        * Config_Handlers/Package_Handlers/CID_Handler.h:
+        * Config_Handlers/Package_Handlers/CID_Handler.cpp:
+        * Config_Handlers/Package_Handlers/CPD_Handler.h:
+        * Config_Handlers/Package_Handlers/CPD_Handler.cpp:
+        * Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.h:
+        * Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp:
+        * Config_Handlers/Package_Handlers/IAD_Handler.h:
+        * Config_Handlers/Package_Handlers/IAD_Handler.cpp:
+        * Config_Handlers/Package_Handlers/NIA_Handler.h:
+        * Config_Handlers/Package_Handlers/PCD_Handler.h:
+        * Config_Handlers/Package_Handlers/PCD_Handler.cpp:
+        * Config_Handlers/Package_Handlers/PC_Intf.h:
+        * Config_Handlers/Package_Handlers/PC_Intf.cpp:
+        * Config_Handlers/Package_Handlers/Package_Handlers.mpc:
+        * Config_Handlers/Package_Handlers/SID_Handler.h:
+        * Config_Handlers/Package_Handlers/SID_Handler.cpp:
+
+        * Config_Handlers/Property_Handler.h:
+        * Config_Handlers/Property_Handler.cpp:
+        * Config_Handlers/RDD_Handler.h:
+        * Config_Handlers/RDD_Handler.cpp:
+        * Config_Handlers/Req_Handler.h:
+        * Config_Handlers/Req_Handler.cpp:
+        * Config_Handlers/STD_CID_Handler.h:
+        * Config_Handlers/STD_CID_Handler.cpp:
+        * Config_Handlers/STD_CPD_Handler.h:
+        * Config_Handlers/STD_CPD_Handler.cpp:
+        * Config_Handlers/STD_IAD_Handler.h:
+        * Config_Handlers/STD_IAD_Handler.cpp:
+        * Config_Handlers/STD_PCD_Handler.h:
+        * Config_Handlers/STD_PCD_Handler.cpp:
+        * Config_Handlers/STD_PC_Intf.h:
+        * Config_Handlers/STD_PC_Intf.cpp:
+        * Config_Handlers/SatisfierProperty_Handler.h:
+        * Config_Handlers/SatisfierProperty_Handler.cpp:
+
+        * Config_Handlers/Utils/Exceptions.h:
+        * Config_Handlers/Utils/Functors.h:
+
+        * Config_Handlers/XML_File_Intf.h:
+        * Config_Handlers/XML_File_Intf.cpp:
+        * Config_Handlers/XML_Typedefs.h:
+        * Config_Handlers/XML_Typedefs.cpp:
+        * Config_Handlers/ccd.cpp:
+        * Config_Handlers/ccd.hpp:
+        * Config_Handlers/cdd.cpp:
+        * Config_Handlers/cdd.hpp:
+        * Config_Handlers/cdp.cpp:
+        * Config_Handlers/cdp.hpp:
+        * Config_Handlers/cid.hpp:
+        * Config_Handlers/cid.cpp:
+        * Config_Handlers/cpd.cpp:
+        * Config_Handlers/cpd.hpp:
+        * Config_Handlers/iad.cpp:
+        * Config_Handlers/iad.hpp:
+        * Config_Handlers/pcd.hpp:
+        * Config_Handlers/pcd.cpp:
+        * Config_Handlers/toplevel.hpp:
+        * Config_Handlers/toplevel.cpp:
+
+        * Logger/Logger_Service.h:
+
+        * MPC/config/dance.mpb:
+        * MPC/config/dance_deployment_skel.mpb:
+        * MPC/config/dance_deployment_stub.mpb:
+
+        * tests/IDL3_to_XMI:
+
+        * tests/IDL3_to_XMI/IDL2XMI_Test/IDL2XMI_Test.mpc:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/XML_Helper.h:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/XML_Helper.cpp:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/xmlvalidator.cpp:
+
+        * tools/IDL3_to_XMI:
+
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.h:
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.cpp:
+        * tools/IDL3_to_XMI/Literals.h:
+        * tools/IDL3_to_XMI/Literals.cpp:
+        * tools/IDL3_to_XMI/be_produce.cpp:
+
 Wed Sep  8 14:59:18 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * Config_Handlers/*:
