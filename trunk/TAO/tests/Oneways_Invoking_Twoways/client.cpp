@@ -5,8 +5,6 @@
 #include "Server_Task.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Muxing, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
@@ -118,16 +116,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // wait for oneway sends and twoway replies to be processed
       client_task.wait ();
-      
+
       // shutdown server
       sender->shutdown ();
-      
+
       // shutdown ourself
       receiver->shutdown ();
-      
+
       // wait for event loop to finish
       server_task.wait ();
-        
+
       ACE_DEBUG ((LM_DEBUG,
                   "Event Loop finished\n"));
 

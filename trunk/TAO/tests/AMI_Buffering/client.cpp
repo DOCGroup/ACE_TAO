@@ -8,8 +8,6 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(AMI_Buffering, client, "$Id$")
-
 const ACE_TCHAR *server_ior = ACE_TEXT("file://server.ior");
 const ACE_TCHAR *admin_ior = ACE_TEXT("file://admin.ior");
 int iterations = 20;

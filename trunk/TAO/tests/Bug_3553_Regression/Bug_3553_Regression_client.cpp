@@ -6,8 +6,6 @@
 #include "tao/Policy_Current.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(TransportCache, client, "$Id$")
-
 int cache_size = 512;
 int port_nr = 27530;
 

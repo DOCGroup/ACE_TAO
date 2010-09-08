@@ -7,11 +7,6 @@
 
 #include "ace/Manual_Event.h"
 
-ACE_RCSID(DII_Collocation_Tests,
-          Server_Task,
-          "$Id$")
-
-
 Server_Task::Server_Task (const ACE_TCHAR *output,
                           const ACE_TCHAR *simple_test_output,
                           CORBA::ORB_ptr sorb,

@@ -7,8 +7,6 @@
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "../check_supported_priorities.cpp"
 
-ACE_RCSID(Priority_Inversion_With_Bands, server, "$Id$")
-
 static const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 static int ior_count = 1;
 static CORBA::ULong static_threads = 1;

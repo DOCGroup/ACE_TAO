@@ -16,8 +16,6 @@
 
 #include "test_i.h"
 
-ACE_RCSID(TIE, test_i, "$Id$")
-
 // Constructor
 Tie_i::Tie_i (CORBA::Long value)
   : value_ (value)

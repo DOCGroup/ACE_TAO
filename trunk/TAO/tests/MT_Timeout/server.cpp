@@ -4,8 +4,6 @@
 #include "Server_Task.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(MT_Timeout, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int

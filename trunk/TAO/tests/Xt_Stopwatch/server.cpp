@@ -3,11 +3,6 @@
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-
-ACE_RCSID (Xt_Stopwatch,
-           server,
-           "$Id$")
-
 #include "tao/XtResource/XtResource_Loader.h"
 #include <Xm/Xm.h>
 #include "Stopwatch_display.h"

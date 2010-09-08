@@ -28,8 +28,6 @@
 #include "ace/OS_NS_string.h"
 #include "tao/PortableServer/AdapterActivatorC.h"
 
-ACE_RCSID(Adapter_Activator, server, "$Id$")
-
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined (_MSC_VER)

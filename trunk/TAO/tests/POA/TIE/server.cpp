@@ -20,8 +20,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(TIE, server, "$Id$")
-
 const ACE_TCHAR *ior_1 = ACE_TEXT ("ior_1");
 const ACE_TCHAR *ior_2 = ACE_TEXT ("ior_2");
 const ACE_TCHAR *ior_3 = ACE_TEXT ("ior_3");

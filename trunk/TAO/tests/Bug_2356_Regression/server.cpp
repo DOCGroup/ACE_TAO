@@ -19,8 +19,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(AMI, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = 0;
 
 int

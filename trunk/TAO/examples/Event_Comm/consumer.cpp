@@ -3,8 +3,6 @@
 #include "Consumer_Handler.h"
 #include "Consumer_Input_Handler.h"
 
-ACE_RCSID(Consumer, consumer, "$Id$")
-
 class Consumer : public ACE_Event_Handler, public ShutdownCallback
 {
   // = TITLE

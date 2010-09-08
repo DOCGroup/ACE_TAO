@@ -2,8 +2,6 @@
 
 #include "Account_i.h"
 
-ACE_RCSID(Bank, Account_i, "$Id$")
-
 // Constructor
 Account_i::Account_i (void)
 {

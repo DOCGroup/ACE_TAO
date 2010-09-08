@@ -19,8 +19,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
 
-ACE_RCSID(Identity, Identity, "$Id$")
-
 class test_i : public POA_test
 {
 public:

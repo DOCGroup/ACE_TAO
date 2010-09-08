@@ -3,8 +3,6 @@
 #include "ace/Get_Opt.h"
 #include "AMI_Manager.h"
 
-ACE_RCSID(LongUpcalls, ami_server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int

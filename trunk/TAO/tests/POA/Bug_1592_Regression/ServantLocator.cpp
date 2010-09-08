@@ -1,13 +1,7 @@
+// $Id$
+
 #include "ServantLocator.h"
-
-
-ACE_RCSID (ServantLocator,
-           ServantLocator,
-           "$Id$")
-
-
 #include "test_i.h"
-
 
 extern CORBA::Boolean receive_request_service_contexts_called;
 extern CORBA::Boolean ending_interception_point_called;

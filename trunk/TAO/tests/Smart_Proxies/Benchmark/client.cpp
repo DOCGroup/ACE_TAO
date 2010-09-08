@@ -27,10 +27,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID (Benchmark,
-           client,
-           "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
 int register_smart_proxy = 1;

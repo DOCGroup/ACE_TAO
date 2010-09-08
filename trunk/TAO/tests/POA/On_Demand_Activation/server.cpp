@@ -20,8 +20,6 @@
 #include "Servant_Locator.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(On_Demand_Activation, server, "$Id$")
-
 static const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 
 static int

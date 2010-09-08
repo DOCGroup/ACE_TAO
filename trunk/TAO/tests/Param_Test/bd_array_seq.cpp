@@ -19,10 +19,6 @@
 #include "helper.h"
 #include "bd_array_seq.h"
 
-ACE_RCSID (Param_Test,
-           bd_array_seq,
-           "$Id$")
-
 const CORBA::ULong MAX_ARRAYSEQ_LEN = 1;
 
 // ************************************************************************

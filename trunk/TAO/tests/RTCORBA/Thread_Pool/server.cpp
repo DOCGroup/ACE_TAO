@@ -8,8 +8,6 @@
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "../check_supported_priorities.cpp"
 
-ACE_RCSID(Thread_Pool, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 int ior_count = 1;
 CORBA::ULong static_threads = 2;

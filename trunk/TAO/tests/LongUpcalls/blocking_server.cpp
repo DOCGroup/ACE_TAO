@@ -3,8 +3,6 @@
 #include "ace/Get_Opt.h"
 #include "Manager.h"
 
-ACE_RCSID(LongUpcalls, blocking_server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int

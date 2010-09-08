@@ -22,10 +22,6 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (IBM1047_ISO8859, 
-           Char_IBM1047_ISO8859_Translator, 
-           "$Id$")
-
 // ****************************************************************
 
 IBM1047_ISO8859::IBM1047_ISO8859 (void)
@@ -84,7 +80,7 @@ IBM1047_ISO8859::read_char_array (ACE_InputCDR& in,
                         ACE_CDR::OCTET_ALIGN,
                         len))
     {
-      for (ACE_CDR::ULong i = 0; i != len; ++i) 
+      for (ACE_CDR::ULong i = 0; i != len; ++i)
         {
           x[i] = (unsigned char)to_IBM1047[(unsigned char)x[i]];
         }
@@ -127,7 +123,7 @@ IBM1047_ISO8859::write_char_array (ACE_OutputCDR& out,
     {
       ACE_OS::memcpy (buf, x, len);
 
-      for (ACE_CDR::ULong i = 0; i != len; ++i) 
+      for (ACE_CDR::ULong i = 0; i != len; ++i)
         {
           buf[i] = (unsigned char)from_IBM1047[(unsigned char)buf[i]];
         }

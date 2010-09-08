@@ -13,12 +13,8 @@
 #include "test_dsi.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(DSI_AMI_Gateway, test_dsi, "$Id$")
-
 void
-DSI_Simple_Server::_dispatch (TAO_ServerRequest &request,
-                         void * //context
-                     )
+DSI_Simple_Server::_dispatch (TAO_ServerRequest &request, void *)
 {
   // No need to do any of this if the client isn't waiting.
   if (request.response_expected ())

@@ -3,10 +3,6 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (TC_Alignment,
-           client,
-           "$Id$")
-
 static const ACE_TCHAR *ior_input_file = ACE_TEXT("file://test.ior");
 
 static obvmod::tcOffset1 *vt1 = 0;

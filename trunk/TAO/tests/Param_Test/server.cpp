@@ -20,10 +20,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (Param_Test,
-           server,
-           "$Id$")
-
 // Parses the command line arguments and returns an error status.
 static FILE *ior_output_file = 0;
 static const ACE_TCHAR *ior_output_filename = ACE_TEXT("test.ior");

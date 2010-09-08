@@ -8,10 +8,6 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "ace/Null_Mutex.h"
 
-ACE_RCSID (DSI,
-           Database_i,
-           "$Id$")
-
 DatabaseImpl::Simpler_Database_Malloc::Simpler_Database_Malloc (void)
   //  : DATABASE_MALLOC ()
 {

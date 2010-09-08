@@ -18,10 +18,6 @@
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (Quoter,
-           Quoter_i,
-           "$Id$")
-
 // Constructor.  Create all the quoter factories.
 
 Quoter_Factory_i::Quoter_Factory_i (size_t num, PortableServer::POA_ptr poa_ptr)

@@ -19,10 +19,6 @@
 
 #include "ami_testS.h"
 
-ACE_RCSID (AMI,
-           simple_client,
-           "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int shutdown_flag = 0;
 int debug = 0;
@@ -74,7 +70,7 @@ public:
       ACE_ERROR ((LM_ERROR,
                   "Error: Callback method <get_yadda> called: result <%d>\n",
                   result));
-      result = 1;                  
+      result = 1;
     };
 
   void get_yadda_excep (::Messaging::ExceptionHolder *excep_holder)
@@ -116,7 +112,7 @@ public:
     {
       ACE_ERROR ((LM_ERROR,
                   "Error: Callback method <set_yadda> called:\n"));
-      result = 1;                  
+      result = 1;
     };
 
   void set_yadda_excep (::Messaging::ExceptionHolder *excep_holder)
@@ -159,7 +155,7 @@ public:
       ACE_ERROR ((LM_ERROR,
                   "Error: Callback method <get_dadda> called: result <%d>\n",
                   result));
-      result = 1;                  
+      result = 1;
     };
 
   void get_dadda_excep (::Messaging::ExceptionHolder *excep_holder)
@@ -271,7 +267,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       CORBA::String_var mystring = CORBA::string_dup ("Hello");
-     
+
       ami_test_var->inout_arg_test (mystring.inout ());
 
       if (shutdown_flag)

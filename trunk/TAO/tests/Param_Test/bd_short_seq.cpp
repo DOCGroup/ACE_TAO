@@ -19,10 +19,6 @@
 #include "helper.h"
 #include "bd_short_seq.h"
 
-ACE_RCSID (Param_Test,
-           bd_short_seq,
-           "$Id$")
-
 // ************************************************************************
 //               Test_Bounded_Short_Sequence
 // ************************************************************************

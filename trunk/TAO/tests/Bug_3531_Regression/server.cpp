@@ -5,8 +5,6 @@
 #include "ace/Task.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID(Bug_2494_Regression, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("file://test.ior");
 const ACE_TCHAR *srv_shutdown_file = ACE_TEXT("server_terminated");
 

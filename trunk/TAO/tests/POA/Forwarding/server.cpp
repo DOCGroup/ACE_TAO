@@ -22,8 +22,6 @@
 #include "Servant_Activator.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(Forwarding, server, "$Id$")
-
 static const ACE_TCHAR *ior_output_file = 0;
 static const ACE_TCHAR *forward_to_ior = 0;
 

@@ -4,8 +4,6 @@
 
 #include "Manager_Handler.h"
 
-ACE_RCSID(LongUpcalls, Manager_Handler, "$Id$")
-
 Manager_Handler::Manager_Handler (Test::Manager_ptr manager,
                                   Test::Controller_ptr controller)
   : manager_ (Test::Manager::_duplicate (manager))

@@ -19,10 +19,6 @@
 #include "helper.h"
 #include "big_union.h"
 
-ACE_RCSID (Param_Test,
-           big_union,
-           "$Id$")
-
 // ************************************************************************
 //               Test_Big_Union
 // ************************************************************************
@@ -130,7 +126,7 @@ Test_Big_Union::reset_parameters (void)
     case 3:
       {
         Param_Test::short_array x;
-        
+
         for (int i = 0; i < 32; ++i)
           {
             x[i] = gen->gen_short ();
@@ -320,7 +316,7 @@ Test_Big_Union::check_validity (void)
         CORBA::Long inout = this->inout_.the_long ();
         CORBA::Long out   = this->out_->the_long ();
         CORBA::Long ret   = this->ret_->the_long ();
-        
+
         if (in != out || in != inout || in != ret)
           {
             return 0;
@@ -337,7 +333,7 @@ Test_Big_Union::check_validity (void)
           this->out_->another_array ();
         Param_Test::short_array_slice* ret_array   =
           this->ret_->another_array ();
-          
+
         for (int i = 0; i != 32; ++i)
           {
             if (in_array[i] != inout_array[i]
@@ -355,7 +351,7 @@ Test_Big_Union::check_validity (void)
         const char* inout = this->inout_.the_string ();
         const char* out   = this->out_->the_string ();
         const char* ret   = this->ret_->the_string ();
-        
+
         if (ACE_OS::strcmp (in,out)
             || ACE_OS::strcmp (in,inout)
             || ACE_OS::strcmp (in,ret))
@@ -402,7 +398,7 @@ Test_Big_Union::check_validity (void)
         CORBA::Short inout_short;
         CORBA::Short out_short;
         CORBA::Short ret_short;
-        
+
         if (!(in >>= in_short)
             || !(inout >>= inout_short)
             || !(out >>= out_short)
@@ -425,7 +421,7 @@ Test_Big_Union::check_validity (void)
         CORBA::Octet inout = this->inout_.the_octet ();
         CORBA::Octet out   = this->out_->the_octet ();
         CORBA::Octet ret   = this->ret_->the_octet ();
-        
+
         if (in != out || in != inout || in != ret)
           {
             return 0;
@@ -438,7 +434,7 @@ Test_Big_Union::check_validity (void)
         CORBA::Char inout = this->inout_.the_char ();
         CORBA::Char out   = this->out_->the_char ();
         CORBA::Char ret   = this->ret_->the_char ();
-        
+
         if (in != out || in != inout || in != ret)
           {
             return 0;
@@ -451,7 +447,7 @@ Test_Big_Union::check_validity (void)
         CORBA::Boolean inout = this->inout_.the_boolean ();
         CORBA::Boolean out   = this->out_->the_boolean ();
         CORBA::Boolean ret   = this->ret_->the_boolean ();
-        
+
         if (in != out || in != inout || in != ret)
           {
             return 0;
@@ -493,7 +489,7 @@ Test_Big_Union::check_validity (void)
           }
 
         CORBA::ULong len = in.seq.length ();
-        
+
         for (CORBA::ULong i = 0; i != len; ++i)
           {
             if (ACE_OS::strcmp (in.seq[i],

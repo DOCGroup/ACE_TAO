@@ -8,8 +8,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
 
-ACE_RCSID(Nested_Upcall_Crash, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int

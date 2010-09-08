@@ -10,8 +10,6 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(Thread_Per_Connection_Latency, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 1000;
 int do_shutdown = 1;

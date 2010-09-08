@@ -21,10 +21,6 @@
 #include "test_i.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (On_Demand_Activation,
-           Servant_Activator,
-           "$Id$")
-
 ServantActivator::ServantActivator (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

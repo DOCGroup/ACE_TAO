@@ -21,8 +21,6 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(Leader_Followers, client, "$Id$")
-
 // Name of file contains ior.
 static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
 

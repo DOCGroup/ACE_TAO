@@ -23,10 +23,6 @@
 
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (IDL_Cubit,
-           Cubit_i,
-           "Cubit_i.cpp,v 1.8 1999/07/07 15:01:28 irfan Exp")
-
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *Cubit_i_Timeprobe_Description[] =

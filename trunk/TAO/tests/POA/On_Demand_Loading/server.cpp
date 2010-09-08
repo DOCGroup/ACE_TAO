@@ -15,8 +15,6 @@
 
 #include "Server_Manager.h"
 
-ACE_RCSID(On_Demand_Loading, server, "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

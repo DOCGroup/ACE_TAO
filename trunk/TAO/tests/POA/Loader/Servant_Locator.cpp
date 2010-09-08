@@ -20,10 +20,6 @@
 #include "Servant_Locator.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (Loader,
-           Servant_Locator,
-           "$Id$")
-
 // Initialization.The dllname is used by the Loactor to load it into
 // memory. The factory function is the point of entry into the dll and
 // is used for obtaining the servant. The garbage_collection_function

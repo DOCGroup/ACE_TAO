@@ -4,8 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "tao/Messaging/Messaging.h"
 
-ACE_RCSID(Hello, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 const ACE_TCHAR *loop_forever_ior = ACE_TEXT ("file://forward_forever.ior");
 bool shutdown_only = false;

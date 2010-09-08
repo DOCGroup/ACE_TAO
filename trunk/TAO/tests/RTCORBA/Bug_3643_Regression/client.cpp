@@ -8,8 +8,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_time.h"
 
-ACE_RCSID(Thread_Pool, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT ("file://ior_1");
 int iterations = 1000;
 int shutdown_server = 0;

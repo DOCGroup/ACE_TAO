@@ -6,8 +6,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(Multiple_Inheritance, server, "$Id$")
-
 static ACE_TCHAR *ior_output_file = 0;
 
 Multiple_Inheritance_i::Multiple_Inheritance_i (void)

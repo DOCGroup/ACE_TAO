@@ -6,8 +6,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "testC.h"
 
-ACE_RCSID(MT_Server, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int do_shutdown = 0;
 

@@ -10,12 +10,6 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
 
-
-ACE_RCSID (AMI,
-           client,
-           "$Id$")
-
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 ACE_hrtime_t throughput_base;

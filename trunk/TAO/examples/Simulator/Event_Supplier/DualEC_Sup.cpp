@@ -38,10 +38,6 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID (Event_Supplier,
-           DualEC_Sup,
-           "$Id$")
-
 //FUZZ: disable check_for_lack_ACE_OS
 static const char usage [] =
 "[[-?]\n"

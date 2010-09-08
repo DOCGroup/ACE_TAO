@@ -17,8 +17,6 @@
 #include "tao/ORB_Constants.h"
 #include "PP_Test_i.h"
 
-ACE_RCSID(IDL_Cubit, Cubit_Client, "$Id$")
-
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *PP_Test_i_Timeprobe_Description[] =
