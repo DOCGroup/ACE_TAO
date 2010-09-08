@@ -173,54 +173,6 @@ test_already_connected_exception (::Components::Receptacles_ptr rec,
   return 0;
 }
 
-#if !defined (CCM_LW)
-int
-test_get_connections (::Components::Receptacles_ptr rec)
-{
-  ::Components::ConnectionDescriptions descriptions;
-  try
-    {
-      descriptions = rec->get_connections ("use_cif_foo");
-      for (::CORBA::ULong i = 0; i < descriptions.length (); ++i)
-        {
-          ::Components::ConnectionDescription description = descriptions[i];
-
-        }
-    }
-  catch (const ::Components::InvalidName &)
-    {
-      ACE_ERROR ((LM_ERROR, "Receptacle test_get_connections - "
-                            "Error: Received InvalidName "
-                            "exception during invocation of "
-                            "get_connections.\n"));
-    }
-  catch (...)
-    {
-      ACE_ERROR ((LM_ERROR, "Receptacle test_get_connections - "
-                            "Error: exception during invocation of "
-                            "get_connections.\n"));
-    }
-
-  // test invalid name exception during invocation of get_connections
-  try
-    {
-      descriptions = rec->get_connections ("use_cif_foo_invalid_name");
-    }
-  catch (const ::Components::InvalidName &)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_connections - "
-                            "Received expected InvalidName "
-                            "exception during connect\n"));
-    }
-  catch (...)
-    {
-      ACE_ERROR ((LM_ERROR, "Receptacle test_get_connections - "
-                            "Error: exception during invocation of "
-                            "get_connections.\n"));
-    }
-}
-#endif
-
 int
 run_test (::Components::Receptacles_ptr rec,
           ::CORBA::Object_ptr facet)
@@ -235,16 +187,12 @@ run_test (::Components::Receptacles_ptr rec,
 //       TODO:
 //       ret += test_invalid_connection_exception ();
 //       ret += test_exceeded_limit_exception ();
+
 #if !defined (CCM_LW)
-      ret += test_get_connections (rec);
-//           ConnectionDescriptions get_connections (in FeatureName name)
-             //raises (InvalidName);
-//       #if !defined (CCM_LW)
-//           ReceptacleDescriptions get_all_receptacles ();
-//       #endif
-//       #if !defined (CCM_LW)
-//           ReceptacleDescriptions get_named_receptacles (in NameList names)
-//             raises (InvalidName);
+//       get_connections is not implement->don't test.
+//       ReceptacleDescriptions get_all_receptacles ();
+//       ReceptacleDescriptions get_named_receptacles (in NameList names)
+//         raises (InvalidName);
 #endif
     }
   catch (...)
