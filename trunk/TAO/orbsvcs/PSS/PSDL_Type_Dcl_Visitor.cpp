@@ -4,7 +4,7 @@
 #include "PSDL_Type_Dcl_Visitor.h"
 #include "PSDL_Stream.h"
 
-ACE_RCSID (PSS, PSDL_Type_Dcl_Visitor, "$Id$")
+
 
 TAO_PSDL_Type_Dcl_Visitor::TAO_PSDL_Type_Dcl_Visitor (void)
 {

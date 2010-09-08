@@ -3,7 +3,7 @@
 #include "Client_i.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(Time, client, "$Id$")
+
 
 // This function runs the Time Service client test.
 

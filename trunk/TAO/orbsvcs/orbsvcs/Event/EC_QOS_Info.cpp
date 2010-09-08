@@ -6,4 +6,4 @@
 #include "orbsvcs/Event/EC_QOS_Info.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_QOS_Info, "$Id$")
+

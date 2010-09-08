@@ -3,7 +3,7 @@
 #include "orbsvcs/Trader/Trader_Utils.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(Trader, Trader_Utils, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -2,7 +2,7 @@
 
 #include "orbsvcs/Event/EC_TPC_ProxyConsumer.h"
 
-ACE_RCSID(Event, EC_TPC_ProxyConsumer, "$Id$")
+
 
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "orbsvcs/Event/EC_TPC_Dispatching.h"

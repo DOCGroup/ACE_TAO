@@ -2,7 +2,7 @@
 
 #include "SLevel1_TestC.h"
 
-ACE_RCSID (SecurityLevel1, client, "$Id$")
+
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 

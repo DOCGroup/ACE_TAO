@@ -4,7 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "TestC.h"
 
-ACE_RCSID(Bug_3444_Regression, client, "$Id$")
+
 
 const ACE_TCHAR *ior_server = 0;
 

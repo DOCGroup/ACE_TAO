@@ -2,7 +2,7 @@
 
 #include "Offer_Importer.h"
 
-ACE_RCSID(Trading, Offer_Importer, "$Id$")
+
 
 TAO_Offer_Importer::TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
                                         CORBA::Boolean verbose)

@@ -4,7 +4,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(Trading, Offer_Exporter, "$Id$")
+
 
 TAO_Offer_Exporter::
 TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,

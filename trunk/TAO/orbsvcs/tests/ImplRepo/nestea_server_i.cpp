@@ -11,7 +11,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(ImplRepo, nestea_server_i, "$Id$")
+
 
 // The file to save the persistent state to.
 const ACE_TCHAR NESTEA_DATA_FILENAME[] = ACE_TEXT("nestea.dat");

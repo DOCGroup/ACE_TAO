@@ -13,7 +13,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID(EC_Tests_Performance, Latency, "$Id$")
+
 
 int iterations = 1000;
 int do_dump_history = 0;

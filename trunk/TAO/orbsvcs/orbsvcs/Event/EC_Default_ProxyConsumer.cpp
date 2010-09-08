@@ -6,7 +6,7 @@
 #include "orbsvcs/Event/EC_Supplier_Filter.h"
 #include "ace/Reverse_Lock_T.h"
 
-ACE_RCSID(Event, EC_Default_ProxyConsumer, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

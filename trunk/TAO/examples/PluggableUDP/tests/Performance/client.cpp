@@ -29,7 +29,7 @@
 // executable and initialized for static builds.
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(Performance, client, "$Id$")
+
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 ACE_UINT32 burst_messages = 1000;

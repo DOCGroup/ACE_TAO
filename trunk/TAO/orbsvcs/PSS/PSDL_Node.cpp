@@ -10,7 +10,7 @@
 #include "PSDL_Stream.h"
 #include "tao/CORBA_String.h"
 
-ACE_RCSID (PSS, PSDL_Node, "$Id$")
+
 
 TAO_PSDL_Node::TAO_PSDL_Node (void)
   : identifiers_ (),

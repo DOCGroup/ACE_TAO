@@ -1,7 +1,7 @@
 // $Id$
 #include "Factories_Define.h"
 
-ACE_RCSID(lib, TAO_Notify_Tests_Factories_Define, "$Id$")
+
 
 #include "Name.h"
 #include "Command_Factory_T.h"

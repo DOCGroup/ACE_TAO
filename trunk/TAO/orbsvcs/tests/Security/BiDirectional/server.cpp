@@ -6,7 +6,7 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"
 
-ACE_RCSID(BiDirectional, server, "$Id$")
+
 
 const ACE_TCHAR *ior_output_file = 0;
 int no_iterations = 10;

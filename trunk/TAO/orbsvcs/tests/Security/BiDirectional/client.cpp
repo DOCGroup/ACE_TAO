@@ -9,7 +9,7 @@
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 
-ACE_RCSID(BiDirectional, client, "$Id$")
+
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 

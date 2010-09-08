@@ -8,7 +8,7 @@
  */
 #include "Echo.h"
 
-ACE_RCSID(Notify_Crash, Echo, "$Id$")
+
 
 Echo::Echo(CORBA::ORB_ptr orb)
   : orb_(CORBA::ORB::_duplicate(orb))

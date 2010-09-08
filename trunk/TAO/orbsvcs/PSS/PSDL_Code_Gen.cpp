@@ -7,7 +7,7 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/CodecFactory/CodecFactory.h"
 
-ACE_RCSID (PSS, PSDL_Code_Gen, "$Id$")
+
 
 TAO_PSDL_Code_Gen::TAO_PSDL_Code_Gen (CORBA::ORB_ptr orb)
   : file_name_ ("Data_Store"),

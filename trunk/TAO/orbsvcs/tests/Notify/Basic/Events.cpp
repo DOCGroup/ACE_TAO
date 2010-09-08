@@ -5,7 +5,7 @@
 #include "tao/debug.h"
 #include "Events.h"
 
-ACE_RCSID (Notify_Tests, Events, "$Id$")
+
 
 /***************************************************************************/
 

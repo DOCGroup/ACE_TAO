@@ -6,7 +6,7 @@
 #include "SequencePushConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(lib, TAO_SequencePushConsumer, "$Id$")
+
 
 TAO_Notify_Tests_SequencePushConsumer_Traits::TAO_Notify_Tests_SequencePushConsumer_Traits (void)
   :type_ (CosNotifyChannelAdmin::SEQUENCE_EVENT)

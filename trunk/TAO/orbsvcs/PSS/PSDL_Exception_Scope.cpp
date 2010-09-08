@@ -4,7 +4,7 @@
 #include "PSDL_Exception_Scope.h"
 
 
-ACE_RCSID (PSS, PSDL_Exception_Scope, "$Id$")
+
 
 TAO_PSDL_Exception_Scope::TAO_PSDL_Exception_Scope (TAO_PSDL_Scope *parent_scope)
   : scope_map_ (),

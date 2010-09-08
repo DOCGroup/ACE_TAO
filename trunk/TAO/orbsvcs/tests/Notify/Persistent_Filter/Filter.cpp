@@ -4,7 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS.h"
 
-ACE_RCSID(Filter, Filter, "Filter.cpp,v 1.13 2002/05/28 20:24:16 pradeep Exp")
+
 
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"

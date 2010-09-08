@@ -2,7 +2,7 @@
 
 #include "Supplier.h"
 
-ACE_RCSID (Notify, TAO_Notify_Lanes_Supplier, "$Id$")
+
 
 #include "tao/ORB_Core.h"
 

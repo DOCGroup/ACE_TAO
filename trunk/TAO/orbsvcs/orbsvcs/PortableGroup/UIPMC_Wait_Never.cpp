@@ -5,7 +5,7 @@
 #include "tao/Transport.h"
 #include "tao/debug.h"
 
-ACE_RCSID(tao, Wait_On_Leader_Follower, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

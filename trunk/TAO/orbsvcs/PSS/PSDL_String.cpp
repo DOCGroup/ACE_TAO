@@ -5,7 +5,7 @@
 #include "ace/Malloc_Base.h"
 #include "ace/SString.h"
 
-ACE_RCSID (PSS, PSDL_String, "$Id")
+
 
 // Constructor
 TAO_PSDL_String::TAO_PSDL_String ()

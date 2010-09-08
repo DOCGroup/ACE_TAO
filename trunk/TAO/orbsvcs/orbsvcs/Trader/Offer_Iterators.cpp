@@ -2,7 +2,7 @@
 
 #include "orbsvcs/Trader/Offer_Iterators.h"
 
-ACE_RCSID(Trader, Offer_Iterators, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

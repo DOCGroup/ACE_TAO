@@ -18,7 +18,7 @@
 #include "orbsvcs/Sched/SchedEntry.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Sched, SchedEntry, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

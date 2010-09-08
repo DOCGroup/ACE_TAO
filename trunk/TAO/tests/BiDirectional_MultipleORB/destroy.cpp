@@ -22,7 +22,7 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 
-ACE_RCSID(BiDir_Multiple_ORB, destroy, "$Id$")
+
 
 int
 test_with_bidir_poa (int argc,

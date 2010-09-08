@@ -9,7 +9,7 @@
 #include "PSDL_Enum_Type_Visitor.h"
 #include "PSDL_Exception_Visitor.h"
 
-ACE_RCSID (PSS, PSDL_Visitor_Factory, "$Id$")
+
 
 TAO_PSDL_Visitor_Factory::TAO_PSDL_Visitor_Factory (void)
 {

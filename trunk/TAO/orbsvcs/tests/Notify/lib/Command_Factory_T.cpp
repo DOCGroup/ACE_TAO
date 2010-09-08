@@ -5,7 +5,7 @@
 
 #include "Command_Factory_T.h"
 
-ACE_RCSID(Notify, TAO_Command_Factory_T, "$Id$")
+
 
 #include "ace/Dynamic_Service.h"
 #include "tao/debug.h"

@@ -12,7 +12,7 @@
 #include "PSDL_Stream.h"
 #include "ace/OS_NS_ctype.h"
 
-ACE_RCSID (PSS, PSDL_Scope, "$Id$")
+
 
 #undef INCREMENT
 #define INCREMENT 40

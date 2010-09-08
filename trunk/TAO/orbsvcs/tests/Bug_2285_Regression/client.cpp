@@ -7,7 +7,7 @@
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 #include "Hello.h"
 
-ACE_RCSID(Hello, client, "$Id$")
+
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 

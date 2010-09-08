@@ -16,7 +16,7 @@
 #include "Criteria_Evaluator.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(LifeCycle_Service, Criteria_Evaluator, "$Id$")
+
 
 Criteria_Evaluator::Criteria_Evaluator (const CosLifeCycle::Criteria &criteria)
 : criteria_ (criteria)

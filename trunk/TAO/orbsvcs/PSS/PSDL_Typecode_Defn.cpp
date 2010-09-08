@@ -3,7 +3,7 @@
 #include "PSDL_Typecode_Defn.h"
 #include "PSDL_Stream.h"
 
-ACE_RCSID(be_visitor_typecode, typecode_defn, "$Id$")
+
 
 
 TAO_PSDL_Typecode_Defn::TAO_PSDL_Typecode_Defn ()
