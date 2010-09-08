@@ -1,3 +1,10 @@
+Wed Sep  8 15:30:34 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/ciao_tests.lst:
+        * tests/DAnCE:
+
+          Moved CIAO specific tests from DAnCE.
+
 Wed Sep  8 15:11:44 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/Hello/descriptors/shs.ciao.localityconfig:

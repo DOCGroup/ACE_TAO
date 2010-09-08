@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef SIMPLE_PROVIDER_IDL
+#define SIMPLE_PROVIDER_IDL
+
+#include "SimpleCommon.idl"
+#include "Components.idl"
+
+module Simple
+{
+  component SimpleProvider
+  {
+    provides Trigger trig;
+  };
+
+  home SimpleProviderHome manages SimpleProvider
+  {
+  };
+};
+
+#endif /*SIMPLE_PROVIDER_IDL*/
