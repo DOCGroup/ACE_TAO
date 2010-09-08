@@ -10,11 +10,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
-ACE_RCSID (tao,
-           UIPMC_Endpoint,
-           "$Id$")
-
-
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/PortableGroup/UIPMC_Endpoint.inl"
 #endif /* __ACE_INLINE__ */

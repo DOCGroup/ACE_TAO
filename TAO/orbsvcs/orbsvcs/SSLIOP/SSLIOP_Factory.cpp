@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/SSLIOP/SSLIOP_Factory.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Acceptor.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Connector.h"
@@ -12,11 +14,6 @@
 
 #include "ace/SSL/sslconf.h"
 #include "ace/SSL/SSL_Context.h"
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_Factory,
-           "$Id$")
-
 
 // An SSL session id seed value. Needs not be too unique, just somewhat
 // different. See the OpenSSL manual

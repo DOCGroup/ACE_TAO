@@ -5,10 +5,6 @@
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (FtRtEvent,
-           PushConsumer,
-           "$Id$")
-
 PushConsumer_impl::PushConsumer_impl(CORBA::ORB_ptr orb)
 : orb_(CORBA::ORB::_duplicate(orb))
 {

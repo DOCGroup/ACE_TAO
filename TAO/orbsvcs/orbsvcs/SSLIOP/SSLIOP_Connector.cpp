@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/SSLIOP/SSLIOP_Connector.h"
 #include "orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Profile.h"
@@ -18,10 +20,6 @@
 #include "tao/Profile_Transport_Resolver.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/os_include/os_netdb.h"
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_Connector,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

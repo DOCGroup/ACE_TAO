@@ -1,9 +1,6 @@
+// $Id$
+
 #include "orbsvcs/PortableGroup/PG_Null_Property_Validator.h"
-
-
-ACE_RCSID (PortableGroup,
-           PG_Null_Property_Validator,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

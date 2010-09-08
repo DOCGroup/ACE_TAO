@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "ace/Get_Opt.h"
 #include "test_i.h"
@@ -13,10 +14,6 @@
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
-
-ACE_RCSID (ForwardRequest,
-           server,
-           "$Id$")
 
 const ACE_TCHAR *ior_file = 0;
 

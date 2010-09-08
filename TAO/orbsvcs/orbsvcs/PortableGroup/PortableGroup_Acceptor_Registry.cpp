@@ -11,10 +11,6 @@
 #include "tao/Leader_Follower.h"
 #include "tao/SystemException.h"
 
-ACE_RCSID (PortableGroup,
-           PortableGroup_Acceptor_Registry,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PortableGroup_Acceptor_Registry::TAO_PortableGroup_Acceptor_Registry (void)

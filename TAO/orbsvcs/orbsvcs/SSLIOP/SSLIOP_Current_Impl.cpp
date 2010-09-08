@@ -1,12 +1,8 @@
+// $Id$
+
 #include "orbsvcs/SSLIOP/SSLIOP_Current_Impl.h"
 
 #include "ace/OS_String.h"
-
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_Current_Impl,
-           "$Id$")
-
 
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/SSLIOP/SSLIOP_Current_Impl.inl"

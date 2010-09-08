@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
 #include "orbsvcs/PortableGroup/PG_GenericFactory.h"
 #include "orbsvcs/PortableGroup/PG_conf.h"
@@ -8,11 +10,6 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Reverse_Lock_T.h"
-
-ACE_RCSID (PortableGroup,
-           PG_ObjectGroupManager,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -222,7 +219,7 @@ TAO_PG_ObjectGroupManager::remove_member (
 
   if (to_be_removed == -1)
     throw PortableGroup::ObjectGroupNotFound ();
- 
+
   // remove the element from the array and resize the array.
   const size_t groups_len = groups->size ();
   size_t j;
@@ -779,7 +776,7 @@ TAO_PG_ObjectGroupManager::member_count (
     bool is_alive)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
-  
+
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
   if (this->object_group_map_.find (oid, group_entry) != 0)
     throw PortableGroup::ObjectGroupNotFound ();
@@ -788,13 +785,13 @@ TAO_PG_ObjectGroupManager::member_count (
   TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
 
   TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
-  
+
   for (TAO_PG_MemberInfo_Set::iterator i = member_infos.begin ();
        i != end;
        ++i)
   {
     if ((*i).is_alive == is_alive)
-    { 
+    {
       ++count;
     }
   }
@@ -809,7 +806,7 @@ TAO_PG_ObjectGroupManager::is_alive (
     CORBA::Object_ptr member)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
-  
+
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
   if (this->object_group_map_.find (oid, group_entry) != 0)
     throw PortableGroup::ObjectGroupNotFound ();
@@ -817,25 +814,25 @@ TAO_PG_ObjectGroupManager::is_alive (
   TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
 
   TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
-  
+
   for (TAO_PG_MemberInfo_Set::iterator i = member_infos.begin ();
        i != end;
        ++i)
   {
     if ((*i).member->_is_equivalent (member))
-    { 
+    {
       return (*i).is_alive;
     }
   }
 
-  throw PortableGroup::MemberNotFound (); 
+  throw PortableGroup::MemberNotFound ();
 }
 
 
 void TAO_PG_ObjectGroupManager::remove_inactive_members ()
 {
   TAO_PG_MemberInfo_Set inactive_members;
-  
+
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
     inactive_members = this->inactive_members_;
@@ -884,13 +881,13 @@ TAO_PG_ObjectGroupManager::get_members (bool is_alive)
 }
 
 void
-TAO_PG_ObjectGroupManager::validate_members (CORBA::ORB_ptr orb, 
+TAO_PG_ObjectGroupManager::validate_members (CORBA::ORB_ptr orb,
                                              const TimeBase::TimeT& timeout)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t)TAO_PG_ObjectGroupManager::validate_members start\n")));
-    
+
   /// Get list of active member info.
   TAO_PG_MemberInfo_Set active_members = this->get_members (true);
 
@@ -934,24 +931,24 @@ TAO_PG_ObjectGroupManager::validate_members (CORBA::ORB_ptr orb,
   }
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t)TAO_PG_ObjectGroupManager::validate_members end\n")));
 }
 
 bool
-TAO_PG_ObjectGroupManager::ping (CORBA::ORB_ptr orb, 
-                                 CORBA::Object_var& obj, 
+TAO_PG_ObjectGroupManager::ping (CORBA::ORB_ptr orb,
+                                 CORBA::Object_var& obj,
                                  const TimeBase::TimeT& tt)
 {
   bool status = true;
   if (CORBA::is_nil (obj.in ()))
     throw CORBA::OBJECT_NOT_EXIST ();
-  
+
   // The ping() is used by LoadBalancer which may use RW strategy.
   // The validate thread invokes the _non_existent call to members
   // sequencially. We have to put a timeout on the call in case
   // the client side is not processing ORB requests at this time.
-  // In the event that the timeout exception occurs, we will assume 
+  // In the event that the timeout exception occurs, we will assume
   // that the peer is still around.  If we get any other exception
   // we will say that the member is not available anymore.
   TimeBase::TimeT timeout = tt;

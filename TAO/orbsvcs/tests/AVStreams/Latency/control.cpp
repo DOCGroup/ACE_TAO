@@ -8,10 +8,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/INET_Addr.h"
 
-ACE_RCSID (Latency,
-           ping,
-           "$Id$")
-
 const ACE_TCHAR *ping_ior = ACE_TEXT ("file://ping.ior");
 const ACE_TCHAR *pong_ior = ACE_TEXT ("file://pong.ior");
 const ACE_TCHAR *ping_address = ACE_TEXT ("localhost:12345");

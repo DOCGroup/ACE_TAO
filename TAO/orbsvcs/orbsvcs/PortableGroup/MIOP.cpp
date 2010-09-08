@@ -1,12 +1,10 @@
+// $Id$
+
 #include "orbsvcs/PortableGroup/MIOP.h"
 #include "orbsvcs/PortableGroup/UIPMC_Factory.h"
 #include "ace/Service_Config.h"
 #include "orbsvcs/PortableGroup/PortableGroup_Loader.h"
 #include "orbsvcs/PortableGroup/PG_Object_Adapter_Factory.h"
-
-ACE_RCSID (PortableGroup,
-           UIPMC_Factory,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

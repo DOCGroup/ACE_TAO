@@ -11,10 +11,6 @@
 #include "orbsvcs/Trader/Constraint_Nodes.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Trader,
-           Constraint_Nodes,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
@@ -302,7 +298,7 @@ TAO_Literal_Constraint::TAO_Literal_Constraint (void)
 TAO_Literal_Constraint::
 TAO_Literal_Constraint (const TAO_Literal_Constraint& lit)
   : TAO_Constraint(),
-    type_ (TAO_UNKNOWN) 
+    type_ (TAO_UNKNOWN)
 {
   this->copy (lit);
 }
@@ -796,7 +792,7 @@ operator/ (const TAO_Literal_Constraint& left,
     {
     case TAO_DOUBLE:
       {
-        if ((CORBA::Double) right == 0.0) 
+        if ((CORBA::Double) right == 0.0)
           return TAO_Literal_Constraint ((CORBA::Double) 0.0);
 
         CORBA::Double result = (CORBA::Double) left / (CORBA::Double) right;
@@ -804,7 +800,7 @@ operator/ (const TAO_Literal_Constraint& left,
       }
     case TAO_SIGNED:
       {
-        if (static_cast<CORBA::LongLong> (right) == 0) 
+        if (static_cast<CORBA::LongLong> (right) == 0)
           return TAO_Literal_Constraint (static_cast<CORBA::LongLong> (0));
 
         CORBA::LongLong result = static_cast<CORBA::LongLong> (left) /
@@ -813,7 +809,7 @@ operator/ (const TAO_Literal_Constraint& left,
       }
     case TAO_UNSIGNED:
       {
-        if (static_cast<CORBA::ULongLong> (right) == 0) 
+        if (static_cast<CORBA::ULongLong> (right) == 0)
           return TAO_Literal_Constraint (static_cast<CORBA::ULongLong> (0));
 
         CORBA::ULongLong result = static_cast<CORBA::ULongLong> (left) /

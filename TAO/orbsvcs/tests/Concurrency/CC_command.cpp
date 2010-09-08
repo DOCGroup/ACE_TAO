@@ -26,12 +26,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 
-
-ACE_RCSID (Concurrency,
-           CC_command,
-           "$Id$")
-
-
 CC_Command::~CC_Command(void)
 {
 }

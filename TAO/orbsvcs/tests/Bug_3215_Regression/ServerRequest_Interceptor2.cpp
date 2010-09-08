@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "ServerRequest_Interceptor2.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
@@ -16,10 +17,6 @@
 #include "tao/PI/PIForwardRequestC.h"
 
 int invocation_count = 0;
-
-ACE_RCSID (FaultTolerance,
-           TAO249_ServerRequest_Interceptor2,
-           "$Id$")
 
 TAO249_ServerRequest_Interceptor2::TAO249_ServerRequest_Interceptor2 (void)
 : orb_ (0),

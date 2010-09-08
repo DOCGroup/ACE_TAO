@@ -9,10 +9,6 @@
 #include "ace/Stats.h"
 #include "ace/Throughput_Stats.h"
 
-ACE_RCSID (Latency,
-           ping,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("ping.ior");
 const char *protocol = "RTP/UDP";
 int milliseconds = 100;
