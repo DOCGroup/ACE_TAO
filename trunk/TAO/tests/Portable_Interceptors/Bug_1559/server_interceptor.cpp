@@ -6,10 +6,6 @@
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (Bug_1559,
-           server_interceptor,
-           "$Id$")
-
 const IOP::ServiceId service_id = 0xdeadbeef;
 const char *request_msg = "REQUEST message";
 const char *reply_msg = "REPLY message";

@@ -1,9 +1,6 @@
-//
 // $Id$
-//
-#include "Foo_Bar.h"
 
-ACE_RCSID(Foo_Bar, Foo_Bar, "$Id$")
+#include "Foo_Bar.h"
 
 Foo_Bar::Foo_Bar (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))

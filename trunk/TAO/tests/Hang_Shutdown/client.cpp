@@ -6,8 +6,6 @@
 #include "ace/Task.h"
 #include "ace/Profile_Timer.h"
 
-ACE_RCSID(Hello, client, "$Id$")
-
 namespace Test
 {
   const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");

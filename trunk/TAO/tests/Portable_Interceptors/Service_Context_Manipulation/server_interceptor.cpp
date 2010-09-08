@@ -6,10 +6,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (Service_Context_Manipulation,
-           server_interceptor,
-           "$Id$")
-
 const IOP::ServiceId service_id = 0xdeadbeef;
 const char *request_msg = "The Echo_Request_Interceptor request message";
 const char *reply_msg = "The Echo_Request_Interceptor reply message";

@@ -4,8 +4,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "simple_test_i.h"
 
-ACE_RCSID(tests, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = 0;
 
 int

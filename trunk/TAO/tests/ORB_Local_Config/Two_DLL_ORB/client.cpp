@@ -7,8 +7,6 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Hello, client, "$Id$")
-
 Client_Worker::Client_Worker ()
   : Abstract_Worker (ACE_TEXT ("file://test.ior"))
 {

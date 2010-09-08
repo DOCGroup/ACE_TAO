@@ -8,11 +8,6 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (tests,
-           ORB_DLL,
-           "$Id$")
-
-//
 Abstract_Worker::Abstract_Worker (const ACE_TCHAR *s)
   : ior_file_ (s)
 {

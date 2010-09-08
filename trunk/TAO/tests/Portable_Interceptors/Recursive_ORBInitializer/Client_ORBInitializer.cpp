@@ -6,10 +6,6 @@
 #include "Client_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_RCSID (Recursive_ORBInitializer,
-           Client_ORBInitializer,
-           "$Id$")
-
 Client_ORBInitializer::Client_ORBInitializer (Client_ORBInitializer *second) :
   pre_init_called (0),
   post_init_called (0),

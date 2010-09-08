@@ -7,10 +7,6 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (Codec,
-           client,
-           "$Id$")
-
 CORBA::WChar *
 gen_wstring (CORBA::ULong max_length)
 {

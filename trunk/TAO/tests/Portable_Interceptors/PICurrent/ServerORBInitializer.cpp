@@ -1,14 +1,11 @@
 // -*- C++ -*-
+// $Id$
 
 #include "ServerORBInitializer.h"
 #include "ServerRequestInterceptor.h"
 #include "ClientRequestInterceptor2.h"
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/ORB_Core.h"
-
-ACE_RCSID (PICurrent,
-           ServerORBInitializer,
-           "$Id$")
 
 PortableInterceptor::SlotId slot_id = 2093843221;
 

@@ -6,10 +6,6 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "Server_ORBInitializer.h"
 
-ACE_RCSID (Bug_2510_Regression,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int

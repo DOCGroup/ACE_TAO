@@ -15,8 +15,6 @@
 #include "ace/Dynamic_Service.h"
 #include "Service_Configuration_Per_ORB.h"
 
-ACE_RCSID (tests, server, "$Id$")
-
 // Currently there is no way to test SSLIOP in this test due to a problem
 // described in bug 3418.
 //#define DO_1459_SSLIOP_TEST 1

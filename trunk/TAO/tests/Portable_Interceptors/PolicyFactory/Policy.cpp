@@ -5,11 +5,6 @@
 #include "tao/SystemException.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (PolicyFactory,
-           Policy,
-           "$Id$")
-
-
 Policy::Policy (CORBA::ULong val)
   : value_ (val)
 {

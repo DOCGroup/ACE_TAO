@@ -1,12 +1,8 @@
 // -*- C++ -*-
-//
 // $Id$
-//
 
 #include "Interceptor_Type.h"
 #include "ace/OS_String.h"
-
-ACE_RCSID (Benchmark, Interceptor_Type, "$Id$")
 
 void get_interceptor_type (int argc, ACE_TCHAR *argv[],
                            int &interceptor_type)

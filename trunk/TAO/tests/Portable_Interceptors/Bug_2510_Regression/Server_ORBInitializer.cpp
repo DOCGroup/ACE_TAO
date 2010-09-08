@@ -1,14 +1,8 @@
 // -*- C++ -*-
-//
 // $Id$
-//
 
 #include "Server_ORBInitializer.h"
 extern PortableInterceptor::SlotId slotId;
-
-ACE_RCSID (Bug_2510,
-           Server_ORBInitializer,
-           "$Id$")
 
 Server_ORBInitializer::Server_ORBInitializer (void)
 {

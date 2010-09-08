@@ -8,8 +8,6 @@
 #include "test_dsi.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(DSI_Gateway, test_dsi, "$Id$")
-
 void
 DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request)
 {

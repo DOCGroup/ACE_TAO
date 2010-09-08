@@ -1,16 +1,10 @@
 // -*- C++ -*-
-//
 // $Id$
-//
 
 #include "Server_ORBInitializer.h"
 #include "test_i.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/ORB_Constants.h"
-
-ACE_RCSID (Recursive_ORBInitializer,
-           Server_ORBInitializer,
-           "$Id$")
 
 Server_ORBInitializer::Server_ORBInitializer (void)
 {
