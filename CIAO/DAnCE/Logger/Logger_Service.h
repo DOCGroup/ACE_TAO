@@ -2,7 +2,7 @@
 #ifndef LOGGER_SERVICE_H_
 #define LOGGER_SERVICE_H_
 
-#include "DAnCE/Logger/DAnCE_Logger_Export.h"
+#include "Logger/DAnCE_Logger_Export.h"
 #include "ace/Service_Object.h"
 
 namespace DAnCE

@@ -1,3 +1,15 @@
+Wed Sep  8 15:04:34 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/dance.mpb:
+        * MPC/config/dance_deployment_skel.mpb:
+        * MPC/config/dance_deployment_stub.mpb:
+
+          Removed references to CIAO_ROOT.
+
+        * Logger/Logger_Service.h:
+
+          Fallout from above change.
+
 Wed Sep  8 15:03:22 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/IDL3_to_XMI:
