@@ -12,10 +12,6 @@
 #include "EC_Destroyer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC,
-           EC_Destroyer,
-           "$Id$")
-
 EC_Destroyer::EC_Destroyer (RtecEventChannelAdmin::EventChannel_ptr ec)
   :  ec_ (RtecEventChannelAdmin::EventChannel::_duplicate (ec))
 {

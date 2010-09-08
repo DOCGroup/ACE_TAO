@@ -14,10 +14,6 @@
 #include "SyncScope_Setup.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC,
-           SyncScope_Setup,
-           "$Id$")
-
 SyncScope_Setup::SyncScope_Setup (CORBA::ORB_ptr orb,
                                   Messaging::SyncScope value)
 {

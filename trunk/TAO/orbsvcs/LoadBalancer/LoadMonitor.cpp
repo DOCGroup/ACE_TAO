@@ -1,3 +1,5 @@
+// $Id$
+
 #include "Push_Handler.h"
 #include "Monitor_Signal_Handler.h"
 
@@ -10,12 +12,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_strings.h"
-
-
-ACE_RCSID (LoadBalancer,
-           LoadMonitor,
-           "$Id$")
-
 
 static const ACE_TCHAR * location_id = 0;
 static const ACE_TCHAR * location_kind = 0;

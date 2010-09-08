@@ -1,9 +1,7 @@
+// $Id$
+
 #include "ace/Log_Msg.h"
 #include "client_i.h"
-
-ACE_RCSID (Callback,
-           client_i,
-           "$Id$")
 
 client_i::client_i (server_ptr s)
   : server_ (server::_duplicate (s))

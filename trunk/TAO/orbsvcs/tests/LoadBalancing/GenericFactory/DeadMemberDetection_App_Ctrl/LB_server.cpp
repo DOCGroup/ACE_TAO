@@ -1,12 +1,10 @@
+// $Id$
+
 #include "LB_server.h"
 #include "Basic.h"
 
 #include "TestC.h"
 #include "ace/OS_NS_stdio.h"
-
-ACE_RCSID (DeadMemberDetection_App_Ctrl,
-           LB_server,
-           "$Id$")
 
 extern const ACE_TCHAR *group_file;
 extern const ACE_TCHAR *group_ior;

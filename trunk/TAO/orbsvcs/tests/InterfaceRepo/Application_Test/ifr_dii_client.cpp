@@ -4,10 +4,6 @@
 #include "ifr_dii_client.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (Application_Test,
-           ifr_dii_client,
-           "$Id$")
-
 IFR_DII_Client::IFR_DII_Client (void)
   : namespace_name (CORBA::string_dup ("warehouse")),
     interface_name (CORBA::string_dup ("inventory")),
@@ -88,7 +84,7 @@ IFR_DII_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("k:nd"));
   int c;
-  
+
   while ((c = opts ()) != -1)
     switch (c)
       {

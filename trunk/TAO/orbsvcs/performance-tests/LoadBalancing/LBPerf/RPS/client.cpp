@@ -11,10 +11,6 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(LoadBalancing,
-          client,
-          "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 100;
 int do_dump_history = 0;

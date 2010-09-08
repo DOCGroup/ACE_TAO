@@ -9,10 +9,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/SString.h"
 
-ACE_RCSID (IFR_Test,
-           Admin_Client,
-           "$Id$")
-
 Admin_Client::Admin_Client (void)
   : debug_ (0),
     all_tests_ (1),

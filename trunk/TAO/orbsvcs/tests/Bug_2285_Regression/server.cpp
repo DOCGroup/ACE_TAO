@@ -11,10 +11,6 @@
 #include "tao/PI/PI.h"
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_RCSID (Hello,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
 

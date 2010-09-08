@@ -1,9 +1,7 @@
+// $Id$
+
 #include "LB_server.h"
 #include "Basic.h"
-
-ACE_RCSID (Application_Controlled,
-           server,
-           "$Id$")
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

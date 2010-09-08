@@ -12,10 +12,6 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID (LoadBalancing,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 CORBA::Float reject_threshold = 0;

@@ -1,3 +1,5 @@
+// $Id$
+
 #include "Basic_Log_Test.h"
 
 #include "tao/debug.h"
@@ -8,14 +10,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (Basic_Log_Test,
-           Basic_Log_Test,
-           "$Id$")
-
-
 const char* BasicLog_Test::basic_log_factory_name_= "BasicLogFactory";
 const char* BasicLog_Test::naming_sevice_name_ = "NameService";
-
 
 BasicLog_Test::BasicLog_Test(void)
   : logServiceIor_ (0)

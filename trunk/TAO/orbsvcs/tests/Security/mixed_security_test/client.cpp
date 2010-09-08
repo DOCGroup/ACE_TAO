@@ -1,16 +1,11 @@
 // -*- C++ -*-
+// $Id$
 
 #include "ace/Get_Opt.h"
 #include "ace/SString.h"
-
 #include "orbsvcs/SecurityC.h"
-
 #include "FooC.h"
 #include "constants.h"
-
-ACE_RCSID (Secure_Invocation,
-           client,
-           "$Id$")
 
 bool shutdown_server = true;
 

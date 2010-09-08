@@ -1,11 +1,8 @@
+// $Id$
+
 #include "Basic.h"
 #include "LB_server.h"
 #include "ace/OS.h"
-
-
-ACE_RCSID (DeadMemberDetection_App_Ctrl,
-           Basic,
-           "$Id$")
 
 extern int pong_delay;
 
@@ -29,7 +26,7 @@ Basic::Basic (CORBA::Object_ptr object_group,
 
 
 /// Default _non_existent: always returns false.
-CORBA::Boolean 
+CORBA::Boolean
 Basic::_non_existent (void)
 {
   if (pong_delay > 0)

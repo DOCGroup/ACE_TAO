@@ -13,11 +13,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (ImplRepo_Service,
-           Options,
-           "$Id$")
-
-
 #if defined (ACE_WIN32)
 static const HKEY SERVICE_REG_ROOT = HKEY_LOCAL_MACHINE;
 // This string must agree with the one used in Locator_NT_Service.h

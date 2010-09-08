@@ -6,10 +6,6 @@
 #include "tao/PortableServer/POAC.h"
 #include "tao/PortableServer/POAManagerC.h"
 
-ACE_RCSID (Validate_Client,
-           gen_data,
-           "$Id$")
-
 const ACE_TCHAR *output_filename = ACE_TEXT ("persistence.notify.xml");
 
 // must be char
@@ -176,8 +172,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            output_file),
                            1);
       const char * dummy_consumer_proxy = ior.in();
-      
-      ACE_OS::fprintf (output_file, format, 
+
+      ACE_OS::fprintf (output_file, format,
                        dummy_consumer_proxy, dummy_consumer_proxy,
                        dummy_consumer_proxy, dummy_consumer_proxy);
       ACE_OS::fclose (output_file);

@@ -76,10 +76,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ifr_removing_visitor.h"
 #include "ifr_adding_visitor.h"
 
-ACE_RCSID (be,
-           be_produce,
-           "$Id$")
-
 // Clean up before exit, whether successful or not.
 TAO_IFR_BE_Export void
 BE_cleanup (void)

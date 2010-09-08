@@ -5,10 +5,6 @@
 #include "utl_scope.h"
 #include "ast_root.h"
 
-ACE_RCSID (IFR_Service,
-           ifr_removing_visitor,
-           "$Id$")
-
 ifr_removing_visitor::ifr_removing_visitor (void)
 {
 }

@@ -1,14 +1,8 @@
 // -*- C++ -*-
+// $Id$
 
 #include "Foo_i.h"
-
 #include "ace/OS_NS_string.h"
-
-
-ACE_RCSID (Secure_Invocation,
-           Foo_i,
-           "$Id$")
-
 
 Foo_i::Foo_i (CORBA::ORB_ptr orb,
               SecurityLevel3::SecurityCurrent_ptr current)

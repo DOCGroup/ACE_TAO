@@ -6,10 +6,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (Application_Test,
-           ifr_dii_client,
-           "$Id$")
-
 // All the magic quantities are here at the top.
 
 const char *COMPONENT_ID = "IDL:mod/test_component:1.0";

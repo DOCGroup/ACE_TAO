@@ -3,10 +3,6 @@
 
 #include "Admin_Client.h"
 
-ACE_RCSID (IFR_Test,
-           client,
-           "$Id$")
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Admin_Client admin_client;

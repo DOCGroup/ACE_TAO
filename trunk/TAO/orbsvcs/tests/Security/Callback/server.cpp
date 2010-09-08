@@ -1,12 +1,10 @@
+// $Id$
+
 #include "ace/Log_Msg.h"
 #include "server_i.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
-
-ACE_RCSID (Callback,
-           server,
-           "$Id$")
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
 const ACE_TCHAR *cert_file = ACE_TEXT("cacert.pem");

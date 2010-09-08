@@ -3,10 +3,6 @@
 
 #include "idl3_client.h"
 
-ACE_RCSID (Application_Test,
-           client,
-           "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

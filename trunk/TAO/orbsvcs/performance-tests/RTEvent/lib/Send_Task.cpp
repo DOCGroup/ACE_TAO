@@ -13,10 +13,6 @@
 #include "ace/Barrier.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (TAO_PERF_RTEC,
-           Send_Task,
-           "$Id$")
-
 Send_Task::Send_Task (void)
   : iterations_ (0)
   , period_in_usecs_ (0)

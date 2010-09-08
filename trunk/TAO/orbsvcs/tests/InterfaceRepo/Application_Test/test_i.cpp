@@ -5,12 +5,6 @@
 
 #include "ace/SString.h"
 
-
-ACE_RCSID (Application_Test,
-           test_i,
-           "$Id$")
-
-
 CORBA::Boolean
 inventory_i::getCDinfo (const char * artist,
                         char *& title,

@@ -4,10 +4,6 @@
 #include "AddrServer.h"
 #include "ace/INET_Addr.h"
 
-ACE_RCSID(EC_MT_Mcast,
-          AddrServer,
-          "$Id$")
-
 AddrServer::AddrServer (const ACE_INET_Addr& addr)
 {
 #if defined (ACE_HAS_IPV6)

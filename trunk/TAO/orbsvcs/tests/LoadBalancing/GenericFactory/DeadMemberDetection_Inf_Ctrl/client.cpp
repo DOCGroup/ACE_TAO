@@ -1,13 +1,9 @@
+// $Id$
+
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS.h"
 #include "ace/Vector_T.h"
-
-
-ACE_RCSID (DeadMemberDetection_Inf_Ctrl,
-           client,
-           "$Id$")
-
 
 const ACE_TCHAR* group_ior = ACE_TEXT ("file:://group.ior");
 const ACE_TCHAR* direct_obj2_ior = ACE_TEXT ("file://direct_obj2.ior");
@@ -50,8 +46,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 
-int dead_member_rr_test (CORBA::ORB_ptr orb, 
-                         const ACE_TCHAR* group_ior, 
+int dead_member_rr_test (CORBA::ORB_ptr orb,
+                         const ACE_TCHAR* group_ior,
                          Test::Simple_ptr direct_simple)
 {
   int status = 0;
@@ -90,7 +86,7 @@ int dead_member_rr_test (CORBA::ORB_ptr orb,
 
         simple->exit ();
       }
-      else 
+      else
         direct_simple->exit ();
 
       if (iter == 3)
@@ -123,8 +119,8 @@ int dead_member_rr_test (CORBA::ORB_ptr orb,
 }
 
 
-int hang_member_rr_test (CORBA::ORB_ptr orb, 
-                         const ACE_TCHAR* group_ior, 
+int hang_member_rr_test (CORBA::ORB_ptr orb,
+                         const ACE_TCHAR* group_ior,
                          Test::Simple_ptr /*direct_simple*/)
 {
   int status = 0;
@@ -185,7 +181,7 @@ int hang_member_rr_test (CORBA::ORB_ptr orb,
     catch (const ::CORBA::COMM_FAILURE& /*ex*/)
     {
       // It is possible that the LB has not detected the server 2 exit as it hangs
-      // and returns the reference to the hang server(server 2) for 4th iteration. 
+      // and returns the reference to the hang server(server 2) for 4th iteration.
       // So the 4th operation could get the COMM_FAILURE or TRANSIENT exceptions.
       if (iter != 3)
       {
@@ -208,13 +204,13 @@ int hang_member_rr_test (CORBA::ORB_ptr orb,
       throw;
     }
   }
- 
+
   return status;
 }
 
 
-int dead_member_rand_test (CORBA::ORB_ptr orb, 
-                           const ACE_TCHAR* group_ior, 
+int dead_member_rand_test (CORBA::ORB_ptr orb,
+                           const ACE_TCHAR* group_ior,
                            Test::Simple_ptr /*direct_simple*/)
 {
   int status = 0;
@@ -246,7 +242,7 @@ int dead_member_rand_test (CORBA::ORB_ptr orb,
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Client request handled by object at <%s>\n",
         the_string.in ()));
 
-      // Any picked member will not be picked again since they exit right after 
+      // Any picked member will not be picked again since they exit right after
       // this request.
       for (size_t j = 0; j < locations.size (); ++j)
       {
@@ -254,8 +250,8 @@ int dead_member_rand_test (CORBA::ORB_ptr orb,
         {
           status = 1;
         }
-      }    
-     
+      }
+
       if (status == 0)
         locations.push_back (the_string.in ());
 
@@ -290,8 +286,8 @@ int dead_member_rand_test (CORBA::ORB_ptr orb,
 }
 
 
-int hang_member_rand_test (CORBA::ORB_ptr orb, 
-                           const ACE_TCHAR* group_ior, 
+int hang_member_rand_test (CORBA::ORB_ptr orb,
+                           const ACE_TCHAR* group_ior,
                            Test::Simple_ptr /*direct_simple*/)
 {
   int status = 0;
@@ -329,11 +325,11 @@ int hang_member_rand_test (CORBA::ORB_ptr orb,
         {
           status = 1;
         }
-      }    
-     
+      }
+
       if (status == 0)
         locations.push_back (the_string.in ());
-     
+
      if (iter == 3)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t)Request %d should not complete\n"), iter));
@@ -358,7 +354,7 @@ int hang_member_rand_test (CORBA::ORB_ptr orb,
     catch (const ::CORBA::COMM_FAILURE& /*ex*/)
     {
       // It is possible that the LB has not detected the server 2 exit as it hangs
-      // and returns the reference to the hang server(server 2) for 4th iteration. 
+      // and returns the reference to the hang server(server 2) for 4th iteration.
       // So the 4th operation could get the COMM_FAILURE or TRANSIENT exceptions.
       if (iter != 3)
       {
@@ -426,7 +422,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         else
           status = dead_member_rand_test (orb.in (),group_ior, direct_simple.in ());
       else
-      {    
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t)Invalid strategy \n")));
         status = 1;
       }

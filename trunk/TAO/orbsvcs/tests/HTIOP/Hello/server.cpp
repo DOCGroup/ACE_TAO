@@ -6,10 +6,6 @@
 #include "tao/IORTable/IORTable.h"
 #include "orbsvcs/CosNamingC.h"
 
-ACE_RCSID (Hello,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int

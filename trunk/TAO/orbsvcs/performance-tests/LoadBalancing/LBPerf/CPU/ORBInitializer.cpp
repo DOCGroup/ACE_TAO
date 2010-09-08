@@ -1,14 +1,8 @@
+// $Id$
+
 #include "ORBInitializer.h"
-
 #include "orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h"
-
 #include "tao/ORB_Constants.h"
-
-
-ACE_RCSID (CPU_Loaded,
-           ORBInitializer,
-           "$Id$")
-
 
 ORBInitializer::ORBInitializer (void)
   : load_alert_ ()

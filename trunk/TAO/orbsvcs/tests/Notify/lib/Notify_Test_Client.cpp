@@ -1,11 +1,6 @@
 // $Id$
 
 #include "Notify_Test_Client.h"
-
-ACE_RCSID (lib,
-           Notify_Test_Client,
-           "$Id$")
-
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"
 
