@@ -20,8 +20,6 @@
 
 #include "Wchar_IBM1047_ISO8859_Translator.h"
 
-ACE_RCSID(IBM1047_ISO8859, Wchar_IBM1047_ISO8859_Translator, "$Id$")
-
 // ****************************************************************
 
 WIBM1047_ISO8859::WIBM1047_ISO8859 (void)

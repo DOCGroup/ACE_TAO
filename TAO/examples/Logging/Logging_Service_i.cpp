@@ -3,8 +3,6 @@
 #include "Logging_Service_i.h"
 #include "tao/debug.h"
 
-ACE_RCSID(Logging_Service, Logging_Service_i, "$Id$")
-
 Logger_Server::Logger_Server (void)
   :service_name_ (ACE_TEXT("LoggingService"))
 {

@@ -19,10 +19,6 @@
 
 #include "Servant_Activator.h"
 
-ACE_RCSID (On_Demand_Loading,
-           Servant_Activator,
-           "$Id$")
-
 // Initialization.
 
 ServantActivator_i::ServantActivator_i (CORBA::ORB_ptr orb)

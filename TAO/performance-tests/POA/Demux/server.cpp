@@ -19,9 +19,6 @@
 #include "demux_test_server.h"
 #include "tao/debug.h"
 
-ACE_RCSID(CodeGen, server, "$Id$")
-
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
   // Set TAO_debug_level to 0 to ensure silent running unless

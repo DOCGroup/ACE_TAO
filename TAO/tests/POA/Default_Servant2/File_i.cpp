@@ -20,8 +20,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/PortableServer/PortableServer.h"
 
-ACE_RCSID(Default_Servant, File_i, "$Id$")
-
 // IDL File::System constructor
 FileImpl::System::System (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
   : orb_ (CORBA::ORB::_duplicate (orb)),

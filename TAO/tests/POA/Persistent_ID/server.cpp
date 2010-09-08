@@ -22,8 +22,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "tao/PortableServer/PortableServer.h"
 
-ACE_RCSID(Explicit_Activation, server, "$Id$")
-
 class test_i :
   public virtual POA_test
 {

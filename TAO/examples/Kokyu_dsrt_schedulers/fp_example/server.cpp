@@ -8,8 +8,6 @@
 #include "FP_Scheduler.h"
 #include "Task_Stats.h"
 
-ACE_RCSID(MT_Server, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int nthreads = 2;

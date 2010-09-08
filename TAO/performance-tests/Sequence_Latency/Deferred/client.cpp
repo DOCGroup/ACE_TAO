@@ -17,10 +17,6 @@
 #include "ace/Sample_History.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID (Deferred,
-           client,
-           "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 1000;
 int burst = 10;

@@ -11,10 +11,6 @@
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 
-
-
-ACE_RCSID(Hello, client, "$Id$")
-
 const ACE_TCHAR *ior1 = ACE_TEXT ("file://server1.ior");
 const ACE_TCHAR *ior2 = ACE_TEXT ("file://server2.ior");
 

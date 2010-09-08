@@ -11,8 +11,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(IDL_Cubit, collocation_test, "$Id$")
-
 #define  THE_IOR ACE_TEXT("theior")
 
 struct Barriers

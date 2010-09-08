@@ -4,8 +4,6 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(Time, Middle_i, "$Id$")
-
 Middle_i::Middle_i (CORBA::ORB_ptr orb, ThreeTier_ptr target)
   : orb_(CORBA::ORB::_duplicate (orb))
   , target_(ThreeTier::_duplicate (target))

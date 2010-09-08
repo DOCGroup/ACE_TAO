@@ -4,8 +4,6 @@
 #include "cubit_i.h"
 #include "Task_Client.h"
 
-ACE_RCSID(MT_Cubit, cubit_i, "$Id$")
-
 Cubit_i::Cubit_i (CORBA::ORB_ptr orb,
                   PortableServer::POA_ptr poa)
   : orb_ (CORBA::ORB::_duplicate (orb)),

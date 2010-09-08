@@ -36,8 +36,6 @@
 # include "quantify.h"
 #endif /* ACE_HAS_QUANTIFY */
 
-ACE_RCSID(MT_Cubit, server, "$Id$")
-
 Server::Server (void)
   :argc_ (0),
    argv_ (0),

@@ -6,10 +6,6 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID (FL_Callback,
-           peer,
-           "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://progress.ior");
 int nthreads = 4;
 int interval = 0; // microseconds

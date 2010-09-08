@@ -4,8 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(Throughput, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int

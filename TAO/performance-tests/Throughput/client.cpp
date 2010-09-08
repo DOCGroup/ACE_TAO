@@ -5,8 +5,6 @@
 #include "ace/Get_Opt.h"
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(Throughput, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int message_size  = 2048;
 int message_count = 10 * 1024;

@@ -7,9 +7,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "Content_Iterator_i.h"
 
-ACE_RCSID(SMI_Iterator, Content_Iterator_i, "$Id$")
-
-
 Content_Iterator_i::Content_Iterator_i (const char *pathname,
                                         CORBA::ULongLong file_size)
   : file_ (ACE_TEXT_CHAR_TO_TCHAR(pathname)),

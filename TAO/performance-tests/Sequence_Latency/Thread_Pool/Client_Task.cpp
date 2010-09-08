@@ -4,8 +4,6 @@
 #include "Client_Task.h"
 #include "ace/OS_NS_time.h"
 
-ACE_RCSID(Thread_Pool_Latency, Client_Task, "$Id$")
-
 Client_Task::Client_Task (const ACE_TCHAR *data_type,
                           int size,
                           Test::Roundtrip_ptr roundtrip,

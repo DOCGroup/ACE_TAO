@@ -22,8 +22,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(Multiple_Inheritance, client, "$Id$")
-
 static ACE_TCHAR *ior = 0;
 static ACE_TCHAR *ior_input_file = 0;
 

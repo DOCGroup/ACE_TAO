@@ -6,10 +6,6 @@
 #include "ace/SString.h"
 #include "tao/IORTable/IORTable.h"
 
-ACE_RCSID (Hello,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
 const ACE_TCHAR *ior_output_file2 = ACE_TEXT ("forward_forever.ior");
 

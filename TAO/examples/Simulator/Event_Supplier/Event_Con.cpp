@@ -38,8 +38,6 @@
 
 #include "ace/os_include/os_limits.h"
 
-ACE_RCSID(Event_Supplier, Event_Con, "$Id$")
-
 static const char usage [] =
 "[-? |\n"
 "            [-c <consumers> [4]]\n"

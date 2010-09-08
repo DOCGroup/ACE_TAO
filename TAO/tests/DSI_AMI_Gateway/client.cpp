@@ -5,8 +5,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_RCSID(DSI_Gateway, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://gateway.ior");
 int niterations = 5;
 int do_shutdown = 0;

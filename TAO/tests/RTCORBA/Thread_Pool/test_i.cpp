@@ -5,8 +5,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 
-ACE_RCSID(Thread_Pools, test_i, "$Id$")
-
 test_i::test_i (CORBA::ORB_ptr orb,
                 PortableServer::POA_ptr poa,
                 long msec_sleep)

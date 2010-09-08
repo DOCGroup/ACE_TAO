@@ -4,8 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_RCSID(Bug_2494_Regression, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 int nthreads = 4;
 

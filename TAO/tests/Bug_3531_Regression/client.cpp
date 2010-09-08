@@ -5,8 +5,6 @@
 #include "ace/OS.h"
 #include "testS.h"
 
-ACE_RCSID(Bug_2494_Regression, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int do_shutdown = 0;
 

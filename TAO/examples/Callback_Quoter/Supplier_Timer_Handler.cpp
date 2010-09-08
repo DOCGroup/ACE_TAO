@@ -21,9 +21,6 @@
 
 #include "Supplier_Timer_Handler.h"
 
-
-ACE_RCSID(Callback_Quoter, Supplier, "$Id$")
-
 // The supplier refernce is got so that the mathods in the supplier
 // can be accessed.
 

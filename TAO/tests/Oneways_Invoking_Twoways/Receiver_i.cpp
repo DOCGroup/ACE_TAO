@@ -1,7 +1,5 @@
 #include "Receiver_i.h"
 
-ACE_RCSID(Oneways_Invoking_Twoways, Receiver_i, "$Id$")
-
 Receiver_i::Receiver_i (CORBA::ORB_ptr orb,
                         Test::Sender_ptr sender,
                         CORBA::ULong iter)

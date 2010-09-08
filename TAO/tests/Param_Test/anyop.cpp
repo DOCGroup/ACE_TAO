@@ -27,10 +27,6 @@
 
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (Param_Test,
-           anyop,
-           "$Id$")
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

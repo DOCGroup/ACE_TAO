@@ -24,10 +24,6 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (RootPOA,
-           RootPOA,
-           "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

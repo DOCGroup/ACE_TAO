@@ -1,16 +1,9 @@
-//
 // $Id$
-//
 #include "Server_Task.h"
 #include "TestS.h"
 #include "Hello.h"
 
 #include "ace/Manual_Event.h"
-
-ACE_RCSID(Collocation_Oneway_Tests,
-          Server_Task,
-          "$Id$")
-
 
 Server_Task::Server_Task (const ACE_TCHAR *output,
                           CORBA::ORB_ptr sorb,

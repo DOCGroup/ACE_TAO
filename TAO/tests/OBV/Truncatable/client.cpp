@@ -4,9 +4,7 @@
 #include "ExtraC.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Truncatable, client, "$Id$")
-
-  const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int fail = 0;
 int pretest = 0;

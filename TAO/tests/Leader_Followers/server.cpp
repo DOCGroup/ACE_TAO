@@ -6,8 +6,6 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(Leader_Followers, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 
 int number_of_event_loop_threads = 1;

@@ -5,9 +5,6 @@
 # include "ace/OS_NS_regex.h"
 #endif
 
-ACE_RCSID(Event_Comm, Event_Comm_i, "$Id$")
-
-
 class Consumer_Entry
 {
   // = TITLE

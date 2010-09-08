@@ -4,8 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(AMI_Buffering, admin, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("admin.ior");
 
 int

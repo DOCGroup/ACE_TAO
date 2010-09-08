@@ -6,8 +6,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_sys_time.h"
 
-ACE_RCSID(Blocking_Sync_None, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int iterations = 1000;
 

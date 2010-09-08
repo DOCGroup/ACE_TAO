@@ -23,8 +23,6 @@
 #include "ace/OS.h"
 #include "ace/SString.h"
 
-ACE_RCSID(Default_Servant, client, "$Id$")
-
 static const ACE_TCHAR *iorfile = 0;
 static const ACE_TCHAR *filename = ACE_TEXT ("test");
 static const ACE_TCHAR *message = ACE_TEXT ("POA rules!!");

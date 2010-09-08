@@ -5,8 +5,6 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(IDL_Cubit, Cubit_Server, "$Id$")
-
 Cubit_Server::Cubit_Server (void)
   : ior_output_file_ (0),
     orb_manager_ (),

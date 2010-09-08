@@ -12,8 +12,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID(Activation, server, "$Id$")
-
 int niterations = 10000;
 int do_dump_history = 0;
 ACE_UINT32 gsf;

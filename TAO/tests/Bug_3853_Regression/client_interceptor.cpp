@@ -7,10 +7,6 @@
 extern const ACE_TCHAR *server2_ior;
 extern CORBA::ORB_var orb;
 
-ACE_RCSID (Service_Context_Manipulation,
-           interceptors,
-           "$Id$")
-
 const IOP::ServiceId service_id = 0xdeadbeef;
 
 int isRecursive = 0;

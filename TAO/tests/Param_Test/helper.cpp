@@ -22,10 +22,6 @@
 
 const CORBA::ULong TEST_BUFSIZE = 128;
 
-ACE_RCSID (Param_Test,
-           helper,
-           "$Id$")
-
 Generator::Generator (void)
 {
 }

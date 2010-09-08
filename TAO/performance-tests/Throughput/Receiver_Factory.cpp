@@ -4,8 +4,6 @@
 #include "Receiver_Factory.h"
 #include "Receiver.h"
 
-ACE_RCSID(Throughput, Receiver_Factory, "$Id$")
-
 Receiver_Factory::Receiver_Factory (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

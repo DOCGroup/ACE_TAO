@@ -5,8 +5,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Oneways_Invoking_Twoways, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 int number_of_oneways = 10;
 

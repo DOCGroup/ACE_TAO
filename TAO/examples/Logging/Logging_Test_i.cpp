@@ -11,10 +11,6 @@
 #include "ace/OS_NS_arpa_inet.h"
 #include "ace/OS_NS_sys_time.h"
 
-ACE_RCSID (Logger,
-           Logging_Test_i,
-           "$Id$")
-
   // Constructor
   Logger_Client::Logger_Client (void)
 {

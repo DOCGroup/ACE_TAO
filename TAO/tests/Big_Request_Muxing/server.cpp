@@ -5,8 +5,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
 
-ACE_RCSID(Big_Request_Muxing, server, "$Id$")
-
 namespace
 {
   // defaults only

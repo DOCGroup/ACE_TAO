@@ -19,8 +19,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/SString.h"
 
-ACE_RCSID(DSI, server, "$Id$")
-
 static const ACE_TCHAR *ior_output_file = ACE_TEXT ("ior");
 
 static int

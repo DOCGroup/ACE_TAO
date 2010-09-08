@@ -5,8 +5,6 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(Nested_Event_Loop, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 
 int

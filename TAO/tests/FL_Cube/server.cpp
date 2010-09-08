@@ -4,8 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "tao/FlResource/FlResource_Loader.h"
 
-ACE_RCSID(FL_Cube, server, "$Id$")
-
 #include <FL/Fl.H>
 
 const ACE_TCHAR *ior_output_file = 0;

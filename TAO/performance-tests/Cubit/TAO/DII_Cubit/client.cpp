@@ -31,8 +31,6 @@
 // interested in timing comparisons anyway.
 #include "../IDL_Cubit/cubitC.h"
 
-ACE_RCSID(DII_Cubit, client, "$Id$")
-
   // Some constants used below.
 const CORBA::ULong DEFAULT_LOOP_COUNT = 250;
 const char *DEFAULT_FACTORY_IOR = "ior00";

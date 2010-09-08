@@ -3,10 +3,6 @@
 #include "Hello.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (Hello,
-           server,
-           "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

@@ -21,8 +21,6 @@
 #include "testC.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(Smart_Proxy, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int

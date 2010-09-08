@@ -3,10 +3,6 @@
 //
 #include "Sender.h"
 
-ACE_RCSID(Stack_Recursion,
-          Sender,
-          "$Id$")
-
 Sender::Sender (CORBA::ORB_ptr orb)
   :  message_count_ (0)
   ,  byte_count_ (0)

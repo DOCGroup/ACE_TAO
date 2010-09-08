@@ -239,7 +239,7 @@ static const short ace_cc_yycheck[] = {     4,
 #define ACE_CC_YYSTACK_USE_ALLOCA
 #define alloca __builtin_alloca
 #else /* not GNU C.  */
-#if (!defined (__STDC__) && defined (sparc)) || defined (__sparc__) || defined (__sparc) || defined (__sgi) || (defined (__sun) && defined (__i386))
+#if (!defined (__STDC__) && defined (sparc)) || defined (__sparc__) || defined (__sparc) || (defined (__sun) && defined (__i386))
 #define ACE_CC_YYSTACK_USE_ALLOCA
 #include <alloca.h>
 #else /* not sparc */
@@ -369,7 +369,7 @@ int ace_cc_yydebug;     /*  nonzero means print parse trace */
 #ifndef ACE_CC_YYMAXDEPTH
 #define ACE_CC_YYMAXDEPTH 10000
 #endif
-
+
 /* Define __ace_cc_yy_memcpy.  Note that the size argument
    should be passed with type unsigned int, because that is what the non-GCC
    definitions require.  With GCC, __builtin_memcpy takes an arg
@@ -413,7 +413,7 @@ __ace_cc_yy_memcpy (char *to, char *from, unsigned int count)
 
 #endif
 #endif
-
+
 
 
 /* The user can define ACE_CC_YYPARSE_PARAM as the name of an argument to be passed
@@ -838,7 +838,7 @@ case 30:
 }
    /* the action file gets copied in in place of this dollarsign */
 
-
+
   ace_cc_yyvsp -= ace_cc_yylen;
   ace_cc_yyssp -= ace_cc_yylen;
 #ifdef ACE_CC_YYLSP_NEEDED

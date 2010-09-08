@@ -5,10 +5,6 @@
 #include "tao/PolicyC.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (Bug_3198_Regression,
-           bug_3198_regression,
-           "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT ("corbaloc:iiop:localhost:12345/MyObjectKey");
 
 int

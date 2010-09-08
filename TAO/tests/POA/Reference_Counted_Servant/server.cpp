@@ -24,10 +24,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(Reference_Counted_Servant, server, "$Id$")
-
-  // This is to remove "inherits via dominance" warnings from MSVC.
-  // MSVC is being a little too paranoid.
+// This is to remove "inherits via dominance" warnings from MSVC.
+// MSVC is being a little too paranoid.
 #if defined (_MSC_VER)
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */

@@ -4,8 +4,6 @@
 #include "Crash_Task.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Crash_On_Write, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int

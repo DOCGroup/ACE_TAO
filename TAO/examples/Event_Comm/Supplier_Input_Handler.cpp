@@ -5,8 +5,6 @@
 #include "Supplier_Input_Handler.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID(Supplier, Supplier_Input_Handler, "$Id$")
-
 Supplier_Input_Handler::Supplier_Input_Handler ()
   : notifier_ (0)
 {

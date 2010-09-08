@@ -11,8 +11,6 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_time.h"
 
-ACE_RCSID(Policies, Manipulation, "$Id$")
-
 int nthreads = 5;
 int niterations = 100;
 
