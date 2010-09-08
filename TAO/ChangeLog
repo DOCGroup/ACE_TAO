@@ -1,3 +1,13 @@
+Wed Sep  8 06:00:00 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+          Fixed compile errors
+
+        * tao/Acceptor_Registry.h:
+          Use ACE_Copy_Disabled
+
 Tue Sep  7 18:07:16 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/logWalker/Log.cpp:
