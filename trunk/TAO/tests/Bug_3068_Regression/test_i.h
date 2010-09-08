@@ -20,6 +20,7 @@
 #include "testS.h"
 #include "ace/Task.h"
 #include "ace/Synch.h"
+#include "ace/Condition_T.h"
 
 class Caller : public ACE_Task_Base
 {
