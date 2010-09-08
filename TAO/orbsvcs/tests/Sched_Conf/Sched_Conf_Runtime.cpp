@@ -14,7 +14,7 @@
 
 #include "Sched_Conf_Runtime.h"
 
-ACE_RCSID(Sched_Conf, Sched_Conf_Runtime, "$Id$")
+
 
 
 

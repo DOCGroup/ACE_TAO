@@ -4,7 +4,7 @@
 #include "ace/Read_Buffer.h"
 #include "testC.h"
 
-ACE_RCSID(Send_File, client, "$Id$")
+
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 

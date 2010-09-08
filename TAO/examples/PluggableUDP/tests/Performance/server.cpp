@@ -26,7 +26,7 @@
 #include "tao/Strategies/advanced_resource.h"
 
 
-ACE_RCSID(Performance, server, "$Id$")
+
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 int orb_threads = 1; // Number of threads running inside the ORB.

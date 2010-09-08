@@ -5,7 +5,7 @@
 #include "PSDL_Node.h"
 #include "PSDL_y.h"
 
-ACE_RCSID(PSDL, PSDL_Interpreter, "$Id$")
+
 
 TAO_SYNCH_MUTEX TAO_PSDL_Interpreter::parserMutex__;
 

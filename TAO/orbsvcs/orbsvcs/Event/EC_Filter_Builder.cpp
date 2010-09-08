@@ -7,7 +7,7 @@
 #include "orbsvcs/Event/EC_Filter_Builder.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_Filter_Builder, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

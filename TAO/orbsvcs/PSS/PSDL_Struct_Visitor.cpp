@@ -6,7 +6,7 @@
 #include "PSDL_y.h"
 #include "tao/CORBA_String.h"
 
-ACE_RCSID (PSS, PSDL_Struct_Visitor, "$Id$")
+
 
 TAO_PSDL_Struct_Visitor::TAO_PSDL_Struct_Visitor (void)
   : identifiers_count_ (0),

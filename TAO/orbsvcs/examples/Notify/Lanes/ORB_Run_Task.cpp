@@ -2,7 +2,7 @@
 
 #include "ORB_Run_Task.h"
 
-ACE_RCSID (Notify, TAO_Notify_ORB_Run_Task, "$Id$")
+
 
 TAO_Notify_ORB_Run_Task::TAO_Notify_ORB_Run_Task (TAO_Notify_ORB_Objects& orb_objects)
   : orb_objects_ (orb_objects)

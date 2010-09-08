@@ -5,7 +5,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Task.h"
 
-ACE_RCSID(Big_Reply, server, "$Id$")
+
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 

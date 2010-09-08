@@ -2,7 +2,7 @@
 
 #include "StructuredEvent.h"
 
-ACE_RCSID(RT_Notify, TAO_Notify_Tests_StructuredEvent, "$Id$")
+
 
 TAO_Notify_Tests_StructuredEvent::TAO_Notify_Tests_StructuredEvent (void)
 {

@@ -8,7 +8,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (Notify_Tests, Supplier_Main, "$Id$")
+
 
 static const char NOTIFY_FACTORY_NAME[] = "NotifyEventChannelFactory";
 static const char NAMING_SERVICE_NAME[] = "NameService";

@@ -8,7 +8,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Sched_Params.h"
 
-ACE_RCSID(Event, EC_Thread_Flags , "$Id$")
+
 
 #define TETFSF(flag)  { #flag, flag }
 TAO_EC_Thread_Flags::Supported_Flag TAO_EC_Thread_Flags::supported_flags_[] = {

@@ -5,7 +5,7 @@
 #include "PSDL_Scope.h"
 #include "PSDL_Stream.h"
 
-ACE_RCSID (PSS, PSDL_Module_Visitor, "$Id$")
+
 
 TAO_PSDL_Module_Visitor::TAO_PSDL_Module_Visitor (void)
 {

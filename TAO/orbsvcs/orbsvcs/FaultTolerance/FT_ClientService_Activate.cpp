@@ -6,7 +6,7 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID(FaultTolerance, FT_ClientService_Activate, "$Id$")
+
 
 static bool initialized = false;
 

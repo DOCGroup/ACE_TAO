@@ -3,7 +3,7 @@
 #include "orbsvcs/Event/EC_Dispatching.h"
 #include "orbsvcs/Event/EC_ProxySupplier.h"
 
-ACE_RCSID(Event, EC_Dispatching, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

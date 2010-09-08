@@ -3,7 +3,7 @@
 
 #include "PSDL_Struct_Scope.h"
 
-ACE_RCSID (PSS, PSDL_Struct_Scope, "$Id$")
+
 
 TAO_PSDL_Struct_Scope::TAO_PSDL_Struct_Scope (TAO_PSDL_Scope *parent_scope)
   : struct_scope_ (),

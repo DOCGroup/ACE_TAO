@@ -12,7 +12,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID(EC_Tests_Performance, Latency_Server, "$Id$")
+
 
 const ACE_TCHAR *ior_file_name = ACE_TEXT("ec.ior");
 

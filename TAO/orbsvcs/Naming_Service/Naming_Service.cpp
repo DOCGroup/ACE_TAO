@@ -6,7 +6,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 
-ACE_RCSID(Naming_Service, Naming_Service, "$Id$")
+
 
 // Default Constructor.
 

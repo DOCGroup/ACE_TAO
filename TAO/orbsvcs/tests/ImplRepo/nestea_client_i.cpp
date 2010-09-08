@@ -6,7 +6,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/ACE.h"
 
-ACE_RCSID(ImplRepo, nestea_client_i, "$Id$")
+
 
 // Constructor.
 Nestea_Client_i::Nestea_Client_i (void)

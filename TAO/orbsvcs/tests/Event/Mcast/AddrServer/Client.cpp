@@ -5,7 +5,7 @@
 #include "orbsvcs/RtecEventCommC.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID(Hello, client, "$Id$")
+
 
 const ACE_TCHAR *ior = ACE_TEXT("file://as.ior");
 

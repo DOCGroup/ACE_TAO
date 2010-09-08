@@ -8,7 +8,7 @@
 #include "orbsvcs/ESF/ESF_Peer_Admin.h"
 #include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
 
-ACE_RCSID(Event, EC_SupplierAdmin, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -6,7 +6,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
-ACE_RCSID(Event, ECG_Reconnect_ConsumerEventChannelControl, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -23,7 +23,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_sys_socket.h"
 
-ACE_RCSID(AMI, server, "$Id$")
+
 
 const ACE_TCHAR *ior_output_file = 0;
 

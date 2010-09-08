@@ -7,7 +7,7 @@
 #include "tao/IFR_Client/IFR_Client_Adapter_Impl.h"
 
 
-ACE_RCSID(Hello, client, "$Id$")
+
 
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 

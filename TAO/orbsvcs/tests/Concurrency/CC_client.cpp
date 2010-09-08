@@ -29,7 +29,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_fcntl.h"
 
-ACE_RCSID(Concurrency, CC_client, "$Id$")
+
 
 // Constructor.
 CC_Client::CC_Client (void)

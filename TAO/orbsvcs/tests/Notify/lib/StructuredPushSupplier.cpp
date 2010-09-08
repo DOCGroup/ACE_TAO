@@ -6,7 +6,7 @@
 #include "StructuredPushSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(lib, TAO_StructuredPushSupplier, "$Id$")
+
 
 TAO_Notify_Tests_StructuredPushSupplier_Traits::TAO_Notify_Tests_StructuredPushSupplier_Traits (void)
   :type_ (CosNotifyChannelAdmin::STRUCTURED_EVENT)

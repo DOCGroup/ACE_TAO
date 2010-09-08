@@ -2,7 +2,7 @@
 
 #include "ORB_Objects.h"
 
-ACE_RCSID (Notify, TAO_Notify_ORB_Objects, "$Id$")
+
 
 TAO_Notify_ORB_Objects::TAO_Notify_ORB_Objects (void)
 {

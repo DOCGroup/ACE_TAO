@@ -20,7 +20,7 @@
 #include "orbsvcs/Event/ECG_Mcast_Gateway.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, ECG_Mcast_Gateway, "$Id$")
+
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

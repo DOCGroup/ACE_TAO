@@ -3,7 +3,7 @@
 
 #include "PSDL_Stream.h"
 
-ACE_RCSID (PSS, PSDL_Scope, "$Id$")
+
 
 TAO_PSDL_Stream::TAO_PSDL_Stream (void)
 {
@@ -121,7 +121,7 @@ TAO_PSDL_Stream::operator<< (const char *str)
 {
   ACE_OS::fprintf (this->fp_, "%s", str);
   ACE_OS::fflush (this->fp_);
-  
+
   return *this;
 }
 
@@ -130,7 +130,7 @@ TAO_PSDL_Stream::operator<< (ACE_CString str)
 {
   ACE_OS::fprintf (this->fp_, "%s", str.c_str ());
   ACE_OS::fflush (this->fp_);
-  
+
   return *this;
 }
 
@@ -142,7 +142,7 @@ TAO_PSDL_Stream::operator<< (const unsigned long num)
                    num);
 
   ACE_OS::fflush (this->fp_);
-  
+
   return *this;
 }
 

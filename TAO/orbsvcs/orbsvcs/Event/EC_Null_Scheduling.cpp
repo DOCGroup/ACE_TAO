@@ -8,7 +8,7 @@
 #include "orbsvcs/Event/EC_Null_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_Null_Scheduling, "$Id$")
+
 
 void
 TAO_EC_Null_Scheduling::add_proxy_supplier_dependencies (

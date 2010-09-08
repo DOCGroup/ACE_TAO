@@ -2,7 +2,7 @@
 
 #include "Relay_Consumer.h"
 
-ACE_RCSID(Notify, TAO_Notify_Tests_Relay_Consumer, "$Id$")
+
 
 #include "LookupManager.h"
 

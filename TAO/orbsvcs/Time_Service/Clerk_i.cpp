@@ -11,7 +11,7 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/os_include/os_netdb.h"
 
-ACE_RCSID(Time_Service, Clerk_i, "$Id$")
+
 
 // Constructor.
 

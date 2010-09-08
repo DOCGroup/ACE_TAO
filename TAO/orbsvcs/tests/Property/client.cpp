@@ -19,7 +19,7 @@
 #include "client.h"
 #include "tao/debug.h"
 
-ACE_RCSID(CosPropertyService, client, "$Id$")
+
 
   Client::Client (void)
 {

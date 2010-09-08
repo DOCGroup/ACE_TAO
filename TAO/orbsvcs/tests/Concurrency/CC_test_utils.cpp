@@ -22,7 +22,7 @@
 #include "ace/OS.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(Concurrency, CC_test_utils, "$Id$")
+
 
 char *CC_TestUtils::get_lock_mode_name (CosConcurrencyControl::lock_mode mode)
 {

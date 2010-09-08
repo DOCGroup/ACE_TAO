@@ -4,7 +4,7 @@
 #include "PSDL_Exception_Visitor.h"
 #include "PSDL_Stream.h"
 
-ACE_RCSID (PSS, PSDL_Exception_Visitor, "$Id$")
+
 
 TAO_PSDL_Exception_Visitor::TAO_PSDL_Exception_Visitor (void)
   : exception_name_ ()

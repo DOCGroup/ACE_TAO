@@ -11,7 +11,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 
-ACE_RCSID(EC_Tests_Basic, Schedule, "$Id$")
+
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

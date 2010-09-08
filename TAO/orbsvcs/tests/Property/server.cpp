@@ -18,7 +18,7 @@
 
 #include "server.h"
 
-ACE_RCSID(CosPropertyService, server, "$Id$")
+
 
 // Main program
 

@@ -9,7 +9,7 @@
 #include "ACEXML/common/FileCharStream.h"
 #include "ACEXML/common/XML_Util.h"
 
-ACE_RCSID (ImplRepo_Service, Locator_Repository, "$Id$")
+
 
 static const ACE_TCHAR* STARTUP_COMMAND = ACE_TEXT("StartupCommand");
 static const ACE_TCHAR* WORKING_DIR = ACE_TEXT("WorkingDir");
@@ -138,8 +138,8 @@ public:
   {
   }
   virtual void next_server (const ACE_CString& server_id,
-    const ACE_CString& name, const ACE_CString& aname, 
-    const ACE_CString& cmdline, const Locator_XMLHandler::EnvList& envlst, 
+    const ACE_CString& name, const ACE_CString& aname,
+    const ACE_CString& cmdline, const Locator_XMLHandler::EnvList& envlst,
     const ACE_CString& dir, const ACE_CString& amodestr, int start_limit,
     const ACE_CString& partial_ior, const ACE_CString& ior)
   {
@@ -356,13 +356,13 @@ Locator_Repository::init(const Options& opts)
 int
 Locator_Repository::unregister_if_address_reused (
   const ACE_CString& server_id,
-  const ACE_CString& name, 
+  const ACE_CString& name,
   const char* partial_ior)
 {
   if (this->debug_ > 0)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)ImR: checking reuse address ")
-      ACE_TEXT ("for server \"%s %s\" ior \"%s\"\n"), 
+      ACE_TEXT ("for server \"%s %s\" ior \"%s\"\n"),
       server_id.c_str(), name.c_str (), partial_ior));
   }
 
@@ -373,16 +373,16 @@ Locator_Repository::unregister_if_address_reused (
   for (; siit.next (sientry); siit.advance() )
   {
     Server_Info_Ptr& info = sientry->int_id_;
-  
+
     if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)ImR: iterating - registered server")
-        ACE_TEXT ("\"%s %s\" ior \"%s\"\n"), info->server_id.c_str(), 
+        ACE_TEXT ("\"%s %s\" ior \"%s\"\n"), info->server_id.c_str(),
         info->name.c_str (), info->partial_ior.c_str ()));
     }
 
-    if (info->partial_ior == partial_ior 
-      && name != info->name 
+    if (info->partial_ior == partial_ior
+      && name != info->name
       && info->server_id != server_id)
     {
       if (this->debug_)
@@ -396,7 +396,7 @@ Locator_Repository::unregister_if_address_reused (
       }
     }
   }
-  
+
   int err = 0;
   for (size_t i = 0; i < srvs.size (); ++i)
   {

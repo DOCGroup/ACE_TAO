@@ -4,7 +4,7 @@
 
 #include "ace/Malloc_Base.h"
 
-ACE_RCSID (PSS, PSDL_OctetSeq, "$Id")
+
 
 // Constructor
 TAO_PSDL_OctetSeq::TAO_PSDL_OctetSeq ()

@@ -9,7 +9,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
 
-ACE_RCSID(Bug_1230_Regression, client, "$Id$")
+
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 

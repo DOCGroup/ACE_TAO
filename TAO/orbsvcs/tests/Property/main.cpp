@@ -18,7 +18,7 @@
 #include "orbsvcs/CosPropertyS.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
 
-ACE_RCSID(CosPropertyService, main, "$Id$")
+
 
 class TAO_PropertySet_Tester
 {

@@ -6,7 +6,7 @@
 #include "PushSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(lib, TAO_PushSupplier, "$Id$")
+
 
 TAO_Notify_Tests_PushSupplier_Traits::TAO_Notify_Tests_PushSupplier_Traits (void)
   :type_ (CosNotifyChannelAdmin::ANY_EVENT)
