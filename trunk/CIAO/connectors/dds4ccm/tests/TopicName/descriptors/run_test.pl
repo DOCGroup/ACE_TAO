@@ -194,11 +194,21 @@ foreach $file (@files) {
 
     # Invoke executor - start the application -.
     print "Invoking executor - launch the application -\n";
+
+open (OLDOUT, ">&STDOUT");
+open (STDOUT, ">" . File::Spec->devnull());
+open (OLDERR, ">&STDERR");
+open (STDERR, ">&STDOUT");
+
     $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                                       "-x $file -k file://$ior_emfile");
     $pl_status = $E->SpawnWaitKill (5 * $tg_executor->ProcessStartWaitInterval ());
+
+open (STDOUT, ">&OLDOUT");
+open (STDERR, ">&OLDERR");
+
     if ($pl_status == 0) {
-        print STDERR "ERROR: plan_launcher started while is shouldn't\n";
+        print STDERR "ERROR: plan_launcher didn't return errors.\n";
 
         print "Sleeping 5 seconds to allow task to complete\n";
         sleep (5);
@@ -208,6 +218,9 @@ foreach $file (@files) {
                                           "-k file://$ior_emfile -x $file -s");
         $E->SpawnWaitKill (5 * $tg_executor->ProcessStartWaitInterval ());
         print "Executor finished.\n";
+    }
+    else {
+        print "OK. plan_launcher returned an expected value.\n";
     }
     delete_ior_files ();
     kill_open_processes ();
