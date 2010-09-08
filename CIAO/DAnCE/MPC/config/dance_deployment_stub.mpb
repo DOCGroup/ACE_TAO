@@ -4,7 +4,7 @@
 project : ccm_stub, messaging {
   after += Deployment_stub
   libs  += DAnCE_Deployment_stub
-  includes += $(CIAO_ROOT)/DAnCE
-  idlflags += -I$(CIAO_ROOT)/DAnCE
+  includes += $(DANCE_ROOT)
+  idlflags += -I$(DANCE_ROOT)
   requires += threads
 }

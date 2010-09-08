@@ -4,5 +4,5 @@
 project : dance_deployment_stub, portableserver  {
   after += Deployment_skel
   libs  += DAnCE_Deployment_skel
-  idlflags += -I$(CIAO_ROOT)/DAnCE
+  idlflags += -I$(DANCE_ROOT)
 }
