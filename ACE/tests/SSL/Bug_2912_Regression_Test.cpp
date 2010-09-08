@@ -261,7 +261,7 @@ public:
 
   int write (ACE_Message_Block &mb, size_t bytes_to_write);
   //FUZZ: enable check_for_lack_ACE_OS
-  
+
   int safe_to_delete (void) const;
 
 private:
@@ -446,7 +446,7 @@ Server_Service_Handler::cancel_and_close (void)
 int
 Server_Service_Handler::read_data (void)
 {
-  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_);
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
   ACE_Message_Block *mb = 0;
   ACE_NEW_NORETURN(mb, ACE_Message_Block (DATA_SIZE));
@@ -631,7 +631,7 @@ Acceptor::validate_connection (const ACE_Asynch_Accept::Result& result,
 Server_Service_Handler*
 Acceptor::make_handler (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, 0);
 
   ACE_ASSERT (0 != this->service_handler_);
   Server_Service_Handler *service_handler = this->service_handler_;
@@ -1107,7 +1107,7 @@ Connector::handle_connect (const ACE_Asynch_Connect::Result &result)
 Client_Service_Handler*
 Connector::make_handler (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, 0);
 
   ACE_ASSERT(0 != this->service_handler_);
   Client_Service_Handler *service_handler = this->service_handler_;
