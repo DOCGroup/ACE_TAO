@@ -27,8 +27,6 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Malloc_Base.h"
 
-ACE_RCSID(MT_Client_Test, client, "$Id$")
-
 MT_Client_Task::MT_Client_Task (int argc, ACE_TCHAR **argv,
                                 int client_number)
   : argc_ (argc),

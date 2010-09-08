@@ -3,8 +3,6 @@
 //
 #include "Oneway_Buffering.h"
 
-ACE_RCSID(Oneway_Buffering, Oneway_Buffering, "$Id$")
-
 Oneway_Buffering::Oneway_Buffering (CORBA::ORB_ptr orb,
                                     Test::Oneway_Buffering_Admin_ptr admin)
   : orb_ (CORBA::ORB::_duplicate (orb))

@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "Test_Server_Module.h"
 #include "tao/TAO_Singleton_Manager.h"
@@ -6,11 +7,6 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Argv_Type_Converter.h"
-
-ACE_RCSID (DLL_ORB,
-           Test_Server_Module,
-           "$Id$")
-
 #include "ace/Get_Opt.h"
 
 

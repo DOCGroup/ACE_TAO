@@ -3,8 +3,6 @@
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (QtTests, server, "$Id$")
-
 // who defines index macro?
 #ifdef index
 #undef index

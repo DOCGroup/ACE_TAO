@@ -27,8 +27,6 @@
 // executable and initialized for static builds.
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(AMI, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int

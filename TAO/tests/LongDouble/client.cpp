@@ -5,9 +5,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
 
-
-ACE_RCSID (LongDoubleTest, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
 
 int

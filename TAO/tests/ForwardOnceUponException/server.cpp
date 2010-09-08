@@ -6,8 +6,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "tao/Invocation_Utils.h"
 
-ACE_RCSID(ForwardOnceUponException, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 int expect_servant_calls = 1;
 int raise_exception = TAO::FOE_NON;
@@ -112,7 +110,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t)server: event loop finished\n"));
 
-      // If expect_servant_calls is 0, it means it's the request forward looping case so the 
+      // If expect_servant_calls is 0, it means it's the request forward looping case so the
       // servant continue receiving calls from a single request. We can not determine how many
       // servant calls but it should be more than the number of requests.
       if ((expect_servant_calls == 0 && (server_impl.ncalls () > num_requests))

@@ -4,8 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_RCSID(Forwarding, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 10;
 int nthreads = 1;

@@ -21,8 +21,6 @@
 #include "Object_B_i.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Triangle_Test, Object_B_i, "$Id$")
-
 // CTOR
 Object_B_i::Object_B_i (void)
 {

@@ -11,8 +11,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_signal.h"
 
-ACE_RCSID(Bug_1270_Regression, Echo, "$Id$")
-
 Echo::Echo(CORBA::ORB_ptr orb,
            int abort_counter)
   : orb_(CORBA::ORB::_duplicate(orb))

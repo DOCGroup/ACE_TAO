@@ -1,12 +1,6 @@
 #include "Sender_i.h"
 #include "ace/Manual_Event.h"
 
-
-ACE_RCSID(MT_BiDir,
-          Sender_i,
-          "$Id$")
-
-
 Sender_i::Sender_i (CORBA::ULong no_clients,
                     ACE_Manual_Event &event)
   : event_ (event)

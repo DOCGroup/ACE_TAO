@@ -3,8 +3,6 @@
 #include "ace/Get_Opt.h"
 #include "testC.h"
 
-ACE_RCSID(Native_Exceptions, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 100;
 

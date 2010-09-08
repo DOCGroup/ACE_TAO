@@ -18,8 +18,6 @@
 #include "tao/ORB_Constants.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (tao, Policy_Tester, "$Id$")
-
 Policy_Tester::Policy_Tester (void)
   : rt_object_properties_ (0),
     rt_poa_properties_ (0)

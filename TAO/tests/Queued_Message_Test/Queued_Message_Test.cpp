@@ -17,10 +17,6 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdlib.h"
 
-ACE_RCSID (tests,
-           Queued_Message_Test,
-           "$Id$")
-
 /// Max number of bytes on each message block
 const size_t max_block_length = 256;
 

@@ -24,8 +24,6 @@
 #include "ace/Event_Handler.h"
 #include "ace/Sig_Handler.h"
 
-ACE_RCSID(MT_Client_Test, server, "$Id$")
-
 class TestShutdown : public ACE_Event_Handler
 {
 public:

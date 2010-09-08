@@ -25,10 +25,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (CDR,
-           basic_types,
-           "$Id$")
-
 static int n = 4096;
 static int nloops = 100;
 

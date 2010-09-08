@@ -9,8 +9,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Oneway_Buffering, client, "$Id$")
-
 const ACE_TCHAR *server_ior = ACE_TEXT("file://server.ior");
 const ACE_TCHAR *admin_ior = ACE_TEXT("file://admin.ior");
 int iterations = 20;

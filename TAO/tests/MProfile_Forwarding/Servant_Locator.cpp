@@ -23,9 +23,6 @@
 #include "testC.h"
 #include "ace/OS_NS_string.h"
 
-
-ACE_RCSID(Forwarding, Servant_Locator, "$Id$")
-
 Servant_Locator::Servant_Locator (CORBA::ORB_ptr orb_ptr)
 
   : orb_var_ (CORBA::ORB::_duplicate (orb_ptr))
