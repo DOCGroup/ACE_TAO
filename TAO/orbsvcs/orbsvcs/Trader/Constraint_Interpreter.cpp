@@ -4,11 +4,6 @@
 #include "orbsvcs/Trader/Trader_Constraint_Visitors.h"
 #include "orbsvcs/Trader/Constraint_Tokens.h"
 
-ACE_RCSID (Trader,
-           Constraint_Interpreter,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Constraint_Interpreter::TAO_Constraint_Interpreter (

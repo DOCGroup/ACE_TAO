@@ -9,10 +9,6 @@
 #include "orbsvcs/Event_Utilities.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (orbsvcs,
-           Event_Utilities,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ConsumerQOS_Factory::
@@ -185,7 +181,7 @@ ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
                                  u_int ncalls)
 {
   CORBA::ULong l = this->qos_.publications.length ();
-  
+
   // @@ TODO We may want to consider more efficient growing
   // strategies here, for example, duplicating the size of the
   // buffer, or growing in fixed sized chunks...

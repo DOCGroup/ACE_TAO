@@ -3,12 +3,6 @@
 #include "orbsvcs/SSLIOP/SSLIOP_ClientCredentials.h"
 #include "orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h"
 
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_ClientCredentials,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::ClientCredentials::ClientCredentials (

@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/SSLIOP/SSLIOP_Acceptor.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Profile.h"
 
@@ -11,11 +13,6 @@
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/SSLIOP/SSLIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
-
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_Acceptor,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

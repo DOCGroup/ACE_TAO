@@ -13,10 +13,6 @@
 // Make sure this file is included to avoid permanent forward problems in win32.
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 
-ACE_RCSID (Hello,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
 
@@ -54,7 +50,7 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
   TAO_IOP::TAO_IOR_Manipulation::IORList iors (1);
   iors.length(1);
   iors [0] = CORBA::Object::_duplicate (ref);
-    
+
   CORBA::Object_var new_ref =
     iorm->merge_iors (iors );
 
@@ -130,34 +126,34 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
-      
-      
+
+
       CORBA::PolicyList policies (2);
       policies.length (2);
 
       policies[0] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID
                                                );
-      
+
 
       policies[1] =
         root_poa->create_lifespan_policy (PortableServer::PERSISTENT
                                           );
-      
+
 
       PortableServer::POA_var my_poa =
         root_poa->create_POA ("my_poa",
                               poa_manager.in (),
                               policies
                               );
-      
+
 
       // Creation of the new POA is over, so destroy the Policy_ptr's.
       for (CORBA::ULong i = 0; i < policies.length (); ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
           policy->destroy ();
-          
+
         }
 
 
@@ -169,29 +165,29 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       Hello (orb.in (), Test::Hello::_nil ()),
                       1);
       PortableServer::ServantBase_var holder (hello_impl);
-                      
+
       PortableServer::ObjectId_var server_id =
         PortableServer::string_to_ObjectId ("server_id");
 
       my_poa->activate_object_with_id (server_id.in (),
                                        hello_impl
                                        );
-      
+
 
       CORBA::Object_var hello =
         my_poa->id_to_reference (server_id.in () );
-      
-      
+
+
       CORBA::String_var ior =
         orb->object_to_string (hello.in () );
-      
-      
+
+
       // Get a ref to the IORManipulation object
       CORBA::Object_var IORM =
         orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                          0
                                          );
-      
+
 
       // Narrow
       iorm =
@@ -199,14 +195,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::Object_var iortmp =
         orb->string_to_object (ior.in ());
-      
+
       CORBA::Object_var iogr = make_iogr ("Domain_1", 1, 1, iortmp.in ());
-      
-      
+
+
       CORBA::String_var iorgr_string =
         orb->object_to_string (iogr.in () );
-      
-      
+
+
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
       if (output_file == 0)
@@ -218,17 +214,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::fclose (output_file);
 
       temp_initializer->set_server_iogr (iogr.in ());
-          
+
       poa_manager->activate ();
-      
+
 
       orb->run ();
-      
+
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
       root_poa->destroy (1, 1 );
-      
+
 
       orb->destroy ();
     }
@@ -238,7 +234,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            "Exception caught:");
       return 1;
     }
-  
+
 
   return 0;
 }

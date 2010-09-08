@@ -21,10 +21,6 @@
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 
-ACE_RCSID(IOGRManipluation,
-          IOGRTest,
-          "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

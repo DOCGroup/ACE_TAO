@@ -13,12 +13,6 @@
 #include <openssl/x509.h>
 #include <openssl/pem.h>
 
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_CredentialsAcquirer,
-           "$Id$")
-
-
 // -------------------------------------------------------
 
 #if (defined (TAO_HAS_VERSIONED_NAMESPACE) && TAO_HAS_VERSIONED_NAMESPACE == 1)

@@ -1,14 +1,7 @@
 // $Id$
 
 #include "orbsvcs/Trader/Service_Type_Repository.h"
-
 #include "ace/Lock_Adapter_T.h"
-
-
-ACE_RCSID (Trader,
-           Service_Type_Repository,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

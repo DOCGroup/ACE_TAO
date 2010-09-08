@@ -15,10 +15,6 @@
 /// include this file to statically linked with Transaction Depth
 #include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
 
-ACE_RCSID (FtRtEvent,
-           consumer,
-           "$Id$")
-
 CORBA::ORB_var orb;
 auto_ptr<TAO_FTRTEC::FTEC_Gateway> gateway;
 

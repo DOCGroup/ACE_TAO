@@ -17,11 +17,6 @@
 #include "orbsvcs/PortableGroup/PG_Object_Group.h"
 #include <orbsvcs/PortableGroup/PG_Utils.h>
 
-ACE_RCSID (PortableGroup,
-           PG_Group_Factory,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PG_Group_Factory::PG_Group_Factory ()

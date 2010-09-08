@@ -5,10 +5,6 @@
 #include "tao/TAO_Server_Request.h"
 #include "tao/CDR.h"
 
-ACE_RCSID (PortableGroup,
-           Portable_Group_Map,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Constructor.

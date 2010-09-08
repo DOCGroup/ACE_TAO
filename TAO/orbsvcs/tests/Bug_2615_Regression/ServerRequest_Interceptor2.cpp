@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "ServerRequest_Interceptor2.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
@@ -14,10 +15,6 @@
 #include "Hello.h"
 #include "ace/OS_NS_sys_time.h"
 #include "tao/PI/PIForwardRequestC.h"
-
-ACE_RCSID (FaultTolerance,
-           ServerRequest_Interceptor2,
-           "$Id$")
 
 CORBA::Boolean
 ServerRequest_Interceptor2::has_ft_request_sc_ = false;

@@ -11,10 +11,6 @@
 // The following #include is needed only for the instantiation pragmas.
 #include "orbsvcs/Trader/Trader_Interfaces.h"
 
-ACE_RCSID (Trader,
-           Trader,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Trader_Base::TAO_Trader_Base (void)

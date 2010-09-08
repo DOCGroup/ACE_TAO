@@ -2,12 +2,6 @@
 
 #include "orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h"
 
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_OwnCredentials,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::OwnCredentials::OwnCredentials (X509 *cert, EVP_PKEY *evp)
