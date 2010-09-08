@@ -431,8 +431,7 @@ void TAO::FT_FaultDetectorFactory_i::remove_detector(CORBA::ULong id, TAO::Fault
 // FT_FaultDetectorFactory_i CORBA methods
 
 void TAO::FT_FaultDetectorFactory_i::change_properties (
-    const PortableGroup::Properties & property_set
-  )
+    const PortableGroup::Properties & property_set)
 {
   METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::change_properties);
 
@@ -478,13 +477,12 @@ void TAO::FT_FaultDetectorFactory_i::shutdown (void)
 CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
     const char * type_id,
     const PortableGroup::Criteria & the_criteria,
-    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
-  )
+    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id)
 {
   METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::create_object);
 
   ACE_UNUSED_ARG (type_id); //@@ use it
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->internals_);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->internals_, CORBA::Object::_nil ());
 
   ::TAO::PG_Property_Set decoder (the_criteria);
 

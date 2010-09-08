@@ -593,12 +593,11 @@ void FT_ReplicaFactory_i::remove_replica(CORBA::ULong id, FT_TestReplica_i * rep
 CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
     const char * type_id,
     const PortableGroup::Criteria & the_criteria,
-    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
-  )
+    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id)
 {
   METHOD_ENTRY(FT_ReplicaFactory_i::create_object);
   ACE_UNUSED_ARG (type_id);
-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->internals_, CORBA::Object::_nil ());
 
   ::TAO::PG_Property_Set decoder (the_criteria);
 
