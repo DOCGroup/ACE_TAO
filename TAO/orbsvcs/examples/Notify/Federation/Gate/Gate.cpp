@@ -115,7 +115,7 @@ tracker ()
       // Check for cancellation request.
       //
       {
-        Lock l (mutex_);
+        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
         if (stop_)
           return;
