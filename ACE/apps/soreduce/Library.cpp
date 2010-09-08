@@ -20,8 +20,6 @@
 
 #include "Library.h"
 
-ACE_RCSID(src, Library, "$Id$")
-
 MPC_Generator::MPC_Generator (const ACE_CString& libname)
   : mpcfile_(),
     libname_(libname),
@@ -183,12 +181,12 @@ Library::~Library ()
 {
   delete mpcfile_;
   int i;
-  
+
   for (i = 0; i < num_modules_; delete modules_[i++])
     {
       // No action.
     }
-  
+
   delete [] modules_;
 }
 

@@ -9,8 +9,6 @@
 //#include "DSRT_CV_Dispatcher_Impl_T.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Kokyu, DSRT_CV_Dispatcher_Impl_T, "$Id$")
-
 namespace Kokyu
 {
 

@@ -11,8 +11,6 @@
 #include "Event_Channel.h"
 #include "Gateway.h"
 
-ACE_RCSID(Gateway, Gateway, "$Id$")
-
 class ACE_Svc_Export Gateway : public ACE_Service_Object
 {
   // = TITLE

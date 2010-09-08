@@ -9,8 +9,6 @@
 #include "Local_Locator.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Caching, Local_Locator, "$Id$")
-
 int
 ACE_URL_Local_Locator::url_query (const ACE_URL_Locator::ACE_Selection_Criteria how,
                                   const ACE_URL_Property_Seq *pseq,

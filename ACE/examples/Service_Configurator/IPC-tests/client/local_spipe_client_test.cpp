@@ -9,8 +9,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(client, local_spipe_client_test, "$Id$")
-
 #if defined (ACE_HAS_STREAM_PIPES)
 
 static ACE_TCHAR *program_name;

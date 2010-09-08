@@ -25,8 +25,6 @@
 
 #include "server_loggerd.h"
 
-ACE_RCSID(Acceptor_server, server_loggerd, "$Id$")
-
 // ----------------------------------------
 
 // Return the port number.

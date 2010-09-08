@@ -11,8 +11,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(client, remote_service_directory_test, "$Id$")
-
 // Port number to use.
 static unsigned short port_number = ACE_DEFAULT_SERVICE_PORT;
 

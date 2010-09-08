@@ -2,8 +2,6 @@
 
 #include "connection.h"
 
-ACE_RCSID(stress_testing, connection, "$Id$")
-
 // Make the connection to the WEB server
 
 int connection::connect(char *hostname_opt_port, int tcp_nodelay, int sockbufsiz) {

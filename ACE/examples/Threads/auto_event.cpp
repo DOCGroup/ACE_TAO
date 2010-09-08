@@ -14,8 +14,6 @@
 #include "ace/Singleton.h"
 #include "ace/Thread_Manager.h"
 
-ACE_RCSID(Threads, auto_event, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 // Shared event between reader and writer.  The ACE_Thread_Mutex is
 // necessary to make sure that only one ACE_Auto_Event is created.

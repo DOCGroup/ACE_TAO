@@ -1,7 +1,5 @@
 #include "Signature.h"
 
-ACE_RCSID(src, Signature, "$Id$")
-
 //-----------------------------------------------------------------------------
 
 Signature::Signature (const ACE_CString &name)
@@ -11,13 +9,13 @@ Signature::Signature (const ACE_CString &name)
 {
 }
 
-void 
+void
 Signature::used ()
-{  
+{
   used_++;
 }
 
-int 
+int
 Signature::used_count() const
 {
   return used_;

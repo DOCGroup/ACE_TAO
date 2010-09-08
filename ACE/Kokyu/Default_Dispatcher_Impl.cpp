@@ -7,10 +7,6 @@
 #include "Default_Dispatcher_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Kokyu,
-           Default_Dispatcher_Impl,
-           "$Id$")
-
 namespace Kokyu
 {
 
@@ -42,7 +38,7 @@ Default_Dispatcher_Impl::init_i (const Dispatcher_Attributes& attrs)
 
   //ACE_DEBUG ((LM_DEBUG, "task array auto_ptr set\n" ));
 
-  ConfigInfoSet& config_set = 
+  ConfigInfoSet& config_set =
     const_cast<ConfigInfoSet&> (attrs.config_info_set_);
   ConfigInfoSet::ITERATOR iter(config_set);
   int i=0;
@@ -52,8 +48,8 @@ Default_Dispatcher_Impl::init_i (const Dispatcher_Attributes& attrs)
     {
       //ACE_DEBUG ((LM_DEBUG, "iter = %d\n", i));
       Dispatcher_Task* task=0;
-      ACE_NEW_RETURN (task, 
-                      Dispatcher_Task (*config, 
+      ACE_NEW_RETURN (task,
+                      Dispatcher_Task (*config,
                                        ACE_Thread_Manager::instance()),
                       -1);
       auto_ptr<Dispatcher_Task> tmp_task_auto_ptr (task);
@@ -88,12 +84,12 @@ Default_Dispatcher_Impl::activate_i ()
       Priority_t priority =
         tasks_[i]->get_curr_config_info ().thread_priority_;
 
-      if (this->tasks_[i]->activate (this->thr_creation_flags_, 
+      if (this->tasks_[i]->activate (this->thr_creation_flags_,
                                      1, 1, priority) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
              ACE_TEXT ("EC (%P|%t) cannot activate queue.")
-             ACE_TEXT ("Need superuser privilege to run in RT class\n")),  
+             ACE_TEXT ("Need superuser privilege to run in RT class\n")),
              -1);
         }
     }
@@ -130,7 +126,7 @@ Default_Dispatcher_Impl::dispatch_i (const Dispatch_Command* cmd,
   Dispatcher_Task* task =
     find_task_with_preemption_prio (qos_info.preemption_priority_);
 
-  //@@VS - We should insert this into the lowest prio queue. 
+  //@@VS - We should insert this into the lowest prio queue.
   //How do we know that the last queue is the lowest prio queue.
   if (task == 0)
     task = tasks_[ntasks_-1].get ();
@@ -141,7 +137,7 @@ Default_Dispatcher_Impl::dispatch_i (const Dispatch_Command* cmd,
 int
 Default_Dispatcher_Impl::shutdown_i ()
 {
-  //This needs to be revisited based on mode transition and 
+  //This needs to be revisited based on mode transition and
   //consistent cut through the queues
 
   //post shutdown command to all tasks

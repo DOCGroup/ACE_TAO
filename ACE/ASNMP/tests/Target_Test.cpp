@@ -44,8 +44,6 @@ DAMAGES.
 #include "asnmp/target.h"
 #include "test_config.h"
 
-ACE_RCSID(tests, Target_Test, "$Id$")
-
 /*
   Percieved Problems with this CTarget aka UdpTarget Interface:
 

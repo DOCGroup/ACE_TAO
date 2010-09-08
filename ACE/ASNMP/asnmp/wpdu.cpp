@@ -25,8 +25,6 @@
 #define DEFINE_TRAP_CONSTANTS_
 #include "asnmp/enttraps.h"
 
-ACE_RCSID(asnmp, wpdu, "$Id$")
-
 #define MAX_COMM_STR_LEN 255
 #define V1_COLD_START 0
 #define V1_WARM_START 1

@@ -41,8 +41,6 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_ctype.h"
 
-ACE_RCSID(asnmp, oid, "$Id$")
-
 enum Defs {SNMPBUFFSIZE=300,
            SNMPCHARSIZE=15};          // max oid value (4294967295UL)
 

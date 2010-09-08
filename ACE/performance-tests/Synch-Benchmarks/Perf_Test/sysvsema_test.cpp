@@ -5,8 +5,6 @@
 #include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
 
-ACE_RCSID(Synch_Benchmarks, sysvsema_test, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 class ACE_Svc_Export SYSVSema_Test : public Benchmark_Performance

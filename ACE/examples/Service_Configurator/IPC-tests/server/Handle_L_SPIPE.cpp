@@ -2,8 +2,6 @@
 
 #include "Handle_L_SPIPE.h"
 
-ACE_RCSID(server, Handle_L_SPIPE, "$Id$")
-
 #if !defined (__ACE_INLINE__)
 #include "Handle_L_SPIPE.inl"
 #endif /* __ACE_INLINE__ */

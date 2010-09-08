@@ -42,8 +42,6 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID(trap, trap, "$Id$")
-
 //
 // SNMPv1 Trap Application
 //

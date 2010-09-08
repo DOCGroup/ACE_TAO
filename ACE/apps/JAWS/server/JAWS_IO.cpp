@@ -16,11 +16,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Basic_Types.h"
 
-ACE_RCSID (server,
-           IO,
-           "$Id$")
-
-
 JAWS_IO::JAWS_IO (void)
   : handler_ (0)
 {

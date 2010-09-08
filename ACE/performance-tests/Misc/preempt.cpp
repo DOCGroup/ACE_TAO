@@ -41,8 +41,6 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Misc, preempt, "$Id$")
-
 #if defined (ACE_HAS_THREADS) || ! defined (ACE_LACKS_FORK)
 
 #if defined (ACE_HAS_STHREADS)

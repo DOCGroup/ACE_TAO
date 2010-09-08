@@ -33,8 +33,6 @@
 #include "ace/Process_Manager.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Threads, process_manager, "$Id$")
-
 class ExitHandler : public ACE_Event_Handler
 {
 public:

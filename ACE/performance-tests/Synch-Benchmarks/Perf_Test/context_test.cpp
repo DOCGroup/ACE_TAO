@@ -4,8 +4,6 @@
 #include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
 
-ACE_RCSID(Synch_Benchmarks, context_test, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 class ACE_Svc_Export Context_Test : public Benchmark_Performance

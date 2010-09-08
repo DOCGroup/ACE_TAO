@@ -43,8 +43,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
-ACE_RCSID(asnmp, vb, "$Id$")
-
 //---------------[ Vb::Vb( void) ]--------------------------------------
 // constructor with no arguments
 // makes an vb, unitialized

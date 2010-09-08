@@ -15,8 +15,6 @@
 #include "JAWS_IO.h"
 #include "HTTP_Server.h"
 
-ACE_RCSID(server, HTTP_Server, "$Id$")
-
 // class is overkill
 class JAWS
 {

@@ -42,8 +42,6 @@
 // FUZZ: disable check_for_math_include
 #include <math.h>
 
-ACE_RCSID(TCP, tcp_test, "$Id$")
-
 // Global variables (evil).
 static const u_short DEFPORT = 5050;
 static const int MAXPKTSZ = 65536;

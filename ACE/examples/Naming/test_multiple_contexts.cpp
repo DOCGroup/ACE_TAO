@@ -5,8 +5,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(Naming, test_multiple_contexts, "$Id$")
-
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   static u_long ACE_DEFAULT_BASE_ADDR_1 = (1 * 64 * 1024 * 1024);
