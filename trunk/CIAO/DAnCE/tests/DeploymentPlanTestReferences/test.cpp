@@ -14,7 +14,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
           return 1;
         }
       //parsing plan
-      CIAO::Config_Handlers::XML_File_Intf file (argv[1]);
+      DAnCE::Config_Handlers::XML_File_Intf file (argv[1]);
       file.add_search_path (ACE_TEXT ("DANCE_ROOT"), ACE_TEXT ("/docs/schema/"));
       file.add_search_path (ACE_TEXT ("CIAO_ROOT"), ACE_TEXT ("/docs/schema/"));
       file.add_search_path (ACE_TEXT ("TAO_ROOT"), ACE_TEXT ("/docs/schema/"));

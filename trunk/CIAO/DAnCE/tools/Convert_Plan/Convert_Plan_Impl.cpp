@@ -19,7 +19,7 @@ namespace DAnCE
                          ACE_TEXT ("Passed a null pointer, returning.\n")));
       }
 
-    CIAO::Config_Handlers::XML_File_Intf xml_intf (filename);
+    DAnCE::Config_Handlers::XML_File_Intf xml_intf (filename);
     xml_intf.add_search_path (ACE_TEXT("ACE_ROOT"), ACE_TEXT("/docs/schema/"));
     xml_intf.add_search_path (ACE_TEXT("TAO_ROOT"), ACE_TEXT("/docs/schema/"));
     xml_intf.add_search_path (ACE_TEXT("CIAO_ROOT"), ACE_TEXT("/docs/schema/"));
@@ -29,7 +29,7 @@ namespace DAnCE
       {
         return xml_intf.release_plan ();  
       }
-    catch (const CIAO::Config_Handlers::Config_Error &ex)
+    catch (const DAnCE::Config_Handlers::Config_Error &ex)
       {
         throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (ex.name_.c_str ()),
                                        ACE_TEXT_ALWAYS_CHAR (ex.error_.c_str ()));

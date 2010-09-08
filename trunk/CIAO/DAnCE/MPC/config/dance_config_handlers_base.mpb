@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : ciao_xml_utils, dynamicany, typecodefactory, dance_logger {
+project : dance_xml_utils, dynamicany, typecodefactory, dance_logger {
   after += XSC_XML_Handlers
   libs  += XSC_XML_Handlers
   macros   += XML_USE_PTHREADS

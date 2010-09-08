@@ -5,14 +5,14 @@ project : dance_config_handlers_base, dynamicany, typecodefactory, dance_deploym
   verbatim(gnuace, macros) {
    override no_hidden_visibility = 1
   }
-  after += CIAO_XML_Utils \
+  after += DANnCE_XML_Utils \
            XSC_DynAny_Handler \
            XSC_Config_Handlers \
            XSC_XML_Handlers \
            Package_Config_Handlers \
            XSC_Config_Handlers_Common
 
-  libs  += CIAO_XML_Utils \
+  libs  += DAnCE_XML_Utils \
            XSC_Config_Handlers \
            Package_Config_Handlers \
            XSC_XML_Handlers \

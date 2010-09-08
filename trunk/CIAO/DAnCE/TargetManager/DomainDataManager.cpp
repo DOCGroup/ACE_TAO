@@ -24,7 +24,7 @@ DAnCE::DomainDataManager::init (CORBA::ORB_ptr orb,
                 ACE_TEXT ("Parsing initial domain from file %s\n"),
                 domain_name));
   
-  CIAO::Config_Handlers::XML_File_Intf intf (domain_name);
+  DAnCE::Config_Handlers::XML_File_Intf intf (domain_name);
   ::Deployment::Domain* dmn = intf.release_domain ();
 
   DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE::DomainDataManager::init - ")
