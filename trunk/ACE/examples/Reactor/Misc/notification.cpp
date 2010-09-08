@@ -8,7 +8,7 @@
 #include "ace/Signal.h"
 #include "ace/Truncate.h"
 
-ACE_RCSID(Misc, notification, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 #if defined (CHORUS)

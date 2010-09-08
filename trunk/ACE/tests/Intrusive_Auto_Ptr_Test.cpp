@@ -21,7 +21,7 @@
 #include "ace/Intrusive_Auto_Ptr.h"
 #include "ace/Thread_Manager.h"
 
-ACE_RCSID(tests, Intrusive_Auto_Ptr_Test, "$Id$")
+
 
 class One {
 

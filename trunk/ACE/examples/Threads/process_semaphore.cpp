@@ -10,7 +10,7 @@
 #include "ace/Process_Semaphore.h"
 #include "ace/OS_NS_stdlib.h"
 
-ACE_RCSID(Threads, process_semaphore, "$Id$")
+
 
 static sig_atomic_t done;
 

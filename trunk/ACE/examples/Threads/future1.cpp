@@ -30,7 +30,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Atomic_Op.h"
 
-ACE_RCSID(Threads, future1, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

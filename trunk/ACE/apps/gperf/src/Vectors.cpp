@@ -25,7 +25,7 @@
 
 #include "Vectors.h"
 
-ACE_RCSID(src, Vectors, "$Id$")
+
 
 #if defined (ACE_HAS_GPERF)
 

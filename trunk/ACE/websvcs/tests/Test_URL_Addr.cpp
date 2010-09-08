@@ -3,7 +3,7 @@
 #include "websvcs/lib/URL_Addr.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(WEBSVCS_Test, Test_URL_Addr, "$Id$")
+
 
 void test_http_addr (void);
 void test_ftp_addr (void);

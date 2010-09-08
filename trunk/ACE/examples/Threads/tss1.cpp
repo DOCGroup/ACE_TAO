@@ -25,7 +25,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
 
-ACE_RCSID(Threads, tss1, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

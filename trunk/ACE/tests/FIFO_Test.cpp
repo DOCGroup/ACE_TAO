@@ -32,7 +32,7 @@
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 
-ACE_RCSID(tests, SOCK_Test, "$Id$")
+
 
 #if !defined (ACE_LACKS_MKFIFO)
 

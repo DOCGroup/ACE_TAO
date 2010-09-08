@@ -67,7 +67,7 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Semaphore.h"
 
-ACE_RCSID(TPReactor, TPReactor_Test, "TPReactor_Test.cpp,v 1.27 2000/03/07 17:15:56 schmidt Exp")
+
 
 //  Some debug helper functions
 static int disable_signal (int sigmin, int sigmax);

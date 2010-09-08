@@ -36,7 +36,7 @@
 #include "ace/Atomic_Op.h"
 #include "ace/Null_Mutex.h"
 
-ACE_RCSID(tests, Future_Set_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

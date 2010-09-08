@@ -7,7 +7,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(FIFO_SAP, FIFO_Msg_client, "$Id$")
+
 
 #if defined (ACE_HAS_STREAM_PIPES)
 

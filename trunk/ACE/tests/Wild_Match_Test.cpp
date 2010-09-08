@@ -3,7 +3,7 @@
 #include "ace/ACE.h"
 #include "test_config.h"
 
-ACE_RCSID (tests, Wild_Match_Test, "$Id$")
+
 
 bool match (const char *str, const char *pat, bool cs = true, bool cc = false)
 {

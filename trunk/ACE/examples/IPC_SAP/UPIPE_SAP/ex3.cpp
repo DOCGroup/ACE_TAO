@@ -24,7 +24,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_time.h"
 
-ACE_RCSID(UPIPE_SAP, ex3, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

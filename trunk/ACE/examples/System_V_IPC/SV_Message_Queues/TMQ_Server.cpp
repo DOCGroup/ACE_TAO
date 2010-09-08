@@ -13,7 +13,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(SV_Message_Queues, TMQ_Server, "$Id$")
+
 
 #if defined (ACE_HAS_SYSV_IPC) && !defined(ACE_LACKS_SYSV_SHMEM)
 

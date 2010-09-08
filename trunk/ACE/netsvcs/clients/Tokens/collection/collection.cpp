@@ -26,7 +26,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Service_Config.h"
 
-ACE_RCSID(collection, collection, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 

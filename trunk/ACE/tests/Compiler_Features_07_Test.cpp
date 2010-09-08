@@ -19,7 +19,7 @@
 #include <set>
 #include <string>
 
-ACE_RCSID(tests, Compiler_Features_07_Test, "$Id$")
+
 
 int
 run_main (int, ACE_TCHAR *[])

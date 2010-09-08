@@ -34,7 +34,7 @@ typedef Thread_Bounded_Packet_Relay_Driver::MYCOMMAND DRIVER_CMD;
 typedef ACE_Command_Callback<BPR_Handler_Base, BPR_Handler_Base::ACTION> HANDLER_CMD;
 typedef ACE_Command_Callback<Send_Handler, Send_Handler::ACTION> SEND_HANDLER_CMD;
 
-ACE_RCSID(Bounded_Packet_Relay, Thread_Bounded_Packet_Relay, "$Id$")
+
 
 // Constructor.
 

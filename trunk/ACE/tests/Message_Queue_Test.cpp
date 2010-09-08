@@ -43,7 +43,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Message_Queue_Test, "$Id$")
+
 
 const ACE_TCHAR usage[] = ACE_TEXT ("usage: Message_Queue_Test <number of messages>\n");
 

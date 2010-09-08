@@ -21,7 +21,7 @@
 
 #include "test_config.h"
 
-ACE_RCSID(tests, Atomic_Op_Test, "$Id$")
+
 
 #include "ace/Atomic_Op.h"
 #include "ace/Synch_Traits.h"
@@ -240,7 +240,7 @@ int test (const ACE_TCHAR* type, int iterations)
   diff = ACE_OS::gettimeofday () - diff;
   diff.to_usec (usec);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <%s> comparison %D, took %Q\n"), type, usec));
-  
+
   return retval;
 }
 

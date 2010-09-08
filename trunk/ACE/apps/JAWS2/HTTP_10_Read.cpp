@@ -7,7 +7,7 @@
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Policy.h"
 
-ACE_RCSID(PROTOTYPE, HTTP_10_Read, "$Id$")
+
 
 // --------------- READ TASK ----------------------
 

@@ -9,7 +9,7 @@
 
 #include "Time_Request_Reply.h"
 
-ACE_RCSID(lib, Time_Request_Reply, "$Id$")
+
 
 // Default "do nothing" constructor.
 

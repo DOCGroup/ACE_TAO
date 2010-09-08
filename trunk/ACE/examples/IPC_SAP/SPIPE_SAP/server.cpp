@@ -8,7 +8,7 @@
 #include "ace/OS_NS_poll.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(SPIPE_SAP, server, "$Id$")
+
 
 #if defined (ACE_HAS_STREAM_PIPES)
 

@@ -19,7 +19,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
 
-ACE_RCSID(tests, Service_Config_Stream_Test, "$Id$")
+
 
 /*
  * The Decrypter service is static and is configured into a stream

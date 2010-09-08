@@ -8,7 +8,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Truncate.h"
 
-ACE_RCSID(file_reverse, file_reverse, "$Id$")
+
 
 static void
 putline (const char *s)

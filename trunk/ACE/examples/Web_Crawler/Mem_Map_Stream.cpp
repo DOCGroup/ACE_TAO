@@ -6,7 +6,7 @@
 #include "Options.h"
 #include "Mem_Map_Stream.h"
 
-ACE_RCSID(Web_Crawler, Mem_Map_Stream, "$Id$")
+
 
 ACE_SOCK_Stream &
 Mem_Map_Stream::stream (void)
@@ -69,7 +69,7 @@ Mem_Map_Stream::recv (size_t &len)
   if (this->eof () && this->grow_file_and_remap () == -1)
     return 0;
 
-  
+
   const char *s = this->recv_pos_;
   ACE_OFF_T olen = static_cast <ACE_OFF_T> (len);
   this->seek (olen, SEEK_CUR);
@@ -84,7 +84,7 @@ Mem_Map_Stream::recv_len (void) const
 }
 
 const char *
-Mem_Map_Stream::peek_str (size_t offset, 
+Mem_Map_Stream::peek_str (size_t offset,
                           size_t size)
 {
   // We will iterate if the size of <offset> is large.
@@ -128,7 +128,7 @@ Mem_Map_Stream::seek (ACE_OFF_T offset, int whence)
       this->recv_pos_ - reinterpret_cast<char *> (this->mem_map_.addr ()));
 }
 
-Mem_Map_Stream::Svc_Handler * 
+Mem_Map_Stream::Svc_Handler *
 Mem_Map_Stream::svc_handler (void)
 {
   return this->svc_handler_;
@@ -139,9 +139,9 @@ int
 Mem_Map_Stream::open (STRAT_CONNECTOR *connector,
                       const ACE_INET_Addr &addr)
 {
-  svc_handler_ = 0; 
+  svc_handler_ = 0;
 
-  // Connect to the server at <addr>. If the handler has to be 
+  // Connect to the server at <addr>. If the handler has to be
   // connected to the server again, the Caching strategy takes care
   // and uses the same connection.
   if (connector->connect (svc_handler_,
@@ -178,7 +178,7 @@ Mem_Map_Stream::open (STRAT_CONNECTOR *connector,
 #endif
     // Initialize all the position pointers to 0.
     this->rewind ();
- 
+
   return 0;
 }
 
@@ -190,7 +190,7 @@ Mem_Map_Stream::grow_file_and_remap (void)
   // Copy the next chunk of bytes from the socket into the temporary
   // file.
   ACE_Time_Value tv (*OPTIONS::instance ()->timeout ());
-  
+
   ssize_t n = this->svc_handler_->peer ().recv_n (buf,
                                                   sizeof buf,
                                                   0,

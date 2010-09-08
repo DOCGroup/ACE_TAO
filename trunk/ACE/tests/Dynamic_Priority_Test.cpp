@@ -57,7 +57,7 @@
 # include "ace/OS_NS_string.h"
 #endif /* VXWORKS */
 
-ACE_RCSID(tests, Dynamic_Priority_Test, "$Id$")
+
 
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
 enum Test_Type {BEST, WORST, RANDOM};

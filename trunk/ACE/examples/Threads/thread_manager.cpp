@@ -11,7 +11,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Signal.h"
 
-ACE_RCSID(Threads, thread_manager, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

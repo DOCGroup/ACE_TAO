@@ -27,7 +27,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, RW_Process_Mutex_Test, "$Id$")
+
 
 // The parent process is number -1. Writer is 0; Readers are 1-3.
 static int child_nr = -1;

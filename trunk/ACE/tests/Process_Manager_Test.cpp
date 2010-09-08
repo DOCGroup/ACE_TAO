@@ -37,7 +37,7 @@
 #include "ace/Thread.h"
 #include "ace/Reactor.h"
 
-ACE_RCSID(tests, Process_Manager_Test, "Process_Manager_Test.cpp,v 4.11 1999/09/02 04:36:30 schmidt Exp")
+
 
 static u_int debug_test = 0;
 #if defined (ACE_HAS_WIN32_PRIORITY_CLASS)

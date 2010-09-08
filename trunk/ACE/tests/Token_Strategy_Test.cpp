@@ -25,7 +25,7 @@
 #include "ace/ACE.h"
 #include "ace/Barrier.h"
 
-ACE_RCSID(tests, Token_Strategy_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

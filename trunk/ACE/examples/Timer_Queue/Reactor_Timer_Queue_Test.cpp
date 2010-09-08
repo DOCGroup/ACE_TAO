@@ -22,7 +22,7 @@
 #include "Driver.h"
 #include "Reactor_Timer_Queue_Test.h"
 
-ACE_RCSID(Timer_Queue, Reactor_Timer_Queue_Test, "$Id$")
+
 
 void
 Reactor_Timer_Handler::set_timer_id (long tid)

@@ -23,7 +23,7 @@
 #include <ace/Auto_Ptr.h>
 #include <ace/SString.h>
 
-ACE_RCSID(tests, Unbounded_Set_Test, "$Id$")
+
 
 struct MyNode
 {

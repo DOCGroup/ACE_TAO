@@ -19,7 +19,7 @@
 
 #include "test_config.h"
 
-ACE_RCSID(tests, Vector_Test, "$Id$")
+
 
 #include "ace/Vector_T.h"
 

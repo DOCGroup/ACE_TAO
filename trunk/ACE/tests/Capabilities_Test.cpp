@@ -22,7 +22,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Capabilities.h"
 
-ACE_RCSID(tests, Capabilities_Test, "$Id$")
+
 
 static const ACE_TCHAR config[] = ACE_TEXT ("Capabilities_Test.cfg");
 

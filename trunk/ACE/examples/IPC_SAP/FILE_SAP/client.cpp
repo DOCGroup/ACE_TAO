@@ -8,7 +8,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(FILE_SAP, client, "$Id$")
+
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

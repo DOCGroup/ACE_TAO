@@ -8,7 +8,7 @@
 #include "ace/INet/HTTP_Status.inl"
 #endif
 
-ACE_RCSID(NET_CLIENT,ACE_HTTP_Status,"$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -29,7 +29,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_wchar.h"
 
-ACE_RCSID(tests, CDR_Test, "$Id$")
+
 
 static int n = 4096;
 static int nloops = 100;

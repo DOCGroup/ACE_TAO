@@ -27,7 +27,7 @@
 
 #include "Gen_Perf.h"
 
-ACE_RCSID(src, gperf, "$Id$")
+
 
 #if defined (ACE_HAS_GPERF)
 

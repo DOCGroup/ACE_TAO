@@ -24,7 +24,7 @@
 #include <ndds/ndds_cpp.h>
 #include <ndds/clock/clock_highResolution.h>
 
-ACE_RCSID(tests, NDDS_Timer_Test, "$Id$")
+
 
 static
 u_int

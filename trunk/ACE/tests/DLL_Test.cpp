@@ -24,7 +24,7 @@
 #include "ace/SString.h"
 #include "DLL_Test.h"
 
-ACE_RCSID(tests, DLL_Test, "$Id$")
+
 
 #if defined (ACE_LD_DECORATOR_STR)
 # define OBJ_SUFFIX ACE_LD_DECORATOR_STR ACE_DLL_SUFFIX

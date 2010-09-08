@@ -24,7 +24,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Thread_Mutex_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

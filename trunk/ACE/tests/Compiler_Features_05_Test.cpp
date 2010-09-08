@@ -18,7 +18,7 @@
 // does not compile the platform is just too broken.
 #include <queue>
 
-ACE_RCSID(tests, Compiler_Features_05_Test, "$Id$")
+
 
 int
 run_main (int, ACE_TCHAR *[])

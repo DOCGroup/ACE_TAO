@@ -32,7 +32,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Bounded_Packet_Relay, BPR_Drivers_T, "$Id$")
+
 
 // Constructor.
 

@@ -19,7 +19,7 @@
 
 #include "test_config.h"
 
-ACE_RCSID(tests, Collection_Test, "$Id$")
+
 
 #include "ace/Containers.h"
 #include "Collection_Test.h"

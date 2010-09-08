@@ -22,7 +22,7 @@
 // Note, for this test the config.h file *must* come first!
 #include "ace/config-all.h"
 
-ACE_RCSID(tests, Bug_2434_Regression_Test, "$Id$")
+
 
 #include "test_config.h"
 #include "ace/ACE.h"

@@ -27,7 +27,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Atomic_Op.h"
 
-ACE_RCSID(tests, Manual_Event_Test, "$Id$")
+
 
 // msec that times are allowed to differ before test fails.
 #if defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HI_RES_TIMER) || \

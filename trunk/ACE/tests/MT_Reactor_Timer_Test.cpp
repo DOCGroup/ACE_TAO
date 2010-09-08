@@ -24,7 +24,7 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, MT_Reactor_Timer_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

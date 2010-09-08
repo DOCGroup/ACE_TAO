@@ -21,7 +21,7 @@
 #include "ace/Hash_Multi_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
 
-ACE_RCSID(tests, Hash_Multi_Map_Manager_Test, "$Id$")
+
 
 typedef ACE_Hash_Multi_Map_Manager<const ACE_TCHAR *,
                                    const ACE_TCHAR *,

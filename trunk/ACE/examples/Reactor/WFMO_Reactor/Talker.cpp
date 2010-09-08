@@ -147,7 +147,7 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(WFMO_Reactor, Talker, "$Id$")
+
 
 typedef ACE_Task<ACE_MT_SYNCH> MT_TASK;
 

@@ -30,7 +30,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Handle_Set.h"
 
-ACE_RCSID(tests, SOCK_Test, "$Id$")
+
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
@@ -75,10 +75,10 @@ client (void *arg)
                                   1, // read_ready
                                   1, // write_ready
                                   0);
-  // we expect the handle to be at leat write_ready since it is freshly connected.                   
+  // we expect the handle to be at leat write_ready since it is freshly connected.
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("ACE::handle_ready")), 0);
-  
+
   // Send data to server (correctly handles "incomplete writes").
 
   for (const char *c = ACE_ALPHABET; *c != '\0'; c++)

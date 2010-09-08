@@ -27,7 +27,7 @@
 #include "ace/Auto_Event.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(WFMO_Reactor, Registry_Changes, "$Id$")
+
 
 static int stop_test = 0;
 static HKEY context_to_monitor = HKEY_CURRENT_USER;

@@ -11,7 +11,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/CDR_Stream.h"
 
-ACE_RCSID(Logger, direct_logging, "$Id$")
+
 
 static u_short LOGGER_PORT = ACE_DEFAULT_SERVER_PORT;
 static const ACE_TCHAR *const LOGGER_HOST = ACE_DEFAULT_SERVER_HOST;

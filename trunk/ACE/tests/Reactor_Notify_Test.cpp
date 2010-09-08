@@ -31,7 +31,7 @@
 #include "ace/Select_Reactor.h"
 #include "ace/Thread_Semaphore.h"
 
-ACE_RCSID(tests, Reactor_Notify_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

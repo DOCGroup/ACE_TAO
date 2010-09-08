@@ -29,7 +29,7 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Bug_2653_Regression_Test, "$Id$")
+
 
 static const char *message =
 "Hello there! Hope you get this message";

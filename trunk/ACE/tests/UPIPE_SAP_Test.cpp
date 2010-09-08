@@ -25,7 +25,7 @@
 #include "ace/UPIPE_Connector.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, UPIPE_SAP_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS) && \
     (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_HAS_WIN32_NAMED_PIPES))

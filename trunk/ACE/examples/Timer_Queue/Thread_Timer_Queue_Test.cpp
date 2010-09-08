@@ -25,7 +25,7 @@
 #include "ace/Condition_T.h"
 #include "ace/Thread_Mutex.h"
 
-ACE_RCSID(Timer_Queue, Thread_Timer_Queue_Test, "$Id$")
+
 
 // Administrivia methods...
 Handler::Handler(const ACE_Time_Value &expiration_time)

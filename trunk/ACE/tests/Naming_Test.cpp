@@ -28,7 +28,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Naming_Test, "$Id$")
+
 
 static char name[BUFSIZ];
 static char value[BUFSIZ];

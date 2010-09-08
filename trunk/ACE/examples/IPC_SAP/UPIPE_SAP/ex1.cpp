@@ -23,7 +23,7 @@
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
 
-ACE_RCSID(UPIPE_SAP, ex1, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

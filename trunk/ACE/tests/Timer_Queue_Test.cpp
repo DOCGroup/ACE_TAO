@@ -37,7 +37,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Containers_T.h"
 
-ACE_RCSID(tests, Timer_Queue_Test, "$Id$")
+
 
 
 // Number of iterations for the performance tests.  Some platforms
@@ -130,7 +130,7 @@ test_interval_timer (ACE_Timer_Queue *tq)
              ACE_TEXT("after interval loop, timer fired %d ")
              ACE_TEXT("times out of %d expected: %s\n"),
              ih.trip_count_, EXPECTED_TRIP_COUNT,
-             ih.trip_count_ == EXPECTED_TRIP_COUNT 
+             ih.trip_count_ == EXPECTED_TRIP_COUNT
              ? ACE_TEXT ("success") : ACE_TEXT ("FAIL")
              ));
 

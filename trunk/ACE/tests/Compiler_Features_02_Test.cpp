@@ -18,7 +18,7 @@
 // does not compile the platform is just too broken.
 #include <map>
 
-ACE_RCSID(tests, Compiler_Features_02_Test, "$Id$")
+
 
 int
 run_main (int, ACE_TCHAR *[])

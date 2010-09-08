@@ -9,7 +9,7 @@
 
 #include "ace/Truncate.h"
 
-ACE_RCSID(NET_CLIENT,ACE_FTP_IOStream,"$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

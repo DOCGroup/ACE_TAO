@@ -23,7 +23,7 @@
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
-ACE_RCSID(mutex, test_mutex, "$Id$")
+
 
 static ACE_Token_Proxy *mutex;
 static int remote_mutexes = 0;

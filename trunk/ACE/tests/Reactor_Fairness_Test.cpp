@@ -35,7 +35,7 @@
 #include "ace/Atomic_Op.h"
 #include "ace/Thread_Mutex.h"
 
-ACE_RCSID(tests, Reactor_Fairness_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 
@@ -364,7 +364,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     run (r, ACE_TEXT ("Select Reactor"), false);  // No thread pool
   }
   fails += results.analyze_reports ();
- 
+
   results.reset (opt_nconnections);
   {
     ACE_TP_Reactor r;

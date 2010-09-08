@@ -13,7 +13,7 @@
 #include "HTBP_Session.inl"
 #endif
 
-ACE_RCSID(HTBP,HTBP_Session,"$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -191,7 +191,7 @@ ACE::HTBP::Session::reconnect_i (ACE::HTBP::Channel *s) const
       if (result == -1)
         ACE_DEBUG ((LM_DEBUG, "HTBP::Session::reconnect_i, %p\n", "set_option" ));
 #endif /* ! ACE_LACKS_TCP_NODELAY */
-      
+
     }
   s->register_notifier(this->reactor_);
   if (s == this->inbound_)

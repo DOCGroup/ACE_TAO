@@ -32,7 +32,7 @@
 #include "ace/Singleton.h"
 #include "ace/Atomic_Op.h"
 
-ACE_RCSID(tests, MEM_Stream_Test, "$Id$")
+
 
 #if (defined (ACE_HAS_THREADS) || defined (ACE_HAS_PROCESS_SPAWN)) && \
     (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)

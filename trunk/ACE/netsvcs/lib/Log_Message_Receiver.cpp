@@ -6,7 +6,7 @@
 #include "ace/Log_Msg.h"
 #include "Log_Message_Receiver.h"
 
-ACE_RCSID(lib, Log_Message_Receiver, "$Id$")
+
 
 // Type based log message receiver
 template<ACE_SYNCH_DECL> void

@@ -28,7 +28,7 @@
 #include "ace/Service_Config.h"
 #include "ace/OS_main.h"
 
-ACE_RCSID(WFMO_Reactor, Timeouts, "$Id$")
+
 
 class Timeout_Handler : public ACE_Event_Handler
 // = TITLE

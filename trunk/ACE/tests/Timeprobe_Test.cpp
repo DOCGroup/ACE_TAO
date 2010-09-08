@@ -28,7 +28,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Timeprobe.h"
 
-ACE_RCSID(tests, Timeprobe_Test, "$Id$")
+
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 

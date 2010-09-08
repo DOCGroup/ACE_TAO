@@ -12,7 +12,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "SPIPE-connector.h"
 
-ACE_RCSID(blocking, SPIPE_connector, "$Id$")
+
 
 Peer_Handler::Peer_Handler (int iterations)
   : iterations_ (iterations)
@@ -32,7 +32,7 @@ Peer_Handler::open (void *)
   if (iterations_ == 0)
     {
       this->display_menu ();
-      
+
       if (ACE_Event_Handler::register_stdin_handler (
             this,
             ACE_Reactor::instance (),
@@ -98,7 +98,7 @@ Peer_Handler::handle_input (ACE_HANDLE)
                                  ACE_TEXT ("close")),
                                 1);
             }
-            
+
           return -1;
         }
       else
@@ -106,7 +106,7 @@ Peer_Handler::handle_input (ACE_HANDLE)
           this->display_menu ();
         }
     }
-      
+
   return 0;
 }
 

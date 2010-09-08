@@ -9,7 +9,7 @@
 # include <pthread.h>
 #endif /* ACE_HAS_PTHREADS */
 
-ACE_RCSID (tests, Log_Thread_Inheritance_Test, "$Id$")
+
 
 #if !defined (ACE_HAS_THREADS) || defined (ACE_LACKS_IOSTREAM_TOTALLY)
 int run_main (int, ACE_TCHAR *[])
@@ -25,7 +25,7 @@ struct Inheritor : ACE_Task_Base
   {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) - this test might crash ACE if it does not "
                           "have the fix for the second bug in #3480.\n"));
-    return 0; 
+    return 0;
   }
 };
 
@@ -33,7 +33,7 @@ extern "C"
 void* spawn_ace_task (void*)
 {
   Inheritor inheritor;
-  
+
   inheritor.activate ();
   inheritor.wait ();
 
@@ -45,10 +45,10 @@ bool test_inherited_attributes ()
   // This test verifies ACE_OS_Log_Msg_Attributes correctly initializes
   // when an ACE thread is created from a non-ACE thread (i.e. pthreads)
   // and is then used for logging.
-  // 
+  //
   // This test will cause occasional SEGVs on failure.
   // stallions 2009/02/05
-  pthread_t parent; 
+  pthread_t parent;
 
   if (pthread_create (&parent, 0, spawn_ace_task, 0) != 0)
     {
@@ -118,7 +118,7 @@ int run_main (int, ACE_TCHAR *[])
   mt.wait ();
   MyThread::childthread_.wait ();
   ACE_LOG_MSG->msg_ostream (initial_stream, 0);
-#ifdef ACE_HAS_PTHREADS 
+#ifdef ACE_HAS_PTHREADS
   if (!test_inherited_attributes ()) return -1;
 #endif /* ACE_HAS_PTHREADS */
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Test passed.\n"));

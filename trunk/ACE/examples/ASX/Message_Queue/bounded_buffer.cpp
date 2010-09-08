@@ -10,7 +10,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Message_Queue, bounded_buffer, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

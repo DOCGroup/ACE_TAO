@@ -27,7 +27,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
 
-ACE_RCSID(tests, Thread_Manager_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 #include "ace/Barrier.h"

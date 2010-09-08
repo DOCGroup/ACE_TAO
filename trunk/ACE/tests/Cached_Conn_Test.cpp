@@ -44,7 +44,7 @@
 #pragma warning(disable:4503)
 #endif /* _MSC_VER */
 
-ACE_RCSID(tests, Cached_Conn_Test, "$Id$")
+
 
 typedef size_t ATTRIBUTES;
 typedef ACE_Pair<Svc_Handler *, ATTRIBUTES>

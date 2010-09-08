@@ -26,7 +26,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Thread_Mutex.h"
 
-ACE_RCSID(tests, Simple_Message_Block_Test, "$Id$")
+
 
 int
 run_main (int, ACE_TCHAR *[])

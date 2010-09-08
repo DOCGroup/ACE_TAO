@@ -25,7 +25,7 @@
 
 #include "Key_List.h"
 
-ACE_RCSID(src, Key_List, "$Id$")
+
 
 #if defined (ACE_HAS_GPERF)
 
@@ -1728,7 +1728,7 @@ Key_List::output (void)
                 {
                   output_keylength_table ();
                 }
-                
+
               if (option[POINTER] && option[TYPE])
                 {
                   output_keyword_table ();
@@ -1740,9 +1740,9 @@ Key_List::output (void)
                 {
                   output_keylength_table ();
                 }
-                
+
               output_keyword_table ();
-              
+
               if (output_lookup_array () == -1)
                 {
                   ACE_ERROR_RETURN ((LM_DEBUG,

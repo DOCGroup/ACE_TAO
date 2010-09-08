@@ -4,7 +4,7 @@
 #include "ace/DEV_Connector.h"
 #include "ace/TTY_IO.h"
 
-ACE_RCSID(reader, reader, "$Id$")
+
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -50,7 +50,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       1);
 
   // Read till character 'q'.
-  for (char readback = 'x'; readback != 'q'; )  
+  for (char readback = 'x'; readback != 'q'; )
     {
       ssize_t bytes_read =
         read_dev.recv ((void *) &readback, 1);

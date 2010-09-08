@@ -6,7 +6,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(Misc, test_get_opt, "$Id$")
+
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

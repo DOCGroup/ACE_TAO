@@ -24,7 +24,7 @@
 
 #include "test_config.h"
 
-ACE_RCSID(tests, FlReactor_Test, "$Id$")
+
 
 
 #include "ace/FlReactor/FlReactor.h"

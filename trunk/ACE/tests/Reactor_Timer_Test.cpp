@@ -28,7 +28,7 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(tests, Reactor_Timer_Test, "$Id$")
+
 
 static int done = 0;
 static int the_count = 0;

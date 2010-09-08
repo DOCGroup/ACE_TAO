@@ -28,7 +28,7 @@
 #include "ace/Assert.h"
 #include "ace/SString.h"
 
-ACE_RCSID(tests, Reactor_Timer_Test, "$Id$")
+
 
 class Test_SIGINT_Handler : public ACE_Event_Handler
 {

@@ -21,7 +21,7 @@
 #include "ace/ACE.h"
 #include "ace/Thread.h"
 
-ACE_RCSID(tests, TSS_Static_Test, "$Id$")
+
 
 #if defined (ACE_HAS_TSS_EMULATION)
 
