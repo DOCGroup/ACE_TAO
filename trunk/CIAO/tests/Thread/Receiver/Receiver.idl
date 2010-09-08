@@ -1,0 +1,22 @@
+//$Id$:
+
+#ifndef RECEIVER_IDL
+#define RECEIVER_IDL
+
+#include "../Thread_Base/Thread_Base.idl"
+
+module Thread
+{
+  component Receiver
+  {
+    uses ReadMessage read_message;
+    consumes TimeOut click_in;
+
+    attribute short iterations;
+  };
+
+  home ReceiverHome manages Receiver
+  {
+  };
+};
+#endif /*RECEIVER_IDL*/

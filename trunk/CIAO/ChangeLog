@@ -1,3 +1,28 @@
+Wed Sep  8 14:41:52 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        *tests/Thread:
+        *tests/Thread/Sender:
+        *tests/Thread/Sender/Sender_exec.cpp:
+        *tests/Thread/Sender/starter.cpp:
+        *tests/Thread/Sender/Sender.idl:
+        *tests/Thread/Sender/Sender_exec.h:
+        *tests/Thread/Sender/Sender.mpc:
+        *tests/Thread/descriptors:
+        *tests/Thread/descriptors/DeploymentPlan.cdp:
+        *tests/Thread/descriptors/NodeManagerMap.dat:
+        *tests/Thread/descriptors/run_test.pl:
+        *tests/Thread/Thread_Base:
+        *tests/Thread/Thread_Base/Thread_Base.mpc:
+        *tests/Thread/Thread_Base/Thread_Base.idl:
+        *tests/Thread/Receiver:
+        *tests/Thread/Receiver/Receiver.mpc:
+        *tests/Thread/Receiver/Receiver_exec.cpp:
+        *tests/Thread/Receiver/Receiver.idl:
+        *tests/Thread/Receiver/Receiver_exec.h:
+        *tests/Thread/README.txt:
+        Test use of same thread by ccm component.
+
 Wed Sep  8 10:13:52 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Navigation/client.cpp:
