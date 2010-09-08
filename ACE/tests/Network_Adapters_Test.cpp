@@ -36,10 +36,6 @@
 
 #include "Network_Adapters_Test.h"
 
-ACE_RCSID (tests,
-           Network_Adapters_Test,
-           "$Id$")
-
 /**
  * There are two major uses of the functionality:
  *
