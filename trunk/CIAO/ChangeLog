@@ -1,7 +1,12 @@
+Wed Sep  8 09:06:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          DDS4CCM TopicName test shouldn't be !FIXED_BUGS_ONLY.
+
 Wed Sep  8 08:13:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Receptacle/client.cpp:
-          DDS4CCM TopicName test shouldn't be !FIXED_BUGS_ONLY.
+          Commented out unnecessary code.
 
 Wed Sep  8 06:34:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
