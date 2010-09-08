@@ -1,9 +1,7 @@
+// $Id$
+
 #include "PSDL_Interface_Visitor.h"
 #include "PSDL_Stream.h"
-
-ACE_RCSID (PSS,
-           PSDL_Interface_Visitor,
-           "$Id$")
 
 TAO_PSDL_Interface_Visitor::TAO_PSDL_Interface_Visitor (void)
   : forward_dcl_ (0),

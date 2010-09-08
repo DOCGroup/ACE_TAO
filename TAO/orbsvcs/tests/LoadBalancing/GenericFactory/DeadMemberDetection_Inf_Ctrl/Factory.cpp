@@ -1,11 +1,9 @@
+// $Id$
+
 #include "Factory.h"
 #include "Simple.h"
 
 #include "TestC.h"
-
-ACE_RCSID (DeadMemberDetection_Inf_Ctrl,
-           Factory,
-           "$Id$")
 
 Factory::Factory (int id)
 : id_ (id)
@@ -95,7 +93,7 @@ Factory::delete_object (
 }
 
 
-CORBA::Object_ptr 
+CORBA::Object_ptr
 Factory::get_object () const
 {
   return this->obj_.in ();

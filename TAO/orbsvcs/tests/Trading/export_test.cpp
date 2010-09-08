@@ -9,10 +9,6 @@
 #include "orbsvcs/Trader/Service_Type_Repository.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (Trading,
-           export_test,
-           "$Id$")
-
 const ACE_TCHAR *done_file = ACE_TEXT("export_test_ready");
 
 int

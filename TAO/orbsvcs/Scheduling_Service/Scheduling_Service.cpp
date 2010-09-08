@@ -10,10 +10,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (Scheduling_Service,
-           Scheduling_Service,
-           "$Id$")
-
 // Default Constructor.
 
 TAO_Scheduling_Service::TAO_Scheduling_Service (void)

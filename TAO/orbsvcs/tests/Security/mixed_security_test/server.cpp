@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include <ace/SString.h>
 #include <ace/ARGV.h>
@@ -8,10 +9,6 @@
 
 #include "Foo_i.h"
 #include "constants.h"
-
-ACE_RCSID (Secure_Invocation,
-           server,
-           "$Id$")
 
 /*
   This tests the ability to use the SecurityManager/AccessDecision tools

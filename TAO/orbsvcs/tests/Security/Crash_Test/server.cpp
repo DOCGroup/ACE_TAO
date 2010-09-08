@@ -6,10 +6,6 @@
 #include "ace/SString.h"
 #include "test_i.h"
 
-ACE_RCSID (Send_File,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = 0;
 const char *cert_file = "cacert.pem";
 

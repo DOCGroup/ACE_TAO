@@ -5,13 +5,8 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_time.h"
 
-ACE_RCSID (ImplRepo,
-           airplane_i,
-           "$Id$")
-
 // Constructor
-
-  Airplane_i::Airplane_i ()
+Airplane_i::Airplane_i ()
 {
   // Seed the random number generator
   ACE_OS::srand (static_cast<u_int> (ACE_OS::time (0L)));

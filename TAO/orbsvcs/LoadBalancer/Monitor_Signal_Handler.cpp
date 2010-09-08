@@ -1,10 +1,6 @@
+// $Id$
+
 #include "Monitor_Signal_Handler.h"
-
-
-ACE_RCSID (LoadBalancer,
-           Monitor_Signal_Handler,
-           "$Id$")
-
 
 TAO_LB_Monitor_Signal_Handler::TAO_LB_Monitor_Signal_Handler (
   CORBA::ORB_ptr orb,

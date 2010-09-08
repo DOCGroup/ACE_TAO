@@ -1,3 +1,5 @@
+// $Id$
+
 #include "LB_server.h"
 #include "Simple.h"
 #include "Factory.h"
@@ -5,10 +7,6 @@
 #include "TestC.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
-
-ACE_RCSID (DeadMemberDetection_Inf_Ctrl,
-           LB_server,
-           "$Id$")
 
 const char *location1 = "MyLocation 1";
 const char *location2 = "MyLocation 2";
@@ -184,15 +182,15 @@ LB_server::create_object_group (const char *loc_1, const char *loc_2, const char
       const char *repository_id = "IDL:Test/Simple:1.0";
 
       CORBA::Object_var obj = this->orb_->string_to_object (factory1_ior);
-      PortableGroup::GenericFactory_var factory1_obj = 
+      PortableGroup::GenericFactory_var factory1_obj =
         PortableGroup::GenericFactory::_narrow (obj.in ());
 
       obj = this->orb_->string_to_object (factory2_ior);
-      PortableGroup::GenericFactory_var factory2_obj = 
+      PortableGroup::GenericFactory_var factory2_obj =
         PortableGroup::GenericFactory::_narrow (obj.in ());
 
       obj = this->orb_->string_to_object (factory3_ior);
-      PortableGroup::GenericFactory_var factory3_obj = 
+      PortableGroup::GenericFactory_var factory3_obj =
         PortableGroup::GenericFactory::_narrow (obj.in ());
 
       PortableGroup::FactoriesValue  factory_infos;

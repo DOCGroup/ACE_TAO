@@ -8,10 +8,6 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/High_Res_Timer.h"
 
-ACE_RCSID (EC_Tests_Basic,
-           Observer,
-           "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

@@ -6,10 +6,6 @@
 #include "orbsvcs/PortableGroup/MIOP.h"
 #include "orbsvcs/PortableGroup/GOA.h"
 
-ACE_RCSID (McastHello,
-           server,
-           "$Id$")
-
 static const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 // Use a multicast address in the administrative "site local" range, 239.255.0.0 to

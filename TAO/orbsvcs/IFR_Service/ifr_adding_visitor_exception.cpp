@@ -12,10 +12,6 @@
 #include "ifr_adding_visitor_structure.h"
 #include "ifr_adding_visitor_union.h"
 
-ACE_RCSID (IFR_Service,
-           ifr_adding_visitor_exception,
-           "$Id$")
-
 ifr_adding_visitor_exception::ifr_adding_visitor_exception (
     AST_Decl *scope,
     bool in_reopened

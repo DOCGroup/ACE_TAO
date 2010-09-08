@@ -1,12 +1,7 @@
+// $Id$
+
 #include "Push_Handler.h"
-
 #include "tao/debug.h"
-
-
-ACE_RCSID (LoadBalancing,
-           Push_Handler,
-           "$Id$")
-
 
 TAO_LB_Push_Handler::TAO_LB_Push_Handler (
   CosLoadBalancing::LoadMonitor_ptr monitor,

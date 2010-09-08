@@ -15,10 +15,6 @@
 #include "LookupManager.h"
 #include "Priority_Mapping.h"
 
-ACE_RCSID (RT_Notify,
-           TAO_Notify_Tests_Periodic_Supplier,
-           "$Id$")
-
 TAO_Notify_Tests_Periodic_Supplier::TAO_Notify_Tests_Periodic_Supplier (void)
   : barrier_ (0),
     priority_ (0),

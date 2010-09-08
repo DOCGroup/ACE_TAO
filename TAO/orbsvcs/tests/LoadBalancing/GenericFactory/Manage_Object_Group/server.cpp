@@ -1,10 +1,8 @@
+// $Id$
+
 #include "LB_server.h"
 #include "Basic.h"
 #include "Simple.h"
-
-ACE_RCSID (Manage_object_group,
-           server,
-           "$Id$")
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

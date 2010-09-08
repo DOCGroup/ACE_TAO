@@ -7,10 +7,6 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_Tests,
-           EC_Supplier,
-           "$Id$")
-
 EC_Supplier::EC_Supplier (EC_Driver *driver,
                           void* cookie)
   :  driver_ (driver),

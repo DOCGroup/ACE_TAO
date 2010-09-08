@@ -7,10 +7,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (Bug_1230_Regression,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 #if defined (ACE_OPENVMS)

@@ -6,10 +6,6 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (EC_Tests_Performance,
-           Throughput,
-           "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

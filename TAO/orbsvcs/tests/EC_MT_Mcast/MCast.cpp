@@ -16,10 +16,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_MT_Mcast,
-           MCast,
-           "$Id$")
-
 const ACE_TCHAR *udp_mcast_address =
     ACE_TEXT (ACE_DEFAULT_MULTICAST_ADDR) ACE_TEXT(":10001");
 
