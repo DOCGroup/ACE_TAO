@@ -7,7 +7,7 @@
  */
 #include <string>
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

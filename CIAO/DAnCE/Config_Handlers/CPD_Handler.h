@@ -26,7 +26,7 @@ namespace Deployment
   class ComponentPortDescriptions;
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
     {

@@ -27,7 +27,7 @@ namespace Deployment
   class EventServiceDeploymentDescriptions;
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

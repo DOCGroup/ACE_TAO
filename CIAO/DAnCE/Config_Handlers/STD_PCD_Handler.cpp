@@ -6,7 +6,7 @@
 #include "Deployment.hpp"
 
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

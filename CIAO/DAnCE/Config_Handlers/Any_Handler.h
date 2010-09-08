@@ -28,7 +28,7 @@ namespace CORBA
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
     {

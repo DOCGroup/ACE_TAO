@@ -14,7 +14,7 @@
 
 #include "tao/AnyTypeCode/Struct_TypeCode.h"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

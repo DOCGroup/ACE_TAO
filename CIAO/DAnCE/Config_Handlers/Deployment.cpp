@@ -17,27 +17,27 @@
 
 #include "Deployment.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
     namespace reader
     {
-      ::CIAO::Config_Handlers::Domain
+      ::DAnCE::Config_Handlers::Domain
       domain (xercesc::DOMDocument const* d)
       {
         //Initiate our Singleton as an ACE_TSS object (ensures thread
@@ -48,7 +48,7 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
         if (e.name () == ACE_TEXT("domain"))
         {
-          ::CIAO::Config_Handlers::Domain r (e);
+          ::DAnCE::Config_Handlers::Domain r (e);
 
           (*TSS_ID_Map)->resolve_idref();
 
@@ -64,7 +64,7 @@ namespace CIAO
 
     namespace reader
     {
-      ::CIAO::Config_Handlers::deploymentPlan
+      ::DAnCE::Config_Handlers::deploymentPlan
       DeploymentPlan (xercesc::DOMDocument const* d)
       {
         //Initiate our Singleton as an ACE_TSS object (ensures thread
@@ -75,7 +75,7 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
         if (e.name () == ACE_TEXT("DeploymentPlan"))
         {
-          ::CIAO::Config_Handlers::deploymentPlan r (e);
+          ::DAnCE::Config_Handlers::deploymentPlan r (e);
 
           (*TSS_ID_Map)->resolve_idref();
 
@@ -91,7 +91,7 @@ namespace CIAO
 
     namespace reader
     {
-      ::CIAO::Config_Handlers::ImplementationArtifactDescription
+      ::DAnCE::Config_Handlers::ImplementationArtifactDescription
       implementationArtifactDescription (xercesc::DOMDocument const* d)
       {
         //Initiate our Singleton as an ACE_TSS object (ensures thread
@@ -102,7 +102,7 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
         if (e.name () == ACE_TEXT("implementationArtifactDescription"))
         {
-          ::CIAO::Config_Handlers::ImplementationArtifactDescription r (e);
+          ::DAnCE::Config_Handlers::ImplementationArtifactDescription r (e);
 
           (*TSS_ID_Map)->resolve_idref();
 
@@ -118,7 +118,7 @@ namespace CIAO
 
     namespace reader
     {
-      ::CIAO::Config_Handlers::ComponentInterfaceDescription
+      ::DAnCE::Config_Handlers::ComponentInterfaceDescription
       componentInterfaceDescription (xercesc::DOMDocument const* d)
       {
         //Initiate our Singleton as an ACE_TSS object (ensures thread
@@ -129,7 +129,7 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
         if (e.name () == ACE_TEXT("componentInterfaceDescription"))
         {
-          ::CIAO::Config_Handlers::ComponentInterfaceDescription r (e);
+          ::DAnCE::Config_Handlers::ComponentInterfaceDescription r (e);
 
           (*TSS_ID_Map)->resolve_idref();
 
@@ -145,7 +145,7 @@ namespace CIAO
 
     namespace reader
     {
-      ::CIAO::Config_Handlers::ComponentImplementationDescription
+      ::DAnCE::Config_Handlers::ComponentImplementationDescription
       componentImplementationDescription (xercesc::DOMDocument const* d)
       {
         //Initiate our Singleton as an ACE_TSS object (ensures thread
@@ -156,7 +156,7 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
         if (e.name () == ACE_TEXT("componentImplementationDescription"))
         {
-          ::CIAO::Config_Handlers::ComponentImplementationDescription r (e);
+          ::DAnCE::Config_Handlers::ComponentImplementationDescription r (e);
 
           (*TSS_ID_Map)->resolve_idref();
 
@@ -172,7 +172,7 @@ namespace CIAO
 
     namespace reader
     {
-      ::CIAO::Config_Handlers::ComponentPackageDescription
+      ::DAnCE::Config_Handlers::ComponentPackageDescription
       componentPackageDescription (xercesc::DOMDocument const* d)
       {
         //Initiate our Singleton as an ACE_TSS object (ensures thread
@@ -183,7 +183,7 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
         if (e.name () == ACE_TEXT("componentPackageDescription"))
         {
-          ::CIAO::Config_Handlers::ComponentPackageDescription r (e);
+          ::DAnCE::Config_Handlers::ComponentPackageDescription r (e);
 
           (*TSS_ID_Map)->resolve_idref();
 
@@ -199,7 +199,7 @@ namespace CIAO
 
     namespace reader
     {
-      ::CIAO::Config_Handlers::PackageConfiguration
+      ::DAnCE::Config_Handlers::PackageConfiguration
       packageConfiguration (xercesc::DOMDocument const* d)
       {
         //Initiate our Singleton as an ACE_TSS object (ensures thread
@@ -210,7 +210,7 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
         if (e.name () == ACE_TEXT("packageConfiguration"))
         {
-          ::CIAO::Config_Handlers::PackageConfiguration r (e);
+          ::DAnCE::Config_Handlers::PackageConfiguration r (e);
 
           (*TSS_ID_Map)->resolve_idref();
 
@@ -226,7 +226,7 @@ namespace CIAO
 
     namespace reader
     {
-      ::CIAO::Config_Handlers::TopLevelPackageDescription
+      ::DAnCE::Config_Handlers::TopLevelPackageDescription
       topLevelPackageDescription (xercesc::DOMDocument const* d)
       {
         //Initiate our Singleton as an ACE_TSS object (ensures thread
@@ -237,7 +237,7 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
         if (e.name () == ACE_TEXT("topLevelPackageDescription"))
         {
-          ::CIAO::Config_Handlers::TopLevelPackageDescription r (e);
+          ::DAnCE::Config_Handlers::TopLevelPackageDescription r (e);
 
           (*TSS_ID_Map)->resolve_idref();
 
@@ -255,7 +255,7 @@ namespace CIAO
 
 #include "XMLSchema/TypeInfo.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -266,7 +266,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -276,7 +276,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -286,14 +286,14 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
     namespace writer
     {
       void
-      domain (::CIAO::Config_Handlers::Domain const& s, xercesc::DOMDocument* d)
+      domain (::DAnCE::Config_Handlers::Domain const& s, xercesc::DOMDocument* d)
       {
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
         if (e.name () != ACE_TEXT ("domain"))
@@ -301,28 +301,28 @@ namespace CIAO
           throw 1;
         }
 
-        struct W : virtual ::CIAO::Config_Handlers::Writer::Domain,
+        struct W : virtual ::DAnCE::Config_Handlers::Writer::Domain,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::string< ACE_TCHAR >, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::Node,
-        virtual ::CIAO::Config_Handlers::Writer::Interconnect,
-        virtual ::CIAO::Config_Handlers::Writer::Bridge,
-        virtual ::CIAO::Config_Handlers::Writer::Resource,
-        virtual ::CIAO::Config_Handlers::Writer::SatisfierProperty,
-        virtual ::CIAO::Config_Handlers::Writer::SatisfierPropertyKind,
+        virtual ::DAnCE::Config_Handlers::Writer::Node,
+        virtual ::DAnCE::Config_Handlers::Writer::Interconnect,
+        virtual ::DAnCE::Config_Handlers::Writer::Bridge,
+        virtual ::DAnCE::Config_Handlers::Writer::Resource,
+        virtual ::DAnCE::Config_Handlers::Writer::SatisfierProperty,
+        virtual ::DAnCE::Config_Handlers::Writer::SatisfierPropertyKind,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::boolean, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::Any,
-        virtual ::CIAO::Config_Handlers::Writer::DataType,
-        virtual ::CIAO::Config_Handlers::Writer::TCKind,
-        virtual ::CIAO::Config_Handlers::Writer::EnumType,
-        virtual ::CIAO::Config_Handlers::Writer::StructType,
-        virtual ::CIAO::Config_Handlers::Writer::StructMemberType,
-        virtual ::CIAO::Config_Handlers::Writer::ValueType,
-        virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
-        virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+        virtual ::DAnCE::Config_Handlers::Writer::Any,
+        virtual ::DAnCE::Config_Handlers::Writer::DataType,
+        virtual ::DAnCE::Config_Handlers::Writer::TCKind,
+        virtual ::DAnCE::Config_Handlers::Writer::EnumType,
+        virtual ::DAnCE::Config_Handlers::Writer::StructType,
+        virtual ::DAnCE::Config_Handlers::Writer::StructMemberType,
+        virtual ::DAnCE::Config_Handlers::Writer::ValueType,
+        virtual ::DAnCE::Config_Handlers::Writer::ValueMemberType,
+        virtual ::DAnCE::Config_Handlers::Writer::SequenceType,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::AliasType,
+        virtual ::DAnCE::Config_Handlers::Writer::AliasType,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::DataValue,
+        virtual ::DAnCE::Config_Handlers::Writer::DataValue,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
@@ -331,9 +331,9 @@ namespace CIAO
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedByte, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::long_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedLong, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::NamedValue,
-        virtual ::CIAO::Config_Handlers::Writer::SharedResource,
-        virtual ::CIAO::Config_Handlers::Writer::Property,
+        virtual ::DAnCE::Config_Handlers::Writer::NamedValue,
+        virtual ::DAnCE::Config_Handlers::Writer::SharedResource,
+        virtual ::DAnCE::Config_Handlers::Writer::Property,
         virtual ::XSCRT::Writer< ACE_TCHAR >
         {
           W (::XSCRT::XML::Element< ACE_TCHAR >& e)
@@ -350,7 +350,7 @@ namespace CIAO
     namespace writer
     {
       void
-      DeploymentPlan (::CIAO::Config_Handlers::deploymentPlan const& s, xercesc::DOMDocument* d)
+      DeploymentPlan (::DAnCE::Config_Handlers::deploymentPlan const& s, xercesc::DOMDocument* d)
       {
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
         if (e.name () != ACE_TEXT ("DeploymentPlan"))
@@ -358,23 +358,23 @@ namespace CIAO
           throw 1;
         }
 
-        struct W : virtual ::CIAO::Config_Handlers::Writer::deploymentPlan,
+        struct W : virtual ::DAnCE::Config_Handlers::Writer::deploymentPlan,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::string< ACE_TCHAR >, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentInterfaceDescription,
-        virtual ::CIAO::Config_Handlers::Writer::Property,
-        virtual ::CIAO::Config_Handlers::Writer::Any,
-        virtual ::CIAO::Config_Handlers::Writer::DataType,
-        virtual ::CIAO::Config_Handlers::Writer::TCKind,
-        virtual ::CIAO::Config_Handlers::Writer::EnumType,
-        virtual ::CIAO::Config_Handlers::Writer::StructType,
-        virtual ::CIAO::Config_Handlers::Writer::StructMemberType,
-        virtual ::CIAO::Config_Handlers::Writer::ValueType,
-        virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
-        virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentInterfaceDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::Property,
+        virtual ::DAnCE::Config_Handlers::Writer::Any,
+        virtual ::DAnCE::Config_Handlers::Writer::DataType,
+        virtual ::DAnCE::Config_Handlers::Writer::TCKind,
+        virtual ::DAnCE::Config_Handlers::Writer::EnumType,
+        virtual ::DAnCE::Config_Handlers::Writer::StructType,
+        virtual ::DAnCE::Config_Handlers::Writer::StructMemberType,
+        virtual ::DAnCE::Config_Handlers::Writer::ValueType,
+        virtual ::DAnCE::Config_Handlers::Writer::ValueMemberType,
+        virtual ::DAnCE::Config_Handlers::Writer::SequenceType,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::AliasType,
+        virtual ::DAnCE::Config_Handlers::Writer::AliasType,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::DataValue,
+        virtual ::DAnCE::Config_Handlers::Writer::DataValue,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
@@ -384,29 +384,29 @@ namespace CIAO
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedByte, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::long_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedLong, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::NamedValue,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPortDescription,
-        virtual ::CIAO::Config_Handlers::Writer::CCMComponentPortKind,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPropertyDescription,
-        virtual ::CIAO::Config_Handlers::Writer::MonolithicDeploymentDescription,
-        virtual ::CIAO::Config_Handlers::Writer::IdRef,
+        virtual ::DAnCE::Config_Handlers::Writer::NamedValue,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPortDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::CCMComponentPortKind,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPropertyDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::MonolithicDeploymentDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::IdRef,
         virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
-        virtual ::CIAO::Config_Handlers::Writer::Requirement,
-        virtual ::CIAO::Config_Handlers::Writer::InstanceDeploymentDescription,
-        virtual ::CIAO::Config_Handlers::Writer::InstanceResourceDeploymentDescription,
-        virtual ::CIAO::Config_Handlers::Writer::ResourceUsageKind,
-        virtual ::CIAO::Config_Handlers::Writer::PlanConnectionDescription,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentExternalPortEndpoint,
-        virtual ::CIAO::Config_Handlers::Writer::PlanSubcomponentPortEndpoint,
-        virtual ::CIAO::Config_Handlers::Writer::ExternalReferenceEndpoint,
-        virtual ::CIAO::Config_Handlers::Writer::ConnectionResourceDeploymentDescription,
-        virtual ::CIAO::Config_Handlers::Writer::PlanPropertyMapping,
-        virtual ::CIAO::Config_Handlers::Writer::PlanSubcomponentPropertyReference,
-        virtual ::CIAO::Config_Handlers::Writer::ImplementationDependency,
-        virtual ::CIAO::Config_Handlers::Writer::ArtifactDeploymentDescription,
-        virtual ::CIAO::Config_Handlers::Writer::ResourceDeploymentDescription,
-        virtual ::CIAO::Config_Handlers::Writer::PlanLocality,
-        virtual ::CIAO::Config_Handlers::Writer::PlanLocalityKind,
+        virtual ::DAnCE::Config_Handlers::Writer::Requirement,
+        virtual ::DAnCE::Config_Handlers::Writer::InstanceDeploymentDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::InstanceResourceDeploymentDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::ResourceUsageKind,
+        virtual ::DAnCE::Config_Handlers::Writer::PlanConnectionDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentExternalPortEndpoint,
+        virtual ::DAnCE::Config_Handlers::Writer::PlanSubcomponentPortEndpoint,
+        virtual ::DAnCE::Config_Handlers::Writer::ExternalReferenceEndpoint,
+        virtual ::DAnCE::Config_Handlers::Writer::ConnectionResourceDeploymentDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::PlanPropertyMapping,
+        virtual ::DAnCE::Config_Handlers::Writer::PlanSubcomponentPropertyReference,
+        virtual ::DAnCE::Config_Handlers::Writer::ImplementationDependency,
+        virtual ::DAnCE::Config_Handlers::Writer::ArtifactDeploymentDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::ResourceDeploymentDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::PlanLocality,
+        virtual ::DAnCE::Config_Handlers::Writer::PlanLocalityKind,
         virtual ::XSCRT::Writer< ACE_TCHAR >
         {
           W (::XSCRT::XML::Element< ACE_TCHAR >& e)
@@ -423,7 +423,7 @@ namespace CIAO
     namespace writer
     {
       void
-      implementationArtifactDescription (::CIAO::Config_Handlers::ImplementationArtifactDescription const& s, xercesc::DOMDocument* d)
+      implementationArtifactDescription (::DAnCE::Config_Handlers::ImplementationArtifactDescription const& s, xercesc::DOMDocument* d)
       {
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
         if (e.name () != ACE_TEXT ("implementationArtifactDescription"))
@@ -431,23 +431,23 @@ namespace CIAO
           throw 1;
         }
 
-        struct W : virtual ::CIAO::Config_Handlers::Writer::ImplementationArtifactDescription,
+        struct W : virtual ::DAnCE::Config_Handlers::Writer::ImplementationArtifactDescription,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::string< ACE_TCHAR >, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::NamedImplementationArtifact,
-        virtual ::CIAO::Config_Handlers::Writer::Property,
-        virtual ::CIAO::Config_Handlers::Writer::Any,
-        virtual ::CIAO::Config_Handlers::Writer::DataType,
-        virtual ::CIAO::Config_Handlers::Writer::TCKind,
-        virtual ::CIAO::Config_Handlers::Writer::EnumType,
-        virtual ::CIAO::Config_Handlers::Writer::StructType,
-        virtual ::CIAO::Config_Handlers::Writer::StructMemberType,
-        virtual ::CIAO::Config_Handlers::Writer::ValueType,
-        virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
-        virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+        virtual ::DAnCE::Config_Handlers::Writer::NamedImplementationArtifact,
+        virtual ::DAnCE::Config_Handlers::Writer::Property,
+        virtual ::DAnCE::Config_Handlers::Writer::Any,
+        virtual ::DAnCE::Config_Handlers::Writer::DataType,
+        virtual ::DAnCE::Config_Handlers::Writer::TCKind,
+        virtual ::DAnCE::Config_Handlers::Writer::EnumType,
+        virtual ::DAnCE::Config_Handlers::Writer::StructType,
+        virtual ::DAnCE::Config_Handlers::Writer::StructMemberType,
+        virtual ::DAnCE::Config_Handlers::Writer::ValueType,
+        virtual ::DAnCE::Config_Handlers::Writer::ValueMemberType,
+        virtual ::DAnCE::Config_Handlers::Writer::SequenceType,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::AliasType,
+        virtual ::DAnCE::Config_Handlers::Writer::AliasType,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::DataValue,
+        virtual ::DAnCE::Config_Handlers::Writer::DataValue,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
@@ -457,8 +457,8 @@ namespace CIAO
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedByte, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::long_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedLong, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::NamedValue,
-        virtual ::CIAO::Config_Handlers::Writer::Requirement,
+        virtual ::DAnCE::Config_Handlers::Writer::NamedValue,
+        virtual ::DAnCE::Config_Handlers::Writer::Requirement,
         virtual ::XSCRT::Writer< ACE_TCHAR >
         {
           W (::XSCRT::XML::Element< ACE_TCHAR >& e)
@@ -475,7 +475,7 @@ namespace CIAO
     namespace writer
     {
       void
-      componentInterfaceDescription (::CIAO::Config_Handlers::ComponentInterfaceDescription const& s, xercesc::DOMDocument* d)
+      componentInterfaceDescription (::DAnCE::Config_Handlers::ComponentInterfaceDescription const& s, xercesc::DOMDocument* d)
       {
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
         if (e.name () != ACE_TEXT ("componentInterfaceDescription"))
@@ -483,22 +483,22 @@ namespace CIAO
           throw 1;
         }
 
-        struct W : virtual ::CIAO::Config_Handlers::Writer::ComponentInterfaceDescription,
+        struct W : virtual ::DAnCE::Config_Handlers::Writer::ComponentInterfaceDescription,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::string< ACE_TCHAR >, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::Property,
-        virtual ::CIAO::Config_Handlers::Writer::Any,
-        virtual ::CIAO::Config_Handlers::Writer::DataType,
-        virtual ::CIAO::Config_Handlers::Writer::TCKind,
-        virtual ::CIAO::Config_Handlers::Writer::EnumType,
-        virtual ::CIAO::Config_Handlers::Writer::StructType,
-        virtual ::CIAO::Config_Handlers::Writer::StructMemberType,
-        virtual ::CIAO::Config_Handlers::Writer::ValueType,
-        virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
-        virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+        virtual ::DAnCE::Config_Handlers::Writer::Property,
+        virtual ::DAnCE::Config_Handlers::Writer::Any,
+        virtual ::DAnCE::Config_Handlers::Writer::DataType,
+        virtual ::DAnCE::Config_Handlers::Writer::TCKind,
+        virtual ::DAnCE::Config_Handlers::Writer::EnumType,
+        virtual ::DAnCE::Config_Handlers::Writer::StructType,
+        virtual ::DAnCE::Config_Handlers::Writer::StructMemberType,
+        virtual ::DAnCE::Config_Handlers::Writer::ValueType,
+        virtual ::DAnCE::Config_Handlers::Writer::ValueMemberType,
+        virtual ::DAnCE::Config_Handlers::Writer::SequenceType,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::AliasType,
+        virtual ::DAnCE::Config_Handlers::Writer::AliasType,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::DataValue,
+        virtual ::DAnCE::Config_Handlers::Writer::DataValue,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
@@ -508,10 +508,10 @@ namespace CIAO
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedByte, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::long_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedLong, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::NamedValue,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPortDescription,
-        virtual ::CIAO::Config_Handlers::Writer::CCMComponentPortKind,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPropertyDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::NamedValue,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPortDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::CCMComponentPortKind,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPropertyDescription,
         virtual ::XSCRT::Writer< ACE_TCHAR >
         {
           W (::XSCRT::XML::Element< ACE_TCHAR >& e)
@@ -528,7 +528,7 @@ namespace CIAO
     namespace writer
     {
       void
-      componentImplementationDescription (::CIAO::Config_Handlers::ComponentImplementationDescription const& s, xercesc::DOMDocument* d)
+      componentImplementationDescription (::DAnCE::Config_Handlers::ComponentImplementationDescription const& s, xercesc::DOMDocument* d)
       {
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
         if (e.name () != ACE_TEXT ("componentImplementationDescription"))
@@ -536,23 +536,23 @@ namespace CIAO
           throw 1;
         }
 
-        struct W : virtual ::CIAO::Config_Handlers::Writer::ComponentImplementationDescription,
+        struct W : virtual ::DAnCE::Config_Handlers::Writer::ComponentImplementationDescription,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::string< ACE_TCHAR >, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentInterfaceDescription,
-        virtual ::CIAO::Config_Handlers::Writer::Property,
-        virtual ::CIAO::Config_Handlers::Writer::Any,
-        virtual ::CIAO::Config_Handlers::Writer::DataType,
-        virtual ::CIAO::Config_Handlers::Writer::TCKind,
-        virtual ::CIAO::Config_Handlers::Writer::EnumType,
-        virtual ::CIAO::Config_Handlers::Writer::StructType,
-        virtual ::CIAO::Config_Handlers::Writer::StructMemberType,
-        virtual ::CIAO::Config_Handlers::Writer::ValueType,
-        virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
-        virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentInterfaceDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::Property,
+        virtual ::DAnCE::Config_Handlers::Writer::Any,
+        virtual ::DAnCE::Config_Handlers::Writer::DataType,
+        virtual ::DAnCE::Config_Handlers::Writer::TCKind,
+        virtual ::DAnCE::Config_Handlers::Writer::EnumType,
+        virtual ::DAnCE::Config_Handlers::Writer::StructType,
+        virtual ::DAnCE::Config_Handlers::Writer::StructMemberType,
+        virtual ::DAnCE::Config_Handlers::Writer::ValueType,
+        virtual ::DAnCE::Config_Handlers::Writer::ValueMemberType,
+        virtual ::DAnCE::Config_Handlers::Writer::SequenceType,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::AliasType,
+        virtual ::DAnCE::Config_Handlers::Writer::AliasType,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::DataValue,
+        virtual ::DAnCE::Config_Handlers::Writer::DataValue,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
@@ -562,37 +562,37 @@ namespace CIAO
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedByte, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::long_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedLong, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::NamedValue,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPortDescription,
-        virtual ::CIAO::Config_Handlers::Writer::CCMComponentPortKind,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPropertyDescription,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentAssemblyDescription,
-        virtual ::CIAO::Config_Handlers::Writer::SubcomponentInstantiationDescription,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPackageDescription,
-        virtual ::CIAO::Config_Handlers::Writer::PackagedComponentImplementation,
-        virtual ::CIAO::Config_Handlers::Writer::PackageConfiguration,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPackageImport,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPackageReference,
-        virtual ::CIAO::Config_Handlers::Writer::Requirement,
-        virtual ::CIAO::Config_Handlers::Writer::AssemblyConnectionDescription,
-        virtual ::CIAO::Config_Handlers::Writer::SubcomponentPortEndpoint,
-        virtual ::CIAO::Config_Handlers::Writer::IdRef,
+        virtual ::DAnCE::Config_Handlers::Writer::NamedValue,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPortDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::CCMComponentPortKind,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPropertyDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentAssemblyDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::SubcomponentInstantiationDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPackageDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::PackagedComponentImplementation,
+        virtual ::DAnCE::Config_Handlers::Writer::PackageConfiguration,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPackageImport,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPackageReference,
+        virtual ::DAnCE::Config_Handlers::Writer::Requirement,
+        virtual ::DAnCE::Config_Handlers::Writer::AssemblyConnectionDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::SubcomponentPortEndpoint,
+        virtual ::DAnCE::Config_Handlers::Writer::IdRef,
         virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
-        virtual ::CIAO::Config_Handlers::Writer::ComponentExternalPortEndpoint,
-        virtual ::CIAO::Config_Handlers::Writer::ExternalReferenceEndpoint,
-        virtual ::CIAO::Config_Handlers::Writer::AssemblyPropertyMapping,
-        virtual ::CIAO::Config_Handlers::Writer::SubcomponentPropertyReference,
-        virtual ::CIAO::Config_Handlers::Writer::Locality,
-        virtual ::CIAO::Config_Handlers::Writer::LocalityKind,
-        virtual ::CIAO::Config_Handlers::Writer::MonolithicImplementationDescription,
-        virtual ::CIAO::Config_Handlers::Writer::ImplementationRequirement,
-        virtual ::CIAO::Config_Handlers::Writer::ResourceUsageKind,
-        virtual ::CIAO::Config_Handlers::Writer::NamedImplementationArtifact,
-        virtual ::CIAO::Config_Handlers::Writer::ImplementationArtifactDescription,
-        virtual ::CIAO::Config_Handlers::Writer::Capability,
-        virtual ::CIAO::Config_Handlers::Writer::SatisfierProperty,
-        virtual ::CIAO::Config_Handlers::Writer::SatisfierPropertyKind,
-        virtual ::CIAO::Config_Handlers::Writer::ImplementationDependency,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentExternalPortEndpoint,
+        virtual ::DAnCE::Config_Handlers::Writer::ExternalReferenceEndpoint,
+        virtual ::DAnCE::Config_Handlers::Writer::AssemblyPropertyMapping,
+        virtual ::DAnCE::Config_Handlers::Writer::SubcomponentPropertyReference,
+        virtual ::DAnCE::Config_Handlers::Writer::Locality,
+        virtual ::DAnCE::Config_Handlers::Writer::LocalityKind,
+        virtual ::DAnCE::Config_Handlers::Writer::MonolithicImplementationDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::ImplementationRequirement,
+        virtual ::DAnCE::Config_Handlers::Writer::ResourceUsageKind,
+        virtual ::DAnCE::Config_Handlers::Writer::NamedImplementationArtifact,
+        virtual ::DAnCE::Config_Handlers::Writer::ImplementationArtifactDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::Capability,
+        virtual ::DAnCE::Config_Handlers::Writer::SatisfierProperty,
+        virtual ::DAnCE::Config_Handlers::Writer::SatisfierPropertyKind,
+        virtual ::DAnCE::Config_Handlers::Writer::ImplementationDependency,
         virtual ::XSCRT::Writer< ACE_TCHAR >
         {
           W (::XSCRT::XML::Element< ACE_TCHAR >& e)
@@ -609,7 +609,7 @@ namespace CIAO
     namespace writer
     {
       void
-      componentPackageDescription (::CIAO::Config_Handlers::ComponentPackageDescription const& s, xercesc::DOMDocument* d)
+      componentPackageDescription (::DAnCE::Config_Handlers::ComponentPackageDescription const& s, xercesc::DOMDocument* d)
       {
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
         if (e.name () != ACE_TEXT ("componentPackageDescription"))
@@ -617,23 +617,23 @@ namespace CIAO
           throw 1;
         }
 
-        struct W : virtual ::CIAO::Config_Handlers::Writer::ComponentPackageDescription,
+        struct W : virtual ::DAnCE::Config_Handlers::Writer::ComponentPackageDescription,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::string< ACE_TCHAR >, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentInterfaceDescription,
-        virtual ::CIAO::Config_Handlers::Writer::Property,
-        virtual ::CIAO::Config_Handlers::Writer::Any,
-        virtual ::CIAO::Config_Handlers::Writer::DataType,
-        virtual ::CIAO::Config_Handlers::Writer::TCKind,
-        virtual ::CIAO::Config_Handlers::Writer::EnumType,
-        virtual ::CIAO::Config_Handlers::Writer::StructType,
-        virtual ::CIAO::Config_Handlers::Writer::StructMemberType,
-        virtual ::CIAO::Config_Handlers::Writer::ValueType,
-        virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
-        virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentInterfaceDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::Property,
+        virtual ::DAnCE::Config_Handlers::Writer::Any,
+        virtual ::DAnCE::Config_Handlers::Writer::DataType,
+        virtual ::DAnCE::Config_Handlers::Writer::TCKind,
+        virtual ::DAnCE::Config_Handlers::Writer::EnumType,
+        virtual ::DAnCE::Config_Handlers::Writer::StructType,
+        virtual ::DAnCE::Config_Handlers::Writer::StructMemberType,
+        virtual ::DAnCE::Config_Handlers::Writer::ValueType,
+        virtual ::DAnCE::Config_Handlers::Writer::ValueMemberType,
+        virtual ::DAnCE::Config_Handlers::Writer::SequenceType,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::AliasType,
+        virtual ::DAnCE::Config_Handlers::Writer::AliasType,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::DataValue,
+        virtual ::DAnCE::Config_Handlers::Writer::DataValue,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
@@ -643,37 +643,37 @@ namespace CIAO
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedByte, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::long_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedLong, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::NamedValue,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPortDescription,
-        virtual ::CIAO::Config_Handlers::Writer::CCMComponentPortKind,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPropertyDescription,
-        virtual ::CIAO::Config_Handlers::Writer::PackagedComponentImplementation,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentImplementationDescription,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentAssemblyDescription,
-        virtual ::CIAO::Config_Handlers::Writer::SubcomponentInstantiationDescription,
-        virtual ::CIAO::Config_Handlers::Writer::PackageConfiguration,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPackageImport,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPackageReference,
-        virtual ::CIAO::Config_Handlers::Writer::Requirement,
-        virtual ::CIAO::Config_Handlers::Writer::AssemblyConnectionDescription,
-        virtual ::CIAO::Config_Handlers::Writer::SubcomponentPortEndpoint,
-        virtual ::CIAO::Config_Handlers::Writer::IdRef,
+        virtual ::DAnCE::Config_Handlers::Writer::NamedValue,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPortDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::CCMComponentPortKind,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPropertyDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::PackagedComponentImplementation,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentImplementationDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentAssemblyDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::SubcomponentInstantiationDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::PackageConfiguration,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPackageImport,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPackageReference,
+        virtual ::DAnCE::Config_Handlers::Writer::Requirement,
+        virtual ::DAnCE::Config_Handlers::Writer::AssemblyConnectionDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::SubcomponentPortEndpoint,
+        virtual ::DAnCE::Config_Handlers::Writer::IdRef,
         virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
-        virtual ::CIAO::Config_Handlers::Writer::ComponentExternalPortEndpoint,
-        virtual ::CIAO::Config_Handlers::Writer::ExternalReferenceEndpoint,
-        virtual ::CIAO::Config_Handlers::Writer::AssemblyPropertyMapping,
-        virtual ::CIAO::Config_Handlers::Writer::SubcomponentPropertyReference,
-        virtual ::CIAO::Config_Handlers::Writer::Locality,
-        virtual ::CIAO::Config_Handlers::Writer::LocalityKind,
-        virtual ::CIAO::Config_Handlers::Writer::MonolithicImplementationDescription,
-        virtual ::CIAO::Config_Handlers::Writer::ImplementationRequirement,
-        virtual ::CIAO::Config_Handlers::Writer::ResourceUsageKind,
-        virtual ::CIAO::Config_Handlers::Writer::NamedImplementationArtifact,
-        virtual ::CIAO::Config_Handlers::Writer::ImplementationArtifactDescription,
-        virtual ::CIAO::Config_Handlers::Writer::Capability,
-        virtual ::CIAO::Config_Handlers::Writer::SatisfierProperty,
-        virtual ::CIAO::Config_Handlers::Writer::SatisfierPropertyKind,
-        virtual ::CIAO::Config_Handlers::Writer::ImplementationDependency,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentExternalPortEndpoint,
+        virtual ::DAnCE::Config_Handlers::Writer::ExternalReferenceEndpoint,
+        virtual ::DAnCE::Config_Handlers::Writer::AssemblyPropertyMapping,
+        virtual ::DAnCE::Config_Handlers::Writer::SubcomponentPropertyReference,
+        virtual ::DAnCE::Config_Handlers::Writer::Locality,
+        virtual ::DAnCE::Config_Handlers::Writer::LocalityKind,
+        virtual ::DAnCE::Config_Handlers::Writer::MonolithicImplementationDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::ImplementationRequirement,
+        virtual ::DAnCE::Config_Handlers::Writer::ResourceUsageKind,
+        virtual ::DAnCE::Config_Handlers::Writer::NamedImplementationArtifact,
+        virtual ::DAnCE::Config_Handlers::Writer::ImplementationArtifactDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::Capability,
+        virtual ::DAnCE::Config_Handlers::Writer::SatisfierProperty,
+        virtual ::DAnCE::Config_Handlers::Writer::SatisfierPropertyKind,
+        virtual ::DAnCE::Config_Handlers::Writer::ImplementationDependency,
         virtual ::XSCRT::Writer< ACE_TCHAR >
         {
           W (::XSCRT::XML::Element< ACE_TCHAR >& e)
@@ -690,7 +690,7 @@ namespace CIAO
     namespace writer
     {
       void
-      packageConfiguration (::CIAO::Config_Handlers::PackageConfiguration const& s, xercesc::DOMDocument* d)
+      packageConfiguration (::DAnCE::Config_Handlers::PackageConfiguration const& s, xercesc::DOMDocument* d)
       {
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
         if (e.name () != ACE_TEXT ("packageConfiguration"))
@@ -698,24 +698,24 @@ namespace CIAO
           throw 1;
         }
 
-        struct W : virtual ::CIAO::Config_Handlers::Writer::PackageConfiguration,
+        struct W : virtual ::DAnCE::Config_Handlers::Writer::PackageConfiguration,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::string< ACE_TCHAR >, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPackageDescription,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentInterfaceDescription,
-        virtual ::CIAO::Config_Handlers::Writer::Property,
-        virtual ::CIAO::Config_Handlers::Writer::Any,
-        virtual ::CIAO::Config_Handlers::Writer::DataType,
-        virtual ::CIAO::Config_Handlers::Writer::TCKind,
-        virtual ::CIAO::Config_Handlers::Writer::EnumType,
-        virtual ::CIAO::Config_Handlers::Writer::StructType,
-        virtual ::CIAO::Config_Handlers::Writer::StructMemberType,
-        virtual ::CIAO::Config_Handlers::Writer::ValueType,
-        virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
-        virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPackageDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentInterfaceDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::Property,
+        virtual ::DAnCE::Config_Handlers::Writer::Any,
+        virtual ::DAnCE::Config_Handlers::Writer::DataType,
+        virtual ::DAnCE::Config_Handlers::Writer::TCKind,
+        virtual ::DAnCE::Config_Handlers::Writer::EnumType,
+        virtual ::DAnCE::Config_Handlers::Writer::StructType,
+        virtual ::DAnCE::Config_Handlers::Writer::StructMemberType,
+        virtual ::DAnCE::Config_Handlers::Writer::ValueType,
+        virtual ::DAnCE::Config_Handlers::Writer::ValueMemberType,
+        virtual ::DAnCE::Config_Handlers::Writer::SequenceType,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::AliasType,
+        virtual ::DAnCE::Config_Handlers::Writer::AliasType,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::DataValue,
+        virtual ::DAnCE::Config_Handlers::Writer::DataValue,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
@@ -725,36 +725,36 @@ namespace CIAO
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedByte, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::long_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedLong, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::NamedValue,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPortDescription,
-        virtual ::CIAO::Config_Handlers::Writer::CCMComponentPortKind,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPropertyDescription,
-        virtual ::CIAO::Config_Handlers::Writer::PackagedComponentImplementation,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentImplementationDescription,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentAssemblyDescription,
-        virtual ::CIAO::Config_Handlers::Writer::SubcomponentInstantiationDescription,
-        virtual ::CIAO::Config_Handlers::Writer::Requirement,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPackageReference,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPackageImport,
-        virtual ::CIAO::Config_Handlers::Writer::AssemblyConnectionDescription,
-        virtual ::CIAO::Config_Handlers::Writer::SubcomponentPortEndpoint,
-        virtual ::CIAO::Config_Handlers::Writer::IdRef,
+        virtual ::DAnCE::Config_Handlers::Writer::NamedValue,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPortDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::CCMComponentPortKind,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPropertyDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::PackagedComponentImplementation,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentImplementationDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentAssemblyDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::SubcomponentInstantiationDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::Requirement,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPackageReference,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPackageImport,
+        virtual ::DAnCE::Config_Handlers::Writer::AssemblyConnectionDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::SubcomponentPortEndpoint,
+        virtual ::DAnCE::Config_Handlers::Writer::IdRef,
         virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
-        virtual ::CIAO::Config_Handlers::Writer::ComponentExternalPortEndpoint,
-        virtual ::CIAO::Config_Handlers::Writer::ExternalReferenceEndpoint,
-        virtual ::CIAO::Config_Handlers::Writer::AssemblyPropertyMapping,
-        virtual ::CIAO::Config_Handlers::Writer::SubcomponentPropertyReference,
-        virtual ::CIAO::Config_Handlers::Writer::Locality,
-        virtual ::CIAO::Config_Handlers::Writer::LocalityKind,
-        virtual ::CIAO::Config_Handlers::Writer::MonolithicImplementationDescription,
-        virtual ::CIAO::Config_Handlers::Writer::ImplementationRequirement,
-        virtual ::CIAO::Config_Handlers::Writer::ResourceUsageKind,
-        virtual ::CIAO::Config_Handlers::Writer::NamedImplementationArtifact,
-        virtual ::CIAO::Config_Handlers::Writer::ImplementationArtifactDescription,
-        virtual ::CIAO::Config_Handlers::Writer::Capability,
-        virtual ::CIAO::Config_Handlers::Writer::SatisfierProperty,
-        virtual ::CIAO::Config_Handlers::Writer::SatisfierPropertyKind,
-        virtual ::CIAO::Config_Handlers::Writer::ImplementationDependency,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentExternalPortEndpoint,
+        virtual ::DAnCE::Config_Handlers::Writer::ExternalReferenceEndpoint,
+        virtual ::DAnCE::Config_Handlers::Writer::AssemblyPropertyMapping,
+        virtual ::DAnCE::Config_Handlers::Writer::SubcomponentPropertyReference,
+        virtual ::DAnCE::Config_Handlers::Writer::Locality,
+        virtual ::DAnCE::Config_Handlers::Writer::LocalityKind,
+        virtual ::DAnCE::Config_Handlers::Writer::MonolithicImplementationDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::ImplementationRequirement,
+        virtual ::DAnCE::Config_Handlers::Writer::ResourceUsageKind,
+        virtual ::DAnCE::Config_Handlers::Writer::NamedImplementationArtifact,
+        virtual ::DAnCE::Config_Handlers::Writer::ImplementationArtifactDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::Capability,
+        virtual ::DAnCE::Config_Handlers::Writer::SatisfierProperty,
+        virtual ::DAnCE::Config_Handlers::Writer::SatisfierPropertyKind,
+        virtual ::DAnCE::Config_Handlers::Writer::ImplementationDependency,
         virtual ::XSCRT::Writer< ACE_TCHAR >
         {
           W (::XSCRT::XML::Element< ACE_TCHAR >& e)
@@ -771,7 +771,7 @@ namespace CIAO
     namespace writer
     {
       void
-      topLevelPackageDescription (::CIAO::Config_Handlers::TopLevelPackageDescription const& s, xercesc::DOMDocument* d)
+      topLevelPackageDescription (::DAnCE::Config_Handlers::TopLevelPackageDescription const& s, xercesc::DOMDocument* d)
       {
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
         if (e.name () != ACE_TEXT ("topLevelPackageDescription"))
@@ -779,25 +779,25 @@ namespace CIAO
           throw 1;
         }
 
-        struct W : virtual ::CIAO::Config_Handlers::Writer::TopLevelPackageDescription,
-        virtual ::CIAO::Config_Handlers::Writer::PackageConfiguration,
+        struct W : virtual ::DAnCE::Config_Handlers::Writer::TopLevelPackageDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::PackageConfiguration,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::string< ACE_TCHAR >, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPackageDescription,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentInterfaceDescription,
-        virtual ::CIAO::Config_Handlers::Writer::Property,
-        virtual ::CIAO::Config_Handlers::Writer::Any,
-        virtual ::CIAO::Config_Handlers::Writer::DataType,
-        virtual ::CIAO::Config_Handlers::Writer::TCKind,
-        virtual ::CIAO::Config_Handlers::Writer::EnumType,
-        virtual ::CIAO::Config_Handlers::Writer::StructType,
-        virtual ::CIAO::Config_Handlers::Writer::StructMemberType,
-        virtual ::CIAO::Config_Handlers::Writer::ValueType,
-        virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
-        virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPackageDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentInterfaceDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::Property,
+        virtual ::DAnCE::Config_Handlers::Writer::Any,
+        virtual ::DAnCE::Config_Handlers::Writer::DataType,
+        virtual ::DAnCE::Config_Handlers::Writer::TCKind,
+        virtual ::DAnCE::Config_Handlers::Writer::EnumType,
+        virtual ::DAnCE::Config_Handlers::Writer::StructType,
+        virtual ::DAnCE::Config_Handlers::Writer::StructMemberType,
+        virtual ::DAnCE::Config_Handlers::Writer::ValueType,
+        virtual ::DAnCE::Config_Handlers::Writer::ValueMemberType,
+        virtual ::DAnCE::Config_Handlers::Writer::SequenceType,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::AliasType,
+        virtual ::DAnCE::Config_Handlers::Writer::AliasType,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::DataValue,
+        virtual ::DAnCE::Config_Handlers::Writer::DataValue,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
@@ -807,36 +807,36 @@ namespace CIAO
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedByte, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::long_, ACE_TCHAR >,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedLong, ACE_TCHAR >,
-        virtual ::CIAO::Config_Handlers::Writer::NamedValue,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPortDescription,
-        virtual ::CIAO::Config_Handlers::Writer::CCMComponentPortKind,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPropertyDescription,
-        virtual ::CIAO::Config_Handlers::Writer::PackagedComponentImplementation,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentImplementationDescription,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentAssemblyDescription,
-        virtual ::CIAO::Config_Handlers::Writer::SubcomponentInstantiationDescription,
-        virtual ::CIAO::Config_Handlers::Writer::Requirement,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPackageReference,
-        virtual ::CIAO::Config_Handlers::Writer::ComponentPackageImport,
-        virtual ::CIAO::Config_Handlers::Writer::AssemblyConnectionDescription,
-        virtual ::CIAO::Config_Handlers::Writer::SubcomponentPortEndpoint,
-        virtual ::CIAO::Config_Handlers::Writer::IdRef,
+        virtual ::DAnCE::Config_Handlers::Writer::NamedValue,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPortDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::CCMComponentPortKind,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPropertyDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::PackagedComponentImplementation,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentImplementationDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentAssemblyDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::SubcomponentInstantiationDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::Requirement,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPackageReference,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentPackageImport,
+        virtual ::DAnCE::Config_Handlers::Writer::AssemblyConnectionDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::SubcomponentPortEndpoint,
+        virtual ::DAnCE::Config_Handlers::Writer::IdRef,
         virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
-        virtual ::CIAO::Config_Handlers::Writer::ComponentExternalPortEndpoint,
-        virtual ::CIAO::Config_Handlers::Writer::ExternalReferenceEndpoint,
-        virtual ::CIAO::Config_Handlers::Writer::AssemblyPropertyMapping,
-        virtual ::CIAO::Config_Handlers::Writer::SubcomponentPropertyReference,
-        virtual ::CIAO::Config_Handlers::Writer::Locality,
-        virtual ::CIAO::Config_Handlers::Writer::LocalityKind,
-        virtual ::CIAO::Config_Handlers::Writer::MonolithicImplementationDescription,
-        virtual ::CIAO::Config_Handlers::Writer::ImplementationRequirement,
-        virtual ::CIAO::Config_Handlers::Writer::ResourceUsageKind,
-        virtual ::CIAO::Config_Handlers::Writer::NamedImplementationArtifact,
-        virtual ::CIAO::Config_Handlers::Writer::ImplementationArtifactDescription,
-        virtual ::CIAO::Config_Handlers::Writer::Capability,
-        virtual ::CIAO::Config_Handlers::Writer::SatisfierProperty,
-        virtual ::CIAO::Config_Handlers::Writer::SatisfierPropertyKind,
-        virtual ::CIAO::Config_Handlers::Writer::ImplementationDependency,
+        virtual ::DAnCE::Config_Handlers::Writer::ComponentExternalPortEndpoint,
+        virtual ::DAnCE::Config_Handlers::Writer::ExternalReferenceEndpoint,
+        virtual ::DAnCE::Config_Handlers::Writer::AssemblyPropertyMapping,
+        virtual ::DAnCE::Config_Handlers::Writer::SubcomponentPropertyReference,
+        virtual ::DAnCE::Config_Handlers::Writer::Locality,
+        virtual ::DAnCE::Config_Handlers::Writer::LocalityKind,
+        virtual ::DAnCE::Config_Handlers::Writer::MonolithicImplementationDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::ImplementationRequirement,
+        virtual ::DAnCE::Config_Handlers::Writer::ResourceUsageKind,
+        virtual ::DAnCE::Config_Handlers::Writer::NamedImplementationArtifact,
+        virtual ::DAnCE::Config_Handlers::Writer::ImplementationArtifactDescription,
+        virtual ::DAnCE::Config_Handlers::Writer::Capability,
+        virtual ::DAnCE::Config_Handlers::Writer::SatisfierProperty,
+        virtual ::DAnCE::Config_Handlers::Writer::SatisfierPropertyKind,
+        virtual ::DAnCE::Config_Handlers::Writer::ImplementationDependency,
         virtual ::XSCRT::Writer< ACE_TCHAR >
         {
           W (::XSCRT::XML::Element< ACE_TCHAR >& e)

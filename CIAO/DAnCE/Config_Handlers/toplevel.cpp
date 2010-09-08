@@ -17,7 +17,7 @@
 
 #include "toplevel.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -77,7 +77,7 @@ namespace CIAO
     }
 
     void TopLevelPackageDescription::
-    add_package (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex >  const& e)
+    add_package (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PackageConfiguration, ACE_Null_Mutex >  const& e)
     {
       package_.push_back (e);
     }
@@ -90,7 +90,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -111,7 +111,7 @@ namespace CIAO
 
         if (n == ACE_TEXT("package"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PackageConfiguration (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PackageConfiguration, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::PackageConfiguration (e));
           add_package (t);
         }
 
@@ -123,7 +123,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -132,7 +132,7 @@ namespace CIAO
 
 #include "XMLSchema/TypeInfo.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -144,7 +144,7 @@ namespace CIAO
       {
         TopLevelPackageDescriptionTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::TopLevelPackageDescription));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::TopLevelPackageDescription));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -157,7 +157,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -198,7 +198,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::TopLevelPackageDescription::package_iterator b (o.begin_package()), e (o.end_package());
+        ::DAnCE::Config_Handlers::TopLevelPackageDescription::package_iterator b (o.begin_package()), e (o.end_package());
 
         if (b != e)
         {
@@ -220,7 +220,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::TopLevelPackageDescription::package_const_iterator b (o.begin_package()), e (o.end_package());
+        ::DAnCE::Config_Handlers::TopLevelPackageDescription::package_const_iterator b (o.begin_package()), e (o.end_package());
 
         if (b != e)
         {
@@ -290,7 +290,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -339,7 +339,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

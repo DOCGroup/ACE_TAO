@@ -10,7 +10,7 @@
 #include "Package_Handlers/CPD_Handler.h"
 #include "Config_Handlers/CPD_Handler.h"
 #include "DAnCE/Logger/Log_Macros.h"
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -91,7 +91,7 @@ namespace CIAO
         toconfig.port.length (cid->count_port ());
         std::for_each (cid->begin_port (),
                        cid->end_port (),
-                       CIAO::Config_Handlers::CPD_Functor (toconfig.port));
+                       DAnCE::Config_Handlers::CPD_Functor (toconfig.port));
 
         toconfig.property.length (cid->count_property ());
         SEQ_HAND_GCC_BUG_WORKAROUND (Comp_Prop_Handler::handle_cpd,
@@ -131,7 +131,7 @@ namespace CIAO
 
         for (CORBA::ULong i = 0; i < src.port.length (); ++i)
           retval.add_port
-            (CIAO::Config_Handlers::CPD_Handler::component_port_description (src.port[i]));
+            (DAnCE::Config_Handlers::CPD_Handler::component_port_description (src.port[i]));
 
         for (CORBA::ULong i = 0; i < src.property.length (); ++i)
           retval.add_property (Comp_Prop_Handler::get_cpd (src.property[i]));

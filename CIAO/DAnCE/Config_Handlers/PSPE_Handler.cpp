@@ -5,7 +5,7 @@
 #include "Basic_Deployment_Data.hpp"
 #include "DAnCE/Deployment/Deployment_DataC.h"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-namespace CIAO{
+namespace DAnCE{
 
 namespace Config_Handlers{
 
@@ -45,7 +45,7 @@ public:
 DataType_Handler (void);
 virtual ~DataType_Handler (void);
 
-////This method takes a <CIAO::Config_Handlers::DataType>
+////This method takes a <DAnCE::Config_Handlers::DataType>
 ///and returns the corresponding CORBA::TypeCode.
 static void
 data_type (const DataType& desc,

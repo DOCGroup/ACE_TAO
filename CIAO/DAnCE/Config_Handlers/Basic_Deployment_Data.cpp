@@ -17,7 +17,7 @@
 
 #include "Basic_Deployment_Data.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -144,13 +144,13 @@ namespace CIAO
     }
 
     bool
-    operator== (::CIAO::Config_Handlers::TCKind const& a, ::CIAO::Config_Handlers::TCKind const& b)
+    operator== (::DAnCE::Config_Handlers::TCKind const& a, ::DAnCE::Config_Handlers::TCKind const& b)
     {
       return a.v_ == b.v_;
     }
 
     bool
-    operator!= (::CIAO::Config_Handlers::TCKind const& a, ::CIAO::Config_Handlers::TCKind const& b)
+    operator!= (::DAnCE::Config_Handlers::TCKind const& a, ::DAnCE::Config_Handlers::TCKind const& b)
     {
       return a.v_ != b.v_;
     }
@@ -165,10 +165,10 @@ namespace CIAO
     //
 
     DataType::
-    DataType (::CIAO::Config_Handlers::TCKind const& kind__)
+    DataType (::DAnCE::Config_Handlers::TCKind const& kind__)
     :
     ::XSCRT::Type (),
-    kind_ (new ::CIAO::Config_Handlers::TCKind (kind__)),
+    kind_ (new ::DAnCE::Config_Handlers::TCKind (kind__)),
     regulator__ ()
     {
       kind_->container (this);
@@ -178,12 +178,12 @@ namespace CIAO
     DataType (DataType const& s)
     :
     ::XSCRT::Type (),
-    kind_ (new ::CIAO::Config_Handlers::TCKind (*s.kind_)),
-    enum__ (s.enum__.get () ? new ::CIAO::Config_Handlers::EnumType (*s.enum__) : 0),
-    struct__ (s.struct__.get () ? new ::CIAO::Config_Handlers::StructType (*s.struct__) : 0),
-    value_ (s.value_.get () ? new ::CIAO::Config_Handlers::ValueType (*s.value_) : 0),
-    sequence_ (s.sequence_.get () ? new ::CIAO::Config_Handlers::SequenceType (*s.sequence_) : 0),
-    alias_ (s.alias_.get () ? new ::CIAO::Config_Handlers::AliasType (*s.alias_) : 0),
+    kind_ (new ::DAnCE::Config_Handlers::TCKind (*s.kind_)),
+    enum__ (s.enum__.get () ? new ::DAnCE::Config_Handlers::EnumType (*s.enum__) : 0),
+    struct__ (s.struct__.get () ? new ::DAnCE::Config_Handlers::StructType (*s.struct__) : 0),
+    value_ (s.value_.get () ? new ::DAnCE::Config_Handlers::ValueType (*s.value_) : 0),
+    sequence_ (s.sequence_.get () ? new ::DAnCE::Config_Handlers::SequenceType (*s.sequence_) : 0),
+    alias_ (s.alias_.get () ? new ::DAnCE::Config_Handlers::AliasType (*s.alias_) : 0),
     id_ (s.id_.get () ? new ::XMLSchema::ID< ACE_TCHAR > (*s.id_) : 0),
     regulator__ ()
     {
@@ -235,14 +235,14 @@ namespace CIAO
 
     // DataType
     //
-    ::CIAO::Config_Handlers::TCKind const& DataType::
+    ::DAnCE::Config_Handlers::TCKind const& DataType::
     kind () const
     {
       return *kind_;
     }
 
     void DataType::
-    kind (::CIAO::Config_Handlers::TCKind const& e)
+    kind (::DAnCE::Config_Handlers::TCKind const& e)
     {
       *kind_ = e;
     }
@@ -255,14 +255,14 @@ namespace CIAO
       return enum__.get () != 0;
     }
 
-    ::CIAO::Config_Handlers::EnumType const& DataType::
+    ::DAnCE::Config_Handlers::EnumType const& DataType::
     enum_ () const
     {
       return *enum__;
     }
 
     void DataType::
-    enum_ (::CIAO::Config_Handlers::EnumType const& e)
+    enum_ (::DAnCE::Config_Handlers::EnumType const& e)
     {
       if (enum__.get ())
       {
@@ -271,7 +271,7 @@ namespace CIAO
 
       else
       {
-        enum__ = ::std::auto_ptr< ::CIAO::Config_Handlers::EnumType > (new ::CIAO::Config_Handlers::EnumType (e));
+        enum__ = ::std::auto_ptr< ::DAnCE::Config_Handlers::EnumType > (new ::DAnCE::Config_Handlers::EnumType (e));
         enum__->container (this);
       }
     }
@@ -284,14 +284,14 @@ namespace CIAO
       return struct__.get () != 0;
     }
 
-    ::CIAO::Config_Handlers::StructType const& DataType::
+    ::DAnCE::Config_Handlers::StructType const& DataType::
     struct_ () const
     {
       return *struct__;
     }
 
     void DataType::
-    struct_ (::CIAO::Config_Handlers::StructType const& e)
+    struct_ (::DAnCE::Config_Handlers::StructType const& e)
     {
       if (struct__.get ())
       {
@@ -300,7 +300,7 @@ namespace CIAO
 
       else
       {
-        struct__ = ::std::auto_ptr< ::CIAO::Config_Handlers::StructType > (new ::CIAO::Config_Handlers::StructType (e));
+        struct__ = ::std::auto_ptr< ::DAnCE::Config_Handlers::StructType > (new ::DAnCE::Config_Handlers::StructType (e));
         struct__->container (this);
       }
     }
@@ -313,14 +313,14 @@ namespace CIAO
       return value_.get () != 0;
     }
 
-    ::CIAO::Config_Handlers::ValueType const& DataType::
+    ::DAnCE::Config_Handlers::ValueType const& DataType::
     value () const
     {
       return *value_;
     }
 
     void DataType::
-    value (::CIAO::Config_Handlers::ValueType const& e)
+    value (::DAnCE::Config_Handlers::ValueType const& e)
     {
       if (value_.get ())
       {
@@ -329,7 +329,7 @@ namespace CIAO
 
       else
       {
-        value_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ValueType > (new ::CIAO::Config_Handlers::ValueType (e));
+        value_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::ValueType > (new ::DAnCE::Config_Handlers::ValueType (e));
         value_->container (this);
       }
     }
@@ -342,14 +342,14 @@ namespace CIAO
       return sequence_.get () != 0;
     }
 
-    ::CIAO::Config_Handlers::SequenceType const& DataType::
+    ::DAnCE::Config_Handlers::SequenceType const& DataType::
     sequence () const
     {
       return *sequence_;
     }
 
     void DataType::
-    sequence (::CIAO::Config_Handlers::SequenceType const& e)
+    sequence (::DAnCE::Config_Handlers::SequenceType const& e)
     {
       if (sequence_.get ())
       {
@@ -358,7 +358,7 @@ namespace CIAO
 
       else
       {
-        sequence_ = ::std::auto_ptr< ::CIAO::Config_Handlers::SequenceType > (new ::CIAO::Config_Handlers::SequenceType (e));
+        sequence_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::SequenceType > (new ::DAnCE::Config_Handlers::SequenceType (e));
         sequence_->container (this);
       }
     }
@@ -371,14 +371,14 @@ namespace CIAO
       return alias_.get () != 0;
     }
 
-    ::CIAO::Config_Handlers::AliasType const& DataType::
+    ::DAnCE::Config_Handlers::AliasType const& DataType::
     alias () const
     {
       return *alias_;
     }
 
     void DataType::
-    alias (::CIAO::Config_Handlers::AliasType const& e)
+    alias (::DAnCE::Config_Handlers::AliasType const& e)
     {
       if (alias_.get ())
       {
@@ -387,7 +387,7 @@ namespace CIAO
 
       else
       {
-        alias_ = ::std::auto_ptr< ::CIAO::Config_Handlers::AliasType > (new ::CIAO::Config_Handlers::AliasType (e));
+        alias_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::AliasType > (new ::DAnCE::Config_Handlers::AliasType (e));
         alias_->container (this);
       }
     }
@@ -1019,7 +1019,7 @@ namespace CIAO
     }
 
     void DataValue::
-    add_element (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::DataValue, ACE_Null_Mutex >  const& e)
+    add_element (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::DataValue, ACE_Null_Mutex >  const& e)
     {
       element_.push_back (e);
     }
@@ -1057,7 +1057,7 @@ namespace CIAO
     }
 
     void DataValue::
-    add_member (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedValue, ACE_Null_Mutex >  const& e)
+    add_member (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::NamedValue, ACE_Null_Mutex >  const& e)
     {
       member_.push_back (e);
     }
@@ -1075,11 +1075,11 @@ namespace CIAO
     AliasType::
     AliasType (::XMLSchema::string< ACE_TCHAR > const& name__,
                ::XMLSchema::string< ACE_TCHAR > const& typeId__,
-               ::CIAO::Config_Handlers::DataType const& elementType__)
+               ::DAnCE::Config_Handlers::DataType const& elementType__)
     :
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     typeId_ (new ::XMLSchema::string< ACE_TCHAR > (typeId__)),
-    elementType_ (new ::CIAO::Config_Handlers::DataType (elementType__)),
+    elementType_ (new ::DAnCE::Config_Handlers::DataType (elementType__)),
     regulator__ ()
     {
       name_->container (this);
@@ -1093,7 +1093,7 @@ namespace CIAO
     ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
     typeId_ (new ::XMLSchema::string< ACE_TCHAR > (*s.typeId_)),
-    elementType_ (new ::CIAO::Config_Handlers::DataType (*s.elementType_)),
+    elementType_ (new ::DAnCE::Config_Handlers::DataType (*s.elementType_)),
     regulator__ ()
     {
       name_->container (this);
@@ -1144,14 +1144,14 @@ namespace CIAO
 
     // AliasType
     //
-    ::CIAO::Config_Handlers::DataType const& AliasType::
+    ::DAnCE::Config_Handlers::DataType const& AliasType::
     elementType () const
     {
       return *elementType_;
     }
 
     void AliasType::
-    elementType (::CIAO::Config_Handlers::DataType const& e)
+    elementType (::DAnCE::Config_Handlers::DataType const& e)
     {
       *elementType_ = e;
     }
@@ -1363,7 +1363,7 @@ namespace CIAO
     }
 
     void StructType::
-    add_member (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::StructMemberType, ACE_Null_Mutex >  const& e)
+    add_member (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::StructMemberType, ACE_Null_Mutex >  const& e)
     {
       member_.push_back (e);
     }
@@ -1380,10 +1380,10 @@ namespace CIAO
 
     StructMemberType::
     StructMemberType (::XMLSchema::string< ACE_TCHAR > const& name__,
-                      ::CIAO::Config_Handlers::DataType const& type__)
+                      ::DAnCE::Config_Handlers::DataType const& type__)
     :
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
-    type_ (new ::CIAO::Config_Handlers::DataType (type__)),
+    type_ (new ::DAnCE::Config_Handlers::DataType (type__)),
     regulator__ ()
     {
       name_->container (this);
@@ -1395,7 +1395,7 @@ namespace CIAO
     :
     ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
-    type_ (new ::CIAO::Config_Handlers::DataType (*s.type_)),
+    type_ (new ::DAnCE::Config_Handlers::DataType (*s.type_)),
     regulator__ ()
     {
       name_->container (this);
@@ -1429,14 +1429,14 @@ namespace CIAO
 
     // StructMemberType
     //
-    ::CIAO::Config_Handlers::DataType const& StructMemberType::
+    ::DAnCE::Config_Handlers::DataType const& StructMemberType::
     type () const
     {
       return *type_;
     }
 
     void StructMemberType::
-    type (::CIAO::Config_Handlers::DataType const& e)
+    type (::DAnCE::Config_Handlers::DataType const& e)
     {
       *type_ = e;
     }
@@ -1449,12 +1449,12 @@ namespace CIAO
     ValueType (::XMLSchema::string< ACE_TCHAR > const& name__,
                ::XMLSchema::string< ACE_TCHAR > const& typeId__,
                ::XMLSchema::string< ACE_TCHAR > const& modifier__,
-               ::CIAO::Config_Handlers::DataType const& baseType__)
+               ::DAnCE::Config_Handlers::DataType const& baseType__)
     :
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     typeId_ (new ::XMLSchema::string< ACE_TCHAR > (typeId__)),
     modifier_ (new ::XMLSchema::string< ACE_TCHAR > (modifier__)),
-    baseType_ (new ::CIAO::Config_Handlers::DataType (baseType__)),
+    baseType_ (new ::DAnCE::Config_Handlers::DataType (baseType__)),
     regulator__ ()
     {
       name_->container (this);
@@ -1470,7 +1470,7 @@ namespace CIAO
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
     typeId_ (new ::XMLSchema::string< ACE_TCHAR > (*s.typeId_)),
     modifier_ (new ::XMLSchema::string< ACE_TCHAR > (*s.modifier_)),
-    baseType_ (new ::CIAO::Config_Handlers::DataType (*s.baseType_)),
+    baseType_ (new ::DAnCE::Config_Handlers::DataType (*s.baseType_)),
     member_ (s.member_),
     regulator__ ()
     {
@@ -1541,14 +1541,14 @@ namespace CIAO
 
     // ValueType
     //
-    ::CIAO::Config_Handlers::DataType const& ValueType::
+    ::DAnCE::Config_Handlers::DataType const& ValueType::
     baseType () const
     {
       return *baseType_;
     }
 
     void ValueType::
-    baseType (::CIAO::Config_Handlers::DataType const& e)
+    baseType (::DAnCE::Config_Handlers::DataType const& e)
     {
       *baseType_ = e;
     }
@@ -1580,7 +1580,7 @@ namespace CIAO
     }
 
     void ValueType::
-    add_member (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ValueMemberType, ACE_Null_Mutex >  const& e)
+    add_member (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ValueMemberType, ACE_Null_Mutex >  const& e)
     {
       member_.push_back (e);
     }
@@ -1598,11 +1598,11 @@ namespace CIAO
     ValueMemberType::
     ValueMemberType (::XMLSchema::string< ACE_TCHAR > const& name__,
                      ::XMLSchema::string< ACE_TCHAR > const& visibility__,
-                     ::CIAO::Config_Handlers::DataType const& type__)
+                     ::DAnCE::Config_Handlers::DataType const& type__)
     :
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     visibility_ (new ::XMLSchema::string< ACE_TCHAR > (visibility__)),
-    type_ (new ::CIAO::Config_Handlers::DataType (type__)),
+    type_ (new ::DAnCE::Config_Handlers::DataType (type__)),
     regulator__ ()
     {
       name_->container (this);
@@ -1616,7 +1616,7 @@ namespace CIAO
     ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
     visibility_ (new ::XMLSchema::string< ACE_TCHAR > (*s.visibility_)),
-    type_ (new ::CIAO::Config_Handlers::DataType (*s.type_)),
+    type_ (new ::DAnCE::Config_Handlers::DataType (*s.type_)),
     regulator__ ()
     {
       name_->container (this);
@@ -1667,14 +1667,14 @@ namespace CIAO
 
     // ValueMemberType
     //
-    ::CIAO::Config_Handlers::DataType const& ValueMemberType::
+    ::DAnCE::Config_Handlers::DataType const& ValueMemberType::
     type () const
     {
       return *type_;
     }
 
     void ValueMemberType::
-    type (::CIAO::Config_Handlers::DataType const& e)
+    type (::DAnCE::Config_Handlers::DataType const& e)
     {
       *type_ = e;
     }
@@ -1685,10 +1685,10 @@ namespace CIAO
 
     NamedValue::
     NamedValue (::XMLSchema::string< ACE_TCHAR > const& name__,
-                ::CIAO::Config_Handlers::DataValue const& value__)
+                ::DAnCE::Config_Handlers::DataValue const& value__)
     :
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
-    value_ (new ::CIAO::Config_Handlers::DataValue (value__)),
+    value_ (new ::DAnCE::Config_Handlers::DataValue (value__)),
     regulator__ ()
     {
       name_->container (this);
@@ -1700,7 +1700,7 @@ namespace CIAO
     :
     ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
-    value_ (new ::CIAO::Config_Handlers::DataValue (*s.value_)),
+    value_ (new ::DAnCE::Config_Handlers::DataValue (*s.value_)),
     regulator__ ()
     {
       name_->container (this);
@@ -1734,14 +1734,14 @@ namespace CIAO
 
     // NamedValue
     //
-    ::CIAO::Config_Handlers::DataValue const& NamedValue::
+    ::DAnCE::Config_Handlers::DataValue const& NamedValue::
     value () const
     {
       return *value_;
     }
 
     void NamedValue::
-    value (::CIAO::Config_Handlers::DataValue const& e)
+    value (::DAnCE::Config_Handlers::DataValue const& e)
     {
       *value_ = e;
     }
@@ -1751,9 +1751,9 @@ namespace CIAO
     //
 
     SequenceType::
-    SequenceType (::CIAO::Config_Handlers::DataType const& elementType__)
+    SequenceType (::DAnCE::Config_Handlers::DataType const& elementType__)
     :
-    elementType_ (new ::CIAO::Config_Handlers::DataType (elementType__)),
+    elementType_ (new ::DAnCE::Config_Handlers::DataType (elementType__)),
     regulator__ ()
     {
       elementType_->container (this);
@@ -1764,7 +1764,7 @@ namespace CIAO
     :
     ::XSCRT::Type (),
     bound_ (s.bound_.get () ? new ::XMLSchema::unsignedInt (*s.bound_) : 0),
-    elementType_ (new ::CIAO::Config_Handlers::DataType (*s.elementType_)),
+    elementType_ (new ::DAnCE::Config_Handlers::DataType (*s.elementType_)),
     regulator__ ()
     {
       if (bound_.get ()) bound_->container (this);
@@ -1816,14 +1816,14 @@ namespace CIAO
 
     // SequenceType
     //
-    ::CIAO::Config_Handlers::DataType const& SequenceType::
+    ::DAnCE::Config_Handlers::DataType const& SequenceType::
     elementType () const
     {
       return *elementType_;
     }
 
     void SequenceType::
-    elementType (::CIAO::Config_Handlers::DataType const& e)
+    elementType (::DAnCE::Config_Handlers::DataType const& e)
     {
       *elementType_ = e;
     }
@@ -1833,11 +1833,11 @@ namespace CIAO
     //
 
     Any::
-    Any (::CIAO::Config_Handlers::DataType const& type__,
-         ::CIAO::Config_Handlers::DataValue const& value__)
+    Any (::DAnCE::Config_Handlers::DataType const& type__,
+         ::DAnCE::Config_Handlers::DataValue const& value__)
     :
-    type_ (new ::CIAO::Config_Handlers::DataType (type__)),
-    value_ (new ::CIAO::Config_Handlers::DataValue (value__)),
+    type_ (new ::DAnCE::Config_Handlers::DataType (type__)),
+    value_ (new ::DAnCE::Config_Handlers::DataValue (value__)),
     regulator__ ()
     {
       type_->container (this);
@@ -1848,8 +1848,8 @@ namespace CIAO
     Any (Any const& s)
     :
     ::XSCRT::Type (),
-    type_ (new ::CIAO::Config_Handlers::DataType (*s.type_)),
-    value_ (new ::CIAO::Config_Handlers::DataValue (*s.value_)),
+    type_ (new ::DAnCE::Config_Handlers::DataType (*s.type_)),
+    value_ (new ::DAnCE::Config_Handlers::DataValue (*s.value_)),
     regulator__ ()
     {
       type_->container (this);
@@ -1869,28 +1869,28 @@ namespace CIAO
 
     // Any
     //
-    ::CIAO::Config_Handlers::DataType const& Any::
+    ::DAnCE::Config_Handlers::DataType const& Any::
     type () const
     {
       return *type_;
     }
 
     void Any::
-    type (::CIAO::Config_Handlers::DataType const& e)
+    type (::DAnCE::Config_Handlers::DataType const& e)
     {
       *type_ = e;
     }
 
     // Any
     //
-    ::CIAO::Config_Handlers::DataValue const& Any::
+    ::DAnCE::Config_Handlers::DataValue const& Any::
     value () const
     {
       return *value_;
     }
 
     void Any::
-    value (::CIAO::Config_Handlers::DataValue const& e)
+    value (::DAnCE::Config_Handlers::DataValue const& e)
     {
       *value_ = e;
     }
@@ -1901,10 +1901,10 @@ namespace CIAO
 
     Property::
     Property (::XMLSchema::string< ACE_TCHAR > const& name__,
-              ::CIAO::Config_Handlers::Any const& value__)
+              ::DAnCE::Config_Handlers::Any const& value__)
     :
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
-    value_ (new ::CIAO::Config_Handlers::Any (value__)),
+    value_ (new ::DAnCE::Config_Handlers::Any (value__)),
     regulator__ ()
     {
       name_->container (this);
@@ -1916,7 +1916,7 @@ namespace CIAO
     :
     ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
-    value_ (new ::CIAO::Config_Handlers::Any (*s.value_)),
+    value_ (new ::DAnCE::Config_Handlers::Any (*s.value_)),
     regulator__ ()
     {
       name_->container (this);
@@ -1950,14 +1950,14 @@ namespace CIAO
 
     // Property
     //
-    ::CIAO::Config_Handlers::Any const& Property::
+    ::DAnCE::Config_Handlers::Any const& Property::
     value () const
     {
       return *value_;
     }
 
     void Property::
-    value (::CIAO::Config_Handlers::Any const& e)
+    value (::DAnCE::Config_Handlers::Any const& e)
     {
       *value_ = e;
     }
@@ -1973,13 +1973,13 @@ namespace CIAO
     }
 
     bool
-    operator== (::CIAO::Config_Handlers::SatisfierPropertyKind const& a, ::CIAO::Config_Handlers::SatisfierPropertyKind const& b)
+    operator== (::DAnCE::Config_Handlers::SatisfierPropertyKind const& a, ::DAnCE::Config_Handlers::SatisfierPropertyKind const& b)
     {
       return a.v_ == b.v_;
     }
 
     bool
-    operator!= (::CIAO::Config_Handlers::SatisfierPropertyKind const& a, ::CIAO::Config_Handlers::SatisfierPropertyKind const& b)
+    operator!= (::DAnCE::Config_Handlers::SatisfierPropertyKind const& a, ::DAnCE::Config_Handlers::SatisfierPropertyKind const& b)
     {
       return a.v_ != b.v_;
     }
@@ -1995,14 +1995,14 @@ namespace CIAO
 
     SatisfierProperty::
     SatisfierProperty (::XMLSchema::string< ACE_TCHAR > const& name__,
-                       ::CIAO::Config_Handlers::SatisfierPropertyKind const& kind__,
+                       ::DAnCE::Config_Handlers::SatisfierPropertyKind const& kind__,
                        ::XMLSchema::boolean const& dynamic__,
-                       ::CIAO::Config_Handlers::Any const& value__)
+                       ::DAnCE::Config_Handlers::Any const& value__)
     :
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
-    kind_ (new ::CIAO::Config_Handlers::SatisfierPropertyKind (kind__)),
+    kind_ (new ::DAnCE::Config_Handlers::SatisfierPropertyKind (kind__)),
     dynamic_ (new ::XMLSchema::boolean (dynamic__)),
-    value_ (new ::CIAO::Config_Handlers::Any (value__)),
+    value_ (new ::DAnCE::Config_Handlers::Any (value__)),
     regulator__ ()
     {
       name_->container (this);
@@ -2016,9 +2016,9 @@ namespace CIAO
     :
     ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
-    kind_ (new ::CIAO::Config_Handlers::SatisfierPropertyKind (*s.kind_)),
+    kind_ (new ::DAnCE::Config_Handlers::SatisfierPropertyKind (*s.kind_)),
     dynamic_ (new ::XMLSchema::boolean (*s.dynamic_)),
-    value_ (new ::CIAO::Config_Handlers::Any (*s.value_)),
+    value_ (new ::DAnCE::Config_Handlers::Any (*s.value_)),
     regulator__ ()
     {
       name_->container (this);
@@ -2058,14 +2058,14 @@ namespace CIAO
 
     // SatisfierProperty
     //
-    ::CIAO::Config_Handlers::SatisfierPropertyKind const& SatisfierProperty::
+    ::DAnCE::Config_Handlers::SatisfierPropertyKind const& SatisfierProperty::
     kind () const
     {
       return *kind_;
     }
 
     void SatisfierProperty::
-    kind (::CIAO::Config_Handlers::SatisfierPropertyKind const& e)
+    kind (::DAnCE::Config_Handlers::SatisfierPropertyKind const& e)
     {
       *kind_ = e;
     }
@@ -2086,14 +2086,14 @@ namespace CIAO
 
     // SatisfierProperty
     //
-    ::CIAO::Config_Handlers::Any const& SatisfierProperty::
+    ::DAnCE::Config_Handlers::Any const& SatisfierProperty::
     value () const
     {
       return *value_;
     }
 
     void SatisfierProperty::
-    value (::CIAO::Config_Handlers::Any const& e)
+    value (::DAnCE::Config_Handlers::Any const& e)
     {
       *value_ = e;
     }
@@ -2217,7 +2217,7 @@ namespace CIAO
     }
 
     void Resource::
-    add_property (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex >  const& e)
+    add_property (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::SatisfierProperty, ACE_Null_Mutex >  const& e)
     {
       property_.push_back (e);
     }
@@ -2325,7 +2325,7 @@ namespace CIAO
     }
 
     void Requirement::
-    add_property (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
+    add_property (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       property_.push_back (e);
     }
@@ -2433,7 +2433,7 @@ namespace CIAO
     }
 
     void ResourceDeploymentDescription::
-    add_property (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
+    add_property (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       property_.push_back (e);
     }
@@ -2634,7 +2634,7 @@ namespace CIAO
     }
 
     void ArtifactDeploymentDescription::
-    add_execParameter (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
+    add_execParameter (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       execParameter_.push_back (e);
     }
@@ -2672,7 +2672,7 @@ namespace CIAO
     }
 
     void ArtifactDeploymentDescription::
-    add_deployRequirement (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  const& e)
+    add_deployRequirement (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Requirement, ACE_Null_Mutex >  const& e)
     {
       deployRequirement_.push_back (e);
     }
@@ -2710,7 +2710,7 @@ namespace CIAO
     }
 
     void ArtifactDeploymentDescription::
-    add_deployedResource (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ResourceDeploymentDescription, ACE_Null_Mutex >  const& e)
+    add_deployedResource (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ResourceDeploymentDescription, ACE_Null_Mutex >  const& e)
     {
       deployedResource_.push_back (e);
     }
@@ -2884,7 +2884,7 @@ namespace CIAO
     }
 
     void MonolithicDeploymentDescription::
-    add_artifact (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex >  const& e)
+    add_artifact (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::IdRef, ACE_Null_Mutex >  const& e)
     {
       artifact_.push_back (e);
     }
@@ -2922,7 +2922,7 @@ namespace CIAO
     }
 
     void MonolithicDeploymentDescription::
-    add_execParameter (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
+    add_execParameter (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       execParameter_.push_back (e);
     }
@@ -2960,7 +2960,7 @@ namespace CIAO
     }
 
     void MonolithicDeploymentDescription::
-    add_deployRequirement (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  const& e)
+    add_deployRequirement (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Requirement, ACE_Null_Mutex >  const& e)
     {
       deployRequirement_.push_back (e);
     }
@@ -3017,13 +3017,13 @@ namespace CIAO
     }
 
     bool
-    operator== (::CIAO::Config_Handlers::ResourceUsageKind const& a, ::CIAO::Config_Handlers::ResourceUsageKind const& b)
+    operator== (::DAnCE::Config_Handlers::ResourceUsageKind const& a, ::DAnCE::Config_Handlers::ResourceUsageKind const& b)
     {
       return a.v_ == b.v_;
     }
 
     bool
-    operator!= (::CIAO::Config_Handlers::ResourceUsageKind const& a, ::CIAO::Config_Handlers::ResourceUsageKind const& b)
+    operator!= (::DAnCE::Config_Handlers::ResourceUsageKind const& a, ::DAnCE::Config_Handlers::ResourceUsageKind const& b)
     {
       return a.v_ != b.v_;
     }
@@ -3038,11 +3038,11 @@ namespace CIAO
     //
 
     InstanceResourceDeploymentDescription::
-    InstanceResourceDeploymentDescription (::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage__,
+    InstanceResourceDeploymentDescription (::DAnCE::Config_Handlers::ResourceUsageKind const& resourceUsage__,
                                            ::XMLSchema::string< ACE_TCHAR > const& requirementName__,
                                            ::XMLSchema::string< ACE_TCHAR > const& resourceName__)
     :
-    resourceUsage_ (new ::CIAO::Config_Handlers::ResourceUsageKind (resourceUsage__)),
+    resourceUsage_ (new ::DAnCE::Config_Handlers::ResourceUsageKind (resourceUsage__)),
     requirementName_ (new ::XMLSchema::string< ACE_TCHAR > (requirementName__)),
     resourceName_ (new ::XMLSchema::string< ACE_TCHAR > (resourceName__)),
     regulator__ ()
@@ -3056,7 +3056,7 @@ namespace CIAO
     InstanceResourceDeploymentDescription (InstanceResourceDeploymentDescription const& s)
     :
     ::XSCRT::Type (),
-    resourceUsage_ (new ::CIAO::Config_Handlers::ResourceUsageKind (*s.resourceUsage_)),
+    resourceUsage_ (new ::DAnCE::Config_Handlers::ResourceUsageKind (*s.resourceUsage_)),
     requirementName_ (new ::XMLSchema::string< ACE_TCHAR > (*s.requirementName_)),
     resourceName_ (new ::XMLSchema::string< ACE_TCHAR > (*s.resourceName_)),
     property_ (s.property_),
@@ -3084,14 +3084,14 @@ namespace CIAO
 
     // InstanceResourceDeploymentDescription
     //
-    ::CIAO::Config_Handlers::ResourceUsageKind const& InstanceResourceDeploymentDescription::
+    ::DAnCE::Config_Handlers::ResourceUsageKind const& InstanceResourceDeploymentDescription::
     resourceUsage () const
     {
       return *resourceUsage_;
     }
 
     void InstanceResourceDeploymentDescription::
-    resourceUsage (::CIAO::Config_Handlers::ResourceUsageKind const& e)
+    resourceUsage (::DAnCE::Config_Handlers::ResourceUsageKind const& e)
     {
       *resourceUsage_ = e;
     }
@@ -3151,7 +3151,7 @@ namespace CIAO
     }
 
     void InstanceResourceDeploymentDescription::
-    add_property (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
+    add_property (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       property_.push_back (e);
     }
@@ -3170,12 +3170,12 @@ namespace CIAO
     InstanceDeploymentDescription (::XMLSchema::string< ACE_TCHAR > const& name__,
                                    ::XMLSchema::string< ACE_TCHAR > const& node__,
                                    ::XMLSchema::string< ACE_TCHAR > const& source__,
-                                   ::CIAO::Config_Handlers::IdRef const& implementation__)
+                                   ::DAnCE::Config_Handlers::IdRef const& implementation__)
     :
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     node_ (new ::XMLSchema::string< ACE_TCHAR > (node__)),
     source_ (new ::XMLSchema::string< ACE_TCHAR > (source__)),
-    implementation_ (new ::CIAO::Config_Handlers::IdRef (implementation__)),
+    implementation_ (new ::DAnCE::Config_Handlers::IdRef (implementation__)),
     regulator__ ()
     {
       name_->container (this);
@@ -3191,10 +3191,10 @@ namespace CIAO
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
     node_ (new ::XMLSchema::string< ACE_TCHAR > (*s.node_)),
     source_ (new ::XMLSchema::string< ACE_TCHAR > (*s.source_)),
-    implementation_ (new ::CIAO::Config_Handlers::IdRef (*s.implementation_)),
+    implementation_ (new ::DAnCE::Config_Handlers::IdRef (*s.implementation_)),
     configProperty_ (s.configProperty_),
     deployedResource_ (s.deployedResource_),
-    deployedSharedResource_ (s.deployedSharedResource_.get () ? new ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription (*s.deployedSharedResource_) : 0),
+    deployedSharedResource_ (s.deployedSharedResource_.get () ? new ::DAnCE::Config_Handlers::InstanceResourceDeploymentDescription (*s.deployedSharedResource_) : 0),
     id_ (s.id_.get () ? new ::XMLSchema::ID< ACE_TCHAR > (*s.id_) : 0),
     regulator__ ()
     {
@@ -3277,14 +3277,14 @@ namespace CIAO
 
     // InstanceDeploymentDescription
     //
-    ::CIAO::Config_Handlers::IdRef const& InstanceDeploymentDescription::
+    ::DAnCE::Config_Handlers::IdRef const& InstanceDeploymentDescription::
     implementation () const
     {
       return *implementation_;
     }
 
     void InstanceDeploymentDescription::
-    implementation (::CIAO::Config_Handlers::IdRef const& e)
+    implementation (::DAnCE::Config_Handlers::IdRef const& e)
     {
       *implementation_ = e;
     }
@@ -3316,7 +3316,7 @@ namespace CIAO
     }
 
     void InstanceDeploymentDescription::
-    add_configProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
+    add_configProperty (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       configProperty_.push_back (e);
     }
@@ -3354,7 +3354,7 @@ namespace CIAO
     }
 
     void InstanceDeploymentDescription::
-    add_deployedResource (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription, ACE_Null_Mutex >  const& e)
+    add_deployedResource (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::InstanceResourceDeploymentDescription, ACE_Null_Mutex >  const& e)
     {
       deployedResource_.push_back (e);
     }
@@ -3373,14 +3373,14 @@ namespace CIAO
       return deployedSharedResource_.get () != 0;
     }
 
-    ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& InstanceDeploymentDescription::
+    ::DAnCE::Config_Handlers::InstanceResourceDeploymentDescription const& InstanceDeploymentDescription::
     deployedSharedResource () const
     {
       return *deployedSharedResource_;
     }
 
     void InstanceDeploymentDescription::
-    deployedSharedResource (::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& e)
+    deployedSharedResource (::DAnCE::Config_Handlers::InstanceResourceDeploymentDescription const& e)
     {
       if (deployedSharedResource_.get ())
       {
@@ -3389,7 +3389,7 @@ namespace CIAO
 
       else
       {
-        deployedSharedResource_ = ::std::auto_ptr< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > (new ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription (e));
+        deployedSharedResource_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::InstanceResourceDeploymentDescription > (new ::DAnCE::Config_Handlers::InstanceResourceDeploymentDescription (e));
         deployedSharedResource_->container (this);
       }
     }
@@ -3440,13 +3440,13 @@ namespace CIAO
     }
 
     bool
-    operator== (::CIAO::Config_Handlers::CCMComponentPortKind const& a, ::CIAO::Config_Handlers::CCMComponentPortKind const& b)
+    operator== (::DAnCE::Config_Handlers::CCMComponentPortKind const& a, ::DAnCE::Config_Handlers::CCMComponentPortKind const& b)
     {
       return a.v_ == b.v_;
     }
 
     bool
-    operator!= (::CIAO::Config_Handlers::CCMComponentPortKind const& a, ::CIAO::Config_Handlers::CCMComponentPortKind const& b)
+    operator!= (::DAnCE::Config_Handlers::CCMComponentPortKind const& a, ::DAnCE::Config_Handlers::CCMComponentPortKind const& b)
     {
       return a.v_ != b.v_;
     }
@@ -3466,14 +3466,14 @@ namespace CIAO
                               ::XMLSchema::boolean const& exclusiveProvider__,
                               ::XMLSchema::boolean const& exclusiveUser__,
                               ::XMLSchema::boolean const& optional__,
-                              ::CIAO::Config_Handlers::CCMComponentPortKind const& kind__)
+                              ::DAnCE::Config_Handlers::CCMComponentPortKind const& kind__)
     :
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     provider_ (new ::XMLSchema::boolean (provider__)),
     exclusiveProvider_ (new ::XMLSchema::boolean (exclusiveProvider__)),
     exclusiveUser_ (new ::XMLSchema::boolean (exclusiveUser__)),
     optional_ (new ::XMLSchema::boolean (optional__)),
-    kind_ (new ::CIAO::Config_Handlers::CCMComponentPortKind (kind__)),
+    kind_ (new ::DAnCE::Config_Handlers::CCMComponentPortKind (kind__)),
     regulator__ ()
     {
       name_->container (this);
@@ -3495,7 +3495,7 @@ namespace CIAO
     exclusiveProvider_ (new ::XMLSchema::boolean (*s.exclusiveProvider_)),
     exclusiveUser_ (new ::XMLSchema::boolean (*s.exclusiveUser_)),
     optional_ (new ::XMLSchema::boolean (*s.optional_)),
-    kind_ (new ::CIAO::Config_Handlers::CCMComponentPortKind (*s.kind_)),
+    kind_ (new ::DAnCE::Config_Handlers::CCMComponentPortKind (*s.kind_)),
     templateParam_ (s.templateParam_),
     regulator__ ()
     {
@@ -3675,14 +3675,14 @@ namespace CIAO
 
     // ComponentPortDescription
     //
-    ::CIAO::Config_Handlers::CCMComponentPortKind const& ComponentPortDescription::
+    ::DAnCE::Config_Handlers::CCMComponentPortKind const& ComponentPortDescription::
     kind () const
     {
       return *kind_;
     }
 
     void ComponentPortDescription::
-    kind (::CIAO::Config_Handlers::CCMComponentPortKind const& e)
+    kind (::DAnCE::Config_Handlers::CCMComponentPortKind const& e)
     {
       *kind_ = e;
     }
@@ -3731,10 +3731,10 @@ namespace CIAO
 
     ComponentPropertyDescription::
     ComponentPropertyDescription (::XMLSchema::string< ACE_TCHAR > const& name__,
-                                  ::CIAO::Config_Handlers::DataType const& type__)
+                                  ::DAnCE::Config_Handlers::DataType const& type__)
     :
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
-    type_ (new ::CIAO::Config_Handlers::DataType (type__)),
+    type_ (new ::DAnCE::Config_Handlers::DataType (type__)),
     regulator__ ()
     {
       name_->container (this);
@@ -3746,7 +3746,7 @@ namespace CIAO
     :
     ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
-    type_ (new ::CIAO::Config_Handlers::DataType (*s.type_)),
+    type_ (new ::DAnCE::Config_Handlers::DataType (*s.type_)),
     regulator__ ()
     {
       name_->container (this);
@@ -3780,14 +3780,14 @@ namespace CIAO
 
     // ComponentPropertyDescription
     //
-    ::CIAO::Config_Handlers::DataType const& ComponentPropertyDescription::
+    ::DAnCE::Config_Handlers::DataType const& ComponentPropertyDescription::
     type () const
     {
       return *type_;
     }
 
     void ComponentPropertyDescription::
-    type (::CIAO::Config_Handlers::DataType const& e)
+    type (::DAnCE::Config_Handlers::DataType const& e)
     {
       *type_ = e;
     }
@@ -3844,12 +3844,12 @@ namespace CIAO
 
     PlanSubcomponentPortEndpoint::
     PlanSubcomponentPortEndpoint (::XMLSchema::string< ACE_TCHAR > const& portName__,
-                                  ::CIAO::Config_Handlers::CCMComponentPortKind const& kind__,
-                                  ::CIAO::Config_Handlers::IdRef const& instance__)
+                                  ::DAnCE::Config_Handlers::CCMComponentPortKind const& kind__,
+                                  ::DAnCE::Config_Handlers::IdRef const& instance__)
     :
     portName_ (new ::XMLSchema::string< ACE_TCHAR > (portName__)),
-    kind_ (new ::CIAO::Config_Handlers::CCMComponentPortKind (kind__)),
-    instance_ (new ::CIAO::Config_Handlers::IdRef (instance__)),
+    kind_ (new ::DAnCE::Config_Handlers::CCMComponentPortKind (kind__)),
+    instance_ (new ::DAnCE::Config_Handlers::IdRef (instance__)),
     regulator__ ()
     {
       portName_->container (this);
@@ -3863,8 +3863,8 @@ namespace CIAO
     ::XSCRT::Type (),
     portName_ (new ::XMLSchema::string< ACE_TCHAR > (*s.portName_)),
     provider_ (s.provider_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.provider_) : 0),
-    kind_ (new ::CIAO::Config_Handlers::CCMComponentPortKind (*s.kind_)),
-    instance_ (new ::CIAO::Config_Handlers::IdRef (*s.instance_)),
+    kind_ (new ::DAnCE::Config_Handlers::CCMComponentPortKind (*s.kind_)),
+    instance_ (new ::DAnCE::Config_Handlers::IdRef (*s.instance_)),
     regulator__ ()
     {
       portName_->container (this);
@@ -3936,28 +3936,28 @@ namespace CIAO
 
     // PlanSubcomponentPortEndpoint
     //
-    ::CIAO::Config_Handlers::CCMComponentPortKind const& PlanSubcomponentPortEndpoint::
+    ::DAnCE::Config_Handlers::CCMComponentPortKind const& PlanSubcomponentPortEndpoint::
     kind () const
     {
       return *kind_;
     }
 
     void PlanSubcomponentPortEndpoint::
-    kind (::CIAO::Config_Handlers::CCMComponentPortKind const& e)
+    kind (::DAnCE::Config_Handlers::CCMComponentPortKind const& e)
     {
       *kind_ = e;
     }
 
     // PlanSubcomponentPortEndpoint
     //
-    ::CIAO::Config_Handlers::IdRef const& PlanSubcomponentPortEndpoint::
+    ::DAnCE::Config_Handlers::IdRef const& PlanSubcomponentPortEndpoint::
     instance () const
     {
       return *instance_;
     }
 
     void PlanSubcomponentPortEndpoint::
-    instance (::CIAO::Config_Handlers::IdRef const& e)
+    instance (::DAnCE::Config_Handlers::IdRef const& e)
     {
       *instance_ = e;
     }
@@ -4224,7 +4224,7 @@ namespace CIAO
     }
 
     void ConnectionResourceDeploymentDescription::
-    add_property (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
+    add_property (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       property_.push_back (e);
     }
@@ -4359,7 +4359,7 @@ namespace CIAO
     }
 
     void PlanConnectionDescription::
-    add_deployRequirement (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  const& e)
+    add_deployRequirement (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Requirement, ACE_Null_Mutex >  const& e)
     {
       deployRequirement_.push_back (e);
     }
@@ -4397,7 +4397,7 @@ namespace CIAO
     }
 
     void PlanConnectionDescription::
-    add_externalEndpoint (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex >  const& e)
+    add_externalEndpoint (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex >  const& e)
     {
       externalEndpoint_.push_back (e);
     }
@@ -4435,7 +4435,7 @@ namespace CIAO
     }
 
     void PlanConnectionDescription::
-    add_internalEndpoint (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint, ACE_Null_Mutex >  const& e)
+    add_internalEndpoint (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PlanSubcomponentPortEndpoint, ACE_Null_Mutex >  const& e)
     {
       internalEndpoint_.push_back (e);
     }
@@ -4473,7 +4473,7 @@ namespace CIAO
     }
 
     void PlanConnectionDescription::
-    add_externalReference (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex >  const& e)
+    add_externalReference (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex >  const& e)
     {
       externalReference_.push_back (e);
     }
@@ -4511,7 +4511,7 @@ namespace CIAO
     }
 
     void PlanConnectionDescription::
-    add_deployedResource (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription, ACE_Null_Mutex >  const& e)
+    add_deployedResource (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ConnectionResourceDeploymentDescription, ACE_Null_Mutex >  const& e)
     {
       deployedResource_.push_back (e);
     }
@@ -4685,7 +4685,7 @@ namespace CIAO
     }
 
     void Capability::
-    add_property (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex >  const& e)
+    add_property (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::SatisfierProperty, ACE_Null_Mutex >  const& e)
     {
       property_.push_back (e);
     }
@@ -4716,7 +4716,7 @@ namespace CIAO
     ImplementationRequirement (ImplementationRequirement const& s)
     :
     ::XSCRT::Type (),
-    resourceUsage_ (s.resourceUsage_.get () ? new ::CIAO::Config_Handlers::ResourceUsageKind (*s.resourceUsage_) : 0),
+    resourceUsage_ (s.resourceUsage_.get () ? new ::DAnCE::Config_Handlers::ResourceUsageKind (*s.resourceUsage_) : 0),
     resourcePort_ (s.resourcePort_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.resourcePort_) : 0),
     componentPort_ (s.componentPort_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.componentPort_) : 0),
     resourceType_ (new ::XMLSchema::string< ACE_TCHAR > (*s.resourceType_)),
@@ -4767,14 +4767,14 @@ namespace CIAO
       return resourceUsage_.get () != 0;
     }
 
-    ::CIAO::Config_Handlers::ResourceUsageKind const& ImplementationRequirement::
+    ::DAnCE::Config_Handlers::ResourceUsageKind const& ImplementationRequirement::
     resourceUsage () const
     {
       return *resourceUsage_;
     }
 
     void ImplementationRequirement::
-    resourceUsage (::CIAO::Config_Handlers::ResourceUsageKind const& e)
+    resourceUsage (::DAnCE::Config_Handlers::ResourceUsageKind const& e)
     {
       if (resourceUsage_.get ())
       {
@@ -4783,7 +4783,7 @@ namespace CIAO
 
       else
       {
-        resourceUsage_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ResourceUsageKind > (new ::CIAO::Config_Handlers::ResourceUsageKind (e));
+        resourceUsage_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::ResourceUsageKind > (new ::DAnCE::Config_Handlers::ResourceUsageKind (e));
         resourceUsage_->container (this);
       }
     }
@@ -4901,7 +4901,7 @@ namespace CIAO
     }
 
     void ImplementationRequirement::
-    add_property (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
+    add_property (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       property_.push_back (e);
     }
@@ -4918,10 +4918,10 @@ namespace CIAO
 
     SubcomponentPortEndpoint::
     SubcomponentPortEndpoint (::XMLSchema::string< ACE_TCHAR > const& portName__,
-                              ::CIAO::Config_Handlers::IdRef const& instance__)
+                              ::DAnCE::Config_Handlers::IdRef const& instance__)
     :
     portName_ (new ::XMLSchema::string< ACE_TCHAR > (portName__)),
-    instance_ (new ::CIAO::Config_Handlers::IdRef (instance__)),
+    instance_ (new ::DAnCE::Config_Handlers::IdRef (instance__)),
     regulator__ ()
     {
       portName_->container (this);
@@ -4933,7 +4933,7 @@ namespace CIAO
     :
     ::XSCRT::Type (),
     portName_ (new ::XMLSchema::string< ACE_TCHAR > (*s.portName_)),
-    instance_ (new ::CIAO::Config_Handlers::IdRef (*s.instance_)),
+    instance_ (new ::DAnCE::Config_Handlers::IdRef (*s.instance_)),
     regulator__ ()
     {
       portName_->container (this);
@@ -4967,14 +4967,14 @@ namespace CIAO
 
     // SubcomponentPortEndpoint
     //
-    ::CIAO::Config_Handlers::IdRef const& SubcomponentPortEndpoint::
+    ::DAnCE::Config_Handlers::IdRef const& SubcomponentPortEndpoint::
     instance () const
     {
       return *instance_;
     }
 
     void SubcomponentPortEndpoint::
-    instance (::CIAO::Config_Handlers::IdRef const& e)
+    instance (::DAnCE::Config_Handlers::IdRef const& e)
     {
       *instance_ = e;
     }
@@ -5064,7 +5064,7 @@ namespace CIAO
     }
 
     void AssemblyConnectionDescription::
-    add_deployRequirement (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  const& e)
+    add_deployRequirement (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Requirement, ACE_Null_Mutex >  const& e)
     {
       deployRequirement_.push_back (e);
     }
@@ -5102,7 +5102,7 @@ namespace CIAO
     }
 
     void AssemblyConnectionDescription::
-    add_internalEndpoint (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPortEndpoint, ACE_Null_Mutex >  const& e)
+    add_internalEndpoint (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::SubcomponentPortEndpoint, ACE_Null_Mutex >  const& e)
     {
       internalEndpoint_.push_back (e);
     }
@@ -5140,7 +5140,7 @@ namespace CIAO
     }
 
     void AssemblyConnectionDescription::
-    add_externalEndpoint (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex >  const& e)
+    add_externalEndpoint (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex >  const& e)
     {
       externalEndpoint_.push_back (e);
     }
@@ -5178,7 +5178,7 @@ namespace CIAO
     }
 
     void AssemblyConnectionDescription::
-    add_externalReference (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex >  const& e)
+    add_externalReference (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex >  const& e)
     {
       externalReference_.push_back (e);
     }
@@ -5200,13 +5200,13 @@ namespace CIAO
     }
 
     bool
-    operator== (::CIAO::Config_Handlers::PlanLocalityKind const& a, ::CIAO::Config_Handlers::PlanLocalityKind const& b)
+    operator== (::DAnCE::Config_Handlers::PlanLocalityKind const& a, ::DAnCE::Config_Handlers::PlanLocalityKind const& b)
     {
       return a.v_ == b.v_;
     }
 
     bool
-    operator!= (::CIAO::Config_Handlers::PlanLocalityKind const& a, ::CIAO::Config_Handlers::PlanLocalityKind const& b)
+    operator!= (::DAnCE::Config_Handlers::PlanLocalityKind const& a, ::DAnCE::Config_Handlers::PlanLocalityKind const& b)
     {
       return a.v_ != b.v_;
     }
@@ -5221,10 +5221,10 @@ namespace CIAO
     //
 
     PlanLocality::
-    PlanLocality (::CIAO::Config_Handlers::PlanLocalityKind const& constraint__,
-                  ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex > > const& constrainedInstance__)
+    PlanLocality (::DAnCE::Config_Handlers::PlanLocalityKind const& constraint__,
+                  ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::IdRef, ACE_Null_Mutex > > const& constrainedInstance__)
     :
-    constraint_ (new ::CIAO::Config_Handlers::PlanLocalityKind (constraint__)),
+    constraint_ (new ::DAnCE::Config_Handlers::PlanLocalityKind (constraint__)),
     constrainedInstance_ (constrainedInstance__),
     regulator__ ()
     {
@@ -5235,7 +5235,7 @@ namespace CIAO
     PlanLocality (PlanLocality const& s)
     :
     ::XSCRT::Type (),
-    constraint_ (new ::CIAO::Config_Handlers::PlanLocalityKind (*s.constraint_)),
+    constraint_ (new ::DAnCE::Config_Handlers::PlanLocalityKind (*s.constraint_)),
     constrainedInstance_ (s.constrainedInstance_),
     regulator__ ()
     {
@@ -5255,14 +5255,14 @@ namespace CIAO
 
     // PlanLocality
     //
-    ::CIAO::Config_Handlers::PlanLocalityKind const& PlanLocality::
+    ::DAnCE::Config_Handlers::PlanLocalityKind const& PlanLocality::
     constraint () const
     {
       return *constraint_;
     }
 
     void PlanLocality::
-    constraint (::CIAO::Config_Handlers::PlanLocalityKind const& e)
+    constraint (::DAnCE::Config_Handlers::PlanLocalityKind const& e)
     {
       *constraint_ = e;
     }
@@ -5294,7 +5294,7 @@ namespace CIAO
     }
 
     void PlanLocality::
-    add_constrainedInstance (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex >  const& e)
+    add_constrainedInstance (ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::IdRef, ACE_Null_Mutex >  const& e)
     {
       constrainedInstance_.push_back (e);
     }
@@ -5307,7 +5307,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -5501,37 +5501,37 @@ namespace CIAO
 
         if (n == ACE_TEXT("kind"))
         {
-          kind_ = ::std::auto_ptr< ::CIAO::Config_Handlers::TCKind > (new ::CIAO::Config_Handlers::TCKind (e));
+          kind_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::TCKind > (new ::DAnCE::Config_Handlers::TCKind (e));
           kind_->container (this);
         }
 
         else if (n == ACE_TEXT("enum"))
         {
-          ::CIAO::Config_Handlers::EnumType t (e);
+          ::DAnCE::Config_Handlers::EnumType t (e);
           enum_ (t);
         }
 
         else if (n == ACE_TEXT("struct"))
         {
-          ::CIAO::Config_Handlers::StructType t (e);
+          ::DAnCE::Config_Handlers::StructType t (e);
           struct_ (t);
         }
 
         else if (n == ACE_TEXT("value"))
         {
-          ::CIAO::Config_Handlers::ValueType t (e);
+          ::DAnCE::Config_Handlers::ValueType t (e);
           value (t);
         }
 
         else if (n == ACE_TEXT("sequence"))
         {
-          ::CIAO::Config_Handlers::SequenceType t (e);
+          ::DAnCE::Config_Handlers::SequenceType t (e);
           sequence (t);
         }
 
         else if (n == ACE_TEXT("alias"))
         {
-          ::CIAO::Config_Handlers::AliasType t (e);
+          ::DAnCE::Config_Handlers::AliasType t (e);
           alias (t);
         }
 
@@ -5654,13 +5654,13 @@ namespace CIAO
 
         else if (n == ACE_TEXT("element"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::DataValue, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::DataValue (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::DataValue, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::DataValue (e));
           add_element (t);
         }
 
         else if (n == ACE_TEXT("member"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedValue, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::NamedValue (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::NamedValue, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::NamedValue (e));
           add_member (t);
         }
 
@@ -5699,7 +5699,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("elementType"))
         {
-          elementType_ = ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > (new ::CIAO::Config_Handlers::DataType (e));
+          elementType_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::DataType > (new ::DAnCE::Config_Handlers::DataType (e));
           elementType_->container (this);
         }
 
@@ -5777,7 +5777,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("member"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::StructMemberType, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::StructMemberType (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::StructMemberType, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::StructMemberType (e));
           add_member (t);
         }
 
@@ -5810,7 +5810,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("type"))
         {
-          type_ = ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > (new ::CIAO::Config_Handlers::DataType (e));
+          type_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::DataType > (new ::DAnCE::Config_Handlers::DataType (e));
           type_->container (this);
         }
 
@@ -5855,13 +5855,13 @@ namespace CIAO
 
         else if (n == ACE_TEXT("baseType"))
         {
-          baseType_ = ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > (new ::CIAO::Config_Handlers::DataType (e));
+          baseType_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::DataType > (new ::DAnCE::Config_Handlers::DataType (e));
           baseType_->container (this);
         }
 
         else if (n == ACE_TEXT("member"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ValueMemberType, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ValueMemberType (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ValueMemberType, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::ValueMemberType (e));
           add_member (t);
         }
 
@@ -5900,7 +5900,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("type"))
         {
-          type_ = ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > (new ::CIAO::Config_Handlers::DataType (e));
+          type_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::DataType > (new ::DAnCE::Config_Handlers::DataType (e));
           type_->container (this);
         }
 
@@ -5933,7 +5933,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("value"))
         {
-          value_ = ::std::auto_ptr< ::CIAO::Config_Handlers::DataValue > (new ::CIAO::Config_Handlers::DataValue (e));
+          value_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::DataValue > (new ::DAnCE::Config_Handlers::DataValue (e));
           value_->container (this);
         }
 
@@ -5966,7 +5966,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("elementType"))
         {
-          elementType_ = ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > (new ::CIAO::Config_Handlers::DataType (e));
+          elementType_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::DataType > (new ::DAnCE::Config_Handlers::DataType (e));
           elementType_->container (this);
         }
 
@@ -5993,13 +5993,13 @@ namespace CIAO
 
         if (n == ACE_TEXT("type"))
         {
-          type_ = ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > (new ::CIAO::Config_Handlers::DataType (e));
+          type_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::DataType > (new ::DAnCE::Config_Handlers::DataType (e));
           type_->container (this);
         }
 
         else if (n == ACE_TEXT("value"))
         {
-          value_ = ::std::auto_ptr< ::CIAO::Config_Handlers::DataValue > (new ::CIAO::Config_Handlers::DataValue (e));
+          value_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::DataValue > (new ::DAnCE::Config_Handlers::DataValue (e));
           value_->container (this);
         }
 
@@ -6032,7 +6032,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("value"))
         {
-          value_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Any > (new ::CIAO::Config_Handlers::Any (e));
+          value_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::Any > (new ::DAnCE::Config_Handlers::Any (e));
           value_->container (this);
         }
 
@@ -6109,7 +6109,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("kind"))
         {
-          kind_ = ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierPropertyKind > (new ::CIAO::Config_Handlers::SatisfierPropertyKind (e));
+          kind_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::SatisfierPropertyKind > (new ::DAnCE::Config_Handlers::SatisfierPropertyKind (e));
           kind_->container (this);
         }
 
@@ -6121,7 +6121,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("value"))
         {
-          value_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Any > (new ::CIAO::Config_Handlers::Any (e));
+          value_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::Any > (new ::DAnCE::Config_Handlers::Any (e));
           value_->container (this);
         }
 
@@ -6160,7 +6160,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("property"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::SatisfierProperty (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::SatisfierProperty, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::SatisfierProperty (e));
           add_property (t);
         }
 
@@ -6199,7 +6199,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("property"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::Property (e));
           add_property (t);
         }
 
@@ -6238,7 +6238,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("property"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::Property (e));
           add_property (t);
         }
 
@@ -6289,19 +6289,19 @@ namespace CIAO
 
         else if (n == ACE_TEXT("execParameter"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::Property (e));
           add_execParameter (t);
         }
 
         else if (n == ACE_TEXT("deployRequirement"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Requirement (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::Requirement (e));
           add_deployRequirement (t);
         }
 
         else if (n == ACE_TEXT("deployedResource"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ResourceDeploymentDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ResourceDeploymentDescription (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ResourceDeploymentDescription, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::ResourceDeploymentDescription (e));
           add_deployedResource (t);
         }
 
@@ -6358,19 +6358,19 @@ namespace CIAO
 
         else if (n == ACE_TEXT("artifact"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::IdRef (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::IdRef, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::IdRef (e));
           add_artifact (t);
         }
 
         else if (n == ACE_TEXT("execParameter"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::Property (e));
           add_execParameter (t);
         }
 
         else if (n == ACE_TEXT("deployRequirement"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Requirement (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::Requirement (e));
           add_deployRequirement (t);
         }
 
@@ -6456,7 +6456,7 @@ namespace CIAO
 
         if (n == ACE_TEXT("resourceUsage"))
         {
-          resourceUsage_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ResourceUsageKind > (new ::CIAO::Config_Handlers::ResourceUsageKind (e));
+          resourceUsage_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::ResourceUsageKind > (new ::DAnCE::Config_Handlers::ResourceUsageKind (e));
           resourceUsage_->container (this);
         }
 
@@ -6474,7 +6474,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("property"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::Property (e));
           add_property (t);
         }
 
@@ -6519,25 +6519,25 @@ namespace CIAO
 
         else if (n == ACE_TEXT("implementation"))
         {
-          implementation_ = ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > (new ::CIAO::Config_Handlers::IdRef (e));
+          implementation_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::IdRef > (new ::DAnCE::Config_Handlers::IdRef (e));
           implementation_->container (this);
         }
 
         else if (n == ACE_TEXT("configProperty"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
         else if (n == ACE_TEXT("deployedResource"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::InstanceResourceDeploymentDescription, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::InstanceResourceDeploymentDescription (e));
           add_deployedResource (t);
         }
 
         else if (n == ACE_TEXT("deployedSharedResource"))
         {
-          ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription t (e);
+          ::DAnCE::Config_Handlers::InstanceResourceDeploymentDescription t (e);
           deployedSharedResource (t);
         }
 
@@ -6674,7 +6674,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("kind"))
         {
-          kind_ = ::std::auto_ptr< ::CIAO::Config_Handlers::CCMComponentPortKind > (new ::CIAO::Config_Handlers::CCMComponentPortKind (e));
+          kind_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::CCMComponentPortKind > (new ::DAnCE::Config_Handlers::CCMComponentPortKind (e));
           kind_->container (this);
         }
 
@@ -6713,7 +6713,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("type"))
         {
-          type_ = ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > (new ::CIAO::Config_Handlers::DataType (e));
+          type_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::DataType > (new ::DAnCE::Config_Handlers::DataType (e));
           type_->container (this);
         }
 
@@ -6779,13 +6779,13 @@ namespace CIAO
 
         else if (n == ACE_TEXT("kind"))
         {
-          kind_ = ::std::auto_ptr< ::CIAO::Config_Handlers::CCMComponentPortKind > (new ::CIAO::Config_Handlers::CCMComponentPortKind (e));
+          kind_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::CCMComponentPortKind > (new ::DAnCE::Config_Handlers::CCMComponentPortKind (e));
           kind_->container (this);
         }
 
         else if (n == ACE_TEXT("instance"))
         {
-          instance_ = ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > (new ::CIAO::Config_Handlers::IdRef (e));
+          instance_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::IdRef > (new ::DAnCE::Config_Handlers::IdRef (e));
           instance_->container (this);
         }
 
@@ -6875,7 +6875,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("property"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::Property (e));
           add_property (t);
         }
 
@@ -6914,31 +6914,31 @@ namespace CIAO
 
         else if (n == ACE_TEXT("deployRequirement"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Requirement (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::Requirement (e));
           add_deployRequirement (t);
         }
 
         else if (n == ACE_TEXT("externalEndpoint"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ComponentExternalPortEndpoint (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::ComponentExternalPortEndpoint (e));
           add_externalEndpoint (t);
         }
 
         else if (n == ACE_TEXT("internalEndpoint"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PlanSubcomponentPortEndpoint, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::PlanSubcomponentPortEndpoint (e));
           add_internalEndpoint (t);
         }
 
         else if (n == ACE_TEXT("externalReference"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ExternalReferenceEndpoint (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::ExternalReferenceEndpoint (e));
           add_externalReference (t);
         }
 
         else if (n == ACE_TEXT("deployedResource"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ConnectionResourceDeploymentDescription, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::ConnectionResourceDeploymentDescription (e));
           add_deployedResource (t);
         }
 
@@ -7004,7 +7004,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("property"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::SatisfierProperty (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::SatisfierProperty, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::SatisfierProperty (e));
           add_property (t);
         }
 
@@ -7031,7 +7031,7 @@ namespace CIAO
 
         if (n == ACE_TEXT("resourceUsage"))
         {
-          ::CIAO::Config_Handlers::ResourceUsageKind t (e);
+          ::DAnCE::Config_Handlers::ResourceUsageKind t (e);
           resourceUsage (t);
         }
 
@@ -7061,7 +7061,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("property"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::Property (e));
           add_property (t);
         }
 
@@ -7094,7 +7094,7 @@ namespace CIAO
 
         else if (n == ACE_TEXT("instance"))
         {
-          instance_ = ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > (new ::CIAO::Config_Handlers::IdRef (e));
+          instance_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::IdRef > (new ::DAnCE::Config_Handlers::IdRef (e));
           instance_->container (this);
         }
 
@@ -7127,25 +7127,25 @@ namespace CIAO
 
         else if (n == ACE_TEXT("deployRequirement"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Requirement (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::Requirement (e));
           add_deployRequirement (t);
         }
 
         else if (n == ACE_TEXT("internalEndpoint"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPortEndpoint, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::SubcomponentPortEndpoint (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::SubcomponentPortEndpoint, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::SubcomponentPortEndpoint (e));
           add_internalEndpoint (t);
         }
 
         else if (n == ACE_TEXT("externalEndpoint"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ComponentExternalPortEndpoint (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::ComponentExternalPortEndpoint (e));
           add_externalEndpoint (t);
         }
 
         else if (n == ACE_TEXT("externalReference"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ExternalReferenceEndpoint (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::ExternalReferenceEndpoint (e));
           add_externalReference (t);
         }
 
@@ -7207,13 +7207,13 @@ namespace CIAO
 
         if (n == ACE_TEXT("constraint"))
         {
-          constraint_ = ::std::auto_ptr< ::CIAO::Config_Handlers::PlanLocalityKind > (new ::CIAO::Config_Handlers::PlanLocalityKind (e));
+          constraint_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::PlanLocalityKind > (new ::DAnCE::Config_Handlers::PlanLocalityKind (e));
           constraint_->container (this);
         }
 
         else if (n == ACE_TEXT("constrainedInstance"))
         {
-          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::IdRef (e));
+          ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::IdRef, ACE_Null_Mutex >  t (new ::DAnCE::Config_Handlers::IdRef (e));
           add_constrainedInstance (t);
         }
 
@@ -7225,7 +7225,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -7234,7 +7234,7 @@ namespace CIAO
 
 #include "XMLSchema/TypeInfo.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -7246,7 +7246,7 @@ namespace CIAO
       {
         IdRefTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::IdRef));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::IdRef));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7275,7 +7275,7 @@ namespace CIAO
       {
         DataTypeTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::DataType));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::DataType));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7289,7 +7289,7 @@ namespace CIAO
       {
         DataValueTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::DataValue));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::DataValue));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7303,7 +7303,7 @@ namespace CIAO
       {
         AliasTypeTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::AliasType));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::AliasType));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7317,7 +7317,7 @@ namespace CIAO
       {
         EnumTypeTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::EnumType));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::EnumType));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7331,7 +7331,7 @@ namespace CIAO
       {
         StructTypeTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::StructType));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::StructType));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7345,7 +7345,7 @@ namespace CIAO
       {
         StructMemberTypeTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::StructMemberType));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::StructMemberType));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7359,7 +7359,7 @@ namespace CIAO
       {
         ValueTypeTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::ValueType));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::ValueType));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7373,7 +7373,7 @@ namespace CIAO
       {
         ValueMemberTypeTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::ValueMemberType));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::ValueMemberType));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7387,7 +7387,7 @@ namespace CIAO
       {
         NamedValueTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::NamedValue));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::NamedValue));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7401,7 +7401,7 @@ namespace CIAO
       {
         SequenceTypeTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::SequenceType));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::SequenceType));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7415,7 +7415,7 @@ namespace CIAO
       {
         AnyTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::Any));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::Any));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7429,7 +7429,7 @@ namespace CIAO
       {
         PropertyTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::Property));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::Property));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7458,7 +7458,7 @@ namespace CIAO
       {
         SatisfierPropertyTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::SatisfierProperty));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::SatisfierProperty));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7472,7 +7472,7 @@ namespace CIAO
       {
         ResourceTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::Resource));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::Resource));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7486,7 +7486,7 @@ namespace CIAO
       {
         RequirementTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::Requirement));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::Requirement));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7500,7 +7500,7 @@ namespace CIAO
       {
         ResourceDeploymentDescriptionTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::ResourceDeploymentDescription));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::ResourceDeploymentDescription));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7514,7 +7514,7 @@ namespace CIAO
       {
         ArtifactDeploymentDescriptionTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::ArtifactDeploymentDescription));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::ArtifactDeploymentDescription));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7528,7 +7528,7 @@ namespace CIAO
       {
         MonolithicDeploymentDescriptionTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::MonolithicDeploymentDescription));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::MonolithicDeploymentDescription));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7557,7 +7557,7 @@ namespace CIAO
       {
         InstanceResourceDeploymentDescriptionTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::InstanceResourceDeploymentDescription));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::InstanceResourceDeploymentDescription));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7571,7 +7571,7 @@ namespace CIAO
       {
         InstanceDeploymentDescriptionTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::InstanceDeploymentDescription));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::InstanceDeploymentDescription));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7600,7 +7600,7 @@ namespace CIAO
       {
         ComponentPortDescriptionTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::ComponentPortDescription));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::ComponentPortDescription));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7614,7 +7614,7 @@ namespace CIAO
       {
         ComponentPropertyDescriptionTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::ComponentPropertyDescription));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::ComponentPropertyDescription));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7628,7 +7628,7 @@ namespace CIAO
       {
         ComponentExternalPortEndpointTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::ComponentExternalPortEndpoint));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::ComponentExternalPortEndpoint));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7642,7 +7642,7 @@ namespace CIAO
       {
         PlanSubcomponentPortEndpointTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::PlanSubcomponentPortEndpoint));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7656,7 +7656,7 @@ namespace CIAO
       {
         ExternalReferenceEndpointTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::ExternalReferenceEndpoint));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::ExternalReferenceEndpoint));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7670,7 +7670,7 @@ namespace CIAO
       {
         ConnectionResourceDeploymentDescriptionTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::ConnectionResourceDeploymentDescription));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7684,7 +7684,7 @@ namespace CIAO
       {
         PlanConnectionDescriptionTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::PlanConnectionDescription));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::PlanConnectionDescription));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7698,7 +7698,7 @@ namespace CIAO
       {
         ImplementationDependencyTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::ImplementationDependency));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::ImplementationDependency));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7712,7 +7712,7 @@ namespace CIAO
       {
         CapabilityTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::Capability));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::Capability));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7726,7 +7726,7 @@ namespace CIAO
       {
         ImplementationRequirementTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::ImplementationRequirement));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::ImplementationRequirement));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7740,7 +7740,7 @@ namespace CIAO
       {
         SubcomponentPortEndpointTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::SubcomponentPortEndpoint));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::SubcomponentPortEndpoint));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7754,7 +7754,7 @@ namespace CIAO
       {
         AssemblyConnectionDescriptionTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::AssemblyConnectionDescription));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::AssemblyConnectionDescription));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7783,7 +7783,7 @@ namespace CIAO
       {
         PlanLocalityTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::PlanLocality));
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::PlanLocality));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -7796,7 +7796,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -8163,7 +8163,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::short_iterator b (o.begin_short()), e (o.end_short());
+        ::DAnCE::Config_Handlers::DataValue::short_iterator b (o.begin_short()), e (o.end_short());
 
         if (b != e)
         {
@@ -8185,7 +8185,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::short_const_iterator b (o.begin_short()), e (o.end_short());
+        ::DAnCE::Config_Handlers::DataValue::short_const_iterator b (o.begin_short()), e (o.end_short());
 
         if (b != e)
         {
@@ -8247,7 +8247,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::long_iterator b (o.begin_long()), e (o.end_long());
+        ::DAnCE::Config_Handlers::DataValue::long_iterator b (o.begin_long()), e (o.end_long());
 
         if (b != e)
         {
@@ -8269,7 +8269,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::long_const_iterator b (o.begin_long()), e (o.end_long());
+        ::DAnCE::Config_Handlers::DataValue::long_const_iterator b (o.begin_long()), e (o.end_long());
 
         if (b != e)
         {
@@ -8331,7 +8331,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::ushort_iterator b (o.begin_ushort()), e (o.end_ushort());
+        ::DAnCE::Config_Handlers::DataValue::ushort_iterator b (o.begin_ushort()), e (o.end_ushort());
 
         if (b != e)
         {
@@ -8353,7 +8353,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::ushort_const_iterator b (o.begin_ushort()), e (o.end_ushort());
+        ::DAnCE::Config_Handlers::DataValue::ushort_const_iterator b (o.begin_ushort()), e (o.end_ushort());
 
         if (b != e)
         {
@@ -8415,7 +8415,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::ulong_iterator b (o.begin_ulong()), e (o.end_ulong());
+        ::DAnCE::Config_Handlers::DataValue::ulong_iterator b (o.begin_ulong()), e (o.end_ulong());
 
         if (b != e)
         {
@@ -8437,7 +8437,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::ulong_const_iterator b (o.begin_ulong()), e (o.end_ulong());
+        ::DAnCE::Config_Handlers::DataValue::ulong_const_iterator b (o.begin_ulong()), e (o.end_ulong());
 
         if (b != e)
         {
@@ -8499,7 +8499,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::float_iterator b (o.begin_float()), e (o.end_float());
+        ::DAnCE::Config_Handlers::DataValue::float_iterator b (o.begin_float()), e (o.end_float());
 
         if (b != e)
         {
@@ -8521,7 +8521,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::float_const_iterator b (o.begin_float()), e (o.end_float());
+        ::DAnCE::Config_Handlers::DataValue::float_const_iterator b (o.begin_float()), e (o.end_float());
 
         if (b != e)
         {
@@ -8583,7 +8583,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::double_iterator b (o.begin_double()), e (o.end_double());
+        ::DAnCE::Config_Handlers::DataValue::double_iterator b (o.begin_double()), e (o.end_double());
 
         if (b != e)
         {
@@ -8605,7 +8605,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::double_const_iterator b (o.begin_double()), e (o.end_double());
+        ::DAnCE::Config_Handlers::DataValue::double_const_iterator b (o.begin_double()), e (o.end_double());
 
         if (b != e)
         {
@@ -8667,7 +8667,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::boolean_iterator b (o.begin_boolean()), e (o.end_boolean());
+        ::DAnCE::Config_Handlers::DataValue::boolean_iterator b (o.begin_boolean()), e (o.end_boolean());
 
         if (b != e)
         {
@@ -8689,7 +8689,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::boolean_const_iterator b (o.begin_boolean()), e (o.end_boolean());
+        ::DAnCE::Config_Handlers::DataValue::boolean_const_iterator b (o.begin_boolean()), e (o.end_boolean());
 
         if (b != e)
         {
@@ -8751,7 +8751,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::octet_iterator b (o.begin_octet()), e (o.end_octet());
+        ::DAnCE::Config_Handlers::DataValue::octet_iterator b (o.begin_octet()), e (o.end_octet());
 
         if (b != e)
         {
@@ -8773,7 +8773,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::octet_const_iterator b (o.begin_octet()), e (o.end_octet());
+        ::DAnCE::Config_Handlers::DataValue::octet_const_iterator b (o.begin_octet()), e (o.end_octet());
 
         if (b != e)
         {
@@ -8835,7 +8835,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::enum_iterator b (o.begin_enum()), e (o.end_enum());
+        ::DAnCE::Config_Handlers::DataValue::enum_iterator b (o.begin_enum()), e (o.end_enum());
 
         if (b != e)
         {
@@ -8857,7 +8857,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::enum_const_iterator b (o.begin_enum()), e (o.end_enum());
+        ::DAnCE::Config_Handlers::DataValue::enum_const_iterator b (o.begin_enum()), e (o.end_enum());
 
         if (b != e)
         {
@@ -8919,7 +8919,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::string_iterator b (o.begin_string()), e (o.end_string());
+        ::DAnCE::Config_Handlers::DataValue::string_iterator b (o.begin_string()), e (o.end_string());
 
         if (b != e)
         {
@@ -8941,7 +8941,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::string_const_iterator b (o.begin_string()), e (o.end_string());
+        ::DAnCE::Config_Handlers::DataValue::string_const_iterator b (o.begin_string()), e (o.end_string());
 
         if (b != e)
         {
@@ -9003,7 +9003,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::longlong_iterator b (o.begin_longlong()), e (o.end_longlong());
+        ::DAnCE::Config_Handlers::DataValue::longlong_iterator b (o.begin_longlong()), e (o.end_longlong());
 
         if (b != e)
         {
@@ -9025,7 +9025,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::longlong_const_iterator b (o.begin_longlong()), e (o.end_longlong());
+        ::DAnCE::Config_Handlers::DataValue::longlong_const_iterator b (o.begin_longlong()), e (o.end_longlong());
 
         if (b != e)
         {
@@ -9087,7 +9087,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::ulonglong_iterator b (o.begin_ulonglong()), e (o.end_ulonglong());
+        ::DAnCE::Config_Handlers::DataValue::ulonglong_iterator b (o.begin_ulonglong()), e (o.end_ulonglong());
 
         if (b != e)
         {
@@ -9109,7 +9109,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::ulonglong_const_iterator b (o.begin_ulonglong()), e (o.end_ulonglong());
+        ::DAnCE::Config_Handlers::DataValue::ulonglong_const_iterator b (o.begin_ulonglong()), e (o.end_ulonglong());
 
         if (b != e)
         {
@@ -9171,7 +9171,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::longdouble_iterator b (o.begin_longdouble()), e (o.end_longdouble());
+        ::DAnCE::Config_Handlers::DataValue::longdouble_iterator b (o.begin_longdouble()), e (o.end_longdouble());
 
         if (b != e)
         {
@@ -9193,7 +9193,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::longdouble_const_iterator b (o.begin_longdouble()), e (o.end_longdouble());
+        ::DAnCE::Config_Handlers::DataValue::longdouble_const_iterator b (o.begin_longdouble()), e (o.end_longdouble());
 
         if (b != e)
         {
@@ -9255,7 +9255,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::element_iterator b (o.begin_element()), e (o.end_element());
+        ::DAnCE::Config_Handlers::DataValue::element_iterator b (o.begin_element()), e (o.end_element());
 
         if (b != e)
         {
@@ -9277,7 +9277,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::element_const_iterator b (o.begin_element()), e (o.end_element());
+        ::DAnCE::Config_Handlers::DataValue::element_const_iterator b (o.begin_element()), e (o.end_element());
 
         if (b != e)
         {
@@ -9339,7 +9339,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::member_iterator b (o.begin_member()), e (o.end_member());
+        ::DAnCE::Config_Handlers::DataValue::member_iterator b (o.begin_member()), e (o.end_member());
 
         if (b != e)
         {
@@ -9361,7 +9361,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::DataValue::member_const_iterator b (o.begin_member()), e (o.end_member());
+        ::DAnCE::Config_Handlers::DataValue::member_const_iterator b (o.begin_member()), e (o.end_member());
 
         if (b != e)
         {
@@ -9571,7 +9571,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::EnumType::member_iterator b (o.begin_member()), e (o.end_member());
+        ::DAnCE::Config_Handlers::EnumType::member_iterator b (o.begin_member()), e (o.end_member());
 
         if (b != e)
         {
@@ -9591,7 +9591,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::EnumType::member_const_iterator b (o.begin_member()), e (o.end_member());
+        ::DAnCE::Config_Handlers::EnumType::member_const_iterator b (o.begin_member()), e (o.end_member());
 
         if (b != e)
         {
@@ -9709,7 +9709,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::StructType::member_iterator b (o.begin_member()), e (o.end_member());
+        ::DAnCE::Config_Handlers::StructType::member_iterator b (o.begin_member()), e (o.end_member());
 
         if (b != e)
         {
@@ -9731,7 +9731,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::StructType::member_const_iterator b (o.begin_member()), e (o.end_member());
+        ::DAnCE::Config_Handlers::StructType::member_const_iterator b (o.begin_member()), e (o.end_member());
 
         if (b != e)
         {
@@ -9955,7 +9955,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ValueType::member_iterator b (o.begin_member()), e (o.end_member());
+        ::DAnCE::Config_Handlers::ValueType::member_iterator b (o.begin_member()), e (o.end_member());
 
         if (b != e)
         {
@@ -9977,7 +9977,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ValueType::member_const_iterator b (o.begin_member()), e (o.end_member());
+        ::DAnCE::Config_Handlers::ValueType::member_const_iterator b (o.begin_member()), e (o.end_member());
 
         if (b != e)
         {
@@ -10545,7 +10545,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::Resource::resourceType_iterator b (o.begin_resourceType()), e (o.end_resourceType());
+        ::DAnCE::Config_Handlers::Resource::resourceType_iterator b (o.begin_resourceType()), e (o.end_resourceType());
 
         if (b != e)
         {
@@ -10565,7 +10565,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::Resource::resourceType_const_iterator b (o.begin_resourceType()), e (o.end_resourceType());
+        ::DAnCE::Config_Handlers::Resource::resourceType_const_iterator b (o.begin_resourceType()), e (o.end_resourceType());
 
         if (b != e)
         {
@@ -10615,7 +10615,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::Resource::property_iterator b (o.begin_property()), e (o.end_property());
+        ::DAnCE::Config_Handlers::Resource::property_iterator b (o.begin_property()), e (o.end_property());
 
         if (b != e)
         {
@@ -10637,7 +10637,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::Resource::property_const_iterator b (o.begin_property()), e (o.end_property());
+        ::DAnCE::Config_Handlers::Resource::property_const_iterator b (o.begin_property()), e (o.end_property());
 
         if (b != e)
         {
@@ -10767,7 +10767,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::Requirement::property_iterator b (o.begin_property()), e (o.end_property());
+        ::DAnCE::Config_Handlers::Requirement::property_iterator b (o.begin_property()), e (o.end_property());
 
         if (b != e)
         {
@@ -10789,7 +10789,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::Requirement::property_const_iterator b (o.begin_property()), e (o.end_property());
+        ::DAnCE::Config_Handlers::Requirement::property_const_iterator b (o.begin_property()), e (o.end_property());
 
         if (b != e)
         {
@@ -10919,7 +10919,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ResourceDeploymentDescription::property_iterator b (o.begin_property()), e (o.end_property());
+        ::DAnCE::Config_Handlers::ResourceDeploymentDescription::property_iterator b (o.begin_property()), e (o.end_property());
 
         if (b != e)
         {
@@ -10941,7 +10941,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ResourceDeploymentDescription::property_const_iterator b (o.begin_property()), e (o.end_property());
+        ::DAnCE::Config_Handlers::ResourceDeploymentDescription::property_const_iterator b (o.begin_property()), e (o.end_property());
 
         if (b != e)
         {
@@ -11071,7 +11071,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ArtifactDeploymentDescription::source_iterator b (o.begin_source()), e (o.end_source());
+        ::DAnCE::Config_Handlers::ArtifactDeploymentDescription::source_iterator b (o.begin_source()), e (o.end_source());
 
         if (b != e)
         {
@@ -11093,7 +11093,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ArtifactDeploymentDescription::source_const_iterator b (o.begin_source()), e (o.end_source());
+        ::DAnCE::Config_Handlers::ArtifactDeploymentDescription::source_const_iterator b (o.begin_source()), e (o.end_source());
 
         if (b != e)
         {
@@ -11167,7 +11167,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ArtifactDeploymentDescription::location_iterator b (o.begin_location()), e (o.end_location());
+        ::DAnCE::Config_Handlers::ArtifactDeploymentDescription::location_iterator b (o.begin_location()), e (o.end_location());
 
         if (b != e)
         {
@@ -11189,7 +11189,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ArtifactDeploymentDescription::location_const_iterator b (o.begin_location()), e (o.end_location());
+        ::DAnCE::Config_Handlers::ArtifactDeploymentDescription::location_const_iterator b (o.begin_location()), e (o.end_location());
 
         if (b != e)
         {
@@ -11251,7 +11251,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ArtifactDeploymentDescription::execParameter_iterator b (o.begin_execParameter()), e (o.end_execParameter());
+        ::DAnCE::Config_Handlers::ArtifactDeploymentDescription::execParameter_iterator b (o.begin_execParameter()), e (o.end_execParameter());
 
         if (b != e)
         {
@@ -11273,7 +11273,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ArtifactDeploymentDescription::execParameter_const_iterator b (o.begin_execParameter()), e (o.end_execParameter());
+        ::DAnCE::Config_Handlers::ArtifactDeploymentDescription::execParameter_const_iterator b (o.begin_execParameter()), e (o.end_execParameter());
 
         if (b != e)
         {
@@ -11335,7 +11335,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ArtifactDeploymentDescription::deployRequirement_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
+        ::DAnCE::Config_Handlers::ArtifactDeploymentDescription::deployRequirement_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
 
         if (b != e)
         {
@@ -11357,7 +11357,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ArtifactDeploymentDescription::deployRequirement_const_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
+        ::DAnCE::Config_Handlers::ArtifactDeploymentDescription::deployRequirement_const_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
 
         if (b != e)
         {
@@ -11419,7 +11419,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ArtifactDeploymentDescription::deployedResource_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
+        ::DAnCE::Config_Handlers::ArtifactDeploymentDescription::deployedResource_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
 
         if (b != e)
         {
@@ -11441,7 +11441,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ArtifactDeploymentDescription::deployedResource_const_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
+        ::DAnCE::Config_Handlers::ArtifactDeploymentDescription::deployedResource_const_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
 
         if (b != e)
         {
@@ -11589,7 +11589,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::MonolithicDeploymentDescription::source_iterator b (o.begin_source()), e (o.end_source());
+        ::DAnCE::Config_Handlers::MonolithicDeploymentDescription::source_iterator b (o.begin_source()), e (o.end_source());
 
         if (b != e)
         {
@@ -11611,7 +11611,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::MonolithicDeploymentDescription::source_const_iterator b (o.begin_source()), e (o.end_source());
+        ::DAnCE::Config_Handlers::MonolithicDeploymentDescription::source_const_iterator b (o.begin_source()), e (o.end_source());
 
         if (b != e)
         {
@@ -11673,7 +11673,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::MonolithicDeploymentDescription::artifact_iterator b (o.begin_artifact()), e (o.end_artifact());
+        ::DAnCE::Config_Handlers::MonolithicDeploymentDescription::artifact_iterator b (o.begin_artifact()), e (o.end_artifact());
 
         if (b != e)
         {
@@ -11695,7 +11695,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::MonolithicDeploymentDescription::artifact_const_iterator b (o.begin_artifact()), e (o.end_artifact());
+        ::DAnCE::Config_Handlers::MonolithicDeploymentDescription::artifact_const_iterator b (o.begin_artifact()), e (o.end_artifact());
 
         if (b != e)
         {
@@ -11757,7 +11757,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::MonolithicDeploymentDescription::execParameter_iterator b (o.begin_execParameter()), e (o.end_execParameter());
+        ::DAnCE::Config_Handlers::MonolithicDeploymentDescription::execParameter_iterator b (o.begin_execParameter()), e (o.end_execParameter());
 
         if (b != e)
         {
@@ -11779,7 +11779,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::MonolithicDeploymentDescription::execParameter_const_iterator b (o.begin_execParameter()), e (o.end_execParameter());
+        ::DAnCE::Config_Handlers::MonolithicDeploymentDescription::execParameter_const_iterator b (o.begin_execParameter()), e (o.end_execParameter());
 
         if (b != e)
         {
@@ -11841,7 +11841,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::MonolithicDeploymentDescription::deployRequirement_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
+        ::DAnCE::Config_Handlers::MonolithicDeploymentDescription::deployRequirement_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
 
         if (b != e)
         {
@@ -11863,7 +11863,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::MonolithicDeploymentDescription::deployRequirement_const_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
+        ::DAnCE::Config_Handlers::MonolithicDeploymentDescription::deployRequirement_const_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
 
         if (b != e)
         {
@@ -12029,7 +12029,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription::property_iterator b (o.begin_property()), e (o.end_property());
+        ::DAnCE::Config_Handlers::InstanceResourceDeploymentDescription::property_iterator b (o.begin_property()), e (o.end_property());
 
         if (b != e)
         {
@@ -12051,7 +12051,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription::property_const_iterator b (o.begin_property()), e (o.end_property());
+        ::DAnCE::Config_Handlers::InstanceResourceDeploymentDescription::property_const_iterator b (o.begin_property()), e (o.end_property());
 
         if (b != e)
         {
@@ -12219,7 +12219,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::InstanceDeploymentDescription::configProperty_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+        ::DAnCE::Config_Handlers::InstanceDeploymentDescription::configProperty_iterator b (o.begin_configProperty()), e (o.end_configProperty());
 
         if (b != e)
         {
@@ -12241,7 +12241,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::InstanceDeploymentDescription::configProperty_const_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+        ::DAnCE::Config_Handlers::InstanceDeploymentDescription::configProperty_const_iterator b (o.begin_configProperty()), e (o.end_configProperty());
 
         if (b != e)
         {
@@ -12303,7 +12303,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::InstanceDeploymentDescription::deployedResource_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
+        ::DAnCE::Config_Handlers::InstanceDeploymentDescription::deployedResource_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
 
         if (b != e)
         {
@@ -12325,7 +12325,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::InstanceDeploymentDescription::deployedResource_const_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
+        ::DAnCE::Config_Handlers::InstanceDeploymentDescription::deployedResource_const_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
 
         if (b != e)
         {
@@ -12523,7 +12523,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ComponentPortDescription::supportedType_iterator b (o.begin_supportedType()), e (o.end_supportedType());
+        ::DAnCE::Config_Handlers::ComponentPortDescription::supportedType_iterator b (o.begin_supportedType()), e (o.end_supportedType());
 
         if (b != e)
         {
@@ -12545,7 +12545,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ComponentPortDescription::supportedType_const_iterator b (o.begin_supportedType()), e (o.end_supportedType());
+        ::DAnCE::Config_Handlers::ComponentPortDescription::supportedType_const_iterator b (o.begin_supportedType()), e (o.end_supportedType());
 
         if (b != e)
         {
@@ -12667,7 +12667,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ComponentPortDescription::templateParam_iterator b (o.begin_templateParam()), e (o.end_templateParam());
+        ::DAnCE::Config_Handlers::ComponentPortDescription::templateParam_iterator b (o.begin_templateParam()), e (o.end_templateParam());
 
         if (b != e)
         {
@@ -12689,7 +12689,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ComponentPortDescription::templateParam_const_iterator b (o.begin_templateParam()), e (o.end_templateParam());
+        ::DAnCE::Config_Handlers::ComponentPortDescription::templateParam_const_iterator b (o.begin_templateParam()), e (o.end_templateParam());
 
         if (b != e)
         {
@@ -13069,7 +13069,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ExternalReferenceEndpoint::supportedType_iterator b (o.begin_supportedType()), e (o.end_supportedType());
+        ::DAnCE::Config_Handlers::ExternalReferenceEndpoint::supportedType_iterator b (o.begin_supportedType()), e (o.end_supportedType());
 
         if (b != e)
         {
@@ -13091,7 +13091,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ExternalReferenceEndpoint::supportedType_const_iterator b (o.begin_supportedType()), e (o.end_supportedType());
+        ::DAnCE::Config_Handlers::ExternalReferenceEndpoint::supportedType_const_iterator b (o.begin_supportedType()), e (o.end_supportedType());
 
         if (b != e)
         {
@@ -13235,7 +13235,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription::property_iterator b (o.begin_property()), e (o.end_property());
+        ::DAnCE::Config_Handlers::ConnectionResourceDeploymentDescription::property_iterator b (o.begin_property()), e (o.end_property());
 
         if (b != e)
         {
@@ -13257,7 +13257,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription::property_const_iterator b (o.begin_property()), e (o.end_property());
+        ::DAnCE::Config_Handlers::ConnectionResourceDeploymentDescription::property_const_iterator b (o.begin_property()), e (o.end_property());
 
         if (b != e)
         {
@@ -13407,7 +13407,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PlanConnectionDescription::deployRequirement_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
+        ::DAnCE::Config_Handlers::PlanConnectionDescription::deployRequirement_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
 
         if (b != e)
         {
@@ -13429,7 +13429,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PlanConnectionDescription::deployRequirement_const_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
+        ::DAnCE::Config_Handlers::PlanConnectionDescription::deployRequirement_const_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
 
         if (b != e)
         {
@@ -13491,7 +13491,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PlanConnectionDescription::externalEndpoint_iterator b (o.begin_externalEndpoint()), e (o.end_externalEndpoint());
+        ::DAnCE::Config_Handlers::PlanConnectionDescription::externalEndpoint_iterator b (o.begin_externalEndpoint()), e (o.end_externalEndpoint());
 
         if (b != e)
         {
@@ -13513,7 +13513,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PlanConnectionDescription::externalEndpoint_const_iterator b (o.begin_externalEndpoint()), e (o.end_externalEndpoint());
+        ::DAnCE::Config_Handlers::PlanConnectionDescription::externalEndpoint_const_iterator b (o.begin_externalEndpoint()), e (o.end_externalEndpoint());
 
         if (b != e)
         {
@@ -13575,7 +13575,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PlanConnectionDescription::internalEndpoint_iterator b (o.begin_internalEndpoint()), e (o.end_internalEndpoint());
+        ::DAnCE::Config_Handlers::PlanConnectionDescription::internalEndpoint_iterator b (o.begin_internalEndpoint()), e (o.end_internalEndpoint());
 
         if (b != e)
         {
@@ -13597,7 +13597,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PlanConnectionDescription::internalEndpoint_const_iterator b (o.begin_internalEndpoint()), e (o.end_internalEndpoint());
+        ::DAnCE::Config_Handlers::PlanConnectionDescription::internalEndpoint_const_iterator b (o.begin_internalEndpoint()), e (o.end_internalEndpoint());
 
         if (b != e)
         {
@@ -13659,7 +13659,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PlanConnectionDescription::externalReference_iterator b (o.begin_externalReference()), e (o.end_externalReference());
+        ::DAnCE::Config_Handlers::PlanConnectionDescription::externalReference_iterator b (o.begin_externalReference()), e (o.end_externalReference());
 
         if (b != e)
         {
@@ -13681,7 +13681,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PlanConnectionDescription::externalReference_const_iterator b (o.begin_externalReference()), e (o.end_externalReference());
+        ::DAnCE::Config_Handlers::PlanConnectionDescription::externalReference_const_iterator b (o.begin_externalReference()), e (o.end_externalReference());
 
         if (b != e)
         {
@@ -13743,7 +13743,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PlanConnectionDescription::deployedResource_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
+        ::DAnCE::Config_Handlers::PlanConnectionDescription::deployedResource_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
 
         if (b != e)
         {
@@ -13765,7 +13765,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PlanConnectionDescription::deployedResource_const_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
+        ::DAnCE::Config_Handlers::PlanConnectionDescription::deployedResource_const_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
 
         if (b != e)
         {
@@ -13935,7 +13935,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::Capability::resourceType_iterator b (o.begin_resourceType()), e (o.end_resourceType());
+        ::DAnCE::Config_Handlers::Capability::resourceType_iterator b (o.begin_resourceType()), e (o.end_resourceType());
 
         if (b != e)
         {
@@ -13957,7 +13957,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::Capability::resourceType_const_iterator b (o.begin_resourceType()), e (o.end_resourceType());
+        ::DAnCE::Config_Handlers::Capability::resourceType_const_iterator b (o.begin_resourceType()), e (o.end_resourceType());
 
         if (b != e)
         {
@@ -14019,7 +14019,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::Capability::property_iterator b (o.begin_property()), e (o.end_property());
+        ::DAnCE::Config_Handlers::Capability::property_iterator b (o.begin_property()), e (o.end_property());
 
         if (b != e)
         {
@@ -14041,7 +14041,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::Capability::property_const_iterator b (o.begin_property()), e (o.end_property());
+        ::DAnCE::Config_Handlers::Capability::property_const_iterator b (o.begin_property()), e (o.end_property());
 
         if (b != e)
         {
@@ -14249,7 +14249,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ImplementationRequirement::property_iterator b (o.begin_property()), e (o.end_property());
+        ::DAnCE::Config_Handlers::ImplementationRequirement::property_iterator b (o.begin_property()), e (o.end_property());
 
         if (b != e)
         {
@@ -14271,7 +14271,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::ImplementationRequirement::property_const_iterator b (o.begin_property()), e (o.end_property());
+        ::DAnCE::Config_Handlers::ImplementationRequirement::property_const_iterator b (o.begin_property()), e (o.end_property());
 
         if (b != e)
         {
@@ -14459,7 +14459,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::AssemblyConnectionDescription::deployRequirement_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
+        ::DAnCE::Config_Handlers::AssemblyConnectionDescription::deployRequirement_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
 
         if (b != e)
         {
@@ -14481,7 +14481,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::AssemblyConnectionDescription::deployRequirement_const_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
+        ::DAnCE::Config_Handlers::AssemblyConnectionDescription::deployRequirement_const_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
 
         if (b != e)
         {
@@ -14543,7 +14543,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::AssemblyConnectionDescription::internalEndpoint_iterator b (o.begin_internalEndpoint()), e (o.end_internalEndpoint());
+        ::DAnCE::Config_Handlers::AssemblyConnectionDescription::internalEndpoint_iterator b (o.begin_internalEndpoint()), e (o.end_internalEndpoint());
 
         if (b != e)
         {
@@ -14565,7 +14565,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::AssemblyConnectionDescription::internalEndpoint_const_iterator b (o.begin_internalEndpoint()), e (o.end_internalEndpoint());
+        ::DAnCE::Config_Handlers::AssemblyConnectionDescription::internalEndpoint_const_iterator b (o.begin_internalEndpoint()), e (o.end_internalEndpoint());
 
         if (b != e)
         {
@@ -14627,7 +14627,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::AssemblyConnectionDescription::externalEndpoint_iterator b (o.begin_externalEndpoint()), e (o.end_externalEndpoint());
+        ::DAnCE::Config_Handlers::AssemblyConnectionDescription::externalEndpoint_iterator b (o.begin_externalEndpoint()), e (o.end_externalEndpoint());
 
         if (b != e)
         {
@@ -14649,7 +14649,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::AssemblyConnectionDescription::externalEndpoint_const_iterator b (o.begin_externalEndpoint()), e (o.end_externalEndpoint());
+        ::DAnCE::Config_Handlers::AssemblyConnectionDescription::externalEndpoint_const_iterator b (o.begin_externalEndpoint()), e (o.end_externalEndpoint());
 
         if (b != e)
         {
@@ -14711,7 +14711,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::AssemblyConnectionDescription::externalReference_iterator b (o.begin_externalReference()), e (o.end_externalReference());
+        ::DAnCE::Config_Handlers::AssemblyConnectionDescription::externalReference_iterator b (o.begin_externalReference()), e (o.end_externalReference());
 
         if (b != e)
         {
@@ -14733,7 +14733,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::AssemblyConnectionDescription::externalReference_const_iterator b (o.begin_externalReference()), e (o.end_externalReference());
+        ::DAnCE::Config_Handlers::AssemblyConnectionDescription::externalReference_const_iterator b (o.begin_externalReference()), e (o.end_externalReference());
 
         if (b != e)
         {
@@ -14849,7 +14849,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PlanLocality::constrainedInstance_iterator b (o.begin_constrainedInstance()), e (o.end_constrainedInstance());
+        ::DAnCE::Config_Handlers::PlanLocality::constrainedInstance_iterator b (o.begin_constrainedInstance()), e (o.end_constrainedInstance());
 
         if (b != e)
         {
@@ -14869,7 +14869,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::PlanLocality::constrainedInstance_const_iterator b (o.begin_constrainedInstance()), e (o.end_constrainedInstance());
+        ::DAnCE::Config_Handlers::PlanLocality::constrainedInstance_const_iterator b (o.begin_constrainedInstance()), e (o.end_constrainedInstance());
 
         if (b != e)
         {
@@ -14927,7 +14927,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -14992,43 +14992,43 @@ namespace CIAO
       {
         ::std::basic_string< ACE_TCHAR > s;
 
-        if (o == ::CIAO::Config_Handlers::TCKind::tk_null) s = ACE_TEXT ("tk_null");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_void) s = ACE_TEXT ("tk_void");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_short) s = ACE_TEXT ("tk_short");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_long) s = ACE_TEXT ("tk_long");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_ushort) s = ACE_TEXT ("tk_ushort");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_ulong) s = ACE_TEXT ("tk_ulong");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_float) s = ACE_TEXT ("tk_float");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_double) s = ACE_TEXT ("tk_double");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_boolean) s = ACE_TEXT ("tk_boolean");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_char) s = ACE_TEXT ("tk_char");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_octet) s = ACE_TEXT ("tk_octet");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_any) s = ACE_TEXT ("tk_any");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_TypeCode) s = ACE_TEXT ("tk_TypeCode");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_Principal) s = ACE_TEXT ("tk_Principal");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_objref) s = ACE_TEXT ("tk_objref");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_struct) s = ACE_TEXT ("tk_struct");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_union) s = ACE_TEXT ("tk_union");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_enum) s = ACE_TEXT ("tk_enum");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_string) s = ACE_TEXT ("tk_string");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_sequence) s = ACE_TEXT ("tk_sequence");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_array) s = ACE_TEXT ("tk_array");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_alias) s = ACE_TEXT ("tk_alias");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_except) s = ACE_TEXT ("tk_except");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_longlong) s = ACE_TEXT ("tk_longlong");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_ulonglong) s = ACE_TEXT ("tk_ulonglong");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_longdouble) s = ACE_TEXT ("tk_longdouble");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_wchar) s = ACE_TEXT ("tk_wchar");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_wstring) s = ACE_TEXT ("tk_wstring");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_fixed) s = ACE_TEXT ("tk_fixed");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_value) s = ACE_TEXT ("tk_value");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_value_box) s = ACE_TEXT ("tk_value_box");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_native) s = ACE_TEXT ("tk_native");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_abstract_interface) s = ACE_TEXT ("tk_abstract_interface");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_local_interface) s = ACE_TEXT ("tk_local_interface");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_component) s = ACE_TEXT ("tk_component");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_home) s = ACE_TEXT ("tk_home");
-        else if (o == ::CIAO::Config_Handlers::TCKind::tk_event) s = ACE_TEXT ("tk_event");
+        if (o == ::DAnCE::Config_Handlers::TCKind::tk_null) s = ACE_TEXT ("tk_null");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_void) s = ACE_TEXT ("tk_void");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_short) s = ACE_TEXT ("tk_short");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_long) s = ACE_TEXT ("tk_long");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_ushort) s = ACE_TEXT ("tk_ushort");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_ulong) s = ACE_TEXT ("tk_ulong");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_float) s = ACE_TEXT ("tk_float");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_double) s = ACE_TEXT ("tk_double");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_boolean) s = ACE_TEXT ("tk_boolean");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_char) s = ACE_TEXT ("tk_char");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_octet) s = ACE_TEXT ("tk_octet");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_any) s = ACE_TEXT ("tk_any");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_TypeCode) s = ACE_TEXT ("tk_TypeCode");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_Principal) s = ACE_TEXT ("tk_Principal");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_objref) s = ACE_TEXT ("tk_objref");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_struct) s = ACE_TEXT ("tk_struct");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_union) s = ACE_TEXT ("tk_union");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_enum) s = ACE_TEXT ("tk_enum");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_string) s = ACE_TEXT ("tk_string");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_sequence) s = ACE_TEXT ("tk_sequence");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_array) s = ACE_TEXT ("tk_array");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_alias) s = ACE_TEXT ("tk_alias");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_except) s = ACE_TEXT ("tk_except");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_longlong) s = ACE_TEXT ("tk_longlong");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_ulonglong) s = ACE_TEXT ("tk_ulonglong");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_longdouble) s = ACE_TEXT ("tk_longdouble");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_wchar) s = ACE_TEXT ("tk_wchar");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_wstring) s = ACE_TEXT ("tk_wstring");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_fixed) s = ACE_TEXT ("tk_fixed");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_value) s = ACE_TEXT ("tk_value");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_value_box) s = ACE_TEXT ("tk_value_box");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_native) s = ACE_TEXT ("tk_native");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_abstract_interface) s = ACE_TEXT ("tk_abstract_interface");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_local_interface) s = ACE_TEXT ("tk_local_interface");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_component) s = ACE_TEXT ("tk_component");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_home) s = ACE_TEXT ("tk_home");
+        else if (o == ::DAnCE::Config_Handlers::TCKind::tk_event) s = ACE_TEXT ("tk_event");
         else
         {
         }
@@ -15907,12 +15907,12 @@ namespace CIAO
       {
         ::std::basic_string< ACE_TCHAR > s;
 
-        if (o == ::CIAO::Config_Handlers::SatisfierPropertyKind::Quantity) s = ACE_TEXT ("Quantity");
-        else if (o == ::CIAO::Config_Handlers::SatisfierPropertyKind::Capacity) s = ACE_TEXT ("Capacity");
-        else if (o == ::CIAO::Config_Handlers::SatisfierPropertyKind::Minimum) s = ACE_TEXT ("Minimum");
-        else if (o == ::CIAO::Config_Handlers::SatisfierPropertyKind::Maximum) s = ACE_TEXT ("Maximum");
-        else if (o == ::CIAO::Config_Handlers::SatisfierPropertyKind::Attribute) s = ACE_TEXT ("Attribute");
-        else if (o == ::CIAO::Config_Handlers::SatisfierPropertyKind::Selection) s = ACE_TEXT ("Selection");
+        if (o == ::DAnCE::Config_Handlers::SatisfierPropertyKind::Quantity) s = ACE_TEXT ("Quantity");
+        else if (o == ::DAnCE::Config_Handlers::SatisfierPropertyKind::Capacity) s = ACE_TEXT ("Capacity");
+        else if (o == ::DAnCE::Config_Handlers::SatisfierPropertyKind::Minimum) s = ACE_TEXT ("Minimum");
+        else if (o == ::DAnCE::Config_Handlers::SatisfierPropertyKind::Maximum) s = ACE_TEXT ("Maximum");
+        else if (o == ::DAnCE::Config_Handlers::SatisfierPropertyKind::Attribute) s = ACE_TEXT ("Attribute");
+        else if (o == ::DAnCE::Config_Handlers::SatisfierPropertyKind::Selection) s = ACE_TEXT ("Selection");
         else
         {
         }
@@ -16435,11 +16435,11 @@ namespace CIAO
       {
         ::std::basic_string< ACE_TCHAR > s;
 
-        if (o == ::CIAO::Config_Handlers::ResourceUsageKind::None) s = ACE_TEXT ("None");
-        else if (o == ::CIAO::Config_Handlers::ResourceUsageKind::InstanceUsesResource) s = ACE_TEXT ("InstanceUsesResource");
-        else if (o == ::CIAO::Config_Handlers::ResourceUsageKind::ResourceUsesInstance) s = ACE_TEXT ("ResourceUsesInstance");
-        else if (o == ::CIAO::Config_Handlers::ResourceUsageKind::PortUsesResource) s = ACE_TEXT ("PortUsesResource");
-        else if (o == ::CIAO::Config_Handlers::ResourceUsageKind::ResourceUsesPort) s = ACE_TEXT ("ResourceUsesPort");
+        if (o == ::DAnCE::Config_Handlers::ResourceUsageKind::None) s = ACE_TEXT ("None");
+        else if (o == ::DAnCE::Config_Handlers::ResourceUsageKind::InstanceUsesResource) s = ACE_TEXT ("InstanceUsesResource");
+        else if (o == ::DAnCE::Config_Handlers::ResourceUsageKind::ResourceUsesInstance) s = ACE_TEXT ("ResourceUsesInstance");
+        else if (o == ::DAnCE::Config_Handlers::ResourceUsageKind::PortUsesResource) s = ACE_TEXT ("PortUsesResource");
+        else if (o == ::DAnCE::Config_Handlers::ResourceUsageKind::ResourceUsesPort) s = ACE_TEXT ("ResourceUsesPort");
         else
         {
         }
@@ -16647,14 +16647,14 @@ namespace CIAO
       {
         ::std::basic_string< ACE_TCHAR > s;
 
-        if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::Facet) s = ACE_TEXT ("Facet");
-        else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::SimplexReceptacle) s = ACE_TEXT ("SimplexReceptacle");
-        else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::MultiplexReceptacle) s = ACE_TEXT ("MultiplexReceptacle");
-        else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::EventEmitter) s = ACE_TEXT ("EventEmitter");
-        else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::EventPublisher) s = ACE_TEXT ("EventPublisher");
-        else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::EventConsumer) s = ACE_TEXT ("EventConsumer");
-        else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::ExtendedPort) s = ACE_TEXT ("ExtendedPort");
-        else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::MirrorPort) s = ACE_TEXT ("MirrorPort");
+        if (o == ::DAnCE::Config_Handlers::CCMComponentPortKind::Facet) s = ACE_TEXT ("Facet");
+        else if (o == ::DAnCE::Config_Handlers::CCMComponentPortKind::SimplexReceptacle) s = ACE_TEXT ("SimplexReceptacle");
+        else if (o == ::DAnCE::Config_Handlers::CCMComponentPortKind::MultiplexReceptacle) s = ACE_TEXT ("MultiplexReceptacle");
+        else if (o == ::DAnCE::Config_Handlers::CCMComponentPortKind::EventEmitter) s = ACE_TEXT ("EventEmitter");
+        else if (o == ::DAnCE::Config_Handlers::CCMComponentPortKind::EventPublisher) s = ACE_TEXT ("EventPublisher");
+        else if (o == ::DAnCE::Config_Handlers::CCMComponentPortKind::EventConsumer) s = ACE_TEXT ("EventConsumer");
+        else if (o == ::DAnCE::Config_Handlers::CCMComponentPortKind::ExtendedPort) s = ACE_TEXT ("ExtendedPort");
+        else if (o == ::DAnCE::Config_Handlers::CCMComponentPortKind::MirrorPort) s = ACE_TEXT ("MirrorPort");
         else
         {
         }
@@ -17502,9 +17502,9 @@ namespace CIAO
       {
         ::std::basic_string< ACE_TCHAR > s;
 
-        if (o == ::CIAO::Config_Handlers::PlanLocalityKind::SameProcess) s = ACE_TEXT ("SameProcess");
-        else if (o == ::CIAO::Config_Handlers::PlanLocalityKind::DifferentProcess) s = ACE_TEXT ("DifferentProcess");
-        else if (o == ::CIAO::Config_Handlers::PlanLocalityKind::NoConstraint) s = ACE_TEXT ("NoConstraint");
+        if (o == ::DAnCE::Config_Handlers::PlanLocalityKind::SameProcess) s = ACE_TEXT ("SameProcess");
+        else if (o == ::DAnCE::Config_Handlers::PlanLocalityKind::DifferentProcess) s = ACE_TEXT ("DifferentProcess");
+        else if (o == ::DAnCE::Config_Handlers::PlanLocalityKind::NoConstraint) s = ACE_TEXT ("NoConstraint");
         else
         {
         }
@@ -17571,7 +17571,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

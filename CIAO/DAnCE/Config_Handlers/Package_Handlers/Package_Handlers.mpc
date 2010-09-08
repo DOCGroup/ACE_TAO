@@ -4,20 +4,17 @@ project (Package_Config_Handlers) : install, acelib, dance_deployment_stub, danc
   sharedname = Package_Config_Handlers
   dynamicflags += PACKAGING_HANDLERS_BUILD_DLL
 
-  includes += $(CIAO_ROOT)/ciao
-  libpaths += $(CIAO_ROOT)/bin
-
   after    += XSC_Config_Handlers_Common \
               XSC_Config_Handlers \
               XSC_DynAny_Handler \
               XSC_XML_Handlers \
-              CIAO_XML_Utils \
+              DAnCE_XML_Utils \
 
   libs     += XSC_Config_Handlers_Common \
               XSC_Config_Handlers \
               XSC_DynAny_Handler \
               XSC_XML_Handlers \
-              CIAO_XML_Utils \
+              DAnCE_XML_Utils \
 
   Source_files {
     CAD_Handler.cpp

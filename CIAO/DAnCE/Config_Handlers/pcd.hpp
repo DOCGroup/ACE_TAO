@@ -21,7 +21,7 @@
 #include "XSC_XML_Handlers_Export.h"
 // Forward declarations.
 //
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -45,7 +45,7 @@ namespace CIAO
 
 #include "cpd.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -117,73 +117,73 @@ namespace CIAO
       // 
       public:
       bool basePackage_p () const;
-      ::CIAO::Config_Handlers::ComponentPackageDescription const& basePackage () const;
-      void basePackage (::CIAO::Config_Handlers::ComponentPackageDescription const& );
+      ::DAnCE::Config_Handlers::ComponentPackageDescription const& basePackage () const;
+      void basePackage (::DAnCE::Config_Handlers::ComponentPackageDescription const& );
 
       protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageDescription > basePackage_;
+      ::std::auto_ptr< ::DAnCE::Config_Handlers::ComponentPackageDescription > basePackage_;
 
       // specializedConfig
       // 
       public:
       bool specializedConfig_p () const;
-      ::CIAO::Config_Handlers::PackageConfiguration const& specializedConfig () const;
-      void specializedConfig (::CIAO::Config_Handlers::PackageConfiguration const& );
+      ::DAnCE::Config_Handlers::PackageConfiguration const& specializedConfig () const;
+      void specializedConfig (::DAnCE::Config_Handlers::PackageConfiguration const& );
 
       protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::PackageConfiguration > specializedConfig_;
+      ::std::auto_ptr< ::DAnCE::Config_Handlers::PackageConfiguration > specializedConfig_;
 
       // importedPackage
       // 
       public:
       bool importedPackage_p () const;
-      ::CIAO::Config_Handlers::ComponentPackageImport const& importedPackage () const;
-      void importedPackage (::CIAO::Config_Handlers::ComponentPackageImport const& );
+      ::DAnCE::Config_Handlers::ComponentPackageImport const& importedPackage () const;
+      void importedPackage (::DAnCE::Config_Handlers::ComponentPackageImport const& );
 
       protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageImport > importedPackage_;
+      ::std::auto_ptr< ::DAnCE::Config_Handlers::ComponentPackageImport > importedPackage_;
 
       // referencedPackage
       // 
       public:
       bool referencedPackage_p () const;
-      ::CIAO::Config_Handlers::ComponentPackageReference const& referencedPackage () const;
-      void referencedPackage (::CIAO::Config_Handlers::ComponentPackageReference const& );
+      ::DAnCE::Config_Handlers::ComponentPackageReference const& referencedPackage () const;
+      void referencedPackage (::DAnCE::Config_Handlers::ComponentPackageReference const& );
 
       protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageReference > referencedPackage_;
+      ::std::auto_ptr< ::DAnCE::Config_Handlers::ComponentPackageReference > referencedPackage_;
 
       // selectRequirement
       // 
       public:
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::iterator selectRequirement_iterator;
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::const_iterator selectRequirement_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Requirement, ACE_Null_Mutex > >::iterator selectRequirement_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Requirement, ACE_Null_Mutex > >::const_iterator selectRequirement_const_iterator;
       selectRequirement_iterator begin_selectRequirement ();
       selectRequirement_iterator end_selectRequirement ();
       selectRequirement_const_iterator begin_selectRequirement () const;
       selectRequirement_const_iterator end_selectRequirement () const;
-      void add_selectRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
+      void add_selectRequirement ( ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
       XSCRT::Type* selectRequirement_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_selectRequirement (void) const;
 
       protected:
-      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > > selectRequirement_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Requirement, ACE_Null_Mutex > > selectRequirement_;
 
       // configProperty
       // 
       public:
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator configProperty_iterator;
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator configProperty_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex > >::iterator configProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator configProperty_const_iterator;
       configProperty_iterator begin_configProperty ();
       configProperty_iterator end_configProperty ();
       configProperty_const_iterator begin_configProperty () const;
       configProperty_const_iterator end_configProperty () const;
-      void add_configProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      void add_configProperty ( ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex > const& );
       XSCRT::Type* configProperty_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_configProperty (void) const;
 
       protected:
-      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > configProperty_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex > > configProperty_;
 
       // contentLocation
       // 
@@ -210,7 +210,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -219,13 +219,13 @@ namespace CIAO
 
 #include "XMLSchema/Traversal.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
     namespace Traversal
     {
-      struct XSC_XML_Handlers_Export ComponentPackageImport : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ComponentPackageImport >
+      struct XSC_XML_Handlers_Export ComponentPackageImport : ::XMLSchema::Traversal::Traverser< ::DAnCE::Config_Handlers::ComponentPackageImport >
       {
         virtual void
         traverse (Type&);
@@ -276,7 +276,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct XSC_XML_Handlers_Export PackageConfiguration : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PackageConfiguration >
+      struct XSC_XML_Handlers_Export PackageConfiguration : ::XMLSchema::Traversal::Traverser< ::DAnCE::Config_Handlers::PackageConfiguration >
       {
         virtual void
         traverse (Type&);
@@ -446,7 +446,7 @@ namespace CIAO
 
 #include "XMLSchema/Writer.hpp"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
@@ -455,7 +455,7 @@ namespace CIAO
       struct ComponentPackageImport : Traversal::ComponentPackageImport, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
-        typedef ::CIAO::Config_Handlers::ComponentPackageImport Type;
+        typedef ::DAnCE::Config_Handlers::ComponentPackageImport Type;
         ComponentPackageImport (::XSCRT::XML::Element< ACE_TCHAR >&);
 
         virtual void 
@@ -501,7 +501,7 @@ namespace CIAO
       struct PackageConfiguration : Traversal::PackageConfiguration, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
-        typedef ::CIAO::Config_Handlers::PackageConfiguration Type;
+        typedef ::DAnCE::Config_Handlers::PackageConfiguration Type;
         PackageConfiguration (::XSCRT::XML::Element< ACE_TCHAR >&);
 
         virtual void 
@@ -637,7 +637,7 @@ namespace CIAO
   }
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {

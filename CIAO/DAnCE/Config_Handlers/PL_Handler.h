@@ -27,7 +27,7 @@ namespace Deployment
   class PlanLocalities;
 }
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Config_Handlers
   {
