@@ -31,9 +31,8 @@ $ior_emfile = 0;
 
 $nr_clients = 1;
 
-# @clients = ("../Navigation/Navigation_Test_Client",
-#             "../Receptacle/Receptacle_Test_Client" );
-@clients = ("../Receptacle/Receptacle_Test_Client" );
+@clients = ("../Navigation/Navigation_Test_Client",
+            "../Receptacle/Receptacle_Test_Client" );
 
 #  Processes
 $E = 0;

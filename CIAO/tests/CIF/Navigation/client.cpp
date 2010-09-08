@@ -46,6 +46,7 @@ run_test (::Components::Navigation_ptr nav)
         }
 
       #if !defined (CCM_LW)
+        ACE_DEBUG ((LM_DEBUG, "Start test: get_all_facets\n"));
         ::Components::FacetDescriptions_var all_facets = nav->get_all_facets ();
         if (all_facets->length () != 2)
           {
@@ -61,6 +62,7 @@ run_test (::Components::Navigation_ptr nav)
 
         try
           {
+            ACE_DEBUG ((LM_DEBUG, "Start test: get_named_facets\n"));
             ::Components::NameList names;
             names.length (2);
             names[0] = CORBA::string_dup ("navigation_foo");
@@ -87,6 +89,7 @@ run_test (::Components::Navigation_ptr nav)
 
         try
           {
+            ACE_DEBUG ((LM_DEBUG, "Start test: get_named_facets->exception.\n"));
             ::Components::NameList names;
             names.length (2);
             names[0] = CORBA::string_dup ("navigation_foo_1");
@@ -102,6 +105,7 @@ run_test (::Components::Navigation_ptr nav)
                                   "while testing get_named_facets\n"));
           }
 
+        ACE_DEBUG ((LM_DEBUG, "Start test: >same_component\n"));
         if (nav->same_component (nav))
           {
             ACE_DEBUG ((LM_DEBUG, "Same component test passed !\n"));
@@ -111,8 +115,10 @@ run_test (::Components::Navigation_ptr nav)
             ACE_DEBUG ((LM_DEBUG, "Error: Same component test failed!\n"));
             ++ret;
           }
+
         try
           {
+            ACE_DEBUG ((LM_DEBUG, "Start test: >same_component->exception\n"));
             nav->same_component (0);
           }
         catch (const CORBA::Exception& ex)
