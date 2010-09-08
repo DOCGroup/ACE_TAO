@@ -28,10 +28,6 @@
 #include "ace/SString.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (NewPOA,
-           NewPOA,
-           "$Id$")
-
 void
 print_poa (PortableServer::POA_ptr poa)
 {

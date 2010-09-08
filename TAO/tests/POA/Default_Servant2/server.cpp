@@ -22,8 +22,6 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(Default_Servant, server, "$Id$")
-
 static const ACE_TCHAR *ior_output_file = ACE_TEXT ("ior");
 
 static int

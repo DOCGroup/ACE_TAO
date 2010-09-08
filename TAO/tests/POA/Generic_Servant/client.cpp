@@ -6,8 +6,6 @@
 #include "ace/Read_Buffer.h"
 #include "testC.h"
 
-ACE_RCSID(Generic_Servant, client, "$Id$")
-
 static ACE_TCHAR *IOR = 0;
 static int iterations = 1;
 static int oneway = 0;

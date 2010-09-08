@@ -4,8 +4,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(Generic_Servant, test_i, "$Id$")
-
 // Constructor
 test_i::test_i (CORBA::ORB_ptr orb,
                 PortableServer::POA_ptr poa)

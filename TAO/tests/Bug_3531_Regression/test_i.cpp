@@ -11,8 +11,6 @@
 #include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Bug_2494_Regression, test_i, "$Id$")
-
 char *
 Simple_Server_i::test_method (Simple_Server_ptr objref)
 {

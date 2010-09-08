@@ -9,10 +9,6 @@
 #include "ace/Reactor.h"
 #include "ace/OS_NS_time.h"
 
-ACE_RCSID (Nested_Upcall_Crash,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 ACE_RANDR_TYPE seed;
 int payload_size = 4;

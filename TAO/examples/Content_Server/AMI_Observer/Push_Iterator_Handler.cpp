@@ -8,8 +8,6 @@
 #include "Push_Iterator_Handler.h"
 #include "Callback_i.h"
 
-ACE_RCSID (AMI_Observer, Push_Iterator_Handler, "$Id$")
-
 Push_Iterator_Handler::Push_Iterator_Handler (void)
   : callback_servant_ (0),
     callback_ (),

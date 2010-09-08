@@ -8,8 +8,6 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(Thread_Pool_Latency, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int

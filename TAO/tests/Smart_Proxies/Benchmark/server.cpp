@@ -20,8 +20,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(Benchmark, server, "$Id$")
-
 // The servant
 
 class Test_i : public POA_Test

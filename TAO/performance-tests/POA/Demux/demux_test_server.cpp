@@ -18,8 +18,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(CodeGen, demux_test_server, "$Id$")
-
 // Constructor
 Demux_Test_Server::Demux_Test_Server (void)
   : argc_ (0),

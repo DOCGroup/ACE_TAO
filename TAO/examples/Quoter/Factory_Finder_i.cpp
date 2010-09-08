@@ -21,10 +21,6 @@
 
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (Quoter,
-           Factory_Finder_i,
-           "$Id$")
-
 // Constructor
 Quoter_Factory_Finder_i::Quoter_Factory_Finder_i (int debug_level)
 : debug_level_ (debug_level)

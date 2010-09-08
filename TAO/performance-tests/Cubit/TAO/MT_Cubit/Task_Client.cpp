@@ -19,8 +19,6 @@ ACE_round (ACE_timer_t t)
   return static_cast<ACE_UINT32> (t);
 }
 
-ACE_RCSID(MT_Cubit, Task_Client, "$Id$")
-
 Task_State::Task_State (void)
   : barrier_ (0),
     key_ ("Cubit"),

@@ -8,8 +8,6 @@
 #include "ace/Log_Record.h"
 #include "ace/os_include/os_netdb.h"
 
-ACE_RCSID(Log, Logger_i, "$Id$")
-
 Logger_Factory_i::Logger_Factory_i (void)
 {
 }

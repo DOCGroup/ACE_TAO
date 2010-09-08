@@ -4,8 +4,6 @@
 #include "ping_i.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(Faults, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("ping.ior");
 
 int

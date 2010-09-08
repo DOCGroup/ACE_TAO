@@ -18,10 +18,6 @@
 
 #include "recursive_struct.h"
 
-ACE_RCSID (Param_Test,
-           recursive_struct,
-           "$Id$")
-
 const CORBA::ULong MAX_DEPTH = 5;
 const CORBA::ULong MAX_SEQ_LENGTH = 3;
 

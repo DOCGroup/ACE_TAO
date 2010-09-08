@@ -24,8 +24,6 @@
 #include "../common_args.cpp"
 #include "testC.h"
 
-ACE_RCSID(Profile_And_Endpoint_Selection, client, "$Id$")
-
 static int iterations = 1;
 static int debug = 1;
 static int shutdown_server = 0;

@@ -5,8 +5,6 @@
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "ace/Countdown_Time.h"
 
-ACE_RCSID(Priority_Inversion_With_Bands, test_i, "$Id$")
-
 test_i::test_i (CORBA::ORB_ptr orb,
                 PortableServer::POA_ptr poa,
                 RTCORBA::Priority low_priority,

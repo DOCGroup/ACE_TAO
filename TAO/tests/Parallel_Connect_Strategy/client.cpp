@@ -5,8 +5,6 @@
 #include "ace/High_Res_Timer.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID(Hello, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int kill_server = 0;
 bool sanity_timeout = false;

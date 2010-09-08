@@ -8,8 +8,6 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(AMI_Latency, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 int nthreads = 4;
 

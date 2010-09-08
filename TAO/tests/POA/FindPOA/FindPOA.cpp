@@ -23,10 +23,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
 
-ACE_RCSID (FindPOA,
-           FindPOA,
-           "$Id$")
-
 void
 find_non_existant_POA (PortableServer::POA_ptr parent,
                        const char *child_poa_name,

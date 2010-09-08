@@ -3,17 +3,10 @@
 #include "TestC.h"
 #include "tao/IFR_Client/IFR_BaseC.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
-
 #include "ace/Get_Opt.h"
 
 #include <algorithm>
 #include <functional>
-
-
-ACE_RCSID (Recursive,
-           client,
-           "$Id$")
-
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 

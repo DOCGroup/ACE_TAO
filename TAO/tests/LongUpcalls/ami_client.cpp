@@ -4,8 +4,6 @@
 #include "Controller.h"
 #include "Manager_Handler.h"
 
-ACE_RCSID(LongUpcalls, ami_client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int

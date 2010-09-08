@@ -21,8 +21,6 @@
 #include "WUCS4_UTF16.h"
 #include "ace/OS.h"
 
-ACE_RCSID(UCS4_UTF16, WUCS4_UTF16, "$Id$")
-
 // ****************************************************************
 
 
@@ -500,7 +498,7 @@ WUCS4_UTF16::write_wstring (ACE_OutputCDR & cdr,
       ACE_UTF16_T bom = ACE_UNICODE_BOM_CORRECT;
       ACE_CDR::ULong length = len + count_potential_surrogates (x, len);
       ACE_CDR::ULong l = length * ACE_UTF16_CODEPOINT_SIZE;
-      
+
       if (this->write_4 (cdr, &l) && x != 0)
         {
           this->write_2 (cdr, &bom);
@@ -510,21 +508,21 @@ WUCS4_UTF16::write_wstring (ACE_OutputCDR & cdr,
   else
     {
       ACE_CDR::ULong l = len + 1;
-      
+
       if (this->write_4 (cdr, &l))
         {
           if (x != 0)
             {
               return this->write_wchar_array (cdr, x, len + 1);
             }
-          else 
+          else
             {
               ACE_UTF16_T s = 0;
               return this->write_2 (cdr, &s);
             }
         }
     }
-    
+
   return 0;
 }
 

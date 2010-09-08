@@ -1,14 +1,11 @@
 // -*- C++ -*-
+// $Id$
 
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 #include "ServantLocator.h"
 #include "Server_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
-
-ACE_RCSID (ServantLocator,
-           server,
-           "$Id$")
 
 const ACE_TCHAR * ior_file = 0;
 

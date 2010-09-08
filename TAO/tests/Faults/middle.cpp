@@ -4,8 +4,6 @@
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(Failure, middle, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("middle.ior");
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 10;

@@ -20,10 +20,6 @@
 #include "ub_any_seq.h"
 #include "tao/debug.h"
 
-ACE_RCSID (Param_Test,
-           ub_any_seq,
-           "$Id$")
-
 const CORBA::ULong TEST_SEQ_LENGTH = 5;
 const CORBA::ULong NUM_TEST_TYPES = 4;
 

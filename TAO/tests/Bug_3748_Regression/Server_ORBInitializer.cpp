@@ -8,10 +8,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfo.h"
 
-ACE_RCSID (Bug_3748_Regression,
-           Server_ORBInitializer,
-           "$Id$")
-
 Server_ORBInitializer::Server_ORBInitializer (void)
 {
 }

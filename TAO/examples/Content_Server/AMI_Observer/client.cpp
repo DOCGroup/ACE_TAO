@@ -9,10 +9,6 @@
 #include "Push_Web_ServerC.h"
 #include "Push_Iterator_Handler.h"
 
-ACE_RCSID (AMI_Observer,
-           client,
-           "$Id$")
-
 // Obtain reference to Iterator_Factory
 Web_Server::Iterator_Factory_ptr
 get_iterator (CORBA::ORB_ptr orb);

@@ -10,8 +10,6 @@
 #include "ace/Reactor.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(Bug_1269_Regression, Server_Timer, "$Id$")
-
 Server_Timer::Server_Timer(Test::Echo_ptr echo,
                            ACE_Reactor * reactor)
   : ACE_Event_Handler (reactor)

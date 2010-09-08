@@ -9,8 +9,6 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID(Callback, server, "$Id$")
-
 const ACE_TCHAR *ior_file_name = ACE_TEXT("test.ior");
 
 /// Parse the arguments.

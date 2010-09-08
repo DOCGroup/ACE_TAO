@@ -2,8 +2,6 @@
 
 #include "Notifier_Server.h"
 #include "notifier.h"
-ACE_RCSID(Notifier, notifier, "$Id$")
-
 
 int
 Notifier::handle_signal (int signum, siginfo_t *, ucontext_t *)

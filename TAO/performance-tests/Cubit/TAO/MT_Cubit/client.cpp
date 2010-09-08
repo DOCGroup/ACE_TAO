@@ -18,8 +18,6 @@
 # include "quantify.h"
 #endif /* ACE_HAS_QUANTIFY */
 
-ACE_RCSID(MT_Cubit, client, "$Id$")
-
 #if defined (ACE_HAS_VXTHREADS)
 u_int ctx = 0;
 u_int ct = 0;

@@ -9,8 +9,6 @@
 #include "ace/Throughput_Stats.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID(AMI_Latency, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 ACE_hrtime_t throughput_base;

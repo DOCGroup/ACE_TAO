@@ -2,8 +2,6 @@
 
 #include "Echo_i.h"
 
-ACE_RCSID(Echo, Echo_i, "$Id$")
-
 // Constructor.
 
 Echo_i::Echo_i (void)

@@ -5,10 +5,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "tao/FlResource/FlResource_Loader.h"
 
-ACE_RCSID (FL_Callback,
-           progress,
-           "$Id$")
-
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
 

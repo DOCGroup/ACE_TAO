@@ -20,10 +20,6 @@
 
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (Quoter,
-           Generic_Factory_i,
-           "$Id$")
-
 // Constructor
 Quoter_Generic_Factory_i::Quoter_Generic_Factory_i (int debug_level)
 : debug_level_ (debug_level)

@@ -30,10 +30,6 @@
 #include "ace/Sample_History.h"
 #include "ace/Sched_Params.h"
 
-ACE_RCSID (Anyop,
-           anyop,
-           "$Id$")
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

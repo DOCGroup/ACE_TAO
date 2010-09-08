@@ -17,10 +17,6 @@
 
 #include "orbsvcs/LifeCycleServiceC.h"
 
-ACE_RCSID (Quoter,
-           Generic_Factory,
-           "$Id$")
-
 Quoter_Generic_Factory_Server::Quoter_Generic_Factory_Server (void)
 : use_LifeCycle_Service_ (0),
   debug_level_ (1)

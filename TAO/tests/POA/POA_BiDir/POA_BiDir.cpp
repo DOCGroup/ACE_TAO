@@ -25,11 +25,6 @@
 
 #include "ace/SString.h"
 
-
-ACE_RCSID (POA_BiDir,
-           POA_BiDir,
-           "$Id$")
-
 void
 print_poa (PortableServer::POA_ptr poa)
 {

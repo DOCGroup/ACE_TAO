@@ -1,13 +1,10 @@
 // $Id$
 
-
 #include "TreeBaseC.h"
 #include "TreeControllerC.h"
 #include "TreeNodeC.h"
 
 #include "ace/Get_Opt.h"
-
-ACE_RCSID(Forward, client, "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 

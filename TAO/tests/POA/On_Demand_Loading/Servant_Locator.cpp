@@ -19,10 +19,6 @@
 
 #include "Servant_Locator.h"
 
-ACE_RCSID (On_Demand_Activation,
-           Servant_Locator,
-           "$Id$")
-
 // Initialization.
 
 ServantLocator_i::ServantLocator_i (CORBA::ORB_ptr orb)

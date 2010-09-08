@@ -6,8 +6,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Nested_Upcall_Crash, scavenger, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 #if defined (ACE_OPENVMS)

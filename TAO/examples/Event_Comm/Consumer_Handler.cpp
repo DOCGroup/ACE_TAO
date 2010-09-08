@@ -3,8 +3,6 @@
 #include "Consumer_Handler.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID(Consumer, Consumer_Handler, "$Id$")
-
 Consumer_Handler::Consumer_Handler (void)
   : receiver_ (0),
     notifier_ (0),

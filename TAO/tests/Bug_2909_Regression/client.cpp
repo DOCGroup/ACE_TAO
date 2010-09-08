@@ -19,10 +19,6 @@
 #include "ace/Synch_Traits.h"
 #include "ami_test_i.h"
 
-ACE_RCSID (AMI,
-           client,
-           "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 1;
 int niterations = 2;

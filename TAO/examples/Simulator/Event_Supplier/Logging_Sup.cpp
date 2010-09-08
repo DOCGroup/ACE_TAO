@@ -39,10 +39,6 @@
 
 #include "ace/os_include/os_ctype.h"
 
-ACE_RCSID (Event_Supplier,
-           Logging_Sup,
-           "$Id$")
-
 #if defined (ACE_OPENVMS)
 // need this to circumvent link error on OpenVMS
 // has to do with interference in template instantiations

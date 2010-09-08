@@ -3,8 +3,6 @@
 #include "PP_Test_Server.h"
 #include "tao/Timeprobe.h"
 
-ACE_RCSID(IDL_Cubit, server, "$Id$")
-
 // This runs the server test.
 
 int
@@ -34,13 +32,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::SystemException& sysex)
     {
-      ACE_UNUSED_ARG (sysex);
       sysex._tao_print_exception ("System Exception");
       return -1;
     }
   catch (const CORBA::UserException& userex)
     {
-      ACE_UNUSED_ARG (userex);
       userex._tao_print_exception ("User Exception");
       return -1;
     }

@@ -4,8 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"
 
-ACE_RCSID(Big_Oneways, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int

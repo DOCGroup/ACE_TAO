@@ -11,8 +11,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
-ACE_RCSID(Nested_Upcall_Crash, Client_Peer, "$Id$")
-
 class Crasher : public ACE_Event_Handler
 {
 public:

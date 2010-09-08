@@ -20,11 +20,9 @@
 #include "Servant_Manager.h"
 #include "tao/debug.h"
 
-ACE_RCSID(On_Demand_Activation, Servant_Manager, "$Id$")
-
-  // Initialization.
-  ServantManager_i::ServantManager_i (CORBA::ORB_ptr orb)
-    : orb_ (CORBA::ORB::_duplicate (orb))
+// Initialization.
+ServantManager_i::ServantManager_i (CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 

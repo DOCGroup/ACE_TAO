@@ -6,10 +6,6 @@
 #include "Test_Protocols_Hooks.h"
 #include "TestC.h"
 
-ACE_RCSID (Test,
-           Test_Protocols_Hooks,
-           "$Id$")
-
 Test_Protocols_Hooks::Test_Protocols_Hooks (void)
   : failure_count_ (0)
 {
