@@ -48,12 +48,10 @@ ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>::ACE_Hash_Multi_Map_Entry (const EXT_ID
 {
 }
 
-# if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
 template <class EXT_ID, class INT_ID>
 ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Multi_Map_Entry (void)
 {
 }
-# endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
 template <class EXT_ID, class INT_ID> EXT_ID &
 ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>::key ()

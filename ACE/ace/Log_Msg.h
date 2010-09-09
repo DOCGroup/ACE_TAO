@@ -405,27 +405,6 @@ public:
    */
   void thr_desc (ACE_Thread_Descriptor *td);
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS) && defined(ACE_LEGACY_MODE)
-  // These functions are disabled without ACE_LEGACY_MODE
-  // because the *semantics* have changed (the objects are no longer
-  // TSS).
-  /// Get TSS exception action.
-  /// @note The action is no longer TSS, they are global!
-  ACE_SEH_EXCEPT_HANDLER seh_except_selector (void);
-
-  /// Set TSS exception action.
-  /// @note The action is no longer TSS, they are global!
-  ACE_SEH_EXCEPT_HANDLER seh_except_selector (ACE_SEH_EXCEPT_HANDLER);
-
-  /// Get TSS exception handler.
-  /// @note The handler is no longer TSS, they are global!
-  ACE_SEH_EXCEPT_HANDLER seh_except_handler (void);
-
-  /// Set TSS exception handler.
-  /// @note The handler is no longer TSS, they are global!
-  ACE_SEH_EXCEPT_HANDLER seh_except_handler (ACE_SEH_EXCEPT_HANDLER);
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS && ACE_LEGACY_MODE */
-
   /// Stop tracing status on a per-thread basis...
   void stop_tracing (void);
 
@@ -529,12 +508,12 @@ public:
    *  - 'S': print out the appropriate signal message corresponding
    *         to var-argument, e.g., as done by strsignal()
    *  - 's': prints a ACE_TCHAR* character string (also see C and W)
-   *  - 'T': print timestamp in hour:minute:sec:usec format (plain option, 
-   *         i.e. without any flags, prints system supplied timestamp; 
+   *  - 'T': print timestamp in hour:minute:sec:usec format (plain option,
+   *         i.e. without any flags, prints system supplied timestamp;
    *         with '#' flag added expects ACE_Time_Value* in argument list)
    *  - 'D': print timestamp as Weekday Month day year hour:minute:sec.usec
-   *         (plain option, i.e. without any flags, prints system supplied 
-   *         timestamp; with '#' flag added expects ACE_Time_Value* in 
+   *         (plain option, i.e. without any flags, prints system supplied
+   *         timestamp; with '#' flag added expects ACE_Time_Value* in
    *         argument list)
    *  - 't': print thread id (1 if single-threaded)
    *  - 'u': print as unsigned int
@@ -764,10 +743,6 @@ void
 ACE_TSS_CLEANUP_NAME (void *ptr);
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #endif /* ACE_MT_SAFE */
-
-#if defined(ACE_LEGACY_MODE)
-#include "ace/Log_Msg_Callback.h"
-#endif /* ACE_LEGACY_MODE */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Log_Msg.inl"

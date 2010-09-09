@@ -286,7 +286,6 @@ protected:
 
   /// Holds the thread ID of the last thread to exit svc() in this object.
   ACE_thread_t  last_thread_id_;
-
 private:
 
   // = Disallow these operations.

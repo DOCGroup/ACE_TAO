@@ -141,10 +141,6 @@ public:
   /// Set the preferred signaling strategy.
   void preferred_strategy (ACE_MEM_IO::Signal_Strategy strategy);
 
-  /// Accessor to underlying malloc options.
-  /// @deprecated This method has been deprecated.
-  ACE_MEM_SAP::MALLOC_OPTIONS &malloc_options (void);
-
   // = Meta-type info
   typedef ACE_INET_Addr PEER_ADDR;
   typedef ACE_MEM_Stream PEER_STREAM;

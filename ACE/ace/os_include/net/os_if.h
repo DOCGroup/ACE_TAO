@@ -47,10 +47,6 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (ACE_HAS_BROKEN_IF_HEADER)
-   struct ifafilt;
-#endif /* ACE_HAS_BROKEN_IF_HEADER */
-
 #if defined (ACE_LACKS_IFREQ)
 struct  ifreq {
 #define IFNAMSIZ        16

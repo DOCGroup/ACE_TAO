@@ -556,21 +556,6 @@
 #  define ACE_DEFAULT_GLOBALNAME_A "globalnames"
 #endif /* ACE_DEFAULT_GLOBALNAME_A */
 
-// ACE_DEFAULT_NAMESPACE_DIR is for legacy mode apps.  A better
-// way of doing this is something like ACE_Lib_Find::get_temp_dir, since
-// this directory may not exist
-#if defined (ACE_LEGACY_MODE)
-#  if defined (ACE_WIN32)
-#    define ACE_DEFAULT_NAMESPACE_DIR_A "C:\\temp"
-#  else /* ACE_WIN32 */
-#    define ACE_DEFAULT_NAMESPACE_DIR_A "/tmp"
-#  endif /* ACE_WIN32 */
-#  if defined (ACE_HAS_WCHAR)
-#    define ACE_DEFAULT_NAMESPACE_DIR_W ACE_TEXT_WIDE(ACE_DEFAULT_NAMESPACE_DIR_A)
-#  endif /* ACE_HAS_WCHAR */
-#    define ACE_DEFAULT_NAMESPACE_DIR ACE_TEXT(ACE_DEFAULT_NAMESPACE_DIR_A)
-#endif /* ACE_LEGACY_MODE */
-
 #if defined (ACE_HAS_WCHAR)
 #  define ACE_DEFAULT_LOCALNAME_W ACE_TEXT_WIDE(ACE_DEFAULT_LOCALNAME_A)
 #  define ACE_DEFAULT_GLOBALNAME_W ACE_TEXT_WIDE(ACE_DEFAULT_GLOBALNAME_A)

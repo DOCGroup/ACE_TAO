@@ -58,13 +58,6 @@ public:
                     const time_t time,
                     ACE_Time_Value *timeout = 0);
 
-  /**
-   * Initialize length_ in order to ensure correct byte ordering before a
-   * request is sent.
-   * @deprecated This method is a no-op.
-   */
-  void init (void);
-
   // Get the fixed size of message
   ssize_t size (void) const;
 

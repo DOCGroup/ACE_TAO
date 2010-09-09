@@ -65,10 +65,8 @@ public:
   ACE_Hash_Multi_Map_Entry (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *next,
                             ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *prev);
 
-  # if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
   /// Destructor.
   ~ACE_Hash_Multi_Map_Entry (void);
-  #endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
   /// Key accessor.
   EXT_ID& key (void);
@@ -553,7 +551,7 @@ protected:
   ACE_Allocator *table_allocator_;
 
   /// Addidtional allocator for entries, so it should be able to
-  /// allocate 'size' / chunks of sizeof 
+  /// allocate 'size' / chunks of sizeof
   /// (@c ACE_Hash_Multi_Map_Entry<@c EXT_ID, @c INT_ID>) bytes each.
   ACE_Allocator *entry_allocator_;
 

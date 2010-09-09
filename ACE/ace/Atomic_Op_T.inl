@@ -322,14 +322,6 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::dump (void) const
 #endif /* ACE_HAS_DUMP */
   return;
 }
-
-template <class ACE_LOCK, class TYPE>
-ACE_INLINE ACE_LOCK &
-ACE_Atomic_Op<ACE_LOCK, TYPE>::mutex (void)
-{
-  return this->own_mutex_;
-}
-
 template <class ACE_LOCK, class TYPE>
 ACE_INLINE TYPE &
 ACE_Atomic_Op<ACE_LOCK, TYPE>::value_i (void)

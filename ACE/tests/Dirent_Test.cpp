@@ -29,7 +29,6 @@
 #include "ace/Dirent_Selector.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/OS_String.h"
 #include "ace/SString.h"
 
 #if (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
