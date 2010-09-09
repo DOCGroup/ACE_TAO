@@ -1,3 +1,14 @@
+Thu Sep  9 09:28:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+          All compilers now support template typedefs, no need to use the
+          macros
+
 Wed Sep  8 14:42:36 UTC 2010  William Otte  <wotte@zifnab>
 
         * Release:
