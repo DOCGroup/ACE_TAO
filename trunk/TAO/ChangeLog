@@ -1,3 +1,9 @@
+Thu Sep  9 18:29:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Leader_Follower.inl:
+        * tao/Leader_Follower.cpp:
+          Changed empty to is_empty
+
 Thu Sep  9 12:15:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:

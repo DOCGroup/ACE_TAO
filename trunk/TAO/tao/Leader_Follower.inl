@@ -33,7 +33,7 @@ TAO_Leader_Follower::get_tss_resources (void) const
 ACE_INLINE int
 TAO_Leader_Follower::follower_available (void) const
 {
-  return !this->follower_set_.empty ();
+  return !this->follower_set_.is_empty ();
 }
 
 ACE_INLINE void
