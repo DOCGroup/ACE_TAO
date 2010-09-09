@@ -491,6 +491,10 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 # define ACE_GCC_DESTRUCTOR_ATTRIBUTE
 #endif
 
+#ifndef ACE_HAS_TEMPLATE_TYPEDEFS
+#define ACE_HAS_TEMPLATE_TYPEDEFS
+#endif
+
 #ifndef ACE_DEPRECATED
 # define ACE_DEPRECATED
 #endif

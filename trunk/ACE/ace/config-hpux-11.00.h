@@ -51,10 +51,6 @@
 #      define ACE_LACKS_NUMERIC_LIMITS
 #    endif /* _HP_NAMESPACE_STD */
 
-// Compiler implements templates that support typedefs inside of classes
-// used as formal arguments to a template class.
-#    define ACE_HAS_TEMPLATE_TYPEDEFS
-
 #    define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 
 // Platform lacks streambuf "linebuffered ()".

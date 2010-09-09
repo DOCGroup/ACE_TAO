@@ -76,14 +76,8 @@ static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 #  endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
 #endif /* ACE_LACKS_FORK */
 
-#if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-#define LOCK_SOCK_ACCEPTOR ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>
-#else
-#define LOCK_SOCK_ACCEPTOR ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>, ACE_INET_Addr
-#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
-
 typedef ACE_Oneshot_Acceptor<Svc_Handler,
-                             LOCK_SOCK_ACCEPTOR>
+                             ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>>
         ACCEPTOR;
 typedef ACE_Connector<Svc_Handler,
                       ACE_SOCK_CONNECTOR>

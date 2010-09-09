@@ -53,7 +53,6 @@
 #define ACE_LACKS_STRRECVFD
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
-#define ACE_HAS_TEMPLATE_TYPEDEFS
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
 // Platform provides ACE_TLI function prototypes.
