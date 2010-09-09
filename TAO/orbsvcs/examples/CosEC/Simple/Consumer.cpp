@@ -4,10 +4,6 @@
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (CosEC_Examples,
-           Consumer,
-           "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT ("file://ec.ior");
 
 int

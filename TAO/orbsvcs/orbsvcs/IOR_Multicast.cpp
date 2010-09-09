@@ -7,10 +7,6 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (orbsvcs,
-           IOR_Multicast,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_HANDLE

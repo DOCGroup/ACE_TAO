@@ -14,18 +14,12 @@
 #include "orbsvcs/IFRService/ProvidesDef_i.h"
 #include "orbsvcs/IFRService/UsesDef_i.h"
 
-ACE_RCSID (IFRService,
-           ComponentRepository_i,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ComponentRepository_i::TAO_ComponentRepository_i (
     CORBA::ORB_ptr orb,
     PortableServer::POA_ptr poa,
-    ACE_Configuration *config
-  )
+    ACE_Configuration *config)
   : TAO_IRObject_i (0),
     TAO_Container_i (0),
     TAO_Repository_i (orb,

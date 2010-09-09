@@ -2,11 +2,6 @@
 
 #include "orbsvcs/Security/SL3_ContextEstablishmentPolicy.h"
 
-
-ACE_RCSID (Security,
-           SL3_ContextEstablishmentPolicy,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SL3::ContextEstablishmentPolicy::ContextEstablishmentPolicy (

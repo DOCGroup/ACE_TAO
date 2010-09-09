@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.h"
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_time.h"
@@ -9,10 +11,6 @@
 #if defined(__NetBSD__) || defined (__APPLE__)
 #include <sys/sysctl.h>
 #endif
-
-ACE_RCSID (LoadBalancing,
-           LB_CPU_Load_Average_Monitor,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,14 +1,11 @@
 // -*- C++ -*-
+// $Id$
 
 #include "orbsvcs/LoadBalancing/LB_Random.h"
 
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_time.h"
 #include "ace/os_include/os_netdb.h"
-
-ACE_RCSID (LoadBalancing,
-           LB_Random,
-           "$Id$")
 
 #ifdef ACE_HAS_PTHREADS_STD
 static pthread_once_t tao_lb_once_control = PTHREAD_ONCE_INIT;

@@ -9,11 +9,6 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (ClientORB,
-           FTRT_ClientORB_Loader,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRT {

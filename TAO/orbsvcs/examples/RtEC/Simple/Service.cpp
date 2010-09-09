@@ -6,10 +6,6 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (EC_Examples,
-           Service,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("ec.ior");
 
 int parse_args (int argc, ACE_TCHAR *argv[]);

@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/Time/TAO_UTO.h"
 #include "orbsvcs/Time/TAO_TIO.h"
 #include "orbsvcs/Time/TAO_Time_Service_Server.h"
@@ -5,10 +7,6 @@
 #include "orbsvcs/Time_Utilities.h"
 
 #include "tao/debug.h"
-
-ACE_RCSID (Time,
-           TAO_Time_Service_Server,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

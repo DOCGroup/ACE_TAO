@@ -1,8 +1,6 @@
-#include "orbsvcs/Log/LogRecordStore.h"
+// $Id$
 
-ACE_RCSID (Log,
-           LogRecordStore,
-           "$Id$")
+#include "orbsvcs/Log/LogRecordStore.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

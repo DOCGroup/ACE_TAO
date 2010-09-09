@@ -9,10 +9,6 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (EC_Examples,
-           Supplier,
-           "$Id$")
-
 static const ACE_TCHAR *supplierec = 0;
 static const ACE_TCHAR *consumerec = 0;
 

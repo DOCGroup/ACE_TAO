@@ -1,16 +1,10 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "orbsvcs/FaultTolerance/FT_ServerPolicyFactory.h"
 #include "orbsvcs/FaultTolerance/FT_ServerPolicy_i.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/PolicyC.h"
-
-
-ACE_RCSID (FaultTolerance,
-           FT_ServerPolicyFactory,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

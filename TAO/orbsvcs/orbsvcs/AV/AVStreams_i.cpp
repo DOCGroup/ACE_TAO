@@ -23,10 +23,6 @@
 #include "orbsvcs/AV/AVStreams_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (AV,
-           AVStreams_i,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //------------------------------------------------------------

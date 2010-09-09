@@ -12,11 +12,6 @@
 #include "orbsvcs/Event/EC_Dispatching_Task.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event,
-           EC_Dispatching,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Simple_Queue_Full_Action::TAO_EC_Simple_Queue_Full_Action (void)

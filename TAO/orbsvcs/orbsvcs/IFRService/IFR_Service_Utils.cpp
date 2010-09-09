@@ -18,10 +18,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_fcntl.h"
 
-ACE_RCSID (IFR_Service,
-           IFR_Service,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Repository_i *TAO_IFR_Service_Utils::repo_ = 0;
@@ -352,11 +348,11 @@ TAO_IFR_Server::create_repository (void)
                                           repo_ref);
 
   // Write our IOR to a file.
-  
+
   FILE *output_file_ =
     ACE_OS::fopen (OPTIONS::instance ()->ior_output_file (),
                    ACE_TEXT ("w"));
-                   
+
   if (output_file_ == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -585,7 +581,7 @@ TAO_IFR_Service_Utils::id_exists (const char *id,
 {
   // The repo id must not already exist.
   ACE_TString holder;
-  
+
   if (repo->config ()->get_string_value (repo->repo_ids_key (),
                                          id,
                                          holder)
@@ -791,8 +787,8 @@ TAO_IFR_Service_Utils::valid_creation (
 {
   TAO_IFR_Service_Utils::valid_container (container_kind,
                                           contained_kind);
-     
-  /// IDL modules can be reopened, and thus pre-exist.                                        
+
+  /// IDL modules can be reopened, and thus pre-exist.
   if (contained_kind == CORBA::dk_Module)
     {
       return;

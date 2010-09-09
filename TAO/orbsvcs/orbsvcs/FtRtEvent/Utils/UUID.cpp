@@ -1,9 +1,7 @@
 //$Id$
+
 #include "orbsvcs/FtRtEvent/Utils/UUID.h"
 
-ACE_RCSID (Utils,
-           UUID,
-           "$Id$")
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/FtRtEvent/Utils/UUID.inl"
 #endif /* __ACE_INLINE__ */

@@ -8,10 +8,6 @@
 #include "ace/HTBP/HTBP_Environment.h"
 #include "tao/IOPC.h"
 
-ACE_RCSID (HTIOP,
-           TAOHTIOP_Factory,
-           "$Id$")
-
 static const char the_prefix[] = "htiop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

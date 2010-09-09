@@ -1,12 +1,9 @@
+// $Id$
+
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 #include "tao/Object_KeyC.h"
 #include <algorithm>
-
-ACE_RCSID (EventChannel,
-           replace_key,
-           "$Id$")
-
 
 /// This function was defined in IOGR_Maker.cpp. It is moved
 /// here because the use of <algorithm> header

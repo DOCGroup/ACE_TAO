@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/Log/LogNotification.h"
 #include "orbsvcs/Log/RTEventLogNotification.h"
 #include "orbsvcs/Time_Utilities.h"
@@ -17,10 +19,6 @@
 #include "orbsvcs/Event/EC_ConsumerControl.h"
 #include "orbsvcs/ESF/ESF_RefCount_Guard.h"
 #include "orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h"
-
-ACE_RCSID (Log,
-           RTEventLogNotification,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

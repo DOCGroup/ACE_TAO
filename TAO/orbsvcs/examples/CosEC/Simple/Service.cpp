@@ -5,10 +5,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (CosEC_Simple,
-           Service,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("ec.ior");
 
 int

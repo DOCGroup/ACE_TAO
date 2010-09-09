@@ -1,12 +1,9 @@
+// $Id$
+
 #include "orbsvcs/LoadBalancing/LB_LoadManager.h"
 #include "orbsvcs/LoadBalancing/LB_MemberLocator.h"
 
 #include "tao/debug.h"
-
-
-ACE_RCSID (LoadBalancing,
-           LB_MemberLocator,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

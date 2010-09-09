@@ -7,10 +7,6 @@
 #include "../Utils/Safe_InputCDR.h"
 #include "../Utils/Log.h"
 
-ACE_RCSID (EventChannel,
-           FtEventServiceInterceptor,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool

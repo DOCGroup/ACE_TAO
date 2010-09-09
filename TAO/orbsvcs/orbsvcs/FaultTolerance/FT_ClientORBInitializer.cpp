@@ -12,10 +12,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfo.h"
 
-ACE_RCSID (FaultTolerance,
-           FT_ClientORBInitializer,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void

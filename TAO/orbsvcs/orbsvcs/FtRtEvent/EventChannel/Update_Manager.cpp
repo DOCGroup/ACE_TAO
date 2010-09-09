@@ -3,10 +3,6 @@
 #include "orbsvcs/FtRtEvent/EventChannel/Update_Manager.h"
 #include "ace/Guard_T.h"
 
-ACE_RCSID (EventChannel,
-           Update_Manager,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Update_Manager::Update_Manager(ACE_Auto_Event& evt,

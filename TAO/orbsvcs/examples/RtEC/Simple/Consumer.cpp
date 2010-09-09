@@ -5,10 +5,6 @@
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/CosNamingC.h"
 
-ACE_RCSID (EC_Examples,
-           Consumer,
-           "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

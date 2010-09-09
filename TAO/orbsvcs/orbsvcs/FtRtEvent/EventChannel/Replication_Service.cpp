@@ -12,11 +12,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_strings.h"
 
-
-ACE_RCSID (EventChannel,
-           Replication_Service,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRTEC

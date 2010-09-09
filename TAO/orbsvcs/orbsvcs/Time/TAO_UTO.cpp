@@ -5,12 +5,6 @@
 #include "orbsvcs/Time/TAO_TIO.h"
 #include "ace/OS.h"
 
-
-ACE_RCSID (Time,
-           TAO_UTO,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UTO::TAO_UTO (TimeBase::TimeT time,

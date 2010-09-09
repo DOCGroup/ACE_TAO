@@ -12,11 +12,6 @@
 
 #include "ace/SString.h"
 
-
-ACE_RCSID (IFRService,
-           ComponentDef_i,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Specialization.
@@ -161,7 +156,7 @@ TAO_ComponentDef_i::describe_i (void)
     this->repo_->config ()->get_string_value (this->section_key_,
                                               "base_component",
                                               holder);
-                                              
+
   if (status == 0)
     {
       ACE_Configuration_Section_Key base_key;
@@ -173,8 +168,8 @@ TAO_ComponentDef_i::describe_i (void)
                                                 "id",
                                                 holder);
     }
-  
-  // If status wasn't 0, holder will contain the empty string.  
+
+  // If status wasn't 0, holder will contain the empty string.
   cd.base_component = holder.fast_rep ();
 
   CORBA::ULong count = 0;

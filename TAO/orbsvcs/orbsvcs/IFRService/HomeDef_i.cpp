@@ -12,12 +12,6 @@
 
 #include "ace/SString.h"
 
-
-ACE_RCSID (IFRService,
-           HomeDef_i,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_HomeDef_i::TAO_HomeDef_i (TAO_Repository_i *repo)

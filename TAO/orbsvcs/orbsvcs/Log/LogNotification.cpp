@@ -1,12 +1,10 @@
+// $Id$
+
 #include "orbsvcs/Log/LogNotification.h"
 
 #include "orbsvcs/Time_Utilities.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_sys_time.h"
-
-ACE_RCSID (Log,
-           LogNotification,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

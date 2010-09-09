@@ -15,11 +15,6 @@
 #include "ace/Lock.h"
 #include "ace/Synch_Traits.h"
 
-ACE_RCSID (FaultTolerance,
-           FT_ORBInitializer,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

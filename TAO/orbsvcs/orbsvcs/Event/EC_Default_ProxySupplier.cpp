@@ -6,10 +6,6 @@
 
 #include "ace/Reverse_Lock_T.h"
 
-ACE_RCSID (Event,
-           EC_ProxySupplier,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_EC_Unlock;

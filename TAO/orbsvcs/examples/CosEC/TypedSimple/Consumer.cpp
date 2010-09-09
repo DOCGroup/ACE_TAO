@@ -34,10 +34,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-ACE_RCSID (CosEC_Examples,
-           Consumer,
-           "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

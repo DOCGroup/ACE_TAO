@@ -18,11 +18,6 @@
 #include "tao/Profile_Transport_Resolver.h"
 #include "ace/Strategies_T.h"
 
-ACE_RCSID (HTIOP,
-           TAO_HTIOP_Connector,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Connector::Connector (ACE::HTBP::Environment *ht_env)
