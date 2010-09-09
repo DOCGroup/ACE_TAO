@@ -1,3 +1,55 @@
+Thu Sep  9 09:29:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Base.h:
+        * ace/CDR_Base.cpp:
+        * ace/DEV.h:
+        * ace/FILE.h:
+        * ace/Global_Macros.h:
+        * ace/INET_Addr.inl:
+        * ace/Malloc_T.h:
+        * ace/Malloc_T.inl:
+        * ace/Malloc_T.cpp:
+        * ace/SOCK_Dgram_Bcast.cpp:
+        * ace/SSL/SSL_SOCK.h:
+        * ace/Shared_Memory_Pool.cpp:
+        * ace/Sock_Connect.cpp:
+        * ace/config-aix-5.x.h:
+        * ace/config-doxygen.h:
+        * ace/config-g++-common.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-icc-common.h:
+        * ace/config-integritySCA.h:
+        * ace/config-linux-common.h:
+        * ace/config-macros.h:
+        * ace/config-mvs.h:
+        * ace/config-openvms.h:
+        * ace/config-suncc-common.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-sunos5.6.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+        * ace/config-win32-borland.h:
+        * ace/config-win32-dmc.h:
+        * ace/config-win32-ghs.h:
+        * ace/config-win32-msvc-10.h:
+        * ace/config-win32-msvc-7.h:
+        * ace/config-win32-msvc-8.h:
+        * ace/config-win32-msvc-9.h:
+        * examples/IOStream/server/iostream_server.h:
+        * examples/IPC_SAP/SOCK_SAP/C-inserver.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
+        * examples/Reactor/Misc/test_event_handler_t.cpp:
+        * tests/Basic_Types_Test.cpp:
+        * tests/Conn_Test.cpp:
+        * tests/Message_Queue_Test.cpp:
+        * tests/SSL/Thread_Pool_Reactor_SSL_Test.h:
+        * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
+          Cleanup, all compilers support templated typedefs
+
+        * ace/config-cray.h:
+        * ace/config-cxx-common.h:
+          Removed these files, obsolete
+
 Thu Sep  9 09:01:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ACE.cpp:

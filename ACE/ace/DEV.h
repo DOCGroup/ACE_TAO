@@ -23,19 +23,6 @@
 
 #include "ace/DEV_Addr.h"
 
-// The following is necessary since many C++ compilers don't support
-// typedef'd types inside of classes used as formal template
-// arguments... ;-(.  Luckily, using the C++ preprocessor I can hide
-// most of this nastiness!
-
-#if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-#define ACE_DEV_CONNECTOR ACE_DEV_Connector
-#define ACE_DEV_STREAM ACE_DEV_IO
-#else /* TEMPLATES are broken (must be a cfront-based compiler...) */
-#define ACE_DEV_CONNECTOR ACE_DEV_Connector, ACE_DEV_Addr
-#define ACE_DEV_STREAM ACE_DEV_IO, ACE_DEV_Addr
-#endif /* ACE_TEMPLATE_TYPEDEFS */
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**

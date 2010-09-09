@@ -55,7 +55,7 @@
 #if defined (ACE_HAS_THREADS)
 
 #include "Thread_Pool_Reactor_SSL_Test.h"
-typedef ACE_Strategy_Acceptor <Request_Handler, ACE_SSL_SOCK_ACCEPTOR>
+typedef ACE_Strategy_Acceptor <Request_Handler, ACE_SSL_SOCK_Acceptor>
    ACCEPTOR;
 
 // Accepting end point.  This is actually "localhost:10010", but some
@@ -128,7 +128,7 @@ parse_arg (int argc, ACE_TCHAR *argv[])
 }
 
 Request_Handler::Request_Handler (ACE_Thread_Manager *thr_mgr)
-  : ACE_Svc_Handler<ACE_SSL_SOCK_STREAM, ACE_MT_SYNCH> (thr_mgr),
+  : ACE_Svc_Handler<ACE_SSL_SOCK_Stream, ACE_MT_SYNCH> (thr_mgr),
     nr_msgs_rcvd_(0)
 {
   // Make sure we use TP_Reactor with this class (that's the whole

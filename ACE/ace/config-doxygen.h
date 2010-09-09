@@ -90,9 +90,6 @@
 /// Generate ACE_Dev_Poll_Reactor documentation
 #define ACE_HAS_DEV_POLL
 
-/// Generate ACE_Event_Handler_T documentation
-#define ACE_HAS_TEMPLATE_TYPEDEFS
-
 /// Generate ACE_Log_Msg_NT_Event_Log documentation
 #define ACE_HAS_LOG_MSG_NT_EVENT_LOG
 

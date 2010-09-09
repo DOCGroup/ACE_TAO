@@ -144,16 +144,6 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (const ACE_TCHAR *pool_name,
 {
 }
 
-#if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE
-ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (const ACE_TCHAR *pool_name,
-                                                  const ACE_TCHAR *lock_name,
-                                                  const void *options)
-  : ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block> (pool_name, lock_name, options)
-{
-}
-#endif /* !ACE_HAS_TEMPLATE_TYPEDEFS */
-
 template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE
 ACE_Malloc_LIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc_LIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
                                                                               const char *name)

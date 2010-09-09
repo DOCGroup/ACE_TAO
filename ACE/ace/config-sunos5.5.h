@@ -58,7 +58,6 @@
     // If -compat=4 is turned on, the old 4.2 settings for iostreams are used,
     // but the newer, explicit instantiation is used (above)
 #   if (__SUNPRO_CC_COMPAT >= 5)
-#     define ACE_HAS_TEMPLATE_TYPEDEFS
 #     define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #     define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #     define ACE_HAS_THR_C_DEST

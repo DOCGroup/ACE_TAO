@@ -30,7 +30,7 @@
 
 #include "ace/Svc_Handler.h"
 
-class Request_Handler : public ACE_Svc_Handler<ACE_SSL_SOCK_STREAM,
+class Request_Handler : public ACE_Svc_Handler<ACE_SSL_SOCK_Stream,
                                                ACE_MT_SYNCH>
 {
   // = TITLE
