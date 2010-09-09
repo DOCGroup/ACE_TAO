@@ -71,10 +71,6 @@ public:
   /// Returns true if the container is empty, otherwise returns false.
   bool is_empty (void) const;
 
-  /// Returns true if the container is empty, otherwise returns false.
-  /// @deprecated Use is_empty() instead.
-  bool empty (void) const;
-
   /// Insert an element at the beginning of the list
   void push_front (T *node);
 

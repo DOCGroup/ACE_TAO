@@ -6,10 +6,6 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/Tokenizer_T.h"
 
-// Can remove this when import_config and export_config are removed from
-// ACE_Configuration. They're deprecated at ACE 5.2.
-#include "ace/Configuration_Import_Export.h"
-
 #if !defined (ACE_LACKS_ACCESS)
 #  include "ace/OS_NS_unistd.h"
 #endif /* ACE_LACKS_ACCESS */
@@ -133,22 +129,6 @@ ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
 
   return 0;
 
-}
-
-// import_config and export_config are here for backward compatibility,
-// and have been deprecated.
-int
-ACE_Configuration::export_config (const ACE_TCHAR* filename)
-{
-  ACE_Registry_ImpExp exporter (*this);
-  return exporter.export_config (filename);
-}
-
-int
-ACE_Configuration::import_config (const ACE_TCHAR* filename)
-{
-  ACE_Registry_ImpExp importer (*this);
-  return importer.import_config (filename);
 }
 
 int

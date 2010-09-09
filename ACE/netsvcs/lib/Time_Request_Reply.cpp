@@ -46,14 +46,6 @@ ACE_Time_Request::ACE_Time_Request (ACE_INT32 t, // Type of request.
   this->transfer_.time_ = this->time_ = time;
 }
 
-// Initialize length_ in order to avoid problems with byte-ordering
-void
-ACE_Time_Request::init (void)
-{
-  ACE_TRACE ("ACE_Time_Request::init");
-//  this->length (sizeof this->transfer_);
-}
-
 // Get the fixed size of message
 ssize_t
 ACE_Time_Request::size (void) const

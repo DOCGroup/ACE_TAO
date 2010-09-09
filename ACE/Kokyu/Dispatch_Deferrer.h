@@ -23,7 +23,7 @@
 #include "ace/Message_Block.h"
 #include "ace/Message_Queue.h"
 #include "ace/Reactor.h"
-#include "ace/Map.h"
+#include "ace/Map_T.h"
 
 namespace Kokyu
 {

@@ -1,3 +1,69 @@
+Thu Sep  9 11:14:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Kokyu/Dispatch_Deferrer.h:
+
+        * ace/Atomic_Op_T.h:
+        * ace/Atomic_Op_T.inl:
+        * ace/Configuration.h:
+        * ace/Configuration.cpp:
+        * ace/Default_Constants.h:
+        * ace/Hash_Multi_Map_Manager_T.h:
+        * ace/Hash_Multi_Map_Manager_T.cpp:
+        * ace/Intrusive_List.h:
+        * ace/Intrusive_List.inl:
+        * ace/Local_Name_Space_T.h:
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+        * ace/MEM_Acceptor.h:
+        * ace/MEM_Acceptor.inl:
+        * ace/MEM_Connector.h:
+        * ace/MEM_Connector.inl:
+        * ace/Message_Queue.h:
+        * ace/OS.h:
+        * ace/OS_Memory.h:
+        * ace/OS_TLI.h:
+        * ace/Obstack_T.h:
+        * ace/Obstack_T.inl:
+        * ace/POSIX_Asynch_IO.h:
+        * ace/Process_Manager.h:
+        * ace/Process_Manager.cpp:
+        * ace/Recursive_Thread_Mutex.h:
+        * ace/Recursive_Thread_Mutex.cpp:
+        * ace/Refcountable_T.h:
+        * ace/Strategies_T.h:
+        * ace/Strategies_T.inl:
+        * ace/Synch.h:
+        * ace/Task.h:
+        * ace/Task_Ex_T.h:
+        * ace/Task_Ex_T.inl:
+        * ace/Task_T.h:
+        * ace/Task_T.inl:
+        * ace/Thread_Control.cpp:
+        * ace/Token_Collection.h:
+        * ace/Token_Invariants.h:
+        * ace/Token_Manager.h:
+        * ace/ace_wchar.h:
+        * ace/config-macosx-leopard.h:
+        * ace/os_include/net/os_if.h:
+        * ace/os_include/sys/os_mman.h:
+        * apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp:
+        * netsvcs/lib/Time_Request_Reply.h:
+        * netsvcs/lib/Time_Request_Reply.cpp:
+        * tests/Conn_Test.cpp:
+        * tests/Dirent_Test.cpp:
+        * tests/Svc_Handler_Test.cpp:
+          Removed several methods, files, and macros that are marked deprecated
+          for several years now.
+
+        * ace/Map.h:
+        * ace/Method_Object.h:
+        * ace/OS_Dirent.h:
+        * ace/OS_String.h:
+        * ace/Pair.h:
+        * ace/Refcountable.h:
+        * ace/Service_Templates.h:
+          Removed these files.
+
 Thu Sep  9 09:37:22 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_doxygen.pl:

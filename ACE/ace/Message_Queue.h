@@ -64,13 +64,9 @@ public:
     // and WAS_INACTIVE are defined to match previous semantics for
     // applications that don't use the PULSED state.
 
-    /// @deprecated Use ACTIVATED instead.
-    WAS_ACTIVE = 1,
     /// Message queue is active and processing normally
     ACTIVATED = 1,
 
-    /// @deprecated Use DEACTIVATED instead.
-    WAS_INACTIVE = 2,
     /// Queue is deactivated; no enqueue or dequeue operations allowed.
     DEACTIVATED = 2,
 

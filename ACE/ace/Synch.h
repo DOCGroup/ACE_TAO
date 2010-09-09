@@ -47,14 +47,6 @@
 #include "ace/Thread_Semaphore.h"
 #include "ace/TSS_Adapter.h"
 
-#if defined (ACE_LEGACY_MODE)
-# include "ace/File_Lock.h"
-# include "ace/Process_Semaphore.h"
-# include "ace/Process_Mutex.h"
-# include "ace/RW_Process_Mutex.h"
-# include "ace/Test_and_Set.h"
-#endif  /* ACE_LEGACY_MODE */
-
 #endif /* DO_NOT_INCLUDE_SYNCH_H */
 
 #include /**/ "ace/post.h"

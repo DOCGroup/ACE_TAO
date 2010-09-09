@@ -2469,32 +2469,6 @@ ACE_Log_Msg::thr_desc (ACE_Thread_Descriptor *td)
     td->acquire_release ();
 }
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS) && defined(ACE_LEGACY_MODE)
-ACE_SEH_EXCEPT_HANDLER
-ACE_Log_Msg::seh_except_selector (void)
-{
-  return ACE_OS_Object_Manager::seh_except_selector ();
-}
-
-ACE_SEH_EXCEPT_HANDLER
-ACE_Log_Msg::seh_except_selector (ACE_SEH_EXCEPT_HANDLER n)
-{
-  return ACE_OS_Object_Manager::seh_except_selector (n);
-}
-
-ACE_SEH_EXCEPT_HANDLER
-ACE_Log_Msg::seh_except_handler (void)
-{
-  return ACE_OS_Object_Manager::seh_except_handler ();
-}
-
-ACE_SEH_EXCEPT_HANDLER
-ACE_Log_Msg::seh_except_handler (ACE_SEH_EXCEPT_HANDLER n)
-{
-  return ACE_OS_Object_Manager::seh_except_handler (n);
-}
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS && ACE_LEGACY_MODE */
-
 ACE_Log_Msg_Backend *
 ACE_Log_Msg::msg_backend (ACE_Log_Msg_Backend *b)
 {

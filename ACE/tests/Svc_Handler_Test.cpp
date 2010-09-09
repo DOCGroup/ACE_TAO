@@ -26,7 +26,7 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Synch_Traits.h"
 
-typedef ACE_Buffered_Svc_Handler <ACE_FILE_STREAM, ACE_NULL_SYNCH> SVC_HANDLER;
+typedef ACE_Buffered_Svc_Handler <ACE_FILE_IO, ACE_NULL_SYNCH> SVC_HANDLER;
 
 static void
 run_test (SVC_HANDLER &svc_handler,
