@@ -28,7 +28,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_TSS)
 
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
 # if defined (ACE_HAS_THR_C_DEST)
-extern "C" void ACE_TSS_C_cleanup (void *); 
+extern "C" void ACE_TSS_C_cleanup (void *);
 # endif /* ACE_HAS_THR_C_DEST */
 #endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) */
 
@@ -48,7 +48,7 @@ ACE_TSS<TYPE>::~ACE_TSS (void)
     ACE_TSS<TYPE>::cleanup (ts_obj);
 # endif /* ACE_HAS_THR_C_DEST */
 
-    ACE_OS::thr_key_detach (this->key_, this);
+    ACE_OS::thr_key_detach (this->key_);
     ACE_OS::thr_keyfree (this->key_);
   }
 #else // defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
@@ -114,11 +114,11 @@ ACE_TSS<TYPE>::ts_init (void)
     {
       if (ACE_Thread::keycreate (&this->key_,
 #if defined (ACE_HAS_THR_C_DEST)
-                                 &ACE_TSS_C_cleanup,
+                                 &ACE_TSS_C_cleanup
 #else
-                                 &ACE_TSS<TYPE>::cleanup,
+                                 &ACE_TSS<TYPE>::cleanup
 #endif /* ACE_HAS_THR_C_DEST */
-                                 (void *) this) != 0)
+                                 ) != 0)
         return -1; // Major problems, this should *never* happen!
       else
         {
