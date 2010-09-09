@@ -146,10 +146,10 @@ install: build
 
 #	We provide scripts replacement for tao_idl and tao_ifr ; they
 #	automatically define ACE_ROOT and TAO_ROOT
-	mv $(DT)/usr/bin/tao_idl $(DT)/usr/bin/tao_idl.real
-	$(INSTALL_755) -D debian/tao_idl $(DT)/usr/bin/tao_idl
-	mv  $(DT)/usr/bin/tao_ifr  $(DT)/usr/bin/tao_ifr.real
-	$(INSTALL_755) -D debian/tao_ifr $(DT)/usr/bin/tao_ifr
+#	mv $(DT)/usr/bin/tao_idl $(DT)/usr/bin/tao_idl.real
+#	$(INSTALL_755) -D debian/tao_idl $(DT)/usr/bin/tao_idl
+#	mv  $(DT)/usr/bin/tao_ifr  $(DT)/usr/bin/tao_ifr.real
+#	$(INSTALL_755) -D debian/tao_ifr $(DT)/usr/bin/tao_ifr
 
 #       Install mpc scripts
 	$(INSTALL_755) -D $(ACE_ROOT)/bin/mpc.pl $(DT)/usr/bin/mpc-ace

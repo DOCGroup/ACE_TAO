@@ -99,10 +99,10 @@ if (!-r "$ACE_ROOT/ace/config.h") {
 }
 
 &generate_doxy_files ('ACE',  " $ACE_ROOT", " $ACE_ROOT/VERSION", @ACE_DOCS) if (!$exclude_ace);
-&generate_doxy_files ('TAO',  " $TAO_ROOT", " $TAO_ROOT/VERSION" @TAO_DOCS) if (!$exclude_tao);
-&generate_doxy_files ('CIAO', " $CIAO_ROOT", " $CIAO_ROOT/VERSION" @CIAO_DOCS) if (!$exclude_ciao);
-&generate_doxy_files ('DANCE'," $DANCE_ROOT", " $CIAO_ROOT/VERSION" @DANCE_DOCS) if (!$exclude_dance);
-&generate_doxy_files ('DDS',   "$DDS_ROOT", " $DDS_ROOT/VERSION" @DDS_DOCS) if $dds;
+&generate_doxy_files ('TAO',  " $TAO_ROOT", " $TAO_ROOT/VERSION", @TAO_DOCS) if (!$exclude_tao);
+&generate_doxy_files ('CIAO', " $CIAO_ROOT", " $CIAO_ROOT/VERSION", @CIAO_DOCS) if (!$exclude_ciao);
+&generate_doxy_files ('DANCE'," $DANCE_ROOT", " $CIAO_ROOT/VERSION", @DANCE_DOCS) if (!$exclude_dance);
+&generate_doxy_files ('DDS',   "$DDS_ROOT", " $DDS_ROOT/VERSION", @DDS_DOCS) if $dds;
 
 unlink "$ACE_ROOT/ace/config.h" if $wrote_configh;
 
