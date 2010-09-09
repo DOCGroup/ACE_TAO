@@ -1,3 +1,11 @@
+Thu Sep  9 09:37:22 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_doxygen.pl:
+          Fixed errors
+
+        * debian/debian.rules:
+          Moving forward with OBS
+
 Thu Sep  9 09:29:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Base.h:
