@@ -1,3 +1,9 @@
+Thu Sep  9 11:49:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Removed invalid colon, thanks to Frank Preischl
+          <Frank dot Preischl at ids dot de> for reporting this
+
 Thu Sep  9 11:14:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Kokyu/Dispatch_Deferrer.h:
