@@ -1,3 +1,70 @@
+Thu Sep  9 09:01:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.cpp:
+        * ace/ACE_export.h:
+        * ace/ETCL/ETCL_y.cpp:
+        * ace/INET_Addr.cpp:
+        * ace/Log_Msg.cpp:
+        * ace/OS.inl:
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.inl:
+        * ace/OS_NS_Thread.cpp:
+        * ace/OS_NS_ctype.cpp:
+        * ace/OS_NS_netdb.inl:
+        * ace/OS_NS_pwd.inl:
+        * ace/OS_NS_stdlib.inl:
+        * ace/OS_NS_time.inl:
+        * ace/OS_NS_time.cpp:
+        * ace/POSIX_CB_Proactor.cpp:
+        * ace/POSIX_Proactor.cpp:
+        * ace/config-cxx-common.h:
+        * ace/config-doxygen.h:
+        * ace/config-integritySCA.h:
+        * ace/config-lynxos.h:
+        * ace/config-macros.h:
+        * ace/config-openvms.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+        * ace/config-vxworks6.4.h:
+        * ace/config-win32-common.h:
+        * ace/os_include/os_pthread.h:
+        * ace/os_include/os_pwd.h:
+        * ace/os_include/os_signal.h:
+        * ace/os_include/os_stdlib.h:
+        * ace/os_include/os_time.h:
+        * ace/os_include/sys/os_types.h:
+          Removed Tru64, Irix, Unixware, and SCO support
+
+        * debian/debian.rules:
+          Improved
+
+        * examples/QOS/Change_Receiver_FlowSpec/Receiver_QoS_Event_Handler.h:
+        * examples/QOS/Change_Receiver_FlowSpec/Sender_QoS_Event_Handler.h:
+        * examples/QOS/Change_Sender_TSpec/Receiver_QoS_Event_Handler.h:
+        * examples/QOS/Change_Sender_TSpec/Sender_QoS_Event_Handler.h:
+        * examples/QOS/Simple/Receiver_QoS_Event_Handler.h:
+        * examples/QOS/Simple/Sender_QoS_Event_Handler.h:
+          Zapped ACE_RCSID
+
+        * ace/config-irix6.5.x-sgic++.h:
+        * ace/config-irix6.x-common.h:
+        * ace/config-irix6.x-g++.h:
+        * ace/config-irix6.x-sgic++.h:
+        * ace/config-sco-5.0.0-nothread.h:
+        * ace/config-sco-5.0.0.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-unixware-7.1.0.udk.h:
+        * include/makeinclude/platform_irix6.x_common.GNU:
+        * include/makeinclude/platform_irix6.x_g++.GNU:
+        * include/makeinclude/platform_irix6.x_sgic++.GNU:
+        * include/makeinclude/platform_tru64_cxx.GNU:
+        * include/makeinclude/platform_tru64_g++.GNU:
+        * include/makeinclude/platform_tru64_post.GNU:
+        * include/makeinclude/platform_tru64_pre.GNU:
+        * include/makeinclude/platform_unixware_g++.GNU:
+          Removed the files because Tru64, Irix, Unixware, and SCO support are
+          removed now
+
 Wed Sep  8 14:54:45 UTC 2010  William Otte  <wotte@zifnab>
 
         * docs/bczar/bczar.html:

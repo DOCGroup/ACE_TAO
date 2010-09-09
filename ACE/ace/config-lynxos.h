@@ -146,11 +146,6 @@
 # endif
 #endif /* ACE_MT_SAFE */
 
-// By default, don't include RCS Id strings in object code.
-#if !defined (ACE_USE_RCSID)
-# define ACE_USE_RCSID 0
-#endif /* ! ACE_USE_RCSID */
-
 #if ACE_LYNXOS_MAJOR == 4 && ACE_LYNXOS_MINOR == 0
 # define ACE_LACKS_GETOPT_PROTOTYPE
 # define ACE_LACKS_INET_ATON_PROTOTYPE

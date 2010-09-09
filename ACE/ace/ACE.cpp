@@ -88,10 +88,6 @@ ACE::out_of_handles (int error)
 #elif defined (__OpenBSD__)
       // OpenBSD appears to return EBADF.
       error == EBADF ||
-#elif defined (__sgi) // irix
-      error == ENOTSUP ||
-#elif defined (DIGITAL_UNIX) // osf1
-      error == ENOTSUP ||
 #endif /* ACE_WIN32 */
       error == ENFILE)
     return 1;
@@ -2176,7 +2172,7 @@ ACE::handle_ready (ACE_HANDLE handle,
 
   fds.fd = handle;
   fds.events = read_ready ? POLLIN : 0;
-  
+
   if( write_ready )
   {
     fds.events |= POLLOUT;

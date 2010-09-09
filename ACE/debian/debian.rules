@@ -73,7 +73,7 @@ pl-stamp: extract-stamp
 	touch $@
 
 patch-stamp: prepatch pl-stamp
-	dpatch apply-all
+#	dpatch apply-all
 	touch $@
 
 patch: patch-stamp
@@ -114,8 +114,8 @@ install: build
 	dh_installdirs
 #       2nd-pass MPC generation is a quick bugfix related with write_install_files@MPC/modules/ProjectCreator.pm
 	echo 2nd-pass MPC generation
-	cd $(ACE_ROOT) &&  bin/mwc.pl $(MWCFLAGS) ACE-DPKG.mwc
-	cd $(TAO_ROOT) &&  $(ACE_ROOT)/bin/mwc.pl $(MWCFLAGS) TAO-DPKG.mwc
+#	cd $(ACE_ROOT) &&  bin/mwc.pl $(MWCFLAGS) ACE-DPKG.mwc
+#	cd $(TAO_ROOT) &&  $(ACE_ROOT)/bin/mwc.pl $(MWCFLAGS) TAO-DPKG.mwc
 #	Install ACE files in $(CURDIR)/$(DT)
 	echo Installing..
 	cd $(ACE_ROOT) && $(MPC_ROOT)/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) ace
@@ -125,10 +125,10 @@ install: build
 	cd $(ACE_ROOT)/protocols && $(MPC_ROOT)/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) ace
 
 #	Install TAO files in $(CURDIR)/$(DT)
-	cd $(TAO_ROOT) && $(MPC_ROOT)/MPC/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) tao
-	cd $(TAO_ROOT) && $(MPC_ROOT)/MPC/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) orbsvcs
-	cd $(TAO_ROOT) && $(MPC_ROOT)/MPC/prj_install.pl -k -s man_files,exe_output,lib_output  -b exe_output=usr/bin -b man_files=usr/share/man -b lib_output=usr/lib  $(CURDIR)/$(DT) TAO_IDL
-	cd $(TAO_ROOT) && $(MPC_ROOT)/MPC/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) utils
+	cd $(TAO_ROOT) && $(MPC_ROOT)/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) tao
+	cd $(TAO_ROOT) && $(MPC_ROOT)/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) orbsvcs
+	cd $(TAO_ROOT) && $(MPC_ROOT)/prj_install.pl -k -s man_files,exe_output,lib_output  -b exe_output=usr/bin -b man_files=usr/share/man -b lib_output=usr/lib  $(CURDIR)/$(DT) TAO_IDL
+	cd $(TAO_ROOT) && $(MPC_ROOT)/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) utils
 
 #	Move libraries and excutable to lib and bin, then remove subdirectories
 	cd $(CURDIR)/$(DT)/usr/bin &&  find . -executable -a -type f -exec mv {} . ';' && find . -type d -delete

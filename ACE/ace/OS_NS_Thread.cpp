@@ -60,9 +60,6 @@ ACE_Thread_ID::to_string (char *thr_string) const
   ACE_OS::sprintf (thr_string,
                    format,
                    static_cast <unsigned> (this->thread_id_));
-#elif defined (DIGITAL_UNIX)
-                  ACE_OS::strcpy (fp, "u");
-                  ACE_OS::sprintf (thr_string, format, this->thread_id_);
 #else
 # if defined (ACE_MVS) || defined (ACE_TANDEM_T1248_PTHREADS)
                   // MVS's pthread_t is a struct... yuck. So use the ACE 5.0
@@ -3562,15 +3559,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
       int result = ::sched_setscheduler (id == ACE_SELF ? 0 : id,
                                          sched_params.policy (),
                                          &param) == -1 ? -1 : 0;
-# if defined (DIGITAL_UNIX)
-      return result == 0
-        ? // Use priocntl (2) to set the process in the RT class,
-        // if using an RT policy.
-        ACE_OS::set_scheduling_params (sched_params)
-        : result;
-# else  /* ! DIGITAL_UNIX */
       return result;
-# endif /* ! DIGITAL_UNIX */
 # endif /* ! ACE_TANDEM_T1248_PTHREADS */
     }
   else if (sched_params.scope () == ACE_SCOPE_THREAD)
@@ -4072,10 +4061,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           struct sched_param sparam;
           ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
 
-#     if defined (ACE_HAS_IRIX62_THREADS)
-          sparam.sched_priority = ACE_MIN (priority,
-                                           (long) PTHREAD_MAX_PRIORITY);
-#     elif defined (PTHREAD_MAX_PRIORITY) && !defined(ACE_HAS_PTHREADS)
+#     if defined (PTHREAD_MAX_PRIORITY) && !defined(ACE_HAS_PTHREADS)
           /* For MIT pthreads... */
           sparam.prio = ACE_MIN (priority, PTHREAD_MAX_PRIORITY);
 #     elif defined(ACE_HAS_PTHREADS) && !defined (ACE_HAS_STHREADS)
@@ -4097,7 +4083,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                            (long) PRIORITY_MAX);
 #     else
           sparam.sched_priority = priority;
-#     endif /* ACE_HAS_IRIX62_THREADS */
+#     endif /*  PTHREAD_MAX_PRIORITY */
 
           {
 #       if defined (sun)  &&  defined (ACE_HAS_ONLY_SCHED_OTHER)

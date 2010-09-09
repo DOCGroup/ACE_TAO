@@ -82,10 +82,6 @@ ACE_POSIX_Proactor::ACE_POSIX_Proactor (void)
 
   os_id_ = ACE_OS_HPUX;   // set family
 
-#elif defined(__sgi)
-
-  os_id_ = ACE_OS_IRIX;   // set family
-
 #elif defined(__OpenBSD)
 
   os_id_ = ACE_OS_OPENBSD; // set family
@@ -1428,7 +1424,7 @@ ACE_POSIX_AIOCB_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
   const ACE_TCHAR *ptype = 0;
 
   // Start IO
-  // The following aio_ptr anathema is required to work around a bug in 
+  // The following aio_ptr anathema is required to work around a bug in
   // the optimizer for GCC 4.1.2
   aiocb * aio_ptr (result);
   switch (result->aio_lio_opcode )

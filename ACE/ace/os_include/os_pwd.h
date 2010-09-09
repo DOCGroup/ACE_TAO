@@ -45,11 +45,6 @@ extern "C"
 #  endif /* AIX and VAC++ 4 */
 #endif /* !ACE_WIN32 */
 
-#if defined (DIGITAL_UNIX)
-  extern int _Pgetpwnam_r (const char *, struct passwd *,
-                           char *, size_t, struct passwd **);
-#endif /* DIGITAL_UNIX */
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

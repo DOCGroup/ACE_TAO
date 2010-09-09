@@ -2500,27 +2500,17 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
      return *sig;
    #endif /* _POSIX_C_SOURCE - 0 >= 199506L || _POSIX_PTHREAD_SEMANTICS */
 # elif defined (ACE_HAS_PTHREADS)
-  // Digital UNIX has own hoops to jump through.
-#   if defined (DIGITAL_UNIX) && defined (__DECCXX_VER)
-      // DEC cxx (but not g++) needs this direct call to its internal
-      // sigwait ().  This allows us to #undef sigwait, so that we can
-      // have ACE_OS::sigwait.  cxx gets confused by ACE_OS::sigwait
-      // if sigwait is _not_ #undef'ed.
-      errno = ::_Psigwait (sset, sig);
+#   if defined (CYGWIN32)
+      // Cygwin has sigwait definition, but it is not implemented
+      ACE_UNUSED_ARG (sset);
+      ACE_NOTSUP_RETURN (-1);
+#   elif defined (ACE_TANDEM_T1248_PTHREADS)
+      errno = ::spt_sigwait (sset, sig);
       return errno == 0  ?  *sig  :  -1;
-#   else /* !(DIGITAL_UNIX && __DECCXX_VER) */
-#     if defined (CYGWIN32)
-        // Cygwin has sigwait definition, but it is not implemented
-        ACE_UNUSED_ARG (sset);
-        ACE_NOTSUP_RETURN (-1);
-#     elif defined (ACE_TANDEM_T1248_PTHREADS)
-        errno = ::spt_sigwait (sset, sig);
-        return errno == 0  ?  *sig  :  -1;
-#     else   /* this is draft 7 or std */
-        errno = ::sigwait (sset, sig);
-        return errno == 0  ?  *sig  :  -1;
-#     endif /* CYGWIN32 */
-#   endif /* !(DIGITAL_UNIX && __DECCXX_VER) */
+#   else   /* this is draft 7 or std */
+      errno = ::sigwait (sset, sig);
+      return errno == 0  ?  *sig  :  -1;
+#   endif /* CYGWIN32 */
 # elif defined (ACE_HAS_WTHREADS)
     ACE_UNUSED_ARG (sset);
     ACE_NOTSUP_RETURN (-1);

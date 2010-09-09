@@ -99,9 +99,6 @@
 /// Generate icmp documentation
 #define ACE_HAS_ICMP_SUPPORT 1
 
-/// Don't expand ACE_RCSID macro
-#define ACE_USE_RCSID 0
-
 /// Parse some ACE_SSL classes that depend on recent versions of
 /// OpenSSL.
 #define OPENSSL_VERSION_NUMBER 0x00905820L
