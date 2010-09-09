@@ -6,11 +6,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
-
-ACE_RCSID (IFRService,
-           AliasDef_i,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_AliasDef_i::TAO_AliasDef_i (TAO_Repository_i *repo)

@@ -15,10 +15,6 @@
 #include "orbsvcs/Event/EC_Kokyu_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event,
-           EC_Kokyu_Factory,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Kokyu_Factory::~TAO_EC_Kokyu_Factory (void)

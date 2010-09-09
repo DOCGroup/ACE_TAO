@@ -26,10 +26,6 @@
 #include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (CosEvent,
-           CEC_ProxyPushSupplier,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;

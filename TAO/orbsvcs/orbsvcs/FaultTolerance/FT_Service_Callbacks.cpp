@@ -15,11 +15,6 @@
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 
-ACE_RCSID (FaultTolerance,
-           FT_Service_Callbacks,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_FT_Service_Callbacks::TAO_FT_Service_Callbacks (TAO_ORB_Core *orb_core)

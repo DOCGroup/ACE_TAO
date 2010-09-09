@@ -8,11 +8,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
-
-ACE_RCSID (IFRService,
-           StructDef_i,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_StructDef_i::TAO_StructDef_i (TAO_Repository_i *repo)

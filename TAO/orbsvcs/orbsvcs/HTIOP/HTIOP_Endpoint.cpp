@@ -9,11 +9,6 @@
 #include "tao/IOPC.h"
 #include "tao/debug.h"
 
-
-ACE_RCSID (HTIOP,
-           TAO_HTIOP_Endpoint,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/HTIOP/HTIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */

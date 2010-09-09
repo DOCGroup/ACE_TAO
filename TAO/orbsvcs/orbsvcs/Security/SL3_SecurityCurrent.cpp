@@ -2,12 +2,6 @@
 
 #include "orbsvcs/Security/SL3_SecurityCurrent.h"
 
-
-ACE_RCSID (Security,
-           SL3_SecurityCurrent,
-           "$Id$")
-
-
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/Security/SL3_SecurityCurrent.inl"
 #endif /* __ACE_INLINE__ */

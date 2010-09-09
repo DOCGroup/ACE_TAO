@@ -10,18 +10,12 @@
 
 #include "ace/SString.h"
 
-
-ACE_RCSID (IFRService,
-           InterfaceAttrExtension_i,
-           "$Id$")
-
 // =====================================================================
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_InterfaceAttrExtension_i::TAO_InterfaceAttrExtension_i (
-    TAO_Repository_i *repo
-  )
+    TAO_Repository_i *repo)
   : TAO_IRObject_i (repo)
 {
 }

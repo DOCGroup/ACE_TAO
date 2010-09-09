@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/Log/LogMgr_i.h"
 #include "orbsvcs/Log/LogActivator.h"
 #include "ace/Dynamic_Service.h"
@@ -5,11 +7,6 @@
 #include "orbsvcs/Log/Hash_Persistence_Strategy.h"
 #include "orbsvcs/Log/LogStore.h"
 #include "ace/OS_NS_stdio.h"
-
-ACE_RCSID (Log,
-           LogMgr_i,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

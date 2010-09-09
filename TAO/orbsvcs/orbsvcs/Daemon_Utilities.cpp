@@ -4,10 +4,6 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/ACE.h"
 
-ACE_RCSID(orbsvcs,
-          Daemon_Utilities,
-          "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void TAO_Daemon_Utility::check_for_daemon (int &argc, ACE_TCHAR* argv[])

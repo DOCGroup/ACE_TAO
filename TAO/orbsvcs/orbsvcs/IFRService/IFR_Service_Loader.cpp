@@ -14,10 +14,6 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Argv_Type_Converter.h"
 
-ACE_RCSID (IFR_Service,
-           IFR_Service_Loader,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IFR_Service_Loader::TAO_IFR_Service_Loader (void)

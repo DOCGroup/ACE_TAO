@@ -3,10 +3,6 @@
 #include "orbsvcs/Event/EC_Gateway_Sched.h"
 #include "orbsvcs/Time_Utilities.h"
 
-ACE_RCSID (Event,
-           EC_Gateway_sched,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Gateway_Sched::TAO_EC_Gateway_Sched (void)

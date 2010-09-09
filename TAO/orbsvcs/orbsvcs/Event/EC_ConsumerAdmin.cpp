@@ -8,10 +8,6 @@
 #include "orbsvcs/ESF/ESF_Peer_Admin.h"
 #include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
 
-ACE_RCSID (Event,
-           EC_ConsumerAdmin,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_ConsumerAdmin::TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel_Base *ec)

@@ -8,13 +8,6 @@
 #include "orbsvcs/Event/ECG_UDP_Receiver.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event,
-           ECG_UDP_Receiver,
-           "$Id$")
-
-
-// ****************************************************************
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_UDP_Receiver::~TAO_ECG_UDP_Receiver (void)

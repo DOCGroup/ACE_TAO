@@ -9,10 +9,6 @@
 #include "orbsvcs/Event/EC_Filter.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event,
-           EC_Filter,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Filter::~TAO_EC_Filter (void)

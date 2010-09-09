@@ -9,11 +9,6 @@
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/PortableServer/Creation_Time.h"
 
-ACE_RCSID (Security,
-           SL2_SecurityManager,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::Security::SecurityManager::SecurityManager (/* unknown */)

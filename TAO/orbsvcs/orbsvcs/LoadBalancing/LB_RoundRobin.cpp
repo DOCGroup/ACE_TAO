@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "orbsvcs/LoadBalancing/LB_RoundRobin.h"
 
@@ -6,10 +7,6 @@
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
-
-ACE_RCSID (LoadBalancing,
-           LB_RoundRobin,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -104,12 +101,12 @@ TAO_LB_RoundRobin::next_member (
       // based on the previous location list. It may be invalid
       // if the list of locations are changed since then.
       // We need verify if the suggested location is still exist.
-      // if it does, use it. Otherwise we need look the previous 
+      // if it does, use it. Otherwise we need look the previous
       // location backwards one by one until we find an existing
-      // one in current list then use the next location. If not 
+      // one in current list then use the next location. If not
       // find a match, then start with 0 index.
       bool found = false;
-      
+
       for (CORBA::ULong k = i; k > 0 && !found; --k)
       {
         for (CORBA::ULong j = 0; j < len && !found; ++j)
@@ -125,15 +122,15 @@ TAO_LB_RoundRobin::next_member (
             {
               i = j + 1;
             }
-            
+
             found = true;
           }
         }
       }
-     
+
       if (!found)
         i = 0;
-      
+
       if (len <= i)
         i = 0;  // Reset, i.e. wrap around
 

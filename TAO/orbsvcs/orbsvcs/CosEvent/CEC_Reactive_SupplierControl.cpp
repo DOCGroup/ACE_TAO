@@ -31,10 +31,6 @@
 #include "orbsvcs/CosEvent/CEC_Reactive_SupplierControl.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (CosEvent,
-           CEC_Reactive_SupplierControl,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_CEC_Reactive_SupplierControl constructor for the Un-typed EC

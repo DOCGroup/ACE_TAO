@@ -4,10 +4,6 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (Naming,
-           Naming_Client,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CosNaming::NamingContext_ptr

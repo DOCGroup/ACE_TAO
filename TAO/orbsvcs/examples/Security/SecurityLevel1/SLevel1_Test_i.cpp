@@ -6,10 +6,6 @@
 #include "test_i.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (SecurityLevel1,
-           SLevel1_Test_i,
-           "$Id$")
-
 static int authorize_1 = 1;
 static int authorize_2 = 1;
 

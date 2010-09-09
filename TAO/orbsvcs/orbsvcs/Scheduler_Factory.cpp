@@ -13,10 +13,6 @@
 #include "orbsvcs/Scheduler_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(orbsvcs,
-          Scheduler_Factory,
-          "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Initialize static class members.

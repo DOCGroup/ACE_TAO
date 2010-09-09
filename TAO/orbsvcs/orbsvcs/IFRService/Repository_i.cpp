@@ -13,11 +13,6 @@
 #include "ace/Lock_Adapter_T.h"
 #include "ace/SString.h"
 
-ACE_RCSID (IFR_Service,
-           Repository_i,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,

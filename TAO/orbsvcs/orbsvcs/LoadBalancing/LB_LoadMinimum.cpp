@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/LoadBalancing/LB_LoadMinimum.h"
 #include "ace/OS_NS_sys_time.h"
 #include "orbsvcs/LoadBalancing/LB_LoadMap.h"
@@ -10,12 +12,6 @@
 
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
-
-
-ACE_RCSID (LoadBalancing,
-           LB_LoadMinimum,
-           "$Id$")
-
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/LoadBalancing/LB_LoadMinimum.inl"

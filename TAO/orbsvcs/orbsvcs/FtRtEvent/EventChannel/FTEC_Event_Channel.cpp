@@ -15,10 +15,6 @@
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
 
-ACE_RCSID (EventChannel,
-           TAO_FTEC_Event_Channel,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_FTEC_Event_Channel::TAO_FTEC_Event_Channel(CORBA::ORB_var orb,

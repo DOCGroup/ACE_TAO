@@ -10,10 +10,6 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/os_include/os_netdb.h"
 
-ACE_RCSID (AV,
-           SCTP_SEQ,
-           "SCTP_SEQ.cpp,v 1.3 2003/11/05 21:06:53 yamuna Exp")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //------------------------------------------------------------

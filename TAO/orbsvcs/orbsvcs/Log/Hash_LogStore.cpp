@@ -1,11 +1,9 @@
+// $Id$
+
 #include "orbsvcs/Log/Hash_LogStore.h"
 #include "orbsvcs/Log/Hash_LogRecordStore.h"
 #include "orbsvcs/Log/LogMgr_i.h"
 #include "ace/Auto_Ptr.h"
-
-ACE_RCSID (Log,
-           Hash_LogStore,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

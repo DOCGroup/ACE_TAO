@@ -3,11 +3,6 @@
 #include "orbsvcs/FtRtEvent/EventChannel/Identification_Service.h"
 #include "../Utils/UUID.h"
 
-ACE_RCSID (EventChannel,
-           Identification_Service,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRTEC {

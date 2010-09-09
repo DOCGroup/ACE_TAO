@@ -19,10 +19,6 @@
 #include "orbsvcs/HTIOP/HTIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(HTIOP,
-          TAO_HTIOP_Acceptor,
-          "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Acceptor::Acceptor (ACE::HTBP::Environment *ht_env,

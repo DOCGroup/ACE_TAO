@@ -1,11 +1,9 @@
+// $Id$
+
 #include "Notify_Consumer.h"
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "ace/OS_main.h"
-
-ACE_RCSID (Notify,
-           Notify_Consumer,
-           "$Id$")
 
 #define NAMING_SERVICE_NAME "NameService"
 #define NOTIFY_TLS_LOG_FACTORY_NAME "NotifyLogFactory"

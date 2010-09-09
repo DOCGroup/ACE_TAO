@@ -10,17 +10,9 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
-
-ACE_RCSID (IFRService,
-           ConstantDef_i,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ConstantDef_i::TAO_ConstantDef_i (
-    TAO_Repository_i *repo
-  )
+TAO_ConstantDef_i::TAO_ConstantDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
     TAO_Contained_i (repo)
 {

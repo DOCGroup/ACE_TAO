@@ -1,13 +1,11 @@
+// $Id$
+
 #include "orbsvcs/LoadBalancing/LB_IORInterceptor.h"
 #include "orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h"
 #include "orbsvcs/LoadBalancing/LB_LoadAlert.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
-
-ACE_RCSID (LoadBalancing,
-           LB_IORInterceptor,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

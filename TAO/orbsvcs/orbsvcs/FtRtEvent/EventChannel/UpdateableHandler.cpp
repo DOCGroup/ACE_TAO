@@ -5,11 +5,6 @@
 #include "orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.h"
 #include "../Utils/resolve_init.h"
 
-ACE_RCSID (EventChannel,
-           UpdateableHandler,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 UpdateableHandler::UpdateableHandler(AMI_Primary_Replication_Strategy* strategy)

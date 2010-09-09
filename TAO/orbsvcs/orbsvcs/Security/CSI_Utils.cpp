@@ -2,15 +2,8 @@
 
 #include "orbsvcs/Security/CSI_Utils.h"
 #include "orbsvcs/CSIC.h"
-
 #include "tao/CDR.h"
-
 #include "ace/OS_NS_string.h"
-
-
-ACE_RCSID (Security,
-           CSI_Utils,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

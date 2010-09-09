@@ -9,12 +9,6 @@
 
 #include "ace/OS_NS_string.h"
 
-
-ACE_RCSID (Trader,
-           Constraint_Visitors,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Constraint_Evaluator::Operand_Queue::Operand_Queue (void)
