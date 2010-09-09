@@ -1,3 +1,9 @@
+Thu Sep  9 11:54:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/soreduce/Signature.cpp:
+        * tests/TkReactor_Test.cpp:
+          Fixed fuzz
+
 Thu Sep  9 11:49:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
