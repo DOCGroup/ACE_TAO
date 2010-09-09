@@ -4,7 +4,6 @@
 
 #include "inner_i.h"
 #include "ace/SString.h"
-#include "ace/OS_String.h"
 #include "ace/Get_Opt.h"
 #include <iostream>
 #include <fstream>

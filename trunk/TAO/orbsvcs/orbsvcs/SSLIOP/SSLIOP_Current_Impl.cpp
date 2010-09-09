@@ -2,8 +2,6 @@
 
 #include "orbsvcs/SSLIOP/SSLIOP_Current_Impl.h"
 
-#include "ace/OS_String.h"
-
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/SSLIOP/SSLIOP_Current_Impl.inl"
 #endif /* __ACE_INLINE__ */
