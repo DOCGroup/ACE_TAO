@@ -1631,11 +1631,8 @@ namespace ACE_OS {
                         size_t cpu_set_size,
                         const cpu_set_t * cpu_mask);
 
-  /**
-   * @note the "inst" arg is deprecated.  It will be ignored.
-   */
   extern ACE_Export
-  int thr_key_detach (ACE_thread_key_t key, void * inst);
+  int thr_key_detach (ACE_thread_key_t key);
 
   extern ACE_Export
   int thr_key_used (ACE_thread_key_t key);
@@ -1644,17 +1641,12 @@ namespace ACE_OS {
 #   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
   /// @internal Applications should call thr_keycreate
   extern ACE_Export
-  int thr_keycreate_native (ACE_OS_thread_key_t *key,
-                     ACE_THR_C_DEST);
+  int thr_keycreate_native (ACE_OS_thread_key_t *key, ACE_THR_C_DEST);
 #   endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
-  /**
-   * @note the "inst" arge is deprecated.  It will be ignored.
-   */
   extern ACE_Export
-  int thr_keycreate (ACE_thread_key_t *key,
-                     ACE_THR_C_DEST,
-                     void *inst = 0);
+  int thr_keycreate (ACE_thread_key_t *key, ACE_THR_C_DEST);
+
 # else
 #   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
   /// @internal Applications should call thr_keycreate instead
@@ -1662,13 +1654,9 @@ namespace ACE_OS {
   int thr_keycreate_native (ACE_OS_thread_key_t *key,
                      ACE_THR_DEST);
 #   endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
-  /**
-   * @note the "inst" arge is deprecated.  It will be ignored.
-   */
+
   extern ACE_Export
-  int thr_keycreate (ACE_thread_key_t *key,
-                     ACE_THR_DEST,
-                     void *inst = 0);
+  int thr_keycreate (ACE_thread_key_t *key, ACE_THR_DEST);
 
 # endif /* ACE_HAS_THR_C_DEST */
 

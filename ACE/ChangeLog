@@ -1,3 +1,24 @@
+Thu Sep  9 12:53:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Asynch_Acceptor.h:
+        * ace/Asynch_Acceptor.cpp:
+        * ace/Hash_Multi_Map_Manager_T.h:
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.cpp:
+        * ace/Service_Config.cpp:
+        * ace/TSS_T.cpp:
+        * ace/Thread.h:
+        * ace/Thread.inl:
+        * ace/config-macosx-snowleopard.h:
+        * ace/config-macosx-tiger.h:
+        * ace/config-macosx.h:
+        * tests/Hash_Multi_Map_Manager_Test.cpp:
+          Removed deprecated methods and arguments
+
+        * docs/FAQ:
+        * FAQ:
+          Moved to docs
+
 Thu Sep  9 11:54:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/soreduce/Signature.cpp:

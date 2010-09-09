@@ -226,11 +226,11 @@ public:
    */
   static int keycreate (ACE_thread_key_t *keyp,
 #if defined (ACE_HAS_THR_C_DEST)
-                        ACE_THR_C_DEST destructor,
+                        ACE_THR_C_DEST destructor
 #else
-                        ACE_THR_DEST destructor,
+                        ACE_THR_DEST destructor
 #endif /* ACE_HAS_THR_C_DEST */
-                        void * = 0);
+                        );
 
   /// Free up the key so that other threads can reuse it.
   static int keyfree (ACE_thread_key_t key);

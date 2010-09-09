@@ -445,13 +445,6 @@ ACE_Asynch_Acceptor<HANDLER>::make_handler (void)
   return handler;
 }
 
-/* static */
-template <class HANDLER> size_t
-ACE_Asynch_Acceptor<HANDLER>::address_size (void)
-{
-  return sizeof (sockaddr) + sizeof (sockaddr_in);
-}
-
 template <class HANDLER> bool
 ACE_Asynch_Acceptor<HANDLER>::pass_addresses (void) const
 {

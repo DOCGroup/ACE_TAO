@@ -60,7 +60,6 @@
 
 #define ACE_NEEDS_SCHED_H
 
-// Use of <malloc.h> is deprecated.
 #define ACE_LACKS_MALLOC_H
 
 #define ACE_HAS_ALT_CUSERID
