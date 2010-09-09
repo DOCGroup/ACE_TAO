@@ -21,11 +21,6 @@
 #include "tao/Resume_Handle.h"
 #include "tao/Protocols_Hooks.h"
 
-ACE_RCSID (HTIOP,
-           TAO_HTIOP_Connection_Handler,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Connection_Handler::Connection_Handler (ACE_Thread_Manager *t)

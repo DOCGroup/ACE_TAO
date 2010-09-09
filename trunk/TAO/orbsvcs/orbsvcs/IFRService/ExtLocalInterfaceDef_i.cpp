@@ -3,15 +3,9 @@
 #include "orbsvcs/IFRService/ExtLocalInterfaceDef_i.h"
 #include "orbsvcs/IFRService/Repository_i.h"
 
-ACE_RCSID (IFRService,
-           ExtLocalInterfaceDef_i,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ExtLocalInterfaceDef_i::TAO_ExtLocalInterfaceDef_i (
-    TAO_Repository_i *repo
-  )
+TAO_ExtLocalInterfaceDef_i::TAO_ExtLocalInterfaceDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
     TAO_Container_i (repo),
     TAO_Contained_i (repo),

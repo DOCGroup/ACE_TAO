@@ -4,10 +4,6 @@
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "orbsvcs/Event/EC_ProxySupplier.h"
 
-ACE_RCSID (EventChannel,
-           ProxyConsumerStateWorker,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ProxyConsumerStateWorker::ProxyConsumerStateWorker (

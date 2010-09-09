@@ -5,10 +5,6 @@
 #include "orbsvcs/FtRtecEventCommS.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (Utils,
-           FTEC_Gateway,
-           "$Id$")
-
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.inl"
 #endif /* __ACE_INLINE__ */

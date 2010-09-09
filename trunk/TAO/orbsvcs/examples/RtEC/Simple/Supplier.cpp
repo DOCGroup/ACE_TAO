@@ -6,10 +6,6 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_Examples,
-           Supplier,
-           "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

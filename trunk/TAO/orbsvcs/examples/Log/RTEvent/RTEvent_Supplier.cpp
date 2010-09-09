@@ -1,12 +1,10 @@
+// $Id$
+
 #include "RTEvent_Supplier.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_RCSID (RTEvent,
-           RTEvent_Supplier,
-           "$Id$")
 
 #define NAMING_SERVICE_NAME "NameService"
 #define EVENT_TLS_LOG_FACTORY_NAME "RTEventLogFactory"

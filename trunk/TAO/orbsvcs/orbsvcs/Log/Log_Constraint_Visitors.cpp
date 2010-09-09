@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/Log/Log_Constraint_Visitors.h"
 
 #include "ace/ETCL/ETCL_Constraint.h"
@@ -13,10 +15,6 @@
 
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
-
-ACE_RCSID (Log,
-           Log_Constraint_Visitors,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -44,7 +42,7 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (const DsLogAdmin::LogRec
 
   // Bind an entry for each item in the record's attribute list.
   CORBA::Long len = rec.attr_list.length ();
-  
+
   for (CORBA::Long i = 0; i < len; ++i)
     {
       this->property_lookup_.bind (ACE_CString (rec.attr_list[i].name,
@@ -571,12 +569,12 @@ TAO_Log_Constraint_Visitor::visit_component (
     {
       TAO_ETCL_Literal_Constraint id;
       this->queue_.dequeue_head (id);
-        
+
       CORBA::Any *any_ptr = 0;
       ACE_NEW_RETURN (any_ptr,
                       CORBA::Any,
                       -1);
-                      
+
       any_ptr->replace (id);
       any_ptr->impl ()->_add_ref ();
       this->current_member_ = any_ptr;
@@ -962,7 +960,7 @@ TAO_Log_Constraint_Visitor::visit_in (
               ACE_NEW_RETURN (any_ptr,
                               CORBA::Any,
                               -1);
-                              
+
               CORBA::Any_var component = any_ptr;
               component->replace (bag);
               component->impl ()->_add_ref ();
@@ -1263,7 +1261,7 @@ TAO_Log_Constraint_Visitor::simple_type_match (int expr_type,
     default:
       return false;
   }
-  
+
   return true;
 }
 

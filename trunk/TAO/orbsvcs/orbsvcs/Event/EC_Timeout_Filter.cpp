@@ -11,10 +11,6 @@
 #include "orbsvcs/Event/EC_Timeout_Filter.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event,
-           EC_Timeout_Filter,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Timeout_Filter::TAO_EC_Timeout_Filter (

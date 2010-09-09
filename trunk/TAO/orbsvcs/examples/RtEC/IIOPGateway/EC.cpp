@@ -9,10 +9,6 @@
 #include "orbsvcs/Event/EC_Gateway.h"
 #include "ace/Arg_Shifter.h"
 
-ACE_RCSID (EC_Examples,
-           Supplier,
-           "$Id$")
-
 static const ACE_TCHAR *ecname = 0;
 
 int

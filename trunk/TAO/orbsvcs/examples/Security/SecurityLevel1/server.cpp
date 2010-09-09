@@ -2,10 +2,6 @@
 
 #include "SLevel1_Test_i.h"
 
-ACE_RCSID (SecurityLevel1,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = 0;
 
 int

@@ -1,11 +1,9 @@
+// $Id$
+
 #include "orbsvcs/Log/Hash_Iterator_i.h"
 #include "orbsvcs/Log/Log_Constraint_Interpreter.h"
 #include "orbsvcs/Log/Log_Constraint_Visitors.h"
 #include "orbsvcs/DsLogAdminC.h"
-
-ACE_RCSID (Log,
-           Hash_Iterator_i,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

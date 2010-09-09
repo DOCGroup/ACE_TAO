@@ -6,10 +6,6 @@
 
 #include "GatewayC.h"
 
-ACE_RCSID (ORT,
-           Server_IORInterceptor_ORBInitializer,
-           "$Id: ")
-
 void
 Server_IORInterceptor_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr /* info */

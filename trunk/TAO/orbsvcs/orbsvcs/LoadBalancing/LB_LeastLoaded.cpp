@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/LoadBalancing/LB_LeastLoaded.h"
 #include "orbsvcs/LoadBalancing/LB_LoadMap.h"
 #include "orbsvcs/LoadBalancing/LB_Random.h"
@@ -9,12 +11,6 @@
 
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
-
-
-ACE_RCSID (LoadBalancing,
-           LB_LeastLoaded,
-           "$Id$")
-
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/LoadBalancing/LB_LeastLoaded.inl"

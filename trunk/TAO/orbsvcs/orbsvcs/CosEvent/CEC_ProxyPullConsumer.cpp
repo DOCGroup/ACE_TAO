@@ -12,10 +12,6 @@
 #include "orbsvcs/CosEvent/CEC_ProxyPullConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (CosEvent,
-           CEC_ProxyPullConsumer,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;

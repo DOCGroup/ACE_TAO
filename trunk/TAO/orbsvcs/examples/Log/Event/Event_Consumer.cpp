@@ -2,10 +2,6 @@
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "ace/OS_main.h"
 
-ACE_RCSID (Event,
-           Event_Consumer,
-           "$Id$")
-
 #define NAMING_SERVICE_NAME "NameService"
 #define EVENT_TLS_LOG_FACTORY_NAME "EventLogFactory"
 

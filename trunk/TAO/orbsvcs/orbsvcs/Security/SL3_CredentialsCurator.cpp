@@ -3,11 +3,6 @@
 #include "orbsvcs/Security/SL3_CredentialsCurator.h"
 #include "orbsvcs/Security/SL3_CredentialsAcquirerFactory.h"
 
-
-ACE_RCSID (Security,
-           SL3_CredentialsCurator,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

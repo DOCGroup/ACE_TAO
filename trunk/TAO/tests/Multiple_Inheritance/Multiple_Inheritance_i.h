@@ -2,8 +2,6 @@
 
 #include "Multiple_InheritanceS.h"
 
-ACE_RCSID(Multiple_Inheritance, Multiple_Inheritance_i, "$Id$")
-
 class Multiple_Inheritance_i : public POA_D
 {
 public:

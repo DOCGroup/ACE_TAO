@@ -12,10 +12,6 @@
 #include "orbsvcs/Sched/Strategy_Scheduler.h"
 #include "ace/Sched_Params.h"
 
-ACE_RCSID (Sched,
-           Strategy_Scheduler,
-           "$Id$")
-
 //////////////////////////////////////////////
 // Helper function type definition for sort //
 //////////////////////////////////////////////

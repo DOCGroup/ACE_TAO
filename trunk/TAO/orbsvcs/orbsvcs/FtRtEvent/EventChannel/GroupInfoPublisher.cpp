@@ -7,13 +7,6 @@
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.h"
 #include "../Utils/Log.h"
 
-//#include "../Utils/log_obj_endpoints.h"
-
-ACE_RCSID (EventChannel,
-           GroupInfoPublisher,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 GroupInfoPublisherBase::GroupInfoPublisherBase()

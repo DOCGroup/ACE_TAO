@@ -5,10 +5,6 @@
 #include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 
-ACE_RCSID (EventChannel,
-           TAO_FTEC_ProxyPushSupplier,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const TAO_FTEC_ProxyPushSupplier::RollbackOperation

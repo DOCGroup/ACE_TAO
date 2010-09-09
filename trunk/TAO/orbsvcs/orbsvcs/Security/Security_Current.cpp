@@ -1,11 +1,8 @@
 // -*- C++ -*-
+// $Id$
 
 #include "orbsvcs/Security/Security_Current.h"
 #include "tao/debug.h"
-
-ACE_RCSID (Security,
-           Security_Current,
-           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/Security/Security_Current.inl"

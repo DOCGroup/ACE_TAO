@@ -13,11 +13,6 @@
 #include "../Utils/Safe_InputCDR.h"
 #include "orbsvcs/FtRtecEventCommC.h"
 
-
-ACE_RCSID (EventChannel,
-           FTEC_Event_Channel_Impl,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void obtain_push_supplier(TAO_FTEC_Event_Channel_Impl* ec,

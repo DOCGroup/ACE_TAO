@@ -14,10 +14,6 @@
 #include "orbsvcs/Event/EC_Kokyu_Filter_Builder.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event,
-           EC_Kokyu_Filter_Builder,
-           "$Id$")
-
 const char* designator (long dsgn)
 {
   switch(dsgn)

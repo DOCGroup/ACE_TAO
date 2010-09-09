@@ -6,10 +6,6 @@
 #include "orbsvcs/FTRTC.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
 
-ACE_RCSID (EventChannel,
-           Set_Update_Intercetpor,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Set_Update_Interceptor::TAO_Set_Update_Interceptor ()

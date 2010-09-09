@@ -9,10 +9,6 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_sys_socket.h"
 
-ACE_RCSID (EventChannel,
-           SCTP_Fault_Detector,
-           "$Id$")
-
 #ifndef SCTP_HEARTBEAT_ITVL
 #define SCTP_HEARTBEAT_ITVL 19
 #endif

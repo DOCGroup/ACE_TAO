@@ -18,10 +18,6 @@
 #include "orbsvcs/Event/EC_Gateway_IIOP_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event,
-           EC_Gateway_IIOP_Factory,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
