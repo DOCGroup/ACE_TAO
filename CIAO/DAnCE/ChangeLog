@@ -1,3 +1,15 @@
+Thu Sep  9 14:25:19 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/IDL3_to_XMI/Bug_3607_Regression/run_test.pl:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Array/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Included_File/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Module_Reopen/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Native/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Sequence/run_test.pl:
+
+          Corrected path to binary.
+
 Thu Sep  9 11:15:16 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * RepositoryManager/RepositoryManager_Impl.cpp:
