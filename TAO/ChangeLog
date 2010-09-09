@@ -1,3 +1,22 @@
+Thu Sep  9 11:20:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DevGuideExamples/AMH_AMI/inner_server.cpp:
+        * DevGuideExamples/AMH_AMI/middle_server.cpp:
+        * examples/Kokyu_dsrt_schedulers/Task_Stats.cpp:
+        * examples/RTScheduling/Task_Stats.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Service_Container.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Service_Container.cpp:
+        * orbsvcs/orbsvcs/Notify/Name_Value_Pair.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/receiver.cpp:
+        * tao/DynamicInterface/Request.inl:
+        * tao/ORB_Constants.h:
+        * tao/Utils/Synch_Refcountable.h:
+        * tao/Utils/Synch_Refcountable.inl:
+        * tao/Utils/Synch_Refcountable.cpp:
+        * tests/Portable_Interceptors/Benchmark/Interceptor_Type.cpp:
+          Cleanup
+
 Thu Sep  9 09:28:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.h:

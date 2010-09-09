@@ -62,15 +62,7 @@ CORBA::Request::contexts (void)
   return this->contexts_;
 }
 
-//// *** DEPRECATED ***  Return the <Environment> for this request.
-// ACE_INLINE CORBA::Environment *
-// CORBA::Request::env (void)
-// {
-//   return &this->env_;
-// }
-
 // The argument manipulation helper functions
-
 ACE_INLINE CORBA::Any &
 CORBA::Request::add_in_arg (void)
 {

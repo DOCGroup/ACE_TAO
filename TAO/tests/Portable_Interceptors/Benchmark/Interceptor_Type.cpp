@@ -2,7 +2,6 @@
 // $Id$
 
 #include "Interceptor_Type.h"
-#include "ace/OS_String.h"
 
 void get_interceptor_type (int argc, ACE_TCHAR *argv[],
                            int &interceptor_type)
