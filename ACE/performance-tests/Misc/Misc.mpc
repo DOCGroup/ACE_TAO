@@ -59,6 +59,7 @@ project(*preempt) : aceexe {
 }
 
 project(*test_guard) : aceexe {
+  avoids += ace_for_tao
   exename = test_guard
   Source_Files {
     test_guard.cpp
