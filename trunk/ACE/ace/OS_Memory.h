@@ -58,11 +58,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_HAS_OLD_MALLOC)
-typedef char * ACE_MALLOC_T;
-#else
 typedef void * ACE_MALLOC_T;
-#endif /* ACE_HAS_OLD_MALLOC */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

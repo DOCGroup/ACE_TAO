@@ -61,8 +61,6 @@
 #include "ace/OS_NS_wchar.h"
 
 // Include the split up ACE_OS classes
-#include "ace/OS_Dirent.h"
-#include "ace/OS_String.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_TLI.h"
 #include "ace/OS_Errno.h"
@@ -314,14 +312,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #   define ACE_INLINE inline
 #   include "ace/OS.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
-
-#if defined (ACE_LEGACY_MODE)
-# include "ace/Log_Msg.h"
-# include "ace/Thread_Hook.h"
-# include "ace/Thread_Adapter.h"
-# include "ace/Thread_Exit.h"
-# include "ace/Thread_Control.h"
-#endif  /* ACE_LEGACY_MODE */
 
 #endif /* 0 */
 

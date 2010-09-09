@@ -324,18 +324,6 @@ public:
   void dump (void) const;
 
   /**
-   * Returns a reference to the underlying <ACE_LOCK>.  This makes it
-   * possible to acquire the lock explicitly, which can be useful in
-   * some cases if you instantiate the ACE_Atomic_Op with an
-   * ACE_Recursive_Mutex or ACE_Process_Mutex.
-   *
-   * @deprecated This member function is deprecated and so may go away in
-   * the future. If you need access to the underlying mutex, consider
-   * using the ACE_Atomic_Op_Ex template instead.
-   */
-  ACE_LOCK & mutex (void);
-
-  /**
    * Explicitly return @c value_ (by reference).  This gives the user
    * full, unrestricted access to the underlying value.  This method
    * will usually be used in conjunction with explicit access to the

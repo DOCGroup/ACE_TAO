@@ -77,7 +77,7 @@ static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 #endif /* ACE_LACKS_FORK */
 
 typedef ACE_Oneshot_Acceptor<Svc_Handler,
-                             ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>>
+                             ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING> >
         ACCEPTOR;
 typedef ACE_Connector<Svc_Handler,
                       ACE_SOCK_CONNECTOR>

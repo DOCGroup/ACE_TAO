@@ -71,12 +71,7 @@ public:
   ACE_CHAR_T *copy (const ACE_CHAR_T *data,
               size_t len);
 
-  /// Return the maximum @a length or @a size of a string that can be put
-  /// into this Obstack. @a size = @a length * sizeof (ACE_CHAR_T).
-  ///
-  /// @deprecated No need to use this function as you can put objects of
-  /// arbitrary lengths into the obstack now.
-  size_t length (void) const;
+  /// Return the maximum @a size
   size_t size (void) const;
 
   /// "Unwind" the stack. If @a obj is a null pointer, everything allocated

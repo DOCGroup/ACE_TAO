@@ -115,17 +115,11 @@ extern "C"
 }
 #     endif /* !ACE_HAS_TLI_PROTOTYPES */
 
-#     if defined (ACE_HAS_TIUSER_H_BROKEN_EXTERN_C)
-extern "C" {
-#     endif /* ACE_HAS_TIUSER_H_BROKEN_EXTERN_C */
 #     if defined (ACE_HAS_TIUSER_H)
 #       include /**/ <tiuser.h>
 #     else
        /* What to do here??? Is there a tli.h? */
 #     endif /* ACE_HAS_TIUSER_H */
-#     if defined (ACE_HAS_TIUSER_H_BROKEN_EXTERN_C)
-}
-#     endif /* ACE_HAS_TIUSER_H_BROKEN_EXTERN_C */
 
 #     if defined (ACE_HAS_SVR4_TLI)
          // t_getname is a TLI extension added by some platforms before XTI
