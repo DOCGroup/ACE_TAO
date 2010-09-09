@@ -74,12 +74,13 @@ public:
   /// Item accessor.
   ACE_Unbounded_Set<INT_ID>& item (void);
 
+public:
   /// Key used to look up an entry.
-  /// @deprecated Use key()
+  /// @todo Should be private
   EXT_ID ext_id_;
 
   /// The contents of the entry itself.
-  /// @deprecated Use item()
+  /// @todo Should be private
   ACE_Unbounded_Set<INT_ID> int_id_set_;
 
   /// Pointer to the next item in the bucket of overflow nodes.

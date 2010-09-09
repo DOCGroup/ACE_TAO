@@ -250,11 +250,11 @@ run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("iterating (%d): %s:\n"),
                   i,
-                  entry->ext_id_));
+                  entry->key ()));
       i++;
 
-      for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->int_id_set_);
-           iter != entry->int_id_set_.end ();
+      for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->item ());
+           iter != entry->item ().end ();
            iter++)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -318,11 +318,11 @@ run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("reverse iterating (%d): %s\n"),
                   i,
-                  entry->ext_id_));
+                  entry->key ()));
       i++;
 
-      for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->int_id_set_);
-           iter != entry->int_id_set_.end ();
+      for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->item ());
+           iter != entry->item ().end ();
            iter++)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -349,11 +349,11 @@ run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("const iterating (%d): %s\n"),
                   i,
-                  entry->ext_id_));
+                  entry->key ()));
       i++;
 
-      for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->int_id_set_);
-           iter != entry->int_id_set_.end ();
+      for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->item ());
+           iter != entry->item ().end ();
            iter++)
         {
           ACE_DEBUG ((LM_DEBUG,

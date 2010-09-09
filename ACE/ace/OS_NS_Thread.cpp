@@ -4644,7 +4644,7 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
 #endif /* ACE_HAS_VXTHREADS */
 
 int
-ACE_OS::thr_key_detach (ACE_thread_key_t key, void *)
+ACE_OS::thr_key_detach (ACE_thread_key_t key)
 {
 #if defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_TSS_EMULATION)
   TSS_Cleanup_Instance cleanup;
@@ -4819,11 +4819,10 @@ ACE_OS::thr_keycreate_native (ACE_OS_thread_key_t *key,
 int
 ACE_OS::thr_keycreate (ACE_thread_key_t *key,
 # if defined (ACE_HAS_THR_C_DEST)
-                       ACE_THR_C_DEST dest,
+                       ACE_THR_C_DEST dest)
 # else
-                       ACE_THR_DEST dest,
+                       ACE_THR_DEST dest)
 # endif /* ACE_HAS_THR_C_DEST */
-                       void *)
 {
   // ACE_OS_TRACE ("ACE_OS::thr_keycreate");
 #if defined (ACE_HAS_THREADS)

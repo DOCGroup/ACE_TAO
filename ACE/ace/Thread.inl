@@ -13,14 +13,14 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE int
 ACE_Thread::keycreate (ACE_thread_key_t *keyp,
 #if defined (ACE_HAS_THR_C_DEST)
-                       ACE_THR_C_DEST destructor,
+                       ACE_THR_C_DEST destructor
 #else
-                       ACE_THR_DEST destructor,
+                       ACE_THR_DEST destructor
 #endif /* ACE_HAS_THR_C_DEST */
-                       void *inst)
+                       )
 {
   // ACE_TRACE ("ACE_Thread::keycreate");
-  return ACE_OS::thr_keycreate (keyp, destructor, inst);
+  return ACE_OS::thr_keycreate (keyp, destructor);
 }
 
 // Free up the key so that other threads can reuse it.
