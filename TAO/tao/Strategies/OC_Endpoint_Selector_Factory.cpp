@@ -7,7 +7,7 @@
 #include "tao/PI/ORBInitInfo.h"
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_strings.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
