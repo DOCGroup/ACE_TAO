@@ -337,11 +337,6 @@
 # define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
-// By default, don't include RCS Id strings in object code.
-#if !defined (ACE_USE_RCSID)
-#define ACE_USE_RCSID 0
-#endif /* !ACE_USE_RCSID */
-
 #if defined (ACE_HAS_IP_MULTICAST)
 # define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1
 #endif /* ACE_HAS_IP_MULTICAST */

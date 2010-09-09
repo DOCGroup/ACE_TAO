@@ -411,13 +411,11 @@ ACE_OS::rand_r (ACE_RANDR_TYPE &seed)
   ACE_OS_TRACE ("ACE_OS::rand_r");
 # if defined (ACE_HAS_REENTRANT_FUNCTIONS) && \
     !defined (ACE_LACKS_RAND_REENTRANT_FUNCTIONS)
-#   if defined (DIGITAL_UNIX)
-  ACE_OSCALL_RETURN (::_Prand_r (&seed), int, -1);
-#   elif defined (ACE_HAS_BROKEN_RANDR)
+#   if defined (ACE_HAS_BROKEN_RANDR)
   ACE_OSCALL_RETURN (::rand_r (seed), int, -1);
 #   else
   ACE_OSCALL_RETURN (::rand_r (&seed), int, -1);
-#   endif /* DIGITAL_UNIX */
+#   endif /* ACE_HAS_BROKEN_RANDR */
 # else
   ACE_UNUSED_ARG (seed);
   ACE_OSCALL_RETURN (::rand (), int, -1);

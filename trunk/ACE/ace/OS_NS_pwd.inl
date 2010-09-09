@@ -59,11 +59,8 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
       !defined (ACE_HAS_STHREADS) || \
       defined (HPUX_11)  || \
       defined (__USLC__) // Added by Roland Gigler for SCO UnixWare 7.
-  struct passwd *result;
+  struct passwd *result = 0;
   int status;
-#       if defined (DIGITAL_UNIX)
-  ::_Pgetpwnam_r (name, pwent, buffer, buflen, &result);
-#       else
   // VAC++ doesn't correctly grok the ::getpwnam_r - the function is redefined
   // in pwd.h, and that redefinition is used here
 #         if defined (__IBMCPP__) && (__IBMCPP__ >= 400)   /* VAC++ 4 */
@@ -76,7 +73,6 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
       errno = status;
       result = 0;
     }
-#       endif /* (DIGITAL_UNIX) */
   return result;
 #     elif defined (AIX)
   if (::getpwnam_r (name, pwent, buffer, buflen) == -1)

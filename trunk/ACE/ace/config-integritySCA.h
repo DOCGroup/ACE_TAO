@@ -186,7 +186,6 @@ extern "C"
 #define ACE_LACKS_GETPPID
 #define NSIG (SIGRTMAX+1)
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-#define ACE_USE_RCSID 0
 #define ACE_LACKS_CUSERID
 #define ACE_NEEDS_HUGE_THREAD_STACKSIZE 0x5000
 #define fileno(file) ((file)->io_channel) //Hack to get Svc_Conf_l.cpp compiled

@@ -6,10 +6,6 @@
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
-#if !defined (ACE_USE_RCSID)
-# define ACE_USE_RCSID 0
-#endif
-
 #ifdef __cplusplus
 #pragma message disable CODCAUUNR
 #pragma message disable CODEUNREACHABLE

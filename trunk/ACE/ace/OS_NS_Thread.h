@@ -762,18 +762,18 @@ typedef int ACE_pri_t;
 #   else
   typedef int ACE_idtype_t;
 #   endif /* ACE_HAS_IDTYPE_T */
-#   if defined (ACE_HAS_STHREADS) || defined (DIGITAL_UNIX)
+#   if defined (ACE_HAS_STHREADS)
 #     if defined (ACE_LACKS_PRI_T)
     typedef int pri_t;
 #     endif /* ACE_LACKS_PRI_T */
   typedef id_t ACE_id_t;
 #     define ACE_SELF P_MYID
   typedef pri_t ACE_pri_t;
-#   else  /* ! ACE_HAS_STHREADS && ! DIGITAL_UNIX */
+#   else  /* ! ACE_HAS_STHREADS */
   typedef long ACE_id_t;
 #     define ACE_SELF (-1)
   typedef short ACE_pri_t;
-#   endif /* ! ACE_HAS_STHREADS && ! DIGITAL_UNIX */
+#   endif /* ! ACE_HAS_STHREADS */
 #endif /* !defined (ACE_WIN32) */
 
 # if defined (ACE_HAS_TSS_EMULATION)
