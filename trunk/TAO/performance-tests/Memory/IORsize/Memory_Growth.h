@@ -1,6 +1,4 @@
-//
 // $Id$
-//
 
 #ifndef MEMORY_GROWTH_H
 #define MEMORY_GROWTH_H

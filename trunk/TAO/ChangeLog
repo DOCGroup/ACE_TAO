@@ -1,3 +1,33 @@
+Thu Sep  9 12:15:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/examples/Log/Event/Event_Consumer.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientService_Activate.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerService_Activate.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/RPS_Monitor.cpp:
+        * orbsvcs/tests/Concurrency/CC_naming_service.cpp:
+        * performance-tests/Memory/IORsize/Foo_i.cpp:
+        * performance-tests/Memory/IORsize/Memory_Growth.h:
+        * performance-tests/Memory/IORsize/Test.idl:
+        * tests/Bug_1476_Regression/Sender_i.cpp:
+        * tests/Codec/client.cpp:
+        * tests/File_IO/server.cpp:
+        * tests/IOR_Endpoint_Hostnames/list_interfaces.cpp:
+        * tests/MT_BiDir/Sender_i.cpp:
+        * tests/ORB_Local_Config/Bug_1459/Test.cpp:
+        * tests/ORB_Local_Config/Service_Dependency/Service_Config_DLL.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/ORB_DLL.cpp:
+        * tests/ORT/ORT_test_IORInterceptor.cpp:
+        * tests/ORT/ServerORBInitializer.cpp:
+        * tests/Oneways_Invoking_Twoways/Receiver_i.cpp:
+        * tests/Portable_Interceptors/Bug_2510_Regression/test_i.cpp:
+        * tests/Portable_Interceptors/PolicyFactory/Server_ORBInitializer.cpp:
+          Fixed fuzz
+
 Thu Sep  9 11:20:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DevGuideExamples/AMH_AMI/inner_server.cpp:

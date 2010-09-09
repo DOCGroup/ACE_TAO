@@ -1,3 +1,5 @@
+// $Id$
+
 #include "Locator_Repository.h"
 #include "Locator_XMLHandler.h"
 #include "utils.h"
@@ -8,8 +10,6 @@
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/FileCharStream.h"
 #include "ACEXML/common/XML_Util.h"
-
-
 
 static const ACE_TCHAR* STARTUP_COMMAND = ACE_TEXT("StartupCommand");
 static const ACE_TCHAR* WORKING_DIR = ACE_TEXT("WorkingDir");
