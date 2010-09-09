@@ -2,7 +2,6 @@
 #include "Task_Stats.h"
 #include "ace/OS.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_String.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Task_Stats.inl"

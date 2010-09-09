@@ -11,7 +11,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Synch_Refcountable::TAO_Synch_Refcountable (ACE_Lock *lock, int refcount)
-  : ACE_Refcountable (refcount)
+  : ACE_Refcountable_T<ACE_Null_Mutex> (refcount)
   , refcount_lock_ (lock)
 {
 }
