@@ -67,7 +67,7 @@
  *
  * -p  IPv4 addresses of the remote CEs, which we are going to check
  *     (purpose 2), or they are 3rd points for the purpose 1,
- *     e.g. “-p 192.168.5.120: 192.168.5.122: 192.168.5.125
+ *     e.g. ï¿½-p 192.168.5.120: 192.168.5.122: 192.168.5.125
  *
  * -w  milliseconds to wait for echo-reply, on lan 100-200 msec, on
  *     WAN may be 2000-5000 msec, for GPRS may reach 10000 - 20000

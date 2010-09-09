@@ -435,9 +435,6 @@ typedef enum CMA_T_SCHED_POLICY {
 // Build options
 //=========================================================================
 
-// Disable the inclusion of RCS ids in the generated code.
-#define ACE_USE_RCSID 0
-
 // For debugging problems in os calls (but this doesn't work too well
 // since output is not interleaved properly with output from ACE_TRACE
 //# define ACE_OS_TRACE(X) ::printf(X)

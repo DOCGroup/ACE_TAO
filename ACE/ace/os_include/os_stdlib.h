@@ -53,10 +53,6 @@ extern "C"
 #else
 #endif /* ACE_HAS_BROKEN_RANDR */
 
-#if defined (DIGITAL_UNIX)
-  extern int _Prand_r (unsigned int *seedptr);
-#endif /* DIGITAL_UNIX */
-
 #if defined (ACE_LACKS_PUTENV_PROTOTYPE)
   int putenv (char *);
 #endif /* ACE_LACKS_PUTENV_PROTOTYPE */

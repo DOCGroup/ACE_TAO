@@ -68,11 +68,6 @@
 #     define ACE_AUTO_PTR_LACKS_RESET
 #   endif /* __DECCXX_VER == 60190027 */
 
-#   if defined (DIGITAL_UNIX)  &&  DIGITAL_UNIX >= 0x40D
-      // variable "PTHREAD_THIS_CATCH_NP" was declared but never referenced
-#     pragma message disable declbutnotref
-#   endif /* DIGITAL_UNIX >= 4.0f */
-
 # else  /* __DECCXX_VER < 60090010 */
 #   define ACE_LACKS_PRAGMA_ONCE
 # endif /* __DECCXX_VER < 60090010 */

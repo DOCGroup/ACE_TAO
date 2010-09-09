@@ -120,45 +120,6 @@
 # endif /* ACE_USES_FIFO_SEM */
 
 // =========================================================================
-// RCSID Macros
-// =========================================================================
-
-// By default, DO NOT include RCS Id strings in object code.
-#if ! defined (ACE_USE_RCSID)
-#  define ACE_USE_RCSID 0
-#endif /* #if ! defined (ACE_USE_RCSID) */
-
-#if (defined (ACE_USE_RCSID) && (ACE_USE_RCSID != 0))
-#  if ! defined (ACE_RCSID)
-
-   // This hack has the following purposes:
-   // 1. To define the RCS id string variable as a static char*, so
-   //    that there won't be any duplicate extern symbols at link
-   //    time.
-   // 2. To have a RCS id string variable with a unique name for each
-   //    file.
-   // 3. To avoid warnings of the type "variable declared and never
-   //    used".
-
-#    define ACE_RCSID(path, file, id) \
-      static inline const char* get_rcsid_ ## path ## _ ## file (const char*) \
-      { \
-        return id ; \
-      } \
-      static const char* rcsid_ ## path ## _ ## file = \
-        get_rcsid_ ## path ## _ ## file ( rcsid_ ## path ## _ ## file ) ;
-
-#  endif /* #if ! defined (ACE_RCSID) */
-#else
-
-   // RCS id strings are not wanted.
-#  if defined (ACE_RCSID)
-#    undef ACE_RCSID
-#  endif /* #if defined (ACE_RCSID) */
-#  define ACE_RCSID(path, file, id) /* noop */
-#endif /* #if (defined (ACE_USE_RCSID) && (ACE_USE_RCSID != 0)) */
-
-// =========================================================================
 // INLINE macros
 //
 // These macros handle all the inlining of code via the .i or .inl files
@@ -266,7 +227,7 @@
 #if !defined (ACE_UNUSED_ARG)
 # if defined (__GNUC__) && ((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 2)))
 #   define ACE_UNUSED_ARG(a) (void) (a)
-# elif defined (__GNUC__) || defined (ghs) || defined (__hpux) || defined (__sgi) || defined (__DECCXX) || defined (__rational__) || defined (__USLC__) || defined (ACE_RM544) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM)
+# elif defined (__GNUC__) || defined (ghs) || defined (__hpux) || defined (__DECCXX) || defined (__rational__) || defined (__USLC__) || defined (ACE_RM544) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM)
 // Some compilers complain about "statement with no effect" with (a).
 // This eliminates the warnings, and no code is generated for the null
 // conditional statement.  @note that may only be true if -O is enabled,
@@ -281,11 +242,11 @@
 # endif /* ghs || __GNUC__ || ..... */
 #endif /* !ACE_UNUSED_ARG */
 
-#if defined (_MSC_VER) || defined(__sgi) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (ACE_RM544) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM) || (defined (__HP_aCC) && (__HP_aCC < 40000 || __HP_aCC >= 60500))
+#if defined (_MSC_VER) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (ACE_RM544) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM) || (defined (__HP_aCC) && (__HP_aCC < 40000 || __HP_aCC >= 60500))
 # define ACE_NOTREACHED(a)
-#else  /* __sgi || ghs || ..... */
+#else  /* ghs || ..... */
 # define ACE_NOTREACHED(a) a
-#endif /* __sgi || ghs || ..... */
+#endif /* ghs || ..... */
 
 // ============================================================================
 // ACE_ALLOC_HOOK* macros

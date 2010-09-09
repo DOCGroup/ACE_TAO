@@ -166,11 +166,6 @@
 
 #define ACE_HAS_GPERF
 
-// By default, don't include RCS Id strings in object code.
-#if !defined (ACE_USE_RCSID)
-# define ACE_USE_RCSID 0
-#endif /* ! ACE_USE_RCSID */
-
 // ---------------- platform features or lack of them -------------
 
 // By default WIN32 has FD_SETSIZE of 64, which places the limit

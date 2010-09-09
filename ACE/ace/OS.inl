@@ -58,10 +58,6 @@ using std::strftime;
 #   include /**/ <sys/syscall.h>
 # endif /* ACE_HAS_SYS_SYSCALL_H */
 
-# if defined (UNIXWARE)  /* See strcasecmp, below */
-#   include /**/ <ctype.h>
-# endif /* UNIXWARE */
-
 # if defined (ACE_HAS_GETIFADDRS)
 #   if defined (ACE_VXWORKS)
 #     include /**/ <net/ifaddrs.h>

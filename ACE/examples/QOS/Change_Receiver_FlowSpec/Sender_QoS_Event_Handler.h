@@ -26,8 +26,6 @@
 //#define MY_DEFPORT 5001
 //#define DEFAULT_MULTICASTGROUP "234.5.6.7"
 
-ACE_RCSID(Sender_QoS_Event_Handler, Sender_QoS_Event_Handler, "$Id$")
-
 class Sender_QoS_Event_Handler : public ACE_Event_Handler
 {
 public:
