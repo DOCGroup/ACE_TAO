@@ -1,3 +1,13 @@
+Thu Sep  9 00:22:51 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE_Core.mpc:
+
+          Added Version.h to stub project.
+
+        * DAnCE/install_versionh.mpc:
+
+          Removed this file.
+
 Wed Sep  8 15:29:55 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/dance_tests.lst:
