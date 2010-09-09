@@ -1,6 +1,6 @@
-#include "Signature.h"
+// $Id$
 
-//-----------------------------------------------------------------------------
+#include "Signature.h"
 
 Signature::Signature (const ACE_CString &name)
   :name_(name),
