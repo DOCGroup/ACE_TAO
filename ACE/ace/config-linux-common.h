@@ -172,16 +172,12 @@
 #define ACE_CC_MAJOR_VERSION __GNUC__
 #define ACE_CC_MINOR_VERSION __GNUC_MINOR__
 //#define ACE_CC_BETA_VERSION 0 /* ??? */
-#elif defined (__DECCXX)
-# define ACE_CONFIG_INCLUDE_CXX_COMMON
-# include "ace/config-cxx-common.h"
 #elif defined (__SUNCC_PRO) || defined (__SUNPRO_CC)
 # include "ace/config-suncc-common.h"
 #elif defined (__PGI)
 // Portable group compiler
 # define ACE_HAS_CPLUSPLUS_HEADERS
 # define ACE_HAS_STDCPP_STL_INCLUDES
-# define ACE_HAS_TEMPLATE_TYPEDEFS
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 # define ACE_LACKS_SWAB

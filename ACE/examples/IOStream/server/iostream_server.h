@@ -19,14 +19,7 @@
 
 typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;
 
-// Need to handle brain-dead C++ compilers.
-#if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-#define ACE_SOCK_IOSTREAM ACE_SOCK_IOStream
-#else
-#define ACE_SOCK_IOSTREAM ACE_SOCK_IOStream, ACE_INET_Addr
-#endif /* ACE_HAS_TYPENAME_KEYWORD */
-
-class Handler : public ACE_Svc_Handler<ACE_SOCK_IOSTREAM, ACE_NULL_SYNCH>
+class Handler : public ACE_Svc_Handler<ACE_SOCK_IOStream, ACE_NULL_SYNCH>
   // = TITLE
   //     Extend the <ACE_Svc_Handler> template to do our bidding.
   //

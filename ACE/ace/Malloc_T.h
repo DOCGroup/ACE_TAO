@@ -490,14 +490,6 @@ public:
                 const ACE_MEM_POOL_OPTIONS *options,
                 ACE_LOCK *lock);
 
-#if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-  /// This is necessary to work around template bugs with certain C++
-  /// compilers.
-  ACE_Malloc_T (const ACE_TCHAR *pool_name,
-                const ACE_TCHAR *lock_name,
-                const void *options = 0);
-#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
-
   /// Destructor
   ~ACE_Malloc_T (void);
 
@@ -868,14 +860,6 @@ public:
   ACE_Malloc (const ACE_TCHAR *pool_name,
               const ACE_TCHAR *lock_name,
               const ACE_MEM_POOL_OPTIONS *options = 0);
-
-#if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-  /// This is necessary to work around template bugs with certain C++
-  /// compilers.
-  ACE_Malloc (const ACE_TCHAR *pool_name,
-              const ACE_TCHAR *lock_name,
-              const void *options = 0);
-#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 };
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>

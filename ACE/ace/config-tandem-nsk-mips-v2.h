@@ -352,10 +352,6 @@ typedef enum CMA_T_SCHED_POLICY {
 // .cpp files).
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
-// Compiler implements templates that support typedefs inside
-// of classes used as formal arguments to a template class.
-#define ACE_HAS_TEMPLATE_TYPEDEFS
-
 // Platform has its standard c++ library in the namespace std.
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 

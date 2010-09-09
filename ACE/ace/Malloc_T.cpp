@@ -544,32 +544,6 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
                 ACE_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
 }
 
-#if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *pool_name,
-                                                          const ACE_TCHAR *lock_name,
-                                                          const void *options)
-  : cb_ptr_ (0),
-    memory_pool_ (pool_name,
-                  (const ACE_MEM_POOL_OPTIONS *) options),
-    bad_flag_ (0)
-{
-  ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
-
-  this->lock_ = ACE_Malloc_Lock_Adapter_T<ACE_LOCK> ()(lock_name);
-  if (this->lock_ == 0)
-    return;
-
-  this->delete_lock_ = true;
-  this->bad_flag_ = this->open ();
-  if (this->bad_flag_ == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
-}
-#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
-
-
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::~ACE_Malloc_T (void)
 {

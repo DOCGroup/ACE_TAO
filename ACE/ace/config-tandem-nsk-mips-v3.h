@@ -387,10 +387,6 @@ typedef enum CMA_T_SCHED_POLICY {
 // .cpp files).
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
-// Compiler implements templates that support typedefs inside
-// of classes used as formal arguments to a template class.
-#define ACE_HAS_TEMPLATE_TYPEDEFS
-
 // Platform/Compiler supports a String class
 #define ACE_HAS_STRING_CLASS
 #define ACE_HAS_STDCPP_STL_INCLUDES

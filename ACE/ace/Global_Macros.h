@@ -125,7 +125,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
    ACE_Guard< MUTEX > OBJ (LOCK); \
    if (OBJ.locked () != 0) { ACTION; } \
    else { REACTION; }
-#endif /* !ACE_GUARD_ACTION */   
+#endif /* !ACE_GUARD_ACTION */
 #if !defined (ACE_GUARD_REACTION)
 #define ACE_GUARD_REACTION(MUTEX, OBJ, LOCK, REACTION) \
   ACE_GUARD_ACTION(MUTEX, OBJ, LOCK, ;, REACTION)
@@ -137,7 +137,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #if !defined (ACE_GUARD_RETURN)
 #define ACE_GUARD_RETURN(MUTEX, OBJ, LOCK, RETURN) \
   ACE_GUARD_REACTION(MUTEX, OBJ, LOCK, return RETURN)
-#endif /* !ACE_GUARD_RETURN */  
+#endif /* !ACE_GUARD_RETURN */
 #if !defined (ACE_WRITE_GUARD)
 # define ACE_WRITE_GUARD(MUTEX,OBJ,LOCK) \
   ACE_Write_Guard< MUTEX > OBJ (LOCK); \
@@ -157,7 +157,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # define ACE_READ_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
   ACE_Read_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) return RETURN;
-#endif /* !ACE_READ_GUARD_RETURN */    
+#endif /* !ACE_READ_GUARD_RETURN */
 // FUZZ: enable check_for_ACE_Guard
 
 // ----------------------------------------------------------------
@@ -996,10 +996,6 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 #   define ACE_UPIPE_ACCEPTOR ACE_UPIPE_Acceptor
 #   define ACE_UPIPE_CONNECTOR ACE_UPIPE_Connector
 #   define ACE_UPIPE_STREAM ACE_UPIPE_Stream
-
-// Handle ACE_FILE_*
-#   define ACE_FILE_CONNECTOR ACE_FILE_Connector
-#   define ACE_FILE_STREAM ACE_FILE_IO
 
 // Handle ACE_*_Memory_Pool.
 #   define ACE_MMAP_MEMORY_POOL ACE_MMAP_Memory_Pool

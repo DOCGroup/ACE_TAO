@@ -78,7 +78,6 @@
 #  define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #  define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 
-#  define ACE_HAS_TEMPLATE_TYPEDEFS
 #  define ACE_HAS_CUSTOM_EXPORT_MACROS
 #  define ACE_Proper_Export_Flag
 #  define ACE_Proper_Import_Flag

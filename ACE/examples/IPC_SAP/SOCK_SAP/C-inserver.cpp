@@ -82,12 +82,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           continue;
         }
 
-#if !defined(_UNICOS)
       int addr_len = sizeof cli_addr.sin_addr.s_addr;
-#else /* ! _UNICOS */
-      // sizeof on bitfield fails
-      int addr_len = sizeof cli_addr.sin_addr;  // 32 bit biffield in UNICOS
-#endif /* ! _UNICOS */
       hp = ACE_OS::gethostbyaddr ((char *) &cli_addr.sin_addr,
                                   addr_len, AF_INET);
 

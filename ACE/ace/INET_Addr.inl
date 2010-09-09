@@ -71,14 +71,7 @@ ACE_INET_Addr::ip_addr_size (void) const
   else
     return static_cast<int> (sizeof this->inet_addr_.in6_.sin6_addr);
 #else
-  // These _UNICOS changes were picked up from pre-IPv6 code in
-  // get_host_name_i... the IPv6 section above may need something
-  // similar, so keep an eye out for it.
-#  if !defined(_UNICOS)
   return static_cast<int> (sizeof this->inet_addr_.in4_.sin_addr.s_addr);
-#  else /* _UNICOS */
-  return static_cast<int> (sizeof this->inet_addr_.in4_.sin_addr);
-#  endif /* ! _UNICOS */
 #endif /* ACE_HAS_IPV6 */
 }
 
