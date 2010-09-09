@@ -1,3 +1,5 @@
+// $Id$
+
 #include "Receiver_i.h"
 
 Receiver_i::Receiver_i (CORBA::ORB_ptr orb,
@@ -13,8 +15,6 @@ Receiver_i::Receiver_i (CORBA::ORB_ptr orb,
 Receiver_i::~Receiver_i (void)
 {
 }
-
-
 
 CORBA::Long
 Receiver_i::receive_call (void)
