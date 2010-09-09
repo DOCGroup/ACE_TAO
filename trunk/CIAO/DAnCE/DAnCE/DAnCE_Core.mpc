@@ -54,6 +54,7 @@ project (DAnCE_stub) : ciaolib_with_idl, dance_output, \
     DAnCE_PropertiesC.h
     DAnCE_LocalityManagerC.h
     DAnCE_ArtifactInstallationC.h
+    Version.h
   }
 
   Template_Files {
