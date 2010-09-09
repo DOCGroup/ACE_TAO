@@ -143,10 +143,10 @@ namespace DAnCE
           DANCE_ERROR (1, (LM_ERROR, "Failed to add the type\n"));
       }
 
-    CIAO::Config_Handlers::XML_Helper::
+    DAnCE::Config_Handlers::XML_Helper::
       XML_HELPER.get_resolver ().get_resolver ().add_path (ACE_TEXT ("DANCE_ROOT"),
                                                            ACE_TEXT ("/docs/schema/"));
-    CIAO::Config_Handlers::XML_Helper::
+    DAnCE::Config_Handlers::XML_Helper::
       XML_HELPER.get_resolver ().get_resolver ().add_path (ACE_TEXT ("CIAO_ROOT"),
                                                            ACE_TEXT ("/docs/schema/"));
 
@@ -951,7 +951,7 @@ namespace DAnCE
     //parse the PCD to make sure that there are no package errors
     try
       {
-        CIAO::Config_Handlers::Packaging::PCD_Handler::package_config (pc_name, *pc);
+        DAnCE::Config_Handlers::Packaging::PCD_Handler::package_config (pc_name, *pc);
       }
     catch (...)
       {
