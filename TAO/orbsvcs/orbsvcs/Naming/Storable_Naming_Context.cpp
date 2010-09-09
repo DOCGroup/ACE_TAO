@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
 #include "orbsvcs/Naming/Bindings_Iterator_T.h"
 

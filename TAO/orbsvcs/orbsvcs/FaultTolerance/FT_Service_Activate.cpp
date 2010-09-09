@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
 #include "orbsvcs/FaultTolerance/FT_Service_Callbacks.h"
 #include "orbsvcs/FaultTolerance/FT_ORBInitializer.h"
@@ -5,8 +7,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Service_Callbacks.h"
 #include "ace/Dynamic_Service.h"
-
-
 
 static bool initialized = false;
 

@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "Service_Config_DLL.h"
 #include "ace/Service_Config.h"
