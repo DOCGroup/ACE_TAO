@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : ccm_stub, messaging {
+project : pi, messaging {
   after += Deployment_stub
   libs  += DAnCE_Deployment_stub
   includes += $(DANCE_ROOT)

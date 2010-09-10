@@ -1,6 +1,6 @@
 // $Id$
 
-project(*idl): ciaoidldefaults {
+project(*idl): danceidldefaults {
   IDL_Files {
     Dummy.idl
   }

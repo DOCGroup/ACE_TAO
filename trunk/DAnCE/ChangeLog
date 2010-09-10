@@ -1,3 +1,24 @@
+Fri Sep 10 15:10:35 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE_Core.mpc:
+        * DAnCE/DAnCE_Properties.mpc:
+        * Deployment/Deployment_Core.mpc:
+        * LocalityManager/Daemon/Locality_Manager.mpc:
+        * LocalityManager/Interceptors/Error_Interceptors.mpc:
+        * MPC/config/dance_deployment_stub.mpb:
+        * MPC/config/danceidldefaults.mpb:
+        * MPC/config/dancelib_with_idl.mpb:
+        * NodeManager/NodeManager.mpc:
+        * Plan_Launcher/Daemon/PL_Daemon.mpc:
+        * tests/Config_Handlers/DynAny_Handler/test.mpc:
+        * tests/NameServiceTest/NameServiceTest.mpc:
+        * tests/TargetManager/TM_Client.mpc:
+        * tools/System_Health/Daemon/SHS_Daemon.mpc:
+        * tools/System_Health/Interceptors/SHS_Interceptor.mpc:
+        * tools/System_Health/System_Health.mpc:
+
+          Resolved MPC errors from CIAO separation.
+
 Fri Sep 10 15:09:04 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/LocalityManager/CPUAffinity:
