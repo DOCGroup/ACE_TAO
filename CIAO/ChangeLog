@@ -1,3 +1,11 @@
+Fri Sep 10 08:25:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Navigation/client.cpp:
+        * tests/CIF/Receptacle/client.cpp:
+        * tests/CIF/descriptors/run_test.pl:
+          Extended tests. Improved logging. Added TODO list te keep track of
+          which tests fail.
+
 Thu Sep  9 02:47:19 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIAO_DAnCE.mwc:

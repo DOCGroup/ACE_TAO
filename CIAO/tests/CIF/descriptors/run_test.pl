@@ -29,7 +29,7 @@ $ior_nsfile = 0;
 $ior_embase = "EM.ior";
 $ior_emfile = 0;
 
-$nr_clients = 1;
+$nr_clients = 2;
 
 @clients = ("../Navigation/Navigation_Test_Client",
             "../Receptacle/Receptacle_Test_Client" );
@@ -239,8 +239,6 @@ for ($client_nr = 0; $client_nr < $nr_clients; ++$client_nr) {
 
     if ($client_status != 0) {
         print STDERR "ERROR: client $clients[$client_nr] returned $client_status\n";
-        kill_open_processes ();
-        exit 1;
     }
     print "Sleeping 5 seconds to allow task $clients[$i] to complete\n";
     sleep (5);
