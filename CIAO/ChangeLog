@@ -1,3 +1,10 @@
+Fri Sep 10 15:48:20 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/IDL3_to_XMI:
+        * tools/IDL3_to_XMI:
+
+          Re-import from DAnCE.
+
 Fri Sep 10 15:47:32 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/DAnCE/LocalityManager:
