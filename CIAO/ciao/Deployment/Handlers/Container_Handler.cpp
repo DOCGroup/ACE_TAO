@@ -2,11 +2,12 @@
 
 #include "Container_Handler.h"
 #include "ciao/Logger/Log_Macros.h"
+#include "ciao/Logger/Logger_Service.h"
 #include "ciao/Containers/Session/Session_Container.h"
 #include "ciao/Base/Server_init.h"
 #include "DAnCE/DAnCE_Utility.h"
 #include "DAnCE/DAnCE_PropertiesC.h"
-#include "DAnCE/LocalityManager/Scheduler/Plugin_Manager.h"
+#include "LocalityManager/Scheduler/Plugin_Manager.h"
 #include "CIAO_State.h"
 
 namespace CIAO
@@ -17,6 +18,9 @@ namespace CIAO
     CIAO::Logger_Service
       * clf = ACE_Dynamic_Service<CIAO::Logger_Service>::instance ("CIAO_Logger");
     
+    int argc (0);
+    char **argv (0);
+      
     if (clf)
       {
         clf->init (argc, argv);
