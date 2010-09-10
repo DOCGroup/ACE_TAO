@@ -3,9 +3,8 @@
 #include "ace/Dynamic_Service.h"
 #include "tao/ORB.h"
 #include "tao/Object.h"
-#include "DAnCE/Logger/Log_Macros.h"
-#include "DAnCE/Logger/Logger_Service.h"
-#include "ciao/Logger/Logger_Service.h"
+#include "Logger/Log_Macros.h"
+#include "Logger/Logger_Service.h"
 #include "Node_Manager_Module.h"
 
 int
@@ -25,15 +24,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           dlf->init (argc, argv);
         }
 
-      // Also initialize CIAO logger since we reuse parts of CIAO in the nodemanager
-      CIAO::Logger_Service
-        * clf = ACE_Dynamic_Service<CIAO::Logger_Service>::instance ("CIAO_Logger");
-
-      if (clf)
-        {
-          clf->init (argc, argv);
-        }
-        
       DANCE_DEBUG (6, (LM_TRACE, DLINFO
                     ACE_TEXT("NodeManager - initializing ORB\n")));
 

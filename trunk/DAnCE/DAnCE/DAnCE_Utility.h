@@ -20,7 +20,7 @@
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "Deployment/Deployment_DeploymentPlanC.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 
 namespace DAnCE
 {

@@ -2,7 +2,7 @@
 
 #include "DomainApplicationManager_Impl.h"
 #include "Deployment/Deployment_ConnectionC.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 #include "Split_Plan/Split_Plan.h"
 #include "Split_Plan/Node_Splitter.h"
 #include <sstream>

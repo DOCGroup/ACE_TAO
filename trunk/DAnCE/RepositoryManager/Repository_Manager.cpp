@@ -3,8 +3,8 @@
 #include "ace/Dynamic_Service.h"
 #include "tao/ORB.h"
 #include "tao/Object.h"
-#include "DAnCE/Logger/Log_Macros.h"
-#include "DAnCE/Logger/Logger_Service.h"
+#include "Logger/Log_Macros.h"
+#include "Logger/Logger_Service.h"
 #include "Repository_Manager_Module.h"
 
 int

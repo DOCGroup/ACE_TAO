@@ -1,7 +1,7 @@
 // $Id$
 
-#include "DAnCE/Logger/Log_Macros.h"
-#include "DAnCE/Deployment/Deployment_DataC.h"
+#include "Logger/Log_Macros.h"
+#include "Deployment/Deployment_DataC.h"
 #include "PC_Updater.h"
 #include "PC_Updater_T.h"
 #include "ace/Containers_T.h"        //for ACE_Double_Linked_List

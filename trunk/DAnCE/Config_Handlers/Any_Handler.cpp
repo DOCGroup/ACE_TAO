@@ -6,7 +6,7 @@
 #include "DataType_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "tao/AnyTypeCode/Any.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 #include "DynAny_Handler/DynAny_Handler.h"
 
 #include "ace/Null_Mutex.h"

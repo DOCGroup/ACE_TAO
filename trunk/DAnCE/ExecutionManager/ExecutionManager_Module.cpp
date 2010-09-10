@@ -7,10 +7,9 @@
 #include "tao/IORTable/IORTable.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/CosNamingC.h"
-#include "ciao/Valuetype_Factories/Cookies.h"
 #include "ExecutionManager_Module.h"
 #include "ExecutionManager_Impl.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 
 namespace DAnCE
 {
@@ -192,15 +191,6 @@ DAnCE_ExecutionManager_Module::init (CORBA::ORB_ptr orb,
       if (!this->parse_args (argc, argv))
         return CORBA::Object::_nil ();
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::init - ")
-                    ACE_TEXT("before creating value factory.\n")));
-      CORBA::ValueFactory_var vf = new Components::Cookie_init();
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::init - ")
-                    ACE_TEXT("before registering value factory.\n")));
-      vf = orb->register_value_factory ("IDL:omg.org/Components/Cookie:1.0", vf.in());
-
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::init - ")
-                    ACE_TEXT("after creating value factory.\n")));
       // Get reference to Root POA.
       CORBA::Object_var poa_obj
         = orb->resolve_initial_references ("RootPOA");

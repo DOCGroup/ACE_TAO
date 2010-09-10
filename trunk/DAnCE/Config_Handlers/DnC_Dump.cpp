@@ -2,7 +2,7 @@
 
 #include "ace/Log_Msg.h"
 #include "tao/SystemException.h"
-#include "DAnCE/Deployment/Deployment_DataC.h"
+#include "Deployment/Deployment_DataC.h"
 #include "DnC_Dump.h"
 #include "DnC_Dump_T.h"
 #include <iostream>

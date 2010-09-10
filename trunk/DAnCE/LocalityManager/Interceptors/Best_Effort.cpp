@@ -4,7 +4,7 @@
 #include "Deployment/Deployment_StartErrorC.h"
 #include "DAnCE/DAnCE_PropertiesC.h"
 #include "DAnCE/DAnCE_Utility.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 
 namespace DAnCE
 {

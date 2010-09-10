@@ -11,8 +11,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/String_Base.h"
-#include "DAnCE/Logger/Log_Macros.h"
-#include "DAnCE/Logger/Logger_Service.h"
+#include "Logger/Log_Macros.h"
+#include "Logger/Logger_Service.h"
 #include "Deployment/Deployment_RepositoryManagerC.h"
 
 #include "repository_manager_admin.h"

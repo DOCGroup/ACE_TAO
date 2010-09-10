@@ -21,7 +21,7 @@
 #include "ace/OS_NS_sys_stat.h"    //for stat
 #include "ace/OS_NS_sys_stat.h"    //for filesize and mkdir
 #include "ace/OS_Memory.h"         //for ACE_NEW* macros
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 
 #include <string>
 #include "minizip/unzip.h"

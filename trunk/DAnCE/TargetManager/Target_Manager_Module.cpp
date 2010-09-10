@@ -8,8 +8,8 @@
 #include "tao/IORTable/IORTable.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/CosNamingC.h"
-#include "DAnCE/Logger/Log_Macros.h"
-#include "DAnCE/DAnCE/DAnCE_PropertiesC.h"
+#include "Logger/Log_Macros.h"
+#include "DAnCE/DAnCE_PropertiesC.h"
 
 #include "TargetManager_Impl.h"
 

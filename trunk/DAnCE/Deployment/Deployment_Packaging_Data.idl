@@ -3,7 +3,7 @@
 #ifndef PACKAGING_DATA_IDL
 #define PACKAGING_DATA_IDL
 
-#include "DAnCE/Deployment/Deployment_Data.idl"
+#include "Deployment/Deployment_Data.idl"
 
 module Deployment {
 

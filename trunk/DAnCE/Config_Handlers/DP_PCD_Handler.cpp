@@ -8,8 +8,8 @@
 #include "PCD_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "cdp.hpp"
-#include "DAnCE/Deployment/Deployment_DataC.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Deployment/Deployment_DataC.h"
+#include "Logger/Log_Macros.h"
 namespace DAnCE
 {
   namespace Config_Handlers

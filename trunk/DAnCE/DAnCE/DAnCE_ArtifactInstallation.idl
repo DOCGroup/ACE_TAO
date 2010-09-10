@@ -3,8 +3,8 @@
 #ifndef DANCE_ARTIFACT_INSTALLATION_IDL
 #define DANCE_ARTIFACT_INSTALLATION_IDL
 
-#include "DAnCE/Deployment/Deployment_DeploymentPlan.idl"
-#include "DAnCE/Deployment/Deployment_PlanError.idl"
+#include "Deployment/Deployment_DeploymentPlan.idl"
+#include "Deployment/Deployment_PlanError.idl"
 
 module DAnCE
 {

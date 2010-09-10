@@ -30,7 +30,7 @@
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNamingC.h"
-#include "DAnCE/DAnCE/DAnCE_Utility.h"
+#include "DAnCE/DAnCE_Utility.h"
 #include "DAnCE/DAnCE_ArtifactInstallationC.h"
 
 namespace DAnCE

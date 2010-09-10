@@ -3,7 +3,7 @@
 #ifndef IDREF_BASE_CPP
 #define IDREF_BASE_CPP
 
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 #include "IDREF_Base.h"
 #include <iostream>
 

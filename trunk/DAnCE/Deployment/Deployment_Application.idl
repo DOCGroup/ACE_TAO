@@ -3,10 +3,10 @@
 #ifndef DEPLOYMENT_APPLICATION_IDL
 #define DEPLOYMENT_APPLICATION_IDL
 
-#include "DAnCE/Deployment/Deployment_Connection.idl"
-#include "DAnCE/Deployment/Deployment_StartError.idl"
-#include "DAnCE/Deployment/Deployment_StopError.idl"
-#include "DAnCE/Deployment/Deployment_InvalidConnection.idl"
+#include "Deployment/Deployment_Connection.idl"
+#include "Deployment/Deployment_StartError.idl"
+#include "Deployment/Deployment_StopError.idl"
+#include "Deployment/Deployment_InvalidConnection.idl"
 
 module Deployment
 {

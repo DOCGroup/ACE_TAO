@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Node_Splitter.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 
 namespace DAnCE
 {

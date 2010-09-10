@@ -2,7 +2,7 @@
 
 #include "File_Installation_Handler.h"
 #include "Installation_Repository_Manager.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 #include "ace/ACE.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_unistd.h"
