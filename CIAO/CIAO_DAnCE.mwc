@@ -3,7 +3,7 @@
 workspace {
   ccm
   ciao
-  DAnCE
+  $(DANCE_ROOT)
   exclude {
     DAnCE/tests
   }
