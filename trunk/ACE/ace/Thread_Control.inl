@@ -4,6 +4,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+#include "ace/OS_NS_macros.h"
+
 // Set the exit status.
 
 ACE_INLINE ACE_THR_FUNC_RETURN
