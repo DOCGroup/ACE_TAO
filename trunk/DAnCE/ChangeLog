@@ -1,3 +1,9 @@
+Fri Sep 10 17:19:06 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/dance_stub.mpb:
+
+          Add DANCE_ROOT as an include.
+
 Fri Sep 10 17:18:26 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/IDL3_to_XMI:
