@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (DAnCE_RepositoryManagerDaemon_IDL) : install, taoidldefaults {
+project (DAnCE_RepositoryManagerDaemon_IDL) : install, danceidldefaults {
   custom_only = 1
   IDL_Files {
     RepositoryManagerDaemon.idl

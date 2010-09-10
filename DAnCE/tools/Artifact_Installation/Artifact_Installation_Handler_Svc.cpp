@@ -2,7 +2,7 @@
 
 #include "Artifact_Installation_Handler_Svc.h"
 #include "Artifact_Installation_Impl.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 
 namespace DAnCE
 {

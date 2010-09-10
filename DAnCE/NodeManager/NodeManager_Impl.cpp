@@ -2,11 +2,11 @@
 
 #include "NodeManager_Impl.h"
 #include "ace/streams.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 #include "ace/OS_Memory.h"
 
 #include "DAnCE/DAnCE_PropertiesC.h"
-#include "DAnCE/LocalityManager/Scheduler/Plugin_Manager.h"
+#include "LocalityManager/Scheduler/Plugin_Manager.h"
 
 #ifdef GEN_OSTREAM_OPS
 #include <iostream>

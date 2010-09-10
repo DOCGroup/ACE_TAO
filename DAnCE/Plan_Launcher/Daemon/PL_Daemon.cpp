@@ -4,8 +4,8 @@
 #include "tao/Object.h"
 #include "tao/Utils/ORB_Destroyer.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
-#include "DAnCE/Logger/Log_Macros.h"
-#include "DAnCE/Logger/Logger_Service.h"
+#include "Logger/Log_Macros.h"
+#include "Logger/Logger_Service.h"
 #include "DAnCE/DAnCE_Utility.h"
 
 #include "PL_Daemon_Impl.h"

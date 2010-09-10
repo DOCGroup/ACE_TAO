@@ -3,9 +3,9 @@
 #ifndef TARGETMANAGER_IDL
 #define TARGETMANAGER_IDL
 
-#include "DAnCE/Deployment/Deployment_TargetData.idl"
-#include "DAnCE/Deployment/Deployment_DeploymentPlan.idl"
-#include "DAnCE/Deployment/Deployment_ResourceCommitmentManager.idl"
+#include "Deployment/Deployment_TargetData.idl"
+#include "Deployment/Deployment_DeploymentPlan.idl"
+#include "Deployment/Deployment_ResourceCommitmentManager.idl"
 
 module Deployment {
   enum DomainUpdateKind {

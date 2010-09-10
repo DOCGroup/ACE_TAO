@@ -9,7 +9,7 @@
 #include "Deployment.hpp"
 #include "Package_Handlers/CPD_Handler.h"
 #include "Config_Handlers/CPD_Handler.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 namespace DAnCE
 {
   namespace Config_Handlers

@@ -3,7 +3,7 @@
 #ifndef DEPLOYMENT_TARGETDATA_IDL
 #define DEPLOYMENT_TARGETDATA_IDL
 
-#include "DAnCE/Deployment/Deployment_Base.idl"
+#include "Deployment/Deployment_Base.idl"
 #include "tao/StringSeq.pidl"
 #include "tao/ULongSeq.pidl"
 

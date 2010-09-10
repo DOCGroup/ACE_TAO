@@ -3,7 +3,7 @@
 #include "SHS_CORBA_Transport.h"
 #include "orbsvcs/CosNamingC.h"
 #include "DAnCE/DAnCE_PropertiesC.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 #include "LocalityManager/Scheduler/Plugin_Manager.h"
 
 namespace DAnCE

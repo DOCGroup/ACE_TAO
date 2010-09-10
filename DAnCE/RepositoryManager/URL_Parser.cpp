@@ -5,7 +5,7 @@
 #include "URL_Parser.h"
 #include "ace/ACE.h"
 
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 
 bool
 URL_Parser::parse_args (int argc, ACE_TCHAR *argv[])

@@ -4,7 +4,7 @@
 #include "DAnCE/DAnCE_PropertiesC.h"
 #include "Deployment/Deployment_StartErrorC.h"
 
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 
 #include <sstream>
 #include "ace/Auto_Ptr.h"

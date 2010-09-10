@@ -3,8 +3,8 @@
 #ifndef DOMAINAPPLICATIONMANAGER_IDL
 #define DOMAINAPPLICATIONMANAGER_IDL
 
-#include "DAnCE/Deployment/Deployment_DeploymentPlan.idl"
-#include "DAnCE/Deployment/Deployment_ApplicationManager.idl"
+#include "Deployment/Deployment_DeploymentPlan.idl"
+#include "Deployment/Deployment_ApplicationManager.idl"
 
 module Deployment {
   interface DomainApplicationManager : ApplicationManager

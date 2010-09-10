@@ -3,7 +3,7 @@
 #ifndef DEPLOYMENT_DATA_IDL
 #define DEPLOYMENT_DATA_IDL
 
-#include "DAnCE/Deployment/Deployment_DeploymentPlan.idl"
+#include "Deployment/Deployment_DeploymentPlan.idl"
 
 module Deployment {
   struct ComponentPackageReference {

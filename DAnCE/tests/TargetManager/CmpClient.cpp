@@ -9,8 +9,8 @@
  * TM to getAllResources and getAvailable resources
  */
 
-#include "DAnCE/Deployment/Deployment_DataC.h"
-#include "DAnCE/Deployment/Deployment_ResourceCommitmentManagerC.h"
+#include "Deployment/Deployment_DataC.h"
+#include "Deployment/Deployment_ResourceCommitmentManagerC.h"
 #include "DAnCE/TargetManager/TargetManagerC.h"
 #include "ace/streams.h"
 #include "ace/FILE_IO.h"

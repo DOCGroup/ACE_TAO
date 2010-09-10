@@ -2,12 +2,12 @@
 
 
 #include "ace/streams.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 
 #include "NodeApplicationManager_Impl.h"
 #include "NodeApplication/NodeApplication_Impl.h"
-#include "DAnCE/DAnCE/DAnCE_PropertiesC.h"
-#include "DAnCE/DAnCE/DAnCE_Utility.h"
+#include "DAnCE/DAnCE_PropertiesC.h"
+#include "DAnCE/DAnCE_Utility.h"
 #include "ace/Unbounded_Set.h"
 #include "tao/ORB.h"
 #include "tao/Object.h"

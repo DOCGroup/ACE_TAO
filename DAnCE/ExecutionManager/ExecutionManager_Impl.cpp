@@ -4,7 +4,7 @@
 #include "ExecutionManager_Impl.h"
 
 #include "Config_Handlers/DnC_Dump.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 
 using namespace DAnCE;
 

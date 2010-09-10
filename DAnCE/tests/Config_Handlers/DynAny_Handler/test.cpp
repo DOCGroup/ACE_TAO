@@ -4,7 +4,7 @@
 
 #include "Deployment.hpp"
 #include "DP_Handler.h"
-#include "DAnCE/Deployment/Deployment_DataC.h"
+#include "Deployment/Deployment_DataC.h"
 #include "ace/Get_Opt.h"
 #include "XML_Typedefs.h"
 #include "tao/ORB.h"

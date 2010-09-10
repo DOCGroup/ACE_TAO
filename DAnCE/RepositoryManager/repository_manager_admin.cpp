@@ -1,6 +1,6 @@
 // $Id$
 #include "repository_manager_admin.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 #include "RepositoryManagerDaemonC.h"
 
 namespace DAnCE

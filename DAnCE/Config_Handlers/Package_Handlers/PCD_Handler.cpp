@@ -1,7 +1,7 @@
 // $Id$
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-#include "DAnCE/Logger/Log_Macros.h"
-#include "DAnCE/Deployment/Deployment_Packaging_DataC.h"
+#include "Logger/Log_Macros.h"
+#include "Deployment/Deployment_Packaging_DataC.h"
 #include "XML_Typedefs.h"
 #include "XML/XercesString.h"
 #include "Utils/Exceptions.h"

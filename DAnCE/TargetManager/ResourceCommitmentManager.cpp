@@ -2,7 +2,7 @@
 //
 #include "ResourceCommitmentManager.h"
 #include "DomainDataManager.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 
 DAnCE::ResourceCommitmentManager_i::ResourceCommitmentManager_i (void)
 {

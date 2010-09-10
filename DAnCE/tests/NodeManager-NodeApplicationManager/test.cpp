@@ -1,6 +1,6 @@
 // $Id$
-#include "DAnCE/Deployment/Deployment_NodeManagerC.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Deployment/Deployment_NodeManagerC.h"
+#include "Logger/Log_Macros.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {

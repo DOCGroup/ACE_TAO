@@ -2,7 +2,7 @@
 
 #include "Node_Locator.h"
 #include "ace/Read_Buffer.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 
 namespace DAnCE
 {

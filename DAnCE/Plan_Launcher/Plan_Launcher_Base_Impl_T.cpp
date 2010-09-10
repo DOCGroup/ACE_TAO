@@ -12,7 +12,7 @@
 #include "Deployment/Deployment_PlanErrorC.h"
 #include "Deployment/Deployment_ApplicationC.h"
 #include "Deployment/Deployment_ApplicationManagerC.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 
 #include "Deployment_Failure.h"
 

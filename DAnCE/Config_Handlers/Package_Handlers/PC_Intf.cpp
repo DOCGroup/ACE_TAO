@@ -5,7 +5,7 @@
 #include "Deployment.hpp"
 #include "STD_PCD_Handler.h"
 #include "ciao/Packaging_DataC.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 
 namespace DAnCE
 {

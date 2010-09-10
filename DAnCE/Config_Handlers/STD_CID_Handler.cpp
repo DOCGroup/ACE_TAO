@@ -3,7 +3,7 @@
 #include "STD_CPD_Handler.h"
 #include "STD_IAD_Handler.h"
 #include "Basic_Deployment_Data.hpp"
-#include "DAnCE/Deployment/Deployment_DataC.h"
+#include "Deployment/Deployment_DataC.h"
 #include "Utils/XML_Helper.h"
 #include "Deployment.hpp"
 #include "Property_Handler.h"
