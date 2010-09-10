@@ -1,3 +1,9 @@
+Fri Sep 10 15:37:10 UTC 2010  William Otte  <wotte@zifnab>
+
+        * tools/IDL3_to_XMI:
+
+          Moving back to CIAO.
+
 Fri Sep 10 15:10:35 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE_Core.mpc:
