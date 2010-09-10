@@ -1,3 +1,9 @@
+Fri Sep 10 17:19:34 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/dance_tests.lst:
+
+          Moved appropriate tests to CIAO list.
+
 Fri Sep 10 17:19:06 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/dance_stub.mpb:
