@@ -1,0 +1,103 @@
+The LocalityManager is a deployment entity that can be easily extended
+through the use of user-provided functionality plug-ins.  These
+plug-ins fall into three categories:
+
+1) Installation Handlers - These handlers add the capability to
+install new instance types to the locality manager.  These plug-ins
+are implementations of the InstanceDeploymentHandler interface found
+in DAnCE_LocalityManager.idl.
+
+2) Deployment Interceptors - These plug ins allow users to customize
+the behavior of DAnCE and are invoked before and after most major
+instance lifecycle events.  These are implementations of the
+DeploymentInterceptor interface found in
+DAnCE_DeploymentInterceptors.idl.
+
+3) Locality Configurators - These are invoked when the locality
+manager is launched and used to, for example, modify process
+parameters of the locality manager itself.  These are implementations
+of the LocalityConfiguration interface found in
+DAnCE_LocalityManager.idl.
+
+These plug-ins are loaded by the LocalityManager by using a factory
+function.  This factory function must be declared as 'extern "C"',
+take no arguments, and have a return value of the IDL interface type,
+e.g.:
+
+extern "C"
+{
+  ::DAnCE::LocalityConfiguration_ptr create_My_Plugin (void);
+}
+
+Note, however, that both symbols for this factory method and the plugin
+implementation itself must be exported by the compiler.  To accomplish
+this, it is suggested that you use the perl script found in
+ACE_ROOT/bin/generate_export_file.pl to create an export header, e.g.:
+
+$ACE_ROOT/bin/generate_export_file.pl MyPlugin > MyPlugin_export.h
+
+This generated header file contains preprocessor macros that will
+resolve to the platform specific export dectorators at compile time.
+In this case, the factory method must be declared thusly:
+
+extern "C"
+{
+  ::DAnCE::LocalityConfiguration_ptr MyPlugin_Export create_My_Plugin (void);
+}
+
+and the MPC file must have the following line:
+
+  dynamicflags += MYPLUGIN_BUILD_DLL
+
+The interceptor/installation handler/configuration plug-ins are loaded
+in the LocalityManager by means of a configuration file that is read
+at run-time.  By default,it loads a configuration from 
+
+DANCE_ROOT/bin/ciao.localityconfig
+
+The file format should be fairly self explanatory, but for a brief
+reference, it expects lines in the following format:
+
+<plug-in instance type>  <artifact name>  <artifact entrypoint>
+
+e.g.:
+
+edu.vanderbilt.dre.DAnCE.InstanceHandler CIAO_Deployment_Handlers create_Container_Handler
+edu.vanderbilt.dre.DAnCE.InstanceHandler CIAO_Deployment_Handlers create_Home_Handler
+edu.vanderbilt.dre.DAnCE.InstanceHandler CIAO_Deployment_Handlers create_Component_Handler
+edu.vanderbilt.dre.DAnCE.InstanceHandler CIAO_Deployment_Handlers create_Homed_Component_Handler
+edu.vanderbilt.dre.DAnCE.DeploymentInterceptor CIAO_Deployment_Interceptors create_CIAO_StoreReferences
+edu.vanderbilt.dre.DAnCE.DeploymentInterceptor DAnCE_Error_Interceptors create_DAnCE_Standard_Error
+edu.vanderbilt.dre.DAnCE.ConfigPlugin DAnCE_LM_Config_Plugins create_Process_Name
+edu.vanderbilt.dre.DAnCE.ConfigPlugin DAnCE_LM_Config_Plugins create_Process_Priority
+edu.vanderbilt.dre.DAnCE.ConfigPlugin DAnCE_LM_Config_Plugins create_CPU_Affinity
+
+This allows you to load plug-ins at runtime without having to modify
+the source code of the locality manager.  Note that this configuration
+ability only applies currently to the locality manager.   There are
+two ways alternate configuration files can be provided to the locality
+manager:  1) as a command line option specified on an explicit
+locality manager instance in the deployment plan, and 2) as a command
+line option to the dance_node_manager.   An example of (1) can be
+found at DAnCE/tests/CIAO/Executor-Destructor (look in Component.cdp),
+and an example of (2) can be found at
+CIAO/examples/Hello/descriptors/run_test_shs.pl (note the additional
+command line option --locality-config on the node manager).   (1) will
+apply only to an individual locality instance, (2) will apply to ALL
+locality instances spawned by the node manager.
+
+The dance_node_manager currently loads the following plug-ins:
+.  Locality Manager installation handler
+.  SH&S interceptor
+.  Best-effort or standard error interceptor, based on the
+   --best-effort command line option.  
+
+The --best-effort command line option now only applies to the node
+manager, best effort deployment semantics are requested for the
+locality manager by supplying the following line in the localityconfig
+file in lieu of the standard error interceptor:
+
+edu.vanderbilt.dre.DAnCE.DeploymentInterceptor DAnCE_Error_Interceptors create_DAnCE_Best_Effort
+
+
+
