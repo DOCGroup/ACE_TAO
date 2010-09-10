@@ -6,7 +6,7 @@
 #include "ace/OS_NS_unistd.h"        //for close
 #include "ace/OS_NS_sys_stat.h"      //for filesize and mkdir
 #include "ace/OS_NS_string.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 
 void
 RM_Helper::pc_to_cdr (const Deployment::PackageConfiguration& pc, TAO_OutputCDR& cdr)

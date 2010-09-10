@@ -18,7 +18,7 @@
 #include "ace/Map_Manager.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "tao/ORB.h"
-#include "DAnCE/Deployment/Deployment_NodeManagerC.h"
+#include "Deployment/Deployment_NodeManagerC.h"
 #include "DomainApplicationManager/DomainApplicationManager_Export.h"
 
 namespace DAnCE

@@ -5,9 +5,9 @@
 #include "ace/Get_Opt.h"
 #include "tao/ORB.h"
 #include "tao/Object.h"
-#include "DAnCE/Logger/Log_Macros.h"
-#include "DAnCE/Logger/Logger_Service.h"
-#include "DAnCE/tools/Convert_Plan/Convert_Plan_Impl.h"
+#include "Logger/Log_Macros.h"
+#include "Logger/Logger_Service.h"
+#include "tools/Convert_Plan/Convert_Plan_Impl.h"
 
 #include "EM_Launcher.h"
 #include "NM_Launcher.h"

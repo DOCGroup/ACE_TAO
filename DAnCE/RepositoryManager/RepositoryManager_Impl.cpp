@@ -31,9 +31,9 @@
 #include "ace/Malloc_Allocator.h"       //for ACE_New_Allocator
 
 //for the PackageConfiguration parsing
-#include "DAnCE/Deployment/Deployment_DataC.h"
-#include "DAnCE/Deployment/Deployment_Packaging_DataC.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Deployment/Deployment_DataC.h"
+#include "Deployment/Deployment_Packaging_DataC.h"
+#include "Logger/Log_Macros.h"
 
 #include "Package_Handlers/PCD_Handler.h"
 #include "XML_Typedefs.h"

@@ -3,7 +3,7 @@
 #ifndef RESOURCE_COMMITMENT_MANAGER_IDL
 #define RESOURCE_COMMITMENT_MANAGER_IDL
 
-#include "DAnCE/Deployment/Deployment_Base.idl"
+#include "Deployment/Deployment_Base.idl"
 #include "tao/AnyTypeCode/AnySeq.pidl"
 
 module Deployment {

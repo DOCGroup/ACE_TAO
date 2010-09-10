@@ -3,7 +3,7 @@
 #include "Plugin_Conf.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Tokenizer_T.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 #include "DAnCE/DAnCE_PropertiesC.h"
 
 #include "Inst_Handler_Impl.h"

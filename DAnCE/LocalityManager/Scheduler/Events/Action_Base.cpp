@@ -2,7 +2,7 @@
 #include "Action_Base.h"
 
 #include "tao/AnyTypeCode/ExceptionA.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 #include "DAnCE/DAnCE_Utility.h"
 
 namespace DAnCE

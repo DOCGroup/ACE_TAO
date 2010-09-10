@@ -4,7 +4,7 @@
 #include "Package_Handlers/CID_Handler.h"
 #include "Package_Handlers/Comp_Intf_Descr_Handler.h"
 #include "Basic_Deployment_Data.hpp"
-#include "DAnCE/Deployment/Deployment_Packaging_DataC.h"
+#include "Deployment/Deployment_Packaging_DataC.h"
 #include "Deployment.hpp"
 #include "Utils/Exceptions.h"
 #include "Property_Handler.h"

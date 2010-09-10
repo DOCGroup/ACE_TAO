@@ -7,7 +7,7 @@
  */
 
 #include "Locality_Manager_Task.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {

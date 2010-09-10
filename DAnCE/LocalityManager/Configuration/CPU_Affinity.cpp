@@ -4,7 +4,7 @@
 #include "DAnCE/DAnCE_PropertiesC.h"
 #include "Deployment/Deployment_StartErrorC.h"
 
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 
 #if defined (LINUX_VERSION_CODE) && defined (KERNEL_VERSION)
 # if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,8))

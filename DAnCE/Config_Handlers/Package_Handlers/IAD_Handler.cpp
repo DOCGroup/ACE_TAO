@@ -9,7 +9,7 @@
 #include "XML_Typedefs.h"
 
 #include "Deployment.hpp"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 
 namespace DAnCE
 {

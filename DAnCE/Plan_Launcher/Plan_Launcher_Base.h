@@ -12,7 +12,7 @@
 
 #include "Deployment/Deployment_DeploymentPlanC.h"
 #include "Deployment/Deployment_ConnectionC.h"
-#include "DAnCE/Plan_Launcher/Plan_Launcher_Export.h"
+#include "Plan_Launcher/Plan_Launcher_Export.h"
 
 namespace DAnCE
 {

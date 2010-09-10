@@ -10,7 +10,7 @@
 #include "Req_Handler.h"
 
 #include "Basic_Deployment_Data.hpp"
-#include "DAnCE/Deployment/Deployment_DataC.h"
+#include "Deployment/Deployment_DataC.h"
 #include "XML_Typedefs.h"
 #include "Utils/Exceptions.h"
 

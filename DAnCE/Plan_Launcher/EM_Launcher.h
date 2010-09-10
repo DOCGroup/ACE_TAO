@@ -12,10 +12,10 @@
 
 #include "Plan_Launcher_Base_Impl_T.h"
 
-#include "DAnCE/Deployment/Deployment_DomainApplicationC.h"
-#include "DAnCE/Deployment/Deployment_DomainApplicationManagerC.h"
-#include "DAnCE/Deployment/Deployment_ExecutionManagerC.h"
-#include "DAnCE/Plan_Launcher/Plan_Launcher_Export.h"
+#include "Deployment/Deployment_DomainApplicationC.h"
+#include "Deployment/Deployment_DomainApplicationManagerC.h"
+#include "Deployment/Deployment_ExecutionManagerC.h"
+#include "Plan_Launcher/Plan_Launcher_Export.h"
 
 namespace DAnCE
 {

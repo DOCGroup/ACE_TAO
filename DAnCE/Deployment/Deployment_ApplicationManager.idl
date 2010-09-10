@@ -4,13 +4,13 @@
 #ifndef DEPLOYMENT_APPLICATIONMANAGER_IDL
 #define DEPLOYMENT_APPLICATIONMANAGER_IDL
 
-#include "DAnCE/Deployment/Deployment.idl"
-#include "DAnCE/Deployment/Deployment_InvalidProperty.idl"
-#include "DAnCE/Deployment/Deployment_Application.idl"
-#include "DAnCE/Deployment/Deployment_Connection.idl"
-#include "DAnCE/Deployment/Deployment_ResourceNotAvailable.idl"
-#include "DAnCE/Deployment/Deployment_InvalidNodeExecParameter.idl"
-#include "DAnCE/Deployment/Deployment_InvalidComponentExecParameter.idl"
+#include "Deployment/Deployment.idl"
+#include "Deployment/Deployment_InvalidProperty.idl"
+#include "Deployment/Deployment_Application.idl"
+#include "Deployment/Deployment_Connection.idl"
+#include "Deployment/Deployment_ResourceNotAvailable.idl"
+#include "Deployment/Deployment_InvalidNodeExecParameter.idl"
+#include "Deployment/Deployment_InvalidComponentExecParameter.idl"
 
 module Deployment {
 

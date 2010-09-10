@@ -10,8 +10,8 @@
 #ifndef PLAN_LAUNCHER_BASE_IMPL_H
 #define PLAN_LAUNCHER_BASE_IMPL_H
 
-#include "DAnCE/Deployment/Deployment_ConnectionC.h"
-#include "DAnCE/Deployment/Deployment_DeploymentPlanC.h"
+#include "Deployment/Deployment_ConnectionC.h"
+#include "Deployment/Deployment_DeploymentPlanC.h"
 
 #include "Plan_Launcher_Base.h"
 

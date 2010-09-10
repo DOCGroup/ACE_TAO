@@ -3,7 +3,7 @@
 #ifndef DEPLOYMENT_DEPLOYMENTPLAN_IDL
 #define DEPLOYMENT_DEPLOYMENTPLAN_IDL
 
-#include "DAnCE/Deployment/Deployment_Base.idl"
+#include "Deployment/Deployment_Base.idl"
 #include "tao/StringSeq.pidl"
 #include "tao/ULongSeq.pidl"
 #include "tao/Typecode_types.pidl"

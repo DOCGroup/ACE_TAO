@@ -3,7 +3,7 @@
 #include "LocalityActivator_Impl.h"
 #include "ace/Log_Msg.h"
 #include "ace/UUID.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 #include "DAnCE/DAnCE_PropertiesC.h"
 #include "tao/ORB_Core.h"
 #include "LocalityManager/Scheduler/Plugin_Manager.h"

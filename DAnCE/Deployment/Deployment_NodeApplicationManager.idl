@@ -2,7 +2,7 @@
 #ifndef NODEAPPLICATIONMANAGER_IDL
 #define NODEAPPLICATIONMANAGER_IDL
 
-#include "DAnCE/Deployment/Deployment_ApplicationManager.idl"
+#include "Deployment/Deployment_ApplicationManager.idl"
 
 module Deployment {
   interface NodeApplicationManager :

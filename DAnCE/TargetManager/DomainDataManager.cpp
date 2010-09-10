@@ -3,7 +3,7 @@
 #include "Deployment/Deployment_NodeManagerC.h"
 
 #include "Config_Handlers/XML_File_Intf.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "Logger/Log_Macros.h"
 
 #ifdef GEN_OSTREAM_OPS
 #include <iostream>

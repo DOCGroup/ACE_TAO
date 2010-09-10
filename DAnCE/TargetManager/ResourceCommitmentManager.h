@@ -11,7 +11,7 @@
 #ifndef DEPLOYMENT_RESOURCECOMMITMENTMANAGERI_H_
 #define DEPLOYMENT_RESOURCECOMMITMENTMANAGERI_H_
 
-#include "DAnCE/Deployment/Deployment_ResourceCommitmentManagerS.h"
+#include "Deployment/Deployment_ResourceCommitmentManagerS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

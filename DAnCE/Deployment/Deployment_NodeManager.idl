@@ -2,10 +2,10 @@
 #ifndef DEPLOYMENT_NODEMANAGER_IDL
 #define DEPLOYMENT_NODEMANAGER_IDL
 
-#include "DAnCE/Deployment/Deployment.idl"
-#include "DAnCE/Deployment/Deployment_TargetManager.idl"
-#include "DAnCE/Deployment/Deployment_NodeApplicationManager.idl"
-#include "DAnCE/Deployment/Deployment_PlanError.idl"
+#include "Deployment/Deployment.idl"
+#include "Deployment/Deployment_TargetManager.idl"
+#include "Deployment/Deployment_NodeApplicationManager.idl"
+#include "Deployment/Deployment_PlanError.idl"
 
 module Deployment {
 
