@@ -13,6 +13,16 @@ namespace CIAO
 {
   Container_Handler_i::Container_Handler_i (void)
   {
+    // Also initialize CIAO logger since we reuse parts of CIAO in the locality manager
+    CIAO::Logger_Service
+      * clf = ACE_Dynamic_Service<CIAO::Logger_Service>::instance ("CIAO_Logger");
+    
+    if (clf)
+      {
+        clf->init (argc, argv);
+      }
+    
+
     CIAO_TRACE ("Container_Handler_i::Container_Handler_i");
   }
   
@@ -247,6 +257,7 @@ namespace CIAO
       }
     
     CIAO::Server_init (orb_);
+
     
     // For the time being, we are going to go ahead and construct a container.
     ::Deployment::DeploymentPlan plan;
