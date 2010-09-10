@@ -1,3 +1,11 @@
+Fri Sep 10 17:06:53 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+
+          Compile fixes for separated DAnCE.
+
 Fri Sep 10 15:48:45 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/xscdefaults.mpb:
