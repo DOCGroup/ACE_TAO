@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : dance_config_handlers, dance_deployment_stub, dance_tools {
-   after += DAnCE_Convert_Plan
-   libs += DAnCE_Convert_Plan
-}
