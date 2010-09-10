@@ -698,7 +698,6 @@ nobase_include_HEADERS += \
   Message_Queue_T.h \
   Message_Queue_Vx.h \
   Message_Queue_Vx.inl \
-  Method_Object.h \
   Method_Request.h \
   Min_Max.h \
   Module.cpp \
@@ -741,7 +740,6 @@ nobase_include_HEADERS += \
   Obstack.h \
   OS.h \
   OS.inl \
-  OS_Dirent.h \
   OS_Errno.h \
   OS_Errno.inl \
   OS_Log_Msg_Attributes.h \
@@ -816,7 +814,6 @@ nobase_include_HEADERS += \
   OS_NS_wctype.inl \
   OS_NS_wchar.inl \
   OS_QoS.h \
-  OS_String.h \
   OS_TLI.h \
   OS_TLI.inl \
   OS_Thread_Adapter.h \
@@ -837,7 +834,6 @@ nobase_include_HEADERS += \
   POSIX_Proactor.inl \
   Pagefile_Memory_Pool.h \
   Pagefile_Memory_Pool.inl \
-  Pair.h \
   Pair_T.cpp \
   Pair_T.h \
   Pair_T.inl \
@@ -883,7 +879,6 @@ nobase_include_HEADERS += \
   Recursive_Thread_Mutex.inl \
   Recyclable.h \
   Recyclable.inl \
-  Refcountable.h \
   Refcountable_T.cpp \
   Refcountable_T.h \
   Refcountable_T.inl \
