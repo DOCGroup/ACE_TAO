@@ -117,10 +117,10 @@ test_get_named_facets (::Components::Navigation_ptr nav)
   ACE_DEBUG ((LM_DEBUG, "Start test: Navigation test_get_named_facets\n"));
   try
     {
-      ::Components::NameList names;
+      ::Components::NameList names (2);
       names.length (2);
-      names[0] = CORBA::string_dup ("navigation_foo");
-      names[1] = CORBA::string_dup ("inherited_foo");
+      names[0] = CORBA::string_dup ("provide_cif_foo");
+      names[1] = CORBA::string_dup ("provide_cif_inherited_foo");
       ::Components::FacetDescriptions_var named_facets = nav->get_named_facets (names);
 
       if (named_facets->length () != 2)
@@ -153,8 +153,8 @@ test_get_named_facets (::Components::Navigation_ptr nav)
     {
       ::Components::NameList names;
       names.length (2);
-      names[0] = CORBA::string_dup ("navigation_foo_1");
-      names[1] = CORBA::string_dup ("inherited_foo_1");
+      names[0] = CORBA::string_dup ("provide_cif_foo_invalid_name");
+      names[1] = CORBA::string_dup ("provide_cif_inherited_foo_invalid_name");
       ::Components::FacetDescriptions_var named_facets = nav->get_named_facets (names);
       ACE_ERROR ((LM_ERROR, "Navigation test_get_named_facets - "
                             "Error: No InvalidName exception caught "
@@ -230,11 +230,11 @@ run_test (::Components::Navigation_ptr nav)
 //    - get_all_facets
 //    - get_named_facets
 
-//   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
-//   ret += test_get_all_facets (nav);
+//    ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+//    ret += test_get_all_facets (nav);
 
-//   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
-//   ret += test_get_named_facets (nav);
+//    ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+//    ret += test_get_named_facets (nav);
 
   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
   ret += test_same_component (nav);
