@@ -1,7 +1,7 @@
 // $Id$
 
 project (DAnCE_LocalityManager_ExplicitExec) : \
-        dance_locality_manager, ciao_logger {
+        dance_locality_manager, dance_logger {
   exename = explicit_exec
   libs += CIAO_Deployment_Handlers
   after += CIAO_Deployment_Handlers 
