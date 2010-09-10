@@ -19,7 +19,7 @@ workspace {
   $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService.mpc
   ccm
   ciao
-  DAnCE
+  $(DANCE_ROOT)
   tools
   connectors
   tests

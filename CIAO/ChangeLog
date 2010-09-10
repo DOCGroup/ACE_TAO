@@ -1,3 +1,17 @@
+Fri Sep 10 15:46:30 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIAO_DAnCE.mwc:
+        * CIAO_TAO.mwc:
+        * CIAO_TAO_DAnCE.mwc:
+
+          Refer to DAnCE using an environment variable.
+
+Fri Sep 10 14:44:35 UTC 2010  William Otte  <wotte@zifnab>
+
+        * DAnCE:
+
+          Moved DAnCE to root of DOC repository.
+
 Fri Sep 10 10:54:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Common/CIF_Common.mpc:
