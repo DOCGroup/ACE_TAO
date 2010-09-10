@@ -1,3 +1,8 @@
+Fri Sep 10 11:07:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/TSS_T.h:
+          Resolved compile issue regarding ACE_Copy_Disabled class.
+
 Fri Sep 10 07:36:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * ace/Thread_Control.inl:
