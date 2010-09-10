@@ -1,0 +1,20 @@
+// $Id$
+
+#ifndef TEST_IDL
+#define TEST_IDL
+
+module TestXMIArray {
+  typedef char CharArray [4][5];
+
+  struct A
+  {
+    CharArray bar;
+  };
+
+  struct B
+  {
+    char bar[3][2];
+  };
+};
+
+#endif // TEST_IDL
