@@ -1,3 +1,9 @@
+Fri Sep 10 15:48:45 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/xscdefaults.mpb:
+
+          Moved to MPC repository.
+
 Fri Sep 10 15:48:20 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/IDL3_to_XMI:
