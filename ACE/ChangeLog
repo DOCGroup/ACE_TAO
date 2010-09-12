@@ -1,7 +1,13 @@
+Sun Sep 12 19:27:58 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/make_release.py:
+
+          Some updates to handle moved DAnCE package.
+
 Sun Sep 12 19:22:21 UTC 2010  William Otte  <wotte@zifnab>
 
         * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
-        *        bin/MakeProjectCreator/templates/:
+        * bin/MakeProjectCreator/templates/:
 
           Added rules to pullin rules.dance.GNU.
 
