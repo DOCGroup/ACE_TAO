@@ -1,7 +1,7 @@
 // $Id$
 
 #include "SimpleEmitter_exec.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO_Simple_SimpleEmitter_Impl
 {
@@ -11,12 +11,12 @@ namespace CIAO_Simple_SimpleEmitter_Impl
 
   SimpleEmitter_exec_i::SimpleEmitter_exec_i (void)
   {
-    DANCE_TRACE ("SimpleEmitter_exec_i::SimpleEmitter_exec_i (void)");
+    CIAO_TRACE ("SimpleEmitter_exec_i::SimpleEmitter_exec_i (void)");
   }
 
   SimpleEmitter_exec_i::~SimpleEmitter_exec_i (void)
   {
-    DANCE_TRACE ("SimpleEmitter_exec_i::~SimpleEmitter_exec_i (void)");
+    CIAO_TRACE ("SimpleEmitter_exec_i::~SimpleEmitter_exec_i (void)");
   }
 
   // Supported or inherited operations.
@@ -31,7 +31,7 @@ namespace CIAO_Simple_SimpleEmitter_Impl
   SimpleEmitter_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    DANCE_TRACE ("SimpleEmitter_exec_i::set_session_context ()");
+    CIAO_TRACE ("SimpleEmitter_exec_i::set_session_context ()");
     this->context_ =
       ::Simple::CCM_SimpleEmitter_Context::_narrow (ctx);
 
@@ -44,14 +44,14 @@ namespace CIAO_Simple_SimpleEmitter_Impl
   void
   SimpleEmitter_exec_i::configuration_complete ()
   {
-    DANCE_TRACE ("SimpleEmitter_exec_i::configuration_complete ()");
+    CIAO_TRACE ("SimpleEmitter_exec_i::configuration_complete ()");
     // Your code here.
   }
 
   void
   SimpleEmitter_exec_i::ccm_activate ()
   {
-    DANCE_TRACE ("SimpleEmitter_exec_i::ccm_activate ()");
+    CIAO_TRACE ("SimpleEmitter_exec_i::ccm_activate ()");
     // Your code here.
 
     ::Simple::Hello_var hello = new OBV_Simple::Hello ("Test successful, hello from SimpleEmitter_exec_i");
@@ -62,14 +62,14 @@ namespace CIAO_Simple_SimpleEmitter_Impl
   void
   SimpleEmitter_exec_i::ccm_passivate ()
   {
-    DANCE_TRACE ("SimpleEmitter_exec_i::ccm_passivate ()");
+    CIAO_TRACE ("SimpleEmitter_exec_i::ccm_passivate ()");
     // Your code here.
   }
 
   void
   SimpleEmitter_exec_i::ccm_remove ()
   {
-    DANCE_TRACE ("SimpleEmitter_exec_i::ccm_remove ()");
+    CIAO_TRACE ("SimpleEmitter_exec_i::ccm_remove ()");
     // Your code here.
   }
 
@@ -79,12 +79,12 @@ namespace CIAO_Simple_SimpleEmitter_Impl
 
   SimpleEmitterHome_exec_i::SimpleEmitterHome_exec_i (void)
   {
-    DANCE_TRACE ("SimpleEmitterHome_exec_i::SimpleEmitterHome_exec_i (void)");
+    CIAO_TRACE ("SimpleEmitterHome_exec_i::SimpleEmitterHome_exec_i (void)");
   }
 
   SimpleEmitterHome_exec_i::~SimpleEmitterHome_exec_i (void)
   {
-    DANCE_TRACE ("SimpleEmitterHome_exec_i::~SimpleEmitterHome_exec_i (void)");
+    CIAO_TRACE ("SimpleEmitterHome_exec_i::~SimpleEmitterHome_exec_i (void)");
   }
 
   // Supported or inherited operations.
@@ -100,7 +100,7 @@ namespace CIAO_Simple_SimpleEmitter_Impl
   ::Components::EnterpriseComponent_ptr
   SimpleEmitterHome_exec_i::create ()
   {
-    DANCE_TRACE ("SimpleEmitterHome_exec_i::create ()");
+    CIAO_TRACE ("SimpleEmitterHome_exec_i::create ()");
 
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
@@ -116,7 +116,7 @@ namespace CIAO_Simple_SimpleEmitter_Impl
   extern "C" SIMPLEEMITTER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Simple_SimpleEmitterHome_Impl (void)
   {
-    DANCE_TRACE ("create_Simple_SimpleEmitterHome_Impl (void)");
+    CIAO_TRACE ("create_Simple_SimpleEmitterHome_Impl (void)");
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
 

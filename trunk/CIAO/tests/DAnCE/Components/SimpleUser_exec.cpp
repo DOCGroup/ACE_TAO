@@ -1,7 +1,7 @@
 // $Id$
 
 #include "SimpleUser_exec.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO_Simple_SimpleUser_Impl
 {
@@ -11,12 +11,12 @@ namespace CIAO_Simple_SimpleUser_Impl
 
   SimpleUser_exec_i::SimpleUser_exec_i (void)
   {
-    DANCE_TRACE ("SimpleUser_exec_i::SimpleUser_exec_i (void)");
+    CIAO_TRACE ("SimpleUser_exec_i::SimpleUser_exec_i (void)");
   }
 
   SimpleUser_exec_i::~SimpleUser_exec_i (void)
   {
-    DANCE_TRACE ("SimpleUser_exec_i::~SimpleUser_exec_i (void)");
+    CIAO_TRACE ("SimpleUser_exec_i::~SimpleUser_exec_i (void)");
   }
 
   // Supported or inherited operations.
@@ -31,7 +31,7 @@ namespace CIAO_Simple_SimpleUser_Impl
   SimpleUser_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    DANCE_TRACE ("SimpleUser_exec_i::set_session_context ()");
+    CIAO_TRACE ("SimpleUser_exec_i::set_session_context ()");
     this->context_ =
       ::Simple::CCM_SimpleUser_Context::_narrow (ctx);
 
@@ -44,14 +44,14 @@ namespace CIAO_Simple_SimpleUser_Impl
   void
   SimpleUser_exec_i::configuration_complete ()
   {
-    DANCE_TRACE ("SimpleUser_exec_i::configuration_complete ()");
+    CIAO_TRACE ("SimpleUser_exec_i::configuration_complete ()");
     // Your code here.
   }
 
   void
   SimpleUser_exec_i::ccm_activate ()
   {
-    DANCE_TRACE ("SimpleUser_exec_i::ccm_activate ()");
+    CIAO_TRACE ("SimpleUser_exec_i::ccm_activate ()");
 
     ::Simple::Trigger_var trig (this->context_->get_connection_trig ());
 
@@ -83,14 +83,14 @@ namespace CIAO_Simple_SimpleUser_Impl
   void
   SimpleUser_exec_i::ccm_passivate ()
   {
-    DANCE_TRACE ("SimpleUser_exec_i::ccm_passivate ()");
+    CIAO_TRACE ("SimpleUser_exec_i::ccm_passivate ()");
     // Your code here.
   }
 
   void
   SimpleUser_exec_i::ccm_remove ()
   {
-    DANCE_TRACE ("SimpleUser_exec_i::ccm_remove ()");
+    CIAO_TRACE ("SimpleUser_exec_i::ccm_remove ()");
     // Your code here.
   }
 
@@ -100,12 +100,12 @@ namespace CIAO_Simple_SimpleUser_Impl
 
   SimpleUserHome_exec_i::SimpleUserHome_exec_i (void)
   {
-    DANCE_TRACE ("SimpleUserHome_exec_i::SimpleUserHome_exec_i (void)");
+    CIAO_TRACE ("SimpleUserHome_exec_i::SimpleUserHome_exec_i (void)");
   }
 
   SimpleUserHome_exec_i::~SimpleUserHome_exec_i (void)
   {
-    DANCE_TRACE ("SimpleUserHome_exec_i::~SimpleUserHome_exec_i (void)");
+    CIAO_TRACE ("SimpleUserHome_exec_i::~SimpleUserHome_exec_i (void)");
   }
 
   // Supported or inherited operations.
@@ -121,7 +121,7 @@ namespace CIAO_Simple_SimpleUser_Impl
   ::Components::EnterpriseComponent_ptr
   SimpleUserHome_exec_i::create ()
   {
-    DANCE_TRACE ("SimpleUserHome_exec_i::create ()");
+    CIAO_TRACE ("SimpleUserHome_exec_i::create ()");
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
 
@@ -136,7 +136,7 @@ namespace CIAO_Simple_SimpleUser_Impl
   extern "C" SIMPLEUSER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Simple_SimpleUserHome_Impl (void)
   {
-    DANCE_TRACE ("create_Simple_SimpleUserHome_Impl (void)");
+    CIAO_TRACE ("create_Simple_SimpleUserHome_Impl (void)");
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
 

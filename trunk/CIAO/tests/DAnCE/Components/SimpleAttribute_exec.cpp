@@ -1,7 +1,7 @@
 // $Id$
 
 #include "SimpleAttribute_exec.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO_Simple_SimpleAttribute_Impl
 {
@@ -34,7 +34,7 @@ namespace CIAO_Simple_SimpleAttribute_Impl
   void
   SimpleAttribute_exec_i::str_attr (const char * str)
   {
-    DANCE_TRACE ("SimpleAttribute_exec_i::str_attr");
+    CIAO_TRACE ("SimpleAttribute_exec_i::str_attr");
     // Your code here.
     this->str_ = str;
   }
@@ -42,7 +42,7 @@ namespace CIAO_Simple_SimpleAttribute_Impl
   ::CORBA::Long
   SimpleAttribute_exec_i::long_attr ()
   {
-    DANCE_TRACE ("SimpleAttribute_exec_i::long_attr");
+    CIAO_TRACE ("SimpleAttribute_exec_i::long_attr");
     // Your code here.
     return long_;
   }
@@ -50,7 +50,7 @@ namespace CIAO_Simple_SimpleAttribute_Impl
   void
   SimpleAttribute_exec_i::long_attr (::CORBA::Long long_attr )
   {
-    DANCE_TRACE ("SimpleAttribute_exec_i::long_attr");
+    CIAO_TRACE ("SimpleAttribute_exec_i::long_attr");
     // Your code here.
     this->long_ = long_attr;
   }
@@ -65,7 +65,7 @@ namespace CIAO_Simple_SimpleAttribute_Impl
   void
   SimpleAttribute_exec_i::short_attr (::CORBA::Short short_attr )
   {
-    DANCE_TRACE ("SimpleAttribute_exec_i::short_attr");
+    CIAO_TRACE ("SimpleAttribute_exec_i::short_attr");
     // Your code here.
     this->short_ = short_attr;
   }
@@ -159,7 +159,7 @@ namespace CIAO_Simple_SimpleAttribute_Impl
   void
   SimpleAttributeHome_exec_i::str_attr (const char * str)
   {
-    DANCE_TRACE ("SimpleAttributeHome_exec_i::str_attr");
+    CIAO_TRACE ("SimpleAttributeHome_exec_i::str_attr");
     // Your code here.
     this->str_ = str;
   }
@@ -167,7 +167,7 @@ namespace CIAO_Simple_SimpleAttribute_Impl
   ::CORBA::Long
   SimpleAttributeHome_exec_i::long_attr ()
   {
-    DANCE_TRACE ("SimpleAttributeHome_exec_i::long_attr");
+    CIAO_TRACE ("SimpleAttributeHome_exec_i::long_attr");
     // Your code here.
     return long_;
   }
@@ -175,7 +175,7 @@ namespace CIAO_Simple_SimpleAttribute_Impl
   void
   SimpleAttributeHome_exec_i::long_attr (::CORBA::Long long_attr )
   {
-    DANCE_TRACE ("SimpleAttributeHome_exec_i::long_attr");
+    CIAO_TRACE ("SimpleAttributeHome_exec_i::long_attr");
     // Your code here.
     this->long_ = long_attr;
   }
@@ -190,7 +190,7 @@ namespace CIAO_Simple_SimpleAttribute_Impl
   void
   SimpleAttributeHome_exec_i::short_attr (::CORBA::Short short_attr )
   {
-    DANCE_TRACE ("SimpleAttributeHome_exec_i::short_attr");
+    CIAO_TRACE ("SimpleAttributeHome_exec_i::short_attr");
     // Your code here.
     this->short_ = short_attr;
   }
