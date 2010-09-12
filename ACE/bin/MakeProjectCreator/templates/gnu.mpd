@@ -37,11 +37,14 @@ static_libs_only = 1
 SHLIB_UNCHECKED  = $(LIB_PREFIX)<%libname_prefix%><%sharedname%>.$(SOEXT)
 SHLIB            = $(SHLIB_UNCHECKED)
 <%endif%>
-<%if(tao || ciao)%>
+<%if(tao || ciao || dance)%>
 
 TAO_ROOT  ?= $(ACE_ROOT)/TAO
 <%if(ciao)%>
 CIAO_ROOT ?= $(TAO_ROOT)/CIAO
+<%endif%>
+<%if(dance)%>
+DANCE_ROOT ?= $(TAO_ROOT)/DAnCE
 <%endif%>
 <%endif%>
 
@@ -184,6 +187,9 @@ endif # versioned_so
 <%marker(extension)%>
 <%if(ciao)%>
 include $(CIAO_ROOT)/rules.ciao.GNU
+<%endif%>
+<%if(dance)%>
+include $(DANCE_ROOT)/rules.dance.GNU
 <%endif%>
 <%if(tao)%>
 include $(TAO_ROOT)/rules.tao.GNU
