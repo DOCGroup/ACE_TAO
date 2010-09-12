@@ -1,7 +1,7 @@
 // $Id$
 
 #include "SimpleProvider_exec.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO_Simple_SimpleProvider_Impl
 {
@@ -12,12 +12,12 @@ namespace CIAO_Simple_SimpleProvider_Impl
   Trigger_exec_i::Trigger_exec_i (bool &triggered)
     : triggered_ (triggered)
   {
-    DANCE_TRACE ("Trigger_exec_i::Trigger_exec_i (void)");
+    CIAO_TRACE ("Trigger_exec_i::Trigger_exec_i (void)");
   }
 
   Trigger_exec_i::~Trigger_exec_i (void)
   {
-    DANCE_TRACE ("Trigger_exec_i::~Trigger_exec_i (void)");
+    CIAO_TRACE ("Trigger_exec_i::~Trigger_exec_i (void)");
   }
 
   // Operations from ::Simple::Trigger
@@ -26,7 +26,7 @@ namespace CIAO_Simple_SimpleProvider_Impl
   Trigger_exec_i::hello (
     const char * hello )
   {
-    DANCE_TRACE ("Trigger_exec_i::hello ()");
+    CIAO_TRACE ("Trigger_exec_i::hello ()");
     this->triggered_ = true;
     // Your code here.
     ACE_DEBUG ((LM_EMERGENCY, "Trigger_exec_i::hello - "
@@ -41,12 +41,12 @@ namespace CIAO_Simple_SimpleProvider_Impl
   SimpleProvider_exec_i::SimpleProvider_exec_i (void)
     : triggered_ (false)
   {
-    DANCE_TRACE ("SimpleProvider_exec_i::SimpleProvider_exec_i (void)");
+    CIAO_TRACE ("SimpleProvider_exec_i::SimpleProvider_exec_i (void)");
   }
 
   SimpleProvider_exec_i::~SimpleProvider_exec_i (void)
   {
-    DANCE_TRACE ("SimpleProvider_exec_i::~SimpleProvider_exec_i (void)");
+    CIAO_TRACE ("SimpleProvider_exec_i::~SimpleProvider_exec_i (void)");
   }
 
   // Supported or inherited operations.
@@ -58,7 +58,7 @@ namespace CIAO_Simple_SimpleProvider_Impl
   ::Simple::CCM_Trigger_ptr
   SimpleProvider_exec_i::get_trig ()
   {
-    DANCE_TRACE ("SimpleProvider_exec_i::get_trig ()");
+    CIAO_TRACE ("SimpleProvider_exec_i::get_trig ()");
     return new Trigger_exec_i (this->triggered_);
   }
 
@@ -68,7 +68,7 @@ namespace CIAO_Simple_SimpleProvider_Impl
   SimpleProvider_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    DANCE_TRACE ("SimpleProvider_exec_i::set_session_context ()");
+    CIAO_TRACE ("SimpleProvider_exec_i::set_session_context ()");
     this->context_ =
       ::Simple::CCM_SimpleProvider_Context::_narrow (ctx);
 
@@ -81,28 +81,28 @@ namespace CIAO_Simple_SimpleProvider_Impl
   void
   SimpleProvider_exec_i::configuration_complete ()
   {
-    DANCE_TRACE ("SimpleProvider_exec_i::configuration_complete ()");
+    CIAO_TRACE ("SimpleProvider_exec_i::configuration_complete ()");
     // Your code here.
   }
 
   void
   SimpleProvider_exec_i::ccm_activate ()
   {
-    DANCE_TRACE ("SimpleProvider_exec_i::ccm_activate ()");
+    CIAO_TRACE ("SimpleProvider_exec_i::ccm_activate ()");
     // Your code here.
   }
 
   void
   SimpleProvider_exec_i::ccm_passivate ()
   {
-    DANCE_TRACE ("SimpleProvider_exec_i::ccm_passivate ()");
+    CIAO_TRACE ("SimpleProvider_exec_i::ccm_passivate ()");
     // Your code here.
   }
 
   void
   SimpleProvider_exec_i::ccm_remove ()
   {
-    DANCE_TRACE ("SimpleProvider_exec_i::ccm_remove ()");
+    CIAO_TRACE ("SimpleProvider_exec_i::ccm_remove ()");
     if (!triggered_)
       ACE_ERROR ((LM_EMERGENCY, "Error:  My facet wasn't triggered!!\n"));
     
@@ -115,12 +115,12 @@ namespace CIAO_Simple_SimpleProvider_Impl
 
   SimpleProviderHome_exec_i::SimpleProviderHome_exec_i (void)
   {
-    DANCE_TRACE ("SimpleProviderHome_exec_i::SimpleProviderHome_exec_i (void)");
+    CIAO_TRACE ("SimpleProviderHome_exec_i::SimpleProviderHome_exec_i (void)");
   }
 
   SimpleProviderHome_exec_i::~SimpleProviderHome_exec_i (void)
   {
-    DANCE_TRACE ("SimpleProviderHome_exec_i::~SimpleProviderHome_exec_i (void)");
+    CIAO_TRACE ("SimpleProviderHome_exec_i::~SimpleProviderHome_exec_i (void)");
   }
 
   // Supported or inherited operations.
@@ -136,7 +136,7 @@ namespace CIAO_Simple_SimpleProvider_Impl
   ::Components::EnterpriseComponent_ptr
   SimpleProviderHome_exec_i::create ()
   {
-    DANCE_TRACE ("SimpleProviderHome_exec_i::create ()");
+    CIAO_TRACE ("SimpleProviderHome_exec_i::create ()");
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
 
@@ -151,7 +151,7 @@ namespace CIAO_Simple_SimpleProvider_Impl
   extern "C" SIMPLEPROVIDER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Simple_SimpleProviderHome_Impl (void)
   {
-    DANCE_TRACE ("create_Simple_SimpleProviderHome_Impl (void)");
+    CIAO_TRACE ("create_Simple_SimpleProviderHome_Impl (void)");
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
 
