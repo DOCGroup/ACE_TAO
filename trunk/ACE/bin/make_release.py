@@ -321,6 +321,8 @@ def update_spec_file ():
                 line = "%define TAOVER  " + comp_versions["TAO_version"] + "\n"
             if line.find ("define CIAOVER ") is not -1:
                 line = "%define CIAOVER " + comp_versions["CIAO_version"] + "\n"
+            if line.find ("define DANCEVER ") is not -1:
+                line = "%define DANCEVER " + comp_versions["DAnCE_version"] + "\n"
             if line.find ("define is_major_ver") is not -1:
                 if opts.release_type == "beta":
                     line = "%define is_major_ver 0\n"
@@ -446,14 +448,17 @@ def get_and_update_versions ():
         get_comp_versions ("ACE")
         get_comp_versions ("TAO")
         get_comp_versions ("CIAO")
+        get_comp_versions ("DAnCE")
 
         files = list ()
         files += update_version_files ("ACE")
         files += update_version_files ("TAO")
         files += update_version_files ("CIAO")
+        files += update_version_files ("DAnCE")
         files += create_changelog ("ACE")
         files += create_changelog ("TAO")
         files += create_changelog ("CIAO")
+        files += create_changelog ("DAnCE")
         files += update_spec_file ()
         files += update_debianbuild ()
 
@@ -569,6 +574,7 @@ def update_latest_tag (which, branch):
     propval = """ACE_wrappers %s/tags/%s/ACE
 ACE_wrappers/TAO %s/tags/%s/TAO
 ACE_wrappers/TAO/CIAO %s/tags/%s/CIAO
+ACE_wrappers/TAO/DAnCE %s/tags/%s/DAnCE
 """ % (root_anon, branch, root_anon, branch, root_anon, branch)
     svn_client.propset ("svn:externals", propval,
                         opts.repo_root + "/tags/Latest_" + which)
@@ -630,6 +636,10 @@ def export_wc (stage_dir):
     print ("Exporting CIAO")
     svn_client.export (doc_root + "/CIAO",
                        stage_dir + "/ACE_wrappers/TAO/CIAO")
+
+    print ("Exporting DAnCE")
+    svn_client.export (doc_root + "/DAnCE",
+                       stage_dir + "/ACE_wrappers/TAO/DAnCE")
 
 
 def update_packages (text_files, bin_files, stage_dir, package_dir):
@@ -818,7 +828,7 @@ def package (stage_dir, package_dir, decorator):
 
     # for TAO:
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO"),
-                                                     "ACE_wrappers/TAO", ["CIAO", "autom4te.cache"])
+                                                     "ACE_wrappers/TAO", ["CIAO", "DAnCE", "autom4te.cache"])
 
 #    write_file_lists ("fTAO" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
@@ -830,9 +840,24 @@ def package (stage_dir, package_dir, decorator):
 
     text_files = list ()
     bin_files = list ()
+
+    # for TAO:
+    text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO"),
+                                               "ACE_wrappers/DAnCE", ["autom4te.cache"])
+
+#    write_file_lists ("fTAO" + decorator, text_files, bin_files)
+    update_packages ("\n".join (text_files),
+                     "\n".join (bin_files),
+                     stage_dir,
+                     package_dir)
+
+    move_packages ("ACE+TAO+DAnCE" + decorator, stage_dir, package_dir)
+
+    text_files = list ()
+    bin_files = list ()
     # for CIAO:
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO/CIAO"),
-                                                     "ACE_wrappers/TAO/CIAO", "")
+                                               "ACE_wrappers/TAO/CIAO", "")
 
 #    write_file_lists ("fCIAO" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
@@ -856,7 +881,7 @@ def generate_workspaces (stage_dir):
     os.putenv ("MPC_ROOT", os.path.join (stage_dir, "ACE_wrappers", "MPC"))
     os.putenv ("TAO_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO"))
     os.putenv ("CIAO_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO", "CIAO"))
-    os.putenv ("DANCE_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO", "CIAO", "DAnCE"))
+    os.putenv ("DANCE_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO", "DAnCE"))
 
     # Create option strings
     mpc_command = os.path.join (stage_dir, "ACE_wrappers", "bin", "mwc.pl")
@@ -864,7 +889,7 @@ def generate_workspaces (stage_dir):
     mpc_option = ' -recurse -hierarchy -relative ACE_ROOT=' + stage_dir + '/ACE_wrappers '
     mpc_option += ' -relative TAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO '
     mpc_option += ' -relative CIAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO/CIAO '
-    mpc_option += ' -relative DANCE_ROOT=' + stage_dir + '/ACE_wrappers/TAO/CIAO/DAnCE '
+    mpc_option += ' -relative DANCE_ROOT=' + stage_dir + '/ACE_wrappers/TAO/DAnCE '
 
     vc10_option = ' -name_modifier *_vc10 '
     vc9_option = ' -name_modifier *_vc9 '
@@ -904,6 +929,7 @@ def create_kit ():
     get_comp_versions ("ACE")
     get_comp_versions ("TAO")
     get_comp_versions ("CIAO")
+    get_comp_versions ("DAnCE")
 
     print "Creating working directories...."
     stage_dir, package_dir = make_working_directories ()
