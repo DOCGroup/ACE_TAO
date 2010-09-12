@@ -19,8 +19,8 @@ endif
 DANCE_ROOT := $(subst \,/,$(DANCE_ROOT))
 
 
-ifeq (,$(findstring -L$(DANCE_ROOT)/ciao,$(LDFLAGS)))
-  LDFLAGS += -L$(DANCE_ROOT)/ciao
+ifeq (,$(findstring -L$(DANCE_ROOT)/DAnCE,$(LDFLAGS)))
+  LDFLAGS += -L$(DANCE_ROOT)/DAnCE
 endif
 ifeq (,$(findstring -I$(DANCE_ROOT),$(INCLDIRS)))
   INCLDIRS += -I$(DANCE_ROOT)
@@ -36,9 +36,9 @@ DANCE_MAJOR_VERSION := $(shell awk "/DANCE_MAJOR_VERSION/ { print $$3}" ${DANCE_
 DANCE_MINOR_VERSION := $(shell awk "/DANCE_MINOR_VERSION/ { print $$3}" ${DANCE_ROOT}/DAnCE/Version.h)
 DANCE_BETA_VERSION := $(shell awk "/DANCE_BETA_VERSION/ { print $$3}" ${DANCE_ROOT}/DAnCE/Version.h)
 else
-DANCE_MAJOR_VERSION := $(shell awk '/DANCE_MAJOR_VERSION/ { print $$3}' ${DANCE_ROOT}/ciao/Version.h)
-DANCE_MINOR_VERSION := $(shell awk '/DANCE_MINOR_VERSION/ { print $$3}' ${DANCE_ROOT}/ciao/Version.h)
-DANCE_BETA_VERSION := $(shell awk '/DANCE_BETA_VERSION/ { print $$3}' ${DANCE_ROOT}/ciao/Version.h)
+DANCE_MAJOR_VERSION := $(shell awk '/DANCE_MAJOR_VERSION/ { print $$3}' ${DANCE_ROOT}/DAnCE/Version.h)
+DANCE_MINOR_VERSION := $(shell awk '/DANCE_MINOR_VERSION/ { print $$3}' ${DANCE_ROOT}/DAnCE/Version.h)
+DANCE_BETA_VERSION := $(shell awk '/DANCE_BETA_VERSION/ { print $$3}' ${DANCE_ROOT}/DAnCE/Version.h)
 endif
 
 # Version number of the libraries
