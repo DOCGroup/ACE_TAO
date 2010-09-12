@@ -1,7 +1,7 @@
 // $Id$
 
 #include "SimpleFailure_exec.h"
-#include "DAnCE/Logger/Log_Macros.h"
+#include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO_Simple_SimpleFailure_Impl
 {

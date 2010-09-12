@@ -1,3 +1,25 @@
+Sun Sep 12 19:20:28 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/Components/ProcessColocation_exec.cpp:
+        * tests/DAnCE/Components/Progressive_exec.cpp:
+        * tests/DAnCE/Components/SimpleAttribute_exec.cpp:
+        * tests/DAnCE/Components/SimpleConsumer_exec.cpp:
+        * tests/DAnCE/Components/SimpleEmitter_exec.cpp:
+        * tests/DAnCE/Components/SimpleFailure_exec.cpp:
+        * tests/DAnCE/Components/SimpleLocalProvider_exec.cpp:
+        * tests/DAnCE/Components/SimpleLocalUser_exec.cpp:
+        * tests/DAnCE/Components/SimpleMultipleUser_exec.cpp:
+        * tests/DAnCE/Components/SimpleNilFacetProvider_exec.cpp:
+        * tests/DAnCE/Components/SimpleNilFacetUser_exec.cpp:
+        * tests/DAnCE/Components/SimpleNull_exec.cpp:
+        * tests/DAnCE/Components/SimpleProvider_exec.cpp:
+        * tests/DAnCE/Components/SimplePublisher_exec.cpp:
+               * tests/DAnCE/Components/SimpleUser_exec.cpp:
+        * tests/DAnCE/LocalityManager/CPUAffinity/CPUAffinity_exec.cpp:
+        * tests/DAnCE/LocalityManager/CommandlinePassage/CommandlinePassage_exec.cpp:
+
+          Compile fixes.
+
 Fri Sep 10 17:20:04 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/ciao_tests.lst:
