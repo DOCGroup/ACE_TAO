@@ -16,16 +16,16 @@ namespace DAnCE
 {
   namespace SHS
   {
-    class DAnCE_SHS_CORBA_Transport_Export SHS_CORBA_Transport : 
+    class DAnCE_SHS_CORBA_Transport_Export SHS_CORBA_Transport :
       public virtual SHS_Transport
     {
     public:
       SHS_CORBA_Transport (void);
-      
+
       virtual ~SHS_CORBA_Transport (void);
-      
+
       virtual void configure (const Deployment::Properties &);
-      
+
       virtual void push_event (const Status_Update &update);
     private:
       DAnCE::SHS::SHS_Daemon_var shs_daemon_;

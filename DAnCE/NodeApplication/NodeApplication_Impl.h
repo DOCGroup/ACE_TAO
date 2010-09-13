@@ -42,7 +42,7 @@ namespace DAnCE
   typedef DAnCE::Split_Plan < DAnCE::Locality_Splitter > LocalitySplitter;
 
   class NodeManager_Impl;
-  
+
   class NodeApplication_Export NodeApplication_Impl :
     public virtual POA_Deployment::NodeApplication
   {
@@ -69,8 +69,8 @@ namespace DAnCE
 
     typedef std::map <std::string, ::DAnCE::LocalityManager_var>
       LOCALITY_MAP;
-    
-    
+
+
     typedef std::pair <CORBA::ULong, ::Deployment::DeploymentPlan> SUB_PLAN;
     typedef std::map <std::string, SUB_PLAN> PLAN_MAP;
 
@@ -87,11 +87,11 @@ namespace DAnCE
     ACE_CString node_name_;
 
     LOCALITY_MAP localities_;
-    
+
     DAnCE::Deployment_Scheduler scheduler_;
 
     PLAN_MAP sub_plans_;
-    
+
     CORBA::ULong spawn_delay_;
   };
 }

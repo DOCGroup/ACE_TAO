@@ -18,15 +18,15 @@ namespace DAnCE
   {
   public:
     void load_from_text_file (const ACE_TCHAR *file);
-    
+
   private:
     void deploy_plan (::Deployment::DeploymentPlan &plan);
-    
+
     void create_entry (const char *artifact,
                        const char *entrypoint,
                        const char *type,
                        ::Deployment::DeploymentPlan &plan,
-                       CORBA::ULong pos);    
+                       CORBA::ULong pos);
   };
 }
 #endif

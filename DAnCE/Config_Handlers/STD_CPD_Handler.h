@@ -68,7 +68,7 @@ namespace DAnCE
         :xml_helper_ (0)
       {
       }
-      
+
       XML_Helper *xml_helper_;
     };
   }

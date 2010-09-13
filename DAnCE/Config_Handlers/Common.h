@@ -25,7 +25,7 @@ namespace DAnCE
         name_ (name),
         error_ (error)
       {};
-      
+
       void add_name (const std::basic_string<ACE_TCHAR> &name)
       {
         name_ = name + ACE_TEXT (":") + name_;

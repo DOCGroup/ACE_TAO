@@ -24,13 +24,13 @@ namespace DAnCE
     : public virtual DAnCE::DeploymentInterceptor_Base
   {
   public:
-    // Constructor 
-    
+    // Constructor
+
     Best_Effort (void);
-  
-    // Destructor 
+
+    // Destructor
     virtual ~Best_Effort (void);
-  
+
     virtual
       void post_install (const ::Deployment::DeploymentPlan & plan,
                                   ::CORBA::ULong index,
@@ -47,31 +47,31 @@ namespace DAnCE
       void post_configured (const ::Deployment::DeploymentPlan & plan,
                                      ::CORBA::ULong instanceRef,
                                      const ::CORBA::Any & exception_thrown);
-  
+
     virtual
       void post_activate (const ::Deployment::DeploymentPlan & plan,
                                    ::CORBA::ULong instanceRef,
                                    const ::CORBA::Any & exception_thrown);
-  
+
     virtual
       void post_passivate (const ::Deployment::DeploymentPlan & plan,
                                     ::CORBA::ULong instanceRef,
                                     const ::CORBA::Any & exception_thrown);
-  
+
     virtual
       void post_remove (const ::Deployment::DeploymentPlan & plan,
                                  ::CORBA::ULong instanceRef,
                                  const ::CORBA::Any & exception_thrown);
     virtual
       void configure(const Deployment::Properties&);
-    
+
   private:
   };
 }
 
 extern "C"
 {
-  ::DAnCE::DeploymentInterceptor_ptr 
+  ::DAnCE::DeploymentInterceptor_ptr
   DAnCE_Error_Interceptors_Export create_DAnCE_Best_Effort (void);
 }
 

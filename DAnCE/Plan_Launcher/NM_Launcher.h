@@ -19,7 +19,7 @@
 
 namespace DAnCE
 {
-  class DAnCE_Plan_Launcher_Export NM_Launcher : 
+  class DAnCE_Plan_Launcher_Export NM_Launcher :
     public virtual Plan_Launcher_Base_Impl< ::Deployment::NodeManager,
                                             ::Deployment::NodeApplicationManager,
                                             ::Deployment::NodeApplication >
@@ -27,14 +27,14 @@ namespace DAnCE
     typedef Plan_Launcher_Base_Impl< ::Deployment::NodeManager,
                                      ::Deployment::NodeApplicationManager,
                                      ::Deployment::NodeApplication > __Base;
-    
+
   public:
     NM_Launcher (CORBA::ORB_ptr orb,
                       __Base::Manager_ptr managerw);
-    
+
     ~NM_Launcher (void);
-    
-    
+
+
   };
 }
 

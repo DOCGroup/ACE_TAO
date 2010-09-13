@@ -74,9 +74,9 @@ namespace DAnCE
 
       /// Terminate the parser
       void terminate_parser (void);
-      
+
       Resolver &get_resolver (void);
-      
+
       Error_Handler &get_error_handler (void);
 
     protected:

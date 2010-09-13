@@ -19,23 +19,23 @@ namespace DAnCE
     Action_Base (Event_Future holder,
                  const char *name,
                  const char *instance_type);
-    
+
     virtual ~Action_Base (void);
-    
+
     virtual int call (void);
-    
+
   protected:
     virtual void invoke_pre_interceptor (Plugin_Manager::INTERCEPTORS::const_iterator &) = 0;
-    
+
     virtual void invoke (::DAnCE::InstanceDeploymentHandler_ptr) = 0;
-    
+
     virtual void invoke_post_interceptor (Plugin_Manager::INTERCEPTORS::const_iterator &) = 0;
-    
+
     virtual void create_unexpected_exception (const std::string &,
                                               const std::string &) = 0;
-    
+
     virtual void create_valid_result (Event_Result &) = 0;
-    
+
     ::CORBA::Any_var instance_excep_;
   };
 }

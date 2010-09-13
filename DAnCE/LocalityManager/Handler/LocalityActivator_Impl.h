@@ -99,7 +99,7 @@ namespace DAnCE
 
     void create_properties (const Server_Info &info,
                             Deployment::Properties_out config);
-    
+
     struct Server_Info
     {
       enum ProcessStatus

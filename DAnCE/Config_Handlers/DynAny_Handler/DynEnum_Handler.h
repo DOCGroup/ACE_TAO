@@ -39,7 +39,7 @@ namespace DAnCE
                                                          CORBA::TypeCode_ptr = 0);
 
       static void extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn);
-      
+
       static CORBA::TypeCode_ptr create_typecode (const DataType &type);
     };
 

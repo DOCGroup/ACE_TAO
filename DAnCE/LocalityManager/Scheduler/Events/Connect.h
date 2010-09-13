@@ -1,7 +1,7 @@
 /**
  * @file Connect.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- * 
+ *
  * $Id$
  *
  */
@@ -27,26 +27,26 @@ namespace DAnCE
                       const ::CORBA::Any &provided_ref,
                       const char *instance_type,
                       Event_Future holder);
-    
+
     virtual ~Connect_Instance (void);
 
   protected:
     virtual void invoke_pre_interceptor (Plugin_Manager::INTERCEPTORS::const_iterator &);
-    
+
     virtual void invoke (::DAnCE::InstanceDeploymentHandler_ptr);
-    
+
     virtual void invoke_post_interceptor (Plugin_Manager::INTERCEPTORS::const_iterator &);
-    
+
     virtual void create_unexpected_exception (const std::string &,
                                               const std::string &);
-    
+
     virtual void create_valid_result (Event_Result &);
 
   private:
     ::Deployment::DeploymentPlan &plan_;
     ::CORBA::ULong connectionRef_;
     ::CORBA::Any provided_ref_;
-  };  
+  };
 }
 
 #endif
