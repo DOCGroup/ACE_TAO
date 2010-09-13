@@ -4,27 +4,4 @@
 project(TAO_XtResource) : acelib, taolib, install, tao_output, taodefaults, ace_xtreactor, taoidldefaults {
   sharedname   = TAO_XtResource
   dynamicflags += TAO_XTRESOURCE_BUILD_DLL
-
-  Source_Files {
-    XtResource
-  }
-
-  Header_Files {
-    XtResource
-  }
-
-  Inline_Files {
-  }
-
-  Template_Files {
-  }
-
-  Resource_Files {
-  }
-
-  PIDL_Files {
-  }
-
-  IDL_Files {
-  }
 }
