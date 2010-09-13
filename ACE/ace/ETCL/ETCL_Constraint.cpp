@@ -38,17 +38,13 @@ ETCL_Literal_Constraint::ETCL_Literal_Constraint (
 }
 
 ETCL_Literal_Constraint::ETCL_Literal_Constraint (
-    ACE_CDR::ULong uinteger
-  )
-  : type_ (ACE_ETCL_UNSIGNED)
+    ACE_CDR::ULong uinteger) : type_ (ACE_ETCL_UNSIGNED)
 {
   this->op_.uinteger_ = uinteger;
 }
 
 ETCL_Literal_Constraint::ETCL_Literal_Constraint (
-    ACE_CDR::Long integer
-  )
-  : type_ (ACE_ETCL_SIGNED)
+    ACE_CDR::Long integer) : type_ (ACE_ETCL_SIGNED)
 {
   this->op_.integer_ = integer;
 }
@@ -62,17 +58,13 @@ ETCL_Literal_Constraint::ETCL_Literal_Constraint (
 }
 
 ETCL_Literal_Constraint::ETCL_Literal_Constraint (
-    ACE_CDR::Double doub
-  )
-  : type_ (ACE_ETCL_DOUBLE)
+    ACE_CDR::Double doub) : type_ (ACE_ETCL_DOUBLE)
 {
   this->op_.double_ = doub;
 }
 
 ETCL_Literal_Constraint::ETCL_Literal_Constraint (
-    const char* str
-  )
-  : type_ (ACE_ETCL_STRING)
+    const char* str) : type_ (ACE_ETCL_STRING)
 {
   this->op_.str_ = ACE::strnew (str);
 }

@@ -286,7 +286,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Guard_T.inl
     Handle_Gobbler.inl
     Lock_Adapter_T.inl
-    OS.inl
     OS_Memory.inl
     OS_String.inl
     Refcounted_Auto_Ptr.inl
@@ -322,7 +321,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Null_Mutex.h
     Null_Semaphore.h
     Numeric_Limits.h
-    OS.h
     OS_Dirent.h
     OS_Memory.h
     OS_NS_macros.h

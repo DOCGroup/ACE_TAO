@@ -17,6 +17,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_socket.h"
 
 unsigned port = 8088;
 const ACE_TCHAR *notifier_file = 0;

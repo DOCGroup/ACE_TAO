@@ -1,3 +1,73 @@
+Mon Sep 13 09:25:22 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_doxygen.pl:
+          Updated for DAnCE move
+
+        * ace/ETCL/ETCL_Constraint.cpp:
+        * ace/ETCL/ETCL_l.cpp.diff:
+        * ace/ETCL/ETCL_l.cpp:
+        * ace/Makefile.am:
+        * ace/Thread_Control.inl:
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+        * apps/JAWS3/bench/average.cpp:
+        * apps/JAWS3/bench/mkfiles.cpp:
+        * apps/JAWS3/bench/rqfiles.cpp:
+        * apps/JAWS3/http/HTTP_Data.h:
+        * apps/JAWS3/http/HTTP_Service_Handler.h:
+        * apps/JAWS3/http/HTTP_Service_Handler.cpp:
+        * apps/JAWS3/http/HTTP_States.h:
+        * apps/JAWS3/jaws3-todo/Reactive_Socket.h:
+        * apps/JAWS3/jaws3-todo/Reactive_Socket_Helpers.h:
+        * apps/JAWS3/jaws3-todo/Reactive_Socket_Helpers.cpp:
+        * apps/JAWS3/jaws3-todo/Socket.h:
+        * apps/JAWS3/jaws3/Concurrency_T.h:
+        * apps/JAWS3/small/SS_Data.h:
+        * apps/JAWS3/small/SS_Service_Handler.h:
+        * apps/JAWS3/small/SS_Service_Handler.cpp:
+        * apps/JAWS3/small/SS_State_DONE.h:
+        * apps/JAWS3/small/SS_State_DONE.cpp:
+        * apps/JAWS3/small/SS_State_ERROR.h:
+        * apps/JAWS3/small/SS_State_ERROR.cpp:
+        * apps/JAWS3/small/SS_State_PARSE.h:
+        * apps/JAWS3/small/SS_State_PARSE.cpp:
+        * apps/JAWS3/small/SS_State_READ.h:
+        * apps/JAWS3/small/SS_State_READ.cpp:
+        * apps/JAWS3/small/SS_State_WRITE.h:
+        * apps/JAWS3/small/SS_State_WRITE.cpp:
+        * apps/JAWS3/small/SS_Templates.cpp:
+        * contrib/FaCE/FaCE.h:
+        * examples/APG/Svc_Config/HA_Status_Dynamic.h:
+        * examples/APG/Svc_Config/HA_Status_Static.h:
+        * examples/Reactor/TP_Reactor/client.cpp:
+        * examples/Reactor/TP_Reactor/server.cpp:
+        * protocols/ace/HTBP/HTBP_Channel.cpp:
+        * protocols/ace/HTBP/HTBP_Filter.h:
+        * protocols/ace/HTBP/HTBP_Inside_Squid_Filter.cpp:
+        * protocols/ace/HTBP/HTBP_Session.cpp:
+        * protocols/ace/TMCast/Group.cpp:
+        * protocols/examples/RMCast/Send_Msg/Sender.cpp:
+        * protocols/tests/HTBP/Reactor_Tests/client.cpp:
+        * protocols/tests/HTBP/Reactor_Tests/server.cpp:
+        * protocols/tests/HTBP/Reactor_Tests/test_config.h:
+        * protocols/tests/HTBP/Send_Large_Msg/client.cpp:
+        * protocols/tests/HTBP/Send_Large_Msg/server.cpp:
+        * protocols/tests/HTBP/Send_Recv_Tests/client.cpp:
+        * protocols/tests/HTBP/Send_Recv_Tests/server.cpp:
+        * protocols/tests/HTBP/ping/client.cpp:
+        * protocols/tests/HTBP/ping/server.cpp:
+        * protocols/tests/RMCast/Sender.cpp:
+        * tests/Based_Pointer_Test.cpp:
+        * tests/Bug_2980_Regression_Dll.cpp:
+        * tests/SSL/Bug_2912_Regression_Test.cpp:
+          Removed include of ace/OS.h, only in a few files we really had
+          to add an include of OS_NS_*.h
+
+        * ace/OS.h:
+        * ace/OS.inl:
+        * ace/OS.cpp:
+          Removed these files, replaced with OS_NS_* files a long time ago
+
 Sun Sep 12 19:27:58 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/make_release.py:

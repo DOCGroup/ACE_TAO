@@ -20,7 +20,8 @@
 
 #include "ace/Message_Block.h"
 #include "ace/Reactor.h"
-
+#include "ace/os_include/netinet/os_tcp.h"
+#include "ace/OS_NS_time.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -64,7 +65,7 @@ ACE::HTBP::Channel::Channel (ACE_SOCK_Stream &s)
   if (result == -1)
     ACE_DEBUG ((LM_DEBUG, "HTBP::Channel ctor(stream), %p\n", "set_option" ));
 #endif /* ! ACE_LACKS_TCP_NODELAY */
-  
+
   this->filter_ = ACE::HTBP::Filter_Factory::get_filter (this->session_ != 0);
   this->request_count_ = static_cast<unsigned long> (ACE_OS::time());
 }
@@ -89,7 +90,7 @@ ACE::HTBP::Channel::Channel (ACE_HANDLE h)
   if (result == -1)
     ACE_DEBUG ((LM_DEBUG, "HTBP::Channel(handle) ctor, %p\n", "set_option" ));
 #endif /* ! ACE_LACKS_TCP_NODELAY */
-  
+
   this->filter_ = ACE::HTBP::Filter_Factory::get_filter (this->session_ != 0);
   this->request_count_ = static_cast<unsigned long> (ACE_OS::time());
 }
@@ -524,7 +525,7 @@ ACE::HTBP::Channel::sendv (const iovec iov[],
 
   ssize_t result = 0;
   size_t n = 0;
-  
+
   for (int i = 0; i < iovcnt; n += iov[i++].iov_len)
     {
       // No action.

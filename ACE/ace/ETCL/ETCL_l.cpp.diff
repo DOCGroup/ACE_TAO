@@ -24,7 +24,8 @@
 
 -#include <stdlib.h>
 -#include <unistd.h>
-+#include "ace/OS.h"
++#include "ace/OS_NS_unistd.h"
++#include "ace/OS_NS_stdio.h"
 
  /* Use prototypes in function declarations. */
  #define YY_USE_PROTOS

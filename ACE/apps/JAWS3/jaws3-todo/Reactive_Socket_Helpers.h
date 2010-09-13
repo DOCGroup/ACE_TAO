@@ -4,7 +4,6 @@
 #ifndef JAWS_REACTIVE_SOCKET_HELPERS
 #define JAWS_REACTIVE_SOCKET_HELPERS
 
-#include "ace/OS.h"
 #include "ace/Addr.h"
 #include "ace/Synch.h"
 #include "ace/Acceptor.h"

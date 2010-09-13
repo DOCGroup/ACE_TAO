@@ -4,7 +4,6 @@
 #ifndef TERA_SS_SERVICE_HANDLER_H
 #define TERA_SS_SERVICE_HANDLER_H
 
-#include "ace/OS.h"
 #include "ace/Synch.h"
 #include "ace/Acceptor.h"
 #include "ace/Svc_Handler.h"

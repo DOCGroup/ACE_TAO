@@ -738,8 +738,6 @@ nobase_include_HEADERS += \
   Null_Semaphore.h \
   Numeric_Limits.h \
   Obstack.h \
-  OS.h \
-  OS.inl \
   OS_Errno.h \
   OS_Errno.inl \
   OS_Log_Msg_Attributes.h \

@@ -7,7 +7,6 @@
 
 #include <ace/Event_Handler.h>
 #include <ace/Log_Msg.h>
-#include <ace/OS.h>
 #include <ace/Reactor.h>
 #include <ace/Signal.h>
 #include <ace/streams.h>
