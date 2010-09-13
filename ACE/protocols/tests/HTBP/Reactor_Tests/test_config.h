@@ -32,7 +32,6 @@
 
 // This first #undef protects against command-line definitions.
 #undef ACE_NDEBUG
-#include "ace/OS.h"
 #include "ace/streams.h"
 #include "ace/Singleton.h"
 #include "ace/Synch.h"

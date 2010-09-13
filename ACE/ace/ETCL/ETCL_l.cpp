@@ -17,11 +17,12 @@
 #endif
 #endif
 
-#include "ace/OS.h"
-
 #include "ace/ETCL/ETCL_Constraint.h"
 
 #ifdef __cplusplus
+
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdio.h"
 
 /* Use prototypes in function declarations. */
 #define YY_USE_PROTOS

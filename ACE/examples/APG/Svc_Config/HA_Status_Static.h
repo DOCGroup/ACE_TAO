@@ -9,7 +9,6 @@
 #define __HASTATUS_H_
 
 // Listing 1 code/ch19
-#include "ace/OS.h"
 #include "ace/Acceptor.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Stream.h"

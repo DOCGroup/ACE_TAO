@@ -4,7 +4,6 @@
 #ifndef JAWS_HTTP_SERVICE_HANDLER_H
 #define JAWS_HTTP_SERVICE_HANDLER_H
 
-#include "ace/OS.h"
 #include "ace/Synch.h"
 #include "ace/Acceptor.h"
 #include "ace/Svc_Handler.h"

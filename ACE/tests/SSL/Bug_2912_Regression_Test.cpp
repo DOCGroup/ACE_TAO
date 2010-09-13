@@ -32,7 +32,6 @@
 #include "ace/SSL/SSL_Asynch_Stream.h"
 #include "ace/Proactor.h"
 #include "ace/Task.h"
-#include "ace/OS.h"
 #include "ace/Asynch_Acceptor.h"
 #include "ace/Asynch_Connector.h"
 #include "ace/Manual_Event.h"

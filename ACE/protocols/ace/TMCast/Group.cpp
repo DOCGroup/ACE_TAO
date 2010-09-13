@@ -6,12 +6,12 @@
 #include <typeinfo>
 
 // OS primitives
-#include <ace/OS.h>
 #include <ace/OS_NS_stdlib.h>
 #include <ace/Synch.h>
 #include <ace/Time_Value.h>
 #include <ace/SOCK_Dgram_Mcast.h>
 #include <ace/Condition_T.h>
+#include <ace/OS_NS_sys_time.h>
 
 #include "Messaging.hpp"
 

@@ -8,7 +8,6 @@
 #include <ace/Auto_Ptr.h>
 #include <ace/INET_Addr.h>
 #include <ace/Log_Msg.h>
-#include <ace/OS.h>
 #include <ace/SOCK_Acceptor.h>
 #include <ace/SOCK_Connector.h>
 #include <ace/SOCK_Stream.h>

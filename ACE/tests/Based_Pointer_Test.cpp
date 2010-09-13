@@ -19,7 +19,6 @@
 #include "test_config.h"
 #include "ace/DLL.h"
 #include "ace/ACE.h"
-#include "ace/OS.h"
 #ifdef ACE_HAS_POSITION_INDEPENDENT_POINTERS
 #include "ace/Based_Pointer_Repository.h"
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS */
