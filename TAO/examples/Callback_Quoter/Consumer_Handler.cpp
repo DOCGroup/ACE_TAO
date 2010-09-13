@@ -28,6 +28,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/Reactor.h"
 #include "ace/Event_Handler.h"
+#include "ace/OS_NS_fcntl.h"
 
 Consumer_Handler::Consumer_Handler (void)
   : stock_name_ ("Unknown"),
