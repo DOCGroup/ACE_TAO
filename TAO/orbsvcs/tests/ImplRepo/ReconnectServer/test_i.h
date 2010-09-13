@@ -13,12 +13,12 @@ class  Test_Dummy_i
   : public virtual POA_Test::Dummy
 {
 public:
-  // Constructor 
+  // Constructor
   Test_Dummy_i (void);
-  
-  // Destructor 
+
+  // Destructor
   virtual ~Test_Dummy_i (void);
-  
+
   virtual  char * getMessage (void);
 };
 
@@ -26,17 +26,17 @@ class  Test_Time_i
   : public virtual POA_Test::Time
 {
 public:
-  // Constructor 
+  // Constructor
   Test_Time_i (void);
-  
-  // Destructor 
+
+  // Destructor
   virtual ~Test_Time_i (void);
-  
+
   virtual
   ::CORBA::Long current_time (
       void
     );
-  
+
   virtual
   void shutdown (
       void

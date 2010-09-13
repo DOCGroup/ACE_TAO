@@ -34,9 +34,9 @@ public:
   /// Constructor
   Send_Task (void);
 
-  /// This is for compilers that are a PITA complaining that we are 
-  /// hiding something. 
-  virtual int init (int argc, ACE_TCHAR *argv[]) 
+  /// This is for compilers that are a PITA complaining that we are
+  /// hiding something.
+  virtual int init (int argc, ACE_TCHAR *argv[])
   {
     return ACE_Task_Base::init (argc, argv);
   }

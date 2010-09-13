@@ -41,7 +41,7 @@ class ifr_visitor : public ast_visitor
   //
 public:
   virtual ~ifr_visitor (void);
-  
+
   virtual int visit_decl (AST_Decl *d);
   virtual int visit_scope (UTL_Scope *node);
   virtual int visit_type (AST_Type *node);
@@ -96,7 +96,7 @@ public:
 
   ACE_Lock &lock (void) const;
   // Accessor for our lock.
-  
+
 protected:
   // Not abstract but we want to force subclassing anyway.
   ifr_visitor (void);

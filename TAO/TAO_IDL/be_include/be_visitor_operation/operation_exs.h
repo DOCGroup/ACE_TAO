@@ -36,13 +36,13 @@ public:
   ~be_visitor_operation_exs (void);
 
   virtual int visit_operation (be_operation *node);
-  
+
   void scope (be_decl *node);
   void class_extension (const char *extension);
 
 private:
   int gen_op_body (be_type *return_type);
-  
+
 private:
   TAO_OutStream &os_;
   be_decl *scope_;

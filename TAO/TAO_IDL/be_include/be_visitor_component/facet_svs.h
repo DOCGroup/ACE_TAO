@@ -29,9 +29,9 @@ class be_visitor_facet_svs : public be_visitor_component_scope
 {
 public:
   be_visitor_facet_svs (be_visitor_context *ctx);
-  
+
   ~be_visitor_facet_svs (void);
-  
+
   virtual int visit_provides (be_provides *node);
 };
 

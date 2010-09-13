@@ -205,7 +205,7 @@ protected:
 
   /// Indentation level
   int indent_level_;
-  
+
   /// Used to set tab spaces.
   ACE_CString tab_unit_str_;
   const char *tab_unit_;

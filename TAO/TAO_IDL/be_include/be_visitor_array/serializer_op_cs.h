@@ -5,9 +5,9 @@
  *
  *  $Id$
  *
- *  The array's own TAO::DCPS::Serializer operators are generated in 
+ *  The array's own TAO::DCPS::Serializer operators are generated in
  *  the .i file, but if the
- *  array contains an anonymous sequence, those 
+ *  array contains an anonymous sequence, those
  *  TAO::DCPS::Serializer operators will not
  *  get generated on their own, and, since the sequence may contain a
  *  recursive type, they must also be generated in the .cpp file. That is

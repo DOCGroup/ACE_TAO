@@ -32,13 +32,13 @@ public:
   be_visitor_root_ch (be_visitor_context *ctx);
 
   ~be_visitor_root_ch (void);
-  
+
   virtual int visit_root (be_root *node);
 
 private:
   /// Open file and initialize stream.
   int init (void);
-  
+
   /// Encapsulating various bits of code generation peculiar
   /// to the client header file, done either before or after
   /// the main scope traversal.
@@ -52,7 +52,7 @@ private:
   int gen_any_ops (be_root *node);
   int gen_cdr_ops (be_root *node);
   int gen_dds_serializer_ops (be_root *node);
-  
+
 private:
   /// Can't use base class be_visitor_decl's member since
   /// its constructor is called too soon to initialize the

@@ -29,7 +29,7 @@ class be_predefined_type : public virtual AST_PredefinedType,
 public:
   be_predefined_type (AST_PredefinedType::PredefinedType t,
                       UTL_ScopedName *n);
-                      
+
   // Overridden from class be_type.
   virtual void gen_member_ostream_operator (TAO_OutStream *os,
                                             const char *instance_name,

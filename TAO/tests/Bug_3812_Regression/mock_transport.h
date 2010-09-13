@@ -32,7 +32,7 @@ public:
   ACE_Event_Handler::Reference_Count remove_reference (void) {return 0;}
 
   // Implementation needs be similar to TAO_Transport::cache_map_entry().
-  void cache_map_entry (TCM::HASH_MAP_ENTRY *entry) {  
+  void cache_map_entry (TCM::HASH_MAP_ENTRY *entry) {
     ACE_GUARD (ACE_Lock, ace_mon, *this->handler_lock_);
     ACE_DEBUG ((LM_DEBUG, "(%P|%t)cache_map_entry %X\n", entry));
     this->entry_ = entry;
@@ -41,7 +41,7 @@ public:
   void close_connection (void) { purged_count_ = ++global_purged_count;};
   int purged_count (void) { return this->purged_count_;}
   bool can_be_purged (void) { return true;}
-  
+
   // Implementation needs be similar to TAO_Transport::purge_entry().
   int purge_entry (void)
   {
@@ -56,7 +56,7 @@ public:
   }
 
   // Implementation needs be similar to TAO_Transport::make_idle().
-  // 
+  //
   //  int
   //  TAO_Transport::make_idle (void)
   //  {
@@ -66,7 +66,7 @@ public:
   //                    ACE_TEXT ("TAO (%P|%t) - Transport[%d]::make_idle\n"),
   //                    this->id ()));
   //      }
-  //  
+  //
   //    return this->transport_cache_manager ().make_idle (this->cache_map_entry_);
   //  }
 
@@ -78,7 +78,7 @@ public:
   int make_idle (void)
   {
     static bool is_first = true;
-    
+
     ACE_DEBUG ((LM_DEBUG, "(%P|%t)make_idle pass entry %X\n", this->entry_));
 
     TCM::HASH_MAP_ENTRY* entry = this->entry_;
@@ -92,13 +92,13 @@ public:
       test_condition.wait ();
     }
 
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t)make_idle execute on entry %X and now entry %X\n", 
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t)make_idle execute on entry %X and now entry %X\n",
       entry, this->entry_));
 
     // When the first thread is at this point, the entry is
     // deleted by second thread, so make idle on the invalid
     // entry cause SEGV. It's possible that the memory is still
-    // available then next checking if entry is changed should 
+    // available then next checking if entry is changed should
     // confirm if the entry is valid or not.
     int ret = tcm->make_idle (entry);
     if (entry != this->entry_)
@@ -107,7 +107,7 @@ public:
         ACE_TEXT ("after passing to TCM and before calling make_idl.\n")));
       result = 1;
     }
-    
+
     return ret;
   }
 

@@ -34,11 +34,11 @@ class be_visitor_connector_ami_exs
   //
 public:
   be_visitor_connector_ami_exs (be_visitor_context *ctx);
-  
+
   ~be_visitor_connector_ami_exs (void);
-  
+
   virtual int visit_connector (be_connector *node);
-  
+
 private:
   void gen_entrypoint (void);
 };

@@ -36,9 +36,9 @@ public:
   virtual int visit_argument (be_argument *node);
   virtual int visit_string (be_string *node);
   virtual int visit_sequence (be_sequence *node);
-  
+
   virtual int pre_process (be_decl *node);
-  
+
 private:
   TAO_OutStream &os_;
   be_interface *iface_;

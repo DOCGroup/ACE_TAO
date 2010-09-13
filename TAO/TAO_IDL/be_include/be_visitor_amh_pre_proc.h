@@ -29,7 +29,7 @@
 class be_visitor_amh_pre_proc : public be_visitor_scope
 {
 private:
-  typedef enum 
+  typedef enum
   {
     NORMAL,
     GET_OPERATION,

@@ -82,7 +82,7 @@ public:
   enum UnionLabel
     {
         UL_default
-      , UL_label 
+      , UL_label
     };
 
   AST_UnionLabel (UnionLabel lk,
@@ -99,7 +99,7 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-  
+
   // Cleanup.
   virtual void destroy (void);
 

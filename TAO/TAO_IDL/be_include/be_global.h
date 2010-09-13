@@ -486,25 +486,25 @@ public:
   /// impl and executor IDL files, if generated.
   void ciao_svnt_header_ending (const char* s);
   const char* ciao_svnt_header_ending (void) const;
-  
+
   void ciao_svnt_source_ending (const char* s);
   const char* ciao_svnt_source_ending (void) const;
-  
+
   void ciao_exec_header_ending (const char* s);
   const char* ciao_exec_header_ending (void) const;
-  
+
   void ciao_exec_source_ending (const char* s);
   const char* ciao_exec_source_ending (void) const;
-  
+
   void ciao_exec_stub_header_ending (const char* s);
   const char* ciao_exec_stub_header_ending (void) const;
-  
+
   void ciao_exec_idl_ending (const char* s);
   const char* ciao_exec_idl_ending (void) const;
-  
+
   void ciao_conn_header_ending (const char* s);
   const char* ciao_conn_header_ending (void) const;
-  
+
   void ciao_conn_source_ending (const char* s);
   const char* ciao_conn_source_ending (void) const;
 
@@ -789,18 +789,18 @@ public:
   /// Accessors for the member gen_unique_guards_.
   bool gen_unique_guards (void) const;
   void gen_unique_guards (bool val);
-  
+
   /// Accessors for the corresponding members.
-  
+
   bool gen_ciao_svnt (void) const;
   void gen_ciao_svnt (bool val);
-  
+
   bool gen_ciao_exec_idl (void) const;
   void gen_ciao_exec_idl (bool val);
-  
+
   bool gen_ciao_exec_impl (void) const;
   void gen_ciao_exec_impl (bool val);
-  
+
   bool gen_ciao_conn_impl (void) const;
   void gen_ciao_conn_impl (bool val);
 
@@ -824,7 +824,7 @@ public:
 
   bool gen_lem_force_all (void) const;
   void gen_lem_force_all (bool val);
-  
+
   bool alt_mapping (void) const;
   void alt_mapping (bool val);
 
@@ -957,7 +957,7 @@ private:
 
   /// CIAO AMI connector IDL file name ending. Default is "A.idl".
   char* ciao_ami_conn_idl_ending_;
-  
+
   /// CIAO AMI reply handler impl header file name ending.
   /// Default is "A_impl.h".
   char* ciao_ami_conn_impl_hdr_ending_;
@@ -1166,7 +1166,7 @@ private:
 
   /// 2 spaces by default, can be set from the command line.
   unsigned int tab_size_;
-  
+
   bool alt_mapping_;
   // Are we generating STL types?
 };

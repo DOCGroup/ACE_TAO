@@ -364,18 +364,18 @@ public:
 
   // Referenced template parameter not matched in param list.
   void mismatched_template_param (const char *name);
-  
+
   // Given a template param of the form 'sequence<T>', the
   // 'T' must match a previous param in the list.
   void mismatch_seq_of_param (const char *param_id);
-  
+
   // Informative message when a lookup fails because a
   // masking scope has not been correctly differentiated
   // in the scoped name from the scope it masks.
   void scope_masking_error (AST_Decl *masked,
                             AST_Decl *loc);
-          
-  // Error (default) or warning (set by command line option).                        
+
+  // Error (default) or warning (set by command line option).
   void anonymous_type_diagnostic (void);
 };
 

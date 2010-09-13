@@ -29,9 +29,9 @@ class be_visitor_context_svh : public be_visitor_component_scope
 {
 public:
   be_visitor_context_svh (be_visitor_context *ctx);
-  
+
   ~be_visitor_context_svh (void);
-  
+
   virtual int visit_component (be_component *node);
   virtual int visit_connector (be_connector *node);
   virtual int visit_uses (be_uses *node);

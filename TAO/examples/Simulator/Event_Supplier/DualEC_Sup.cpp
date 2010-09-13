@@ -37,6 +37,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_ctype.h"
 
 //FUZZ: disable check_for_lack_ACE_OS
 static const char usage [] =

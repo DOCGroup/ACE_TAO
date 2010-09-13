@@ -57,7 +57,7 @@ public:
 private:
   char *opname_;
   // operation name
-  
+
   std::string in_;
   std::string inout_;
   std::string out_;

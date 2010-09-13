@@ -7,7 +7,7 @@
  *  $Id$
  *
  *  Concrete visitor for the Sequence class
- *  This one provides code generation for the 
+ *  This one provides code generation for the
  *  TAO::DCPS::Serializer operators for the sequence
  *  in the client header.
  *

@@ -99,11 +99,11 @@ public:
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
   virtual bool legal_for_primary_key (void) const;
-  
+
   // Is the element type a forward declared struct or union
   // that hasn't yet been fully defined?
   virtual bool is_defined (void);
-  
+
   // Cleanup method.
   virtual void destroy (void);
 
@@ -129,7 +129,7 @@ private:
 
   bool unbounded_;
   // Whether we are bounded or unbounded.
-  
+
   bool owns_base_type_;
   // If our base type is anonymous array or sequence, we're
   // responsible for destroying it.

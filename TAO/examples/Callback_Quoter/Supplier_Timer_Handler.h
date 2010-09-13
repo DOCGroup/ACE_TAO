@@ -42,13 +42,13 @@ class Supplier_Timer_Handler : public ACE_Event_Handler
   // need to be handled, only the handle_timeout method is overlaoded.
 public:
   Supplier_Timer_Handler (Supplier *supplier,
-                          ACE_Reactor *reactor, 
+                          ACE_Reactor *reactor,
                           FILE *file_ptr);
   // Initilization.
 
   ~Supplier_Timer_Handler (void);
   // Destructor.
- 
+
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg = 0);
   // Method which will be called by the Reactor when timeout occurs.
@@ -62,7 +62,7 @@ private:
   // The supplier instance.
 
   ACE_Reactor *reactor_;
-  // Reactor used by the supplier. 
+  // Reactor used by the supplier.
 
   FILE* file_ptr_;
   // The file handle of the file from where the stock input is obtained.

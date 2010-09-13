@@ -59,7 +59,7 @@ public:
   virtual TAO_Notify_Object::ID get_filter_id (CosNotifyFilter::Filter_ptr filter);
   virtual CosNotifyFilter::Filter_ptr get_filter (const TAO_Notify_Object::ID& id);
   virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
-    
+
 protected:
   /// Release this object.
   virtual void release (void);

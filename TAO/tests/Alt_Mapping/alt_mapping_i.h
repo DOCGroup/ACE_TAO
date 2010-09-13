@@ -35,7 +35,7 @@ public:
     const Alt_Mapping::StructSeq & s1,
     Alt_Mapping::StructSeq & s2,
     Alt_Mapping::StructSeq & s3);
-      
+
   void shutdown (void);
 
 private:

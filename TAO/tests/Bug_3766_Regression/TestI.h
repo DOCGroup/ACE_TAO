@@ -27,7 +27,7 @@
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // .\be\be_codegen.cpp:1364
 
 #ifndef TESTI_H_
@@ -43,16 +43,16 @@ class  Test_i
   : public virtual POA_Test
 {
 public:
-  // Constructor 
+  // Constructor
   Test_i (CORBA::ORB_ptr o);
-  
-  // Destructor 
+
+  // Destructor
   virtual ~Test_i (void);
-  
+
   virtual
   void do_something_FixedLength (
     ::FixedLengthInfo_out my_info);
-  
+
   virtual
   void do_something_VariableLength (
     ::VariableLengthInfo_out my_info);

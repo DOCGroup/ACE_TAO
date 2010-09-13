@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //   Balachandran Natarajan <bala@cs.wustl.edu>
-//    
+//
 // ============================================================================
 
 #ifndef TIME_CLIENT_I_H

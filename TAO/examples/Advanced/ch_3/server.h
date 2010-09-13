@@ -23,8 +23,8 @@
 
 #include "timeS.h"
 
-class Time_impl : public virtual POA_Time 
-{ 
+class Time_impl : public virtual POA_Time
+{
 public:
   virtual TimeOfDay get_gmt (void);
 };

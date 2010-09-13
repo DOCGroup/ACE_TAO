@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //   Balachandran Natarajan <bala@cs.wustl.edu>
-//    
+//
 // ============================================================================
 
 #ifndef GRID_CLIENT_I_H

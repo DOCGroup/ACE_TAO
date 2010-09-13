@@ -31,8 +31,8 @@ public:
   // Extend lookup to the supported interfaces.
   virtual AST_Decl *look_in_supported (UTL_ScopedName *e,
                                        bool full_def_only);
-     
-  // Overridden for homes from the UTL_Scope method.                                     
+
+  // Overridden for homes from the UTL_Scope method.
   virtual AST_Decl *special_lookup (UTL_ScopedName *,
                                     bool full_def_only);
 
@@ -63,10 +63,10 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   static AST_Decl::NodeType const NT;
-  
+
 private:
   // Scope Management Protocol.
-  
+
   friend int tao_yyparse (void);
   friend class ast_visitor_tmpl_module_inst;
 

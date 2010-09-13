@@ -30,15 +30,15 @@ class be_visitor_executor_exs
   //
 public:
   be_visitor_executor_exs (be_visitor_context *ctx);
-  
+
   ~be_visitor_executor_exs (void);
-  
+
   virtual int visit_operation (be_operation *node);
   virtual int visit_attribute (be_attribute *node);
   virtual int visit_component (be_component *node);
   virtual int visit_provides (be_provides *node);
   virtual int visit_consumes (be_consumes *node);
-  
+
 private:
   be_interface *op_scope_;
   const char *comment_border_;

@@ -32,23 +32,23 @@ class be_visitor_connector_dds_ex_base
   //
 public:
   be_visitor_connector_dds_ex_base (be_visitor_context *ctx);
-  
+
   ~be_visitor_connector_dds_ex_base (void);
-  
+
 protected:
   bool begin (be_connector *node);
-  
+
 protected:
   // Storage for the current template module instantiation we
   // are using, and its associated template args.
   AST_Template_Module_Inst *t_inst_;
   FE_Utils::T_ARGLIST *t_args_;
-  
+
   // Derives from the DDS datatype, so we want to calculate it
   // once and store it.
   ACE_CString dds_traits_name_;
   const char *base_tname_;
-  
+
 private:
   void process_template_args (AST_Connector *node);
 };

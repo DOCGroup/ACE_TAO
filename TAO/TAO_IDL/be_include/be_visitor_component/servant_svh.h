@@ -29,9 +29,9 @@ class be_visitor_servant_svh : public be_visitor_component_scope
 {
 public:
   be_visitor_servant_svh (be_visitor_context *ctx);
-  
+
   ~be_visitor_servant_svh (void);
-  
+
   virtual int visit_component (be_component *node);
   virtual int visit_connector (be_connector *node);
   virtual int visit_attribute (be_attribute *node);
@@ -40,9 +40,9 @@ public:
   virtual int visit_publishes (be_publishes *node);
   virtual int visit_emits (be_emits *node);
   virtual int visit_consumes (be_consumes *node);
-  
+
 private:
-  /// Base class overrides and CIAO-specific code.                
+  /// Base class overrides and CIAO-specific code.
   void gen_non_type_specific (void);
 };
 
