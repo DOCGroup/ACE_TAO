@@ -1,3 +1,11 @@
+Mon Sep 13 14:56:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Factory.cpp:
+        * tests/File_IO/client.cpp:
+        * tests/POA/Default_Servant2/client.cpp:
+          Added needed includes
+
 Mon Sep 13 14:42:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Identification_Service.cpp:
