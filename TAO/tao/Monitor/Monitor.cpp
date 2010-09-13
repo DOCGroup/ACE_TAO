@@ -46,7 +46,7 @@ TAO_Monitor_Init::create_object (CORBA::ORB_ptr orb,
   catch (const CORBA::Exception&)
     {
     }
-  
+
   return CORBA::Object::_nil ();
 }
 

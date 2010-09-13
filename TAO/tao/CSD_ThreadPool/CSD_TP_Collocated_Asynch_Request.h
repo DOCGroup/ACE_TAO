@@ -39,9 +39,9 @@ namespace TAO
      *
      * @brief Represents a "queue-able", collocated, asynchronous,
      *        CORBA request.
-     *        
-     * This kind request is one-way collocated request with the default  
-     * SYNC_SCOPE policy (SYNC_WITH_TRANSPORT) applied. It is cloned 
+     *
+     * This kind request is one-way collocated request with the default
+     * SYNC_SCOPE policy (SYNC_WITH_TRANSPORT) applied. It is cloned
      * before enqueuing and the "enqueuing" thread never blocks.
      */
     class TAO_CSD_TP_Export TP_Collocated_Asynch_Request

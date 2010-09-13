@@ -88,7 +88,7 @@ namespace CORBA
     virtual const char* _interface_repository_id (void) const;
 
     /// TAO specific operations
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &strm) const;
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &strm);
@@ -97,11 +97,11 @@ namespace CORBA
 #if defined (GEN_OSTREAM_OPS)
 
     /// Used by optionally generated ostream operators for interface
-    /// to output the actual repo id for debugging.  
+    /// to output the actual repo id for debugging.
     static std::ostream& _tao_stream (std::ostream &strm,
                                       const AbstractBase_ptr _tao_objref);
     virtual std::ostream& _tao_stream_v (std::ostream &strm) const;
-    
+
 #endif /* GEN_OSTREAM_OPS */
 
     /// Memmory management operations
@@ -127,7 +127,7 @@ namespace CORBA
     CORBA::Object_ptr equivalent_objref (void);
 
     /// Wrapper for _remove_ref(), naming convention for
-    /// templatizing.                              
+    /// templatizing.
     void _decr_refcount (void);
 
   protected:

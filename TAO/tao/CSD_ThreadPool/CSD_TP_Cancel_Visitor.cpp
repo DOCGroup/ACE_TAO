@@ -36,7 +36,7 @@ TAO::CSD::TP_Cancel_Visitor::visit_request(TP_Request* request,
       request->cancel();
     }
 
-   // Since we are either cancelling requests to any servant or a 
+   // Since we are either cancelling requests to any servant or a
    // specific servant, always continue visitation.
    return true;
 }

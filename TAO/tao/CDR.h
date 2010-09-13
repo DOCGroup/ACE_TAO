@@ -279,7 +279,7 @@ private:
   /// Request/reply send timeout.
   ACE_Time_Value * timeout_;
   //@}
- 
+
   /// These maps are used by valuetype indirection support.
   Repo_Id_Map_Handle repo_id_map_;
 #ifdef TAO_HAS_VALUETYPE_CODEBASE

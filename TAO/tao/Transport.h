@@ -81,9 +81,9 @@ namespace TAO
    * application level policies in effect.
    *
    * Some examples:
-   * 
+   *
    * # When idle, the ORB will want to send data on any socket that has
-   *   space available.  In this case, the queue must be drained on 
+   *   space available.  In this case, the queue must be drained on
    *   a best-effort basis, without any blocking.
    * # If the ORB is configured to handle nested upcalls, any two-way
    *   request should block and push data to the underlying socket as fast
@@ -1057,14 +1057,14 @@ private:
    * on the current flushing and waiting strategies.
    */
   bool using_blocking_io_for_synch_messages() const;
-  
+
   /**
    * Return true if blocking I/O should be used for sending asynchronous
    * (AMI calls, non-blocking oneways, responses to operations, etc.)
    * messages.  This is determined based on the current flushing strategy.
    */
   bool using_blocking_io_for_asynch_messages() const;
-  
+
   /*
    * Specialization hook to add concrete private methods from
    * TAO's protocol implementation onto the base Transport class

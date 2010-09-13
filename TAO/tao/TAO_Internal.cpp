@@ -354,7 +354,7 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
                       ACE_TEXT ("TAO (%P|%t) - process-wide service ")
                       ACE_TEXT ("configuration context had %d failed ")
                       ACE_TEXT ("directives\n"), status));
-        }          
+        }
     }
 
   if (TAO_debug_level > 2)
@@ -516,7 +516,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
                       ACE_TEXT ("TAO (%P|%t) - ORB-specific service ")
                       ACE_TEXT ("configuration context had %d failed ")
                       ACE_TEXT ("directives\n"), status));
-        }          
+        }
     }
 
 

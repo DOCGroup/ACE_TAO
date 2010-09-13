@@ -53,7 +53,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
           const ACE_TCHAR *location)
 {
   ACE_GUARD (ACE_Log_Msg, ace_mon, *ACE_Log_Msg::instance ());
-  
+
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
               ACE_TEXT ("sending %d buffers\n"),
@@ -202,7 +202,7 @@ TAO_Transport::~TAO_Transport (void)
                   this->id_
                   ));
     }
-  
+
   delete this->messaging_object_;
 
   delete this->ws_;
@@ -490,7 +490,7 @@ TAO_Transport::purge_entry (void)
     entry = this->cache_map_entry_;
     this->cache_map_entry_ = 0;
   }
-  
+
   if (TAO_debug_level > 3)
     {
       ACE_DEBUG ((LM_DEBUG,

@@ -386,7 +386,7 @@ TAO_ETCL_Literal_Constraint::operator/ (const TAO_ETCL_Literal_Constraint & rhs)
       {
         if ((ACE_CDR::Double) rhs == 0.0)
           return TAO_ETCL_Literal_Constraint ((ACE_CDR::Double) 0.0);
-        
+
         CORBA::Double result = (CORBA::Double) *this / (CORBA::Double) rhs;
         return TAO_ETCL_Literal_Constraint ((CORBA::Double) result);
       }
@@ -395,7 +395,7 @@ TAO_ETCL_Literal_Constraint::operator/ (const TAO_ETCL_Literal_Constraint & rhs)
       {
         if ((ACE_CDR::Long) rhs == 0)
           return TAO_ETCL_Literal_Constraint ((ACE_CDR::Long) 0);
-        
+
         CORBA::Long result = (CORBA::Long) *this / (CORBA::Long) rhs;
         return TAO_ETCL_Literal_Constraint ((CORBA::Long) result);
       }
@@ -439,12 +439,12 @@ TAO_ETCL_Literal_Constraint::widest_type (
   if (rhs_type == ACE_ETCL_COMPONENT)
     {
       const TAO_ETCL_Literal_Constraint& actual =
-        dynamic_cast<const TAO_ETCL_Literal_Constraint&> (rhs);   
+        dynamic_cast<const TAO_ETCL_Literal_Constraint&> (rhs);
       CORBA::TypeCode_var tc = actual.any_->type ();
       rhs_type = TAO_ETCL_Literal_Constraint::comparable_type (tc.in ());
       return return_value;
     }
-    
+
   return this->ETCL_Literal_Constraint::widest_type (rhs);
 }
 

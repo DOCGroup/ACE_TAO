@@ -83,10 +83,10 @@ namespace CORBA
 
   class Object;
   typedef Object *Object_ptr;
-  
+
   typedef TAO_Pseudo_Var_T<Object> Object_var;
   typedef TAO_Pseudo_Out_T<Object> Object_out;
-  
+
   template<>
   TAO_Export Boolean
   is_nil<> (Object_ptr);
@@ -342,9 +342,9 @@ namespace CORBA
     /// implement Smart Proxies and no others.
     virtual char* convert_to_ior (bool use_omg_ior_format,
                                   const char* ior_prefix) const;
-            
+
     /// Wrapper for _remove_ref(), naming convention for
-    /// templatizing.                              
+    /// templatizing.
     void _decr_refcount (void);
 
   protected:
