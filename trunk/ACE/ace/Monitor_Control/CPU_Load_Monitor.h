@@ -56,11 +56,11 @@ namespace ACE
 
       /// Stores the default name, used if none is supplied by the user.
       static const char* default_name (void);
-      
+
     private:
       /// Overridden reset, calls platform-specific reset.
       virtual void clear_i (void);
-      
+
       /// Common code to the constructor and to clear_i().
       void init (void);
 

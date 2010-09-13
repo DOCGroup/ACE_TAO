@@ -80,7 +80,7 @@ public:
 
 class JAWS_Export JAWS_Datagram
 {
-public: 
+public:
 
   JAWS_Datagram (JAWS_Datagram_Impl *impl = 0);
 

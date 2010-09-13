@@ -78,7 +78,7 @@ namespace
     // The array.
     T * const array_;
 
-    // Factor out the constant coefficient.  
+    // Factor out the constant coefficient.
     double const coefficient_;
 
     // Random number generator seed value.

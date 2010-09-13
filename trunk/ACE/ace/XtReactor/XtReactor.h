@@ -110,7 +110,7 @@ protected:
   /// Synchronize XtInputHandler for @a handle
   virtual void synchronize_XtInput(ACE_HANDLE handle);
 
-  /// Compute needed Xt condition by looking at base class wait set. 
+  /// Compute needed Xt condition by looking at base class wait set.
   virtual int compute_Xt_condition(ACE_HANDLE handle);
 
   /// Wait for events to occur.

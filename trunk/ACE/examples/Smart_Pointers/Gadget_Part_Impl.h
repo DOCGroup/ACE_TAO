@@ -25,7 +25,7 @@ class Gadget_Part_Impl : public Gadget_Part
 public:
   /// Constructor.
   Gadget_Part_Impl (Gadget_ptr owner, const char* name, int size);
-  
+
   /// Destructor.
   virtual ~Gadget_Part_Impl (void);
 
@@ -37,7 +37,7 @@ public:
 
 private:
   /// The gadget that contains this part.
-  ///  
+  ///
   /// Some things to note about the choice of ACE_Weak_Bound_Ptr (from the
   /// typedef for Gadget_ptr):
   /// - We cannot use an ACE_Strong_Bound_Ptr (Gadget_var) since that would

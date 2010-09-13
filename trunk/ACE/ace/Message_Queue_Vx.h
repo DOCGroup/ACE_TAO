@@ -107,7 +107,7 @@ public:
    * the message block sizes.
    */
   virtual void message_bytes (size_t new_size);
-  
+
   /**
    * New value of the number of total length on the queue, i.e., sum
    * of the message block lengths.

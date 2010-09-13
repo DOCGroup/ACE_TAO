@@ -133,7 +133,7 @@
 
 /* Define to 1 if platform has the <new.h> header file. */
 #ifdef ACE_HAS_NEW_H
-#undef ACE_HAS_NEW_H 
+#undef ACE_HAS_NEW_H
 #endif
 
 #ifndef ACE_LACKS_NEW_H

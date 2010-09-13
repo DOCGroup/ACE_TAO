@@ -53,7 +53,7 @@ class URL_Command : public Command
 public:
   URL_Command (URL *);
   // Constructor.
-  
+
   virtual int execute (void);
   // Execute the URL command.
 

@@ -7,7 +7,7 @@
  *
  *  $Id$
  *
- *  @brief 
+ *  @brief
  *
  *  @author Michael R. MacFaden port to ACE / use Reactor pattern
  */

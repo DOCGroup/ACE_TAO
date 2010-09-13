@@ -50,7 +50,7 @@ namespace ACE
 
     protected:
       ACE_UINT64 value_;
-      
+
     private:
       void init (void);
       void fetch (ACE_UINT64& value) const;
