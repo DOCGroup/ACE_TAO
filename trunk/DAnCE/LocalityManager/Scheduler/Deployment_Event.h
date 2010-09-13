@@ -33,26 +33,26 @@ namespace DAnCE
     bool exception_;
     CORBA::Any_var contents_;
   };
-    
+
   typedef ACE_Future< Event_Result > Event_Future;
-  
+
   typedef std::list <Event_Future> Event_List;
-  
-  class Deployment_Scheduler_Export Deployment_Event : 
+
+  class Deployment_Scheduler_Export Deployment_Event :
     public virtual ACE_Method_Request
   {
   public:
     Deployment_Event (Event_Future holder,
                       const char *name,
                       const char *instance_type);
-    
+
     Event_Future get_future (void);
-    
+
   protected:
     Event_Future holder_;
     std::string name_;
     std::string instance_type_;
-  };  
+  };
 }
 
 #if defined (__ACE_INLINE__)

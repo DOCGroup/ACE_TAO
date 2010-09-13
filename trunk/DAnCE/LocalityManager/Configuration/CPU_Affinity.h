@@ -26,15 +26,15 @@ namespace DAnCE
       public virtual ::CORBA::LocalObject
   {
   public:
-    // Constructor 
+    // Constructor
     CPU_Affinity (void);
-    
-    // Destructor 
+
+    // Destructor
     virtual ~CPU_Affinity (void);
-    
+
     virtual
       char * type (void);
-    
+
     virtual
       void configure (const ::Deployment::Property & prop);
   };

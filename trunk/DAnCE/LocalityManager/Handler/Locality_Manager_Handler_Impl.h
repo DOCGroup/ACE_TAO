@@ -4,8 +4,8 @@
 /**
  * @file Locality_Manager_Handler_Impl.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- * 
- * Installation handler implementation for spawning LocalityManagers. 
+ *
+ * Installation handler implementation for spawning LocalityManagers.
  */
 
 #ifndef DANCE_LOCALITYMANAGERI_MIGAYG_H_
@@ -30,12 +30,12 @@ namespace DAnCE
       public virtual ::CORBA::LocalObject
   {
   public:
-    // Constructor 
+    // Constructor
     Locality_Handler_i (void);
-  
-    // Destructor 
+
+    // Destructor
     virtual ~Locality_Handler_i (void);
-    
+
     virtual
       char * instance_type (void);
 
@@ -46,7 +46,7 @@ namespace DAnCE
       void install_instance (const ::Deployment::DeploymentPlan & plan,
                              ::CORBA::ULong instanceRef,
                              ::CORBA::Any_out instance_reference);
-    
+
     virtual
       void activate_instance (const ::Deployment::DeploymentPlan & ,
                               ::CORBA::ULong ,
@@ -61,29 +61,29 @@ namespace DAnCE
                             ::CORBA::ULong instanceRef,
                             const ::CORBA::Any & instance_reference);
 
-    virtual 
+    virtual
       void provide_endpoint_reference (const ::Deployment::DeploymentPlan &,
                                        ::CORBA::ULong,
                                        ::CORBA::Any_out) {};
-  
+
     virtual
       void connect_instance (const ::Deployment::DeploymentPlan & plan,
                              ::CORBA::ULong connectionRef,
                              const ::CORBA::Any & provided_reference);
-  
+
     virtual
       void disconnect_instance (const ::Deployment::DeploymentPlan & plan,
                                 ::CORBA::ULong connectionRef);
 
-    virtual 
+    virtual
       void instance_configured (const ::Deployment::DeploymentPlan &,
-                                ::CORBA::ULong) {};    
+                                ::CORBA::ULong) {};
 
     virtual
       void configure(const Deployment::Properties&);
-    
+
     virtual void close (void);
-     
+
   private:
     static const char *instance_type_;
     DAnCE_LocalityActivator_i *activator_;
@@ -92,7 +92,7 @@ namespace DAnCE
 
 extern "C"
 {
-  ::DAnCE::InstanceDeploymentHandler_ptr 
+  ::DAnCE::InstanceDeploymentHandler_ptr
   DAnCE_Locality_Handler_Export create_Locality_Handler (void);
 }
 

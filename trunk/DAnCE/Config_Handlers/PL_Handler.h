@@ -38,15 +38,15 @@ namespace DAnCE
     public:
       static void get_PlanLocality (const PlanLocality &desc,
                                     Deployment::PlanLocality &toconfig);
-      
+
       static PlanLocality  plan_locality (const ::Deployment::PlanLocality &src);
     };
-    
+
     typedef Sequence_Handler < PlanLocality,
                                ::Deployment::PlanLocalities,
                                ::Deployment::PlanLocality,
                                PL_Handler::get_PlanLocality >  PL_Functor;
-    
+
   }
 }
 

@@ -43,7 +43,7 @@ namespace DAnCE
     ACE_TString uuid_;
     ACE_TString callback_ior_str_;
     ACE_TString output_file_;
-    
+
     std::list < std::string > plugin_config_;
   };
 }

@@ -31,7 +31,7 @@ namespace DAnCE
       XStr() : _wstr(0L) { };
 
 // On unicode windows, ACE_TCHAR == XMLCh
-#if !defined (_MSC_VER) || !defined (ACE_USES_WCHAR)      
+#if !defined (_MSC_VER) || !defined (ACE_USES_WCHAR)
       XStr (const ACE_TCHAR* str);
 #endif
 
@@ -60,9 +60,9 @@ namespace DAnCE
       XMLCh operator [] (const int i) const;
 
       operator const XMLCh* () const { return _wstr; };
-    
+
       XMLCh * release (void);
-      
+
       /// Release the held string and free its memory.
       void reset (void);
     private:

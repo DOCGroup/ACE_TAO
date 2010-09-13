@@ -26,15 +26,15 @@ namespace DAnCE
       public virtual ::CORBA::LocalObject
   {
   public:
-    // Constructor 
+    // Constructor
     Process_Name (void);
-    
-    // Destructor 
+
+    // Destructor
     virtual ~Process_Name (void);
-    
+
     virtual
       char * type (void);
-    
+
     virtual
       void configure (const ::Deployment::Property & prop);
   };

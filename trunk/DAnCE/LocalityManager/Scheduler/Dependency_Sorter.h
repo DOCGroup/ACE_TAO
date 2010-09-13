@@ -31,12 +31,12 @@ namespace DAnCE
     /// Add a dependency to the map.
     void add_dependency (const std::string &subject,
                          const std::string &install_after);
-    
+
     void calculate_order (INSTALL_ORDER &);
 
   private:
     typedef std::map < std::string, IH_DEPS > DEP_MAP;
-    
+
     DEP_MAP dep_map_;
   };
 }

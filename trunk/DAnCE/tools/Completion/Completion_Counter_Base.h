@@ -37,7 +37,7 @@ namespace DAnCE
       Completion_Counter_Base (unsigned int exec_count,
                                unsigned int fail_count);
       virtual ~Completion_Counter_Base ();
-      
+
       void  decrement_exec_count ();
       void  increment_fail_count (const char* error);
 
@@ -45,7 +45,7 @@ namespace DAnCE
       unsigned int fail_count ();
 
       bool all_completed ();
-      
+
       const errors_type& errors () const;
 
     protected:

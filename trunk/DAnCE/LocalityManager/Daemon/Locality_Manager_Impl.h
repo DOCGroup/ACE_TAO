@@ -6,7 +6,7 @@
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  **/
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_codegen.cpp:1521
 
 #ifndef DANCE_LOCALITYMANAGERI_PDD6RP_H_
@@ -38,75 +38,75 @@ namespace DAnCE
     : public virtual POA_DAnCE::LocalityManager
   {
   public:
-    // Constructor 
+    // Constructor
     LocalityManager_i (const ACE_TString &uuid,
                        std::list <std::string> plugin_config_files,
                        CORBA::ORB_ptr orb,
                        PortableServer::POA_ptr poa);
-  
+
     void init (Deployment::Properties *prop);
-    // Destructor 
+    // Destructor
     virtual ~LocalityManager_i (void);
-  
+
     virtual
       ::Deployment::Properties * configuration (void);
-  
+
     virtual
       ::Deployment::ApplicationManager_ptr preparePlan (
                           const ::Deployment::DeploymentPlan & plan,
                           ::Deployment::ResourceCommitmentManager_ptr resourceCommitment);
-  
+
     virtual
       void destroyManager (::Deployment::ApplicationManager_ptr manager);
-  
+
     virtual
       void shutdown (void);
-  
+
     virtual
       void finishLaunch (const ::Deployment::Connections & providedReference,
                          ::CORBA::Boolean start);
-  
+
     virtual
       void start (void);
-  
+
     virtual
       ::Deployment::Application_ptr startLaunch (const ::Deployment::Properties & configProperty,
                                                  ::Deployment::Connections_out providedReference);
-  
+
     virtual
       void destroyApplication (::Deployment::Application_ptr app);
-    
+
   private:
     void install_instances (const ::Deployment::Properties &prop);
-    
+
     void collect_references (::Deployment::Connections_out &providedReference);
-    
+
     ACE_TString uuid_;
-    
+
     std::list< std::string > plugin_config_files_;
 
     CORBA::ORB_var orb_;
     PortableServer::POA_var poa_;
-    
+
     typedef std::list< CORBA::ULong > INSTANCE_LIST;
 
-    typedef std::map <std::string, 
+    typedef std::map <std::string,
                       INSTANCE_LIST> HANDLER_TABLE;
-    
+
     HANDLER_TABLE instance_handlers_;
-    
+
     Plugin_Manager::INSTALL_ORDER handler_order_;
-    
+
     typedef std::map < std::string, CORBA::Any_var > REFERENCE_MAP;
-    
+
     REFERENCE_MAP instance_references_;
-      
+
     ::Deployment::DeploymentPlan plan_;
-    
+
     ::Deployment::Properties_var props_;
-    
+
     DAnCE::Deployment_Scheduler scheduler_;
-    
+
     CORBA::ULong spawn_delay_;
   };
 

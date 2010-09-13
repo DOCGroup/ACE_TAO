@@ -27,13 +27,13 @@ namespace DAnCE
     : public virtual DAnCE::DeploymentInterceptor_Base
   {
   public:
-    // Constructor 
-    
+    // Constructor
+
     SHS_Interceptor (void);
-  
-    // Destructor 
+
+    // Destructor
     virtual ~SHS_Interceptor (void);
-  
+
     virtual
       void post_install (const ::Deployment::DeploymentPlan & plan,
                                   ::CORBA::ULong index,
@@ -50,17 +50,17 @@ namespace DAnCE
       void post_configured (const ::Deployment::DeploymentPlan & plan,
                                      ::CORBA::ULong instanceRef,
                                      const ::CORBA::Any & exception_thrown);
-  
+
     virtual
       void post_activate (const ::Deployment::DeploymentPlan & plan,
                                    ::CORBA::ULong instanceRef,
                                    const ::CORBA::Any & exception_thrown);
-  
+
     virtual
       void post_passivate (const ::Deployment::DeploymentPlan & plan,
                                     ::CORBA::ULong instanceRef,
                                     const ::CORBA::Any & exception_thrown);
-  
+
     virtual
       void post_remove (const ::Deployment::DeploymentPlan & plan,
                                  ::CORBA::ULong instanceRef,
@@ -73,7 +73,7 @@ namespace DAnCE
                              ::CORBA::ULong index,
                              const ::CORBA::Any & exception_thrown,
                              const char *error);
-    
+
   private:
     auto_ptr <DAnCE::SHS::SHS_Transport> shs_transport_;
   };
@@ -81,7 +81,7 @@ namespace DAnCE
 
 extern "C"
 {
-  ::DAnCE::DeploymentInterceptor_ptr 
+  ::DAnCE::DeploymentInterceptor_ptr
   DAnCE_SHS_Interceptors_Export create_DAnCE_SHS_Interceptor (void);
 }
 

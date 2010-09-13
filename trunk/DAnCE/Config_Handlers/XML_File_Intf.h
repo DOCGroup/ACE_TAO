@@ -49,7 +49,7 @@ namespace DAnCE
                             const ACE_TCHAR *relpath);
 
     protected:
-      
+
       bool read_process_plan (const ACE_TCHAR *file);
 
       bool read_process_domain (const ACE_TCHAR *file);

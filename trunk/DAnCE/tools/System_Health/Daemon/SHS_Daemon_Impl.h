@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_codegen.cpp:1698
 
 #ifndef SHS_DAEMONI_SPRPP7_H_
@@ -19,20 +19,20 @@ namespace DAnCE
     : public virtual POA_DAnCE::SHS::SHS_Daemon
   {
   public:
-    // Constructor 
+    // Constructor
     SHS_Daemon_i (CORBA::ORB_ptr orb);
-    
-    // Destructor 
+
+    // Destructor
     virtual ~SHS_Daemon_i (void);
-    
+
     virtual
       void update (
                    const ::DAnCE::SHS::Status_Update & update);
-    
+
     virtual
       void shutdown (void);
-    
-  private: 
+
+  private:
     CORBA::ORB_var orb_;
   };
 }
