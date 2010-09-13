@@ -558,6 +558,14 @@ public:
    */
   const char* output_dir (void) const;
 
+  /// Set the path for all *C.* file includes.
+  /// Default is local directory or $TAO_ROOT/tao.
+  void stub_include_dir (const char* s);
+
+  /// Get the path for all *C.* file includes.
+  /// Default is local directory or $TAO_ROOT/tao.
+  const char* stub_include_dir (void) const;
+
   /// Set the directory where all the *S.* files are
   /// to be kept. Default is output_dir_.
   void skel_output_dir (const char* s);
@@ -972,6 +980,12 @@ private:
    * directory from which the <tao_idl> is called.
    */
   char* output_dir_;
+
+  /**
+   * Path for all *C.* includes. Default value is 0, in which case
+   * the local directory or $TAO_ROOT/tao is used.
+   */
+  char* stub_include_dir_;
 
   /**
    * Directory where all the *S.* files are to be
