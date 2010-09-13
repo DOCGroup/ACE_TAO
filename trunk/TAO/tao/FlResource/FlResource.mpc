@@ -2,30 +2,6 @@
 // $Id$
 
 project(TAO_FlResource) : acelib, taolib, install, tao_output, taodefaults, ace_flreactor, taoidldefaults {
-
   sharedname   = TAO_FlResource
   dynamicflags += TAO_FLRESOURCE_BUILD_DLL
-
-  Source_Files {
-    FlResource
-  }
-
-  Header_Files {
-    FlResource
-  }
-
-  Inline_Files {
-  }
-
-  Template_Files {
-  }
-
-  Resource_Files {
-  }
-
-  PIDL_Files {
-  }
-
-  IDL_Files {
-  }
 }
