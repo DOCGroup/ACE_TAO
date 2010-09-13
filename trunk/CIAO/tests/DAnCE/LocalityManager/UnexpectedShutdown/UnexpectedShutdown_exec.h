@@ -44,7 +44,7 @@
 
 namespace CIAO_locality_Shutdown_Impl
 {
-  
+
   class COMMANDLINEPASSAGE_EXEC_Export Shutdown_exec_i
     : public virtual Shutdown_Exec,
       public virtual ::CORBA::LocalObject
@@ -52,33 +52,33 @@ namespace CIAO_locality_Shutdown_Impl
   public:
     Shutdown_exec_i (void);
     virtual ~Shutdown_exec_i (void);
-    
+
     //@{
     /** Supported operations and attributes. */
-    
+
     //@}
-    
+
     //@{
     /** Component attributes and port operations. */
-    
+
     //@}
-    
+
     //@{
     /** Operations from Components::SessionComponent. */
-    
+
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     //@}
-  
+
   private:
     ::locality::CCM_Shutdown_Context_var ciao_context_;
   };
-  
+
   extern "C" COMMANDLINEPASSAGE_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_locality_Shutdown_Impl (void);
 }

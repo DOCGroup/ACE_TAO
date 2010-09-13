@@ -19,7 +19,7 @@
 
 namespace CIAO_connector_test_C_Impl
 {
-  class ComponentC_exec_i 
+  class ComponentC_exec_i
     : public virtual C_Exec,
       public virtual ::CORBA::LocalObject
   {
@@ -56,7 +56,7 @@ namespace CIAO_connector_test_C_Impl
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
-  
+
   private:
     ::connector_test::CCM_C_Context_var context_;
     CORBA::String_var topic_name_c_;
@@ -66,7 +66,7 @@ namespace CIAO_connector_test_C_Impl
     bool topic_name_b_has_been_set_;
     bool topic_name_a_has_been_set_;
   };
-  
+
   extern "C" INHERITED_COMPONENTS_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_ComponentC_Impl (void);
 }

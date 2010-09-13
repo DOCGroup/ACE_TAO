@@ -21,10 +21,10 @@ namespace CIAO
   {
   public:
     // Temporary hack until Martin's artifact installation work can
-    // be implemented. 
+    // be implemented.
     static const char * get_implementation (const char *name,
                                             const ::Deployment::DeploymentPlan &plan);
-    
+
     static void create_attribute_configuration (const ::Deployment::Properties &props,
                                                 ::Components::ConfigValues & values);
     struct Instance_Info
@@ -34,8 +34,8 @@ namespace CIAO
     };
 
     typedef std::map < std::string, Instance_Info > INSTANCES;
-    
+
   };
 }
 
-#endif 
+#endif

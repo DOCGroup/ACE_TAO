@@ -47,7 +47,7 @@ namespace CIAO_Null_Component_Impl
 {
   // TAO_IDL - Generated from
   // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_component/facet_exh.cpp:58
-  
+
   class NULL_COMPONENT_EXEC_Export Null_Interface_exec_i
     : public virtual ::CCM_Null_Interface,
       public virtual ::CORBA::LocalObject
@@ -55,16 +55,16 @@ namespace CIAO_Null_Component_Impl
   public:
     Null_Interface_exec_i (void);
     virtual ~Null_Interface_exec_i (void);
-    
+
     // Operations and attributes from ::Null_Interface
-    
+
     // TAO_IDL - Generated from
     // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-    
+
     virtual void
     null_operation (void);
   };
-  
+
   class NULL_COMPONENT_EXEC_Export Null_Component_exec_i
     : public virtual Null_Component_Exec,
       public virtual ::CORBA::LocalObject
@@ -72,39 +72,39 @@ namespace CIAO_Null_Component_Impl
   public:
     Null_Component_exec_i (void);
     virtual ~Null_Component_exec_i (void);
-    
+
     //@{
     /** Supported operations and attributes. */
-    
+
     //@}
-    
+
     //@{
     /** Component attributes and port operations. */
-    
-    
+
+
     virtual ::CCM_Null_Interface_ptr
     get_null_facet (void);
     //@}
-    
+
     //@{
     /** Operations from Components::SessionComponent. */
-    
+
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     //@}
-    
-  
+
+
   private:
     ::CCM_Null_Component_Context_var context_;
   };
-  
+
   extern "C" NULL_COMPONENT_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Null_Component_Impl (void);
 }
@@ -117,21 +117,21 @@ namespace CIAO_Null_Component_Impl
   {
   public:
     Null_ComponentHome_exec_i (void);
-    
+
     virtual ~Null_ComponentHome_exec_i (void);
-    
+
     // All operations and attributes.
-    
+
     // Factory operations.
-    
+
     // Finder operations.
-    
+
     // Implicit operations.
-    
+
     virtual ::Components::EnterpriseComponent_ptr
     create (void);
   };
-  
+
   extern "C" NULL_COMPONENT_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Null_ComponentHome_Impl (void);
 }

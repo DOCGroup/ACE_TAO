@@ -189,7 +189,7 @@ namespace CIAO
       ::DDS::StatusMask get_mask (void);
 
       virtual DDSDataReader * get_impl (void);
-      
+
     private:
       typename DDS_TYPE::datareader_type * impl_;
 

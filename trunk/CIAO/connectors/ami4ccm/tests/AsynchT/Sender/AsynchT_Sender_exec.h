@@ -18,7 +18,7 @@
 namespace CIAO_AsynchT_Sender_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::UShort > Atomic_UShort;
-   
+
   /// Worker thread for asynchronous invocations
   class asynch_foo_generator : public virtual ACE_Task_Base
   {

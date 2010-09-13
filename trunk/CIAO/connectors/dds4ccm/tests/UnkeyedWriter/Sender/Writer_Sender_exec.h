@@ -20,7 +20,7 @@
 namespace CIAO_Writer_Sender_Impl
 {
   class Sender_exec_i;
-  
+
   enum WRITER_ASSIGNMENT {
     WRITE_NONE,
     WRITE_UNKEYED,

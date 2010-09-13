@@ -51,7 +51,7 @@ namespace CIAO_Stock_StockDistributor_Impl
 
   // TAO_IDL - Generated from
   // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_component/facet_exh.cpp:58
-  
+
   class STOCKDISTRIBUTOR_EXEC_Export StockQuoter_exec_i
     : public virtual ::Stock::CCM_StockQuoter,
       public virtual ::CORBA::LocalObject
@@ -60,12 +60,12 @@ namespace CIAO_Stock_StockDistributor_Impl
     StockQuoter_exec_i (StockDistributor_exec_i &distributor);
 
     virtual ~StockQuoter_exec_i (void);
-    
+
     // Operations and attributes from ::Stock::StockQuoter
-    
+
     // TAO_IDL - Generated from
     // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-    
+
     virtual ::Stock::StockInfo *
     get_stock_info (
       const char * stock_name);
@@ -133,60 +133,60 @@ namespace CIAO_Stock_StockDistributor_Impl
   public:
     StockDistributor_exec_i (void);
     virtual ~StockDistributor_exec_i (void);
-    
+
     //@{
     /** Supported operations and attributes. */
-    
-    
+
+
     // TAO_IDL - Generated from
     // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-    
+
     virtual void
     start (void);
-    
+
     // TAO_IDL - Generated from
     // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-    
+
     virtual void
     stop (void);
     //@}
-    
+
     //@{
     /** Component attributes and port operations. */
-    
-    
+
+
     virtual ::Stock::CCM_StockQuoter_ptr
     get_push_quoter (void);
-    
+
     // TAO_IDL - Generated from
     // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-    
+
     virtual ::CORBA::Long
     rate (void);
-    
+
     // TAO_IDL - Generated from
     // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-    
+
     virtual void
     rate (
       ::CORBA::Long rate);
     //@}
-    
+
     //@{
     /** Operations from Components::SessionComponent. */
-    
+
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     //@}
-    
-  
+
+
   private:
     ::Stock::CCM_StockDistributor_Context_var context_;
     /// User defined members
@@ -210,7 +210,7 @@ namespace CIAO_Stock_StockDistributor_Impl
 
     friend class StockQuoter_exec_i;
   };
-  
+
   extern "C" STOCKDISTRIBUTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Stock_StockDistributor_Impl (void);
 }
@@ -223,21 +223,21 @@ namespace CIAO_Stock_StockDistributor_Impl
   {
   public:
     StockDistributorHome_exec_i (void);
-    
+
     virtual ~StockDistributorHome_exec_i (void);
-    
+
     // All operations and attributes.
-    
+
     // Factory operations.
-    
+
     // Finder operations.
-    
+
     // Implicit operations.
-    
+
     virtual ::Components::EnterpriseComponent_ptr
     create (void);
   };
-  
+
   extern "C" STOCKDISTRIBUTOR_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Stock_StockDistributorHome_Impl (void);
 }

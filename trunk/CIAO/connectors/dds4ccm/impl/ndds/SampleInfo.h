@@ -40,7 +40,7 @@ operator<<= (::CCM_DDS::ReadInfo& ccm_dds_readinfo, const ::DDS_SampleInfo& samp
   ccm_dds_readinfo.source_timestamp <<= sample_info.source_timestamp;
 #else
   ccm_dds_readinfo.source_timestamp = sample_info.source_timestamp;
-#endif  
+#endif
   ccm_dds_readinfo.access_status <<= sample_info.sample_state;
 #if (CIAO_DDS4CCM_NDDS==1)
   ccm_dds_readinfo.instance_handle <<= sample_info.instance_handle;

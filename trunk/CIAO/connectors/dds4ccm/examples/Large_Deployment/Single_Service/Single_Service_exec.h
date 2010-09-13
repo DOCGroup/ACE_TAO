@@ -46,7 +46,7 @@ namespace CIAO_Single_Service_Impl
 {
   // TAO_IDL - Generated from
   // be/be_visitor_component/facet_exh.cpp:53
-  
+
   class SINGLE_SERVICE_EXEC_Export Simple_Service_exec_i
     : public virtual ::CCM_Simple_Service,
       public virtual ::CORBA::LocalObject
@@ -54,16 +54,16 @@ namespace CIAO_Single_Service_Impl
   public:
     Simple_Service_exec_i (void);
     virtual ~Simple_Service_exec_i (void);
-    
+
     // Operations and attributes from ::Simple_Service
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:37
-    
+
     virtual void
     ping (void);
   };
-  
+
   class SINGLE_SERVICE_EXEC_Export Single_Service_exec_i
     : public virtual Single_Service_Exec,
       public virtual ::CORBA::LocalObject
@@ -71,39 +71,39 @@ namespace CIAO_Single_Service_Impl
   public:
     Single_Service_exec_i (void);
     virtual ~Single_Service_exec_i (void);
-    
+
     //@{
     /** Supported operations and attributes. */
-    
+
     //@}
-    
+
     //@{
     /** Component attributes and port operations. */
-    
-    
+
+
     virtual ::CCM_Simple_Service_ptr
     get_ping_port (void);
     //@}
-    
+
     //@{
     /** Operations from Components::SessionComponent. */
-    
+
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     //@}
-    
-  
+
+
   private:
     ::CCM_Single_Service_Context_var context_;
   };
-  
+
   extern "C" SINGLE_SERVICE_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Single_Service_Impl (void);
 }

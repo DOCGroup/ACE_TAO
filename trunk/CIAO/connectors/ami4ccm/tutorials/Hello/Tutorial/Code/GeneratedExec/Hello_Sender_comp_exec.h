@@ -42,7 +42,7 @@
 
 namespace CIAO_Hello_Sender_comp_Impl
 {
-  
+
   class  Sender_comp_exec_i
     : public virtual Sender_comp_Exec,
       public virtual ::CORBA::LocalObject
@@ -50,33 +50,33 @@ namespace CIAO_Hello_Sender_comp_Impl
   public:
     Sender_comp_exec_i (void);
     virtual ~Sender_comp_exec_i (void);
-    
+
     //@{
     /** Supported operations and attributes. */
-    
+
     //@}
-    
+
     //@{
     /** Component attributes and port operations. */
-    
+
     //@}
-    
+
     //@{
     /** Operations from Components::SessionComponent. */
-    
+
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     //@}
-  
+
   private:
     ::Hello::CCM_Sender_comp_Context_var ciao_context_;
   };
-  
+
   extern "C"  ::Components::EnterpriseComponent_ptr
   create_Hello_Sender_comp_Impl (void);
 }

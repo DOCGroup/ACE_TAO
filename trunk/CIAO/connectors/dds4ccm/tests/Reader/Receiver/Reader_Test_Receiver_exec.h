@@ -37,7 +37,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
     Receiver_exec_i &callback_;
 
   };
- 
+
   //============================================================
   // Starter_exec_i
   //============================================================

@@ -74,7 +74,7 @@ namespace MyImpl
    * RateGen executor implementation class.
    */
   class RATEGEN_EXEC_Export RateGen_exec_i :
-    public virtual ::CIAO_HUDisplay_RateGen_Impl::RateGen_Exec, 
+    public virtual ::CIAO_HUDisplay_RateGen_Impl::RateGen_Exec,
     public virtual ::CORBA::LocalObject
   {
   public:

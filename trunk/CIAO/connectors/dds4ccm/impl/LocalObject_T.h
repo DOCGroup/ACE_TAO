@@ -34,7 +34,7 @@ namespace CIAO
     {
     public:
       LocalObject_Auto_Ptr_T (void);
-      
+
       ~LocalObject_Auto_Ptr_T (void);
 
       explicit LocalObject_Auto_Ptr_T (LOCAL_OBJECT* lobject);
