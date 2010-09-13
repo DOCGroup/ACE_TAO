@@ -1,3 +1,23 @@
+Mon Sep 13 13:38:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Compression/bzip2/Bzip2Compressor.mpc:
+        * tao/Compression/lzo/LzoCompressor.mpc:
+        * tao/Compression/zlib/ZlibCompressor.mpc:
+        * tao/FlResource/FlResource.mpc:
+        * tao/FoxResource/FoxResource.mpc:
+        * tao/QtResource/QtResource.mpc:
+        * tao/TkResource/TkResource.mpc:
+          Moved these mpc files to their own directory
+
+        * tao/Bzip2Compressor.mpc:
+        * tao/FlResource.mpc:
+        * tao/FoxResource.mpc:
+        * tao/LzoCompressor.mpc:
+        * tao/QtResource.mpc:
+        * tao/TkResource.mpc:
+        * tao/ZlibCompressor.mpc:
+          Removed these files.
+
 Mon Sep 13 13:29:02 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/PP_Memory_Management.txt:
