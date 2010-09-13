@@ -1,3 +1,10 @@
+Mon Sep 13 18:53:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/psdl.mpb:
+        * orbsvcs/PSS:
+        * orbsvcs/examples/PSS:
+          Removed these files, have been disabled for years now
+
 Mon Sep 13 18:15:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           *:
