@@ -20,7 +20,6 @@
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
-#include "ace/OS.h"
 #include "ace/SString.h"
 
 static const ACE_TCHAR *iorfile = 0;

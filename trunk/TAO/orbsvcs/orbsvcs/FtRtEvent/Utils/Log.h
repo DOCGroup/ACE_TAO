@@ -15,7 +15,6 @@
 #include /**/ "ace/pre.h"
 #include "orbsvcs/FtRtEvent/Utils/ftrtevent_export.h"
 #include "tao/Versioned_Namespace.h"
-#include "ace/OS.h"
 #include "ace/Log_Msg.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

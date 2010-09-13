@@ -8,8 +8,6 @@
 
 #include "TestS.h"
 
-#include "ace/OS.h"
-
 class  Test_Simple_Test_i
   : public virtual POA_Test::Simple_Test
 {

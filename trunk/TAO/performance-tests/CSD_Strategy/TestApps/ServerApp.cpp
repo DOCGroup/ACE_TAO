@@ -5,7 +5,6 @@
 #include "TestInf/AppShutdown.h"
 #include "TestInf/TestAppExceptionC.h"
 #include "TestServant/Foo_ClientEngine.h"
-#include "ace/OS.h"
 #include "ace/Get_Opt.h"
 #include "ace/Time_Value.h"
 #include "ace/High_Res_Timer.h"

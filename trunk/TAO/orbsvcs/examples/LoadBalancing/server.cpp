@@ -4,7 +4,6 @@
 #include "StockFactory.h"
 #include "ORBInitializer.h"
 #include "RPS_Monitor.h"
-#include "ace/OS.h"
 #include "ace/OS_NS_stdlib.h"
 
 #include "ace/Get_Opt.h"

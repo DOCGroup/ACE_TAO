@@ -2,7 +2,6 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include "ace/OS.h"
 #include "testS.h"
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");

@@ -3,7 +3,6 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "tao/ZIOP/ZIOP.h"
-#include "ace/OS.h"
 #include "tao/Compression/zlib/ZlibCompressor_Factory.h"
 #include "tao/Compression/bzip2/Bzip2Compressor_Factory.h"
 #include "TestCompressor//TestCompressor_Factory.h"

@@ -27,7 +27,6 @@
 #include "orbsvcs/Null_MediaCtrlS.h"
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 
-#include "ace/OS.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/ATM_Addr.h"
 #include "ace/Containers_T.h"

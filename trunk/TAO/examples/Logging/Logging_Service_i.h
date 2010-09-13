@@ -30,7 +30,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Log_Msg.h"
-#include "ace/OS.h"
 #include "tao/Utils/ORB_Manager.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Client.h"

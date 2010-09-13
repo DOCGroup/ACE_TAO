@@ -1,7 +1,6 @@
 // $Id$
 
 #include "TestI.h"
-#include "ace/OS.h"
 #include "ace/Get_Opt.h"
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");

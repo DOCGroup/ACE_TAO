@@ -5,7 +5,6 @@
  * $Id$
  */
 
-#include "ace/OS.h"
 #include "ace/Service_Config.h"
 #include "tao/corba.h"
 

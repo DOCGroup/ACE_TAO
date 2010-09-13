@@ -1,7 +1,6 @@
 // $Id$
 
 #include "Simple.h"
-#include "ace/OS.h"
 
 extern int pong_delay;
 

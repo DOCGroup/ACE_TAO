@@ -3,7 +3,6 @@
 //
 
 #include "Hello_i.h"
-#include "ace/OS.h"
 
 #include <iostream>
 using namespace std;
@@ -30,11 +29,11 @@ void Demo_HelloWorld_i::sayHello (
 
 
 
-void 
+void
 Demo_HelloWorld_i::shutdown()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t)Demo_HelloWorld_i::shutdown \n"));
   this->orb_->shutdown (0);
 }
-    
+
 

@@ -2,7 +2,6 @@
 
 #include "TestC.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS.h"
 #include "ace/Vector_T.h"
 
 const ACE_TCHAR* group_ior = ACE_TEXT ("file:://group.ior");

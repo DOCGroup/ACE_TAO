@@ -12,8 +12,6 @@
 
 #include "ClientTask.h"
 #include "ace/SString.h"
-#include "ace/OS.h"
-
 
 ClientTask::ClientTask(CORBA::ORB_ptr orb,
                        Foo_ptr foo,
