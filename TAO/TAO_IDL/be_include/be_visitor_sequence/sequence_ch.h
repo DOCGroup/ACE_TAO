@@ -40,7 +40,7 @@ public:
   virtual int visit_sequence (be_sequence *node);
 
   /// Generate the typedefs for our _var and _out template classes.
-  void gen_varout_typedefs (be_sequence *node, 
+  void gen_varout_typedefs (be_sequence *node,
                             be_type *elem);
 };
 

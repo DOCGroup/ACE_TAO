@@ -66,7 +66,7 @@ public:
    * Return the StockQuoter object.
    *
    * @return Returns the StockQuoter object reference that has been
-   *         created by connect_quoter_info (). 
+   *         created by connect_quoter_info ().
    */
   virtual ::Stock::StockQuoter_ptr get_connection_quoter_info ();
 
@@ -74,11 +74,11 @@ public:
    * Shutdown the object and destroy the application.
    */
   virtual void shutdown ();
-  
+
 private:
   // Cached ORB pointer
   CORBA::ORB_var orb_;
-  
+
   /// A StockQuoter object reference that is used to get detailed
   /// stock information.
   Stock::StockQuoter_var quoter_;
@@ -86,7 +86,7 @@ private:
   /// A StockNameConsumer servant that is used to get notification of
   /// updates.
   Stock_StockNameConsumer_i *consumer_;
-  
+
   /// The distributor that we are registered with, useful for shutdown.
   Stock::StockDistributor_var distributor_;
 };
@@ -97,12 +97,12 @@ private:
  */
 class  Stock_StockBrokerHome_i
   : public virtual POA_Stock::StockBrokerHome,
-    public ACE_Event_Handler  
+    public ACE_Event_Handler
 {
 public:
   /**
    * Constructor.
-   * Register the necessary factories and mappings with the specified orb and 
+   * Register the necessary factories and mappings with the specified orb and
    * Create a new instance of the StockBroker object.
    *
    * @param orb
@@ -127,7 +127,7 @@ public:
 private:
   /// The StockDistributor object created by its home.
   Stock::StockBroker_var broker_;
-  
+
   /// Cache a reference to the ORB.
   CORBA::ORB_var orb_;
 };

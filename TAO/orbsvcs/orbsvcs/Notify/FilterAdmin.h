@@ -26,7 +26,7 @@
 #include "orbsvcs/Notify/Topology_Object.h"
 #include "orbsvcs/Notify/EventChannel.h"
 
-class TAO_Notify_EventChannel; 
+class TAO_Notify_EventChannel;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

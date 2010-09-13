@@ -128,10 +128,10 @@ public:
    */
   be_interface *interface (void) const;
   void interface (be_interface *);
-  
+
   /// Accessor for the member.
   ACE_CString &port_prefix (void);
-  
+
   /// return the export macro currently in force
   const char *export_macro (void) const;
 
@@ -171,7 +171,7 @@ private:
 
   /// See the method declaration above.
   be_interface *interface_;
-  
+
   /// Used in enough visitors to put it here.
   ACE_CString port_prefix_;
 };

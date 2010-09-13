@@ -38,7 +38,7 @@ public:
 private:
   /// Open file and initialize stream.
   int init (void);
-  
+
   /// Generate OBV definitions in the client inline
   /// file, done after the main scope traversal.
   int gen_obv_defns (be_root *node);

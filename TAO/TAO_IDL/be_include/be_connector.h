@@ -27,13 +27,13 @@ public:
 
   /// Visiting.
   virtual int accept (be_visitor *visitor);
-  
+
   bool dds_connector (void);
   bool ami_connector (void);
-  
+
 private:
   void check_ancestors (void);
-  
+
 private:
   bool dds_connector_;
   bool ami_connector_;

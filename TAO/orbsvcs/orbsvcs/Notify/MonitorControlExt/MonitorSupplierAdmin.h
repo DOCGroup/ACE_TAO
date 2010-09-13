@@ -30,7 +30,7 @@ public:
   /// Remove the statistics for this event channel
   ~TAO_MonitorSupplierAdmin (void);
 
-  /// Register our statistic and control objects 
+  /// Register our statistic and control objects
   void register_stats_controls (TAO_MonitorEventChannel* mec,
                                 const ACE_CString& name);
 

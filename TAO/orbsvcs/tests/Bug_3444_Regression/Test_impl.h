@@ -4,7 +4,7 @@
 #define TEST_IMPL_HPP
 
 #include "TestS.h"
-    
+
 class Server_impl : public virtual POA_Test::Server
 {
 public:
@@ -13,7 +13,7 @@ public:
   virtual void shutdown ();
 
 private:
-  CORBA::ORB_var orb_;    
+  CORBA::ORB_var orb_;
 };
 
 #endif /* TEST_IMPL_HPP */

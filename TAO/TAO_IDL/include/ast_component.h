@@ -46,7 +46,7 @@ public:
   AST_Type **supports (void) const;
 
   long n_supports (void) const;
-  
+
   // Override for component of UTL_Scope method.
   virtual AST_Decl *special_lookup (UTL_ScopedName *e,
                                     bool full_def_only);
@@ -73,7 +73,7 @@ public:
 
   static AST_Decl::NodeType const NT;
   typedef AST_ComponentFwd FWD_TYPE;
-  
+
 protected:
   virtual AST_Provides *fe_add_provides (AST_Provides *p);
 

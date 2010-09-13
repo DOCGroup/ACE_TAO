@@ -34,7 +34,7 @@ class AST_Type;
 class be_visitor_ami_pre_proc : public be_visitor_scope
 {
 private:
- typedef enum 
+ typedef enum
  {
    NORMAL,
    GET_OPERATION,
@@ -95,7 +95,7 @@ private:
   /// Create an inheritance list for the reply handler.
   AST_Type **create_inheritance_list (be_interface *node,
                                       long &n_parents);
-                                      
+
   /// Generate an *A.idl file for AMI4CCM.
   int generate_ami4ccm_idl (void);
 };

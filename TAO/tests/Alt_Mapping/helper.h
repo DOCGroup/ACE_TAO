@@ -37,7 +37,7 @@ public:
   CORBA::WChar* gen_wstring (void);
   CORBA::WChar* gen_wstring (int maxlength);
   const Alt_Mapping::Fixed_Struct gen_fixed_struct (void);
-  
+
  private:
   Alt_Mapping::Fixed_Struct fixed_struct_;
 };

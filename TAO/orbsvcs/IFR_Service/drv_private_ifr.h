@@ -75,10 +75,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // The ACE_Process_Options default size of 1024 is sometimes not enough.
 const unsigned long TAO_IDL_COMMAND_LINE_BUFFER_SIZE = 4 * 1024;
 
-extern const char *DRV_files[];   
+extern const char *DRV_files[];
 // All files to be processed.
 
-extern long DRV_nfiles;     
+extern long DRV_nfiles;
 // How many are there?
 
 extern long DRV_file_index;

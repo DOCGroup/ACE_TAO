@@ -92,7 +92,7 @@ protected:
    * to generate a TypeCode for its members or content type.
    */
   bool is_typecode_generation_required (be_type * node);
-  
+
   /// Generate nested namespaces for anonymous type typecodes.
   /**
    * Utility methods to generate enclosing namespaces for

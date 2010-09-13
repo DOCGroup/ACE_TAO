@@ -246,7 +246,7 @@ public:
 
   /// Set the anyop source stream.
   int start_anyop_source (const char *fname);
-  
+
   int start_ciao_svnt_header (const char *fname);
   int start_ciao_svnt_source (const char *fname);
   int start_ciao_exec_header (const char *fname);
@@ -294,7 +294,7 @@ public:
 
   /// Make sure we end with a newline.
   int end_anyop_source (void);
-  
+
   int end_ciao_svnt_header (void);
   int end_ciao_svnt_source (void);
   int end_ciao_exec_header (void);
@@ -365,7 +365,7 @@ public:
 
   /// Get the CIAO connector impl source stream.
   TAO_OutStream *ciao_conn_source (void);
-  
+
   /// Get the CIAO AMI connector IDL stream.
   TAO_OutStream *ciao_ami_conn_idl (void);
 
@@ -374,7 +374,7 @@ public:
 
   /// Get the CIAO connector impl source stream.
   TAO_OutStream *ciao_ami_rh_impl_source (void);
-  
+
   /// Set the gperf input file stream.
   void gperf_input_stream (TAO_OutStream *gperf_input);
 
@@ -398,11 +398,11 @@ public:
 
   /// Pass along the #ident string, if any, from the IDL file.
   void gen_ident_string (TAO_OutStream *stream) const;
-  
+
   /// Generates the export files selected on the command line.
   void gen_export_files (void);
 
-  /// Generate file include, with optional empty comment to 
+  /// Generate file include, with optional empty comment to
   /// short-circuit DOxygen.
   void gen_standard_include (TAO_OutStream *stream,
                              const char *included_file,
@@ -430,7 +430,7 @@ private:
                               const char *filepath,
                               TAO_OutStream *stream);
   void gen_typecode_includes (TAO_OutStream * stream);
-  
+
   /// Used if one or both of the CIAO code gen flags are set.
   void gen_svnt_hdr_includes (void);
   void gen_svnt_src_includes (void);
@@ -440,12 +440,12 @@ private:
   void gen_conn_hdr_includes (void);
   void gen_conn_src_includes (void);
   void gen_ami_conn_idl_includes (void);
-  
+
   void gen_export_file (const char *filename,
                         const char *macro,
                         const char *msg,
                         bool for_skel = false);
-                        
+
   void make_rand_extension (char * const t);
 
 private:

@@ -48,7 +48,7 @@ public:
   // Look up a scoped name in the supported interface list.
   virtual AST_Decl *look_in_supported (UTL_ScopedName *,
                                        bool full_def_only);
-    
+
   // Overridden for valuetype from UTL_Scope method.
   virtual AST_Decl *special_lookup (UTL_ScopedName *,
                                     bool full_def_only);

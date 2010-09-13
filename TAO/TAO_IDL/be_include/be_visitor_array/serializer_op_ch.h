@@ -5,7 +5,7 @@
  *
  *  $Id$
  *
- *  Visitors for generation of TAO::DCPS::Serializer operators code 
+ *  Visitors for generation of TAO::DCPS::Serializer operators code
  *  for Arrays in client header. This one
  *  generates the TAO::DCPS::Serializer operators.
  *

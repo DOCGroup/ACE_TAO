@@ -5,7 +5,7 @@
 #include <iostream>
 const char *ior = "file://ecf.ior";
 
-CosNotifyChannelAdmin::EventChannel_var 
+CosNotifyChannelAdmin::EventChannel_var
 get_event_channel(CORBA::ORB_ptr orb)
 
 {
@@ -20,8 +20,8 @@ get_event_channel(CORBA::ORB_ptr orb)
 
   if (CORBA::is_nil(obj.in ()))
   {
-    std::cerr << "Bad ec_fact.ior " << std::endl; 
-    ACE_OS::exit (1);    
+    std::cerr << "Bad ec_fact.ior " << std::endl;
+    ACE_OS::exit (1);
   }
 
   CosNotifyChannelAdmin::EventChannelFactory_var factory =
@@ -40,20 +40,20 @@ get_event_channel(CORBA::ORB_ptr orb)
   }
   catch (CORBA::SystemException& se )
   {
-    std::cerr << "System exception occurred during get_all_channels: " 
+    std::cerr << "System exception occurred during get_all_channels: "
       << se << std::endl;
     throw;
   }
 
   if( channelIdSeq->length() == 0 )
   {
-    try 
+    try
     {
       ec = factory->create_channel( init_qos, init_admin, id);
     }
     catch (CORBA::SystemException& se )
     {
-      std::cerr << "System exception occurred during find_channel: " 
+      std::cerr << "System exception occurred during find_channel: "
         << se << std::endl;
       throw;
     }
@@ -65,14 +65,14 @@ get_event_channel(CORBA::ORB_ptr orb)
     }
     catch (CosNotifyChannelAdmin::ChannelNotFound& )
     {
-      std::cerr << "ChannelNotFound: " 
+      std::cerr << "ChannelNotFound: "
         << channelIdSeq[0] << std::endl;
       throw;
     }
 
     catch (CORBA::SystemException& se )
     {
-      std::cerr << "System exception occurred during get_event_channel: " 
+      std::cerr << "System exception occurred during get_event_channel: "
         << se << std::endl;
       throw;
     }

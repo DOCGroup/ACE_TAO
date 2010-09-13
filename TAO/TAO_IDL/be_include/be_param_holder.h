@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  Place holder referenced by AST_Field (or subclass) 
+ *  Place holder referenced by AST_Field (or subclass)
  *  representing a corresponding template parameter in IDL.
  *
  *
@@ -30,7 +30,7 @@ public:
                    FE_Utils::T_Param_Info *info);
 
   virtual ~be_param_holder (void);
-  
+
   // Narrowing.
   DEF_NARROW_FROM_DECL (be_param_holder);
 

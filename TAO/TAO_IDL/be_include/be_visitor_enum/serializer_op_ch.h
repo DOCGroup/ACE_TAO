@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  Concrete visitor for Enums generating code for the 
+ *  Concrete visitor for Enums generating code for the
  *  TAO::DCPS::Serializer operators
  *
  *

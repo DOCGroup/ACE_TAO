@@ -23,6 +23,8 @@
 
 #define NUM_KEYS 1
 
+#include "ace/OS_NS_wchar.h"
+
 class wchar_reference
 {
  public:

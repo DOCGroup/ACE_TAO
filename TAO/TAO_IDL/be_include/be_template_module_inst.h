@@ -17,7 +17,7 @@ public:
                            FE_Utils::T_ARGLIST *template_args);
 
   virtual ~be_template_module_inst (void);
-  
+
   // Narrowing.
   DEF_NARROW_FROM_DECL (be_template_module_inst);
 

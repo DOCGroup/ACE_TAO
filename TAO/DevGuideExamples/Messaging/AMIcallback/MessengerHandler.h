@@ -8,12 +8,12 @@
 class  MessengerHandler : public virtual POA_AMI_MessengerHandler
 {
 public:
-  //Constructor 
+  //Constructor
   MessengerHandler (CORBA::ORB_ptr orb);
-  
-  //Destructor 
+
+  //Destructor
   virtual ~MessengerHandler (void);
-  
+
 virtual void send_message (
     CORBA::Boolean ami_return_val,
     const char * message,

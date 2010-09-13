@@ -326,7 +326,7 @@ public:
                           TAO_OutStream &os);
   int gen_facet_svnt_src (be_visitor *visitor,
                           TAO_OutStream &os);
-                
+
   /// Used with ami4ccm.
   int gen_ami4ccm_idl (TAO_OutStream *os);
 
@@ -335,23 +335,23 @@ public:
 
   bool is_ami4ccm_rh (void) const;
   void is_ami4ccm_rh (bool val);
-  
+
   /// Accessors for the member.
   bool dds_connector_traits_done (void) const;
   void dds_connector_traits_done (bool val);
-  
+
   /// Generate the "public virtual" entries in the stub header.
   virtual void gen_stub_inheritance (TAO_OutStream *os);
-  
+
   /// Generate the "public virtual" entries in the skel header.
   virtual void gen_skel_inheritance (TAO_OutStream *os);
-  
+
   /// Generate the string compares for ancestors in _is_a().
   virtual int gen_is_a_ancestors (TAO_OutStream *os);
-  
+
   /// Generate setup_collocation() for base component, if any.
   virtual void gen_parent_collocation (TAO_OutStream *os);
-  
+
 protected:
   /**
    * CDreate a new string made by the concatenation
@@ -454,7 +454,7 @@ private:
    */
   void enqueue_base_component_r (AST_Component *node);
   void enqueue_base_home_r (AST_Home *node);
-  
+
 protected:
   /// Have these been done already?
   bool var_out_seq_decls_gen_;
@@ -473,7 +473,7 @@ protected:
 
   /// Are we a direct child of Components::SessionComponent?
   int session_component_child_;
-  
+
   /// Are we an AMI reply handler?
   bool is_ami_rh_;
 
@@ -493,7 +493,7 @@ protected:
 
   /// Used to suppress generation of some CCM servant methods/
   bool has_rw_attributes_;
-  
+
   /// Flags to ensure that DDS connector impl traits members
   /// are generated only once per port interface.
   bool dds_connector_traits_done_;

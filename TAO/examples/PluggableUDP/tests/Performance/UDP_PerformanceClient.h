@@ -26,7 +26,7 @@
 #include "UDP_i.h"
 #include "UDPC.h"
 
-class UDP_PerformanceClient 
+class UDP_PerformanceClient
   : public ACE_Task_Base
 {
   // = TITLE

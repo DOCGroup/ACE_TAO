@@ -7,7 +7,7 @@
  *  $Id$
  *
  *  Concrete visitor for the Module class
- *  This one provides visitors to generate the 
+ *  This one provides visitors to generate the
  *  TAO::DCPS::Serializer operators for elements in
  *  the Module's scope.
  *

@@ -13,7 +13,7 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
   int activate_task (CORBA::ORB_ptr orb);
 
   RTScheduling::Current::IdType* guids (void);
-  
+
  protected:
   /// task svc
   virtual int svc (void);

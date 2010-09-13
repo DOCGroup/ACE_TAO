@@ -15,7 +15,7 @@ public:
     AST_PortType *porttype_ref);
 
   virtual ~AST_Mirror_Port (void);
-  
+
   // Cleanup function.
   virtual void destroy (void);
 

@@ -21,7 +21,7 @@
  *
  * @brief be_visitor_component_ex_idl
  *
- * This is a concrete visitor to generate the 
+ * This is a concrete visitor to generate the
  * CIAO executor IDL for component.
  */
 class be_visitor_component_ex_idl : public be_visitor_decl
@@ -33,7 +33,7 @@ public:
 
   virtual int visit_component (be_component *node);
   virtual int visit_connector (be_connector *node);
-  
+
 private:
   TAO_OutStream &os_;
 };

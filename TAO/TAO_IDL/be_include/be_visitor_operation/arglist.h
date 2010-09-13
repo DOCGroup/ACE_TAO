@@ -41,10 +41,10 @@ public:
 
   /// Stuff to output after each element of the scope is handled.
   virtual int post_process (be_decl *);
-  
+
   /// Set the member.
   void unused (bool val);
-  
+
 private:
   bool unused_;
 };

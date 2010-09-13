@@ -20,6 +20,7 @@
 // ============================================================================
 #include "wchar_reference.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
 
 #if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
 

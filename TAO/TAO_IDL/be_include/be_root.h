@@ -32,7 +32,7 @@ class be_root : public virtual AST_Root,
   //
 public:
   be_root (UTL_ScopedName *n);
-  
+
   virtual ~be_root (void);
 
   /// Cleanup method.

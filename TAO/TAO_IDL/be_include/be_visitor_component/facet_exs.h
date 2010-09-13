@@ -30,13 +30,13 @@ class be_visitor_facet_exs
   //
 public:
   be_visitor_facet_exs (be_visitor_context *ctx);
-  
+
   ~be_visitor_facet_exs (void);
-  
+
   virtual int visit_operation (be_operation *node);
   virtual int visit_attribute (be_attribute *node);
   virtual int visit_provides (be_provides *node);
-  
+
 private:
   be_provides *op_scope_;
   const char *comment_border_;

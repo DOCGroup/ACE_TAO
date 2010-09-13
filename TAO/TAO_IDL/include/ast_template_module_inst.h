@@ -18,18 +18,18 @@ public:
                             FE_Utils::T_ARGLIST *template_args);
 
   virtual ~AST_Template_Module_Inst (void);
-  
+
   AST_Template_Module *ref (void) const;
 
   FE_Utils::T_ARGLIST *
   template_args (void) const;
-  
+
   // Narrowing.
   DEF_NARROW_FROM_DECL (AST_Template_Module_Inst);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
-  
+
   // Cleanup function.
   virtual void destroy (void);
 
@@ -37,7 +37,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   static AST_Decl::NodeType const NT;
-  
+
 private:
   FE_Utils::T_ARGLIST * template_args_;
 };

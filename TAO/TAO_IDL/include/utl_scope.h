@@ -179,7 +179,7 @@ public:
   AST_Decl *lookup_by_name (UTL_ScopedName *,
                             bool full_def_only = false,
                             bool for_add = true);
-                            
+
   AST_Decl *lookup_by_name_r (UTL_ScopedName *,
                               bool full_def_only);
 
@@ -195,9 +195,9 @@ public:
 
   virtual AST_Decl *look_in_prev_mods_local (Identifier *e,
                                              bool ignore_fwd = false);
-     
+
   // A no-op here, overridden for types like interface
-  // (look_in_inherited), modules (look_in_prev_mods) etc.                                     
+  // (look_in_inherited), modules (look_in_prev_mods) etc.
   virtual AST_Decl *special_lookup (UTL_ScopedName *e,
                                     bool ful_def_only);
 
@@ -206,10 +206,10 @@ public:
 
   // If the Identifier string (from the scoped name which has been
   // already determined to be of length 1) matches a param,
-  // create and return a param holder AST node, otherwise 
+  // create and return a param holder AST node, otherwise
   // return 0.
   static AST_Param_Holder *match_param (UTL_ScopedName *e);
-  
+
   // Add to decls. Node represents a local declaration
   // The new decl e is inserted after ex if ex is not 0.
   // This one is public because the case of a reopened
@@ -284,7 +284,7 @@ protected:
   void check_for_predef_seq (AST_Decl *d);
   // Set the appropriate *_seen_ flag if we are seeing a spec-defined
   // sequence of a basic type.
-  
+
 protected:
   // Data.
 
@@ -316,7 +316,7 @@ protected:
 
   // Have we seen a #pragma prefix declaration in this scope?
   bool has_prefix_;
-  
+
   // Used in lookup of various CORBA pseudo objects, which also
   // determines generation of specific #include headers.
   enum WHICH_PSEUDO
@@ -326,37 +326,37 @@ protected:
     PSEUDO_VALUEBASE,
     PSEUDO_ABSTRACTBASE
   };
-  
+
   WHICH_PSEUDO which_pseudo_;
-  
+
 public:
   /// Scope Management Protocol.
-  
+
   /// Common code for most basic adding action.
   AST_Decl *fe_add_decl (AST_Decl *d);
-  
+
   /// Specialized for types that reference another type.
   AST_Field *fe_add_ref_decl (AST_Field *d);
-  
+
   template<typename DECL>
   DECL *fe_add_full_intf_decl (DECL *t);
-  
+
   template<typename FULL_DECL>
   typename FULL_DECL::FWD_TYPE *fe_add_fwd_intf_decl (
     typename FULL_DECL::FWD_TYPE *t);
-    
+
   AST_Structure *fe_add_full_struct_type (AST_Structure *t);
   AST_StructureFwd *fe_add_fwd_struct_type (AST_StructureFwd *t);
-  
+
   /// No-op base class version of the specialized adding actions.
-  
+
   virtual
   AST_PredefinedType *fe_add_predefined_type (
     AST_PredefinedType *t);
 
   virtual
   AST_Module *fe_add_module (AST_Module *m);
-  
+
   virtual
   AST_Template_Module_Inst *fe_add_template_module_inst (
     AST_Template_Module_Inst *m);
@@ -457,7 +457,7 @@ public:
 
   virtual
   AST_Factory *fe_add_factory (AST_Factory *f);
-  
+
   virtual
   AST_Finder *fe_add_finder (AST_Finder *f);
 
@@ -487,7 +487,7 @@ public:
 
   virtual
   AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *mp);
-  
+
 protected:
   /// Quick check on the head of a name to see if it's global.
   bool is_global_name (Identifier *i);
@@ -497,11 +497,11 @@ private:
   /// (and its subtypes) and operations respectively.
   bool inherited_op_attr_clash (AST_Decl *t);
   bool arg_specific_error (AST_Decl *t);
-  
+
   /// Encapsulates the vagaries of adding fields vs decls to
   /// structs/unions vs other types.
   void smart_local_add (AST_Decl *t);
-  
+
   /// Helper function for lookup_by_name(). Iterates doing local
   /// lookups of subsequent components of a scoped name.
   AST_Decl *

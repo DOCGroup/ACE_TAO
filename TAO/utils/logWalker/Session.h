@@ -1,7 +1,7 @@
 // -*- C++ -*-
 
 // $Id$
-// 
+//
 
 #ifndef LOG_WALKER_SESSION_H
 #define LOG_WALKER_SESSION_H

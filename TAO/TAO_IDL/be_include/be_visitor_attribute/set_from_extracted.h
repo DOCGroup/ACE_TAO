@@ -32,7 +32,7 @@ class be_visitor_attribute_set_from_extracted
 public:
   be_visitor_attribute_set_from_extracted (be_visitor_context *ctx);
   virtual ~be_visitor_attribute_set_from_extracted (void);
-  
+
   virtual int visit_array (be_array *);
   virtual int visit_component (be_component *);
   virtual int visit_enum (be_enum *);

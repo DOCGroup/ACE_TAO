@@ -65,10 +65,10 @@ public:
 
   int get_module_name (const ACE_CString &identifier_name,
                        ACE_CString &module_name);
-  
+
   int get_interface_name (const ACE_CString &identifier_name,
                           ACE_CString &interface_name);
-  
+
   /// Public methods to return the scopes needed.
   TAO_PSDL_Scope *parent_scope (void);
 

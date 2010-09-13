@@ -29,19 +29,19 @@ class be_visitor_home_exs : public be_visitor_scope
 {
 public:
   be_visitor_home_exs (be_visitor_context *ctx);
-  
+
   ~be_visitor_home_exs (void);
-  
+
   virtual int visit_home (be_home *node);
   virtual int visit_operation (be_operation *node);
   virtual int visit_attribute (be_attribute *node);
   virtual int visit_factory (be_factory *node);
-  
+
 private:
   int gen_exec_class (void);
-  
+
   void gen_entrypoint (void);
-  
+
 private:
   be_home *node_;
   AST_Component *comp_;
@@ -58,7 +58,7 @@ class Home_Exec_Op_Attr_Generator
 {
 public:
   Home_Exec_Op_Attr_Generator (be_visitor_scope * visitor);
-  
+
   virtual int emit (be_interface * derived_interface,
                     TAO_OutStream * os,
                     be_interface * base_interface);
@@ -66,6 +66,6 @@ public:
 private:
   be_visitor_scope * visitor_;
 };
-                     
+
 #endif /* _BE_HOME_HOME_EXS_H_ */
 

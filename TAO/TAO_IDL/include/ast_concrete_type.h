@@ -79,7 +79,7 @@ public:
                     UTL_ScopedName *n);
 
   virtual ~AST_ConcreteType (void);
-  
+
   // Cleanup.
   virtual void destroy (void);
 

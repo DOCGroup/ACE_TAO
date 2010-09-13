@@ -202,7 +202,7 @@ public:
   AST_Expression (ACE_CDR::UShort us);
 
   AST_Expression (ACE_CDR::Long l);
-  
+
   AST_Expression (ACE_CDR::LongLong ll);
 
   AST_Expression (ACE_CDR::Boolean b);
@@ -286,7 +286,7 @@ public:
 
   // Accessor for the member.
   AST_Decl *get_tdef (void) const;
-  
+
   // Accessor for the member.
   AST_Param_Holder *param_holder (void) const;
 
@@ -331,10 +331,10 @@ private:
 
   AST_Decl *tdef;
   // Propagates aliased constant type.
-  
+
   AST_Param_Holder *param_holder_;
   // Non-zero if we were created from a reference template param.
-  
+
 private:
   // Fill out the lineno, filename and definition scope details.
   void fill_definition_details (void);

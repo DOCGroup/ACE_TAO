@@ -139,7 +139,7 @@ public:
   virtual int visit_root (AST_Root *node) = 0;
   virtual int visit_native (AST_Native *node) = 0;
   virtual int visit_valuebox (AST_ValueBox *node) = 0;
-  
+
 protected:
   // For abstract class.
   ast_visitor (void);

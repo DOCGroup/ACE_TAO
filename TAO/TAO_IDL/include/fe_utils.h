@@ -65,7 +65,7 @@ struct TAO_IDL_FE_Export FE_Utils
   create_uses_multiple_stuff (AST_Component *c,
                               AST_Uses *u,
                               const char *prefix = "");
-  
+
   /// For the executor IDL file, when a pragma ciao ami receptacle
   /// name is multiplex.
   static void
@@ -94,7 +94,7 @@ struct TAO_IDL_FE_Export FE_Utils
   static bool
   is_include_file_found (ACE_CString & inc_file,
                          UTL_String * idl_file_name);
-  
+
   /// Validate the included idl files, somefiles might have been
   /// ignored by the preprocessor.
   static void
@@ -107,14 +107,14 @@ struct TAO_IDL_FE_Export FE_Utils
   /// Strips _cxx_ prefix for use in port names.
   static void
   original_local_name (Identifier *local_name);
-  
+
   /// Types, constants and exceptions can be redefined in
   /// derived interfaces, modules may be reopened, forward
   /// declarations may be repeated, etc.
   static bool
   can_be_redefined (AST_Decl *prev_dec,
                     AST_Decl *curr_decl);
-  
+
 private:
   static bool
   check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,

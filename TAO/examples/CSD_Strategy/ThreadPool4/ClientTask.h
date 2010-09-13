@@ -21,7 +21,7 @@ class ClientTask : public ACE_Task_Base
 {
   public:
 
-    ClientTask(Foo_ptr foo, 
+    ClientTask(Foo_ptr foo,
                Callback_ptr callback);
 
     virtual ~ClientTask();

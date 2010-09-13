@@ -79,7 +79,7 @@ ntptime (timeval t)
         return (s << 16 | usec2ntp((u_int)t.tv_usec) >> 16);
 }
 
-ACE_INLINE ACE_UINT32 
+ACE_INLINE ACE_UINT32
 ntptime()
 {
   //

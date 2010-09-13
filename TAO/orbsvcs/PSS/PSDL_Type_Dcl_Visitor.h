@@ -47,7 +47,7 @@ private:
 
   void print_for_sequence_typedefs (ACE_CString identifier_type,
                                     ACE_CString identifier);
-  
+
   // Generate the code that should go into the stub implementation
   // file for the type_declarators.
   void gen_code_for_si (void);
