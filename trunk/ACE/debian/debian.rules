@@ -50,7 +50,7 @@ extract-stamp:
 
 extract: extract-stamp
 
-debian/mpc-ace.sgml: ACE_wrappers/MPC/docs/MPC.sgml
+debian/mpc-ace.sgml: MPC/docs/MPC.sgml
 	sed -e 's/mpc\.pl/mpc-ace/g' -e 's/mwc\.pl/mwc-ace/g' $< > $@
 
 debian/%.1 debian/%.5: debian/%.sgml
