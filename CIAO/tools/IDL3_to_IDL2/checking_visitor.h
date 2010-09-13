@@ -98,9 +98,9 @@ public:
   virtual int visit_typedef (AST_Typedef *node);
   virtual int visit_root (AST_Root *node);
   virtual int visit_native (AST_Native *node);
-  
+
   bool is_idl3 (void) const;
-  
+
 private:
   void remove_idl2_only_filename (ACE_CString filename);
 

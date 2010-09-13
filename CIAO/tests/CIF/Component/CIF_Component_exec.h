@@ -42,7 +42,7 @@
 
 namespace CIAO_CIF_CIF_Provider_Impl
 {
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_component/facet_exh.cpp:53
   class  provide_cif_foo_exec_i
@@ -53,16 +53,16 @@ namespace CIAO_CIF_CIF_Provider_Impl
     provide_cif_foo_exec_i (
       ::CIF::CCM_CIF_Provider_Context_ptr ctx);
     virtual ~provide_cif_foo_exec_i (void);
-    
+
     // Operations and attributes from ::CIF::foo
-    
+
     virtual
     void do_foo (void);
-  
+
   private:
     ::CIF::CCM_CIF_Provider_Context_var ciao_context_;
   };
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_component/facet_exh.cpp:53
   class  provide_cif_inherited_foo_exec_i
@@ -73,19 +73,19 @@ namespace CIAO_CIF_CIF_Provider_Impl
     provide_cif_inherited_foo_exec_i (
       ::CIF::CCM_CIF_Provider_Context_ptr ctx);
     virtual ~provide_cif_inherited_foo_exec_i (void);
-    
+
     // Operations and attributes from ::CIF::inherited_foo
-    
+
     virtual
     void do_inherited_foo (void);
-    
+
     virtual
     void do_foo (void);
-  
+
   private:
     ::CIF::CCM_CIF_Provider_Context_var ciao_context_;
   };
-  
+
   class  CIF_Provider_exec_i
     : public virtual CIF_Provider_Exec,
       public virtual ::CORBA::LocalObject
@@ -93,48 +93,48 @@ namespace CIAO_CIF_CIF_Provider_Impl
   public:
     CIF_Provider_exec_i (void);
     virtual ~CIF_Provider_exec_i (void);
-    
+
     //@{
     /** Supported operations and attributes. */
-    
+
     //@}
-    
+
     //@{
     /** Component attributes and port operations. */
-    
-    
+
+
     virtual ::CIF::CCM_foo_ptr
     get_provide_cif_foo (void);
-    
+
     virtual ::CIF::CCM_inherited_foo_ptr
     get_provide_cif_inherited_foo (void);
     //@}
-    
+
     //@{
     /** Operations from Components::SessionComponent. */
-    
+
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     //@}
-  
+
   private:
     ::CIF::CCM_CIF_Provider_Context_var ciao_context_;
     ::CIF::CCM_foo_var ciao_provide_cif_foo_;
     ::CIF::CCM_inherited_foo_var ciao_provide_cif_inherited_foo_;
   };
-  
+
   extern "C" CIF_COMPONENT_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_CIF_CIF_Provider_Impl (void);
 }
 
 namespace CIAO_CIF_CIF_User_Impl
 {
-  
+
   class  CIF_User_exec_i
     : public virtual CIF_User_Exec,
       public virtual ::CORBA::LocalObject
@@ -142,33 +142,33 @@ namespace CIAO_CIF_CIF_User_Impl
   public:
     CIF_User_exec_i (void);
     virtual ~CIF_User_exec_i (void);
-    
+
     //@{
     /** Supported operations and attributes. */
-    
+
     //@}
-    
+
     //@{
     /** Component attributes and port operations. */
-    
+
     //@}
-    
+
     //@{
     /** Operations from Components::SessionComponent. */
-    
+
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     //@}
-  
+
   private:
     ::CIF::CCM_CIF_User_Context_var ciao_context_;
   };
-  
+
   extern "C" CIF_COMPONENT_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_CIF_CIF_User_Impl (void);
 }

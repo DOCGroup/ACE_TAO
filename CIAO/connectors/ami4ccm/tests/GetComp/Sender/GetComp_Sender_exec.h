@@ -17,7 +17,7 @@
 
 namespace CIAO_GetComp_Sender_Impl
 {
-  
+
   class MyFoo_callback_exec_i
     : public virtual ::GetComp::CCM_AMI4CCM_MyFooReplyHandler,
       public virtual ::CORBA::LocalObject

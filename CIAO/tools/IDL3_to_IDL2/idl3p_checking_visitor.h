@@ -10,7 +10,7 @@
 //    idl3p_checking_visitor.h
 //
 // = DESCRIPTION
-//    Header file for visitor that checks modules for the 
+//    Header file for visitor that checks modules for the
 //    presence of declarations other than non-code-generating
 //    IDL3+ constructs. Prevents the generation of illegal
 //    empty modules in the *_IDL2 artifact.
@@ -80,9 +80,9 @@ public:
   virtual int visit_typedef (AST_Typedef *node);
   virtual int visit_root (AST_Root *node);
   virtual int visit_native (AST_Native *node);
-  
+
   bool needs_codegen (void) const;
-  
+
 private:
   bool needs_codegen_;
 };

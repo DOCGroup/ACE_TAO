@@ -65,21 +65,21 @@ public:
   virtual int visit_finder (AST_Finder *node);
   virtual int visit_root (AST_Root *node);
   virtual int visit_param_holder(AST_Param_Holder *node);
-  
+
 private:
   UTL_ScopedName *create_scoped_name (const char *prefix,
                                       const char *local_name,
                                       const char *suffix,
                                       AST_Decl *parent);
-                                      
+
   void tranfer_scope_elements (AST_Home *src, AST_Interface &dst);
-  
+
   /// We don't want to visit a porttype when its declaration is
   /// encountered but rather by navigating to it from an
   /// extended port or a mirror port.
   int visit_porttype_scope (AST_PortType *node);
   int visit_porttype_scope_mirror (AST_PortType *node);
-  
+
 private:
   AST_Home *home_;
 };

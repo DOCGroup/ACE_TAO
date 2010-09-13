@@ -46,7 +46,7 @@
 
 namespace CIAO_dance_test_Exec_Destructor_Impl
 {
-  
+
   class EXECUTOR_DESTRUCTOR_EXEC_Export Exec_Destructor_exec_i
     : public virtual Exec_Destructor_Exec,
       public virtual ::CORBA::LocalObject
@@ -54,37 +54,37 @@ namespace CIAO_dance_test_Exec_Destructor_Impl
   public:
     Exec_Destructor_exec_i (void);
     virtual ~Exec_Destructor_exec_i (void);
-    
+
     //@{
     /** Supported operations and attributes. */
     void id (const char  *);
-    
+
     char * id (void) { return 0; }
 
     //@}
-    
+
     //@{
     /** Component attributes and port operations. */
-    
+
     //@}
-    
+
     //@{
     /** Operations from Components::SessionComponent. */
-    
+
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     //@}
-  
+
   private:
     ::dance_test::CCM_Exec_Destructor_Context_var ciao_context_;
     std::string name_;
   };
-  
+
   extern "C" EXECUTOR_DESTRUCTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_dance_test_Exec_Destructor_Impl (void);
 }
@@ -97,22 +97,22 @@ namespace CIAO_dance_test_Exec_Destructor_Impl
   {
   public:
     Home_Destructor_exec_i (void);
-    
+
     virtual ~Home_Destructor_exec_i (void);
-    
+
     // Implicit operations.
-    
+
     virtual ::Components::EnterpriseComponent_ptr
     create (void);
 
     void id (const char  *);
-    
+
     char * id (void);
 
   private:
     std::string name_;
   };
-  
+
   extern "C" EXECUTOR_DESTRUCTOR_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_dance_test_Home_Destructor_Impl (void);
 }

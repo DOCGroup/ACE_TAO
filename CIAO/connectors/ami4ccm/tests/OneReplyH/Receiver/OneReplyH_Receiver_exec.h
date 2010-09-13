@@ -25,7 +25,7 @@ namespace CIAO_OneReplyH_Receiver_Impl
 
     virtual ::CORBA::Long foo (const char * in_str, ::CORBA::Long cmd,
                                ::CORBA::String_out answer);
-    virtual void bar (const char * in_str, ::CORBA::Long cmd, 
+    virtual void bar (const char * in_str, ::CORBA::Long cmd,
                       ::CORBA::String_out answer, ::CORBA::Long_out l_cmd);
   };
 

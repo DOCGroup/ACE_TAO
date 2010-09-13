@@ -52,36 +52,36 @@ namespace CIAO_Minimum_Receiver_Impl
   public:
     Receiver_exec_i (void);
     virtual ~Receiver_exec_i (void);
-    
+
     //@{
     /** Supported operations and attributes. */
-    
+
     //@}
-    
+
     //@{
     /** Component attributes and port operations. */
-    
+
     //@}
-    
+
     //@{
     /** Operations from Components::SessionComponent. */
-    
+
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     //@}
-    
-  
+
+
   private:
     ::Minimum::CCM_Receiver_Context_var context_;
   };
-  
+
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Minimum_Receiver_Impl (void);
 }
@@ -94,21 +94,21 @@ namespace CIAO_Minimum_Receiver_Impl
   {
   public:
     ReceiverHome_exec_i (void);
-    
+
     virtual ~ReceiverHome_exec_i (void);
-    
+
     // All operations and attributes.
-    
+
     // Factory operations.
-    
+
     // Finder operations.
-    
+
     // Implicit operations.
-    
+
     virtual ::Components::EnterpriseComponent_ptr
     create (void);
   };
-  
+
   extern "C" RECEIVER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Minimum_ReceiverHome_Impl (void);
 }

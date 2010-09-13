@@ -30,25 +30,25 @@ namespace dance_test
     Exec_Dest_Status (void);
 
     ~Exec_Dest_Status (void);
-    
+
     void plan (const ::Deployment::DeploymentPlan *plan);
 
     void destructor_called (const std::string &id);
-    
+
     bool check_destructor (const std::string &id);
   private:
-    
+
     struct Instance_Status
     {
       Instance_Status (void);
-      
+
       bool destructor_;
     };
-    
+
     typedef std::map <std::string, Instance_Status> Inst_Map;
     Inst_Map instances_;
   };
-  
+
   typedef ACE_Singleton <Exec_Dest_Status,
                          ACE_Null_Mutex> EXEC_DEST_STATUS;
 }

@@ -83,7 +83,7 @@ public:
   virtual int visit_typedef (AST_Typedef *node);
   virtual int visit_native (AST_Native *node);
   virtual int visit_param_holder (AST_Param_Holder *node);
-  
+
 protected:
   void check_prefix (AST_Decl *d);
   void check_id_and_version (AST_Decl *d);
@@ -96,13 +96,13 @@ protected:
   void gen_operation (AST_Operation *node);
   void gen_attribute (AST_Attribute *node);
   void gen_label_value (AST_UnionLabel *node);
-  
+
   // Overrides allow common code for visit_scope().
   virtual bool scope_skip_type (AST_Decl *d);
-  
+
   // Used by derived visitors to avoid generating an empty IDL module.
   bool can_skip_module (AST_Module *m);
-  
+
   // Used by derived visitors to check for special include handling.
   bool match_excluded_file (const char *raw_filename);
 
@@ -110,7 +110,7 @@ protected:
   TAO_OutStream *os;
   AST_Type *disc_type_;
   ACE_CString port_prefix_;
-  
+
 private:
   ACE_CString tmp_retval_;
 };

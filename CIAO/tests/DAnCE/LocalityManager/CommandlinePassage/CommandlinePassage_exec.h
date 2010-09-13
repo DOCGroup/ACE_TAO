@@ -40,12 +40,12 @@ namespace CIAO_command_line_test_A_Impl
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
-  
+
   private:
     ::command_line_test::CCM_A_Context_var context_;
     CORBA::Long tc_max_;
   };
-  
+
   extern "C" COMMANDLINEPASSAGE_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Component_Impl (void);
 }

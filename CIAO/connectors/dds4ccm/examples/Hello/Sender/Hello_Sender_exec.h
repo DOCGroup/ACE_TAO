@@ -55,7 +55,7 @@ namespace CIAO_Hello_Sender_Impl
 
   };
 
-  class pulse_Generator : 
+  class pulse_Generator :
     public ACE_Event_Handler
   {
   public:

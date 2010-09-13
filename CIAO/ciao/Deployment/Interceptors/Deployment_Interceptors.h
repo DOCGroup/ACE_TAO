@@ -3,7 +3,7 @@
  * @file Deployment_Interceptors.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
- * Initial deployment interceptors for use in DAnCE.  
+ * Initial deployment interceptors for use in DAnCE.
  */
 
 #ifndef DEPLOYMENT_INTERCEPTORS_H
@@ -25,17 +25,17 @@ namespace CIAO
     : public virtual DAnCE::DeploymentInterceptor_Base
   {
   public:
-    // Constructor 
-    
+    // Constructor
+
     CIAO_StoreReferences_i (void);
-  
-    // Destructor 
+
+    // Destructor
     virtual ~CIAO_StoreReferences_i (void);
-  
+
     virtual
       void pre_install (::Deployment::DeploymentPlan & plan,
                                  ::CORBA::ULong instanceRef);
-  
+
     virtual
       void post_install (const ::Deployment::DeploymentPlan & plan,
                                   ::CORBA::ULong index,
@@ -44,7 +44,7 @@ namespace CIAO
 
     virtual
       void configure(const Deployment::Properties&);
-    
+
     CORBA::ORB_var orb_;
   private:
     CosNaming::NamingContext_var ctx_;
@@ -54,17 +54,17 @@ namespace CIAO
     : public virtual DAnCE::DeploymentInterceptor_Base
   {
   public:
-    // Constructor 
+    // Constructor
     CIAO_ReferenceLookup_i (void);
-  
-    // Destructor 
+
+    // Destructor
     virtual ~CIAO_ReferenceLookup_i (void);
-  
+
     virtual
       void pre_connect (::Deployment::DeploymentPlan & plan,
                                  ::CORBA::ULong connection_index,
                                  ::CORBA::Any & provided_reference);
-  
+
     virtual
       void post_connect (const ::Deployment::DeploymentPlan & plan,
                                   ::CORBA::ULong connectionRef,
@@ -77,7 +77,7 @@ namespace CIAO
 
 extern "C"
 {
-  ::DAnCE::DeploymentInterceptor_ptr 
+  ::DAnCE::DeploymentInterceptor_ptr
   CIAO_Deployment_Interceptors_Export create_CIAO_StoreReferences (void);
 }
 

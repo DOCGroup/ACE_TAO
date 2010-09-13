@@ -29,7 +29,7 @@ namespace CIAO_Simple_SimpleProvider_Impl
     virtual void
     hello (
       const char * hello);
-    
+
   private:
     bool &triggered_;
   };

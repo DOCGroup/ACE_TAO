@@ -108,7 +108,7 @@ namespace DAnCE
       virtual int visit_root (AST_Root *node);
       virtual int visit_native (AST_Native *node);
       virtual int visit_finder (AST_Finder *node);
-      
+
       struct Error
       {
         Error (const ACE_CString &diag, AST_Decl *node = 0)

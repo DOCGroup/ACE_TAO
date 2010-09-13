@@ -44,7 +44,7 @@ namespace MyImpl
   private:
     CORBA::String_var str_;
   };
-  
+
   /**
    * @class BMClosedED_exec_i
    *

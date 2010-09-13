@@ -52,55 +52,55 @@ namespace CIAO_Hello_Receiver_Impl
   public:
     Receiver_exec_i (void);
     virtual ~Receiver_exec_i (void);
-    
+
     //@{
     /** Supported operations and attributes. */
-    
+
     //@}
-    
+
     //@{
     /** Component attributes and port operations. */
-    
-    
+
+
     virtual void
     push_click_in (
       ::Hello::TimeOut * ev);
-    
+
     // TAO_IDL - Generated from
     // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-    
+
     virtual ::CORBA::Short
     iterations (void);
-    
+
     // TAO_IDL - Generated from
     // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-    
+
     virtual void
     iterations (
       ::CORBA::Short iterations);
     //@}
-    
+
     //@{
     /** Operations from Components::SessionComponent. */
-    
+
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     //@}
-    
-  
+
+
   private:
     ::Hello::CCM_Receiver_Context_var context_;
     CORBA::String_var message_;
     CORBA::Short iterations_;
   };
-  
+
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Hello_Receiver_Impl (void);
 }
@@ -113,21 +113,21 @@ namespace CIAO_Hello_Receiver_Impl
   {
   public:
     ReceiverHome_exec_i (void);
-    
+
     virtual ~ReceiverHome_exec_i (void);
-    
+
     // All operations and attributes.
-    
+
     // Factory operations.
-    
+
     // Finder operations.
-    
+
     // Implicit operations.
-    
+
     virtual ::Components::EnterpriseComponent_ptr
     create (void);
   };
-  
+
   extern "C" RECEIVER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Hello_ReceiverHome_Impl (void);
 }

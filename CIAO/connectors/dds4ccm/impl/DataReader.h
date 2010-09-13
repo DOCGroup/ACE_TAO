@@ -31,7 +31,7 @@ namespace CIAO
     {
     public:
       virtual ~CCM_DDS_DataReader_Base (void);
-      
+
       virtual DDSDataReader * get_impl (void) = 0;
     };
   }

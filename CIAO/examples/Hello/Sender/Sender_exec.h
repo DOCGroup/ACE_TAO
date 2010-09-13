@@ -49,7 +49,7 @@ namespace CIAO_Hello_Sender_Impl
 
   // TAO_IDL - Generated from
   // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_component/facet_exh.cpp:58
-  
+
   class SENDER_EXEC_Export ReadMessage_exec_i
     : public virtual ::Hello::CCM_ReadMessage,
       public virtual ::CORBA::LocalObject
@@ -58,19 +58,19 @@ namespace CIAO_Hello_Sender_Impl
     ReadMessage_exec_i (Sender_exec_i& component);
 
     virtual ~ReadMessage_exec_i (void);
-    
+
     // Operations and attributes from ::Hello::ReadMessage
-    
+
     // TAO_IDL - Generated from
     // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-    
+
     virtual char *
     get_message (void);
 
   private:
     Sender_exec_i& component_;
   };
-  
+
   class SENDER_EXEC_Export Sender_exec_i
     : public virtual Sender_Exec,
       public virtual ::CORBA::LocalObject
@@ -79,60 +79,60 @@ namespace CIAO_Hello_Sender_Impl
     Sender_exec_i (void);
     Sender_exec_i (const char* local_message);
     virtual ~Sender_exec_i (void);
-    
+
     //@{
     /** Supported operations and attributes. */
-    
-    
+
+
     // TAO_IDL - Generated from
     // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-    
+
     virtual void
     start (void);
     //@}
-    
+
     //@{
     /** Component attributes and port operations. */
-    
-    
+
+
     virtual ::Hello::CCM_ReadMessage_ptr
     get_push_message (void);
-    
+
     // TAO_IDL - Generated from
     // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-    
+
     virtual char *
     local_message (void);
-    
+
     // TAO_IDL - Generated from
     // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-    
+
     virtual void
     local_message (
       const char * local_message);
-    
+
     //@{
     /** Operations from Components::SessionComponent. */
-    
+
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     //@}
-    
-  
+
+
   private:
     ::Hello::CCM_Sender_Context_var context_;
     CORBA::String_var message_;
     CORBA::Boolean log_time_;
     friend class ReadMessage_exec_i;
   };
-  
+
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Hello_Sender_Impl (void);
 }
@@ -145,21 +145,21 @@ namespace CIAO_Hello_Sender_Impl
   {
   public:
     SenderHome_exec_i (void);
-    
+
     virtual ~SenderHome_exec_i (void);
-    
+
     // All operations and attributes.
-    
+
     // Factory operations.
-    
+
     // Finder operations.
-    
+
     // Implicit operations.
-    
+
     virtual ::Components::EnterpriseComponent_ptr
     create (void);
   };
-  
+
   extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Hello_SenderHome_Impl (void);
 }

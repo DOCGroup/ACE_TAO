@@ -5,6 +5,6 @@ workspace {
   ciao
   $(DANCE_ROOT)
   exclude {
-    DAnCE/tests
+    $(DANCE_ROOT)/tests
   }
 }

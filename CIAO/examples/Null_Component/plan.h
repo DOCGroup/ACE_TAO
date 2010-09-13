@@ -23,7 +23,7 @@ struct HomeAttributes
 };
 
 /// Homes
-HomeAttributes homes_table[] = 
+HomeAttributes homes_table[] =
 {
   {
     "Null_Component.ComponentImplementations.Null_Assembly_Container."

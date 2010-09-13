@@ -42,13 +42,13 @@ public:
 
   void remove (::DDS::Publisher_ptr publisher);
 
-private:      
+private:
   typedef ::CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> Writer_type;
   typedef ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
     DataWriterListener_type;
   typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
     DataWriter_type;
-    
+
   /**
    * DDS_Write
    */

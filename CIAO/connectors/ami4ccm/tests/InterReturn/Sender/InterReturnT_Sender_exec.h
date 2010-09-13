@@ -53,7 +53,7 @@ namespace CIAO_InterReturnT_Sender_Impl
     virtual void ret_void_excep (
                  ::CCM_AMI::ExceptionHolder_ptr excep_holder);
 
-    virtual void ret_long (::CORBA::Long ami_return_val, 
+    virtual void ret_long (::CORBA::Long ami_return_val,
                            const char * answer, CORBA::Long l_cmd);
     virtual void ret_long_excep (
                  ::CCM_AMI::ExceptionHolder_ptr excep_holder);

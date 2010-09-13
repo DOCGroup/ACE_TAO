@@ -46,7 +46,7 @@ namespace CIAO_CompA_Impl
 {
   // TAO_IDL - Generated from
   // be/be_visitor_component/facet_exh.cpp:53
-  
+
   class COMPA_EXEC_Export Moo_exec_i
     : public virtual ::CCM_Moo,
       public virtual ::CORBA::LocalObject
@@ -54,16 +54,16 @@ namespace CIAO_CompA_Impl
   public:
     Moo_exec_i (void);
     virtual ~Moo_exec_i (void);
-    
+
     // Operations and attributes from ::Moo
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:37
-    
+
     virtual void
     do_something (void);
   };
-  
+
   class COMPA_EXEC_Export CompA_exec_i
     : public virtual CompA_Exec,
       public virtual ::CORBA::LocalObject
@@ -71,39 +71,39 @@ namespace CIAO_CompA_Impl
   public:
     CompA_exec_i (void);
     virtual ~CompA_exec_i (void);
-    
+
     //@{
     /** Supported operations and attributes. */
-    
+
     //@}
-    
+
     //@{
     /** Component attributes and port operations. */
-    
-    
+
+
     virtual ::CCM_Moo_ptr
     get_my_moo (void);
     //@}
-    
+
     //@{
     /** Operations from Components::SessionComponent. */
-    
+
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     //@}
-    
-  
+
+
   private:
     ::CCM_CompA_Context_var context_;
   };
-  
+
   extern "C" COMPA_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_CompA_Impl (void);
 }
