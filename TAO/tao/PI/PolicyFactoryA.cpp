@@ -46,7 +46,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:omg.org/PortableInterceptor/PolicyFactory:1.0",
     "PolicyFactory");
-  
+
 namespace PortableInterceptor
 {
   ::CORBA::TypeCode_ptr const _tc_PolicyFactory =

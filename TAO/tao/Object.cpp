@@ -931,7 +931,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
         {
           return false;
         }
-        
+
       ACE_NEW_RETURN (x,
                       CORBA::Object (ior, orb_core),
                       false);

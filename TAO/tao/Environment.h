@@ -150,7 +150,7 @@ namespace CORBA
     /// The previous environment on the "default environment stack".
     Environment *previous_;
   };
-  
+
   template<>
   inline void release (Environment_ptr env)
   {

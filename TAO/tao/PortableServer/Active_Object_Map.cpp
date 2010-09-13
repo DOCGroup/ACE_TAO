@@ -19,14 +19,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /* static */
 size_t TAO_Active_Object_Map::system_id_size_ = 0;
 
-static void 
+static void
 hexstring (ACE_CString& hexstr, const char* s, size_t l)
 {
   char buf[3] = {0};
-  
+
   hexstr.fast_resize (2 + l * 2);
   hexstr.append ("0x", 2);
-  while (--l) 
+  while (--l)
     {
       ACE_OS::sprintf (buf, "%02x", (unsigned int)(unsigned char)*s);
       hexstr.append (buf, 2);

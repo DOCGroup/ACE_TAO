@@ -70,7 +70,7 @@ namespace CORBA
   class UnionMemberSeq;
   class ValueMemberSeq;
   class ORB_ObjectIdList;
-  
+
   class Object;
   typedef Object * Object_ptr;
 
@@ -91,7 +91,7 @@ namespace CORBA
 
   class Policy;
   typedef Policy *Policy_ptr;
-  
+
   class OperationDef;
   typedef OperationDef * OperationDef_ptr;
 

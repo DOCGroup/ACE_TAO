@@ -48,7 +48,7 @@ namespace TAO
      * "servant requests" that can be inserted into a TP_Queue
      * object.
      */
-    class TAO_CSD_TP_Export TP_Request 
+    class TAO_CSD_TP_Export TP_Request
       : public TAO_Intrusive_Ref_Count_Base<TAO_SYNCH_MUTEX>
     {
     public:

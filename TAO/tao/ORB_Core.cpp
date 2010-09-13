@@ -2306,7 +2306,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion)
 
   // Cleanup transports
   this->thread_lane_resources_manager ().close_all_transports ();
-  
+
   // Grab the thread manager
   ACE_Thread_Manager *tm = this->thr_mgr ();
 

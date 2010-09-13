@@ -285,7 +285,7 @@ TAO_Connection_Handler::handle_input_internal (
     {
       resume_handle.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
     }
-    
+
   return return_value;
 }
 
@@ -296,7 +296,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
     {
       return 1;
     }
-    
+
   this->is_closed_ = true;
 
   // Save the ID for debugging messages

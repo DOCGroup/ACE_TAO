@@ -29,7 +29,7 @@ TAO_Endpoint_Acceptor_Filter_Factory::~TAO_Endpoint_Acceptor_Filter_Factory(void
           EndpointPolicy::Policy_var cur_policy = EndpointPolicy::Policy::_narrow (policies[i]);
           if (CORBA::is_nil (cur_policy.in ()))
             return 0;
-          
+
           EndpointPolicy::EndpointList_var cur_endpoints = cur_policy->value ();
           CORBA::ULong cur_num_endpoints = cur_endpoints->length ();
 
