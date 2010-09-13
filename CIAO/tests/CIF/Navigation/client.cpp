@@ -117,7 +117,7 @@ test_get_named_facets (::Components::Navigation_ptr nav)
   ACE_DEBUG ((LM_DEBUG, "Start test: Navigation test_get_named_facets\n"));
   try
     {
-      ::Components::NameList names (2);
+      ::Components::NameList names;
       names.length (2);
       names[0] = CORBA::string_dup ("provide_cif_foo");
       names[1] = CORBA::string_dup ("provide_cif_inherited_foo");
@@ -225,16 +225,11 @@ run_test (::Components::Navigation_ptr nav)
   int ret = test_provide_facet (nav);
 
 #if !defined (CCM_LW)
-// TODO
-// resolve errors in core for:
-//    - get_all_facets
-//    - get_named_facets
+   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+   ret += test_get_all_facets (nav);
 
-//    ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
-//    ret += test_get_all_facets (nav);
-
-//    ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
-//    ret += test_get_named_facets (nav);
+   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+   ret += test_get_named_facets (nav);
 
   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
   ret += test_same_component (nav);
