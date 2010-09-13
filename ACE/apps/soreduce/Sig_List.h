@@ -9,11 +9,11 @@
 #ifndef _SIG_LIST_H_
 #define _SIG_LIST_H_
 
-// A Sig_List is a specialized container of signatures. The initial use of a 
-// Sig_List was to manage a variable length of undefined Signatures, so the 
-// program could know when all possible resolutions were determined. As the 
-// program grows in complexity, Sig_Lists are used to store other groups as 
-// well.  The methods provide simple list traversal, as well as efficient use 
+// A Sig_List is a specialized container of signatures. The initial use of a
+// Sig_List was to manage a variable length of undefined Signatures, so the
+// program could know when all possible resolutions were determined. As the
+// program grows in complexity, Sig_Lists are used to store other groups as
+// well.  The methods provide simple list traversal, as well as efficient use
 // of space.
 
 #include "Signature.h"

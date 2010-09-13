@@ -55,7 +55,7 @@ public:
   void status (STATUS_CODE);
   int destroy (void);
 private:
-  STATUS_CODE status_;  
+  STATUS_CODE status_;
 };
 
 #endif /* _URL_STATUS_H */

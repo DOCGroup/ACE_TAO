@@ -40,7 +40,7 @@ extern "C"
 #if !defined (ACE_LACKS_NETDB_H)
 #  include /**/ <netdb.h>
 #endif /* !ACE_LACKS_NETDB_H */
-  
+
 #if defined (ACE_LACKS_HOSTENT)
 struct  hostent {
         char    *h_name;        /* official name of host */

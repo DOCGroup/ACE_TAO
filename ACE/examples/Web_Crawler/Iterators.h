@@ -27,7 +27,7 @@ class URL_Iterator
 {
   // = TITLE
   //    An abstract base class that defines an iterator.
-  // 
+  //
   // = DESCRIPTION
   //    Subclasses of this base class can define what strings
   //    to return from <next>.  This class decouples higher-level
@@ -97,7 +97,7 @@ class URL_Download_Iterator : public URL_Iterator
   // = TITLE
   //    An iterator that iterates over the contents of an entire URL,
   //    i.e., both header and body, and returns it in <BUFSIZ>
-  //    <buffer>s. 
+  //    <buffer>s.
 public:
   // = Initialization and termination methods.
   URL_Download_Iterator (URL &url);

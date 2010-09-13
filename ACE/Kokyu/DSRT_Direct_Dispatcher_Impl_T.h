@@ -38,7 +38,7 @@ namespace Kokyu
     typedef typename
     DSRT_Scheduler_Traits::QoSDescriptor_t DSRT_QoSDescriptor;
 
-    DSRT_Direct_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy, 
+    DSRT_Direct_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
                                  int sched_scope);
 
     int init_i (const DSRT_ConfigInfo&);

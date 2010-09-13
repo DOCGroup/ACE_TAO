@@ -123,7 +123,7 @@ inline ACE_HANDLE ace_fileno_helper (FILE *fp)
 # endif /* defined (fileno) */
 }
 #endif /* !ACE_FILENO_EQUIVALENT */
- 
+
 #if !defined (ACE_LACKS_CUSERID) && !defined(ACE_HAS_ALT_CUSERID) \
     && !defined(ACE_WIN32) && !defined (ACE_VXWORKS)
 /// Helper for the ACE_OS::cuserid() function

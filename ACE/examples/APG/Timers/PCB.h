@@ -19,7 +19,7 @@ public:
   virtual int handleEvent (const void *arg);
   virtual int handleCancel (void);
   virtual int handleClose (void);
- 
+
 private:
   long timerID_;
   int count_;

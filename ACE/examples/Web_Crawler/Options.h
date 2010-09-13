@@ -35,7 +35,7 @@ class Options
   //   Maintains the global options.
   //
   // = DESCRIPTION
-  //   This class is converted into a Singleton by the 
+  //   This class is converted into a Singleton by the
   //   <ACE_Singleton> template.
 public:
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -80,7 +80,7 @@ public:
 
   // Get the handle_limit.
   int handle_limit (void);
-private:  
+private:
   int recurse_;
   // Are we recursving.
 
@@ -113,12 +113,12 @@ private:
 
   int port_no_;
   // Port no.
-  
+
   int handle_limit_;
   // The limit of the number of descriptors to be given for this process.
 };
 
-// Typedef an Options Singleton. 
+// Typedef an Options Singleton.
 typedef ACE_Singleton <Options, ACE_Null_Mutex> OPTIONS;
 
 #endif /* _OPTIONS_H */

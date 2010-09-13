@@ -233,7 +233,7 @@ public:
                   int flags,
                   const ACE_Time_Value *timeout,
                   size_t *bytes_transferred = 0) const;
-                  
+
   /**
    * Try to receive exactly len bytes into buf (uses the recv() call).
    * The ACE_Time_Value indicates how long to blocking trying to

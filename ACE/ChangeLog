@@ -1,3 +1,9 @@
+Mon Sep 13 18:15:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          *:
+          Zapped trailing whitespaces using
+          find -name \*.h -o -name \*.cpp -name \*.inl | xargs perl -i -pe's/\s+\n/\n/'
+
 Mon Sep 13 14:04:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted change below, not correct given new info from Adam
