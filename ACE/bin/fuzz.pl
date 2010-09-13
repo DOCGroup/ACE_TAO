@@ -1032,38 +1032,6 @@ sub check_for_streams_include ()
     }
 }
 
-# This test checks for the inclusion of OS.h.
-sub check_for_OS_h_include ()
-{
-    print "Running ace/OS.h test\n";
-    foreach $file (@files_h, @files_cpp, @files_inl) {
-        if (open (FILE, $file)) {
-            my $disable = 0;
-            print "Looking at file $file\n" if $opt_d;
-            while (<FILE>) {
-                if (/FUZZ\: disable check_for_OS_h_include/) {
-                    $disable = 1;
-                }
-                if (/FUZZ\: enable check_for_OS_h_include/) {
-                    $disable = 0;
-                }
-                if ($disable == 0 and ($file =~ /.*CIAO.*/)
-                    and /^\s*#\s*include\s*\"ace\/OS\.h\"/) {
-                    print_error ("$file:$.: expensive ace/OS.h included; consider an OS_NS_*.h file");
-                    print " OS.h is very expensive in both ";
-                    print "compile-time and footprint. \n";
-                    print " Please consider including one of the ";
-                    print "OS_NS_*.h files instead.\n\n";
-                }
-            }
-            close (FILE);
-        }
-        else {
-            print STDERR "Error: Could not open $file\n";
-        }
-    }
-}
-
 # This test checks for the inclusion of Synch*.h.
 sub check_for_synch_include ()
 {
@@ -2105,7 +2073,6 @@ if (!getopts ('cdhl:t:mv') || $opt_h) {
     print "\t   check_for_noncvs_files
            check_for_generated_headers
            check_for_synch_include
-           check_for_OS_h_include
            check_for_streams_include
            check_for_dependency_file
            check_for_makefile_variable
@@ -2194,7 +2161,6 @@ check_for_NULL () if ($opt_l >= 1);
 check_for_inline () if ($opt_l >= 2);
 check_for_math_include () if ($opt_l >= 3);
 check_for_synch_include () if ($opt_l >= 6);
-check_for_OS_h_include () if ($opt_l >= 5);
 check_for_line_length () if ($opt_l >= 8);
 check_for_preprocessor_comments () if ($opt_l >= 7);
 check_for_tchar () if ($opt_l >= 4);

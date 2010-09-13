@@ -9,15 +9,15 @@
 #define _OBJ_MODULE_H_
 
 // Obj_Module encapsulates the result of applying nm to a single object module
-// in a shared library.  Currently an object module consists of two types of 
+// in a shared library.  Currently an object module consists of two types of
 // signatures, those that are exported, able to resolve references from others,
 // and those that are imported, needing resolution.
 //
-// Obj_Modules keep track of external references. In the end, any module that 
+// Obj_Modules keep track of external references. In the end, any module that
 // has one or more external references to it must be included in the resulting
-// library. While the means exists to remove external references, perhaps 
-// through further analysis of undefined signatures and their usage, this is 
-// not currently done. Once a technique is discovered to allow for easy 
+// library. While the means exists to remove external references, perhaps
+// through further analysis of undefined signatures and their usage, this is
+// not currently done. Once a technique is discovered to allow for easy
 // determination that reference is truly unneeded this code may be useful.
 
 #include "Sig_List.h"
@@ -51,12 +51,12 @@ public:
   // not included in the final library.
   int extref ();
 
-  // add a new external reference to this module. 
+  // add a new external reference to this module.
   void add_extref ();
 
   // remove an exterenal reference. Currently, this function is not used.
   void remove_extref();
-  
+
 private:
   void populate_sig_list (Sig_List &, int ,  ACE_Message_Block *);
   int read_line (ACE_HANDLE src, ACE_Message_Block **buf);

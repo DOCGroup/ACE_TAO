@@ -29,7 +29,7 @@ public:
   HA_Device_Repository ();
 
   int update_device (int device_id, char *commands);
-    
+
 private:
   ACE_Task_Base *owner_;
 };
@@ -63,12 +63,12 @@ public:
   {
     ACE_ASSERT(0);
   }
-  
+
   Message_Receiver (HA_CommandHandler *ch) : handler_(ch)
   { }
 
   ACE_Message_Block *shut_down_message (void);
-    
+
   virtual int handle_input (ACE_HANDLE fd);
 
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
@@ -78,7 +78,7 @@ public:
     delete this;
     return 0;
   }
-    
+
 private:
   int read_header (DeviceCommandHeader *dch);
   int copy_payload (ACE_Message_Block *mb, int payload_length);

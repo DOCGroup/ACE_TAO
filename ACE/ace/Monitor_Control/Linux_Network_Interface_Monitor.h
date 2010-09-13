@@ -53,9 +53,9 @@ namespace ACE
 
     protected:
       ACE_UINT64 value_;
-      
+
     private:
-      /// Common code.      
+      /// Common code.
       void init (void);
 
     private:

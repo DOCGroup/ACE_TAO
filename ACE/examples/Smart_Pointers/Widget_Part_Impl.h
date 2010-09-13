@@ -25,7 +25,7 @@ class Widget_Part_Impl : public Widget_Part
 public:
   /// Constructor.
   Widget_Part_Impl (Widget *owner, const char* name, int size);
-  
+
   /// Destructor.
   virtual ~Widget_Part_Impl (void);
 

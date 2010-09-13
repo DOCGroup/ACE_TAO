@@ -74,7 +74,7 @@ public:
   static ACE_URL_Addr* create_address (const ACE_TCHAR *url);
   // Create an address from a complete URL, such as "http://www/foo"
   // or "ftp://ftp.here/get_this".
-  
+
   static int known_scheme (const ACE_TCHAR *url);
   // Returns 1 if the URL scheme is recognized, 0 otherwise.
 
@@ -129,7 +129,7 @@ public:
   // The visit methods for all the hierarchy.
   // The default implementation is a nop (instead of a pure virtual
   // function) to facilitate the addition of new members in the
-  // hierarchy. 
+  // hierarchy.
   // virtual int visit (ACE_AFS_Addr*);
   // virtual int visit (ACE_News_Addr*);
   // virtual int visit (ACE_NNTP_Addr*);
@@ -174,7 +174,7 @@ public:
 
   ACE_HTTP_Addr& operator= (const ACE_HTTP_Addr &addr);
   // Assignment operator.
- 
+
   int set (const ACE_HTTP_Addr &addr);
   // Essentially the copy constructor.
 
@@ -203,7 +203,7 @@ public:
   // Create an address from a (possibly) relative URL, such as
   // "../foo.html", or "/icons/bar.gif"
   // If the URL is absolute (like "http://www/foo" or "ftp:host/bar")
-  // it simply returns the correct ACE_URL_Addr object; but if the URL 
+  // it simply returns the correct ACE_URL_Addr object; but if the URL
   // is not absolute then it is interpreted as relative from the
   // current address.  In that case url is just a path, if it is a
   // relative path the new address simply concatenates the path and

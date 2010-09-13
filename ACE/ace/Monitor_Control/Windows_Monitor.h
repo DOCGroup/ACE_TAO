@@ -53,7 +53,7 @@ namespace ACE
 
     protected:
       double value_;
-      
+
     private:
       /// Code common to constructor and clear_impl().
       void init (void);

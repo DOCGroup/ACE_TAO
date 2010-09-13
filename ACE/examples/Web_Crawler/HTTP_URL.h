@@ -29,7 +29,7 @@ class HTTP_URL : public URL
 {
   // = TITLE
   //    An ADT for an HTTP URL.
-  // 
+  //
   // = DESCRIPTION
   //    This class plays the "element" role in the Visitor pattern.
 public:
@@ -47,7 +47,7 @@ public:
   virtual ssize_t send_request (void);
   // Send a <GET> command to fetch the contents in the URI from the
   // server.
-  
+
   virtual const ACE_URL_Addr &url_addr (void) const;
   // Returns the URL that we represent.
 
