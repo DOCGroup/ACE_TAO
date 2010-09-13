@@ -3,6 +3,7 @@
 #include "orbsvcs/Notify/Random_File.h"
 
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_fcntl.h"
 #include "tao/debug.h"
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL
