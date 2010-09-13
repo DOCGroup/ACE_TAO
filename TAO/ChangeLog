@@ -1,3 +1,13 @@
+Mon Sep 13 14:42:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Identification_Service.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/Log.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.cpp:
+        * orbsvcs/orbsvcs/Notify/Name_Value_Pair.cpp:
+        * orbsvcs/orbsvcs/Notify/Random_File.cpp:
+        * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.cpp:
+          Added needed includes
+
 Mon Sep 13 13:53:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Benchmark/Interceptor_Type.cpp:
