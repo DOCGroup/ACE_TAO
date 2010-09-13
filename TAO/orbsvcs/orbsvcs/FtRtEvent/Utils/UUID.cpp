@@ -6,6 +6,10 @@
 #include "orbsvcs/FtRtEvent/Utils/UUID.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_netdb.h"
+#include "ace/OS_NS_sys_time.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO_FtRt
 {

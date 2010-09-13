@@ -3,6 +3,7 @@
 #include "orbsvcs/Notify/Name_Value_Pair.h"
 #include "orbsvcs/Notify/Property_T.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_ctype.h"
 
 namespace
 {
