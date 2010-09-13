@@ -5,8 +5,8 @@
 /**
  * @file Home_Handler.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- * 
- * Installation handler implementation for spawning LocalityManagers. 
+ *
+ * Installation handler implementation for spawning LocalityManagers.
  */
 
 #ifndef CIAO_HOME_HANDLER_H
@@ -31,23 +31,23 @@ namespace CIAO
       public virtual ::CORBA::LocalObject
   {
   public:
-    // Constructor 
+    // Constructor
     Home_Handler_i (void);
-  
-    // Destructor 
+
+    // Destructor
     virtual ~Home_Handler_i (void);
 
-    virtual 
+    virtual
       ::CORBA::StringSeq * dependencies (void);
-    
+
     virtual
       char * instance_type (void);
-  
+
     virtual
       void install_instance (const ::Deployment::DeploymentPlan & plan,
                              ::CORBA::ULong instanceRef,
                              ::CORBA::Any_out instance_reference);
-    
+
     virtual
       void activate_instance (const ::Deployment::DeploymentPlan & ,
                               ::CORBA::ULong ,
@@ -62,27 +62,27 @@ namespace CIAO
                             ::CORBA::ULong instanceRef,
                             const ::CORBA::Any & instance_reference);
 
-    virtual 
+    virtual
       void provide_endpoint_reference (const ::Deployment::DeploymentPlan & plan,
                                        ::CORBA::ULong connectionRef,
-                                       ::CORBA::Any_out endpoint_reference);  
+                                       ::CORBA::Any_out endpoint_reference);
 
     virtual
       void connect_instance (const ::Deployment::DeploymentPlan & plan,
                              ::CORBA::ULong connectionRef,
                              const ::CORBA::Any & provided_reference);
-  
+
     virtual
       void disconnect_instance (const ::Deployment::DeploymentPlan & plan,
                                 ::CORBA::ULong connectionRef);
 
-    virtual 
+    virtual
       void instance_configured (const ::Deployment::DeploymentPlan & plan,
-                                ::CORBA::ULong instanceRef);    
+                                ::CORBA::ULong instanceRef);
 
     virtual
       void configure(const Deployment::Properties&);
-    
+
     virtual void close (void);
 
   private:
@@ -92,7 +92,7 @@ namespace CIAO
 
 extern "C"
 {
-  ::DAnCE::InstanceDeploymentHandler_ptr 
+  ::DAnCE::InstanceDeploymentHandler_ptr
   CIAO_Locality_Handler_Export create_Home_Handler (void);
 }
 

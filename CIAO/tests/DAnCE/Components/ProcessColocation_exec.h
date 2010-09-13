@@ -52,43 +52,43 @@ namespace CIAO_Simple_ProcessColocation_Impl
   public:
     ProcessColocation_exec_i (void);
     virtual ~ProcessColocation_exec_i (void);
-    
+
     // Supported operations and attributes.
-    
+
     // Component attributes.
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual char *
     process_name (void);
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void
     process_name (
       const char * process_name);
-    
+
     // Port operations.
-    
+
     // Operations from Components::SessionComponent.
-    
+
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
-  
+
   private:
     ACE_CString process_name_;
     ::Simple::CCM_ProcessColocation_Context_var context_;
   };
-  
+
   extern "C" PROCESSCOLOCATION_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Simple_ProcessColocation_Impl (void);
 }
@@ -101,21 +101,21 @@ namespace CIAO_Simple_ProcessColocation_Impl
   {
   public:
     ProcessColocationHome_exec_i (void);
-    
+
     virtual ~ProcessColocationHome_exec_i (void);
-    
+
     // All operations and attributes.
-    
+
     // Factory operations.
-    
+
     // Finder operations.
-    
+
     // Implicit operations.
-    
+
     virtual ::Components::EnterpriseComponent_ptr
     create (void);
   };
-  
+
   extern "C" PROCESSCOLOCATION_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Simple_ProcessColocationHome_Impl (void);
 }

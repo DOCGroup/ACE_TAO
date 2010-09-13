@@ -40,12 +40,12 @@ namespace CIAO_cpuaffinity_A_Impl
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
-  
+
   private:
     ::cpuaffinity::CCM_A_Context_var context_;
     CORBA::Long cpu_affinity_;
   };
-  
+
   extern "C" COMMANDLINEPASSAGE_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Component_Impl (void);
 }

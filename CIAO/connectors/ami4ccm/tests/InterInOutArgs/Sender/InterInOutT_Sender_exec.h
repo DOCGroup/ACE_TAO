@@ -24,7 +24,7 @@ namespace CIAO_InterInOutT_Sender_Impl
       long expect_id,
       const char* error_string,
       const char* func);
-  
+
   /// Worker thread for asynchronous invocations
   class asynch_foo_generator : public virtual ACE_Task_Base
   {

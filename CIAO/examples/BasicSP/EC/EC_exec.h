@@ -139,7 +139,7 @@ namespace MyImpl
    * EC home executor implementation class.
    */
   class EC_EXEC_Export ECHome_exec_i :
-    public virtual ::CIAO_BasicSP_EC_Impl::ECHome_Exec, 
+    public virtual ::CIAO_BasicSP_EC_Impl::ECHome_Exec,
     public virtual ::CORBA::LocalObject
   {
   public:

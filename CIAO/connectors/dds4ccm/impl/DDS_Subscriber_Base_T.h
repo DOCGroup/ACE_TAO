@@ -66,7 +66,7 @@ protected:
     DataReader_type;
   typedef ::CIAO::DDS4CCM::CCM_DDS_ContentFilterSetting_i
     ContentFilterSetting_type;
-    
+
   /**
    * DDS_Subscriber_Base_T
    */

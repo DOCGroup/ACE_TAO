@@ -40,7 +40,7 @@ namespace CIAO_UsesMulti_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     virtual ::UsesMulti::CCM_One_ptr get_do_my_one (void);
-  
+
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);

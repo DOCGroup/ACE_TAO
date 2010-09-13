@@ -51,36 +51,36 @@ namespace CIAO_CompB_Impl
   public:
     CompB_exec_i (void);
     virtual ~CompB_exec_i (void);
-    
+
     //@{
     /** Supported operations and attributes. */
-    
+
     //@}
-    
+
     //@{
     /** Component attributes and port operations. */
-    
+
     //@}
-    
+
     //@{
     /** Operations from Components::SessionComponent. */
-    
+
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     //@}
-    
-  
+
+
   private:
     ::CCM_CompB_Context_var context_;
   };
-  
+
   extern "C" COMPB_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_CompB_Impl (void);
 }

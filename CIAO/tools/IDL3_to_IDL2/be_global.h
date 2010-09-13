@@ -57,9 +57,9 @@ public:
   bool encapsulate_idl2 (void) const;
 
   ACE_CString & excluded_filenames (void);
-  
+
   void set_excluded_filenames (const char *filenames);
-  
+
   bool gen_copyright (void) const;
 
   //=========================================
@@ -77,7 +77,7 @@ public:
 
   void destroy (void);
   // Cleanup.
-  
+
 protected:
   bool gen_copyright_;
   // So it can be turned off in backends that inherit from this one.

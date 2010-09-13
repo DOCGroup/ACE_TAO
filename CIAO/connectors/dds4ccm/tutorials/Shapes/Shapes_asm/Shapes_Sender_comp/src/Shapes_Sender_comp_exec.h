@@ -31,10 +31,10 @@ namespace CIAO_Shapes_Sender_comp_Impl
     Controller_exec_i (Sender_exec_i &callback);
     virtual ~Controller_exec_i (void);
 
-    virtual ::Shapes::ReturnStatus 
+    virtual ::Shapes::ReturnStatus
     setSize (::CORBA::UShort size);
 
-    virtual ::Shapes::ReturnStatus 
+    virtual ::Shapes::ReturnStatus
     setLocation (::CORBA::UShort x, ::CORBA::UShort y);
 
   private:

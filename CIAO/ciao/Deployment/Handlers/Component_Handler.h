@@ -5,8 +5,8 @@
 /**
  * @file Component_Handler.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- * 
- * Installation handler implementation for spawning LocalityManagers. 
+ *
+ * Installation handler implementation for spawning LocalityManagers.
  */
 
 #ifndef CIAO_COMPONENT_HANDLER_H
@@ -32,23 +32,23 @@ namespace CIAO
       public virtual ::CORBA::LocalObject
   {
   public:
-    // Constructor 
+    // Constructor
     Component_Handler_i (void);
-  
-    // Destructor 
+
+    // Destructor
     virtual ~Component_Handler_i (void);
-    
-    virtual 
+
+    virtual
       ::CORBA::StringSeq * dependencies (void);
 
     virtual
       char * instance_type (void);
-  
+
     virtual
       void install_instance (const ::Deployment::DeploymentPlan & plan,
                              ::CORBA::ULong instanceRef,
                              ::CORBA::Any_out instance_reference);
-  
+
     virtual
       void remove_instance (const ::Deployment::DeploymentPlan & plan,
                             ::CORBA::ULong instanceRef,
@@ -63,29 +63,29 @@ namespace CIAO
                                ::CORBA::ULong ,
                                const ::CORBA::Any &);
 
-    virtual 
+    virtual
       void provide_endpoint_reference (const ::Deployment::DeploymentPlan & plan,
                                        ::CORBA::ULong connectionRef,
                                        ::CORBA::Any_out endpoint_reference);
-  
+
     virtual
       void connect_instance (const ::Deployment::DeploymentPlan & plan,
                              ::CORBA::ULong connectionRef,
                              const ::CORBA::Any & provided_reference);
-  
+
     virtual
       void disconnect_instance (const ::Deployment::DeploymentPlan & plan,
                                 ::CORBA::ULong connectionRef);
 
-    virtual 
+    virtual
       void instance_configured (const ::Deployment::DeploymentPlan & plan,
-                                ::CORBA::ULong instanceRef);    
+                                ::CORBA::ULong instanceRef);
 
     virtual
       void configure(const Deployment::Properties&);
-    
+
     virtual void close (void);
-    
+
   private:
     Deployment_Common::INSTANCES instances_;
   };
@@ -93,7 +93,7 @@ namespace CIAO
 
 extern "C"
 {
-  ::DAnCE::InstanceDeploymentHandler_ptr 
+  ::DAnCE::InstanceDeploymentHandler_ptr
   CIAO_Locality_Handler_Export create_Component_Handler (void);
 }
 

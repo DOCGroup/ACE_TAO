@@ -52,42 +52,42 @@ namespace CIAO_Minimum_Sender_Impl
   public:
     Sender_exec_i (void);
     virtual ~Sender_exec_i (void);
-    
+
     //@{
     /** Supported operations and attributes. */
-    
-    
+
+
     // TAO_IDL - Generated from
     // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-    
+
     virtual void
     bar (void);
     //@}
-    
+
     //@{
     /** Component attributes and port operations. */
-    
+
     //@}
-    
+
     //@{
     /** Operations from Components::SessionComponent. */
-    
+
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     //@}
-    
-  
+
+
   private:
     ::Minimum::CCM_Sender_Context_var context_;
   };
-  
+
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Minimum_Sender_Impl (void);
 }
@@ -100,21 +100,21 @@ namespace CIAO_Minimum_Sender_Impl
   {
   public:
     SenderHome_exec_i (void);
-    
+
     virtual ~SenderHome_exec_i (void);
-    
+
     // All operations and attributes.
-    
+
     // Factory operations.
-    
+
     // Finder operations.
-    
+
     // Implicit operations.
-    
+
     virtual ::Components::EnterpriseComponent_ptr
     create (void);
   };
-  
+
   extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Minimum_SenderHome_Impl (void);
 }

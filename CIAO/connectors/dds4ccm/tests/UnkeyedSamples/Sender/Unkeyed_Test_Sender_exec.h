@@ -29,7 +29,7 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
 
     /// Handle the timeout.
     virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
-    
+
   private:
     /// Maintains a handle that actually process the event
     Sender_exec_i &pulse_callback_;

@@ -24,26 +24,26 @@ namespace CIAO_DDS_Pub_Impl
   public:
     DDS_Pub_exec_i (void);
     virtual ~DDS_Pub_exec_i (void);
-    
+
     //@{
     /** Operations from Components::SessionComponent. */
-    
+
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     //@}
-    
-  
+
+
   private:
     ::CCM_DDS_Pub_Context_var context_;
   };
-  
+
   extern "C" DDS_PUB_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_DDS_Pub_Impl (void);
 }
