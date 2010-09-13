@@ -86,6 +86,7 @@ BE_GlobalData::BE_GlobalData (void)
     ciao_ami_conn_impl_hdr_ending_ (ACE::strnew ("_conn_i.h")),
     ciao_ami_conn_impl_src_ending_ (ACE::strnew ("_conn_i.cpp")),
     output_dir_ (0),
+    stub_include_dir_ (0),
     skel_output_dir_ (0),
     anyop_output_dir_ (0),
     any_support_ (true),
@@ -1464,6 +1465,19 @@ BE_GlobalData::skel_output_dir (void) const
 }
 
 void
+BE_GlobalData::stub_include_dir (const char* s)
+{
+  ACE::strdelete (this->stub_include_dir_);
+  this->stub_include_dir_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::stub_include_dir (void) const
+{
+  return this->stub_include_dir_;
+}
+
+void
 BE_GlobalData::anyop_output_dir (const char* s)
 {
   ACE::strdelete (this->anyop_output_dir_);
@@ -2642,6 +2656,23 @@ BE_GlobalData::parse_args (long &i, char **av)
         else if (av[i][2] == 'n')
           {
             be_global->changing_standard_include_files (0);
+          }
+        else if (av[i][2] == 'C')
+          {
+            if (av[i][3] == '\0')
+              {
+                be_global->stub_include_dir (av[i + 1]);
+                ++i;
+              }
+            else
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: I don't understand")
+                    ACE_TEXT (" the '%C' option\n"),
+                    av[i]
+                  ));
+              }
           }
         else
           {

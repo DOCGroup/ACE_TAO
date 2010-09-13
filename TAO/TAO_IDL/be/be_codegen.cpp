@@ -953,16 +953,27 @@ TAO_CodeGen::start_anyop_header (const char *fname)
   // Generate the include statement for AnyTypeCode
   *this->anyop_header_ << "\n#include \"tao/AnyTypeCode/Any.h\"\n";
 
-  const char *tao_prefix = "";
+  ACE_CString tao_prefix;
   ACE_CString pidl_checker (idl_global->filename ()->get_string ());
   bool const got_tao_pidl =
     (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
 
   // If we're here and we have a .pidl file, we need to generate
-  // the *C.h include from the tao library.
+  // the *C.h include from the tao library, or from the command line
+  // override path.
   if (got_tao_pidl)
     {
-      tao_prefix = "tao/";
+      const char *stub_incl_dir = be_global->stub_include_dir ();
+      
+      if (stub_incl_dir == 0)
+        {
+          tao_prefix = "tao/";
+        }
+      else
+        {
+          tao_prefix = stub_incl_dir;
+          tao_prefix += '/';
+        }
     }
   
   // Generate the include statement for the client header. We just
@@ -977,7 +988,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
     }
   else
     {
-      *this->anyop_header_ << "\n#include \"" << tao_prefix
+      *this->anyop_header_ << "\n#include \"" << tao_prefix.c_str ()
                            << be_global->be_get_client_hdr_fname ()
                            << "\"";
     }
