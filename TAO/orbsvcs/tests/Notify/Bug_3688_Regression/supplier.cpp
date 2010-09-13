@@ -1,17 +1,15 @@
 // $Id$
 
 #include "common.h"
-#include "ace/OS.h"
-
 
 namespace CosNotifyCommImpl{
-  class StructuredPushSupplier: public virtual POA_CosNotifyComm:: StructuredPushSupplier 
+  class StructuredPushSupplier: public virtual POA_CosNotifyComm:: StructuredPushSupplier
   {
   public:
     void disconnect_structured_push_supplier()
     {
     };
-    void subscription_change( const CosNotification::EventTypeSeq&, 
+    void subscription_change( const CosNotification::EventTypeSeq&,
       const CosNotification::EventTypeSeq&)
     {};
 
@@ -39,7 +37,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CosNotifyChannelAdmin::EventChannel_var ec = get_event_channel(orb.in());
 
     //Instanciating the Supplier
-    CosNotifyComm::StructuredPushSupplier_var sps = 
+    CosNotifyComm::StructuredPushSupplier_var sps =
       CosNotifyComm::StructuredPushSupplier::_nil();
 
 
@@ -107,18 +105,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     event.remainder_of_body <<= data;
 
     std::cout << "Sending a demo event...," << std::endl;
-    std::cout << "event.header.fixed_header.event_type.domain_name = " 
-      << event.header.fixed_header.event_type.domain_name 
+    std::cout << "event.header.fixed_header.event_type.domain_name = "
+      << event.header.fixed_header.event_type.domain_name
       << std::endl;
-    std::cout << "event.header.fixed_header.event_type.type_name = " 
+    std::cout << "event.header.fixed_header.event_type.type_name = "
       << event.header.fixed_header.event_type.type_name
       << std::endl;
-    std::cout << "event.filterable_data: data=" << data << std::endl; 
+    std::cout << "event.filterable_data: data=" << data << std::endl;
 
 
     try{
       ppc->push_structured_event(event);
-    }   
+    }
     catch (CORBA::SystemException& se)
     {
       std::cerr << "System exception occurred during push: "

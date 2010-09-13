@@ -2,7 +2,6 @@
 
 #include "TestC.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS.h"
 #include "ace/Task.h"
 #include "ace/Profile_Timer.h"
 

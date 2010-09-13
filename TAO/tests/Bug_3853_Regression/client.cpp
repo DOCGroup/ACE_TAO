@@ -7,7 +7,6 @@
 #include "tao/PI_Server/PI_Server.h"
 #include "tao/debug.h"
 #include "ace/Task.h"
-#include "ace/OS.h"
 #include "ace/Get_Opt.h"
 #include <iostream>
 

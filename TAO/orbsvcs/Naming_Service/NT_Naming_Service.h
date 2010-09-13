@@ -18,11 +18,10 @@
 #ifndef TAO_NT_NAMING_SERVICE_H
 #define TAO_NT_NAMING_SERVICE_H
 
-#include /**/ "ace/OS.h"
+#include /**/ "ace/NT_Service.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 
-#include /**/ "ace/NT_Service.h"
 #include /**/ "ace/Singleton.h"
 #include /**/ "ace/Synch.h"
 #include /**/ "tao/orbconf.h"

@@ -9,7 +9,6 @@
 #include "Client_Options.h"
 
 #include "ace/Log_Msg.h"
-#include "ace/OS.h"
 
 Client_Options::Client_Options (int &argc, ACE_TCHAR *argv[])
   : ior (ACE_TEXT("file://test.ior"))

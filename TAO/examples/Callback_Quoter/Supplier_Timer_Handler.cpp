@@ -16,7 +16,6 @@
 //
 // ===========================================================
 
-#include "ace/OS.h"
 #include "ace/ACE.h"
 
 #include "Supplier_Timer_Handler.h"

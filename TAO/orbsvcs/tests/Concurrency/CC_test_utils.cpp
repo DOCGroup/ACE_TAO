@@ -19,10 +19,7 @@
 
 #include "CC_test_utils.h"
 #include "CC_naming_service.h"
-#include "ace/OS.h"
 #include "ace/Log_Msg.h"
-
-
 
 char *CC_TestUtils::get_lock_mode_name (CosConcurrencyControl::lock_mode mode)
 {

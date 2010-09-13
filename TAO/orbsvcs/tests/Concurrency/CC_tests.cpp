@@ -18,10 +18,7 @@
 // ============================================================================
 
 #include "CC_tests.h"
-#include "ace/OS.h"
 #include "ace/Log_Msg.h"
-
-
 
 CC_Test::CC_Test (CC_naming_service *ns)
   : result (CC_FAIL),

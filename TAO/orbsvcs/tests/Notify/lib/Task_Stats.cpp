@@ -1,7 +1,6 @@
 //$Id$
 
 #include "Task_Stats.h"
-#include "ace/OS.h"
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)

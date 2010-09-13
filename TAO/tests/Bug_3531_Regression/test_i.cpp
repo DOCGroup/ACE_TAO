@@ -2,7 +2,6 @@
 
 #include "test_i.h"
 #include "tao/debug.h"
-#include "ace/OS.h"
 #include "tao/ORB_Core.h"
 #include "tao/LF_Strategy.h"
 #include "ace/Reactor.h"

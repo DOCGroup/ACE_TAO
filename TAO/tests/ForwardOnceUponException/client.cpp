@@ -3,7 +3,6 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include "ace/OS.h"
 #include "ace/streams.h"
 #include "tao/Invocation_Utils.h"
 

@@ -1,6 +1,5 @@
 /* -*- C++ -*- $Id$ */
 
-#include "ace/OS.h"
 #include "ace/Get_Opt.h"
 
 #include "MessengerC.h"
@@ -103,7 +102,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                                argv [0]),
                               -1);
         break;
-      case '?': 
+      case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Usage:  %s "

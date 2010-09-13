@@ -20,11 +20,9 @@
 //
 // ============================================================================
 
-#include "ace/OS.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (ACE_WIN32) || defined (ACE_LACKS_WIN32_SERVICES)
-
-#include "ace/Log_Msg.h"
 
 int
 ACE_TMAIN(int, ACE_TCHAR *[])

@@ -1,10 +1,9 @@
 // $Id$
+
 #include "Foo_B_i.h"
 #include "AppShutdown.h"
 #include "TestAppExceptionC.h"
-#include "ace/OS.h"
 #include "ace/SString.h"
-
 
 Foo_B_i::Foo_B_i()
 : error_count_ (0)

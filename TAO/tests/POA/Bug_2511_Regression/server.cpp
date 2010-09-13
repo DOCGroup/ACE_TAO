@@ -18,7 +18,6 @@
 //=========================================================================
 
 #include "testS.h"
-#include "ace/OS.h"
 #include "tao/PortableServer/ServantLocatorC.h"
 #include "tao/CDR.h"
 

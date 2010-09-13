@@ -4,7 +4,6 @@
 #include "ace/SString.h"
 #include "ace/Manual_Event.h"
 #include "ace/Task.h"
-#include "ace/OS.h"
 
 #include "tao/Transport_Cache_Manager_T.h"
 #include "tao/ORB.h"
@@ -53,16 +52,16 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 class Client_Task : public ACE_Task_Base
 {
-  public : 
+  public :
    Client_Task (mock_tdi& tdi, mock_transport& trans)
    : tdi_ (tdi),
      trans_ (trans)
    {
    }
-   
-   
+
+
   ~Client_Task () {};
-   
+
   void process_listen_point ()
   {
     this->trans_.purge_entry ();
@@ -73,7 +72,7 @@ class Client_Task : public ACE_Task_Base
     this->trans_.make_idle();
     delete x;
   }
-   
+
   int svc ()
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, test_lock);
@@ -81,8 +80,8 @@ class Client_Task : public ACE_Task_Base
     test_condition.signal ();
     return 0;
   };
-   
-   
+
+
  private:
     mock_tdi& tdi_;
     mock_transport& trans_;
@@ -118,9 +117,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
         }
-       
+
       client_task.wait ();
-      
+
       orb->destroy ();
 
     }

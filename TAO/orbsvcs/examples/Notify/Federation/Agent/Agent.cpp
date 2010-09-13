@@ -13,8 +13,6 @@
 # include <sstream>
 #endif
 
-#include "ace/OS.h"
-
 #include "tao/corba.h"
 
 #include "orbsvcs/CosNotificationC.h"

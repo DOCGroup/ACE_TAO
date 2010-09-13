@@ -3,12 +3,10 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
 #include <ace/Task.h>
-#include <ace/OS.h>
-
 
 const ACE_TCHAR *ior_input_file = ACE_TEXT ("file://serverA.ior");
 int test_duration_sec = 15;
-bool expect_object_not_exist = false; 
+bool expect_object_not_exist = false;
 
 class Client_Task : public ACE_Task_Base
 {
@@ -23,7 +21,7 @@ class Client_Task : public ACE_Task_Base
     virtual int svc (void)
     {
       ACE_Time_Value start = ACE_OS::gettimeofday ();
-      ACE_Time_Value elapsed; 
+      ACE_Time_Value elapsed;
       int i = 0;
       while (elapsed < ACE_Time_Value (test_duration_sec))
       {
@@ -45,7 +43,7 @@ class Client_Task : public ACE_Task_Base
           caught_object_not_exist_ = true;
           ACE_OS::sleep (1);
         }
-        catch (const CORBA::Exception & /*ex*/) 
+        catch (const CORBA::Exception & /*ex*/)
         {
           //ex._tao_print_exception ("Exception caught:");
           communication_failed_ = true;
@@ -54,7 +52,7 @@ class Client_Task : public ACE_Task_Base
         ++i;
         elapsed = ACE_OS::gettimeofday () - start;
       }
-          
+
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)Client thread exit \n")));
       return 0;
     }
@@ -109,7 +107,7 @@ parse_args (int argc, ACE_TCHAR* argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  try 
+  try
   {
     CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
@@ -137,7 +135,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     Client_Task task (test.in ());
     task.activate (THR_NEW_LWP | THR_JOINABLE, 1, 1);
-    
+
     ACE_Time_Value tv(test_duration_sec);
     orb->run (&tv);
 
@@ -156,7 +154,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t)Client test failed.\n")), 1);
     }
   }
-  catch (const CORBA::Exception &ex) 
+  catch (const CORBA::Exception &ex)
   {
     ex._tao_print_exception ("Exception caught by client:");
     return 1;
