@@ -2,30 +2,6 @@
 // $Id$
 
 project(TAO_TkResource) : acelib, taolib, install, tao_output, taodefaults, ace_tkreactor, taoidldefaults {
-
   sharedname   = TAO_TkResource
   dynamicflags += TAO_TKRESOURCE_BUILD_DLL
-
-  Source_Files {
-    TkResource
-  }
-
-  Header_Files {
-    TkResource
-  }
-
-  Inline_Files {
-  }
-
-  Template_Files {
-  }
-
-  Resource_Files {
-  }
-
-  PIDL_Files {
-  }
-
-  IDL_Files {
-  }
 }

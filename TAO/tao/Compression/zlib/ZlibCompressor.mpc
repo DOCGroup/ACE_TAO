@@ -1,0 +1,7 @@
+//$Id$
+
+project(ZlibCompressor) : taolib, tao_output, install, compression, taoidldefaults, ace_zlib {
+  requires += zlib
+  sharedname   = TAO_ZlibCompressor
+  dynamicflags += TAO_ZLIBCOMPRESSOR_BUILD_DLL
+}
