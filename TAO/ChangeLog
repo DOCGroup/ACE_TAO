@@ -1,3 +1,8 @@
+Mon Sep 13 13:53:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Benchmark/Interceptor_Type.cpp:
+          Added missing include
+
 Mon Sep 13 13:38:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Compression/bzip2/Bzip2Compressor.mpc:
