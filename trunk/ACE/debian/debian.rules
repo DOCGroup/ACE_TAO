@@ -160,7 +160,7 @@ install: build
 #	-chmod -x `find $(TAO_ROOT)/examples/ -perm 755 ! -type d -a ! \( -name "*.pl" -o -name "*.sh" \)`
 
 	rm -f $(DT)/usr/bin/TAO_Service
-	dh_install --sourcedir=$(DT) --fail-missing
+	dh_install --sourcedir=$(DT)
 
 binary-indep: build install doxygen-stamp
 	dh_testdir -i

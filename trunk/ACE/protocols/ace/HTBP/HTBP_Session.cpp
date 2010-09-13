@@ -6,14 +6,13 @@
 #include "HTBP_Session.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Event_Handler.h"
+#include "ace/os_include/netinet/os_tcp.h"
 #include "HTBP_Filter.h"
 #include "HTBP_ID_Requestor.h"
 
 #if !defined (__ACE_INLINE__)
 #include "HTBP_Session.inl"
 #endif
-
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -4,7 +4,6 @@
 #ifndef TERA_SS_STATE_PARSE_H
 #define TERA_SS_STATE_PARSE_H
 
-#include "ace/OS.h"
 #include "ace/Singleton.h"
 
 #include "jaws3/Protocol_Handler.h"

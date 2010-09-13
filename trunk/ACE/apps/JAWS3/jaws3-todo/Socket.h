@@ -4,7 +4,6 @@
 #ifndef JAWS_SOCKET_H
 #define JAWS_SOCKET_H
 
-#include "ace/OS.h"
 #include "ace/Addr.h"
 #include "ace/Synch.h"
 #include "ace/Singleton.h"

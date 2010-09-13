@@ -22,14 +22,14 @@ if (!defined $CIAO_ROOT) {
     $CIAO_ROOT = "$TAO_ROOT/CIAO";
 }
 if (!defined $DANCE_ROOT) {
-    $DANCE_ROOT = "$CIAO_ROOT/DAnCE";
+    $DANCE_ROOT = "$TAO_ROOT/DAnCE";
 }
 
 $is_release = 0;
 $exclude_ace = 0;
 $exclude_tao = !-r "$TAO_ROOT/VERSION";
 $exclude_ciao = !-r "$CIAO_ROOT/VERSION";
-$exclude_dance = !-r "$CIAO_ROOT/VERSION";
+$exclude_dance = !-r "$DANCE_ROOT/VERSION";
 $verbose = 0;
 $perl_path = '/usr/bin/perl';
 $html_output_dir = '.';
@@ -101,7 +101,7 @@ if (!-r "$ACE_ROOT/ace/config.h") {
 &generate_doxy_files ('ACE',  " $ACE_ROOT", " $ACE_ROOT/VERSION", @ACE_DOCS) if (!$exclude_ace);
 &generate_doxy_files ('TAO',  " $TAO_ROOT", " $TAO_ROOT/VERSION", @TAO_DOCS) if (!$exclude_tao);
 &generate_doxy_files ('CIAO', " $CIAO_ROOT", " $CIAO_ROOT/VERSION", @CIAO_DOCS) if (!$exclude_ciao);
-&generate_doxy_files ('DANCE'," $DANCE_ROOT", " $CIAO_ROOT/VERSION", @DANCE_DOCS) if (!$exclude_dance);
+&generate_doxy_files ('DANCE'," $DANCE_ROOT", " $DANCE_ROOT/VERSION", @DANCE_DOCS) if (!$exclude_dance);
 &generate_doxy_files ('DDS',   "$DDS_ROOT", " $DDS_ROOT/VERSION", @DDS_DOCS) if $dds;
 
 unlink "$ACE_ROOT/ace/config.h" if $wrote_configh;
