@@ -2,7 +2,6 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
-#include "ace/OS.h"
 #include "test_i.h"
 
 #include "tao/Strategies/advanced_resource.h"

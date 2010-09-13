@@ -1,9 +1,210 @@
+Mon Sep 13 09:27:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DevGuideExamples/AMH_AMI/inner_i.cpp:
+
+        * examples/Advanced/ch_12/icp.h:
+
+        * examples/Advanced/ch_18/icp.h:
+
+        * examples/Advanced/ch_21/icp.h:
+
+        * examples/Advanced/ch_8_and_10/icp.h:
+
+        * examples/CSD_Strategy/ThreadPool/Foo_i.cpp:
+
+        * examples/CSD_Strategy/ThreadPool2/FooServantList.cpp:
+        * examples/CSD_Strategy/ThreadPool2/Foo_i.cpp:
+
+        * examples/CSD_Strategy/ThreadPool4/ClientTask.cpp:
+        * examples/CSD_Strategy/ThreadPool4/Foo_i.cpp:
+
+        * examples/CSD_Strategy/ThreadPool5/ClientTask.cpp:
+        * examples/CSD_Strategy/ThreadPool5/FooServantList.cpp:
+        * examples/CSD_Strategy/ThreadPool5/Foo_i.cpp:
+
+        * examples/CSD_Strategy/ThreadPool6/Foo_i.cpp:
+
+        * examples/Callback_Quoter/Consumer_Handler.cpp:
+        * examples/Callback_Quoter/Supplier_Timer_Handler.cpp:
+
+        * examples/Kokyu_dsrt_schedulers/Task_Stats.cpp:
+        * examples/Kokyu_dsrt_schedulers/utils.h:
+
+        * examples/Logging/Logging_Service_i.h:
+
+        * examples/Persistent_Grid/Grid_i.h:
+
+        * examples/RTCORBA/Activity/Task_Stats.cpp:
+
+        * examples/RTScheduling/Task_Stats.cpp:
+
+        * examples/Simple/bank/AccountManager_i.h:
+
+        * examples/Simulator/Event_Supplier/DOVE_Supplier.h:
+
+        * interop-tests/wchar/wchar_reference.h:
+
+        * orbsvcs/DevGuideExamples/NamingService/Naming_Server/NamingMessenger.cpp:
+
+        * orbsvcs/DevGuideExamples/Security/PolicyControllingApp/MessengerClient.cpp:
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+
+        * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
+        * orbsvcs/Naming_Service/NT_Naming_Service.h:
+
+        * orbsvcs/Notify_Service/NT_Notify_Server.cpp:
+        * orbsvcs/Notify_Service/NT_Notify_Service.h:
+
+        * orbsvcs/PSS/PSDL_l.cpp:
+
+        * orbsvcs/Trading_Service/Trading_Service.cpp:
+
+        * orbsvcs/examples/LoadBalancing/server.cpp:
+
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.h:
+
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.h:
+
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/Log.h:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.h:
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.h:
+
+        * orbsvcs/orbsvcs/Notify/Random_File.cpp:
+
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.h:
+
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+
+        * orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
+
+        * orbsvcs/performance-tests/RTEvent/lib/Client_Options.cpp:
+
+        * orbsvcs/tests/Bug_2248_Regression/client.cpp:
+
+        * orbsvcs/tests/Bug_2800_Regression/nsmain.cpp:
+
+        * orbsvcs/tests/Bug_3673_Regression/nsmain.cpp:
+
+        * orbsvcs/tests/COIOP_Naming_Test/Hello.h:
+
+        * orbsvcs/tests/Concurrency/CC_test_utils.cpp:
+        * orbsvcs/tests/Concurrency/CC_tests.cpp:
+
+        * orbsvcs/tests/ImplRepo/ReconnectServer/client.cpp:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/serverB.cpp:
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/Basic.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/client.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/server.cpp:
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/Factory.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/Simple.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/client.cpp:
+
+        * orbsvcs/tests/Notify/Bug_1884_Regression/supplier.cpp:
+
+        * orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+
+        * orbsvcs/tests/Notify/Bug_3688_Regression/supplier.cpp:
+
+        * orbsvcs/tests/Notify/MT_Dispatching/Notify_Structured_Push_Consumer.cpp:
+
+        * orbsvcs/tests/Notify/Persistent_Filter/Filter.cpp:
+
+        * orbsvcs/tests/Notify/lib/Task_Stats.cpp:
+
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+
+        * performance-tests/CSD_Strategy/TestApps/ServerApp.cpp:
+
+        * performance-tests/CSD_Strategy/TestInf/AppHelper.h:
+
+        * performance-tests/CSD_Strategy/TestServant/Foo_i.cpp:
+
+        * tests/Bug_2677_Regression/server.cpp:
+
+        * tests/Bug_2936_Regression/bug2936.cpp:
+
+        * tests/Bug_3251_Regression/server.cpp:
+
+        * tests/Bug_3531_Regression/client.cpp:
+        * tests/Bug_3531_Regression/test_i.cpp:
+
+        * tests/Bug_3542_Regression/server.cpp:
+
+        * tests/Bug_3647_Regression/Backend_Impl.cpp:
+
+        * tests/Bug_3766_Regression/client.cpp:
+        * tests/Bug_3766_Regression/server.cpp:
+
+        * tests/Bug_3812_Regression/Bug_3812_Regression.cpp:
+
+        * tests/Bug_3853_Regression/Hello_i.cpp:
+        * tests/Bug_3853_Regression/client.cpp:
+
+        * tests/COIOP/Hello.h:
+
+        * tests/CSD_Strategy_Tests/Broken/ServerApp.cpp:
+
+        * tests/CSD_Strategy_Tests/TP_Common/AppHelper.h:
+
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_ClientEngine.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_SimpleClientEngine.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_i.cpp:
+
+        * tests/CSD_Strategy_Tests/TP_Test_2/ServerApp.cpp:
+
+        * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.cpp:
+
+        * tests/CSD_Strategy_Tests/TP_Test_4/ServerApp.cpp:
+
+        * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.cpp:
+
+        * tests/Collocation_Exception_Test/Hello.h:
+
+        * tests/Collocation_Oneway_Tests/Hello.h:
+
+        * tests/Collocation_Tests/Hello.h:
+
+        * tests/DII_Collocation_Tests/oneway/Hello.h:
+
+        * tests/DII_Collocation_Tests/twoway/Hello.h:
+
+        * tests/DynAny_Test/test_wrapper.cpp:
+
+        * tests/File_IO/client.cpp:
+
+        * tests/ForwardOnceUponException/client.cpp:
+
+        * tests/Hang_Shutdown/client.cpp:
+
+        * tests/Nested_Event_Loop/client.cpp:
+
+        * tests/Nested_Upcall_Crash/Clock_Ticks.h:
+
+        * tests/ORB_Local_Config/Bug_2612/Test.cpp:
+
+        * tests/POA/Bug_2511_Regression/server.cpp:
+
+        * tests/POA/Default_Servant2/client.cpp:
+
+        * tests/POA/Explicit_Activation/Alt_Resources/Alt_Resource_Factory.h:
+
+        * tests/ZIOP/client.cpp:
+
 Mon Sep 13 07:46:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* Makefile.am:
-	  Removed, configure is too experimental to be used for TAO. If
-	  someone really wants to use configure we need to fix the MPC
-	  generator and the configure script and really perform testing
+        * Makefile.am:
+          Removed, configure is too experimental to be used for TAO. If
+          someone really wants to use configure we need to fix the MPC
+          generator and the configure script and really perform testing
 
 Thu Sep  9 18:29:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 

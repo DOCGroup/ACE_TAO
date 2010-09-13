@@ -58,12 +58,9 @@ Factory::create_object (
   return obj_._retn ();
 }
 
-#include <ace/OS.h>
-
 void
 Factory::delete_object (
-    const PortableGroup::GenericFactory::FactoryCreationId &
-      fcid)
+    const PortableGroup::GenericFactory::FactoryCreationId & fcid)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t)%T delete_object \n"));
   ACE_OS::sleep (10);

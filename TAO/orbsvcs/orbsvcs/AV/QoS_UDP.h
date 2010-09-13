@@ -22,7 +22,6 @@
 
 #include "orbsvcs/AV/Protocol_Factory.h"
 
-#include "ace/OS.h"
 #include "ace/Service_Config.h"
 #include "ace/QoS/QoS_Session_Factory.h"
 #include "ace/QoS/QoS_Decorator.h"

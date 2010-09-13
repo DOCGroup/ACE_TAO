@@ -1,12 +1,10 @@
 // $Id$
 
 #include "ace/ARGV.h"
-#include "ace/OS.h"
 #include "ace/Reactor.h"
 #include "ace/Signal.h"
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
-
 
 ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "testDllOrb",

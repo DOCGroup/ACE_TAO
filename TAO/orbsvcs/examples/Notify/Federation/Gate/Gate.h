@@ -5,7 +5,6 @@
 #ifndef GATE_H
 #define GATE_H
 
-#include "ace/OS.h"
 #include "ace/INET_Addr.h"
 #include "ace/UUID.h"
 

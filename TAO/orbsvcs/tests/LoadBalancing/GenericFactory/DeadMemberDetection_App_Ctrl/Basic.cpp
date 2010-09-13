@@ -2,7 +2,6 @@
 
 #include "Basic.h"
 #include "LB_server.h"
-#include "ace/OS.h"
 
 extern int pong_delay;
 

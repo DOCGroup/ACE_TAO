@@ -3,7 +3,6 @@
 
 #include "orbsvcs/Time/TAO_UTO.h"
 #include "orbsvcs/Time/TAO_TIO.h"
-#include "ace/OS.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

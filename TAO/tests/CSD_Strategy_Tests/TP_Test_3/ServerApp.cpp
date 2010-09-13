@@ -7,7 +7,6 @@
 #include "Foo_B_ClientEngine.h"
 #include "Foo_B_ClientEngine.h"
 #include "Callback_i.h"
-#include "ace/OS.h"
 #include "ace/Get_Opt.h"
 // To force static load the service.
 #include "tao/PI/PI.h"

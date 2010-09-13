@@ -3,7 +3,6 @@
 #include "LB_server.h"
 #include "Basic.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS.h"
 #include "ace/Task.h"
 
 const ACE_TCHAR *group_file = ACE_TEXT("group.ior");

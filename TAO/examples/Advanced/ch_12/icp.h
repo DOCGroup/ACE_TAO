@@ -22,8 +22,6 @@
 #ifndef _ICP_H
 #define _ICP_H
 
-#include "ace/OS.h"
-
 extern "C"
 {
   int ICP_online (unsigned long id);   // Add device

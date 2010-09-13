@@ -1,7 +1,6 @@
 // $Id$
 #include "Foo_i.h"
 #include "OrbShutdownTask.h"
-#include "ace/OS.h"
 
 Foo_i::Foo_i(unsigned num_clients)
   : value_(0),

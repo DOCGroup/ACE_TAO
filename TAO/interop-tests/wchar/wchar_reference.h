@@ -21,8 +21,6 @@
 #ifndef WCHAR_REFERENCE_H
 #define WCHAR_REFERENCE_H
 
-#include "ace/OS.h"
-
 #define NUM_KEYS 1
 
 class wchar_reference
