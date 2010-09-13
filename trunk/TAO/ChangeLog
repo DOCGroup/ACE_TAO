@@ -1,3 +1,10 @@
+Mon Sep 13 07:46:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* Makefile.am:
+	  Removed, configure is too experimental to be used for TAO. If
+	  someone really wants to use configure we need to fix the MPC
+	  generator and the configure script and really perform testing
+
 Thu Sep  9 18:29:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Leader_Follower.inl:
