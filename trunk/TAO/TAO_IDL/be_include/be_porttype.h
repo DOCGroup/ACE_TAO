@@ -37,11 +37,11 @@ class be_porttype : public virtual AST_PortType,
   //
 public:
   be_porttype (UTL_ScopedName *n);
-    
+
   virtual ~be_porttype (void);
-  
+
   virtual void destroy (void);
-  
+
   virtual int accept (be_visitor *visitor);
 
   DEF_NARROW_FROM_DECL (be_porttype);

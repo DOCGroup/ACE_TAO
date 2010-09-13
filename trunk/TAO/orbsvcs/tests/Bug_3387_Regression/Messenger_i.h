@@ -11,7 +11,7 @@ class  Messenger_i : public POA_Messenger
 {
  public:
   Messenger_i (CORBA::ORB_ptr orb);
-  
+
   virtual ~Messenger_i (void);
 
   CORBA::Boolean send_message (const char * user_name,
@@ -23,7 +23,7 @@ class  Messenger_i : public POA_Messenger
   CosNotifyChannelAdmin::StructuredProxyPushConsumer_var consumer_proxy_;
 };
 
-#endif 
+#endif
 
 
 

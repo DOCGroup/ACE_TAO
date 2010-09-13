@@ -32,7 +32,7 @@ public:
   ~be_visitor_ami4ccm_conn_ex_idl (void);
 
   virtual int visit_interface (be_interface *node);
-  
+
 private:
   TAO_OutStream &os_;
 };

@@ -45,10 +45,10 @@ public:
   virtual int visit_structure (AST_Structure *node);
   virtual int visit_enum (AST_Enum *node);
   virtual int visit_union (AST_Union *node);
-  
+
   virtual CORBA::IDLType_ptr ir_current (void) const;
   // Lets the visitor one level above acess this value.
-  
+
 private:
   int add_members (AST_Union *node, CORBA::UnionDef_ptr union_def);
   // Common code called whether we are creating a new union

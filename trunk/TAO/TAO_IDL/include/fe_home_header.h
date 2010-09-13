@@ -24,7 +24,7 @@ public:
                  UTL_NameList *supports,
                  UTL_ScopedName *managed_component,
                  UTL_ScopedName *primary_key);
-                 
+
   virtual ~FE_HomeHeader (void);
 
   // Data Accessors.

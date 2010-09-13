@@ -95,7 +95,7 @@ class FilterClient
 
   void wait_consumer_complete ();
 
-  void verify_filter (CosNotifyFilter::FilterAdmin_var& admin, 
+  void verify_filter (CosNotifyFilter::FilterAdmin_var& admin,
                       const char* constraint_expr,
                       const char* mod_constraint_expr);
 
@@ -145,7 +145,7 @@ class FilterClient
 
   CosNotifyChannelAdmin::AdminID adminid_1_id_;
   CosNotifyChannelAdmin::AdminID adminid_2_id_;
-  
+
   CosNotifyChannelAdmin::ChannelID channel_id_;
 
   bool use_persistent_;

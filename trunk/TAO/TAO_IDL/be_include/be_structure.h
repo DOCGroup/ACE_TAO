@@ -37,11 +37,11 @@ public:
                 UTL_ScopedName *n,
                 bool local,
                 bool abstract);
-                
+
   /// Copy BE-specific values when redefining struct or union
   /// from a forward declaration.
   virtual void redefine (AST_Structure *from);
-  
+
   /// Overridden from class be_type.
   virtual void gen_ostream_operator (TAO_OutStream *os,
                                      bool use_underscore);

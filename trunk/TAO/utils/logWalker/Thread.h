@@ -1,7 +1,7 @@
 // -*- C++ -*-
 
 // $Id$
-// 
+//
 
 #ifndef LOG_WALKER_THREAD_H
 #define LOG_WALKER_THREAD_H

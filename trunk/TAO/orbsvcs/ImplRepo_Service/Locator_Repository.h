@@ -55,7 +55,7 @@ public:
   int init (const Options& opts);
 
   int unregister_if_address_reused (const ACE_CString& server_id,
-                                    const ACE_CString& name, 
+                                    const ACE_CString& name,
                                     const char* partial_ior);
 
   /// Add a new server to the Repository

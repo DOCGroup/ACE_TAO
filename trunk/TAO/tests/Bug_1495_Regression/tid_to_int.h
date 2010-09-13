@@ -38,7 +38,7 @@ namespace
 
       // We assume sizeof(thread_id_type) >= sizeof(ace_thread_id_type).
       return (thread_id_type) tmp;
-    }    
+    }
   };
 
   template<typename thread_id_type>

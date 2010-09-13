@@ -1,7 +1,7 @@
 // -*- C++ -*-
 
 // $Id$
-// 
+//
 
 #ifndef LOG_WALKER_PEER_OBJECT_H
 #define LOG_WALKER_PEER_OBJECT_H

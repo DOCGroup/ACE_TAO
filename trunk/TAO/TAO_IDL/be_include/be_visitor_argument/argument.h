@@ -44,7 +44,7 @@ public:
   //= helper
   /// helper that produces either a nested name for
   /// header files or full name for others.
-  virtual const char *type_name (be_type *type, 
+  virtual const char *type_name (be_type *type,
                                  const char *suffix = 0);
 
   /// return the direction of the argument node
@@ -54,7 +54,7 @@ public:
   virtual int visit_argument (be_argument *node);
 
   void set_fixed_direction (AST_Argument::Direction direction);
-  
+
 protected:
   /// Consolidation of common code from invoke_cs and marshal_ss
   /// for predefined type args.

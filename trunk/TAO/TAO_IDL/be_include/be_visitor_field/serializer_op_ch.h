@@ -6,7 +6,7 @@
  *  $Id$
  *
  *  Concrete visitor for the base "BE_Field" node
- *  This generates TAO::DCPS::Serializer operators code for structure members 
+ *  This generates TAO::DCPS::Serializer operators code for structure members
  *  in the client header.
  *
  *

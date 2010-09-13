@@ -6,14 +6,14 @@
 #include "StatisticsHelper.h"
 
 
-class CSD_TP_Foo_B_Export Foo_B_Statistics 
+class CSD_TP_Foo_B_Export Foo_B_Statistics
 {
   public:
 
-    enum In_Value_Type 
+    enum In_Value_Type
     {
-      FOO_B_STAT_NONE, 
-      FOO_B_STAT_STRING, 
+      FOO_B_STAT_NONE,
+      FOO_B_STAT_STRING,
       FOO_B_STAT_LONG
     };
 

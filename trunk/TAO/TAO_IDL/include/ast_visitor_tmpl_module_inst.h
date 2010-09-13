@@ -94,32 +94,32 @@ public:
   virtual int visit_field (AST_Field *node);
   virtual int visit_factory (AST_Factory *node);
   virtual int visit_finder (AST_Finder *node);
-  
+
 private:
   // If arg is a param holder, return the matching template arg,
   // otherwise return arg unchanged. If the arg is declared in
   // the scope of a template module, the returned node will be a
   // copy created in the scope of the template module instantiation.
   AST_Decl *reify_type (AST_Decl *d);
-  
+
   // Utility method used for attributes and operations.
   UTL_ExceptList *reify_exception_list (UTL_ExceptList *orig);
-  
+
   // Utility method to create a NameList from a list of inherited
   // or supported types that may contain a template param ref.
   UTL_NameList *create_name_list (AST_Type **list, long length);
-  
+
 private:
   ast_visitor_context *ctx_;
 
   // Flag to branch in visit_valuetype() where we create an
   // eventtype or a valuetype.
   bool for_eventtype_;
-  
+
   // Flag to branch in visit_factory() where we create a
   // finder or a factory.
   bool for_finder_;
-  
+
   // Flag to short_circuit reifying if we are the base class of
   // ast_visitor_tmpl_module_ref.
   bool ref_only_;

@@ -1,7 +1,7 @@
 // -*- C++ -*-
 
 // $Id$
-// 
+//
 
 #ifndef LOG_WALKER_PEER_PROCESS_H
 #define LOG_WALKER_PEER_PROCESS_H
@@ -57,7 +57,7 @@ public:
   void add_transport (Transport *t);
   Transport *last_transport (void);
   Transport *find_transport (long handle);
-  
+
   bool match_local (const char *addr) const;
 
   Invocation *new_invocation (size_t req_id, Thread *thr);

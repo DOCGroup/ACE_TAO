@@ -123,7 +123,7 @@ public:
   // Accessors for the member.
   bool home_equiv (void) const;
   void home_equiv (bool val);
-  
+
   // Accessors for the member.
   AST_InterfaceFwd *fwd_decl (void) const;
   void fwd_decl (AST_InterfaceFwd *node);
@@ -131,7 +131,7 @@ public:
   // Look through inherited interfaces.
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
                                        bool full_def_only);
-                                       
+
   AST_Decl *look_in_inherited_local (Identifier *e,
                                      bool full_def_only = false);
 
@@ -146,11 +146,11 @@ public:
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
   virtual bool legal_for_primary_key (void) const;
-  
+
   virtual AST_Decl *special_lookup (UTL_ScopedName *e,
                                     bool full_def_only);
-       
-  /// Accessors for the members.                                  
+
+  /// Accessors for the members.
   AST_Interface *ami_handler (void) const;
   void ami_handler (AST_Interface *handler);
   AST_Interface *ami4ccm_uses (void) const;
@@ -201,12 +201,12 @@ protected:
 
   // Are we the equivalent interface of a home?
   bool home_equiv_;
-  
+
   // The forward declaration we may have been created from.
   AST_InterfaceFwd *fwd_decl_;
-  
+
   // Must keep these base interface placeholders in a separate
-  // container, so they can be destroyed. Iterating over 
+  // container, so they can be destroyed. Iterating over
   // pd_inherits won't work because the real interfaces will
   // probably already be destroyed and the pointers will be
   // garbage.
@@ -214,7 +214,7 @@ protected:
 
   /// Do we have both abstract and concrete parents?
   int has_mixed_parentage_;
-  
+
   /// Store here for quick retrieval without an AST lookup.
   AST_Interface *ami_handler_;
   AST_Interface *ami4ccm_uses_;

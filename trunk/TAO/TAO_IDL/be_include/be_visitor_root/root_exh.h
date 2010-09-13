@@ -32,7 +32,7 @@ public:
   be_visitor_root_exh (be_visitor_context *ctx);
 
   ~be_visitor_root_exh (void);
-  
+
   virtual int visit_root (be_root *node);
 
 private:

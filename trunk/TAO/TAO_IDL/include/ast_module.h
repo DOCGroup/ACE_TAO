@@ -132,7 +132,7 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-  
+
   // Accessors for the member.
   AST_Template_Module_Inst *from_inst (void) const;
   void from_inst (AST_Template_Module_Inst *node);

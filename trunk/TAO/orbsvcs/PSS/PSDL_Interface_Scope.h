@@ -68,7 +68,7 @@ class TAO_PSDL_Export TAO_PSDL_Interface_Scope : public TAO_PSDL_Scope
 
   int get_module_name (const ACE_CString &identifier_name,
                        ACE_CString &module_name);
-  
+
   int get_interface_name (const ACE_CString &identifier_name,
                           ACE_CString &interface_name);
 

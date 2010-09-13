@@ -17,18 +17,18 @@ class be_consumes : public virtual AST_Consumes,
 public:
   be_consumes (UTL_ScopedName *n,
                AST_Type *consumes_type);
-            
+
   virtual ~be_consumes (void);
-  
+
   // Non-virtual override of frontend method.
   be_eventtype *consumes_type (void) const;
-  
+
   // Narrowing.
   DEF_NARROW_FROM_DECL (be_consumes);
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
-  
+
   // Cleanup.
   virtual void destroy (void);
 };

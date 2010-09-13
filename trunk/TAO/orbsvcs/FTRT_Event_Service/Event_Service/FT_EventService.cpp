@@ -12,6 +12,7 @@
 #include "orbsvcs/FtRtEvent/EventChannel/FTRTEC_ServiceActivate.h"
 #include "orbsvcs/FtRtEvent/Utils/Log.h"
 #include "ace/OS_main.h"
+#include "ace/OS_NS_strings.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {

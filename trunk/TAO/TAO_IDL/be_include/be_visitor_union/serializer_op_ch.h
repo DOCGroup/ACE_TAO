@@ -7,7 +7,7 @@
  *  $Id$
  *
  *  Concrete visitor for the Union class
- *  This one provides code generation for the TAO::DCPS::Serializer operators 
+ *  This one provides code generation for the TAO::DCPS::Serializer operators
  *  for the union in the client header.
  *
  *

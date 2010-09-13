@@ -31,9 +31,9 @@ class be_visitor_component_exh
   //
 public:
   be_visitor_component_exh (be_visitor_context *ctx);
-  
+
   ~be_visitor_component_exh (void);
-  
+
   virtual int visit_component (be_component *node);
 };
 

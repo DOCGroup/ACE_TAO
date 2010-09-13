@@ -46,7 +46,7 @@ class TAO_LoadBalancing_Export TAO_LB_LoadManager
 public:
 
   /// Constructor.
-  TAO_LB_LoadManager (int ping_timeout, 
+  TAO_LB_LoadManager (int ping_timeout,
                       int ping_interval);
 
   virtual int svc (void);

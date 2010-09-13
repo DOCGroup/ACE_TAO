@@ -20,7 +20,7 @@ public:
                                         int iter,
                                         int dist,
                                         char *job_name);
-  
+
   virtual void yield (time_t suspend_time,
                       Thread_Task* task);
 

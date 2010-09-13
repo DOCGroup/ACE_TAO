@@ -36,7 +36,7 @@ public:
 
   /// Called only by AMH exceptions.
   virtual int visit_operation (be_operation *node);
-  
+
 private:
   /// Recursive to generate for inherited members.
   void gen_ostream_operator_r (be_valuetype *node, unsigned long &index);

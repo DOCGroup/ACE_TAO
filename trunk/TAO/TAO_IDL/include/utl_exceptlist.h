@@ -82,15 +82,15 @@ class AST_Type;
 class TAO_IDL_FE_Export UTL_ExceptList : public UTL_List
 {
 public:
-  UTL_ExceptList (AST_Type *s, 
+  UTL_ExceptList (AST_Type *s,
                   UTL_ExceptList *cdr);
 
   // Get list item.
   AST_Type *head (void);
-  
+
   // Cleanup.
   virtual void destroy (void);
-  
+
   // Copies the UTL_ExceptList pointers but not the
   // contained AST_Exceptions.
   virtual UTL_ExceptList *copy (void);

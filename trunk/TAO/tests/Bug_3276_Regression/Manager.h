@@ -39,7 +39,7 @@ private:
   // Our servant locator
 
   CORBA::Object_var server_;
-  // 
+  //
 };
 
 #endif /*_MANAGER_H_ */

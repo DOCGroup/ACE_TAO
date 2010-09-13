@@ -1,7 +1,7 @@
 // -*- C++ -*-
 
 // $Id$
-// 
+//
 
 #ifndef LOG_WALKER_HOST_PROCESS_H
 #define LOG_WALKER_HOST_PROCESS_H
@@ -48,7 +48,7 @@ public:
   HostProcess (const ACE_CString &src, long pid);
   ~HostProcess (void);
 
-  // set/get the name of the process. This is only provided by 
+  // set/get the name of the process. This is only provided by
   // an alias supplied to the logWalker command line or manifest file.
   void proc_name (const ACE_CString &name);
   const ACE_CString &proc_name (void) const;
@@ -58,7 +58,7 @@ public:
   Thread * find_thread (long tid);
 
   // Returns a thread that had previously worked with handle h. May return
-  // a null pointer. 
+  // a null pointer.
   Thread * find_thread_for_handle (long h);
 
   // Returns the process id.
@@ -66,7 +66,7 @@ public:
 
   // returns true if the supplied endpoint has been visited before. This
   // may be either a listen endpoint or a client endpoint used to connect
-  // to another peer. 
+  // to another peer.
   bool has_endpoint (ACE_CString& addr, bool listen);
 
   // adds a new endpoint to the list of listen endpoints. Client endpoints
@@ -77,7 +77,7 @@ public:
   // are added as part of the process to add a new peer process
   void add_listen_endpoint (ACE_CString& addr);
 
-  // add a peer to the connection list. If the peer is not in the 
+  // add a peer to the connection list. If the peer is not in the
   // by_addr_ table, it will be added there too.
   void add_peer (long handle, PeerProcess *peer);
 
@@ -104,9 +104,9 @@ public:
   void reconcile_peers (Session *session);
 
 private:
-  void iterate_peers (int group, 
-                      int operation, 
-                      ostream *strm = 0, 
+  void iterate_peers (int group,
+                      int operation,
+                      ostream *strm = 0,
                       Session * session = 0);
 
   long pid_;

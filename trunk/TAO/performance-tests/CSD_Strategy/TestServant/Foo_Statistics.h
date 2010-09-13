@@ -5,7 +5,7 @@
 #include "CSD_PT_TestServant_Export.h"
 
 
-class CSD_PT_TestServant_Export Foo_Statistics 
+class CSD_PT_TestServant_Export Foo_Statistics
 {
   public:
 

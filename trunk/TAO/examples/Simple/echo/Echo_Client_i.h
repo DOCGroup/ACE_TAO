@@ -13,9 +13,9 @@
 //    This class implements the  interface calls for RMI.
 //
 // = AUTHOR
-//    
+//
 //   Balachandran Natarajan <bala@cs.wustl.edu>
-//    
+//
 // ============================================================================
 
 #ifndef ECHO_CLIENT_I_H

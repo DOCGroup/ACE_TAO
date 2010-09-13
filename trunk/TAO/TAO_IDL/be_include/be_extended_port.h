@@ -38,13 +38,13 @@ public:
   be_extended_port (
     UTL_ScopedName *n,
     AST_PortType *porttype_ref);
-    
+
   virtual ~be_extended_port (void);
-  
+
   be_porttype *port_type (void) const;
-  
+
   virtual void destroy (void);
-  
+
   virtual int accept (be_visitor *visitor);
 
   DEF_NARROW_FROM_DECL (be_extended_port);

@@ -70,7 +70,7 @@ public:
 
   ACE_Time_Value last_ping() const;
   void last_ping(const ACE_Time_Value& tv);
- 
+
 protected:
   /// Access the Supplier
   TAO_Notify_Supplier* supplier (void);
@@ -78,7 +78,7 @@ protected:
   /// Accept an event from the Supplier
   void push_i (TAO_Notify_Event * event);
 
-  /// Last time either push an event or validate connection 
+  /// Last time either push an event or validate connection
   /// via _non_exist call.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, ACE_Time_Value> last_ping_;
 

@@ -86,7 +86,7 @@ public:
   // Factory Methods
 
   /// Create the stream that can operate on a disk file
-  virtual TAO_Storable_Base *create_stream(const ACE_CString & file, 
+  virtual TAO_Storable_Base *create_stream(const ACE_CString & file,
                                            const ACE_TCHAR * mode);
 };
 

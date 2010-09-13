@@ -31,7 +31,7 @@ class be_visitor_attribute_ccm_init
 public:
   be_visitor_attribute_ccm_init (be_visitor_context *ctx);
   ~be_visitor_attribute_ccm_init (void);
-  
+
   virtual int visit_attribute (be_attribute *node);
 
   virtual int visit_array (be_array *node);
@@ -48,13 +48,13 @@ public:
   virtual int visit_union (be_union *node);
   virtual int visit_valuebox (be_valuebox *node);
   virtual int visit_valuetype (be_valuetype *node);
-  
+
 private:
   void emit_init_block (void);
   void emit_error (const char *);
   void open_if_block (void);
   void close_if_block (void);
-  
+
 private:
   be_attribute *attr_;
 };

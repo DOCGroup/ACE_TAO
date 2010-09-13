@@ -28,11 +28,11 @@ class be_visitor_interface_sh : public be_visitor_interface
 public:
   be_visitor_interface_sh (be_visitor_context *ctx);
   ~be_visitor_interface_sh (void);
-  
+
   virtual int visit_interface (be_interface *node);
   virtual int visit_component (be_component *node);
   virtual int visit_connector (be_connector *node);
-    
+
   /// Helper to generate the declarations for the operations
   /// of any abstract parents we may have.
   static int gen_abstract_ops_helper (be_interface *node,

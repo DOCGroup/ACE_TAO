@@ -34,7 +34,7 @@ class be_visitor_null_return_value : public be_visitor_decl
 public:
   be_visitor_null_return_value (be_visitor_context *ctx);
   virtual ~be_visitor_null_return_value (void);
-  
+
   virtual int visit_array (be_array *);
   virtual int visit_component (be_component *);
   virtual int visit_enum (be_enum *);
@@ -49,7 +49,7 @@ public:
   virtual int visit_union (be_union *);
   virtual int visit_valuebox (be_valuebox *);
   virtual int visit_valuetype (be_valuetype *);
-  
+
 protected:
   TAO_OutStream & os_;
 };
