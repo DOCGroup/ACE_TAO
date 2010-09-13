@@ -1,6 +1,7 @@
 // $Id$
 
 #include "CIF_Common.h"
+#include "ciao/Base/Client_init.h"
 #include "ace/Get_Opt.h"
 #include "Component/CIF_ComponentC.h"
 
@@ -110,12 +111,14 @@ CIF_Common::init (int argc, ACE_TCHAR *argv[])
 {
   int ret = 0;
 
+  this->orb_ = ::CORBA::ORB_init (argc, argv);
+  ::CIAO::Client_init (this->orb_);
+
   if (this->parse_args (argc, argv) != 0)
     return 1;
 
   try
     {
-      this->orb_ = ::CORBA::ORB_init (argc, argv);
       // Resolving naming service
       ::CORBA::Object_var naming_context_object =
         this->orb_->string_to_object (naming_);
