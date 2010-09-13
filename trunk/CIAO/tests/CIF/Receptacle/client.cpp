@@ -365,15 +365,12 @@ run_test (::Components::Receptacles_ptr rec,
 //       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
 //       ret += test_exceeded_limit_exception ();
 
-//       resolve errors in core for:
-//          - test_get_all_receptacles
-
 #if !defined (CCM_LW)
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_get_connections (rec);
 
-//       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
-//       ret += test_get_all_receptacles (rec);
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_get_all_receptacles (rec);
 
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_get_named_receptacles (rec);
