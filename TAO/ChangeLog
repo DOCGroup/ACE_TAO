@@ -1,3 +1,12 @@
+Mon Sep 13 13:29:02 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/PP_Memory_Management.txt:
+        * tao/PP_Memory_Management.txt:
+          Moved to docs
+
+        * configure.ac:
+          Removed these files.
+
 Mon Sep 13 13:26:24 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
