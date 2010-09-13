@@ -32,6 +32,6 @@ project (TAO_Utils) : taolib, tao_output, install, portableserver, pi {
   }
 
   Pkgconfig_Files {
-    TAO_Utils.pc.in
+    Utils/TAO_Utils.pc.in
   }
 }
