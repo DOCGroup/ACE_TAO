@@ -4,8 +4,8 @@
 /**
  * @file Config_Handler_Impl.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- * 
- * Installation handler implementation for spawning LocalityManagers. 
+ *
+ * Installation handler implementation for spawning LocalityManagers.
  */
 
 #ifndef DANCE_CONFIG_HANDLER_H
@@ -28,15 +28,15 @@ namespace DAnCE
       public virtual ::CORBA::LocalObject
   {
   public:
-    // Constructor 
+    // Constructor
     Config_Handler_Impl (void);
-  
-    // Destructor 
+
+    // Destructor
     virtual ~Config_Handler_Impl (void);
-    
+
     virtual
       char * instance_type (void);
-    
+
     ::CORBA::StringSeq *
         dependencies (void);
 
@@ -44,7 +44,7 @@ namespace DAnCE
       void install_instance (const ::Deployment::DeploymentPlan & plan,
                              ::CORBA::ULong instanceRef,
                              ::CORBA::Any_out instance_reference);
-    
+
     virtual
       void activate_instance (const ::Deployment::DeploymentPlan & ,
                               ::CORBA::ULong ,
@@ -59,29 +59,29 @@ namespace DAnCE
                             ::CORBA::ULong instanceRef,
                             const ::CORBA::Any & instance_reference);
 
-    virtual 
+    virtual
       void provide_endpoint_reference (const ::Deployment::DeploymentPlan &,
                                        ::CORBA::ULong,
                                        ::CORBA::Any_out) {};
-  
+
     virtual
       void connect_instance (const ::Deployment::DeploymentPlan & plan,
                              ::CORBA::ULong connectionRef,
                              const ::CORBA::Any & provided_reference);
-  
+
     virtual
       void disconnect_instance (const ::Deployment::DeploymentPlan & plan,
                                 ::CORBA::ULong connectionRef);
 
-    virtual 
+    virtual
       void instance_configured (const ::Deployment::DeploymentPlan &,
-                                ::CORBA::ULong) {};    
+                                ::CORBA::ULong) {};
 
     virtual
       void configure(const Deployment::Properties&);
-    
+
     virtual void close (void);
-     
+
   private:
     static const char *instance_type_;
   };
@@ -89,7 +89,7 @@ namespace DAnCE
 
 extern "C"
 {
-  ::DAnCE::InstanceDeploymentHandler_ptr 
+  ::DAnCE::InstanceDeploymentHandler_ptr
   DAnCE_Locality_Handler_Export create_Config_Handler (void);
 }
 

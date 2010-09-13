@@ -53,18 +53,18 @@ namespace DAnCE
       DynamicAny::DynAny_ptr  extract_into_dynany (const DataType &type,
                                                    const DataValue &value,
                                                    CORBA::TypeCode_ptr = 0);
-      
+
       Any extract_from_dynany (const CORBA::Any &any);
 
       CORBA::ORB_ptr orb ();
 
       DynamicAny::DynAnyFactory_ptr daf ();
-      
+
       CORBA::TypeCode_ptr create_typecode (const DataType &type);
-      
+
       void register_typecode (const std::basic_string<ACE_TCHAR> typeID,
                               CORBA::TypeCode_ptr tc);
-      
+
       CORBA::TypeCode_ptr get_typecode (const std::basic_string<ACE_TCHAR> typeID);
 
     private:
@@ -72,7 +72,7 @@ namespace DAnCE
       CORBA::ORB_var orb_;
 
       DynamicAny::DynAnyFactory_var daf_;
-      
+
       std::map <std::basic_string<ACE_TCHAR>, CORBA::TypeCode_ptr> typecode_map_;
     };
 

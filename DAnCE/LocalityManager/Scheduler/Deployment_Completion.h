@@ -33,19 +33,19 @@ namespace DAnCE
     virtual ~Deployment_Completion (void);
 
     virtual void update (const Event_Future &future);
-    
+
     void accept (Event_Future &future);
 
     /// Waits for completion of all events, with a timeout
     bool wait_on_completion (ACE_Time_Value *tv);
-    
+
     void completed_events (Event_List &event_list);
 
   protected:
     virtual void on_all_completed ();
 
     virtual void on_all_completed_with_failure ();
-    
+
     bool single_threaded_wait_on_completion (ACE_Time_Value *tv);
 
   private:
@@ -53,7 +53,7 @@ namespace DAnCE
 
     TAO_SYNCH_MUTEX mutex_;
     ACE_Condition< TAO_SYNCH_MUTEX > condition_;
-    
+
     Event_List completed_events_;
   };
 

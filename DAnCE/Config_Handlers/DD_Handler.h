@@ -96,7 +96,7 @@ auto_ptr < ::Deployment::Domain > idl_domain_;
 
 /// The XSC Domain structure
 auto_ptr <Domain> domain_ptr_;
- 
+
  Domain &domain_;
 /// The return value used
 bool retval_;

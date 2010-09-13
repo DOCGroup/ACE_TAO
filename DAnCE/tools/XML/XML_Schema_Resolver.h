@@ -51,7 +51,7 @@ namespace DAnCE
       /// actually resolve the location of a schema.
       virtual InputSource * resolveEntity (const XMLCh *const publicId,
                                            const XMLCh *const systemId);
-      
+
       Resolver &get_resolver (void);
 
     private:

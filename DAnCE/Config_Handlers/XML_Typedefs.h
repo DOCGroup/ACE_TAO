@@ -23,9 +23,9 @@ namespace DAnCE
       typedef ::DAnCE::XML::XML_Schema_Resolver< ::DAnCE::XML::Environment_Resolver > XML_RESOLVER;
       typedef ::DAnCE::XML::XML_Error_Handler ERROR_HANDLER;
       typedef ::DAnCE::XML::XML_Helper< XML_RESOLVER, ERROR_HANDLER > HELPER;
-      
+
       static ERROR_HANDLER _xml_error_handler;
-      
+
     public:
       static HELPER XML_HELPER;
     };
