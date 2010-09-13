@@ -21,6 +21,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/SString.h"
 #include "ace/Thread_Manager.h"
+#include "ace/OS_NS_fcntl.h"
 
 static const ACE_TCHAR *iorfile = ACE_TEXT("ior");
 static const ACE_TCHAR *filename = ACE_TEXT("big.txt");
