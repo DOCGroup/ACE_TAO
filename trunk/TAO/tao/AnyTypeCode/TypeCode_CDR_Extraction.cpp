@@ -689,7 +689,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
             CORBA::ULongLong label;
             if (!(cdr >> label))
               return false;
- 
+
             typedef TypeCode::Case_T<CORBA::ULongLong,
                                      CORBA::String_var,
                                       CORBA::TypeCode_var> case_type;

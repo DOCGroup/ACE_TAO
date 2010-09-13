@@ -63,22 +63,22 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace RTCORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:638
 
 #if !defined (_RTCORBA_PROTOCOLPROPERTIES__VAR_OUT_CH_)
 #define _RTCORBA_PROTOCOLPROPERTIES__VAR_OUT_CH_
-  
+
   class ProtocolProperties;
   typedef ProtocolProperties *ProtocolProperties_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         ProtocolProperties
       >
     ProtocolProperties_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         ProtocolProperties
@@ -86,13 +86,13 @@ namespace RTCORBA
     ProtocolProperties_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_PROTOCOLPROPERTIES_CH_)
 #define _RTCORBA_PROTOCOLPROPERTIES_CH_
-  
+
   class TAO_RTCORBA_Export ProtocolProperties
     : public virtual ::CORBA::Object
   {
@@ -100,24 +100,24 @@ namespace RTCORBA
     typedef ProtocolProperties_ptr _ptr_type;
     typedef ProtocolProperties_var _var_type;
     typedef ProtocolProperties_out _out_type;
-    
+
     // The static operations.
     static ProtocolProperties_ptr _duplicate (ProtocolProperties_ptr obj);
-    
+
     static void _tao_release (ProtocolProperties_ptr obj);
-    
+
     static ProtocolProperties_ptr _narrow (::CORBA::Object_ptr obj);
     static ProtocolProperties_ptr _unchecked_narrow (::CORBA::Object_ptr obj);
     static ProtocolProperties_ptr _nil (void)
     {
       return static_cast<ProtocolProperties_ptr> (0);
     }
-    
+
     static void _tao_any_destructor (void *);
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:216
-    
+
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
@@ -129,13 +129,13 @@ namespace RTCORBA
   protected:
     // Abstract or local interface only.
     ProtocolProperties (void);
-    
+
     virtual ~ProtocolProperties (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     ProtocolProperties (const ProtocolProperties &);
-    
+
     void operator= (const ProtocolProperties &);
   };
 
@@ -161,7 +161,7 @@ namespace TAO
 
 #if !defined (_RTCORBA_PROTOCOLPROPERTIES__TRAITS_)
 #define _RTCORBA_PROTOCOLPROPERTIES__TRAITS_
-  
+
   template<>
   struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::ProtocolProperties>
   {

@@ -210,7 +210,7 @@ private:
   /// Once closed make sure the transport is not added back to the cache.
   /// This is distinct from the leader-follower state so it cannot be reset.
   bool is_closed_;
-   
+
   /*
    * Hook to add instance members from derived class
    * onto base Connection_Handler class. Any further

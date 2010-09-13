@@ -58,7 +58,7 @@ public:
   /// Shutdown reactor.
   void shutdown_reactor (void);
 
-  /// Certain ORB policies such as dropping replies on shutdown 
+  /// Certain ORB policies such as dropping replies on shutdown
   /// would need cleanup of transports to wake threads up.
   void close_all_transports (void);
 

@@ -9,7 +9,7 @@
  *
  * @author Jeff Parsons
  */
- 
+
 #include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -24,8 +24,8 @@ namespace TAO
     const std::vector<T> &)
   {
   }
-    
-  /// Non-copying  
+
+  /// Non-copying
   template<typename T>
   void
   insert_value_vector (
@@ -33,7 +33,7 @@ namespace TAO
     std::vector<T> *)
   {
   }
-    
+
   template<typename T>
   bool
   extract_value_vector (
@@ -41,7 +41,7 @@ namespace TAO
     std::vector<T> &)
   {
     return true;
-  }  
+  }
 
   /// Copying
   template<typename T>
@@ -51,7 +51,7 @@ namespace TAO
     const std::vector<typename T::_ptr_type> &)
   {
   }
-    
+
   /// Non-copying
   template<typename T>
   void
@@ -60,7 +60,7 @@ namespace TAO
     std::vector<typename T::_ptr_type> *)
   {
   }
-    
+
   template<typename T>
   bool
   extract_objref_vector (
@@ -68,7 +68,7 @@ namespace TAO
     std::vector<typename T::_ptr_type> &)
   {
     return true;
-  }  
+  }
 
   /// Copying
   template<typename T_forany>
@@ -78,7 +78,7 @@ namespace TAO
     const std::vector<typename T_forany::_slice_type *> &)
   {
   }
-    
+
   /// Non-copying
   template<typename T_forany>
   void
@@ -87,7 +87,7 @@ namespace TAO
     std::vector<typename T_forany::_slice_type *> *)
   {
   }
-    
+
   template<typename T_forany>
   bool
   extract_array_vector (
@@ -95,7 +95,7 @@ namespace TAO
     std::vector<typename T_forany::_slice_type *> &)
   {
     return true;
-  }  
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

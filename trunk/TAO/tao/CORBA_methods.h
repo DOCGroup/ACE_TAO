@@ -57,7 +57,7 @@ namespace CORBA
   {
     return x == 0;
   }
-  
+
   template<typename T> inline void release (T x)
   {
     if (x != 0)

@@ -155,7 +155,7 @@ public:
     );
 
   _out_type     out (void);
-  
+
 private:
   // Some compilers don't look into the base class when parsing
   // templates unless they are force to.
@@ -188,7 +188,7 @@ public:
   _out_type     out (void);
 
   operator _slice_type *& ();
-  
+
 private:
   // Some compilers don't look into the base class when parsing
   // templates unless they are force to.

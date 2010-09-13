@@ -57,20 +57,20 @@ TAO::TypeCode::Case_Enum_T<StringType,
 {
   CORBA::Any_var any = tc->member_label (index);
   TAO_OutputCDR out_cdr;
-  
+
   if (! any->impl ()->marshal_value (out_cdr))
     {
       return false;
     }
-  
+
   TAO_InputCDR in_cdr (out_cdr);
   CORBA::ULong tc_label = ACE_UINT32_MAX;
-  
+
   if (! in_cdr.read_ulong (tc_label))
     {
       return false;
     }
-  
+
   return (this->label_ == tc_label);
 }
 

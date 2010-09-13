@@ -43,8 +43,8 @@ namespace TAO
      *
      * @brief Base class for all custom request operations.
      *
-     * @note  The caller that creates a new TP_Custom_Request_Operation 
-     *        object needs call _add_ref () on the servant before 
+     * @note  The caller that creates a new TP_Custom_Request_Operation
+     *        object needs call _add_ref () on the servant before
      *        constructing it and the TP_Custom_Request_Operation object
      *        is responsible to decrement the reference count.
      *

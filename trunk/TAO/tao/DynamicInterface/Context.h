@@ -49,10 +49,10 @@ namespace CORBA
 
   class NVList;
   typedef NVList *NVList_ptr;
-  
+
   class Context;
   typedef Context * Context_ptr;
-  
+
   class ContextList;
   typedef ContextList * ContextList_ptr;
 

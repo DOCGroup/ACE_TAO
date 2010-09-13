@@ -74,23 +74,23 @@ CORBA::ServerRequest::arguments (CORBA::NVList_ptr &list)
       throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 7, CORBA::COMPLETED_NO);
     }
 
-  // In a collocated situation there will not be an incoming CDR stream 
-  // in which case we can get the arguments from the 
+  // In a collocated situation there will not be an incoming CDR stream
+  // in which case we can get the arguments from the
   // operation_details using the 'collocated argument converter'.
   if (this->orb_server_request_.collocated ())
   {
     this->params_ = list;
-    
+
     if (this->orb_server_request_.operation_details ()->cac () != 0)
       {
         TAO_OutputCDR output;
         this->orb_server_request_.operation_details ()->cac (
                 )->dsi_convert_request (this->orb_server_request_,
                                         output);
-        
+
         TAO_InputCDR input(output);
         this->params_->_tao_decode (input, CORBA::ARG_IN | CORBA::ARG_INOUT);
-      }    
+      }
   }
   else
   {
@@ -191,7 +191,7 @@ CORBA::ServerRequest::dsi_marshal (void)
                               output,
                               CORBA::ARG_INOUT | CORBA::ARG_OUT);
           }
-        
+
         TAO_InputCDR input (output);
         // set reply parameters
         this->orb_server_request_.operation_details ()->cac (

@@ -20,7 +20,7 @@ bool
 TAO::CSD::TP_Task::add_request(TP_Request* request)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, false);
-  
+
   if (!this->accepting_requests_)
     {
       ACE_DEBUG((LM_DEBUG,"(%P|%t) TP_Task::add_request() - "
@@ -304,7 +304,7 @@ void
 TAO::CSD::TP_Task::cancel_servant (PortableServer::Servant servant)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
-  
+
   // Cancel the requests targeted for the provided servant.
   TP_Cancel_Visitor cancel_visitor(servant);
   this->queue_.accept_visitor(cancel_visitor);

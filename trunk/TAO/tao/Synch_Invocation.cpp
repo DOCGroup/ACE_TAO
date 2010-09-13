@@ -498,7 +498,7 @@ namespace TAO
     mon.set_status (TAO_INVOKE_USER_EXCEPTION);
 
     // We must manage the memory allocated
-    // by the call above to alloc(). 
+    // by the call above to alloc().
     auto_ptr<CORBA::Exception> safety (exception);
 
     exception->_raise ();

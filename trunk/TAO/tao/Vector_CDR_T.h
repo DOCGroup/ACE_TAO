@@ -61,7 +61,7 @@ namespace TAO
         return false;
       }
 
-    std::vector<T> tmp;  
+    std::vector<T> tmp;
     tmp.reserve (new_length);
     T tmp_elem;
 
@@ -163,7 +163,7 @@ namespace TAO
          i != source.end ();
          ++i)
       {
-        var_type tmp_array = 
+        var_type tmp_array =
           TAO::Array_Traits<T_forany>::dup (*i);
         T_forany const tmp (tmp_array.inout ());
 
