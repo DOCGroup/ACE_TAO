@@ -1,3 +1,9 @@
+Mon Sep 13 15:12:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Callback_Quoter/Consumer_Handler.cpp:
+        * examples/Simulator/Event_Supplier/Event_Sup.cpp:
+          Added needed includes
+
 Mon Sep 13 14:56:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:
