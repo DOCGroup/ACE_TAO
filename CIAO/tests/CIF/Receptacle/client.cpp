@@ -279,35 +279,83 @@ test_get_named_receptacles (::Components::Receptacles_ptr rec)
   ACE_DEBUG ((LM_DEBUG, "Run test_get_named_receptacles test\n"));
   ::Components::ReceptacleDescriptions_var descriptions;
 
-  ::Components::NameList names;
-  names.length (1);
-  names[0] = ::CORBA::string_dup ("use_cif_foo");
+  ::Components::NameList one_name;
+  one_name.length (1);
+  one_name[0] = ::CORBA::string_dup ("use_cif_foo");
 
   try
     {
-      descriptions = rec->get_named_receptacles (names);
+      descriptions = rec->get_named_receptacles (one_name);
+      if (descriptions->length () != 1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "Receptacle test_get_named_receptacles one name - "
+                            "Error: Unexpected length recieived.\n"),
+                            1);
+        }
     }
   catch (const ::Components::InvalidName &)
     {
-      ACE_ERROR ((LM_ERROR, "Receptacle test_get_named_receptacles - "
+      ACE_ERROR ((LM_ERROR, "Receptacle test_get_named_receptacles one name - "
                              "Error: Received InvalidName "
                              "exception during invocation of "
-                             "get_connections.\n"));
+                             "get_named_receptacles.\n"));
       return 1;
     }
-  catch (const ::CORBA::NO_IMPLEMENT &)
+  catch (const ::CORBA::Exception &ex)
     {
-      // get_named_receptacles is not implemented
-      ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_named_receptacles - "
-                            "test_get_named_receptacles method not implemented yet.\n"));
+      ex._tao_print_exception ("test_get_named_receptacles one name");
+      return 1;
     }
   catch (...)
     {
-      ACE_ERROR ((LM_ERROR, "Receptacle test_get_named_receptacles - "
+      ACE_ERROR ((LM_ERROR, "Receptacle test_get_named_receptacles one name - "
                             "Error: exception during invocation of "
-                            "get_connections.\n"));
+                            "get_named_receptacles.\n"));
       return 1;
     }
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_named_receptacles - "
+                        "Test with one name passed!\n"));
+
+  ::Components::NameList two_names;
+  two_names.length (2);
+  two_names[0] = ::CORBA::string_dup ("use_cif_foo");
+  two_names[1] = ::CORBA::string_dup ("use_cif_inherited_foo");
+
+  try
+    {
+      descriptions = rec->get_named_receptacles (two_names);
+      if (descriptions->length () != 2)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "Receptacle test_get_named_receptacles two names - "
+                            "Error: Unexpected length recieived.\n"),
+                            1);
+        }
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_get_named_receptacles two names - "
+                             "Error: Received InvalidName "
+                             "exception during invocation of "
+                             "test_get_named_receptacles.\n"));
+      return 1;
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("test_get_named_receptacles two names");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_get_named_receptacles two names - "
+                            "Error: exception during invocation of "
+                            "test_get_named_receptacles.\n"));
+      return 1;
+    }
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_named_receptacles - "
+                        "Test with two names passed!\n"));
+
 
   // test invalid name exception during invocation of get_connections
   ::Components::NameList invalid_names;
@@ -317,6 +365,10 @@ test_get_named_receptacles (::Components::Receptacles_ptr rec)
   try
     {
       descriptions = rec->get_named_receptacles (invalid_names);
+      ACE_ERROR ((LM_ERROR, "Receptacle test_get_named_receptacles - "
+                            "Error: didn't receive expected InvalidName "
+                            "exception.\n"));
+      return 1;
     }
   catch (const ::Components::InvalidName &)
     {
@@ -324,17 +376,16 @@ test_get_named_receptacles (::Components::Receptacles_ptr rec)
                             "Received expected InvalidName "
                             "exception during connect\n"));
     }
-  catch (const ::CORBA::NO_IMPLEMENT &)
+  catch (const ::CORBA::Exception &ex)
     {
-      // get_named_receptacles is not implemented
-      ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_named_receptacles - "
-                            "test_get_named_receptacles method not implemented yet.\n"));
+      ex._tao_print_exception ("test_get_named_receptacles");
+      return 1;
     }
   catch (...)
     {
       ACE_ERROR ((LM_ERROR, "Receptacle test_get_named_receptacles - "
                             "Error: exception during invocation of "
-                            "get_connections.\n"));
+                            "test_get_named_receptacles.\n"));
       return 1;
     }
   return 0;
