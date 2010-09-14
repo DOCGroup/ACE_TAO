@@ -78,7 +78,6 @@ if (defined $DDS_ROOT && -r "$DDS_ROOT/VERSION") {
              ,'tao_costime'
              ,'tao_costrader'
              ,'tao_portablegroup'
-             ,'tao_pss'
              ,'tao_ifr');
 @CIAO_DOCS = ('ciao_config_handlers'
              ,'ciao_dds4ccm'
