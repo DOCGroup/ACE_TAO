@@ -21,8 +21,6 @@
 
 #include "ace/OS_Memory.h"
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Record)
