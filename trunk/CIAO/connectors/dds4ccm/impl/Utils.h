@@ -13,6 +13,7 @@
 #include "dds4ccm_dds_impl_export.h"
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
+#include "ace/String_Base.h"
 
 namespace CIAO
 {
@@ -84,6 +85,34 @@ namespace CIAO
         }
       return "***Unknown enum value, update RTI::translate_rejectedstatuskind()";
 #undef RTI_DDS_RETCODE
+    }
+
+    inline void translate_statusmask (ACE_CString &ret, ::DDS::StatusMask mask)
+    {
+#define RTI_DDS_CHECK_MASK(X, Y, Z) \
+        if (X & Y) { \
+          if (Z.length () != 0) \
+              Z += " | "; \
+          Z += translate_statuskind (Y); \
+        }
+      RTI_DDS_CHECK_MASK (mask, ::DDS::INCONSISTENT_TOPIC_STATUS, ret);
+      RTI_DDS_CHECK_MASK (mask, ::DDS::OFFERED_DEADLINE_MISSED_STATUS, ret);
+      RTI_DDS_CHECK_MASK (mask, ::DDS::REQUESTED_DEADLINE_MISSED_STATUS, ret);
+      RTI_DDS_CHECK_MASK (mask, ::DDS::OFFERED_INCOMPATIBLE_QOS_STATUS, ret);
+      RTI_DDS_CHECK_MASK (mask, ::DDS::REQUESTED_INCOMPATIBLE_QOS_STATUS, ret);
+      RTI_DDS_CHECK_MASK (mask, ::DDS::SAMPLE_LOST_STATUS, ret);
+      RTI_DDS_CHECK_MASK (mask, ::DDS::SAMPLE_REJECTED_STATUS, ret);
+      RTI_DDS_CHECK_MASK (mask, ::DDS::DATA_ON_READERS_STATUS, ret);
+      RTI_DDS_CHECK_MASK (mask, ::DDS::DATA_AVAILABLE_STATUS, ret);
+      RTI_DDS_CHECK_MASK (mask, ::DDS::LIVELINESS_LOST_STATUS, ret);
+      RTI_DDS_CHECK_MASK (mask, ::DDS::LIVELINESS_CHANGED_STATUS, ret);
+      RTI_DDS_CHECK_MASK (mask, ::DDS::PUBLICATION_MATCHED_STATUS, ret);
+      RTI_DDS_CHECK_MASK (mask, ::DDS::SUBSCRIPTION_MATCHED_STATUS, ret);
+      RTI_DDS_CHECK_MASK (mask, ::DDS::RELIABLE_WRITER_CACHE_CHANGED_STATUS, ret);
+      RTI_DDS_CHECK_MASK (mask, ::DDS::RELIABLE_READER_ACTIVITY_CHANGED_STATUS, ret);
+
+#undef RTI_ADD_MASK
+#undef RTI_DDS_CHECK_MASK
     }
   }
 }
