@@ -95,10 +95,16 @@ CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
     {
       mask = ::DDS::INCONSISTENT_TOPIC_STATUS;
     }
-  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
-                 "TopicListener_T::get_mask - "
-                 "Mask becomes %x\n",
-                 mask));
+
+  if (CIAO_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
+    {
+      ACE_CString msk = "";
+      translate_statusmask (msk, mask);
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+                    "TopicListener_T::get_mask - "
+                    "Mask becomes %C\n",
+                    msk.c_str ()));
+    }
   return mask;
 }
 

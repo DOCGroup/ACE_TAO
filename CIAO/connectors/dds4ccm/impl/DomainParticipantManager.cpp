@@ -3,7 +3,6 @@
 #include "DomainParticipantManager.h"
 #include "dds4ccm/impl/Log_Macros.h"
 #include "dds4ccm/impl/Utils.h"
-#include "ace/Auto_Ptr.h"
 
 namespace CIAO
 {
