@@ -1,10 +1,10 @@
 usr/bin/mpc-ace
 usr/bin/mwc-ace
-$ACE_ROOT/bin/m[p,w]c.pl          usr/share/ace/bin
-$ACE_ROOT/bin/MakeProjectCreator  usr/share/ace/bin
-$MPC_ROOT/config              usr/share/ace/MPC
-$MPC_ROOT/modules             usr/share/ace/MPC
-$MPC_ROOT/templates           usr/share/ace/MPC
-$MPC_ROOT/*.pl                usr/share/ace/MPC
-$MPC_ROOT/ChangeLog           usr/share/ace/MPC
-$ACE_ROOT/PerlACE             usr/share/ace/bin
+../bin/m[p,w]c.pl          usr/share/ace/bin
+../bin/MakeProjectCreator  usr/share/ace/bin
+../MPC/config              usr/share/ace/MPC
+../MPC/modules             usr/share/ace/MPC
+../MPC/templates           usr/share/ace/MPC
+../MPC/*.pl                usr/share/ace/MPC
+../MPC/ChangeLog           usr/share/ace/MPC
+../bin/PerlACE             usr/share/ace/bin
