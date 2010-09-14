@@ -22,6 +22,6 @@ workspace {
   connectors/dds4ccm/idl
   connectors/dds4ccm/impl
   exclude {
-    DAnCE/tests
+    $(DANCE_ROOT)/tests
   }
 }
