@@ -1,3 +1,41 @@
+Tue Sep 14 11:40:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/Array.pl:
+        * bin/Array_Helper:
+        * bin/Hash_Map_Manager.pl:
+        * bin/Hash_Map_Manager_Helper:
+        * bin/vxworks_modify.pl:
+          Removed these files, very old and will not work at all
+
+        * bin/PythonACE:
+        * bin/PythonACE/__init__.py:
+        * bin/PythonACE/fuzz:
+        * bin/PythonACE/fuzz/__init__.py:
+        * bin/PythonACE/fuzz/_fuzz.py:
+        * bin/PythonACE/fuzz/_generic_handler.py:
+        * bin/PythonACE/fuzz/_mailer.py:
+        * bin/PythonACE/fuzz/_path.py:
+        * bin/PythonACE/fuzz/_singleton.py:
+        * bin/PythonACE/fuzz/_types.py:
+        * bin/PythonACE/fuzz/_warning_handler.py:
+        * bin/PythonACE/fuzz/check_includes.py:
+        * bin/PythonACE/fuzz/check_no_tabs.py:
+        * bin/PythonACE/fuzz/cpp_inline.py:
+        * bin/PythonACE/fuzz/inline.py:
+        * bin/PythonACE/fuzz/math_include.py:
+        * bin/PythonACE/fuzz/max_filename.py:
+        * bin/PythonACE/fuzz/max_project_len.py:
+        * bin/PythonACE/fuzz/newline.py:
+        * bin/PythonACE/fuzz/no_conflict_markers.py:
+        * bin/PythonACE/fuzz/noncvs.py:
+        * bin/PythonACE/fuzz/ptr_arith_t.py:
+        * bin/PythonACE/fuzz/refcountservantbase.py:
+        * bin/PythonACE/fuzz/streams_include.py:
+        * bin/PythonACE/fuzz/verify_changelog.py:
+        * bin/fuzz.py:
+          Deleted, fuzz is still perl, if we need a PythonACE later we can
+          easily get this again from svn
+
 Tue Sep 14 11:31:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_doxygen.pl:
