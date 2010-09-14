@@ -199,9 +199,14 @@ namespace CIAO
 
     CORBA::Object_ptr lookup_facet (const char *port_name);
 
- #if !defined (CCM_LW)
+#if !defined (CCM_LW)
     ::Components::FacetDescription *lookup_facet_description (
       const char *port_name);
+#endif
+
+#if !defined (CCM_LW)
+    ::Components::ReceptacleDescription *lookup_receptacle_description (
+      const char * receptacle_name);
 #endif
 
   protected:

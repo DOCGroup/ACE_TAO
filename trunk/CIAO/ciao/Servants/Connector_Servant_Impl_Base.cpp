@@ -267,10 +267,36 @@ namespace CIAO
 #if !defined (CCM_LW)
   ::Components::ReceptacleDescriptions *
   Connector_Servant_Impl_Base::get_named_receptacles (
-    const ::Components::NameList & /* names */)
+    const ::Components::NameList & names)
   {
     CIAO_TRACE("Connector_Servant_Impl_Base::get_named_receptacles");
-    throw ::CORBA::NO_IMPLEMENT ();
+
+
+    ::Components::ReceptacleDescriptions_var retval;
+    ACE_NEW_THROW_EX (retval,
+                      ::Components::ReceptacleDescriptions,
+                      ::CORBA::NO_MEMORY ());
+
+    retval->length (names.length ());
+    ::CORBA::ULong count = 0;
+
+    for (::CORBA::ULong name = 0;
+         name < names.length ();
+         ++name)
+      {
+        ::Components::ReceptacleDescription * desc =
+          lookup_receptacle_description (names[name].in ());
+        if (desc)
+          {
+            retval[count++] = desc;
+          }
+        else
+          {
+            throw ::Components::InvalidName ();
+          }
+      }
+    ::Components::ReceptacleDescriptions_var safe_retval = retval;
+    return safe_retval._retn ();
   }
 #endif
 
@@ -449,6 +475,43 @@ namespace CIAO
 
     return CORBA::Object::_duplicate (iter->second);
   }
+
+#if !defined (CCM_LW)
+  ::Components::ReceptacleDescription *
+  Connector_Servant_Impl_Base::lookup_receptacle_description (
+    const char * receptacle_name)
+  {
+    CIAO_TRACE ("Connector_Servant_Impl_Base::lookup_receptacle_description");
+    if (!receptacle_name)
+      {
+        return 0;
+      }
+    ::Components::ReceptacleDescriptions_var all_receptacles =
+      this->get_all_receptacles ();
+    for (::CORBA::ULong receptacle = 0;
+          receptacle < all_receptacles->length ();
+          ++receptacle)
+      {
+        ::Components::ReceptacleDescription *receptacle_desc =
+          all_receptacles[receptacle];
+        if (::ACE_OS::strcmp (receptacle_name, receptacle_desc->name ()) == 0)
+          {
+            ::Components::ReceptacleDescription *rd = 0;
+
+            ACE_NEW_THROW_EX (rd,
+                              ::OBV_Components::ReceptacleDescription (
+                                receptacle_desc->name (),
+                                receptacle_desc->type_id (),
+                                receptacle_desc->is_multiple (),
+                                receptacle_desc->connections ()),
+                              CORBA::NO_MEMORY ());
+            ::Components::ReceptacleDescription_var safe = rd;
+            return safe._retn ();
+          }
+      }
+    return 0;
+  }
+#endif
 
 #if !defined (CCM_LW)
   ::Components::FacetDescription *
