@@ -60,9 +60,6 @@ Subject: [area]: [synopsis]
     (unless this isn't used in this case, e.g., with Microsoft Visual
     C++)]:
 
-    BUILD METHOD USED:
-[Experimental ./configure or traditional makefile/project file?]
-
     CONTENTS OF $ACE_ROOT/bin/MakeProjectCreator/config/default.features
     (used by MPC when you generate your own makefiles):
 
