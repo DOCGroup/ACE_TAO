@@ -1,18 +1,26 @@
+Tue Sep 14 09:24:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/LoadBalancing/server.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/client.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/client.cpp:
+          Added missing includes
+
 Mon Sep 13 19:09:35 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
         * TAO_IDL/be/be_global.cpp:
         * TAO_IDL/be_include/be_global.h:
-        
+
           Added command line option -iC <path> to override the default
           prefix (if any) for generated *C.h includes *A.h.
-          
+
         * TAO_IDL/be/be_util.cpp:
-        
+
           Updated tao_idl usage message.
-          
+
         * tao/docs/compiler.html:
-        
+
           Updated IDL compiler command line option documentation.
 
 Mon Sep 13 18:53:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>

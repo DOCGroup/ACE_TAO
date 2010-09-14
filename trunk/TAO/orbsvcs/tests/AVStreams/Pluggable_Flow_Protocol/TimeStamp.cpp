@@ -1,6 +1,7 @@
 #include "TimeStamp.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/OS_NS_strings.h"
 
 // $Id$
 //TimeStamp Protocol Object
