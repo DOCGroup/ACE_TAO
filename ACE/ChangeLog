@@ -1,3 +1,14 @@
+Tue Sep 14 09:36:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release.py:
+          Updated generation of dsc file
+
+        * protocols/examples/RMCast/Send_Msg/Sender.cpp:
+        * protocols/tests/RMCast/Sender.cpp:
+        * tests/Based_Pointer_Test.cpp:
+        * tests/SSL/Bug_2912_Regression_Test.cpp:
+          Added missing includes
+
 Mon Sep 13 18:15:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           *:
