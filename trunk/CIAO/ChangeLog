@@ -1,3 +1,8 @@
+Tue Sep 14 11:33:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao_config_handlers.doxygen:
+          Removed this file.
+
 Tue Sep 14 09:42:26 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Servants/Connector_Servant_Impl_Base.h:
