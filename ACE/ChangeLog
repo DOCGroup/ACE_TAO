@@ -1,3 +1,8 @@
+Tue Sep 14 12:05:19 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * examples/APG/Logging/Callback-3.h: Replaced use of deprecated
+          ACE_Log_Record::encode() with CDR converter.
+
 Tue Sep 14 12:01:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/FlReactor/ace_flreactor.mpc:
