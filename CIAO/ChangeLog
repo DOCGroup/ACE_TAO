@@ -1,3 +1,8 @@
+Tue Sep 14 12:13:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO_TAO_DAnCE.mwc:
+          Updated exclude path
+
 Tue Sep 14 11:48:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ContentFilterSetting.cpp:
@@ -9,7 +14,7 @@ Tue Sep 14 11:48:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/impl/SubscriberListener_T.cpp:
         * connectors/dds4ccm/impl/TopicListener_T.cpp:
         * connectors/dds4ccm/impl/Utils.h:
-          Status mask will be printed as text (instead of hex). 
+          Status mask will be printed as text (instead of hex).
 
 Tue Sep 14 11:33:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
