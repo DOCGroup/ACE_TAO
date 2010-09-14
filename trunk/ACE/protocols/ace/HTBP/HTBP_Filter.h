@@ -20,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/os_include/sys/os_types.h"
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
