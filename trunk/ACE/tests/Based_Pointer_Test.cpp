@@ -28,6 +28,7 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Based_Pointer_T.h"
 #include "ace/SString.h"
+#include "ace/OS_NS_unistd.h"
 
 class Foo
 {
