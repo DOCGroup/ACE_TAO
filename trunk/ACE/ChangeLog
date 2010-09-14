@@ -1,3 +1,10 @@
+Tue Sep 14 13:00:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Record.h:
+        * ace/Log_Record.inl:
+        * ace/Log_Record.cpp:
+          Removed deprecated encode/decode methods
+
 Tue Sep 14 12:05:19 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * examples/APG/Logging/Callback-3.h: Replaced use of deprecated

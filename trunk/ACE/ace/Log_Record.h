@@ -103,27 +103,6 @@ public:
   /// IMPORTANT: @a name must be a statically allocated const ACE_TCHAR*
   static void priority_name (ACE_Log_Priority p, const ACE_TCHAR *name);
 
-  // = Marshall/demarshall
-  /**
-   * Encode the @c Log_Record for transmission on the network.
-   * @deprecated
-   * The encode() and decode() metods are deprecated; please use
-   * the CDR insertion and extraction operators to properly encode and decode
-   * ACE_Log_Record objects.
-   */
-  void encode (void);
-
-  /**
-   * Decode the @c Log_Record received from the network.
-   * @deprecated
-   * The encode() and decode() metods are deprecated; please use
-   * the CDR insertion and extraction operators to properly encode and decode
-   * ACE_Log_Record objects.
-   */
-  void decode (void);
-
-  // = Set/get methods
-
   /// Get the type of the Log_Record.
   ACE_UINT32 type (void) const;
 
