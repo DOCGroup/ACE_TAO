@@ -4,6 +4,7 @@
 #define APG_CALLBACK3_H
 
 #include "ace/streams.h"
+#include "ace/CDR_Stream.h"
 #include "ace/Log_Msg.h"
 #include "ace/Log_Msg_Callback.h"
 #include "ace/Log_Record.h"
@@ -50,10 +51,9 @@ public:
           return;
         }
 
-      size_t len = log_record.length();
-      log_record.encode ();
-
-      if (this->logger_->send_n ((char *) &log_record, len) == -1)
+      ACE_OutputCDR cdr;
+      cdr << log_record;
+      if (this->logger_->send_n (cdr.begin ()) == -1)
         {
           delete this->logger_;
           this->logger_ = 0;
