@@ -35,6 +35,7 @@
 #include "ace/Asynch_Acceptor.h"
 #include "ace/Asynch_Connector.h"
 #include "ace/Manual_Event.h"
+#include "ace/OS_NS_unistd.h"
 
 /* Linux kernels can't hack multiple outstanding I/O, which this
    test requires */
