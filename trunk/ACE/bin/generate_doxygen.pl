@@ -79,8 +79,7 @@ if (defined $DDS_ROOT && -r "$DDS_ROOT/VERSION") {
              ,'tao_costrader'
              ,'tao_portablegroup'
              ,'tao_ifr');
-@CIAO_DOCS = ('ciao_config_handlers'
-             ,'ciao_dds4ccm'
+@CIAO_DOCS = ('ciao_dds4ccm'
              ,'ciao');
 @DANCE_DOCS = ('DAnCE');
 @DDS_DOCS = ('dds');
