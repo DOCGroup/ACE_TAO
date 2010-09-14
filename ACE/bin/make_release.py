@@ -10,6 +10,8 @@ from __future__ import with_statement
 from time import strftime
 import pysvn
 import re
+import tempfile
+import shutil
 
 ##################################################
 #### Global variables
@@ -575,9 +577,13 @@ def update_latest_tag (which, branch):
 ACE_wrappers/TAO %s/tags/%s/TAO
 ACE_wrappers/TAO/CIAO %s/tags/%s/CIAO
 ACE_wrappers/TAO/DAnCE %s/tags/%s/DAnCE
-""" % (root_anon, branch, root_anon, branch, root_anon, branch)
-    svn_client.propset ("svn:externals", propval,
-                        opts.repo_root + "/tags/Latest_" + which)
+""" % ((root_anon, branch) * 4)
+    tagname = "Latest_" + which
+    temp = tempfile.gettempdir () + "/" + tagname
+    svn_client.checkout (opts.repo_root + "/tags/" + tagname, temp, False)
+    svn_client.propset ("svn:externals", propval, temp)
+    svn_client.checkin (temp, "Updating for release " + branch)
+    shutil.rmtree (temp, True)
 
 def tag ():
     """ Tags the DOC and MPC repositories for the version """

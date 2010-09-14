@@ -1,3 +1,12 @@
+Tue Sep 14 16:42:26 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/make_release.py (update_latest_tag):
+
+          Fixed a bug with the new DAnCE changes and changed the way it does
+          the svn properties edits.  This function is still not called, but
+          the calls are ready to be un-commented whenever the buildczar or
+          release manager can re-enable this.
+
 Tue Sep 14 13:00:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Record.h:
