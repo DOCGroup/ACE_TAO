@@ -1,0 +1,186 @@
+//$Id$
+
+project(*idl) : tao_versioning_idl_defaults, gen_ostream, install {
+  custom_only = 1
+  idlflags += -Gp -Gd -Sci -SS -GA \
+              -Wb,export_macro=TAO_AnyTypeCode_Export \
+              -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h \
+              -iC tao/AnyTypeCode
+  idlflags -= -Sa -St
+
+  IDL_Files {
+    idlflags += -Sorb
+    AnySeq.pidl
+    Dynamic_Parameter.pidl
+    ValueModifier.pidl
+    Visibility.pidl
+    Dynamic.pidl
+  }
+
+  IDL_Files {
+    Bounds.pidl
+  }
+}
+
+project(AnyTypeCode) : taolib, tao_output, install, extra_anytypecode, taoidldefaults, nolink_codecfactory, gen_ostream {
+  after += *idl
+  sharedname   = TAO_AnyTypeCode
+  dynamicflags += TAO_ANYTYPECODE_BUILD_DLL
+
+  Source_Files(TAO_ANYTYPECODE_COMPONENTS) {
+    Alias_TypeCode_Static.cpp
+    Any.cpp
+    AnySeqA.cpp
+    AnySeqC.cpp
+    Any_Basic_Impl.cpp
+    Any_Impl.cpp
+    Any_SystemException.cpp
+    Any_Unknown_IDL_Type.cpp
+    AnyTypeCode_Adapter_Impl.cpp
+    append.cpp
+    BasicTypeTraits.cpp
+    BooleanSeqA.cpp
+    BoundsA.cpp
+    BoundsC.cpp
+    CharSeqA.cpp
+    CONV_FRAMEA.cpp
+    CurrentA.cpp
+    DoubleSeqA.cpp
+    DynamicA.cpp
+    DynamicC.cpp
+    Dynamic_ParameterA.cpp
+    Dynamic_ParameterC.cpp
+    Empty_Param_TypeCode.cpp
+    Enum_TypeCode_Static.cpp
+    ExceptionA.cpp
+    FloatSeqA.cpp
+    GIOPA.cpp
+    IIOPA.cpp
+    IOPA.cpp
+    IIOP_EndpointsA.cpp
+    LongDoubleSeqA.cpp
+    LongLongSeqA.cpp
+    LongSeqA.cpp
+    Marshal.cpp
+    Messaging_PolicyValueA.cpp
+    NVList.cpp
+    NVList_Adapter_Impl.cpp
+    ObjectIdListA.cpp
+    Objref_TypeCode_Static.cpp
+    OctetSeqA.cpp
+    orb_typesA.cpp
+    ParameterModeA.cpp
+    PI_ForwardA.cpp
+    PolicyA.cpp
+    Policy_CurrentA.cpp
+    Policy_ForwardA.cpp
+    Policy_ManagerA.cpp
+    PortableInterceptorA.cpp
+    Sequence_TypeCode_Static.cpp
+    ShortSeqA.cpp
+    skip.cpp
+    StringSeqA.cpp
+    String_TypeCode_Static.cpp
+    Struct_TypeCode_Static.cpp
+    SystemExceptionA.cpp
+    TAOA.cpp
+    TimeBaseA.cpp
+    True_RefCount_Policy.cpp
+    TypeCode.cpp
+    TypeCodeA.cpp
+    TypeCode_CDR_Extraction.cpp
+    TypeCode_Constants.cpp
+    ULongLongSeqA.cpp
+    ULongSeqA.cpp
+    Union_TypeCode_Static.cpp
+    UShortSeqA.cpp
+    Value_TypeCode_Static.cpp
+    ValueModifierC.cpp
+    ValueModifierA.cpp
+    VisibilityA.cpp
+    VisibilityC.cpp
+    WCharSeqA.cpp
+    WrongTransactionA.cpp
+    WStringSeqA.cpp
+  }
+
+  Header_Files {
+    *.h
+    GIOPA.h
+    BooleanSeqA.h
+    CONV_FRAMEA.h
+    CharSeqA.h
+    CurrentA.h
+    DoubleSeqA.h
+    FloatSeqA.h
+    IIOPA.h
+    IOPA.h
+    IIOP_EndpointsA.h
+    IOPA.h
+    LongDoubleSeqA.h
+    LongLongSeqA.h
+    LongSeqA.h
+    Messaging_PolicyValueA.h
+    Messaging_SyncScopeA.h
+    ObjectIdListA.h
+    OctetSeqA.h
+    PI_ForwardA.h
+    ParameterModeA.h
+    Policy_CurrentA.h
+    Policy_ForwardA.h
+    Policy_ManagerA.h
+    PortableInterceptorA.h
+    ServicesA.h
+    ShortSeqA.h
+    StringSeqA.h
+    TAOA.h
+    TimeBaseA.h
+    ULongLongSeqA.h
+    ULongSeqA.h
+    UShortSeqA.h
+    WCharSeqA.h
+    WStringSeqA.h
+    orb_typesA.h
+    AnySeqA.h
+    AnySeqC.h
+    AnySeqS.h
+    BoundsA.h
+    BoundsC.h
+    BoundsS.h
+    DynamicA.h
+    DynamicC.h
+    Dynamic_ParameterA.h
+    Dynamic_ParameterC.h
+    Dynamic_ParameterS.h
+    DynamicS.h
+    ValueModifierA.h
+    ValueModifierC.h
+    ValueModifierS.h
+    VisibilityA.h
+    VisibilityC.h
+    VisibilityS.h
+  }
+
+  Inline_Files {
+    *.inl
+  }
+
+  Template_Files {
+    *_T.cpp
+    Alias_TypeCode.cpp
+    Enum_TypeCode.cpp
+    Fixed_TypeCode.cpp
+    Objref_TypeCode.cpp
+    Recursive_Type_TypeCode.cpp
+    Sequence_TypeCode.cpp
+    String_TypeCode.cpp
+    Struct_TypeCode.cpp
+    TypeCode_Base_Attributes.cpp
+    Union_TypeCode.cpp
+    Value_TypeCode.cpp
+  }
+
+  Pkgconfig_Files {
+    TAO_AnyTypeCode.pc.in
+  }
+}
