@@ -1,3 +1,19 @@
+Tue Sep 14 12:01:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/FlReactor/ace_flreactor.mpc:
+        * ace/FoxReactor/ace_foxreactor.mpc:
+        * ace/QtReactor/ace_qt3reactor.mpc:
+        * ace/QtReactor/ace_qt4reactor.mpc:
+        * ace/TkReactor/ace_tkreactor.mpc:
+        * ace/XtReactor/ace_xtreactor.mpc:
+        * ace/ace_flreactor.mpc:
+        * ace/ace_foxreactor.mpc:
+        * ace/ace_qt3reactor.mpc:
+        * ace/ace_qt4reactor.mpc:
+        * ace/ace_tkreactor.mpc:
+        * ace/ace_xtreactor.mpc:
+          Moved these files to the subdirectory they need to be in
+
 Tue Sep 14 11:40:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/Array.pl:
