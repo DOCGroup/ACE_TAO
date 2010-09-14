@@ -3,6 +3,6 @@
 
 feature(!minimum_corba) {
   Source_Files(TAO_ANYTYPECODE_COMPONENTS) {
-    AnyTypeCode/ServicesA.cpp
+    ServicesA.cpp
   }
 }

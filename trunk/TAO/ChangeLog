@@ -1,3 +1,12 @@
+Tue Sep 14 18:46:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode.mpc:
+        * tao/extra_anytypecode.mpb:
+        * tao/AnyTypeCode/AnyTypeCode.mpc:
+        * tao/AnyTypeCode/extra_anytypecode.mpb:
+          Moved to the AnyTypeCode directory and use the new -iC flag, the
+          other mpc files in the tao directory will be moved soon
+
 Tue Sep 14 11:29:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/tao_pss.doxygen:
