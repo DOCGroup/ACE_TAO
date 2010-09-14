@@ -4,7 +4,7 @@
 project(ACE_Qt4Reactor_moc) : acedefaults, ace_qt4 {
   custom_only = 1
   MOC_Files {
-    QtReactor/QtReactor.h
+    QtReactor.h
   }
 }
 
@@ -17,27 +17,7 @@ project(ACE_Qt4Reactor) : acedefaults, install, acelib, ace_output, ace_qt4 {
   }
 
   Source_Files {
-    QtReactor/QtReactor_moc.cpp
-    QtReactor/QtReactor.cpp
-  }
-
-  Header_Files {
-    QtReactor
-  }
-
-  Inline_Files {
-    QtReactor
-  }
-
-  Template_Files {
-    QtReactor
-  }
-
-  Resource_Files {
-    QtReactor
-  }
-
-  Pkgconfig_Files {
-    QtReactor/ACE_QtReactor.pc.in
+    QtReactor_moc.cpp
+    QtReactor.cpp
   }
 }
