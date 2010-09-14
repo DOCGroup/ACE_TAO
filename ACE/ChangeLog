@@ -1,3 +1,11 @@
+Tue Sep 14 09:41:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/mpc-ace.install:
+          Don't use environment variables
+
+        * protocols/ace/HTBP/HTBP_Filter.h:
+          Added missing includes
+
 Tue Sep 14 09:36:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release.py:
