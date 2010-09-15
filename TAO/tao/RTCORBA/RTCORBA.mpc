@@ -1,0 +1,48 @@
+//$Id$
+project(*core_idl) : tao_versioning_idl_defaults, install, pidl_install {
+  custom_only = 1
+  idlflags    += -Sci -SS -Sorb -GX \
+                 -Wb,export_macro=TAO_RTCORBA_Export \
+                 -Wb,export_include=tao/RTCORBA/rtcorba_export.h \
+                 -iC tao/RTCORBA
+  IDL_Files {
+    idlflags += -Sa \
+                -Wb,unique_include=tao/RTCORBA/RTCORBA.h
+    RTCORBA_include.pidl
+  }
+
+  IDL_Files {
+    idlflags -= -Sa -St
+    idlflags += -Gp -Gd \
+                -Wb,include_guard=TAO_RTCORBA_SAFE_INCLUDE \
+                -Wb,safe_include=tao/RTCORBA/RTCORBA.h
+    RTCORBA.pidl
+  }
+
+  PidlInstallWithoutBuilding_Files {
+    RT_ProtocolProperties.pidl
+  }
+}
+
+project(RTCORBA) : taolib, tao_output, install, pi, taoidldefaults {
+  after       += *core_idl
+  sharedname   = TAO_RTCORBA
+  dynamicflags += TAO_RTCORBA_BUILD_DLL
+  requires    += rt_corba
+
+  Source_Files {
+    *.cpp
+    RTCORBA_includeC.cpp
+    RTCORBAC.cpp
+  }
+
+  Header_Files {
+    *.h
+    RTCORBA_includeC.h
+    RTCORBA_includeS.h
+    RTCORBA_includeA.h
+    RTCORBAC.h
+    RTCORBAS.h
+    RTCORBAA.h
+  }
+}

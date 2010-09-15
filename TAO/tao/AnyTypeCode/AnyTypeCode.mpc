@@ -179,8 +179,4 @@ project(AnyTypeCode) : taolib, tao_output, install, extra_anytypecode, taoidldef
     Union_TypeCode.cpp
     Value_TypeCode.cpp
   }
-
-  Pkgconfig_Files {
-    TAO_AnyTypeCode.pc.in
-  }
 }

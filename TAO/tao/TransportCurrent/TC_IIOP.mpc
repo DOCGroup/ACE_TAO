@@ -1,0 +1,42 @@
+//$Id$
+project(*idl) : tao_versioning_idl_defaults {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -Wb,export_include=tao/TransportCurrent/Transport_Current_Export.h \
+                -Wb,export_macro=TAO_Transport_Current_Export \
+                -iC tao/TransportCurrent -I./TransportCurrent
+    idlflags -= -Sa -St
+
+    TC_IIOP.idl
+  }
+}
+
+project(TC_IIOP) : taolib_with_idl, tao_output, taoidldefaults, install, tc, interceptors, pi {
+  after += *idl
+  requires    += transport_current
+  sharedname   = TAO_TC_IIOP
+
+  dynamicflags += TAO_TRANSPORT_CURRENT_BUILD_DLL
+
+  Source_Files {
+    IIOP_Current_Impl.cpp
+    IIOP_Current_Loader.cpp
+  }
+
+  Source_Files {
+    TC_IIOPC.cpp
+  }
+
+  Header_Files {
+    IIOP_Current_Impl.h
+    IIOP_Current_Loader.h
+    IIOP_Transport_Current.h
+    TC_IIOPC.h
+    TC_IIOPS.h
+  }
+
+  Inline_Files {
+    TC_IIOPC.inl
+    TC_IIOPS.inl
+  }
+}
