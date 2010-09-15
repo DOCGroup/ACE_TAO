@@ -732,7 +732,7 @@ install: <%if(postbuild)%>__postbuild__<%else%>all<%endif%>
 INSTALL_LIB ?= lib
 ifneq ($(INSTALL_PREFIX),)
 ifneq ($(install_rpath),0)
-LDFLAGS += -Wl,-R,$(INSTALL_PREFIX)/$(INSTALL_LIB)
+LDFLAGS += -Wl,-R$(INSTALL_PREFIX)/$(INSTALL_LIB)
 endif
 endif
 
