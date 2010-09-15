@@ -287,7 +287,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Handle_Gobbler.inl
     Lock_Adapter_T.inl
     OS_Memory.inl
-    OS_String.inl
     Refcounted_Auto_Ptr.inl
     Reverse_Lock_T.inl
     TSS_T.inl
@@ -321,15 +320,12 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Null_Mutex.h
     Null_Semaphore.h
     Numeric_Limits.h
-    OS_Dirent.h
     OS_Memory.h
     OS_NS_macros.h
-    OS_String.h
     OS_Thread_Adapter.h
     Object_Manager_Base.h
     Process.h
     Process_Manager.h
-    Pair.h
     Reactor_Impl.h
     Reactor_Timer_Interface.h
     Refcounted_Auto_Ptr.h

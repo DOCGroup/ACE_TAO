@@ -405,8 +405,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Lock_Adapter_T.h
     Log_Priority.h
     Malloc_Base.h
-    Map.h
-    Method_Object.h
     Metrics_Cache.h
     Metrics_Cache_T.h
     Memory_Pool.h
@@ -417,18 +415,14 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Null_Mutex.h
     Null_Semaphore.h
     Numeric_Limits.h
-    OS_Dirent.h
     OS_Memory.h
     OS_NS_macros.h
-    OS_String.h
     OS_Thread_Adapter.h
     Object_Manager_Base.h
     Obstack.h
-    Pair.h
     Proactor_Impl.h
     Reactor_Impl.h
     Reactor_Timer_Interface.h
-    Refcountable.h
     Refcounted_Auto_Ptr.h
     Reverse_Lock_T.h
     Select_Reactor.h
