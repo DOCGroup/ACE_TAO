@@ -1,3 +1,18 @@
+Wed Sep 15 15:51:01 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_ih.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_is.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
+        
+          Skip traversal if the operation is an AMI sendc_* implied
+          IDL addition. The CORBA servant impl and CCM executor
+          classes should not be providing these (empty) operations
+          for the application developer to fill in.
+          
+        * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+        
+          Cosmetic changes.
+
 Wed Sep 15 13:07:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/pidl_install.mpb:
