@@ -200,11 +200,10 @@ test_get_connections (::Components::Receptacles_ptr rec)
                              "get_connections.\n"));
       return 1;
     }
-  catch (const ::CORBA::NO_IMPLEMENT &)
+  catch (const ::CORBA::Exception &ex)
     {
-      // get_connections is not implemented
-      ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_connections - "
-                            "get_connections method not implemented yet.\n"));
+      ex._tao_print_exception ("test_get_connections");
+      return 1;
     }
   catch (...)
     {
@@ -213,17 +212,12 @@ test_get_connections (::Components::Receptacles_ptr rec)
                             "get_connections.\n"));
       return 1;
     }
-
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_connections - "
+                        "Test passed!\n"));
   // test invalid name exception during invocation of get_connections
   try
     {
       descriptions = rec->get_connections ("use_cif_foo_invalid_name");
-    }
-  catch (const ::CORBA::NO_IMPLEMENT &)
-    {
-      // get_connections is not implemented
-      ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_connections - "
-                            "get_connections method not implemented yet.\n"));
     }
   catch (const ::Components::InvalidName &)
     {
@@ -231,6 +225,11 @@ test_get_connections (::Components::Receptacles_ptr rec)
                             "Received expected InvalidName "
                             "exception during connect\n"));
     }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("test_get_connections - invalid name");
+      return 1;
+    }
   catch (...)
     {
       ACE_ERROR ((LM_ERROR, "Receptacle test_get_connections - "
@@ -238,6 +237,9 @@ test_get_connections (::Components::Receptacles_ptr rec)
                             "get_connections.\n"));
       return 1;
     }
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_connections - "
+                        "Invalid name test passed!\n"));
+
   return 0;
 }
 #endif
@@ -268,6 +270,8 @@ test_get_all_receptacles (::Components::Receptacles_ptr rec)
                             "get_all_receptacles.\n"));
       return 1;
     }
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_all_receptacles - "
+                        "Test passed!\n"));
   return 0;
 }
 #endif
@@ -357,7 +361,7 @@ test_get_named_receptacles (::Components::Receptacles_ptr rec)
                         "Test with two names passed!\n"));
 
 
-  // test invalid name exception during invocation of get_connections
+  // test invalid name exception during invocation of get_named_receptacles
   ::Components::NameList invalid_names;
   invalid_names.length (2);
   invalid_names[0] = ::CORBA::string_dup ("use_cif_foo");
