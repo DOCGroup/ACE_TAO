@@ -1,3 +1,14 @@
+Wed Sep 15 08:12:50 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/models/ami4ccm.xme:
+        * connectors/ami4ccm/models/CoSMIC/ami4ccm.xme:
+          Moved to CoSMIC directory
+
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/doc/AMI4CCM.emx:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/doc/AMI4CCM_Hello.jpg:
+          Added Zeligsoft CX models
+
 Wed Sep 15 07:45:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Receptacle/client.cpp:
