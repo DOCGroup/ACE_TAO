@@ -1,7 +1,14 @@
+Wed Sep 15 18:10:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/ami4ccm/tests/IDL_Test/run_test.pl:
+          Added perl script that just checks that the generated Hello_Component_exec.cpp
+          doesn't contain sendc
+
 Wed Sep 15 15:48:56 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/ami4ccm/tests/IDL_Test/Hello_Component.mpc:
-        
+
           Added missing link lib to the component servant's list.
 
 Wed Sep 15 10:38:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
