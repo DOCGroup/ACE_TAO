@@ -89,8 +89,7 @@
 #    else
 #      define ACE_PROC_PRI_OTHER_MIN (sched_get_priority_min(SCHED_OTHER))
 #    endif /* HPUX */
-#  else /* UNICOS is missing a sched_get_priority_min() implementation,
-              SCO too */
+#  else /* UNICOS is missing a sched_get_priority_min() implementation */
 #    define ACE_PROC_PRI_FIFO_MIN  0
 #    define ACE_PROC_PRI_RR_MIN    0
 #    define ACE_PROC_PRI_OTHER_MIN 0
@@ -105,7 +104,7 @@
 #    else
 #      define ACE_PROC_PRI_OTHER_MAX (sched_get_priority_max(SCHED_OTHER))
 #    endif /* HPUX */
-#  else /* SCO missing sched_get_priority_max() implementation */
+#  else
 #    define ACE_PROC_PRI_FIFO_MAX  59
 #    define ACE_PROC_PRI_RR_MAX    59
 #    define ACE_PROC_PRI_OTHER_MAX 59

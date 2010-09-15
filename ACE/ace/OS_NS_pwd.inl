@@ -57,8 +57,7 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
 #   if !defined (ACE_LACKS_PWD_REENTRANT_FUNCTIONS)
 #     if defined (ACE_HAS_PTHREADS) && \
       !defined (ACE_HAS_STHREADS) || \
-      defined (HPUX_11)  || \
-      defined (__USLC__) // Added by Roland Gigler for SCO UnixWare 7.
+      defined (HPUX_11)
   struct passwd *result = 0;
   int status;
   // VAC++ doesn't correctly grok the ::getpwnam_r - the function is redefined
