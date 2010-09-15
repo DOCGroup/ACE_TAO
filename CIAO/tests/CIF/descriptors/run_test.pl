@@ -163,7 +163,7 @@ for ($client_nr = 0; $client_nr < $nr_clients; ++$client_nr) {
         exit 1;
     }
 
-    print STDERR "Starting Naming Service with  -ORBEndpoint iiop://localhost:60003 -o ns.ior\n";
+    print "Starting Naming Service with  -ORBEndpoint iiop://localhost:60003 -o ns.ior\n";
 
     if ($tg_naming->WaitForFileTimed ($ior_nsbase,
                                       $tg_naming->ProcessStartWaitInterval ()) == -1) {

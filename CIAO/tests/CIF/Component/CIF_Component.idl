@@ -26,6 +26,7 @@ module CIF
   component CIF_User
   {
     uses foo           use_cif_foo;
+    uses multiple foo  use_multiple_foo;
     uses inherited_foo use_cif_inherited_foo;
   };
 
