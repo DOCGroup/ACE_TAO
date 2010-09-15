@@ -1,3 +1,9 @@
+Wed Sep 15 15:48:56 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/ami4ccm/tests/IDL_Test/Hello_Component.mpc:
+        
+          Added missing link lib to the component servant's list.
+
 Wed Sep 15 10:38:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Common/CIF_Common.cpp:
