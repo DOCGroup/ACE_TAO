@@ -1,3 +1,10 @@
+Wed Sep 15 07:51:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Removed invalid comma, thanks to Frank Preischl
+          <Frank dot Preischl at ids dot de> for reporting this and Olli Savia
+          for correcting my initial patch
+
 Tue Sep 14 18:18:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace.mwc:
