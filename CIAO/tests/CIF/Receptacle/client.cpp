@@ -150,6 +150,48 @@ test_invalid_name_exception (::Components::Receptacles_ptr rec,
   return 0;
 }
 
+int
+test_invalid_connection_exception (::Components::Receptacles_ptr rec)
+{
+  ACE_DEBUG ((LM_DEBUG, "Run test_invalid_connection_exception test\n"));
+
+  ::Components::Cookie_var ck;
+  try
+    {
+      ck = rec->connect ("use_cif_foo", ::CORBA::Object::_nil ());
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_invalid_connection_exception - "
+                            "Error: InvalidName "
+                            "exception during connect\n"));
+      return 1;
+    }
+  catch (const ::Components::InvalidConnection &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_invalid_connection_exception - "
+                            "Expected InvalidConnection "
+                            "exception received\n"));
+    }
+  catch (const ::Components::AlreadyConnected &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_invalid_connection_exception - "
+                            "Error: AlreadyConnected "
+                            "exception during connect\n"));
+      return 1;
+    }
+  catch (const ::Components::ExceededConnectionLimit &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_invalid_connection_exception - "
+                            "Error: ExceededConnectionLimit "
+                            "exception during connect\n"));
+      return 1;
+    }
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_invalid_connection_exception - "
+                        "Test passed!\n"));
+  return 0;
+}
+
 //============================================================
 // test_already_connected_exception
 //============================================================
@@ -414,8 +456,8 @@ run_test (::Components::Receptacles_ptr rec,
       ret += test_already_connected_exception (rec, facet);
 
 //       TODO:
-//       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
-//       ret += test_invalid_connection_exception ();
+       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+       ret += test_invalid_connection_exception (rec);
 
 //       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
 //       ret += test_exceeded_limit_exception ();
