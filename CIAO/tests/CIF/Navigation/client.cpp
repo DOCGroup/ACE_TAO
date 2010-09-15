@@ -31,7 +31,7 @@ test_provide_facet (::Components::Navigation_ptr nav)
                         "Provide facet test passed !\n"));
 
   ACE_DEBUG ((LM_DEBUG, "Start test: Navigation test_provide_facet - "
-                        "InvalidName exception\n"));
+                        "InvalidName exception test\n"));
   try
     {
       nav->provide_facet ("navigation_foo_1");

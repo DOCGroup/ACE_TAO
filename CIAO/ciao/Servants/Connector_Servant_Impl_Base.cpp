@@ -97,10 +97,33 @@ namespace CIAO
 #if !defined (CCM_LW)
   ::Components::ConnectionDescriptions *
   Connector_Servant_Impl_Base::get_connections (
-    const char * /* name */)
+    const char * name)
   {
-    CIAO_TRACE("Connector_Servant_Impl_Base::get_connections (const char * /* name */)");
-    throw CORBA::NO_IMPLEMENT ();
+    CIAO_TRACE("Connector_Servant_Impl_Base::get_connections");
+
+    ::Components::ReceptacleDescription *receptacle_desc =
+      this->lookup_receptacle_description (name);
+    if (!receptacle_desc)
+      {
+        throw ::Components::InvalidName ();
+      }
+    ::Components::ConnectionDescriptions_var retval;
+    ACE_NEW_THROW_EX (retval,
+                      ::Components::ConnectionDescriptions,
+                      ::CORBA::NO_MEMORY ());
+
+    ::Components::ConnectionDescription * cd = 0;
+    ACE_NEW_THROW_EX (cd,
+                      ::OBV_Components::ConnectionDescription,
+                      ::CORBA::NO_MEMORY ());
+    CORBA::Object_var obj = dynamic_cast < ::CORBA::Object_ptr > (receptacle_desc);
+    cd->objref (::CORBA::Object::_duplicate (obj.in ()));
+
+    ::CORBA::ULong i = 0UL;
+    retval->length (1);
+    retval[i] = cd;
+
+    return retval._retn ();
   }
 #endif
 
@@ -126,7 +149,7 @@ namespace CIAO
     return retval._retn ();
   }
 
- #if !defined (CCM_LW)
+#if !defined (CCM_LW)
   Components::FacetDescriptions *
   Connector_Servant_Impl_Base::get_named_facets (
     const ::Components::NameList & names)
@@ -142,7 +165,7 @@ namespace CIAO
     CORBA::ULong const len = names.length ();
     safe_retval->length (len);
 
-    for (CORBA::ULong i = 0; i < len; ++i)
+    for (CORBA::ULong i = 0UL; i < len; ++i)
       {
         ::Components::FacetDescription *tmp =
           this->lookup_facet_description (names[i]);
@@ -159,7 +182,7 @@ namespace CIAO
   }
 #endif
 
- #if !defined (CCM_LW)
+#if !defined (CCM_LW)
   ::Components::FacetDescriptions *
   Connector_Servant_Impl_Base::get_all_facets (void)
   {
@@ -285,7 +308,7 @@ namespace CIAO
          ++name)
       {
         ::Components::ReceptacleDescription * desc =
-          lookup_receptacle_description (names[name].in ());
+          this->lookup_receptacle_description (names[name].in ());
         if (desc)
           {
             retval[count++] = desc;
@@ -482,12 +505,14 @@ namespace CIAO
     const char * receptacle_name)
   {
     CIAO_TRACE ("Connector_Servant_Impl_Base::lookup_receptacle_description");
-    if (!receptacle_name)
-      {
-        return 0;
-      }
     ::Components::ReceptacleDescriptions_var all_receptacles =
       this->get_all_receptacles ();
+
+    if (!receptacle_name || all_receptacles->length () == 0)
+      {
+        // Calling function will throw InvalidName after getting this.
+        return 0;
+      }
     for (::CORBA::ULong receptacle = 0;
           receptacle < all_receptacles->length ();
           ++receptacle)

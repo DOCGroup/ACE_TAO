@@ -1,3 +1,19 @@
+Wed Sep 15 07:18:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Extended logging.
+
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+          Implemented get_connections
+
+        * tests/CIF/Component/CIF_Component_exec.h:
+        * tests/CIF/Component/CIF_Component_exec.cpp:
+          Re-generated executor files
+
+        * tests/CIF/Navigation/client.cpp:
+        * tests/CIF/Receptacle/client.cpp:
+          Expanded tests.
+
 Tue Sep 14 12:13:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO_TAO_DAnCE.mwc:
