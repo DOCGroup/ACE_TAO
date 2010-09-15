@@ -1,0 +1,30 @@
+//$Id$
+project(*idl) : tao_versioning_idl_defaults {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -Gp -Gd -Sci -SS -Sorb -Sa -St \
+                -Wb,export_macro=TAO_BiDirGIOP_Export \
+                -Wb,export_include=tao/BiDir_GIOP/bidirgiop_export.h \
+                -Wb,include_guard=TAO_BIDIRGIOP_SAFE_INCLUDE \
+                -Wb,safe_include=tao/BiDir_GIOP/BiDirGIOP.h \
+                -iC BiDir_GIOP
+    BiDirPolicy.pidl
+  }
+}
+
+project(BiDir_GIOP) : taolib, tao_output, install, pi, taoidldefaults {
+  after       += *idl
+  sharedname   = TAO_BiDirGIOP
+  dynamicflags += TAO_BIDIRGIOP_BUILD_DLL
+
+  Source_Files {
+    *.cpp
+    BiDirPolicyC.cpp
+  }
+
+  Header_Files {
+    *.h
+    BiDirPolicyC.h
+    BiDirPolicyS.h
+  }
+}

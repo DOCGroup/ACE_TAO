@@ -1,3 +1,75 @@
+Wed Sep 15 11:32:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/AnyTypeCode.mpc:
+        * tao/BiDir_GIOP/BiDir_GIOP.mpc:
+        * tao/CSD_Framework/CSD_Framework.mpc:
+        * tao/CSD_ThreadPool/CSD_ThreadPool.mpc:
+        * tao/CodecFactory/CodecFactory.mpc:
+        * tao/Codeset/Codeset.mpc:
+        * tao/Compression/Compression.mpc:
+        * tao/DiffServPolicy/DiffServPolicy.mpc:
+        * tao/DynamicAny/DynamicAny.mpc:
+        * tao/DynamicInterface/DynamicInterface.mpc:
+        * tao/ETCL/TAO_ETCL.mpc:
+        * tao/EndpointPolicy/EndpointPolicy.mpc:
+        * tao/IFR_Client/IFR_Client.mpc:
+        * tao/IORInterceptor/IORInterceptor.mpc:
+        * tao/IORManipulation/IORManipulation.mpc:
+        * tao/IORTable/IORTable.mpc:
+        * tao/ImR_Client/ImR_Client.mpc:
+        * tao/Messaging/Messaging.mpc:
+        * tao/Monitor/Monitor.mpc:
+        * tao/ObjRefTemplate/ObjRefTemplate.mpc:
+        * tao/PI/PI.mpc:
+        * tao/PI_Server/PI_Server.mpc:
+        * tao/PortableServer/PortableServer.mpc:
+        * tao/RTCORBA/RTCORBA.mpc:
+        * tao/RTPortableServer/RTPortableServer.mpc:
+        * tao/RTScheduling/RTScheduler.mpc:
+        * tao/SmartProxies/SmartProxies.mpc:
+        * tao/Strategies/Strategies.mpc:
+        * tao/TransportCurrent/TC.mpc:
+        * tao/TransportCurrent/TC_IIOP.mpc:
+        * tao/TypeCodeFactory/TypeCodeFactory.mpc:
+        * tao/Utils/Utils.mpc:
+        * tao/Valuetype/Valuetype.mpc:
+        * tao/ZIOP/ZIOP.mpc:
+          Moved all MPC files to their subdirectory and simplified them
+
+        * tao/BiDir_GIOP.mpc:
+        * tao/CSD_Framework.mpc:
+        * tao/CSD_ThreadPool.mpc:
+        * tao/CodecFactory.mpc:
+        * tao/Codeset.mpc:
+        * tao/Compression.mpc:
+        * tao/DiffServPolicy.mpc:
+        * tao/DynamicAny.mpc:
+        * tao/DynamicInterface.mpc:
+        * tao/EndpointPolicy.mpc:
+        * tao/IFR_Client.mpc:
+        * tao/IORInterceptor.mpc:
+        * tao/IORManipulation.mpc:
+        * tao/IORTable.mpc:
+        * tao/ImR_Client.mpc:
+        * tao/Messaging.mpc:
+        * tao/Monitor.mpc:
+        * tao/ObjRefTemplate.mpc:
+        * tao/PI.mpc:
+        * tao/PI_Server.mpc:
+        * tao/PortableServer.mpc:
+        * tao/RTCORBA.mpc:
+        * tao/RTPortableServer.mpc:
+        * tao/RTScheduler.mpc:
+        * tao/SmartProxies.mpc:
+        * tao/Strategies.mpc:
+        * tao/TC.mpc:
+        * tao/TC_IIOP.mpc:
+        * tao/TypeCodeFactory.mpc:
+        * tao/Utils.mpc:
+        * tao/Valuetype.mpc:
+        * tao/ZIOP.mpc:
+          Removed these files.
+
 Tue Sep 14 18:46:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode.mpc:
