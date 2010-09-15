@@ -1,3 +1,10 @@
+Wed Sep 15 09:20:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/tests/IDL_Test/Hello.idl:
+        * connectors/ami4ccm/tests/IDL_Test/Hello_Component.idl:
+          Extended this test to show that the generated _exec.h/cpp files
+          do get too much code generated
+
 Wed Sep 15 08:12:50 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/models/ami4ccm.xme:
