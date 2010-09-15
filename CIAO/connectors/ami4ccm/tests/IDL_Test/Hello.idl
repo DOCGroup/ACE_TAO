@@ -42,11 +42,11 @@ module Hello
       void no_answer (in string in_str)
         raises (InternalError);
       test_enum enum_return(in string in_str)
-        raises (InternalError); 
-      void enum_no_return(in string in_str, 
+        raises (InternalError);
+      void enum_no_return(in string in_str,
                           in test_enum in_test,
                           out test_enum out_test)
-        raises (InternalError); 
+        raises (InternalError);
 
       attribute short rw_attrib
         getraises (InternalError)
@@ -74,11 +74,16 @@ module Hello
       readonly attribute short ro_bar_attrib
         raises (InternalError);
     };
+
+  interface X
+    {
+      void mydosomething (in string str);
+    };
 };
 
 module Foo
 {
-  struct TestTopic 
+  struct TestTopic
     {
       string key;
       long x;
@@ -98,7 +103,7 @@ module Foo
 
 module Bar
 {
-  struct TestTopic 
+  struct TestTopic
     {
       string key;
       long x;
