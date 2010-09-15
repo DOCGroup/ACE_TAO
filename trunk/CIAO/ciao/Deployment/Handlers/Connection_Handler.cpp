@@ -248,7 +248,10 @@ namespace CIAO
           {
             CIAO_ERROR (1, (LM_ERROR, CLINFO
                             "Connection_Handler::connect_facet - "
-                            "Error: Wrong number of internal endpoints for local facet connection\n"));
+                            "Error: Wrong number of internal endpoints for local facet connection: "
+                            "expected <2> - found <%d>\n",
+                            conn.internalEndpoint.length ()));
+
             throw ::Deployment::InvalidConnection (conn.name.in (),
                                                    "Local facet connections require exactly 2 internalEndpoints");
           }
@@ -347,7 +350,9 @@ namespace CIAO
           {
             CIAO_ERROR (1, (LM_ERROR, CLINFO
                             "Connection_Handler::connect_receptacle - "
-                            "Error: Wrong number of internal endpoints for local receptacle connection\n"));
+                            "Error: Wrong number of internal endpoints for local receptacle connection: "
+                            "expected <2> - found <%d>\n",
+                            conn.internalEndpoint.length ()));
             throw ::Deployment::InvalidConnection (conn.name.in (),
                                                    "Local receptacle connections require exactly 2 internalEndpoints");
           }
