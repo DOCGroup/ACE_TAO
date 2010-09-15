@@ -110,6 +110,7 @@ project(AMI4CCM_ITB_Hello_Comp_svnt) : ciao_servant, ami {
   sharedname  = Hello_Component_svnt
   libs       += Hello_Component_stub Hello_Component_lem_stub  \
                 Hello_skel \
+                Hello_lem_stub \
                 Hello_stub
   libpaths += lib
   libout = lib
