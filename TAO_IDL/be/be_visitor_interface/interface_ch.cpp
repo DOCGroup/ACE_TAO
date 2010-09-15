@@ -172,8 +172,9 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     }
 
   // The _is_a method
-  *os << "virtual ::CORBA::Boolean _is_a (const char *type_id);"
-      << be_nl;
+  *os << "virtual ::CORBA::Boolean _is_a (const "
+      << (be_global->alt_mapping () ? "std::string " : "char *")
+      << "type_id);" << be_nl;
 
   // The _interface_repository_id method.
   *os << "virtual const char* _interface_repository_id "

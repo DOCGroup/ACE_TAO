@@ -43,7 +43,7 @@ TAO_CDR_Encaps_Codec::~TAO_CDR_Encaps_Codec (void)
 {
 }
 
-CORBA::OctetSeq *
+CORBA::OctetSeq
 TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data)
 {
   this->check_type_for_encoding (data);
@@ -71,6 +71,7 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data)
   if ((cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
       && (cdr << data))
     {
+      /*
       CORBA::OctetSeq * octet_seq = 0;
 
       ACE_NEW_THROW_EX (octet_seq,
@@ -82,20 +83,30 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data)
                           CORBA::COMPLETED_NO));
 
       CORBA::OctetSeq_var safe_octet_seq = octet_seq;
-
       octet_seq->length (static_cast<CORBA::ULong> (cdr.total_length ()));
       CORBA::Octet *buf = octet_seq->get_buffer ();
+      */
+      CORBA::OctetSeq octet_seq;
+      octet_seq.resize (cdr.total_length ());
+      size_t index = 0;
 
       for (const ACE_Message_Block *i = cdr.begin ();
            i != 0;
            i = i->cont ())
         {
+          for (size_t j = 0; j < i->length (); ++j)
+            {
+              octet_seq[index++] = i->rd_ptr ()[j];
+            }
+          /*
           size_t const len = i->length ();
           ACE_OS::memcpy (buf, i->rd_ptr (), len);
           buf += len;
+          */
         }
 
-      return safe_octet_seq._retn ();
+//      return safe_octet_seq._retn ();
+      return octet_seq;
     }
 
   throw ::CORBA::MARSHAL ();
@@ -112,13 +123,18 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data)
   // the octet sequence, and place them into the Any.  We can't just
   // insert the octet sequence into the Any.
 
-  ACE_Message_Block mb (data.length () + 2 * ACE_CDR::MAX_ALIGNMENT);
+  ACE_Message_Block mb (data.size () + 2 * ACE_CDR::MAX_ALIGNMENT);
   ACE_CDR::mb_align (&mb);
 
-  ACE_OS::memcpy (mb.rd_ptr (), data.get_buffer (), data.length ());
+//  ACE_OS::memcpy (mb.rd_ptr (), data.get_buffer (), data.length ());
+
+  for (size_t i = 0; i < data.size (); ++i)
+    {
+      mb.rd_ptr ()[i] = data[i];
+    }
 
   size_t rd_pos = mb.rd_ptr () - mb.base ();
-  size_t wr_pos = mb.wr_ptr () - mb.base () + data.length ();
+  size_t wr_pos = mb.wr_ptr () - mb.base () + data.size ();
 
   TAO_InputCDR cdr (mb.data_block (),
                     ACE_Message_Block::DONT_DELETE,
@@ -161,7 +177,7 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data)
   throw IOP::Codec::FormatMismatch ();
 }
 
-CORBA::OctetSeq *
+CORBA::OctetSeq
 TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data)
 {
   this->check_type_for_encoding (data);
@@ -212,6 +228,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data)
 
       // TAO extension: replace the contents of the octet sequence with
       // the CDR stream.
+      /*
       CORBA::OctetSeq * octet_seq = 0;
 
       ACE_NEW_THROW_EX (octet_seq,
@@ -228,19 +245,30 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data)
 
       octet_seq->length (static_cast<CORBA::ULong> (cdr.total_length ()));
       CORBA::Octet *buf = octet_seq->get_buffer ();
-
+      */
+      CORBA::OctetSeq octet_seq;
+      octet_seq.resize (cdr.total_length ());
+      size_t index = 0;
+      
       for (const ACE_Message_Block *i = cdr.begin ();
            i != 0;
            i = i->cont ())
         {
+          for (size_t j = 0; j < i->length (); ++j)
+            {
+              octet_seq[index++] = i->rd_ptr ()[j];
+            }
+          /*
           size_t len = i->length ();
           ACE_OS::memcpy (buf,
                           i->rd_ptr (),
                           len);
           buf += len;
+          */
         }
 
-      return safe_octet_seq._retn ();
+//      return safe_octet_seq._retn ();
+      return octet_seq;
     }
 
   throw ::CORBA::MARSHAL ();
@@ -256,13 +284,18 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
   // We accommodate this by including
   // 2 * ACE_CDR::MAX_ALIGNMENT bytes of additional space in
   // the message block.
-  ACE_Message_Block mb (data.length () + 2 * ACE_CDR::MAX_ALIGNMENT);
+  ACE_Message_Block mb (data.size () + 2 * ACE_CDR::MAX_ALIGNMENT);
   ACE_CDR::mb_align (&mb);
-
+  
+  for (size_t i = 0; i < data.size (); ++i)
+    {
+      mb.rd_ptr ()[i] = data[i];
+    }
+  /*
   ACE_OS::memcpy (mb.rd_ptr (),
                   data.get_buffer (),
                   data.length ());
-
+  */
   // @todo How do we check for a type mismatch so that we can
   //       throw a IOP::Codec::TypeMismatch exception?
   //       @@ I added a check below.  See the comment.  I'm not sure
@@ -277,7 +310,7 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
   //       encapsulation.
 
   size_t rd_pos = mb.rd_ptr () - mb.base ();
-  size_t wr_pos = mb.wr_ptr () - mb.base () + data.length ();
+  size_t wr_pos = mb.wr_ptr () - mb.base () + data.size ();
 
   TAO_InputCDR cdr (mb.data_block (),
                     ACE_Message_Block::DONT_DELETE,

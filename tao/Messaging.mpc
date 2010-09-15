@@ -1,6 +1,8 @@
 //$Id$
 project(*idl) : tao_versioning_idl_defaults {
   custom_only = 1
+  idlflags += -Gstl
+  
   IDL_Files {
     idlflags += -SS -GA -Gp -Gd -Sorb -Sal \
                 -Wb,export_macro=TAO_Messaging_Export \

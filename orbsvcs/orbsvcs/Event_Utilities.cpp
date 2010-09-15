@@ -30,8 +30,8 @@ ACE_ConsumerQOS_Factory::~ACE_ConsumerQOS_Factory (void)
 int
 ACE_ConsumerQOS_Factory::start_conjunction_group (int nchildren)
 {
-  int l = qos_.dependencies.length ();
-  qos_.dependencies.length (l + 1);
+  int l = qos_.dependencies.size ();
+  qos_.dependencies.resize (l + 1);
   if (this->event_initializer_ != 0)
     (*this->event_initializer_) (qos_.dependencies[l].event);
   qos_.dependencies[l].event.header.type = ACE_ES_CONJUNCTION_DESIGNATOR;
@@ -44,8 +44,8 @@ ACE_ConsumerQOS_Factory::start_conjunction_group (int nchildren)
 int
 ACE_ConsumerQOS_Factory::start_disjunction_group (int nchildren)
 {
-  int l = qos_.dependencies.length ();
-  qos_.dependencies.length (l + 1);
+  int l = qos_.dependencies.size ();
+  qos_.dependencies.resize (l + 1);
   if (this->event_initializer_ != 0)
     (*this->event_initializer_) (qos_.dependencies[l].event);
   qos_.dependencies[l].event.header.type = ACE_ES_DISJUNCTION_DESIGNATOR;
@@ -58,8 +58,8 @@ ACE_ConsumerQOS_Factory::start_disjunction_group (int nchildren)
 int
 ACE_ConsumerQOS_Factory::start_logical_and_group (int nchildren)
 {
-  int l = qos_.dependencies.length ();
-  qos_.dependencies.length (l + 1);
+  int l = qos_.dependencies.size ();
+  qos_.dependencies.resize (l + 1);
   if (this->event_initializer_ != 0)
     (*this->event_initializer_) (qos_.dependencies[l].event);
   qos_.dependencies[l].event.header.type = ACE_ES_LOGICAL_AND_DESIGNATOR;
@@ -72,8 +72,8 @@ ACE_ConsumerQOS_Factory::start_logical_and_group (int nchildren)
 int
 ACE_ConsumerQOS_Factory::start_negation (void)
 {
-  int l = qos_.dependencies.length ();
-  qos_.dependencies.length (l + 1);
+  int l = qos_.dependencies.size ();
+  qos_.dependencies.resize (l + 1);
   if (this->event_initializer_ != 0)
     (*this->event_initializer_) (qos_.dependencies[l].event);
   qos_.dependencies[l].event.header.type = ACE_ES_NEGATION_DESIGNATOR;
@@ -86,8 +86,8 @@ int
 ACE_ConsumerQOS_Factory::start_bitmask (CORBA::ULong source_mask,
                                         CORBA::ULong type_mask)
 {
-  int l = qos_.dependencies.length ();
-  qos_.dependencies.length (l + 2);
+  int l = qos_.dependencies.size ();
+  qos_.dependencies.resize (l + 2);
   if (this->event_initializer_ != 0)
     {
       (*this->event_initializer_) (qos_.dependencies[l].event);
@@ -110,8 +110,8 @@ ACE_ConsumerQOS_Factory::insert (const RtecEventChannelAdmin::Dependency &subscr
   // Make sure that a designator is first.
   if (designator_set_ == 0)
     {
-      int l = qos_.dependencies.length ();
-      qos_.dependencies.length (l + 1);
+      int l = qos_.dependencies.size ();
+      qos_.dependencies.resize (l + 1);
       if (this->event_initializer_ != 0)
         (*this->event_initializer_) (qos_.dependencies[l].event);
       qos_.dependencies[l].rt_info = 0;
@@ -120,8 +120,8 @@ ACE_ConsumerQOS_Factory::insert (const RtecEventChannelAdmin::Dependency &subscr
       this->designator_set_ = 1;
     }
 
-  int l = qos_.dependencies.length ();
-  qos_.dependencies.length (l + 1);
+  int l = qos_.dependencies.size ();
+  qos_.dependencies.resize (l + 1);
   qos_.dependencies[l] = subscribe;
   return 0;
 }
@@ -143,7 +143,7 @@ ACE_ConsumerQOS_Factory::debug (const RtecEventChannelAdmin::ConsumerQOS& qos)
   ACE_DEBUG ((LM_DEBUG, "ConsumerQOS {\n"));
   ACE_DEBUG ((LM_DEBUG, "  is_gateway: %d\n", qos.is_gateway));
 
-  for (u_int i = 0; i < qos.dependencies.length (); ++i)
+  for (u_int i = 0; i < qos.dependencies.size (); ++i)
     {
       char buf[128];
       ACE_OS::sprintf (buf, " dep[%d]", i);
@@ -163,11 +163,11 @@ ACE_SupplierQOS_Factory::
   qos_.is_gateway = 0;
 
   // Allocate the space requested by the application....
-  qos_.publications.length (qos_max_len);
+  qos_.publications.reserve (qos_max_len);
 
   // ... now reset the length, we do not want to use any elements in
   // the sequence that have not been initialized....
-  qos_.publications.length (0);
+  qos_.publications.resize (0);
 }
 
 int
@@ -176,12 +176,12 @@ ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
                                  RtecBase::handle_t rt_info,
                                  u_int ncalls)
 {
-  CORBA::ULong l = this->qos_.publications.length ();
-  if (l >= this->qos_.publications.maximum ())
+  CORBA::ULong l = this->qos_.publications.size ();
+  if (l >= this->qos_.publications.capacity ())
     {
       // There is not enough space for the next element, grow the
       // buffer.
-      this->qos_.publications.length (l + 1);
+      this->qos_.publications.resize (l + 1);
 
       // @@ TODO We may want to consider more efficient growing
       // strategies here, for example, duplicating the size of the
@@ -203,7 +203,7 @@ void ACE_SupplierQOS_Factory::debug (const RtecEventChannelAdmin::SupplierQOS& q
   ACE_DEBUG ((LM_DEBUG, "SupplierQOS {\n"));
   ACE_DEBUG ((LM_DEBUG, "  is_gateway: %d\n", qos.is_gateway));
 
-  for (u_int i = 0; i < qos.publications.length (); ++i)
+  for (u_int i = 0; i < qos.publications.size (); ++i)
     {
       char buf[128] = { 0 };
       ACE_OS::sprintf (buf, " publications[%d]", i);

@@ -587,20 +587,14 @@ CORBA::Policy::_tao_release (Policy_ptr obj)
 
 CORBA::Boolean
 CORBA::Policy::_is_a (
-    const char *value
+    const std::string value
 
   )
 {
   if (
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/CORBA/Policy:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-    )
+      value == "IDL:omg.org/CORBA/Policy:1.0" ||
+      value == "IDL:omg.org/CORBA/Object:1.0"
+      )
     {
       return true; // success using local knowledge
     }

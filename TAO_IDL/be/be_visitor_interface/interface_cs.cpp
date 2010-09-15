@@ -329,7 +329,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
 
   *os << "::CORBA::Boolean" << be_nl
-      << node->full_name () << "::_is_a (const char *value)" << be_nl;
+      << node->full_name () << "::_is_a (const "
+      << (be_global->alt_mapping () ? "std::string " : "char *")
+      << "value)" << be_nl;
 
   *os << "{" << be_idt_nl
       << "if (" << be_idt << be_idt_nl;
@@ -345,7 +347,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                         -1);
     }
       
-  *os << ")" << be_nl
+  *os << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "return true; // success using local knowledge" << be_uidt_nl
       << "}" << be_uidt_nl

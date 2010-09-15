@@ -187,7 +187,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (const CORBA::Exception &ex)
 
   TAO_Pluggable_Reply_Params_Base reply_params;
   reply_params.request_id_ = this->request_id_;
-  reply_params.svc_ctx_.length (0);
+  reply_params.svc_ctx_.resize (0);
   reply_params.service_context_notowned (&this->reply_service_context_.service_info ());
   reply_params.argument_flag_ = true;
   // @@ It appears as if there should be a more efficient way to do
@@ -247,7 +247,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_location_forward (CORBA::Object_ptr fwd,
 
   TAO_Pluggable_Reply_Params_Base reply_params;
   reply_params.request_id_ = this->request_id_;
-  reply_params.svc_ctx_.length (0);
+  reply_params.svc_ctx_.resize (0);
   reply_params.service_context_notowned
     (&this->reply_service_context_.service_info ());
   reply_params.argument_flag_ = true;

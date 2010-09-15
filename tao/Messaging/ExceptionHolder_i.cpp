@@ -53,9 +53,12 @@ namespace TAO
 
   void ExceptionHolder::raise_exception (void)
     {
-      TAO_InputCDR _tao_in ((const char*) this->marshaled_exception ().get_buffer (),
-                            this->marshaled_exception ().length (),
-                            this->byte_order ());
+      TAO_InputCDR _tao_in (
+        reinterpret_cast<const char *> (
+          this->marshaled_exception ().get_allocator ().address (
+            *this->marshaled_exception ().begin ())),
+        this->marshaled_exception ().size (),
+        this->byte_order ());
 
       _tao_in.char_translator (this->char_translator_);
       _tao_in.wchar_translator (this->wchar_translator_);

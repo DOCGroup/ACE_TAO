@@ -202,7 +202,7 @@ CORBA::Object::_servant (void) const
 // logical type ID is passed as a parameter.
 
 CORBA::Boolean
-CORBA::Object::_is_a (const char *type_id)
+CORBA::Object::_is_a (const std::string type_id)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN(false);
 
@@ -226,11 +226,11 @@ CORBA::Object::_is_a (const char *type_id)
     throw ::CORBA::NO_IMPLEMENT ();
 
   if (this->_stubobj ()->type_id.in () != 0
-      && ACE_OS::strcmp (type_id,
+      && ACE_OS::strcmp (type_id.c_str (),
                          this->_stubobj ()->type_id.in ()) == 0)
     return true;
 
-  return this->proxy_broker ()->_is_a (this, type_id);
+  return this->proxy_broker ()->_is_a (this, type_id.c_str ());
 }
 
 const char*

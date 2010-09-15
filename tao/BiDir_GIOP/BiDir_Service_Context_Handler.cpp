@@ -21,9 +21,12 @@ TAO_BiDIR_Service_Context_Handler::process_service_context (
   TAO_Transport& transport,
   const IOP::ServiceContext& context)
 {
-  TAO_InputCDR cdr (reinterpret_cast<const char*> (
-                      context.context_data.get_buffer ()),
-                    context.context_data.length ());
+  TAO_InputCDR cdr (
+    reinterpret_cast<const char*> (
+      context.context_data.get_allocator ().address (
+        *context.context_data.begin ())),
+    context.context_data.size ());
+      
   return transport.tear_listen_point_list (cdr);
 }
 

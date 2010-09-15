@@ -51,10 +51,11 @@ namespace TAO
 
 namespace Dynamic
 {
-  class ParameterList;
-  class ExceptionList;
-  typedef CORBA::StringSeq RequestContext;
+  struct Parameter;
+  typedef std::vector<Parameter> ParameterList;
+  typedef std::vector< ::CORBA::TypeCode_ptr> ExceptionList;
   typedef CORBA::StringSeq ContextList;
+  typedef CORBA::StringSeq RequestContext;
 }
 
 namespace Messaging
@@ -80,18 +81,18 @@ public:
   virtual CORBA::ULong request_id (void);
 
   /// Return the operation name for the current request.
-  virtual char * operation (void);
+  virtual std::string operation (void);
 
   /// Return the list of arguments passed to the current operation.
-  virtual Dynamic::ParameterList * arguments (void);
+  virtual Dynamic::ParameterList arguments (void);
 
   /// Return the list of exceptions the current operation is capable
   /// of throwing.
-  virtual Dynamic::ExceptionList * exceptions (void);
+  virtual Dynamic::ExceptionList exceptions (void);
 
-  virtual Dynamic::ContextList * contexts (void);
+  virtual Dynamic::ContextList contexts (void);
 
-  virtual Dynamic::RequestContext * operation_context (void);
+  virtual Dynamic::RequestContext operation_context (void);
 
   /// Return the result of the current request.  If there is no return
   /// value then an Any with tk_void TypeCode is returned.  This is
@@ -147,7 +148,7 @@ public:
   virtual CORBA::Any * received_exception (void);
 
   /// Return the repository ID for the received exception.
-  virtual char * received_exception_id (void);
+  virtual std::string received_exception_id (void);
 
   /// Return the first IOP::TaggedComponent that matches the given
   /// IOP::ComponentId in the object reference for the current
@@ -157,7 +158,7 @@ public:
   /// Return all IOP::TaggedComponent(s) that match the given
   /// IOP::ComponentId in the object reference for the current
   /// target.
-  virtual IOP::TaggedComponentSeq * get_effective_components (IOP::ComponentId id);
+  virtual IOP::TaggedComponentSeq get_effective_components (IOP::ComponentId id);
 
   /// Return the policy of the given type in effect for the current
   /// request.

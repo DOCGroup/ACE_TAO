@@ -23,8 +23,10 @@ namespace TAO
       {
         return T::_nil ();
       }
+      
+    std::string type_id (repo_id);
 
-    if (obj->_is_a (repo_id) == false)
+    if (obj->_is_a (type_id) == false)
       {
         return T::_nil ();
       }

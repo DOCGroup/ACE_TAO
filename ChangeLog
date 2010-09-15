@@ -1,3 +1,45 @@
+Wed Sep 15 19:26:33 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/Event_Utilities.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * tao/CORBANAME_Parser.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/PortableServer/Basic_SArguments.h:
+        * tao/Object_KeyC.h:
+        * tao/Messaging.mpc:
+        * tao/Object.h:
+        * tao/Messaging/ExceptionHolder_i.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * tao/Messaging/ExceptionHolder_i.h:
+        * tao/Messaging/AMH_Response_Handler.cpp:
+        * tao/BiDir_GIOP/BiDir_Service_Context_Handler.cpp:
+        * tao/PI/ORBInitInfo.cpp:
+        * tao/PI/RequestInfo_Util.h:
+        * tao/PI/Interceptor_List_T.cpp:
+        * tao/PI/ORBInitInfo.h:
+        * tao/PI/ClientRequestDetails.cpp:
+        * tao/PI/RequestInfo_Util.cpp:
+        * tao/PI/ClientRequestInfo.h:
+        * tao/PI/Interceptor_List_T.h:
+        * tao/PI/ClientRequestInfo.cpp:
+        * tao/CodecFactory.mpc:
+        * tao/Object_T.cpp:
+        * tao/PI.mpc:
+        * tao/Object.cpp:
+        * tao/CodecFactory/CDR_Encaps_Codec.cpp:
+        * tao/CodecFactory/CDR_Encaps_Codec.h:
+
+          More changes to support the alternatie IDL->C++
+          mapping. The changes above allow clean builds
+          of the Portable Interceptor and Messaging libs.
+
 Tue Sep  7 16:00:49 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Alt_Mapping/ub_long_seq.h:

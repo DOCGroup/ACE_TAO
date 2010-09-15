@@ -55,10 +55,11 @@ namespace TAO
           {
             /// If the Interceptor is not anonymous, make sure an
             /// Interceptor with the same isn't already registered.
-            CORBA::String_var name =
-              interceptor->name ();
+//            CORBA::String_var name =
+//              interceptor->name ();
 
-            if (ACE_OS::strlen (name.in ()) != 0)
+//            if (ACE_OS::strlen (name.in ()) != 0)
+            if (!interceptor->name ().empty ())
               {
                 // @@ This simple search algorithm isn't the greatest
                 //    thing in the world, but since we only register
@@ -77,11 +78,12 @@ namespace TAO
                 // registered.  Anonymous interceptors are okay.
                 for (size_t i = 0; i < old_len; ++i)
                   {
-                    CORBA::String_var existing_name =
-                      this->interceptor (i)->name ();
+//                    CORBA::String_var existing_name =
+//                      this->interceptor (i)->name ();
 
-                    if (ACE_OS::strcmp (existing_name.in (),
-                                        name.in ()) == 0)
+//                    if (ACE_OS::strcmp (existing_name.in (),
+//                                        name.in ()) == 0)
+                    if (this->interceptor (i)->name () == interceptor->name ())
                       {
                         throw PortableInterceptor::ORBInitInfo::DuplicateName ();
                       }
@@ -127,10 +129,11 @@ namespace TAO
           {
             /// If the Interceptor is not anonymous, make sure an
             /// Interceptor with the same isn't already registered.
-            CORBA::String_var name =
-              interceptor->name ();
+//            CORBA::String_var name =
+//              interceptor->name ();
 
-            if (ACE_OS::strlen (name.in ()) != 0)
+//            if (ACE_OS::strlen (name.in ()) != 0)
+            if (!interceptor->name ().empty ())
               {
                 // @@ This simple search algorithm isn't the greatest
                 //    thing in the world, but since we only register
@@ -149,11 +152,12 @@ namespace TAO
                 // registered.  Anonymous interceptors are okay.
                 for (size_t i = 0; i < old_len; ++i)
                   {
-                    CORBA::String_var existing_name =
-                      this->interceptor (i)->name ();
+//                    CORBA::String_var existing_name =
+//                      this->interceptor (i)->name ();
 
-                    if (ACE_OS::strcmp (existing_name.in (),
-                                        name.in ()) == 0)
+//                    if (ACE_OS::strcmp (existing_name.in (),
+//                                        name.in ()) == 0)
+                    if (this->interceptor (i)->name () == interceptor->name ())
                       {
                         throw PortableInterceptor::ORBInitInfo::DuplicateName ();
                       }

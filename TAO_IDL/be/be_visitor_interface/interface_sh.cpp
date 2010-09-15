@@ -127,7 +127,9 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "virtual ~" << class_name.c_str () << " (void);" << be_nl << be_nl;
 
   // _is_a
-  *os << "virtual ::CORBA::Boolean _is_a (const char* logical_type_id);" << be_nl << be_nl;
+  *os << "virtual ::CORBA::Boolean _is_a (const "
+      << (be_global->alt_mapping () ? "std::string " : "char *")
+      << "logical_type_id);" << be_nl << be_nl;
 
   // Add a skeleton for our _is_a method.
   *os << "static void _is_a_skel (" << be_idt << be_idt_nl

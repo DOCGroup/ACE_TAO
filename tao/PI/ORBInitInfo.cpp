@@ -71,7 +71,7 @@ TAO_ORBInitInfo::~TAO_ORBInitInfo (void)
 {
 }
 
-CORBA::StringSeq *
+CORBA::StringSeq
 TAO_ORBInitInfo::arguments (void)
 {
   this->check_validity ();
@@ -79,7 +79,8 @@ TAO_ORBInitInfo::arguments (void)
   // In accordance with the C++ mapping for sequences, it is up to the
   // caller to deallocate storage for returned sequences.
 
-  CORBA::StringSeq *args = 0;
+  CORBA::StringSeq args;
+  /*
   ACE_NEW_THROW_EX (args,
                     CORBA::StringSeq,
                     CORBA::NO_MEMORY (
@@ -89,24 +90,31 @@ TAO_ORBInitInfo::arguments (void)
                       CORBA::COMPLETED_NO));
 
   CORBA::StringSeq_var safe_args (args);
-
+  */
   // Copy the argument vector to the string sequence.
 
-  args->length (this->argc_);   // Not a problem if argc is zero.
+  args.resize (this->argc_);   // Not a problem if argc is zero.
+  
   for (int i = 0; i < this->argc_; ++i)
-    (*args)[i] = CORBA::string_dup (this->argv_[i]);
+    {
+      args[i] = this->argv_[i];
+//      (*args)[i] = CORBA::string_dup (this->argv_[i]);
+    }
 
-  return safe_args._retn ();
+//  return safe_args._retn ();
+  return args;
 }
 
-char *
+std::string
 TAO_ORBInitInfo::orb_id (void)
 {
   this->check_validity ();
 
   // In accordance with the C++ mapping for strings, return a copy.
 
-  return CORBA::string_dup (this->orb_core_->orbid ());
+//  return CORBA::string_dup (this->orb_core_->orbid ());
+  std::string retval (this->orb_core_->orbid ());
+  return retval;
 }
 
 IOP::CodecFactory_ptr
@@ -142,12 +150,13 @@ TAO_ORBInitInfo::codec_factory (void)
 
 void
 TAO_ORBInitInfo::register_initial_reference (
-    const char * id,
+    const std::string id,
     CORBA::Object_ptr obj)
 {
   this->check_validity ();
 
-  if (id == 0 || ACE_OS::strlen (id) == 0)
+//  if (id == 0 || ACE_OS::strlen (id) == 0)
+  if (id.empty ())
     throw PortableInterceptor::ORBInitInfo::InvalidName ();
 
   if (CORBA::is_nil (obj))
@@ -155,22 +164,23 @@ TAO_ORBInitInfo::register_initial_reference (
 
   TAO_Object_Ref_Table &table = this->orb_core_->object_ref_table ();
 
-  if (table.register_initial_reference (id, obj) == -1)
+  if (table.register_initial_reference (id.c_str (), obj) == -1)
     throw PortableInterceptor::ORBInitInfo::InvalidName ();
 }
 
 CORBA::Object_ptr
-TAO_ORBInitInfo::resolve_initial_references (const char * id)
+TAO_ORBInitInfo::resolve_initial_references (const std::string id)
 {
   this->check_validity ();
 
-  if (id == 0 || ACE_OS::strlen (id) == 0)
+//  if (id == 0 || ACE_OS::strlen (id) == 0)
+  if (id.empty ())
     throw PortableInterceptor::ORBInitInfo::InvalidName ();
 
   // The ORB is practically fully initialized by the time this point
   // is reached so just use the ORB's resolve_initial_references()
   // mechanism.
-  return this->orb_core_->orb ()->resolve_initial_references (id);
+  return this->orb_core_->orb ()->resolve_initial_references (id.c_str ());
 }
 
 void

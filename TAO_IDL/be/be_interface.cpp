@@ -2161,10 +2161,18 @@ be_interface::is_a_helper (be_interface * /*derived*/,
                            TAO_OutStream *os)
 {
   // Emit the comparison code.
-  *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
-      << "value," << be_nl
-      << "\"" << bi->repoID () << "\"" << be_uidt_nl
-      << ") == 0 ||" << be_uidt_nl;
+  if (be_global->alt_mapping ())
+    {
+      *os << "value == \"" << bi->repoID () << "\" ||"
+          << be_nl;
+    }
+  else
+    {
+      *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
+          << "value," << be_nl
+          << "\"" << bi->repoID () << "\"" << be_uidt_nl
+          << ") == 0 ||" << be_uidt_nl;
+    }
 
   return 0;
 }
@@ -3037,19 +3045,35 @@ be_interface::gen_is_a_ancestors (TAO_OutStream *os)
 
   if (this->is_abstract () || this->has_mixed_parentage ())
     {
-      *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "value," << be_nl
-          << "\"IDL:omg.org/CORBA/AbstractBase:1.0\"" << be_uidt_nl
-          << ") == 0";
+      if (be_global->alt_mapping ())
+        {
+          *os << "value == \"IDL:omg.org/CORBA/AbstractBase:1.0\" ||"
+              << be_nl;
+        }
+      else
+        {
+          *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
+              << "value," << be_nl
+              << "\"IDL:omg.org/CORBA/AbstractBase:1.0\"" << be_uidt_nl
+              << ") == 0 ||" << be_uidt_nl;
+        }
     }
   else if (this->is_local ())
     {
-      *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "value," << be_nl
-          << "\"IDL:omg.org/CORBA/LocalObject:1.0\"" << be_uidt_nl
-          << ") == 0";
+      if (be_global->alt_mapping ())
+        {
+          *os << "value == \"IDL:omg.org/CORBA/LocalObject:1.0\" ||"
+              << be_nl;
+        }
+      else
+        {
+          *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
+              << "value," << be_nl
+              << "\"IDL:omg.org/CORBA/LocalObject:1.0\"" << be_uidt_nl
+              << ") == 0 ||" << be_uidt_nl;
+        }
     }
-
+/*
   if (this->has_mixed_parentage () || this->is_local ())
     {
       *os << " ||" << be_uidt_nl;
@@ -3058,13 +3082,21 @@ be_interface::gen_is_a_ancestors (TAO_OutStream *os)
     {
       *os << be_uidt << be_uidt_nl;
     }
-
+*/
   if (! this->is_abstract ())
     {
-      *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "value," << be_nl
-          << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
-          << ") == 0" << be_uidt << be_uidt_nl;
+      if (be_global->alt_mapping ())
+        {
+          *os << "value == \"IDL:omg.org/CORBA/Object:1.0\""
+              << be_nl;
+        }
+      else
+        {
+          *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
+              << "value," << be_nl
+              << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
+              << ") == 0" << be_uidt << be_uidt_nl;
+        }
     }
 
   return 0;

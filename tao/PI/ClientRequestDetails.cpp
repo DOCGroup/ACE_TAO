@@ -21,7 +21,7 @@ namespace TAO
     // Flag to check for duplicate ProcessingModePolicy objects in the list.
     bool processing_mode_applied = false;
 
-    const CORBA::ULong plen = policies.length ();
+    const CORBA::ULong plen = policies.size ();
 
     for (CORBA::ULong i = 0; i < plen; ++i)
       {
