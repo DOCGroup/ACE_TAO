@@ -15,6 +15,9 @@
 
 #include /**/ "ace/pre.h"
 
+#include <vector>
+#include <string>
+
 #include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -31,14 +34,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-  class StringSeq;
+  typedef std::vector<std::string> StringSeq;
   class Any;
 }
 
 namespace Dynamic
 {
-  class ParameterList;
-  class ExceptionList;
+  struct Parameter;
+  typedef std::vector<Parameter> ParameterList;
+  typedef std::vector< ::CORBA::TypeCode_ptr> ExceptionList;
   typedef CORBA::StringSeq ContextList;
   typedef CORBA::StringSeq RequestContext;
 }
@@ -63,13 +67,13 @@ public:
    * class.
    */
   //@{
-  static Dynamic::ParameterList * make_parameter_list (void);
+  static Dynamic::ParameterList make_parameter_list (void);
 
-  static Dynamic::ExceptionList * make_exception_list (void);
+  static Dynamic::ExceptionList make_exception_list (void);
 
-  static Dynamic::ContextList * make_context_list (void);
+  static Dynamic::ContextList make_context_list (void);
 
-  static Dynamic::RequestContext * make_request_context (void);
+  static Dynamic::RequestContext make_request_context (void);
 
   static CORBA::Any * make_any (CORBA::Boolean tk_void_any);
   //@}

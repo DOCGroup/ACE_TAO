@@ -73,10 +73,10 @@ public:
   //@{
   /// Return the argument vector for the ORB currently being
   /// initialized as a string sequence.
-  virtual CORBA::StringSeq * arguments (void);
+  virtual CORBA::StringSeq arguments (void);
 
   /// Return the ORBid for the ORB currently being initialized.
-  virtual char * orb_id (void);
+  virtual std::string orb_id (void);
 
   /// Return the CodecFactory for the ORB currently being
   /// initialized.
@@ -92,12 +92,12 @@ public:
    * resolve_initial_references() that may be called in the
    * ORBInitializer::post_init() call.
    */
-  virtual void register_initial_reference (const char * id, CORBA::Object_ptr obj);
+  virtual void register_initial_reference (const std::string id, CORBA::Object_ptr obj);
 
   /// Obtain a reference to an object that may not yet be available
   /// via the usual CORBA::ORB::resolve_initial_references() mechanism
   /// since the ORB may not be fully initialized yet.
-  virtual CORBA::Object_ptr resolve_initial_references (const char * id);
+  virtual CORBA::Object_ptr resolve_initial_references (const std::string id);
 
   /// Register a client request interceptor with the ORB currently
   /// being initialized.

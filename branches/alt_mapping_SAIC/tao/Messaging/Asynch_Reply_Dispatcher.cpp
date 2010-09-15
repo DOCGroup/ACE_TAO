@@ -83,10 +83,19 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
     {
       // Steal the buffer, that way we don't do any unnecesary copies of
       // this data.
-      CORBA::ULong const max = params.svc_ctx_.maximum ();
-      CORBA::ULong const len = params.svc_ctx_.length ();
-      IOP::ServiceContext *context_list = params.svc_ctx_.get_buffer (1);
-      this->reply_service_info_.replace (max, len, context_list, 1);
+      CORBA::ULong const max = params.svc_ctx_.capacity ();
+      CORBA::ULong const len = params.svc_ctx_.size ();
+      
+//      IOP::ServiceContext *context_list = params.svc_ctx_.get_buffer (1);
+//      this->reply_service_info_.replace (max, len, context_list, 1);
+
+      this->reply_service_info_.reserve (max);
+      this->reply_service_info_.resize (len);
+      
+      for (size_t i = 0; i < len; ++i)
+        {
+          this->reply_service_info_[i] = params.svc_ctx_[i];
+        }
 
       if (TAO_debug_level >= 4)
         {

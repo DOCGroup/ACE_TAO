@@ -58,7 +58,7 @@ public:
 
   /// Encode the given data, including the TypeCode, into an octet
   /// sequence.
-  virtual CORBA::OctetSeq * encode (const CORBA::Any & data);
+  virtual CORBA::OctetSeq encode (const CORBA::Any & data);
 
   /// Extract the TypeCode and the value from the octet sequence and
   /// place them into an Any.
@@ -66,7 +66,7 @@ public:
 
   /// Encode the given data, excluding the TypeCode, into an octet
   /// sequence.
-  virtual CORBA::OctetSeq * encode_value (const CORBA::Any & data);
+  virtual CORBA::OctetSeq encode_value (const CORBA::Any & data);
 
   /// Extract the value from the octet sequence, based on the given
   /// TypeCode,  and place it into an Any.

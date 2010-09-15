@@ -110,8 +110,9 @@ TAO_CORBANAME_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
                            "Cannot resolve Naming Service: CORBANAME_Parser\n"),
                           0);
 
+      std::string type_id ("IDL:omg.org/CosNaming/NamingContextExt:1.0");
       CORBA::Boolean is_a =
-        name_context->_is_a ("IDL:omg.org/CosNaming/NamingContextExt:1.0");
+        name_context->_is_a (type_id);
 
       if (!is_a)
         {

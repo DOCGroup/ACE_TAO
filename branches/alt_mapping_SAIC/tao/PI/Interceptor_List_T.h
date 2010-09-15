@@ -16,6 +16,8 @@
 
 #include /**/ "ace/pre.h"
 
+#include <vector>
+
 #include "ace/Array_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -34,7 +36,9 @@ namespace PortableInterceptor
 
 namespace CORBA
 {
-  class PolicyList;
+  class Policy;
+  typedef Policy *Policy_ptr;
+  typedef std::vector<Policy_ptr> PolicyList;
 }
 
 namespace TAO

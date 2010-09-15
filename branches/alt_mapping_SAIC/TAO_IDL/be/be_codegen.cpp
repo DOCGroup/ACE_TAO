@@ -3234,8 +3234,10 @@ TAO_CodeGen::gen_stub_arg_file_includes (TAO_OutStream * stream)
 void
 TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
 {
+  // Also triggered by interface, for _is_a() std::string arg.
   this->gen_cond_file_include (
-      idl_global->basic_arg_seen_,
+      idl_global->basic_arg_seen_
+      || idl_global->non_local_iface_seen_,
       "tao/PortableServer/Basic_SArguments.h",
       stream
     );

@@ -299,7 +299,7 @@ namespace CORBA
     // be\be_visitor_interface/interface_ch.cpp:210
 
     virtual CORBA::Boolean _is_a (
-        const char *type_id
+        const std::string type_id
 
       );
 

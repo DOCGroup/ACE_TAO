@@ -19,10 +19,11 @@ ACE_RCSID (tao,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-Dynamic::ParameterList *
+Dynamic::ParameterList
 TAO_RequestInfo_Util::make_parameter_list (void)
 {
-  Dynamic::ParameterList *parameter_list = 0;
+  Dynamic::ParameterList parameter_list;
+  /*
   ACE_NEW_THROW_EX (parameter_list,
                     Dynamic::ParameterList,
                     CORBA::NO_MEMORY (
@@ -32,14 +33,15 @@ TAO_RequestInfo_Util::make_parameter_list (void)
                       CORBA::COMPLETED_NO));
 
   // No need to do an ACE_CHECK_RETURN.  The caller should do that.
-
+  */
   return parameter_list;
 }
 
-Dynamic::ExceptionList *
+Dynamic::ExceptionList
 TAO_RequestInfo_Util::make_exception_list (void)
 {
-  Dynamic::ExceptionList *exception_list = 0;
+  Dynamic::ExceptionList exception_list;
+  /*
   ACE_NEW_THROW_EX (exception_list,
                     Dynamic::ExceptionList,
                     CORBA::NO_MEMORY (
@@ -49,14 +51,15 @@ TAO_RequestInfo_Util::make_exception_list (void)
                       CORBA::COMPLETED_NO));
 
   // No need to do an ACE_CHECK_RETURN.  The caller should do that.
-
+  */
   return exception_list;
 }
 
-Dynamic::ContextList *
+Dynamic::ContextList
 TAO_RequestInfo_Util::make_context_list (void)
 {
-  Dynamic::ContextList *context_list = 0;
+  Dynamic::ContextList context_list;
+  /*
   ACE_NEW_THROW_EX (context_list,
                     Dynamic::ContextList,
                     CORBA::NO_MEMORY (
@@ -66,14 +69,15 @@ TAO_RequestInfo_Util::make_context_list (void)
                       CORBA::COMPLETED_NO));
 
   // No need to do an ACE_CHECK_RETURN.  The caller should do that.
-
+  */
   return context_list;
 }
 
-Dynamic::RequestContext *
+Dynamic::RequestContext
 TAO_RequestInfo_Util::make_request_context (void)
 {
-  Dynamic::RequestContext *request_context = 0;
+  Dynamic::RequestContext request_context;
+  /*
   ACE_NEW_THROW_EX (request_context,
                     Dynamic::RequestContext,
                     CORBA::NO_MEMORY (
@@ -83,7 +87,7 @@ TAO_RequestInfo_Util::make_request_context (void)
                       CORBA::COMPLETED_NO));
 
   // No need to do an ACE_CHECK_RETURN.  The caller should do that.
-
+  */
   return request_context;
 }
 

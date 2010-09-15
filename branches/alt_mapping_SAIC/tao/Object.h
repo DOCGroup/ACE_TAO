@@ -135,7 +135,7 @@ namespace CORBA
     // appropriate.
 
     /// Determine if we are of the type specified by the "logical_type_id"
-    virtual CORBA::Boolean _is_a (const char *logical_type_id);
+    virtual CORBA::Boolean _is_a (const std::string logical_type_id);
 
     /// The repository ID for the most derived class, this is an
     /// implementation method and does no remote invocations!

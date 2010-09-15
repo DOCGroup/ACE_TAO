@@ -30,7 +30,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace Dynamic
 {
-  class ExceptionList;
+  typedef std::vector< ::CORBA::TypeCode_ptr> ExceptionList;
 }
 
 namespace Messaging

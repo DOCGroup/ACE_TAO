@@ -169,7 +169,7 @@ TAO_ClientRequestInfo::received_exception (void)
   return caught_exception_var._retn ();
 }
 
-char *
+std::string
 TAO_ClientRequestInfo::received_exception_id (void)
 {
   this->check_validity ();
@@ -181,7 +181,9 @@ TAO_ClientRequestInfo::received_exception_id (void)
       throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
-  return CORBA::string_dup (caught_exception->_rep_id ());
+//  return CORBA::string_dup (caught_exception->_rep_id ());
+  std::string retval (caught_exception->_rep_id ());
+  return retval;
 }
 
 IOP::TaggedComponent *
@@ -195,7 +197,7 @@ TAO_ClientRequestInfo::get_effective_component (IOP::ComponentId id)
 
   IOP::MultipleComponentProfile &components = ecs.components ();
 
-  CORBA::ULong const len = components.length ();
+  CORBA::ULong const len = components.size ();
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       if (components[i].tag == id)
@@ -226,7 +228,7 @@ TAO_ClientRequestInfo::get_effective_component (IOP::ComponentId id)
   throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
 }
 
-IOP::TaggedComponentSeq *
+IOP::TaggedComponentSeq
 TAO_ClientRequestInfo::get_effective_components (IOP::ComponentId id)
 {
   this->check_validity ();
@@ -237,14 +239,16 @@ TAO_ClientRequestInfo::get_effective_components (IOP::ComponentId id)
 
   IOP::MultipleComponentProfile &components = ecs.components ();
 
-  IOP::TaggedComponentSeq *tagged_components = 0;
-  IOP::TaggedComponentSeq_var safe_tagged_components;
+  IOP::TaggedComponentSeq tagged_components;
+//  IOP::TaggedComponentSeq *tagged_components = 0;
+//  IOP::TaggedComponentSeq_var safe_tagged_components;
 
-  const CORBA::ULong len = components.length ();
+  const CORBA::ULong len = components.size ();
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       if (components[i].tag == id)
         {
+          /*
           if (tagged_components == 0)
             {
               // Only allocate a sequence if we have tagged components
@@ -259,14 +263,16 @@ TAO_ClientRequestInfo::get_effective_components (IOP::ComponentId id)
 
               safe_tagged_components = tagged_components;
             }
-
+          
           const CORBA::ULong old_len = safe_tagged_components->length ();
           safe_tagged_components->length (old_len + 1);
 
           safe_tagged_components[old_len] = components[i];  // Deep copy
+          */
+          tagged_components.push_back (components[i]);
         }
     }
-
+/*
   if (tagged_components == 0)
     {
       // No tagged component sequence was allocated, meaning no tagged
@@ -274,8 +280,9 @@ TAO_ClientRequestInfo::get_effective_components (IOP::ComponentId id)
       // IOP::ComponentId.
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
     }
-
-  return safe_tagged_components._retn ();
+*/
+//  return safe_tagged_components._retn ();
+  return tagged_components;
 }
 
 CORBA::Policy_ptr
@@ -399,19 +406,21 @@ TAO_ClientRequestInfo::request_id (void)
   return id;
 }
 
-char *
+std::string
 TAO_ClientRequestInfo::operation (void)
 {
   this->check_validity ();
 
-  return CORBA::string_dup (this->invocation_->operation_details ().opname  ());
+//  return CORBA::string_dup (this->invocation_->operation_details ().opname  ());
+  std::string retval (this->invocation_->operation_details ().opname  ());
+  return retval;
 }
 
-Dynamic::ParameterList *
+Dynamic::ParameterList
 TAO_ClientRequestInfo::arguments (void)
 {
   this->check_validity ();
-
+/*
   // Generate the argument list on demand.
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list ();
@@ -422,13 +431,22 @@ TAO_ClientRequestInfo::arguments (void)
     throw ::CORBA::MARSHAL ();
 
   return safe_parameter_list._retn ();
+*/
+  Dynamic::ParameterList parameter_list;
+
+  if (!this->parameter_list (parameter_list))
+    {
+      throw ::CORBA::MARSHAL ();
+    }
+    
+  return parameter_list;
 }
 
 bool
 TAO_ClientRequestInfo::parameter_list (Dynamic::ParameterList &param_list)
 {
   // Account for the return type that is in the argument list.
-  param_list.length (this->invocation_->operation_details ().args_num () - 1);
+  param_list.resize (this->invocation_->operation_details ().args_num () - 1);
 
   for (CORBA::ULong i = 1; i != this->invocation_->operation_details ().args_num (); ++i)
     {
@@ -449,11 +467,11 @@ TAO_ClientRequestInfo::parameter_list (Dynamic::ParameterList &param_list)
   return true;
 }
 
-Dynamic::ExceptionList *
+Dynamic::ExceptionList
 TAO_ClientRequestInfo::exceptions (void)
 {
   this->check_validity ();
-
+/*
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list ();
 
@@ -463,6 +481,16 @@ TAO_ClientRequestInfo::exceptions (void)
     throw ::CORBA::MARSHAL ();
 
   return safe_exception_list._retn ();
+*/
+
+  Dynamic::ExceptionList exception_list;
+  
+  if (!this->exception_list (exception_list))
+    {
+      throw ::CORBA::MARSHAL ();
+    }
+    
+  return exception_list;
 }
 
 bool
@@ -470,7 +498,7 @@ TAO_ClientRequestInfo::exception_list (Dynamic::ExceptionList &exception_list)
 {
   if (this->invocation_->operation_details ().ex_count ())
     {
-      exception_list.length (this->invocation_->operation_details ().ex_count ());
+      exception_list.resize (this->invocation_->operation_details ().ex_count ());
 
       for (CORBA::ULong i = 0;
            i != this->invocation_->operation_details ().ex_count ();
@@ -487,7 +515,7 @@ TAO_ClientRequestInfo::exception_list (Dynamic::ExceptionList &exception_list)
   return true;
 }
 
-Dynamic::ContextList *
+Dynamic::ContextList
 TAO_ClientRequestInfo::contexts (void)
 {
   this->check_validity ();
@@ -495,7 +523,7 @@ TAO_ClientRequestInfo::contexts (void)
   throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
-Dynamic::RequestContext *
+Dynamic::RequestContext
 TAO_ClientRequestInfo::operation_context (void)
 {
   this->check_validity ();

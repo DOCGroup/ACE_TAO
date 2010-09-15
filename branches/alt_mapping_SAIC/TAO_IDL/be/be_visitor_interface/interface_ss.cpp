@@ -681,7 +681,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << be_nl << be_nl
       << "::CORBA::Boolean " << full_skel_name
-      << "::_is_a (const char* value)" << be_nl
+      << "::_is_a (const "
+      << (be_global->alt_mapping () ? "std::string " : "char *")
+      << "value)" << be_nl
       << "{" << be_idt_nl
       << "return" << be_idt_nl
       << "(" << be_idt_nl;
@@ -696,22 +698,39 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-      << "value," << be_nl
-      << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
-      << ")";
+  
+//  *os << " ||" << be_nl;
+  
+  if (be_global->alt_mapping ())
+    {
+      *os << "value == \"IDL:omg.org/CORBA/Object:1.0\"";
+    }
+  else
+    {
+      *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
+          << "value," << be_nl
+          << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
+          << ") == 0 ||" << be_uidt_nl;
+    }
 
   if (node->has_mixed_parentage ())
     {
-      *os << " ||" << be_uidt_nl
-          << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "(char *)value," << be_nl
-          << "\"IDL:omg.org/CORBA/AbstractBase:1.0\""
-          << be_uidt_nl
-          << ")";
+      *os << " ||" << be_uidt_nl;
+      
+      if (be_global->alt_mapping ())
+        {
+          *os << "value == \"IDL:omg.org/CORBA/AbstractBase:1.0\"";
+        }
+      else
+        {
+      *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
+          << "value," << be_nl
+          << "\"IDL:omg.org/CORBA/AbstractBase:1.0\"" << be_uidt_nl
+          << ") == 0 ||" << be_uidt_nl;
+        }
     }
 
-  *os << be_uidt << be_uidt_nl
+  *os << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
