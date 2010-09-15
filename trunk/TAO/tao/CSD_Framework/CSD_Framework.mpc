@@ -1,0 +1,31 @@
+//$Id$
+project(*idl) : tao_versioning_idl_defaults {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -Sci -SS -Gp -Gd -Sorb -GA -Sal \
+                -Wb,export_macro=TAO_CSD_FW_Export \
+                -Wb,export_include=tao/CSD_Framework/CSD_FW_Export.h \
+                -iC tao/CSD_Framework
+    idlflags -= -Sa -St
+    CSD_Framework.pidl
+  }
+}
+
+project(CSD_Framework) : taolib, tao_output, portableserver, install, pi, avoids_corba_e_micro, taoidldefaults {
+  after       += *idl
+  sharedname   = TAO_CSD_Framework
+  dynamicflags += TAO_CSD_FW_BUILD_DLL
+  includes    += $(TAO_ROOT)/tao
+
+  Source_Files {
+    *.cpp
+    CSD_FrameworkC.cpp
+  }
+
+  Header_Files {
+    *.h
+    CSD_FrameworkC.h
+    CSD_FrameworkS.h
+    CSD_FrameworkA.h
+  }
+}
