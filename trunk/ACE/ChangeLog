@@ -1,3 +1,10 @@
+Wed Sep 15 12:31:07 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/tests/HTBP/Reactor_Tests/server.cpp:
+        * protocols/tests/HTBP/Send_Recv_Tests/server.cpp:
+        * protocols/tests/HTBP/ping/server.cpp:
+          Fixed solaris compile problems
+
 Wed Sep 15 09:33:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace.mpc:
