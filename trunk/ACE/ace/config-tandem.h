@@ -154,7 +154,6 @@
 
 // Compiler/platform has threadspecific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
-//Platform supports thr_keydelete  (e.g,. UNIXWARE)
 
 #define ACE_HAS_THR_MINSTACK            // Tandem uses thr_minstack instead of thr_min_stack
 #define ACE_LACKS_PRI_T                 // Tandem lacks pri_t
@@ -181,7 +180,6 @@
 #define ACE_HAS_STANDARD_CPP_LIBRARY
 //Platform lacks madvise() (e.g., Linux)
 #define ACE_LACKS_MADVISE
-//Compiler/platform lacks strcasecmp() (e.g., DG/UX, UNIXWARE, VXWORKS)
 #define ACE_LACKS_STRCASECMP
 
 // Defines the page size of the system.
