@@ -28,6 +28,12 @@ be_visitor_operation_ih::~be_visitor_operation_ih (void)
 int
 be_visitor_operation_ih::visit_operation (be_operation *node)
 {
+  // Impl classes shouldn't have implied AMI operations.
+  if (node->is_sendc_ami ())
+    {
+      return 0;
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
   
