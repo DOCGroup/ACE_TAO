@@ -32,12 +32,6 @@
    }
 #endif /* !ACE_LACKS_SIGNAL_H */
 
-// This must come after signal.h is #included.
-#if defined (SCO)
-#  define SIGIO SIGPOLL
-#  include /**/ <sys/regset.h>
-#endif /* SCO */
-
 #if defined (ACE_HAS_SIGINFO_T)
 #  if !defined (ACE_LACKS_SIGINFO_H)
 #    if defined (__QNX__) || defined (__OpenBSD__) || defined (__INTERIX)

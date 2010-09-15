@@ -1,3 +1,27 @@
+Wed Sep 15 12:45:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Auto_Event.h:
+        * ace/OS_NS_arpa_inet.inl:
+        * ace/OS_NS_arpa_inet.cpp:
+        * ace/OS_NS_errno.cpp:
+        * ace/OS_NS_fcntl.cpp:
+        * ace/OS_NS_math.cpp:
+        * ace/OS_NS_pwd.inl:
+        * ace/OS_NS_pwd.cpp:
+        * ace/OS_NS_regex.inl:
+        * ace/OS_NS_regex.cpp:
+        * ace/OS_NS_signal.cpp:
+        * ace/OS_NS_sys_resource.cpp:
+        * ace/OS_NS_sys_wait.inl:
+        * ace/OS_NS_wctype.inl:
+        * ace/OS_NS_wctype.cpp:
+        * ace/config-tandem.h:
+        * ace/os_include/os_pthread.h:
+        * ace/os_include/os_signal.h:
+        * ace/os_include/sys/os_resource.h:
+        * ace/os_include/sys/os_socket.h:
+          Small cleanup and layout changes
+
 Wed Sep 15 12:31:07 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * protocols/tests/HTBP/Reactor_Tests/server.cpp:
