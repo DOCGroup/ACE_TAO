@@ -434,10 +434,54 @@ test_get_named_receptacles (::Components::Receptacles_ptr rec)
                             "test_get_named_receptacles.\n"));
       return 1;
     }
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_named_receptacles - "
+                        "InvalidName test passed!\n"));
   return 0;
 }
 #endif
 
+
+#if !defined (CCM_LW)
+int
+test_exceeded_limit_exception (::Components::Receptacles_ptr rec,
+                               ::CORBA::Object_ptr facet)
+{
+  try
+    {
+      for (CORBA::ULong i = 0UL;
+           i < 100;
+           ++i)
+        {
+          rec->connect ("use_multiple_foo", facet);
+        }
+    }
+  catch (const ::Components::ExceededConnectionLimit &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_exceeded_limit_exception - "
+                            "Expected ExceededConnectionLimit "
+                            "exception received\n"));
+       ACE_DEBUG ((LM_DEBUG, "Receptacle test_exceeded_limit_exception - "
+                             "Test passed!\n"));
+      return 0;
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("test_exceeded_limit_exception");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_exceeded_limit_exception - "
+                            "Error: exception during invocation of "
+                            "test_exceeded_limit_exception.\n"));
+      return 1;
+    }
+  ACE_ERROR ((LM_ERROR, "Receptacle test_exceeded_limit_exception - "
+                        "Error: Did not received the expected "
+                        "ExceededConnectionLimit exception!\n"));
+  return 1;
+}
+#endif
 
 int
 run_test (::Components::Receptacles_ptr rec,
@@ -455,12 +499,11 @@ run_test (::Components::Receptacles_ptr rec,
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_already_connected_exception (rec, facet);
 
-//       TODO:
-       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
-       ret += test_invalid_connection_exception (rec);
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_invalid_connection_exception (rec);
 
-//       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
-//       ret += test_exceeded_limit_exception ();
+      //ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      //ret += test_exceeded_limit_exception (rec, facet);
 
 #if !defined (CCM_LW)
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));

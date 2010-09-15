@@ -78,7 +78,7 @@ CIF_Common::init_user_component (::CosNaming::NamingContext_ptr naming_context)
 {
   ::CosNaming::Name name (1);
   name.length (1);
-  name[0].id = ::CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ("UserComponentInstance"));
+  name[0].id = ::CORBA::string_dup ("UserComponentInstance");
 
   ::CORBA::Object_var obj_ref = naming_context->resolve (name);
 
