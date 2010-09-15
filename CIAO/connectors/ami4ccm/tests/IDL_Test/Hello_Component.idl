@@ -31,6 +31,10 @@ module Hello
     uses multiple MyDerived m_run_my_derived;
     uses multiple MyBar m_run_mybar;
     uses multiple Bar::Three m_run_three;
+
+    provides MyFoo my_foo;
+    provides Bar::Three my_three;
+    provides X myx;
   };
 };
 
