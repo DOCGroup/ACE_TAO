@@ -1,3 +1,8 @@
+Wed Sep 15 07:45:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Receptacle/client.cpp:
+          Test InvalidConnection exception.
+
 Wed Sep 15 07:18:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Deployment/Handlers/Connection_Handler.cpp:
