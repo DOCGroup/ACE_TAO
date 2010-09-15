@@ -1,3 +1,9 @@
+Wed Sep 15 13:07:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/pidl_install.mpb:
+        * tao/pidl_install.mpb:
+          Moved from tao to MPC/config
+
 Wed Sep 15 11:32:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/AnyTypeCode.mpc:
