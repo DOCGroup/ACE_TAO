@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:1272
 
-#ifndef CIAO_CIF_COMPONENT_EXEC_S44IH2_H_
-#define CIAO_CIF_COMPONENT_EXEC_S44IH2_H_
+#ifndef CIAO_CIF_COMPONENT_EXEC_VQNWSP_H_
+#define CIAO_CIF_COMPONENT_EXEC_VQNWSP_H_
 
 #include "CIF_Component_exec_export.h"
 #include "CIF_ComponentEC.h"

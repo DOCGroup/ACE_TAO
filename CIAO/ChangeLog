@@ -1,3 +1,18 @@
+Wed Sep 15 10:38:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Common/CIF_Common.cpp:
+          No need to use ACE_TEXT_ALWAYS_CHAR.
+
+        * tests/CIF/Component/CIF_Component.idl:
+        * tests/CIF/Component/CIF_Component_exec.h:
+          Added multiple receptacle.
+
+        * tests/CIF/Receptacle/client.cpp:
+          Don't test ExceedConnectionLimit exception for now.
+
+        * tests/CIF/descriptors/run_test.pl:
+          No STDERR for information message.
+
 Wed Sep 15 09:20:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/IDL_Test/Hello.idl:
