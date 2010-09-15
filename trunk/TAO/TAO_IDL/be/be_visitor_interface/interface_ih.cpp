@@ -110,7 +110,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_ih::"
-                        "visit_interface - "
+                         "visit_interface - "
                          "codegen for scope failed\n"),
                         -1);
     }

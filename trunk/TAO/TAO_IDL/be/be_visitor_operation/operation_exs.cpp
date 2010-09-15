@@ -28,6 +28,12 @@ be_visitor_operation_exs::~be_visitor_operation_exs (void)
 int
 be_visitor_operation_exs::visit_operation (be_operation *node)
 {
+  // Impl classes shouldn't have implied AMI operations.
+  if (node->is_sendc_ami ())
+    {
+      return 0;
+    }
+
   this->ctx_->node (node);
 
   os_ << be_nl << be_nl;
