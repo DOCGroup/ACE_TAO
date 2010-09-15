@@ -1,3 +1,12 @@
+Wed Sep 15 09:33:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+          Zapped removed files
+
+        * docs/svn/config:
+          Added another file type
+
 Wed Sep 15 07:51:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
