@@ -1,3 +1,9 @@
+Thu Sep 16 09:08:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/tests/HTBP/Send_Large_Msg/server.cpp:
+        * protocols/tests/HTBP/ping/client.cpp:
+          Added missing includes
+
 Wed Sep 15 12:45:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Auto_Event.h:
