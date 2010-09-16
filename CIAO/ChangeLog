@@ -1,3 +1,13 @@
+Thu Sep 16 12:18:01 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Component/CIF_Component.idl:
+        * tests/CIF/descriptors/Plan.cdp:
+          Implemented a Home for the CIF_User component. The test error should
+          be gone.
+
+        * tests/CIF/Receptacle/client.cpp:
+          Improved logging.
+
 Thu Sep 16 11:06:09 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
        * connectors/ami4ccm/tests/ThreeComp/Sender/ThreeComp_Sender_exec.cpp:

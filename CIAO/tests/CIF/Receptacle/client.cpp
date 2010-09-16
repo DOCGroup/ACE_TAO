@@ -612,6 +612,8 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
 int
 test_get_ccm_home (::Components::CCMObject_ptr cmp)
 {
+  ACE_DEBUG ((LM_DEBUG, "Receptacle - test_get_ccm_home - "
+                        "Start test\n"));
   try
     {
       ::Components::CCMHome_var cif_home;
@@ -736,7 +738,10 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
         }
       ::Components::CCMObject_var cmp = ::Components::CCMObject::_narrow (obj);
 
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_get_all_ports (cmp);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_get_ccm_home (cmp);
 #endif
 

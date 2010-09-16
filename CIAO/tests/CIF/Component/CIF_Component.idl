@@ -30,7 +30,7 @@ module CIF
     uses inherited_foo use_cif_inherited_foo;
   };
 
-  home UserHome manages CIF_User
+  home CIF_UserHome manages CIF_User
   {
   };
 };

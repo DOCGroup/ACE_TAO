@@ -6,6 +6,77 @@
   <label>CIF_Test_Depl</label>
   <UUID>CIF_Test_Depl</UUID>
 
+  <!-- Home implementation -->
+  <implementation xmi:id="CIF_UserHomeImplementation">
+    <name>CIF_UserHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="Component_ExecArtifact" />
+    <artifact xmi:idref="Component_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>home factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIF_CIF_UserHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+        <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIF_CIF_UserHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CIF_Component_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CIF_Component_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="UserComponentImplementation">
+    <name>UserComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Component_ExecArtifact" />
+    <artifact xmi:idref="Component_SvntArtifact" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
   <implementation xmi:id="ProviderComponentImplementation">
     <name>ProviderComponentImplementation</name>
     <source/>
@@ -57,57 +128,6 @@
     </execParameter>
   </implementation>
 
-  <implementation xmi:id="UserComponentImplementation">
-    <name>UserComponentImplementation</name>
-    <source/>
-    <artifact xmi:idref="Component_ExecArtifact" />
-    <artifact xmi:idref="Component_SvntArtifact" />
-    <execParameter>
-      <name>component factory</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIF_CIF_User_Impl</string>
-        </value>
-      </value>
-    </execParameter>
-    <execParameter>
-      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIF_CIF_User_Servant</string>
-        </value>
-      </value>
-    </execParameter>
-    <execParameter>
-      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>CIF_Component_svnt</string>
-        </value>
-      </value>
-    </execParameter>
-    <execParameter>
-      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>CIF_Component_exec</string>
-        </value>
-      </value>
-    </execParameter>
-  </implementation>
-
   <instance xmi:id="ProviderComponent">
     <name>ProviderComponent</name>
     <node>ProviderNode</node>
@@ -127,12 +147,42 @@
     </configProperty>
   </instance>
 
-  <instance xmi:id="UserComponent">
-    <name>UserComponent</name>
+  <instance xmi:id="CIF_UserHomeInstance">
+    <name>CIF_UserHomeInstance</name>
+    <node>UserNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="CIF_UserHomeImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CIF_UserHomeInstance</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="UserComponentInstance">
+    <name>UserComponentInstance</name>
     <node>UserNode</node>
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="UserComponentImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CIF_UserHomeInstance</string>
+        </value>
+      </value>
+    </configProperty>
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
       <value>
@@ -145,6 +195,7 @@
       </value>
     </configProperty>
   </instance>
+
 
   <artifact xmi:id="Component_ExecArtifact">
     <name>CIF_Component_exec</name>
