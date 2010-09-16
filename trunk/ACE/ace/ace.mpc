@@ -426,7 +426,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Refcounted_Auto_Ptr.h
     Reverse_Lock_T.h
     Select_Reactor.h
-    Service_Templates.h
     SOCK_Netlink.h
     SStringfwd.h
     Stack_Trace.h
