@@ -78,33 +78,7 @@ namespace CIAO_ThreeComp_Sender_Impl
             asynch = true;
           }
        }
-  /*
-    ::ThreeComp::AMI4CCM_MyFoo_var my_foo_ami_  =
-       context_->get_connection_sendc_run_my_foo();
-
-    ACE_OS::sleep(2);
-    ::ThreeComp::CCM_AMI4CCM_MyFooReplyHandler_var cb =
-                  new MyFoo_callback_exec_i ();
-    if (CORBA::is_nil (my_foo_ami_))
-      {
-         ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :"
-                             "\tfoo_ami is NIL !\n"));  
-         return 1;
-      }
-    //Invoke Asynchronous calls to test 
-    for (int i = 0; i < 3; i++)
-      {
-        ++nr_of_sent;
-        my_foo_ami_->sendc_foo ( cb.in(), 10);
-        ACE_DEBUG ((LM_DEBUG, "Sender send ASYNCHRONOUS call to Receiver.\n"));
-      }
-    //there is more than 1 message sent, without receiving callbacks,
-    //so it is asynchronous
-    if (nr_of_sent.value() > 1)
-      {
-        asynch = true;
-      }
- */   return 0;
+    return 0;
   }
   //============================================================
   // Worker thread for synchronous invocations for MyFoo
@@ -154,45 +128,7 @@ namespace CIAO_ThreeComp_Sender_Impl
                                 "Unexpected exception.\n"));
            }
        }
-
-
-/*    ::ThreeComp::MyFoo_var my_foo_ami_ =
-         context_->get_connection_run_my_foo ();
-
-    ACE_OS::sleep(1);
-    CORBA::Boolean wait = false;
-    for (int i = 0; i < 3; ++i)
-      {
-        // Run some synch calls, answer has to come before the next step.
-         CORBA::String_var answer;
-         CORBA::Long l_cmd = 0;
-         try
-           {
-
-             if ( wait==true)
-               {
-                 ACE_ERROR ((LM_ERROR,
-                             "ERROR: Sender didn't receive SYNCHRONOUS answer"
-                             " from Receiver.\n"));
-               }
-             wait = true;
-             ACE_DEBUG ((LM_DEBUG, "Sender send SYNCHRONOUS CALL to Receiver.\n"));
-             l_cmd = my_foo_ami_->foo (20, answer.out());
-             if (l_cmd == 2)
-               {
-                 ACE_DEBUG ((LM_DEBUG, "Sender received SYNCHRONOUS answer "
-                                       "from Receiver <%C>\n",
-                                       answer.in ()));
-                 wait = false;
-               }
-           }
-          catch (const ThreeComp::InternalError&)
-            {
-              ACE_ERROR ((LM_ERROR, "ERROR: synch_foo_generator::foo: "
-                                    "Unexpected exception.\n"));
-            }
-       }
-  */  return 0;
+    return 0;
   }
   //============================================================
   // Receptacle Executor Implementation Class: State_exec_i
