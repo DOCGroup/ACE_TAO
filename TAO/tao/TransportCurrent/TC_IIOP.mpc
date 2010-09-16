@@ -35,6 +35,9 @@ project(TC_IIOP) : taolib_with_idl, tao_output, taoidldefaults, install, tc, int
     TC_IIOPS.h
   }
 
+  IDL_Files {
+  }
+
   Inline_Files {
     TC_IIOPC.inl
     TC_IIOPS.inl
