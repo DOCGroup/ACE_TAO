@@ -22,12 +22,14 @@ TAO_EC_Null_Scheduling::schedule_event (const RtecEventComm::EventSet &event,
                                         TAO_EC_ProxyPushConsumer *,
                                         TAO_EC_Supplier_Filter *filter)
 {
-  for (CORBA::ULong j = 0; j < event.length (); ++j)
+  for (CORBA::ULong j = 0; j < event.size (); ++j)
     {
       const RtecEventComm::Event& e = event[j];
       RtecEventComm::Event* buffer =
         const_cast<RtecEventComm::Event*> (&e);
-      RtecEventComm::EventSet single_event (1, 1, buffer, 0);
+        
+      RtecEventComm::EventSet single_event;
+      single_event.push_back (*buffer);
 
       TAO_EC_QOS_Info event_info;
       filter->push_scheduled_event (single_event, event_info);

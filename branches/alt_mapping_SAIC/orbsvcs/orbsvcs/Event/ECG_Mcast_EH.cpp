@@ -147,7 +147,7 @@ TAO_ECG_Mcast_EH::compute_required_subscriptions (
     const RtecEventChannelAdmin::ConsumerQOS& sub,
     Address_Set& multicast_addresses)
 {
-  CORBA::ULong count = sub.dependencies.length ();
+  CORBA::ULong count = sub.dependencies.size ();
   for (CORBA::ULong i = 0; i != count; ++i)
     {
       const RtecEventComm::EventHeader& header =

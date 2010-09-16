@@ -116,11 +116,11 @@ public:
    * RT_Info is returned.  If the RT_Info already exists, an exception
    * is thrown.
    */
-  virtual RtecScheduler::handle_t create (const char * entry_point);
+  virtual RtecScheduler::handle_t create (const std::string entry_point);
 
   /// Lookup a handle for an RT_Info, and return its handle, or an error
   /// value if it's not present.
-  virtual RtecScheduler::handle_t lookup (const char * entry_point);
+  virtual RtecScheduler::handle_t lookup (const std::string entry_point);
 
   /// Return a pointer to the RT_Info corresponding to the passed handle.
   virtual RtecScheduler::RT_Info* get (RtecScheduler::handle_t handle);
@@ -174,7 +174,7 @@ public:
 
   /// Returns the priority and subpriority values assigned to an RT_Info,
   /// based on its entry point name.
-  virtual void entry_point_priority (const char * entry_point,
+  virtual void entry_point_priority (const std::string entry_point,
                                      RtecScheduler::OS_Priority& o_priority,
                                      RtecScheduler::Preemption_Subpriority_t& p_subpriority,
                                      RtecScheduler::Preemption_Priority_t& p_priority);
@@ -216,27 +216,27 @@ public:
    */
   virtual void compute_scheduling (CORBA::Long minimum_priority,
                                    CORBA::Long maximum_priority,
-                                   RtecScheduler::RT_Info_Set_out infos,
-                                   RtecScheduler::Dependency_Set_out dependencies,
-                                   RtecScheduler::Config_Info_Set_out configs,
-                                   RtecScheduler::Scheduling_Anomaly_Set_out anomalies);
+                                   RtecScheduler::RT_Info_Set & infos,
+                                   RtecScheduler::Dependency_Set & dependencies,
+                                   RtecScheduler::Config_Info_Set & configs,
+                                   RtecScheduler::Scheduling_Anomaly_Set & anomalies);
 
   /// Recomputes the scheduling priorities, etc.
   virtual void recompute_scheduling (CORBA::Long minimum_priority,
                                      CORBA::Long maximum_priority,
-                                     RtecScheduler::Scheduling_Anomaly_Set_out anomalies);
+                                     RtecScheduler::Scheduling_Anomaly_Set & anomalies);
 
   /// Returns the set of rt_infos, with their assigned priorities (as
   /// of the last schedule re-computation).
-  virtual void get_rt_info_set (RtecScheduler::RT_Info_Set_out infos);
+  virtual void get_rt_info_set (RtecScheduler::RT_Info_Set & infos);
 
   /// Returns the set of rt_infos, with their assigned priorities (as
   /// of the last schedule re-computation).
-  virtual void get_dependency_set (RtecScheduler::Dependency_Set_out dependencies);
+  virtual void get_dependency_set (RtecScheduler::Dependency_Set & dependencies);
 
   /// Returns the set of config_infos, describing the appropriate
   /// number, types, and priority levels for the dispatching lanes.
-  virtual void get_config_info_set (RtecScheduler::Config_Info_Set_out configs);
+  virtual void get_config_info_set (RtecScheduler::Config_Info_Set & configs);
 
 
   /// Provides the thread priority and queue type for the given priority level.
@@ -253,7 +253,7 @@ public:
   virtual RtecScheduler::Preemption_Priority_t last_scheduled_priority (void);
 
   /// Provides the set of Config_Infos associated with the current schedule.
-  virtual void get_config_infos (RtecScheduler::Config_Info_Set_out configs);
+  virtual void get_config_infos (RtecScheduler::Config_Info_Set & configs);
 
   // = Accessors that allow controlled relaxations of encapsulation.
 

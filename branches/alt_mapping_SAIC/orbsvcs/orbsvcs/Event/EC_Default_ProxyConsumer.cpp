@@ -164,9 +164,9 @@ TAO_EC_Default_ProxyPushConsumer::activate (
 PortableServer::ObjectId
 TAO_EC_Default_ProxyPushConsumer::object_id (void)
 {
-  PortableServer::ObjectId_var result =
+  PortableServer::ObjectId result =
     this->default_POA_->servant_to_id (this);
-  return result.in ();
+  return result;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

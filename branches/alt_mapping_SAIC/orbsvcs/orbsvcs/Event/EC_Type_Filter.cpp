@@ -15,7 +15,7 @@ int
 TAO_EC_Type_Filter::filter (const RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info)
 {
-  if (event.length () != 1)
+  if (event.size () != 1)
     return this->filter_set (event, qos_info);
 
   if (this->can_match (event[0].header))
@@ -30,7 +30,7 @@ int
 TAO_EC_Type_Filter::filter_nocopy (RtecEventComm::EventSet& event,
                                    TAO_EC_QOS_Info& qos_info)
 {
-  if (event.length () != 1)
+  if (event.size () != 1)
     return this->filter_set (event, qos_info);
 
   if (this->can_match (event[0].header))
@@ -116,8 +116,8 @@ int
 TAO_EC_Type_Filter::filter_set (const RtecEventComm::EventSet& event,
                                 TAO_EC_QOS_Info& qos_info)
 {
-  CORBA::ULong maximum = event.length ();
-  if (event.maximum () == 0)
+  CORBA::ULong maximum = event.size ();
+  if (event.capacity () == 0)
     return 0;
 
   RtecEventComm::EventSet matched (maximum);
@@ -126,11 +126,11 @@ TAO_EC_Type_Filter::filter_set (const RtecEventComm::EventSet& event,
     {
       if (!this->can_match (event[i].header))
         continue;
-      matched.length (next_slot + 1);
+      matched.resize (next_slot + 1);
       matched[next_slot] = event[i];
       next_slot++;
     }
-  if (matched.length () == 0)
+  if (matched.size () == 0)
     return 0;
 
   this->push (matched, qos_info);

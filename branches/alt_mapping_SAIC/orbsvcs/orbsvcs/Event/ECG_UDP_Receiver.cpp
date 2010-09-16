@@ -65,7 +65,7 @@ TAO_ECG_UDP_Receiver::connect (const RtecEventChannelAdmin::SupplierQOS& pub)
       throw CORBA::INTERNAL ();
     }
 
-  if (pub.publications.length () == 0)
+  if (pub.publications.size () == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "TAO_ECG_UDP_Receiver::connect(): "

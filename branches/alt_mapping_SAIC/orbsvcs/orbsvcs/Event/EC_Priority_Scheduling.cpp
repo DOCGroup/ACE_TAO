@@ -27,7 +27,7 @@ TAO_EC_Priority_Scheduling::add_proxy_supplier_dependencies (
               supplier, consumer));
   const RtecEventChannelAdmin::SupplierQOS& qos =
     consumer->publications ();
-  for (CORBA::ULong i = 0; i < qos.publications.length (); ++i)
+  for (CORBA::ULong i = 0; i < qos.publications.size (); ++i)
     {
       const RtecEventComm::EventHeader &header =
         qos.publications[i].event.header;
@@ -55,16 +55,18 @@ TAO_EC_Priority_Scheduling::schedule_event (const RtecEventComm::EventSet &event
   RtecEventChannelAdmin::SupplierQOS qos =
     consumer->publications ();
 
-  for (CORBA::ULong j = 0; j != event.length (); ++j)
+  for (CORBA::ULong j = 0; j != event.size (); ++j)
     {
       const RtecEventComm::Event& e = event[j];
       RtecEventComm::Event* buffer =
         const_cast<RtecEventComm::Event*> (&e);
-      RtecEventComm::EventSet single_event (1, 1, buffer, 0);
+        
+      RtecEventComm::EventSet single_event;
+      single_event.push_back (*buffer);
 
       TAO_EC_QOS_Info qos_info;
 
-      for (CORBA::ULong i = 0; i != qos.publications.length (); ++i)
+      for (CORBA::ULong i = 0; i != qos.publications.size (); ++i)
         {
           const RtecEventComm::EventHeader &qos_header =
             qos.publications[i].event.header;

@@ -41,9 +41,9 @@ public:
   ACE_Config_Scheduler (void);
   virtual ~ACE_Config_Scheduler (void);
 
-  virtual RtecScheduler::handle_t create (const char * entry_point);
+  virtual RtecScheduler::handle_t create (const std::string entry_point);
 
-  virtual RtecScheduler::handle_t lookup (const char * entry_point);
+  virtual RtecScheduler::handle_t lookup (const std::string entry_point);
 
   virtual RtecScheduler::RT_Info* get (RtecScheduler::handle_t handle);
 
@@ -63,7 +63,7 @@ public:
                          RtecScheduler::Preemption_Subpriority_t& p_subpriority,
                          RtecScheduler::Preemption_Priority_t& p_priority);
 
-  virtual void entry_point_priority (const char * entry_point,
+  virtual void entry_point_priority (const std::string entry_point,
                                      RtecScheduler::OS_Priority& priority,
                                      RtecScheduler::Preemption_Subpriority_t& p_subpriority,
                                      RtecScheduler::Preemption_Priority_t& p_priority);
@@ -75,10 +75,10 @@ public:
 
   virtual void compute_scheduling (CORBA::Long minimum_priority,
                                    CORBA::Long maximum_priority,
-                                   RtecScheduler::RT_Info_Set_out infos,
-                                   RtecScheduler::Dependency_Set_out dependencies,
-                                   RtecScheduler::Config_Info_Set_out configs,
-                                   RtecScheduler::Scheduling_Anomaly_Set_out anomalies);
+                                   RtecScheduler::RT_Info_Set & infos,
+                                   RtecScheduler::Dependency_Set & dependencies,
+                                   RtecScheduler::Config_Info_Set & configs,
+                                   RtecScheduler::Scheduling_Anomaly_Set & anomalies);
 
   virtual void dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                                        RtecScheduler::OS_Priority& priority,
@@ -94,7 +94,7 @@ public:
   // All scheduled priorities range from 0 to the number returned,
   // inclusive.
 
-  virtual void get_config_infos (RtecScheduler::Config_Info_Set_out configs);
+  virtual void get_config_infos (RtecScheduler::Config_Info_Set & configs);
   // Provides the set of Config_Infos associated with the current schedule.
 
   virtual void reset (RtecScheduler::handle_t handle,
@@ -148,18 +148,18 @@ public:
 
   virtual void recompute_scheduling (CORBA::Long minimum_priority,
                                      CORBA::Long maximum_priority,
-                                     RtecScheduler::Scheduling_Anomaly_Set_out anomalies);
+                                     RtecScheduler::Scheduling_Anomaly_Set & anomalies);
   // Recomputes the scheduling priorities, etc.
 
-  virtual void get_rt_info_set (RtecScheduler::RT_Info_Set_out infos);
+  virtual void get_rt_info_set (RtecScheduler::RT_Info_Set & infos);
   // Returns the set of rt_infos, with their assigned priorities (as
   // of the last schedule re-computation).
 
-  virtual void get_dependency_set (RtecScheduler::Dependency_Set_out dependencies);
+  virtual void get_dependency_set (RtecScheduler::Dependency_Set & dependencies);
   // Returns the set of rt_infos, with their assigned priorities (as
   // of the last schedule re-computation).
 
-  virtual void get_config_info_set (RtecScheduler::Config_Info_Set_out configs);
+  virtual void get_config_info_set (RtecScheduler::Config_Info_Set & configs);
   // Returns the set of config_infos, describing the appropriate
   // number, types, and priority levels for the dispatching lanes.
 

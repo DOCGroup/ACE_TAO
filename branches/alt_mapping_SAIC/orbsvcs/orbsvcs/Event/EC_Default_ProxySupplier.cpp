@@ -79,7 +79,7 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
       if ( consumer_validate_connection_ == 1 )
       {
         // Validate connection during connect.
-        CORBA::PolicyList_var unused;
+        CORBA::PolicyList unused;
         int status = push_consumer->_validate_connection (unused);
 #if TAO_EC_ENABLE_DEBUG_MESSAGES
         ACE_DEBUG ((LM_DEBUG, "Validated connection to PushConsumer on connect. Status[%d]\n", status));
@@ -191,10 +191,10 @@ TAO_EC_Default_ProxyPushSupplier::activate (
 PortableServer::ObjectId
 TAO_EC_Default_ProxyPushSupplier::object_id (void)
 {
-  PortableServer::ObjectId_var result =
+  PortableServer::ObjectId result =
     this->default_POA_->servant_to_id (this);
 
-  return result.in ();
+  return result;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

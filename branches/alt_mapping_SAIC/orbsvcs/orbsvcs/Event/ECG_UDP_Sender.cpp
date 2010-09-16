@@ -70,7 +70,7 @@ TAO_ECG_UDP_Sender::connect (const RtecEventChannelAdmin::ConsumerQOS& sub)
       throw CORBA::INTERNAL ();
     }
 
-  if (sub.dependencies.length () == 0)
+  if (sub.dependencies.size () == 0)
     {
       ACE_ERROR ((LM_ERROR, "TAO_ECG_UDP_Sender::connect(): "
                             "0-length subscriptions argument."));
@@ -165,7 +165,7 @@ TAO_ECG_UDP_Sender::shutdown (void)
 void
 TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events)
 {
-  if (events.length () == 0)
+  if (events.size () == 0)
     {
       // ACE_DEBUG ((EC_FORMAT (DEBUG,
       //                        "Nothing to multicast: "
@@ -176,7 +176,7 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events)
   // Send each event in a separate message.
   // @@ TODO It is interesting to group events destined to the
   // same mcast group in a single message.
-  for (u_int i = 0; i < events.length (); ++i)
+  for (u_int i = 0; i < events.size (); ++i)
     {
       // To avoid loops we keep a TTL field on the events and skip the
       // events with TTL <= 0

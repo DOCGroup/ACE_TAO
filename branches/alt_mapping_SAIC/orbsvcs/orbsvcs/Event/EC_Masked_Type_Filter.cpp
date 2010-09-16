@@ -44,7 +44,7 @@ int
 TAO_EC_Masked_Type_Filter::filter (const RtecEventComm::EventSet& event,
                                    TAO_EC_QOS_Info& qos_info)
 {
-  if (event.length () != 1)
+  if (event.size () != 1)
     return 0;
 
   if ((event[0].header.type & this->type_mask_) != this->type_value_
@@ -62,7 +62,7 @@ int
 TAO_EC_Masked_Type_Filter::filter_nocopy (RtecEventComm::EventSet& event,
                                           TAO_EC_QOS_Info& qos_info)
 {
-  if (event.length () != 1)
+  if (event.size () != 1)
     return 0;
 
   if ((event[0].header.type & this->type_mask_) != this->type_value_

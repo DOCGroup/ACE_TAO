@@ -38,7 +38,7 @@ TAO_EC_Prefix_Filter_Builder:: recursive_build (
     RtecEventChannelAdmin::ConsumerQOS& qos,
     CORBA::ULong& pos) const
 {
-  CORBA::ULong l = qos.dependencies.length ();
+  CORBA::ULong l = qos.dependencies.size ();
   if (pos == l)
     return 0;
 
@@ -99,7 +99,7 @@ TAO_EC_Prefix_Filter_Builder:: recursive_build (
     {
       pos++; // COnsumer the designator
 
-      if (pos == qos.dependencies.length ())
+      if (pos == qos.dependencies.size ())
         return 0;
       CORBA::ULong source_mask = qos.dependencies[pos].event.header.source;
       CORBA::ULong type_mask = qos.dependencies[pos].event.header.type;
@@ -115,13 +115,13 @@ TAO_EC_Prefix_Filter_Builder:: recursive_build (
     {
       pos++; // Consume the designator
 
-      if (pos == qos.dependencies.length ())
+      if (pos == qos.dependencies.size ())
         return 0;
       CORBA::ULong source_mask = qos.dependencies[pos].event.header.source;
       CORBA::ULong type_mask = qos.dependencies[pos].event.header.type;
       pos++;
 
-      if (pos == qos.dependencies.length ())
+      if (pos == qos.dependencies.size ())
         return 0;
       CORBA::ULong source_value = qos.dependencies[pos].event.header.source;
       CORBA::ULong type_value = qos.dependencies[pos].event.header.type;

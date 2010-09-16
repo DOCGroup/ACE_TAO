@@ -502,7 +502,7 @@ TAO_ECG_Mcast_Gateway::init_sender (
   TAO_EC_Auto_Command<UDP_Sender_Shutdown> sender_shutdown;
   sender_shutdown.set_command (UDP_Sender_Shutdown (sender));
 
-  if (this->consumer_qos_.dependencies.length () > 0)
+  if (this->consumer_qos_.dependencies.size () > 0)
     {
       // Client supplied consumer qos.  Use it.
       this->consumer_qos_.is_gateway = true;
