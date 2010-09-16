@@ -1,3 +1,9 @@
+Thu Sep 16 14:59:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TransportCurrent/TC.mpc:
+        * tao/TransportCurrent/TC_IIOP.mpc:
+          Reduced the number of files generated
+
 Thu Sep 16 14:54:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TransportCurrent/TC.mpc:
