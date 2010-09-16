@@ -483,6 +483,164 @@ test_exceeded_limit_exception (::Components::Receptacles_ptr rec,
 }
 #endif
 
+#if !defined (CCM_LW)
+int
+test_get_all_ports (::Components::CCMObject_ptr cmp)
+{
+  ACE_DEBUG ((LM_DEBUG, "Receptacle - test_get_all_ports - "
+                        "Start test\n"));
+  int ret = 0;
+  try
+    {
+      ::Components::ComponentPortDescription * cpd;
+      cpd = cmp->get_all_ports ();
+
+      //only the facets are available.
+      ::Components::FacetDescriptions fds;
+      fds = cpd->facets ();
+      if (fds.length () != 0)
+        {
+          ACE_ERROR ((LM_ERROR, "Receptacle - test_get_all_ports - "
+                                "Error: Did not receive the expected "
+                                "number of facets: "
+                                "expected <0> - received <%d>\n",
+                                fds.length ()));
+          ++ret;
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "Receptacle get_all_ports - "
+                                "Expected number of Facets found\n"));
+        }
+
+      ::Components::ReceptacleDescriptions rds;
+      rds = cpd->receptacles ();
+      if (rds.length () != 3)
+        {
+          ACE_ERROR ((LM_ERROR, "Receptacle - test_get_all_ports - "
+                                "Error: Did not receive the expected "
+                                "number of receptacles: "
+                                "expected <3> - received <%d>\n",
+                                rds.length ()));
+          ++ret;
+        }
+      for (::CORBA::ULong i = 0UL; i < rds.length (); ++i)
+        {
+          if (::ACE_OS::strcmp (rds[i]->name (), "use_cif_foo") == 0 ||
+              ::ACE_OS::strcmp (rds[i]->name (), "use_multiple_foo") == 0 ||
+              ::ACE_OS::strcmp (rds[i]->name (), "use_cif_inherited_foo") == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG, "Receptacle get_all_ports - "
+                                    "Correct receptacledescription found <%C>\n",
+                                    rds[i]->name ()));
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR, "Receptacle get_all_ports - "
+                                    "Error Incorrect receptacledescription found <%C>\n",
+                                    rds[i]->name ()));
+              ++ret;
+            }
+        }
+
+      ::Components::ConsumerDescriptions cds;
+      cds = cpd->consumers ();
+      if (cds.length () != 0)
+        {
+          ACE_ERROR ((LM_ERROR, "Receptacle get_all_ports - "
+                                "Error: Found Consumers while not  "
+                                "configured\n"));
+          ++ret;
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "Receptacle get_all_ports - "
+                                "Expected number of Consumers found\n"));
+        }
+
+      ::Components::EmitterDescriptions eds;
+      eds = cpd->emitters ();
+      if (eds.length () != 0)
+        {
+          ACE_ERROR ((LM_ERROR, "Receptacle get_all_ports - "
+                                "Error: Found Emitters while not  "
+                                "configured\n"));
+          ++ret;
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "Receptacle get_all_ports - "
+                                "Expected number of Emitters found\n"));
+        }
+
+      ::Components::PublisherDescriptions pds;
+      pds = cpd->publishers ();
+      if (pds.length () != 0)
+        {
+          ACE_ERROR ((LM_ERROR, "Receptacle get_all_ports - "
+                                "Error: Found Publishers while not  "
+                                "configured\n"));
+          ++ret;
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "Receptacle get_all_ports - "
+                                "Expected number of Publishers found\n"));
+        }
+    }
+  catch (const ::CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Receptacle get_all_ports");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle get_all_ports - "
+                            "Error: Unexpected exception caught.\n"));
+      return 1;
+    }
+  if (ret == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Receptacle - test_get_all_ports - "
+                            "Test passed\n"));
+    }
+  return ret;
+}
+#endif
+
+#if !defined (CCM_LW)
+int
+test_get_ccm_home (::Components::CCMObject_ptr cmp)
+{
+  try
+    {
+      ::Components::CCMHome_var cif_home;
+      cif_home = cmp->get_ccm_home ();
+      if (::CORBA::is_nil (cif_home.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, "Receptacle test_get_ccm_home - "
+                                "Error: get_ccm_home returned a "
+                                "NIL pointer\n"));
+          return 1;
+        }
+    }
+  catch (const ::CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Receptacle test_get_ccm_home");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_get_ccm_home - "
+                            "Error: Unexpected exception caught.\n"));
+      return 1;
+    }
+  ACE_DEBUG ((LM_DEBUG, "Receptacle - test_get_ccm_home - "
+                        "Test passed\n"));
+  return 0;
+}
+#endif
+
 int
 run_test (::Components::Receptacles_ptr rec,
           ::CORBA::Object_ptr facet)
@@ -536,7 +694,7 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
     {
       if (cmd.init (argc, argv) != 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ACE_ERROR_RETURN ((LM_ERROR, "Receptacle main - "
                             "Error: Unable to initalize\n"),
                             1);
 
@@ -546,37 +704,52 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
 
       if (::CORBA::is_nil (rec.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                            "Unable to get receptacles interface\n"),
+          ACE_ERROR_RETURN ((LM_ERROR, "Receptacle main - "
+                            "Error: Unable to get receptacles interface\n"),
                             1);
         }
       if (::CORBA::is_nil (nav.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                            "Unable to get navigation interface\n"),
+          ACE_ERROR_RETURN ((LM_ERROR, "Receptacle main - "
+                            "Error: Unable to get navigation interface\n"),
                             1);
         }
 
       ::CORBA::Object_var facet = nav->provide_facet ("provide_cif_foo");
       if (::CORBA::is_nil (facet.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                            "Unable to get Provide facet 'provide_cif_foo'\n"),
+          ACE_ERROR_RETURN ((LM_ERROR, "Receptacle main - "
+                            "Error: Unable to get Provide facet 'provide_cif_foo'\n"),
                             1);
         }
 
       ret = run_test (rec.in (), facet.in ());
 
+#if !defined (CCM_LW)
+      // tests on the component itself
+      ::CORBA::Object_var obj = cmd.get_user_cmp ();
+      if (::CORBA::is_nil (obj.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "Unable to get receptacle component\n"),
+                            1);
+        }
+      ::Components::CCMObject_var cmp = ::Components::CCMObject::_narrow (obj);
+
+      ret += test_get_all_ports (cmp);
+      ret += test_get_ccm_home (cmp);
+#endif
+
       cmd.shutdown ();
     }
   catch (const ::CORBA::Exception &ex)
     {
-      ex._tao_print_exception ("Navigation main");
+      ex._tao_print_exception ("Receptacle main - ");
       return 1;
     }
   catch (...)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_ERROR, "Receptacle main - "
                         "Error: Caught unknown exception\n"),
                         1);
     }
@@ -585,13 +758,13 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
   ACE_DEBUG ((LM_DEBUG, "SUMMARY : \n"));
   if (ret != 0)
     {
-      ACE_ERROR ((LM_ERROR, "\tACE_TMAIN : "
+      ACE_ERROR ((LM_ERROR, "\tReceptacle main - "
               " %d error(s) found during tests.\n",
               ret));
     }
   else
     {
-      ACE_ERROR ((LM_ERROR, "\tACE_TMAIN : "
+      ACE_ERROR ((LM_ERROR, "\tReceptacle main - "
               " No problems found during tests.\n"));
     }
   return ret;

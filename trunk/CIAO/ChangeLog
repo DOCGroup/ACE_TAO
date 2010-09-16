@@ -1,3 +1,27 @@
+Thu Sep 16 09:17:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Common/CIF_Common.h:
+        * tests/CIF/Common/CIF_Common.cpp:
+          Added get_component interface methods.
+
+        * tests/CIF/Common/CIF_Common.mpc:
+          Resolved static compile issue.
+
+        * tests/CIF/Component/CIF_Component.idl:
+          Extended by adding a home.
+
+        * tests/CIF/Component/CIF_Component.mpc:
+          Auto generate executor files.
+
+        * tests/CIF/Navigation/client.cpp:
+        * tests/CIF/Receptacle/client.cpp:
+          Extended with get_all_ports method.
+
+        * tests/CIF/Component/CIF_Component_exec.h:
+        * tests/CIF/Component/CIF_Component_exec.cpp:
+
+          Removed these files.
+
 Wed Sep 15 18:10:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:
