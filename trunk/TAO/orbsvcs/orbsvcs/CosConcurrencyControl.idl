@@ -44,13 +44,13 @@ module CosConcurrencyControl
   // = DESCRIPTION
   //     This idl file describes the concurrency control service.  The
   //     purpose of the concurrency control service is to mediate
-  //     concurrent access to an pbject such that the consistency of
+  //     concurrent access to an object such that the consistency of
   //     the object is not compromised when accessed by concurrently
   //     executing computations.
 
   // = These are the different lock types supported by this module.
 
-  // For a description of the compatability between the different lock
+  // For a description of the compatibility between the different lock
   // types please consult the service description (OMG).
   enum lock_mode
   {
@@ -77,7 +77,7 @@ module CosConcurrencyControl
       //     The LockCoordinator interface enables a transaction service to
       //     drop all locks held by a transaction.
 
-      // Releases all the locks held by the transaction. Designet to be
+      // Releases all the locks held by the transaction. Designed to be
       // used by transaction service when a transaction commits or aborts.
       void drop_locks ();
     };
@@ -92,7 +92,7 @@ module CosConcurrencyControl
       // = DESCRIPTION
       //     Clients operating in the implicit mode
       //     (i.e. non-transactional mode) acquire and release locks
-      //     in lock sets throug this interface. The interface only
+      //     in lock sets through this interface. The interface only
       //     provides operations to acquire and release locks on
       //     behalf of the calling thread or transaction.
 

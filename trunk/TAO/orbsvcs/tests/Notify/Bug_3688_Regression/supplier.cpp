@@ -1,6 +1,7 @@
 // $Id$
 
 #include "common.h"
+#include "ace/OS_NS_unistd.h"
 
 namespace CosNotifyCommImpl{
   class StructuredPushSupplier: public virtual POA_CosNotifyComm:: StructuredPushSupplier

@@ -1,3 +1,41 @@
+Thu Sep 16 09:19:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DevGuideExamples/AMH_AMI/inner_i.cpp:
+        * examples/CSD_Strategy/ThreadPool5/ClientTask.cpp:
+        * examples/CSD_Strategy/ThreadPool5/FooServantList.cpp:
+        * orbsvcs/Event_Service/Event_Service.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+        * orbsvcs/orbsvcs/Channel_Clients_T.h:
+        * orbsvcs/orbsvcs/CosConcurrencyControl.idl:
+        * orbsvcs/orbsvcs/CosNaming.idl:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/Notify/Random_File.cpp:
+        * orbsvcs/tests/Bug_2248_Regression/client.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/client.cpp:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/serverB.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/Basic.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/client.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/Factory.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/Simple.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/client.cpp:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/supplier.cpp:
+        * orbsvcs/tests/Notify/MT_Dispatching/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Persistent_Filter/Filter.cpp:
+        * tests/Bug_2936_Regression/bug2936.cpp:
+        * tests/Bug_3531_Regression/client.cpp:
+        * tests/Bug_3647_Regression/Backend_Impl.cpp:
+        * tests/Bug_3812_Regression/run_test.pl:
+        * tests/Bug_3853_Regression/Hello_i.cpp:
+        * tests/File_IO/client.cpp:
+        * tests/Hang_Shutdown/client.cpp:
+        * tests/ORB_Local_Config/Bug_2612/Test.cpp:
+        * tests/POA/Default_Servant2/client.cpp:
+          Added missing includes
+
 Thu Sep 16 09:14:39 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * tao/Transport_Cache_Manager_T.inl:
@@ -12,14 +50,14 @@ Wed Sep 15 15:51:01 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_operation/operation_ih.cpp:
         * TAO_IDL/be/be_visitor_operation/operation_is.cpp:
         * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
-        
+
           Skip traversal if the operation is an AMI sendc_* implied
           IDL addition. The CORBA servant impl and CCM executor
           classes should not be providing these (empty) operations
           for the application developer to fill in.
-          
+
         * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
-        
+
           Cosmetic changes.
 
 Wed Sep 15 13:07:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>

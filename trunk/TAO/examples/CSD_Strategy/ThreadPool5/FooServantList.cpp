@@ -4,6 +4,7 @@
 #include "Callback_i.h"
 #include "ClientTask.h"
 #include "OrbShutdownTask.h"
+#include "ace/OS_NS_unistd.h"
 
 FooServantList::FooServantList(const ACE_TCHAR* prefix,
                                unsigned    num_servants,
