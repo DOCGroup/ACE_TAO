@@ -6,7 +6,7 @@
 #include "Component/CIF_ComponentC.h"
 
 CIF_Common::CIF_Common (void)
-  : naming_ ("")
+  : naming_ (0)
 {
 }
 
@@ -78,7 +78,7 @@ CIF_Common::init_user_component (::CosNaming::NamingContext_ptr naming_context)
 {
   ::CosNaming::Name name (1);
   name.length (1);
-  name[0].id = ::CORBA::string_dup ("UserComponentInstance");
+  name[0].id = ::CORBA::string_dup (ACE_TEXT ("UserComponentInstance"));
 
   ::CORBA::Object_var obj_ref = naming_context->resolve (name);
 
@@ -174,6 +174,19 @@ CIF_Common::get_receptacle_interface()
     }
   return ::Components::Receptacles::_duplicate (rec.in ());
 }
+
+::CORBA::Object_var
+ CIF_Common::get_provider_cmp ()
+{
+  return ::CORBA::Object::_duplicate (this->provider_cmp_.in ());
+}
+
+::CORBA::Object_var
+CIF_Common::get_user_cmp ()
+{
+  return ::CORBA::Object::_duplicate (this->user_cmp_.in ());
+}
+
 
 void
 CIF_Common::shutdown ()
