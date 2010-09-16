@@ -93,7 +93,7 @@ namespace TAO
 
   template <typename TT, typename TRDT, typename PSTRAT>
   void
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::set_entry_state (HASH_MAP_ENTRY *entry,
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::set_entry_state (HASH_MAP_ENTRY *&entry,
                                             TAO::Cache_Entries_State state)
   {
     ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
@@ -379,9 +379,6 @@ namespace TAO
   int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::make_idle_i (HASH_MAP_ENTRY *entry)
   {
-    if (entry == 0)
-      return -1;
-
     entry->item ().recycle_state (ENTRY_IDLE_AND_PURGABLE);
 
     return 0;
@@ -457,30 +454,16 @@ namespace TAO
 
   template <typename TT, typename TRDT, typename PSTRAT>
   int
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_entry_i (HASH_MAP_ENTRY *&entry)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_entry_i (HASH_MAP_ENTRY *entry)
   {
     // Remove the entry from the Map
     int retval = this->cache_map_.unbind (entry);
-
-    // Set the entry pointer to zero
-    entry = 0;
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
     this->size_monitor_->receive (this->current_size ());
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
 
     return retval;
-  }
-
-  template <typename TT, typename TRDT, typename PSTRAT>
-  void
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::mark_invalid_i (HASH_MAP_ENTRY *entry)
-  {
-    if (entry != 0)
-      {
-        // Mark the entry as not usable
-        entry->item ().recycle_state (ENTRY_PURGABLE_BUT_NOT_IDLE);
-      }
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>

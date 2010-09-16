@@ -42,25 +42,29 @@ namespace TAO
     int retval = 0;
 
     if (entry != 0)
+    {
+      HASH_MAP_ENTRY* cached_entry = 0;
+      ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
+      if (entry != 0) // in case someone beat us to it (entry is reference to transport member)
       {
-        ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
-        retval = this->purge_entry_i (entry);
+        // Store the entry in a temporary and zero out the reference.
+        // If there is only one reference count for the transport, we will end up causing
+        // it's destruction.  And the transport can not be holding a cache map entry if
+        // that happens.
+        cached_entry = entry;
+        entry = 0;
+
+        // now it's save to really purge the entry
+        retval = this->purge_entry_i (cached_entry);
       }
+    }
       
     return retval;
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
   ACE_INLINE void
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::mark_invalid (HASH_MAP_ENTRY *entry)
-  {
-    ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
-    this->mark_invalid_i (entry);
-  }
-
-  template <typename TT, typename TRDT, typename PSTRAT>
-  ACE_INLINE void
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::mark_connected (HASH_MAP_ENTRY *entry, bool state)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::mark_connected (HASH_MAP_ENTRY *&entry, bool state)
   {
     ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
     if (entry == 0)
@@ -77,9 +81,12 @@ namespace TAO
 
   template <typename TT, typename TRDT, typename PSTRAT>
   ACE_INLINE int
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::make_idle (HASH_MAP_ENTRY *entry)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::make_idle (HASH_MAP_ENTRY *&entry)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
+    if (entry == 0) // in case someone beat us to it (entry is reference to transport member)
+      return -1;
+
     return this->make_idle_i (entry);
   }
 
