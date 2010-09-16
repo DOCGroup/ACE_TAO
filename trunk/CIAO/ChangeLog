@@ -1,3 +1,10 @@
+Thu Sep 16 13:57:26 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Component/CIF_Component.idl:
+        * tests/CIF/Navigation/client.cpp:
+        * tests/CIF/Receptacle/client.cpp:
+          Renamed some interfaces.
+
 Thu Sep 16 12:18:01 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Component/CIF_Component.idl:

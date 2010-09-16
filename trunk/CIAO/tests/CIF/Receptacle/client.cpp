@@ -366,7 +366,7 @@ test_get_named_receptacles (::Components::Receptacles_ptr rec)
   ::Components::NameList two_names;
   two_names.length (2);
   two_names[0] = ::CORBA::string_dup ("use_cif_foo");
-  two_names[1] = ::CORBA::string_dup ("use_cif_inherited_foo");
+  two_names[1] = ::CORBA::string_dup ("use_cif_derived_foo");
 
   try
     {
@@ -528,7 +528,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
         {
           if (::ACE_OS::strcmp (rds[i]->name (), "use_cif_foo") == 0 ||
               ::ACE_OS::strcmp (rds[i]->name (), "use_multiple_foo") == 0 ||
-              ::ACE_OS::strcmp (rds[i]->name (), "use_cif_inherited_foo") == 0)
+              ::ACE_OS::strcmp (rds[i]->name (), "use_cif_derived_foo") == 0)
             {
               ACE_DEBUG ((LM_DEBUG, "Receptacle get_all_ports - "
                                     "Correct receptacledescription found <%C>\n",
