@@ -1,3 +1,8 @@
+Thu Sep 16 09:25:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace.mpc:
+          Removed Service_Templates.h
+
 Thu Sep 16 09:08:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * protocols/tests/HTBP/Send_Large_Msg/server.cpp:
