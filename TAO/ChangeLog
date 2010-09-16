@@ -1,3 +1,15 @@
+Thu Sep 16 10:32:39 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * test/Bug_3812_Regression:
+          Removed unused, incomplete and incorrect test.
+          The test attempted to test the problems from the referred bug
+          but instead of testing the code from TAO itself it tested some 
+          simulating code in the test itself making it independent of whether 
+          TAO was fixed or not.
+          Unfortunately it is not possible to change the test to reliably 
+          reproduce the bug (or its being fixed) using more generalized code 
+          accessing TAO functionality itself.
+
 Thu Sep 16 09:19:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DevGuideExamples/AMH_AMI/inner_i.cpp:
