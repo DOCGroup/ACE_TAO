@@ -1,0 +1,135 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p ThreeComp_Base ThreeComp_Master"
+
+project(AMI_ThreeComp_Base_Master_idl_gen) : componentidldefaults {
+  after += AMI_ThreeComp_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=THREECOMP_MASTER_STUB_Export \
+              -Wb,stub_export_include=ThreeComp_Master_stub_export.h \
+              -Wb,skel_export_macro=THREECOMP_MASTER_SVNT_Export \
+              -Wb,skel_export_include=ThreeComp_Master_svnt_export.h \
+              -Wb,exec_export_macro=THREECOMP_MASTER_EXEC_Export \
+              -Wb,exec_export_include=ThreeComp_Master_exec_export.h \
+              -I.. -GC
+
+  IDL_Files {
+    ThreeComp_Master.idl
+  }
+}
+
+project(AMI_ThreeComp_Base_Master_lem_gen) : ciaoidldefaults {
+  after += AMI_ThreeComp_Base_Master_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=THREECOMP_MASTER_LEM_STUB_Export \
+              -Wb,stub_export_include=ThreeComp_Master_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    ThreeComp_MasterE.idl
+  }
+}
+
+project(AMI_ThreeComp_Base_Master_lem_stub) : ccm_svnt, ami   {
+  after += AMI_ThreeComp_Base_Master_lem_gen AMI_ThreeComp_stub Conn_ThreeComp_Base_stub
+  libs  += ThreeComp_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = ThreeComp_Master_lem_stub
+  dynamicflags += THREECOMP_MASTER_LEM_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    ThreeComp_MasterEC.cpp
+  }
+
+  Header_Files {
+    ThreeComp_MasterEC.h
+    ThreeComp_Master_lem_stub_export.h
+  }
+
+  Inline_Files {
+    ThreeComp_MasterEC.inl
+  }
+}
+
+project(AMI_ThreeComp_Base_Master_stub) : ccm_stub, ami   {
+  after += AMI_ThreeComp_Base_Master_idl_gen AMI_ThreeComp_Base_stub AMI_ThreeComp_stub Conn_ThreeComp_Base_stub
+  libs  += ThreeComp_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = ThreeComp_Master_stub
+  dynamicflags += THREECOMP_MASTER_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    ThreeComp_MasterC.cpp
+  }
+
+  Header_Files {
+    ThreeComp_MasterC.h
+    ThreeComp_Master_stub_export.h
+  }
+
+  Inline_Files {
+    ThreeComp_MasterC.inl
+  }
+}
+
+project(AMI_ThreeComp_Base_Master_exec) : ciao_executor, ami, ami4ccm_stub {
+  after   += AMI_ThreeComp_Base_Master_lem_stub AMI_ThreeComp_Base_Master_stub AMI_ThreeComp_Base_exec Conn_ThreeComp_Base_stub AMI_ThreeComp_lem_stub
+  sharedname = ThreeComp_Master_exec
+  libs += ThreeComp_Master_stub ThreeComp_Master_lem_stub ThreeComp_stub ThreeComp_stub ThreeComp_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags += THREECOMP_MASTER_EXEC_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    ThreeComp_Master_exec.cpp
+  }
+
+  Header_Files {
+    ThreeComp_Master_exec.h
+    ThreeComp_Master_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(AMI_ThreeComp_Base_Master_svnt) : ciao_servant, ami {
+  after      += AMI_ThreeComp_Base_skel AMI_ThreeComp_Base_Master_lem_stub AMI_ThreeComp_Base_Master_stub AMI_ThreeComp_Base_exec AMI_ThreeComp_skel
+  sharedname  = ThreeComp_Master_svnt
+  libs       += ThreeComp_Master_stub ThreeComp_Master_lem_stub  \
+                ThreeComp_skel \
+                ThreeComp_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags += THREECOMP_MASTER_SVNT_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    ThreeComp_MasterS.cpp
+    ThreeComp_Master_svnt.cpp
+  }
+
+  Header_Files {
+    ThreeComp_MasterS.h
+    ThreeComp_Master_svnt.h
+    ThreeComp_Master_svnt_export.h
+  }
+
+  Inline_Files {
+    ThreeComp_MasterS.inl
+  }
+}
+
+
