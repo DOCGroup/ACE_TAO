@@ -13,7 +13,7 @@ test_provide_facet (::Components::Navigation_ptr nav)
   try
     {
       nav->provide_facet ("provide_cif_foo");
-      nav->provide_facet ("provide_cif_inherited_foo");
+      nav->provide_facet ("provide_cif_derived_foo");
     }
   catch (const ::Components::InvalidName &)
     {
@@ -53,7 +53,7 @@ test_provide_facet (::Components::Navigation_ptr nav)
 
   try
     {
-      nav->provide_facet ("inherited_foo_1");
+      nav->provide_facet ("derived_foo_1");
       ACE_ERROR ((LM_ERROR, "Navigation test_provide_facet - "
                             "Error: No InvalidName exception caught "
                             "while testing provide_facet\n"));
@@ -120,7 +120,7 @@ test_get_named_facets (::Components::Navigation_ptr nav)
       ::Components::NameList names;
       names.length (2);
       names[0] = CORBA::string_dup ("provide_cif_foo");
-      names[1] = CORBA::string_dup ("provide_cif_inherited_foo");
+      names[1] = CORBA::string_dup ("provide_cif_derived_foo");
       ::Components::FacetDescriptions_var named_facets = nav->get_named_facets (names);
 
       if (named_facets->length () != 2)
@@ -154,7 +154,7 @@ test_get_named_facets (::Components::Navigation_ptr nav)
       ::Components::NameList names;
       names.length (2);
       names[0] = CORBA::string_dup ("provide_cif_foo_invalid_name");
-      names[1] = CORBA::string_dup ("provide_cif_inherited_foo_invalid_name");
+      names[1] = CORBA::string_dup ("provide_cif_derived_foo_invalid_name");
       ::Components::FacetDescriptions_var named_facets = nav->get_named_facets (names);
       ACE_ERROR ((LM_ERROR, "Navigation test_get_named_facets - "
                             "Error: No InvalidName exception caught "
@@ -244,7 +244,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
       for (::CORBA::ULong i = 0UL; i < fds.length (); ++i)
         {
           if (::ACE_OS::strcmp (fds[i]->name (), "provide_cif_foo") == 0 ||
-              ::ACE_OS::strcmp (fds[i]->name (), "provide_cif_inherited_foo") == 0)
+              ::ACE_OS::strcmp (fds[i]->name (), "provide_cif_derived_foo") == 0)
             {
               ACE_DEBUG ((LM_DEBUG, "Navigation get_all_ports - "
                                     "Correct facetdescription found <%C>\n",
