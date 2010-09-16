@@ -1,3 +1,20 @@
+Thu Sep 16 10:09:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Removed ParseError test since this one has been moved to the DAnCE
+          tests.
+
+        * tests/DAnCE/ParseError:
+        * tests/DAnCE/ParseError/Component:
+        * tests/DAnCE/ParseError/Component/ParseError_Test_Component.idl:
+        * tests/DAnCE/ParseError/Component/ParseError_Test_Component.mpc:
+        * tests/DAnCE/ParseError/Component/ParseError_Test_Component_exec.h:
+        * tests/DAnCE/ParseError/Component/ParseError_Test_Component_exec.cpp:
+        * tests/DAnCE/ParseError/descriptors:
+        * tests/DAnCE/ParseError/descriptors/run_test.pl:
+        * tests/DAnCE/ParseError/descriptors/run_test_msm.pl:
+          Removed these files.
+
 Thu Sep 16 09:17:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Common/CIF_Common.h:
