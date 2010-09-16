@@ -1,3 +1,12 @@
+Thu Sep 16 09:14:39 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/Transport_Cache_Manager_T.inl:
+        * tao/Transport_Cache_Manager_T.h:
+        * tao/Transport_Cache_Manager_T.cpp:
+        * tao/Transport.cpp:
+          Changes to fix threadsafety of cache entry management.
+          This fixes Bugzilla #3812.
+
 Wed Sep 15 15:51:01 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation_ih.cpp:
