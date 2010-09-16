@@ -1,0 +1,22 @@
+// $Id$
+
+#ifndef THREECOMP_SENDER_IDL
+#define THREECOMP_SENDER_IDL
+
+#include <Components.idl>
+
+#include "Base/ThreeComp.idl"
+
+#pragma ciao ami4ccm receptacle "ThreeComp::Sender::run_my_foo"
+
+module ThreeComp
+{
+  component Sender
+  {
+    /// For synchronous invocation
+    uses multiple MyFoo run_my_foo;
+    provides State  do_my_state;
+  };
+};
+
+#endif
