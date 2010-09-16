@@ -40,6 +40,9 @@ project(TC) : taolib_with_idl, tao_output, taoidldefaults, install, interceptors
     TCS.inl
   }
 
+  IDL_Files {
+  }
+
   Template_Files {
     Current_ORBInitializer.cpp
   }
