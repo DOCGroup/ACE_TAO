@@ -480,25 +480,15 @@ TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
 int
 TAO_Transport::purge_entry (void)
 {
-  // We must store our entry in a temporary and zero out the data member.
-  // If there is only one reference count on us, we will end up causing
-  // our own destruction.  And we can not be holding a cache map entry if
-  // that happens.
-  TAO::Transport_Cache_Manager::HASH_MAP_ENTRY* entry = 0;
-  {
-    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
-    entry = this->cache_map_entry_;
-    this->cache_map_entry_ = 0;
-  }
-
   if (TAO_debug_level > 3)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Transport[%d]::purge_entry, ")
                   ACE_TEXT ("entry is %@\n"),
-                  this->id (), entry));
+                  this->id (), this->cache_map_entry_));
     }
-  return this->transport_cache_manager ().purge_entry (entry);
+
+  return this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
 }
 
 bool
