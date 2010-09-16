@@ -3,6 +3,7 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
 #include <ace/Task.h>
+#include "ace/OS_NS_unistd.h"
 
 const ACE_TCHAR *ior_input_file = ACE_TEXT ("file://serverA.ior");
 int test_duration_sec = 15;

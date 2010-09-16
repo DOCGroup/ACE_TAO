@@ -6,6 +6,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_main.h"
+#include "ace/OS_NS_unistd.h"
 
 #include "orbsvcs/Daemon_Utilities.h"
 

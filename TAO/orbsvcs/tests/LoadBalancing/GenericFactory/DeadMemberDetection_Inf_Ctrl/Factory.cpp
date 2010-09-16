@@ -4,6 +4,7 @@
 #include "Simple.h"
 
 #include "TestC.h"
+#include "ace/OS_NS_unistd.h"
 
 Factory::Factory (int id)
 : id_ (id)
