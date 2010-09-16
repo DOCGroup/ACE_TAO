@@ -20,6 +20,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_unistd.h"
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

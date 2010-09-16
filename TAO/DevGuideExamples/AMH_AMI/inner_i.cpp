@@ -2,6 +2,7 @@
 #include "amh_ami_pch.h"
 
 #include "inner_i.h"
+#include "ace/OS_NS_unistd.h"
 
 Inner_i::Inner_i (int d)
   : divisor_ (d)

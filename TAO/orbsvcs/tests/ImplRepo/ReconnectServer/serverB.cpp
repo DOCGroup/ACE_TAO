@@ -4,6 +4,7 @@
 #include "tao/ImR_Client/ImR_Client.h"
 #include <ace/Task.h>
 #include <ace/Get_Opt.h>
+#include "ace/OS_NS_unistd.h"
 
 const ACE_TCHAR * ior_output_file = ACE_TEXT ("serverB.ior");
 // server_notify_delay between resolving RootPOA init ref and create_POA.

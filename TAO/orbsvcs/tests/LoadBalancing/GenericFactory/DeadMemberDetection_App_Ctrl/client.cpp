@@ -4,6 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Vector_T.h"
 #include "ace/OS_NS_strings.h"
+i#include "ace/OS_NS_unistd.h"
 
 const ACE_TCHAR *group_file = ACE_TEXT("group.ior");
 const ACE_TCHAR *group_ior = ACE_TEXT("file://group.ior");

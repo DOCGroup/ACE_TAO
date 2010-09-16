@@ -22,6 +22,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_unistd.h"
 
 static const ACE_TCHAR *iorfile = 0;
 static const ACE_TCHAR *filename = ACE_TEXT ("test");

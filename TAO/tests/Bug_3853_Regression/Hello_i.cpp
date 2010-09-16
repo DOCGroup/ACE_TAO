@@ -1,11 +1,7 @@
-//
 // $Id$
-//
 
 #include "Hello_i.h"
-
-#include <iostream>
-using namespace std;
+#include "ace/OS_NS_unistd.h"
 
 // Implementation skeleton constructor
 Demo_HelloWorld_i::Demo_HelloWorld_i (CORBA::ORB_ptr orb)
@@ -18,13 +14,13 @@ Demo_HelloWorld_i::~Demo_HelloWorld_i (void)
 {
 }
 
-void Demo_HelloWorld_i::sayHello (
+void Demo_HelloWorld_i::sayHello ( 
     const char * msg
   )
 {
   ACE_OS::sleep(1);
   // Add your implementation here
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%P|%t)Demo_HelloWorld_i::sayHello %s \n"), msg));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%P|%t)Demo_HelloWorld_i::sayHello %C\n"), msg));
 }
 
 

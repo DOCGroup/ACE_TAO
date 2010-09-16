@@ -7,6 +7,7 @@
 
 #include "ace/Service_Config.h"
 #include "tao/corba.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_TCHAR const * const scpc_loadOrb = // NOTE due to the way ACE_DYNAMIC_SERVICE_DIRECTIVE() macro is defined,
   // each parameter CANNOT be split into multiple quoted strings "line1" "nextline" with the expectation that

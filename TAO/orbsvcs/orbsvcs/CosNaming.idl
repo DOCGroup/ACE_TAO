@@ -187,7 +187,7 @@ module CosNaming
 
       // = Deleting contexts.
 
-      /// Delete the naming context.  NOTE: the user should <unbind>
+      /// Delete the naming context.  @note the user should <unbind>
       /// any bindings in which the given context is bound to some
       /// names before invoking <destroy> operation on it.
       void destroy ()

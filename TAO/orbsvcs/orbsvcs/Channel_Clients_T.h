@@ -12,7 +12,7 @@
  *  These classes allow applications to be consumer, suppliers, and
  *  consumer suppliers, as well as being active objects.  This is
  *  accomplished with adapters to prevent the use of multiple
- *  inheritence (which is this root of all evil.)
+ *  inheritance (which is this root of all evil.)
  *
  *
  */
