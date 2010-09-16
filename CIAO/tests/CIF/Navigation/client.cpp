@@ -218,8 +218,122 @@ test_same_component (::Components::Navigation_ptr nav)
 }
 #endif
 
+#if !defined (CCM_LW)
 int
-run_test (::Components::Navigation_ptr nav)
+test_get_all_ports (::Components::CCMObject_ptr cmp)
+{
+  ACE_DEBUG ((LM_DEBUG, "Navigation - test_get_all_ports - "
+                        "Start test\n"));
+  try
+    {
+      ::Components::ComponentPortDescription * cpd;
+      cpd = cmp->get_all_ports ();
+
+      //only the facets are available.
+      ::Components::FacetDescriptions fds;
+      fds = cpd->facets ();
+      if (fds.length () != 2)
+        {
+          ACE_ERROR ((LM_ERROR, "Navigation - test_get_all_ports - "
+                                "Error: Did not receive the expected "
+                                "number of facets: "
+                                "expected <2> - received <%d>\n",
+                                fds.length ()));
+          return 1;
+        }
+      for (::CORBA::ULong i = 0UL; i < fds.length (); ++i)
+        {
+          if (::ACE_OS::strcmp (fds[i]->name (), "provide_cif_foo") == 0 ||
+              ::ACE_OS::strcmp (fds[i]->name (), "provide_cif_inherited_foo") == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG, "Navigation get_all_ports - "
+                                    "Correct facetdescription found <%C>\n",
+                                    fds[i]->name ()));
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR, "Navigation get_all_ports - "
+                                    "Error Incorrect facetdescription found <%C>\n",
+                                    fds[i]->name ()));
+            }
+        }
+
+      ::Components::ReceptacleDescriptions rds;
+      rds = cpd->receptacles ();
+      if (rds.length () != 0)
+        {
+          ACE_ERROR ((LM_ERROR, "Navigation get_all_ports - "
+                                "Error: Found receptacles an a Navigation "
+                                "Component\n"));
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "Navigation get_all_ports - "
+                                "Expected number of Receptacles found\n"));
+        }
+
+      ::Components::ConsumerDescriptions cds;
+      cds = cpd->consumers ();
+      if (cds.length () != 0)
+        {
+          ACE_ERROR ((LM_ERROR, "Navigation get_all_ports - "
+                                "Error: Found Consumers while not  "
+                                "configured\n"));
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "Navigation get_all_ports - "
+                                "Expected number of Consumers found\n"));
+        }
+
+      ::Components::EmitterDescriptions eds;
+      eds = cpd->emitters ();
+      if (eds.length () != 0)
+        {
+          ACE_ERROR ((LM_ERROR, "Navigation get_all_ports - "
+                                "Error: Found Emitters while not  "
+                                "configured\n"));
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "Navigation get_all_ports - "
+                                "Expected number of Emitters found\n"));
+        }
+
+      ::Components::PublisherDescriptions pds;
+      pds = cpd->publishers ();
+      if (pds.length () != 0)
+        {
+          ACE_ERROR ((LM_ERROR, "Navigation get_all_ports - "
+                                "Error: Found Publishers while not  "
+                                "configured\n"));
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "Navigation get_all_ports - "
+                                "Expected number of Publishers found\n"));
+        }
+    }
+  catch (const ::CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Navigation get_all_ports");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Navigation get_all_ports - "
+                            "Error: Unexpected exception caught.\n"));
+      return 1;
+    }
+  ACE_DEBUG ((LM_DEBUG, "Navigation - test_get_all_ports - "
+                        "Test passed\n"));
+  return 0;
+}
+#endif
+
+int
+run_test (::Components::Navigation_ptr nav,
+          ::Components::CCMObject_ptr cmp)
 {
   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
   int ret = test_provide_facet (nav);
@@ -233,6 +347,10 @@ run_test (::Components::Navigation_ptr nav)
 
   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
   ret += test_same_component (nav);
+
+
+  ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+  ret += test_get_all_ports (cmp);
 #endif
   return ret;
 }
@@ -251,15 +369,23 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
                             1);
 
         }
-      ::Components::Navigation_var nav = cmd.get_navigation_interface ();
+      ::CORBA::Object_var obj = cmd.get_provider_cmp ();
+      if (::CORBA::is_nil (obj.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "Unable to get navigation component\n"),
+                            1);
+        }
 
+      ::Components::Navigation_var nav = cmd.get_navigation_interface ();
       if (::CORBA::is_nil (nav.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                             "Unable to get navigation interface\n"),
                             1);
         }
-      ret = run_test (nav.in ());
+      ::Components::CCMObject_var cmp = ::Components::CCMObject::_narrow (obj);
+      ret = run_test (nav.in (), cmp.in ());
 
       cmd.shutdown ();
     }
@@ -279,13 +405,13 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
   ACE_DEBUG ((LM_DEBUG, "SUMMARY : \n"));
   if (ret != 0)
     {
-      ACE_ERROR ((LM_ERROR, "\tACE_TMAIN : "
+      ACE_ERROR ((LM_ERROR, "\tNavigation main - "
               " %d error(s) found during tests.\n",
               ret));
     }
   else
     {
-      ACE_ERROR ((LM_ERROR, "\tACE_TMAIN : "
+      ACE_ERROR ((LM_ERROR, "\tNavigation main - "
               " No problems found during tests.\n"));
     }
   return ret;

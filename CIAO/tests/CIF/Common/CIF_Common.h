@@ -9,28 +9,30 @@
 class CIF_COMMON_Export CIF_Common
 {
 public:
-  CIF_Common (void);
-  ~CIF_Common (void);
+    CIF_Common (void);
+    ~CIF_Common (void);
 
-  int init (int argc,
-            ACE_TCHAR *argv[]);
+    int init (int argc,
+              ACE_TCHAR *argv[]);
 
-  void shutdown ();
+    void shutdown ();
 
-  ::Components::Navigation_ptr get_navigation_interface ();
-  ::Components::Receptacles_ptr get_receptacle_interface ();
+    ::Components::Navigation_ptr get_navigation_interface (void);
+    ::Components::Receptacles_ptr get_receptacle_interface (void);
+    ::CORBA::Object_var get_provider_cmp (void);
+    ::CORBA::Object_var get_user_cmp (void);
 
 private:
-  ::CORBA::ORB_var orb_;
-  ::CORBA::Object_var provider_cmp_;
-  ::CORBA::Object_var user_cmp_;
+    ::CORBA::ORB_var orb_;
+    ::CORBA::Object_var provider_cmp_;
+    ::CORBA::Object_var user_cmp_;
 
-  const char * naming_;
+    ACE_TCHAR * naming_;
 
-  int init_provider_component (::CosNaming::NamingContext_ptr naming_context);
-  int init_user_component (::CosNaming::NamingContext_ptr naming_context);
+    int init_provider_component (::CosNaming::NamingContext_ptr naming_context);
+    int init_user_component (::CosNaming::NamingContext_ptr naming_context);
 
-  int parse_args (int argc, ACE_TCHAR *argv[]);
+    int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 #endif

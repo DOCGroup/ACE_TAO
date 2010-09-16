@@ -30,6 +30,9 @@ module CIF
     uses inherited_foo use_cif_inherited_foo;
   };
 
+  home UserHome manages CIF_User
+  {
+  };
 };
 
 #endif /* CIF_COMPONENT_IDL_ */
