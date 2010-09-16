@@ -1,0 +1,196 @@
+// $Id$
+
+project(AMI_ThreeComp_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=THREECOMP_STUB_Export \
+              -Wb,stub_export_include=ThreeComp_stub_export.h \
+              -Wb,skel_export_macro=THREECOMP_SKEL_Export \
+              -Wb,skel_export_include=ThreeComp_skel_export.h \
+              -Wb,conn_export_macro=THREECOMP_CONN_Export \
+              -Wb,conn_export_include=ThreeComp_conn_export.h \
+              -Wb,exec_export_macro=THREECOMP_EXEC_Export \
+              -Wb,exec_export_include=ThreeComp_exec_export.h \
+              -I.. -GM -Gxhcn
+  idlflags -= -Gsv
+
+  IDL_Files {
+    ThreeComp.idl
+  }
+}
+
+project(AMI_ThreeComp_lem_gen) : ciaoidldefaults {
+  after += AMI_ThreeComp_idl_gen AMI_ThreeComp_lema_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro=THREECOMP_LEM_STUB_Export \
+              -Wb,export_include=ThreeComp_lem_stub_export.h \
+              -I.. -SS -Gxhst
+
+  IDL_Files {
+    ThreeCompE.idl
+  }
+}
+
+project(AMI_ThreeComp_lema_gen) : ciaoidldefaults, typecode {
+  after += AMI_ThreeComp_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=THREECOMP_STUB_Export \
+              -Wb,stub_export_include=ThreeComp_stub_export.h \
+              -Wb,conn_export_macro=THREECOMP_CONN_Export \
+              -Wb,conn_export_include=ThreeComp_conn_export.h \
+              -Wb,svnt_export_macro=THREECOMP_SVNT_Export \
+              -Wb,svnt_export_include=ThreeComp_svnt_export.h \
+              -Wb,skel_export_macro=THREECOMP_SKEL_Export \
+              -Wb,skel_export_include=ThreeComp_skel_export.h \
+              -I.. -Gsv -Gcn -Glem -GC -Gxhst -Gxhsv
+
+  IDL_Files {
+    ThreeCompA.idl
+  }
+}
+
+project(AMI_ThreeComp_lemae_gen) : ciaoidldefaults {
+  after += AMI_ThreeComp_lema_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=THREECOMP_LEM_STUB_Export \
+              -Wb,stub_export_include=ThreeComp_lem_stub_export.h \
+              -I.. -SS
+
+  IDL_Files {
+    ThreeCompAE.idl
+  }
+}
+
+project(AMI_ThreeComp_stub) : ccm_stub, ami, ami4ccm_stub {
+  after += AMI_ThreeComp_lem_gen
+  libs  +=
+  libout = ../lib
+  libpaths += ../lib
+  includes +=   ..
+
+  sharedname = ThreeComp_stub
+  dynamicflags += THREECOMP_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ThreeCompC.cpp
+    ThreeCompAC.cpp
+  }
+
+  Header_Files {
+    ThreeCompC.h
+    ThreeComp_stub_export.h
+}
+
+  Inline_Files {
+    ThreeCompC.inl
+  }
+}
+
+project(AMI_ThreeComp_lem_stub) : ccm_executor, ami, ami4ccm_lem_stub {
+  after += AMI_ThreeComp_lem_gen AMI_ThreeComp_stub AMI_ThreeComp_lemae_gen AMI_ThreeComp_skel
+  libs += ThreeComp_stub ThreeComp_skel
+  libout = ../lib
+  libpaths += ../lib
+  includes +=   ..
+
+  sharedname = ThreeComp_lem_stub
+  dynamicflags += THREECOMP_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ThreeCompEC.cpp
+    ThreeCompAEC.cpp
+  }
+
+  Header_Files {
+    ThreeCompEC.h
+    ThreeComp_lem_stub_export.h
+}
+
+  Inline_Files {
+    ThreeCompEC.inl
+  }
+}
+
+project(AMI_ThreeComp_skel) : ciao_executor, ami, ami4ccm_servant {
+  after      += AMI_ThreeComp_stub
+  sharedname  = ThreeComp_skel
+  libs       += ThreeComp_stub
+  libout = ../lib
+  libpaths += ../lib
+  includes +=   ..
+
+  dynamicflags += THREECOMP_SKEL_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ThreeCompS.cpp
+    ThreeCompAS.cpp
+  }
+
+  Header_Files {
+    ThreeCompS.h
+   
+    ThreeComp_skel_export.h
+  }
+
+  Inline_Files {
+    ThreeCompS.inl
+   
+  }
+}
+
+project(AMI_ThreeComp_conn) : ciao_executor, ami, ami4ccm_lem_stub {
+  after   += AMI_ThreeComp_lem_stub ThreeComp_Base_AMI_stub AMI_ThreeComp_skel AMI_ThreeComp_lema_gen AMI_ThreeComp_lemae_gen
+  sharedname = ThreeComp_conn
+  libs += ThreeComp_stub ThreeComp_skel ThreeComp_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags += THREECOMP_CONN_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    ThreeCompA_conn.cpp
+  }
+
+  Header_Files {
+    ThreeCompA_conn.h
+    ThreeComp_conn_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(AMI_ThreeComp_svnt) : ciao_servant, ami, ami4ccm_servant {
+  after   += AMI_ThreeComp_lem_stub ThreeComp_Base_AMI_stub AMI_ThreeComp_skel AMI_ThreeComp_lema_gen AMI_ThreeComp_lemae_gen AMI_ThreeComp_conn
+  sharedname = ThreeComp_svnt
+  libs += ThreeComp_stub ThreeComp_skel ThreeComp_lem_stub ThreeComp_conn
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags += THREECOMP_SVNT_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    ThreeCompA_svnt.cpp
+  }
+
+  Header_Files {
+    ThreeCompA_svnt.h
+    ThreeCompA_svnt_export.h
+  }
+
+  Inline_Files {
+  }
+}
+

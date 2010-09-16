@@ -1,0 +1,812 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:DeploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>6D382DAE-9024-4C4D-B91B-A0F9176AFACF</UUID>
+
+  <implementation xmi:id="ThreeComp_ReceiverHomeImplementation">
+    <name>ThreeComp_ReceiverHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="ThreeComp_Receiver_ExecArtifact"/>
+    <artifact xmi:idref="ThreeComp_Receiver_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_AMI_Receiver_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ThreeComp.ImplementationArtifacts.ReceiverArtifacts.Receiver_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_Receiver_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ThreeComp.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="ThreeComp_SenderHomeImplementation">
+    <name>ThreeComp_SenderHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="ThreeComp_Sender_ExecArtifact"/>
+    <artifact xmi:idref="ThreeComp_Sender_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_AMI_Sender_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ThreeComp.ImplementationArtifacts.SenderArtifacts.Sender_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_Sender_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ThreeComp.ImplementationArtifacts.SenderArtifacts.Sender_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+<implementation xmi:id="ThreeComp_MasterHomeImplementation">
+    <name>ThreeComp_MasterHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="ThreeComp_Master_ExecArtifact"/>
+    <artifact xmi:idref="ThreeComp_Master_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_AMI_Master_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ThreeComp.ImplementationArtifacts.MasterArtifacts.Master_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_Master_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ThreeComp.ImplementationArtifacts.MasterArtifacts.Master_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+
+
+  <implementation xmi:id="ThreeComp_AMIHomeImplementation1">
+    <name>ThreeComp_AMIHomeImplementation1</name>
+    <source/>
+    <artifact xmi:idref="ThreeComp_AMI1_ExecArtifact"/>
+    <artifact xmi:idref="ThreeComp_AMI1_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_AMI4CCM_MyFoo_Connector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ThreeComp.ImplementationArtifacts.AMIArtifacts.AMI1_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_AMI4CCM_MyFoo_Connector_AMI4CCM_Connector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ThreeComp.ImplementationArtifacts.AMIArtifacts.AMI1_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+
+<implementation xmi:id="ThreeComp_AMIHomeImplementation2">
+    <name>ThreeComp_AMIHomeImplementation2</name>
+    <source/>
+    <artifact xmi:idref="ThreeComp_AMI2_ExecArtifact"/>
+    <artifact xmi:idref="ThreeComp_AMI2_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_AMI4CCM_State_Connector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ThreeComp.ImplementationArtifacts.AMIArtifacts.AMI2_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_AMI4CCM_State_Connector_AMI4CCM_Connector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ThreeComp.ImplementationArtifacts.AMIArtifacts.AMI2_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <instance xmi:id="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.ReceiverA">
+    <name>ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.ReceiverA</name>
+    <node>Receiver</node>
+    <source/>
+    <implementation xmi:idref="ThreeComp_ReceiverHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+   <instance xmi:id="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.ReceiverB">
+    <name>ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.ReceiverB</name>
+    <node>Receiver</node>
+    <source/>
+    <implementation xmi:idref="ThreeComp_ReceiverHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+   <instance xmi:id="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.ReceiverC">
+    <name>ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.ReceiverC</name>
+    <node>Receiver</node>
+    <source/>
+    <implementation xmi:idref="ThreeComp_ReceiverHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  
+  
+
+  <instance xmi:id="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.Sender">
+    <name>ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.Sender</name>
+    <node>Sender</node>
+    <source/>
+    <implementation xmi:idref="ThreeComp_SenderHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+<instance xmi:id="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.Master">
+    <name>ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.Master</name>
+    <node>Master</node>
+    <source/>
+    <implementation xmi:idref="ThreeComp_MasterHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Master.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.AMI1A">
+    <name>ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.AMI1A</name>
+    <node>Sender</node>
+    <source/>
+    <implementation xmi:idref="ThreeComp_AMIHomeImplementation1"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>AMI1.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+   <instance xmi:id="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.AMI1B">
+    <name>ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.AMI1B</name>
+    <node>Sender</node>
+    <source/>
+    <implementation xmi:idref="ThreeComp_AMIHomeImplementation1"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>AMI1.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+   <instance xmi:id="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.AMI1C">
+    <name>ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.AMI1C</name>
+    <node>Sender</node>
+    <source/>
+    <implementation xmi:idref="ThreeComp_AMIHomeImplementation1"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>AMI1.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+<instance xmi:id="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.AMI2">
+    <name>ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.AMI2</name>
+    <node>Master</node>
+    <source/>
+    <implementation xmi:idref="ThreeComp_AMIHomeImplementation2"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>AMI2.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+
+
+  <connection>
+    <name>run_asynch_foo_connectionA</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>sendc_run_my_foo</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_provides</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.AMI1A" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>run_asynch_foo_connectionB</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>sendc_run_my_foo</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_provides</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.AMI1B" />
+    </internalEndpoint>
+  </connection>
+    <connection>
+    <name>run_asynch_foo_connectionC</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>sendc_run_my_foo</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_provides</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.AMI1C" />
+    </internalEndpoint>
+  </connection>
+  
+
+<connection>
+    <name>run_asynch_state_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>sendc_run_my_state</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.Master" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_provides</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.AMI2" />
+    </internalEndpoint>
+  </connection>
+
+
+  <connection>
+    <name>do_foo_connectionA</name>
+    <internalEndpoint>
+      <portName>do_my_foo</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.ReceiverA" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_uses</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.AMI1A" />
+    </internalEndpoint>
+  </connection>
+   <connection>
+    <name>do_foo_connectionB</name>
+    <internalEndpoint>
+      <portName>do_my_foo</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.ReceiverB" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_uses</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.AMI1B" />
+    </internalEndpoint>
+  </connection>
+   <connection>
+    <name>do_foo_connectionC</name>
+    <internalEndpoint>
+      <portName>do_my_foo</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.ReceiverC" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_uses</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.AMI1C" />
+    </internalEndpoint>
+  </connection>
+
+<connection>
+    <name>do_state_connection</name>
+    <internalEndpoint>
+      <portName>do_my_state</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_uses</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.AMI2" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>synch_foo_connectionA</name>
+    <internalEndpoint>
+      <portName>do_my_foo</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.ReceiverA" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>run_my_foo</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.Sender" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>synch_foo_connectionB</name>
+    <internalEndpoint>
+      <portName>do_my_foo</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.ReceiverB" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>run_my_foo</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.Sender" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>synch_foo_connectionC</name>
+    <internalEndpoint>
+      <portName>do_my_foo</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.ReceiverC" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>run_my_foo</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.Sender" />
+    </internalEndpoint>
+  </connection>
+
+<connection>
+    <name>synch_state_connection</name>
+    <internalEndpoint>
+      <portName>do_my_state</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>run_my_state</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.Master" />
+    </internalEndpoint>
+  </connection>
+
+  <artifact xmi:id="ThreeComp_AMI1_SvntArtifact">
+    <name>ThreeComp.ImplementationArtifacts.AMIArtifacts.AMI1_svnt</name>
+    <source/>
+    <node/>
+    <location>ThreeComp_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_AMI4CCM_MyFoo_Connector_AMI4CCM_Connector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="ThreeComp_AMI1_ExecArtifact">
+    <name>ThreeComp.ImplementationArtifacts.AMIArtifacts.AMI1_exec</name>
+    <source/>
+    <node/>
+    <location>ThreeComp_conn</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_AMI4CCM_MyFoo_Connector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+
+  <artifact xmi:id="ThreeComp_AMI2_SvntArtifact">
+    <name>ThreeComp.ImplementationArtifacts.AMIArtifacts.AMI2_svnt</name>
+    <source/>
+    <node/>
+    <location>ThreeComp_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_AMI4CCM_State_Connector_AMI4CCM_Connector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="ThreeComp_AMI2_ExecArtifact">
+    <name>ThreeComp.ImplementationArtifacts.AMIArtifacts.AMI2_exec</name>
+    <source/>
+    <node/>
+    <location>ThreeComp_conn</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_AMI4CCM_State_Connector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+
+  <artifact xmi:id="ThreeComp_Receiver_SvntArtifact">
+    <name>ThreeComp.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</name>
+    <source/>
+    <node/>
+    <location>ThreeComp_Receiver_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_AMI_ReceiverHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="ThreeComp_Receiver_ExecArtifact">
+    <name>ThreeComp.ImplementationArtifacts.ReceiverArtifacts.Receiver_exec</name>
+    <source/>
+    <node/>
+    <location>ThreeComp_Receiver_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_AMI_ReceiverHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="ThreeComp_Sender_SvntArtifact">
+    <name>ThreeComp.ImplementationArtifacts.SenderArtifacts.Sender_svnt</name>
+    <source/>
+    <node/>
+    <location>ThreeComp_Sender_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_AMI_SenderHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="ThreeComp_Sender_ExecArtifact">
+    <name>ThreeComp.ImplementationArtifacts.SenderArtifacts.Sender_exec</name>
+    <source/>
+    <node/>
+    <location>ThreeComp_Sender_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_AMI_SenderHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+<artifact xmi:id="ThreeComp_Master_SvntArtifact">
+    <name>ThreeComp.ImplementationArtifacts.MasterArtifacts.Master_svnt</name>
+    <source/>
+    <node/>
+    <location>ThreeComp_Master_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_AMI_MasterHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="ThreeComp_Master_ExecArtifact">
+    <name>ThreeComp.ImplementationArtifacts.MasterArtifacts.Master_exec</name>
+    <source/>
+    <node/>
+    <location>ThreeComp_Master_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ThreeComp_AMI_MasterHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+</Deployment:DeploymentPlan>
