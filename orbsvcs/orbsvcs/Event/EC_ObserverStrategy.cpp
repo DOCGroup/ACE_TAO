@@ -229,7 +229,7 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
 
   RtecEventChannelAdmin::DependencySet& dep = qos.dependencies;
 
-  dep.length (static_cast<CORBA::ULong> (headers.current_size () + 1));
+  dep.resize (static_cast<CORBA::ULong> (headers.current_size () + 1));
 
   dep[0].event.header.type = ACE_ES_DISJUNCTION_DESIGNATOR;
   dep[0].event.header.source = static_cast<CORBA::ULong> (headers.current_size ());
@@ -252,7 +252,7 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
   TAO_EC_Accumulate_Consumer_Headers worker (headers);
   this->event_channel_->for_each_supplier (&worker);
 
-  qos.publications.length (static_cast<CORBA::ULong> (headers.current_size ()));
+  qos.publications.resize (static_cast<CORBA::ULong> (headers.current_size ()));
 
   CORBA::ULong count = 0;
   for (HeadersIterator i = headers.begin (); i != headers.end (); ++i)
@@ -398,7 +398,7 @@ TAO_EC_Accumulate_Supplier_Headers::work (TAO_EC_ProxyPushSupplier *supplier)
     supplier->subscriptions ();
   if (sub.is_gateway)
     return;
-  for (CORBA::ULong j = 0; j < sub.dependencies.length (); ++j)
+  for (CORBA::ULong j = 0; j < sub.dependencies.size (); ++j)
     {
       const RtecEventComm::Event& event =
         sub.dependencies[j].event;
@@ -419,7 +419,7 @@ TAO_EC_Accumulate_Consumer_Headers::work (TAO_EC_ProxyPushConsumer *consumer)
     consumer->publications ();
   if (pub.is_gateway)
     return;
-  for (CORBA::ULong j = 0; j < pub.publications.length (); ++j)
+  for (CORBA::ULong j = 0; j < pub.publications.size (); ++j)
     {
       const RtecEventComm::Event& event =
         pub.publications[j].event;

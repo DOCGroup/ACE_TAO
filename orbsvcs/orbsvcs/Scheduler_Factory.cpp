@@ -351,11 +351,11 @@ int ACE_Scheduler_Factory::dump_schedule
 
   // Indicate anomalies encountered during scheduling.
 
-  ACE_OS::fprintf(file, (anomalies.length () > 0
+  ACE_OS::fprintf(file, (anomalies.size () > 0
                          ? start_anomalies_found
                          : start_anomalies_none));
 
-  for (i = 0; i < anomalies.length (); ++i)
+  for (i = 0; i < anomalies.size (); ++i)
     {
       const RtecScheduler::Scheduling_Anomaly& anomaly = anomalies[i];
       switch (anomaly.severity)
@@ -396,7 +396,7 @@ int ACE_Scheduler_Factory::dump_schedule
   ACE_OS::fprintf (file, start_infos);
 
   for (i = 0;
-       i < infos.length ();
+       i < infos.size ();
        ++i)
     {
       const RtecScheduler::RT_Info& info = infos[i];
@@ -441,7 +441,7 @@ int ACE_Scheduler_Factory::dump_schedule
   // Finish last line.
   ACE_OS::fprintf(file, "\n");
 
-  if (infos.length () > 0)
+  if (infos.size () > 0)
     ACE_OS::fprintf (file, end_infos);
   else
     ACE_OS::fprintf (file, end_infos_empty);
@@ -460,7 +460,7 @@ int ACE_Scheduler_Factory::dump_schedule
   ACE_OS::fprintf (file, start_dependencies);
 
   for (i = 0;
-       i < dependencies.length ();
+       i < dependencies.size ();
        ++i)
     {
       const RtecScheduler::Dependency_Info& dep = dependencies[i];
@@ -488,7 +488,7 @@ int ACE_Scheduler_Factory::dump_schedule
   // Finish last line.
   ACE_OS::fprintf (file, "\n");
 
-  if (dependencies.length () > 0)
+  if (dependencies.size () > 0)
     ACE_OS::fprintf (file, end_dependencies);
   else
     ACE_OS::fprintf (file, end_dependencies_empty);
@@ -498,7 +498,7 @@ int ACE_Scheduler_Factory::dump_schedule
   ACE_OS::fprintf (file, start_configs);
 
   for (i = 0;
-       i < configs.length ();
+       i < configs.size ();
        ++i)
     {
       if (i != 0)
@@ -516,7 +516,7 @@ int ACE_Scheduler_Factory::dump_schedule
   // Finish last line.
   ACE_OS::fprintf (file, "\n");
 
-  if (configs.length () > 0)
+  if (configs.size () > 0)
     ACE_OS::fprintf (file, end_configs);
   else
     ACE_OS::fprintf (file, end_configs_empty);

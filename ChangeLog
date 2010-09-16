@@ -1,3 +1,48 @@
+Thu Sep 16 18:59:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp:
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h:
+        * orbsvcs/orbsvcs/RTSched.mpc:
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Generator.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Null_Scheduling.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Masked_Type_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Reconnect_ConsumerEC_Control.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.inl:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Prefix_Filter_Builder.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.inl:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+        * orbsvcs/orbsvcs/Runtime_Scheduler.h:
+        * orbsvcs/Event_Service/Event_Service.cpp:
+
+          Changes to get the Event Service to build with the
+          alternate mapping.
+
 Wed Sep 15 19:26:33 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/RTEvent.mpc:

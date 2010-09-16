@@ -121,7 +121,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::handle_timeout (
       // Query the state of the Current object *before* we initiate
       // the iteration...
       CORBA::PolicyTypeSeq types;
-      CORBA::PolicyList_var policies =
+      CORBA::PolicyList policies =
         this->policy_current_->get_policy_overrides (types);
 
       // Change the timeout
@@ -131,9 +131,9 @@ TAO_ECG_Reconnect_ConsumerEC_Control::handle_timeout (
       // Query the state of the consumers...
       this->query_eventchannel ();
 
-      this->policy_current_->set_policy_overrides (policies.in (),
+      this->policy_current_->set_policy_overrides (policies,
                                                    CORBA::SET_OVERRIDE);
-      for (CORBA::ULong i = 0; i != policies->length (); ++i)
+      for (CORBA::ULong i = 0; i != policies.size (); ++i)
         {
           policies[i]->destroy ();
         }
@@ -162,7 +162,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::activate (void)
       CORBA::Any any;
       any <<= timeout;
 
-      this->policy_list_.length (1);
+      this->policy_list_.resize (1);
       this->policy_list_[0] =
         this->orb_->create_policy (
                Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,

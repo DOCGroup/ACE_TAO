@@ -191,7 +191,7 @@ void
 TAO_EC_Gateway_IIOP::update_consumer (
     const RtecEventChannelAdmin::ConsumerQOS& c_qos)
 {
-  if (c_qos.dependencies.length () == 0)
+  if (c_qos.dependencies.size () == 0)
     return;
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
@@ -263,7 +263,7 @@ TAO_EC_Gateway_IIOP::open_i (
   // Change the RT_Info in the consumer QoS.
   // On the same loop we discover the subscriptions by event source,
   // and fill the consumer proxy map if we have to use this map.
-  for (CORBA::ULong i = 0; i < sub.dependencies.length (); ++i)
+  for (CORBA::ULong i = 0; i < sub.dependencies.size (); ++i)
     {
       sub.dependencies[i].rt_info = this->supplier_info_;
 
@@ -315,13 +315,13 @@ TAO_EC_Gateway_IIOP::open_i (
            ++j)
         {
           RtecEventChannelAdmin::SupplierQOS pub;
-          pub.publications.length (sub.dependencies.length () + 1);
+          pub.publications.resize (sub.dependencies.size () + 1);
           pub.is_gateway = true;
 
           int c = 0;
 
           RtecEventComm::EventSourceID sid = (*j).ext_id_;
-          for (CORBA::ULong k = 0; k < sub.dependencies.length (); ++k)
+          for (CORBA::ULong k = 0; k < sub.dependencies.size (); ++k)
             {
               const RtecEventComm::EventHeader& h =
                 sub.dependencies[k].event.header;
@@ -342,7 +342,7 @@ TAO_EC_Gateway_IIOP::open_i (
           if (c == 0)
             continue;
 
-          pub.publications.length (c);
+          pub.publications.resize (c);
 
           // ACE_DEBUG ((LM_DEBUG, "ECG (%P|%t) Gateway/Supplier "));
           // ACE_SupplierQOS_Factory::debug (pub);
@@ -355,10 +355,10 @@ TAO_EC_Gateway_IIOP::open_i (
   // consumer proxy map, and all subscriptions when we don't use the map and
   // then connect to the default consumer proxy.
   RtecEventChannelAdmin::SupplierQOS pub;
-  pub.publications.length (sub.dependencies.length () + 1);
+  pub.publications.resize (sub.dependencies.size () + 1);
   pub.is_gateway = true;
   int c = 0;
-  for (CORBA::ULong k = 0; k < sub.dependencies.length (); ++k)
+  for (CORBA::ULong k = 0; k < sub.dependencies.size (); ++k)
     {
       const RtecEventComm::EventHeader& h =
         sub.dependencies[k].event.header;
@@ -393,7 +393,7 @@ TAO_EC_Gateway_IIOP::open_i (
       this->default_consumer_proxy_ =
         supplier_admin->obtain_push_consumer ();
 
-      pub.publications.length (c);
+      pub.publications.resize (c);
       // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Gateway/Supplier "));
       // ACE_SupplierQOS_Factory::debug (pub);
       this->default_consumer_proxy_->connect_push_supplier (supplier_ref.in (),
@@ -445,7 +445,7 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events)
 {
   // ACE_DEBUG ((LM_DEBUG, "TAO_EC_Gateway_IIOP::push (%P|%t) -\n"));
 
-  if (events.length () == 0)
+  if (events.size () == 0)
     {
       // ACE_DEBUG ((LM_DEBUG, "no events\n"));
       return;
@@ -462,8 +462,8 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events)
   // @@ TODO, there is an extra data copy here, we should do the event
   // modification without it and only compact the necessary events.
   RtecEventComm::EventSet out (1);
-  out.length (1);
-  for (CORBA::ULong i = 0; i < events.length (); ++i)
+  out.resize (1);
+  for (CORBA::ULong i = 0; i < events.size (); ++i)
     {
       if (this->use_ttl_ == 1)
         {
@@ -549,9 +549,9 @@ TAO_EC_Gateway_IIOP::shutdown (void)
     {
       PortableServer::POA_var poa =
         this->supplier_._default_POA ();
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId id =
         poa->servant_to_id (&this->supplier_);
-      poa->deactivate_object (id.in ());
+      poa->deactivate_object (id);
       this->supplier_is_active_ = false;
     }
 
@@ -559,9 +559,9 @@ TAO_EC_Gateway_IIOP::shutdown (void)
     {
       PortableServer::POA_var poa =
         this->consumer_._default_POA ();
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId id =
         poa->servant_to_id (&this->consumer_);
-      poa->deactivate_object (id.in ());
+      poa->deactivate_object (id);
       this->consumer_is_active_ = false;
     }
 

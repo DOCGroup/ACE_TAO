@@ -76,7 +76,7 @@ TAO_EC_Per_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier* supplier)
   const RtecEventChannelAdmin::SupplierQOS& pub =
     this->consumer_->publications_i ();
 
-  for (CORBA::ULong j = 0; j < pub.publications.length (); ++j)
+  for (CORBA::ULong j = 0; j < pub.publications.size (); ++j)
     {
       const RtecEventComm::Event& event =
         pub.publications[j].event;
@@ -112,7 +112,7 @@ TAO_EC_Per_Supplier_Filter::reconnected (TAO_EC_ProxyPushSupplier* supplier)
   const RtecEventChannelAdmin::SupplierQOS& pub =
     this->consumer_->publications_i ();
 
-  for (CORBA::ULong j = 0; j < pub.publications.length (); ++j)
+  for (CORBA::ULong j = 0; j < pub.publications.size (); ++j)
     {
       const RtecEventComm::Event& event =
         pub.publications[j].event;

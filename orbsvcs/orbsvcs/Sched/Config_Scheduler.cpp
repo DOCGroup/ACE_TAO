@@ -30,7 +30,7 @@ ACE_Config_Scheduler::~ACE_Config_Scheduler (void)
 }
 
 RtecScheduler::handle_t
-ACE_Config_Scheduler::create (const char * entry_point)
+ACE_Config_Scheduler::create (const std::string entry_point)
 {
   typedef RtecScheduler::RT_Info* RT_Info_ptr;
 
@@ -39,7 +39,7 @@ ACE_Config_Scheduler::create (const char * entry_point)
 
   ACE_NEW_RETURN (rt_info[0], RtecScheduler::RT_Info, -1);
 
-  rt_info[0]->entry_point = CORBA::string_dup(entry_point);
+  rt_info[0]->entry_point = CORBA::string_dup(entry_point.c_str ());
   rt_info[0]->handle = -1;
   rt_info[0]->worst_case_execution_time = ORBSVCS_Time::zero ();
   rt_info[0]->typical_execution_time = ORBSVCS_Time::zero ();
@@ -79,10 +79,10 @@ ACE_Config_Scheduler::create (const char * entry_point)
 }
 
 RtecScheduler::handle_t
-ACE_Config_Scheduler::lookup (const char * entry_point)
+ACE_Config_Scheduler::lookup (const std::string entry_point)
 {
   RtecScheduler::RT_Info* rt_info = 0;
-  switch (impl->get_rt_info (entry_point, rt_info))
+  switch (impl->get_rt_info (entry_point.c_str (), rt_info))
     {
     case BaseSchedImplType::SUCCEEDED:
       return rt_info->handle;
@@ -172,7 +172,7 @@ void ACE_Config_Scheduler::priority (RtecScheduler::handle_t handle,
     }
 }
 
-void ACE_Config_Scheduler::entry_point_priority (const char * entry_point,
+void ACE_Config_Scheduler::entry_point_priority (const std::string entry_point,
                                                  RtecScheduler::OS_Priority& priority,
                                                  RtecScheduler::Preemption_Subpriority_t& p_subpriority,
                                                  RtecScheduler::Preemption_Priority_t& p_priority)
@@ -217,10 +217,10 @@ void ACE_Config_Scheduler::add_dependency (RtecScheduler::handle_t handle,
 
 void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
                                                CORBA::Long maximum_priority,
-                                               RtecScheduler::RT_Info_Set_out infos,
-                                               RtecScheduler::Dependency_Set_out dependencies,
-                                               RtecScheduler::Config_Info_Set_out configs,
-                                               RtecScheduler::Scheduling_Anomaly_Set_out anomalies)
+                                               RtecScheduler::RT_Info_Set & infos,
+                                               RtecScheduler::Dependency_Set & dependencies,
+                                               RtecScheduler::Config_Info_Set & configs,
+                                               RtecScheduler::Scheduling_Anomaly_Set & anomalies)
 {
 
   // Initialize the scheduler implementation.
@@ -232,12 +232,12 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   // Invoke the imlementation's scheduling method.
   BaseSchedImplType::status_t schedule_status;
   schedule_status = impl->schedule (anomaly_set);
-
+/*
   if (dependencies.ptr () == 0)
     {
       dependencies = new RtecScheduler::Dependency_Set ();
     }
-
+*/
   // Iterate over the set of anomalies, reporting each one, storing
   // it in the set of anomalies to return, and determining the worst
   // anomaly severity.
@@ -247,12 +247,15 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   CORBA::ULong anomaly_index = 0;
   CORBA::ULong anomaly_set_size =
                     static_cast<CORBA::ULong> (anomaly_set.size ());
+/*
   if (anomalies.ptr () == 0)
     {
       anomalies =
         new RtecScheduler::Scheduling_Anomaly_Set (anomaly_set_size);
     }
-  anomalies->length (anomaly_set_size);
+*/
+
+  anomalies.resize (anomaly_set_size);
   ACE_Unbounded_Set_Iterator<RtecScheduler::Scheduling_Anomaly *>
     anomaly_iter (anomaly_set);
   for (anomaly_iter.first (), anomaly_index = 0;
@@ -355,13 +358,15 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
         }
         break;
     }
-
+/*
   // return the set of scheduled RT_Infos
   if (infos.ptr () == 0)
     {
       infos = new RtecScheduler::RT_Info_Set (impl->tasks ());
     }
-  infos->length (impl->tasks ());
+*/
+
+  infos.resize (impl->tasks ());
   for (RtecScheduler::handle_t handle = 1;
        handle <= static_cast<RtecScheduler::handle_t> (impl->tasks ());
        ++handle)
@@ -382,14 +387,16 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
           break;
         }
     }
-
+/*
   // return the set of scheduled Config_Infos
   if (configs.ptr () == 0)
     {
       configs =
         new RtecScheduler::Config_Info_Set(impl->minimum_priority_queue () + 1);
     }
-  configs->length (impl->minimum_priority_queue () + 1);
+*/
+
+  configs.resize (impl->minimum_priority_queue () + 1);
   for (RtecScheduler::Preemption_Priority_t priority = 0;
        priority <=
          static_cast<RtecScheduler::Preemption_Priority_t> (impl->minimum_priority_queue ());
@@ -415,10 +422,11 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
 
   ACE_DEBUG ((LM_DEBUG, "Schedule prepared.\n"));
   ACE_DEBUG ((LM_DEBUG, "Dumping to stdout.\n"));
-  ACE_Scheduler_Factory::dump_schedule (*(infos.ptr()),
-                                        *(dependencies.ptr()),
-                                        *(configs.ptr()),
-                                        *(anomalies.ptr()), 0);
+  ACE_Scheduler_Factory::dump_schedule (infos,
+                                        dependencies,
+                                        configs,
+                                        anomalies,
+                                        0);
   ACE_DEBUG ((LM_DEBUG, "Dump done.\n"));
 }
 
@@ -459,7 +467,7 @@ ACE_Config_Scheduler::last_scheduled_priority (void)
   // All scheduled priorities range from 0 to the number returned, inclusive.
 
 void
-ACE_Config_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out configs)
+ACE_Config_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set & configs)
 {
   ACE_UNUSED_ARG ((configs));
 
@@ -546,27 +554,27 @@ void ACE_Config_Scheduler::set_rt_info_enable_state_seq (
 
 void ACE_Config_Scheduler::recompute_scheduling (CORBA::Long,
                            CORBA::Long,
-                           RtecScheduler::Scheduling_Anomaly_Set_out)
+                           RtecScheduler::Scheduling_Anomaly_Set &)
 // Recomputes the scheduling priorities, etc.
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
-void ACE_Config_Scheduler::get_rt_info_set (RtecScheduler::RT_Info_Set_out)
+void ACE_Config_Scheduler::get_rt_info_set (RtecScheduler::RT_Info_Set &)
 // Returns the set of rt_infos, with their assigned priorities (as
 // of the last schedule re-computation).
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
-void ACE_Config_Scheduler::get_dependency_set (RtecScheduler::Dependency_Set_out)
+void ACE_Config_Scheduler::get_dependency_set (RtecScheduler::Dependency_Set &)
 // Returns the set of rt_infos, with their assigned priorities (as
 // of the last schedule re-computation).
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
-void ACE_Config_Scheduler::get_config_info_set (RtecScheduler::Config_Info_Set_out)
+void ACE_Config_Scheduler::get_config_info_set (RtecScheduler::Config_Info_Set &)
 // Returns the set of config_infos, describing the appropriate
 // number, types, and priority levels for the dispatching lanes.
 {

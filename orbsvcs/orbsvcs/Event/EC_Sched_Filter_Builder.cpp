@@ -289,7 +289,7 @@ TAO_EC_Sched_Filter_Builder::
     count_children (RtecEventChannelAdmin::ConsumerQOS& qos,
                     CORBA::ULong pos) const
 {
-  CORBA::ULong l = qos.dependencies.length ();
+  CORBA::ULong l = qos.dependencies.size ();
   CORBA::ULong i;
   for (i = pos; i != l; ++i)
     {

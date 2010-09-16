@@ -29,13 +29,16 @@ ACE_Runtime_Scheduler (int config_count,
 // it's not present.
 
 RtecScheduler::handle_t
-ACE_Runtime_Scheduler::create (const char *entry_point)
+ACE_Runtime_Scheduler::create (const std::string entry_point)
 {
   // Just make sure it's there and return its handle.
   for (int i = 0; i < entry_count_; ++i)
-      if (ACE_OS::strcmp (entry_point,
-                          rt_info_[i].entry_point) == 0)
-        return i + 1;
+    {
+      if (entry_point == rt_info_[i].entry_point)
+        {
+          return i + 1;
+        }
+    }
 
   // TODO: throw an exception or print an error.
   return -1;
@@ -45,7 +48,7 @@ ACE_Runtime_Scheduler::create (const char *entry_point)
 // value if it's not present.
 
 RtecScheduler::handle_t
-ACE_Runtime_Scheduler::lookup (const char * entry_point)
+ACE_Runtime_Scheduler::lookup (const std::string entry_point)
 {
   return create (entry_point);
 }
@@ -146,9 +149,9 @@ ACE_Runtime_Scheduler::reset (RtecScheduler::handle_t handle,
 
 
 void
-ACE_Runtime_Scheduler::set_seq (const RtecScheduler::RT_Info_Set& infos)
+ACE_Runtime_Scheduler::set_seq (const RtecScheduler::RT_Info_Set & infos)
 {
-  for (u_int i = 0; i < infos.length (); ++i)
+  for (u_int i = 0; i < infos.size (); ++i)
     {
       // Call the internal set method.
       this->set (infos[i].handle,
@@ -167,7 +170,7 @@ ACE_Runtime_Scheduler::set_seq (const RtecScheduler::RT_Info_Set& infos)
 void
 ACE_Runtime_Scheduler::replace_seq (const RtecScheduler::RT_Info_Set& infos)
 {
-  for (u_int i = 0; i < infos.length (); ++i)
+  for (u_int i = 0; i < infos.size (); ++i)
     {
       // Call the internal set method.
       this->set (infos[i].handle,
@@ -215,7 +218,7 @@ ACE_Runtime_Scheduler::priority (RtecScheduler::handle_t handle,
 // based on its entry point name.
 
 void
-ACE_Runtime_Scheduler::entry_point_priority (const char * entry_point,
+ACE_Runtime_Scheduler::entry_point_priority (const std::string entry_point,
                                              RtecScheduler::OS_Priority& priority,
                                              RtecScheduler::Preemption_Subpriority_t& subpriority,
                                              RtecScheduler::Preemption_Priority_t& p_priority)
@@ -325,10 +328,10 @@ void ACE_Runtime_Scheduler::set_rt_info_enable_state_seq (
 void
 ACE_Runtime_Scheduler::compute_scheduling (CORBA::Long /* minimum_priority */,
                                            CORBA::Long /* maximum_priority */,
-                                           RtecScheduler::RT_Info_Set_out /* infos */,
-                                           RtecScheduler::Dependency_Set_out /*dependencies */,
-                                           RtecScheduler::Config_Info_Set_out /* configs */,
-                                           RtecScheduler::Scheduling_Anomaly_Set_out /* anomalies */)
+                                           RtecScheduler::RT_Info_Set & /* infos */,
+                                           RtecScheduler::Dependency_Set & /*dependencies */,
+                                           RtecScheduler::Config_Info_Set & /* configs */,
+                                           RtecScheduler::Scheduling_Anomaly_Set & /* anomalies */)
 {
   // TODO: Right now just do nothing, later we could validate the
   // priorities (without recomputing).
@@ -341,7 +344,7 @@ ACE_Runtime_Scheduler::compute_scheduling (CORBA::Long /* minimum_priority */,
 void
 ACE_Runtime_Scheduler::recompute_scheduling (CORBA::Long minimum_priority,
                                              CORBA::Long maximum_priority,
-                                             RtecScheduler::Scheduling_Anomaly_Set_out anomalies)
+                                             RtecScheduler::Scheduling_Anomaly_Set & anomalies)
 
 {
   // TODO: Right now just do nothing.
@@ -357,7 +360,7 @@ ACE_Runtime_Scheduler::recompute_scheduling (CORBA::Long minimum_priority,
 // of the last schedule re-computation).
 
 void
-ACE_Runtime_Scheduler::get_rt_info_set (RtecScheduler::RT_Info_Set_out infos)
+ACE_Runtime_Scheduler::get_rt_info_set (RtecScheduler::RT_Info_Set & infos)
 
 {
   // TODO: Right now just do nothing.
@@ -370,7 +373,7 @@ ACE_Runtime_Scheduler::get_rt_info_set (RtecScheduler::RT_Info_Set_out infos)
 // of the last schedule re-computation).
 
 void
-ACE_Runtime_Scheduler::get_dependency_set (RtecScheduler::Dependency_Set_out dependencies)
+ACE_Runtime_Scheduler::get_dependency_set (RtecScheduler::Dependency_Set & dependencies)
 
 {
   // TODO: Right now just do nothing.
@@ -383,7 +386,7 @@ ACE_Runtime_Scheduler::get_dependency_set (RtecScheduler::Dependency_Set_out dep
 // number, types, and priority levels for the dispatching lanes.
 
 void
-ACE_Runtime_Scheduler::get_config_info_set (RtecScheduler::Config_Info_Set_out configs)
+ACE_Runtime_Scheduler::get_config_info_set (RtecScheduler::Config_Info_Set & configs)
 {
   // TODO: Right now just do nothing.
   ACE_UNUSED_ARG(configs);
@@ -438,7 +441,7 @@ ACE_Runtime_Scheduler::last_scheduled_priority (void)
 
 
 void
-ACE_Runtime_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out /*configs */)
+ACE_Runtime_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set & /*configs */)
 {
   // throw an exception if a valid schedule has not been loaded
   if (this->config_count_ <= 0)

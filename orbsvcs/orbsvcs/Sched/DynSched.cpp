@@ -408,12 +408,12 @@ int ACE_DynScheduler::priority (
 
 int ACE_DynScheduler::number_of_dependencies(RT_Info* rt_info)
 {
-  return rt_info->dependencies.length();
+  return rt_info->dependencies.size();
 }
 
 int ACE_DynScheduler::number_of_dependencies(RT_Info& rt_info)
 {
-  return rt_info.dependencies.length();
+  return rt_info.dependencies.size();
 }
 
 int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
@@ -456,8 +456,8 @@ int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
               temp_info->entry_point.in ()));
 
   RtecScheduler::Dependency_Set& set = temp_info->dependencies;
-  int l = set.length();
-  set.length(l + 1);
+  int l = set.size();
+  set.resize(l + 1);
   set[l] = d;
   return 0;
 }

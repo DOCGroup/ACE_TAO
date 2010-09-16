@@ -120,9 +120,9 @@ TAO_EC_Conjunction_Filter::push (const RtecEventComm::EventSet& event,
   if (ACE_BIT_ENABLED (this->bitvec_[w], 1<<b))
     return;
   ACE_SET_BITS (this->bitvec_[w], 1<<b);
-  CORBA::ULong n = event.length ();
-  CORBA::ULong l = this->event_.length ();
-  this->event_.length (l + n);
+  CORBA::ULong n = event.size ();
+  CORBA::ULong l = this->event_.size ();
+  this->event_.resize (l + n);
   for (CORBA::ULong i = 0; i != n; ++i)
     {
       this->event_[l + i] = event[i];
@@ -159,7 +159,7 @@ TAO_EC_Conjunction_Filter::clear (void)
   Word last = ~0 << b;
   *j = last;
 
-  this->event_.length (0);
+  this->event_.resize (0);
 }
 
 CORBA::ULong

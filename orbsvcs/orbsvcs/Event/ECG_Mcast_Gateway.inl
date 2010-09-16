@@ -16,7 +16,7 @@ TAO_ECG_Mcast_Gateway::TAO_ECG_Mcast_Gateway (void)
   , non_blocking_ (TAO_ECG_DEFAULT_NON_BLOCKING)
   , consumer_qos_ ()
 {
-  this->consumer_qos_.dependencies.length (0);
+  this->consumer_qos_.dependencies.resize (0);
 }
 
 ACE_INLINE

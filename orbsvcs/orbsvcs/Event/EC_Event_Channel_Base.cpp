@@ -171,9 +171,9 @@ TAO_EC_Event_Channel_Base::deactivate_supplier_admin (void)
     {
       PortableServer::POA_var supplier_poa =
         this->supplier_admin_->_default_POA ();
-      PortableServer::ObjectId_var supplier_id =
+      PortableServer::ObjectId supplier_id =
         supplier_poa->servant_to_id (this->supplier_admin_);
-      supplier_poa->deactivate_object (supplier_id.in ());
+      supplier_poa->deactivate_object (supplier_id);
     }
   catch (const CORBA::Exception&)
     {
@@ -188,9 +188,9 @@ TAO_EC_Event_Channel_Base::deactivate_consumer_admin (void)
     {
       PortableServer::POA_var consumer_poa =
         this->consumer_admin_->_default_POA ();
-      PortableServer::ObjectId_var consumer_id =
+      PortableServer::ObjectId consumer_id =
         consumer_poa->servant_to_id (this->consumer_admin_);
-      consumer_poa->deactivate_object (consumer_id.in ());
+      consumer_poa->deactivate_object (consumer_id);
     }
   catch (const CORBA::Exception&)
     {

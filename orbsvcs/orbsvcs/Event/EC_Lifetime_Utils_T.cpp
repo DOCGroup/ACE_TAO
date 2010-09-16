@@ -19,14 +19,14 @@ activate (T & obj_ref,
           TAO_EC_Object_Deactivator & suggested_object_deactivator)
 {
   // Activate the servant into the POA.
-  PortableServer::ObjectId_var obj_id =
+  PortableServer::ObjectId obj_id =
     poa->activate_object (servant);
 
-  suggested_object_deactivator.set_values (poa, obj_id.in ());
+  suggested_object_deactivator.set_values (poa, obj_id);
 
   // Get the object reference of the activated object.
   CORBA::Object_var obj =
-    poa->id_to_reference (obj_id.in ());
+    poa->id_to_reference (obj_id);
 
   // Don't try to use T::_obj_type::_narrow, some compilers don't like it so
   // do this in two steps
