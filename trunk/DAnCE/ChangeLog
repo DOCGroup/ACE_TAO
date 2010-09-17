@@ -1,3 +1,9 @@
+Fri Sep 17 18:52:11 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * DAnCE/DAnCE_Properties.mpc:
+
+          Set up "make install" commands for rules.dance.GNU.
+
 Fri Sep 17 08:40:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Config_Handlers/test.cdp:
