@@ -1,3 +1,8 @@
+Fri Sep 17 13:37:53 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+          Mentioned the implementation of the CIF tests.
+
 Fri Sep 17 13:14:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/descriptors/Plan.cdp:

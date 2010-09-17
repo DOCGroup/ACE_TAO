@@ -1,6 +1,11 @@
 USER VISIBLE CHANGES BETWEEN CIAO-0.8.2 and CIAO-0.8.3
 =======================================================
 
+. Tests for the Component Implementation Framework have been added.
+  Because of this, two methods ('get_named_receptacles' and
+  'get_connections') off the receptacle interface were implemented
+  in the CIAO core.
+
 . DAnCE has been made an entirely separate product from CIAO, and has
   been moved from ACE_wrappers/TAO/CIAO/DAnCE to
   ACE_wrappers/TAO/DAnCE.
