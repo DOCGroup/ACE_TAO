@@ -77,7 +77,7 @@ Concurrency_Service::parse_args (int argc, ACE_TCHAR** argv)
                            argv[0]),
                            1);
       }
-  // Indicates successfull persing of command line.
+  // Indicates successful persing of command line.
   return 0;
 }
 
