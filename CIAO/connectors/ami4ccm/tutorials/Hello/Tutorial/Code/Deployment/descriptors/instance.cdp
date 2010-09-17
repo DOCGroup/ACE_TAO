@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <instance xmi:id="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver">
     <name>Hello.ComponentImplementations.HelloImplementation.Hello.Receiver</name>
     <node>Receiver</node>

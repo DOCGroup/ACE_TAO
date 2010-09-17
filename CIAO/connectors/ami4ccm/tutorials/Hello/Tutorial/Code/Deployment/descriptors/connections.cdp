@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <connection>
     <name>run_asynch_foo_connection</name>
     <deployRequirement>
