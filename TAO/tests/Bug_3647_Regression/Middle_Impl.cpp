@@ -35,14 +35,14 @@ startup_test()
   {
     ACE_DEBUG ((LM_INFO,
             "Middle_Impl::startup_test(%P|%t) - backend "
-            "startup call sucessful\n"));
+            "startup call successful\n"));
   }
   backend_->freeze(10);
   if (verbose_)
   {
     ACE_DEBUG ((LM_INFO,
             "Middle_Impl::startup_test(%P|%t) - backend "
-            "freeze call sucessful\n"));
+            "freeze call successful\n"));
   }
 }
 

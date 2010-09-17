@@ -62,7 +62,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                           ACE_OS::strlen(corbaloc_prefix)) != 0)
       return 1;
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
