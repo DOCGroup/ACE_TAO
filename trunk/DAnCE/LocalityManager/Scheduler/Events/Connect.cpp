@@ -60,7 +60,7 @@ namespace DAnCE
 
     DANCE_DEBUG (10, (LM_TRACE, DLINFO
                       ACE_TEXT ("Connect_Instance::invoke - ")
-                      ACE_TEXT ("connect_instance successfull completed\n")));
+                      ACE_TEXT ("connect_instance successful completed\n")));
   }
 
 

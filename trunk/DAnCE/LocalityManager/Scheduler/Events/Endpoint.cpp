@@ -59,7 +59,7 @@ namespace DAnCE
                                          this->ref_.out ());
     DANCE_DEBUG (10, (LM_TRACE, DLINFO
                       ACE_TEXT ("Endpoint_Reference::invoke - ")
-                      ACE_TEXT ("provide_endpoint_reference successfull completed\n")));
+                      ACE_TEXT ("provide_endpoint_reference successful completed\n")));
   }
 
 

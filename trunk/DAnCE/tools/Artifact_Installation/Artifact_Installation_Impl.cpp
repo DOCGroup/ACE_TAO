@@ -286,7 +286,7 @@ namespace DAnCE
       if (ith != handlers_.end ())
         {
           // activate protocol installation handler
-          // after successfull installation the protocol handler will update
+          // after successful installation the protocol handler will update
           // the location to the installed version
           ith->second->install (plan_uuid, location, properties);
           return true;
