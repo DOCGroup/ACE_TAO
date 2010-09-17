@@ -8,4 +8,8 @@ project (TAO_Utils) : taolib, tao_output, install, portableserver, pi {
     Servant_Var.cpp
     Server_Main.cpp
   }
+
+  specific {
+    install_dir = tao/Utils
+  }
 }

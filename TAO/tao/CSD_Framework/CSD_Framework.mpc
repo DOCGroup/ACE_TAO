@@ -28,4 +28,8 @@ project(CSD_Framework) : taolib, tao_output, portableserver, install, pi, avoids
     CSD_FrameworkS.h
     CSD_FrameworkA.h
   }
+
+  specific {
+    install_dir = tao/CSD_Framework
+  }
 }

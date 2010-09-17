@@ -29,4 +29,8 @@ project(DiffServPolicy) : taolib, tao_output, install, portableserver, pi, taoid
     DiffServPolicyS.h
     DiffServPolicyA.h
   }
+
+  specific {
+    install_dir = tao/DiffServPolicy
+  }
 }

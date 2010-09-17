@@ -63,6 +63,10 @@ project(*idl) : tao_versioning_idl_defaults, install, pidl_install {
   PidlInstallWithoutBuilding_Files {
     PS_Forward.pidl
   }
+
+  specific {
+    install_dir = tao/PortableServer
+  }
 }
 
 project(PortableServer) : taolib, tao_output, install, anytypecode, taoidldefaults, valuetype_out_indirection {
@@ -166,5 +170,9 @@ project(PortableServer) : taolib, tao_output, install, anytypecode, taoidldefaul
   Template_Files {
     Servant_var.cpp
     *_T.cpp
+  }
+
+  specific {
+    install_dir = tao/PortableServer
   }
 }

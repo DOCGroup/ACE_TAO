@@ -4,4 +4,8 @@ project(LzoCompressor) : taolib, tao_output, install, compression, taoidldefault
   requires += lzo1
   sharedname   = TAO_LzoCompressor
   dynamicflags += TAO_LZOCOMPRESSOR_BUILD_DLL
+
+  specific {
+    install_dir = tao/Compression/lzo
+  }
 }

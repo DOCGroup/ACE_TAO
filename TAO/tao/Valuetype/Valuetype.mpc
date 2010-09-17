@@ -24,4 +24,8 @@ project(Valuetype) : taolib, tao_output, install, anytypecode, avoids_corba_e_mi
   Header_Files {
     *.h
   }
+
+  specific {
+    install_dir = tao/Valuetype
+  }
 }
