@@ -1,3 +1,9 @@
+Fri Sep 17 20:44:43 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+
+          Added include of OS_NS_strings.h for ACE_OS::strcasecmp().
+
 Fri Sep 17 20:20:37 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * tao/AnyTypeCode/AnyTypeCode.mpc:
