@@ -1,3 +1,9 @@
+Fri Sep 17 08:46:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Common/CIF_Common.cpp:
+        * tests/CIF/Navigation/client.cpp:
+          Resolved compile errors/warnings.
+
 Fri Sep 17 07:51:44 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * *.cdp:
