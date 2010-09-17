@@ -1,3 +1,15 @@
+Fri Sep 17 20:14:33 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/FlReactor/ace_flreactor.mpc:
+        * ace/FoxReactor/ace_foxreactor.mpc:
+        * ace/QtReactor/ace_qt3reactor.mpc:
+        * ace/QtReactor/ace_qt4reactor.mpc:
+        * ace/TkReactor/ace_tkreactor.mpc:
+        * ace/XtReactor/ace_xtreactor.mpc:
+
+          Since these have been moved, the default install_dir isn't what we
+          want.  Set the install_dir to ace/*Reactor.
+
 Fri Sep 17 07:51:06 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * bin/fuzz.pl:
