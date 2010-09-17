@@ -302,6 +302,13 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                         -1);
     }
 
+  // The _nil method
+  *os << node->full_name () << "_ptr" << be_nl
+      << node->full_name () << "::_nil (void)"
+      << be_nl
+      << "{" << be_idt_nl
+      << "return 0;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // The _duplicate method
   *os << node->full_name () << "_ptr" << be_nl
@@ -335,7 +342,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "if (" << be_idt << be_idt_nl;
 
   int status = node->gen_is_a_ancestors (os);
-  
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -344,7 +351,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                          ACE_TEXT ("gen_is_a_ancestors() failed\n")),
                         -1);
     }
-      
+
   *os << ")" << be_nl
       << "{" << be_idt_nl
       << "return true; // success using local knowledge" << be_uidt_nl
@@ -371,7 +378,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "return \"" << node->repoID ()
       << "\";" << be_uidt_nl
       << "}";
-      
+
   bool is_loc = node->is_local ();
 
   *os << be_nl << be_nl
@@ -551,7 +558,7 @@ be_visitor_interface_cs::visit_extended_port (be_extended_port *node)
   /// line to tell what scope we are actually in.
   this->ctx_->interface (
     be_interface::narrow_from_scope (node->defined_in ()));
-  
+
   /// Will ignore everything but porttype attributes.
   int status = this->visit_scope (node->port_type ());
 
@@ -580,7 +587,7 @@ be_visitor_interface_cs::visit_mirror_port (be_mirror_port *node)
   /// line to tell what scope we are actually in.
   this->ctx_->interface (
     be_interface::narrow_from_scope (node->defined_in ()));
-  
+
   /// Will ignore everything but porttype attributes.
   int status = this->visit_scope (node->port_type ());
 
