@@ -66,7 +66,7 @@ TAO/orbsvcs/tests/Bug_2287_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CO
 TAO/orbsvcs/tests/Bug_2316_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !SUNCC5_1
 TAO/orbsvcs/tests/Bug_2377_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC
 TAO/orbsvcs/tests/Bug_2615_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO
-TAO/orbsvcs/tests/Bug_2777_Regression/run_test.pl: !MINIMUM !CORBA_E_MICRO !ACE_FOR_TAO
+TAO/orbsvcs/tests/Bug_2777_Regression/run_test.pl: !MINIMUM !CORBA_E_MICRO !ACE_FOR_TAO !NO_MESSAGING
 TAO/orbsvcs/tests/Bug_3215_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO
 TAO/orbsvcs/tests/Bug_3216_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO
 TAO/orbsvcs/tests/Bug_3418_Regression/run_test.pl: !ST SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO
