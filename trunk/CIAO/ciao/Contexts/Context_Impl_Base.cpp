@@ -11,11 +11,9 @@
 namespace CIAO
 {
   Context_Impl_Base::Context_Impl_Base (Components::CCMHome_ptr home,
-                                        Container_ptr c,
-                                        const char *instance_id)
+                                        Container_ptr c)
     : home_ (Components::CCMHome::_duplicate (home)),
-      container_ (Container::_duplicate (c)),
-      ciao_instance_id_ (instance_id)
+      container_ (Container::_duplicate (c))
   {
   }
 
@@ -24,7 +22,6 @@ namespace CIAO
   }
 
   // Operations from ::Components::CCMContext.
-
 #if !defined (CCM_LW)
   Components::Principal_ptr
   Context_Impl_Base::get_caller_principal (void)

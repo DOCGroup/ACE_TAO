@@ -84,8 +84,7 @@ namespace CIAO
 
     Context_Impl (Components::CCMHome_ptr the_home,
                   Container_ptr c,
-                  PortableServer::Servant sv,
-                  const char* id);
+                  PortableServer::Servant sv);
 
     virtual ~Context_Impl (void);
 
