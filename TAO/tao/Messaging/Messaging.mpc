@@ -119,4 +119,8 @@ project(Messaging) : taolib, tao_output, install, portableserver, pi, valuetype,
     ExceptionHolderC.inl
     MessagingC.inl
   }
+
+  specific {
+    install_dir = tao/Messaging
+  }
 }

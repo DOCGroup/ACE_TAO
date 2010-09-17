@@ -23,6 +23,10 @@ project(*idl) : tao_versioning_idl_defaults, install, pidl_install {
   PidlInstallWithoutBuilding_Files {
     ServerRequestInterceptor.pidl
   }
+
+  specific {
+    install_dir = tao/PI_Server
+  }
 }
 
 project(PI_Server) : taolib, tao_output, pi, portableserver, install, taoidldefaults {
@@ -44,5 +48,9 @@ project(PI_Server) : taolib, tao_output, pi, portableserver, install, taoidldefa
     PI_Server_includeC.h
     PI_Server_includeS.h
     PI_Server_includeA.h
+  }
+
+  specific {
+    install_dir = tao/PI_Server
   }
 }

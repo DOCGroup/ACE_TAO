@@ -45,5 +45,9 @@ project(TC) : taolib_with_idl, tao_output, taoidldefaults, install, interceptors
   Template_Files {
     Current_ORBInitializer.cpp
   }
+
+  specific {
+    install_dir = tao/TransportCurrent
+  }
 }
 

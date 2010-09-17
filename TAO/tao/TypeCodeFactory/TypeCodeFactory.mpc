@@ -26,4 +26,8 @@ project(TypeCodeFactory) : taolib, tao_output, install, ifr_client, taoidldefaul
     TypeCodeFactoryC.h
     TypeCodeFactoryS.h
   }
+
+  specific {
+    install_dir = tao/TypeCodeFactory
+  }
 }

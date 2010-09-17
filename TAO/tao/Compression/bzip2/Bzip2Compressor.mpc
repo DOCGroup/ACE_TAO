@@ -4,4 +4,8 @@ project(Bzip2Compressor) : taolib, tao_output, install, compression, taoidldefau
   requires += bzip2
   sharedname   = TAO_Bzip2Compressor
   dynamicflags += TAO_BZIP2COMPRESSOR_BUILD_DLL
+
+  specific {
+    install_dir = tao/Compression/bzip2
+  }
 }

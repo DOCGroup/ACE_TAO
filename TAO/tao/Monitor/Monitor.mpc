@@ -22,6 +22,10 @@ project (*idl): tao_versioning_idl_defaults, install {
      -Wb,safe_include=tao/Monitor/Monitor.h
     Monitor_Types.pidl
   }
+
+  specific {
+    install_dir = tao/Monitor
+  }
 }
 
 project (TAO_Monitor): portableserver, install, taoidldefaults, ace_mc, tao_output {
@@ -57,5 +61,9 @@ project (TAO_Monitor): portableserver, install, taoidldefaults, ace_mc, tao_outp
     *.inl
     MonitorC.inl
     Monitor_TypesC.inl
+  }
+
+  specific {
+    install_dir = tao/Monitor
   }
 }

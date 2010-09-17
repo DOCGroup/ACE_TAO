@@ -22,6 +22,10 @@ project(*core_idl) : tao_versioning_idl_defaults, install, pidl_install {
   PidlInstallWithoutBuilding_Files {
     RT_ProtocolProperties.pidl
   }
+
+  specific {
+    install_dir = tao/RTCORBA
+  }
 }
 
 project(RTCORBA) : taolib, tao_output, install, pi, taoidldefaults {
@@ -44,5 +48,9 @@ project(RTCORBA) : taolib, tao_output, install, pi, taoidldefaults {
     RTCORBAC.h
     RTCORBAS.h
     RTCORBAA.h
+  }
+
+  specific {
+    install_dir = tao/RTCORBA
   }
 }

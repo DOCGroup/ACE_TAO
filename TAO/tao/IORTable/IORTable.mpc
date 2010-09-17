@@ -27,4 +27,8 @@ project(IORTable) : taolib, tao_output, install, taoidldefaults {
     IORTableC.h
     IORTableS.h
   }
+
+  specific {
+    install_dir = tao/IORTable
+  }
 }

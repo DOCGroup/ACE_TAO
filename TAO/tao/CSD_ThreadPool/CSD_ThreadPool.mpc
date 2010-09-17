@@ -4,4 +4,8 @@ project(CSD_ThreadPool) : csd_framework, tao_output, install, threads {
   sharedname   = TAO_CSD_ThreadPool
   dynamicflags += TAO_CSD_TP_BUILD_DLL
   includes    += $(TAO_ROOT)/tao
+
+  specific {
+    install_dir = tao/CSD_ThreadPool
+  }
 }
