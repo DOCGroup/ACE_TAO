@@ -27,7 +27,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
     }
   catch (const DAnCE::LocalityManager_Task::Error &e)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO 
+      DANCE_ERROR (1, (LM_ERROR, DLINFO
                        ACE_TEXT ("LocalityManager main: Caught ComponentServer exception: %C\n"),
                   e.err_.c_str ()));
       retval = -1;
@@ -39,7 +39,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO 
+      DANCE_ERROR (1, (LM_ERROR, DLINFO
                        ACE_TEXT ("LocalityManager main: Caught unknown exception.\n")));
       retval = -1;
     }

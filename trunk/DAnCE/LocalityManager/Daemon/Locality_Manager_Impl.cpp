@@ -59,9 +59,9 @@ namespace DAnCE
 
         PLUGIN_MANAGER::instance ()->set_configuration (*props);
       }
-    
+
     PLUGIN_MANAGER::instance ()->set_orb (this->orb_.in ());
-    
+
     Plugin_Configurator config;
     bool tmp;
 
@@ -69,7 +69,7 @@ namespace DAnCE
                       ACE_TEXT ("LocalityManager_i::init - ")
                       ACE_TEXT ("Loading %u plugin configuration files\n"),
                       this->plugin_config_files_.size ()));
-    
+
     for (std::list < std::string >::const_iterator i = this->plugin_config_files_.begin ();
          i != this->plugin_config_files_.end (); ++i)
       {
@@ -95,7 +95,7 @@ namespace DAnCE
           ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
           ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Standard_Error"));
       }
-    
+
     if (this->props_)
       {
         if (DAnCE::Utility::get_property_value (DAnCE::LOCALITY_TIMEOUT,
@@ -107,7 +107,7 @@ namespace DAnCE
                              ACE_TEXT ("Using provided spawn delay %u\n"),
                              this->spawn_delay_));
           }
-        
+
         for (CORBA::ULong i = 0; i < this->props_->length (); ++i)
           {
             DANCE_DEBUG (8, (LM_DEBUG, DLINFO
@@ -115,9 +115,9 @@ namespace DAnCE
                              ACE_TEXT ("Looking up configuration handler for <%C>\n"),
                              this->props_[i].name.in ()));
 
-            ::DAnCE::LocalityConfiguration_var config = 
+            ::DAnCE::LocalityConfiguration_var config =
               PLUGIN_MANAGER::instance ()->get_configuration_handler (this->props_[i].name.in ());
-            
+
             if (config.in ())
               {
                 DANCE_DEBUG (6, (LM_DEBUG, DLINFO
@@ -144,10 +144,10 @@ namespace DAnCE
     DANCE_TRACE ("LocalityManager_i::preparePlan");
 
     this->plan_ = plan;
-    
-    Plugin_Manager::INTERCEPTORS interceptors = 
+
+    Plugin_Manager::INTERCEPTORS interceptors =
       PLUGIN_MANAGER::instance ()->fetch_interceptors ();
-    
+
     for (Plugin_Manager::INTERCEPTORS::iterator i = interceptors.begin ();
          i != interceptors.end ();
          ++i)
@@ -179,7 +179,7 @@ namespace DAnCE
                                   ::Deployment::Connections_out providedReference)
   {
     DANCE_TRACE ("LocalityManager_i::startLaunch");
-    
+
     PLUGIN_MANAGER::instance ()->get_installation_order (this->handler_order_);
 
     this->install_instances (prop);
@@ -932,7 +932,7 @@ namespace DAnCE
   LocalityManager_i::shutdown (void)
   {
     DANCE_TRACE ("LocalityManager_i::shutdown");
-    
+
     DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                      ACE_TEXT ("DAnCE LocalityManager shutdown request received for UUID <%C>\n"),
                      uuid_.c_str ()));

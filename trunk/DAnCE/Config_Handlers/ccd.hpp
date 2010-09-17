@@ -54,7 +54,7 @@ namespace DAnCE
       typedef ACE_Refcounted_Auto_Ptr < ComponentInterfaceDescription, ACE_Null_Mutex > _ptr;
 
       // label
-      // 
+      //
       public:
       bool label_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& label () const;
@@ -64,7 +64,7 @@ namespace DAnCE
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > label_;
 
       // UUID
-      // 
+      //
       public:
       bool UUID_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& UUID () const;
@@ -74,7 +74,7 @@ namespace DAnCE
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > UUID_;
 
       // specificType
-      // 
+      //
       public:
       bool specificType_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& specificType () const;
@@ -84,7 +84,7 @@ namespace DAnCE
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > specificType_;
 
       // supportedType
-      // 
+      //
       public:
       typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator supportedType_iterator;
       typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator supportedType_const_iterator;
@@ -100,7 +100,7 @@ namespace DAnCE
       ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > supportedType_;
 
       // idlFile
-      // 
+      //
       public:
       typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator idlFile_iterator;
       typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator idlFile_const_iterator;
@@ -116,7 +116,7 @@ namespace DAnCE
       ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > idlFile_;
 
       // configProperty
-      // 
+      //
       public:
       typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex > >::iterator configProperty_iterator;
       typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator configProperty_const_iterator;
@@ -132,7 +132,7 @@ namespace DAnCE
       ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex > > configProperty_;
 
       // port
-      // 
+      //
       public:
       typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ComponentPortDescription, ACE_Null_Mutex > >::iterator port_iterator;
       typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ComponentPortDescription, ACE_Null_Mutex > >::const_iterator port_const_iterator;
@@ -148,7 +148,7 @@ namespace DAnCE
       ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ComponentPortDescription, ACE_Null_Mutex > > port_;
 
       // property
-      // 
+      //
       public:
       typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ComponentPropertyDescription, ACE_Null_Mutex > >::iterator property_iterator;
       typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ComponentPropertyDescription, ACE_Null_Mutex > >::const_iterator property_const_iterator;
@@ -164,7 +164,7 @@ namespace DAnCE
       ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::ComponentPropertyDescription, ACE_Null_Mutex > > property_;
 
       // infoProperty
-      // 
+      //
       public:
       typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex > >::iterator infoProperty_iterator;
       typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator infoProperty_const_iterator;
@@ -180,7 +180,7 @@ namespace DAnCE
       ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Property, ACE_Null_Mutex > > infoProperty_;
 
       // contentLocation
-      // 
+      //
       public:
       bool contentLocation_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& contentLocation () const;
@@ -190,7 +190,7 @@ namespace DAnCE
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > contentLocation_;
 
       // href
-      // 
+      //
       public:
       bool href_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& href () const;
@@ -502,13 +502,13 @@ namespace DAnCE
   {
     namespace Writer
     {
-      struct ComponentInterfaceDescription : Traversal::ComponentInterfaceDescription, 
+      struct ComponentInterfaceDescription : Traversal::ComponentInterfaceDescription,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::DAnCE::Config_Handlers::ComponentInterfaceDescription Type;
         ComponentInterfaceDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
@@ -517,7 +517,7 @@ namespace DAnCE
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         label (Type &o)
         {
           this->label (const_cast <Type const &> (o));
@@ -526,7 +526,7 @@ namespace DAnCE
         virtual void
         label (Type const&);
 
-        virtual void 
+        virtual void
         UUID (Type &o)
         {
           this->UUID (const_cast <Type const &> (o));
@@ -535,7 +535,7 @@ namespace DAnCE
         virtual void
         UUID (Type const&);
 
-        virtual void 
+        virtual void
         specificType (Type &o)
         {
           this->specificType (const_cast <Type const &> (o));
@@ -544,7 +544,7 @@ namespace DAnCE
         virtual void
         specificType (Type const&);
 
-        virtual void 
+        virtual void
         supportedType_pre (Type &o)
         {
           this->supportedType_pre (const_cast <Type const &> (o));
@@ -553,7 +553,7 @@ namespace DAnCE
         virtual void
         supportedType_pre (Type const&);
 
-        virtual void 
+        virtual void
         supportedType_next (Type &o)
         {
           this->supportedType_next (const_cast <Type const &> (o));
@@ -562,7 +562,7 @@ namespace DAnCE
         virtual void
         supportedType_next (Type const&);
 
-        virtual void 
+        virtual void
         supportedType_post (Type &o)
         {
           this->supportedType_post (const_cast <Type const &> (o));
@@ -571,7 +571,7 @@ namespace DAnCE
         virtual void
         supportedType_post (Type const&);
 
-        virtual void 
+        virtual void
         idlFile_pre (Type &o)
         {
           this->idlFile_pre (const_cast <Type const &> (o));
@@ -580,7 +580,7 @@ namespace DAnCE
         virtual void
         idlFile_pre (Type const&);
 
-        virtual void 
+        virtual void
         idlFile_next (Type &o)
         {
           this->idlFile_next (const_cast <Type const &> (o));
@@ -589,7 +589,7 @@ namespace DAnCE
         virtual void
         idlFile_next (Type const&);
 
-        virtual void 
+        virtual void
         idlFile_post (Type &o)
         {
           this->idlFile_post (const_cast <Type const &> (o));
@@ -598,7 +598,7 @@ namespace DAnCE
         virtual void
         idlFile_post (Type const&);
 
-        virtual void 
+        virtual void
         configProperty_pre (Type &o)
         {
           this->configProperty_pre (const_cast <Type const &> (o));
@@ -607,7 +607,7 @@ namespace DAnCE
         virtual void
         configProperty_pre (Type const&);
 
-        virtual void 
+        virtual void
         configProperty_next (Type &o)
         {
           this->configProperty_next (const_cast <Type const &> (o));
@@ -616,7 +616,7 @@ namespace DAnCE
         virtual void
         configProperty_next (Type const&);
 
-        virtual void 
+        virtual void
         configProperty_post (Type &o)
         {
           this->configProperty_post (const_cast <Type const &> (o));
@@ -625,7 +625,7 @@ namespace DAnCE
         virtual void
         configProperty_post (Type const&);
 
-        virtual void 
+        virtual void
         port_pre (Type &o)
         {
           this->port_pre (const_cast <Type const &> (o));
@@ -634,7 +634,7 @@ namespace DAnCE
         virtual void
         port_pre (Type const&);
 
-        virtual void 
+        virtual void
         port_next (Type &o)
         {
           this->port_next (const_cast <Type const &> (o));
@@ -643,7 +643,7 @@ namespace DAnCE
         virtual void
         port_next (Type const&);
 
-        virtual void 
+        virtual void
         port_post (Type &o)
         {
           this->port_post (const_cast <Type const &> (o));
@@ -652,7 +652,7 @@ namespace DAnCE
         virtual void
         port_post (Type const&);
 
-        virtual void 
+        virtual void
         property_pre (Type &o)
         {
           this->property_pre (const_cast <Type const &> (o));
@@ -661,7 +661,7 @@ namespace DAnCE
         virtual void
         property_pre (Type const&);
 
-        virtual void 
+        virtual void
         property_next (Type &o)
         {
           this->property_next (const_cast <Type const &> (o));
@@ -670,7 +670,7 @@ namespace DAnCE
         virtual void
         property_next (Type const&);
 
-        virtual void 
+        virtual void
         property_post (Type &o)
         {
           this->property_post (const_cast <Type const &> (o));
@@ -679,7 +679,7 @@ namespace DAnCE
         virtual void
         property_post (Type const&);
 
-        virtual void 
+        virtual void
         infoProperty_pre (Type &o)
         {
           this->infoProperty_pre (const_cast <Type const &> (o));
@@ -688,7 +688,7 @@ namespace DAnCE
         virtual void
         infoProperty_pre (Type const&);
 
-        virtual void 
+        virtual void
         infoProperty_next (Type &o)
         {
           this->infoProperty_next (const_cast <Type const &> (o));
@@ -697,7 +697,7 @@ namespace DAnCE
         virtual void
         infoProperty_next (Type const&);
 
-        virtual void 
+        virtual void
         infoProperty_post (Type &o)
         {
           this->infoProperty_post (const_cast <Type const &> (o));
@@ -706,7 +706,7 @@ namespace DAnCE
         virtual void
         infoProperty_post (Type const&);
 
-        virtual void 
+        virtual void
         contentLocation (Type &o)
         {
           this->contentLocation (const_cast <Type const &> (o));
@@ -715,7 +715,7 @@ namespace DAnCE
         virtual void
         contentLocation (Type const&);
 
-        virtual void 
+        virtual void
         href (Type &o)
         {
           this->href (const_cast <Type const &> (o));

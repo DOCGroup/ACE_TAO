@@ -28,12 +28,12 @@ namespace DAnCE
         tc = req_tc;
       else
         tc = DynSequence_Handler::create_typecode (type);
-      
+
       // Make the actual DynSequence
       DynamicAny::DynAny_var temp =
         DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
       DynamicAny::DynSequence_var retval = DynamicAny::DynSequence::_narrow (temp.in ());
-      
+
       DynamicAny::DynAnySeq dynseq;
       CORBA::ULong pos = 0;
 
@@ -69,17 +69,17 @@ namespace DAnCE
             {
               dynseq.length (value.count_element ());
               retval->set_length (value.count_element ());
-              
+
               for (DataValue::element_const_iterator i = value.begin_element ();
                    i != value.end_element ();
                    ++i)
                 {
-                  DynamicAny::DynAny_var dynany 
+                  DynamicAny::DynAny_var dynany
                     (DYNANY_HANDLER->extract_into_dynany (type.sequence ().elementType (),
                                                           **i));
                   dynseq[pos++] = dynany->copy ();
                 }
-          
+
               retval->set_elements_as_dyn_any (dynseq);
               return retval._retn ();
             }
@@ -90,16 +90,16 @@ namespace DAnCE
                           pos));
               throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Invalid value whilst populating the sequence."));
             }
-          
+
         case TCKind::tk_char_l:
         case TCKind::tk_wchar_l:
-          // special case where value iterataor multiplicity should be one, and should 
+          // special case where value iterataor multiplicity should be one, and should
           // represent a string, each character of which becomes a element of the sequence.
 
         case TCKind::tk_sequence_l:
         case TCKind::tk_array_l:
           // Several special cases here.
-          
+
         case TCKind::tk_any_l:
         case TCKind::tk_TypeCode_l:
         case TCKind::tk_Principal_l:
@@ -113,22 +113,22 @@ namespace DAnCE
         case TCKind::tk_local_interface_l:
         case TCKind::tk_event_l:
           // Special case where element association in datavalue contains another datavalue.
-          
+
           DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Type not supported\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
         }
-      
+
       return retval._retn ();
     }
-    
+
     void
     DynSequence_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn)
     {
       ACE_UNUSED_ARG (dyn);
       DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Extracting Sequences not yet supported\n")));
     }
-    
-    CORBA::TypeCode_ptr 
+
+    CORBA::TypeCode_ptr
     DynSequence_Handler::create_typecode (const DataType &type)
     {
       if (!type.sequence_p ())
@@ -136,28 +136,28 @@ namespace DAnCE
           DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("ERROR: Sequence type descriptioin required")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Expected <sequence> element, incorrect tc_kind."));
         }
-      
-      CORBA::TypeCode_ptr etc = 
+
+      CORBA::TypeCode_ptr etc =
         DYNANY_HANDLER->create_typecode (type.sequence ().elementType ());
-      
+
       CORBA::ULong bound (0);
       if (type.sequence ().bound_p ())
         bound = type.sequence ().bound ();
-      
+
       // @@ Leak this guy onto the heap to avoid a compile problem.
       CORBA::TypeCode_ptr tc =
         DYNANY_HANDLER->orb ()->create_sequence_tc (bound,
                                                     etc);
-      
+
       // Sequences don't have names.
       //      DYNANY_HANDLER->register_typecode (type.sequence_ ().typeId (),
       //                                   tc);
-      
+
       return tc;
     }
-    
+
   }
 }
 
 
-  
+

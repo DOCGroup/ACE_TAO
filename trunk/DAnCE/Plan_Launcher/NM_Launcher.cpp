@@ -9,11 +9,11 @@ namespace DAnCE
     : __Base (orb, manager)
   {
   }
-    
 
-  
+
+
   NM_Launcher::~NM_Launcher (void)
   {
-    
+
   }
 }

@@ -33,14 +33,14 @@ bool
 parse_args (int argc, ACE_TCHAR *argv [])
 {
   DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("dance_split_plan options: ")));
-  
+
   for (int i = 0; i < argc; ++i)
     {
       DANCE_DEBUG (9, (LM_TRACE, ACE_TEXT("\t%s\n"), argv[i]));
     }
-  
+
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("c:x:t:h"), 0);
-  
+
   int c;
   ACE_CString s;
   while ((c = get_opt ()) != EOF)
@@ -51,7 +51,7 @@ parse_args (int argc, ACE_TCHAR *argv [])
           cdr_encoded_ = true;
           input_filename = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
-          
+
         case 'x':
           cdr_encoded_ = false;
           input_filename = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
@@ -65,58 +65,58 @@ parse_args (int argc, ACE_TCHAR *argv [])
               split_type = 'N';
             }
           break;
-          
+
         case 'h':
           usage ();
           return false;
-        default: 
+        default:
           usage ();
           return false;
         }
     }
-  
+
   return true;
 }
 
-int 
+int
 ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
   DANCE_DISABLE_TRACE ();
-  
+
   int retval = 0;
 
   try
     {
       DAnCE::Logger_Service
         * dlf = ACE_Dynamic_Service<DAnCE::Logger_Service>::instance ("DAnCE_Logger");
-      
+
       if (dlf)
         {
           dlf->init (argc, argv);
         }
-      
+
       DANCE_DEBUG (6, (LM_TRACE, DLINFO
                        ACE_TEXT("PlanLauncher - initializing ORB\n")));
-      
+
       // Need an ORB for the Config handlers
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-      
+
       if (!parse_args (argc, argv))
         {
           return -1;
         }
 
       auto_ptr<Deployment::DeploymentPlan> plan;
-      
+
       if (!cdr_encoded_)
         {
           plan.reset (DAnCE::Convert_Plan::read_xml_plan (ACE_TEXT_CHAR_TO_TCHAR (input_filename)));
         }
-      else 
+      else
         {
           plan.reset (DAnCE::Convert_Plan::read_cdr_plan (ACE_TEXT_CHAR_TO_TCHAR (input_filename)));
         }
-      
+
       if (plan.get () == 0)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Split_Plan - ")
@@ -141,7 +141,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
               ACE_CString name ((*iter_plans).ext_id_);
               name += "-";
               name += input_filename;
-              DAnCE::Convert_Plan::write_cdr_plan (ACE_TEXT_CHAR_TO_TCHAR (name.c_str ()), 
+              DAnCE::Convert_Plan::write_cdr_plan (ACE_TEXT_CHAR_TO_TCHAR (name.c_str ()),
                                                    (*iter_plans).int_id_);
             }
         }
@@ -177,6 +177,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Split_Plan - error: unknown c++ exception\n")));
       retval = -1;
     }
-  
+
   return retval;
 }

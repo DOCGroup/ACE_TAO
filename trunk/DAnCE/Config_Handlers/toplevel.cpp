@@ -22,12 +22,12 @@ namespace DAnCE
   namespace Config_Handlers
   {
     // TopLevelPackageDescription
-    // 
+    //
 
     TopLevelPackageDescription::
     TopLevelPackageDescription ()
-    : 
-    ::XSCRT::Type (), 
+    :
+    ::XSCRT::Type (),
     regulator__ ()
     {
     }
@@ -51,7 +51,7 @@ namespace DAnCE
 
 
     // TopLevelPackageDescription
-    // 
+    //
     TopLevelPackageDescription::package_iterator TopLevelPackageDescription::
     begin_package ()
     {
@@ -115,7 +115,7 @@ namespace DAnCE
           add_package (t);
         }
 
-        else 
+        else
         {
         }
       }

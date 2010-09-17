@@ -22,12 +22,12 @@ namespace DAnCE
   namespace Config_Handlers
   {
     // ComponentPackageImport
-    // 
+    //
 
     ComponentPackageImport::
     ComponentPackageImport ()
-    : 
-    ::XSCRT::Type (), 
+    :
+    ::XSCRT::Type (),
     regulator__ ()
     {
     }
@@ -51,7 +51,7 @@ namespace DAnCE
 
 
     // ComponentPackageImport
-    // 
+    //
     ComponentPackageImport::location_iterator ComponentPackageImport::
     begin_location ()
     {
@@ -90,11 +90,11 @@ namespace DAnCE
 
 
     // PackageConfiguration
-    // 
+    //
 
     PackageConfiguration::
     PackageConfiguration ()
-    : 
+    :
     regulator__ ()
     {
     }
@@ -170,7 +170,7 @@ namespace DAnCE
 
 
     // PackageConfiguration
-    // 
+    //
     bool PackageConfiguration::
     label_p () const
     {
@@ -199,7 +199,7 @@ namespace DAnCE
     }
 
     // PackageConfiguration
-    // 
+    //
     bool PackageConfiguration::
     UUID_p () const
     {
@@ -228,7 +228,7 @@ namespace DAnCE
     }
 
     // PackageConfiguration
-    // 
+    //
     bool PackageConfiguration::
     basePackage_p () const
     {
@@ -257,7 +257,7 @@ namespace DAnCE
     }
 
     // PackageConfiguration
-    // 
+    //
     bool PackageConfiguration::
     specializedConfig_p () const
     {
@@ -286,7 +286,7 @@ namespace DAnCE
     }
 
     // PackageConfiguration
-    // 
+    //
     bool PackageConfiguration::
     importedPackage_p () const
     {
@@ -315,7 +315,7 @@ namespace DAnCE
     }
 
     // PackageConfiguration
-    // 
+    //
     bool PackageConfiguration::
     referencedPackage_p () const
     {
@@ -344,7 +344,7 @@ namespace DAnCE
     }
 
     // PackageConfiguration
-    // 
+    //
     PackageConfiguration::selectRequirement_iterator PackageConfiguration::
     begin_selectRequirement ()
     {
@@ -382,7 +382,7 @@ namespace DAnCE
     }
 
     // PackageConfiguration
-    // 
+    //
     PackageConfiguration::configProperty_iterator PackageConfiguration::
     begin_configProperty ()
     {
@@ -420,7 +420,7 @@ namespace DAnCE
     }
 
     // PackageConfiguration
-    // 
+    //
     bool PackageConfiguration::
     contentLocation_p () const
     {
@@ -475,7 +475,7 @@ namespace DAnCE
           add_location (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -550,7 +550,7 @@ namespace DAnCE
           contentLocation (t);
         }
 
-        else 
+        else
         {
         }
       }

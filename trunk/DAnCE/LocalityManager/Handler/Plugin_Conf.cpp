@@ -15,11 +15,11 @@
 
 namespace DAnCE
 {
-  void 
+  void
   Plugin_Configurator::load_from_text_file (const ACE_TCHAR *file)
   {
     DANCE_TRACE ("Plugin_Configurator::load_from_text_file");
-    
+
     if (!file)
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plugin_Configurator::load_from_text_file - ")
@@ -36,7 +36,7 @@ namespace DAnCE
                          file));
         return;
       }
-    
+
     ::Deployment::DeploymentPlan plan;
 
     ACE_Read_Buffer reader (inf, true);
@@ -52,13 +52,13 @@ namespace DAnCE
             size_t len = ACE_OS::strlen (string);
 
             if (len == 0) continue;
-        
+
             std::istringstream tokenizer (string);
             std::vector< std::string > tokens;
             std::copy (std::istream_iterator< std::string > (tokenizer),
                        std::istream_iterator <std::string > (),
                        std::back_inserter < std::vector < std::string > > (tokens));
-        
+
             if (tokens.size () != 3)
               {
                 DANCE_ERROR (1, (LM_ERROR, DLINFO
@@ -75,23 +75,23 @@ namespace DAnCE
                                  tokens[0].c_str (),
                                  tokens[1].c_str (),
                                  tokens[2].c_str ()));
-                             
 
-                if (ACE_OS::strcmp (tokens[0].c_str (), 
+
+                if (ACE_OS::strcmp (tokens[0].c_str (),
                                     DAnCE::DANCE_INSTALLATIONHANDLER) == 0)
                   {
                     this->create_entry (tokens[1].c_str (), tokens[2].c_str (),
                                         DAnCE::DANCE_INSTALLATIONHANDLER,
                                         plan, pos++);
                   }
-                else if (ACE_OS::strcmp (tokens[0].c_str (), 
+                else if (ACE_OS::strcmp (tokens[0].c_str (),
                                          DAnCE::DANCE_DEPLOYMENTINTERCEPTOR) == 0)
                   {
                     this->create_entry (tokens[1].c_str (), tokens[2].c_str (),
                                         DAnCE::DANCE_DEPLOYMENTINTERCEPTOR,
                                         plan, pos++);
                   }
-                else if (ACE_OS::strcmp (tokens[0].c_str (), 
+                else if (ACE_OS::strcmp (tokens[0].c_str (),
                                          DAnCE::DANCE_CONFIGPLUGIN) == 0)
                   {
                     this->create_entry (tokens[1].c_str (), tokens[2].c_str (),
@@ -106,7 +106,7 @@ namespace DAnCE
                                      string));
                   }
               }
-        
+
             reader.alloc ()->free (string);
           }
         catch (...)
@@ -118,16 +118,16 @@ namespace DAnCE
 
     this->deploy_plan (plan);
   }
-  
+
   void
   Plugin_Configurator::deploy_plan (::Deployment::DeploymentPlan &plan)
   {
     DANCE_TRACE ("Plugin_Configurator::deploy_plan");
-    
+
     DAnCE::Inst_Handler_Impl inst_handler;
     DAnCE::Interceptor_Handler_Impl interceptor_handler;
     DAnCE::Config_Handler_Impl config_handler;
-    
+
     for (CORBA::ULong i = 0; i < plan.instance.length (); ++i)
       {
         if (plan.instance[i].implementationRef >= plan.implementation.length ())
@@ -138,14 +138,14 @@ namespace DAnCE
                              plan.instance[i].name.in ()));
             continue;
           }
-        
-        ::Deployment::MonolithicDeploymentDescription &mdd = 
+
+        ::Deployment::MonolithicDeploymentDescription &mdd =
             plan.implementation[plan.instance[i].implementationRef];
 
-        CORBA::String_var inst_type = 
+        CORBA::String_var inst_type =
           DAnCE::Utility::get_instance_type (mdd.execParameter);
-        
-        if (ACE_OS::strcmp (inst_type.in (), 
+
+        if (ACE_OS::strcmp (inst_type.in (),
                             DAnCE::DANCE_INSTALLATIONHANDLER) == 0)
           {
             CORBA::Any_var any;
@@ -153,7 +153,7 @@ namespace DAnCE
                                            i,
                                            any.out ());
           }
-        else if (ACE_OS::strcmp (inst_type.in (), 
+        else if (ACE_OS::strcmp (inst_type.in (),
                                  DAnCE::DANCE_DEPLOYMENTINTERCEPTOR) == 0)
           {
             CORBA::Any_var any;
@@ -161,7 +161,7 @@ namespace DAnCE
                                                   i,
                                                   any.out ());
           }
-        else if (ACE_OS::strcmp (inst_type.in (), 
+        else if (ACE_OS::strcmp (inst_type.in (),
                                  DAnCE::DANCE_CONFIGPLUGIN) == 0)
           {
             CORBA::Any_var any;
@@ -172,7 +172,7 @@ namespace DAnCE
       }
   }
 
-  void 
+  void
   Plugin_Configurator::create_entry (const char *artifact,
                                      const char *entrypoint,
                                      const char *type,
@@ -186,17 +186,17 @@ namespace DAnCE
     plan.implementation[pos].execParameter.length (3);
 
     plan.implementation[pos].execParameter[0].name = DAnCE::DANCE_PLUGIN_ARTIFACT;
-    plan.implementation[pos].execParameter[0].value <<= 
+    plan.implementation[pos].execParameter[0].value <<=
       CORBA::Any::from_string (artifact, 0);
 
     plan.implementation[pos].execParameter[1].name = DAnCE::DANCE_PLUGIN_ENTRYPT;
-    plan.implementation[pos].execParameter[1].value <<= 
+    plan.implementation[pos].execParameter[1].value <<=
       CORBA::Any::from_string (entrypoint, 0);
 
     plan.implementation[pos].execParameter[2].name = DAnCE::IMPL_TYPE;
-    plan.implementation[pos].execParameter[2].value <<= 
+    plan.implementation[pos].execParameter[2].value <<=
       CORBA::Any::from_string (type, 0);
-    
+
     plan.instance.length (pos + 1);
     plan.instance[pos].name = entrypoint;
     plan.instance[pos].implementationRef = pos;

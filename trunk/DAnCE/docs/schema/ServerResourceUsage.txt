@@ -52,7 +52,7 @@ referenced by its name and the CIAO:ServerResources name.
          <requirementName>CIAO:PolicySet</requirementName>
          <resourceName>here_we_insert_the_name_defined_in_CIAO:ServerResources</resourcename>
          <property>
-// 
+//
 // name could be CIAO:InstancePolicy or CIAO:ReceptaclePolicy.
 // Here we show an example of an CIAO::InstancePolicy.
 //
@@ -105,7 +105,7 @@ referenced by its name and the CIAO:ServerResources name.
      </instance>
      </instance>
    </deploymentplan>
-  
+
 If only the name of the CIAO:ServerResources is specified, we are
 using it as a collocation constraint.  In this case, the
 <deployedResource> will contain no <property> sub-element.  Component

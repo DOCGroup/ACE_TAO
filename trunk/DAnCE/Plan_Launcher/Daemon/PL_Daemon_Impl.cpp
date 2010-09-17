@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_codegen.cpp:1756
 
 #include "PL_Daemon_Impl.h"
@@ -15,40 +15,40 @@ namespace DAnCE
     : orb_ (CORBA::ORB::_duplicate (orb))
   {
   }
-  
+
   // Implementation skeleton destructor
   Plan_Launcher_Daemon_i::~Plan_Launcher_Daemon_i (void)
   {
   }
 
-  ::Deployment::DeploymentPlan * 
+  ::Deployment::DeploymentPlan *
   Plan_Launcher_Daemon_i::parse_xml_plan (const char * plan_location)
   {
     if (!plan_location)
       throw CORBA::BAD_PARAM ();
-  
-    Deployment::DeploymentPlan * plan = 
+
+    Deployment::DeploymentPlan * plan =
       DAnCE::Convert_Plan::read_xml_plan (ACE_TEXT_CHAR_TO_TCHAR (plan_location));
-  
+
     if (plan)
       return plan;
-  
+
     throw CORBA::UNKNOWN ();
   }
 
 
-  ::Deployment::DeploymentPlan * 
+  ::Deployment::DeploymentPlan *
   Plan_Launcher_Daemon_i::parse_cdr_plan (const char * plan_location)
   {
     if (!plan_location)
       throw CORBA::BAD_PARAM ();
-  
-    Deployment::DeploymentPlan * plan = 
+
+    Deployment::DeploymentPlan * plan =
       DAnCE::Convert_Plan::read_xml_plan (ACE_TEXT_CHAR_TO_TCHAR (plan_location));
-  
+
     if (plan)
       return plan;
-  
+
     throw CORBA::UNKNOWN ();
   }
 

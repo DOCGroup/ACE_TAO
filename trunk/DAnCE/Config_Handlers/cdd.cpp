@@ -22,12 +22,12 @@ namespace DAnCE
   namespace Config_Handlers
   {
     // Domain
-    // 
+    //
 
     Domain::
     Domain (::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Node, ACE_Null_Mutex > > const& node__)
-    : 
-    ::XSCRT::Type (), 
+    :
+    ::XSCRT::Type (),
     node_ (node__),
     regulator__ ()
     {
@@ -78,7 +78,7 @@ namespace DAnCE
 
 
     // Domain
-    // 
+    //
     bool Domain::
     UUID_p () const
     {
@@ -107,7 +107,7 @@ namespace DAnCE
     }
 
     // Domain
-    // 
+    //
     bool Domain::
     label_p () const
     {
@@ -136,7 +136,7 @@ namespace DAnCE
     }
 
     // Domain
-    // 
+    //
     Domain::node_iterator Domain::
     begin_node ()
     {
@@ -174,7 +174,7 @@ namespace DAnCE
     }
 
     // Domain
-    // 
+    //
     Domain::interconnect_iterator Domain::
     begin_interconnect ()
     {
@@ -212,7 +212,7 @@ namespace DAnCE
     }
 
     // Domain
-    // 
+    //
     Domain::bridge_iterator Domain::
     begin_bridge ()
     {
@@ -250,7 +250,7 @@ namespace DAnCE
     }
 
     // Domain
-    // 
+    //
     Domain::sharedResource_iterator Domain::
     begin_sharedResource ()
     {
@@ -288,7 +288,7 @@ namespace DAnCE
     }
 
     // Domain
-    // 
+    //
     Domain::infoProperty_iterator Domain::
     begin_infoProperty ()
     {
@@ -327,12 +327,12 @@ namespace DAnCE
 
 
     // Bridge
-    // 
+    //
 
     Bridge::
     Bridge (::XMLSchema::string< ACE_TCHAR > const& name__,
             ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Interconnect, ACE_Null_Mutex > > const& connect__)
-    : 
+    :
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     connect_ (connect__),
     regulator__ ()
@@ -373,7 +373,7 @@ namespace DAnCE
 
 
     // Bridge
-    // 
+    //
     ::XMLSchema::string< ACE_TCHAR > const& Bridge::
     name () const
     {
@@ -387,7 +387,7 @@ namespace DAnCE
     }
 
     // Bridge
-    // 
+    //
     bool Bridge::
     label_p () const
     {
@@ -416,7 +416,7 @@ namespace DAnCE
     }
 
     // Bridge
-    // 
+    //
     Bridge::connect_iterator Bridge::
     begin_connect ()
     {
@@ -454,7 +454,7 @@ namespace DAnCE
     }
 
     // Bridge
-    // 
+    //
     Bridge::resource_iterator Bridge::
     begin_resource ()
     {
@@ -493,12 +493,12 @@ namespace DAnCE
 
 
     // Interconnect
-    // 
+    //
 
     Interconnect::
     Interconnect (::XMLSchema::string< ACE_TCHAR > const& name__,
                   ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::Node, ACE_Null_Mutex > > const& connect__)
-    : 
+    :
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     connect_ (connect__),
     regulator__ ()
@@ -542,7 +542,7 @@ namespace DAnCE
 
 
     // Interconnect
-    // 
+    //
     ::XMLSchema::string< ACE_TCHAR > const& Interconnect::
     name () const
     {
@@ -556,7 +556,7 @@ namespace DAnCE
     }
 
     // Interconnect
-    // 
+    //
     bool Interconnect::
     label_p () const
     {
@@ -585,7 +585,7 @@ namespace DAnCE
     }
 
     // Interconnect
-    // 
+    //
     Interconnect::connection_iterator Interconnect::
     begin_connection ()
     {
@@ -623,7 +623,7 @@ namespace DAnCE
     }
 
     // Interconnect
-    // 
+    //
     Interconnect::connect_iterator Interconnect::
     begin_connect ()
     {
@@ -661,7 +661,7 @@ namespace DAnCE
     }
 
     // Interconnect
-    // 
+    //
     Interconnect::resource_iterator Interconnect::
     begin_resource ()
     {
@@ -700,11 +700,11 @@ namespace DAnCE
 
 
     // Node
-    // 
+    //
 
     Node::
     Node (::XMLSchema::string< ACE_TCHAR > const& name__)
-    : 
+    :
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     regulator__ ()
     {
@@ -747,7 +747,7 @@ namespace DAnCE
 
 
     // Node
-    // 
+    //
     ::XMLSchema::string< ACE_TCHAR > const& Node::
     name () const
     {
@@ -761,7 +761,7 @@ namespace DAnCE
     }
 
     // Node
-    // 
+    //
     bool Node::
     label_p () const
     {
@@ -790,7 +790,7 @@ namespace DAnCE
     }
 
     // Node
-    // 
+    //
     Node::connection_iterator Node::
     begin_connection ()
     {
@@ -828,7 +828,7 @@ namespace DAnCE
     }
 
     // Node
-    // 
+    //
     Node::sharedResource_iterator Node::
     begin_sharedResource ()
     {
@@ -866,7 +866,7 @@ namespace DAnCE
     }
 
     // Node
-    // 
+    //
     Node::resource_iterator Node::
     begin_resource ()
     {
@@ -905,14 +905,14 @@ namespace DAnCE
 
 
     // SharedResource
-    // 
+    //
 
     SharedResource::
     SharedResource (::XMLSchema::string< ACE_TCHAR > const& name__,
                     ::XMLSchema::string< ACE_TCHAR > const& resourceType__,
                     ::DAnCE::Config_Handlers::Node const& node__,
                     ::DAnCE::Config_Handlers::SatisfierProperty const& property__)
-    : 
+    :
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     resourceType_ (new ::XMLSchema::string< ACE_TCHAR > (resourceType__)),
     node_ (new ::DAnCE::Config_Handlers::Node (node__)),
@@ -957,7 +957,7 @@ namespace DAnCE
 
 
     // SharedResource
-    // 
+    //
     ::XMLSchema::string< ACE_TCHAR > const& SharedResource::
     name () const
     {
@@ -971,7 +971,7 @@ namespace DAnCE
     }
 
     // SharedResource
-    // 
+    //
     ::XMLSchema::string< ACE_TCHAR > const& SharedResource::
     resourceType () const
     {
@@ -985,7 +985,7 @@ namespace DAnCE
     }
 
     // SharedResource
-    // 
+    //
     ::DAnCE::Config_Handlers::Node const& SharedResource::
     node () const
     {
@@ -999,7 +999,7 @@ namespace DAnCE
     }
 
     // SharedResource
-    // 
+    //
     ::DAnCE::Config_Handlers::SatisfierProperty const& SharedResource::
     property () const
     {
@@ -1075,7 +1075,7 @@ namespace DAnCE
           add_infoProperty (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -1120,7 +1120,7 @@ namespace DAnCE
           add_resource (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -1171,7 +1171,7 @@ namespace DAnCE
           add_resource (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -1222,7 +1222,7 @@ namespace DAnCE
           add_resource (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -1267,7 +1267,7 @@ namespace DAnCE
           property_->container (this);
         }
 
-        else 
+        else
         {
         }
       }

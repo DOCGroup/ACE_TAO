@@ -47,7 +47,7 @@ namespace XMI
     typedef ACE_Refcounted_Auto_Ptr < Extension, ACE_Null_Mutex > _ptr;
 
     // id
-    // 
+    //
     public:
     bool id_p () const;
     ::XMLSchema::ID< ACE_TCHAR > const& id () const;
@@ -58,7 +58,7 @@ namespace XMI
     ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > id_;
 
     // label
-    // 
+    //
     public:
     bool label_p () const;
     ::XMLSchema::string< ACE_TCHAR > const& label () const;
@@ -69,7 +69,7 @@ namespace XMI
     ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > label_;
 
     // uuid
-    // 
+    //
     public:
     bool uuid_p () const;
     ::XMLSchema::string< ACE_TCHAR > const& uuid () const;
@@ -80,7 +80,7 @@ namespace XMI
     ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > uuid_;
 
     // href
-    // 
+    //
     public:
     bool href_p () const;
     ::XMLSchema::string< ACE_TCHAR > const& href () const;
@@ -91,7 +91,7 @@ namespace XMI
     ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > href_;
 
     // idref
-    // 
+    //
     public:
     bool idref_p () const;
     ::XMLSchema::IDREF< ACE_TCHAR > const& idref () const;
@@ -104,7 +104,7 @@ namespace XMI
     ::std::auto_ptr< ::XMLSchema::IDREF< ACE_TCHAR > > idref_;
 
     // version
-    // 
+    //
     public:
     bool version_p () const;
     ::XMLSchema::string< ACE_TCHAR > const& version () const;
@@ -115,7 +115,7 @@ namespace XMI
     ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > version_;
 
     // extender
-    // 
+    //
     public:
     bool extender_p () const;
     ::XMLSchema::string< ACE_TCHAR > const& extender () const;
@@ -126,7 +126,7 @@ namespace XMI
     ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > extender_;
 
     // extenderID
-    // 
+    //
     public:
     bool extenderID_p () const;
     ::XMLSchema::string< ACE_TCHAR > const& extenderID () const;
@@ -291,13 +291,13 @@ namespace XMI
 {
   namespace Writer
   {
-    struct Extension : Traversal::Extension, 
+    struct Extension : Traversal::Extension,
     virtual ::XSCRT::Writer< ACE_TCHAR >
     {
       typedef ::XMI::Extension Type;
       Extension (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-      virtual void 
+      virtual void
       traverse (Type &o)
       {
         this->traverse (const_cast <Type const &> (o));
@@ -306,7 +306,7 @@ namespace XMI
       virtual void
       traverse (Type const&);
 
-      virtual void 
+      virtual void
       id (Type &o)
       {
         this->id (const_cast <Type const &> (o));
@@ -315,7 +315,7 @@ namespace XMI
       virtual void
       id (Type const&);
 
-      virtual void 
+      virtual void
       label (Type &o)
       {
         this->label (const_cast <Type const &> (o));
@@ -324,7 +324,7 @@ namespace XMI
       virtual void
       label (Type const&);
 
-      virtual void 
+      virtual void
       uuid (Type &o)
       {
         this->uuid (const_cast <Type const &> (o));
@@ -333,7 +333,7 @@ namespace XMI
       virtual void
       uuid (Type const&);
 
-      virtual void 
+      virtual void
       href (Type &o)
       {
         this->href (const_cast <Type const &> (o));
@@ -342,7 +342,7 @@ namespace XMI
       virtual void
       href (Type const&);
 
-      virtual void 
+      virtual void
       idref (Type &o)
       {
         this->idref (const_cast <Type const &> (o));
@@ -351,7 +351,7 @@ namespace XMI
       virtual void
       idref (Type const&);
 
-      virtual void 
+      virtual void
       version (Type &o)
       {
         this->version (const_cast <Type const &> (o));
@@ -360,7 +360,7 @@ namespace XMI
       virtual void
       version (Type const&);
 
-      virtual void 
+      virtual void
       extender (Type &o)
       {
         this->extender (const_cast <Type const &> (o));
@@ -369,7 +369,7 @@ namespace XMI
       virtual void
       extender (Type const&);
 
-      virtual void 
+      virtual void
       extenderID (Type &o)
       {
         this->extenderID (const_cast <Type const &> (o));

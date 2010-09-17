@@ -139,14 +139,14 @@ namespace DAnCE
       if ((excep >>= ex_holder))
         {
           std::ostringstream excep_stream;
-          
-          excep_stream << " Name: " << ex_holder->name.in () 
+
+          excep_stream << " Name: " << ex_holder->name.in ()
                        << " Reason: " << ex_holder->reason.in ();
-          
+
           result += excep_stream.str ();
           return true;
         }
-      
+
       return false;
     }
 

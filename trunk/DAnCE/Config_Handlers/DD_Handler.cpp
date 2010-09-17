@@ -60,7 +60,7 @@ namespace DAnCE
       if(!this->build_domain ())
         throw NoDomain ();
     }
-    
+
     /*
     DD_Handler::DD_Handler (::Deployment::Domain *dmn):
       idl_domain_(dmn),

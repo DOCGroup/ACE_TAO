@@ -5,7 +5,7 @@
                           xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
   <label>ParseError_TestDepl_1</label>
   <UUID>ParseError_TestDepl_1</UUID>
-  
+
   <implementation xmi:id="ComponentImplementation">
     <name>ComponentImplementation</name>
     <source/>
@@ -57,7 +57,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
   <instance xmi:id="ComponentInstance1">
     <name>Component1</name>
     <node>ComponentNode</node>
@@ -75,7 +75,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance xmi:id="ComponentInstance2">
     <name>Component2</name>
     <node>ComponentNode</node>
@@ -93,7 +93,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <connection>
     <name>comp_connection</name>
     <deployRequirement>
@@ -113,7 +113,7 @@
       <instance xmi:idref="ComponentInstance2" />
     </internalEndpoint>
   </connection>
-  
+
   <artifact xmi:id="Component_ExecArtifact">
     <name>Component_exec</name>
     <source/>

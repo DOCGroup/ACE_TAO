@@ -22,7 +22,7 @@
       </value>
     </execParameter>
   </implementation>
-      
+
 
   <instance xmi:id="CompSvrInst">
     <name>LocalityInstance</name>

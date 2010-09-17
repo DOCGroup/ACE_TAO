@@ -55,7 +55,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   //Create an XML_Helper for all the file work
 
-  if (xercesc::DOMDocument *doc = 
+  if (xercesc::DOMDocument *doc =
       XML_Helper::XML_HELPER.create_dom (input_file))
     {
       //Read in the XSC type structure from the DOMDocument
@@ -77,7 +77,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       DP_Handler reverse_handler(*idl);
 
       //Create a new DOMDocument for writing the XSC into XML
-      xercesc::DOMDocument* the_xsc 
+      xercesc::DOMDocument* the_xsc
         (XML_Helper::XML_HELPER.create_dom(0));
 
       //Serialize the XSC into a DOMDocument

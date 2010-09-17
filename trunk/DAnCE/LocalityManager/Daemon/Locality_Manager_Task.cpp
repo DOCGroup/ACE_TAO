@@ -31,12 +31,12 @@ namespace DAnCE
 
     Logger_Service
       *dlf = ACE_Dynamic_Service<Logger_Service>::instance ("DAnCE_Logger");
-    
+
     if (dlf)
       {
         dlf->init (argc, argv);
       }
-    
+
     DANCE_DEBUG (9, (LM_TRACE, DLINFO
                      ACE_TEXT ("DAnCE_LocalityManager_Task::DAnCE_LocalityManager_Task - ")
                      ACE_TEXT ("Creating ORB\n")));
@@ -104,7 +104,7 @@ namespace DAnCE
 
     if (this->callback_ior_str_ != ACE_TEXT(""))
       {
-        DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+        DANCE_DEBUG (9, (LM_TRACE, DLINFO
                          ACE_TEXT ("LocalityManager_Task::run - ")
                          ACE_TEXT ("Resolving callback IOR\n")));
         CORBA::Object_var obj =
@@ -149,11 +149,11 @@ namespace DAnCE
                                            ACE_TEXT_ALWAYS_CHAR (this->uuid_.c_str ()),
                                            config.out ());
 
-            DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+            DANCE_DEBUG (9, (LM_TRACE, DLINFO
                              ACE_TEXT ("LocalityManager_Task::svc - ")
                              ACE_TEXT ("Configuration received, got %u values\n"),
                              config->length ()));
-            
+
             lm_srv->init (config._retn ());
 
             DANCE_DEBUG (6, (LM_NOTICE, DLINFO
@@ -165,7 +165,7 @@ namespace DAnCE
           }
         catch (const CORBA::BAD_PARAM &)
           {
-            DANCE_ERROR (1, (LM_ERROR, DLINFO 
+            DANCE_ERROR (1, (LM_ERROR, DLINFO
                              ACE_TEXT ("LocalityManager_Task::svc - ")
                              ACE_TEXT ("The Callback IOR provided pointed to the ")
                              ACE_TEXT ("wrong Activator\n")));
@@ -182,7 +182,7 @@ namespace DAnCE
       }
     else
       {
-        DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+        DANCE_DEBUG (9, (LM_TRACE, DLINFO
                          ACE_TEXT ("LocalityManager_Task::svc - ")
                          ACE_TEXT ("Initializing ComponentServer without ServantActivator ")
                          ACE_TEXT ("callback\n")));
@@ -191,7 +191,7 @@ namespace DAnCE
 
     this->orb_->run ();
 
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO
                      ACE_TEXT ("LocalityManager_Task::svc - ")
                      ACE_TEXT ("ORB Event loop completed.\n")));
 
@@ -208,7 +208,7 @@ namespace DAnCE
   {
     DANCE_TRACE ("LocalityManager_Task::run");
 
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO 
+    DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                      ACE_TEXT ("LocalityManager_Task::run - Starting ORB\n")));
     this->svc ();
     DANCE_DEBUG (6, (LM_INFO,
@@ -221,7 +221,7 @@ namespace DAnCE
   {
     DANCE_TRACE ("LocalityManager_Task::parse_args");
 
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO
                      ACE_TEXT ("LocalityManager_Task::parse_args - ")
                      ACE_TEXT ("parsing arguments...\n")));
 
@@ -238,7 +238,7 @@ namespace DAnCE
     int c = 0;
     while ((c = opts ()) != -1)
       {
-        DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+        DANCE_DEBUG (9, (LM_TRACE, DLINFO
                          ACE_TEXT ("LocalityManager_Task::parse_args - ")
                          ACE_TEXT ("Found option: \"%s\" with argument \"%s\"\n"),
                         opts.last_option (), opts.opt_arg ()));
@@ -246,7 +246,7 @@ namespace DAnCE
         switch (c)
           {
           case 'u':
-            DANCE_DEBUG (6, (LM_DEBUG, DLINFO 
+            DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                              ACE_TEXT ("LocalityManager_Task::parse_args - ")
                              ACE_TEXT ("uuid is %s\n"),
                             opts.opt_arg ()));
@@ -254,7 +254,7 @@ namespace DAnCE
             break;
 
           case 'c':
-            DANCE_DEBUG (6, (LM_DEBUG, DLINFO 
+            DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                              ACE_TEXT ("LocalityManager_Task::parse_args - ")
                              ACE_TEXT ("callback ior is %s\n"),
                             opts.opt_arg ()));
@@ -270,15 +270,15 @@ namespace DAnCE
             continue; // already taken care of
 
           case 'o':
-            DANCE_DEBUG (6, (LM_DEBUG, DLINFO 
+            DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                              ACE_TEXT ("LocalityManager_Task::parse_args - ")
                              ACE_TEXT ("IOR Output file: %s\n"),
                             opts.opt_arg ()));
             this->output_file_ = opts.opt_arg ();
             break;
-            
+
           case 'p':
-            DANCE_DEBUG (6, (LM_DEBUG, DLINFO 
+            DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                              ACE_TEXT ("LocalityManager_Task::parse_args - ")
                              ACE_TEXT ("Adding <%s> to plugin config list\n"),
                              opts.opt_arg ()));
@@ -288,9 +288,9 @@ namespace DAnCE
           case 'h':
             this->usage ();
             throw Error ("Command line help requested, bailing out....");
-            
+
           default:
-            DANCE_ERROR (1, (LM_ERROR, DLINFO 
+            DANCE_ERROR (1, (LM_ERROR, DLINFO
                              ACE_TEXT (" Unknown option: %s\n"),
                             opts.last_option ()));
             this->usage ();
@@ -309,14 +309,14 @@ namespace DAnCE
                          ACE_TEXT ("LocalityManager_Task::parse_args - ")
                          ACE_TEXT ("Starting ComponentServer without a callback IOR\n")));
       }
-    
+
     if (this->plugin_config_.size () == 0)
       {
         DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                          ACE_TEXT ("LocalityManager_Task::parse_args - ")
                          ACE_TEXT ("No plugin config specified, adding default at ")
                          ACE_TEXT ("DANCE_ROOT/bin/ciao.localityconfig\n")));
-        
+
         ACE_Env_Value<const ACE_TCHAR *> dance_env (ACE_TEXT ("DANCE_ROOT"),
                                                     ACE_TEXT (""));
         std::string filename (ACE_TEXT_ALWAYS_CHAR (dance_env));
@@ -330,7 +330,7 @@ namespace DAnCE
   {
     DANCE_TRACE ("LocalityManager_Task::usage");
     // Shouldn't be subject to CIAO's logging policy
-    ACE_ERROR ((LM_EMERGENCY, 
+    ACE_ERROR ((LM_EMERGENCY,
                 ACE_TEXT ("Usage: dance_locality_manager <options>\n")
                 ACE_TEXT ("Options:\n")
                 ACE_TEXT ("\t-h|--help\t\t\t\tShow help\n")

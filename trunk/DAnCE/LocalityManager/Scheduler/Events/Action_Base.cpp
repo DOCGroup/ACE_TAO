@@ -13,17 +13,17 @@ namespace DAnCE
     : Deployment_Event (holder, name, instance_type)
   {
     CORBA::Any *tmp;
-    ACE_NEW_THROW_EX (tmp, 
+    ACE_NEW_THROW_EX (tmp,
                       ::CORBA::Any (),
                       CORBA::NO_MEMORY ());
     instance_excep_ = tmp;
   }
-  
+
   Action_Base::~Action_Base (void)
   {
-    
+
   }
-  
+
   int
   Action_Base::call (void)
   {
@@ -90,7 +90,7 @@ namespace DAnCE
                              ACE_TEXT ("Caught C++ exception while processing instance ")
                              ACE_TEXT ("<%C>\n"),
                              this->name_.c_str ()));
-            
+
             this->create_unexpected_exception (this->name_,
                                                "Caught unknown C++ exception from install");
           }
@@ -107,7 +107,7 @@ namespace DAnCE
               {
                 this->invoke_post_interceptor (i);
               }
-            
+
             this->create_valid_result (result);
             result.exception_ = false;
           }
@@ -165,5 +165,5 @@ namespace DAnCE
         return -1;
       }
     return 0;
-  }  
+  }
 }

@@ -20,11 +20,11 @@
 namespace XMI
 {
   // Extension
-  // 
+  //
 
   Extension::
   Extension ()
-  : 
+  :
   regulator__ ()
   {
   }
@@ -84,7 +84,7 @@ namespace XMI
 
 
   // Extension
-  // 
+  //
   bool Extension::
   id_p () const
   {
@@ -119,7 +119,7 @@ namespace XMI
   }
 
   // Extension
-  // 
+  //
   bool Extension::
   label_p () const
   {
@@ -154,7 +154,7 @@ namespace XMI
   }
 
   // Extension
-  // 
+  //
   bool Extension::
   uuid_p () const
   {
@@ -189,7 +189,7 @@ namespace XMI
   }
 
   // Extension
-  // 
+  //
   bool Extension::
   href_p () const
   {
@@ -224,7 +224,7 @@ namespace XMI
   }
 
   // Extension
-  // 
+  //
   bool Extension::
   idref_p () const
   {
@@ -267,7 +267,7 @@ namespace XMI
   }
 
   // Extension
-  // 
+  //
   bool Extension::
   version_p () const
   {
@@ -302,7 +302,7 @@ namespace XMI
   }
 
   // Extension
-  // 
+  //
   bool Extension::
   extender_p () const
   {
@@ -337,7 +337,7 @@ namespace XMI
   }
 
   // Extension
-  // 
+  //
   bool Extension::
   extenderID_p () const
   {
@@ -443,7 +443,7 @@ namespace XMI
         extenderID (t);
       }
 
-      else 
+      else
       {
       }
     }
@@ -871,7 +871,7 @@ namespace XMI
       struct W : virtual ::XMI::Writer::Extension,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::string< ACE_TCHAR >, ACE_TCHAR >,
-      virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
+      virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         W (::XSCRT::XML::Element< ACE_TCHAR >& e)

@@ -28,7 +28,7 @@ namespace DAnCE
   void Process_Priority::configure (const ::Deployment::Property & prop)
   {
     CORBA::Long prio;
-    
+
     if (!(prop.value >>= prio))
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO
@@ -37,21 +37,21 @@ namespace DAnCE
         throw ::Deployment::PlanError (prop.name.in (),
                                        "Unable to extract priority value from config property.");
       }
-    
+
     ACE_hthread_t handle;
-    
+
     ACE_OS::thr_self (handle);
 
     int retval = ACE_OS::thr_setprio (handle,
                                       static_cast<int> (prio),
                                       -1);
-    
+
     if (retval != 0)
       {
         std::stringstream str;
         ACE_Auto_Basic_Array_Ptr<char> safe_error (ACE_OS::strerror (ACE_OS::last_error ()));
-        
-        str << "Unable to set process priority to <" << prio << ">: " 
+
+        str << "Unable to set process priority to <" << prio << ">: "
             << safe_error.get ();
         std::string message = str.str ();
 
@@ -63,7 +63,7 @@ namespace DAnCE
                                         message.c_str ());
 
       }
-    
+
   }
 }
 
@@ -72,7 +72,7 @@ extern "C"
   DAnCE::LocalityConfiguration_ptr create_Process_Priority (void)
   {
     DAnCE::LocalityConfiguration_ptr retval (0);
-    
+
     ACE_NEW_RETURN (retval,
                     DAnCE::Process_Priority (),
                     0);

@@ -9,11 +9,11 @@ module DAnCE
   module SHS
   {
     /**
-     * simple interface to receive system health updates. 
+     * simple interface to receive system health updates.
      */
     interface SHS_Daemon
     {
-      void update (in Status_Update update);    
+      void update (in Status_Update update);
       oneway void shutdown ();
     };
   };

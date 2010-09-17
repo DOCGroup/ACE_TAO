@@ -54,8 +54,8 @@ namespace DAnCE
         DAnCE::Utility::throw_exception_from_any (exception);
       }
   }
-  
-  void 
+
+  void
   Standard_Error::post_configured (const ::Deployment::DeploymentPlan & plan,
                                             ::CORBA::ULong index,
                                             const ::CORBA::Any &exception )
@@ -69,8 +69,8 @@ namespace DAnCE
         DAnCE::Utility::throw_exception_from_any (exception);
       }
   }
-  
-  
+
+
   void
   Standard_Error::post_activate (const ::Deployment::DeploymentPlan & plan,
                                           ::CORBA::ULong index,
@@ -85,8 +85,8 @@ namespace DAnCE
         DAnCE::Utility::throw_exception_from_any (exception);
       }
   }
-  
-  
+
+
   void
   Standard_Error::post_passivate (const ::Deployment::DeploymentPlan & plan,
                                            ::CORBA::ULong index,
@@ -101,8 +101,8 @@ namespace DAnCE
         DAnCE::Utility::throw_exception_from_any (exception);
       }
   }
-  
-  
+
+
   void
   Standard_Error::post_remove (const ::Deployment::DeploymentPlan & plan,
                                         ::CORBA::ULong index,
@@ -121,7 +121,7 @@ namespace DAnCE
 
 extern "C"
 {
-  ::DAnCE::DeploymentInterceptor_ptr 
+  ::DAnCE::DeploymentInterceptor_ptr
   create_DAnCE_Standard_Error (void)
   {
     return new DAnCE::Standard_Error ();

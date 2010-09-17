@@ -22,12 +22,12 @@ namespace DAnCE
   namespace Config_Handlers
   {
     // ComponentInterfaceDescription
-    // 
+    //
 
     ComponentInterfaceDescription::
     ComponentInterfaceDescription ()
-    : 
-    ::XSCRT::Type (), 
+    :
+    ::XSCRT::Type (),
     regulator__ ()
     {
     }
@@ -99,7 +99,7 @@ namespace DAnCE
 
 
     // ComponentInterfaceDescription
-    // 
+    //
     bool ComponentInterfaceDescription::
     label_p () const
     {
@@ -128,7 +128,7 @@ namespace DAnCE
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     bool ComponentInterfaceDescription::
     UUID_p () const
     {
@@ -157,7 +157,7 @@ namespace DAnCE
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     bool ComponentInterfaceDescription::
     specificType_p () const
     {
@@ -186,7 +186,7 @@ namespace DAnCE
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     ComponentInterfaceDescription::supportedType_iterator ComponentInterfaceDescription::
     begin_supportedType ()
     {
@@ -224,7 +224,7 @@ namespace DAnCE
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     ComponentInterfaceDescription::idlFile_iterator ComponentInterfaceDescription::
     begin_idlFile ()
     {
@@ -262,7 +262,7 @@ namespace DAnCE
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     ComponentInterfaceDescription::configProperty_iterator ComponentInterfaceDescription::
     begin_configProperty ()
     {
@@ -300,7 +300,7 @@ namespace DAnCE
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     ComponentInterfaceDescription::port_iterator ComponentInterfaceDescription::
     begin_port ()
     {
@@ -338,7 +338,7 @@ namespace DAnCE
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     ComponentInterfaceDescription::property_iterator ComponentInterfaceDescription::
     begin_property ()
     {
@@ -376,7 +376,7 @@ namespace DAnCE
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     ComponentInterfaceDescription::infoProperty_iterator ComponentInterfaceDescription::
     begin_infoProperty ()
     {
@@ -414,7 +414,7 @@ namespace DAnCE
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     bool ComponentInterfaceDescription::
     contentLocation_p () const
     {
@@ -443,7 +443,7 @@ namespace DAnCE
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     bool ComponentInterfaceDescription::
     href_p () const
     {
@@ -558,7 +558,7 @@ namespace DAnCE
           contentLocation (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -573,7 +573,7 @@ namespace DAnCE
           href (t);
         }
 
-        else 
+        else
         {
         }
       }

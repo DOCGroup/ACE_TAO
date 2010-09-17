@@ -28,34 +28,34 @@ namespace DAnCE
     {
       XStr file (toCatch.getSystemId ());
       XStr msg (toCatch.getMessage ());
-      
+
       std::cerr << "Warning: " << file << ':' << toCatch.getLineNumber ()
                 << ':' << toCatch.getColumnNumber () << " - "
                 << msg << std::endl;
     }
-    
+
     void XML_Error_Handler::error(const SAXParseException& toCatch)
     {
       XStr file (toCatch.getSystemId ());
       XStr msg (toCatch.getMessage ());
-      
+
       std::cerr << "Error: " << file << ':' << toCatch.getLineNumber ()
                 << ':' << toCatch.getColumnNumber () << " - "
                 << msg << std::endl;
       this->errors_ = true;
     }
-    
+
     void XML_Error_Handler::fatalError(const SAXParseException& toCatch)
     {
       XStr file (toCatch.getSystemId ());
       XStr msg (toCatch.getMessage ());
-      
+
       std::cerr << "Fatal Error: " << file << ':' << toCatch.getLineNumber ()
                 << ':' << toCatch.getColumnNumber () << " - "
                 << msg << std::endl;
-      this->errors_ = true;      
+      this->errors_ = true;
     }
-    
+
     void XML_Error_Handler::resetErrors()
     {
       this->errors_ = false;
