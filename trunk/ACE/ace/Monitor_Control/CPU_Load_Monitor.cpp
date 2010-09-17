@@ -85,7 +85,7 @@ namespace ACE
     {
       return CPU_Load_Monitor::default_name_;
     }
-    
+
     void
     CPU_Load_Monitor::clear_i (void)
     {
@@ -96,7 +96,7 @@ namespace ACE
       this->init ();
       this->Monitor_Base::clear_i ();
     }
-    
+
     void
     CPU_Load_Monitor::init (void)
     {

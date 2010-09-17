@@ -57,8 +57,8 @@ sub pre_workspace {
   print $fh 'MAKEFILE = ', $self->get_modified_workspace_name($base, '', 1),
             $crlf;
 }
-  
-  
+
+
 sub write_project_targets {
   my($self)   = shift;
   my($fh)     = shift;

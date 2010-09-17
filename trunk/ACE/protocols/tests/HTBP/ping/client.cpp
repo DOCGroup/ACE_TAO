@@ -8,7 +8,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_sys_socket.h"
-#include "ace/os_include/os_netdb.h" 
+#include "ace/os_include/os_netdb.h"
 
 #include "ace/HTBP/HTBP_Session.h"
 #include "ace/HTBP/HTBP_Stream.h"

@@ -124,7 +124,7 @@ ACE_Tokenizer_T<ACE_CHAR_T>::next (void)
       index_ = 0;
       return 0;
     }
- 
+
   // Check if a buffer has been passed
   if (!buffer_)
     {

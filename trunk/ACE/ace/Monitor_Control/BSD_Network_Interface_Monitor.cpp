@@ -53,16 +53,16 @@ namespace ACE
     {
       ACE_UINT64 count = 0;
       int fd = socket (AF_INET, SOCK_DGRAM, 0);
-      
-      if (fd == -1) 
+
+      if (fd == -1)
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("socket failed\n")));
           return;
         }
 
       struct ifaddrs *ifa, *ifap;
-      
-      if (getifaddrs (&ifap) < 0) 
+
+      if (getifaddrs (&ifap) < 0)
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("getifaddrs failed\n")));
           close (fd);
@@ -70,15 +70,15 @@ namespace ACE
         }
 
       char *p = 0;
-      
-      for (ifa = ifap; ifa != 0; ifa = ifa->ifa_next) 
+
+      for (ifa = ifap; ifa != 0; ifa = ifa->ifa_next)
         {
           if (p && strcmp (p, ifa->ifa_name) == 0)
             {
               continue;
             }
-            
-          p = ifa->ifa_name; 
+
+          p = ifa->ifa_name;
 
 #if defined (__OpenBSD__)
           struct ifreq ifdr;
@@ -94,7 +94,7 @@ namespace ACE
 #else
           strncpy (ifdr.ifdr_name, ifa->ifa_name, sizeof (ifdr));
 #endif
-          if (ioctl (fd, SIOCGIFDATA, &ifdr) == -1) 
+          if (ioctl (fd, SIOCGIFDATA, &ifdr) == -1)
             {
               ACE_ERROR ((LM_ERROR, ACE_TEXT ("SIOCGIFDATA failed\n")));
             }
@@ -125,7 +125,7 @@ namespace ACE
 
       freeifaddrs (ifap);
       close (fd);
-      
+
       value = count;
     }
   }

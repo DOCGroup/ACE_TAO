@@ -78,7 +78,7 @@ namespace ACE
     {
       return Num_Threads_Monitor::default_name_;
     }
-    
+
     void
     Num_Threads_Monitor::clear_i (void)
     {

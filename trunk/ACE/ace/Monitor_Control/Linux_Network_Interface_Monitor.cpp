@@ -70,7 +70,7 @@ namespace ACE
     {
       this->init ();
     }
-    
+
     void
     Linux_Network_Interface_Monitor::init (void)
     {

@@ -84,7 +84,7 @@ va_list args;
     va_start(args, format);
     VPRINTF(debugfile, format, args);
     va_end(args);
-    
+
     fflush(debugfile);
     return 0;
 }
@@ -101,6 +101,6 @@ static char buf[200];
     sprintf(buf, "errno = %d: %s", errno, strerror(errno));
     errno = 0;
 #endif /* WIN32 */
-   
+
     return buf;
 }

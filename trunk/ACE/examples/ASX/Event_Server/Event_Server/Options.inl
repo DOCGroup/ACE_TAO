@@ -7,7 +7,7 @@
 // inline, not ACE_INLINE.
 // FUZZ: disable check_for_inline
 
-inline void   
+inline void
 Options::supplier_port (u_short port)
 {
   this->supplier_port_ = port;
@@ -19,7 +19,7 @@ Options::supplier_port (void)
   return this->supplier_port_;
 }
 
-inline void   
+inline void
 Options::consumer_port (u_short port)
 {
   this->consumer_port_ = port;
@@ -55,55 +55,55 @@ Options::thr_count (void)
   return this->thr_count_;
 }
 
-inline void 
+inline void
 Options::initial_queue_length (size_t length)
 {
   this->initial_queue_length_ = length;
 }
 
-inline size_t  
+inline size_t
 Options::initial_queue_length (void)
 {
   return this->initial_queue_length_;
 }
 
-inline void 
+inline void
 Options::high_water_mark (size_t size)
 {
   this->high_water_mark_ = size;
 }
 
-inline size_t  
+inline size_t
 Options::high_water_mark (void)
 {
   return this->high_water_mark_;
 }
 
-inline void 
+inline void
 Options::low_water_mark (size_t size)
 {
   this->low_water_mark_ = size;
 }
 
-inline size_t  
+inline size_t
 Options::low_water_mark (void)
 {
   return this->low_water_mark_;
 }
 
-inline void 
+inline void
 Options::message_size (size_t size)
 {
   this->message_size_ = size;
 }
 
-inline size_t  
+inline size_t
 Options::message_size (void)
 {
   return this->message_size_;
 }
 
-inline void 
+inline void
 Options::iterations (size_t n)
 {
   this->iterations_ = n;
@@ -115,7 +115,7 @@ Options::iterations (void)
   return this->iterations_;
 }
 
-inline void 
+inline void
 Options::t_flags (long flag)
 {
   this->t_flags_ |= flag;
@@ -127,13 +127,13 @@ Options::t_flags (void)
   return this->t_flags_;
 }
 
-inline int 
+inline int
 Options::debug (void)
 {
   return this->debugging_;
 }
 
-inline int 
+inline int
 Options::verbose (void)
 {
   return this->verbosity_;

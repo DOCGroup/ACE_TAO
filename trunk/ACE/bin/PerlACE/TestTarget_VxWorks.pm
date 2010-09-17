@@ -86,7 +86,7 @@ sub KillAll ($)
 {
     my $self = shift;
     my $procmask = shift;
-    PerlACE::ProcessVX::kill_all ($procmask, $self);    
+    PerlACE::ProcessVX::kill_all ($procmask, $self);
 }
 
 1;

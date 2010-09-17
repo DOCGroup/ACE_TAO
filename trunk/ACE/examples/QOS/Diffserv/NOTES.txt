@@ -10,7 +10,7 @@ unless you run as root:
 EF, CS5, CS6, CS7
 
 Also, under Linux 2.4.2 kernel, if I could successfully
-set the 2 bits reserved for ECN in the Diffserv Field to 
+set the 2 bits reserved for ECN in the Diffserv Field to
 0x00 or 0x02.  However, the setsockopt call would
 fail if it was set to 0x01 or 0x03.
 
@@ -41,7 +41,7 @@ On Fri, Oct 05, 2001 at 08:18:06AM +0300, Pekka Savola wrote:
 >
 ===========================================================================
 
-FreeBSD notes 
+FreeBSD notes
 =============
 Under FreeBSD 4.3, I encountered no problems
 setting DSCP or ECN values, and I could set all

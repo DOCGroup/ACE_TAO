@@ -26,7 +26,7 @@ namespace ACE
       , Solaris_Network_Interface_Monitor (ACE_TEXT ("ipackets"))
 #elif defined (__FreeBSD__) || defined (__Lynx__)
       , FreeBSD_Network_Interface_Monitor (ACE_TEXT ("ipackets"))
-#elif defined (__NetBSD__) || defined (__OpenBSD__) 
+#elif defined (__NetBSD__) || defined (__OpenBSD__)
       , BSD_Network_Interface_Monitor (ACE_TEXT ("ipackets"))
 #endif
     {}
@@ -35,7 +35,7 @@ namespace ACE
     Packets_Received_Monitor::update (void)
     {
       this->update_i ();
-      
+
       /// On some platforms, value_ is an ACE_UINT64.
       this->receive (static_cast<double> (this->value_));
     }
@@ -45,7 +45,7 @@ namespace ACE
     {
       return Packets_Received_Monitor::default_name_;
     }
-    
+
     void
     Packets_Received_Monitor::clear_i (void)
     {

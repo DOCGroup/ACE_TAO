@@ -157,7 +157,7 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
           loadnum = 0;
 
           if (textvalue != 0)
-            { 
+            {
               /* is there more? */
               /* check for weighting factor */
               D_PRINTF( "Setting page values from: %s\n", textvalue );

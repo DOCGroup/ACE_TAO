@@ -1059,7 +1059,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
   if (!ignore_default_svc_conf_file)
     {
       bool add_default = true;
-      bool has_files = this->svc_conf_file_queue_ && 
+      bool has_files = this->svc_conf_file_queue_ &&
         !this->svc_conf_file_queue_->is_empty ();
       bool has_cmdline = this->svc_queue_ && !this->svc_queue_->is_empty ();
       if (has_files || has_cmdline)

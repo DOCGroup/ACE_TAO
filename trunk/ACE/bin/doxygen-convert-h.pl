@@ -87,7 +87,7 @@ sub verify (@)
     my (@contents) = @_;
 
     print "Verification\n" if (defined $opt_d);
-    
+
     my $found_id = 0;
     my $found_filename = 0;
 
@@ -99,8 +99,8 @@ sub verify (@)
     return 0 if ($found_id == 1 && $found_filename == 1);
 
     # failed
-    return 1;  
-} 
+    return 1;
+}
 
 sub format_description (@)
 {
@@ -146,7 +146,7 @@ sub fix_file_header (@)
             push @after, $line;
             next LOOP;
         }
-        
+
         if ($state eq 'before') {
             if ($line =~ /\-\*\- C\+\+ \-\*\-/) {
                 push @after, $line;
@@ -167,7 +167,7 @@ sub fix_file_header (@)
                 push @after, $line;
             }
         }
-        
+
         if ($state eq 'filename') {
             if ($line =~ /\/\/   (.+)/) {
                 push @after, " *  \@file   $1\n";
@@ -188,7 +188,7 @@ sub fix_file_header (@)
                 ### Fall through so the after can put the ending in
             }
         }
-        
+
         if ($state eq 'description') {
             if ($line =~ /\= AUTHOR/) {
                 push @after, format_description (@description);
@@ -236,7 +236,7 @@ sub fix_file_header (@)
                 }
             }
         }
-        
+
         if ($state eq 'after') {
             if ($line =~ /===================/) {
                 ## print the rest
@@ -263,14 +263,14 @@ sub fix_class_headers (@)
     my $classname = "";
 
     my $state = 'outside';
-    ## state = 
+    ## state =
     ##  outside   = not in class
     ##  template  = stored template line
     ##  class     = started collecting lines, in case of a class
     ##  header    = after a class foo, but before any methods
 
     print "Fixing class headers\n" if (defined $opt_d);
-    
+
     LOOP: foreach $line (@before) {
         printf ("%10s %s", $state, $line) if (defined $opt_D);
 
@@ -342,7 +342,7 @@ sub fix_class_headers (@)
                 my $indent = $1;
                 push @after, "$indent/**\n";
                 push @after, "$indent * \@class $classname\n";
-                
+
                 foreach $header (@headers) {
                     if ($header =~ /\= TITLE/) {
                         push @after, "$indent *\n";
@@ -417,15 +417,15 @@ sub fix_class_members (@)
     my $level = 0;
 
     print "Fixing class methods\n" if (defined $opt_d);
-    
+
     LOOP: foreach $line (@before) {
         if ($line =~ /\{/ && $line !~ /^\s*\/\//) {
             $level++;
         }
 
-        if ($line =~ /^\s*class/ 
-            && $line !~ /\;/ 
-            && $level == $classlevel) 
+        if ($line =~ /^\s*class/
+            && $line !~ /\;/
+            && $level == $classlevel)
         {
             $classlevel++;
         }
@@ -436,7 +436,7 @@ sub fix_class_members (@)
             }
             $level--;
         }
-        
+
         printf ("%2d%2d", $level, $classlevel) if (defined $opt_D);
 
         if ($level == $classlevel && $level > 0) {
@@ -458,7 +458,7 @@ sub fix_class_members (@)
             }
             elsif ($line =~ /^\s*\/\//) {
                 print "C $line" if (defined $opt_D);
-                
+
                 if ($#method >= 0) {
                     push @comment, $line;
                 }
@@ -498,9 +498,9 @@ FILELOOP: foreach $file (@files) {
     print "\n" if (defined $opt_d);
     print "$file\n";
     print "\n" if (defined $opt_d);
-    
+
     $fail = 0;
-    
+
     my @contents = ();
 
     ### Read file into @contents
@@ -517,7 +517,7 @@ FILELOOP: foreach $file (@files) {
 
     ### Verify file
     print "Verifying file\n" if (defined $opt_d);
-    
+
     if (!defined $opt_u) {
         if (verify (@contents) == 1) {
             print "$file did not pass verification\n";
@@ -541,7 +541,7 @@ FILELOOP: foreach $file (@files) {
     else {
         if (defined $opt_s) {
             print @contents;
-        } 
+        }
         elsif (!defined $opt_D) {
             ### Save @contents back to the file
             print "Saving\n" if (defined $opt_d);

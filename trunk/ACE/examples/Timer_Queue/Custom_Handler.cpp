@@ -7,7 +7,7 @@
 //    Custom_Handler.cpp
 //
 // = DESCRIPTION
-//    This is a custom event handler to be used with the thread timer queue 
+//    This is a custom event handler to be used with the thread timer queue
 //    adapter, and its appropriate upcall.
 //
 // = AUTHOR

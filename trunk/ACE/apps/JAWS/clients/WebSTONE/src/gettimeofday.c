@@ -3,11 +3,11 @@
 /*
  *  This file defines functions that are required for unix compatibility.
  *
- *  These functions are not available in the Microsoft C/C++ Run Time 
+ *  These functions are not available in the Microsoft C/C++ Run Time
  *  and the Win32 API.
  *
  *  The following functions list may not be complete
- *  
+ *
  *  FUNCTIONS:
  *     SHARED   _gettimeofday
  *
@@ -34,7 +34,7 @@ int gettimeofday(curTimeP)
 {
 struct _timeb  localTime;
 
-    if (curTimeP == (struct timeval *) 0) 
+    if (curTimeP == (struct timeval *) 0)
     {
       errno = EFAULT;
       return (-1);

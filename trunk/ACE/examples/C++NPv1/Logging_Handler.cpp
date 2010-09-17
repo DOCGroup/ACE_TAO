@@ -73,7 +73,7 @@ int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
   return -1;
 }
 
-int 
+int
 Logging_Handler::write_log_record (ACE_Message_Block *mblk)
 {
   // Peer hostname is in the <mblk> and the log record data

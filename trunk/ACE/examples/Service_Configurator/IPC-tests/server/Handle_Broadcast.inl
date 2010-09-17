@@ -50,7 +50,7 @@ Handle_Broadcast::info (ACE_TCHAR **strp, size_t length) const
     {
       ACE_OS::strncpy (*strp, buf, length);
     }
-    
+
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (buf));
 }
 

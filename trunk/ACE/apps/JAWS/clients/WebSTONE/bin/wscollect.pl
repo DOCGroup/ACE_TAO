@@ -15,7 +15,7 @@ require "find.pl";
 # the list @runs contains the timestamps for the runs which are found
 # during the traversal of the runs directory. This list is used for
 # indices into the associative arrays for storing run information.
-# 
+#
 # $numclients{ $time }    - number of clients for the run
 # $connrate{ $time }      - connection rate average
 # $littlesload{ $time }   - little's load factor
@@ -83,7 +83,7 @@ sub wanted {
 	    (( $connrate{ $runtime }) = $data =~ /([\d\.]+)/, next);
 	$tag =~ /Server thruput/ &&
 	    (( $throughput{ $runtime }) = $data =~ /([\d\.]+)/, next);
-	$tag =~ /Little's Load/  && 
+	$tag =~ /Little's Load/  &&
             (( $littlesload{ $runtime}) = $data =~ /([\d\.]+)/, next); # '
         $tag =~ /Average response time/ &&
 	    (( $latency{ $runtime } ) = $data =~ /([\d\.]+)/, next);
@@ -97,7 +97,7 @@ sub wanted {
 
 
 sub printdata {
-    local ($timestamp, $num_clients, $conn_rate, 
+    local ($timestamp, $num_clients, $conn_rate,
 	   $load, $latency, $error, $tput) = @_;
     format STDOUT =
 @<<<<<<<<<<< @###### @######.## @####.## @###.#### @####.#### @######.##
@@ -106,7 +106,7 @@ $timestamp, $num_clients, $conn_rate, $load, $latency, $error, $tput
 
     if (!$printedTitles) {
 	$printedTitles = 1;
-	($ttimestamp, $tnum_clients, $tconn_rate, 
+	($ttimestamp, $tnum_clients, $tconn_rate,
 	       $tload, $tlatency, $terror, $ttput) = @title;
 	format STDOUT_TOP =
 ^||||||||||| ^||||||| ^||||||||| ^||||||| ^||||||||| ^||||||||| ^|||||||||||
@@ -119,7 +119,7 @@ $ttimestamp, $tnum_clients, $tconn_rate, $tload, $tlatency, $terror, $ttput
 $ttimestamp, $tnum_clients, $tconn_rate, $tload, $tlatency, $terror, $ttput
 ^||||||||||| ^||||||| ^||||||||| ^||||||| ^||||||||| ^||||||||| ^|||||||||||
 $ttimestamp, $tnum_clients, $tconn_rate, $tload, $tlatency, $terror, $ttput
----------------------------------------------------------------------------- 
+----------------------------------------------------------------------------
 .
     # write STDOUT_TOP;
     } # end if printedTitles

@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     if 0;
 
 # $Id$
-# Goes through ACE/TAO and replaces 
+# Goes through ACE/TAO and replaces
 
 use File::Find;
 use Cwd;
@@ -37,7 +37,7 @@ sub wanted
 
         if ($flag == 1) {
             print "Regenerating: $file\n";
-            if ($OSNAME eq 'MSWIn32') { 
+            if ($OSNAME eq 'MSWIn32') {
                 $file =~ s/\//\\/g;
             }
             system ("perl -S generate_export_file.pl $args $name > $file");

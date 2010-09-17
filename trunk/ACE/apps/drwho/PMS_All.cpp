@@ -37,8 +37,8 @@ PMS_All::encode (char *packet, int &packet_length)
   for (;
        (prp = this->get_next_friend ()) != 0;
        *buf_ptr++ = '\t')
-    buf_ptr = 
-      this->handle_protocol_entries (ACE_OS::strecpy 
+    buf_ptr =
+      this->handle_protocol_entries (ACE_OS::strecpy
                                        (ACE_OS::strecpy (buf_ptr,
                                                          prp->get_login ()),
                                         prp->get_real ()),
