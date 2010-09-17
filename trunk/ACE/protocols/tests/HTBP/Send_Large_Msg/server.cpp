@@ -121,7 +121,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P|%t) Server: ")
-              ACE_TEXT("using streams %d, %d. Got sesssion = %x\n"),
+              ACE_TEXT("using streams %d, %d. Got session = %x\n"),
               sock[0].get_handle(),sock[1].get_handle(),session));
 
   ssize_t got = 1;
