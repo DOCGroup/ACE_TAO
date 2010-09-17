@@ -124,7 +124,6 @@
 // that #define STDERR or THREAD (e.g. LynxOS). We simply #undef
 // these macros as there is no way to save the macro definition using
 // the pre-processor. See Bugzilla Bug #299 for more info.
-
 #if defined (STDERR)
 # undef STDERR
 #endif /* STDERR */
