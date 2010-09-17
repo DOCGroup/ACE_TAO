@@ -126,7 +126,7 @@ namespace TAO
     countdown.update ();
 
     // For some strategies one may want to release the transport
-    // back to  cache. If the idling is successfull let the
+    // back to  cache. If the idling is successful let the
     // resolver about that.
     if (this->resolver_.transport ()->idle_after_send ())
       this->resolver_.transport_released ();
@@ -137,7 +137,7 @@ namespace TAO
 
     // For some strategies one may want to release the transport
     // back to  cache after receiving the reply. If the idling is
-    // successfull let the resolver about that.
+    // successful let the resolver about that.
     if (this->resolver_.transport ()->idle_after_reply ())
       this->resolver_.transport_released ();
 

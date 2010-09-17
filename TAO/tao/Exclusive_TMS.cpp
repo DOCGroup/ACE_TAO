@@ -136,7 +136,7 @@ bool
 TAO_Exclusive_TMS::idle_after_reply (void)
 {
   // Irrespective of whether we are successful or not we need to
-  // return true. If *this* class is not successfull in idling the
+  // return true. If *this* class is not successful in idling the
   // transport no one can.
   if (this->transport_ != 0)
     (void) this->transport_->make_idle ();
