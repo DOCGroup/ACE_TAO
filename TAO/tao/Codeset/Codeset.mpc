@@ -20,6 +20,12 @@ project(Codeset) : taolib, tao_output, install, taoidldefaults, nolink_codecfact
     CodeSetContextC.cpp
   }
 
+  Header_Files {
+    *.h
+    CodeSetContextC.h
+    CodeSetContextS.h
+  }
+
   specific {
     install_dir = tao/Codeset
   }
