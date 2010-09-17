@@ -106,7 +106,7 @@ be_visitor_typedef::visit_array (be_array *node)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_typedef::"
                            "visit_array - "
-                           "Bad context state\n"), 
+                           "Bad context state\n"),
                           -1);
       }
     }
@@ -116,7 +116,7 @@ be_visitor_typedef::visit_array (be_array *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_typedef::"
                          "visit_array - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 
@@ -190,7 +190,7 @@ be_visitor_typedef::visit_enum (be_enum *node)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_typedef::"
                            "visit_enum - "
-                           "Bad context state\n"), 
+                           "Bad context state\n"),
                           -1);
       }
     }
@@ -200,7 +200,7 @@ be_visitor_typedef::visit_enum (be_enum *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_typedef::"
                          "visit_enum - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 
@@ -276,7 +276,7 @@ be_visitor_typedef::visit_sequence (be_sequence *node)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_typedef::"
                            "visit_sequence - "
-                           "Bad context state\n"), 
+                           "Bad context state\n"),
                           -1);
       }
     }
@@ -286,7 +286,7 @@ be_visitor_typedef::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_typedef::"
                          "visit_sequence - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 
@@ -365,7 +365,7 @@ be_visitor_typedef::visit_structure (be_structure *node)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_typedef::"
                            "visit_structure - "
-                           "Bad context state\n"), 
+                           "Bad context state\n"),
                           -1);
       }
     }
@@ -375,7 +375,7 @@ be_visitor_typedef::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_typedef::"
                          "visit_structure - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 
@@ -453,7 +453,7 @@ be_visitor_typedef::visit_union (be_union *node)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_typedef::"
                            "visit_union - "
-                           "Bad context state\n"), 
+                           "Bad context state\n"),
                           -1);
       }
     }
@@ -463,7 +463,7 @@ be_visitor_typedef::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_typedef::"
                          "visit_union - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 

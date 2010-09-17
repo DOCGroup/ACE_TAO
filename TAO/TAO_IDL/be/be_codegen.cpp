@@ -292,7 +292,7 @@ TAO_CodeGen::start_client_header (const char *fname)
           *this->client_header_ << "\n#include <string>"
                                 << "\n#include <vector>\n";
         }
-        
+
       this->gen_stub_hdr_includes ();
 
       size_t const nfiles = idl_global->n_included_idl_files ();
@@ -350,7 +350,7 @@ TAO_CodeGen::start_client_header (const char *fname)
             }
         }
     }
-    
+
   for (ACE_Unbounded_Queue<char *>::CONST_ITERATOR i (
          idl_global->ciao_ami_idl_fnames ());
        !i.done ();
@@ -358,7 +358,7 @@ TAO_CodeGen::start_client_header (const char *fname)
     {
       char **tmp = 0;
       i.next (tmp);
-      
+
       // Make a String out of it.
       UTL_String idl_name_str (*tmp);
 
@@ -964,7 +964,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
   if (got_tao_pidl)
     {
       const char *stub_incl_dir = be_global->stub_include_dir ();
-      
+
       if (stub_incl_dir == 0)
         {
           tao_prefix = "tao/";
@@ -975,7 +975,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
           tao_prefix += '/';
         }
     }
-  
+
   // Generate the include statement for the client header. We just
   // need to put only the base names. Path info is not required.
   if (be_global->safe_include ())
@@ -1054,7 +1054,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
             }
         }
     }
-    
+
   *this->anyop_header_ << "\n";
 
   // Begin versioned namespace support after initial headers have been
@@ -1868,7 +1868,7 @@ TAO_CodeGen::end_server_header (void)
   /// Otherwise just generate the post_include(), if any,
   /// and the #endif.
   if (be_global->gen_skel_files ())
-    {    
+    {
       // End versioned namespace support.  Do not place include directives
       // before this.
       *os << be_global->versioning_end ();
@@ -1904,7 +1904,7 @@ TAO_CodeGen::end_server_header (void)
   *os << be_nl << be_nl
       << "#endif /* ifndef */\n"
       << "\n";
-                        
+
   return 0;
 }
 
@@ -2900,7 +2900,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
     {
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Vector_CDR_T.h");
-                                  
+
       if (be_global->any_support ())
         {
           this->gen_standard_include (
@@ -2908,7 +2908,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
             "tao/AnyTypeCode/Vector_AnyOp_T.h");
         }
     }
-    
+
   // Includes whatever arg helper template classes that may be needed.
   this->gen_stub_arg_file_includes (this->client_stubs_);
 
@@ -3557,16 +3557,16 @@ TAO_CodeGen::gen_exec_idl_includes (void)
     "ccm/CCM_Object.idl");
 
   if (!be_global->gen_lwccm ())
-    {    
+    {
       this->gen_standard_include (
         this->ciao_exec_idl_,
         "ccm/CCM_Enumeration.idl");
     }
-    
+
   this->gen_standard_include (
     this->ciao_exec_idl_,
     "ccm/CCM_CCMException.idl");
-    
+
   this->gen_standard_include (
     this->ciao_exec_idl_,
     "ccm/CCM_HomeExecutorBase.idl");
@@ -3578,7 +3578,7 @@ TAO_CodeGen::gen_exec_idl_includes (void)
   this->gen_standard_include (
     this->ciao_exec_idl_,
     "ccm/CCM_SessionComponent.idl");
-    
+
   if (be_global->ami4ccm_call_back ())
     {
       this->gen_standard_include (
@@ -3598,11 +3598,11 @@ TAO_CodeGen::gen_exec_idl_includes (void)
        riter.advance ())
     {
       riter.next (path_tmp);
-      
+
       const char *exec_idl_fname =
         be_global->be_get_ciao_exec_idl_fname (true);
-        
-      /// No need to have the exec IDL file include itself.  
+
+      /// No need to have the exec IDL file include itself.
       if (ACE_OS::strcmp (*path_tmp, exec_idl_fname) != 0)
         {
           this->gen_standard_include (this->ciao_exec_idl_,
@@ -3686,7 +3686,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
        iiter.advance ())
     {
       iiter.next (path_tmp);
-      
+
       this->gen_standard_include (
         this->ciao_conn_header_,
         *path_tmp);
@@ -3698,7 +3698,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
         this->ciao_conn_header_,
         "tao/LocalObject.h");
     }
-    
+
   for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
     {
       if (j == 0)
@@ -3708,7 +3708,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
 
       char * const idl_name =
         idl_global->included_idl_files ()[j];
-        
+
       bool system_file =
         ACE_OS::strcmp (idl_name, "Components.idl") == 0
         || ACE_OS::strcmp (
@@ -3725,10 +3725,10 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
       this->gen_standard_include (
         this->ciao_conn_header_,
         BE_GlobalData::be_get_server_hdr (&str, true));
-        
+
       str.destroy ();
     }
-        
+
   this->gen_standard_include (
     this->ciao_conn_header_,
     BE_GlobalData::be_get_ciao_exec_stub_header (

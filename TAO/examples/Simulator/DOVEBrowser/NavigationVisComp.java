@@ -1,5 +1,5 @@
 // $Id$
-// 
+//
 // = FILENAME
 //    NavigationVisComp.java
 //
@@ -35,40 +35,40 @@ public class NavigationVisComp extends Panel implements VisComp
   public int getProperty () {
       return Properties.NAVIGATION;
     }
-  
+
   public void update (java.util.Observable observable, java.lang.Object obj) {
     Navigation navigation_ = null;
     try {
-      navigation_ = (Navigation) obj;  
+      navigation_ = (Navigation) obj;
     }
     catch (Exception excp) {
       System.out.println (excp);
       System.out.println ("Visualization Component received wrong data type!");
     }
-    if (navigation_ != null) {            
+    if (navigation_ != null) {
       // make sure all the values are in the proper range.
-      navigation_.roll = (navigation_.roll > 180 || navigation_.roll < -180) ? 
+      navigation_.roll = (navigation_.roll > 180 || navigation_.roll < -180) ?
 	0 :  navigation_.roll;
-      navigation_.pitch = (navigation_.pitch > 90 || navigation_.pitch < -90) ? 
+      navigation_.pitch = (navigation_.pitch > 90 || navigation_.pitch < -90) ?
 	0 :  navigation_.pitch;
 
       // update the artificial horizon
       alt_hor_.update_display (navigation_.roll, navigation_.pitch);
 
-      navigation_.pitch = (navigation_.position_latitude > 90 || navigation_.position_latitude < -90) ? 
+      navigation_.pitch = (navigation_.position_latitude > 90 || navigation_.position_latitude < -90) ?
 	0 :  navigation_.position_latitude;
-      navigation_.pitch = (navigation_.position_longitude > 100 || navigation_.position_longitude < 00) ? 
+      navigation_.pitch = (navigation_.position_longitude > 100 || navigation_.position_longitude < 00) ?
 	0 :  navigation_.position_longitude;
-      navigation_.pitch = (navigation_.altitude > 90 || navigation_.altitude < -90) ? 
+      navigation_.pitch = (navigation_.altitude > 90 || navigation_.altitude < -90) ?
 	0 :  navigation_.altitude;
-      navigation_.pitch = (navigation_.heading > 180 || navigation_.heading < -180) ? 
+      navigation_.pitch = (navigation_.heading > 180 || navigation_.heading < -180) ?
 	0 :  navigation_.heading;
 
       // update the position display
-      pos_.update_display (navigation_.position_latitude, 
-			   navigation_.position_longitude, 
-			   navigation_.altitude, 
-			   navigation_.heading);      
+      pos_.update_display (navigation_.position_latitude,
+			   navigation_.position_longitude,
+			   navigation_.altitude,
+			   navigation_.heading);
     }
   }
 }
@@ -78,13 +78,13 @@ extends Canvas
 {
   private final static Color GREEN = new Color (0, 100, 0),
     BLUE = new Color (30, 144, 255);
-  
+
   private Graphics offgraphics_;
   private Image offscreen_;
   private Dimension offscreensize_;
 
   private int roll_ = 0, pitch_ = 0;
-  
+
   public void update_display (int roll, int pitch)
     {
       roll_ = roll;
@@ -92,7 +92,7 @@ extends Canvas
 
       repaint ();
     }
-  
+
   public Dimension getPreferredSize ()
     {
       return new Dimension (180, 180);
@@ -102,18 +102,18 @@ extends Canvas
     {
       return new Dimension (80, 80);
     }
-  
+
   public void paint (Graphics g)
     {
       update (g);
     }
-  
+
   public void update (Graphics g)
     {
       Dimension d = getSize ();
       int rad, angles[] = { 180, 0 };
       Point center;
-      
+
       if ((offscreen_ == null) || (d.width != offscreensize_.width) ||
 	  (d.height != offscreensize_.height))
 	{
@@ -121,17 +121,17 @@ extends Canvas
 	  offscreensize_ = new Dimension (d.width, d.height);
 	  offgraphics_ = offscreen_.getGraphics ();
 	  offgraphics_.setFont (getFont());
-	  
+
 	  //	  g.setColor (Color.lightGray);
 	  //	  g.draw3DRect (0, 0, d.width - 1, d.height - 1, true);
 	  //	  g.draw3DRect (1, 1, d.width - 3, d.height - 3, true);
 	  //	  g.draw3DRect (2, 2, d.width - 5, d.height - 5, true);
 	}
-      
+
       offgraphics_.setColor (getBackground());
       offgraphics_.fillRect (0, 0, d.width, d.height);
       offgraphics_.setColor (BLUE);
-      
+
       // Calculate from the dimensions, the largest square.
       center = new Point (d.width / 2, d.height / 2);
       rad = ((center.x < center.y) ? center.x : center.y);
@@ -151,7 +151,7 @@ extends Canvas
       // Draw the resulting terrain
       draw_horizon (rad, center, angles);
 
-      // Draw the plotted Image. 
+      // Draw the plotted Image.
       g.drawImage (offscreen_, 0, 0, null);
     }
 
@@ -162,7 +162,7 @@ extends Canvas
 	((angles[0] > angles[1]) ?
 	 (360 - angles[0]) + angles[1] :
 	 (angles[1] - angles[0]));
-      
+
       Polygon remainder = new Polygon ();
 
       offgraphics_.setColor (GREEN);
@@ -181,9 +181,9 @@ extends Canvas
 	  // System.out.println (points[0] + " " + points[1]);
 
 	  // System.out.println (accepted_point);
-	  
+
 	  remainder.addPoint (center.x + polar_to_rect_x (rad, cover_angle),
-			      center.y - polar_to_rect_y (rad, cover_angle)); 
+			      center.y - polar_to_rect_y (rad, cover_angle));
 	  remainder.addPoint (center.x + polar_to_rect_x (rad, angles[0]),
 			      center.y - polar_to_rect_y (rad, angles[0]));
 	  remainder.addPoint (center.x + polar_to_rect_x (rad, angles[1]),
@@ -191,9 +191,9 @@ extends Canvas
 	  offgraphics_.fillPolygon (remainder);
 	  //offgraphics_.setColor (getBackground ());
 	  //offgraphics_.drawPolygon (remainder);
-	}	
+	}
     }
-  
+
   private void pitch_horizon (int rad, int[] angles)
     {
       boolean upside_down = Math.abs (roll_) >= 90;
@@ -203,10 +203,10 @@ extends Canvas
 
       angles[0] += angle_shift;
       angles[1] -= angle_shift;
-      
+
 
     }
-  
+
   private void roll_horizon (int rad, int[] angles)
     {
       // Roll the left and right points of the terrain.
@@ -217,7 +217,7 @@ extends Canvas
 	angles[0] += 360;
 
       if (angles[1] < 0)
-	angles[1] += 360;      
+	angles[1] += 360;
     }
 
   private int polar_to_rect_x (int rad, int angle)
@@ -239,7 +239,7 @@ extends Canvas
 
       return ((double) (y2 - y1)) / ((double) (x2 - x1));
     }
-  
+
   private Point[] line_circle_intesect (int rad, double y_intercept, double slope)
     {
       double r_2 = (double)(rad * rad),
@@ -257,7 +257,7 @@ extends Canvas
 
       return points;
     }
-  
+
   private int calculate_angle (int rad, int x, int y)
     {
       /*
@@ -293,7 +293,7 @@ extends Canvas
     {
       int[] roots = new int [2];
       double body = Math.sqrt (b*b - 4.0*a*c);
-      
+
       roots[0] = (int) Math.round ((-b + body) / (2.0 * a));
       roots[1] = (int) Math.round ((-b - body) / (2.0 * a));
 
@@ -312,17 +312,17 @@ extends Canvas
 class Position extends Panel
 {
   private final static Font FONT = new Font ("Dialog", Font.BOLD, 12);
-  private final static char DEGREE = '\u00B0'; 
-  
+  private final static char DEGREE = '\u00B0';
+
   private Label lat_ = new Label ("0" + DEGREE + " N", Label.RIGHT),
     long_ = new Label ("0" + DEGREE + " S", Label.RIGHT),
     alt_ = new Label ("0 Kft", Label.RIGHT),
     heading_ = new Label ("0" + DEGREE + "  ", Label.RIGHT);
-  
+
   public Position ()
     {
       Panel grid_panel = new Panel ();
-      
+
       lat_.setFont (FONT);
       long_.setFont (FONT);
       alt_.setFont (FONT);
@@ -332,7 +332,7 @@ class Position extends Panel
       add (lat_);
       add (long_);
       add (heading_);
-      add (alt_);      
+      add (alt_);
     }
 
   public void update_display (int lat, int lon, int alt, int heading)

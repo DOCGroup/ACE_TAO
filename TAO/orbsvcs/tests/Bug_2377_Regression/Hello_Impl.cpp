@@ -66,7 +66,7 @@ MessageLog::register_message_send (int message_num)
     {
       this->overdoseS_++;
     }
-  
+
   if (!this->supress_)
     {
       ACE_DEBUG ((LM_DEBUG,

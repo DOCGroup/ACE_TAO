@@ -26,7 +26,7 @@ interface Object_A {
 
 interface MT_Object;
 
-interface MT_Object 
+interface MT_Object
 {
   long yadda (in long hop_count, in MT_Object partner);
 };

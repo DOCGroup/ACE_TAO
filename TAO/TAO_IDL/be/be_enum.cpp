@@ -57,16 +57,16 @@ be_enum::gen_ostream_operator (TAO_OutStream *os,
       << "{" << be_idt_nl
       << "switch (_tao_enumerator)" << be_idt_nl
       << "{" << be_idt_nl;
-      
+
   for (int i = 0; i < this->member_count (); ++i)
     {
       UTL_ScopedName *mname =
         this->value_to_name (static_cast<unsigned long> (i));
-    
+
       *os << "case " << mname << ": return strm << \""
           << mname << "\";" << be_nl;
     }
-    
+
   *os << "default: return strm;" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
       << "}" << be_nl;

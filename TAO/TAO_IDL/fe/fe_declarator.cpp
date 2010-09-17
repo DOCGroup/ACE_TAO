@@ -100,7 +100,7 @@ FE_Declarator::compose (AST_Decl *d)
     {
       AST_Param_Holder *ph =
         AST_Param_Holder::narrow_from_decl (ct);
-        
+
       // Every other template parameter kind is legal.
       if (ph->info ()->type_ == AST_Decl::NT_const)
         {
@@ -110,7 +110,7 @@ FE_Declarator::compose (AST_Decl *d)
     }
 
   AST_Decl::NodeType nt = d->node_type ();
-  
+
   if (nt == AST_Decl::NT_struct_fwd
       || nt == AST_Decl::NT_union_fwd
       || nt == AST_Decl::NT_struct

@@ -36,7 +36,7 @@ be_visitor_root_exh::visit_root (be_root *node)
                          ACE_TEXT ("failed to initialize\n")),
                         -1);
     }
-    
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -57,7 +57,7 @@ be_visitor_root_exh::init (void)
   int status =
     tao_cg->start_ciao_exec_header (
       be_global->be_get_ciao_exec_hdr_fname ());
-      
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

@@ -20,7 +20,7 @@ foreach $i (@ARGV) {
 my $ns_service = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $lg_service = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 my $client = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
- 
+
 my $iorbase = "ns.ior";
 my $ns_iorfile = $ns_service->LocalFile ($iorbase);
 my $lg_iorfile = $lg_service->LocalFile ($iorbase);
@@ -79,7 +79,7 @@ if ($process_status != 0) {
     exit 1;
 }
 
-# Give time for logging service to initialize and install its object 
+# Give time for logging service to initialize and install its object
 # reference in the nameing service.
 sleep (10);
 

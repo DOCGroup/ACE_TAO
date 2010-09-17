@@ -16,14 +16,14 @@ public:
   virtual int visit_constraint (TAO_Unary_Constraint*);
 
   virtual int visit_with (TAO_Unary_Constraint*) { return 1; }
-  virtual int visit_min (TAO_Unary_Constraint*) { return 1; }  
-  virtual int visit_max (TAO_Unary_Constraint*) { return 1; }  
+  virtual int visit_min (TAO_Unary_Constraint*) { return 1; }
+  virtual int visit_max (TAO_Unary_Constraint*) { return 1; }
   virtual int visit_first (TAO_Noop_Constraint*) { return 1; }
   virtual int visit_random (TAO_Noop_Constraint*) { return 1; }
 
   virtual int visit_and (TAO_Binary_Constraint*) { return 1; }
-  virtual int visit_or (TAO_Binary_Constraint*) { return 1; }  
-  virtual int visit_not (TAO_Unary_Constraint*) { return 1; }   
+  virtual int visit_or (TAO_Binary_Constraint*) { return 1; }
+  virtual int visit_not (TAO_Unary_Constraint*) { return 1; }
 
   virtual int visit_exist (TAO_Unary_Constraint*) { return 1; }
   virtual int visit_unary_minus (TAO_Unary_Constraint*) { return 1; }
@@ -31,7 +31,7 @@ public:
   virtual int visit_add (TAO_Binary_Constraint*) { return 1; }
   virtual int visit_sub (TAO_Binary_Constraint*) { return 1; }
   virtual int visit_mult (TAO_Binary_Constraint*) { return 1; }
-  virtual int visit_div (TAO_Binary_Constraint*) { return 1; }  
+  virtual int visit_div (TAO_Binary_Constraint*) { return 1; }
 
   virtual int visit_twiddle (TAO_Binary_Constraint*) { return 1; }
   virtual int visit_in (TAO_Binary_Constraint*) { return 1; }

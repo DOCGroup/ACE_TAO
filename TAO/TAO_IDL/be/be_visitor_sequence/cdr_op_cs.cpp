@@ -97,14 +97,14 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       << node->flat_name () << "_CPP_" << be_nl
       << "#define _TAO_CDR_OP_" << node->flat_name () << "_CPP_"
       << be_nl;
-      
+
   bool alt = be_global->alt_mapping ();
 
   *os << be_global->core_versioning_begin () << be_nl;
 
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
-  
+
   if (alt)
     {
       *os << "::CORBA::Boolean operator<< (" << be_idt_nl
@@ -153,12 +153,12 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
           << "{" << be_idt_nl
           << "::CORBA::ULong length = 0UL;" << be_nl
           << bt->full_name ();
-          
+
       if (bt->size_type () == AST_Type::VARIABLE)
         {
           *os << " *";
         }
-          
+
       *os << " tmp;" << be_nl << be_nl
           << "if (! (strm >> length))" << be_idt_nl
           << "{" << be_idt_nl

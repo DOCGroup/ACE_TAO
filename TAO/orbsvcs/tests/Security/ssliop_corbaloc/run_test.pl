@@ -119,7 +119,7 @@ $orb_debug_level =  ($quiet || $debug_level == 0) ? "" : "-ORBDebugLevel $debug_
 
 # Options for all simple tests recognized by the 'client' program.
 @opts = (
-         "-s -ORBInitRef NameService=corbaloc:ssliop:$TARGETHOSTNAME:$ns_ssl_port/NameService" 
+         "-s -ORBInitRef NameService=corbaloc:ssliop:$TARGETHOSTNAME:$ns_ssl_port/NameService"
                 . " -ORBSvcConf $cli_cliconffile $orb_debug_level",
          "-t -ORBInitRef NameService=corbaloc:ssliop:$TARGETHOSTNAME:$ns_ssl_port/NameService"
                 . " -ORBSvcConf $cli_cliconffile $orb_debug_level",
@@ -129,7 +129,7 @@ $orb_debug_level =  ($quiet || $debug_level == 0) ? "" : "-ORBDebugLevel $debug_
                 . " -ORBSvcConf $cli_cliconffile $orb_debug_level",
          "-y -ORBInitRef NameService=corbaloc:ssliop:$TARGETHOSTNAME:$ns_ssl_port/NameService"
                 . " -ORBSvcConf $cli_cliconffile $orb_debug_level",
-         
+
          );
 
 @server_opts = (
@@ -137,13 +137,13 @@ $orb_debug_level =  ($quiet || $debug_level == 0) ? "" : "-ORBDebugLevel $debug_
                         . " -ORBSvcConf $ns_nsconffile $orb_debug_level",
                 "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port/ssl_port=$ns_ssl_port"
                         . " -ORBSvcConf $ns_nsconffile $orb_debug_level",
-                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port/ssl_port=$ns_ssl_port" 
+                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port/ssl_port=$ns_ssl_port"
                         . " -ORBSvcConf $ns_nsconffile $orb_debug_level",
-                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port/ssl_port=$ns_ssl_port" 
+                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port/ssl_port=$ns_ssl_port"
                         . " -ORBSvcConf $ns_nsconffile $orb_debug_level",
-                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port/ssl_port=$ns_ssl_port" 
+                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port/ssl_port=$ns_ssl_port"
                         . " -ORBSvcConf $ns_nsconffile $orb_debug_level",
-                
+
                 );
 
 @comments = (
@@ -165,7 +165,7 @@ foreach $o (@opts) {
         print STDERR " - Skipping, use -s to run the SSL tests";
         next;
     }
-    
+
     print STDERR "\n";
     name_server ($server_opts[$test_number]);
     client ($o);

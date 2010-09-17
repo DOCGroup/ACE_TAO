@@ -18,30 +18,30 @@ $num_csd_threads=1;
 $collocated_test=0;
 $servant_cancellation_option="";
 
-if ($ARGV[0] eq 'collocated') { 
-    # 1 servant, 1 collocated client, 1 orb thread, 2 strategy working threads    
+if ($ARGV[0] eq 'collocated') {
+    # 1 servant, 1 collocated client, 1 orb thread, 2 strategy working threads
     $num_clients_per_servant=1;
     $collocated_test=1;
     $num_csd_threads=2;
 }
-elsif ($ARGV[0] eq 'multiple_servants') { 
+elsif ($ARGV[0] eq 'multiple_servants') {
     # multiple servants and single orb thread.
-    # 10 servant, 40 client, 1 orb thread, 10 strategy working threads  
+    # 10 servant, 40 client, 1 orb thread, 10 strategy working threads
     $num_servants=10;
     $num_csd_threads=10;
     $num_clients_per_servant=4;
 }
-elsif ($ARGV[0] eq 'multiple_orb_threads') { 
+elsif ($ARGV[0] eq 'multiple_orb_threads') {
     # multiple servants and multiple orb threads.
-    # 10 servant, 40 client, 4 orb thread, 10 strategy working threads 
+    # 10 servant, 40 client, 4 orb thread, 10 strategy working threads
     $num_servants=10;
     $num_csd_threads=10;
     $num_clients_per_servant=4;
     $num_orb_threads=4;
 }
-elsif ($ARGV[0] eq 'cancel_servant') { 
+elsif ($ARGV[0] eq 'cancel_servant') {
     # Cancel one servant and leave the other alive.
-    # 2 servant, 10 client, 5 orb thread, 1 strategy working threads 
+    # 2 servant, 10 client, 5 orb thread, 1 strategy working threads
     $num_clients_per_servant=5;
     $num_servants=2;
     $num_csd_threads=2;
@@ -49,7 +49,7 @@ elsif ($ARGV[0] eq 'cancel_servant') {
     $servant_cancellation_option = " -d 1 ";
 }
 elsif ($ARGV[0] eq '') {
-    # default test - 1 servant, 40 clients , 1 orb thread, 1 csd thread  
+    # default test - 1 servant, 40 clients , 1 orb thread, 1 csd thread
 }
 else {
     print STDERR "ERROR: invalid parameter $ARGV[0] \n";
@@ -68,7 +68,7 @@ $num_clients = $num_servants * $num_clients_per_servant;
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-$SV  = $server->CreateProcess("server_main", 
+$SV  = $server->CreateProcess("server_main",
                               "-p $iorfname_prefix -s $num_servants ".
                               "-c $num_clients -t $num_orb_threads -n $num_csd_threads ".
                               "-l $collocated_test $servant_cancellation_option");
@@ -92,7 +92,7 @@ for ($i = 0; $i < $num_servants; $i++) {
 my @CLS = ();
 my @clients_iorfile = ();
 $count = 0;
-for ($i = 0; $i < $num_servants; $i++) { 
+for ($i = 0; $i < $num_servants; $i++) {
     for ($j = 0; $j < $num_clients_per_servant; $j++) {
         $clients_iorfile[$count] = $clients[$count]->LocalFile($iorfiles[$i]);
         $clients[$count]->DeleteFile($iorfiles[$i]);
@@ -128,7 +128,7 @@ for ($i = 0; $i < $num_servants; $i++) {
 }
 
 $count = 0;
-for ($i = 0; $i < $num_servants; $i++) { 
+for ($i = 0; $i < $num_servants; $i++) {
     for ($j = 0; $j < $num_clients_per_servant; $j++) {
         if ($clients[$count]->PutFile ($iorfiles[$i]) == -1) {
             print STDERR "ERROR: client $count cannot set file <$clients_iorfile[$count]>\n";
@@ -142,7 +142,7 @@ for ($i = 0; $i < $num_servants; $i++) {
 $count = 0;
 
 if ($collocated_test == 0) {
-    for ($i = 0; $i < $num_servants; $i++) { 
+    for ($i = 0; $i < $num_servants; $i++) {
         for ($j = 0; $j < $num_clients_per_servant; $j++) {
             my $client_status = $CLS[$count]->Spawn();
             if ($client_status != 0) {
@@ -177,7 +177,7 @@ for ($i = 0; $i < $num_servants; $i++) {
 }
 
 $count = 0;
-for ($i = 0; $i < $num_servants; $i++) { 
+for ($i = 0; $i < $num_servants; $i++) {
     for ($j = 0; $j < $num_clients_per_servant; $j++) {
         $clients[$count]->DeleteFile($iorfiles[$i]);
         $count++;

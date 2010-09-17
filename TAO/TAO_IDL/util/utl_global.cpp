@@ -102,7 +102,7 @@ char* IDL_GlobalData::translateName(const char* name, char *name_buf)
       ACE_OS::strcpy (name_buf, transName);
       transName = name_buf;
     }
-    
+
   return (transName == 0 || ((int)transName) == -1 ) ? 0 : transName;
 }
 #endif
@@ -206,7 +206,7 @@ IDL_GlobalData::IDL_GlobalData (void)
                        ace_root);
 #endif /* ACE_GPERF */
     }
-    
+
 #if defined (IDL_ANON_ERROR)
   this->anon_type_diagnostic_ = ANON_TYPE_ERROR;
 #elif defined (IDL_ANON_WARNING)
@@ -1357,7 +1357,7 @@ IDL_GlobalData::check_gperf (void)
           // to <errno> again, so that it can be used to print error
           // messages.
           errno = WEXITSTATUS (wait_status);
-          
+
           if (errno)
             {
               // <exec> has failed.
@@ -1522,23 +1522,23 @@ IDL_GlobalData::fini (void)
       ACE::strdelete (entry->ext_id_);
       ACE::strdelete (entry->int_id_);
     }
-    
+
   DCPS_Type_Info_Map::ENTRY *dcps_entry = 0;
-    
+
   for (DCPS_Type_Info_Map::ITERATOR dcps_iter (
          this->dcps_type_info_map_);
        !dcps_iter.done ();
        dcps_iter.advance ())
     {
       dcps_iter.next (dcps_entry);
-      
+
       dcps_entry->int_id_->name_->destroy ();
       delete dcps_entry->int_id_->name_;
       dcps_entry->int_id_->name_ = 0;
-      
+
       delete dcps_entry->int_id_;
       dcps_entry->int_id_ = 0;
-      
+
       delete [] dcps_entry->ext_id_;
       dcps_entry->ext_id_ = 0;
     }
@@ -1583,19 +1583,19 @@ void
 IDL_GlobalData::recursion_start (const char *val)
 {
   ACE::strdelete (this->recursion_start_);
-  
+
   /// Strip off any trailing slashes (not needed
   /// for further processing).
   ACE_CString tmp (val);
   ACE_CString::size_type len = tmp.length ();
   ACE_TCHAR c = tmp[len - 1];
-  
+
   while (c == '\\' || c == '/')
     {
       tmp = tmp.substr (0, --len);
       c = tmp[len - 1];
     }
-    
+
   this->recursion_start_ = ACE::strnew (tmp.c_str ());
 }
 
@@ -1634,7 +1634,7 @@ IDL_GlobalData::add_dcps_data_type (const char* id)
 {
   // Check if the type already exists.
   DCPS_Data_Type_Info* newinfo ;
-  
+
   if (this->dcps_type_info_map_.find (id, newinfo) != 0)
     {
       // No existing entry, add one.
@@ -1645,7 +1645,7 @@ IDL_GlobalData::add_dcps_data_type (const char* id)
 
       UTL_ScopedName* t1 =
         FE_Utils::string_to_scoped_name (foo_type);
-        
+
       // Chained with null Identifier required!!
       UTL_ScopedName* target =
         new UTL_ScopedName (new Identifier (""), t1);
@@ -1698,7 +1698,7 @@ IDL_GlobalData::is_dcps_type (UTL_ScopedName* target)
 {
   // Traverse the entire map.
   DCPS_Type_Info_Map::ENTRY* entry ;
-  
+
   for (DCPS_Type_Info_Map::ITERATOR current (
          this->dcps_type_info_map_);
        current.next (entry);

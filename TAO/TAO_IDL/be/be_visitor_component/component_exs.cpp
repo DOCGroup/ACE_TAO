@@ -38,7 +38,7 @@ be_visitor_component_exs::visit_component (be_component *node)
       << "namespace CIAO_" << node->flat_name ()
       << "_Impl" << be_nl
       << "{" << be_idt;
-      
+
   be_visitor_facet_exs facet_visitor (this->ctx_);
   facet_visitor.node (node);
 
@@ -50,7 +50,7 @@ be_visitor_component_exs::visit_component (be_component *node)
                          ACE_TEXT ("facet visitor failed\n")),
                         -1);
     }
-    
+
   be_visitor_executor_exs exec_visitor (this->ctx_);
 
   if (exec_visitor.visit_component (node) == -1)

@@ -68,9 +68,9 @@ be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
           // Some compilers handle "any" operators in a namespace
           // corresponding to their module, others do not.
           *os << "\n\n#if defined (ACE_ANY_OPS_USE_NAMESPACE)\n";
-      
+
           be_util::gen_nested_namespace_begin (os, module);
-      
+
           *os << be_nl << be_nl
               << macro << " void operator<<= (::CORBA::Any &, const ::" << node->name ()
               << " &); // copying version" << be_nl;
@@ -80,17 +80,17 @@ be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
               << node->name () << " *&); // deprecated\n";
           *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const ::"
               << node->name () << " *&);";
-      
+
           be_util::gen_nested_namespace_end (os, module);
-      
+
           // Emit #else.
           *os << be_nl << be_nl
               << "#else\n\n";
         }
     }
-      
+
   *os << be_global->core_versioning_begin () << be_nl;
-  
+
   *os << be_nl << be_nl
       << macro << " void operator<<= (::CORBA::Any &, const " << node->name ()
       << " &); // copying version" << be_nl;
@@ -107,7 +107,7 @@ be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
     {
       *os << "\n\n#endif";
     }
-  
+
   // All we have to do is to visit the scope and generate code.
   if (this->visit_scope (node) == -1)
     {

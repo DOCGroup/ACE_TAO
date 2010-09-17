@@ -201,23 +201,23 @@ module CosTrading
          {
          case some: PropertyNameSeq prop_names;
          };
-       
+
        exception IllegalPreference {
          Preference pref;
        };
-       
+
        exception IllegalPolicyName {
          PolicyName name;
        };
-       
+
        exception PolicyTypeMismatch {
          Policy the_policy;
        };
-       
+
        exception InvalidPolicyValue {
          Policy the_policy;
        };
-       
+
        void query (in ServiceTypeName type,
                    in Constraint constr,
                    in Preference pref,
@@ -238,9 +238,9 @@ module CosTrading
                  DuplicatePropertyName,
                  DuplicatePolicyName);
      };
-     
+
      interface Register : TraderComponents, SupportAttributes
-       {                
+       {
          struct OfferInfo
          {
            Object reference;
@@ -251,42 +251,42 @@ module CosTrading
          exception InvalidObjectRef {
            Object ref;
          };
-         
+
          exception UnknownPropertyName {
            PropertyName name;
          };
-         
+
          exception InterfaceTypeMismatch {
            ServiceTypeName type;
            Object reference;
          };
-         
+
          exception ProxyOfferId {
            OfferId id;
          };
-         
+
          exception MandatoryProperty {
            ServiceTypeName type;
            PropertyName name;
          };
-         
+
          exception ReadonlyProperty {
            ServiceTypeName type;
            PropertyName name;
          };
-         
+
          exception NoMatchingOffers {
            Constraint constr;
          };
-         
+
          exception IllegalTraderName {
            TraderName name;
          };
-         
+
          exception UnknownTraderName {
            TraderName name;
          };
-         
+
          exception RegisterNotSupported {
            TraderName name;
          };
@@ -308,7 +308,7 @@ module CosTrading
            raises (IllegalOfferId,
                    UnknownOfferId,
                    ProxyOfferId);
-         
+
          OfferInfo describe (in OfferId id)
            raises (IllegalOfferId,
                    UnknownOfferId,
@@ -355,25 +355,25 @@ module CosTrading
     exception IllegalLinkName {
                   LinkName name;
     };
-                
+
     exception UnknownLinkName {
                   LinkName name;
     };
-                
+
     exception DuplicateLinkName {
                   LinkName name;
     };
-                
+
     exception DefaultFollowTooPermissive {
                   FollowOption def_pass_on_follow_rule;
                   FollowOption limiting_follow_rule;
     };
-                
+
     exception LimitingFollowTooPermissive {
                   FollowOption limiting_follow_rule;
                   FollowOption max_link_follow_policy;
     };
-                
+
     void add_link (in LinkName name,
                                in Lookup target,
                                in FollowOption def_pass_on_follow_rule,
@@ -406,7 +406,7 @@ module CosTrading
   interface Proxy : TraderComponents, SupportAttributes
           {
             typedef Istring ConstraintRecipe;
-            
+
             struct ProxyInfo
             {
               ServiceTypeName type;
@@ -420,11 +420,11 @@ module CosTrading
             exception IllegalRecipe {
               ConstraintRecipe recipe;
             };
-            
+
             exception NotProxyOfferId {
               OfferId id;
             };
-            
+
             OfferId export_proxy (in Lookup target,
                                   in ServiceTypeName type,
                                   in PropertySeq properties,
@@ -446,46 +446,46 @@ module CosTrading
               raises (IllegalOfferId,
                       UnknownOfferId,
                       NotProxyOfferId);
-            
+
             ProxyInfo describe_proxy (in OfferId id)
               raises (IllegalOfferId,
                       UnknownOfferId,
                       NotProxyOfferId);
           };
-          
+
           interface Admin : TraderComponents, SupportAttributes, ImportAttributes, LinkAttributes
-            {              
+            {
               typedef sequence<octet> OctetSeq;
-              
+
               readonly attribute OctetSeq request_id_stem;
-              
+
               unsigned long set_def_search_card (in unsigned long value);
               unsigned long set_max_search_card (in unsigned long value);
-              
+
               unsigned long set_def_match_card (in unsigned long value);
               unsigned long set_max_match_card (in unsigned long value);
-              
+
               unsigned long set_def_return_card (in unsigned long value);
               unsigned long set_max_return_card (in unsigned long value);
-              
+
               unsigned long set_max_list (in unsigned long value);
-              
+
               boolean set_supports_modifiable_properties (in boolean value);
               boolean set_supports_dynamic_properties (in boolean value);
               boolean set_supports_proxy_offers (in boolean value);
-              
+
               unsigned long set_def_hop_count (in unsigned long value);
               unsigned long set_max_hop_count (in unsigned long value);
-              
+
               FollowOption set_def_follow_policy (in FollowOption policy);
               FollowOption set_max_follow_policy (in FollowOption policy);
-              
+
               FollowOption set_max_link_follow_policy (in FollowOption policy);
-              
+
               TypeRepository set_type_repos (in TypeRepository repository);
-              
+
               OctetSeq set_request_id_stem (in OctetSeq stem);
-              
+
               void list_offers (in unsigned long how_many,
                                 out OfferIdSeq ids,
                                 out OfferIdIterator id_itr)
@@ -512,13 +512,13 @@ module CosTrading
           {
             unsigned long max_left ()
               raises (UnknownMaxLeft);
-            
+
             boolean next_n (in unsigned long n,
                             out OfferIdSeq ids);
 
             void destroy ();
           };
-          
+
 }; /* end module CosTrading */
 
 #endif /* TAO_TRADING_IDL */

@@ -3,7 +3,7 @@
 #include "Foo_C_ClientEngine.h"
 #include "Foo_C_Custom_ClientEngine.h"
 
-Foo_C_Statistics::Foo_C_Statistics(unsigned num_remote_clients, 
+Foo_C_Statistics::Foo_C_Statistics(unsigned num_remote_clients,
                                    unsigned num_collocated_clients)
 : num_remote_clients_ (num_remote_clients),
   num_collocated_clients_ (num_collocated_clients)
@@ -71,21 +71,21 @@ Foo_C_Statistics::actual_vs_expected()
         }
 
       // Verify the "in" values.
-      // Skip op1/op5 and cust_op1/cust_op5 since they do not have 
+      // Skip op1/op5 and cust_op1/cust_op5 since they do not have
       // any "in" values.
       if (i % 5 == 0 || i % 5 == 4)
         {
           continue;
         }
 
-      unsigned actual_size 
+      unsigned actual_size
         = this->actual_in_values_[i].size ();
-      unsigned expected_size 
+      unsigned expected_size
         =  this->num_remote_clients_ * remote_client_stats.expected_[i]
            + this->num_collocated_clients_ * collocated_client_stats.expected_[i];
-          
+
       if (actual_size == 0 && expected_size == 0)
-        { 
+        {
           continue;
         }
 
@@ -103,7 +103,7 @@ Foo_C_Statistics::actual_vs_expected()
               return false;
             }
         }
-    }   
+    }
   return true;
 }
 

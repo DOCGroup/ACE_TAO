@@ -85,7 +85,7 @@ sub run_client
     my $client_args = "@_" . " $extra_client_args";
 
     print "client $client_args\n";
-    
+
     $CL = $client->CreateProcess ("client", "$client_args");
 
     $CL->Spawn ();

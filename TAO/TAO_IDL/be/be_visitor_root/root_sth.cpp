@@ -32,7 +32,7 @@ be_visitor_root_sth::visit_root (be_root *node)
     {
       return 0;
     }
-    
+
   if (this->init () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -40,7 +40,7 @@ be_visitor_root_sth::visit_root (be_root *node)
                          ACE_TEXT ("failed to initialize\n")),
                         -1);
     }
-    
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -138,7 +138,7 @@ be_visitor_root_sth::init (void)
   int status =
     tao_cg->start_server_template_header (
       be_global->be_get_server_template_hdr_fname ());
-  
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

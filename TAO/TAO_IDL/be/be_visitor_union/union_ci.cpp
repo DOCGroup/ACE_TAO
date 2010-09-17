@@ -56,7 +56,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_ci::"
                          "visit_union - "
-                         "bad discriminant type\n"), 
+                         "bad discriminant type\n"),
                         -1);
     }
 
@@ -67,7 +67,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_ci::"
                          "visit union - "
-                         "codegen for discrminant failed\n"), 
+                         "codegen for discrminant failed\n"),
                         -1);
     }
 
@@ -78,7 +78,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_ci::"
                          "visit_union - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 

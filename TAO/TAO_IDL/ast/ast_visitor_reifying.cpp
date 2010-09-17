@@ -521,17 +521,17 @@ ast_visitor_reifying::visit_string (AST_String *node)
                   AST_Expression (b,
                                   AST_Expression::EV_ulong),
                   -1);
-                  
+
   Identifier id ("string");
   UTL_ScopedName sn (&id, 0);
-  
+
   ACE_NEW_RETURN (this->reified_node_,
                   AST_String (AST_Decl::NT_string,
                               &sn,
                               bound,
                               node->width ()),
                   -1);
-                  
+
   return 0;
 }
 

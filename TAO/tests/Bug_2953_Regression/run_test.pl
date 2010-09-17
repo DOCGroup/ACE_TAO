@@ -14,7 +14,7 @@ $debug_level = '0';
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
-    } 
+    }
 }
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
@@ -49,7 +49,7 @@ if ($server->WaitForFileTimed ($iorbaseA,
     print STDERR "ERROR: cannot find file <$server_iorfileA>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
-} 
+}
 
 $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval ());
 

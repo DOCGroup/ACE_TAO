@@ -50,7 +50,7 @@ module RTEventLogAdmin
         DsLogAdmin::InvalidThreshold);
 
   };
-  
+
 };
 
 #endif /* RTEVENT_LOG_ADMIN_IDL */

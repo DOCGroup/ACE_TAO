@@ -7,7 +7,7 @@ interface Nestea_Bookshelf
   // Add a number of cans to the bookshelf.
 
   void crush (in long cans);
-  // Crush some of those cans. 
+  // Crush some of those cans.
 
   long bookshelf_size ();
   // How many cans are in the collection?

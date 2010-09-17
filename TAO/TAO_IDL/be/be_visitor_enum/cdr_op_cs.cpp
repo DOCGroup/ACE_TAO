@@ -62,7 +62,7 @@ be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
       << "}" << be_uidt_nl << be_nl
       << "return _tao_success;" << be_uidt_nl
       << "}" << be_nl;
-      
+
   if (be_global->gen_ostream_operators ())
     {
       node->gen_ostream_operator (os, false);

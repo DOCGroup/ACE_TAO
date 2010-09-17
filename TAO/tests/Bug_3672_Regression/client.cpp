@@ -16,7 +16,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ami_test_i.h"
-#include "tao/ORB_Core.h" 
+#include "tao/ORB_Core.h"
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 1;
@@ -81,7 +81,7 @@ public:
 
   /// The thread entry point.
   virtual int svc (void);
-  
+
   /// Set all members to nil
   void clear ();
 
@@ -102,7 +102,7 @@ public:
   Handler (void)
   {
   };
-  
+
   void foo (CORBA::Long result,
             CORBA::Long out_l)
     {
@@ -253,7 +253,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->destroy ();
 
       CORBA::ULong ref_count  = orb->_refcount();
-      
+
       if (ref_count > 1)
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Refcount orb %d\n"), ref_count));
@@ -274,7 +274,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
-      
+
     }
 
   return parameter_corruption;

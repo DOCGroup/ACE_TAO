@@ -58,7 +58,7 @@ namespace TAO
         retval = this->purge_entry_i (cached_entry);
       }
     }
-      
+
     return retval;
   }
 

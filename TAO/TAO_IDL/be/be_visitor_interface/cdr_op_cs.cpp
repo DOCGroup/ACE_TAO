@@ -62,7 +62,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "const " << node->full_name () << "_ptr _tao_objref)" << be_uidt
       << be_uidt_nl
       << "{" << be_idt_nl;
-      
+
   AST_Decl::NodeType nt = node->node_type ();
 
   if (node->is_abstract ())

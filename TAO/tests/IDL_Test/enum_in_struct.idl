@@ -9,7 +9,7 @@
 //    enum_in_struct.idl
 //
 // = DESCRIPTION
-//    This file contains examples of IDL code that has 
+//    This file contains examples of IDL code that has
 //    caused problems in the past for the TAO IDL
 //    compiler. This test is to make sure the problems
 //    stay fixed.
@@ -31,11 +31,11 @@ enum UnNamed
 
 struct HoldsEnum
 {
-  enum Named 
-    { 
-      NAMED_FIRST, 
-      NAMED_SECOND, 
-      NAMED_THIRD 
+  enum Named
+    {
+      NAMED_FIRST,
+      NAMED_SECOND,
+      NAMED_THIRD
     } named_enum;
 
   UnNamed unnamed_enum;
@@ -45,22 +45,22 @@ struct HoldsEnum
 
 struct decl_heavy_struct
 {
-  enum str_en 
+  enum str_en
   {
-    a, 
-    b, 
+    a,
+    b,
     c
   } m_en[10];
 
-  struct st 
+  struct st
   {
-    long a; 
+    long a;
     char b;
   } m_st[10];
 
-  union un switch (long) 
+  union un switch (long)
   {
-    case 1: long a; 
+    case 1: long a;
     case 2: char b;
   } m_un[10];
 };

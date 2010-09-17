@@ -65,7 +65,7 @@ Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-static CosNotifyFilter::Filter_ptr 
+static CosNotifyFilter::Filter_ptr
 create_proxyFilter (CosNotifyChannelAdmin::EventChannel_ptr ec)
 {
   CosNotifyFilter::FilterFactory_var ffact =
@@ -100,7 +100,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                     CORBA::NO_MEMORY ());
 
   consumer_1->init (client->root_poa ());
-  
+
   consumer_1->_connect (admin, filter);
 }
 

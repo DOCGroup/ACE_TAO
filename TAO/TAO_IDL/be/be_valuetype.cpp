@@ -97,7 +97,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
     {
       be_interface *intf =
         be_interface::narrow_from_decl (this->pd_supports[i]);
-        
+
       if (intf == 0)
         {
           // The item is a template param holder.
@@ -363,7 +363,7 @@ be_valuetype::have_supported_op (be_interface * node)
       long i;  // loop index
       long n_inherits = node->n_inherits ();
       AST_Type **inherits = node->inherits ();
-      
+
       for (i = 0; i < n_inherits; ++i)
         {
           be_interface * intf =

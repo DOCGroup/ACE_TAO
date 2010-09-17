@@ -67,7 +67,7 @@ $imr->DeleteFile ($persistdat);
 sub scale_test
 {
     print "Running scale test with $servers_count servers and $obj_count objects.\n";
-    
+
     my $result = 0;
     my $start_time = time();
 
@@ -104,7 +104,7 @@ sub scale_test
     }
 
     if ($use_activator) {
-    
+
         $ACT->Arguments ("-d 1 -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
         $ACT_status = $ACT->Spawn ();
         if ($ACT_status != 0) {
@@ -135,7 +135,7 @@ sub scale_test
                 }
             }
         }
-        
+
         $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile list");
         $result = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
         if ($TI_status != 0) {
@@ -145,9 +145,9 @@ sub scale_test
             return 1;
         }
     }
-    
+
     for(my $i = 0; $i < $servers_count; $i++ ) {
-    
+
         my $startfile = $objprefix . "_$i.status";
         my $srv_startfile = $srv->LocalFile ($startfile);
         $srv->DeleteFile ($objprefix . "_$i.status");
@@ -203,7 +203,7 @@ sub scale_test
                 last;
             }
         }
-        
+
         if ($status == 1) {
             last;
         }
@@ -216,7 +216,7 @@ sub scale_test
             $status = 1;
         }
     }
-    
+
     my $IMR_status = $IMR->TerminateWaitKill ($imr->ProcessStopWaitInterval());
     if ($IMR_status != 0) {
         print STDERR "ERROR: IMR returned $IMR_status\n";
@@ -225,7 +225,7 @@ sub scale_test
 
     my $test_time = time() - $start_time;
     my $total_objs = $obj_count * $servers_count;
-    
+
     print "\nFinished. The test took $test_time seconds for $total_objs imr-ified objects.\n";
 
     return $status;

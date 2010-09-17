@@ -5,7 +5,7 @@
  *
  *  $Id$
  *
- *  Visitor generating code for the TAO::DCPS::Serializer operators 
+ *  Visitor generating code for the TAO::DCPS::Serializer operators
  *  for types defined in Module's scope.
  *
  *
@@ -35,7 +35,7 @@ be_visitor_module_serializer_op::visit_module (be_module *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_module_serializer_op::visit_module - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 

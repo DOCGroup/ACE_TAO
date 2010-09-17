@@ -129,9 +129,9 @@ be_visitor_executor_exh::visit_component (be_component *node)
       << "private:" << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "_Context_var ciao_context_;";
-      
+
   be_visitor_facet_private_exh v (this->ctx_);
-  
+
   if (v.visit_component_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -141,7 +141,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
                          ACE_TEXT ("visitor failed\n")),
                         -1);
     }
-      
+
   os_ << be_uidt_nl
       << "};";
 
@@ -154,7 +154,7 @@ be_visitor_executor_exh::visit_provides (be_provides *node)
   ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
-  
+
   be_type *impl = node->provides_type ();
 
   AST_Decl *scope = ScopeAsDecl (impl->defined_in ());

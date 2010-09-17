@@ -33,12 +33,12 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           name.length (1);
           name[0].id = CORBA::string_dup ("Channel1");
           CORBA::Object_var obj1 = naming->resolve (name);
-          
+
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Successfully retrieved Challel1\n")));
 
           name[0].id = CORBA::string_dup ("Channel2");
           CORBA::Object_var obj2 = naming->resolve (name);
-          
+
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Successfully retrieved Challel2\n")));
         }
     }

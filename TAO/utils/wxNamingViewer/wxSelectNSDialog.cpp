@@ -27,14 +27,14 @@ namespace  // anonymous
                                   wxDefaultSize,
                                   0,
                                   0,
-                                  wxLB_SINGLE, 
+                                  wxLB_SINGLE,
                                   wxDefaultValidator,
-                                  "serversList" 
+                                  "serversList"
                                   ),
                     1,
                     wxEXPAND | wxALL,
                     5);
- 
+
       wxBoxSizer *button_sizer = new wxBoxSizer( wxHORIZONTAL );
       {
         wxButton* okButton = new wxButton( dialog, wxID_OK, "OK" );
@@ -65,12 +65,12 @@ namespace  // anonymous
                         0,
                         wxALL,
                         5);
- 
+
       topsizer->Add(
                     button_sizer,
                     0,
                     wxALIGN_CENTER);
- 
+
       dialog->SetSizer( topsizer);
       topsizer->SetSizeHints( dialog);
     }

@@ -1,5 +1,5 @@
 // $Id$
-// 
+//
 // = FILENAME
 //    NavWeapDataHandler.java
 //
@@ -8,7 +8,7 @@
 //
 // = DESCRIPTION
 //   This is an implementation of the interface Data Handler,
-//   it handles Navigation and Weapons data, where statistic data is 
+//   it handles Navigation and Weapons data, where statistic data is
 //   part of it. Several Observables are declared, they can be accessed by
 //   any number of Observers, which could reside in a Java Bean for example.
 //
@@ -18,18 +18,18 @@ import org.omg.CORBA.*;
 
 public class NavWeapDataHandler implements DataHandler {
 
-  java.util.Hashtable ObservablesTable; 
+  java.util.Hashtable ObservablesTable;
   int received_events_;
 
 
   // Observable for Persian Recursion data
   class PersianObservable extends DemoObservable {
-    
+
     // to ask which kind of viewer is needed to display data
     public int getProperty () {
 	return Properties.PERSIAN;
     }
-    
+
     public void updatePersianData (PersianRecursion.Data data) {
 
       //      System.out.println ("in PersianObservable.updatePersianData");
@@ -42,20 +42,20 @@ public class NavWeapDataHandler implements DataHandler {
 
   // Observable for Navigation data
   class NavigationObservable extends DemoObservable {
-    
+
     // to ask which kind of viewer is needed to display data
     public int getProperty () {
 	return Properties.NAVIGATION;
-    }    
-    
+    }
+
     public void updateNavigation (Navigation navigation) {
       setChanged ();
       notifyObservers (navigation);
-    }      
+    }
   }
 
   class WeaponsObservable extends DemoObservable {
-    
+
     // to ask which kind of viewer is needed to display data
     public int getProperty () {
 	return Properties.WEAPONS;
@@ -66,13 +66,13 @@ public class NavWeapDataHandler implements DataHandler {
       notifyObservers (weapons);
     }
   }
-  
+
   class Cpu_UsageObservable extends DemoObservable {
-    
+
     public int getProperty () {
       return Properties.DOUBLE;
     }
-    
+
     public void updateCpu_Usage (double utilization) {
       setChanged ();
       Double temp_ = new Double (utilization);
@@ -81,7 +81,7 @@ public class NavWeapDataHandler implements DataHandler {
   }
 
   class OverheadObservable extends DemoObservable {
-    
+
     public int getProperty () {
       return Properties.DOUBLE;
     }
@@ -97,11 +97,11 @@ public class NavWeapDataHandler implements DataHandler {
     double latency = 0.0;
     double avg_latency = 0.0;
     double sample_count = 0.0;
-        
+
     public int getProperty () {
       return Properties.DOUBLE;
     }
-        
+
     public void updateJitter (long completion_time,
 		              long computation_time,
 		              long arrival_time) {
@@ -112,10 +112,10 @@ public class NavWeapDataHandler implements DataHandler {
       latency = latency > 0 ? latency : 0;
 
       sample_count = sample_count + 1.0;
-      avg_latency = (avg_latency * (sample_count - 1.0) + latency) / 
-                    (sample_count);  
+      avg_latency = (avg_latency * (sample_count - 1.0) + latency) /
+                    (sample_count);
 
-      double jitter_ = (double)Math.abs(latency - avg_latency); 
+      double jitter_ = (double)Math.abs(latency - avg_latency);
 
       setChanged ();
       Double temp_ = new Double (jitter_);
@@ -124,28 +124,28 @@ public class NavWeapDataHandler implements DataHandler {
   }
 
   class DeadlinesObservable extends DemoObservable {
-    
+
     public int getProperty () {
       return Properties.DOUBLE;
     }
-    
-    public void updateDeadlines (long deadline_time, 
+
+    public void updateDeadlines (long deadline_time,
 				 long completion_time) {
 
       double missed_ = (deadline_time < completion_time) ? 1.0 : 0.0;
       Double temp_ = new Double (missed_);
       setChanged ();
-      notifyObservers (temp_);	
+      notifyObservers (temp_);
     }
   }
 
   class CriticalDeadlinesObservable extends DeadlinesObservable {
-    
+
     public int getProperty () {
       return Properties.DOUBLE;
     }
-    
-    public void updateDeadlines (long deadline_time, 
+
+    public void updateDeadlines (long deadline_time,
 				 long completion_time,
                                  long criticality) {
 
@@ -153,14 +153,14 @@ public class NavWeapDataHandler implements DataHandler {
                         (deadline_time < completion_time)) ? 1.0 : 0.0;
       Double temp_ = new Double (missed_);
       setChanged ();
-      notifyObservers (temp_);	
+      notifyObservers (temp_);
     }
   }
 
   class LatencyObservable extends DemoObservable {
     double latency = 0.0;
     double last_latency = 0.0;
-    
+
     public int getProperty () {
       return Properties.DOUBLE;
     }
@@ -169,12 +169,12 @@ public class NavWeapDataHandler implements DataHandler {
       last_latency = latency;
       latency = (double)(computation_time);
       latency = latency > 0 ? latency : 0;
-      
+
       setChanged ();
       Double temp_ = new Double(latency);
-      notifyObservers (temp_);	
+      notifyObservers (temp_);
     }
-    
+
     public void updateLatency (long completion_time,
 			       long computation_time,
 			       long arrival_time) {
@@ -183,14 +183,14 @@ public class NavWeapDataHandler implements DataHandler {
                 (double)(computation_time) -
                 (double)(arrival_time);
       latency = latency > 0 ? latency : 0;
-      
+
       setChanged ();
       Double temp_ = new Double(latency);
-      notifyObservers (temp_);	
+      notifyObservers (temp_);
     }
   }
-  
-  
+
+
   public synchronized void update (RtecEventComm.Event event) {
 
     // System.out.println ("in NavWeapDataHandler.update");
@@ -206,7 +206,7 @@ public class NavWeapDataHandler implements DataHandler {
 
         try
 	  {
-            persian_recursion_data = 
+            persian_recursion_data =
               PersianRecursion.DataHelper.extract (any_value);
 	  }
         catch (Exception e)
@@ -231,7 +231,7 @@ public class NavWeapDataHandler implements DataHandler {
 
 	    pobs_hi.updatePersianData (persian_recursion_data);
 
-            // LatencyObservable lobs_hi = 
+            // LatencyObservable lobs_hi =
 	    // (LatencyObservable) ObservablesTable.get ("High Consumer Execution Time (100 ns)");
 
 	    // lobs_hi.updateLatency (persian_recursion_data.computation_time);
@@ -249,7 +249,7 @@ public class NavWeapDataHandler implements DataHandler {
 
 	    //            System.out.println ("updated low priority persian recursion observable");
 
-            // LatencyObservable lobs_lo = 
+            // LatencyObservable lobs_lo =
 	    // (LatencyObservable) ObservablesTable.get ("Low Consumer Execution Time (100 ns)");
 
 	    // lobs_lo.updateLatency (persian_recursion_data.computation_time);
@@ -291,7 +291,7 @@ public class NavWeapDataHandler implements DataHandler {
 	DeadlinesObservable dobs = (DeadlinesObservable)ObservablesTable.get ("Missed Deadlines");
 	dobs.updateDeadlines (navigation_.deadline_time,
 			      navigation_.completion_time);
-	CriticalDeadlinesObservable cdobs = 
+	CriticalDeadlinesObservable cdobs =
           (CriticalDeadlinesObservable)ObservablesTable.get ("Missed Critical Deadlines");
 	cdobs.updateDeadlines (navigation_.deadline_time,
 			       navigation_.completion_time,
@@ -310,7 +310,7 @@ public class NavWeapDataHandler implements DataHandler {
       {
 	Weapons weapons_ = WeaponsHelper.extract (any_value);
 
-        // if the weapons structure's update data flag is set, update 
+        // if the weapons structure's update data flag is set, update
         // itss scheduling data with actual values from the EC
         if (weapons_.update_data > 0)
           {
@@ -350,13 +350,13 @@ public class NavWeapDataHandler implements DataHandler {
                              weapons_.arrival_time);
 	received_events_++;
       }
-    else 
+    else
       {
        	System.out.println ("Received wrong type information");
-  
+
 	System.out.println ("Received any_value.type (): [" +
                             any_value.type() + "]");
-  
+
 	System.out.println ("Expected NavigationHelper.type (): [" +
                             NavigationHelper.type() + "]");
 
@@ -367,7 +367,7 @@ public class NavWeapDataHandler implements DataHandler {
                             PersianRecursion.DataHelper.type() + "]");
       }
   }
-  
+
   NavWeapDataHandler () {
     ObservablesTable = new java.util.Hashtable();
 
@@ -381,27 +381,27 @@ public class NavWeapDataHandler implements DataHandler {
     ObservablesTable.put ("Missed Deadlines", new DeadlinesObservable());
     ObservablesTable.put ("Missed Critical Deadlines", new CriticalDeadlinesObservable());
     ObservablesTable.put ("Latency (100 ns)", new LatencyObservable());
-    ObservablesTable.put ("Weapons Latency (100 ns)", new LatencyObservable()); 
-    ObservablesTable.put ("Navigation Latency (100 ns)", new LatencyObservable()); 
-    ObservablesTable.put ("High Consumer Persian Recursion", new PersianObservable()); 
-    ObservablesTable.put ("Low Consumer Persian Recursion", new PersianObservable()); 
-    ObservablesTable.put ("High Consumer Execution Time (100 ns)", new LatencyObservable()); 
-    ObservablesTable.put ("Low Consumer Execution Time (100 ns)", new LatencyObservable()); 
+    ObservablesTable.put ("Weapons Latency (100 ns)", new LatencyObservable());
+    ObservablesTable.put ("Navigation Latency (100 ns)", new LatencyObservable());
+    ObservablesTable.put ("High Consumer Persian Recursion", new PersianObservable());
+    ObservablesTable.put ("Low Consumer Persian Recursion", new PersianObservable());
+    ObservablesTable.put ("High Consumer Execution Time (100 ns)", new LatencyObservable());
+    ObservablesTable.put ("Low Consumer Execution Time (100 ns)", new LatencyObservable());
   }
-  
+
   public java.util.Enumeration getObservablesList () {
     return ObservablesTable.keys ();
   }
-  
+
   public DemoObservable getObservable(String name) {
     return (DemoObservable)ObservablesTable.get (name);
   }
-  
+
   public int getObservableProperty (String name) {
     DemoObservable obs = (DemoObservable)ObservablesTable.get (name);
     return obs.getProperty ();
   }
 }
 
-    
-    
+
+

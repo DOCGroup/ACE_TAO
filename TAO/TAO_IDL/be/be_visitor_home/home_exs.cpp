@@ -140,9 +140,9 @@ be_visitor_home_exs::gen_exec_class (void)
       << lname << "_exec_i::~" << lname << "_exec_i (void)" << be_nl
       << "{" << be_nl
       << "}";
-      
+
   be_home *h = node_;
-  
+
   while (h != 0)
     {
       if (this->visit_scope (h) != 0)
@@ -154,14 +154,14 @@ be_visitor_home_exs::gen_exec_class (void)
                              ACE_TEXT ("failed\n")),
                             -1);
         }
-        
+
       for (long i = 0; i < h->n_inherits (); ++i)
         {
           // A closure of all the supported interfaces is stored
           // in the base class 'pd_inherits_flat' member.
           be_interface *bi =
             be_interface::narrow_from_decl (h->inherits ()[i]);
-   
+
           bi->get_insert_queue ().reset ();
           bi->get_del_queue ().reset ();
           bi->get_insert_queue ().enqueue_tail (bi);
@@ -184,8 +184,8 @@ be_visitor_home_exs::gen_exec_class (void)
                                  bi->full_name ()),
                                 -1);
             }
-        }  
-        
+        }
+
       h = be_home::narrow_from_decl (h->base_home ());
     }
 

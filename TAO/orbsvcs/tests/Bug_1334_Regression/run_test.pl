@@ -64,7 +64,7 @@ if ($CLI_status != 0) {
         print STDERR "ERROR: Closing Name Service returned $NS_status\n";
     }
     $ns->DeleteFile ($nsiorfile);
-    exit 1;    
+    exit 1;
 }
 
 # Now try it with a duff ior in the environment variable.
@@ -80,7 +80,7 @@ if ($CLI_status != 1) {
         print STDERR "ERROR: Closing Name Service returned $NS_status\n";
     }
     $ns->DeleteFile ($nsiorfile);
-    exit 1;    
+    exit 1;
 }
 
 # Now try with a duff ior in the environment variable but overridden by
@@ -97,7 +97,7 @@ if ($CLI_status != 0) {
         print STDERR "ERROR: Closing Name Service returned $NS_status\n";
     }
     $ns->DeleteFile ($nsiorfile);
-    exit 1;    
+    exit 1;
 }
 
 # Clean up and return

@@ -5,7 +5,7 @@
  *
  *  $Id$
  *
- *  Visitor generating TAO::DCPS::Serializer operator declarator for field 
+ *  Visitor generating TAO::DCPS::Serializer operator declarator for field
  *  in the client header
  *
  *
@@ -48,7 +48,7 @@ be_visitor_field_serializer_op_ch::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_serializer_op_ch::"
                          "visit_field - "
-                         "Bad field type\n"), 
+                         "Bad field type\n"),
                         -1);
     }
 
@@ -91,7 +91,7 @@ be_visitor_field_serializer_op_ch::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_serializer_op_ch::"
                              "visit_array - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }

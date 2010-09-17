@@ -9,7 +9,7 @@ int runtime = 5; //sec
 
 
 namespace CosNotifyCommImpl{
-  class StructuredPushConsumer: public virtual POA_CosNotifyComm:: StructuredPushConsumer 
+  class StructuredPushConsumer: public virtual POA_CosNotifyComm:: StructuredPushConsumer
   {
   public:
     StructuredPushConsumer () : received_ (false) {};
@@ -20,24 +20,24 @@ namespace CosNotifyCommImpl{
     {
       received_ = true;
       std::cout << "Received an event...," << std::endl;
-      std::cout << "event.header.fixed_header.event_type.domain_name = " 
-        << event.header.fixed_header.event_type.domain_name 
+      std::cout << "event.header.fixed_header.event_type.domain_name = "
+        << event.header.fixed_header.event_type.domain_name
         << std::endl;
-      std::cout << "event.header.fixed_header.event_type.type_name = " 
+      std::cout << "event.header.fixed_header.event_type.type_name = "
         << event.header.fixed_header.event_type.type_name
         << std::endl;
 
     };
 
     void disconnect_structured_push_consumer()
-    {};         
+    {};
 
     void offer_change (
       const CosNotification::EventTypeSeq &,
       const CosNotification::EventTypeSeq &)
     {};
 
-    bool received_events () 
+    bool received_events ()
     {
       return this->received_;
     };
@@ -61,8 +61,8 @@ int parse_args (int argc, ACE_TCHAR *argv[])
 
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("usage:  %s -t <runtime>\n"), 
-                         argv [0]), 
+                         ACE_TEXT ("usage:  %s -t <runtime>\n"),
+                         argv [0]),
                         -1);
   }
 
@@ -81,7 +81,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     PortableServer::POA_var root_poa = PortableServer::POA::_narrow(poa_obj.in());
 
     poa_manager = root_poa->the_POAManager();
-    
+
     if (parse_args (argc, argv) != 0)
       return 1;
 
@@ -92,7 +92,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CosNotifyChannelAdmin::EventChannel_var ec = get_event_channel(orb.in());
 
     //Instanciating the Consumer
-    CosNotifyComm::StructuredPushConsumer_var spc = 
+    CosNotifyComm::StructuredPushConsumer_var spc =
       CosNotifyComm::StructuredPushConsumer::_nil();
 
     CosNotifyCommImpl::StructuredPushConsumer *pImpl_spc = new CosNotifyCommImpl::StructuredPushConsumer;
@@ -128,7 +128,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 
     //Attaching a filter to pps
-    CosNotifyFilter::FilterFactory_var dff = 
+    CosNotifyFilter::FilterFactory_var dff =
       ec->default_filter_factory();
 
     ACE_ASSERT(!CORBA::is_nil(dff.in()));
@@ -150,7 +150,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     constraints[0].constraint_expr = CORBA::string_dup(
       "");
 
-    filter->add_constraints(constraints);                                       
+    filter->add_constraints(constraints);
 
     pps->add_filter(filter.in());
 

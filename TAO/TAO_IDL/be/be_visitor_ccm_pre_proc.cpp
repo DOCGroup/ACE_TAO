@@ -68,7 +68,7 @@ const int N_LW_EXCEPS =
   sizeof (LW_EXCEP_NAMES) / sizeof (char *);
 const int N_ADDL_EXCEPS =
   sizeof (ADDL_EXCEP_NAMES) / sizeof (char *);
-  
+
 be_exception *LW_EXCEPS[N_LW_EXCEPS];
 be_exception *ADDL_EXCEPS[N_ADDL_EXCEPS];
 
@@ -173,7 +173,7 @@ be_visitor_ccm_pre_proc::visit_component (be_component *node)
                              ACE_TEXT ("lookups failed\n")),
                             -1);
         }
-        
+
       this->ccm_lookups_done_ = true;
     }
 
@@ -1155,7 +1155,7 @@ be_visitor_ccm_pre_proc::gen_create (be_home *node,
                       -1);
       arg_id.destroy ();
       op->be_add_argument (arg);
-      
+
       UTL_ExceptList *tail = 0;
       ACE_NEW_RETURN (tail,
                       UTL_ExceptList (this->invalid_key_,
@@ -1210,10 +1210,10 @@ be_visitor_ccm_pre_proc::gen_find_by_primary_key (be_home *node,
                   -1);
   arg_id.destroy ();
   op->be_add_argument (arg);
-  
+
   UTL_ExceptList *tail = 0;
   UTL_ExceptList *middle = 0;
-  
+
   if (!be_global->gen_lwccm ())
     {
       ACE_NEW_RETURN (tail,
@@ -1225,7 +1225,7 @@ be_visitor_ccm_pre_proc::gen_find_by_primary_key (be_home *node,
                                       tail),
                       -1);
     }
-                    
+
   UTL_ExceptList *exceps = 0;
   ACE_NEW_RETURN (exceps,
                   UTL_ExceptList (this->finder_failure_,
@@ -1272,10 +1272,10 @@ be_visitor_ccm_pre_proc::gen_remove (be_home *node,
                   -1);
   arg_id.destroy ();
   op->be_add_argument (arg);
-  
+
   UTL_ExceptList *tail = 0;
   UTL_ExceptList *middle = 0;
-  
+
   if (!be_global->gen_lwccm ())
     {
       ACE_NEW_RETURN (tail,
@@ -1287,7 +1287,7 @@ be_visitor_ccm_pre_proc::gen_remove (be_home *node,
                                       tail),
                       -1);
     }
-    
+
   UTL_ExceptList *exceps = 0;
   ACE_NEW_RETURN (exceps,
                   UTL_ExceptList (this->remove_failure_,
@@ -1415,7 +1415,7 @@ be_visitor_ccm_pre_proc::lookup_exceptions (void)
   this->create_failure_             = LW_EXCEPS[4];
   this->remove_failure_             = LW_EXCEPS[5];
   this->finder_failure_             = LW_EXCEPS[6];
-  
+
   if (!be_global->gen_lwccm ())
     {
       for (int j = 0; j < N_ADDL_EXCEPS; ++j)
@@ -1433,7 +1433,7 @@ be_visitor_ccm_pre_proc::lookup_exceptions (void)
       this->unknown_key_value_          = ADDL_EXCEPS[1];
       this->duplicate_key_value_        = ADDL_EXCEPS[2];
     }
-    
+
   return 0;
 }
 
@@ -1718,7 +1718,7 @@ be_visitor_ccm_pre_proc::create_equivalent (be_home *node,
                               ScopeAsDecl (s));
   node->set_name (mangled_name);
   AST_Module *m = AST_Module::narrow_from_scope (s);
-  
+
   /// Calling be_add_interface() here calls add_to_referenced(),
   /// which will give a redef error.
   m->add_to_scope (retval);
@@ -1867,7 +1867,7 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
 
       be_interface *iface =
         be_interface::narrow_from_decl (u->uses_type ());
-        
+
       /// The real AMI_xxx exists only in the *A.idl file, so
       /// we create a dummy as the uses type for the implied
       /// receptacle created below, but only if it hasn't
@@ -1879,7 +1879,7 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
       if (ami_iface == 0)
         {
           ACE_CString iname ("AMI4CCM_");
-     
+
           iname += iface->local_name ();
           Identifier itmp_id (iname.c_str ());
           UTL_ScopedName itmp_sn (&itmp_id, 0);
@@ -1901,11 +1901,11 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
           /// Make it imported so it doesn't trigger
           /// any unwanted code generation.
           ami_iface->set_imported (true);
-          
+
           s->add_to_scope (ami_iface);
           iface->ami4ccm_uses (ami_iface);
         }
-        
+
       /// Now create the receptacle, passing in
       /// the local interface created above as the
       /// uses type. We don't generate anything
@@ -1928,7 +1928,7 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
 
       s->add_to_scope (ami_uses);
       idl_global->scopes ().pop ();
-      
+
       if (u->is_multiple ())
         {
         /*

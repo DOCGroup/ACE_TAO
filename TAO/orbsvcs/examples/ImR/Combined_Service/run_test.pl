@@ -92,8 +92,8 @@ sub cleanup
         if (m/ImR Activator: Successfully started/) {
             chomp $_;
             my @words = split (/=/, $_);
-            push(@pids, $words[1]); 
-            ++ $i;         
+            push(@pids, $words[1]);
+            ++ $i;
         }
     }
     close (TEST_OUTPUT);
@@ -183,7 +183,7 @@ sub do_test
         print "ERROR : Shutting down test server.\n";
         return $ret;
     }
-       
+
     # Both TestObject1 and TestObject2 should now show up as "not running"
     $IMRUTIL->Arguments ("-ORBLogFile $output_files[$id_imru_log] $imr_initref list -v");
     $ret = $IMRUTIL->SpawnWaitKill ($test->ProcessStartWaitInterval());

@@ -32,13 +32,13 @@ be_visitor_facet_private_exh::visit_provides (be_provides *node)
   const char *smart_scope = (is_global ? "" : "::");
   ACE_CString scope_name =
     IdentifierHelper::orig_sn (i_scope->name (), false);
-  
+
   os_ << be_nl
       << smart_scope << scope_name.c_str () << "::CCM_"
       << impl->original_local_name () << "_var ciao_"
       << this->ctx_->port_prefix ().c_str ()
       << node->original_local_name () << "_;";
-  
+
   return 0;
 }
 

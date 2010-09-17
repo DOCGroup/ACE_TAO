@@ -17,8 +17,8 @@ $conf_client = "";
 $conf_server = "";
 $iter = 10;
 
-sub options () { 
-    my $help = 0;       # handled locally 
+sub options () {
+    my $help = 0;       # handled locally
     my $man = 0;        # handled locally
     my $ssl = 1;        # handled locally
     my $dotdec = 0;     # handled locally
@@ -27,15 +27,15 @@ sub options () {
     my $chost;        # handled locally
 
     # Process options.
-    if ( @ARGV > 0 ) { 
-        GetOptions ('help|?' => \$help, 
-                'manual' => \$man, 
-                'iter=i' => \$iter, 
-                'ssl' => \$ssl, 
-                'dd=s' => \$dotdec, 
-                'shost=s' => \$shost, 
-                'chost=s' => \$chost, 
-                'debug=i' => \$debug) or pod2usage(2); 
+    if ( @ARGV > 0 ) {
+        GetOptions ('help|?' => \$help,
+                'manual' => \$man,
+                'iter=i' => \$iter,
+                'ssl' => \$ssl,
+                'dd=s' => \$dotdec,
+                'shost=s' => \$shost,
+                'chost=s' => \$chost,
+                'debug=i' => \$debug) or pod2usage(2);
     }
 
     if ($ssl) {
@@ -66,18 +66,18 @@ sub options () {
 
     if ( $man or $help ) {
         # Load Pod::Usage only if needed.
-        require "Pod/Usage.pm"; 
-        import Pod::Usage; 
+        require "Pod/Usage.pm";
+        import Pod::Usage;
         pod2usage(1) if $help;
-        pod2usage(VERBOSE => 2) if $man; 
+        pod2usage(VERBOSE => 2) if $man;
         return 0;
-    } 
+    }
     return 1;
 }
 
 
 # Make sure OpenSSL knows where to find the trust store
-$ENV{'SSL_CERT_DIR'} = './ssl'; 
+$ENV{'SSL_CERT_DIR'} = './ssl';
 
 options () or die "Error: Nothing executed";
 
@@ -92,13 +92,13 @@ $client->DeleteFile($iorbase);
 
 print STDERR "Executing: server $conf_server $opt -o $iorbase -i $iter\n";
 
-$SV = $server->CreateProcess ("server", 
+$SV = $server->CreateProcess ("server",
                               "$conf_server " .
                               "$opt " .
                               "-o $server_iorfile " .
                               "-i $iter");
 
-$CL = $client->CreateProcess ("client", 
+$CL = $client->CreateProcess ("client",
                               "$conf_client " .
                               "$opt " .
                               "-k file://$client_iorfile");
@@ -157,7 +157,7 @@ run_test.pl - A driver to run the test
 =head1 SYNOPSIS
 
 B<run_test.pl> [B<-help|?>] [B<-iter iterations>] [B<-chost host>]
-               [B<-dd who>] [B<-shost host>] [B<-man>] [B<-ssl>] 
+               [B<-dd who>] [B<-shost host>] [B<-man>] [B<-ssl>]
                [B<-debug level>]
 
 
@@ -167,7 +167,7 @@ This is a test that exercises the birectional GIOP connection
 implementation in TAO over SSLIOP connection. Start the server like this
 
     $ server -ORBSvcConf server.conf -o <file.ior> -i <no_iterations>
-    $ client -ORBSvcConf client.conf -k file://<file.ior> -x 
+    $ client -ORBSvcConf client.conf -k file://<file.ior> -x
 
 Or, simply
 
@@ -188,13 +188,13 @@ added support for SSLIOP.
 [B<-help|?>]
     Print a short help message
 
-[B<-iter iterations>] 
+[B<-iter iterations>]
     The number of iterations to make. Default is 10.
 
-[B<-chost hostname>] 
+[B<-chost hostname>]
     The hostname_in_ior for the client. Used only if specified.
 
-[B<-shost hostname>] 
+[B<-shost hostname>]
     The hostname_in_ior for the server. Used only if specified.
 
 [B<-man>]
@@ -205,7 +205,7 @@ added support for SSLIOP.
     server or both. Values of who can be "client", "server" or
     "client,server".
 
-[B<-ssl>] 
+[B<-ssl>]
     Enables the use of SSLIOP instead of IIOP. Default.
 
 [B<-debug level>]

@@ -92,10 +92,10 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl;
-  
+
   *os << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
-      
+
   *os << be_nl << be_nl;
 
   // Find if we are at the top scope or inside some module,
@@ -165,10 +165,10 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
 
   *os << be_nl << be_nl;
-  
+
   *os << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
-      
+
   *os << be_nl << be_nl;
 
   // Generate code for the _is_a skeleton.
@@ -520,7 +520,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       && !be_global->gen_minimum_corba ())
   {
     *os << be_nl << be_nl;
-    
+
     *os << "// TAO_IDL - Generated from " << be_nl
         << "// " << __FILE__ << ":" << __LINE__;
 
@@ -879,10 +879,10 @@ be_visitor_interface_ss::this_method (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl;
-  
+
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
-      
+
   *os << be_nl << be_nl;
 
   // The _this () operation.
@@ -961,10 +961,10 @@ be_visitor_interface_ss::dispatch_method (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl;
-  
+
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
-      
+
   *os << be_nl << be_nl;
 
   *os << "void " << node->full_skel_name ()
@@ -1024,7 +1024,7 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
           || be_global->gen_thru_poa_collocation ())
       {
         *os << be_nl << be_nl;
-        
+
         *os << "// TAO_IDL - Generated from" << be_nl
             << "// " << __FILE__ << ":" << __LINE__;
 

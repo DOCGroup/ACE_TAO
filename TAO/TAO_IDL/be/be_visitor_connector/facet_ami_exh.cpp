@@ -88,7 +88,7 @@ be_visitor_facet_ami_exh::visit_operation (be_operation *node)
     {
       return  0;
     }
-    
+
   /// We're generating implementation operation declarations,
   /// so we can just use this visitor.
   be_visitor_operation_ih v (this->ctx_);
@@ -124,7 +124,7 @@ be_visitor_facet_ami_exh::init (bool for_impl)
   /// by -GC, which must be applied to this IDL file.
   this->handler_str_ = this->scope_name_;
   this->handler_str_ += this->smart_scope_;
-  
+
   this->handler_str_ += (for_impl ? "" : "AMI_");
   ACE_CString tmp (this->iface_name_);
   this->handler_str_ +=
@@ -211,7 +211,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
       << iface_name << suffix << " (void);" << be_nl << be_nl
       << "virtual ~" << iface_name << suffix
       << " (void);";
-      
+
   if (this->visit_scope (this->iface_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -221,11 +221,11 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
                          ACE_TEXT ("interface failed\n")),
                         -1);
     }
-    
+
   os_ << be_nl << be_nl
-      << "virtual void set_session_context (" 
+      << "virtual void set_session_context ("
       << "::Components::SessionContext_ptr ctx);";
-      
+
   AST_Decl *s = ScopeAsDecl (this->node_->defined_in ());
   bool is_global =
    (s->node_type () == AST_Decl::NT_root);
@@ -233,13 +233,13 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
 
   os_ << be_nl << be_nl
       << "virtual ::CORBA::Object_ptr _get_component (void);";
-      
+
   os_ << be_nl << be_nl
       << "virtual void _set_component (" << be_idt_nl
       << "::" << s->name () << smart_scope
       << "CCM_" << this->node_->local_name ()
       << "_ptr);" << be_uidt;
-      
+
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl
       << "::" << s->name () << smart_scope

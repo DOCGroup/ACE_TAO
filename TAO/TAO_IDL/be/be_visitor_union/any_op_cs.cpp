@@ -93,7 +93,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       if (decl->defined_in ()->scope_node_type () == AST_Decl::NT_module)
         {
           module = be_module::narrow_from_scope (decl->defined_in ());
-          
+
           if (!module)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -177,10 +177,10 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
               << "}";
 
           be_util::gen_nested_namespace_end (os, module);
-      
+
           // Emit #else.
           *os << be_nl << be_nl
-              << "#else\n";          
+              << "#else\n";
         }
     }
 

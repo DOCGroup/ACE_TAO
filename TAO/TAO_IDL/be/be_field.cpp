@@ -37,7 +37,7 @@ be_field::be_field (AST_Type *ft,
   // This covers valuetype fields as well, which is what we want.
   AST_Decl::NodeType nt =
     ft->unaliased_type ()->node_type ();
-    
+
   if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
     {
       idl_global->string_member_seen_ = true;

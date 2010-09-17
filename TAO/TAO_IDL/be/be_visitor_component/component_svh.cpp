@@ -42,14 +42,14 @@ be_visitor_component_svh::visit_component (be_component *node)
     {
       return 0;
     }
-    
+
   /// Fills in the node's has_* members, for use in minimizing
-  /// code generation.  
+  /// code generation.
   node->scan (node);
-  
+
   // Generate the facet servant class declaration.
   be_visitor_facet_svh facet_visitor (this->ctx_);
-  
+
   if (facet_visitor.visit_component_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -77,8 +77,8 @@ be_visitor_component_svh::visit_component (be_component *node)
                          ACE_TEXT ("context visitor failed\n")),
                         -1);
     }
-    
-  // Generate the servant class declaration.  
+
+  // Generate the servant class declaration.
   be_visitor_servant_svh servant_visitor (this->ctx_);
 
   if (servant_visitor.visit_component (node) == -1)

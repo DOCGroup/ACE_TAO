@@ -36,16 +36,16 @@ be_visitor_home_exh::visit_home (be_home *node)
     {
       return 0;
     }
-    
+
   node_ = node;
   comp_ = node_->managed_component ();
-  
+
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
   os_ << be_nl << be_nl
       << "namespace CIAO_" << comp_->flat_name () << "_Impl" << be_nl
       << "{" << be_idt;
-    
+
   if (this->gen_exec_class () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -54,12 +54,12 @@ be_visitor_home_exh::visit_home (be_home *node)
                          ACE_TEXT ("gen_servant_class() failed\n")),
                         -1);
     }
-     
+
   this->gen_entrypoint ();
 
   os_ << be_uidt_nl
       << "}";
-     
+
   return 0;
 }
 
@@ -83,10 +83,10 @@ be_visitor_home_exh::visit_factory (be_factory *node)
   os_ << be_nl << be_nl
       << "virtual ::Components::EnterpriseComponent_ptr" << be_nl
       << node->local_name ();
-      
+
   // We can reuse this visitor.
   be_visitor_valuetype_init_arglist_ch v (this->ctx_);
-  
+
   if (v.visit_factory (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -96,9 +96,9 @@ be_visitor_home_exh::visit_factory (be_factory *node)
                          ACE_TEXT ("list failed\n")),
                         -1);
     }
-    
+
   os_ << ";";
-    
+
   return 0;
 }
 
@@ -108,7 +108,7 @@ be_visitor_home_exh::gen_exec_class (void)
   // We don't want a '_cxx_' prefix here.
   const char *lname =
     node_->original_local_name ()->get_string ();
-  
+
   os_ << be_nl
       << "class " << export_macro_.c_str () << " " << lname
       << "_exec_i" << be_idt_nl
@@ -117,15 +117,15 @@ be_visitor_home_exh::gen_exec_class (void)
       << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt;
-      
+
   os_ << be_nl
       << lname << "_exec_i (void);";
-      
+
   os_ << be_nl << be_nl
       << "virtual ~" << lname << "_exec_i (void);";
-      
+
   be_home *h = node_;
-  
+
   while (h != 0)
     {
       if (this->visit_scope (h) != 0)
@@ -136,19 +136,19 @@ be_visitor_home_exh::gen_exec_class (void)
                              ACE_TEXT ("visit_scope() failed\n")),
                             -1);
         }
-        
+
       for (long i = 0; i < h->n_inherits (); ++i)
         {
           // A closure of all the supported interfaces is stored
           // in the base class 'pd_inherits_flat' member.
           be_interface *bi =
             be_interface::narrow_from_decl (h->inherits ()[i]);
-            
+
           int status =
             bi->traverse_inheritance_graph (
               be_visitor_home_exh::op_attr_decl_helper,
               &os_);
-              
+
           if (status == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -159,21 +159,21 @@ be_visitor_home_exh::gen_exec_class (void)
                                  bi->full_name ()),
                                 -1);
             }
-        }  
-        
+        }
+
       h = be_home::narrow_from_decl (h->base_home ());
     }
-    
+
   os_ << be_nl << be_nl
       << "// Implicit operations.";
-      
+
   os_ << be_nl << be_nl
       << "virtual ::Components::EnterpriseComponent_ptr" << be_nl
       << "create (void);";
 
   os_ << be_uidt_nl
       << "};";
-     
+
   return 0;
 }
 
@@ -184,7 +184,7 @@ be_visitor_home_exh::gen_entrypoint (void)
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::HomeExecutorBase_ptr" << be_nl
       << "create_" << node_->flat_name ()
-      << "_Impl (void);"; 
+      << "_Impl (void);";
 }
 
 int
@@ -198,8 +198,8 @@ be_visitor_home_exh::op_attr_decl_helper (be_interface * /* derived */,
   ctx.state (TAO_CodeGen::TAO_ROOT_EXH);
   ctx.stream (os);
   be_visitor_home_exh visitor (&ctx);
-  
-  /// Since this visitor overriddes only visit_operation() and 
+
+  /// Since this visitor overriddes only visit_operation() and
   /// visit_attribute(), we can get away with this for the declarations.
   return visitor.visit_scope (ancestor);
 }

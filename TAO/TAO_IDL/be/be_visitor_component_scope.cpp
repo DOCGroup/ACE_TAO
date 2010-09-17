@@ -123,7 +123,7 @@ be_visitor_component_scope::visit_component_scope (
     {
       return 0;
     }
-    
+
   this->ctx_->interface (node);
 
   if (this->visit_scope (node) == -1)
@@ -209,7 +209,7 @@ be_visitor_component_scope::visit_porttype_scope_mirror (
                                    d->full_name ()),
                                   -1);
               }
-              
+
             break;
         }
     }

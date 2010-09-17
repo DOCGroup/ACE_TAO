@@ -35,7 +35,7 @@ be_visitor_facet_svh::visit_provides (be_provides *node)
                          ACE_TEXT ("failed\n")),
                         -1);
     }
-                
+
   return 0;
 }
 

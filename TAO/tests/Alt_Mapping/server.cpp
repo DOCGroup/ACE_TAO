@@ -147,7 +147,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       userex._tao_print_exception ("User Exception");
       return -1;
     }
-    
+
   /// Free resources.
   delete svnt;
 

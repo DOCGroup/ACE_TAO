@@ -105,7 +105,7 @@ if ($server_status != 0) {
   $CL->Kill (); $CL->TimedWait (1);
   exit 1;
 }
- 
+
 $server_status = $SV1->Spawn ();
 
 if ($server_status != 0) {

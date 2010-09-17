@@ -90,8 +90,8 @@ TAO_Notify_StructuredPushConsumer::push (const CORBA::Any& event)
   if ( !connection_valid ) {
     try
       {
-        CORBA::PolicyList_var inconsistent_policies; 
-        this->push_consumer_->_validate_connection (inconsistent_policies.out()); 
+        CORBA::PolicyList_var inconsistent_policies;
+        this->push_consumer_->_validate_connection (inconsistent_policies.out());
       }
     catch (const CORBA::COMM_FAILURE&)
       {
@@ -123,8 +123,8 @@ TAO_Notify_StructuredPushConsumer::push (const CosNotification::StructuredEvent&
   if ( !connection_valid ) {
     try
       {
-        CORBA::PolicyList_var inconsistent_policies; 
-        this->push_consumer_->_validate_connection (inconsistent_policies.out()); 
+        CORBA::PolicyList_var inconsistent_policies;
+        this->push_consumer_->_validate_connection (inconsistent_policies.out());
       }
     catch (const CORBA::COMM_FAILURE&)
       {

@@ -38,11 +38,11 @@ $md_server->DeleteFile($middle_ior);
 my $client_iorfile = $client->LocalFile ($middle_ior);
 $client->DeleteFile($middle_ior);
 
-$IS = $in_server->CreateProcess ("inner_server", 
+$IS = $in_server->CreateProcess ("inner_server",
                               "-ORBdebuglevel $debug_level " .
                               "-o $in_server_inner_ior");
 
-$MD = $md_server->CreateProcess ("middle_server", 
+$MD = $md_server->CreateProcess ("middle_server",
                               "-ORBdebuglevel $debug_level " .
                               "-o $md_server_middle_ior " .
                               "-i file://$md_server_inner_ior");

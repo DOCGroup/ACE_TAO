@@ -3415,7 +3415,7 @@ static ACE_CDR::ULongLong
 idl_atoui (char *s, long b)
 {
   ACE_CDR::ULongLong r = 0;
-  
+
   if (b == 8 && *s == '0')
     {
       ++s;

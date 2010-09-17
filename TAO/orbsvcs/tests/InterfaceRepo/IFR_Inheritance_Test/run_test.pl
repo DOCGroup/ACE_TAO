@@ -56,16 +56,16 @@ my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed
 my $iorbase = "if_repo.ior";
 my $testoutputfilename = "IFR_Inheritance_test.output";
 
-my $log1 = "server1.log"; 
+my $log1 = "server1.log";
 my $log2 = "server2.log";
 my $log3 = "client.log";
 
 my $log1_test = $test->LocalFile ($log1);
-my $log2_test = $test->LocalFile ($log2); 
+my $log2_test = $test->LocalFile ($log2);
 my $log3_test = $test->LocalFile ($log3);
 
 $test->DeleteFile ($log1);
-$test->DeleteFile ($log2); 
+$test->DeleteFile ($log2);
 $test->DeleteFile ($log3);
 
 my $test_iorfile = $test->LocalFile ($iorbase);
@@ -79,10 +79,10 @@ $SV2 = $test->CreateProcess ("$tao_ifr",
                               " IFR_Inheritance_Test.idl " .
                               "-ORBInitRef InterfaceRepository=file://$test_iorfile " .
                               "-ORBLogFile $log2_test");
-                              
+
 $CL = $test->CreateProcess ("IFR_Inheritance_Test",
                               "-ORBInitRef InterfaceRepository=file://$test_iorfile " .
-                              "-ORBLogFile $log3_test"); 
+                              "-ORBLogFile $log3_test");
 
 $server_status = $SV1->Spawn ();
 
@@ -162,7 +162,7 @@ if ($server_status != 0) {
 }
 
 $test->DeleteFile ($log1);
-$test->DeleteFile ($log2); 
+$test->DeleteFile ($log2);
 $test->DeleteFile ($log3);
 $test->DeleteFile($iorbase);
 

@@ -49,7 +49,7 @@ be_visitor_structure_cdr_op_ch::visit_structure (be_structure *node)
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator<< (TAO_OutputCDR &, const " << node->name ()
       << " &);" << be_nl;
-      
+
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator>> (TAO_InputCDR &, "
       << node->name () << " &);" << be_nl;
@@ -71,7 +71,7 @@ be_visitor_structure_cdr_op_ch::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_structure_cdr_op_ch::"
                          "visit_structure - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 

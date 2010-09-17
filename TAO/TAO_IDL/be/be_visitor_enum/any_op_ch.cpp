@@ -43,7 +43,7 @@ be_visitor_enum_any_op_ch::visit_enum (be_enum *node)
       << "// " << __FILE__ << ":" << __LINE__;
 
   be_module *module = 0;
-  
+
   if (node->is_nested ())
     {
       AST_Decl *d = node;
@@ -68,18 +68,18 @@ be_visitor_enum_any_op_ch::visit_enum (be_enum *node)
           // Some compilers handle "any" operators in a namespace
           // corresponding to their module, others do not.
           *os << "\n\n#if defined (ACE_ANY_OPS_USE_NAMESPACE)\n";
-      
+
           be_util::gen_nested_namespace_begin (os, module);
-      
+
           // Generate the Any <<= and >>= operators.
           *os << be_nl << be_nl
               << macro << " void operator<<= (::CORBA::Any &, ::" << node->name ()
               << ");" << be_nl;
           *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::"
               << node->name () << " &);";
-      
+
           be_util::gen_nested_namespace_end (os, module);
-      
+
           // Emit #else.
           *os << be_nl << be_nl
               << "#else\n\n";

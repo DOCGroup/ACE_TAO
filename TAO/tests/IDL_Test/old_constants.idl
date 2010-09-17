@@ -35,7 +35,7 @@ module OldConstants
 
   module M
   {
-    const short l = 4; 
+    const short l = 4;
 
     enum N
     {
@@ -52,8 +52,8 @@ module OldConstants
 
     interface A
     {
-      const short l = 4; 
-   
+      const short l = 4;
+
       enum N
       {
         zero,
@@ -61,7 +61,7 @@ module OldConstants
         deux,
         trois
       };
-   
+
       exception E
       {
         short cause ;

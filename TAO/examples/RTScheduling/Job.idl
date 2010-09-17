@@ -6,6 +6,6 @@ interface Job
 {
   void work (in unsigned long work,
              in short importance);
-  
+
   void shutdown ();
 };

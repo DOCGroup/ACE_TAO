@@ -9,7 +9,7 @@
 //    fwd.idl
 //
 // = DESCRIPTION
-//    This file contains examples of IDL code that has 
+//    This file contains examples of IDL code that has
 //    caused problems in the past for the TAO IDL
 //    compiler. This test is to make sure the problems
 //    stay fixed.
@@ -23,7 +23,7 @@
 // handling of forward interface declarations that are
 // not defined in the same IDL file. The two files have
 // mutually dependent interfaces. It is no longer necessary
-// for such ILD files to include each other, as long as 
+// for such ILD files to include each other, as long as
 // they are part of the same build.
 
 module scope_test
@@ -47,14 +47,14 @@ module mod2
   };
 
   interface fwd;
-  
+
   exception exp
   {
     fwd fwd_mem;
   };
-  
+
   typedef fwd td_fwd;
-  
+
   interface full
   {
     fwd op (in fwd inarg,
@@ -74,11 +74,11 @@ module mod2
 module fwd_mixed_intf
 {
   interface mixed_parents;
-  
+
   interface concrete_parent {};
-  
+
   abstract interface abstract_parent {};
-  
+
   interface mixed_abs_first : abstract_parent, concrete_parent {};
   interface mixed_conc_first : concrete_parent, abstract_parent {};
 };

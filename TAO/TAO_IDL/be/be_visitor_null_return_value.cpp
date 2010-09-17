@@ -33,7 +33,7 @@ int
 be_visitor_null_return_value::visit_array (be_array *)
 {
   os_ << "0";
-  
+
   return 0;
 }
 
@@ -115,7 +115,7 @@ be_visitor_null_return_value::visit_predefined_type (be_predefined_type *node)
       default: // PT_void not handled.
         break;
     }
-    
+
   return 0;
 }
 
@@ -123,7 +123,7 @@ int
 be_visitor_null_return_value::visit_sequence (be_sequence *)
 {
   os_ << "0";
-  
+
   return 0;
 }
 
@@ -131,7 +131,7 @@ int
 be_visitor_null_return_value::visit_string (be_string *)
 {
   os_ << "0";
-  
+
   return 0;
 }
 
@@ -146,7 +146,7 @@ be_visitor_null_return_value::visit_structure (be_structure *node)
     {
       os_ << "0";
     }
-  
+
   return 0;
 }
 
@@ -167,7 +167,7 @@ be_visitor_null_return_value::visit_union (be_union *node)
     {
       os_ << "0";
     }
-  
+
   return 0;
 }
 
@@ -175,7 +175,7 @@ int
 be_visitor_null_return_value::visit_valuebox (be_valuebox *)
 {
   os_ << "0";
-  
+
   return 0;
 }
 
@@ -183,7 +183,7 @@ int
 be_visitor_null_return_value::visit_valuetype (be_valuetype *)
 {
   os_ << "0";
-  
+
   return 0;
 }
 

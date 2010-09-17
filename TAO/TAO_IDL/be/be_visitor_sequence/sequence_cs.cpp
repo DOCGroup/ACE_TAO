@@ -49,7 +49,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
         }
 
     }
-    
+
   if (be_global->alt_mapping () && node->unbounded ())
     {
       // We are just a typedef and don't need any stub source
@@ -60,7 +60,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl;
-  
+
   *os << "// TAO_IDL - Generated from " << be_nl
       << "// "__FILE__ << ":" << __LINE__;
 
@@ -80,7 +80,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
           << be_idt << be_idt_nl
           << "::CORBA::ULong max)" << be_uidt_nl
           << ": " << be_idt;
-          
+
       int status =
         node->gen_base_class_name (os,
                                    "",
@@ -199,7 +199,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
           << "{" << be_idt_nl
           << "return this->size ();" << be_uidt_nl
           << "}";
-          
+
       *os << be_nl << be_nl
           << "void" << be_nl
           << node->name () << "::length ( ::CORBA::ULong length)"
@@ -207,7 +207,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
           << "{" << be_idt_nl
           << "this->resize (length);" << be_uidt_nl
           << "}";
-          
+
       *os << be_nl << be_nl
           << "::CORBA::ULong" << be_nl
           << node->name () << "::maximum (void) const" << be_nl

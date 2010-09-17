@@ -27,7 +27,7 @@ $lm_conf = $^O eq 'MSWin32' ? "windows$PerlACE::svcconf_ext"
 $init_ref = "-ORBInitRef LoadManager=file://$ior1file";
 
 
-@tests = ({   
+@tests = ({
             description => "Dead Member Detection",
             strategy  => "RoundRobin",
             svr_args => "$init_ref -o $ior2file -x file://$ior3file -y file://$ior4file -z file://$ior5file",
@@ -35,7 +35,7 @@ $init_ref = "-ORBInitRef LoadManager=file://$ior1file";
             svr2_args => "$init_ref -n 2 -o $ior4file -j $ior6file",
             svr3_args => "$init_ref -n 3 -o $ior5file",
             client_args => "-k file://$ior2file -j file://$ior6file -s RoundRobin",
-          },{   
+          },{
             description => "Hang Member Detection",
             strategy  => "RoundRobin",
             svr_args => "$init_ref -o $ior2file -x file://$ior3file -y file://$ior4file -z file://$ior5file",
@@ -43,7 +43,7 @@ $init_ref = "-ORBInitRef LoadManager=file://$ior1file";
             svr2_args => "$init_ref -n 2 -o $ior4file -j $ior6file -l 2",
             svr3_args => "$init_ref -n 3 -o $ior5file",
             client_args => "-k file://$ior2file -j file://$ior6file -s RoundRobin -l",
-          },{   
+          },{
             description => "Dead Member Detection",
             strategy  => "Random",
             svr_args => "$init_ref -o $ior2file -x file://$ior3file -y file://$ior4file -z file://$ior5file",
@@ -51,7 +51,7 @@ $init_ref = "-ORBInitRef LoadManager=file://$ior1file";
             svr2_args => "$init_ref -n 2 -o $ior4file -j $ior6file",
             svr3_args => "$init_ref -n 3 -o $ior5file",
             client_args => "-k file://$ior2file -j file://$ior6file -s Random",
-          },{ 
+          },{
             description => "Hang Member Detection",
             strategy  => "Random",
             svr_args => "$init_ref -o $ior2file -x file://$ior3file -y file://$ior4file -z file://$ior5file",
@@ -88,9 +88,9 @@ for $test (@tests) {
     $server5->DeleteFile($ior5file);
 
     $status = 0;
-    #-ORBVerboseLogging 1 -ORBDebugLevel 10 -ORBLogFile lm.log 
+    #-ORBVerboseLogging 1 -ORBDebugLevel 10 -ORBLogFile lm.log
     $LM = $server1->CreateProcess ("../../../../LoadBalancer/LoadManager",
-                                "-ORBVerboseLogging 1 -ORBDebugLevel $debug -s $test->{strategy} -o $ior1file -i 3" 
+                                "-ORBVerboseLogging 1 -ORBDebugLevel $debug -s $test->{strategy} -o $ior1file -i 3"
                                 . " -ORBSvcConf $lm_conf");
     $SV = $server2->CreateProcess ("server", $test->{svr_args});
     $SV1 = $server3->CreateProcess ("factory_server", $test->{svr1_args});

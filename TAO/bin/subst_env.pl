@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 #
 # $Id$
-# 
+#
 # This script eases the transition from the CORBA::Environment& ACE_TRY_ENV
 # declarations and method parameters to the ACE_ENV_ARG macros.
 # It was used for converting TAO between versions 1.2.1 and 1.2.2.
-# The converted output is written to stdout. 
+# The converted output is written to stdout.
 # Typical usage would be as follows:
 #   perl subst_env.pl file_with_acetryenv.cpp >file_with_taoenvarg.cpp
 #

@@ -1,7 +1,7 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
-    if 0;  
- 
+    if 0;
+
 # $Id$
 # -*- perl -*-
 
@@ -33,13 +33,13 @@ $ls->DeleteFile ($nsiorfile);
 $con->DeleteFile ($nsiorfile);
 $sup->DeleteFile ($nsiorfile);
 
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service", 
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
                           " -o $ns_nsiorfile");
-$LS = $ls->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service", 
+$LS = $ls->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service",
                           " -ORBInitRef NameService=file://$ls_nsiorfile");
-$CON = $con->CreateProcess ("RTEvent_Consumer", 
+$CON = $con->CreateProcess ("RTEvent_Consumer",
                             "-ORBInitRef NameService=file://$con_nsiorfile");
-$SUP = $sup->CreateProcess ("RTEvent_Supplier", 
+$SUP = $sup->CreateProcess ("RTEvent_Supplier",
                             "-ORBInitRef NameService=file://$sup_nsiorfile");
 
 print STDERR "Starting Naming Service\n";
@@ -88,7 +88,7 @@ if ($LS_status != 0) {
     exit 1;
 }
 
-# Give time for logging service to initialize and install its object 
+# Give time for logging service to initialize and install its object
 # reference in the naming service.
 sleep (5);
 

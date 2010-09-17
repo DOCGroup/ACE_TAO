@@ -11,7 +11,7 @@ use PerlACE::TestTarget;
 $status = 0;
 $debug_level = '0';
 $miop_address = '[FF01:0:0:0:0:0:BEBE:75]';
-$port = '5555'; 
+$port = '5555';
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
@@ -28,7 +28,7 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server", 
+$SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level " .
                               "-u corbaloc:miop:1.0\@1.0-cdmwftdomain-1/$miop_address:$port " .
                               "-o $server_iorfile");

@@ -38,7 +38,7 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
   // processes the implied IDL. It's a bit inefficient to have
   // the implied IDL in both the template module and its
   // instantiations, but otherwise the lookup issues are
-  // extremely complicated. This approach allows 
+  // extremely complicated. This approach allows
   // lookup_by_name_local() to just skip over the alias and
   // match the module of the same name occurring later in the
   // template module scope. From that vantage point, the
@@ -47,15 +47,15 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
   // module scope (see ast_visitor_reifying::check_and_store()
   // and ast_visitor_reifying::template_module_rel_name()).
   UTL_ScopedName sn (node->local_name (), 0);
-  
+
   AST_Module *added_module =
     idl_global->gen ()->create_module (idl_global->scopes (). top (),
                                        &sn);
-                                       
+
   idl_global->scopes ().top ()->add_to_scope (added_module);
-  
+
   idl_global->scopes ().push (added_module);
-  
+
   // Visit the scope of referenced template module. No need to
   // update the template parameter list since its param list has
   // to be a subset of the one we're in.
@@ -67,9 +67,9 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
                          ACE_TEXT ("visit_scope failed\n")),
                         -1);
     }
-    
+
   idl_global->scopes ().pop ();
-  
+
   return 0;
 }
 

@@ -56,14 +56,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     // Register the servant with the RootPOA, obtain its object
     // reference, stringify it, and write it to a file.
-    PortableServer::ObjectId_var oid = 
+    PortableServer::ObjectId_var oid =
       poa->activate_object( &messenger_servant );
     CORBA::Object_var messenger_obj = poa->id_to_reference( oid.in() );
     CORBA::String_var str = orb->object_to_string( messenger_obj.in() );
     std::ofstream iorFile( ACE_TEXT_ALWAYS_CHAR(ior_output_file) );
     iorFile << str.in() << std::endl;
     iorFile.close();
-    std::cout << "IOR written to file " << ACE_TEXT_ALWAYS_CHAR(ior_output_file) << std::endl;   
+    std::cout << "IOR written to file " << ACE_TEXT_ALWAYS_CHAR(ior_output_file) << std::endl;
 
     // Accept requests
     orb->run();

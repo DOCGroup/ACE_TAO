@@ -39,7 +39,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
     {
       return -1;
     }
-    
+
   os_ << be_nl
       << this->node_->local_name () << "_exec_i::"
       << this->node_->local_name () << "_exec_i (void)"
@@ -78,7 +78,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
     }
 
   os_ << "DDS4CCM_NDDS" << ">";
-  
+
   os_ << "()"
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl

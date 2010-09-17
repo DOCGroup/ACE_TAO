@@ -5,7 +5,7 @@
  *
  *  $Id$
  *
- *  Visitor generating code for TAO::DCPS::Serializer operators for unions. 
+ *  Visitor generating code for TAO::DCPS::Serializer operators for unions.
  *  This uses compiled marshaling.
  *
  *
@@ -32,8 +32,8 @@ be_visitor_union_serializer_op_ch::~be_visitor_union_serializer_op_ch (void)
 int
 be_visitor_union_serializer_op_ch::visit_union (be_union *node)
 {
-  if (node->cli_hdr_serializer_op_gen () 
-      || node->imported () 
+  if (node->cli_hdr_serializer_op_gen ()
+      || node->imported ()
       || node->is_local ())
     {
       return 0;
@@ -44,17 +44,17 @@ be_visitor_union_serializer_op_ch::visit_union (be_union *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-    //- _dcps_max_marshaled_size(type) method 
-  *os << be_global->stub_export_macro () 
-      << " size_t _dcps_max_marshaled_size (const " 
+    //- _dcps_max_marshaled_size(type) method
+  *os << be_global->stub_export_macro ()
+      << " size_t _dcps_max_marshaled_size (const "
       << node->name() << "& _tao_union);" << be_nl;
-  //- _tao_is_bounded_size(type) method 
-  *os << be_global->stub_export_macro () 
-      << " ::CORBA::Boolean _tao_is_bounded_size (const " 
+  //- _tao_is_bounded_size(type) method
+  *os << be_global->stub_export_macro ()
+      << " ::CORBA::Boolean _tao_is_bounded_size (const "
       << node->name() << "& _tao_union);" << be_nl;
-  //- _dcps_find_size(type) method 
-  *os << be_global->stub_export_macro () 
-      << " size_t _dcps_find_size (const " 
+  //- _dcps_find_size(type) method
+  *os << be_global->stub_export_macro ()
+      << " size_t _dcps_find_size (const "
       << node->name() << "& _tao_union);" << be_nl;
 
 
@@ -74,7 +74,7 @@ be_visitor_union_serializer_op_ch::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_serializer_op_ch::"
                          "visit_union - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 

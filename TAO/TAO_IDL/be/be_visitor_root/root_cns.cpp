@@ -36,7 +36,7 @@ be_visitor_root_cns::visit_root (be_root *node)
                          ACE_TEXT ("failed to initialize\n")),
                         -1);
     }
-    
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -48,7 +48,7 @@ be_visitor_root_cns::visit_root (be_root *node)
   (void) tao_cg->end_ciao_conn_source ();
 
   TAO_OutStream *rh_impl = tao_cg->ciao_ami_rh_impl_source ();
-  
+
   /// If this stream has been created during the connector AST
   /// pass we generate the file ending stuff here, to make sure
   /// that all the AST nodes have been traversed.
@@ -56,7 +56,7 @@ be_visitor_root_cns::visit_root (be_root *node)
     {
       (void) tao_cg->end_ciao_ami_rh_impl_source ();
     }
-  
+
   return 0;
 }
 
@@ -67,7 +67,7 @@ be_visitor_root_cns::init (void)
   int status =
     tao_cg->start_ciao_conn_source (
       be_global->be_get_ciao_conn_src_fname ());
-      
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

@@ -85,7 +85,7 @@ if ($cli->PutFile ($srviorfile) == -1) {
     $SRV->Kill (); $SRV->TimedWait (1);
     exit 1;
 }
- 
+
 # start MessengerClient
 $CLI_status = $CLI->SpawnWaitKill ($cli->ProcessStartWaitInterval());
 
@@ -94,7 +94,7 @@ if ($CLI_status != 0) {
     $status = 1;
 }
 
-# clean-up 
+# clean-up
 $SRV_status = $SRV->TerminateWaitKill ($srv->ProcessStopWaitInterval());
 
 if ($SRV_status != 0) {

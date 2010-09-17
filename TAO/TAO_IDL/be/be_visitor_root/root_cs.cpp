@@ -35,7 +35,7 @@ be_visitor_root_cs::visit_root (be_root *node)
                          ACE_TEXT ("failed to initialize\n")),
                         -1);
     }
-    
+
 
   if (this->gen_arg_traits (node) == -1)
     {
@@ -106,7 +106,7 @@ be_visitor_root_cs::init (void)
   int status =
     tao_cg->start_client_stubs (
       be_global->be_get_client_stub_fname ());
-  
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -156,7 +156,7 @@ be_visitor_root_cs::gen_any_ops (be_root *node)
     {
       (void) tao_cg->end_anyop_source ();
     }
-    
+
   return status;
 }
 
@@ -176,7 +176,7 @@ be_visitor_root_cs::gen_dds_serializer_ops (be_root *node)
     {
       return 0;
     }
-    
+
   be_visitor_context ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS);
   be_visitor_root_cdr_op visitor (&ctx);

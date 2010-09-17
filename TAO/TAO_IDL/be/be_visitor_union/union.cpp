@@ -104,7 +104,7 @@ be_visitor_union::visit_union_branch (be_union_branch *node)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_union::"
                            "visit_union_branch - "
-                           "Bad context state\n"), 
+                           "Bad context state\n"),
                           -1);
       }
     }
@@ -114,7 +114,7 @@ be_visitor_union::visit_union_branch (be_union_branch *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union::"
                          "visit_union_branch - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 
@@ -141,8 +141,8 @@ be_visitor_union_cdr_op_cs::pre_process (be_decl *bd)
 
   be_union_branch* b =
     be_union_branch::narrow_from_decl (bd);
-    
-  // Could be a type decl.  
+
+  // Could be a type decl.
   if (b == 0)
     {
       return 0;

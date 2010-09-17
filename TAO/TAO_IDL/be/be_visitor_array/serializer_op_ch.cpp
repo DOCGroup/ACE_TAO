@@ -5,7 +5,7 @@
  *
  *  $Id$
  *
- *  Visitor for code generation of Arrays for the 
+ *  Visitor for code generation of Arrays for the
  *  TAO::DCPS::Serializer operators in the client header.
  *
  *
@@ -32,7 +32,7 @@ be_visitor_array_serializer_op_ch::~be_visitor_array_serializer_op_ch (void)
 }
 
 
-void 
+void
 be_visitor_array_serializer_op_ch::gen_arg_ref(be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -128,18 +128,18 @@ be_visitor_array_serializer_op_ch::visit_array (be_array *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   //  Set the sub state as generating code for the size method
-  *os << be_global->stub_export_macro () 
-      << " size_t _dcps_max_marshaled_size (" 
+  *os << be_global->stub_export_macro ()
+      << " size_t _dcps_max_marshaled_size ("
       << "const ";
   this->gen_arg_ref(node);
 
-  *os << be_global->stub_export_macro () 
-      << " ::CORBA::Boolean _tao_is_bounded_size (" 
+  *os << be_global->stub_export_macro ()
+      << " ::CORBA::Boolean _tao_is_bounded_size ("
       << "const ";
   this->gen_arg_ref(node);
 
-  *os << be_global->stub_export_macro () 
-      << " size_t _dcps_find_size (" 
+  *os << be_global->stub_export_macro ()
+      << " size_t _dcps_find_size ("
       << "const ";
   this->gen_arg_ref(node);
 

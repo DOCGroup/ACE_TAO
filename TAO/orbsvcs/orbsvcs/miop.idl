@@ -43,7 +43,7 @@ module MIOP
   typedef GIOP::Version Version;
 
   typedef string Address;
- 
+
   typedef sequence<IOP::TaggedComponent> Component_Seq;
   struct UIPMC_ProfileBody
   {

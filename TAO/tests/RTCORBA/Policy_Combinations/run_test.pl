@@ -13,7 +13,7 @@ $status = 0;
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-@iorfiles = 
+@iorfiles =
     (
      "root",
      "child",
@@ -36,7 +36,7 @@ sub run_client
     $CL = $client->CreateProcess ("client", @_);
 
     $CL->Spawn ();
-    
+
     $client_status = $CL->WaitKill ($client->ProcessStartWaitInterval ());
 
     if ($client_status != 0) {
@@ -64,18 +64,18 @@ for $file (@iorfiles) {
             # Mark as no longer running to avoid errors on exit.
             $SV->{RUNNING} = 0;
             exit $status;
-        } 
-        else {            
+        }
+        else {
             print STDERR "ERROR: cannot find ior file: $server_iorfile\n";
             $status = 1;
             goto kill_server;
         }
     }
-      
+
     print STDERR "\n******************************************************\n";
     print STDERR "Invoking methods on servant in $file poa\n";
     print STDERR "******************************************************\n\n";
-    
+
     run_client ("-k file://$client_iorfile");
 }
 
@@ -86,7 +86,7 @@ print STDERR "**************************\n\n";
 $ior_file = $client->LocalFile ($iorfiles[0]);
 run_client ("-k file://$ior_file -i 0 -x");
 
-kill_server: 
+kill_server:
     print STDERR "Killing server...\n";
     $server_status = $SV->Kill ($server->ProcessStopWaitInterval ());
 

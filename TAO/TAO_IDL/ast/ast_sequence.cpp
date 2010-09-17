@@ -108,12 +108,12 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
     owns_base_type_ (false)
 {
   AST_Decl::NodeType bnt = bt->node_type ();
-    
+
   if (bnt == AST_Decl::NT_param_holder)
     {
       AST_Param_Holder *ph =
         AST_Param_Holder::narrow_from_decl (bt);
-        
+
       if (ph->info ()->type_ == AST_Decl::NT_const)
         {
           idl_global->err ()->not_a_type (bt);

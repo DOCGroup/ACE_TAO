@@ -741,7 +741,7 @@ namespace // local/internal helper function
     {
       return; // Null filename not allowed.
     }
- 
+
     ACE_CString const name_str (incl_file);
     ACE_CString const simple ("orb.idl");
     ACE_CString const nix_path ("tao/orb.idl");
@@ -1040,7 +1040,7 @@ DRV_pre_proc (const char *myfile)
                   tmp_ifile,
                   myfile);
   ACE_OS::fclose (file);
-  
+
   UTL_String *utl_string = 0;
 
 #if defined (ACE_OPENVMS)

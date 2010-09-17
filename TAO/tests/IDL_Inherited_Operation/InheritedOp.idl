@@ -13,9 +13,9 @@ module Outer
     };
   };
 };
-   
+
 module Outer
-{    
+{
   module Inner
   {
     interface Base;

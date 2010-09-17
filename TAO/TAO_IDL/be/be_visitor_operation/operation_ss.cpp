@@ -33,7 +33,7 @@ be_visitor_operation_ss::visit_operation (be_operation * node)
     {
       return 0;
     }
-    
+
   TAO_OutStream *os = this->ctx_->stream ();
   be_type *bt = 0;
 
@@ -131,9 +131,9 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   UTL_Scope *s = this->ctx_->attribute ()
                  ? this->ctx_->attribute ()->defined_in ()
                  : node->defined_in ();
-                 
+
   be_interface *intf = be_interface::narrow_from_scope (s);
-  
+
   if (intf == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

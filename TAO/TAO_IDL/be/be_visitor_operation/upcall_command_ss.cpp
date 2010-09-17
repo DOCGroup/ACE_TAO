@@ -34,7 +34,7 @@ be_visitor_operation_upcall_command_ss::visit (
     {
       return 0;
     }
-    
+
   be_interface * const intf = this->ctx_->attribute ()
     ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
     : be_interface::narrow_from_scope (node->defined_in ());
@@ -71,7 +71,7 @@ be_visitor_operation_upcall_command_ss::visit (
 
       be_util::gen_nested_namespace_begin (&os, module, true);
     }
-  
+
   be_visitor_context ctx (*this->ctx_);
 
   // save the node.
@@ -225,7 +225,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
   bool excep_method = ((ACE_OS::strstr (op_name, excep_suffix) +
                         excep_suffix_len) ==
                        (op_name + ACE_OS::strlen (op_name)));
-                       
+
   for (; !si.is_done (); si.next (), ++index)
     {
       AST_Argument * const arg =
@@ -348,7 +348,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
       exceplist.visit_operation (node);
 
       unsigned int exceptions_count = 0;
-      
+
       for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
            !ei.is_done (); ei.next ())
         {

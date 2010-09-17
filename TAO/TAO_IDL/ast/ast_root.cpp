@@ -181,7 +181,7 @@ AST_Root::destroy (void)
   // processing multiple IDL files.
   // Final cleanup will be done in fini().
   long end = this->pd_decls_used;
-  
+
   for (i = 2; i < end; ++i)
     {
       d = this->pd_decls[i];
@@ -191,7 +191,7 @@ AST_Root::destroy (void)
       d = 0;
       --this->pd_decls_used;
     }
-    
+
   // Same goes for the references and the name
   // references, leave the first 2.
 
@@ -202,7 +202,7 @@ AST_Root::destroy (void)
     {
       this->pd_referenced[i] = 0;
     }
-    
+
   this->pd_referenced_used = 2;
 
   for (i = 2; i < this->pd_name_referenced_used; ++i)
@@ -212,7 +212,7 @@ AST_Root::destroy (void)
       delete id;
       id = 0;
     }
-    
+
   this->pd_name_referenced_used = 2;
 }
 

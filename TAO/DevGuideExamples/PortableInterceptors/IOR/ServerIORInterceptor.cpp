@@ -45,7 +45,7 @@ ServerIORInterceptor::components_established (
 
 void
 ServerIORInterceptor::adapter_manager_state_changed (
-                             const char* /*id*/, 
+                             const char* /*id*/,
                              PortableInterceptor::AdapterState /*state*/)
 {
 }

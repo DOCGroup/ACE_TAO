@@ -1,4 +1,4 @@
-// $Id:$
+// $Id$
 #include "StructuredEventSupplier_i.h"
 #include "tao/PortableServer/PS_CurrentC.h"
 
@@ -12,7 +12,7 @@ StructuredEventSupplier_i::disconnect_structured_push_supplier ()
 {
 
    CORBA::Object_var obj = orb_->resolve_initial_references ("POACurrent");
-   PortableServer::Current_var current = 
+   PortableServer::Current_var current =
                           PortableServer::Current::_narrow (obj.in());
    PortableServer::POA_var poa = current->get_POA ();
    PortableServer::ObjectId_var objectId = current->get_object_id ();
@@ -22,9 +22,9 @@ StructuredEventSupplier_i::disconnect_structured_push_supplier ()
 
 void
 StructuredEventSupplier_i::subscription_change (
-                    const CosNotification::EventTypeSeq &, 
+                    const CosNotification::EventTypeSeq &,
                     const CosNotification::EventTypeSeq &
       )
 {
-}       
+}
 

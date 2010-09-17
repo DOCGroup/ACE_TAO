@@ -70,7 +70,7 @@ module X
     Object make_object ();
   };
 
-  abstract valuetype BXXX : AXXX 
+  abstract valuetype BXXX : AXXX
   {
   };
   typedef sequence<BXXX> BSeq;

@@ -315,7 +315,7 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
         consumerCountData->data_union.num ();
       if (consumerCountNum.last != 1)
       ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should still be one Consumer\n"));
-  
+
       ACE_CString queueElementName = this->base_ + NotifyMonitoringExt::EventChannelQueueElementCount;
       Monitor::Data_var queueElementData =
         nsm_->get_statistic(queueElementName.c_str ());
@@ -324,7 +324,7 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
       if (queueElementNum.last == 0)
       ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be at least one "
                             "event queued\n"));
-  
+
       ACE_CString adminNamesName  = this->base_ + NotifyMonitoringExt::EventChannelConsumerAdminNames;
       Monitor::Data_var adminNamesData =
         nsm_->get_statistic(adminNamesName.c_str ());
@@ -348,9 +348,9 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
             ACE_ERROR ((LM_ERROR, "Monitor: ERROR: The most recent queue size [%f] should not be greater than 2000.\n",
               queueSizeNum.last));
       }
-  
+
       consumer_stats_check();
-  
+
       brain_dump ("Finished Supplier");
       break;
       }

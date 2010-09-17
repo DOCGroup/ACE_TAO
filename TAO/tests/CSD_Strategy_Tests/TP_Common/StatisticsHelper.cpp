@@ -8,7 +8,7 @@ void swap ( CORBA::Long& x, CORBA::Long& y )
   temp = x;
   x = y;
   y = temp;
-} 
+}
 
 
 void sort ( LongVector & vector )

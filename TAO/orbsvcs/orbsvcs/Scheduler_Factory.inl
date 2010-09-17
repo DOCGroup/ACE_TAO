@@ -12,7 +12,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // the factory is uninitialized, or in a config or runtime mode of
 // operation.
 
-ACE_INLINE ACE_Scheduler_Factory::Factory_Status 
+ACE_INLINE ACE_Scheduler_Factory::Factory_Status
 ACE_Scheduler_Factory::status (void)
 {
   return status_;

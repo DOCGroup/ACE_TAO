@@ -130,14 +130,14 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
 {
   this->size_type (AST_Type::VARIABLE); // always the case
   this->has_constructor (true);      // always the case
-  
+
   // Enqueue the param holders (if any) for later destruction.
   // By the time our destroy() is called, it will be too late
   // to iterate over pd_inherits.
   for (long i = 0; i < nih; ++i)
     {
       if (ih[i]->node_type () == AST_Decl::NT_param_holder)
-        { 
+        {
           this->param_holders_.enqueue_tail (ih[i]);
         }
     }
@@ -350,7 +350,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
   // lookup is all that's needed.
   AST_Decl *d = s->lookup_by_name_local (i->local_name (),
                                          false);
-                                         
+
   AST_Interface *fd = 0;
 
   if (d != 0)
@@ -379,7 +379,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
       if (fd == 0)
         {
           AST_Decl::NodeType nt = d->node_type ();
-          
+
           if (nt == AST_Decl::NT_struct_fwd || nt == AST_Decl::NT_union_fwd)
             {
               idl_global->err ()->redef_error (i->full_name (),
@@ -418,14 +418,14 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
                 }
 
               fd->redefine (i);
-              
+
               AST_InterfaceFwd *fwd = fd->fwd_decl ();
-              
+
               if (fwd != 0)
                 {
                   fwd->set_as_defined ();
                 }
-              
+
               // Use full definition node.
               i->destroy ();
               delete i;
@@ -445,12 +445,12 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
 
   AST_Decl::NodeType nt = t->node_type ();
   long n = 0;
-  
+
   if (nt != AST_Decl::NT_param_holder)
     {
       AST_Interface *i =
         AST_Interface::narrow_from_decl (t);
-        
+
       AST_Type **parents = i->inherits ();
       long n_parents = i->n_inherits ();
 
@@ -514,7 +514,7 @@ AST_Interface::insert_non_dup (AST_Type *t,
 {
   AST_Interface *f =
     AST_Interface::narrow_from_decl (t);
-    
+
   // Now check if the dequeued element has any ancestors. If yes, insert
   // them inside the queue making sure that there are no duplicates.
   // If we are doing a component, the inheritance list is actually a
@@ -523,7 +523,7 @@ AST_Interface::insert_non_dup (AST_Type *t,
     {
       for (long i = 0; i < f->n_inherits (); ++i)
         {
-          // Retrieve the next parent from which 
+          // Retrieve the next parent from which
           // the dequeued element inherits.
           AST_Type *parent = f->inherits ()[i];
 
@@ -754,7 +754,7 @@ AST_Interface::redef_clash (void)
                         {
                           group2_member_item =
                             group2_member_items.item ();
-                            
+
                           AST_Decl::NodeType nt2 =
                             group2_member_item->node_type ();
 
@@ -776,7 +776,7 @@ AST_Interface::redef_clash (void)
                                 *group1_member,
                                 *group2_member,
                                 group2_member_item);
-                                
+
                               return true;
                             }
                           else if (pid1->case_compare_quiet (pid2))
@@ -788,7 +788,7 @@ AST_Interface::redef_clash (void)
                                     *group1_member,
                                     group1_member_item,
                                     group2_member_item);
-                                    
+
                                   return true;
                                 }
                               else
@@ -835,14 +835,14 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
        nis > 0;
        nis--, is++)
     {
-      AST_Interface *i = 
+      AST_Interface *i =
         AST_Interface::narrow_from_decl (*is);
-        
+
       if (i == 0)
         {
           continue;
         }
-        
+
       d = (i)->lookup_by_name_r (e, full_def_only);
       if (d != 0)
         {
@@ -903,22 +903,22 @@ AST_Interface::look_in_inherited_local (Identifier *e,
        nis > 0;
        nis--, is++)
     {
-      AST_Interface *i = 
+      AST_Interface *i =
         AST_Interface::narrow_from_decl (*is);
-        
+
       if (i == 0)
         {
           continue;
         }
-        
+
       d = i->lookup_by_name_local (e, full_def_only);
-      
+
       if (d != 0)
         {
           break;
         }
     }
-    
+
   return d;
 }
 
@@ -1007,7 +1007,7 @@ AST_Interface::analyze_parentage (void)
     }
 
   this->has_mixed_parentage_ = 0;
-  
+
   // Only interfaces may have mixed parentage.
   if (this->node_type () != AST_Decl::NT_interface)
     {
@@ -1035,21 +1035,21 @@ AST_Interface::analyze_parentage (void)
 
   // Must check if we are declared in a template module, in
   // which case no code will be generated, so we should not
-  // be enqueued.                        
+  // be enqueued.
   bool in_tmpl_module = false;
   UTL_Scope *s = this->defined_in ();
-  
+
   while (s != 0)
     {
       AST_Template_Module *m =
         AST_Template_Module::narrow_from_scope (s);
-        
+
       if (m != 0)
         {
           in_tmpl_module = true;
           break;
         }
-        
+
       s = ScopeAsDecl (s)->defined_in ();
     }
 
@@ -1074,18 +1074,18 @@ AST_Interface::special_lookup (UTL_ScopedName *e,
 {
   AST_Decl *d = this->look_in_inherited_local (e->head (),
                                                full_def_only);
-  
+
   if (d != 0)
     {
       UTL_Scope *s = DeclAsScope (d);
       UTL_ScopedName *sn =
         static_cast<UTL_ScopedName *> (e->tail ());
-        
+
       return (s != 0 && sn != 0
                 ? s->lookup_by_name_r (sn, full_def_only)
                 : d);
     }
-    
+
   return 0;
 }
 
@@ -1128,12 +1128,12 @@ AST_Interface::destroy (void)
       delete t;
       t = 0;
     }
-    
+
   // The destroy() we are in gets called twice if we start from
   // be_valuetype or be_eventtype. This line keeps us from
-  // iterating over null pointers the 2nd time.  
+  // iterating over null pointers the 2nd time.
   this->param_holders_.reset ();
-    
+
   delete [] this->pd_inherits;
   this->pd_inherits = 0;
   this->pd_n_inherits = 0;

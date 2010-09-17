@@ -18,7 +18,7 @@
 // ============================================================================
 
 
-module A 
+module A
   {
     exception DidTheRightThing {
       long id;
@@ -27,13 +27,13 @@ module A
 
     interface AMI_Test
       {
-        long foo (out long out_l, 
+        long foo (out long out_l,
                   in long in_l,
                   in string in_str)
           raises (DidTheRightThing);
-  
+
         attribute long yadda;
-        
+
         oneway void shutdown ();
       };
 

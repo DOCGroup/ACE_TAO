@@ -8,7 +8,7 @@
 #include "wxAddNameServerDlg.h"
 
 #include "wxNamingViewer.h"
-  
+
 #include "wx/sizer.h"
 #include "wx/textctrl.h"
 
@@ -17,7 +17,7 @@ namespace  // anonymous
   void create_dialog_components( wxDialog* dialog)
     {
       wxBoxSizer *topsizer = new wxBoxSizer( wxVERTICAL);
- 
+
       {
         wxBoxSizer *sizer = new wxBoxSizer( wxHORIZONTAL);
         sizer->Add(
@@ -40,7 +40,7 @@ namespace  // anonymous
                       0,
                       wxALIGN_LEFT | wxEXPAND);
       }
- 
+
       {
         wxBoxSizer *sizer = new wxBoxSizer( wxHORIZONTAL);
         sizer->Add(
@@ -63,7 +63,7 @@ namespace  // anonymous
                       0,
                       wxALIGN_LEFT | wxEXPAND);
       }
- 
+
       wxBoxSizer *button_sizer = new wxBoxSizer( wxHORIZONTAL);
       {
         wxButton* okButton = new wxButton( dialog, wxID_OK, "OK" );
@@ -85,12 +85,12 @@ namespace  // anonymous
                     button_sizer,
                     0,
                     wxALIGN_CENTER);
- 
+
       dialog->SetSizer( topsizer);
       topsizer->SetSizeHints( dialog);
     }
 };  // anonymous
- 
+
 WxAddNameServerDlg::WxAddNameServerDlg( wxWindow* parent)
 #if defined(wxUSE_RESOURCES) && (wxUSE_RESOURCES == 1)
   : wxDialog()
@@ -109,7 +109,7 @@ WxAddNameServerDlg::WxAddNameServerDlg( wxWindow* parent)
 {
 #if defined(wxUSE_RESOURCES) && (wxUSE_RESOURCES == 1)
   LoadFromResource( parent, "addNameServer");
-#else 
+#else
   create_dialog_components( this);
 #endif  // defined(wxUSE_RESOURCES) && (wxUSE_RESOURCES == 1)
    wxButton* ctrl = static_cast<wxButton*>( wxFindWindowByName(

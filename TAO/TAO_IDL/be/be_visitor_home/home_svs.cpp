@@ -444,7 +444,7 @@ be_visitor_home_attr_set::visit_home (be_home *node)
        i.next ())
     {
       be_decl *d = be_decl::narrow_from_decl (i.item ());
-      
+
       if (d->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -454,9 +454,9 @@ be_visitor_home_attr_set::visit_home (be_home *node)
                             -1);
         }
     }
-    
+
   be_home *h = be_home::narrow_from_decl (node->base_home ());
-  
+
   return this->visit_home (h);
 }
 

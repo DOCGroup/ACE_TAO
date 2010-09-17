@@ -708,8 +708,8 @@ be_visitor_module::visit_component (be_component *node)
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
       return this->visit_interface (node);
-      
-    // Nothing for these with components.  
+
+    // Nothing for these with components.
     case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
     case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
     case TAO_CodeGen::TAO_ROOT_IH:
@@ -885,7 +885,7 @@ be_visitor_module::visit_connector (be_connector *node)
       case TAO_CodeGen::TAO_ROOT_CNH:
         {
           if (node->dds_connector ())
-            {  
+            {
               be_visitor_connector_dds_exh visitor (&ctx);
               status = node->accept (&visitor);
               break;
@@ -900,7 +900,7 @@ be_visitor_module::visit_connector (be_connector *node)
       case TAO_CodeGen::TAO_ROOT_CNS:
         {
           if (node->dds_connector ())
-            {  
+            {
               be_visitor_connector_dds_exs visitor (&ctx);
               status = node->accept (&visitor);
               break;
@@ -922,7 +922,7 @@ be_visitor_module::visit_connector (be_connector *node)
         // In all other cases, same as component.
         return this->visit_component (node);
     }
-    
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -931,7 +931,7 @@ be_visitor_module::visit_connector (be_connector *node)
                          ACE_TEXT ("failed to accept visitor\n")),
                         -1);
     }
-    
+
   return 0;
 }
 

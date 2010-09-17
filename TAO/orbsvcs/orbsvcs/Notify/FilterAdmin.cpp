@@ -162,7 +162,7 @@ TAO_Notify_FilterAdmin::load_child (const ACE_CString &type, CORBA::Long id,
 
    TAO_Notify_FilterFactory* factory = ec_->default_filter_factory_servant ();
    CosNotifyFilter::Filter_var filter = factory->get_filter (mapid);
- 
+
     if (! CORBA::is_nil(filter.in()))
     {
       this->filter_ids_.set_last_used(id);

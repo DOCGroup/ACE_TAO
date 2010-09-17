@@ -198,7 +198,7 @@ be_visitor_servant_svh::visit_uses (be_uses *node)
       << "virtual "
       << (is_multiple ? "::Components::Cookie *" : "void")
       << be_nl
-      << "connect_" << port_name << " (" 
+      << "connect_" << port_name << " ("
       << "::" << obj_name << "_ptr);"
       << be_nl << be_nl;
 
@@ -370,7 +370,7 @@ be_visitor_servant_svh::gen_non_type_specific (void)
           << "virtual ::CORBA::Object_ptr " << be_nl
           << "disconnect (const char * name, ::Components::Cookie * ck);";
     }
-    
+
   if (!be_global->gen_lwccm ())
     {
       os_ << be_nl << be_nl
@@ -378,7 +378,7 @@ be_visitor_servant_svh::gen_non_type_specific (void)
           << be_nl
           << "get_all_receptacles (void);";
     }
-    
+
   AST_Decl::NodeType nt = this->node_->node_type ();
   bool is_connector = (nt == AST_Decl::NT_connector);
 

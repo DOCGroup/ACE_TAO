@@ -58,10 +58,10 @@ my $nt_service = PerlACE::TestTarget::create_target (2) || die "Create target 2 
 my $nm_ior = "naming.ior";
 my $nt_ior = "notify.ior";
 
-my $nt_service_nt_conf = $nt_service->LocalFile($nt_conf); 
+my $nt_service_nt_conf = $nt_service->LocalFile($nt_conf);
 my $nm_service_nm_ior  = $nm_service->LocalFile($nm_ior);
 my $nt_service_nm_ior  = $nt_service->LocalFile($nm_ior);
-my $nt_service_nt_ior  = $nt_service->LocalFile($nt_ior); 
+my $nt_service_nt_ior  = $nt_service->LocalFile($nt_ior);
 $nm_service->DeleteFile($nm_ior);
 $nt_service->DeleteFile($nm_ior);
 $nt_service->DeleteFile($nt_ior);

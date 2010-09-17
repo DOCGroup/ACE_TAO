@@ -209,7 +209,7 @@ BE_produce (void)
       be_visitor_root_is root_is_visitor (&ctx);
       BE_visit_root (root_is_visitor, "implementation skeleton");
     }
-    
+
   if (be_global->gen_ciao_svnt ())
     {
       ctx.state (TAO_CodeGen::TAO_ROOT_SVH);
@@ -220,7 +220,7 @@ BE_produce (void)
       be_visitor_root_svs root_svs_visitor (&ctx);
       BE_visit_root (root_svs_visitor, "CIAO servant source");
     }
-      
+
   if (be_global->gen_ciao_exec_idl ())
     {
       ctx.state (TAO_CodeGen::TAO_ROOT_EX_IDL);
@@ -238,7 +238,7 @@ BE_produce (void)
       be_visitor_root_exs root_exs_visitor (&ctx);
       BE_visit_root (root_exs_visitor, "CIAO exec impl source");
     }
-    
+
   if (be_global->gen_ciao_conn_impl ())
     {
       ctx.state (TAO_CodeGen::TAO_ROOT_CNH);
@@ -249,7 +249,7 @@ BE_produce (void)
       be_visitor_root_cns root_cns_visitor (&ctx);
       BE_visit_root (root_cns_visitor, "CIAO conn impl source");
     }
-    
+
   tao_cg->gen_export_files ();
 
   // Done with this IDL file.

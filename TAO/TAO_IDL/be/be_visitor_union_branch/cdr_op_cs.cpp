@@ -673,7 +673,7 @@ be_visitor_union_branch_cdr_op_cs::visit_sequence (be_sequence *node)
   // Retrieve the union_branch node.
   be_union_branch *f =
     be_union_branch::narrow_from_decl (this->ctx_->node ());
-    
+
   if (f == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

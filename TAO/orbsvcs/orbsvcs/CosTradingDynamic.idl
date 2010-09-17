@@ -25,15 +25,15 @@
 
 module CosTradingDynamic
 {
-  
+
   exception DPEvalFailure {
     CosTrading::PropertyName name;
     CORBA::TypeCode returned_type;
     any extra_info;
   };
-  
+
   interface DynamicPropEval
-    {      
+    {
       any evalDP (in CosTrading::PropertyName name,
                   in CORBA::TypeCode returned_type,
                   in any extra_info)

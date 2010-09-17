@@ -39,7 +39,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception_cdr_op_cs::"
                          "visit_exception - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -71,9 +71,9 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_exception_cdr_op_cs::"
                              "visit_exception - "
-                             "codegen for field decl scope failed\n"), 
+                             "codegen for field decl scope failed\n"),
                             -1);
-        }        
+        }
 
       // some members
       *os << "// First marshal the repository ID." << be_nl
@@ -87,7 +87,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_exception_cdr_op_cs::"
                              "visit_exception - "
-                             "codegen for scope failed\n"), 
+                             "codegen for scope failed\n"),
                             -1);
         }
 
@@ -150,7 +150,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_exception_cdr_op_cs::"
                              "visit_exception - "
-                             "codegen for scope failed\n"), 
+                             "codegen for scope failed\n"),
                             -1);
         }
 
@@ -178,7 +178,7 @@ int
 be_visitor_exception_cdr_op_cs::post_process (be_decl *bd)
 {
   // This checks for members of an enum 'non-scope' declared inside
-  // the exception. If an enum val is actually a member, it will 
+  // the exception. If an enum val is actually a member, it will
   // have node type NT_field.
   if (bd->node_type () == AST_Decl::NT_enum_val)
     {

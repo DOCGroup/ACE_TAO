@@ -187,14 +187,14 @@ AST_UnionBranch::add_labels (AST_Union *u)
     }
 
   const bool enum_labels = (u->udisc_type () == AST_Expression::EV_enum);
-  
+
   for (UTL_LabellistActiveIterator i (this->pd_ll);
        !i.is_done ();
        i.next ())
     {
       AST_Expression *ex = i.item ()->label_val ();
       UTL_ScopedName *n = ex->n ();
-      
+
       if (n)
         {
           u->add_to_name_referenced (n->first_component ());
@@ -208,13 +208,13 @@ AST_UnionBranch::add_labels (AST_Union *u)
           ex->ev ()->et = AST_Expression::EV_enum;
           AST_Enum *disc = AST_Enum::narrow_from_decl (u->disc_type ());
           AST_EnumVal *dval = disc->lookup_by_value (ex);
-          
+
           if (dval == 0)
             {
               idl_global->err ()->incompatible_disc_error (disc, ex);
               throw Bailout ();
             }
-            
+
           ex->ev ()->u.eval = dval->constant_value ()->ev ()->u.ulval;
         }
     }

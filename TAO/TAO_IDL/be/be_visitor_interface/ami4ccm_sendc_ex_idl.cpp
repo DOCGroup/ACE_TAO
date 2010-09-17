@@ -36,36 +36,36 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_interface (be_interface *node)
       << "local interface AMI4CCM_"
       << node->original_local_name () << be_nl
       << "{" << be_idt;
-      
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_ami4ccm_sendc_ex_idl")
                          ACE_TEXT ("::visit_interface - ")
                          ACE_TEXT ("visit_scope() failed\n")),
-                        -1);         
+                        -1);
     }
-    
+
   AST_Interface **inh_flat = node->inherits_flat ();
-    
+
   for (long i = 0; i < node->n_inherits_flat (); ++i)
     {
       be_interface *ancestor =
         be_interface::narrow_from_decl (inh_flat[i]);
-        
+
       if (this->visit_scope (ancestor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_ami4ccm_sendc_ex_idl")
                              ACE_TEXT ("::visit_interface - visit ")
                              ACE_TEXT ("ancestor scope failed\n")),
-                            -1);         
+                            -1);
         }
     }
-  
+
   os_ << be_uidt_nl
       << "};";
-      
+
   return 0;
 }
 
@@ -77,7 +77,7 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_operation (be_operation *node)
       // We do nothing for oneways!
       return 0;
     }
-    
+
   if (!node->is_sendc_ami ())
     {
       return 0;
@@ -86,17 +86,17 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_operation (be_operation *node)
   os_ << be_nl
       << "void " << node->original_local_name ()
       << " (" << be_idt;
-      
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_ami4ccm_rh_ex_idl::visit_operation - ")
                          ACE_TEXT ("visit_scope() failed\n")),
-                        -1);         
+                        -1);
     }
-      
+
   os_ << ");" << be_uidt;
-  
+
   return 0;
 }
 
@@ -107,7 +107,7 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_argument (be_argument *node)
     {
       return 0;
     }
-    
+
   /// AMI4CCM uses a different reply handler type, so we just
   /// replace the original handler parameter (which is always the
   /// first one) type.
@@ -121,15 +121,15 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_argument (be_argument *node)
     {
       be_type *t =
         be_type::narrow_from_decl (node->field_type ());
-        
+
       os_ << be_nl
           << "in ";
-      
+
       os_ << IdentifierHelper::type_name (t, this);
     }
-      
+
   os_ << " " << node->original_local_name ();
-    
+
   return 0;
 }
 
@@ -169,24 +169,24 @@ int
 be_visitor_ami4ccm_sendc_ex_idl::pre_process (be_decl *node)
 {
   be_argument *arg = be_argument::narrow_from_decl (node);
-  
+
   if (arg == 0)
     {
       return 0;
     }
-    
+
   if (arg->direction () != AST_Argument::dir_IN)
     {
       return 0;
     }
-    
+
   if (this->elem_number () == 1)
     {
       return 0;
     }
 
   os_ << ",";
-    
+
   return 0;
 }
 

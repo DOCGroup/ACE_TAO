@@ -78,7 +78,7 @@ IdentifierHelper::original_local_name (Identifier * local_name)
 {
   Identifier * id = 0;
   const char *lname = local_name->get_string ();
-   
+
   // Remove _cxx_ if:
   // 1. it occurs and
   // 2. it occurs at the beginning of the string and
@@ -86,10 +86,10 @@ IdentifierHelper::original_local_name (Identifier * local_name)
   if (ACE_OS::strstr (lname, "_cxx_") == lname)
     {
       TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
-      
+
       unsigned int len =
         static_cast<unsigned int> (ACE_OS::strlen (lname + 5));
-        
+
       const TAO_IDL_CPP_Keyword_Entry *entry =
         cpp_key_tbl.lookup (lname + 5, len);
 
@@ -101,12 +101,12 @@ IdentifierHelper::original_local_name (Identifier * local_name)
                           0);
         }
     }
-    
+
   if (id == 0)
     {
       id = local_name->copy ();
     }
-   
+
   return id;
 }
 
@@ -133,9 +133,9 @@ IdentifierHelper::orig_sn (UTL_IdList * sn, bool for_idl)
         for_idl
           ? IdentifierHelper::original_local_name (i.item ())
           : i.item ()->copy ();
-          
+
       i.next ();
-      
+
       // Append the identifier.
       retval +=
         for_idl
@@ -154,12 +154,12 @@ IdentifierHelper::orig_sn (UTL_IdList * sn, bool for_idl)
               second = true;
             }
         }
-        
+
       id->destroy ();
       delete id;
       id = 0;
     }
-  
+
   return retval;
 }
 
@@ -175,7 +175,7 @@ IdentifierHelper::is_idl_keyword (Identifier * local_name)
   return !idl_global->idl_keywords ().find (ext_id);
 }
 
-ACE_CString 
+ACE_CString
 IdentifierHelper::try_escape (Identifier * local_name)
 {
   ACE_CString s_local_name (local_name->get_string ());

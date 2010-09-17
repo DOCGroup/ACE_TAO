@@ -1,4 +1,4 @@
-# $Id$ 
+# $Id$
 
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
@@ -97,7 +97,7 @@ $TI->IgnoreExeSubDir(1);
 
 sub RunImRUtil {
     my $cmd = shift;
-    
+
     print ">>> " . $TI->CommandLine() . "\n";
     $TI->Arguments("-ORBInitRef ImplRepoService=file://$ti_imriorfile $cmd");
     return $TI->SpawnWaitKill($ti->ProcessStartWaitInterval());
@@ -128,7 +128,7 @@ if ($ti->PutFile ($implrepo_ior) == -1) {
 }
 
 if (SpawnWait($Act, $activator_ior, $act) != 0) {
-    $ImR->Kill(); $ImR->TimedWait(1); 
+    $ImR->Kill(); $ImR->TimedWait(1);
     exit 1;
 }
 
@@ -136,19 +136,19 @@ if (SpawnWait($Act, $activator_ior, $act) != 0) {
 #we want to run the server once to generate the ior file.
 
 if (SpawnWait($Srv, $messenger_ior, $imr) != 0) {
-    $Act->Kill(); $Act->TimedWait(1); 
-    $ImR->Kill(); $ImR->TimedWait(1);  
+    $Act->Kill(); $Act->TimedWait(1);
+    $ImR->Kill(); $ImR->TimedWait(1);
     exit 1;
 }
 if ($imr->GetFile ($implrepo_ior) == -1) {
     print STDERR "ERROR: cannot retrieve file <$imr_srviorfile>\n";
-    $Act->Kill(); $Act->TimedWait(1); 
+    $Act->Kill(); $Act->TimedWait(1);
     $ImR->Kill (); $ImR->TimedWait (1);
     exit 1;
 }
 if ($c1->PutFile ($implrepo_ior) == -1) {
     print STDERR "ERROR: cannot set file <$c1_srviorfile>\n";
-    $Act->Kill(); $Act->TimedWait(1); 
+    $Act->Kill(); $Act->TimedWait(1);
     $ImR->Kill (); $ImR->TimedWait (1);
     exit 1;
 }
@@ -165,7 +165,7 @@ if ($Srv_status != 0) {
 
 RunImRUtil("list -v");
 
-# Note : If the server registers itself, then it won't set the 
+# Note : If the server registers itself, then it won't set the
 # activator name. If we don't set it here, then the activator
 # won't be able to start the server.
 my $actname = $ti->hostname;

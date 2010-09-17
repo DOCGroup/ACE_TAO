@@ -65,7 +65,7 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
   *os << be_uidt << be_nl
       << "{" << be_nl
       << "public:" << be_idt;
-      
+
   node->gen_stub_decls (os);
 
   // _downcast method
