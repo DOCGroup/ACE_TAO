@@ -1,5 +1,5 @@
-<!-- $Id$ -->
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!-- $Id$ -->
 <Deployment:DeploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
 
   <UUID>CCA28448-2004-11DF-8000-000C2916C803</UUID>

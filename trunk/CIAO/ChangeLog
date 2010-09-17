@@ -1,3 +1,38 @@
+Fri Sep 17 13:14:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/AsynchT/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/DelReplyH/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/Exceptions/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/GetComp/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/InterInArgs/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/InterInOutArgs/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/InterMulti/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/InterOutArgs/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/InterReturn/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/NoReplyH/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/OneProcess/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/OneReplyH/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/SimplexMulti/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/ThreeComp/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/UsesMulti/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Deployment/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/Deployment/descriptors/Plan.cdp:
+        * examples/DevGuideExamples/Messenger/descriptors/Application-flattened.cdp:
+        * examples/DevGuideExamples/Messenger/descriptors/Application.cdp:
+        * examples/Display/descriptors/DeploymentPlan.cdp:
+        * examples/Hello/descriptors/PlanLocality_DifferentProcesses.cdp:
+        * examples/Hello/descriptors/PlanLocality_SameProcess.cdp:
+        * examples/Null_Component/descriptors/Null_PlanLocality_DifferentProcesses.cdp:
+        * examples/Null_Component/descriptors/Null_PlanLocality_SameProcess.cdp:
+        * tests/Bug_2130_Regression/descriptors/DeploymentPlan.cdp:
+        * tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+        * tests/Bug_3834_Regression/descriptors/PlanLocality_DifferentProcesses.cdp:
+        * tests/Bug_3834_Regression/descriptors/PlanLocality_SameProcess.cdp:
+        * tutorials/Quoter/Simple/descriptors/Plan.cdp:
+          <?xml should be on the first line of a cdp file. Therefor the Id string
+          goes to the second.
+
 Fri Sep 17 12:49:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Container_Base.h:
