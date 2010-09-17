@@ -19,6 +19,10 @@ project(*idl) : tao_versioning_idl_defaults, avoids_corba_e_micro, install {
                 -iC RTScheduling
     RTScheduler_include.pidl
   }
+
+  specific {
+    install_dir = tao/RTScheduling
+  }
 }
 
 project(RTScheduler) : taolib, tao_output, rtcorba, pi, pi_server, portableserver, install, corba_messaging, taoidldefaults, avoids_corba_e_micro {
@@ -40,5 +44,9 @@ project(RTScheduler) : taolib, tao_output, rtcorba, pi, pi_server, portableserve
     RTScheduler_includeC.h
     RTScheduler_includeS.h
     RTScheduler_includeA.h
+  }
+
+  specific {
+    install_dir = tao/RTScheduling
   }
 }

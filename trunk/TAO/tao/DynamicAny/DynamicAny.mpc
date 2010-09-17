@@ -42,4 +42,8 @@ project(DynamicAny) : install, tao_output, valuetype, taoidldefaults {
   Template_Files {
     DynAnyUtils_T.cpp
   }
+
+  specific {
+    install_dir = tao/DynamicAny
+  }
 }

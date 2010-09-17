@@ -1,3 +1,52 @@
+Fri Sep 17 20:20:37 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/AnyTypeCode/AnyTypeCode.mpc:
+        * tao/BiDir_GIOP/BiDir_GIOP.mpc:
+        * tao/CSD_Framework/CSD_Framework.mpc:
+        * tao/CSD_ThreadPool/CSD_ThreadPool.mpc:
+        * tao/CodecFactory/CodecFactory.mpc:
+        * tao/Codeset/Codeset.mpc:
+        * tao/Compression/Compression.mpc:
+        * tao/Compression/bzip2/Bzip2Compressor.mpc:
+        * tao/Compression/lzo/LzoCompressor.mpc:
+        * tao/Compression/zlib/ZlibCompressor.mpc:
+        * tao/DiffServPolicy/DiffServPolicy.mpc:
+        * tao/DynamicAny/DynamicAny.mpc:
+        * tao/DynamicInterface/DynamicInterface.mpc:
+        * tao/ETCL/TAO_ETCL.mpc:
+        * tao/EndpointPolicy/EndpointPolicy.mpc:
+        * tao/FlResource/FlResource.mpc:
+        * tao/FoxResource/FoxResource.mpc:
+        * tao/IFR_Client/IFR_Client.mpc:
+        * tao/IORInterceptor/IORInterceptor.mpc:
+        * tao/IORManipulation/IORManipulation.mpc:
+        * tao/IORTable/IORTable.mpc:
+        * tao/ImR_Client/ImR_Client.mpc:
+        * tao/Messaging/Messaging.mpc:
+        * tao/Monitor/Monitor.mpc:
+        * tao/ObjRefTemplate/ObjRefTemplate.mpc:
+        * tao/PI/PI.mpc:
+        * tao/PI_Server/PI_Server.mpc:
+        * tao/PortableServer/PortableServer.mpc:
+        * tao/QtResource/QtResource.mpc:
+        * tao/RTCORBA/RTCORBA.mpc:
+        * tao/RTPortableServer/RTPortableServer.mpc:
+        * tao/RTScheduling/RTScheduler.mpc:
+        * tao/SmartProxies/SmartProxies.mpc:
+        * tao/Strategies/Strategies.mpc:
+        * tao/TkResource/TkResource.mpc:
+        * tao/TransportCurrent/TC.mpc:
+        * tao/TransportCurrent/TC_IIOP.mpc:
+        * tao/TypeCodeFactory/TypeCodeFactory.mpc:
+        * tao/Utils/Utils.mpc:
+        * tao/Valuetype/Valuetype.mpc:
+        * tao/XtResource/XtResource.mpc:
+        * tao/ZIOP/ZIOP.mpc:
+
+          Since these have been moved, the default install_dir isn't what we
+          want.  Set the install_dir to the path to the .mpc, starting with
+          tao/.
+
 Fri Sep 17 17:46:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/context_svh.cpp:

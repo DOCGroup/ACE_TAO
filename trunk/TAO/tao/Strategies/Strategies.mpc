@@ -25,4 +25,8 @@ project(Strategies) : taolib, tao_output, install, pi, anytypecode, core_strateg
     sciop_endpointsC.cpp
     COIOP_EndpointsC.cpp
   }
+
+  specific {
+    install_dir = tao/Strategies
+  }
 }

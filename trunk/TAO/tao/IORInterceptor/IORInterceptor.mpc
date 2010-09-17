@@ -38,4 +38,8 @@ project(IORInterceptor) : taolib, tao_output, portableserver, objreftemplate, pi
     IORInfoC.h
     IORInfoS.h
   }
+
+  specific {
+    install_dir = tao/IORInterceptor
+  }
 }

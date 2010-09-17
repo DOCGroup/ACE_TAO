@@ -29,4 +29,8 @@ project(IORManipulation) : taolib, tao_output, install, anytypecode, taoidldefau
     IORS.h
     IORA.h
   }
+
+  specific {
+    install_dir = tao/IORManipulation
+  }
 }

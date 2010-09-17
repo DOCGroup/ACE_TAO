@@ -18,6 +18,10 @@ project(*idl) : tao_versioning_idl_defaults, avoids_corba_e_micro, install {
                 -Wb,unique_include=tao/RTPortableServer/RTPortableServer.h
     RTPortableServer_include.pidl
   }
+
+  specific {
+    install_dir = tao/RTPortableServer
+  }
 }
 
 project(RTPortableServer) : taolib, tao_output, install, rtcorba, portableserver, avoids_corba_e_micro {
@@ -39,5 +43,9 @@ project(RTPortableServer) : taolib, tao_output, install, rtcorba, portableserver
     RTPortableServer_includeC.h
     RTPortableServer_includeS.h
     RTPortableServer_includeA.h
+  }
+
+  specific {
+    install_dir = tao/RTPortableServer
   }
 }

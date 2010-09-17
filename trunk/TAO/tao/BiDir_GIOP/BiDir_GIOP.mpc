@@ -27,4 +27,8 @@ project(BiDir_GIOP) : taolib, tao_output, install, pi, taoidldefaults {
     BiDirPolicyC.h
     BiDirPolicyS.h
   }
+
+  specific {
+    install_dir = tao/BiDir_GIOP
+  }
 }

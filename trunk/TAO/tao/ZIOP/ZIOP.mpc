@@ -28,4 +28,8 @@ project(ZIOP) : tao_output, install, taolib, compression, pi, taoidldefaults {
     ZIOPC.h
     ZIOPS.h
   }
+
+  specific {
+    install_dir = tao/ZIOP
+  }
 }

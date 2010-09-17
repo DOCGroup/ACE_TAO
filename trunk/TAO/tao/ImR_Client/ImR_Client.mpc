@@ -36,4 +36,8 @@ project(ImR_Client) : taolib, tao_output, install, portableserver, taoidldefault
     ImplRepoC.cpp
     ImplRepoS.cpp
   }
+
+  specific {
+    install_dir = tao/ImR_Client
+  }
 }

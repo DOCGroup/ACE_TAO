@@ -40,4 +40,8 @@ project(EndpointPolicy) : taolib, tao_output, install, portableserver, pi, taoid
     EndpointPolicyTypeS.h
     EndpointPolicyTypeA.h
   }
+
+  specific {
+    install_dir = tao/EndpointPolicy
+  }
 }
