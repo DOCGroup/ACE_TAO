@@ -1,3 +1,23 @@
+Fri Sep 17 08:40:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Config_Handlers/test.cdp:
+        * tests/DeploymentPlanDump/CcmDance2-host1.cdp:
+        * tests/DeploymentPlanDump/CcmDance2-host2.cdp:
+        * tests/DeploymentPlanDump/CcmDance2.cdp:
+        * tests/DeploymentPlanDump/CcmDance4-host1.cdp:
+        * tests/DeploymentPlanDump/CcmDance4-host2.cdp:
+        * tests/DeploymentPlanDump/NewCcmDance1.cdp:
+        * tests/LocalityManager/ExplicitExec/Deployment.cdp:
+        * tests/LocalityManager/ProcessName/Deployment.cdp:
+        * tests/LocalityManager/SpawnMultiple/Deployment.cdp:
+        * tests/LocalityManager/SpawnOne/Deployment.cdp:
+        * tests/Parsing/InvalidConfigPropValueDeclaration.cdp:
+        * tests/Parsing/InvalidConnection.cdp:
+        * tests/Parsing/InvalidDatatypeValue.cdp:
+        * tests/Parsing/InvalidElement.cdp:
+        * tests/Parsing/InvalidReference.cdp:
+          Added Id string.
+
 Tue Sep 14 11:28:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/DAnCE.doxygen:
