@@ -351,6 +351,8 @@ run_test (::Components::Navigation_ptr nav,
 
   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
   ret += test_get_all_ports (cmp);
+#else
+  ACE_UNUSED_ARG (cmp);
 #endif
   return ret;
 }
