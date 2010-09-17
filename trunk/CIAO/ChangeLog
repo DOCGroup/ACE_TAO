@@ -1,3 +1,8 @@
+Fri Sep 17 07:11:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/descriptors/Plan.cdp:
+          Added ID string
+
 Thu Sep 16 13:57:26 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Component/CIF_Component.idl:
