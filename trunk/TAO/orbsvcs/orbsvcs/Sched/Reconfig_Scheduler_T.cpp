@@ -242,7 +242,7 @@ init (int config_count,
         }
 
       // Release the auto_ptr so it does not clean
-      // up the sucessfully bound config info.
+      // up the successfully bound config info.
       new_config_info_ptr.release ();
 
       // Increase the count of successfully bound config infos.
@@ -2568,7 +2568,7 @@ assign_priorities_i (void)
             }
 
           // Release the auto_ptr so it does not clean
-          // up the sucessfully bound config info.
+          // up the successfully bound config info.
           new_config_info_ptr.release ();
         }
     }

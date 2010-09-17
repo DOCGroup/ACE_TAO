@@ -85,7 +85,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       pong_protocols[0] = CORBA::string_dup ("UDP=localhost:23456");
     }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
