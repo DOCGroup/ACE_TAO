@@ -20,4 +20,8 @@ project(ACE_Qt4Reactor) : acedefaults, install, acelib, ace_output, ace_qt4 {
     QtReactor_moc.cpp
     QtReactor.cpp
   }
+
+  specific {
+    install_dir = ace/QtReactor
+  }
 }
