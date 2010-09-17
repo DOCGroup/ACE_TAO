@@ -4,8 +4,8 @@ project (TAO_Utils) : taolib, tao_output, install, portableserver, pi {
   dynamicflags  = TAO_UTILS_BUILD_DLL
 
   Template_Files {
-    Utils/RIR_Narrow.cpp
-    Utils/Servant_Var.cpp
-    Utils/Server_Main.cpp
+    RIR_Narrow.cpp
+    Servant_Var.cpp
+    Server_Main.cpp
   }
 }
