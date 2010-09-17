@@ -40,7 +40,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl;
-  
+
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
@@ -77,7 +77,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   if (!node->is_local ())
     {
       bool abs = node->is_abstract ();
-      
+
       *os << be_nl
           << "friend class TAO::"
           << (abs ? "AbstractBase_" : "") << "Narrow_Utils<"
@@ -92,7 +92,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       << "// The static operations." << be_nl
       << "static " << node->local_name () << "_ptr " << "_duplicate ("
       << node->local_name () << "_ptr obj);" << be_nl << be_nl;
-      
+
   if (c == 0)
     {
       *os << "static void _tao_release ("
@@ -109,7 +109,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                          ACE_TEXT ("_narrow () declaration\n")),
                         -1);
     }
-    
+
   if (c == 0)
     {
       if (! this->gen_xxx_narrow ("_unchecked_narrow", node, os))
@@ -123,14 +123,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
         }
     }
 
-  // This method is defined in the header file to workaround old
-  // g++ problems.
-  *os << "static " << node->local_name () << "_ptr _nil (void)"
-      << be_nl
-      << "{" << be_idt_nl
-      << "return static_cast<" << node->local_name ()
-      << "_ptr> (0);" << be_uidt_nl
-      << "}";
+  *os << "static " << node->local_name () << "_ptr _nil (void);";
 
   // Generate code for the interface definition by traversing thru the
   // elements of its scope. We depend on the front-end to have made sure
@@ -158,10 +151,10 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     }
 
   *os << be_nl << be_nl;
-  
+
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
-      
+
   *os << be_nl << be_nl;
 
   // If we inherit from both CORBA::Object and CORBA::AbstractBase,
@@ -299,7 +292,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       << "};";
 
   be_visitor_context ctx (*this->ctx_);
-      
+
   // Don't support smart proxies for local interfaces.
   if (! node->is_local ())
     {
@@ -367,7 +360,7 @@ be_visitor_interface_ch::visit_extended_port (be_extended_port *node)
   /// line to tell what scope we are actually in.
   this->ctx_->interface (
     be_interface::narrow_from_scope (node->defined_in ()));
-  
+
   /// Will ignore everything but porttype attributes.
   int status = this->visit_scope (node->port_type ());
 
@@ -396,7 +389,7 @@ be_visitor_interface_ch::visit_mirror_port (be_mirror_port *node)
   /// line to tell what scope we are actually in.
   this->ctx_->interface (
     be_interface::narrow_from_scope (node->defined_in ()));
-  
+
   /// Will ignore everything but porttype attributes.
   int status = this->visit_scope (node->port_type ());
 
