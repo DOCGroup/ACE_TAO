@@ -286,7 +286,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
               << "}" << be_nl << be_nl;
         }
     }
-    
+
   if (be_global->gen_ostream_operators ())
     {
       *os << "std::ostream &" << be_nl
@@ -294,10 +294,10 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << be_nl
           << "{" << be_idt_nl
           << "strm << \"" << node->name () << "(\"";
-          
-      unsigned long index = 0;         
+
+      unsigned long index = 0;
       this->gen_ostream_operator_r (node, index);
-        
+
       *os << be_nl
           << "     << \")\";" << be_nl << be_nl
           << "return strm;" << be_uidt_nl
@@ -476,35 +476,35 @@ be_visitor_valuetype_cs::gen_ostream_operator_r (be_valuetype *node,
 {
   TAO_OutStream *os = this->ctx_->stream ();
   AST_Type *parent = node->inherits_concrete ();
-    
-  // Recurse up the parent chain.  
+
+  // Recurse up the parent chain.
   if (parent != 0)
     {
       this->gen_ostream_operator_r (be_valuetype::narrow_from_decl (parent),
                                     index);
     }
-  
+
   // Generate output for the members of whichever recursion we are in.
   for (UTL_ScopeActiveIterator i (node, UTL_Scope::IK_decls);
        !i.is_done ();
        i.next ())
     {
       be_field *f = be_field::narrow_from_decl (i.item ());
-      
+
       // No way to access the private members from generated code.
       if (f == 0 || f->visibility () != AST_Field::vis_PUBLIC)
         {
           continue;
         }
-        
+
       if (index++ != 0)
         {
           *os << " << \", \"";
         }
-        
+
       *os << be_nl
           << "     << ";
-          
+
       ACE_CString instance_name ("this->");
       instance_name += f->local_name ()->get_string ();
       f->gen_member_ostream_operator (os,

@@ -67,13 +67,13 @@ sub run_test {
         kill_processes ();
         return -1;
     }
-    
+
     # Consumer EC.
     if (run_ec (1, $consumer_conffile[$index], $consumer_iorfile) != 0) {
         kill_processes ();
         return -1;
     }
-    
+
     # Consumer.
     $ps[2] = $test->CreateProcess ("consumer", "-ORBLogFile $output_files[2] ".
                                                "-ORBInitRef Event_Service=file://$consumer_iorfile");
@@ -81,10 +81,10 @@ sub run_test {
         kill_processes ();
         return -1;
     }
-    
+
     # Give consumer a chance to connect to its EC before firing off the supplier.
     sleep ($sleeptime);
-    
+
     # Supplier.
     $ps[3] = $test->CreateProcess ("supplier", "-ORBLogFile $output_files[3] ".
                                                "-ORBInitRef Event_Service=file://$supplier_iorfile");
@@ -172,16 +172,16 @@ sub analyze_results {
     }
 
     close (TEST_OUTPUT);
-    
+
     if ($events_received != 100) {
         print STDERR "ERROR: consumer received $events_received events, expected 100\n";
     }
-    
+
     if ($events_received == 100 && $status == 0) {
         print STDERR "SUCCESS\n";
         return 0;
     }
- 
+
     print STDERR "ERROR - check $output_files[$process_id] for full output.\n";
     return -1;
 }

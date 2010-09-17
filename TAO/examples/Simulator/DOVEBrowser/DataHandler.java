@@ -1,5 +1,5 @@
 // $Id$
-// 
+//
 // = FILENAME
 //    DataHandler.java
 //
@@ -15,13 +15,13 @@
 import org.omg.CORBA.*;
 
 public interface DataHandler {
-  
+
   // entry point for an consumer to put data event into the data handler
   public void update (RtecEventComm.Event event);
-  
+
   // get a list of the Observables names to allow selection
   public java.util.Enumeration getObservablesList ();
- 
+
   // get a specific Observable
   public DemoObservable getObservable(String name);
 
@@ -30,5 +30,5 @@ public interface DataHandler {
 }
 
 
-    
-    
+
+

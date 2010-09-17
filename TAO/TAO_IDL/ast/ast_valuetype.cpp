@@ -65,9 +65,9 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
           this->param_holders_.enqueue_tail (supports[i]);
         }
     }
-   
+
   if (inherits_concrete != 0)
-    {  
+    {
       if (inherits_concrete->node_type () == AST_Decl::NT_param_holder)
         {
           this->param_holders_.enqueue_tail (inherits_concrete);
@@ -255,12 +255,12 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
         {
           continue;
         }
-        
+
       AST_Interface *i =
         AST_Interface::narrow_from_decl (*is);
-        
+
       d = (i)->lookup_by_name_r (e, full_def_only);
-                               
+
       if (d != 0)
         {
           if (d_before == 0)
@@ -306,12 +306,12 @@ AST_ValueType::special_lookup (UTL_ScopedName *e,
                                bool full_def_only)
 {
   AST_Decl *d = this->look_in_inherited (e, full_def_only);
-  
+
   if (d == 0)
     {
       d = this->look_in_supported (e, full_def_only);
     }
-    
+
   return d;
 }
 
@@ -379,7 +379,7 @@ void
 AST_ValueType::destroy (void)
 {
   this->AST_Interface::destroy ();
-  
+
   delete [] this->pd_supports;
   this->pd_supports = 0;
   this->pd_n_supports = 0;

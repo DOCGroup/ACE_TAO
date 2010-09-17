@@ -63,7 +63,7 @@ if ( -e "supplier.conf" ) {
    $supplier_conf_file = "supplier.conf";
 }
 else{
-   $supplier_conf_file = "../supplier.conf";   
+   $supplier_conf_file = "../supplier.conf";
 }
 
 my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
@@ -92,7 +92,7 @@ $NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
 $NS = $ns->CreateProcess ($NameService, "$flags ".
                                         " -o $ns_nsiorfile ".
                                         "-ORBListenEndpoints iiop://$ns_hostname:$ns_port");
-                                        
+
 my($port1) = $s1->RandomPort() ;
 my($port2) = $s1->RandomPort() ;
 my($mport) = $s1->RandomPort() ;
@@ -102,7 +102,7 @@ if ($udp) {
    $args1 .= " -udp -ecname ec1 -port $port1 -listenport $port2 ";
 } else {
    $args1 .= " -ecname ec1 -address 224.9.9.2 -port $mport ";
-}                        
+}
 $S1 = $s1->CreateProcess ("EchoEventSupplier", "$args1");
 
 

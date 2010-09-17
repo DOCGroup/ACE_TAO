@@ -66,25 +66,25 @@ if ($sv1->PutFile ($inputfile) == -1) {
     exit 1;
 }
 
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service", 
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
                           " -o $ns_nsiorfile");
-$SV = $sv->CreateProcess ("sender", 
+$SV = $sv->CreateProcess ("sender",
                           " -ORBInitRef NameService=file://$sv_nsiorfile ".
                           "-s sender -r 10 ".
                           "-f $sv_inputfile");
-$SV1 = $sv1->CreateProcess ("sender", 
+$SV1 = $sv1->CreateProcess ("sender",
                             " -ORBInitRef NameService=file://$sv1_nsiorfile ".
                             "-s sender -r 10 ".
                             "-f $sv1_inputfile");
-$RE1 = $re1->CreateProcess ("receiver", 
+$RE1 = $re1->CreateProcess ("receiver",
                             " -ORBInitRef NameService=file://$re1_nsiorfile ".
                             "-s distributer -r receiver1 ".
                             "-f $re1_outputfile1");
-$RE2 = $re2->CreateProcess ("receiver", 
+$RE2 = $re2->CreateProcess ("receiver",
                             " -ORBInitRef NameService=file://$re2_nsiorfile ".
                             "-s distributer -r receiver2 ".
                             "-f $re2_outputfile2");
-$DI = $di->CreateProcess ("distributer", 
+$DI = $di->CreateProcess ("distributer",
                           " -ORBInitRef NameService=file://$di_nsiorfile ".
                           "-s sender -r distributer ");
 

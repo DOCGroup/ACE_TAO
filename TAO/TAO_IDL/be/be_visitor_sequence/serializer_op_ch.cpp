@@ -5,7 +5,7 @@
  *
  *  $Id$
  *
- *  Visitor generating code for TAO::DCPS::Serializer operators for sequences. 
+ *  Visitor generating code for TAO::DCPS::Serializer operators for sequences.
  *  This uses compiled marshaling.
  *
  *
@@ -78,20 +78,20 @@ be_visitor_sequence_serializer_op_ch::visit_sequence (be_sequence *node)
 
   *os << be_nl << be_nl;
 
-  *os << be_global->stub_export_macro () 
+  *os << be_global->stub_export_macro ()
       << " ::CORBA::Boolean _tao_is_bounded_size (" << be_idt << be_idt_nl
       << "const " << node->name () << " &" << be_uidt_nl
       << ");" << be_uidt_nl;
-  *os << be_global->stub_export_macro () 
+  *os << be_global->stub_export_macro ()
       << " size_t _dcps_max_marshaled_size (" << be_idt << be_idt_nl
       << "const " << node->name () << " &" << be_uidt_nl
       << ");" << be_uidt_nl;
-  *os << be_global->stub_export_macro () 
+  *os << be_global->stub_export_macro ()
       << " size_t _dcps_find_size (" << be_idt << be_idt_nl
       << "const " << node->name () << " &" << be_uidt_nl
       << ");" << be_uidt_nl;
 
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator<< (" << be_idt << be_idt_nl
       << "TAO::DCPS::Serializer &," << be_nl
@@ -111,7 +111,7 @@ be_visitor_sequence_serializer_op_ch::visit_sequence (be_sequence *node)
 
   if (be_global->gen_dcps_type_support_only ())
     {
-      *os << be_nl  << be_nl << "#if 0 // disable TAO specific code" 
+      *os << be_nl  << be_nl << "#if 0 // disable TAO specific code"
           << be_nl << be_nl;
     }
   node->cli_hdr_serializer_op_gen (1);

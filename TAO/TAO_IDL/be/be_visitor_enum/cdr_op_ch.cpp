@@ -48,7 +48,7 @@ be_visitor_enum_cdr_op_ch::visit_enum (be_enum *node)
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator>> (TAO_InputCDR &strm, " << node->name ()
       << " &_tao_enumerator);" << be_nl;
-      
+
   if (be_global->gen_ostream_operators ())
     {
       *os << be_nl

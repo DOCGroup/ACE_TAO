@@ -275,7 +275,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_argument (
 
   os->indent ();
   *os << "{" << bt->tc_name () << ", ";
-  
+
   switch (node->direction ())
     {
     case AST_Argument::dir_IN:

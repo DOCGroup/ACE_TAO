@@ -265,7 +265,7 @@ interface Param_Test
                                 inout unsigned long s2,
                                 out unsigned long s3)
     raises (Ooops);
-    
+
   typedef short short_array[32];
 
   union Big_Union switch (short)
@@ -339,7 +339,7 @@ interface Param_Test
   // Recursive structs. Contains a sequence of itself.
   struct Recursive_Struct;
   typedef sequence<Recursive_Struct> RecStructSeq;
-  
+
   struct Recursive_Struct
     {
       long x;
@@ -355,7 +355,7 @@ interface Param_Test
   // recursive union.
   union nested_rec_union;
   typedef sequence<nested_rec_union> NestedSeq;
-  
+
   union nested_rec_union switch (short)
     {
       case 0: long value;
@@ -364,7 +364,7 @@ interface Param_Test
 
   union Recursive_Union;
   typedef sequence<Recursive_Union> RecUnionSeq;
-  
+
   union Recursive_Union switch (short)
     {
       case 0: RecUnionSeq rec_member;

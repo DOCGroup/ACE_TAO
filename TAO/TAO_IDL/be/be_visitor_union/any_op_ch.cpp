@@ -44,7 +44,7 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   be_module *module = 0;
-  
+
   AST_Decl *decl = node;
   if (decl->is_nested ())
     {
@@ -67,14 +67,14 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
                                  "Error parsing nested name\n"),
                                 -1);
             }
-          
+
           // Some compilers handle "any" operators in a namespace
           // corresponding to their module, others do not.
           *os << "\n\n#if defined (ACE_ANY_OPS_USE_NAMESPACE)\n";
-          
+
           be_util::gen_nested_namespace_begin (os, module);
-          
-  
+
+
           *os << macro << " void operator<<= (::CORBA::Any &, const ::" << node->name ()
               << " &); // copying version" << be_nl;
           *os << macro << " void operator<<= (::CORBA::Any &, ::" << node->name ()
@@ -83,9 +83,9 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
               << node->name () << " *&); // deprecated\n";
           *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const ::"
               << node->name () << " *&);";
-          
+
           be_util::gen_nested_namespace_end (os, module);
-          
+
           // Emit #else.
           *os << be_nl << be_nl
               << "#else\n\n";
@@ -93,7 +93,7 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
     }
 
   *os << be_global->core_versioning_begin () << be_nl;
-  
+
   *os << macro << " void operator<<= (::CORBA::Any &, const " << node->name ()
       << " &); // copying version" << be_nl;
   *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()

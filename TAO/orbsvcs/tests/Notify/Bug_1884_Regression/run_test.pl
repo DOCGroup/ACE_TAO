@@ -116,7 +116,7 @@ if ($persistent_test == 1) {
         exit 1;
     }
 
-    sleep(5); 
+    sleep(5);
 }
 
 print "\n*********** Starting the notification Supplier ***********\n\n";

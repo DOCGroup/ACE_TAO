@@ -3,7 +3,7 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
   &  eval 'exec perl -S $0 $argv:q'
   if 0;
-  
+
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
@@ -77,10 +77,10 @@ if ($srv->WaitForFileTimed ($msfile,$srv->ProcessStartWaitInterval()) == -1) {
                       "Using default protocol (iiop) and default port ($def_port): \n",
                       "Using Resolve Initial Reference form(must tell ORB where NS is located with -ORBInitRef)\n");
 
-# Run the client for each of the corbaname test. 
+# Run the client for each of the corbaname test.
 $test_number = 0;
 $MessengerClient = "MessengerClient";
-foreach $o (@corbaname_clients) {   
+foreach $o (@corbaname_clients) {
 
     $CLI = $cli->CreateProcess ($MessengerClient, "$o");
 
@@ -91,7 +91,7 @@ foreach $o (@corbaname_clients) {
         $NS->Kill(); $NS->TimedWait (1);
         exit 1;
     }
-   
+
     $test_number++;
 
     print "======================================\n";
@@ -100,7 +100,7 @@ foreach $o (@corbaname_clients) {
     print "======================================\n\n";
 }
 
-# clean up 
+# clean up
 $SRV_status = $SRV->TerminateWaitKill ($srv->ProcessStopWaitInterval());
 
 if ($SRV_status != 0) {

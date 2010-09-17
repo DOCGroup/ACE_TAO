@@ -35,13 +35,13 @@ be_visitor_interface_svs::visit_interface (be_interface *node)
     {
       return 0;
     }
-    
-  // Skip implied IDL nodes.  
+
+  // Skip implied IDL nodes.
   if (node->original_interface () != 0)
     {
       return 0;
     }
-    
+
   if (node->is_local () || node->imported () || node->is_abstract ())
     {
       return 0;
@@ -56,7 +56,7 @@ be_visitor_interface_svs::visit_operation (be_operation *node)
   be_visitor_operation_svs v (this->ctx_);
   v.scope (be_interface::narrow_from_decl (
              this->ctx_->scope ()->decl ()));
-  
+
   return v.visit_operation (node);
 }
 
@@ -64,11 +64,11 @@ int
 be_visitor_interface_svs::visit_attribute (be_attribute *node)
 {
   be_visitor_attribute v (this->ctx_);
-  
+
   v.for_facets (true);
   v.op_scope (be_interface::narrow_from_decl (
                 this->ctx_->scope ()->decl ()));
-  
+
   return v.visit_attribute (node);
 }
 

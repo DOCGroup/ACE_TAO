@@ -2,7 +2,7 @@
 #ifndef CALLBACK_IDL
 #define CALLBACK_IDL
 
-interface Callback 
+interface Callback
 {
   void test_method();
 };

@@ -3,7 +3,7 @@
 #ifndef FOO_IDL
 #define FOO_IDL
 
-interface foo 
+interface foo
 {
   boolean match_references ();
 };

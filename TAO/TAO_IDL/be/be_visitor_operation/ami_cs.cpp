@@ -195,15 +195,15 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   be_interface *intf = be_interface::narrow_from_decl (parent);
 
   ACE_CString base (node->local_name ()->get_string ());
-  
+
   /// The sendc_* operation makes the invocation with the
   /// original operation name.
   ACE_CString lname_str (base.substr (ACE_OS::strlen ("sendc_")));
   const char *lname = lname_str.c_str ();
-  
+
   ACE_CString opname (node->is_attr_op () ? "_" : "");
   opname += lname;
-  
+
   /// Some compilers can't resolve the stream operator overload.
   const char *op_name = opname.c_str ();
   ACE_CDR::ULong len = opname.length ();
@@ -227,7 +227,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   *os << be_uidt_nl
       << ");" << be_uidt;
-  
+
   *os << be_nl << be_nl
       << "_tao_call.invoke (" << be_idt << be_idt_nl
       << "ami_handler," << be_nl
@@ -240,7 +240,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
       *os << gparent->name () << "::";
     }
-    
+
   *os << "AMI_"  << parent->local_name () << "Handler::"
       << lname << "_reply_stub" << be_uidt_nl
       << ");" << be_uidt;

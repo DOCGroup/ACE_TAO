@@ -275,7 +275,7 @@ BE_GlobalData::be_get_client_hdr (UTL_String *idl_file_name,
   ACE_CString fn (idl_file_name->get_string ());
   ACE_CString fn_ext = fn.substr (fn.length () - 5);
   bool orb_file = (fn_ext == ".pidl" || fn_ext == ".PIDL");
-  
+
   if (!orb_file && !be_global->gen_custom_ending ()
       && FE_Utils::validate_orb_include (idl_file_name))
     {
@@ -313,7 +313,7 @@ BE_GlobalData::be_get_server_hdr (UTL_String *idl_file_name,
   ACE_CString fn (idl_file_name->get_string ());
   ACE_CString fn_ext = fn.substr (fn.length () - 5);
   bool orb_file = (fn_ext == ".pidl" || fn_ext == ".PIDL");
-  
+
   if (!orb_file && !be_global->gen_custom_ending ()
       && FE_Utils::validate_orb_include (idl_file_name))
     {
@@ -1983,7 +1983,7 @@ BE_GlobalData:: void_type (void)
       AST_Decl *d =
         idl_global->root ()->lookup_primitive_type (
           AST_Expression::EV_void);
-          
+
       this->void_type_ = AST_PredefinedType::narrow_from_decl (d);
     }
 
@@ -2839,7 +2839,7 @@ BE_GlobalData::parse_args (long &i, char **av)
         else if (av[i][2] == 'M')
           {
             // AMI4CCM calls implicit option 'C': AMI with Call back.
-            be_global->ami_call_back (true); 
+            be_global->ami_call_back (true);
              // Generate tie classes and files
             be_global->ami4ccm_call_back (true);
           }

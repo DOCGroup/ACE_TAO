@@ -102,7 +102,7 @@ be_home::scan (UTL_Scope *s)
       AST_Decl *d = i.item ();
       AST_Attribute *attr =
         AST_Attribute::narrow_from_decl (d);
-        
+
       if (attr != 0 && ! attr->readonly ())
         {
           this->has_rw_attributes_ = true;
@@ -123,67 +123,67 @@ be_home::destroy (void)
 {
   delete [] this->full_skel_name_;
   this->full_skel_name_ = 0;
-  
+
   delete [] this->full_coll_name_;
   this->full_coll_name_ = 0;
-  
+
   delete [] this->local_coll_name_;
   this->local_coll_name_ = 0;
-  
+
   delete [] this->relative_skel_name_;
   this->relative_skel_name_ = 0;
-  
+
   delete [] this->base_proxy_impl_name_;
   this->base_proxy_impl_name_ = 0;
-  
+
   delete [] this->remote_proxy_impl_name_;
   this->remote_proxy_impl_name_ = 0;
-  
+
   delete [] this->direct_proxy_impl_name_;
   this->direct_proxy_impl_name_ = 0;
-  
+
   delete [] this->full_base_proxy_impl_name_;
   this->full_base_proxy_impl_name_ = 0;
-  
+
   delete [] this->full_remote_proxy_impl_name_;
   this->full_remote_proxy_impl_name_ = 0;
-  
+
   delete [] this->full_direct_proxy_impl_name_;
   this->full_direct_proxy_impl_name_ = 0;
-  
+
   delete [] this->base_proxy_broker_;
   this->base_proxy_broker_ = 0;
-  
+
   delete [] this->remote_proxy_broker_;
   this->remote_proxy_broker_ = 0;
-  
+
   delete [] this->strategized_proxy_broker_;
   this->strategized_proxy_broker_ = 0;
-  
+
   delete [] this->full_base_proxy_broker_name_;
   this->full_base_proxy_broker_name_ = 0;
-  
+
   delete [] this->full_remote_proxy_broker_name_;
   this->full_remote_proxy_broker_name_ = 0;
-  
+
   delete [] this->full_strategized_proxy_broker_name_;
   this->full_strategized_proxy_broker_name_ = 0;
-  
+
   delete [] this->client_scope_;
   this->client_scope_ = 0;
-  
+
   delete [] this->flat_client_scope_;
   this->flat_client_scope_ = 0;
-  
+
   delete [] this->server_scope_;
   this->server_scope_ = 0;
-  
+
   delete [] this->flat_server_scope_;
   this->flat_server_scope_ = 0;
-  
+
   this->be_scope::destroy ();
   this->be_type::destroy ();
-  
+
   // This skips AST_Interface, for the reason above.
   this->AST_Home::destroy ();
 }

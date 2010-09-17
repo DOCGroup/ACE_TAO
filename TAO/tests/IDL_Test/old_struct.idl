@@ -54,7 +54,7 @@ interface foo1
 interface foo2 : foo1
 {
   bar1  op2 (in bar2 a);
-  
+
   long op3 (in long a, out char b);
 };
 

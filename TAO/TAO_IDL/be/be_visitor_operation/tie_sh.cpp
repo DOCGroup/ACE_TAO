@@ -37,7 +37,7 @@ be_visitor_operation_tie_sh::visit_operation (be_operation *node)
     {
       return 0;
     }
-    
+
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 

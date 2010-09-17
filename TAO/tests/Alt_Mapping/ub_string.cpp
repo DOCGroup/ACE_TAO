@@ -47,7 +47,7 @@ Test_Unbounded_String::init_parameters (Alt_Mapping_ptr)
 
   this->in_ = gen->gen_string ();
   this->inout_ = this->in_.c_str ();
-  
+
   return 0;
 }
 
@@ -57,7 +57,7 @@ Test_Unbounded_String::reset_parameters (void)
   this->inout_ = this->in_.c_str ();
   this->out_.clear ();
   this->ret_.clear ();
-  
+
   return 0;
 }
 
@@ -76,7 +76,7 @@ Test_Unbounded_String::run_sii_test (Alt_Mapping_ptr objref)
     {
       ex._tao_print_exception ("Test_Unbounded_String::run_sii_test\n");
     }
-    
+
   return -1;
 }
 
@@ -87,7 +87,7 @@ Test_Unbounded_String::check_validity (void)
 
   std::string first_half = this->inout_.substr (0, len);
   std::string second_half = this->inout_.substr (len, len);
-  
+
   return (this->in_ == this->out_
           && this->in_ == this->ret_
           && this->inout_.length () == 2 * len

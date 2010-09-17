@@ -1,12 +1,12 @@
 // $Id$
 
-// Utility to traverse and simplify verbose log files. 
+// Utility to traverse and simplify verbose log files.
 //
 // The goal is to take a collection of log files and extract details
 // related to connections, objects, and invocations to separate out
 // perhaps multiple processes, or at least threads to get a sense of
 // invocation lifecycle.
-// 
+//
 // Ideally a collection of files could be used so that invocations
 // that traverse many processes could be tracked.
 
@@ -56,7 +56,7 @@ parse_manifest (Session &session, ACE_TCHAR *filename)
   while (!strm.eof())
     {
       strm.getline(buffer,500);
-      if (buffer[0] == '\0' || 
+      if (buffer[0] == '\0' ||
           buffer[0] == '#')
         {
           continue;

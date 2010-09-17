@@ -1,6 +1,6 @@
 // -*- C++ -*-
 //
-// $Id:$
+// $Id$
 //
 
 #include "ace/Get_Opt.h"
@@ -26,10 +26,10 @@ null_cipher_test (CORBA::ORB_ptr orb,
   //trust <<= establish_trust;
 
   CORBA::PolicyList policy_list (2);
-  policy_list.length (1); 
+  policy_list.length (1);
   policy_list[0] =
     orb->create_policy (Security::SecQOPPolicy, protection);
-//   policy_list[1] = 
+//   policy_list[1] =
 //     orb->create_policy (Security::SecEstablishTrustPolicy, trust);
 
   // Create an object reference that uses plain IIOP (i.e. no

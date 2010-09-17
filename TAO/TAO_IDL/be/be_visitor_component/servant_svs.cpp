@@ -92,7 +92,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
       || this->node_->n_consumes () > 0UL)
     {
       be_visitor_populate_port_tables ppt_visitor (this->ctx_);
-      
+
       if (ppt_visitor.visit_component_scope (node) == -1)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -128,7 +128,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
           << "::CORBA::Any & descr_value = descr[i]->value ();";
 
       be_visitor_attr_set as_visitor (this->ctx_);
-      
+
       /// This will get assigned to the visitor's interface_
       /// member later so it can catch and skip porttype
       /// attributes in a component.
@@ -166,7 +166,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
                                              &os_,
                                              false,
                                              false);
- 
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -720,7 +720,7 @@ be_visitor_servant_svs::gen_publishes_top (void)
           << "throw ::Components::InvalidName ();" << be_uidt_nl
           << "}";
     }
-    
+
   if (!be_global->gen_lwccm ())
     {
       os_ << be_nl << be_nl
@@ -765,9 +765,9 @@ void
 be_visitor_servant_svs::gen_uses_top (void)
 {
   ACE_CDR::ULong nuses = this->node_->n_uses ();
-    
+
   if (nuses > 0UL)
-    {  
+    {
       os_ << be_nl << be_nl
           << "::Components::Cookie *" << be_nl
           << node_->local_name () << "_Servant::connect ("

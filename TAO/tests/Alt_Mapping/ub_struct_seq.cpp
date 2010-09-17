@@ -55,7 +55,7 @@ Test_Unbounded_Struct_Sequence::init_parameters (Alt_Mapping_ptr)
   // set the length of the sequence
   this->in_.resize (len);
   this->inout_.resize (len);
-  
+
   // Now set each individual element.
   for (CORBA::ULong i = 0; i < this->in_.size (); i++)
     {
@@ -64,7 +64,7 @@ Test_Unbounded_Struct_Sequence::init_parameters (Alt_Mapping_ptr)
       this->in_[i] = gen->gen_fixed_struct ();
       this->inout_[i] = gen->gen_fixed_struct ();
     }
-    
+
   return 0;
 }
 
@@ -74,7 +74,7 @@ Test_Unbounded_Struct_Sequence::reset_parameters (void)
   this->inout_.clear ();
   this->out_.clear ();
   this->ret_.clear ();
-  
+
   return 0;
 }
 
@@ -134,15 +134,15 @@ Test_Unbounded_Struct_Sequence::compare (
 {
   ACE_CDR::ULong s1v = s1.capacity ();
   ACE_CDR::ULong s2v = s2.capacity ();
-  
+
   if (s1v != s2v)
     {
       return false;
     }
-     
+
   s1v = s1.size ();
-  s2v = s2.size ();   
-      
+  s2v = s2.size ();
+
   if (s1v != s2v)
     {
       return false;
@@ -176,7 +176,7 @@ Test_Unbounded_Struct_Sequence::print_sequence (
               s.capacity (),
               s.size ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
-  
+
   for (CORBA::ULong i = 0; i < s.size (); i++)
     {
       const Alt_Mapping::Fixed_Struct& vs = s[i];

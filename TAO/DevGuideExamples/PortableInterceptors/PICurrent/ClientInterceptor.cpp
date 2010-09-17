@@ -81,7 +81,7 @@ ClientInterceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
   } else {
     std::cerr << "Could not extract a boolean value from any" << std::endl;
   }
-     
+
   // Add this context to the service context list.
   ri->add_request_service_context (sc, false);
 

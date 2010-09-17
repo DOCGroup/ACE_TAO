@@ -72,7 +72,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
           << "}" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
-  
+
 
   *os << be_global->core_versioning_end () << be_nl;
 
@@ -101,10 +101,10 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
           // Some compilers handle "any" operators in a namespace corresponding
           // to their module, others do not.
           *os << "\n\n#if defined (ACE_ANY_OPS_USE_NAMESPACE)\n";
-      
+
           be_util::gen_nested_namespace_begin (os, module);
-      
-      
+
+
           // Generate the Any <<= and >>= operator declarations
           // Any <<= and >>= operators.
           *os << "void operator<<= (" << be_idt << be_idt_nl
@@ -119,7 +119,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
               << "_tao_elem" << be_uidt_nl
               << ");" << be_uidt << be_uidt_nl
               << "}" << be_nl << be_nl;
-      
+
           *os << "::CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
               << "const ::CORBA::Any &_tao_any," << be_nl
               << "::" << node->name () << " &_tao_elem" << be_uidt_nl
@@ -133,9 +133,9 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
               << "_tao_elem " << be_uidt_nl
               << ");" << be_uidt << be_uidt << be_uidt_nl
               << "}";
-      
+
           be_util::gen_nested_namespace_end (os, module);
-      
+
           // Emit #else.
           *os << be_nl << be_nl
               << "#else\n";

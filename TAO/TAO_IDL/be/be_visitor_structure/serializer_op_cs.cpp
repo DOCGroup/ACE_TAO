@@ -44,7 +44,7 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_structure_serializer_op_cs::"
                          "visit_structure - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -56,7 +56,7 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
   IDL_GlobalData::DCPS_Data_Type_Info* info;
   if (0 != (info =  idl_global->is_dcps_type(node->name())))
     {
-      *os << "::CORBA::Boolean _dcps_has_key (const " 
+      *os << "::CORBA::Boolean _dcps_has_key (const "
           << node->name() << "& ) { " << be_idt_nl;
       if (info->key_list_.is_empty())
         *os << "return false;";
@@ -67,11 +67,11 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
 
   //- _dcps_max_marshaled_size(type) method
   this->ctx_->sub_state (TAO_CodeGen::TAO_MAX_MARSHALED_SIZE);
-  *os << "size_t "  
-      << "_dcps_max_marshaled_size (const " 
+  *os << "size_t "
+      << "_dcps_max_marshaled_size (const "
       << node->name() << "& _tao_aggregate)" << be_nl
       << "{" << be_idt_nl
-      << "ACE_UNUSED_ARG (_tao_aggregate);" 
+      << "ACE_UNUSED_ARG (_tao_aggregate);"
       << " // sometimes not used - avoid warning" << be_nl;
 
   {
@@ -83,9 +83,9 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_serializer_op_cs::"
                              "visit_structure - "
-                             "codegen for field decl scope failed\n"), 
+                             "codegen for field decl scope failed\n"),
                             -1);
-        }        
+        }
 
 #ifdef DCPS_DEBUG_IDL
     *os << "size_t result = 0;" << be_nl;
@@ -98,11 +98,11 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
         ACE_ERROR_RETURN ((LM_ERROR,
                           "(%N:%l) be_visitor_structure_serializer_op_cs::"
                           "visit_structure - "
-                          "codegen for scope failed\n"), 
+                          "codegen for scope failed\n"),
                           -1);
       }
   }
-  *os << ";" << be_uidt << be_uidt_nl; 
+  *os << ";" << be_uidt << be_uidt_nl;
 #ifdef DCPS_DEBUG_IDL
   *os << "return result;" <<  be_uidt_nl;
 #endif
@@ -111,7 +111,7 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
 
   //- _tao_is_bounded_size(type) method
   this->ctx_->sub_state (TAO_CodeGen::TAO_IS_BOUNDED_SIZE);
-  *os << "::CORBA::Boolean _tao_is_bounded_size (const " 
+  *os << "::CORBA::Boolean _tao_is_bounded_size (const "
       << node->name() << "& _tao_aggregate)" << be_nl
       << "{" << be_idt_nl;
 
@@ -129,7 +129,7 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
         ACE_ERROR_RETURN ((LM_ERROR,
                           "(%N:%l) be_visitor_structure_serializer_op_cs::"
                           "visit_structure - "
-                          "codegen for scope failed\n"), 
+                          "codegen for scope failed\n"),
                           -1);
       }
   }
@@ -138,11 +138,11 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
 
   //- _dcps_find_size(type) method -- like max_marshaled_size but use len - not max.
   this->ctx_->sub_state (TAO_CodeGen::TAO_FIND_SIZE);
-  *os << "size_t "  
-      << "_dcps_find_size(const " 
+  *os << "size_t "
+      << "_dcps_find_size(const "
       << node->name() << "& _tao_aggregate)" << be_nl
       << "{" << be_idt_nl
-      << "ACE_UNUSED_ARG(_tao_aggregate);" 
+      << "ACE_UNUSED_ARG(_tao_aggregate);"
       << " // sometimes not used - avoid warning" << be_nl;
 
   {
@@ -160,11 +160,11 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
         ACE_ERROR_RETURN ((LM_ERROR,
                           "(%N:%l) be_visitor_structure_serializer_op_cs::"
                           "visit_structure - "
-                          "codegen for scope failed\n"), 
+                          "codegen for scope failed\n"),
                           -1);
       }
   }
-  *os << ";" << be_uidt << be_uidt_nl; 
+  *os << ";" << be_uidt << be_uidt_nl;
 #ifdef DCPS_DEBUG_IDL
   *os << "return result;" <<  be_uidt_nl;
 #endif
@@ -191,7 +191,7 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_structure_serializer_op_cs::"
                          "visit_structure - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -209,14 +209,14 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
       *os << "strm";
     }
 
-  *os << "," << be_nl 
+  *os << "," << be_nl
       << node->name () << " &";
-      
+
   if (! node->is_local ())
     {
       *os << "_tao_aggregate";
     }
-    
+
   *os << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
@@ -237,7 +237,7 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_structure_serializer_op_cs"
                              "::visit_structure - "
-                             "codegen for scope failed\n"), 
+                             "codegen for scope failed\n"),
                             -1);
         }
 

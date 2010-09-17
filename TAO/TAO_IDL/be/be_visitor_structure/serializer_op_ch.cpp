@@ -5,7 +5,7 @@
  *
  *  $Id$
  *
- *  Visitor generating code for TAO::DCPS::Serializer operators for 
+ *  Visitor generating code for TAO::DCPS::Serializer operators for
  *  structures. This uses compiled marshaling.
  *
  *
@@ -49,18 +49,18 @@ be_visitor_structure_serializer_op_ch::visit_structure (be_structure *node)
   IDL_GlobalData::DCPS_Data_Type_Info* info;
   if (0 != (info =  idl_global->is_dcps_type(node->name())))
     {
-      *os << be_global->stub_export_macro () 
-          << " ::CORBA::Boolean _dcps_has_key(const " 
+      *os << be_global->stub_export_macro ()
+          << " ::CORBA::Boolean _dcps_has_key(const "
           << node->name() << "& val);" << be_nl;
 
       *os << "// This structure supports use of std::map with a key" << be_nl
           << "// defined by one or more #pragma DCPS_DATA_KEY lines." << be_nl
-          << "struct " << be_global->stub_export_macro () << " " 
+          << "struct " << be_global->stub_export_macro () << " "
           << node->name()->last_component() << "KeyLessThan " << be_nl
           << "{" << be_idt_nl
           << "bool operator() (" << be_idt << be_idt_nl
           << "const " << node->name() << "& v1," << be_nl
-          << "const " << node->name() << "& v2) const"  << be_uidt << be_uidt_nl 
+          << "const " << node->name() << "& v2) const"  << be_uidt << be_uidt_nl
           << "{" << be_idt_nl;
 
       if (info->key_list_.is_empty())
@@ -96,7 +96,7 @@ be_visitor_structure_serializer_op_ch::visit_structure (be_structure *node)
               *os << ")";
 
               iter.advance ();
-              if (iter.done ()) 
+              if (iter.done ())
                 *os << ";" << be_uidt_nl;
               else
                 *os << " || " << be_nl;
@@ -106,17 +106,17 @@ be_visitor_structure_serializer_op_ch::visit_structure (be_structure *node)
           << "};" << be_nl << be_nl;
     }
 
-  //- _dcps_max_marshaled_size(type) method 
-  *os << be_global->stub_export_macro () 
-      << " size_t _dcps_max_marshaled_size (const " 
+  //- _dcps_max_marshaled_size(type) method
+  *os << be_global->stub_export_macro ()
+      << " size_t _dcps_max_marshaled_size (const "
       << node->name() << "& _tao_aggregate);" << be_nl;
-  //- _tao_is_bounded_size(type) method 
-  *os << be_global->stub_export_macro () 
-      << " ::CORBA::Boolean _tao_is_bounded_size (const " 
+  //- _tao_is_bounded_size(type) method
+  *os << be_global->stub_export_macro ()
+      << " ::CORBA::Boolean _tao_is_bounded_size (const "
       << node->name() << "& _tao_aggregate);" << be_nl;
-  //- _dcps_find_size(type) method 
-  *os << be_global->stub_export_macro () 
-      << " size_t _dcps_find_size (const " 
+  //- _dcps_find_size(type) method
+  *os << be_global->stub_export_macro ()
+      << " size_t _dcps_find_size (const "
       << node->name() << "& _tao_aggregate);" << be_nl;
 
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
@@ -148,7 +148,7 @@ be_visitor_structure_serializer_op_ch::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_structure_serializer_op_ch::"
                          "visit_structure - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 

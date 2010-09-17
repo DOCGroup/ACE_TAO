@@ -1274,7 +1274,7 @@ AST_Decl::set_name (UTL_ScopedName *n)
     }
 
   this->pd_name = n;
-  
+
   if (n)
     {
       if (this->pd_local_name)

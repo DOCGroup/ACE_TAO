@@ -123,7 +123,7 @@ Driver::run (void)
                                                     this->objref_.in(),
                                                     new Test_Unbounded_String);
         retstatus = client->run_sii_test ();
-        
+
         delete client;
       }
       break;
@@ -134,9 +134,9 @@ Driver::run (void)
             this->orb_.in (),
             this->objref_.in(),
             new Test_Unbounded_Struct_Sequence);
-                                                   
+
         retstatus = client->run_sii_test ();
-        
+
         delete client;
 
         Alt_Mapping_Client<Test_Unbounded_Struct_Sequence> *client2 = new

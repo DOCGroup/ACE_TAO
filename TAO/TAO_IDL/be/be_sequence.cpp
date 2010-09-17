@@ -561,7 +561,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
     {
       *os << "std::vector<" << elem->nested_type_name (ctx_scope)
           << ">";
-          
+
       return 0;
     }
 */

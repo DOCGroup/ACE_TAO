@@ -105,7 +105,7 @@ be_visitor_attribute_set_from_extracted::visit_predefined_type (
       default: // PT_void left out of case list.
         break;
     }
-    
+
   return 0;
 }
 
@@ -139,7 +139,7 @@ be_visitor_attribute_set_from_extracted::visit_typedef (
 {
   be_type *pbt =
     be_type::narrow_from_decl (node->primitive_base_type ());
-    
+
   return (pbt->accept (this));
 }
 

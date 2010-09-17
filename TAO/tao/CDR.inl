@@ -80,7 +80,7 @@ TAO_OutputCDR::get_codebase_url_map ()
 }
 #endif
 
-ACE_INLINE TAO_OutputCDR::Value_Map_Handle& 
+ACE_INLINE TAO_OutputCDR::Value_Map_Handle&
 TAO_OutputCDR::get_value_map ()
 {
   return this->value_map_;

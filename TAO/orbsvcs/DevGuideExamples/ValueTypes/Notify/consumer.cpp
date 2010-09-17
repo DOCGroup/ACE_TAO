@@ -183,7 +183,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
     notify_ior += ":";
     notify_ior += ACE_TEXT_ALWAYS_CHAR (port);
     notify_ior += "/NotifyEventChannelFactory";
-    
+
     obj = orb->string_to_object(notify_ior.c_str());
     CosNotifyChannelAdmin::EventChannelFactory_var ecf
       = CosNotifyChannelAdmin::EventChannelFactory::_unchecked_narrow(obj.in());

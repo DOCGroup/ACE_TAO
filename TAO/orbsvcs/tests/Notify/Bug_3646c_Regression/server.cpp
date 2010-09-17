@@ -35,11 +35,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("h:p:o:"));
   int c;
-  
+
   ACE_TCHAR *hostname = 0;
   ACE_TCHAR *port = 0;
   ACE_TCHAR *ior_file = 0;
-  
+
   while ((c = get_opts ()) != -1)
     switch (c)
       {
@@ -52,14 +52,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'o':
         ior_file = get_opts.opt_arg ();
         break;
-        
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
            "usage:  %s "
            "-h <hostname> "
            "-p <port> "
-           "-o <ior> "           
+           "-o <ior> "
            "\n",
            argv [0]),-1);
       }
@@ -69,7 +69,7 @@ if ( hostname == 0 || port == 0 || ior_file == 0){
            "usage:  %s "
            "-h <hostname> "
            "-p <port> "
-           "-o <ior> "           
+           "-o <ior> "
            "\n",
            argv [0]),-1);
 }
@@ -84,7 +84,7 @@ ACE_OS::sprintf(scpc_loadOrb, str,  hostname, port);
 
 return 0;
 }
-                                                                
+
 
 
 void loadunloadcycle()
@@ -168,7 +168,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) main - entered\n")
   ));
-  
+
   if (parse_args (argc, argv) != 0)
         return 1;
 

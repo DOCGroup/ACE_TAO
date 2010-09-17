@@ -36,7 +36,7 @@ be_visitor_root_ch::visit_root (be_root *node)
                          ACE_TEXT ("failed to initialize\n")),
                         -1);
     }
-    
+
   this->gen_fwd_decls ();
 
   if (this->visit_scope (node) == -1)
@@ -46,11 +46,11 @@ be_visitor_root_ch::visit_root (be_root *node)
                          ACE_TEXT ("codegen for scope failed\n")),
                         -1);
     }
-    
+
   this->gen_proxy_broker_factory_pointers ();
-  
+
   this->gen_ref_counting_overrides ();
-  
+
   this->gen_static_corba_overrides ();
 
   if (this->gen_obv_decls (node) == -1)
@@ -80,7 +80,7 @@ be_visitor_root_ch::visit_root (be_root *node)
                          ACE_TEXT ("failed to export templates\n")),
                         -1);
     }
-    
+
   if (this->gen_any_ops (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -122,7 +122,7 @@ be_visitor_root_ch::init (void)
   int status =
     tao_cg->start_client_header (
       be_global->be_get_client_hdr_fname ());
-  
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -133,9 +133,9 @@ be_visitor_root_ch::init (void)
 
   /// Initialize the stream.
   this->ctx_->stream (tao_cg->client_header ());
-  
+
   this->o_ = this->ctx_->stream ();
-  
+
   return 0;
 }
 
@@ -177,15 +177,15 @@ void
 be_visitor_root_ch::gen_proxy_broker_factory_pointers (void)
 {
   size_t size = be_global->non_local_interfaces.size ();
-  
+
   if (size == 0)
     {
       return;
     }
-    
+
   size_t index = 0;
   be_interface *i = 0;
-  
+
   *o_ << be_nl << be_nl
       << "// Proxy Broker Factory function pointer declarations."
       << be_nl << be_nl
@@ -214,12 +214,12 @@ void
 be_visitor_root_ch::gen_ref_counting_overrides (void)
 {
   size_t size = be_global->non_defined_interfaces.size ();
-  
+
   if (size == 0)
     {
       return;
     }
-    
+
   size_t index = 0;
   be_interface_fwd *ifwd = 0;
 
@@ -260,12 +260,12 @@ void
 be_visitor_root_ch::gen_static_corba_overrides (void)
 {
   size_t size = idl_global->mixed_parentage_interfaces ().size ();
-  
+
   if (size == 0)
     {
       return;
     }
-    
+
   size_t index = 0;
   AST_Interface *i = 0;
 
@@ -327,8 +327,8 @@ be_visitor_root_ch::gen_template_exports (be_root *node)
     {
       return 0;
     }
-    
-  be_visitor_context ctx = *this->ctx_;  
+
+  be_visitor_context ctx = *this->ctx_;
   be_visitor_template_export export_visitor (&ctx);
   return node->accept (&export_visitor);
 }
@@ -372,7 +372,7 @@ be_visitor_root_ch::gen_dds_serializer_ops (be_root *node)
     {
       return 0;
     }
-    
+
   be_visitor_context ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH);
   be_visitor_root_cdr_op visitor (&ctx);

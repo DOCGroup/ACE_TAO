@@ -896,7 +896,7 @@ be_visitor_union_branch_serializer_op_cs::visit_sequence (be_sequence *node)
   // Retrieve the union_branch node.
   be_union_branch *f =
     be_union_branch::narrow_from_decl (this->ctx_->node ());
-    
+
   if (f == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -1203,7 +1203,7 @@ be_visitor_union_branch_serializer_op_cs::visit_structure_fwd (
 {
   be_structure *s =
     be_structure::narrow_from_decl (node->full_definition ());
-    
+
   return this->visit_structure (s);
 }
 
@@ -1353,7 +1353,7 @@ be_visitor_union_branch_serializer_op_cs::visit_union_fwd (
 {
   be_union *u =
     be_union::narrow_from_decl (node->full_definition ());
-    
+
   return this->visit_union (u);
 }
 

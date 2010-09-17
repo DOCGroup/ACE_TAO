@@ -147,7 +147,7 @@ module FT
       * creation of a member of an object group, and to determine where the member
       * is created.
       *
-      * @param object_group Reference for the object group to which the member is 
+      * @param object_group Reference for the object group to which the member is
       * to be added.
       * @param the_location The physical location.
       * @param type_id The repository identifier for the type of the object.
@@ -167,10 +167,10 @@ module FT
              CannotMeetCriteria);
 
      /**
-      * This operation allows an application to add an existing object to an object 
+      * This operation allows an application to add an existing object to an object
       * group at a particular location.
       *
-      * @param object_group Reference for the object group to which the existing object 
+      * @param object_group Reference for the object group to which the existing object
       * is to be added.
       * @param the_location The physical location of the object to be added.
       * @param member The reference of the object to be added.
@@ -184,10 +184,10 @@ module FT
              ObjectNotAdded);
 
      /**
-      * This operation allows an application to remove a member from an object 
+      * This operation allows an application to remove a member from an object
       * group at a particular location.
       *
-      * @param object_group Reference for the object group to which the member 
+      * @param object_group Reference for the object group to which the member
       * is to be removed.
       * @param the_location The physical location of the member to be removed.
       *
@@ -196,17 +196,17 @@ module FT
     ObjectGroup remove_member(in ObjectGroup object_group)
       raises(ObjectGroupNotFound,
              MemberNotFound);
-     
+
      /**
-      * This operation allows the application to select the member of the object group 
+      * This operation allows the application to select the member of the object group
       * that is to be the primary.
       *
-      * @param object_group Reference for the object group whose primary is to be 
+      * @param object_group Reference for the object group whose primary is to be
       * determined.
-      * @param the_location The physical location of the member that is to become 
+      * @param the_location The physical location of the member that is to become
       * the primary.
       *
-      * @return The object group reference with the primary member at the given 
+      * @return The object group reference with the primary member at the given
       * location.
       */
     ObjectGroup set_primary_member(in ObjectGroup object_group)
@@ -235,18 +235,18 @@ module FT
     typedef any FactoryCreationId;
 
      /**
-      * This operation creates an object or an object group, using the type_id 
+      * This operation creates an object or an object group, using the type_id
       * parameter to determine which type of object to create and the_criteria
-      * parameter to determine restrictions on how and where to create the object. 
+      * parameter to determine restrictions on how and where to create the object.
       *
-      * @param type_id The repository identifier of the object to be created by 
+      * @param type_id The repository identifier of the object to be created by
       * the factory.
-      * 
+      *
       * @param the_criteria Information passed to the factory, which the factory
       * evaluates before creating the object. Examples of criteria are initialization
       * values, constraints on the object, preferred location of the object, fault
       * tolerance properties for an object group, etc.
-      * 
+      *
       * @param factory_creation_id An identifier that allows the factory to delete
       * the object subsequently.
       *

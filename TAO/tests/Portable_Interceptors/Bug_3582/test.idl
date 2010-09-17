@@ -8,7 +8,7 @@ module RTTest
   interface test
   {
     /// Return the number assigned to the current object.  For
-    /// example, object one will return "1," 
+    /// example, object one will return "1,"
     short number ();
 
     oneway void shutdown ();

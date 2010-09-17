@@ -159,7 +159,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
               << "TAO::Objref_Traits<" << node->name () << ">";
         }
 
-      *os << "," << be_nl << this->insert_policy() 
+      *os << "," << be_nl << this->insert_policy()
           << be_uidt_nl
           << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_nl
@@ -419,7 +419,7 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
               << "BD_String_" << this->S_ << "Arg_Traits_T<" << be_nl
               << "CORBA::" << (wide ? "W" : "") << "String_var," << be_nl
               << bound << "," << be_nl
-              << this->insert_policy() 
+              << this->insert_policy()
               << ">"
               << be_uidt << be_uidt << be_uidt_nl
               << "{" << be_nl
@@ -554,7 +554,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
 
   bool const skel =
     (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SS);
-    
+
   AST_Decl *op = ScopeAsDecl (node->defined_in ());
   AST_Decl *intf = ScopeAsDecl (op->defined_in ());
   ACE_CString arg_flat_name (intf->flat_name ());
@@ -581,7 +581,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
       << "BD_String_" << this->S_ << "Arg_Traits_T<" << be_nl
       << "CORBA::" << (wide ? "W" : "") << "String_var," << be_nl
       << bound << "," << be_nl
-      << this->insert_policy() 
+      << this->insert_policy()
       << be_uidt_nl
       << ">"
       << be_uidt << be_uidt << be_uidt_nl
@@ -614,10 +614,10 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
   os->gen_ifdef_macro (alias->flat_name (),
                        guard_suffix.c_str (),
                        false);
-                       
+
   bool use_vec = (node->unbounded () && be_global->alt_mapping ());
   UTL_ScopedName *sn = alias->name ();
-  
+
   *os << be_nl << be_nl
       << "template<>" << be_nl
       << "class " << this->S_ << "Arg_Traits<" << sn << ">"
@@ -677,13 +677,13 @@ be_visitor_arg_traits::visit_string (be_string *node)
       // Form a unique macro name using the local name and the bound.
       ACE_CDR::ULong l = bound;
       int num_digits = 0;
-      
+
       while (l > 0)
         {
           l /= 10 ;
           ++num_digits ;
         }
-        
+
       size_t bound_length = num_digits + 1;
       char* bound_string = 0;
       ACE_NEW_RETURN (bound_string, char[bound_length], -1) ;
@@ -748,7 +748,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
       << be_idt << be_idt_nl
       << "CORBA::" << (wide ? "W" : "") << "String_var," << be_nl
       << bound << "," << be_nl
-      << this->insert_policy() 
+      << this->insert_policy()
       << be_uidt << be_uidt_nl
       << ">"
       << be_uidt << be_uidt << be_uidt << be_uidt_nl
@@ -932,7 +932,7 @@ be_visitor_arg_traits::visit_field (be_field *node)
   // recursion. So we set the field node as processed (the
   // field *type* may not have been reached yet) and return.
   AST_Decl::NodeType nt = bt->base_node_type ();
-  
+
   if (nt == AST_Decl::NT_valuetype || nt == AST_Decl::NT_eventtype)
     {
       node->cli_traits_gen (true);

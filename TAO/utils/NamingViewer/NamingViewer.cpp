@@ -67,7 +67,7 @@ BOOL CNamingViewerApp::InitInstance()
   {
     int argc = Argv.argc ();
     CORBA::ORB_var ORB = CORBA::ORB_init(argc, Argv.argv());
-    
+
     CNamingViewerDlg dlg(ORB);
     m_pMainWnd = &dlg;
     int const nResponse = dlg.DoModal();

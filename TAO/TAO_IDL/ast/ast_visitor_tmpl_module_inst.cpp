@@ -684,7 +684,7 @@ ast_visitor_tmpl_module_inst::visit_module (AST_Module *node)
 
   AST_Module *m =
     AST_Module::narrow_from_scope (idl_global->scopes ().top ());
-  
+
   m->fe_add_module (added_module);
 
   idl_global->scopes ().push (added_module);
@@ -733,14 +733,14 @@ ast_visitor_tmpl_module_inst::visit_template_module_inst (
   AST_Module *instance =
     idl_global->gen ()->create_module (idl_global->scopes ().top (),
                                        node->name ());
-                                       
+
   instance->from_inst (node);
 
   // Add the new module to the scope containing the template
   // module instantiation.
   AST_Module *m =
     AST_Module::narrow_from_scope (idl_global->scopes ().top ());
-    
+
   m->fe_add_module (instance);
 
   // Update our scope management.
@@ -900,7 +900,7 @@ ast_visitor_tmpl_module_inst::visit_interface (AST_Interface *node)
                              node->is_local (),
                              node->is_abstract (),
                              true);
-                             
+
   AST_Interface *added_iface =
     idl_global->gen ()->create_interface (header.name (),
                                           header.inherits (),
@@ -918,7 +918,7 @@ ast_visitor_tmpl_module_inst::visit_interface (AST_Interface *node)
     }
 
   idl_global->scopes ().top ()->add_to_scope (added_iface);
-  
+
   // If this interface has both abstract and concrete parents,
   // extra code needs to be generated for it, such as overrides
   // of _is_nil() and release().
@@ -1162,7 +1162,7 @@ ast_visitor_tmpl_module_inst::visit_factory (AST_Factory *node)
   UTL_ScopedName sn (&id, 0);
 
   AST_Factory *added_factory = 0;
-  
+
   if (this->for_finder_)
     {
       added_factory =
@@ -1198,7 +1198,7 @@ ast_visitor_tmpl_module_inst::visit_factory (AST_Factory *node)
 
   // In case it was set for this call.
   this->for_finder_ = false;
-  
+
   return 0;
 }
 

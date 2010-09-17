@@ -28,7 +28,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  
+
   return 0;
 }
 
@@ -51,7 +51,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       rootPOA->the_POAManager ();
 
     CORBA::PolicyList policies (5);
-    policies.length (5); 
+    policies.length (5);
 
     // Lifespan policy
     policies[0] =
@@ -116,7 +116,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     rootPOA->destroy (1, 1);
     orb->destroy ();
   }
-  catch (const CORBA::Exception &ex) 
+  catch (const CORBA::Exception &ex)
   {
     ex._tao_print_exception ("Exception caught by serverA:");
     return 1;

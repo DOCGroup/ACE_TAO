@@ -29,16 +29,16 @@ be_visitor_connector_ami_rh_exh::visit_component (be_component *node)
     {
       return 0;
     }
-    
+
   this->node_ = node;
-  
+
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
   os_ << be_nl << be_nl
       << "namespace CIAO_" << node->flat_name ()
       << "_Impl" << be_nl
       << "{" << be_idt;
-      
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -48,10 +48,10 @@ be_visitor_connector_ami_rh_exh::visit_component (be_component *node)
                          ACE_TEXT ("failed\n")),
                         -1);
     }
-      
+
   os_ << be_uidt_nl
       << "}";
-   
+
   return 0;
 }
 
@@ -62,9 +62,9 @@ be_visitor_connector_ami_rh_exh::visit_provides (be_provides *node)
     be_interface::narrow_from_decl (node->provides_type ());
 
   this->init (true);
-  
+
   const char *suffix = "ReplyHandler";
-  
+
   os_ << be_nl
       << "class " << this->export_macro_.c_str () << " "
       << this->iface_name_ << suffix << "_i" << be_idt_nl
@@ -74,7 +74,7 @@ be_visitor_connector_ami_rh_exh::visit_provides (be_provides *node)
       << "public:" << be_idt_nl
       << this->iface_name_ << suffix << "_i (void);" << be_nl
       << "virtual ~" << this->iface_name_ << suffix << "_i (void);";
-      
+
   /// This overload of traverse_inheritance_graph() used here
   /// doesn't automatically prime the queues.
   this->callback_iface_->get_insert_queue ().reset ();
@@ -99,7 +99,7 @@ be_visitor_connector_ami_rh_exh::visit_provides (be_provides *node)
                          ACE_TEXT ("callback interface failed\n")),
                         -1);
     }
-    
+
   os_ << be_uidt_nl
       << "};";
 
@@ -113,9 +113,9 @@ be_visitor_connector_ami_rh_exh::visit_attribute (
   this->ctx_->interface (this->callback_iface_);
   TAO_CodeGen::CG_STATE state = this->ctx_->state ();
   this->ctx_->state (TAO_CodeGen::TAO_ROOT_IH);
-  
+
   be_visitor_attribute v (this->ctx_);
-  
+
   if (v.visit_attribute (node) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -124,9 +124,9 @@ be_visitor_connector_ami_rh_exh::visit_attribute (
                   ACE_TEXT ("be_visitor_attribute:: ")
                   ACE_TEXT ("visit_attribute failed\n")));
     }
-    
+
   this->ctx_->state (state);
-  
+
   return 0;
 }
 

@@ -9,7 +9,7 @@
 //    anonymous.idl
 //
 // = DESCRIPTION
-//    This file contains examples of IDL code that has 
+//    This file contains examples of IDL code that has
 //    caused problems in the past for the TAO IDL
 //    compiler. This test is to make sure the problems
 //    stay fixed.
@@ -55,7 +55,7 @@ module All_Anon
   };
 
   // Neither array nor sequence are typedef'd.
-  exception Nested_Anon 
+  exception Nested_Anon
   {
     sequence<float> float_seq_array[6];
     sequence<float> another_fsa[6];

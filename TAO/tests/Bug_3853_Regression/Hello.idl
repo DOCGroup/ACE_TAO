@@ -3,7 +3,7 @@
 //
 module Demo
 {
-  interface HelloWorld 
+  interface HelloWorld
   {
     void sayHello(in string msg);
     oneway void shutdown();

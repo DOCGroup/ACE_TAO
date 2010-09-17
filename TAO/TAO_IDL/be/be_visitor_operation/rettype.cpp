@@ -133,7 +133,7 @@ be_visitor_operation_rettype::visit_sequence (
   be_sequence *node)
 {
   *os << "::" << this->type_name (node);
-  
+
   if (!be_global->alt_mapping () || !node->unbounded ())
     {
       *os << " *";
@@ -147,7 +147,7 @@ be_visitor_operation_rettype::visit_string (be_string *node)
 {
   ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
   bool wide = (node->width () != (long) sizeof (char));
-  
+
   if (wide)
     {
       *os << "::CORBA::WChar *";

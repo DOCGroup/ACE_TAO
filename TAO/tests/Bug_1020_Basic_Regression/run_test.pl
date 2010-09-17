@@ -22,7 +22,7 @@ foreach $i (@ARGV) {
     if ($i eq '-quick') {
         $elapsed = 0;
         $max_running_time = 1;
-    } 
+    }
 }
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";

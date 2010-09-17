@@ -47,13 +47,13 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
     this->ctx_->attribute ()
       ? this->ctx_->attribute ()->defined_in ()
       : node->defined_in ();
-      
+
   be_interface *intf = be_interface::narrow_from_scope (s);
 
   if (intf == 0)
     {
       be_porttype *pt = be_porttype::narrow_from_scope (s);
-      
+
       if (pt == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -103,7 +103,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                          "codegen for return type failed\n"),
                         -1);
     }
-    
+
   // Generate the operation name
   *os << be_nl
       << intf->name () << "::" << node->local_name ();
@@ -130,10 +130,10 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                          "codegen for stub body failed\n"),
                         -1);
     }
-    
+
   /// If we are in a reply handler, are not an execp_* operation,
   /// and have no native args, then generate the AMI static
-  /// reply stub declaration.  
+  /// reply stub declaration.
   if (intf != 0
       && intf->is_ami_rh ()
       && !node->is_excep_ami ()
@@ -141,9 +141,9 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
     {
       be_visitor_operation_ami_handler_reply_stub_operation_cs v (
         this->ctx_);
-        
+
       int status = v.visit_operation (node);
-      
+
       if (status == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -153,7 +153,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                             -1);
         }
     }
-    
+
   return 0;
 }
 
@@ -191,6 +191,6 @@ be_visitor_operation_cs::visit_argument (be_argument *node)
     }
 
   *os << "0}";
-  
+
   return 0;
 }

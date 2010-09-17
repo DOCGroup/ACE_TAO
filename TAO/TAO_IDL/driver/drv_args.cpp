@@ -297,7 +297,7 @@ DRV_parse_args (long ac, char **av)
                       ACE_TEXT_CHAR_TO_TCHAR (av[i])
                     ));
                  }
-                 
+
                break;
             // Temp directory for the IDL compiler to keep its files.
             case 't':

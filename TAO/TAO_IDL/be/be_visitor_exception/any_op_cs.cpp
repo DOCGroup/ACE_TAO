@@ -110,7 +110,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
           << "}" << be_uidt_nl
           << "}";
     }
-  
+
   *os << be_global->core_versioning_end () << be_nl;
 
   be_module *module = 0;
@@ -204,16 +204,16 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
               << "_tao_elem" << be_uidt_nl
               << ");" << be_uidt << be_uidt << be_uidt_nl
               << "}";
-          
+
           be_util::gen_nested_namespace_end (os, module);
-          
+
           // Emit #else.
           *os << be_nl << be_nl
               << "#else\n";
         }
     }
-  
-  
+
+
   *os << be_global->core_versioning_begin () << be_nl;
 
   // Copying insertion operator.
@@ -281,12 +281,12 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << "}";
 
   *os << be_global->core_versioning_end () << be_nl;
-  
+
   if (module != 0)
     {
       *os << "\n\n#endif";
     }
-  
+
   // all we have to do is to visit the scope and generate code
   if (this->visit_scope (node) == -1)
     {

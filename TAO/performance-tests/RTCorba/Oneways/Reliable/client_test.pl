@@ -91,7 +91,7 @@ if ($all == 1) {
 foreach $type (@types) {
     my $transport = "";
     my $shutdown = "";
-    
+
     if ($type == "none" || $type == "transport") {
         $transport = "-ORBNodelay 0";
     }

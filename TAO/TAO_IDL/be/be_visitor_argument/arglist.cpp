@@ -88,7 +88,7 @@ int be_visitor_args_arglist::visit_array (be_array *node)
 int be_visitor_args_arglist::visit_enum (be_enum *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  
+
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -303,7 +303,7 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
         {
           *os << this->type_name (node, "_out");
         }
-        
+
       break;
     }
 
@@ -315,7 +315,7 @@ int be_visitor_args_arglist::visit_string (be_string *node)
   TAO_OutStream *os = this->ctx_->stream ();
   ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
   bool wide = (node->width () != (long) sizeof (char));
-  
+
   if (!wide && bound == 0 && be_global->alt_mapping ())
     {
       switch (this->direction ())
@@ -327,7 +327,7 @@ int be_visitor_args_arglist::visit_string (be_string *node)
             *os << "std::string &";
             break;
         }
-        
+
       return 0;
     }
 

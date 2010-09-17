@@ -71,7 +71,7 @@ FE_Utils::T_ARGLIST::destroy (void)
     {
       i.next (d);
       tmp = *d;
-      
+
       /// This is a problem - nodes that aren't NT_const have
       /// already been destroyed. Must find some other way of
       /// ferreting out the NT_const arglist nodes.
@@ -174,7 +174,7 @@ FE_Utils::ExprTypeToPredefinedType (AST_Expression::ExprType et)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("FE_Utils::ExprTypeToPredefinedType - ")
                   ACE_TEXT ("no pathing PredefinedType enum value\n")));
-           
+
       /// A deliberately odd return value, so the caller can check
       /// it and take further action if necessary.
       return AST_PredefinedType::PT_pseudo;
@@ -262,16 +262,16 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
   struct_name += "Connection";
   Identifier struct_id (struct_name.c_str ());
   UTL_ScopedName sn (&struct_id, 0);
-  
+
   // In case this call comes from the backend. We
   // will pop the scope before returning.
   idl_global->scopes ().push (c);
-  
+
   AST_Structure *connection =
     idl_global->gen ()->create_structure (&sn, 0, 0);
 
   struct_id.destroy ();
-  
+
   /// If the field type is a param holder, we want
   /// to use the lookup to create a fresh one,
   /// since the field will own it and destroy it.
@@ -296,7 +296,7 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
   Identifier module_id ("Components");
   UTL_ScopedName scoped_name (&module_id,
                               &local_name);
-                              
+
   d = c->lookup_by_name (&scoped_name, true);
   local_id.destroy ();
   module_id.destroy ();
@@ -346,7 +346,7 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
   seq_id.destroy ();
 
   (void) c->fe_add_typedef (connections);
-  
+
   // In case this call comes from the backend.
   idl_global->scopes ().pop ();
 }
@@ -372,15 +372,15 @@ FE_Utils::create_implied_ami_uses_stuff (void)
 
       AST_Decl *d =
         idl_global->root ()->lookup_by_name (sn, true);
-            
+
       if (d == 0)
         {
           idl_global->err ()->lookup_error (sn);
-          
+
           sn->destroy ();
           delete sn;
           sn = 0;
-          
+
           continue;
         }
 
@@ -397,18 +397,18 @@ FE_Utils::create_implied_ami_uses_stuff (void)
                       ACE_TEXT ("implied_ami_uses_stuff - ")
                       ACE_TEXT ("narrow to receptacle ")
                       ACE_TEXT ("failed\n")));
-                      
+
           continue;
         }
-      
+
       if (!u->is_multiple ())
         {
           continue;
         }
-        
+
       AST_Component *c =
         AST_Component::narrow_from_scope (u->defined_in ());
-        
+
       if (c == 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -416,13 +416,13 @@ FE_Utils::create_implied_ami_uses_stuff (void)
                       ACE_TEXT ("implied_ami_uses_stuff - ")
                       ACE_TEXT ("receptacle not defined")
                       ACE_TEXT ("in a component\n")));
-                      
+
           continue;
         }
-        
+
       FE_Utils::create_uses_multiple_stuff (c, u, "sendc");
     }
-    
+
   idl_global->included_ami_receps_done (true);
 }
 
@@ -539,7 +539,7 @@ FE_Utils::is_include_file_found (ACE_CString & inc_file,
   // If the include path has literal "s (because of an include
   // of a Windows path with spaces), we must remove them here.
   const char *tmp_inc_file = inc_file.c_str ();
-  
+
   if (tmp_inc_file
       && FE_Utils::hasspace (tmp_inc_file)
       && tmp_inc_file[0] == '\"')
@@ -556,7 +556,7 @@ FE_Utils::is_include_file_found (ACE_CString & inc_file,
   if (full_path != 0)
     {
       FILE *test = ACE_OS::fopen (abspath, "r");
-      
+
       if (test == 0)
         {
           return false;
@@ -581,26 +581,26 @@ FE_Utils::validate_included_idl_files (void)
 {
   // Flag to make sure we don't repeat things.
   static bool already_done = false;
-  
+
   if (already_done)
     {
       return;
     }
-    
+
   already_done = true;
 
   // New number of included_idl_files.
   size_t newj = 0;
-  
+
   size_t n_pre_preproc_includes =
     idl_global->n_included_idl_files ();
-    
+
   char **pre_preproc_includes =
     idl_global->included_idl_files ();
-    
+
   size_t n_post_preproc_includes =
     idl_global->n_include_file_names ();
-    
+
   UTL_String **post_preproc_includes =
     idl_global->include_file_names ();
 
@@ -616,12 +616,12 @@ FE_Utils::validate_included_idl_files (void)
   // @see bug TAO#711 / Bugzilla #3513 for more
   char** ordered_include_files =
     new char* [n_pre_preproc_includes];
-  
+
   for (size_t i = 0u; i < n_post_preproc_includes; ++i)
     {
       post_tmp = post_preproc_includes [i]->get_string ();
       full_path = ACE_OS::realpath (post_tmp, post_abspath);
-      
+
       if (full_path)
         {
           for (size_t j = 0u; j < n_pre_preproc_includes; ++j)
@@ -662,7 +662,7 @@ FE_Utils::validate_included_idl_files (void)
                   full_path =
                     ACE_OS::realpath (pre_partial.c_str (),
                                       pre_abspath);
-                  
+
                   if (full_path &&
                       FE_Utils::path_cmp (pre_abspath, post_abspath) == 0 &&
                       ACE_OS::access (post_abspath, R_OK) == 0)
@@ -815,7 +815,7 @@ FE_Utils::can_be_redefined (AST_Decl *prev_decl,
 {
   AST_Decl::NodeType pnt = prev_decl->node_type ();
   AST_Decl::NodeType cnt = curr_decl->node_type ();
-  
+
   switch (cnt)
   {
     /// For these, any non-zero previous decl
@@ -832,14 +832,14 @@ FE_Utils::can_be_redefined (AST_Decl *prev_decl,
     default:
       break;
   }
-    
+
   UTL_Scope *prev_scope = prev_decl->defined_in ();
   UTL_Scope *curr_scope = curr_decl->defined_in ();
   AST_Structure *s = 0;
   AST_StructureFwd *s_fwd = 0;
   AST_Interface *i = 0;
   AST_InterfaceFwd *i_fwd = 0;
-  
+
   bool nt_eq = (pnt == cnt);
   bool s_eq = (prev_scope == curr_scope);
 

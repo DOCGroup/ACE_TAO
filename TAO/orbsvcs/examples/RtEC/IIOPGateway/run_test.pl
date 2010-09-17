@@ -44,31 +44,31 @@ $g->DeleteFile ($nsiorfile);
 $c->DeleteFile ($nsiorfile);
 $s->DeleteFile ($nsiorfile);
 
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service", 
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
                           " -o $ns_nsiorfile");
 
-$T1 = $t1->CreateProcess ("EC", 
+$T1 = $t1->CreateProcess ("EC",
                           " -ORBInitRef NameService=file://$t1_nsiorfile ".
                           "-ORBsvcconf $t1_conffile ".
                           "-e channel1");
 
-$T2 = $t2->CreateProcess ("EC", 
+$T2 = $t2->CreateProcess ("EC",
                           " -ORBInitRef NameService=file://$t2_nsiorfile ".
                           "-ORBsvcconf $t2_conffile ".
                           "-e channel2");
 
-$G = $g->CreateProcess ("Gateway", 
+$G = $g->CreateProcess ("Gateway",
                         " -ORBInitRef NameService=file://$g_nsiorfile ".
                         "-ORBSvcconf $g_gconffile ".
                         "-c channel2 ".
                         "-s channel1");
 
-$C = $c->CreateProcess ("Consumer", 
+$C = $c->CreateProcess ("Consumer",
                         " -ORBInitRef NameService=file://$c_nsiorfile ".
                         "-ORBDebugLevel $debug_level ".
                         "-e channel2");
 
-$S = $s->CreateProcess ("Supplier", 
+$S = $s->CreateProcess ("Supplier",
                         " -ORBInitRef NameService=file://$s_nsiorfile ".
                         "-e channel1");
 

@@ -37,7 +37,7 @@ interface simple2 : simple
   {
     long reason2;
   };
-  
+
   long op2 (in long a,
             in simple b,
             out simple2 c)

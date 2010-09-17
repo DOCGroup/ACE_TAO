@@ -264,7 +264,7 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
 
       t1->set_name (sn);
     }
-      
+
   // Already defined and cannot be redefined? Or already used?
   if ((d = this->lookup_for_add (t)) != 0)
     {

@@ -480,7 +480,7 @@ UTL_Scope::fe_add_decl (AST_Decl *t)
 {
   // Already defined and cannot be redefined? Or already used?
   AST_Decl *d = this->lookup_for_add (t);
-  
+
   if (d)
     {
       if (!FE_Utils::can_be_redefined (d, t))
@@ -576,7 +576,7 @@ AST_Structure *
 UTL_Scope::fe_add_full_struct_type (AST_Structure *t)
 {
   AST_Decl *predef = this->lookup_for_add (t);
-  
+
   if (predef)
     {
       if (!FE_Utils::can_be_redefined (predef, t))
@@ -587,7 +587,7 @@ UTL_Scope::fe_add_full_struct_type (AST_Structure *t)
                                       predef);
           return 0;
         }
-        
+
       if (referenced (predef, t->local_name ()) && !t->is_defined ())
         {
           idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
@@ -953,7 +953,7 @@ UTL_Scope::lookup_pseudo (Identifier *e)
   bool *seen = 0;
   char *name_string = e->get_string ();
   UTL_Scope *start_scope = idl_global->corba_module ();
-  
+
   if (ACE_OS::strcasecmp (name_string, "TypeCode") == 0
       || ACE_OS::strcasecmp (name_string, "TCKind") == 0)
     {
@@ -980,13 +980,13 @@ UTL_Scope::lookup_pseudo (Identifier *e)
     {
       return 0;
     }
-  
+
   for (UTL_ScopeActiveIterator i (start_scope, IK_decls);
        !i.is_done ();
        i.next ())
     {
       AST_Decl *d = i.item ();
-      
+
       if (e->case_compare (d->local_name ()))
         {
           // These have to be located here because we are just looking
@@ -1003,7 +1003,7 @@ UTL_Scope::lookup_pseudo (Identifier *e)
   if (this->which_pseudo_ == PSEUDO_TYPECODE)
     {
       AST_Decl *d = this->look_in_prev_mods_local (e);
-      
+
       if (d != 0)
         {
           // Generation of #includes for Typecode.h
@@ -1035,17 +1035,17 @@ AST_Decl *
 UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
 {
   UTL_Scope *search = idl_global->corba_module ();
-  
+
   AST_PredefinedType::PredefinedType pdt =
     FE_Utils::ExprTypeToPredefinedType (et);
-    
+
   /// This return value means there was no PredefinedType match
-  /// for the ExprType.  
+  /// for the ExprType.
   if (pdt == AST_PredefinedType::PT_pseudo)
     {
       return 0;
     }
-  
+
   /// The only 'predefined type' not in the CORBA module.
   if (pdt == AST_PredefinedType::PT_void)
     {
@@ -1057,12 +1057,12 @@ UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
        i.next ())
     {
       AST_Decl *as_decl = i.item ();
-      
+
       if (as_decl->node_type () == AST_Decl::NT_pre_defined)
         {
           AST_PredefinedType *t =
             AST_PredefinedType::narrow_from_decl (as_decl);
-            
+
           if (t->pt () == pdt)
             {
               if (idl_global->in_main_file ())
@@ -1211,7 +1211,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
   // scope-expanding iteration below.
   Identifier *name = e->head ();
   const bool global_scope_name = work->is_global_name (name);
-  
+
   if (global_scope_name)
     {
       // Remove the preceeding "::" or "" from the scopename
@@ -1223,7 +1223,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
     }
 
   AST_Decl *d = work->lookup_by_name_r (e, full_def_only);
-  
+
   if (d == 0)
     {
       // If all else fails, look though each outer scope.
@@ -1232,7 +1232,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
            outer = ScopeAsDecl (outer)->defined_in ())
         {
           d = outer->lookup_by_name_r (e, full_def_only);
-          
+
           if (d != 0)
             {
               work = outer;
@@ -1243,12 +1243,12 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 
   ACE_Unbounded_Queue<AST_Decl *> &masks =
     idl_global->masking_scopes ();
-    
+
   if (d != 0 && !global_scope_name)
     {
       ACE_Unbounded_Queue<AST_Decl *>::CONST_ITERATOR i (masks);
       AST_Decl **item = 0;
-      
+
       if (i.next (item))
         {
           // The first queue item (last enqueued) will always
@@ -1257,13 +1257,13 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 
           // Now check that the rest of the names don't collide
           const char *const name_str = name->get_string ();
-          
+
           while (i.advance ())
             {
               i.next (item);
               const char *const item_name_str =
                 (*item)->local_name ()->get_string ();
-                
+
               if (!ACE_OS::strcmp (item_name_str, name_str)
                   && !(*item)->masking_checks (outer_decl))
                 {
@@ -1280,7 +1280,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
       /// Doesn't add if d == 0.
       work->add_to_referenced (d, false, name);
     }
-    
+
   masks.reset ();
   return d;
 }
@@ -1291,7 +1291,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
 {
   bool work_another_level;
   UTL_Scope *work = this;
-  
+
   do
     {
       // Will catch Object, TypeCode, TCKind, ValueBase and
@@ -1299,7 +1299,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
       // generation of some #includes and, whether successful or not,
       // incurs no extra overhead.
       AST_Decl *d = work->lookup_pseudo (e->head ());
-      
+
       if (d)
         {
           return d;
@@ -1324,7 +1324,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
           // lookup.
           AST_Param_Holder *param_holder =
             UTL_Scope::match_param (e);
-            
+
           if (param_holder)
             {
               return param_holder;
@@ -1334,7 +1334,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
       work_another_level = false; // Until we find something.
       bool in_corba =
         (ACE_OS::strcmp (e->head ()->get_string (), "CORBA") == 0);
-        
+
       for (UTL_ScopeActiveIterator i (work, IK_decls);
            !i.is_done ();
            i.next ())
@@ -1356,7 +1356,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
                 }
 
               UTL_Scope *next = DeclAsScope (d); // The next scope to search
-              
+
               if (next)
                 {
                   work = next;
@@ -1382,7 +1382,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
            i.next ())
         {
           AST_Decl *d = i.item ();
-          
+
           if (d->local_name ()->case_compare (e->head ()))
             {
               return d;
@@ -1830,7 +1830,7 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
            i.next ())
         {
           AST_Decl *d = i.item ();
-          
+
           if (!d->imported ())
             {
               idl_global->indent ()->skip_to (o);
@@ -1849,7 +1849,7 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
            j.next ())
         {
           AST_Decl *d = j.item ();
-          
+
           if (!d->imported ())
             {
               idl_global->indent ()->skip_to (o);

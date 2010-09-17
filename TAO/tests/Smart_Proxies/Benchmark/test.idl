@@ -6,7 +6,7 @@ interface Test
   //    A simple test interface
   //
   // = DESCRIPTION
-  //    This test demostrates the smart proxy feature in TAO 
+  //    This test demostrates the smart proxy feature in TAO
   //    and shows how it can improve performace via caching.
 
   short box_prices ();

@@ -22,24 +22,24 @@ $S->Spawn();
 
 if ($server->WaitForFileTimed ($iorfile, $server->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $S->Kill(); 
+    $S->Kill();
     exit 1;
 }
 
-$C = $client->CreateProcess("MessengerClient");  
+$C = $client->CreateProcess("MessengerClient");
 $C->Spawn();
 
 $CRET = $C->WaitKill($client->ProcessStartWaitInterval());
 $S->Kill();
 
-# clean-up 
+# clean-up
 
 $server->DeleteFile($iorfile);
 
 if ($CRET != 0) {
     print STDERR "ERROR: Client returned <$CRET>\n";
     exit 1 ;
-}  
+}
 
 exit 0;
 

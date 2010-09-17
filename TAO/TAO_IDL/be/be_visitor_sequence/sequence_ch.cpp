@@ -95,7 +95,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
     }
 
   *os << be_nl << be_nl;
-  
+
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
@@ -103,7 +103,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   os->gen_ifdef_macro (node->flat_name ());
 
   *os << be_nl << be_nl;
-  
+
   /// If we are using std::vector, we won't be using _vars
   /// and _outs. They may get redefined and reinstated later.
   if (!be_global->alt_mapping () || !node->unbounded ())
@@ -135,9 +135,9 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                              ACE_TEXT ("buffer type visit failed\n")),
                             -1);
         }
-        
+
       *os << "> " << node->local_name () << ";";
-      
+
       os->gen_endif ();
       node->cli_hdr_gen (true);
       return 0;
@@ -147,7 +147,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       << "class " << be_global->stub_export_macro () << " "
       << node->local_name () << be_idt_nl
       << ": public" << be_idt << be_idt_nl;
-      
+
   int status =
     node->gen_base_class_name (os,
                                "",
@@ -211,7 +211,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       *os << "* buffer, " << be_nl
           << "::CORBA::Boolean release = false);" << be_uidt;
   }
-  
+
   *os << be_nl
       << node->local_name () << " (const " << node->local_name ()
       << " &);" << be_nl;
@@ -226,7 +226,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           << be_nl << be_nl
           << "virtual ::CORBA::ULong maximum (void) const;";
     }
-    
+
   *os << be_nl;
 
   node->gen_stub_decls (os);

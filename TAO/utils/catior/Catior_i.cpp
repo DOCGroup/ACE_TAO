@@ -578,19 +578,19 @@ Catior_i::cat_tao_tag_endpoints (TAO_InputCDR& stream)
     const char *host = epseq[iter].host;
     CORBA::UShort port = epseq[iter].port;
     indent ();
-    ACE_OS::snprintf (buf, bufsize, 
+    ACE_OS::snprintf (buf, bufsize,
                       "Endpoint #%d:\n", iter+1);
     buffer_ += buf;
     indent ();
-    ACE_OS::snprintf (buf, bufsize, 
+    ACE_OS::snprintf (buf, bufsize,
                       "Host: %s\n", host);
     buffer_ += buf;
     indent ();
-    ACE_OS::snprintf (buf, bufsize, 
+    ACE_OS::snprintf (buf, bufsize,
                       "Port: %d\n", port);
     buffer_ += buf;
     indent ();
-    ACE_OS::snprintf (buf, bufsize, 
+    ACE_OS::snprintf (buf, bufsize,
                       "Priority: %d\n", epseq[iter].priority);
     buffer_ += buf;
   }
@@ -1242,7 +1242,7 @@ Catior_i::cat_profile_helper (TAO_InputCDR& stream,
          && iiop_version_minor <= 2))
     {
       indent ();
-      ACE_OS::snprintf (buf, bufsize, 
+      ACE_OS::snprintf (buf, bufsize,
                         "detected new v%d.%d %C profile that catior cannot decode\n",
                         iiop_version_major,
                         iiop_version_minor,

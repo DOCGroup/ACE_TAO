@@ -4,7 +4,7 @@
 interface UDP
 {
   // = TITLE
-  //    Defines an interface that encapsulates operations that 
+  //    Defines an interface that encapsulates operations that
   //    return the current time of day and shuts down the server.
 
   struct LongStruct

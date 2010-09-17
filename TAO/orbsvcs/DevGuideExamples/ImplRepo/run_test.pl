@@ -56,7 +56,7 @@ $c1->DeleteFile ($messenger_ior);
 $c2->DeleteFile ($messenger_ior);
 $si->DeleteFile ($messenger_ior);
 
-# Note : We don't actually use SVR, but we need a way to get the 
+# Note : We don't actually use SVR, but we need a way to get the
 #        path to the -ExeSubDir
 $SVR = $imr->CreateProcess ("MessengerServer", "-ORBdebuglevel $debug_level");
 my $server = $SVR->Executable ();
@@ -154,7 +154,7 @@ $TI->IgnoreExeSubDir (1);
 
 ## Note : Instead of using tao_imr to generate the ior, it's easy enough
 ## to just create one by hand. The ior is just a normal corbaloc ior with
-## the poa_name of the server and ip address of the imr. 
+## the poa_name of the server and ip address of the imr.
 ## (ie corbaloc::localhost:8888/Messengerservice)
 ## Of course, to do this, you'd have to start the imr on port 8888.
 ## We use the "tao_imr ior" command, because we don't know which port was used.

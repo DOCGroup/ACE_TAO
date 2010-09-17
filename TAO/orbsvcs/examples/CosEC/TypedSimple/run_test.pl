@@ -52,9 +52,9 @@ $ces->DeleteFile ($cesiorfile);
 $con->DeleteFile ($coniorfile);
 
 
-$IFR = $ifr->CreateProcess ($ENV{"TAO_ROOT"}."/orbsvcs/IFR_Service/IFR_Service", 
+$IFR = $ifr->CreateProcess ($ENV{"TAO_ROOT"}."/orbsvcs/IFR_Service/IFR_Service",
                             " -o $ifr_ifriorfile");
-$TI = $ti->CreateProcess ($ENV{"ACE_ROOT"}."/bin/tao_ifr", 
+$TI = $ti->CreateProcess ($ENV{"ACE_ROOT"}."/bin/tao_ifr",
                           " -ORBInitRef InterfaceRepository=file://$ti_ifriorfile ".
                           "-I".$ENV{"TAO_ROOT"}."/orbsvcs $ti_idl");
 $NS = $ns->CreateProcess ($ENV{"TAO_ROOT"}."/orbsvcs/Naming_Service/Naming_Service",
@@ -64,7 +64,7 @@ $CES = $ces->CreateProcess ($ENV{"TAO_ROOT"}."/orbsvcs/CosEvent_Service/CosEvent
                           "-ORBInitRef InterfaceRepository=file://$ces_ifriorfile ".
                           "-ORBInitRef NameService=file://$ces_nsiorfile ");
 $CON = $con->CreateProcess ("Consumer",
-                          "-o $con_coniorfile ".    
+                          "-o $con_coniorfile ".
                           "-ORBInitRef NameService=file://$con_nsiorfile ");
 $SUP = $sup->CreateProcess ("Supplier",
                           "-ORBInitRef NameService=file://$sup_nsiorfile ");

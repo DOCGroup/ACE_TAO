@@ -49,7 +49,7 @@ be_visitor_operation_argument_marshal::pre_process (be_decl *bd)
                          "Bad argument node\n"),
                         -1);
     }
-    
+
   switch (arg->direction ())
     {
     case AST_Argument::dir_IN:
@@ -109,7 +109,7 @@ be_visitor_operation_argument_marshal::post_process (be_decl *bd)
                          "Bad argument node\n"),
                         -1);
     }
-    
+
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
@@ -199,7 +199,7 @@ be_visitor_args_decl::visit_array (be_array *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_args_decl::"
                          "visit_array - "
-                         "cannot retrieve argument node\n"), 
+                         "cannot retrieve argument node\n"),
                         -1);
     }
 
@@ -207,8 +207,8 @@ be_visitor_args_decl::visit_array (be_array *node)
   // the full_name with or without the underscore and use it later on.
   char fname [NAMEBUFSIZE];  // to hold the full and
 
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (!this->ctx_->alias () // not a typedef
@@ -224,23 +224,23 @@ be_visitor_args_decl::visit_array (be_array *node)
           be_decl *parent =
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
-          ACE_OS::sprintf (fname, 
-                           "%s::_%s", 
+          ACE_OS::sprintf (fname,
+                           "%s::_%s",
                            parent->full_name (),
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, 
-                           "_%s",        
+          ACE_OS::sprintf (fname,
+                           "_%s",
                            node->full_name ());
         }
     }
   else
     {
       // Typedefed node.
-      ACE_OS::sprintf (fname, 
-                       "%s", 
+      ACE_OS::sprintf (fname,
+                       "%s",
                        node->full_name ());
     }
 
@@ -272,7 +272,7 @@ be_visitor_args_decl::visit_typedef (be_typedef *node)
                          "(%N:%l) be_visitor_args_decl::"
                          "visit_typedef - "
                          "Bad primitive type\n"
-                         ), 
+                         ),
                         -1);
     }
 

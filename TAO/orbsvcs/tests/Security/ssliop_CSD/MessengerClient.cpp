@@ -55,9 +55,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-    CORBA::String_var message = CORBA::string_dup( 
+    CORBA::String_var message = CORBA::string_dup(
       "Implementing security policy now!" );
-    messenger->send_message( "Chief of Security", 
+    messenger->send_message( "Chief of Security",
                              "New Directive",
                              message.inout() );
     std::cout << "message was sent" << std::endl;

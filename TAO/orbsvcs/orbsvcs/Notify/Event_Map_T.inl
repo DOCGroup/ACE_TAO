@@ -30,7 +30,7 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::find (const TAO_Notify_EventType& event
       for(Iterator_Type i = this->map_.begin (); i != end; ++i)
         {
           if ((*i).ext_id_ == event_type)
-            {                            
+            {
               entry = (*i).int_id_;
               entry->_incr_refcnt ();
               return entry;

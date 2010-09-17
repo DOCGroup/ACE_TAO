@@ -44,7 +44,7 @@ be_visitor_connector_dds_ex_base::begin (be_connector *node)
   if (this->t_args_ == 0)
     {
       this->process_template_args (node);
-      
+
       if (this->t_args_ == 0)
         {
           return false;
@@ -58,8 +58,8 @@ be_visitor_connector_dds_ex_base::begin (be_connector *node)
       << "_Impl" << be_nl
       << "{" << be_idt;
 
-  this->base_tname_ = node->local_name ();  
-    
+  this->base_tname_ = node->local_name ();
+
   return true;
 }
 
@@ -69,7 +69,7 @@ be_visitor_connector_dds_ex_base::process_template_args (
 {
   AST_Module *m =
     AST_Module::narrow_from_scope (node->defined_in ());
-    
+
   /// We assume the connector comes from the instantiation
   /// of a template module, and the regular module it's
   /// defined in (at some level) will have a reference to it.

@@ -9,7 +9,7 @@
 //    params.idl
 //
 // = DESCRIPTION
-//    This file contains examples of IDL code that has 
+//    This file contains examples of IDL code that has
 //    caused problems in the past for the TAO IDL
 //    compiler. This test is to make sure the problems
 //    stay fixed.
@@ -24,23 +24,23 @@
 // more judiciously in the header file. This file was
 // also initially a problem for lookups as well.
 
-module foo 
+module foo
 {
-  struct theDate 
+  struct theDate
     {
       short year;
       short month;
       short day;
     };
-  
-  module bar 
+
+  module bar
     {
-      struct theDate 
+      struct theDate
         {
           short x;
         };
-              
-      interface fooBar 
+
+      interface fooBar
         {
           foo::theDate getDate (in foo::theDate a,
                                 inout foo::theDate b,

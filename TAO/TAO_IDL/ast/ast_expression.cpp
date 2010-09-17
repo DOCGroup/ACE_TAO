@@ -106,11 +106,11 @@ AST_Expression::AST_Expression (UTL_ScopedName *nm)
     param_holder_ (0)
 {
   this->fill_definition_details ();
-  
+
   AST_Decl *d =
     idl_global->scopes ().top_non_null ()->lookup_by_name (nm,
                                                            true);
-  
+
   if (d->node_type () == AST_Decl::NT_param_holder)
     {
       this->param_holder_ =
@@ -1823,12 +1823,12 @@ eval_kind (AST_Expression::AST_ExprValue *ev, AST_Expression::EvalKind ek)
   ACE_NEW_RETURN (newval,
                   AST_Expression::AST_ExprValue,
                   0);
-                  
+
   if (ev != 0)
     {
       *newval = *ev;
     }
-    
+
   AST_Expression::AST_ExprValue *retval = 0;
 
   switch (ek)
@@ -1868,9 +1868,9 @@ eval_kind (AST_Expression::AST_ExprValue *ev, AST_Expression::EvalKind ek)
     default:
       break;
   }
-  
+
   // Sometimes the call above to coerce_value() will return an
-  // evaluated newval, other times 0. But a heap-allocated 
+  // evaluated newval, other times 0. But a heap-allocated
   // ExprValue is not always passed to coerce_value(), so we
   // have to manage it here, where we know it is always a 'new'.
   if (retval != newval)
@@ -1878,7 +1878,7 @@ eval_kind (AST_Expression::AST_ExprValue *ev, AST_Expression::EvalKind ek)
       delete newval;
       newval = 0;
     }
-    
+
   return retval;
 }
 
@@ -2173,7 +2173,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           return 0;
       }
     }
-    
+
     break;
   case EK_longlong:
     {
@@ -2207,7 +2207,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           return 0;
       }
     }
-    
+
     break;
 #endif /* !defined (ACE_LACKS_LONGLONG_T) */
   case EK_ulong:
@@ -2242,7 +2242,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           return 0;
       }
     }
-    
+
     break;
   case EK_long:
     {
@@ -2274,9 +2274,9 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           break;
         default:
           return 0;
-      } 
+      }
     }
-    
+
     break;
   case EK_ushort:
     {
@@ -2310,7 +2310,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           return 0;
       }
     }
-    
+
     break;
   case EK_short:
     {
@@ -2342,9 +2342,9 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           break;
         default:
           return 0;
-      } 
+      }
     }
-    
+
     break;
   case EK_bool:
     {
@@ -2378,7 +2378,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           return 0;
       }
     }
-    
+
     break;
   case EK_octet:
     {
@@ -2406,7 +2406,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
             // even if both operands are in range, so we set the ExprType
             // to a large type and then check for overflow.
             retval->u.ulval =
-              this->pd_v1->ev ()->u.ulval << this->pd_v2->ev ()->u.ulval;             
+              this->pd_v1->ev ()->u.ulval << this->pd_v2->ev ()->u.ulval;
             AST_Expression test (retval->u.ulval, EV_ulong);
             AST_ExprValue *ev = test.coerce (EV_octet);
             delete retval;
@@ -2421,11 +2421,11 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           return 0;
       }
     }
-    
+
     break;
   default:
     return 0;
-  }  
+  }
 
   return retval;
 }
@@ -2560,10 +2560,10 @@ AST_Expression::eval_symbol (AST_Expression::EvalKind ek)
       idl_global->err ()->lookup_error (this->pd_n);
       return 0;
     }
-    
+
   // If we are a template parameter placeholder, just skip the
   // rest - nothing needs to be evaluated until instantiation
-  // time.  
+  // time.
   if (this->param_holder_ != 0)
     {
       return 0;
@@ -2864,7 +2864,7 @@ AST_Expression::evaluate (EvalKind ek)
   AST_ExprValue *tmp = eval_kind (this->pd_ev, ek);
   delete this->pd_ev;
   this->pd_ev = tmp;
-  
+
   // Artifact of expressions doing double duty for all template
   // args. At this point, we have knowledge that we must be an
   // enum constant, so we set the expression type here, rather
@@ -3311,7 +3311,7 @@ AST_Expression::destroy (void)
 
   delete this->pd_n;
   this->pd_n = 0;
-  
+
   if (this->param_holder_ != 0)
     {
       this->param_holder_->destroy ();

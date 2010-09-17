@@ -9,7 +9,7 @@ module Test
   interface BoundSequences
   {
     typedef sequence<long, 10> SequenceOf10Long;
-    unsigned long SendSequenceOf10Long (in unsigned long LengthSent, in SequenceOf10Long inSeq); 
+    unsigned long SendSequenceOf10Long (in unsigned long LengthSent, in SequenceOf10Long inSeq);
 
     /// A method to shutdown the ORB
     /**

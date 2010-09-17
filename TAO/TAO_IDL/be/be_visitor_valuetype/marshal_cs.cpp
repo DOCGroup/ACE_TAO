@@ -96,7 +96,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_marshal_cs::"
                          "visit_valuetype - "
-                         "codegen for field out cdr scope failed\n"), 
+                         "codegen for field out cdr scope failed\n"),
                         -1);
     }
 

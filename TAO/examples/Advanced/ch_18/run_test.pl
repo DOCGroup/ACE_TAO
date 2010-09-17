@@ -50,7 +50,7 @@ if ($client->TimedWait (60) == -1) {
 
 
 # gracefully kill the server
-$server->Terminate (); 
+$server->Terminate ();
 if ($server->TimedWait (5) == -1) {
   print STDERR "ERROR: cannot terminate the server\n";
   $server->Kill (); $server->TimedWait (1);
@@ -58,7 +58,7 @@ if ($server->TimedWait (5) == -1) {
 }
 
 # gracefully kill the Naming Service
-$NS->Terminate (); 
+$NS->Terminate ();
 if ($NS->TimedWait (5) == -1) {
   print STDERR "ERROR: cannot terminate the server\n";
   $NS->Kill (); $server->TimedWait (1);

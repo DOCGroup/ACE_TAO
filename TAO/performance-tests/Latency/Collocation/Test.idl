@@ -1,5 +1,5 @@
 //
-// $Id$ 
+// $Id$
 //
 
 /// A simple module to avoid namespace pollution
@@ -21,6 +21,6 @@ module Test
     Timestamp test_method (in Timestamp send_time);
 
     /// Shutdown the ORB
-    void shutdown (); 
+    void shutdown ();
   };
-}; 
+};

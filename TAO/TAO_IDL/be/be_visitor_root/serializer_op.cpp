@@ -5,7 +5,7 @@
  *
  *  $Id$
  *
- *  Visitor generating code for the TAO::DCPS::Serializer operators 
+ *  Visitor generating code for the TAO::DCPS::Serializer operators
  *  for types defined in Root's scope.
  *
  *
@@ -35,7 +35,7 @@ be_visitor_root_serializer_op::visit_root (be_root *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_root_serializer_op::")
                          ACE_TEXT ("visit_root - codegen ")
-                         ACE_TEXT ("for scope failed\n")), 
+                         ACE_TEXT ("for scope failed\n")),
                         -1);
     }
 

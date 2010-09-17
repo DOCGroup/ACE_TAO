@@ -90,7 +90,7 @@ Session::find_process (long pid)
   Processes::ENTRY *entry;
   if (this->processes_.find(pid,entry) == 0)
     return entry->item();
-  else 
+  else
     return 0;
 }
 
@@ -145,7 +145,7 @@ Session::stream_for ( ostream *oldstream, HostProcess *hp, const char *sub)
   if (this->has_dir())
     {
       ACE_CString outname = this->base_dir_;
-      
+
       if (oldstream == 0)
         {
           ACE_OS::mkdir(this->base_dir_.c_str());
@@ -170,13 +170,13 @@ Session::stream_for ( ostream *oldstream, HostProcess *hp, const char *sub)
     return &cout;
 }
 
-void 
+void
 Session::dump ()
 {
   bool single = !this->has_dir();
   ostream *strm = this->stream_for(0);
-  
-  // report session metrics 
+
+  // report session metrics
 
   if (single)
     *strm << "Session summary report: "
@@ -250,7 +250,7 @@ Session::dump ()
 
 
 // iterate over the collection of host processes to associate peer
-// processes via endpoints. 
+// processes via endpoints.
 void
 Session::reconcile (void)
 {

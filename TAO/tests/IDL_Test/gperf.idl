@@ -9,7 +9,7 @@
 //    gperf.idl
 //
 // = DESCRIPTION
-//    This file contains examples of IDL code that has 
+//    This file contains examples of IDL code that has
 //    caused problems in the past for the TAO IDL
 //    compiler. This test is to make sure the problems
 //    stay fixed.
@@ -67,7 +67,7 @@ interface test
   attribute testlistitem tltest;
 
   testlistitem new_testlistitem (in string name);
-}; 
+};
 
 interface Simple_Server
 {
@@ -94,5 +94,5 @@ interface Simple_Server
  oneway void transferTriggerDb ();
  oneway void transferTriggerTdc ();
 };
- 
+
 

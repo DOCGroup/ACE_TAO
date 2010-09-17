@@ -32,7 +32,7 @@ $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 $client->DeleteFile($colloc_iorfile);
 
-$SV = $server->CreateProcess ("server", 
+$SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level " .
                               "-o $server_iorfile");
 

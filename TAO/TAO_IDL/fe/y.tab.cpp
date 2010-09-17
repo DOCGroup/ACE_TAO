@@ -2057,7 +2057,7 @@ int tao_yydebug;
 # define TAO_YYMAXDEPTH 10000
 #endif
 
-
+
 
 #if TAO_YYERROR_VERBOSE
 
@@ -2268,7 +2268,7 @@ tao_yysyntax_error (char *tao_yyresult, int tao_yystate, int tao_yychar)
     }
 }
 #endif /* TAO_YYERROR_VERBOSE */
-
+
 
 /*-----------------------------------------------.
 | Release the memory associated to this symbol.  |
@@ -2293,7 +2293,7 @@ tao_yydestruct (tao_yymsg, tao_yytype, tao_yyvaluep)
     tao_yymsg = "Deleting";
   TAO_YY_SYMBOL_PRINT (tao_yymsg, tao_yytype, tao_yyvaluep, tao_yylocationp);
 }
-
+
 
 /* Prevent warnings from -Wmissing-prototypes.  */
 
@@ -6180,7 +6180,7 @@ tao_yyreduce:
                                             s->is_local (),
                                             s->is_abstract ()
                                           );
-              
+
                   if (!idl_global->in_typedef ()
                       && !idl_global->anon_silent ())
                     {
@@ -6242,7 +6242,7 @@ tao_yyreduce:
                         s->is_local (),
                         s->is_abstract ()
                       );
-              
+
                   if (!idl_global->in_typedef ()
                       && !idl_global->anon_silent ())
                     {
@@ -6332,7 +6332,7 @@ tao_yyreduce:
                                                   (tao_yyval.dcval)
                                                 )
                                             );
-                      
+
               if (!idl_global->in_typedef ()
                   && !idl_global->anon_silent ())
                 {
@@ -6492,7 +6492,7 @@ tao_yyreduce:
               (tao_yyvsp[(3) - (3)].elval) = 0;
 
               sn.destroy ();
-              
+
               if (!idl_global->in_typedef ()
                   && !idl_global->anon_silent ())
                 {
@@ -8141,7 +8141,7 @@ tao_yyreduce:
 
           AST_Decl *d =
             s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist), true, false);
-            
+
           if (d == 0)
             {
               idl_global->err ()->lookup_error ((tao_yyvsp[(2) - (3)].idlist));

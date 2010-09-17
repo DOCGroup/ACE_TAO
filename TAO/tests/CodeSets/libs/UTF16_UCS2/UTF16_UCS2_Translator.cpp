@@ -276,7 +276,7 @@ UTF16_UCS2_Translator::write_wstring (ACE_OutputCDR & cdr,
     {
       // pre GIOP 1.2:  include null terminator in length
       ACE_CDR::ULong l = len + 1;
-      
+
       if (this->write_4 (cdr, &l))
         {
           if (x != 0)

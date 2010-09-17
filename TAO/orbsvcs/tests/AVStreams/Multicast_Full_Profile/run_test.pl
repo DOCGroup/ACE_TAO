@@ -53,17 +53,17 @@ if ($cl->PutFile ($inputfile) == -1) {
     exit 1;
 }
 
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service", 
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
                           " -o $ns_nsiorfile");
-$SV1 = $sv1->CreateProcess ("server", 
+$SV1 = $sv1->CreateProcess ("server",
                             " -ORBDebugLevel $debug_level ".
                             " -ORBInitRef NameService=file://$sv1_nsiorfile ".
                             "-f $sv1_test1file");
-$SV2 = $sv2->CreateProcess ("server", 
+$SV2 = $sv2->CreateProcess ("server",
                             " -ORBDebugLevel $debug_level ".
                             " -ORBInitRef NameService=file://$sv2_nsiorfile ".
                             "-f $sv2_test2file");
-$CL = $cl->CreateProcess ("ftp", 
+$CL = $cl->CreateProcess ("ftp",
                           " -ORBInitRef NameService=file://$cl_nsiorfile ".
                           "-f $cl_inputfile");
 

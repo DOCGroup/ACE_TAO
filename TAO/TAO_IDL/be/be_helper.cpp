@@ -82,7 +82,7 @@ TAO_OutStream::TAO_OutStream (void)
     {
       this->tab_unit_str_ += ' ';
     }
-    
+
   this->tab_unit_ = this->tab_unit_str_.c_str ();
 }
 
@@ -486,14 +486,14 @@ TAO_OutStream&
 TAO_OutStream::print (AST_Expression *expr)
 {
   AST_Expression::AST_ExprValue *ev = expr->ev ();
-  
+
   /// Never happens as far as I know, but just in case...
   if (ev == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_OutStream::print() - ")
                   ACE_TEXT ("expression not evaluated\n")));
-                  
+
       return *this;
     }
 

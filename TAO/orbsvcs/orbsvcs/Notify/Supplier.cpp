@@ -55,8 +55,8 @@ TAO_Notify_Supplier::is_alive (bool allow_nil_supplier)
   {
     // The supplier may not connected or the supplier did
     // not provide a callback. In this case, the liveliness
-    // check should return true so it will be validated in 
-    // next period. 
+    // check should return true so it will be validated in
+    // next period.
     if (allow_nil_supplier)
       return true;
     else
@@ -96,12 +96,12 @@ TAO_Notify_Supplier::is_alive (bool allow_nil_supplier)
         for (CORBA::ULong i = 0; i < policy_list.length (); i++)
           policy_list[i]->destroy ();
 
-        do_liveliness_check 
-          = (last_ping == ACE_Time_Value::zero ? true 
+        do_liveliness_check
+          = (last_ping == ACE_Time_Value::zero ? true
           : now - last_ping >= TAO_Notify_PROPERTIES::instance()->validate_client_delay ());
       }
       else
-        do_liveliness_check = 
+        do_liveliness_check =
           now - last_ping >= TAO_Notify_PROPERTIES::instance()->validate_client_interval ();
 
       if (CORBA::is_nil (rtt_obj_.in ()))
@@ -121,7 +121,7 @@ TAO_Notify_Supplier::is_alive (bool allow_nil_supplier)
   catch (CORBA::Exception& ex)
     {
       if (DEBUG_LEVEL > 0)
-      {        
+      {
         ex._tao_print_exception ("TAO_Notify_Supplier::is_alive: false");
       }
     }

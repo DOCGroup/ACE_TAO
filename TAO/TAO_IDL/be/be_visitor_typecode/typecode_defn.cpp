@@ -107,7 +107,7 @@ be_visitor_typecode_defn::gen_typecode_ptr (be_type * node)
                              ACE_TEXT ("Error parsing nested name\n")),
                             -1);
         }
-        
+
       be_util::gen_nested_namespace_begin (&os, module);
 
       os << "::CORBA::TypeCode_ptr const _tc_"
@@ -197,7 +197,7 @@ be_visitor_typecode_defn::gen_forward_declared_typecode (be_type * node)
                              ACE_TEXT ("Error parsing nested name\n")),
                             -1);
         }
-        
+
       be_util::gen_nested_namespace_begin (&os, module);
 
       os << "extern ::CORBA::TypeCode_ptr const _tc_"
@@ -211,7 +211,7 @@ be_visitor_typecode_defn::gen_forward_declared_typecode (be_type * node)
       os << "extern ::CORBA::TypeCode_ptr const "
          << node->tc_name () << ";" << be_uidt;
     }
-    
+
   os << be_nl;
 
   return 0;

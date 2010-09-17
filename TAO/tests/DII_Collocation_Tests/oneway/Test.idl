@@ -53,16 +53,16 @@ module Test
 
     oneway void test_object_arg (in Object o);
 
-    oneway void test_args_1 (in Object arg1, 
-                             in char arg2, 
+    oneway void test_args_1 (in Object arg1,
+                             in char arg2,
                              in Simple_Test arg3);
 
-    oneway void test_args_2 (in string arg1, 
-                             in Fixed_Array arg2, 
+    oneway void test_args_2 (in string arg1,
+                             in Fixed_Array arg2,
                              in TimeOfDay arg3);
 
     oneway void test_args_3 (in Bounded_String arg1,
-                             in Bounded_Var_Size_Arg arg2, 
+                             in Bounded_Var_Size_Arg arg2,
                              in Unbounded_Var_Size_Arg arg3,
                              in Var_Array arg4);
 

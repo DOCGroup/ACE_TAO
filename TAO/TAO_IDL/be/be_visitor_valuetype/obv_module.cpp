@@ -65,7 +65,7 @@ be_visitor_obv_module::visit_module (be_module *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_obv_module::"
                              "visit_module - "
-                             "codegen for scope failed\n"), 
+                             "codegen for scope failed\n"),
                             -1);
         }
 
@@ -119,7 +119,7 @@ be_visitor_obv_module::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_obv_module::"
                          "visit_valuetype - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 

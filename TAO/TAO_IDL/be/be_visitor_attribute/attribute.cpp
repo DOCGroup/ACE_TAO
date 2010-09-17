@@ -56,36 +56,36 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   this->ctx_->node (node);
   this->ctx_->attribute (node);
   be_interface *intf = this->ctx_->interface ();
-  
+
   if (intf != 0)
     {
       AST_Decl::NodeType snt = intf->node_type ();
       AST_Decl::NodeType ant =
         ScopeAsDecl (node->defined_in ())->node_type ();
-        
+
       if (snt == AST_Decl::NT_component
           && ant == AST_Decl::NT_porttype)
         {
           return 0;
         }
     }
-    
+
   UTL_Scope *s = node->defined_in ();
-  AST_Decl *d = ScopeAsDecl (s);  
+  AST_Decl *d = ScopeAsDecl (s);
   ACE_CString op_name (this->ctx_->port_prefix ());
   op_name += node->local_name ()->get_string ();
   Identifier *op_id = 0;
   ACE_NEW_RETURN (op_id,
                   Identifier (op_name.c_str ()),
                   -1);
-                 
+
   UTL_ScopedName *op_ln = 0;
   ACE_NEW_RETURN (op_ln,
                   UTL_ScopedName (op_id, 0),
                   -1);
-        
+
   UTL_ScopedName *op_sn =
-    static_cast<UTL_ScopedName *> (d->name ()->copy ());                
+    static_cast<UTL_ScopedName *> (d->name ()->copy ());
   op_sn->nconc (op_ln);
 
   // first the "get" operation
@@ -255,7 +255,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                                          node->name ());
 
   arg->set_name ((UTL_IdList *) node->name ()->copy ());
-  
+
   // Create the operation.
   be_operation set_op (&rt,
                        AST_Operation::OP_noflags,

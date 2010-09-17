@@ -16,18 +16,18 @@ module Test
     oneway void shutdown ();
 
     // Methods for first test
-    
+
     // The client first calls this to generate a (user) exception
     // which is handled in the application code
     void throw_exception () raises (MyException);
-    
+
     // Starts the nested sequence - client calls...
     boolean call_me_back (in Hello me);
-    
+
     // ... then the server calls this back onto the client,
     // which prompts the client to call...
     boolean call_back ();
-    
+
     // ... this ! The server interceptor will have been recording
     // if any retention ID has been reused in the sequence of invocations
     // @return true for all different, false otherwise.

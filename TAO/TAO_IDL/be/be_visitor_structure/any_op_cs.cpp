@@ -77,7 +77,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
 
       *os << be_global->core_versioning_end () << be_nl;
     }
-  
+
 
   be_module *module = 0;
   if (node->is_nested ())
@@ -174,15 +174,15 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
               << "_tao_elem" << be_uidt_nl
               << ");" << be_uidt << be_uidt << be_uidt_nl
               << "}";
-      
+
           be_util::gen_nested_namespace_end (os, module);
-      
+
           // Emit #else.
           *os << be_nl << be_nl
               << "#else\n";
         }
     }
-  
+
   *os << be_global->core_versioning_begin () << be_nl;
 
   // Copying insertion.

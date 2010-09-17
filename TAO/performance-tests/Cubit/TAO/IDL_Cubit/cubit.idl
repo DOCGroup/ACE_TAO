@@ -149,9 +149,9 @@ interface Cubit
 
   void cube_rti_data (in RtiPacket input,
                       out RtiPacket output);
-  
+
   // A work around for problems with SHMIOP since this test uses
-  // this. 
+  // this.
   void ping ();
 };
 

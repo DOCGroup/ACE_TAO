@@ -30,12 +30,12 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server", 
+$SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level " .
                               "-o $server_iorfile");
 
 $CL = $client->CreateProcess ("client",
-                              "-i $iterations -b $burst" . 
+                              "-i $iterations -b $burst" .
                               "-k file://$client_iorfile");
 $server_status = $SV->Spawn ();
 

@@ -5,7 +5,7 @@
  *
  *  $Id$
  *
- *  Visitors for generation of code for Enum for the 
+ *  Visitors for generation of code for Enum for the
  *  TAO::DCPS::Serializer operators
  *
  *

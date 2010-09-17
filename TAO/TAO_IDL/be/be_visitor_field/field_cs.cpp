@@ -41,7 +41,7 @@ be_visitor_field_cs::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cs::"
                          "visit_field - "
-                         "Bad field type\n"), 
+                         "Bad field type\n"),
                         -1);
     }
 
@@ -52,7 +52,7 @@ be_visitor_field_cs::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cs::"
                          "visit_field - "
-                         "codegen for field type failed\n"), 
+                         "codegen for field type failed\n"),
                         -1);
     }
 
@@ -74,7 +74,7 @@ be_visitor_field_cs::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_cs::"
                              "visit_array - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -97,7 +97,7 @@ be_visitor_field_cs::visit_enum (be_enum *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_cs::"
                              "visit_enum - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -120,7 +120,7 @@ be_visitor_field_cs::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_cs::"
                              "visit_sequence - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -143,7 +143,7 @@ be_visitor_field_cs::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_cs::"
                              "visit_struct - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -157,7 +157,7 @@ be_visitor_field_cs::visit_structure_fwd (
 {
   be_structure *s =
     be_structure::narrow_from_decl (node->full_definition ());
-    
+
   return this->visit_structure (s);
 }
 
@@ -172,7 +172,7 @@ be_visitor_field_cs::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ci::"
                          "visit_typedef - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     }
 
@@ -195,7 +195,7 @@ be_visitor_field_cs::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_cs::"
                              "visit_union - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -208,7 +208,7 @@ be_visitor_field_cs::visit_union_fwd (be_union_fwd *node)
 {
   be_union *u =
     be_union::narrow_from_decl (node->full_definition ());
-    
+
   return this->visit_union (u);
 }
 

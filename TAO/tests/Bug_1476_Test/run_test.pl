@@ -29,7 +29,7 @@ my @levels = ("obj", "orb", "thread");
 
 foreach $synch (@synchs) {
     foreach $level (@levels) {
-        $CL->Arguments ("-ORBDebuglevel $debug_level -k file://$client_iorfile -s$synch -l$level");        
+        $CL->Arguments ("-ORBDebuglevel $debug_level -k file://$client_iorfile -s$synch -l$level");
 
         $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 285);
 

@@ -50,18 +50,18 @@ module DynamicAny
 
     void assign (in DynAny dyn_any)
       raises (TypeMismatch);
-      
+
     void from_any (in any value)
       raises (TypeMismatch, InvalidValue);
-      
+
     any to_any ();
-    
+
     boolean equal (in DynAny dyn_any);
-    
+
     void destroy ();
-    
+
     DynAny copy ();
-    
+
     void insert_boolean (in boolean value)
       raises (TypeMismatch, InvalidValue);
     void insert_octet (in octet value)
@@ -145,19 +145,19 @@ module DynamicAny
       raises (TypeMismatch, InvalidValue);
 
     boolean seek (in long index);
-    
+
     void rewind ();
-    
+
     boolean next ();
-    
+
     unsigned long component_count ();
-    
+
     DynAny current_component ()
       raises (TypeMismatch);
-    
+
     void insert_abstract (in CORBA::AbstractBase value)
       raises (TypeMismatch, InvalidValue);
-      
+
     CORBA::AbstractBase get_abstract ()
       raises (TypeMismatch, InvalidValue);
 
@@ -178,7 +178,7 @@ module DynamicAny
     void insert_float_seq (in CORBA::FloatSeq value)
       raises (TypeMismatch, InvalidValue);
     void insert_double_seq (in CORBA::DoubleSeq value)
-      raises (TypeMismatch, InvalidValue);  
+      raises (TypeMismatch, InvalidValue);
     void insert_longlong_seq (in CORBA::LongLongSeq value)
       raises (TypeMismatch, InvalidValue);
     void insert_ulonglong_seq (in CORBA::ULongLongSeq value)
@@ -187,7 +187,7 @@ module DynamicAny
       raises (TypeMismatch, InvalidValue);
     void insert_wchar_seq (in CORBA::WCharSeq value)
       raises (TypeMismatch, InvalidValue);
-      
+
     CORBA::BooleanSeq get_boolean_seq ()
       raises (TypeMismatch, InvalidValue);
     CORBA::OctetSeq get_octet_seq()
@@ -219,7 +219,7 @@ module DynamicAny
   local interface DynFixed : DynAny
   {
     string get_value ();
-    
+
     boolean set_value (in string val)
       raises (TypeMismatch, InvalidValue);
   };
@@ -227,18 +227,18 @@ module DynamicAny
   local interface DynEnum : DynAny
   {
     string get_as_string ();
-    
+
     void set_as_string (in string value)
       raises (InvalidValue);
-      
+
     unsigned long get_as_ulong ();
-    
+
     void set_as_ulong (in unsigned long value)
       raises (InvalidValue);
   };
-  
+
   typedef string FieldName;
-  
+
   struct NameValuePair
   {
     FieldName id;
@@ -246,7 +246,7 @@ module DynamicAny
   };
 
   typedef sequence<NameValuePair> NameValuePairSeq;
-  
+
   struct NameDynAnyPair
   {
     FieldName id;
@@ -254,22 +254,22 @@ module DynamicAny
   };
 
   typedef sequence<NameDynAnyPair> NameDynAnyPairSeq;
-  
+
   local interface DynStruct : DynAny
   {
     FieldName current_member_name ()
       raises (TypeMismatch, InvalidValue);
-      
+
     CORBA::TCKind current_member_kind ()
       raises (TypeMismatch, InvalidValue);
-      
+
     NameValuePairSeq get_members ();
-    
+
     void set_members (in NameValuePairSeq value)
       raises (TypeMismatch, InvalidValue);
-      
+
     NameDynAnyPairSeq get_members_as_dyn_any ();
-    
+
     void set_members_as_dyn_any (in NameDynAnyPairSeq value)
       raises (TypeMismatch, InvalidValue);
   };
@@ -277,46 +277,46 @@ module DynamicAny
   local interface DynUnion : DynAny
   {
     DynAny get_discriminator ();
-    
+
     void set_discriminator (in DynAny d)
       raises (TypeMismatch);
-    
+
     void set_to_default_member ()
       raises (TypeMismatch);
-      
+
     void set_to_no_active_member ()
       raises (TypeMismatch);
-      
+
     boolean has_no_active_member ();
-    
+
     CORBA::TCKind discriminator_kind ();
-    
+
     DynAny member () raises (InvalidValue);
-    
+
     FieldName member_name ()
       raises (InvalidValue);
-      
+
     CORBA::TCKind member_kind ()
       raises (InvalidValue);
   };
 
   typedef sequence<any> AnySeq;
   typedef sequence<DynAny> DynAnySeq;
-  
+
   local interface DynSequence : DynAny
   {
     unsigned long get_length ();
-    
+
     void set_length (in unsigned long len)
       raises (InvalidValue);
-      
+
     AnySeq get_elements ();
-    
+
     void set_elements (in AnySeq value)
       raises (TypeMismatch, InvalidValue);
-      
+
     DynAnySeq get_elements_as_dyn_any ();
-    
+
     void set_elements_as_dyn_any (in DynAnySeq value)
       raises (TypeMismatch, InvalidValue);
   };
@@ -324,12 +324,12 @@ module DynamicAny
   local interface DynArray : DynAny
   {
     AnySeq get_elements ();
-    
+
     void set_elements (in AnySeq value)
       raises (TypeMismatch, InvalidValue);
-      
+
     DynAnySeq get_elements_as_dyn_any ();
-    
+
     void set_elements_as_dyn_any (in DynAnySeq value)
       raises (TypeMismatch, InvalidValue);
   };
@@ -337,9 +337,9 @@ module DynamicAny
   local interface DynValueCommon : DynAny
   {
     boolean is_null ();
-    
+
     void set_to_null ();
-    
+
     void set_to_value ();
   };
 
@@ -347,17 +347,17 @@ module DynamicAny
   {
     FieldName current_member_name ()
       raises (TypeMismatch, InvalidValue);
-      
+
     CORBA::TCKind current_member_kind ()
       raises (TypeMismatch, InvalidValue);
-      
+
     NameValuePairSeq get_members ();
-    
+
     void set_members (in NameValuePairSeq value)
       raises (TypeMismatch, InvalidValue);
-      
+
     NameDynAnyPairSeq get_members_as_dyn_any ();
-    
+
     void set_members_as_dyn_any (in NameDynAnyPairSeq value)
       raises (TypeMismatch, InvalidValue);
   };
@@ -366,35 +366,35 @@ module DynamicAny
   {
     any get_boxed_value ()
       raises (InvalidValue);
-      
+
     void set_boxed_value (in any boxed)
       raises (TypeMismatch, InvalidValue);
-      
+
     DynAny get_boxed_value_as_dyn_any ()
       raises (InvalidValue);
-      
+
     void set_boxed_value_as_dyn_any (in DynAny boxed)
       raises (TypeMismatch);
   };
-  
+
   exception MustTruncate {};
 
   local interface DynAnyFactory
   {
     exception InconsistentTypeCode {};
-    
+
     DynAny create_dyn_any (in any value)
       raises (InconsistentTypeCode);
     DynAny create_dyn_any_from_type_code (in CORBA::TypeCode type)
       raises (InconsistentTypeCode);
-      
+
     DynAny create_dyn_any_without_truncation (in any value)
       raises (InconsistentTypeCode, MustTruncate);
-      
+
     DynAnySeq create_multiple_dyn_anys (in AnySeq values,
                                         in boolean allow_truncate)
       raises (InconsistentTypeCode, MustTruncate);
-      
+
     AnySeq create_multiple_anys (in DynAnySeq values);
   };
 }; // module DynamicAny

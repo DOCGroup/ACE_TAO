@@ -73,7 +73,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
     }
 
   *os << be_nl << be_nl;
-  
+
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 

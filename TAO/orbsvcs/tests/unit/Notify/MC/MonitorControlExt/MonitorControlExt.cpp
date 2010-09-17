@@ -35,17 +35,17 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-      
+
       CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (obj.in ());
-        
+
       PortableServer::POAManager_var poa_manager = poa->the_POAManager ();
       poa_manager->activate ();
 
       TAO_Notify_Service* notify_service =
         TAO_Notify_Service::load_default ();
-      
+
       if (notify_service == 0)
         {
           error ("Unable to load the Notify Service");
@@ -59,7 +59,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
          notify_service->create (poa.in (), ecf_name.c_str ());
       NotifyMonitoringExt::EventChannelFactory_var monitor_ec_factory =
         NotifyMonitoringExt::EventChannelFactory::_narrow (ecf.in ());
-        
+
       if (CORBA::is_nil (monitor_ec_factory.in ()))
         {
          error ("Unable to create the Monitoring Event Channel Factory");
@@ -69,7 +69,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       CosNotification::AdminProperties admin_prop;
       CosNotifyChannelAdmin::ChannelID id;
       const ACE_CString ec_name ("test1");
-      
+
       CosNotifyChannelAdmin::EventChannel_var ec =
         monitor_ec_factory->create_named_channel (qos_prop,
                                                   admin_prop,
@@ -77,7 +77,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                                                   ec_name.c_str ());
       NotifyMonitoringExt::EventChannel_var mec =
         NotifyMonitoringExt::EventChannel::_narrow (ec.in ());
-        
+
       if (CORBA::is_nil (mec.in ()))
         {
           error ("Unable to narrow the event channel");
@@ -104,9 +104,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         ecf_name
         + "/"
         + ACE_CString (NotifyMonitoringExt::InactiveEventChannelCount);
-        
+
       Monitor_Base* stat = instance->get (stat_name);
-      
+
       if (stat == 0)
         {
           error ("Could not find InactiveEventChannelCount statistic");
@@ -114,7 +114,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       stat->update ();
       double count = stat->last_sample ();
-      
+
       if (count != 1)
         {
           error ("Invalid inactive event channel count");
@@ -124,9 +124,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         ecf_name
         + "/"
         + ACE_CString (NotifyMonitoringExt::ActiveEventChannelCount);
-        
+
       stat = instance->get (stat_name);
-      
+
       if (stat == 0)
         {
           error ("Could not find ActiveEventChannelCount statistic");
@@ -134,7 +134,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       stat->update ();
       count = stat->last_sample ();
-      
+
       if (count != 0)
         {
           error ("Invalid active event channel count");
@@ -144,9 +144,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         ecf_name
         + "/"
         + ACE_CString (NotifyMonitoringExt::InactiveEventChannelNames);
-        
+
       stat = instance->get (stat_name);
-      
+
       if (stat == 0)
         {
           error ("Could not find InactiveEventChannels statistic");
@@ -154,14 +154,14 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       stat->update ();
       Monitor_Control_Types::NameList list = stat->get_list ();
-      
+
       if (list.size () != 1)
         {
           error ("Invalid inactive event channel list");
         }
 
       ACE_CString full_ec_name (ecf_name + "/" + ec_name);
-      
+
       if (list[0] != full_ec_name)
         {
           error ("Wrong event channel name");
@@ -179,7 +179,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
             mec->named_new_for_suppliers (CosNotifyChannelAdmin::AND_OP,
                                           aid,
                                           "TestSupplierAdmin");
-                                          
+
           error ("Expected a SupplierAdmin "
                  "NotifyMonitoringExt::NameAlreadyUsed exception");
         }
@@ -197,7 +197,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       NotifyMonitoringExt::SupplierAdmin_var madmin =
         NotifyMonitoringExt::SupplierAdmin::_narrow (admin.in ());
-        
+
       if (CORBA::is_nil (madmin.in ()))
         {
           error ("Could not narrow the supplier admin");
@@ -215,7 +215,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           CosNotifyChannelAdmin::ProxyConsumer_var fake =
             madmin->obtain_named_notification_push_consumer
             (CosNotifyChannelAdmin::STRUCTURED_EVENT, pid, "supplier");
-            
+
           error ("Expected a ProxyConsumer "
                  "NotifyMonitoringExt::NameAlreadyUsed exception");
         }
@@ -230,9 +230,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         + ec_name
         + "/"
         + ACE_CString (NotifyMonitoringExt::EventChannelSupplierCount);
-        
+
       stat = instance->get (stat_name);
-      
+
       if (stat == 0)
         {
           error ("Could not find the event channel suppliers statistic");
@@ -240,7 +240,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       stat->update ();
       count = stat->last_sample ();
-      
+
       if (count != 1)
         {
           error ("Invalid supplier count");
@@ -277,7 +277,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
             mec->named_new_for_consumers (CosNotifyChannelAdmin::AND_OP,
                                           aid,
                                           "TestConsumerAdmin");
-                                          
+
           error ("Expected a ConsumerAdmin "
                  "NotifyMonitoringExt::NameAlreadyUsed exception");
         }
@@ -295,7 +295,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       NotifyMonitoringExt::ConsumerAdmin_var mcadmin =
         NotifyMonitoringExt::ConsumerAdmin::_narrow (cadmin.in ());
-        
+
       if (CORBA::is_nil (mcadmin.in ()))
         {
           error ("Could not narrow the consumer admin");
@@ -314,7 +314,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
               CosNotifyChannelAdmin::STRUCTURED_EVENT,
               pid,
               "consumer");
-              
+
           error ("Expected a ProxySupplier "
                  "NotifyMonitoringExt::NameAlreadyUsed exception");
         }
@@ -329,9 +329,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         + ec_name
         + "/"
         + ACE_CString (NotifyMonitoringExt::EventChannelConsumerCount);
-        
+
       stat = instance->get (stat_name);
-      
+
       if (stat == 0)
         {
           error ("Could not find the event channel consumers statistic");
@@ -339,7 +339,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       stat->update ();
       count = stat->last_sample ();
-      
+
       if (count != 1)
         {
           error ("Invalid consumer count");

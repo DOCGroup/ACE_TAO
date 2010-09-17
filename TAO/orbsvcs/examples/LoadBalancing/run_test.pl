@@ -53,29 +53,29 @@ $cl->DeleteFile ($srviorfile);
 $sr->DeleteFile ($srviorfile);
 $cr->DeleteFile ($srviorfile);
 
-$LM = $lm->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/LoadBalancer/LoadManager", 
+$LM = $lm->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/LoadBalancer/LoadManager",
                           " -o $lm_lmiorfile");
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service", 
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
                           " -o $ns_nsiorfile");
-$SV = $sv->CreateProcess ("server", 
+$SV = $sv->CreateProcess ("server",
                           "-o $sv_srviorfile ".
                           " -ORBInitRef LoadManager=file://$sv_lmiorfile ".
                           " -n 1 ".
                           "-ORBInitRef NameService=file://$sv_nsiorfile ".
                           " -s LeastLoaded ".
                           " -r 9000 -c 10300 -d 0.1 ");
-$SR = $sr->CreateProcess ("server", 
+$SR = $sr->CreateProcess ("server",
                           "-o $sr_srviorfile ".
                           "-ORBInitRef LoadManager=file://$sr_lmiorfile ".
                           " -n 2 ".
                           "-ORBInitRef NameService=file://sr_nsiorfile ".
                           " -s LeastLoaded ".
                           "-r 9000 -c 10300 -d 0.1 ");
-$CL = $cl->CreateProcess ("client", 
+$CL = $cl->CreateProcess ("client",
                           "-k file://$cl_srviorfile ".
                           " -i 5 -n 1 ".
                           "-ORBInitRef NameService=file://cl_nsiorfile ");
-$CR = $cr->CreateProcess ("client", 
+$CR = $cr->CreateProcess ("client",
                           "-k file://$cr_srviorfile ".
                           "-i 5 -n 2 ".
                           "-ORBInitRef NameService=file://cr_nsiorfile ");

@@ -1,5 +1,5 @@
 // $Id$
-// 
+//
 // = FILENAME
 //   DOVEBrowserApplet.java
 //
@@ -18,15 +18,15 @@ public class DOVEBrowserApplet extends java.applet.Applet {
 
   DemoCore demoCore_;
   static String nameServiceIOR_ = null;
-  
+
   public DOVEBrowserApplet () {
-    super (); 
+    super ();
   }
-  
+
   public void init () {
     // in case of an applet use the following line, else not!
     nameServiceIOR_ = this.getParameter ("NSIOR");
-    
+
     if (nameServiceIOR_ == null) {
       System.out.println ("The DOVE Browser cannot run, because no Naming Service IOR was found!");
       return;
@@ -41,8 +41,8 @@ public class DOVEBrowserApplet extends java.applet.Applet {
     demoCore_.run ();
   }
 }
-  
-  
+
+
 
 
 
