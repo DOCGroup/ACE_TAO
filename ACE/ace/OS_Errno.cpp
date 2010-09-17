@@ -3,8 +3,6 @@
 
 #include "ace/OS_Errno.h"
 
-
-
 // Inlining this class on debug builds with gcc on Solaris can cause
 // deadlocks during static initialization. On non debug builds it
 // causes compilation errors.

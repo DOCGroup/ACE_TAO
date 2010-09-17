@@ -1,3 +1,18 @@
+Fri Sep 17 07:16:16 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.h:
+        * ace/OS_Errno.cpp:
+          Layout changes
+
+        * ace/Malloc_T.h:
+        * ace/Malloc_T.cpp:
+        * ace/Map_Manager.inl:
+        * ace/Map_Manager.cpp:
+          Moved some methods inline
+
+        * ace/OS_NS_signal.cpp:
+          Fixed problem with versioned macros
+
 Thu Sep 16 13:36:51 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * protocols\ace\INet\ClientRequestHandler.h:
