@@ -1,3 +1,12 @@
+Fri Sep 17 17:46:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Context constructor now takes one less argument
+
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+          Fixed indentation problem
+
 Fri Sep 17 15:18:15 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Utils/Utils.mpc:
