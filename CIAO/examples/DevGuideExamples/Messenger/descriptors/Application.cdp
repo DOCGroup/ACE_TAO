@@ -1,5 +1,5 @@
-<!-- $Id$ -->
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!-- $Id$ -->
 <Deployment:DeploymentPlan
  xmlns:Deployment="http://www.omg.org/Deployment"
  xmlns:xmi="http://www.omg.org/XMI"
