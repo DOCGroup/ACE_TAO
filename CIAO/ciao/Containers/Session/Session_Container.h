@@ -34,11 +34,6 @@ namespace CIAO
   class Session_Container;
   class Servant_Activator;
 
-  namespace Deployment
-  {
-    class CIAO_Container_i;
-  }
-
   typedef ::Components::HomeExecutorBase_ptr (*HomeFactory) (void);
   typedef ::PortableServer::Servant (*HomeServantFactory) (::Components::HomeExecutorBase_ptr p,
                                                            ::CIAO::Container_ptr c,
@@ -97,7 +92,6 @@ namespace CIAO
   public:
     Session_Container (CORBA::ORB_ptr o,
                        PortableServer::POA_ptr poa,
-                       Deployment::CIAO_Container_i *container_impl,
                        bool static_config_flag = false,
                        const Static_Config_EntryPoints_Maps* static_entrypts_maps =0,
                        const char *name = 0,

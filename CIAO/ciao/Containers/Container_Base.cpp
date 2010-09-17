@@ -9,22 +9,10 @@
 
 namespace CIAO
 {
-  ////////////////////////////////////////////////////////////////
-
   Container_i::Container_i (CORBA::ORB_ptr o,
                             PortableServer::POA_ptr root_poa)
     : orb_ (CORBA::ORB::_duplicate (o)),
-      root_poa_ (PortableServer::POA::_duplicate (root_poa)),
-      container_impl_ (0)
-  {
-  }
-
-  Container_i::Container_i (CORBA::ORB_ptr o,
-                            PortableServer::POA_ptr root_poa,
-                            Deployment::CIAO_Container_i *container_impl)
-    : orb_ (CORBA::ORB::_duplicate (o)),
-      root_poa_ (PortableServer::POA::_duplicate (root_poa)),
-      container_impl_ (container_impl)
+      root_poa_ (PortableServer::POA::_duplicate (root_poa))
   {
   }
 

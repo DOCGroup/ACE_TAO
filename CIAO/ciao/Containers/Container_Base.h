@@ -31,11 +31,6 @@
 
 namespace CIAO
 {
-  namespace Deployment
-  {
-    class CIAO_Container_i;
-  }
-
   /**
    * @class Container_i
    *
@@ -50,8 +45,6 @@ namespace CIAO
   {
   public:
     Container_i (CORBA::ORB_ptr o, PortableServer::POA_ptr root_poa);
-    Container_i (CORBA::ORB_ptr o, PortableServer::POA_ptr root_poa,
-                 Deployment::CIAO_Container_i *container_impl);
 
     virtual ~Container_i (void);
 
@@ -119,8 +112,6 @@ namespace CIAO
     PortableServer::POA_var facet_cons_poa_;
 
     PortableServer::POA_var home_servant_poa_;
-
-    Deployment::CIAO_Container_i *container_impl_;
 
   private:
     /// Not allowed to be used
