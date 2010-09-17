@@ -1,3 +1,16 @@
+Fri Sep 17 17:55:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Contexts/Context.mpc:
+          No need to list all files
+
+        * ciao/Contexts/Context_Impl_Base.h:
+        * ciao/Contexts/Context_Impl_Base.inl:
+        * ciao/Contexts/Context_Impl_Base.cpp:
+        * ciao/Contexts/Context_Impl_T.h:
+        * ciao/Contexts/Context_Impl_T.cpp:
+        * ciao/Servants/Servant_Impl_T.cpp:
+          Removed ciao_instance_id, not used
+
 Fri Sep 17 13:37:53 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * NEWS:
