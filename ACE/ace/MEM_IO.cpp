@@ -89,7 +89,7 @@ ACE_Reactive_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
                  flags,
                  timeout) != static_cast <ssize_t> (sizeof (offset)))
     {
-      // unsucessful send, release the memory in the shared-memory.
+      // unsuccessful send, release the memory in the shared-memory.
       this->release_buffer (buf);
 
       return -1;

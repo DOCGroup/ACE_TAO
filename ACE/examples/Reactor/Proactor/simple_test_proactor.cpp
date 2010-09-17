@@ -127,7 +127,7 @@ Simple_Tester::open (void)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Write_File::open"), -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              "Simple_Tester::open: Files and Asynch Operations opened sucessfully\n"));
+              "Simple_Tester::open: Files and Asynch Operations opened successfully\n"));
 
 
   // Start an asynchronous read file
@@ -150,7 +150,7 @@ Simple_Tester::initiate_read_file (void)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Read_File::read"), -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              "Simple_Tester:initiate_read_file: Asynch Read File issued sucessfully\n"));
+              "Simple_Tester:initiate_read_file: Asynch Read File issued successfully\n"));
 
   return 0;
 }
