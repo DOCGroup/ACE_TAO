@@ -20,9 +20,9 @@ Fri Sep 17 07:16:16 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Sep 16 13:36:51 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-        * protocols\ace\INet\ClientRequestHandler.h:
-        * protocols\ace\INet\URLBase.h:
-        * protocols\ace\INet\HTTP_ClientRequestHandler.h:
+        * protocols/ace/INet/ClientRequestHandler.h:
+        * protocols/ace/INet/URLBase.h:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.h:
            Changes to fix export problems with nested classes with MSVC 9.
 
 Thu Sep 16 09:25:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
