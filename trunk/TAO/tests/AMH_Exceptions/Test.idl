@@ -8,7 +8,7 @@ module Test
 
   exception InvalidTimestamp {};
   exception ServerOverload {};
-  
+
   /// Use a timestamp to measure the roundtrip delay
   typedef unsigned long long Timestamp;
 

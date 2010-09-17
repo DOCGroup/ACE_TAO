@@ -207,7 +207,7 @@ AST_Constant::destroy (void)
       delete this->pd_constant_value;
       this->pd_constant_value = 0;
     }
-    
+
   this->AST_Decl::destroy ();
 }
 

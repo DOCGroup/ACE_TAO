@@ -35,13 +35,13 @@ be_visitor_attribute_ccm_init::visit_attribute (
     }
 
   be_interface *intf = this->ctx_->interface ();
-  
+
   if (intf != 0)
     {
       AST_Decl::NodeType snt = intf->node_type ();
       AST_Decl::NodeType ant =
         ScopeAsDecl (node->defined_in ())->node_type ();
-        
+
       if (snt == AST_Decl::NT_component
           && ant == AST_Decl::NT_porttype)
         {
@@ -216,7 +216,7 @@ be_visitor_attribute_ccm_init::emit_error (
   const char *corba_kind)
 {
   this->open_if_block ();
-  
+
   os_ << "ACE_ERROR ((LM_ERROR," << be_nl
       << "            \"CCM attributes of "
       << corba_kind << "\"" << be_nl
@@ -224,7 +224,7 @@ be_visitor_attribute_ccm_init::emit_error (
       << "supported by CIAO\\n\"));"
       << be_nl << be_nl
       << "ACE_UNUSED_ARG (descr_value);" << be_nl;
-      
+
   this->close_if_block ();
 }
 

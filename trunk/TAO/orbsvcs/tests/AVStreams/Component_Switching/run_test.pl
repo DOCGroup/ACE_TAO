@@ -96,58 +96,58 @@ if ($sv3->PutFile ($inputfile) == -1) {
     exit 1;
 }
 
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service", 
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
                           "-ORBDottedDecimalAddresses 1 ".
                           " -o $ns_nsiorfile");
-$SV1 = $sv1->CreateProcess ("sender", 
+$SV1 = $sv1->CreateProcess ("sender",
                           " -ORBDebugLevel $debug_level ".
                           "-ORBDottedDecimalAddresses 1 ".
                           " -ORBSvcConf $sv1_conffile ".
                           "-ORBInitRef NameService=file://$sv1_nsiorfile ".
                           "-s sender -r 30 ".
                           "-f $sv1_inputfile");
-$SV2 = $sv2->CreateProcess ("sender", 
+$SV2 = $sv2->CreateProcess ("sender",
                           " -ORBDebugLevel $debug_level ".
                           "-ORBDottedDecimalAddresses 1 ".
                           " -ORBSvcConf $sv2_conffile ".
                           "-ORBInitRef NameService=file://$sv2_nsiorfile ".
                           "-s sender -r 30 ".
                           "-f $sv2_inputfile");
-$SV3 = $sv3->CreateProcess ("sender", 
+$SV3 = $sv3->CreateProcess ("sender",
                           " -ORBDebugLevel $debug_level ".
                           "-ORBDottedDecimalAddresses 1 ".
                           " -ORBSvcConf $sv3_conffile ".
                           "-ORBInitRef NameService=file://$sv3_nsiorfile ".
                           "-s sender -r 30 ".
                           "-f $sv3_inputfile");
-$RE1 = $re1->CreateProcess ("receiver", 
+$RE1 = $re1->CreateProcess ("receiver",
                           "-ORBDottedDecimalAddresses 1 ".
                           " -ORBSvcConf $re1_conffile ".
                           "-ORBInitRef NameService=file://$re1_nsiorfile ".
                           "-s distributer -r receiver1 ".
                           "-f $re1_outputfile1");
-$RE2 = $re2->CreateProcess ("receiver", 
+$RE2 = $re2->CreateProcess ("receiver",
                           "-ORBDottedDecimalAddresses 1 ".
                           " -ORBSvcConf $re2_conffile ".
                           "-ORBInitRef NameService=file://$re2_nsiorfile ".
                           "-s distributer -r receiver2 ".
                           "-f $re2_outputfile2");
-$DI1 = $di1->CreateProcess ("distributer", 
+$DI1 = $di1->CreateProcess ("distributer",
                           "-ORBDottedDecimalAddresses 1 ".
                           " -ORBSvcConf $di1_conffile ".
                           "-ORBInitRef NameService=file://$di1_nsiorfile ".
                           "-s sender -r distributer ");
-$DI2 = $di2->CreateProcess ("distributer", 
+$DI2 = $di2->CreateProcess ("distributer",
                           "-ORBDottedDecimalAddresses 1 ".
                           " -ORBSvcConf $di2_conffile ".
                           "-ORBInitRef NameService=file://$di2_nsiorfile ".
                           "-s sender -r distributer ");
-$DI3 = $di3->CreateProcess ("distributer", 
+$DI3 = $di3->CreateProcess ("distributer",
                           "-ORBDottedDecimalAddresses 1 ".
                           " -ORBSvcConf $di3_conffile ".
                           "-ORBInitRef NameService=file://$di3_nsiorfile ".
                           "-s sender -r distributer ");
-$DI4 = $di4->CreateProcess ("distributer", 
+$DI4 = $di4->CreateProcess ("distributer",
                           "-ORBDottedDecimalAddresses 1 ".
                           " -ORBSvcConf $di4_conffile ".
                           "-ORBInitRef NameService=file://$di4_nsiorfile ".

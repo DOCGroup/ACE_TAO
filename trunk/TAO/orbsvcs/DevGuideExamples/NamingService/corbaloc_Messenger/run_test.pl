@@ -3,7 +3,7 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
   &  eval 'exec perl -S $0 $argv:q'
   if 0;
-  
+
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
@@ -72,8 +72,8 @@ $nsdel = "$ENV{ACE_ROOT}/bin/tao_nsdel";
 
 $test_number = 0;
 
-foreach $o (@corbaloc_servers) {  
-    # Run messenger server for each test.  
+foreach $o (@corbaloc_servers) {
+    # Run messenger server for each test.
     #print "Start $MessengerServer $o \n";
     $SRV = $srv->CreateProcess ($MessengerServer, "-ORBdebuglevel $debug_level ".
                                                "$o");
@@ -127,7 +127,7 @@ if ($SRV_status != 0) {
 $i = 0;
 foreach $o (@corbaloc_clients) {
 
-    # Run the client for each test.  
+    # Run the client for each test.
     #print "Start $MessengerClient $o \n";
     $CLI = $cli->CreateProcess ($MessengerClient, "$o");
 
@@ -149,7 +149,7 @@ foreach $o (@corbaloc_clients) {
 }
 
 
-# clean up 
+# clean up
 $SRV_status = $SRV->TerminateWaitKill ($srv->ProcessStopWaitInterval());
 
 if ($SRV_status != 0) {

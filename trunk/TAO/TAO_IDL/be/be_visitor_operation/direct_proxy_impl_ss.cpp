@@ -21,7 +21,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
     {
       return 0;
     }
-    
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   // We need the interface node in which this operation was defined. However,
@@ -31,13 +31,13 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
     this->ctx_->attribute ()
       ? this->ctx_->attribute ()->defined_in ()
       : node->defined_in ();
-      
+
   be_interface *intf = be_interface::narrow_from_scope (s);
 
   if (intf == 0)
     {
       be_porttype *pt = be_porttype::narrow_from_scope (s);
-      
+
       if (pt == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

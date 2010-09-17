@@ -35,7 +35,7 @@ be_visitor_component_ex_idl::visit_component (
   if (be_global->gen_lem_force_all ())
     {
       be_visitor_facet_ex_idl facet_visitor (this->ctx_);
-      
+
       if (facet_visitor.visit_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -49,7 +49,7 @@ be_visitor_component_ex_idl::visit_component (
   be_util::gen_nesting_open (os_, node);
 
   be_visitor_executor_ex_idl exec_visitor (this->ctx_);
-  
+
   if (exec_visitor.visit_component (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -60,7 +60,7 @@ be_visitor_component_ex_idl::visit_component (
     }
 
   be_visitor_context_ex_idl context_visitor (this->ctx_);
-  
+
   if (context_visitor.visit_component (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

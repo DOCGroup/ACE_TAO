@@ -21,14 +21,14 @@
 
 #pragma prefix "acme.com"
 
-module CCS 
+module CCS
 {
   typedef unsigned long AssetType;
   typedef string ModelType;
   typedef short TempType;
   typedef string LocType;
 
-  interface Thermometer 
+  interface Thermometer
     {
       readonly attribute ModelType model;
       readonly attribute AssetType asset_num;
@@ -38,9 +38,9 @@ module CCS
       void remove ();
     };
 
-  interface Thermostat : Thermometer 
+  interface Thermostat : Thermometer
     {
-      struct BtData 
+      struct BtData
       {
         TempType requested;
         TempType min_permitted;
@@ -54,7 +54,7 @@ module CCS
         raises (BadTemp);
     };
 
-  interface Controller 
+  interface Controller
     {
       exception DuplicateAsset {};
 
@@ -72,7 +72,7 @@ module CCS
 
       enum SearchCriterion { ASSET, LOCATION, MODEL };
 
-      union KeyType switch (SearchCriterion) 
+      union KeyType switch (SearchCriterion)
         {
         case ASSET:
           AssetType asset_num;
@@ -82,7 +82,7 @@ module CCS
           ModelType model_desc;
         };
 
-      struct SearchType 
+      struct SearchType
       {
         KeyType key;
         Thermometer device;
@@ -90,7 +90,7 @@ module CCS
 
       typedef sequence<SearchType> SearchSeq;
 
-      struct ErrorDetails 
+      struct ErrorDetails
       {
         Thermostat tmstat_ref;
         Thermostat::BtData info;
@@ -105,6 +105,6 @@ module CCS
       ThermometerSeq list ();
       void find (inout SearchSeq slist);
       void change (in ThermostatSeq tlist, in short delta)
-        raises (EChange);        
+        raises (EChange);
     };
 };

@@ -5,7 +5,7 @@
 #include "orbsvcs/HTIOP/HTIOP_Profile.h"
 #include "ace/HTBP/HTBP_Environment.h"
 #include "ace/HTBP/HTBP_ID_Requestor.h"
-#include "ace/os_include/os_netdb.h" 
+#include "ace/os_include/os_netdb.h"
 
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"

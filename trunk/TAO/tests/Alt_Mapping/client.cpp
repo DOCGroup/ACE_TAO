@@ -145,7 +145,7 @@ Alt_Mapping_Client<T>::run_sii_test (void)
                   "********** Finished running %s SII *********\n",
                   opname));
     }
-    
+
   return this->results_.error_count ()? -1 : 0;
 }
 

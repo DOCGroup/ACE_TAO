@@ -71,7 +71,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
           << "{" << be_idt_nl
           << "this->_reset ();" << be_nl
           << "this->disc_ = ";
- 
+
       // We use one of the enum values that isn't used in this
       // union if one is available.
       UTL_ScopedName *sn = node->value_to_name (dv.u.enum_val);

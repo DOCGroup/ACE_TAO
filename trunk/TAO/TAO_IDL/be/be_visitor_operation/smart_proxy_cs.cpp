@@ -42,13 +42,13 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
         this->ctx_->attribute ()
           ? this->ctx_->attribute ()->defined_in ()
           : node->defined_in ();
-          
+
       be_interface *intf = be_interface::narrow_from_scope (s);
 
       if (intf == 0)
         {
           be_porttype *pt = be_porttype::narrow_from_scope (s);
-          
+
           if (pt == 0)
             {
               ACE_ERROR_RETURN ((LM_ERROR,

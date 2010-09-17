@@ -107,20 +107,20 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
       << "strm << \"" << this->name () << "(\";" << be_nl << be_nl
       << "switch (_tao_union._d ())" << be_nl
       << "{" << be_idt;
-      
+
   for (long i = 0; i < this->pd_decls_used; ++i)
     {
       be_union_branch *ub =
         be_union_branch::narrow_from_decl (this->pd_decls[i]);
-      
+
       // We don't want any decls, just members.
       if (ub == 0)
         {
           continue;
         }
-        
+
       *os << be_nl;
-        
+
       unsigned long ll_len = ub->label_list_length ();
 
       for (unsigned long j = 0; j < ll_len; ++j)
@@ -151,27 +151,27 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
 
       ACE_CString instance_name ("_tao_union.");
       instance_name += ub->local_name ()->get_string ();
-      
+
       *os << "strm << ";
-      
+
       ub->gen_member_ostream_operator (os,
                                        instance_name.c_str (),
                                        use_underscore,
                                        true);
-      
+
       *os << ";" << be_nl
           << "break;" << be_uidt;
     }
-  
+
   // Some compilers complain unless this is present, but only
-  // if not all values are covered in case statements.  
+  // if not all values are covered in case statements.
   if (this->gen_empty_default_label ())
     {
       *os << be_nl
           << "default:" << be_idt_nl
           << "break;" << be_uidt;
     }
-    
+
   *os << be_uidt_nl
       << "}" << be_nl << be_nl
       << "return strm << \")\";" << be_uidt_nl

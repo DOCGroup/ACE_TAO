@@ -65,7 +65,7 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
 }
 
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service", 
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
                           " -o $ns_nsiorfile");
 
 print STDERR "Starting Naming Service\n";
@@ -111,12 +111,12 @@ for $protocol (@protocols) {
     my $sv_outputfile = $sv->LocalFile ($outputfile);
     $ns->DeleteFile ($outputfile);
 
-    $SV = $sv->CreateProcess ("receiver", 
+    $SV = $sv->CreateProcess ("receiver",
                               "-ORBInitRef NameService=file://$sv_nsiorfile ".
                               "-ORBDebugLevel $debug ".
                               "-f $sv_outputfile");
 
-    $CL = $cl->CreateProcess ("sender", 
+    $CL = $cl->CreateProcess ("sender",
                               "-ORBInitRef NameService=file://$cl_nsiorfile ".
                               "-ORBDebugLevel $debug ".
                               "-p $protocol ".

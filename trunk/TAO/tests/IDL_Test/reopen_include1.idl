@@ -9,7 +9,7 @@
 //    reopen_include1.idl
 //
 // = DESCRIPTION
-//    This file contains examples of IDL code that has 
+//    This file contains examples of IDL code that has
 //    caused problems in the past for the TAO IDL
 //    compiler. This test is to make sure the problems
 //    stay fixed.
@@ -24,7 +24,7 @@
 
 // First opening of a module included by a chain of
 // inclusions into reopened_modules.idl
-module frag 
+module frag
 {
   typedef sequence<double> dub_seq;
 };

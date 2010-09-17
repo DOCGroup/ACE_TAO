@@ -10,10 +10,10 @@ public class MTQueue
   // Initially, the head and tail of the queue are null
   MTQueue_Node head_ = null;
   MTQueue_Node tail_ = null;
-  
+
   // Constructor - does nothing.
   public MTQueue ()
-    {     
+    {
     }
 
   // Places a passed Object at the end of the queue.
@@ -44,7 +44,7 @@ public class MTQueue
     {
       // Create a new node to hold the object.
       MTQueue_Node new_node = new MTQueue_Node(new_data);
-	    
+
       // Insert the node into the queue.
       if (head_ == null)
 	{
@@ -61,7 +61,7 @@ public class MTQueue
       // Wake up any waiting threads
       notifyAll ();
     }
-  
+
   // Try to remove an object from the head of the queue - nonblocking.
   public synchronized Object try_dequeue_head()
   {
@@ -84,7 +84,7 @@ public class MTQueue
       // Start with a null reference.
       Object return_value = null;
 
-      // Wait until there's something to dequeue.      
+      // Wait until there's something to dequeue.
       while (head_ == null)
         {
           try
@@ -116,13 +116,13 @@ public class MTQueue
           head_.prev_.next_ = null;
           head_.prev_.prev_ = null;
           head_.prev_.data_ = null;
-	  head_.prev_ = null;	  
+	  head_.prev_ = null;
 	}
 
       // Return the object we dequeued.
       return return_value;
     }
-  
+
   // Try to remove an object from the tail of the queue - nonblocking.
   public synchronized Object try_dequeue_tail ()
   {
@@ -145,7 +145,7 @@ public class MTQueue
       // Start with a null reference.
       Object return_value = null;
 
-      // Wait until there's something to dequeue.      
+      // Wait until there's something to dequeue.
       while (tail_ == null)
         {
           try
@@ -171,13 +171,13 @@ public class MTQueue
 	  head_ = null;
 	}
       else
-	{	  
+	{
 	  return_value = tail_.data_;
 	  tail_ = tail_.prev_;
           tail_.next_.data_ = null;
           tail_.next_.next_ = null;
           tail_.next_.prev_ = null;
-	  tail_.next_ = null;	  
+	  tail_.next_ = null;
 	}
 
       // Return the object we dequeued.

@@ -24,28 +24,28 @@ $init_ref = "-ORBInitRef LoadManager=file://$ior1file";
 
 
 @tests =
-    (   {   
+    (   {
          description => "Dead Member Detection",
          strategy  => "RoundRobin",
          svr1_args => "$init_ref -n 1 -o $ior2file",
          svr2_args => "$init_ref -n 2 -k file://$ior2file -j $ior3file",
          svr3_args => "$init_ref -n 3 -k file://$ior2file",
          client_args => "-k file://$ior2file -j file://$ior3file -s RoundRobin",
-        }, {   
+        }, {
          description => "Hang Member Detection",
          strategy  => "RoundRobin",
          svr1_args => "$init_ref -n 1 -o $ior2file",
          svr2_args => "$init_ref -n 2 -k file://$ior2file -j $ior3file -l 2",
          svr3_args => "$init_ref -n 3 -k file://$ior2file",
          client_args => "-k file://$ior2file -j file://$ior3file -s RoundRobin -l",
-        }, {   
+        }, {
          description => "Dead Member Detection",
          strategy  => "Random",
          svr1_args => "$init_ref -n 1 -o $ior2file",
          svr2_args => "$init_ref -n 2 -k file://$ior2file -j $ior3file",
          svr3_args => "$init_ref -n 3 -k file://$ior2file",
          client_args => "-k file://$ior2file -j file://$ior3file -s Random",
-        }, {   
+        }, {
          description => "Hang Member Detection",
          strategy  => "Random",
          svr1_args => "$init_ref -n 1 -o $ior2file",
@@ -75,21 +75,21 @@ for $test (@tests) {
     $server2->DeleteFile($ior3file);
 
     $status = 0;
-    #-ORBVerboseLogging 1 -ORBDebugLevel 10 -ORBLogFile lm.log 
+    #-ORBVerboseLogging 1 -ORBDebugLevel 10 -ORBLogFile lm.log
     $LM = $server1->CreateProcess ("../../../../LoadBalancer/LoadManager",
-                                "-ORBVerboseLogging 1 -ORBDebugLevel $debug -s $test->{strategy} -o $ior1file -i 3" 
+                                "-ORBVerboseLogging 1 -ORBDebugLevel $debug -s $test->{strategy} -o $ior1file -i 3"
                                 . " -ORBSvcConf $lm_conf");
     $SV1 = $server2->CreateProcess ("server", $test->{svr1_args});
     $SV2 = $server3->CreateProcess ("server", $test->{svr2_args});
     $SV3 = $server4->CreateProcess ("server", $test->{svr3_args});
     $CL = $client->CreateProcess ("client", $test->{client_args});
-    
+
     print STDERR "\n\n======== $test->{description} with $test->{strategy} ================\n";
     print STDERR "\n";
 
     print STDERR "== Start Load Banlancer.\n";
     print STDERR $LM->CommandLine () . "\n";
-    
+
     $LM->Spawn ();
 
     if ($server1->WaitForFileTimed ($ior1file, $server1->ProcessStartWaitInterval()) == -1) {
@@ -97,13 +97,13 @@ for $test (@tests) {
         $LM->Kill (); $LM->TimedWait (1);
         exit 1;
     }
-    
+
     if ($server1->GetFile ($ior1file) == -1) {
         print STDERR "ERROR: cannot retrieve file <$server1_ior1file>\n";
         $LM->Kill (); $LM->TimedWait (1);
         exit 1;
     }
- 
+
     if ($server2->PutFile ($ior2file) == -1) {
         print STDERR "ERROR: cannot set file <$server2_ior2file>\n";
         $LM->Kill (); $LM->TimedWait (1);
@@ -120,7 +120,7 @@ for $test (@tests) {
         $SV1->Kill (); $SV1->TimedWait (1);
         exit 1;
     }
-    
+
     if ($server2->GetFile ($ior2file) == -1) {
         print STDERR "ERROR: cannot retrieve file <$server2_ior2file>\n";
         $LM->Kill ();
@@ -147,7 +147,7 @@ for $test (@tests) {
         $SV2->Kill (); $SV2->TimedWait (1);
         exit 1;
     }
-    
+
     if ($server3->GetFile ($ior3file) == -1) {
         print STDERR "ERROR: cannot retrieve file <$server3_ior1file>\n";
         $LM->Kill ();
@@ -173,7 +173,7 @@ for $test (@tests) {
         $status = 1;
     }
 
-    $server = $SV3->WaitKill ($server2->ProcessStopWaitInterval()); 
+    $server = $SV3->WaitKill ($server2->ProcessStopWaitInterval());
 
     if ($server != 0) {
         print STDERR "ERROR: server 3 returned $server\n";
@@ -203,7 +203,7 @@ for $test (@tests) {
     $server1->DeleteFile($ior1file);
     $server2->DeleteFile($ior2file);
     $server3->DeleteFile($ior3file);
-    
+
     if ($status == 0) {
       print STDERR "$description test passed.\n";
     }

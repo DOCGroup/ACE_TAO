@@ -18,14 +18,14 @@
 //
 // ============================================================================
 
-struct TimeOfDay 
+struct TimeOfDay
 {
   short hour;       // 0 - 23
   short minute;     // 0 - 59
   short second;     // 0 - 59
 };
 
-interface Time 
+interface Time
 {
   TimeOfDay get_gmt ();
 };

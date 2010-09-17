@@ -4,8 +4,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template<typename T> 
-ACE_INLINE 
+template<typename T>
+ACE_INLINE
 CORBA::Boolean
 TAO::Any_Basic_Impl_T<T>::demarshal_value (TAO_InputCDR &cdr)
 {

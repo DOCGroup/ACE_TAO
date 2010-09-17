@@ -14,7 +14,7 @@ Demo_HelloWorld_i::~Demo_HelloWorld_i (void)
 {
 }
 
-void Demo_HelloWorld_i::sayHello ( 
+void Demo_HelloWorld_i::sayHello (
     const char * msg
   )
 {

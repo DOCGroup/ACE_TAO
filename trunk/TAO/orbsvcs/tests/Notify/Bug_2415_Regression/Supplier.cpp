@@ -91,7 +91,7 @@ Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
     case 'o':
       ior_output_file = get_opts.optarg;
       break;
- 
+
     case 'd':
       domain = get_opts.optarg;
       break;

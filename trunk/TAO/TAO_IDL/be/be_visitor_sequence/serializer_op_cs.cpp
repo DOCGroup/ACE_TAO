@@ -996,12 +996,12 @@ switch (this->ctx_->sub_state ())
           break;
         case AST_Decl::NT_string:
           *os << "the_length += _dcps_max_marshaled_size_ulong () " << be_nl
-            << "+ (_tao_sequence[i] == 0 ? 0 : ACE_OS::strlen (_tao_sequence[i]));" 
+            << "+ (_tao_sequence[i] == 0 ? 0 : ACE_OS::strlen (_tao_sequence[i]));"
             << be_uidt_nl;
           break;
         case AST_Decl::NT_wstring:
           *os << "the_length += _dcps_max_marshaled_size_ulong () " << be_nl
-            << "+ (_tao_sequence[i] == 0 ? 0 : ACE_OS::strlen (_tao_sequence[i]) * sizeof (CORBA::WChar));" 
+            << "+ (_tao_sequence[i] == 0 ? 0 : ACE_OS::strlen (_tao_sequence[i]) * sizeof (CORBA::WChar));"
             << be_uidt_nl;
           break;
         case AST_Decl::NT_interface:
@@ -1256,12 +1256,12 @@ switch (this->ctx_->sub_state ())
         case AST_Decl::NT_interface:
         case AST_Decl::NT_interface_fwd:
           *os << "//DCPS does not support interfaces";
-          
+
           break;
         case AST_Decl::NT_string:
         case AST_Decl::NT_wstring:
           *os << "_tao_marshal_flag = (strm << _tao_sequence[i]);";
-          
+
           break;
         case AST_Decl::NT_valuetype:
         case AST_Decl::NT_valuetype_fwd:
@@ -1269,7 +1269,7 @@ switch (this->ctx_->sub_state ())
         case AST_Decl::NT_eventtype_fwd:
         case AST_Decl::NT_valuebox:
           *os << "//DCPS does not support value types";
-          
+
           break;
         case AST_Decl::NT_pre_defined:
           {

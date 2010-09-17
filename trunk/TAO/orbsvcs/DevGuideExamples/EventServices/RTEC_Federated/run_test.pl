@@ -30,7 +30,7 @@ if ( -e "supplier.conf" ) {
    $supplier_conf_file = "supplier.conf";
 }
 else{
-   $supplier_conf_file = "../supplier.conf";   
+   $supplier_conf_file = "../supplier.conf";
 }
 
 my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
@@ -107,7 +107,7 @@ if ($c2->PutFile ($nsiorfile) == -1) {
     exit 1;
 }
 
-# start Supplier  
+# start Supplier
 $S1_status = $S1->Spawn ();
 
 if ($S1_status != 0) {

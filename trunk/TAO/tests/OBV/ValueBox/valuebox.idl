@@ -38,20 +38,20 @@ interface Test
                                  out vb_basic::M_VBlong  p3);
 
     long basic_op3 (in long p1, inout long p2, out long p3);
-    
+
     // Boxed string
     VBstring string_op1(in VBstring p1, inout VBstring p2, out VBstring  p3);
 
     string string_op2(in string p1, inout string p2, out string p3);
-    
+
     // Boxed sequence
     VBseqlong seq_op1(in VBseqlong p1, inout VBseqlong p2,
                          out VBseqlong  p3);
 
     void seq_op2(in TDseqlong p1, inout TDseqlong p2, out TDseqlong p3);
-    
+
     // Boxed struct
-    VBfixed_struct1 struct_op1(in VBfixed_struct1 p1, 
+    VBfixed_struct1 struct_op1(in VBfixed_struct1 p1,
                                inout VBfixed_struct1 p2,
                                out VBfixed_struct1  p3);
 
@@ -59,7 +59,7 @@ interface Test
                     inout Fixed_Struct1 p2,
                     out Fixed_Struct1 p3);
 
-    VBvariable_struct1 struct_op3(in VBvariable_struct1 p1, 
+    VBvariable_struct1 struct_op3(in VBvariable_struct1 p1,
                                   inout VBvariable_struct1 p2,
                                   out VBvariable_struct1  p3);
 
@@ -79,9 +79,9 @@ interface Test
 
     void array_op4 (in StringArray p1, inout StringArray p2,
                     out StringArray p3);
-    
+
     // Boxed union
-    VBfixed_union1 union_op1(in VBfixed_union1 p1, 
+    VBfixed_union1 union_op1(in VBfixed_union1 p1,
                                inout VBfixed_union1 p2,
                                out VBfixed_union1  p3);
 
@@ -89,14 +89,14 @@ interface Test
                     inout Fixed_Union1 p2,
                     out Fixed_Union1 p3);
 
-    VBvariable_union1 union_op3(in VBvariable_union1 p1, 
+    VBvariable_union1 union_op3(in VBvariable_union1 p1,
                                   inout VBvariable_union1 p2,
                                   out VBvariable_union1  p3);
 
     void union_op4(in Variable_Union1 p1,
                     inout Variable_Union1 p2,
                     out Variable_Union1 p3);
-  
+
     // Shutdown the remote ORB
     oneway void shutdown ();
 };

@@ -60,7 +60,7 @@ module DsNotifyLogAdmin
         CosNotification::UnsupportedQoS,
         CosNotification::UnsupportedAdmin);
   };
-  
+
 };
 
 #endif /* DS_NOTIFY_LOG_ADMIN_IDL */

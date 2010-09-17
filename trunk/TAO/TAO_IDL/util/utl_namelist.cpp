@@ -107,7 +107,7 @@ UTL_NameList::destroy (void)
   this->pd_car_data->destroy ();
   delete this->pd_car_data;
   this->pd_car_data = 0;
-  
+
   this->UTL_List::destroy ();
 }
 

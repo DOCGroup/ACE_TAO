@@ -37,7 +37,7 @@ be_visitor_facet_exs::visit_operation (be_operation *node)
     {
       return 0;
     }
-    
+
   be_visitor_operation_exs v (this->ctx_);
   v.scope (op_scope_);
   return v.visit_operation (node);
@@ -55,7 +55,7 @@ be_visitor_facet_exs::visit_attribute (be_attribute *node)
     {
       return 0;
     }
-    
+
   be_visitor_attribute v (this->ctx_);
   v.op_scope (op_scope_);
   return v.visit_attribute (node);
@@ -73,7 +73,7 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
   os_ << be_nl << be_nl
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
-      
+
   os_ << be_nl
       << comment_border_ << be_nl
       << "// Facet Executor Implementation Class: "
@@ -83,7 +83,7 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
   AST_Decl *c_scope = ScopeAsDecl (this->node_->defined_in ());
   bool is_global = (c_scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (is_global ? "" : "::");
-      
+
   os_ << be_nl << be_nl
       << lname << "_exec_i::" << lname
       << "_exec_i (" << be_idt << be_idt << be_idt_nl

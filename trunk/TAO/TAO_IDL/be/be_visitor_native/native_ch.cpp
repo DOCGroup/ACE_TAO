@@ -47,7 +47,7 @@ be_visitor_native_ch::visit_native (be_native *node)
       << be_nl << be_nl;
 
   const char *node_name = node->full_name ();
-  
+
   if (ACE_OS::strcmp (node_name, "PortableServer::ServantLocator::Cookie") == 0)
     {
       *os << "typedef void *Cookie;" << be_nl;
@@ -75,12 +75,12 @@ be_visitor_native_ch::visit_native (be_native *node)
 
       // strip  the "Seq" ending to get the sample's name
       const size_t max_name_length = 2000;
-      
+
       if (ACE_OS::strlen (node_name) >= max_name_length)
         {
           return -1;
         }
-        
+
       char sample_name[max_name_length];
       ACE_OS::strncpy (sample_name,
                        node_name,

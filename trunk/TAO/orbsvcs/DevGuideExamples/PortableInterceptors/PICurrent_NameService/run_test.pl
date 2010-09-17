@@ -69,7 +69,7 @@ if ($CLI_status != 0) {
     $status = 1;
 }
 
-# clean-up 
+# clean-up
 $SRV_status = $SRV->TerminateWaitKill ($srv->ProcessStopWaitInterval());
 
 if ($SRV_status != 0) {

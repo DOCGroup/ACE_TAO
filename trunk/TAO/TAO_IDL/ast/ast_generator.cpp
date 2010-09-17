@@ -978,8 +978,8 @@ AST_Generator::create_provides (UTL_ScopedName *n,
                   AST_Provides (n,
                                 provides_type),
                   0);
-                  
-  return retval;              
+
+  return retval;
 }
 
 AST_Uses *
@@ -993,8 +993,8 @@ AST_Generator::create_uses (UTL_ScopedName *n,
                             uses_type,
                             is_multiple),
                   0);
-                  
-  return retval;              
+
+  return retval;
 }
 
 AST_Publishes *
@@ -1006,8 +1006,8 @@ AST_Generator::create_publishes (UTL_ScopedName *n,
                   AST_Publishes (n,
                                  publishes_type),
                   0);
-                  
-  return retval;              
+
+  return retval;
 }
 
 AST_Emits *
@@ -1019,8 +1019,8 @@ AST_Generator::create_emits (UTL_ScopedName *n,
                   AST_Emits (n,
                              emits_type),
                   0);
-                  
-  return retval;              
+
+  return retval;
 }
 AST_Consumes *
 AST_Generator::create_consumes (UTL_ScopedName *n,
@@ -1031,8 +1031,8 @@ AST_Generator::create_consumes (UTL_ScopedName *n,
                   AST_Consumes (n,
                                 consumes_type),
                   0);
-                  
-  return retval;              
+
+  return retval;
 }
 
 AST_Extended_Port *
@@ -1045,8 +1045,8 @@ AST_Generator::create_extended_port (
                   AST_Extended_Port (n,
                                      porttype_ref),
                   0);
-                  
-  return retval;              
+
+  return retval;
 }
 
 AST_Mirror_Port *
@@ -1059,8 +1059,8 @@ AST_Generator::create_mirror_port (
                   AST_Mirror_Port (n,
                                    porttype_ref),
                   0);
-                  
-  return retval;              
+
+  return retval;
 }
 
 AST_Connector *
@@ -1073,8 +1073,8 @@ AST_Generator::create_connector (
                   AST_Connector (n,
                                  base_connector),
                   0);
-                  
-  return retval;              
+
+  return retval;
 }
 
 AST_Template_Module *
@@ -1087,10 +1087,10 @@ AST_Generator::create_template_module (
                   AST_Template_Module (n,
                                        template_params),
                   0);
-                  
+
   return retval;
 }
-  
+
 AST_Template_Module_Inst *
 AST_Generator::create_template_module_inst (
   UTL_ScopedName *n,
@@ -1103,10 +1103,10 @@ AST_Generator::create_template_module_inst (
                                             ref,
                                             template_args),
                   0);
-                  
+
   return retval;
 }
-  
+
 AST_Template_Module_Ref *
 AST_Generator::create_template_module_ref (
   UTL_ScopedName *n,
@@ -1119,10 +1119,10 @@ AST_Generator::create_template_module_ref (
                                            ref,
                                            param_refs),
                   0);
-                  
+
   return retval;
 }
-    
+
 AST_Param_Holder *
 AST_Generator::create_param_holder (
   UTL_ScopedName *parameter_name,
@@ -1133,7 +1133,7 @@ AST_Generator::create_param_holder (
                   AST_Param_Holder (parameter_name,
                                     info),
                   0);
-                  
+
   return retval;
 }
 

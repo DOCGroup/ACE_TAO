@@ -203,7 +203,7 @@ AST_Operation::destroy (void)
       this->pd_exceptions->destroy ();
       this->pd_exceptions = 0;
     }
-  
+
   this->UTL_Scope::destroy ();
   this->AST_Decl::destroy ();
 }
@@ -301,7 +301,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
     {
       return 0;
     }
-    
+
   UTL_ScopedName *nl_n = 0;
   AST_Type *fe = 0;
   AST_Decl *d = 0;
@@ -318,9 +318,9 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
           idl_global->err ()->lookup_error (nl_n);
           return 0;
         }
-        
+
       AST_Decl::NodeType nt = d->node_type ();
-        
+
       switch (nt)
         {
           case AST_Decl::NT_except:
@@ -329,32 +329,32 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
             {
               AST_Param_Holder *ph =
                 AST_Param_Holder::narrow_from_decl (d);
-                
+
               nt = ph->info ()->type_;
-                
+
               if (nt != AST_Decl::NT_except
                   && nt != AST_Decl::NT_type)
                 {
                   idl_global->err ()->mismatched_template_param (
                     ph->info ()->name_.c_str ());
                 }
-                
+
               break;
             }
           case AST_Decl::NT_typedef:
             {
               AST_Typedef *td =
                 AST_Typedef::narrow_from_decl (d);
-                
+
               nt = td->primitive_base_type ()->node_type ();
-              
+
               if (nt != AST_Decl::NT_except)
                 {
                   idl_global->err ()->error1 (
                     UTL_Error::EIDL_ILLEGAL_RAISES,
                     this);
                 }
-                
+
               break;
             }
           case AST_Decl::NT_native:
@@ -363,27 +363,27 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
               int compare =
                 ACE_OS::strcmp (d->local_name ()->get_string (),
                                 "UserExceptionBase");
-                                
+
               if (compare != 0)
                 {
                   idl_global->err ()->error1 (
                     UTL_Error::EIDL_ILLEGAL_RAISES,
                     this);
                 }
-                
+
               break;
             }
           default:
             idl_global->err ()->error1 (
               UTL_Error::EIDL_ILLEGAL_RAISES,
               this);
-              
+
             break;
         };
 
       bool oneway_op =
         (this->flags () == AST_Operation::OP_oneway);
-        
+
       fe = AST_Type::narrow_from_decl (d);
 
       if (oneway_op && fe != 0)

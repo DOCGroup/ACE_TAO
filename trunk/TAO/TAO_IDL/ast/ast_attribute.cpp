@@ -114,7 +114,7 @@ AST_Attribute::dump (ACE_OSTREAM_TYPE &o)
   this->dump_i (o, (this->pd_readonly == true
                     ? "readonly attribute "
                     : "attribute "));
-                    
+
   this->AST_Field::dump (o);
 }
 
@@ -137,7 +137,7 @@ AST_Attribute::destroy (void)
       this->pd_get_exceptions->destroy ();
       this->pd_get_exceptions = 0;
     }
-  
+
   if (this->pd_set_exceptions != 0)
     {
       this->pd_set_exceptions->destroy ();
@@ -223,7 +223,7 @@ AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
           idl_global->err ()->lookup_error (nl_n);
           return 0;
         }
-        
+
       AST_Decl::NodeType nt = d->node_type ();
 
       if (nt != AST_Decl::NT_except
@@ -276,7 +276,7 @@ AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
           idl_global->err ()->lookup_error (nl_n);
           return 0;
         }
-        
+
       AST_Decl::NodeType nt = d->node_type ();
 
       if (nt != AST_Decl::NT_except

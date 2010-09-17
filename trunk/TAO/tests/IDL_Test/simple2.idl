@@ -38,7 +38,7 @@ interface simple3 : simple2
   };
 
   exception UserError
-  { 
+  {
     any reason;
   };
 

@@ -729,11 +729,11 @@ Invocation::dump_detail (ostream &strm, int indent, Dump_Mode mode, bool show_ha
           strm << " " << this->repl_octets_->thread()->alias();
 #endif
           char rstat = this->repl_octets_->reply_status();
-          switch (rstat) 
+          switch (rstat)
             {
             case 0:
               break;
-            case 1: 
+            case 1:
               strm << " User Exception";
               break;
             case 2:

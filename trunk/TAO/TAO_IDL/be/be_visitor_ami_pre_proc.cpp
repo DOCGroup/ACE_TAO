@@ -64,7 +64,7 @@ be_visitor_ami_pre_proc::visit_root (be_root *node)
       /// Generate the *A.idl file containing AMI4CCM-related
       /// interfaces and connector.
       int status = this->generate_ami4ccm_idl ();
-      
+
       if (status == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -204,7 +204,7 @@ be_visitor_ami_pre_proc::visit_operation (be_operation *node)
       // We do nothing for oneways!
       return 0;
     }
-    
+
   be_interface *parent =
     be_interface::narrow_from_scope (node->defined_in ());
 
@@ -214,7 +214,7 @@ be_visitor_ami_pre_proc::visit_operation (be_operation *node)
 
   be_operation *sendc_op =
     this->create_sendc_operation (node); // for arguments = TRUE
-                                  
+
   parent->be_add_operation (sendc_op);
 
   return 0;
@@ -236,18 +236,18 @@ be_visitor_ami_pre_proc::visit_attribute (be_attribute *node)
       delete set_operation;
       set_operation = 0;
     }
-    
+
   /// Temporarily generate the get operation.
   be_operation *get_operation =
     this->generate_get_operation (node);
   get_operation->set_defined_in (node->defined_in ());
 
   this->visit_operation (get_operation);
-  
+
   get_operation->destroy ();
   delete get_operation;
   get_operation = 0;
-  
+
   return 0;
 }
 
@@ -270,7 +270,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
 
   UTL_ScopedName *reply_handler_name =
     static_cast<UTL_ScopedName *> (node->name ()->copy ());
-    
+
   reply_handler_name->last_component ()->replace_string (
     reply_handler_local_name.c_str ());
 
@@ -302,7 +302,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
 
   reply_handler->set_name (reply_handler_name);
   reply_handler->set_defined_in (s);
-  
+
   /// Store here for convenient retrieval later.
   node->ami_handler (reply_handler);
 
@@ -349,7 +349,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
                 {
                   be_operation *get_operation =
                     this->generate_get_operation (attribute);
-                    
+
                   this->create_reply_handler_operation (get_operation,
                                                         reply_handler);
 
@@ -395,7 +395,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
 
   reply_handler->is_ami_rh (true);
   reply_handler->is_ami4ccm_rh (true);
-  
+
   return reply_handler;
 }
 
@@ -423,7 +423,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
   op_name->last_component ()->replace_string (new_op_name.c_str ());
 
   idl_global->scopes ().push (node->defined_in ());
-  
+
   // Create the operation
   be_operation *op = 0;
   ACE_NEW_RETURN (op,
@@ -433,7 +433,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
                                 false,
                                 false),
                   0);
-                  
+
   idl_global->scopes ().pop ();
 
   op->set_name (op_name);
@@ -467,11 +467,11 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
 
   be_interface *field_type =
     be_interface::narrow_from_decl (handler);
-  
+
   ACE_NEW_RETURN (id,
                   Identifier ("ami_handler"),
                   0);
- 
+
   UTL_ScopedName *tmp = 0;
 
   ACE_NEW_RETURN (tmp,

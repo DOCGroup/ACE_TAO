@@ -131,7 +131,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
   ACE_OS::memset (fname,
                   '\0',
                   NAMEBUFSIZE);
-                  
+
   bool use_underscore = (this->ctx_->tdef () == 0);
 
   if (!use_underscore)

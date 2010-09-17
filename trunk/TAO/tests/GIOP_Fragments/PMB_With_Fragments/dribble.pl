@@ -53,7 +53,7 @@ if (!$result) {
   my($initial) = length($str);
   my($length)  = $initial;
   my($maxLine) = 78;
- 
+
   print $str;
 
   foreach my $key (sort keys %options) {

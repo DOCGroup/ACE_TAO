@@ -218,12 +218,12 @@ module redefs
   interface base
   {
     const long lconst = -5;
-    
+
     exception ex
     {
       string info;
     };
-    
+
     struct foo
     {
       short index;
@@ -233,12 +233,12 @@ module redefs
   interface derived : base
   {
     const long lconst = 44;
-    
+
     exception ex
     {
       long serial;
     };
-    
+
     struct foo
     {
       string str;

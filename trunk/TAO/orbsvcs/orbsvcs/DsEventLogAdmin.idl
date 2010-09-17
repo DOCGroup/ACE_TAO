@@ -50,7 +50,7 @@ module DsEventLogAdmin
         DsLogAdmin::InvalidThreshold);
 
   };
-  
+
 };
 
 #endif /* DS_EVENT_LOG_ADMIN_IDL */

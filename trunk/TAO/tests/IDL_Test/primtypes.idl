@@ -21,9 +21,9 @@ module OldPrimTypes
   interface ex1
   {
     attribute long l1;
-    
+
     long m1 (in long a);
-    
+
     ex1 mtypes (in long a1,
                 inout long a2,
                 out long a3,
@@ -47,7 +47,7 @@ module OldPrimTypes
                 out char g3);
   };
 
-  interface ex2 : ex1 
+  interface ex2 : ex1
   {
     readonly attribute long l2;
 

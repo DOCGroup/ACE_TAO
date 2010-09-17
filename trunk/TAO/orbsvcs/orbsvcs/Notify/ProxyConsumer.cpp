@@ -186,14 +186,14 @@ TAO_Notify_ProxyConsumer::destroy (void)
 }
 
 
-ACE_Time_Value 
+ACE_Time_Value
 TAO_Notify_ProxyConsumer::last_ping() const
 {
   return this->last_ping_.value ();
 }
 
 
-void 
+void
 TAO_Notify_ProxyConsumer::last_ping(const ACE_Time_Value& tv)
 {
   this->last_ping_ = tv;

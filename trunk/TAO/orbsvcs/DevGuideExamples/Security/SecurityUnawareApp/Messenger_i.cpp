@@ -13,12 +13,12 @@
 Messenger_i::Messenger_i (void)
   {
   }
-  
+
 // Implementation skeleton destructor
 Messenger_i::~Messenger_i (void)
   {
   }
-  
+
 CORBA::Boolean Messenger_i::send_message (
     const char * user_name,
     const char * subject,

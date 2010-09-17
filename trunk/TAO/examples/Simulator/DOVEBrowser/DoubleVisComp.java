@@ -1,5 +1,5 @@
 // $Id$
-// 
+//
 // = FILENAME
 //    DoubleVisComp.java
 //
@@ -23,7 +23,7 @@ public class DoubleVisComp extends Canvas implements VisComp
   private static final int MIN_SPACING = 2;
   private static final int POINT_HISTORY = 200;
   private static final Font FONT = new Font ("Dialog", Font.PLAIN, 10);
-  
+
   private Queue plot_;
   private String title_;
   private Graphics offgraphics_;
@@ -52,19 +52,19 @@ public class DoubleVisComp extends Canvas implements VisComp
     title_ = "";
     max_value_ = 1;
     old_max_value_ = max_value_;
-    
+
     java.util.Random rand = new java.util.Random (System.currentTimeMillis());
     float hue_ = rand.nextFloat();
     float brightness = rand.nextFloat();
 
     hue_ += .075;
-    
+
     if (hue_ > 1.0)
       hue_ -= 1.0;
-    
+
     if (brightness > 0.75)
       brightness -= 0.25;
-    
+
     Color new_color = Color.getHSBColor(hue_, 1, brightness);
 
     this.setBackground(new_color);
@@ -82,7 +82,7 @@ public class DoubleVisComp extends Canvas implements VisComp
   public void setName (String title) {
       title_ = title;
   }
-  
+
   public int getProperty () {
       return Properties.DOUBLE;
     }
@@ -94,7 +94,7 @@ public class DoubleVisComp extends Canvas implements VisComp
   public Dimension getPreferredSize () {
       return new Dimension (175, 175);
     }
-  
+
   public String getName() {
     return title_;
   }
@@ -107,24 +107,24 @@ public class DoubleVisComp extends Canvas implements VisComp
   {
     Double double_temp_;
     try {
-      double_temp_ = (Double) obj;  
+      double_temp_ = (Double) obj;
     }
     catch (Exception excp) {
       double_temp_ = new Double (0.0);
       System.out.println (excp);
       System.out.println ("Visualization Component received wrong data type!");
     }
-        
+
     float new_point = double_temp_.floatValue();
     Float temp = (Float)plot_.dequeue_tail();
     plot_.enqueue_head(new Float(new_point));
-    
+
     if (new_point > local_max_)
       {
         local_max_ = new_point;
         local_max_values_ [local_max_value_index_] = local_max_;
       }
-    
+
     if (monotonic_scale_)
       {
         float global_max = 0;
@@ -132,7 +132,7 @@ public class DoubleVisComp extends Canvas implements VisComp
 
         while (global_max > max_value_)
           max_value_ *= 2;
-    
+
         while ((global_max < max_value_/2) && (max_value_ > old_max_value_))
           max_value_ /= 2;
       }
@@ -140,7 +140,7 @@ public class DoubleVisComp extends Canvas implements VisComp
       {
         while (local_max_ > max_value_)
           max_value_ *= 2;
-    
+
         while ((local_max_ < max_value_/2) && (max_value_ > old_max_value_))
           max_value_ /= 2;
       }
@@ -156,7 +156,7 @@ public class DoubleVisComp extends Canvas implements VisComp
     Enumeration queue_iter = plot_.forward_iterator();
     int x1 = d.width - 8, y1, x2, y2, fheight = fm.getHeight (), i;
     String value =  "Value (of " + max_value_ + "): " + String.valueOf(plot_.head());
-    
+
     if ((offscreen_ == null) ||
 	(offscreensize_.width != d.width - 8) ||
 	(offscreensize_.height != d.height - 8))
@@ -171,12 +171,12 @@ public class DoubleVisComp extends Canvas implements VisComp
     g.draw3DRect (0, 0, d.width - 1, d.height - 1, true);
     g.draw3DRect (1, 1, d.width - 3, d.height - 3, true);
     g.draw3DRect (2, 2, d.width - 5, d.height - 5, true);
-    
+
     local_max_ = 0;
 
     offgraphics_.setColor (getBackground());
     offgraphics_.fillRect (0, 0, offscreensize_.width, offscreensize_.height);
-    offgraphics_.setColor (getForeground());    
+    offgraphics_.setColor (getForeground());
     offgraphics_.drawString(title_, 5, fheight);
     offgraphics_.drawString(value, 5, offscreensize_.height - 5);
 
@@ -184,13 +184,13 @@ public class DoubleVisComp extends Canvas implements VisComp
     while (queue_iter.hasMoreElements())
       {
 	value_2 = ((Float)queue_iter.nextElement()).floatValue();
-	
+
 	if (value_1 > local_max_)
 	  local_max_ = value_1;
-	
+
         y1 = normalize(offscreensize_.height - fheight, value_1);
         y2 = normalize(offscreensize_.height - fheight, value_2);
-	
+
 	tmp = value_2;
 	value_2 = value_1;
 	value_1 = tmp;
@@ -206,13 +206,13 @@ public class DoubleVisComp extends Canvas implements VisComp
 
     g.drawImage(offscreen_, 3, 3, null);
   }
-  
+
   public void paint(Graphics g)
   {
     Dimension d = getSize ();
     int plot_length = plot_.length();
     int num_points = d.width / spacing_;
-    
+
     if (plot_.length() < num_points)
       {
 	for (int i = 0; i < num_points - plot_length; i++)
@@ -223,7 +223,7 @@ public class DoubleVisComp extends Canvas implements VisComp
 	for (int i = 0; i < plot_length - num_points; i++)
 	  plot_.dequeue_tail();
       }
-    
+
     update(g);
   }
 
@@ -244,7 +244,7 @@ public class DoubleVisComp extends Canvas implements VisComp
   private synchronized void local_max_init () {
 
     // Create a new, larger, array to hold the local maxima
-    float new_max_values [] = 
+    float new_max_values [] =
       new float [local_max_value_count_ + 1];
 
     // Copy the previously stored maxima (if any) into the new array.
@@ -267,7 +267,7 @@ public class DoubleVisComp extends Canvas implements VisComp
     float ratio = (float)coord/max_value_;
     float pixels = (float)height*ratio;
     float location = (float)height - pixels;
-    
+
     return Math.round(location);
   }
 }

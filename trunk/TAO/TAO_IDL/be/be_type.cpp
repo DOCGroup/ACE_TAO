@@ -295,26 +295,26 @@ be_type::gen_stub_decls (TAO_OutStream *os)
     {
       return;
     }
-    
+
   *os << be_nl << be_nl
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
-      
+
   *os << be_nl;
-      
+
   AST_Interface *i = AST_Interface::narrow_from_decl (this);
   AST_ValueType *v = AST_ValueType::narrow_from_decl (this);
-  
+
   if (i != 0)
     {
       *os << be_nl
           << "typedef " << this->local_name ()
           << (v == 0 ? "_ptr" : " *") << " _ptr_type;";
     }
-    
+
   bool skip_varout = false;
   AST_Sequence *s = AST_Sequence::narrow_from_decl (this);
-  
+
   if (s != 0)
     {
       // _vars and _outs not supported yet by alt mapping.
@@ -323,16 +323,16 @@ be_type::gen_stub_decls (TAO_OutStream *os)
           skip_varout = true;
         }
     }
-  
+
   if (!skip_varout)
-    {  
+    {
       *os << be_nl
           << "typedef " << this->local_name ()
           << "_var _var_type;" << be_nl
           << "typedef " << this->local_name ()
           << "_out _out_type;";
     }
-      
+
   bool gen_any_destructor =
     be_global->any_support ()
     && (!this->is_local ()

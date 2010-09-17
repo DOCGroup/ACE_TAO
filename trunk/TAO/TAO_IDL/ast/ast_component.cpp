@@ -72,7 +72,7 @@ AST_Component::look_in_inherited (UTL_ScopedName *e,
                                   bool full_def_only)
 {
   AST_Decl *d = 0;
-  
+
   if (this->pd_base_component != 0)
     {
       d =
@@ -148,15 +148,15 @@ AST_Component::special_lookup (UTL_ScopedName *e,
                                bool full_def_only)
 {
   AST_Decl *d = this->look_in_inherited (e, full_def_only);
-  
+
   if (d == 0)
     {
       d = this->look_in_supported (e, full_def_only);
     }
-    
+
   return d;
 }
-                                    
+
 void
 AST_Component::destroy (void)
 {

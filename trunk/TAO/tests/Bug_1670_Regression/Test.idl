@@ -14,7 +14,7 @@ module Foo
       long op1();
       long op2();
     };
-    
+
     interface B
     {
       long op3();

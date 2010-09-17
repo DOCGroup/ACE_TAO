@@ -31,7 +31,7 @@ my $es_nsiorfile = $es->LocalFile ($nsiorfile);
 my $con_nsiorfile = $con->LocalFile ($nsiorfile);
 my $sup_nsiorfile = $sup->LocalFile ($nsiorfile);
 my $sup2_nsiorfile = $sup2->LocalFile ($nsiorfile);
-my $es_ecmtconffile = $es->LocalFile ($ecmtconffile); 
+my $es_ecmtconffile = $es->LocalFile ($ecmtconffile);
 $ns->DeleteFile ($nsiorfile);
 $es->DeleteFile ($nsiorfile);
 $con->DeleteFile ($nsiorfile);
@@ -57,7 +57,7 @@ $CON = $con->CreateProcess ("ECT_Consumer",
 $SUP = $sup->CreateProcess ("ECT_Supplier",
                             "-ORBInitRef NameService=file://$sup_nsiorfile ".
                             " -s 3 -u 10000 -n 1 -t 0 -b 8");
-                            
+
 $SUP2 = $sup2->CreateProcess ("ECT_Supplier",
                               "-ORBInitRef NameService=file://$sup2_nsiorfile ".
                               " -s 1 -u 10 -n 1 -t 0");

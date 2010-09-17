@@ -54,15 +54,15 @@ module OldArray
     A op (in A a1,
           inout A a2,
           out A a3);
-          
+
     str22 op2 (in str22 a1,
                inout str22 a2,
                out str22 a3);
-               
+
     A_matrix op4 (in A a1,
                   inout A a2,
                   out A a3);
-    
+
     attribute str22 attribute_array;
   };
 };

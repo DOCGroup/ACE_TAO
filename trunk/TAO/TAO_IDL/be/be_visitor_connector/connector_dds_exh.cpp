@@ -39,10 +39,10 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
     {
       return -1;
     }
-    
+
   this->gen_dds_traits ();
   this->gen_connector_traits ();
-  
+
   /// Unset the flags in the port interfaces list so
   /// they can be used again in another connector.
   for (ACE_Unbounded_Queue<be_interface *>::ITERATOR iter (
@@ -52,10 +52,10 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
     {
       be_interface **item = 0;
       iter.next (item);
-      
+
       (*item)->dds_connector_traits_done (false);
     }
-  
+
   /// Assumes parent connector exists and is either DDS_State
   /// or DDS_Event, so we generate inheritance from the
   /// corresponding template. May have to generalize this logic.
@@ -116,9 +116,9 @@ be_visitor_connector_dds_exh::visit_provides (be_provides *node)
 {
   be_interface *iface =
     be_interface::narrow_from_decl (node->provides_type ());
-  
+
   this->gen_interface_connector_trait (iface, true);
-    
+
   return 0;
 }
 
@@ -127,9 +127,9 @@ be_visitor_connector_dds_exh::visit_uses (be_uses *node)
 {
   be_interface *iface =
     be_interface::narrow_from_decl (node->uses_type ());
-    
+
   this->gen_interface_connector_trait (iface, false);
-    
+
   return 0;
 }
 
@@ -166,7 +166,7 @@ be_visitor_connector_dds_exh::gen_dds_traits (void)
         {
           os_ << "RTI";
         }
-        
+
       os_ << "Seq dds_seq_type;" << be_nl
           << "typedef ::" << dt_name
           << "TypeSupport type_support;" << be_nl
@@ -214,9 +214,9 @@ be_visitor_connector_dds_exh::gen_connector_traits (void)
 
   bool global_comp =
     (comp_scope->node_type () == AST_Decl::NT_root);
-    
+
   os_ << be_nl << be_nl
-      << "struct DDS_" << this->node_->local_name () 
+      << "struct DDS_" << this->node_->local_name ()
       << "_Traits" << be_nl
       << "{" << be_idt_nl
       << "typedef ::CIAO_" << this->node_->flat_name () << "_Impl::"
@@ -226,7 +226,7 @@ be_visitor_connector_dds_exh::gen_connector_traits (void)
       << "typedef " << (global_comp ? "" : "::")
       << comp_scope->name () << "::CCM_"
       << this->node_->local_name () << "_Context context_type;";
-      
+
   if (this->visit_component_scope (this->node_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -236,7 +236,7 @@ be_visitor_connector_dds_exh::gen_connector_traits (void)
 
       return;
     }
-      
+
   os_ << be_uidt_nl
       << "};";
 }
@@ -247,18 +247,18 @@ be_visitor_connector_dds_exh::gen_interface_connector_trait (
   bool for_facet)
 {
   if (!iface->dds_connector_traits_done ())
-    {  
+    {
       AST_Decl *scope = ScopeAsDecl (iface->defined_in ());
       bool global = (scope->node_type () == AST_Decl::NT_root);
       const char *smart_scope = (global ? "" : "::");
       const char *lname = iface->local_name ();
-      
+
       os_ << be_nl
           << "typedef ::" << scope->name () << smart_scope
           << (for_facet ? "CCM_" : "") << lname
           << " " << tao_cg->downcase (lname) << "_type;";
-          
-      iface->dds_connector_traits_done (true);  
+
+      iface->dds_connector_traits_done (true);
       this->port_ifaces_.enqueue_tail (iface);
     }
 }

@@ -30,16 +30,16 @@ be_visitor_connector_ami_rh_exs::visit_component (be_component *node)
     {
       return 0;
     }
-    
+
   this->node_ = node;
-  
+
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
   os_ << be_nl << be_nl
       << "namespace CIAO_" << node->flat_name ()
       << "_Impl" << be_nl
       << "{" << be_idt;
-      
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -49,10 +49,10 @@ be_visitor_connector_ami_rh_exs::visit_component (be_component *node)
                          ACE_TEXT ("failed\n")),
                         -1);
     }
-      
+
   os_ << be_uidt_nl
       << "}";
-   
+
   return 0;
 }
 
@@ -63,24 +63,24 @@ be_visitor_connector_ami_rh_exs::visit_provides (be_provides *node)
     be_interface::narrow_from_decl (node->provides_type ());
 
   this->init (true);
-  
+
   const char *suffix = "ReplyHandler_i";
-  
+
   os_ << be_nl
       << this->iface_name_ << suffix << "::"
       << this->iface_name_ << suffix << " (void)" << be_nl
       << "{" << be_nl
       << "}";
-      
+
   os_ << be_nl << be_nl
       << this->iface_name_ << suffix << "::~"
       << this->iface_name_ << suffix << " (void)" << be_nl
       << "{" << be_nl
       << "}";
-      
+
   ACE_CString port_pfix = this->ctx_->port_prefix ();
   this->ctx_->port_prefix () = "";
-  
+
   /// This overload of traverse_inheritance_graph() used here
   /// doesn't automatically prime the queues.
   this->callback_iface_->get_insert_queue ().reset ();
@@ -105,8 +105,8 @@ be_visitor_connector_ami_rh_exs::visit_provides (be_provides *node)
                          ACE_TEXT ("callback interface failed\n")),
                         -1);
     }
-    
-  this->ctx_->port_prefix () = port_pfix;  
+
+  this->ctx_->port_prefix () = port_pfix;
   return 0;
 }
 
@@ -115,12 +115,12 @@ be_visitor_connector_ami_rh_exs::visit_operation (
   be_operation *node)
 {
   AST_Decl::NodeType nt = node->defined_in ()->scope_node_type ();
-  
+
   if (nt != AST_Decl::NT_interface)
     {
       return 0;
     }
-    
+
   be_visitor_operation_exs v (this->ctx_);
   v.scope (this->callback_iface_);
   v.class_extension ("_i");

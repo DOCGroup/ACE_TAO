@@ -15,7 +15,7 @@ CORBA::is_nil<> (CORBA::Object_ptr obj)
     {
       return true;
     }
-    
+
   return CORBA::Object::is_nil_i (obj);
 }
 

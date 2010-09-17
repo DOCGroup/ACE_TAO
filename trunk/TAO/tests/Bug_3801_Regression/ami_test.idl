@@ -36,7 +36,7 @@ module A
           raises (DidTheRightThing);
 
         oneway void shutdown ();
-        
+
         void inout_arg_test (inout string str);
       };
   };

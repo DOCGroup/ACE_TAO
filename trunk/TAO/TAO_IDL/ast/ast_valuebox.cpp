@@ -15,14 +15,14 @@ AST_ValueBox::AST_ValueBox (UTL_ScopedName *n,
     AST_Type (AST_Decl::NT_valuebox,
               n),
     AST_ConcreteType (AST_Decl::NT_valuebox, n),
-    pd_boxed_type (boxed_type) 
+    pd_boxed_type (boxed_type)
 {
 }
 
 AST_ValueBox::~AST_ValueBox (void)
 {
 }
- 
+
 AST_Type *
 AST_ValueBox::boxed_type (void) const
 {
@@ -32,7 +32,7 @@ AST_ValueBox::boxed_type (void) const
 void
 AST_ValueBox::dump (ACE_OSTREAM_TYPE &o)
 {
-  
+
   this->dump_i (o, "valuetype ");
 
   this->local_name ()->dump (o);

@@ -364,7 +364,7 @@ Test_DynStruct::run_test (void)
       corba_long_double <<= l_long_double_in_struct;
 
       DynamicAny::DynAny_var l_dynany = dynany_factory->create_dyn_any (corba_long_double);
-      try 
+      try
       {
         l_dynany->destroy ();
         ACE_DEBUG ((LM_DEBUG,

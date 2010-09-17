@@ -662,7 +662,7 @@ TAO_AV_TCP_Flow_Handler::open (void * /*arg*/)
                                 SO_RCVBUF,
                                 (void *) &buf_size, &s) == -1)
        buf_size = BUFSIZ;
-    
+
     ((TAO_AV_TCP_Object*)(this->protocol_object_))->frame_.size (buf_size);
 
   // Called by the <Strategy_Acceptor> when the handler is completely

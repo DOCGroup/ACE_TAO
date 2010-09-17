@@ -9,7 +9,7 @@
 //    generic_object.idl
 //
 // = DESCRIPTION
-//    This file contains examples of IDL code that has 
+//    This file contains examples of IDL code that has
 //    caused problems in the past for the TAO IDL
 //    compiler. This test is to make sure the problems
 //    stay fixed.
@@ -22,13 +22,13 @@
 // The IDL compiler deals with these in a completely different way
 // that it deals with a derived object, i.e., an interface.
 
-enum ObjectType 
+enum ObjectType
 {
-  OT_THIS, 
+  OT_THIS,
   OT_THAT
 };
 
-union Selecter switch (ObjectType) 
+union Selecter switch (ObjectType)
 {
   case OT_THIS: Object this_object;
   case OT_THAT: Object that_object;
@@ -37,8 +37,8 @@ union Selecter switch (ObjectType)
 // Test stub code for generic object parameters.
 interface generic
 {
-  Object op (in Object inarg, 
-             inout Object inoutarg, 
+  Object op (in Object inarg,
+             inout Object inoutarg,
              out Object outarg);
 };
 

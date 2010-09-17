@@ -21,83 +21,83 @@ module OldDif2
   interface ex1
   {
     void op0 ();
-    
+
     float op1 (in float f,
                out double d,
                inout long l);
-               
+
     double op2 (in double d,
                 out long l,
                 inout short s);
-                
+
     long op3 (in long l,
               out short s,
               inout unsigned long ul);
-              
+
     short op4 (in short s,
                out unsigned long ul,
                inout unsigned short us);
-               
+
     unsigned long op5 (inout unsigned long ul,
                        in unsigned short us,
                        out char c,
                        in boolean b);
-                       
+
     unsigned short op6 (out unsigned short us,
                         inout char c);
   };
 
-  interface ex2 : ex1 
+  interface ex2 : ex1
   {
     // Operations continued from ex1.
     char op7 (in char c,
               out boolean b,
               inout octet o);
-              
+
     boolean op8 (out boolean b,
                  in octet o);
-                 
+
     octet op9 (inout octet o,
                out string s,
                in string <10> ls,
                inout long l);
-               
+
     string op10 (in string s,
                  out string <10> ls);
-                 
+
     string <10> op11 (inout string <10> ls,
                       out long l);
-                      
+
     long op12 (in long l);
   };
 
   interface ex3 : ex1
   {
     readonly attribute float float_attribute;
-    
+
     attribute double double_attribute;
-    
+
     readonly attribute long long_attribute;
-    
+
     attribute short short_attribute;
-    
+
     readonly attribute unsigned long unsigned_long_attribute;
   };
 
   interface ex4 : ex2, ex3
   {
     attribute unsigned short unsigned_short_attribute;
-    
+
     readonly attribute char char_attribute;
-    
+
     attribute boolean boolean_attribute;
-    
+
     readonly attribute octet octet_attribute;
-    
+
     attribute string string_attribute;
-    
+
     readonly attribute string <10> limited_string_attribute;
-    
+
     readonly attribute ex4 an_object_attribute;
   };
 };

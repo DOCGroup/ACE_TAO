@@ -99,6 +99,6 @@ module CCS {
         void            change(
                             in ThermostatSeq tlist, in short delta
                         ) raises(EChange);
-        
+
     };
 };

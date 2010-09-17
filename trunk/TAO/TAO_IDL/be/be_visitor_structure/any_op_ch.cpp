@@ -42,7 +42,7 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-  
+
   be_module *module = 0;
   if (node->is_nested ())
     {
@@ -68,9 +68,9 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
           // Some compilers handle "any" operators in a namespace
           // corresponding to their module, others do not.
           *os << "\n\n#if defined (ACE_ANY_OPS_USE_NAMESPACE)\n";
-          
+
           be_util::gen_nested_namespace_begin (os, module);
-          
+
           *os << macro << " void operator<<= (::CORBA::Any &, const ::" << node->name ()
               << " &); // copying version" << be_nl;
           *os << macro << " void operator<<= (::CORBA::Any &, ::" << node->name ()
@@ -79,15 +79,15 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
               << node->name () << " *&); // deprecated\n";
           *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const ::"
               << node->name () << " *&);";
-          
+
           be_util::gen_nested_namespace_end (os, module);
-          
+
           // Emit #else.
           *os << be_nl << be_nl
               << "#else\n\n";
         }
     }
-      
+
   *os << be_global->core_versioning_begin () << be_nl;
 
   *os << macro << " void operator<<= (::CORBA::Any &, const " << node->name ()

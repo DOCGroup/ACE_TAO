@@ -256,7 +256,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
       << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
       << "}";
-      
+
   AST_Decl *s = ScopeAsDecl (this->node_->defined_in ());
   bool is_global =
    (s->node_type () == AST_Decl::NT_root);
@@ -273,7 +273,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
       << "this->component_.in ());"
       << be_uidt << be_uidt << be_uidt_nl
       << "}";
-      
+
   os_ << be_nl << be_nl
       << "void" << be_nl
       << iface_name << "_exec_i::_set_component (" << be_idt_nl
@@ -334,7 +334,7 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
 
   os_ << "if (! ::CORBA::is_nil (this->callback_.in ()))"
       << be_idt_nl << "{" << be_idt_nl;
-      
+
   if (is_excep)
     {
       os_ << "::CCM_AMI::ExceptionHolder_i holder (excep_holder);"
@@ -366,7 +366,7 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
     }
 
   os_ << be_uidt_nl << "}" << be_uidt_nl;
-  
+
   os_ << be_nl
       << "::PortableServer::ObjectId_var oid =" << be_idt_nl
       << "this->poa_->servant_to_id (this);" << be_uidt_nl
@@ -395,11 +395,11 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
                          ACE_TEXT ("list failed\n")),
                         -1);
     }
-    
+
   AST_Decl *scope = ScopeAsDecl (this->iface_->defined_in ());
   bool global = (scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (global ? "" : "::");
-  
+
   const char *prefix = "AMI4CCM_";
   ACE_CString iface_str (this->iface_->local_name ());
   ACE_CString orig_iface_str (
@@ -412,14 +412,14 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
       << orig_iface_name << "_var receptacle_objref =" << be_idt_nl
       << "this->context_->get_connection_ami4ccm_port_ami4ccm_uses ();"
       << be_uidt_nl << be_nl;
-      
+
   os_ << "if (! ::CORBA::is_nil (receptacle_objref.in ()))"
       << be_idt_nl
       << "{" << be_idt_nl
       << "::" << scope->full_name () << smart_scope << "AMI_"
       << orig_iface_name << "Handler_var the_handler_var;"
       << be_nl << be_nl;
-      
+
   os_ << "if (! ::CORBA::is_nil (ami_handler))" << be_idt_nl
       << "{" << be_idt_nl
       << "::CIAO::Context_Impl_Base *ctx_base =" << be_idt_nl

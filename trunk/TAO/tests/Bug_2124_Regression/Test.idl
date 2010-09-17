@@ -6,7 +6,7 @@
  */
 
 module Test
-{   
+{
    typedef string<10> MyString;
    typedef MyString OtherString;
 

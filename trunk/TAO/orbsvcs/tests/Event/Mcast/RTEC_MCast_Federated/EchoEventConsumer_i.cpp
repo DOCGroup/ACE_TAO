@@ -22,7 +22,7 @@ EchoEventConsumer_i::EchoEventConsumer_i(CORBA::ORB_ptr orb, int event_limit)
 void EchoEventConsumer_i::push(const RtecEventComm::EventSet& events)
 {
   // Loop through the events, looking for shutdown events.
-  for (u_int i = 0; i < events.length (); ++i) 
+  for (u_int i = 0; i < events.length (); ++i)
     {
       //ACE_OS::printf(".");
       // Extract event data from the any.
@@ -37,14 +37,14 @@ void EchoEventConsumer_i::push(const RtecEventComm::EventSet& events)
           << "  source: " << events[i].header.source;
 
 #if !defined (TAO_LACKS_EVENT_CHANNEL_ANY)
-      if (events[i].data.any_value >>= eventData) 
+      if (events[i].data.any_value >>= eventData)
         {
           out << "  text: "   << eventData;
         }
 #else
       if (events[i].data.payload.length() > 0)
         {
-          out << "  text: " << 
+          out << "  text: " <<
             (const char *)events[i].data.payload.get_buffer();
         }
 #endif  /* !TAO_LACKS_EVENT_CHANNEL_ANY */

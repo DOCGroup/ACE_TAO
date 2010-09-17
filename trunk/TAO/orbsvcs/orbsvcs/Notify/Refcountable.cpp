@@ -76,7 +76,7 @@ TAO_Notify_Refcountable::~TAO_Notify_Refcountable ()
   {
     ACE_DEBUG ((LM_DEBUG,"object:%x %s(%d) with refcount:%d destroyed incorrectly.\n",
         e.obj, e.class_name, e.obj->ref_id_, e.obj->refcount_.value() ));
- 
+
     if ( e.obj != this || e.obj->ref_id_ != this->ref_id_ )
     {
       ACE_DEBUG ((LM_DEBUG, "  with an ID mismatch %x->%d != %x->%d!\n",
@@ -156,7 +156,7 @@ TAO_Notify_Tracker::dump( const char* title )
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   ACE_DEBUG ((LM_DEBUG,"\nTAO_Notify_Tracker: %s\n", (title ? title : "dump")));
- 
+
   EntityMap::const_iterator iter( map_.begin() );
   while ( iter != map_.end() )
   {
@@ -190,7 +190,7 @@ TAO_Notify_Tracker::add( TAO_Notify_Refcountable* p )
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   int id = ++id_counter_;
- 
+
   Entry e = { p, typeid(*p).name() };
   std::pair< EntityMap::iterator, bool > result =
     map_.insert( std::make_pair( id, e ) );

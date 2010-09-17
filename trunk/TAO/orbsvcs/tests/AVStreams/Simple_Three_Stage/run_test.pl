@@ -50,16 +50,16 @@ if ($sv->PutFile ($inputfile) == -1) {
     exit 1;
 }
 
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service", 
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
                           " -o $ns_nsiorfile");
-$SV = $sv->CreateProcess ("sender", 
+$SV = $sv->CreateProcess ("sender",
                           " -ORBDebugLevel $debug_level ".
                           " -ORBInitRef NameService=file://$sv_nsiorfile ".
                           "-f $sv_inputfile");
-$RE = $re->CreateProcess ("receiver", 
+$RE = $re->CreateProcess ("receiver",
                           " -ORBInitRef NameService=file://$re_nsiorfile ".
                           "-f $re_outputfile");
-$DI = $di->CreateProcess ("distributer", 
+$DI = $di->CreateProcess ("distributer",
                           " -ORBInitRef NameService=file://$di_nsiorfile ");
 
 print STDERR "Starting Naming Service\n";

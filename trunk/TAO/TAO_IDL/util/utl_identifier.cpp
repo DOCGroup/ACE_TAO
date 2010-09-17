@@ -109,13 +109,13 @@ Identifier::Identifier (const char *s)
           const char *eh_suffix = "_excep";
           ACE_CString::size_type pos =
             str.length () - ACE_OS::strlen (eh_suffix);
-            
+
           // If we have an AMI exception holder suffix, strip it off.
           if (str.find (eh_suffix) == pos)
             {
               str = str.substr (0, pos);
             }
-            
+
           TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
           unsigned int len =
             static_cast<unsigned int> (str.length ());

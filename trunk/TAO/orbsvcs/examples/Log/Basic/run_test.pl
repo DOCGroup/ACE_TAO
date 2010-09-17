@@ -1,7 +1,7 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
-    if 0;  
- 
+    if 0;
+
 # $Id$
 # -*- perl -*-
 
@@ -31,11 +31,11 @@ $ls->DeleteFile ($nsiorfile);
 $cli->DeleteFile ($nsiorfile);
 
 
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service", 
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
                           " -o $ns_nsiorfile");
-$LS = $ls->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service", 
+$LS = $ls->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service",
                           " -ORBInitRef NameService=file://$ls_nsiorfile");
-$CLI = $cli->CreateProcess ("client", 
+$CLI = $cli->CreateProcess ("client",
                             "-ORBInitRef NameService=file://$cli_nsiorfile");
 
 print STDERR "Starting Naming Service\n";
@@ -80,7 +80,7 @@ if ($LS_status != 0) {
     exit 1;
 }
 
-# Give time for logging service to initialize and install its object 
+# Give time for logging service to initialize and install its object
 # reference in the nameing service.
 sleep (5);
 

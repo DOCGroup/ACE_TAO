@@ -18,7 +18,7 @@ struct IIOP_Profile_var
   explicit IIOP_Profile_var (TAO_IIOP_Profile *pro)
     : pro_ (pro)
   {}
-  
+
   ~IIOP_Profile_var ()
   {
     this->pro_->_decr_refcnt ();

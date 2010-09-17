@@ -1558,17 +1558,17 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
               this_file,
               idl_global->lineno (),
               masked->full_name () ));
-              
+
   const bool same_file =
     (0 == ACE_OS::strcmp (this_file, masked_file));
-            
+
   if (!same_file)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%C "),
                   masked_file));
     }
-    
+
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("line %d but hidden by local \""),
               masked->line ()));
@@ -1576,11 +1576,11 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("::%C\""),
               masking->full_name ()));
-    
+
   const bool same_file_again =
     (same_file
      && 0 == ACE_OS::strcmp (this_file, masking_file));
-            
+
   if (!same_file_again)
     {
       ACE_ERROR ((LM_ERROR,
@@ -1593,11 +1593,11 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT (" at ")));
     }
-    
+
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("line %d ?\n"),
               masking->line () ));
-}                                
+}
 
 void
 UTL_Error::anonymous_type_diagnostic (void)
@@ -1606,24 +1606,24 @@ UTL_Error::anonymous_type_diagnostic (void)
     {
       return;
     }
-    
+
   bool aw = idl_global->anon_warning ();
   bool nw = (idl_global->compile_flags () & IDL_CF_NOWARNINGS);
-  
+
   if (aw && nw)
     {
       return;
     }
-  
+
   ErrorCode ec =
     (aw ? EIDL_ANONYMOUS_WARNING : EIDL_ANONYMOUS_ERROR);
-    
+
   idl_error_header (ec,
                     idl_global->lineno (),
                     idl_global->filename ()->get_string ());
-                    
+
   ACE_ERROR ((LM_ERROR, "\n"));
-  
+
   if (ec == EIDL_ANONYMOUS_ERROR)
     {
       idl_global->set_err_count (idl_global->err_count () + 1);

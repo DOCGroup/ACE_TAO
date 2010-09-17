@@ -39,7 +39,7 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
     }
 
   AST_Decl::NodeType snt = node->defined_in ()->scope_node_type ();
-  bool in_class = (snt != AST_Decl::NT_root 
+  bool in_class = (snt != AST_Decl::NT_root
                    && snt != AST_Decl::NT_module);
   if (be_global->gen_inline_constants () && !in_class)
     {
@@ -69,7 +69,7 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
       *os << "#ifndef ACE_HAS_HEADER_ALLOCATED_CLASS_STATIC_CONST_INT_STOREAGE" << be_nl << "  ";
     }
   *os << "const ";
-  
+
   if (node->et () == AST_Expression::EV_enum)
     {
       *os << node->enum_full_name ();

@@ -17,13 +17,13 @@ module PortableInterceptor
 {
   typeprefix PortableInterceptor "omg.org";
 
-  abstract valuetype ObjectReferenceFactory 
+  abstract valuetype ObjectReferenceFactory
   {
     Object make_object (in string repository_id,
                         in ObjectId id);
   };
 
-  abstract valuetype ObjectReferenceTemplate : ObjectReferenceFactory 
+  abstract valuetype ObjectReferenceTemplate : ObjectReferenceFactory
   {
     readonly attribute ServerId server_id;
     readonly attribute ORBId orb_id;

@@ -60,7 +60,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               ++result;
             }
         }
- 
+
      if (mytransport[0].purged_count () != 1)
        {
          ACE_ERROR ((LM_ERROR, "ERROR Incorrect purged count for transport 0: %d\n", mytransport[0].purged_count ()));

@@ -135,10 +135,10 @@ AST_Array::compute_dims (UTL_ExprList *ds,
     {
       AST_Expression *orig = iter.item ();
       AST_Param_Holder *ph = orig->param_holder ();
-      
+
       AST_Expression::ExprType ex_type =
         (ph == 0 ? orig->ev ()->et : ph->info ()->const_type_);
-        
+
       AST_Expression *copy = 0;
       ACE_NEW_RETURN (copy,
                       AST_Expression (orig,
@@ -256,11 +256,11 @@ AST_Array::destroy (void)
       delete this->pd_dims[i];
       this->pd_dims[i] = 0;
     }
-    
+
   delete [] this->pd_dims;
   this->pd_dims = 0;
   this->pd_n_dims = 0;
-  
+
   this->AST_ConcreteType::destroy ();
 }
 

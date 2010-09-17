@@ -59,7 +59,7 @@ be_visitor_array_serializer_op_cs::visit_array (be_array *node)
                          "Bad base type\n"),
                         -1);
     }
-  
+
   AST_Decl::NodeType nt = bt->node_type ();
 
   // If we contain an anonymous sequence,

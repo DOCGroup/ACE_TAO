@@ -216,7 +216,7 @@ be_interface::compute_full_skel_name (const char *prefix,
     {
       return;
     }
-    
+
   size_t namelen = ACE_OS::strlen (prefix);
   long first = true;
   long second = false;
@@ -787,24 +787,24 @@ be_interface:: gen_var_out_seq_decls (void)
   // Generate the ifdefined macro for this interface.
   os->gen_ifdef_macro (this->flat_name (),
                        "var_out");
-          
+
   // Need this clunky string compare for when we are processing
   // the *A.idl file. The *_sendc operations are generated in
   // a separate interface distinguished only by the AMI4CCM_
   // prefix. Since it does not come from implied IDL (in this
   // execution of the IDL compiler) there is nothing
   // to tell the IDL compiler that this interface is in any
-  // way special. All we can do is search for the prefix.                  
+  // way special. All we can do is search for the prefix.
   ACE_CString test (lname, 0, false);
   bool has_ami4ccm_prefix = (test.find ("AMI4CCM_") == 0);
-    
+
   bool already_ami =
     (this->is_ami_rh ()
      || this->is_ami4ccm_rh ()
      || has_ami4ccm_prefix);
-           
+
   /// Forward declare the handler interface before declaring
-  /// the original interface.                     
+  /// the original interface.
   if (be_global->ami_call_back ()
       && !already_ami)
     {
@@ -1210,7 +1210,7 @@ be_interface::gen_operation_table (const char *flat_name,
             *os << "_repository_id,&"
                 << skeleton_class_name
                 << "::_repository_id_skel, 0" << be_nl;
-                
+
             ++this->skel_count_;
           }
 
@@ -1303,12 +1303,12 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
             {
               be_operation *op =
                 be_operation::narrow_from_decl (d);
-                
+
               if (op->is_sendc_ami ())
                 {
                   continue;
                 }
-                
+
               // We are an operation node.
               *os << "{\"" << d->original_local_name () << "\", &"
                   << full_skeleton_name << "::"
@@ -1404,12 +1404,12 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
             {
               be_operation *op =
                 be_operation::narrow_from_decl (d);
-                
+
               if (op->is_sendc_ami ())
                 {
                   continue;
                 }
-                
+
               // Generate operation name.
 
               // We are an operation node. We use the original
@@ -1869,7 +1869,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                          "fclose"),
                         -1);
     }
-    
+
   // And reset file to 0 because otherwise there is a problem during destruction of stream.
   tao_cg->gperf_input_stream ()->file () = 0;
 
@@ -2212,13 +2212,13 @@ be_interface::gen_skel_helper (be_interface *derived,
             {
               be_operation *op =
                 be_operation::narrow_from_decl (d);
-               
-              /// These are not generated on the server side.  
+
+              /// These are not generated on the server side.
               if (op->is_sendc_ami ())
                 {
                   continue;
                 }
-        
+
               *os << be_nl << be_nl
                   << "// TAO_IDL - Generated from" << be_nl
                   << "// " << __FILE__ << ":" << __LINE__
@@ -2273,7 +2273,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                 {
                   return -1;
                 }
-                
+
               *os << be_nl << be_nl;
 
               if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
@@ -2481,7 +2481,7 @@ be_interface::gen_colloc_op_defn_helper (be_interface *derived,
       if (nt == AST_Decl::NT_op)
         {
           op = be_operation::narrow_from_decl (d);
-          
+
           /// Skip these on the skeleton side.
           if (op->is_sendc_ami ())
             {
@@ -2697,64 +2697,64 @@ be_interface::destroy (void)
 {
   delete [] this->full_skel_name_;
   this->full_skel_name_ = 0;
-  
+
   delete [] this->full_coll_name_;
   this->full_coll_name_ = 0;
-  
+
   delete [] this->local_coll_name_;
   this->local_coll_name_ = 0;
-  
+
   delete [] this->relative_skel_name_;
   this->relative_skel_name_ = 0;
-  
+
   delete [] this->base_proxy_impl_name_;
   this->base_proxy_impl_name_ = 0;
-  
+
   delete [] this->remote_proxy_impl_name_;
   this->remote_proxy_impl_name_ = 0;
-  
+
   delete [] this->direct_proxy_impl_name_;
   this->direct_proxy_impl_name_ = 0;
-  
+
   delete [] this->full_base_proxy_impl_name_;
   this->full_base_proxy_impl_name_ = 0;
-  
+
   delete [] this->full_remote_proxy_impl_name_;
   this->full_remote_proxy_impl_name_ = 0;
-  
+
   delete [] this->full_direct_proxy_impl_name_;
   this->full_direct_proxy_impl_name_ = 0;
-  
+
   delete [] this->base_proxy_broker_;
   this->base_proxy_broker_ = 0;
-  
+
   delete [] this->remote_proxy_broker_;
   this->remote_proxy_broker_ = 0;
-  
+
   delete [] this->strategized_proxy_broker_;
   this->strategized_proxy_broker_ = 0;
-  
+
   delete [] this->full_base_proxy_broker_name_;
   this->full_base_proxy_broker_name_ = 0;
-  
+
   delete [] this->full_remote_proxy_broker_name_;
   this->full_remote_proxy_broker_name_ = 0;
-  
+
   delete [] this->full_strategized_proxy_broker_name_;
   this->full_strategized_proxy_broker_name_ = 0;
-  
+
   delete [] this->client_scope_;
   this->client_scope_ = 0;
-  
+
   delete [] this->flat_client_scope_;
   this->flat_client_scope_ = 0;
-  
+
   delete [] this->server_scope_;
   this->server_scope_ = 0;
-  
+
   delete [] this->flat_server_scope_;
   this->flat_server_scope_ = 0;
-  
+
   // Call the destroy methods of our base classes.
   this->AST_Interface::destroy ();
   this->be_scope::destroy ();
@@ -2932,13 +2932,13 @@ be_interface::gen_stub_inheritance (TAO_OutStream *os)
   if (nparents > 0)
     {
       *os << be_idt;
-      
+
       AST_Type **parents = this->inherits ();
 
       for (i = 0; i < nparents; ++i)
         {
           AST_Type *parent = parents[i];
-        
+
           if (! parent->is_abstract ())
             {
               has_concrete_parent = true;
@@ -3416,7 +3416,7 @@ be_interface::base_proxy_impl_name (void)
           this->local_name (),
           this->suffix_table_[PROXY_IMPL]);
     }
-    
+
   return this->base_proxy_impl_name_;
 }
 
@@ -3430,7 +3430,7 @@ be_interface::full_base_proxy_impl_name (void)
         this->base_proxy_impl_name ();
       size_t length =
         ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-        
+
       ACE_NEW_RETURN (this->full_base_proxy_impl_name_,
                       char[length + 1],
                       0);
@@ -3440,7 +3440,7 @@ be_interface::full_base_proxy_impl_name (void)
       ACE_OS::strcat (this->full_base_proxy_impl_name_,
                       base_name);
     }
-    
+
   return this->full_base_proxy_impl_name_;
 }
 
@@ -3456,7 +3456,7 @@ be_interface::remote_proxy_impl_name (void)
           this->suffix_table_[PROXY_IMPL],
           this->tag_table_[REMOTE]);
     }
-    
+
   return this->remote_proxy_impl_name_;
 }
 
@@ -3469,7 +3469,7 @@ be_interface::full_remote_proxy_impl_name (void)
       const char *base_name = this->remote_proxy_impl_name ();
       size_t length =
         ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-        
+
       ACE_NEW_RETURN (this->full_remote_proxy_impl_name_,
                       char[length + 1],
                       0);
@@ -3479,7 +3479,7 @@ be_interface::full_remote_proxy_impl_name (void)
       ACE_OS::strcat (this->full_remote_proxy_impl_name_,
                       base_name);
     }
-    
+
   return this->full_remote_proxy_impl_name_;
 }
 
@@ -3495,7 +3495,7 @@ be_interface::direct_proxy_impl_name (void)
           this->suffix_table_[PROXY_IMPL],
           this->tag_table_[DIRECT]);
     }
-    
+
   return this->direct_proxy_impl_name_;
 }
 
@@ -3509,7 +3509,7 @@ be_interface::full_direct_proxy_impl_name (void)
 
       size_t length =
         ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-        
+
       ACE_NEW_RETURN (this->full_direct_proxy_impl_name_,
                       char[length + 1],
                       0);
@@ -3519,7 +3519,7 @@ be_interface::full_direct_proxy_impl_name (void)
       ACE_OS::strcat (this->full_direct_proxy_impl_name_,
                       base_name);
     }
-    
+
   return this->full_direct_proxy_impl_name_;
 }
 
@@ -3535,7 +3535,7 @@ be_interface::base_proxy_broker_name (void)
           this->local_name (),
           this->suffix_table_[PROXY_BROKER]);
     }
-    
+
   return this->base_proxy_broker_;
 }
 
@@ -3548,7 +3548,7 @@ be_interface::full_base_proxy_broker_name (void)
       const char *base_name = this->base_proxy_broker_name ();
       size_t length =
         ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-        
+
       ACE_NEW_RETURN (this->full_base_proxy_broker_name_,
                       char[length + 1],
                       0);
@@ -3558,7 +3558,7 @@ be_interface::full_base_proxy_broker_name (void)
       ACE_OS::strcat (this->full_base_proxy_broker_name_,
                       base_name);
     }
-    
+
   return this->full_base_proxy_broker_name_;
 }
 
@@ -3575,7 +3575,7 @@ be_interface::remote_proxy_broker_name (void)
           this->suffix_table_[PROXY_BROKER],
           this->tag_table_[REMOTE]);
     }
-    
+
   return this->remote_proxy_broker_;
 }
 
@@ -3588,7 +3588,7 @@ be_interface::full_remote_proxy_broker_name (void)
       const char *base_name = this->remote_proxy_broker_name ();
       size_t length =
         ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-        
+
       ACE_NEW_RETURN (this->full_remote_proxy_broker_name_,
                       char[length + 1],
                       0);
@@ -3598,7 +3598,7 @@ be_interface::full_remote_proxy_broker_name (void)
       ACE_OS::strcat (this->full_remote_proxy_broker_name_,
                       base_name);
     }
-    
+
   return this->full_remote_proxy_broker_name_;
 }
 
@@ -3615,7 +3615,7 @@ be_interface::strategized_proxy_broker_name (void)
           this->suffix_table_[PROXY_BROKER],
           this->tag_table_[STRATEGIZED]);
     }
-    
+
   return this->strategized_proxy_broker_;
 }
 
@@ -3629,7 +3629,7 @@ be_interface::full_strategized_proxy_broker_name (void)
         this->strategized_proxy_broker_name ();
       size_t length =
         ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-        
+
       ACE_NEW_RETURN (this->full_strategized_proxy_broker_name_,
                       char[length + 1],
                       0);
@@ -3639,7 +3639,7 @@ be_interface::full_strategized_proxy_broker_name (void)
       ACE_OS::strcat (this->full_strategized_proxy_broker_name_,
                       base_name);
     }
-    
+
   return this->full_strategized_proxy_broker_name_;
 }
 
@@ -3660,7 +3660,7 @@ be_interface::client_enclosing_scope (void)
       ACE_OS::strncpy (this->client_scope_, full_name, length);
       this->client_scope_[length] = '\0';
     }
-    
+
   return this->client_scope_;
 }
 
@@ -3675,7 +3675,7 @@ be_interface::flat_client_enclosing_scope (void)
 
       size_t offset = ACE_OS::strlen (name);
       size_t length = ACE_OS::strlen (full_name) - offset;
-      
+
       ACE_NEW_RETURN (this->flat_client_scope_,
                       char[length + 1],
                       0);
@@ -3685,7 +3685,7 @@ be_interface::flat_client_enclosing_scope (void)
                        length);
       this->flat_client_scope_[length] = '\0';
     }
-    
+
   return this->flat_client_scope_;
 }
 
@@ -3709,7 +3709,7 @@ be_interface::server_enclosing_scope (void)
       ACE_OS::strncpy (this->server_scope_, full_name, length);
       this->server_scope_[length] = '\0';
     }
-    
+
   return this->server_scope_;
 }
 

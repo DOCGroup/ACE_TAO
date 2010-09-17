@@ -117,7 +117,7 @@ if ($client->PutFile ($iorbase) == -1) {
 if ($all == 1) {
     foreach $bufsize (@bufsizes) {
         print STDERR "\n***************** STARTING TEST ******************\n";
-        
+
         $CL->Arguments ("-k file://$client_iorfile -ORBNodelay 0 -l $level ".
                         "-t none -i $iterations -m $bufsize");
 
@@ -138,7 +138,7 @@ foreach $type (@types) {
     print STDERR "\n***************** STARTING TEST ******************\n";
 
     my $transport = "";
-    
+
     if ($type == "none" || $type == "transport") {
         $transport = "-ORBNodelay 0";
     }

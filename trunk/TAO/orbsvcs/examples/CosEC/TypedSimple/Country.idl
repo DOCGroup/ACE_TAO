@@ -7,7 +7,7 @@
 
 #include "orbsvcs/CosTypedEventComm.idl"
 
-interface Country : ::CosTypedEventComm::TypedPushConsumer 
+interface Country : ::CosTypedEventComm::TypedPushConsumer
 {
   void update_population (in string country,
                           in long population);

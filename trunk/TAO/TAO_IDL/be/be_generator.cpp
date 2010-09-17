@@ -217,11 +217,11 @@ be_generator::create_interface (UTL_ScopedName *n,
                                 l,
                                 a),
                   0);
-  
+
   /// Trigger this interation over the included pragmas when the
   /// first local interface is seen in the main file. In an
   /// executor IDL file (the case we want), this happens near the
-  /// top. In other files, it will do no harm.                
+  /// top. In other files, it will do no harm.
   if (l && idl_global->in_main_file ())
     {
       FE_Utils::create_implied_ami_uses_stuff ();
@@ -982,8 +982,8 @@ be_generator::create_provides (UTL_ScopedName *n,
                   be_provides (n,
                                provides_type),
                   0);
-                  
-  return retval;              
+
+  return retval;
 }
 
 AST_Uses *
@@ -997,8 +997,8 @@ be_generator::create_uses (UTL_ScopedName *n,
                            uses_type,
                            is_multiple),
                   0);
-                  
-  return retval;              
+
+  return retval;
 }
 
 AST_Publishes *
@@ -1010,8 +1010,8 @@ be_generator::create_publishes (UTL_ScopedName *n,
                   be_publishes (n,
                                 publishes_type),
                   0);
-                  
-  return retval;              
+
+  return retval;
 }
 
 AST_Emits *
@@ -1023,8 +1023,8 @@ be_generator::create_emits (UTL_ScopedName *n,
                   be_emits (n,
                             emits_type),
                   0);
-                  
-  return retval;              
+
+  return retval;
 }
 AST_Consumes *
 be_generator::create_consumes (UTL_ScopedName *n,
@@ -1035,8 +1035,8 @@ be_generator::create_consumes (UTL_ScopedName *n,
                   be_consumes (n,
                                consumes_type),
                   0);
-                  
-  return retval;              
+
+  return retval;
 }
 
 AST_Extended_Port *
@@ -1049,8 +1049,8 @@ be_generator::create_extended_port (
                   be_extended_port (n,
                                     porttype_ref),
                   0);
-                  
-  return retval;              
+
+  return retval;
 }
 
 AST_Mirror_Port *
@@ -1063,8 +1063,8 @@ be_generator::create_mirror_port (
                   be_mirror_port (n,
                                   porttype_ref),
                   0);
-                  
-  return retval;              
+
+  return retval;
 }
 
 AST_Connector *
@@ -1077,7 +1077,7 @@ be_generator::create_connector (
                   be_connector (n,
                                 base_connector),
                   0);
-                  
+
   return retval;
 }
 
@@ -1091,10 +1091,10 @@ be_generator::create_template_module (
                   be_template_module (n,
                                       template_params),
                   0);
-                  
+
   return retval;
 }
-  
+
 AST_Template_Module_Inst *
 be_generator::create_template_module_inst (
   UTL_ScopedName *n,
@@ -1107,10 +1107,10 @@ be_generator::create_template_module_inst (
                                            ref,
                                            template_args),
                   0);
-                  
+
   return retval;
 }
-  
+
 AST_Template_Module_Ref *
 be_generator::create_template_module_ref (
   UTL_ScopedName *n,
@@ -1123,10 +1123,10 @@ be_generator::create_template_module_ref (
                                           ref,
                                           param_refs),
                   0);
-                  
+
   return retval;
 }
-    
+
 AST_Param_Holder *
 be_generator::create_param_holder (
   UTL_ScopedName *parameter_name,
@@ -1137,7 +1137,7 @@ be_generator::create_param_holder (
                   be_param_holder (parameter_name,
                                    info),
                   0);
-                  
+
   return retval;
 }
 

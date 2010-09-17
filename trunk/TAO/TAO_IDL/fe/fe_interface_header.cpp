@@ -292,7 +292,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
           // We will crash if we continue from here.
           throw Bailout ();
         }
-        
+
       // Look it up.
       d = s->lookup_by_name  (item,
                               true); // full_def_only

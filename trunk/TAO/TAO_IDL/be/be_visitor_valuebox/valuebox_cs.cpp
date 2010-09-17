@@ -131,7 +131,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << "{" << be_idt_nl
       << "return true;" << be_uidt_nl
       << "}" << be_nl << be_nl;
-      
+
 
   if (be_global->any_support ())
     {
@@ -181,7 +181,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
   bool is_array = false;
   const char * unmarshal_arg;
   be_predefined_type *bpt = be_predefined_type::narrow_from_decl (bt);
-  
+
   if (bpt != 0)
     {
       switch (bpt->pt())
@@ -256,7 +256,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << "{" << be_idt_nl
       << "return " << node->name () << "::_tao_unmarshal (" << be_idt
       << be_idt << be_idt_nl
-      << " indrected_strm, vb_object);" 
+      << " indrected_strm, vb_object);"
       << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "ACE_NEW_RETURN (" << be_idt_nl
@@ -269,7 +269,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       *os << at->full_name()
           << "_forany temp (vb_object->_boxed_inout ());" << be_nl;
     }
-    
+
   *os << "return (strm >> ";
 
   be_string *str = be_string::narrow_from_decl (bt);
@@ -451,7 +451,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
   // Retrieve the base type since we will need to do some code
   // generation for it.
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
-  
+
   if (bt == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -553,7 +553,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
 
   // Accessor: const
   *os << "const ";
-  
+
   if (bt->accept (&bt_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -562,7 +562,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
                          "base type visit failed\n"),
                         -1);
     }
-    
+
   *os << " &" << be_nl;
   *os << vb_node->name ()
       << "::operator[] ( ::CORBA::ULong index) const" << be_nl

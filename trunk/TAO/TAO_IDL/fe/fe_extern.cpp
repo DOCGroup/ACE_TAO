@@ -101,7 +101,7 @@ FE_yyparse (void)
 #else
   ACE_OS::fclose (tao_yyin);
 #endif /* USE_MCPP_BUFFER_LEXING */
-  
+
   return result;
 }
 

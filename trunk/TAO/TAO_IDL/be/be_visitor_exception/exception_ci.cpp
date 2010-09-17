@@ -40,7 +40,7 @@ int be_visitor_exception_ci::visit_exception (be_exception *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception::"
                          "visit_exception -"
-                         "code for inline failed\n"), 
+                         "code for inline failed\n"),
                         -1);
     }
 

@@ -37,7 +37,7 @@ be_visitor_operation_exs::visit_operation (be_operation *node)
   this->ctx_->node (node);
 
   os_ << be_nl << be_nl;
-     
+
   // Retrieve the operation return type.
   be_type *rt = be_type::narrow_from_decl (node->return_type ());
 
@@ -70,8 +70,8 @@ be_visitor_operation_exs::visit_operation (be_operation *node)
       << scope_->original_local_name ()->get_string ()
       << this->class_extension_.c_str () << "::"
       << node->local_name ();
-  
-  // Generate the argument list, which will use our overrridden 
+
+  // Generate the argument list, which will use our overrridden
   // visit_argument().
   be_visitor_operation_arglist al_visitor (this->ctx_);
   al_visitor.unused (true);
@@ -88,7 +88,7 @@ be_visitor_operation_exs::visit_operation (be_operation *node)
 
   // Must set this again, it's been changed by traversals above.
   this->ctx_->node (node);
-  
+
   return this->gen_op_body (rt);
 }
 
@@ -110,16 +110,16 @@ be_visitor_operation_exs::gen_op_body (be_type *return_type)
   os_ << be_nl
       << "{" << be_idt_nl
       << your_code_here_;
-      
+
   be_operation *op =
     be_operation::narrow_from_decl (this->ctx_->node ());
-  
+
   if (! op->void_return_type ())
     {
       os_ << be_nl;
-    
+
       be_null_return_emitter emitter (this->ctx_);
-      
+
       if (emitter.emit (return_type) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -130,10 +130,10 @@ be_visitor_operation_exs::gen_op_body (be_type *return_type)
                             -1);
         }
     }
-       
+
   os_ << be_uidt_nl
       << "}";
-      
+
   return 0;
 }
 

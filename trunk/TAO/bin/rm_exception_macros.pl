@@ -136,7 +136,7 @@ sub process_file {
           if ($ats && index($val, ';') == 0 &&
               !($lines[$#lines] =~ /\/\/.*$/ ||
                 $lines[$#lines] =~ /\/\*.*\*\/$/)) {
-            $lines[$#lines] .= $val;                          
+            $lines[$#lines] .= $val;
             $line = '';
           }
           else {
@@ -226,7 +226,7 @@ sub process_file {
               $line = $sp . $line;
             }
             else {
-              $lines[$#lines] .= $line;                          
+              $lines[$#lines] .= $line;
               $line = '';
             }
           }

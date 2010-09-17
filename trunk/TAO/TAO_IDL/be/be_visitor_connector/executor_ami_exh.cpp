@@ -47,7 +47,7 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
       << scope->local_name () << suffix << " (void);" << be_nl
       << "virtual ~" << scope->local_name () << suffix
       << " (void);";
-      
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -58,7 +58,7 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
     }
 
   os_ << be_nl << be_nl
-      << "virtual void set_session_context (" 
+      << "virtual void set_session_context ("
       << "::Components::SessionContext_ptr ctx);"
       << be_nl << be_nl
       << "virtual void configuration_complete (void);"

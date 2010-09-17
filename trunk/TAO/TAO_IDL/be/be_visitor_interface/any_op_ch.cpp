@@ -41,10 +41,10 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
   const char *macro = this->ctx_->export_macro ();
 
   *os << be_nl << be_nl;
-  
+
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
-      
+
   *os << be_nl << be_nl;
 
   be_module *module = 0;
@@ -96,7 +96,7 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
     }
 
   *os << be_global->core_versioning_begin () << be_nl;
-  
+
   *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
       << "_ptr); // copying" << be_nl;
   *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()

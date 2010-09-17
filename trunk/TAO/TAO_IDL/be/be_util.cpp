@@ -43,7 +43,7 @@ be_util::gen_nested_namespace_begin (TAO_OutStream *os,
         {
           // Leave the outermost root scope.
           *os << be_nl << "namespace ";
-          
+
           if (first_level && skel)
             {
               // We are outermost module.
@@ -77,22 +77,22 @@ void
 be_util::gen_nesting_open (TAO_OutStream &os, AST_Decl *node)
 {
   AST_Decl::NodeType nt = node->node_type ();
-  
+
   if (nt == AST_Decl::NT_root)
     {
       os << be_nl;
       return;
     }
-    
+
   be_util::gen_nesting_open (
     os,
     ScopeAsDecl (node->defined_in ()));
-   
+
   if (nt == AST_Decl::NT_module)
-    {  
+    {
       ACE_CString module_name (
         IdentifierHelper::try_escape (node->original_local_name ()));
-      
+
       os << be_nl
          << "module " << module_name.c_str () << be_nl
          << "{" << be_idt;
@@ -104,12 +104,12 @@ be_util::gen_nesting_close (TAO_OutStream &os, AST_Decl *node)
 {
   AST_Decl *d = ScopeAsDecl (node->defined_in ());
   AST_Decl::NodeType nt = d->node_type ();
-  
+
   while (nt != AST_Decl::NT_root)
     {
       os << be_uidt_nl
          << "};";
-         
+
       d = ScopeAsDecl (d->defined_in ());
       nt = d->node_type ();
     }

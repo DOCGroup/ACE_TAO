@@ -45,7 +45,7 @@ AST_Home::AST_Home (UTL_ScopedName *n,
 {
   AST_ValueType *pk =
     AST_ValueType::narrow_from_decl (primary_key);
-    
+
   if (pk != 0)
     {
       idl_global->primary_keys ().enqueue_tail (pk);
@@ -106,12 +106,12 @@ AST_Home::look_in_supported (UTL_ScopedName *e,
         {
           continue;
         }
-        
+
       AST_Interface *i =
         AST_Interface::narrow_from_decl (*is);
-        
+
       d = (i)->lookup_by_name_r (e, full_def_only);
-                               
+
       if (d != 0)
         {
           break;
@@ -126,12 +126,12 @@ AST_Home::special_lookup (UTL_ScopedName *e,
                           bool full_def_only)
 {
   AST_Decl *d = this->look_in_inherited (e, full_def_only);
-  
+
   if (d == 0)
     {
       d = this->look_in_supported (e, full_def_only);
     }
-    
+
   return d;
 }
 
@@ -192,17 +192,17 @@ AST_Home::destroy (void)
 
   delete [] this->inherits ();
   delete [] this->inherits_flat ();
-  
+
   delete [] this->pd_decls;
   this->pd_decls = 0;
   this->pd_decls_allocated = 0;
   this->pd_decls_used = 0;
-  
+
   delete [] this->pd_referenced;
   this->pd_referenced = 0;
   this->pd_referenced_allocated = 0;
   this->pd_referenced_used = 0;
-  
+
   // These are stored by copying the Identifier.
   for (long i = 0; i < this->pd_name_referenced_used; ++i)
     {
@@ -210,12 +210,12 @@ AST_Home::destroy (void)
       delete this->pd_name_referenced[i];
       this->pd_name_referenced[i] = 0;
     }
-  
+
   delete [] this->pd_name_referenced;
   this->pd_name_referenced = 0;
   this->pd_name_referenced_allocated = 0;
   this->pd_name_referenced_used = 0;
-  
+
   // Skip AST_Interface, since the home's decls
   // are added to the equivalent interface, and
   // they should get destroyed there.

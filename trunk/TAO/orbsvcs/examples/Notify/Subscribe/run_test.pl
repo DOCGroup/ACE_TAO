@@ -38,13 +38,13 @@ $nfs->DeleteFile ($nsiorfile);
 $sub->DeleteFile ($nsiorfile);
 $nfs->DeleteFile ($nfsiorfile);
 
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service", 
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
                           " -o $ns_nsiorfile");
 
 $NFS = $nfs->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/Notify_Service");
 $Notify_Args = "-ORBInitRef NameService=file://$nfs_nsiorfile -IORoutput $nfs_nfsiorfile ";
 
-$SUB = $sub->CreateProcess ("Subscribe"); 
+$SUB = $sub->CreateProcess ("Subscribe");
 $Subscribe_Args = "-ORBInitRef NameService=file://$sub_nsiorfile -ORBDebugLevel $debug_level";
 
 $NS_status = $NS->Spawn ();

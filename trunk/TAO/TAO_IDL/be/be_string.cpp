@@ -58,12 +58,12 @@ be_string::gen_member_ostream_operator (TAO_OutStream *os,
   if (this->width () == 1)
     {
       *os << "\"\\\"\" << ";
-      
+
       this->be_type::gen_member_ostream_operator (os,
                                                   instance_name,
                                                   use_underscore,
                                                   accessor);
-      
+
       *os << " << \"\\\"\"";
     }
   else
@@ -142,7 +142,7 @@ be_string::compute_tc_name (void)
       ACE_NEW (id,
                Identifier (local_tc_name.c_str ()));
     }
-    
+
   zero.destroy ();
 
   UTL_ScopedName *conc_name = 0;

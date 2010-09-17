@@ -33,7 +33,7 @@ module A
 
         void inout_arg_test (inout string str);
       };
-      
+
     interface Test_Child : AMI_Test
     {
       void child_op ();

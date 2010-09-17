@@ -95,7 +95,7 @@ if ($es->WaitForFileTimed ($esiorfile,$es->ProcessStartWaitInterval()) == -1) {
     exit 1;
 }
 
-# start EchoEventSupplier  
+# start EchoEventSupplier
 $S_status = $S->Spawn ();
 
 if ($S_status != 0) {
@@ -103,7 +103,7 @@ if ($S_status != 0) {
     exit 1;
 }
 
-# start EchoEventConsumer  
+# start EchoEventConsumer
 $C_status = $C->Spawn ();
 
 if ($C_status != 0) {

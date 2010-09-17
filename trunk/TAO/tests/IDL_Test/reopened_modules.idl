@@ -9,7 +9,7 @@
 //    reopened_modules.idl
 //
 // = DESCRIPTION
-//    This file contains examples of IDL code that has 
+//    This file contains examples of IDL code that has
 //    caused problems in the past for the TAO IDL
 //    compiler. This test is to make sure the problems
 //    stay fixed.
@@ -40,7 +40,7 @@ module AA
   {
     module CC
     {
-      interface x2 
+      interface x2
       {
         // 'AA::BB::' should be implicit
         void op1 (in x1 obj);
@@ -57,19 +57,19 @@ module AA
 // recognized as being in the same scope as the
 // previous occurrence(s).
 
-module dot 
-{ 
+module dot
+{
   interface Party;
 
-  interface Person 
+  interface Person
     {
       attribute Party someParty;
     };
 };
 
-module dot 
-{ 
-  interface Party 
+module dot
+{
+  interface Party
     {
       attribute Person somePerson;
     };
@@ -102,18 +102,18 @@ interface OpHolder
 
 // This particular combination used to cause IDL compiler
 // to go into an infinite loop looking for return type to
-// getInfo(). Partial solution got rid of infinite loop, 
+// getInfo(). Partial solution got rid of infinite loop,
 // but erroneously returned ::com from lookup.
 
-module com 
+module com
 {
-  module mr 
+  module mr
     {
       typedef short info;
     };
 };
 
-module com 
+module com
 {
   interface IFace
     {
@@ -124,7 +124,7 @@ module com
 // Modules X and Y are also included from reopene_include2.idl.
 // There were problems with the lookup of Y::Z and X::Ex.
 
-module Y 
+module Y
 {
    interface Z {};
 };
@@ -133,7 +133,7 @@ module X
 {
    exception Ex {};
 
-   interface BI : Y::Z 
+   interface BI : Y::Z
    {
      void method () raises (X::Ex);
    };
@@ -142,16 +142,16 @@ module X
 // Reopened from reopen_include2.idl inclusion. There
 // was a problem with the inheritance lookup.
 
-module XX 
+module XX
 {
   interface blah_intfc;
 
-  interface blah_intfc 
+  interface blah_intfc
   {
     void op1 ();
   };
 
-  interface blah0 : blah_intfc 
+  interface blah0 : blah_intfc
   {
     void op0 ();
   };
@@ -249,7 +249,7 @@ module mC
 };
 
 // The example below uncovered errors in the logic of
-// AST_Module::fe_add_interface_fwd() and 
+// AST_Module::fe_add_interface_fwd() and
 // AST_Module::add_to_previous() that were causing
 // AST_Module::look_in_previous() (and thus lookup_by_name)
 // to fail on the last line.
@@ -284,7 +284,7 @@ module Schmoik
 module Thwoik
 {
   interface TestType;
-};  
+};
 
 module Thwoik
 {
@@ -298,7 +298,7 @@ module Thwoik
 };
 
 // We had a problem with the inheritance list
-// in the declaration of A_mod::B_mod::Foo, in 
+// in the declaration of A_mod::B_mod::Foo, in
 // both stub and skeleton files.
 module A_mod
 {
@@ -307,12 +307,12 @@ module A_mod
   module B_mod
   {
     interface Foo : A_mod::Foo {};
-  };  
+  };
 };
 
 /// Similar to example at the top of this file,
 /// but with more openings and deeper nesting.
-module m1 
+module m1
 {
   module m2
   {

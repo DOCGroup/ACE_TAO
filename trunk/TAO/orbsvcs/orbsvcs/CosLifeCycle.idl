@@ -25,7 +25,7 @@
 #ifndef TAO_LIFECYCLE_IDL
 #define TAO_LIFECYCLE_IDL
 
-// OMG IDL for CosLifeCycle Module, page 6-10 in 
+// OMG IDL for CosLifeCycle Module, page 6-10 in
 // Includes the following interfaces:
 //   FactoryFinder, LifeCycleObject, GenericFactory
 
@@ -40,21 +40,21 @@ module CosLifeCycle
   //
   // = DESCRIPTION
   //     This idl file describes the life cycle service.
-  //     The purpose of the life cycle service is to 
-  
-  typedef CosNaming::Name Key; 
+  //     The purpose of the life cycle service is to
+
+  typedef CosNaming::Name Key;
   typedef Object _Factory;
   typedef sequence <_Factory> Factories;
 
   struct NameValuePair
   {
-    CosNaming::Istring name; 
-    any value; 
+    CosNaming::Istring name;
+    any value;
   };
 
   typedef sequence <NameValuePair> Criteria;
-  
-  exception NoFactory 
+
+  exception NoFactory
   {
     Key search_key;
   };
@@ -65,12 +65,12 @@ module CosLifeCycle
   {
     Criteria invalid_criteria;
   };
-  exception CannotMeetCriteria 
+  exception CannotMeetCriteria
   {
     Criteria unmet_criteria;
   };
-  
-  interface FactoryFinder 
+
+  interface FactoryFinder
     {
       // = TITLE
       //   @@ Please fill in.
@@ -80,25 +80,25 @@ module CosLifeCycle
       Factories find_factories (in Key factory_key)
         raises (NoFactory);
     };
-  
-  interface LifeCycleObject 
+
+  interface LifeCycleObject
     {
       // = TITLE
       //   @@ Please fill in.
       // = DESCRIPTION
       //   @@ Please fill in.
 
-      LifeCycleObject copy (in FactoryFinder there, 
+      LifeCycleObject copy (in FactoryFinder there,
                             in Criteria the_criteria)
         raises (NoFactory, NotCopyable, InvalidCriteria, CannotMeetCriteria);
-      void move (in FactoryFinder there, 
+      void move (in FactoryFinder there,
                  in Criteria the_criteria)
         raises (NoFactory, NotMovable, InvalidCriteria,  CannotMeetCriteria);
       void remove ()
         raises (NotRemovable);
     };
-  
-  interface GenericFactory 
+
+  interface GenericFactory
     {
       // = TITLE
       //   @@ Please fill in.
@@ -106,7 +106,7 @@ module CosLifeCycle
       //   @@ Please fill in.
 
       boolean _supports (in Key k);
-      Object create_object (in Key k, 
+      Object create_object (in Key k,
                             in Criteria the_criteria)
         raises (NoFactory, InvalidCriteria, CannotMeetCriteria);
     };
@@ -114,9 +114,9 @@ module CosLifeCycle
 
 // Criteria, page 6-17:
 /*
-typedef struct NVP 
+typedef struct NVP
 {
-  CosNaming::Istring name;  
+  CosNaming::Istring name;
   any value;
 } NameValuePair;
 

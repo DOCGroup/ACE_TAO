@@ -25,6 +25,6 @@ CORBA::Boolean Messenger_i::send_message (
   CORBA::string_free(message);
   message = CORBA::string_dup("Thanks for the message.");
   return true;
-  
+
 }
 

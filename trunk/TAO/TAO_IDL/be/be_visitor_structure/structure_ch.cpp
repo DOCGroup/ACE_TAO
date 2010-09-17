@@ -44,7 +44,7 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
   node->gen_common_varout (os);
 
   *os << be_nl << be_nl;
-  
+
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
@@ -54,7 +54,7 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
       << "{" << be_idt;
 
   node->gen_stub_decls (os);
-  
+
   *os << be_nl;
 
   // Generate code for field members.

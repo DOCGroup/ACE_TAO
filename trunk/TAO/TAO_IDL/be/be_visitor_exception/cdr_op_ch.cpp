@@ -69,7 +69,7 @@ be_visitor_exception_cdr_op_ch::visit_exception (be_exception *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception_cdr_op_ch::"
                          "visit_exception - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 

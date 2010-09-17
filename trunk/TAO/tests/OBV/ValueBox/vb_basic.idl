@@ -6,7 +6,7 @@
 
 // Valuebox of all basic types defined at outermost scope:
 
-enum Color { red, orange, yellow, green, blue, indigo, violet }; 
+enum Color { red, orange, yellow, green, blue, indigo, violet };
 
 valuetype VBshort      short;
 valuetype VBlong       long;

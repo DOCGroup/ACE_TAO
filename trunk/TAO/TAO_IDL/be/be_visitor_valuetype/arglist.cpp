@@ -131,7 +131,7 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
       op =
         be_operation::narrow_from_scope (this->ctx_->scope ());
     }
-        
+
   if (op == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

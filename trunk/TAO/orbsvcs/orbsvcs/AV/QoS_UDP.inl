@@ -26,7 +26,7 @@ TAO_AV_UDP_QoS_Flow_Handler::open (ACE_Addr &address)
 
 ACE_INLINE ACE_QoS_Session*
 TAO_AV_UDP_QoS_Flow_Handler::qos_session (void)
-{       
+{
   return this->qos_session_;
 }
 

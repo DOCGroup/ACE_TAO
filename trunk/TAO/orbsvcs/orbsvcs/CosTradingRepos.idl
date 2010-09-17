@@ -26,7 +26,7 @@
 module CosTradingRepos
 {
   interface ServiceTypeRepository
-    {     
+    {
       // local types
       typedef sequence<CosTrading::ServiceTypeName> ServiceTypeNameSeq;
       enum PropertyMode {
@@ -40,7 +40,7 @@ module CosTradingRepos
         PropertyMode mode;
       };
       typedef sequence<PropStruct> PropStructSeq;
-      
+
       typedef CosTrading::Istring Identifier;  // IR::Identifier
 
       struct IncarnationNumber
@@ -99,10 +99,10 @@ module CosTradingRepos
       exception DuplicateServiceTypeName {
         CosTrading::ServiceTypeName name;
       };
-      
+
       // attributes
       readonly attribute IncarnationNumber incarnation;
-      
+
       // operation signatures
       IncarnationNumber add_type (in CosTrading::ServiceTypeName name,
                                   in Identifier if_name,
@@ -121,7 +121,7 @@ module CosTradingRepos
         raises (CosTrading::IllegalServiceType,
                 CosTrading::UnknownServiceType,
                 HasSubTypes);
-      
+
       ServiceTypeNameSeq list_types (in SpecifiedServiceTypes which_types);
 
       TypeStruct describe_type (in CosTrading::ServiceTypeName name)
@@ -140,7 +140,7 @@ module CosTradingRepos
       void unmask_type (in CosTrading::ServiceTypeName name)
         raises (CosTrading::IllegalServiceType,
                 CosTrading::UnknownServiceType,
-                NotMasked);      
+                NotMasked);
     };
 }; /* end module CosTradingRepos */
 

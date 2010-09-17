@@ -147,13 +147,13 @@ be_visitor_exception_ctor_assign::visit_interface (be_interface *node)
   if (this->ctx_->exception ()) // Special constructor.
     {
       *os << "this->" << bd->local_name () << " = TAO::Objref_Traits<"
-          << node->name () << ">::duplicate (_tao_" 
+          << node->name () << ">::duplicate (_tao_"
           << bd->local_name () << ");";
     }
   else
     {
       *os << "this->" << bd->local_name () << " = TAO::Objref_Traits<"
-          << node->name () << ">::duplicate (_tao_excp." 
+          << node->name () << ">::duplicate (_tao_excp."
           << bd->local_name () << ".in ());";
     }
 
@@ -350,7 +350,7 @@ be_visitor_exception_ctor_assign::visit_structure_fwd (
 {
   be_structure *s =
     be_structure::narrow_from_decl (node->full_definition ());
-    
+
   return this->visit_structure (s);
 }
 
@@ -381,7 +381,7 @@ be_visitor_exception_ctor_assign::visit_union_fwd (be_union_fwd *node)
 {
   be_union *u =
     be_union::narrow_from_decl (node->full_definition ());
-    
+
   return this->visit_union (u);
 }
 

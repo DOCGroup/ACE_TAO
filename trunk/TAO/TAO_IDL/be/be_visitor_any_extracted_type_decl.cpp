@@ -88,7 +88,7 @@ be_visitor_any_extracted_type_decl::visit_predefined_type (
   be_predefined_type *node)
 {
   os_ << node->full_name () << " ";
-  
+
   switch (node->pt ())
     {
       case AST_PredefinedType::PT_boolean:
@@ -160,12 +160,12 @@ be_visitor_any_extracted_type_decl::visit_predefined_type (
             os_ << "_ptr " << var_name_
                 << " = ::CORBA::TypeCode::_nil ();";
           }
-        
+
         break;
       default: // PT_void is left out of the case list.
         break;
     }
-    
+
   return 0;
 }
 
@@ -173,15 +173,15 @@ int
 be_visitor_any_extracted_type_decl::visit_sequence (be_sequence *node)
 {
   be_type *bt = this->ctx_->alias ();
-  
+
   if (bt == 0)
     {
       bt = node;
     }
-    
+
   os_ << "const " << bt->nested_type_name (idl_global->root ())
       << " * " << var_name_ << " = 0;";
-      
+
   return 0;
 }
 
@@ -204,7 +204,7 @@ be_visitor_any_extracted_type_decl::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
   int status = node->primitive_base_type ()->accept (this);
-  
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -213,7 +213,7 @@ be_visitor_any_extracted_type_decl::visit_typedef (be_typedef *node)
                          "accept on primitive type failed\n"),
                         -1);
     }
-    
+
   this->ctx_->alias (0);
   return 0;
 }

@@ -50,7 +50,7 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
                          ACE_TEXT ("Bad return type\n")),
                         -1);
     }
-    
+
   // Grab the right visitor to generate the return type.
   be_visitor_context ctx (*this->ctx_);
   be_visitor_operation_rettype or_visitor (&ctx);
@@ -83,13 +83,13 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
                          "codegen for argument list failed\n"),
                         -1);
     }
-    
+
   be_interface *intf =
     be_interface::narrow_from_scope (node->defined_in ());
-   
+
   /// If we are in a reply handler, are not an execp_* operation,
   /// and have no native args, then generate the AMI static
-  /// reply stub declaration.  
+  /// reply stub declaration.
   if (intf != 0
       && intf->is_ami_rh ()
       && !node->is_excep_ami ()
