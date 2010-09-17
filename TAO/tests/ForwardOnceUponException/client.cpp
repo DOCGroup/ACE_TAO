@@ -5,6 +5,7 @@
 #include "ace/Task.h"
 #include "ace/streams.h"
 #include "tao/Invocation_Utils.h"
+#include "ace/OS_NS_unistd.h"
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 1;

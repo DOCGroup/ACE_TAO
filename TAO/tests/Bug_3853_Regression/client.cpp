@@ -8,6 +8,7 @@
 #include "tao/debug.h"
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 #include <iostream>
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("client.ior");
