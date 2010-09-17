@@ -42,13 +42,13 @@ namespace DAnCE
                       CORBA::NO_MEMORY ());
     return retval;
   }
-  
+
   void
   Config_Handler_Impl::close (void)
   {
-    
+
   }
-  
+
   char * Config_Handler_Impl::instance_type (void)
   {
     DANCE_TRACE ("Config_Handler_Impl::instance_type");
@@ -65,7 +65,7 @@ namespace DAnCE
                       CORBA::Any (),
                       CORBA::NO_MEMORY ());
     instance_reference = outany;
-    
+
     if (plan.instance.length () <= instanceRef)
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO
@@ -76,10 +76,10 @@ namespace DAnCE
         throw ::Deployment::PlanError (plan.UUID.in (),
                                        "Invalid instance reference");
       }
-    
+
     const ::Deployment::InstanceDeploymentDescription &idd =
       plan.instance[instanceRef];
-    
+
     if (plan.implementation.length () <= idd.implementationRef)
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO
@@ -90,7 +90,7 @@ namespace DAnCE
         throw ::Deployment::PlanError (plan.UUID.in (),
                                        "Invalid Implementation reference");
       }
-    
+
     const ::Deployment::MonolithicDeploymentDescription &mdd =
       plan.implementation[idd.implementationRef];
 
@@ -122,7 +122,7 @@ namespace DAnCE
         throw ::Deployment::StartError (idd.name.in (),
                                         "No artifact found for plug-in initialization\n");
       }
-    
+
     PLUGIN_MANAGER::instance ()->register_configuration_plugin (ACE_TEXT_CHAR_TO_TCHAR (artifact),
                                                                 ACE_TEXT_CHAR_TO_TCHAR (entrypt));
   }
@@ -153,7 +153,7 @@ namespace DAnCE
   Config_Handler_Impl::configure (const ::Deployment::Properties &prop )
   {
     ::DAnCE::Utility::PROPERTY_MAP pmap (prop.length ());
-    
+
     ::DAnCE::Utility::build_property_map (pmap,
                                           prop);
   }

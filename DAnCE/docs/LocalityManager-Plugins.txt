@@ -51,7 +51,7 @@ and the MPC file must have the following line:
 
 The interceptor/installation handler/configuration plug-ins are loaded
 in the LocalityManager by means of a configuration file that is read
-at run-time.  By default,it loads a configuration from 
+at run-time.  By default,it loads a configuration from
 
 DANCE_ROOT/bin/ciao.localityconfig
 
@@ -90,7 +90,7 @@ The dance_node_manager currently loads the following plug-ins:
 .  Locality Manager installation handler
 .  SH&S interceptor
 .  Best-effort or standard error interceptor, based on the
-   --best-effort command line option.  
+   --best-effort command line option.
 
 The --best-effort command line option now only applies to the node
 manager, best effort deployment semantics are requested for the

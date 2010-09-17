@@ -69,7 +69,7 @@ namespace DAnCE
       ACE_UNUSED_ARG (dyn);
       DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Extracting Enums not yet supported\n")));
     }
-    
+
     CORBA::TypeCode_ptr
     DynEnum_Handler::create_typecode (const DataType &type)
     {
@@ -96,13 +96,13 @@ namespace DAnCE
         DYNANY_HANDLER->orb ()->create_enum_tc (ACE_TEXT_ALWAYS_CHAR (type.enum_ ().typeId ().c_str ()),
                                                 ACE_TEXT_ALWAYS_CHAR (type.enum_ ().name ().c_str ()),
                                                 members);
-      
+
       DYNANY_HANDLER->register_typecode ((type.enum_ ().typeId ()),
                                          tc);
-      
+
       return tc;
     }
-    
+
   }
 }
 

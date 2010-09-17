@@ -38,19 +38,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 
       TAO::Utils::ORB_Destroyer safe_orb (orb);
-      
+
       CORBA::Object_var tmp = orb->resolve_initial_references ("NameService");
       CosNaming::NamingContext_var domain_nc = CosNaming::NamingContext::_narrow (tmp);
-      
+
       if (CORBA::is_nil (domain_nc.in ()))
         {
           ACE_ERROR ((LM_EMERGENCY, "SHS_Daemon - Unable to register with the CORBA Naming Service\n"));
           return -1;
         }
-      
+
       CORBA::Object_var poa_obj
         = orb->resolve_initial_references ("RootPOA");
-            
+
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (poa_obj.in ());
 
@@ -75,11 +75,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       DAnCE::SHS_Daemon_i *shs_daemon (0);
-      
+
       ACE_NEW_RETURN (shs_daemon,
                       DAnCE::SHS_Daemon_i (orb.in ()),
                       0);
-      
+
       PortableServer::ServantBase_var safe_servant (shs_daemon);
       PortableServer::ObjectId_var oid =
         PortableServer::string_to_ObjectId ("SHS_Daemon");
@@ -87,23 +87,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::Object_var shs_obj = persistent_poa->id_to_reference (oid.in ());
       CORBA::String_var shs_ior = orb->object_to_string (shs_obj.in ());
-      
+
       DAnCE::Utility::write_IOR (ACE_TEXT ("SHS_Daemon.ior"),
                                  shs_ior.in ());
-      
-      
+
+
       CosNaming::Name name (1);
       name.length (1);
       name[0].id = "DAnCE.SystemHealthDaemon";
-      
+
       domain_nc->rebind (name, shs_obj.in ());
-      
+
       mgr->activate ();
       orb->run ();
-      
+
       DANCE_DEBUG (6, (LM_TRACE, DLINFO
                        ACE_TEXT("SHS_Daemon - destroying ORB\n")));
-      
+
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)

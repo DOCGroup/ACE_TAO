@@ -48,7 +48,7 @@ namespace DAnCE
           if ((*iter).id_p ())
           {
             ACE_CString cstr ((*iter).id ().c_str ());
-            
+
         STD_CID_Handler::IDREF.bind_ref (cstr,len);
       }
 

@@ -22,13 +22,13 @@ module DAnCE
       const string SHS_TPOOL = "edu.vanderbilt.dre.DAnCE.SHS.ThreadPool";
       /// IDs of hosted instances
       const string SHS_HOSTED_INSTANCES = "edu.vanderbilt.dre.DAnCE.SHS.HostedInstances";
-      
+
       /********** INSTANCE META DATA **********/
       /// Memory footprint of the instance
       const string SHS_MEM_FP = "edu.vanderbilt.dre.DAnCE.SHS.MemoryFootprint";
       /// Reference to instance (Appropriate reference type)
       const string SHS_INSTANCE_REF = "edu.vanderbilt.dre.DAnCE.SHS.InstanceReference";
-      /// Sequence of properties found in the deployment plan. 
+      /// Sequence of properties found in the deployment plan.
 
       /********** CONNECTION META DATA **********/
       /// Instance type indicating a connection status update
@@ -42,7 +42,7 @@ module DAnCE
       /// External endpoint (::Deployment::ExternalReferenceEndpoint)
       const string SHS_CONN_EXTERNAL_ENDPOINT = "edu.vanderbilt.dre.DAnCE.SHS.Connection.ExternalEndpoint";
     };
-    
+
     /// Enumberation describing liveness status of event
     enum Instance_Status
     {
@@ -67,18 +67,18 @@ module DAnCE
        */
       INST_DEFUNCT
     };
-  
+
     struct Status_Update
     {
       /// Name assigned to instance
       string id;
-    
+
       /// Instance type
       string type;
-    
+
       /// New status of instance
       Instance_Status new_status;
-    
+
       /// Additional information about instance
       ::Deployment::Properties instance_info;
     };

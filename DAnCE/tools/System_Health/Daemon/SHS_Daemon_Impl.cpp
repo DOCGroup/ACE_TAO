@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_codegen.cpp:1756
 
 #include "SHS_Daemon_Impl.h"
@@ -30,9 +30,9 @@ namespace DAnCE
                      ACE_TEXT ("SHS_Daemon_i::update - ")
                      ACE_TEXT ("Received status update from <%C>\n"),
                      update.id.in ()));
-    
+
     std::stringstream str;
-    
+
     str << "Instance with ID <" << update.id.in () << "> "
         << "and type <" << update.type.in () << ">: ";
 
@@ -45,20 +45,20 @@ namespace DAnCE
       case ::DAnCE::SHS::INST_ACTIVE:
         str << "ACTIVE.";
         break;
-        
+
       case ::DAnCE::SHS::INST_PASSIVE:
         str << "PASSIVE.";
         break;
-        
+
       case ::DAnCE::SHS::INST_ERROR:
         str << "ERROR.";
         break;
-        
+
       case ::DAnCE::SHS::INST_DEFUNCT:
         str << "DEFUNCT.";
         break;
       }
-    
+
     std::cerr << str.str () << std::endl;
   }
 

@@ -9,25 +9,25 @@ namespace DAnCE
     : __Base (orb, manager)
   {
   }
-    
 
-  
+
+
   EM_Launcher::~EM_Launcher (void)
   {
-    
+
   }
-  
+
   bool
   EM_Launcher::lookup_by_uuid (const char *uuid,
                                CORBA::Object_out am,
                                CORBA::Object_out app)
   {
     DANCE_TRACE ("EM_Launcher::lookup_by_uuid");
-    
+
     try
       {
         ::Deployment::DomainApplicationManagers_var managers = this->manager_->getManagers ();
-        
+
         for (CORBA::ULong i = 0; i < managers->length (); ++i)
           {
             ::Deployment::DeploymentPlan_var plan (managers[i]->getPlan ());
@@ -35,9 +35,9 @@ namespace DAnCE
             if (plan_uuid == uuid)
               {
                 am = CORBA::Object::_duplicate (managers[i]);
-                
+
                 ::Deployment::Applications_var apps = managers[i]->getApplications ();
-                
+
                 if (apps->length () != 0)
                   {
                     app = CORBA::Object::_duplicate ((*apps)[0]);
@@ -60,8 +60,8 @@ namespace DAnCE
                          ACE_TEXT ("Unknown C++ exception\n")));
         throw Deployment_Failure ("Unknown C++ exception in lookup_by_uuid\n");
       }
-    
+
     return false;
   }
-  
+
 }

@@ -13,7 +13,7 @@ namespace DAnCE
     SHS_CORBA_Transport::SHS_CORBA_Transport (void)
     {
     }
-    
+
     SHS_CORBA_Transport::~SHS_CORBA_Transport (void)
     {
     }
@@ -39,18 +39,18 @@ namespace DAnCE
                                ACE_TEXT ("SHS_CORBA_Transport::configure - ")
                                ACE_TEXT ("Found property <%C>\n"),
                                props[i].name.in ()));
-              
+
               CORBA::Object_var obj;
-              
+
               if (!(props[i].value >>= CORBA::Any::to_object (obj)))
                 {
                   const char *val;
                   props[i].value >>= CORBA::Any::to_string (val, 0);
-                  
+
                   CORBA::ORB_var orb = PLUGIN_MANAGER::instance ()->get_orb ();
                   obj = orb->string_to_object (val);
                 }
-              
+
               if (CORBA::is_nil (obj))
                 {
                   DANCE_ERROR (3, (LM_NOTICE, DLINFO
@@ -59,12 +59,12 @@ namespace DAnCE
                                    props[i].name.in ()));
                   return;
                 }
-                
+
               ctx = CosNaming::NamingContext::_narrow (obj.in ());
               break;
             }
         }
-    
+
       if (CORBA::is_nil (ctx))
         {
           DANCE_ERROR (3, (LM_NOTICE, DLINFO
@@ -72,17 +72,17 @@ namespace DAnCE
                            ACE_TEXT ("Failed to get a naming context\n")));
           return;
         }
-    
+
       try
         {
           CosNaming::Name name (1);
           name.length (1);
           name[0].id = "DAnCE.SystemHealthDaemon";
-        
+
           CORBA::Object_var obj = ctx->resolve (name);
-        
+
           this->shs_daemon_ = DAnCE::SHS::SHS_Daemon::_narrow (obj.in ());
-        
+
           if (CORBA::is_nil (this->shs_daemon_))
             DANCE_ERROR (3, (LM_NOTICE, DLINFO
                              ACE_TEXT ("SHS_CORBA_Transport::configure - ")
@@ -102,7 +102,7 @@ namespace DAnCE
                            ACE_TEXT ("Unable to resolve SHS Daemon: Unknown C++ exception\n")));
         }
     }
-      
+
     void
     SHS_CORBA_Transport::push_event (const Status_Update &update)
     {
@@ -113,10 +113,10 @@ namespace DAnCE
               this->shs_daemon_->update (update);
             }
           else
-            DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+            DANCE_DEBUG (9, (LM_TRACE, DLINFO
                              ACE_TEXT ("SHS_CORBA_Transport::push_event - ")
                              ACE_TEXT ("Unable to publish SHS status update, nil daemon ref\n")));
-          
+
         }
       catch (CORBA::Exception &ex)
         {

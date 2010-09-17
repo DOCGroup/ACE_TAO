@@ -378,7 +378,7 @@ int launch_plan (const Options &opts,
                        ACE_TEXT ("Plan_Launcher::launch_plan - ")
                        ACE_TEXT ("Writing Application IOR to <%s>\n"),
                        am_output.c_str ()));
-      
+
       tmp = orb->object_to_string (app.in ());
       write_IOR (app_output.c_str (),
                  tmp.in ());

@@ -31,11 +31,11 @@ namespace DAnCE
   Locality_Handler_i::~Locality_Handler_i (void)
   {
   }
-  
+
   void
   Locality_Handler_i::close (void)
   {
-    
+
   }
 
   ::CORBA::StringSeq *
@@ -47,7 +47,7 @@ namespace DAnCE
                       CORBA::NO_MEMORY ());
     return retval;
   }
-  
+
   char * Locality_Handler_i::instance_type (void)
   {
     DANCE_TRACE ("Locality_Handler_i::instance_type");
@@ -64,7 +64,7 @@ namespace DAnCE
                       CORBA::Any (),
                       CORBA::NO_MEMORY ());
     instance_reference = outany;
-    
+
 #ifdef GEN_OSTREAM_OPS
     {
       std::ostringstream plan_stream;
@@ -77,7 +77,7 @@ namespace DAnCE
                         plan_stream.str ().c_str ()));
     }
 #endif /* GEN_OSTREAM_OPS */
-    
+
     if (plan.instance.length () <= instanceRef)
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO
@@ -88,10 +88,10 @@ namespace DAnCE
         throw ::Deployment::PlanError (plan.UUID.in (),
                                        "Invalid instance reference");
       }
-    
+
     const ::Deployment::InstanceDeploymentDescription &idd =
       plan.instance[instanceRef];
-    
+
     if (plan.implementation.length () <= idd.implementationRef)
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO
@@ -102,7 +102,7 @@ namespace DAnCE
         throw ::Deployment::PlanError (plan.UUID.in (),
                                        "Invalid Implementation reference");
       }
-    
+
     const ::Deployment::MonolithicDeploymentDescription &mdd =
       plan.implementation[idd.implementationRef];
 
@@ -119,7 +119,7 @@ namespace DAnCE
                                 mdd.execParameter);
     Utility::append_properties (allprops,
                                 idd.configProperty);
-    
+
     DANCE_DEBUG (9, (LM_TRACE, DLINFO
                      ACE_TEXT ("Locality_Handler_i::install_instance - ")
                      ACE_TEXT ("Passing %u properties to activator\n"),
@@ -180,7 +180,7 @@ namespace DAnCE
   Locality_Handler_i::configure (const ::Deployment::Properties &prop )
   {
     ::DAnCE::Utility::PROPERTY_MAP pmap (prop.length ());
-    
+
     ::DAnCE::Utility::build_property_map (pmap,
                                           prop);
 
@@ -219,7 +219,7 @@ namespace DAnCE
 
     DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Locality_Handler_i - ")
                      ACE_TEXT("Spawning Locality handler\n")));
-    
+
     ACE_NEW_THROW_EX (this->activator_,
                       DAnCE_LocalityActivator_i (spawn,
                                                  cs_path,

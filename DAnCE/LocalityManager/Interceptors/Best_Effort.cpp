@@ -62,8 +62,8 @@ namespace DAnCE
                          result.c_str ()));
       }
   }
-  
-  void 
+
+  void
   Best_Effort::post_configured (const ::Deployment::DeploymentPlan & plan,
                                             ::CORBA::ULong index,
                                             const ::CORBA::Any &exception )
@@ -81,8 +81,8 @@ namespace DAnCE
                          result.c_str ()));
       }
   }
-  
-  
+
+
   void
   Best_Effort::post_activate (const ::Deployment::DeploymentPlan & plan,
                                        ::CORBA::ULong index,
@@ -101,8 +101,8 @@ namespace DAnCE
                          result.c_str ()));
       }
   }
-  
-  
+
+
   void
   Best_Effort::post_passivate (const ::Deployment::DeploymentPlan & plan,
                                         ::CORBA::ULong index,
@@ -121,8 +121,8 @@ namespace DAnCE
                          result.c_str ()));
       }
   }
-  
-  
+
+
   void
   Best_Effort::post_remove (const ::Deployment::DeploymentPlan & plan,
                                      ::CORBA::ULong index,
@@ -146,7 +146,7 @@ namespace DAnCE
 
 extern "C"
 {
-  ::DAnCE::DeploymentInterceptor_ptr 
+  ::DAnCE::DeploymentInterceptor_ptr
   create_DAnCE_Best_Effort (void)
   {
     return new DAnCE::Best_Effort ();

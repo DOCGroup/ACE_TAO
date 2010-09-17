@@ -32,7 +32,7 @@ namespace DAnCE
       // parse the .cid (ComponentImplementationDescription) file
       // that <referencedImplementation> links to
       xercesc::DOMDocument* dom =
-        XML_Helper::XML_HELPER.create_dom 
+        XML_Helper::XML_HELPER.create_dom
         ((pci.referencedImplementation ()).href ().c_str ()); // here location indicates .pcd file
 
       if (!dom)

@@ -22,13 +22,13 @@ namespace DAnCE
   namespace Config_Handlers
   {
     // PackagedComponentImplementation
-    // 
+    //
 
     PackagedComponentImplementation::
     PackagedComponentImplementation (::XMLSchema::string< ACE_TCHAR > const& name__,
                                      ::DAnCE::Config_Handlers::ComponentImplementationDescription const& referencedImplementation__)
-    : 
-    ::XSCRT::Type (), 
+    :
+    ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     referencedImplementation_ (new ::DAnCE::Config_Handlers::ComponentImplementationDescription (referencedImplementation__)),
     regulator__ ()
@@ -61,7 +61,7 @@ namespace DAnCE
 
 
     // PackagedComponentImplementation
-    // 
+    //
     ::XMLSchema::string< ACE_TCHAR > const& PackagedComponentImplementation::
     name () const
     {
@@ -75,7 +75,7 @@ namespace DAnCE
     }
 
     // PackagedComponentImplementation
-    // 
+    //
     ::DAnCE::Config_Handlers::ComponentImplementationDescription const& PackagedComponentImplementation::
     referencedImplementation () const
     {
@@ -90,11 +90,11 @@ namespace DAnCE
 
 
     // ComponentPackageDescription
-    // 
+    //
 
     ComponentPackageDescription::
     ComponentPackageDescription ()
-    : 
+    :
     regulator__ ()
     {
     }
@@ -150,7 +150,7 @@ namespace DAnCE
 
 
     // ComponentPackageDescription
-    // 
+    //
     bool ComponentPackageDescription::
     label_p () const
     {
@@ -179,7 +179,7 @@ namespace DAnCE
     }
 
     // ComponentPackageDescription
-    // 
+    //
     bool ComponentPackageDescription::
     UUID_p () const
     {
@@ -208,7 +208,7 @@ namespace DAnCE
     }
 
     // ComponentPackageDescription
-    // 
+    //
     bool ComponentPackageDescription::
     realizes_p () const
     {
@@ -237,7 +237,7 @@ namespace DAnCE
     }
 
     // ComponentPackageDescription
-    // 
+    //
     ComponentPackageDescription::configProperty_iterator ComponentPackageDescription::
     begin_configProperty ()
     {
@@ -275,7 +275,7 @@ namespace DAnCE
     }
 
     // ComponentPackageDescription
-    // 
+    //
     ComponentPackageDescription::implementation_iterator ComponentPackageDescription::
     begin_implementation ()
     {
@@ -313,7 +313,7 @@ namespace DAnCE
     }
 
     // ComponentPackageDescription
-    // 
+    //
     ComponentPackageDescription::infoProperty_iterator ComponentPackageDescription::
     begin_infoProperty ()
     {
@@ -351,7 +351,7 @@ namespace DAnCE
     }
 
     // ComponentPackageDescription
-    // 
+    //
     bool ComponentPackageDescription::
     href_p () const
     {
@@ -387,11 +387,11 @@ namespace DAnCE
 
 
     // ConnectorPackageDescription
-    // 
+    //
 
     ConnectorPackageDescription::
     ConnectorPackageDescription ()
-    : 
+    :
     regulator__ ()
     {
     }
@@ -447,7 +447,7 @@ namespace DAnCE
 
 
     // ConnectorPackageDescription
-    // 
+    //
     bool ConnectorPackageDescription::
     label_p () const
     {
@@ -476,7 +476,7 @@ namespace DAnCE
     }
 
     // ConnectorPackageDescription
-    // 
+    //
     bool ConnectorPackageDescription::
     UUID_p () const
     {
@@ -505,7 +505,7 @@ namespace DAnCE
     }
 
     // ConnectorPackageDescription
-    // 
+    //
     bool ConnectorPackageDescription::
     realizes_p () const
     {
@@ -534,7 +534,7 @@ namespace DAnCE
     }
 
     // ConnectorPackageDescription
-    // 
+    //
     ConnectorPackageDescription::configProperty_iterator ConnectorPackageDescription::
     begin_configProperty ()
     {
@@ -572,7 +572,7 @@ namespace DAnCE
     }
 
     // ConnectorPackageDescription
-    // 
+    //
     ConnectorPackageDescription::implementation_iterator ConnectorPackageDescription::
     begin_implementation ()
     {
@@ -610,7 +610,7 @@ namespace DAnCE
     }
 
     // ConnectorPackageDescription
-    // 
+    //
     ConnectorPackageDescription::infoProperty_iterator ConnectorPackageDescription::
     begin_infoProperty ()
     {
@@ -648,7 +648,7 @@ namespace DAnCE
     }
 
     // ConnectorPackageDescription
-    // 
+    //
     bool ConnectorPackageDescription::
     href_p () const
     {
@@ -715,7 +715,7 @@ namespace DAnCE
           referencedImplementation_->container (this);
         }
 
-        else 
+        else
         {
         }
       }
@@ -772,7 +772,7 @@ namespace DAnCE
           add_infoProperty (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -787,7 +787,7 @@ namespace DAnCE
           href (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -844,7 +844,7 @@ namespace DAnCE
           add_infoProperty (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -859,7 +859,7 @@ namespace DAnCE
           href (t);
         }
 
-        else 
+        else
         {
         }
       }

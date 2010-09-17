@@ -22,13 +22,13 @@ namespace DAnCE
   namespace Config_Handlers
   {
     // NamedImplementationArtifact
-    // 
+    //
 
     NamedImplementationArtifact::
     NamedImplementationArtifact (::XMLSchema::string< ACE_TCHAR > const& name__,
                                  ::DAnCE::Config_Handlers::ImplementationArtifactDescription const& referencedArtifact__)
-    : 
-    ::XSCRT::Type (), 
+    :
+    ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     referencedArtifact_ (new ::DAnCE::Config_Handlers::ImplementationArtifactDescription (referencedArtifact__)),
     regulator__ ()
@@ -61,7 +61,7 @@ namespace DAnCE
 
 
     // NamedImplementationArtifact
-    // 
+    //
     ::XMLSchema::string< ACE_TCHAR > const& NamedImplementationArtifact::
     name () const
     {
@@ -75,7 +75,7 @@ namespace DAnCE
     }
 
     // NamedImplementationArtifact
-    // 
+    //
     ::DAnCE::Config_Handlers::ImplementationArtifactDescription const& NamedImplementationArtifact::
     referencedArtifact () const
     {
@@ -90,11 +90,11 @@ namespace DAnCE
 
 
     // ImplementationArtifactDescription
-    // 
+    //
 
     ImplementationArtifactDescription::
     ImplementationArtifactDescription ()
-    : 
+    :
     regulator__ ()
     {
     }
@@ -156,7 +156,7 @@ namespace DAnCE
 
 
     // ImplementationArtifactDescription
-    // 
+    //
     bool ImplementationArtifactDescription::
     label_p () const
     {
@@ -185,7 +185,7 @@ namespace DAnCE
     }
 
     // ImplementationArtifactDescription
-    // 
+    //
     bool ImplementationArtifactDescription::
     UUID_p () const
     {
@@ -214,7 +214,7 @@ namespace DAnCE
     }
 
     // ImplementationArtifactDescription
-    // 
+    //
     ImplementationArtifactDescription::location_iterator ImplementationArtifactDescription::
     begin_location ()
     {
@@ -252,7 +252,7 @@ namespace DAnCE
     }
 
     // ImplementationArtifactDescription
-    // 
+    //
     ImplementationArtifactDescription::dependsOn_iterator ImplementationArtifactDescription::
     begin_dependsOn ()
     {
@@ -290,7 +290,7 @@ namespace DAnCE
     }
 
     // ImplementationArtifactDescription
-    // 
+    //
     ImplementationArtifactDescription::execParameter_iterator ImplementationArtifactDescription::
     begin_execParameter ()
     {
@@ -328,7 +328,7 @@ namespace DAnCE
     }
 
     // ImplementationArtifactDescription
-    // 
+    //
     ImplementationArtifactDescription::infoProperty_iterator ImplementationArtifactDescription::
     begin_infoProperty ()
     {
@@ -366,7 +366,7 @@ namespace DAnCE
     }
 
     // ImplementationArtifactDescription
-    // 
+    //
     ImplementationArtifactDescription::deployRequirement_iterator ImplementationArtifactDescription::
     begin_deployRequirement ()
     {
@@ -404,7 +404,7 @@ namespace DAnCE
     }
 
     // ImplementationArtifactDescription
-    // 
+    //
     bool ImplementationArtifactDescription::
     contentLocation_p () const
     {
@@ -433,7 +433,7 @@ namespace DAnCE
     }
 
     // ImplementationArtifactDescription
-    // 
+    //
     bool ImplementationArtifactDescription::
     href_p () const
     {
@@ -500,7 +500,7 @@ namespace DAnCE
           referencedArtifact_->container (this);
         }
 
-        else 
+        else
         {
         }
       }
@@ -569,7 +569,7 @@ namespace DAnCE
           contentLocation (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -584,7 +584,7 @@ namespace DAnCE
           href (t);
         }
 
-        else 
+        else
         {
         }
       }

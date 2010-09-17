@@ -80,7 +80,7 @@ namespace DAnCE
               resolver_ = new Resolver ();
               release_resolver_ = true;
             }
-          
+
           if (!e_handler_)
             {
               e_handler_ = new Error ();
@@ -277,7 +277,7 @@ namespace DAnCE
     {
       if (!this->resolver_)
         throw std::exception ();
-      
+
       return *this->resolver_;
     }
 
@@ -287,7 +287,7 @@ namespace DAnCE
     {
       if (!this->e_handler_)
         throw std::exception ();
-      
+
       return *this->e_handler_;
     }
 
@@ -349,7 +349,7 @@ namespace DAnCE
           return false;
         }
     }
-    
-    
+
+
   }
 }

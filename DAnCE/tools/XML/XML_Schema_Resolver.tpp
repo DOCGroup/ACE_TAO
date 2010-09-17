@@ -27,7 +27,7 @@ namespace DAnCE
       : resolver_ (res)
     {
     }
-    
+
     template<typename Resolver>
     Resolver &
     XML_Schema_Resolver<Resolver>::get_resolver (void)
@@ -45,10 +45,10 @@ namespace DAnCE
       XStr path = resolver_ (publicId, systemId);
       if (path.begin () == 0)
         return 0;
-      
+
       // Ownership of these objects is given to other people.
       return /*new Wrapper4InputSource*/ (new LocalFileInputSource (path.begin ()));
-    }    
+    }
   }
 }
 
