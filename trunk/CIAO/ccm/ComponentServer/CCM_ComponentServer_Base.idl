@@ -34,16 +34,16 @@ module Components
       FeatureName name;
     };
 
-    exception UnknownImplId 
-    { 
+    exception UnknownImplId
+    {
     };
 
-    exception InvalidLocation 
-    { 
+    exception InvalidLocation
+    {
     };
 
-    exception ImplEntryPointNotFound 
-    { 
+    exception ImplEntryPointNotFound
+    {
     };
 
     exception InstallationFailure

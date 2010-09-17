@@ -203,7 +203,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance xmi:id="SimpleMultipleUserComponentInstanceReverse">
     <name>SimpleMultipleUserComponentReverse</name>
     <node>NodeTwo</node>
@@ -222,7 +222,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <connection>
     <name>TestConnection</name>
     <internalEndpoint>

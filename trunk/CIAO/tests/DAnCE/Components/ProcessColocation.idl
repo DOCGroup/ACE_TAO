@@ -8,7 +8,7 @@ module Simple
   {
     attribute string process_name;
   };
-  
+
   home ProcessColocationHome manages ProcessColocation
   {
   };

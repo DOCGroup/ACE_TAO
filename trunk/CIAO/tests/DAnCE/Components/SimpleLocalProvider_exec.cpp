@@ -105,7 +105,7 @@ namespace CIAO_Simple_SimpleLocalProvider_Impl
     CIAO_TRACE ("SimpleLocalProvider_exec_i::ccm_remove ()");
     if (!triggered_)
       ACE_ERROR ((LM_EMERGENCY, "Error:  My facet wasn't triggered!!\n"));
-    
+
     // Your code here.
   }
 

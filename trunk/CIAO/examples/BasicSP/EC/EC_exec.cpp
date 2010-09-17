@@ -237,11 +237,11 @@ create_BasicSP_EC_Impl (void)
 {
   ::Components::EnterpriseComponent_ptr retval =
     ::Components::EnterpriseComponent::_nil ();
-  
+
   ACE_NEW_RETURN (retval,
                   MyImpl::EC_exec_i,
                   ::Components::EnterpriseComponent::_nil ());
-  
+
   return retval;
 }
 

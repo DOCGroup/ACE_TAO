@@ -9,7 +9,7 @@
 #include "dds4ccm/impl/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_Update_T (void) 
+DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_Update_T (void)
 {
 }
 
@@ -104,10 +104,10 @@ void
 DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate ()
 {
   DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate");
-  
+
   ::DDS::ReturnCode_t const retcode =
     this->ccm_dds_writer_->set_listener (::DDS::DataWriterListener::_nil (), 0);
-    
+
   if (retcode != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO

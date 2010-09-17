@@ -13,7 +13,7 @@ module ImpliedEventSink
   eventtype foo_event
     {
     };
-  
+
   component Foo
     {
       consumes foo_event c_foo;

@@ -1,13 +1,13 @@
 // -*- C++ -*-
 // $Id$
 
-// test asynchronous 
+// test asynchronous
 #include "AsynchT_Sender_exec.h"
 #include "ace/OS_NS_unistd.h"
 
 namespace CIAO_AsynchT_Sender_Impl
 {
-  // Keeps the messages on the go. 
+  // Keeps the messages on the go.
   Atomic_UShort nr_of_sent = 0;
   // Keeps the messages received back.
   Atomic_UShort nr_of_rec = 0;
@@ -141,10 +141,10 @@ namespace CIAO_AsynchT_Sender_Impl
     if (CORBA::is_nil (my_foo_ami_))
       {
          ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :"
-                             "\tfoo_ami is NIL !\n"));  
+                             "\tfoo_ami is NIL !\n"));
          return 1;
       }
-    //Invoke Asynchronous calls to test 
+    //Invoke Asynchronous calls to test
     ++nr_of_sent;
     my_foo_ami_->sendc_foo ( cb.in(),"Hi ", 1);
     ACE_DEBUG ((LM_DEBUG, "OK: SEND ASYNCHRONOUS CALL foo.\n"));
@@ -288,7 +288,7 @@ namespace CIAO_AsynchT_Sender_Impl
   {
     if ((asynch == false) || (nr_of_rec.value() != 5))
       {
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                    "ERROR: Test not asynchronous or not received back"
                    " all requests ( %u/5)!\n",
                    nr_of_rec.value() ));

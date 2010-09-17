@@ -7,14 +7,14 @@
 
 namespace CIAO
 {
-  const char * 
-  Deployment_Common::get_implementation (const char *name, 
+  const char *
+  Deployment_Common::get_implementation (const char *name,
                                          const ::Deployment::DeploymentPlan &plan)
   {
     if (name == 0)
       throw ::Deployment::PlanError (name,
                                      "No such artifact");
-    
+
     for (CORBA::ULong i = 0;
          i < plan.artifact.length ();
          ++i)
@@ -44,14 +44,14 @@ namespace CIAO
     throw ::Deployment::PlanError (name,
                                    "Nonexistant artifact");
     return 0;
-  } 
-  
-  void 
+  }
+
+  void
   Deployment_Common::create_attribute_configuration (const ::Deployment::Properties &props,
                                                      ::Components::ConfigValues & values)
   {
     values.length (props.length ());
-    
+
     for (CORBA::ULong i = 0;
          i < props.length ();
          ++i)

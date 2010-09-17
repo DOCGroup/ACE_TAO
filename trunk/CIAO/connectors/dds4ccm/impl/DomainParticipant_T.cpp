@@ -392,7 +392,7 @@ namespace CIAO
 
       DDS_TopicQos ccm_dds_qos = DDS_TOPIC_QOS_DEFAULT;
 
-      DDSTopicDescription * dds_td = 
+      DDSTopicDescription * dds_td =
         this->impl ()->lookup_topicdescription (impl_name);
       DDSTopic * dds_tp = 0;
       if (dds_td)
@@ -495,7 +495,7 @@ namespace CIAO
                             ::CORBA::NO_MEMORY ());
         }
 
-      DDSTopicDescription * dds_td = 
+      DDSTopicDescription * dds_td =
         this->impl ()->lookup_topicdescription (impl_name);
       DDSTopic * dds_tp = 0;
       if (dds_td)

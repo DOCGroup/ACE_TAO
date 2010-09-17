@@ -72,7 +72,7 @@ namespace CIAO
                           SERVANT (this->executor_,
                                    this->context_),
                           CORBA::NO_MEMORY ());
-                          
+
         return s;
       }
 

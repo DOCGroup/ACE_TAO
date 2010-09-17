@@ -88,7 +88,7 @@ namespace CIAO_InterMulti_Sender_Impl
   {
     ACE_DEBUG ((LM_DEBUG, "OK: Get asynchronous callback from THREE::plus,"
                           " answer = <%C>\n",
-                          answer));  
+                          answer));
      ++nr_of_received;
   }
 
@@ -106,7 +106,7 @@ namespace CIAO_InterMulti_Sender_Impl
   {
     ACE_DEBUG ((LM_DEBUG, "OK: Get asynchronous callback from THREE::foo,"
                           " answer = <%C>\n",
-                          answer));  
+                          answer));
     ++nr_of_received;
   }
 
@@ -122,7 +122,7 @@ namespace CIAO_InterMulti_Sender_Impl
   {
     ACE_DEBUG ((LM_DEBUG, "OK: Get asynchronous callback from THREE::bar,"
                           " answer = <%C>\n",
-                          answer));  
+                          answer));
     ++nr_of_received;
   }
 
@@ -146,7 +146,7 @@ namespace CIAO_InterMulti_Sender_Impl
     ::InterMulti::AMI4CCM_One_var my_one_ami_  =
        context_->get_connection_sendc_run_my_one();
 
-    //Invoke Asynchronous calls to test 
+    //Invoke Asynchronous calls to test
     my_one_ami_->sendc_foo ( new One_callback_exec_i (),
       "Hi from asynch call ONE::foo", 1);
     return 0;
@@ -168,13 +168,13 @@ namespace CIAO_InterMulti_Sender_Impl
 
     if (CORBA::is_nil (my_two_ami_.in ()))
       {
-        ACE_ERROR ((LM_ERROR, 
-                   "ERROR Sender (ASYNCH) :my_two_ami_ is NIL !\n"));  
+        ACE_ERROR ((LM_ERROR,
+                   "ERROR Sender (ASYNCH) :my_two_ami_ is NIL !\n"));
         return 1;
       }
     else
       {
-        //Invoke Asynchronous calls to test 
+        //Invoke Asynchronous calls to test
         my_two_ami_->sendc_bar ( new Two_callback_exec_i (), 2);
       }
     return 0;
@@ -196,15 +196,15 @@ namespace CIAO_InterMulti_Sender_Impl
 
     if (CORBA::is_nil (my_three_ami_))
       {
-        ACE_ERROR ((LM_ERROR, 
-                    "ERROR Sender (ASYNCH) :my_three_ami_ is NIL !\n"));  
+        ACE_ERROR ((LM_ERROR,
+                    "ERROR Sender (ASYNCH) :my_three_ami_ is NIL !\n"));
         return 1;
       }
     else
       {
-        //Invoke Asynchronous calls to test 
+        //Invoke Asynchronous calls to test
         my_three_ami_->sendc_plus( new Three_callback_exec_i (), 3);
-        // derived from CLASS ONE 
+        // derived from CLASS ONE
         my_three_ami_->sendc_foo ( new Three_callback_exec_i (),"hoi", 3);
         // derived fron CLASS TWO
         my_three_ami_->sendc_bar ( new Three_callback_exec_i (), 3);
@@ -232,7 +232,7 @@ namespace CIAO_InterMulti_Sender_Impl
                             answer.out ());
     if (result != 1)
       {
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                     "ERROR Sender (SYNCH) : CLASS One foo !\n"));
       }
     return 0;
@@ -259,7 +259,7 @@ namespace CIAO_InterMulti_Sender_Impl
                         answer.out ());
     if (result != 3)
       {
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                     "ERROR Sender (SYNCH) : CLASS Three foo !\n"));
       }
     return 0;
@@ -337,8 +337,8 @@ namespace CIAO_InterMulti_Sender_Impl
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, 
-                    "OK: All messages received back by Sender\n"));  
+        ACE_DEBUG ((LM_DEBUG,
+                    "OK: All messages received back by Sender\n"));
       }
   }
 

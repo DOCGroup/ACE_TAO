@@ -26,7 +26,7 @@ idl3p_checking_visitor::visit_scope (UTL_Scope *node)
       /// No need to check the return value, there is no
       /// case where it returns anything but 0.
       (void) si.item ()->ast_accept (this);
-          
+
       if (this->needs_codegen_)
         {
           /// No need to go any further.

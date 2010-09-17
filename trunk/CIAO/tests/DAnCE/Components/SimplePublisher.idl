@@ -12,7 +12,7 @@ module Simple
   {
     publishes Hello hello_;
   };
-  
+
   home SimplePublisherHome manages SimplePublisher
   {
   };

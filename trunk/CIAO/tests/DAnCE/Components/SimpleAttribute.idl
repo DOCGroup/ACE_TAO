@@ -13,7 +13,7 @@ module Simple
     attribute long long_attr;
     attribute short short_attr;
   };
-  
+
   home SimpleAttributeHome manages SimpleAttribute
   {
     attribute string str_attr;

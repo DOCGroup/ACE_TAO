@@ -110,7 +110,7 @@ namespace CIAO_Getter_Test_Sender_Impl
       this->context_->get_connection_info_write_data ();
     GetInvoker_var invoker =
       this->context_->get_connection_invoke_getter ();
-    
+
     GetterTestSeq write_many (this->keys_ * this->iterations_);
     write_many.length (this->keys_ * this->iterations_);
     for (CORBA::UShort key = 1; key < this->keys_ + 1; ++key)

@@ -44,13 +44,13 @@ idl3_to_idl2_visitor::visit_module (AST_Module *node)
     {
       return 0;
     }
-    
+
   idl3p_checking_visitor v;
-  
+
   /// Inherited visit_* methods must return int, but this
   /// visitor never returns anything but 0.
   (void) v.visit_scope (node);
-  
+
   if (!v.needs_codegen ())
     {
       /// We'd be generating an (illegal) empty module.
@@ -148,7 +148,7 @@ idl3_to_idl2_visitor::visit_component (AST_Component *node)
     {
       return 0;
     }
-    
+
   *os << be_nl << be_nl
       << "interface "
       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
@@ -161,7 +161,7 @@ idl3_to_idl2_visitor::visit_component (AST_Component *node)
             ? IdentifierHelper::orig_sn (base->name ()).c_str ()
             : "Components::CCMObject")
       << be_idt;
-      
+
   long nsupports = node->n_supports ();
   AST_Type **sups = node->supports ();
 
@@ -210,14 +210,14 @@ int
 idl3_to_idl2_visitor::visit_provides (AST_Provides *node)
 {
   AST_Type *pt = node->provides_type ();
-  
+
   /// These ports are always internal to the container, no
   /// equivalent IDL should be generated for them.
   if (pt->is_local ())
     {
       return 0;
     }
-  
+
   Identifier *orig_id =
     IdentifierHelper::original_local_name (node->local_name ());
 
@@ -247,7 +247,7 @@ idl3_to_idl2_visitor::visit_uses (AST_Uses *node)
     {
       return 0;
     }
-  
+
   *os << be_nl << be_nl;
 
   Identifier *orig_id =
@@ -257,7 +257,7 @@ idl3_to_idl2_visitor::visit_uses (AST_Uses *node)
   ACE_CString impl_str =
     IdentifierHelper::orig_sn (n);
   const char *impl_name = impl_str.c_str ();
-    
+
   ACE_CString port_name (this->port_prefix_);
   port_name += orig_id->get_string ();
   const char *ext_port_name = port_name.c_str ();
@@ -276,7 +276,7 @@ idl3_to_idl2_visitor::visit_uses (AST_Uses *node)
           << "typedef sequence<" << ext_port_name
           << "Connection> " << ext_port_name << "Connections;"
           << be_nl << be_nl;
-         
+
       *os << "Components::Cookie connect_" << ext_port_name
           << " (in " << impl_name << " connection)"
           << be_idt_nl
@@ -438,7 +438,7 @@ idl3_to_idl2_visitor::visit_mirror_port (AST_Mirror_Port *node)
       this->port_prefix_ = node->local_name ()->get_string ();
       this->port_prefix_ += '_';
     }
-    
+
   int status =
     this->visit_porttype_scope_mirror (node->port_type ());
 
@@ -548,7 +548,7 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
     {
       return 0;
     }
-    
+
   this->home_ = node;
 
   ACE_CString explicit_name = node->original_local_name ()->get_string ();
@@ -569,7 +569,7 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
       *os << IdentifierHelper::orig_sn (base->name (), true).c_str ()
           << "Explicit";
     }
-    
+
   *os << be_idt;
 
   long nsupports = node->n_supports ();
@@ -682,9 +682,9 @@ int
 idl3_to_idl2_visitor::visit_factory (AST_Factory *node)
 {
   Identifier *id = node->original_local_name ();
-  
+
   *os << be_nl << be_nl;
-  
+
   if (this->home_ == 0)
     {
       *os << "factory ";
@@ -692,22 +692,22 @@ idl3_to_idl2_visitor::visit_factory (AST_Factory *node)
   else
     {
       AST_Component *c = this->home_->managed_component ();
-      
+
       *os << IdentifierHelper::orig_sn (c->name ()).c_str ()
           << " ";
     }
-    
+
   *os << IdentifierHelper::try_escape (id).c_str ()
       << " (";
-      
+
   this->gen_params (node, node->argument_count ());
-  
+
   *os << ")";
-  
+
   this->gen_exception_list (node->exceptions ());
-  
+
   *os << ";";
-          
+
   return 0;
 }
 

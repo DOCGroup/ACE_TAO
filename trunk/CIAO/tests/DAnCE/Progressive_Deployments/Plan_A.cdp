@@ -115,7 +115,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <artifact xmi:id="Progressive_ExecArtifact">
     <name>Progressive_exec</name>
     <source/>

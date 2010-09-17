@@ -8,7 +8,7 @@
 #include "dds4ccm/impl/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_Write_T (void) 
+DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_Write_T (void)
 {
 }
 
@@ -82,11 +82,11 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate ()
                         DataWriterListener_type (),
                         ::CORBA::NO_MEMORY ());
     }
-    
+
   ::DDS::ReturnCode_t const retcode =
     this->ccm_dds_writer_->set_listener (this->data_listener_.in (),
                                          DataWriterListener_type::get_mask ());
-                                         
+
   if (retcode != DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
@@ -105,7 +105,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate ()
 
   ::DDS::ReturnCode_t const retcode =
     this->ccm_dds_writer_->set_listener (::DDS::DataWriterListener::_nil (), 0);
-    
+
   if (retcode != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
@@ -127,7 +127,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove (
 
   DDS::ReturnCode_t const retcode =
     publisher->delete_datawriter (this->ccm_dds_writer_);
-    
+
   if (retcode == ::DDS::RETCODE_OK)
     {
       this->ccm_dds_writer_->set_impl (0);

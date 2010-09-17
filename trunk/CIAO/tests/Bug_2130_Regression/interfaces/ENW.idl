@@ -1,4 +1,4 @@
-//$Id$ 
+//$Id$
 
 #ifndef ENW_IDL
 #define ENW_IDL
@@ -19,7 +19,7 @@ module ENW
   eventtype ET_LifeToken
   {
   };
-  
+
   //////////////////////////////////////////////////////////////////////////////
   //
   // ICheckPoint-Interfaces
@@ -37,15 +37,15 @@ module ENW
   {
     TSession createSession();
     boolean destroySession( in TSession Session );
-    
+
     TSession acquireSession( in long Ident )
                              raises( EUnknownIdent );
- 
+
     boolean releaseSession( in long Ident,
                             in TSession Session )
                             raises( EUnknownSession );
   };
-  
+
 };
 
 

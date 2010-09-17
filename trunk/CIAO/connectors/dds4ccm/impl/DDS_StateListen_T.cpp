@@ -9,7 +9,7 @@
 #include "dds4ccm/impl/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
-DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::DDS_StateListen_T (void) 
+DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::DDS_StateListen_T (void)
 {
 }
 
@@ -35,7 +35,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complet
             subscriber,
             library_name,
             profile_name);
-            
+
   this->data_control_->_set_component (component);
 }
 
@@ -59,12 +59,12 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
                           this->condition_manager_),
                         ::CORBA::NO_MEMORY ());
     }
-    
+
   ::DDS::ReturnCode_t const retcode =
     this->data_reader_->set_listener (
       this->listener_.in (),
       DataReaderStateListener_type::get_mask (listener));
-      
+
   if (retcode != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO

@@ -1,4 +1,4 @@
-/** 
+/**
  * @file CIAO_Servant_Activator.idl
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  * $Id$
@@ -16,7 +16,7 @@ module CIAO
   local interface Servant_Activator : PortableServer::ServantActivator
   {
     boolean update_port_activator (in PortableServer::ObjectId oid);
-    
+
     boolean register_port_activator (in Port_Activator pa);
   };
 };

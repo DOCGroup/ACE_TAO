@@ -14,6 +14,6 @@
 interface Publication {
   attribute string text;
   attribute unsigned short period;
-};    
+};
 
 #endif

@@ -102,7 +102,7 @@ namespace CIAO_InterInOutT_Sender_Impl
   MyFoo_callback_exec_i::var_div_ins (
                const InterInOutT::TestTopic &test_topic,
                const InterInOutT::TopicString &topic_str,
-               const InterInOutT::TestArray topic_arr, 
+               const InterInOutT::TestArray topic_arr,
                const char * /*answer*/)
   {
     CORBA::Boolean error = false;
@@ -126,7 +126,7 @@ namespace CIAO_InterInOutT_Sender_Impl
                               topic_str.key.in() ,topic_str.x_str.in()));
         error = true;
       }
- 
+
     if ((ACE_OS::strcmp (topic_arr[0].key, "444") != 0) ||
         (topic_arr[1].x_array[2] != 444))
       {
@@ -150,7 +150,7 @@ namespace CIAO_InterInOutT_Sender_Impl
   {
     excep_holder->raise_exception ();
   }
-  
+
   void
   MyFoo_callback_exec_i::var_div2_ins (const InterInOutT::X_Union &x_uni,
                                        const InterInOutT::test_seq &seq,
@@ -163,7 +163,7 @@ namespace CIAO_InterInOutT_Sender_Impl
                               "received the wrong union, "
                               "expected x = 555,"
                               " received x = %u\n",
-                              x_uni.x_long()));  
+                              x_uni.x_long()));
         error = true;
       }
      if ((ACE_OS::strcmp (seq[0].x_teststr, "666") != 0)||
@@ -189,7 +189,7 @@ namespace CIAO_InterInOutT_Sender_Impl
     excep_holder->raise_exception ();
   }
 
-  void 
+  void
   MyFoo_callback_exec_i::enum_in( const char * /*answer*/,
                                   InterInOutT::test_enum test_enum)
   {
@@ -212,7 +212,7 @@ namespace CIAO_InterInOutT_Sender_Impl
   {
     excep_holder->raise_exception ();
   }
-  
+
   //============================================================
   // Worker thread for asynchronous invocations for MyFoo
   //============================================================
@@ -224,19 +224,19 @@ namespace CIAO_InterInOutT_Sender_Impl
 
   int asynch_foo_generator::svc ()
   {
-    ACE_OS::sleep (3); 
+    ACE_OS::sleep (3);
     ::InterInOutT::AMI4CCM_MyFoo_var my_foo_ami_  =
        context_->get_connection_sendc_run_my_foo();
     if (CORBA::is_nil (my_foo_ami_))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :\tfoo_ami is NIL !\n"));  
+        ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :\tfoo_ami is NIL !\n"));
        return 1;
       }
     else
       {
         CORBA::Long l_cmd = 3;
         CORBA::String_var answer = CORBA::string_dup("Hi from sender");
-        //Invoke Asynchronous calls to test 
+        //Invoke Asynchronous calls to test
         my_foo_ami_->sendc_foo ( new MyFoo_callback_exec_i (),
           "Do something synchronous", l_cmd, answer.inout());
 
@@ -246,7 +246,7 @@ namespace CIAO_InterInOutT_Sender_Impl
           "", l_cmd, answer.inout());
         my_foo_ami_->sendc_var_ins( new MyFoo_callback_exec_i (),
                                    "Here a double for you.", 1.6);
-         
+
         InterInOutT::TestTopic test_topic;
         test_topic.key = "aaa";
         test_topic.x = 10;
@@ -260,7 +260,7 @@ namespace CIAO_InterInOutT_Sender_Impl
             for (CORBA::UShort y = 0; y < 5; y ++)
               {
                 topic_arr[i].x_array[y] = i * 100 + y ;
-              } 
+              }
           }
         my_foo_ami_->sendc_var_div_ins (new MyFoo_callback_exec_i (),
                                         test_topic,topic_str,topic_arr, answer);
@@ -272,13 +272,13 @@ namespace CIAO_InterInOutT_Sender_Impl
         ttt.x_teststr = "fff" ;
         InterInOutT::test_seq seq;
         seq.length(2);
-        seq[0] = ttt; 
+        seq[0] = ttt;
 
         my_foo_ami_->sendc_var_div2_ins (new MyFoo_callback_exec_i (),
                                          topic_union, seq);
         InterInOutT::test_enum in_test;
         in_test = ::InterInOutT::ONE;
-        my_foo_ami_->sendc_enum_in(new MyFoo_callback_exec_i (), 
+        my_foo_ami_->sendc_enum_in(new MyFoo_callback_exec_i (),
                                           in_test);
       }
     return 0;
@@ -312,11 +312,11 @@ namespace CIAO_InterInOutT_Sender_Impl
           {
             ++nr_of_received;
           }
-      } 
+      }
     catch (const InterInOutT::InternalError&)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: synch_foo_generator::foo: "
-                              "Unexpected exception.\n"));  
+                              "Unexpected exception.\n"));
       }
     try
       {
@@ -390,7 +390,7 @@ namespace CIAO_InterInOutT_Sender_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: not received the expected number of"
                               " exceptions"
                               "Expected: 2, Received: %u.\n",
-                              nr_of_excep_received));  
+                              nr_of_excep_received));
       }
     if (nr_of_received != 6)
       {
@@ -398,13 +398,13 @@ namespace CIAO_InterInOutT_Sender_Impl
                               " of callbacks and returns  for syn- and "
                               "asynchronous calls. Expected: 6,"
                               " Received: %u.\n",
-                              nr_of_excep_received));  
+                              nr_of_excep_received));
       }
     if ((nr_of_received == 6) && (nr_of_excep_received == 2))
       {
         ACE_DEBUG ((LM_DEBUG, "OK: Sender received the expected number of"
                               " callbacks and exceptions for syn- and "
-                              "asynchronous calls\n"));  
+                              "asynchronous calls\n"));
       }
   }
 

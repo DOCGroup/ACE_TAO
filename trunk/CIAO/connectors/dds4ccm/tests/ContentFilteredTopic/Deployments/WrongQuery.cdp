@@ -6,7 +6,7 @@
                           xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
   <label>ReadGet_Test_Depl_1</label>
   <UUID>ReadGet_Test_Depl_1</UUID>
-  
+
   <implementation xmi:id="ReceiverComponentImplementation">
     <name>ReceiverComponentImplementation</name>
     <source/>
@@ -58,7 +58,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
   <implementation xmi:id="ReadGet_Test_ReceiverConnectorImplementation">
     <name>ReadGet_Test_ReceiverConnectorImplementation</name>
     <source/>
@@ -215,7 +215,7 @@
       <instance xmi:idref="ReadGet_Test_ReceiverConnectorInstance" />
     </internalEndpoint>
   </connection>
-  
+
   <artifact xmi:id="ReadGet_Test_Connector_ExecArtifact">
     <name>CFT_ReadGet_Test_Connector_exec</name>
     <source/>

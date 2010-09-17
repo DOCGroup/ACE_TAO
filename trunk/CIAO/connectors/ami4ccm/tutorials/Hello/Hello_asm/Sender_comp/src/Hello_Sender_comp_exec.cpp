@@ -132,7 +132,7 @@ namespace CIAO_Hello_Sender_comp_Impl
   MyFoo_obj_callback_exec_i::get_ro_attrib_excep (
     ::CCM_AMI::ExceptionHolder * excep_holder)
   {
-    /* Your code here. */   
+    /* Your code here. */
     excep_holder->raise_exception ();
   }
 
@@ -206,7 +206,7 @@ namespace CIAO_Hello_Sender_comp_Impl
                                                    out_str.out());
             ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT("Sender (SYNCH):\tInvoked synchronous call (foo)\n")
-                    ACE_TEXT(" result <%u> answer <%C>\n"), 
+                    ACE_TEXT(" result <%u> answer <%C>\n"),
                              result, out_str.in()));
 
             CORBA::Long answer;
@@ -233,7 +233,7 @@ namespace CIAO_Hello_Sender_comp_Impl
             ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Sender (SYNCH):\tInvoked synchronous call ")
                 ACE_TEXT("(rw_attrib(15))\n")));
- 
+
             ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Sender (SYNCH) :\tInvoke synchronous call")
                 ACE_TEXT(" (ro_attrib())\n")));

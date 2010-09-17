@@ -8,7 +8,7 @@
  * an IDL2 file corresponding to the IDL3 file this one is
  * included in unchanged, without the '_IDL2' suffix.
  */
- 
+
 #ifndef RAW_INCLUDE_IDL
 #define RAW_INCLUDE_IDL
 

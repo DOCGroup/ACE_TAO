@@ -3,7 +3,7 @@
 
 #include "GetComp_Receiver_exec.h"
 #include "ace/OS_NS_unistd.h"
- 
+
 namespace CIAO_GetComp_Receiver_Impl
 {
   MyFoo_exec_i::MyFoo_exec_i (void)
@@ -22,7 +22,7 @@ namespace CIAO_GetComp_Receiver_Impl
     return 1;
   }
 
- 
+
   Receiver_exec_i::Receiver_exec_i (void)
   {
   }

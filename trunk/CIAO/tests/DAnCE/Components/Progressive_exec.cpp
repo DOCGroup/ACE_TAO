@@ -62,16 +62,16 @@ namespace CIAO_Simple_Progressive_Impl
     ACE_DEBUG ((LM_EMERGENCY, "Trigger_exec_i::hello - "
                  "Got the following information from trig port: %C\n",
                  hello));
-    
+
     ::Simple::Trigger_var trig (this->context_->get_connection_trig_out ());
-    
+
     if (CORBA::is_nil (trig.in ()))
       {
         ACE_ERROR ((LM_ERROR, "SimpleUser_exec_i::ccm_activate () - "
                     "Error: Reference nil for port trig\n"));
         return;
       }
-    
+
     try
       {
         trig->hello ("Test successful; hello from SimpleUser.");
@@ -92,20 +92,20 @@ namespace CIAO_Simple_Progressive_Impl
   //============================================================
   // Component Executor Implementation Class: Progressive_exec_i
   //============================================================
-  
+
   Progressive_exec_i::Progressive_exec_i (void)
     : triggered_ (false)
   {
   }
-  
+
   Progressive_exec_i::~Progressive_exec_i (void)
   {
   }
-  
+
   // Supported operations and attributes.
-  
+
   // Component attributes and port operations.
-  
+
   ::Simple::CCM_Trigger_ptr
   Progressive_exec_i::get_trig_in (void)
   {
@@ -113,40 +113,40 @@ namespace CIAO_Simple_Progressive_Impl
     return new Trigger_exec_i (this->triggered_,
                                this->context_);
   }
-  
+
   // Operations from Components::SessionComponent.
-  
+
   void
   Progressive_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
       ::Simple::CCM_Progressive_Context::_narrow (ctx);
-    
+
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
   }
-  
+
   void
   Progressive_exec_i::configuration_complete (void)
   {
     /* Your code here. */
   }
-  
+
   void
   Progressive_exec_i::ccm_activate (void)
   {
     /* Your code here. */
   }
-  
+
   void
   Progressive_exec_i::ccm_passivate (void)
   {
     /* Your code here. */
   }
-  
+
   void
   Progressive_exec_i::ccm_remove (void)
   {
@@ -154,17 +154,17 @@ namespace CIAO_Simple_Progressive_Impl
     if (!triggered_)
       ACE_ERROR ((LM_EMERGENCY, "Error:  My facet wasn't triggered!!\n"));
   }
-  
+
   extern "C" PROGRESSIVE_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Simple_Progressive_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_NORETURN (
       retval,
       Progressive_exec_i);
-    
+
     return retval;
   }
 }
@@ -174,41 +174,41 @@ namespace CIAO_Simple_Progressive_Impl
   //============================================================
   // Home Executor Implementation Class: ProgressiveHome_exec_i
   //============================================================
-  
+
   ProgressiveHome_exec_i::ProgressiveHome_exec_i (void)
   {
   }
-  
+
   ProgressiveHome_exec_i::~ProgressiveHome_exec_i (void)
   {
   }
-  
+
   // Implicit operations.
-  
+
   ::Components::EnterpriseComponent_ptr
   ProgressiveHome_exec_i::create (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_THROW_EX (
       retval,
       Progressive_exec_i,
       ::CORBA::NO_MEMORY ());
-    
+
     return retval;
   }
-  
+
   extern "C" PROGRESSIVE_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Simple_ProgressiveHome_Impl (void)
   {
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
-    
+
     ACE_NEW_NORETURN (
       retval,
       ProgressiveHome_exec_i);
-    
+
     return retval;
   }
 }

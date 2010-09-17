@@ -26,7 +26,7 @@ module InterOutArgsT
 
   // Array
   struct TopicArray {
-    string key; 
+    string key;
     short_array x_array;
     };
 
@@ -68,7 +68,7 @@ module InterOutArgsT
                          out TopicArray topic_arr)
         raises (InternalError);
       void var_div2_outs (out X_Union x_uni,
-                          out test_seq seq) 
+                          out test_seq seq)
         raises (InternalError);
       void enum_out (out test_enum out_test)
         raises (InternalError);

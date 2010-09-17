@@ -66,7 +66,7 @@ module A
   module Nested<typename T, sequence <T> TSeq>
   {
     typedef short y;
-    
+
     abstract interface abs_XX
     {
     };
@@ -74,7 +74,7 @@ module A
     interface XX
     {
     };
-    
+
     // To make sure the overrides of _is_nil() and
     // release() that we need for mixed parentage
     // interfaces get generated when the template
@@ -122,7 +122,7 @@ module second<exception X, typename W>
   {
     public long id_key;
   };
-#endif  
+#endif
 };
 
 module B
@@ -140,7 +140,7 @@ module B
 module T
 {
   typedef unsigned long MyLongType;
-  
+
   module Typed <typename T, sequence <T> TSeq>
   {
     local interface X
@@ -160,7 +160,7 @@ module T
       port Y my_port;
       port Y my_second_port;
     };
-  
+
     connector C
     {
       port Y my_m_port;
@@ -217,12 +217,12 @@ module I
   module Nested_I<typename T, sequence <T> TSeq>
   {
     alias A::Nested<T, TSeq> NestedA;
-    
+
     interface B
     {
       void send (in T arg);
     };
-    
+
     connector Y
     {
       provides B myport;
@@ -274,7 +274,7 @@ module Ast<typename T,
   component Comp_T
   {
     uses multiple T Comp_T_Recep;
-    
+
     mirrorport PT_T Comp_T_Mirror_Port;
     provides T Comp_T_Facet;
     emits E Comp_T_Emit;

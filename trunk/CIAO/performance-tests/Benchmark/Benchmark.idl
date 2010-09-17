@@ -20,7 +20,7 @@ module Benchmark
    * @interface RoundTrip
    *
    * This Latency test provides operations to measure the round-trip
-   * latency of the ORB. The interface is the same as that of 
+   * latency of the ORB. The interface is the same as that of
    * $TAO_ROOT/performance-tests/Latency/Single_Threaded
    */
 
@@ -37,7 +37,7 @@ module Benchmark
    *
    * This interface is used to start the tests.
    */
-  interface Controller 
+  interface Controller
   {
     /// Start the test
     void start ();

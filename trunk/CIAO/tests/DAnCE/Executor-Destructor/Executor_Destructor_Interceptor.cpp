@@ -23,12 +23,12 @@ namespace DAnCE
       {
         if (!dance_test::EXEC_DEST_STATUS::instance ()->check_destructor (*i))
           {
-            ACE_ERROR ((LM_EMERGENCY, 
+            ACE_ERROR ((LM_EMERGENCY,
                         ACE_TEXT ("Error:  Destructor for instance <%C> not invoked\n"),
                         i->c_str ()));
           }
-        else 
-          { 
+        else
+          {
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("Success!  Destructor for instance <%C> was invoked!\n"),
                         i->c_str ()));
@@ -47,9 +47,9 @@ namespace DAnCE
   {
     for (CORBA::ULong i = 0; i < plan.instance.length (); ++i)
       {
-        ::Deployment::MonolithicDeploymentDescription &mdd = 
+        ::Deployment::MonolithicDeploymentDescription &mdd =
           plan.implementation[plan.instance[i].implementationRef];
-        
+
         if (ACE_OS::strcmp (DAnCE::Utility::get_instance_type (mdd.execParameter),
                             ::DAnCE::DANCE_LOCALITYMANAGER) != 0)
           this->instance_ids_.insert (plan.instance[i].name.in ());

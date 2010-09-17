@@ -35,7 +35,7 @@ namespace CIAO_PortUsageState_Test_PortUsageStateComponent_Impl
     ::DDS::DataReader_ptr /*the_reader*/,
     const DDS::RequestedIncompatibleQosStatus & /*status*/)
   {
-  } 
+  }
 
   void ConnectorStatusListener_exec_i::on_sample_rejected (
     ::DDS::DataReader_ptr /*the_reader*/,

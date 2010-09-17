@@ -163,7 +163,7 @@ namespace CIAO
       typename COMP_SVNT::_exec_type::_ptr_type exe)
   {
     CIAO_TRACE ("Home_Servant_Impl<>::_ciao_activate_component");
-    
+
 
     CORBA::Object_var hobj = this->container_->get_objref (this);
 

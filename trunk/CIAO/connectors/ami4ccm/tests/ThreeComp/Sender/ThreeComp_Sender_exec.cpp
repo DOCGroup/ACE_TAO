@@ -8,7 +8,7 @@
 
 namespace CIAO_ThreeComp_Sender_Impl
 {
-  // Keeps the messages on the go. 
+  // Keeps the messages on the go.
   Atomic_UShort nr_of_sent = 0;
   // Keeps the messages received back from Receiver.
   Atomic_UShort nr_of_rec = 0;
@@ -210,7 +210,7 @@ namespace CIAO_ThreeComp_Sender_Impl
     if ((asynch == false) || (nr_of_rec.value() != 6) ||
         (nr_of_sent.value() != 0))
       {
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                    "ERROR: Test not asynchronous or not received back"
                    " all requests ( %u/6)!\n",
                    nr_of_rec.value() ));

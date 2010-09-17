@@ -13,21 +13,21 @@ module ImpliedSources
   eventtype foo_event
     {
     };
-  
+
   eventtype bar_event
     {
     };
-  
+
   component Foo
     {
       publishes foo_event p_foo;
     };
-  
+
   component Bar
     {
       emits bar_event e_bar;
     };
-  /*  
+  /*
   interface test
     {
       ImpliedSources::FooEventConsumers::foo_eventConsumer test_op ();

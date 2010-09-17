@@ -313,8 +313,8 @@
       </value>
     </configProperty>
   </instance>
-  
-  
+
+
 
   <instance xmi:id="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.Sender">
     <name>ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.Sender</name>
@@ -481,7 +481,7 @@
       <instance xmi:idref="ThreeComp.ComponentImplementations.ThreeCompImplementation.ThreeComp.AMI1C" />
     </internalEndpoint>
   </connection>
-  
+
 
 <connection>
     <name>run_asynch_state_connection</name>

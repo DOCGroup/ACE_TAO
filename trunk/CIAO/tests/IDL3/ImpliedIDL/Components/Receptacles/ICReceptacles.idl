@@ -2,7 +2,7 @@
 /**
  * @file ICReceptacles.idl
  * @author Will Otte <wotte@dre.vanderbilt.edu>
- * 
+ *
  * Tests equivalent idl for receptacles.
  */
 #include <Components.idl>
@@ -12,12 +12,12 @@ module EquivReceptacles
   interface foo_interface
     {
     };
-  
-  component Foo 
+
+  component Foo
     {
       uses multiple foo_interface foo_recep;
     };
-  
+
   /**
   interface bar
     {

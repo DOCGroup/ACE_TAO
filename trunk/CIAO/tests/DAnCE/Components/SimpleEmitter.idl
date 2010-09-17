@@ -12,7 +12,7 @@ module Simple
   {
     emits Hello hello_;
   };
-  
+
   home SimpleEmitterHome manages SimpleEmitter
   {
   };

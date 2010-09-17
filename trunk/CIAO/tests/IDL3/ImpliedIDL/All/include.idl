@@ -6,7 +6,7 @@
  * Tests tool's regeneration of IDL2 constructs, which
  * should be basically unchanged.
  */
- 
+
 #ifndef INCLUDE_IDL
 #define INCLUDE_IDL
 
@@ -20,7 +20,7 @@ module pre_mod
     string reasons[4][2];
     wstring<3> why;
   };
-  
+
   enum which
   {
     ZERO,

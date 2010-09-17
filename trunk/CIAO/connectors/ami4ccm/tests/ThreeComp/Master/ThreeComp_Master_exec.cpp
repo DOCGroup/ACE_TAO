@@ -7,7 +7,7 @@
 
 namespace CIAO_ThreeComp_Master_Impl
 {
-  // Keeps the messages on the go. 
+  // Keeps the messages on the go.
   Atomic_UShort nr_of_sent = 0;
   // Keeps the messages received back from the Sender.
   Atomic_UShort nr_of_rec = 0;
@@ -69,7 +69,7 @@ namespace CIAO_ThreeComp_Master_Impl
                              "\tstate_ami is NIL !\n"));
          return 1;
       }
-    //Invoke Asynchronous calls to test 
+    //Invoke Asynchronous calls to test
 
     for (int i = 0; i < 3; i ++)
       {
@@ -184,7 +184,7 @@ namespace CIAO_ThreeComp_Master_Impl
   {
     if ((asynch == false) || (nr_of_rec.value() != 3))
       {
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                    "ERROR: Test not asynchronous or not received back"
                    " all requests ( %u/3)!\n",
                    nr_of_rec.value() ));

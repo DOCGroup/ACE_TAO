@@ -34,7 +34,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_readcond
         (this->rd_condition_.in ());
       if (!rc)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO 
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                         ACE_TEXT ("ConditionManager_T::get_readcondition - ")
                         ACE_TEXT ("Unable to cast ::DDS::ReadCondition to its internal ")
                         ACE_TEXT ("representation.\n")));

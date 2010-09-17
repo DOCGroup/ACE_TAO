@@ -1,21 +1,21 @@
 #!/usr/bin/perl
 #
 # $Id$
-# 
+#
 # The above line is for compatibility /w Linux. Windows uses the .pl extension.
 # Author: Stoyan Paunov
 # Purpose: Generate a container class with mutator/accessor methods
-#		The idea is to use this class as a base class in the 
-#		inheritance hierarchy. This way we can evolve the base 
+#		The idea is to use this class as a base class in the
+#		inheritance hierarchy. This way we can evolve the base
 #		container independently from the rest of the code!
 #
 
 use strict;
 
-die "Usage: $0 <module name> <field description file>\n" 
+die "Usage: $0 <module name> <field description file>\n"
     if not defined $ARGV[0];
 
-die "Usage: $0 <module name> <field description file>\n" 
+die "Usage: $0 <module name> <field description file>\n"
     if not defined $ARGV[1];
 
 my $module_name = $ARGV[0];

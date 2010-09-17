@@ -16,7 +16,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_Base_Connector_T (voi
   , profile_name_ (0)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_Base_Connector_T");
-  
+
   ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), this->domain_id_);
   this->domain_id_ = id;
 }
@@ -25,7 +25,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~DDS_Base_Connector_T (void)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~DDS_Base_Connector_T");
-  
+
   ACE_OS::free (library_name_);
   ACE_OS::free (profile_name_);
 
@@ -193,7 +193,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ccm_activate (void)
   ::DDS::ReturnCode_t const retcode = this->domain_participant_->set_listener (
                               this->domainparticipantlistener_.in (),
                               DomainParticipantListener::get_mask ());
-                              
+
   if (retcode != DDS_RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
@@ -247,7 +247,7 @@ ACE_Reactor*
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::reactor (void)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::reactor");
-  
+
   ACE_Reactor* reactor = 0;
 
   ::CORBA::Object_var ccm_object = this->context_->get_CCM_object();

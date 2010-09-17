@@ -11,19 +11,19 @@ module EventSink
   eventtype foo_event
     {
     };
-  
+
   eventtype bar_event
     {
     };
-  
+
   component Foo
     {
       consumes foo_event c_foo;
     };
-  
+
   component Bar : Foo
     {
       consumes bar_event c_bar;
     };
-  
+
 };
