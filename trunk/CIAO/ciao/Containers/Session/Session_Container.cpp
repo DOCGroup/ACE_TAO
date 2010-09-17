@@ -22,12 +22,11 @@ namespace CIAO
   Session_Container::Session_Container (
         CORBA::ORB_ptr o,
         PortableServer::POA_ptr poa,
-        Deployment::CIAO_Container_i *container_impl,
         bool static_config_flag,
         const Static_Config_EntryPoints_Maps* maps,
         const char *name,
         const CORBA::PolicyList *more_policies)
-    : Container_i (o, poa, container_impl),
+    : Container_i (o, poa),
       static_config_flag_ (static_config_flag),
       static_entrypts_maps_ (maps),
       sa_ (0)

@@ -104,7 +104,6 @@ namespace CIAO
     ACE_NEW_THROW_EX (cont,
                       CIAO::Session_Container (this->orb_,
                                                this->poa_,
-                                               0 /* not needed */,
                                                false /* we're always dynanic for the moment */,
                                                0, /*always dynanic */
                                                name,
