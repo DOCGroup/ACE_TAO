@@ -50,7 +50,7 @@ ACE_Service_Config::open (int argc,
                            ignore_default_svc_conf,
                            ignore_debug_flag) == -1)
     return -1;
-  
+
   return current()->open (argc,
                           argv,
                           logger_key,

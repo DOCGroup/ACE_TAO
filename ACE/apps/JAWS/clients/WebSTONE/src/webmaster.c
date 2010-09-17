@@ -35,7 +35,7 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #else
-#define FD_SETSIZE  1024 /* max size for select() - keep before <winsock.h> 
+#define FD_SETSIZE  1024 /* max size for select() - keep before <winsock.h>
         * and same size as MAXCLIENTS */
 #include <windows.h>
 #include <winsock.h>
@@ -78,7 +78,7 @@ int     num_rexecs = 0;
 SOCKET      socknum[MAXCLIENTS];
 SOCKET      sockIO[MAXTOTALPROCS];
 SOCKET      sockErr[MAXTOTALPROCS];
-THREAD FILE *debugfile = stderr;      
+THREAD FILE *debugfile = stderr;
 struct hostent  *master_phe;   /* IP addresses for webmaster */
 struct timeval sumedh_start, sumedh_end;
 
@@ -120,16 +120,16 @@ passivesock(const NETPORT portnum, const char *protocol, const int qlen)
 
   D_PRINTF( "Beginning passivesock with errno %d\n",errno );
 
-  D_PRINTF( "Zeroing address structure\n" ); 
+  D_PRINTF( "Zeroing address structure\n" );
   memset((char *)&sin, 0, sizeof(sin));
 
   sin.sin_family = AF_INET;
   sin.sin_addr.s_addr = INADDR_ANY;
- 
+
   /* NOT USED: Map service name to portnumber */
   D_PRINTF( "Mapping portnum errno %d\n",errno );
   sin.sin_port = htons(portnum);
- 
+
   /* Map protocol name to number */
   D_PRINTF( "Mapping protocol name errno %d\n",errno );
   if ((ppe = getprotobyname(protocol)) == 0)
@@ -174,11 +174,11 @@ passivesock(const NETPORT portnum, const char *protocol, const int qlen)
   {
       errexit("Can't listen on port %s: %s\n", portnum, neterrstr());
   }
-  D_PRINTF( "Listen succeeded\n" );    
+  D_PRINTF( "Listen succeeded\n" );
 
   /* all done, return socket descriptor */
   return(s);
-}  
+}
 
 
 /* abort clients -- called by SIGINT handler */
@@ -239,7 +239,7 @@ void echo_client(void *stream)
       return;
   if (rv < 0)
       errexit("Error in echo_client(): select() returns %d: %s\n", rv, neterrstr());
-  
+
   /* loop over the sockets that are ready with data */
   for (i = 0; i < num_rexecs; i++) {
       if (sockarr[i] != BADSOCKET_VALUE && FD_ISSET(sockarr[i], &readfds)) {
@@ -253,7 +253,7 @@ void echo_client(void *stream)
       fprintf(stderr, "Error in echo_client() after NETREAD(): %s\n", neterrstr());
         continue;
     }
-  
+
     /* copy to stdout or stderr */
     fwrite(buf, sizeof(char), len, outfile);
       }
@@ -266,8 +266,8 @@ void echo_client(void *stream)
 static int
 echo_client(char *hostname, const int fd)
 {
-  /* 
-   * WRITE TEXT FROM FILE DESCRIPTOR INTO STDOUT 
+  /*
+   * WRITE TEXT FROM FILE DESCRIPTOR INTO STDOUT
    */
   char buf[BUFSIZ];
   int  cc;
@@ -309,7 +309,7 @@ int i;
     }
 
     for (i = 0; master_phe->h_addr_list[i] != 0; i++) {
-  if ((*(int *)(master_phe->h_addr_list[i]) & netmask) == 
+  if ((*(int *)(master_phe->h_addr_list[i]) & netmask) ==
     (client_addr & netmask))
       goto gotit;
     }
@@ -332,7 +332,7 @@ int   currarg;
 extern char *optarg;
 extern int  optind;
 
-    /* 
+    /*
      * PARSE THE COMMAND LINE OPTIONS
      */
     while((getoptch = getopt(argc,argv,"P:f:t:l:p:u:R:w:n:M:adrsvWX")) != (const char)EOF)
@@ -344,9 +344,9 @@ extern int  optind;
       break;
     case 'P':
       haveproxyserver = 1;
-      strcpy(proxyserver, optarg); 
+      strcpy(proxyserver, optarg);
       break;
-    case 'R': 
+    case 'R':
       record_all_transactions = 1;
       break;
     case 'X':
@@ -403,7 +403,7 @@ extern int  optind;
         /*
          * THE SERVERS NAME MUST BE SPECIFIED
          */
-  
+
         fprintf(stderr,"No WWW Server specified\n");
         usage(argv[0]);
     }
@@ -422,7 +422,7 @@ extern int  optind;
   fprintf(stderr, "Invalid network mask (-M %s)\n", network_mask_str);
   usage(argv[0]);
     }
-    
+
     if(strlen(configfile) == 0)
     {
         /*
@@ -491,12 +491,12 @@ struct sockaddr_in *serveraddr;
 
     D_PRINTF( "calling getsockname\n" );
 
-    len = sizeof(struct sockaddr);  
+    len = sizeof(struct sockaddr);
     if(getsockname(sock, (struct sockaddr *)serveraddr, &len) < 0)
     {
   errexit("Could not get socket informaton\n");
     }
-  
+
   return( sock );
 }
 
@@ -523,21 +523,21 @@ char *commandline;
   errexit("Could not retrieve local host name");
     } else {
   /* convert hostname to address (to avoid DNS problems for webclients) */
-  /* The following lines are add to copy the system 
+  /* The following lines are add to copy the system
      buffer (output of gethostbyname()) into user area.
            This is because, there are very good chances that later
      on system buffer might be overwritten by some calls and
      still if your pointer is pointing to same addr. nothing
-     but only trouble and trouble! Infact this is what 
+     but only trouble and trouble! Infact this is what
            happening when I tried to run webstone benchmark for more
            then one clients. It used to over write the webmaster name
      with the first client name and so remaining on client(s)
      the webclient process(es) were invoked with wrong webmaster
-     name! This behaviour is observed Solaris 2.4 this bug 
+     name! This behaviour is observed Solaris 2.4 this bug
      can be hit in any OS.    - Rajesh Shah 5/18/96 */
-       
+
   /* master_phe = gethostbyname(hostname); */
-  master_phe_tmp = gethostbyname(hostname); 
+  master_phe_tmp = gethostbyname(hostname);
   master_phe = (struct hostent *)malloc(sizeof(struct hostent));
   HostEntCpy(master_phe, master_phe_tmp);
     }
@@ -551,7 +551,7 @@ char *commandline;
               + 1);
       strcpy(webclient_path, temp);
       strcat(webclient_path, "/webclient");
-      
+
     } else
 #else
     temp = temp;
@@ -610,7 +610,7 @@ char *commandline;
      */
     sprintf(tmpcommandline,"%s -n %%d -w %%s -c %%s:%%d", commandline);
     strcpy(commandline,tmpcommandline);
-    
+
     if (uil_filelist_f == 0)
     {
   cnt = 0;
@@ -659,13 +659,13 @@ struct sockaddr_in  *serveraddr;
     {
         errexit("Could not open config file %s\n", configfile);
     }
-   
+
     if ((inetport = getservbyname("exec","tcp")) == 0)
     {
         errexit("Could not get service name for exec/tcp\n");
     }
     D_PRINTF( "getservbyname returned %d\n", ntohs(inetport->s_port) );
-    
+
     cnt = 0;
 
     D_PRINTF( "rexec loop\n" );
@@ -699,7 +699,7 @@ struct sockaddr_in  *serveraddr;
 
   primename = pick_webmaster_IP_address(clienthostname[cnt], master_phe, network_mask);
   if (primename == 0) {
-      errexit("Bad client address %s for Client %d\n", clienthostname[cnt], cnt); 
+      errexit("Bad client address %s for Client %d\n", clienthostname[cnt], cnt);
   }
 
         fprintf(stdout,"Client %d: %s \t# Processes: %d\n    Webserver: %s\tWebmaster: %s:%d\n",
@@ -725,7 +725,7 @@ struct sockaddr_in  *serveraddr;
       clienthostname[cnt],tmpcommandline);
       }
   }
-      
+
 
   returnval = NETREAD(tmpfd, buffer, OKSTRLEN);
   D_PRINTF( "read returns %d, %s\n", returnval, buffer );
@@ -757,15 +757,15 @@ struct sockaddr_in  *serveraddr;
        * THE OTHER PROCESS CONTINUES WITH THE PROGRAM
        */
       D_PRINTF( "Forking webclient stderr/stdout processes\n" );
-      switch (fork()) 
-  { 
+      switch (fork())
+  {
   case -1:   /* ERROR */
     errexit("fork: %s\n", strerror(errno));
   case 0:    /* CHILD */
-    exit(echo_client(clienthostname[cnt], tmpfd)); 
+    exit(echo_client(clienthostname[cnt], tmpfd));
   default:   /* PARENT */
     break;
-  } 
+  }
 #else
     /* start threads to echo stdout/stderr from clients */
     _beginthread(echo_client, 0, (void *)0);
@@ -832,7 +832,7 @@ int sock;
             /*
              * SET THE FD IN THE MASK
              */
-            FD_SET(socknum[cnt],fdset); 
+            FD_SET(socknum[cnt],fdset);
         }
   D_PRINTF( "on socket %d\n",socknum[cnt] );
     }
@@ -877,7 +877,7 @@ int sock;
             if(!BADSOCKET(socknum[cnt]) && (FD_ISSET(socknum[cnt],&tmpfdset)))
             {
                 /*
-                 * GET THE READY FROM THIS GUY. 
+                 * GET THE READY FROM THIS GUY.
                  * DON'T FORGET TO CLEAR HIS BIT IN THE tmpfdset
                  */
     len = NETREAD(socknum[cnt],buffer,READYSTRLEN);
@@ -898,7 +898,7 @@ int sock;
     }
     sleep(1);
     fprintf(stdout,"All READYs received\n");
-    fflush(stdout);  
+    fflush(stdout);
 }
 
 /*
@@ -918,7 +918,7 @@ int *socknum;
       if(socknum[cnt] > 0)
         {
     /*
-     * SEND A GO 
+     * SEND A GO
      */
     if(NETWRITE(socknum[cnt], GOSTR, GOSTRLEN) != GOSTRLEN)
             {
@@ -948,28 +948,28 @@ stats_t statarray[MAXCLIENTS];
   int returnval;
   int cnt,i;
 
-  
+
   /* DOESN'T ACTUALLY PRINT UNTIL THE FIRST CLIENT REPORTS */
   fprintf(stdout,"Reading results ");
-  
-  /* 
+
+  /*
    * COPY THE FILE DESCRIPTORS TO A TMP LIST,
    * ALLOCATE MEMORY FOR STATS, PAGESTATS IN TEXT FORM
    */
   leftfdset = *fdset;
   stats_as_text = (char *)mymalloc(SIZEOF_STATSTEXT+1);
   page_stats_as_text = (char *)mymalloc(SIZEOF_PAGESTATSTEXT+1);
-  
-    /* 
+
+    /*
     * COPY THE FILE DESCRIPTORS TO A TMP LIST,
     * PLUS A LIST OF REMAINING FDs
     */
     leftfdset = *fdset;
-    /* 
+    /*
      * LOOP UNTIL ALL CLIENTS HAVE REPORTED
      * AND tmpfdset IS EMPTY
      */
-#ifndef WIN32    
+#ifndef WIN32
     while(memcmp(&leftfdset,&zerofdset,sizeof(fd_set)))
     {
   tmpfdset = leftfdset;
@@ -995,7 +995,7 @@ stats_t statarray[MAXCLIENTS];
   {
       /*
        * SEE WHICH SOCKETS HAVE A INPUT ON THEM PENDING AND
-       * RECEIVE IT.  
+       * RECEIVE IT.
        */
 
       /* IS THIS A VALID SOCKET? IS IT READY TO READ? */
@@ -1007,9 +1007,9 @@ stats_t statarray[MAXCLIENTS];
      * GET THE TIMING DATA FROM THIS GUY
      * THEN REMOVE HIM FROM THE tmpfdset
      */
-      /* 
+      /*
        * READ TIME STATS
-       * DOES READ() RETURN THE CORRECT LENGTH? 
+       * DOES READ() RETURN THE CORRECT LENGTH?
        */
       D_PRINTF( "About to read timestats, count %d, errno %d\n",
       cnt, errno );
@@ -1024,9 +1024,9 @@ stats_t statarray[MAXCLIENTS];
           fprintf(stderr, "Error reading timing stats: %s\nSocket number %d\n",
             neterrstr(),socknum[cnt]);
           abort_clients();
-          errexit(""); 
+          errexit("");
         } /* end if */
-      
+
       /* convert text to stats */
       stats_as_text[returnval] = 0; /* add an end marker */
       statarray[cnt] = *text_to_stats(stats_as_text);
@@ -1036,32 +1036,32 @@ stats_t statarray[MAXCLIENTS];
 
     if(uil_filelist_f) /* READ PAGE STATS */
     {
-      for (i = 0; i < number_of_pages; i++) 
+      for (i = 0; i < number_of_pages; i++)
         {
           D_PRINTF( "On page_stats[%d][%d]\n", cnt, i );
           returnval = recvdata(socknum[cnt], page_stats_as_text,
           SIZEOF_PAGESTATSTEXT);
           D_PRINTF( "Read page stats %d\n", returnval );
-          
+
           if (returnval != SIZEOF_PAGESTATSTEXT) /* <= 0) */
       {
         D_PRINTF( "Error reading page_stats[%d][%d]: %s\n",
           cnt, i, neterrstr() );
         fprintf(stderr, "Error reading page_stats[%d][%d]: %s\n",
-          cnt, i, neterrstr()); 
+          cnt, i, neterrstr());
         abort_clients();
         errexit("");
       }
-          D_PRINTF( "Page stats: read %d bytes\n", 
+          D_PRINTF( "Page stats: read %d bytes\n",
         returnval );
-          
+
           page_stats_as_text[returnval] = 0;    /* add an end marker */
-          D_PRINTF("strlen(page_stats_as_text) = %d\n", 
+          D_PRINTF("strlen(page_stats_as_text) = %d\n",
           strlen(page_stats_as_text));
-          page_stats[cnt][i] = 
+          page_stats[cnt][i] =
       *text_to_page_stats(page_stats_as_text);
-          
-        } /* end for */   
+
+        } /* end for */
     } /* end if filelist */
 
     FD_CLR(socknum[cnt],&leftfdset);
@@ -1113,14 +1113,14 @@ page_stats_t *page_stats_total;
         {
             fprintf(stdout,"----------------------------------\n");
             /* fprintf(stdout,"Test for host: %s\n",statarray[cnt].hostname); */
-            fprintf(stdout,"Total number of pages retrieved from server: %u\n", 
+            fprintf(stdout,"Total number of pages retrieved from server: %u\n",
         statarray[cnt].totalpages);
-      
+
       rqstat_fprint(stdout, &(statarray[cnt].rs));
 
           thruput = thruputpersec((double)(statarray[cnt].rs.totalbytes),
       &(statarray[cnt].rs.totalresponsetime));
-  
+
           fprintf(stdout, "Thruput average per connection: %.0f bytes/sec\n",
       thruput);
         }
@@ -1162,8 +1162,8 @@ page_stats_t *page_stats_total;
     page_stats_total[j].page_valid = 1;
       }
   }
-    } 
-   
+    }
+
     /* print page statistics */
     if (verbose) {
   for (i = 0; i < number_of_pages; i++)
@@ -1177,12 +1177,12 @@ page_stats_t *page_stats_total;
     printf ("===============================================================================\n");
     printf ("Page # %d\n\n", i);
     printf ("Total number of times page was hit %u\n",
-          pst->totalpages); 
+          pst->totalpages);
 
     rqstat_print(&(pst->rs));
 
     printf ("Page size %u \n", pst->page_size);
-    printf ("===============================================================================\n\n"); 
+    printf ("===============================================================================\n\n");
       }
   }
     }
@@ -1215,17 +1215,17 @@ page_stats_t *page_stats_total;
     fprintf(stdout, "Total number of clients: \t%d\n", totalnumclients);
     testtime = sumedh_end.tv_sec - sumedh_start.tv_sec;
     fprintf(stdout,"Test time: \t\t\t%d seconds\n", testtime);
-    
+
     fprintf(stdout, "Server connection rate: \t%3.2f connections/sec\n",
             (double)(masterstat.rs.totalconnects)/(testtime));
-    
+
     fprintf(stdout, "Server error rate: \t\t%4.4f err/sec\n",
             (double)(masterstat.rs.totalerrs)/(testtime));
-    
+
     fprintf(stdout, "Server thruput: \t\t%2.2f Mbit/sec\n",
             (double)(8*masterstat.rs.totalbytes)/(testtime*1024*1024));
-    
-    fprintf(stdout, "Little's Load Factor: \t\t%3.2f \n", 
+
+    fprintf(stdout, "Little's Load Factor: \t\t%3.2f \n",
             (double)(masterstat.rs.totalresponsetime.tv_sec)
             /(testtime));
     avgtime(&masterstat.rs.totalresponsetime,
@@ -1241,17 +1241,17 @@ page_stats_t *page_stats_total;
 
     thruput = 8 * thruputpersec((double)(masterstat.rs.totalbytes),
       &(masterstat.rs.totalresponsetime));
-  
+
     fprintf(stdout, "Average client thruput: \t%4.4f Mbit/sec\n",
       thruput/(1024*1024));
 
-    fprintf(stdout,"Sum of client response times:\t%u.%u sec\n", 
+    fprintf(stdout,"Sum of client response times:\t%u.%u sec\n",
       masterstat.rs.totalresponsetime.tv_sec,
       masterstat.rs.totalresponsetime.tv_usec);
 
-    fprintf(stdout,"Total number of pages read:\t%u\n\n", 
+    fprintf(stdout,"Total number of pages read:\t%u\n\n",
         masterstat.totalpages);
-   
+
     /* Remaining stats are the same as usual */
 
     rqstat_fprint(stdout, &(masterstat.rs));
@@ -1316,8 +1316,8 @@ main(const int argc, char *argv[])
     {
         socknum[i] = BADSOCKET_VALUE;
         statarray[i].rs.totalconnects = 0;
-    }  
-    
+    }
+
     signal(SIGINT, sig_int);
 
     ParseCmdLine( argc, argv);
@@ -1329,7 +1329,7 @@ main(const int argc, char *argv[])
     totalnumclients = RexecClients( commandline, clienthostname, &serveraddr);
 
     /* Initalization of variables. */
-    page_stats = 
+    page_stats =
       (page_stats_t **)
       mymalloc(totalnumclients*sizeof(page_stats_t *));
     for (i=0; i < totalnumclients; i++)
@@ -1337,7 +1337,7 @@ main(const int argc, char *argv[])
   page_stats[i] = (page_stats_t *)
     mymalloc(number_of_pages*sizeof(page_stats_t));
       }
-    page_stats_total = 
+    page_stats_total =
       (page_stats_t *)mymalloc(number_of_pages*sizeof(page_stats_t));
 
     for (i=0; i < totalnumclients; i++) {
@@ -1351,15 +1351,15 @@ main(const int argc, char *argv[])
     for (i=0; i < number_of_pages; i++) {
         page_stats_init(&(page_stats_total[i]));
     }
-    
+
     for(i = 0; i < totalnumclients; i++)
     {
         socknum[i] = BADSOCKET_VALUE;
         statarray[i].rs.totalconnects = 0;
-    }    
+    }
 
     GetReady( &fdset, totalnumclients, sync_sock );
-    NETCLOSE(sync_sock);       
+    NETCLOSE(sync_sock);
 
     /*
      * START ALL OF THE CLIENTS BY SENDING THEM A GO SIGNAL.
@@ -1408,7 +1408,7 @@ main(const int argc, char *argv[])
 void
 HostEntCpy(struct hostent *dest, struct hostent *src)
 {
-  
+
   dest->h_name = (char *)malloc(strlen(src->h_name)+1);
   strcpy(dest->h_name, src->h_name);
   printf("WebMaster name = %s\n", dest->h_name);

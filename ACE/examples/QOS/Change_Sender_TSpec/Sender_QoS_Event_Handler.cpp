@@ -212,7 +212,7 @@ Sender_QoS_Event_Handler::handle_qos (ACE_HANDLE)
   else
     ACE_DEBUG ((LM_DEBUG,
                 "Setting QOS succeeds.\n"));
-  
+
 
   // ACE_SOCK_Dgram_Mcast_QoS dgram_mcast_qos_;
   // ACE_QoS_Session *qos_session_;

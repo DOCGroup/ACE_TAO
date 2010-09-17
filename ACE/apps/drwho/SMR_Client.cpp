@@ -12,7 +12,7 @@ SMR_Client::SMR_Client (short port_number)
 {
   if (CM_Client::open (port_number) < 0)
     ACE_ERROR ((LM_ERROR,
-                "%p\n%a", 
+                "%p\n%a",
                 Options::program_name,
                 1));
 }

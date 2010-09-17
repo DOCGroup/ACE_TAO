@@ -42,7 +42,7 @@ public:
   JAWS_Map_Manager (size_t size, ACE_Allocator *alloc = 0);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int open ( size_t size = ACE_DEFAULT_MAP_SIZE, 
+  int open ( size_t size = ACE_DEFAULT_MAP_SIZE,
              ACE_Allocator *alloc = 0);
 
   int close (void);
@@ -149,7 +149,7 @@ public:
   JAWS_LRU_Cache_Replacement (size_t max_entries, ACE_Allocator *alloc = 0);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int open ( size_t max_entries = ACE_DEFAULT_MAP_SIZE, 
+  int open ( size_t max_entries = ACE_DEFAULT_MAP_SIZE,
              ACE_Allocator *alloc = 0);
 
   int close (void);
@@ -266,7 +266,7 @@ public:
   JAWS_LFU_Cache_Replacement (size_t max_entries, ACE_Allocator *alloc = 0);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int open ( size_t max_entries = ACE_DEFAULT_MAP_SIZE, 
+  int open ( size_t max_entries = ACE_DEFAULT_MAP_SIZE,
              ACE_Allocator *alloc = 0);
 
   int close (void);
@@ -365,7 +365,7 @@ public:
   JAWS_FIFO_Cache_Replacement (size_t max_entries, ACE_Allocator *alloc = 0);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int open ( size_t max_entries = ACE_DEFAULT_MAP_SIZE, 
+  int open ( size_t max_entries = ACE_DEFAULT_MAP_SIZE,
              ACE_Allocator *alloc = 0);
 
   int close (void);

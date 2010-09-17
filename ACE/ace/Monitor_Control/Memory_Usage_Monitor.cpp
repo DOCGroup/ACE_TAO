@@ -60,7 +60,7 @@ namespace ACE
     {
       return Memory_Usage_Monitor::default_name_;
     }
-    
+
     void
     Memory_Usage_Monitor::clear_i (void)
     {

@@ -12,10 +12,10 @@
 #
 #       1. For each line in the input
 #             a. parse the URL and the time, the outcome code, and the size
-#             b. if the code is 200, and it's a GET, 
+#             b. if the code is 200, and it's a GET,
 #               do we already know about this URL?
 #                 i. yes - increment its counter
-#                ii. no - create a slot for it, record size, 
+#                ii. no - create a slot for it, record size,
 #                    and set counter=1
 #
 
@@ -28,7 +28,7 @@ while (<>) {
     $line_number++;
     ($line_number % 1000) || printf STDERR ".";
     # parse line
-    ( $client, $junk1, $junk2, $date, $timezone, 
+    ( $client, $junk1, $junk2, $date, $timezone,
       $command, $url, $version, $result_code, $size ) =
 	split;
     # strip some junk
@@ -81,7 +81,7 @@ foreach $key (@sorted_keys) {
 
 # end main
 
-sub 
+sub
 by_counter {
     $counter{$b} <=> $counter{$a};
 }

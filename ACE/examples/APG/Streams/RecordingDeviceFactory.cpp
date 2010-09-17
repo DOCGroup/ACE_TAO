@@ -13,7 +13,7 @@ RecordingDevice *RecordingDeviceFactory::instantiate (int argc,
   // Exclude 2
   device = new TextListenerAcceptor ();
   // Exclude 2
-  
+
   // Initialize the device with the remaining parameters.
   if (device->init (argc, argv) < 0)
     ACE_ERROR_RETURN ((LM_ERROR,

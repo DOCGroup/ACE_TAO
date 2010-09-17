@@ -29,14 +29,14 @@ int Logging_Event_Handler::open () {
                      O_RDWR|O_CREAT|O_APPEND,
                      ACE_DEFAULT_FILE_PERMS);
 
-  return reactor ()->register_handler 
+  return reactor ()->register_handler
     (this, ACE_Event_Handler::READ_MASK);
 }
 
-int Logging_Event_Handler::handle_input (ACE_HANDLE) 
+int Logging_Event_Handler::handle_input (ACE_HANDLE)
 { return logging_handler_.log_record (); }
 
-int Logging_Event_Handler::handle_close (ACE_HANDLE, 
+int Logging_Event_Handler::handle_close (ACE_HANDLE,
                                          ACE_Reactor_Mask) {
   logging_handler_.close ();
   log_file_.close ();

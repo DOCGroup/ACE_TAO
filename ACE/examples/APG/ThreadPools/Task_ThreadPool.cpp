@@ -80,7 +80,7 @@ public:
         ACE_Message_Block *mb = 0;
         ACE_Time_Value tv ((long)MAX_TIMEOUT);
         tv += ACE_OS::time (0);
-          
+
         // Get a message request.
         if (this->getq (mb, &tv) < 0)
           {

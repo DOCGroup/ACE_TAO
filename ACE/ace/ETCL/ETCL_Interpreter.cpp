@@ -81,13 +81,13 @@ char* Lex_String_Input::end_ = 0;
 // Routine to have Lex read its input from the constraint string.
 
 int
-Lex_String_Input::copy_into (char* buf, 
+Lex_String_Input::copy_into (char* buf,
                              int max_size)
 {
-  int const chars_left = 
+  int const chars_left =
     ACE_Utils::truncate_cast<int> (
       Lex_String_Input::end_ - Lex_String_Input::current_);
-      
+
   int const n = max_size > chars_left ? chars_left : max_size;
 
   if (n > 0)
@@ -106,7 +106,7 @@ Lex_String_Input::reset (char* input_string)
 {
   Lex_String_Input::string_ = input_string;
   Lex_String_Input::current_ = input_string;
-  Lex_String_Input::end_ = 
+  Lex_String_Input::end_ =
     input_string + ACE_OS::strlen (Lex_String_Input::string_);
 }
 

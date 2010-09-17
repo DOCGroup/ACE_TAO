@@ -2138,6 +2138,7 @@ if ($opt_t) {
 print "--------------------Configuration: Fuzz - Level ",$opt_l,
       "--------------------\n";
 
+check_for_trailing_whitespace () if ($opt_l >= 4);
 check_for_lack_ACE_OS () if ($opt_l >= 6);
 check_for_ACE_Guard () if ($opt_l >= 1);
 check_for_generated_headers () if ($opt_l >= 6);
@@ -2179,7 +2180,6 @@ check_for_improper_main_declaration () if ($opt_l >= 1);
 check_for_TAO_Local_RefCounted_Object () if ($opt_l >= 1);
 check_for_ORB_init () if ($opt_l >= 1);
 check_for_export_file () if ($opt_l >= 6);
-check_for_trailing_whitespace () if ($opt_l >= 6);
 
 print "\nfuzz.pl - $errors error(s), $warnings warning(s)\n";
 

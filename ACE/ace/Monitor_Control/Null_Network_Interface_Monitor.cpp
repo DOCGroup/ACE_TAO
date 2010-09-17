@@ -18,7 +18,7 @@ namespace ACE
     {
       /// No-op.
     }
-    
+
     void
     Null_Network_Interface_Monitor::clear_impl (void)
     {

@@ -10,12 +10,12 @@
 //
 // = DESCRIPTION
 //    Checkout $ACE_ROOT/examples/Reactor/Proactor/test_aiocb_ace.cpp,
-//    which is the ACE'ified version of this program. 
-// 
+//    which is the ACE'ified version of this program.
+//
 // = COMPILE and RUN
 //    % CC -g -o test_aiocb -lrt test_aiocb.cpp
 //    % ./test_aiocb
-// 
+//
 // = AUTHOR
 //    Alexander Babu Arulanthu <alex@cs.wustl.edu>
 //
@@ -146,7 +146,7 @@ Test_Aio::do_aio (void)
   // the completion for the first one.
   if (aio_read (this->aiocb_read_) < 0)
     perror ("aio_read");
-  
+
   // Wait for the completion on aio_suspend.
   struct aiocb *list_aiocb[2];
   list_aiocb [0] = this->aiocb_write_;
@@ -214,7 +214,7 @@ Test_Aio::do_aio (void)
 
   cout << "Both the AIO operations done." << endl;
   cout << "The buffer is :" << this->buffer_read_ << endl;
-  
+
   return 0;
 }
 
@@ -229,11 +229,11 @@ main (int argc, char **argv)
               "ACE_POSIX_AIOCB_PROACTOR may not work in this platform\n");
       return -1;
     }
-  
+
   if (test_aio.do_aio () != 0)
     {
       printf ("AIOCB test failed:\n"
-              "ACE_POSIX_AIOCB_PROACTOR may not work in this platform\n"); 
+              "ACE_POSIX_AIOCB_PROACTOR may not work in this platform\n");
       return -1;
     }
   printf ("AIOCB test successful:\n"

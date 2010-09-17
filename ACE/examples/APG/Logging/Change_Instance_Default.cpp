@@ -11,7 +11,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Thread_Manager.h"
 
-ACE_THR_FUNC_RETURN worker (void *) 
+ACE_THR_FUNC_RETURN worker (void *)
 {
   // do some work
   return 0;

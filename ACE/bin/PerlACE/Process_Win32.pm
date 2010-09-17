@@ -459,7 +459,7 @@ sub kill_all
   my $procmask = shift;
   my $target = shift;
   my $pid = -1;
-  for my $line (`tasklist /nh /fo csv`) {    
+  for my $line (`tasklist /nh /fo csv`) {
     # find matching process line
     if ($line =~ /$procmask/) {
       # find process PID

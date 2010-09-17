@@ -359,7 +359,7 @@ ETCL_Literal_Constraint::operator/ (const ETCL_Literal_Constraint & rhs)
       {
         if ((ACE_CDR::Double) rhs == 0.0)
           return ETCL_Literal_Constraint ((ACE_CDR::Double) 0.0);
-        
+
         ACE_CDR::Double result = (ACE_CDR::Double) *this / (ACE_CDR::Double) rhs;
         return ETCL_Literal_Constraint ((ACE_CDR::Double) result);
       }

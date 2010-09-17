@@ -243,13 +243,13 @@ $client->DeleteFile($client_iorfile);
 exit $status;
 @endverbatim
 
-This example illustrates how to get the host name within the cross 
-platform test. In your test program add functionality to handle a 
-command line argument to pass the host name of the target. In the 
+This example illustrates how to get the host name within the cross
+platform test. In your test program add functionality to handle a
+command line argument to pass the host name of the target. In the
 run_test.pl script you can use the following code as example.
 
 @verbatim
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n"; 
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $hostname = $server->HostName();
 $SV = $server->CreateProcess ("server", "-ORBEndpoint iiop://$hostname:43210");
 $CL = $server->CreateProcess ("client", " -p 43210 -h $hostname");

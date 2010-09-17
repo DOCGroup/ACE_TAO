@@ -36,19 +36,19 @@ namespace ACE
     {
       /// No-op, should always call update().
     }
-    
+
     void
     Monitor_Group::receive (size_t /* data */)
     {
       /// No-op, should always call update().
     }
-    
+
     void
     Monitor_Group::receive (const Monitor_Control_Types::NameList& /* data */)
     {
       /// No-op, should always call update().
     }
-    
+
     void
     Monitor_Group::clear (void)
     {

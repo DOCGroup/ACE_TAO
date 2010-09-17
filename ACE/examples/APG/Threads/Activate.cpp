@@ -24,7 +24,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   HA_CommandHandler handler;
   int result = handler.activate ();
   ACE_ASSERT (result == 0);
- 
+
   ACE_UNUSED_ARG (result);
 
   handler.wait ();

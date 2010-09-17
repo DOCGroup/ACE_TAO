@@ -86,7 +86,7 @@ ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
                     ACE_TEXT ("ACE (%P|%t) DSB::instance, repo=%@, name=%s")
                     ACE_TEXT (" type=%@ => %@")
                     ACE_TEXT (" [in repo=%@]\n"),
-                    repo->repo_, name, type, obj, 
+                    repo->repo_, name, type, obj,
                     repo_found->repo_));
         }
       else
