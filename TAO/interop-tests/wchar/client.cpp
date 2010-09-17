@@ -287,7 +287,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
   if (tests_to_run == 0)
     tests_to_run = ALL_TESTS;
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

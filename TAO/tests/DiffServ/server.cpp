@@ -106,7 +106,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         simple_servant_ior_file = get_opts.opt_arg ();
         break;
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

@@ -1345,7 +1345,7 @@ IDL_GlobalData::check_gperf (void)
     }
   else
     {
-      // Wait is sucessful, we will check the exit code from the
+      // Wait is successful, we will check the exit code from the
       // spawned process.
       if (WIFEXITED (wait_status))
         {
