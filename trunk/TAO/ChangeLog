@@ -7,7 +7,7 @@ Fri Sep 17 22:15:54 UTC 2010  Adam Mitz  <mitza@ociweb.com>
           Restoring "make install" functionality (installing all needed
           headers, inline files, and template files) which was lost when these
           mpc files were moved.  Still need to fix some or all of the other mpc
-          files (at least ImRClient).
+          files (at least ImR_Client).
 
 Fri Sep 17 20:44:43 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
