@@ -324,7 +324,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
       << be_uidt_nl << be_uidt_nl
       << "this->add_facet (\"" << port_name << "\", obj.in ());"
       << be_uidt_nl
-      << "}" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
       << "}";
 
   return 0;
