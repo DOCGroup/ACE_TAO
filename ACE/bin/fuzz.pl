@@ -1702,7 +1702,7 @@ sub check_for_changelog_errors ()
 
                 # Check for CVS conflict tags
                 if (m/^<<<<</ || m/^=====/ || m/^>>>>>/) {
-                    print_error ("$file:$.: CVS conflict markers");
+                    print_error ("$file:$.: svn conflict markers");
                 }
             }
             close (FILE);
