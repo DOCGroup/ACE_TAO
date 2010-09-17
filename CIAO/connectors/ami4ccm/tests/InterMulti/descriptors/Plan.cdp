@@ -258,7 +258,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
   <instance xmi:id="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.Receiver">
     <name>InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.Receiver</name>
     <node>Receiver</node>
@@ -346,9 +346,9 @@
       </value>
     </configProperty>
   </instance>
-  
-  
-  
+
+
+
 
   <connection>
     <name>run_asynch_one_connection</name>
@@ -407,7 +407,7 @@
       <instance xmi:idref="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.AMIThree" />
     </internalEndpoint>
   </connection>
-  
+
   <connection>
     <name>do_one_connection</name>
     <internalEndpoint>

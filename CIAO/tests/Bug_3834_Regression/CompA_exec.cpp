@@ -35,49 +35,49 @@ namespace CIAO_CompA_Impl
   //============================================================
   // Facet Executor Implementation Class: Moo_exec_i
   //============================================================
-  
+
   Moo_exec_i::Moo_exec_i (void)
   {
   }
-  
+
   Moo_exec_i::~Moo_exec_i (void)
   {
   }
-  
+
   // Operations from ::Moo
-  
+
   void
   Moo_exec_i::do_something (void)
   {
     /* Your code here. */
     ACE_DEBUG ((LM_DEBUG, "Moo_exec_i::do_something\n"));
   }
-  
+
   //============================================================
   // Component Executor Implementation Class: CompA_exec_i
   //============================================================
-  
+
   CompA_exec_i::CompA_exec_i (void)
   {
   }
-  
+
   CompA_exec_i::~CompA_exec_i (void)
   {
   }
-  
+
   // Supported operations and attributes.
-  
+
   // Component attributes and port operations.
-  
+
   ::CCM_Moo_ptr
   CompA_exec_i::get_my_moo (void)
   {
     /* Your code here. */
     return new Moo_exec_i;
   }
-  
+
   // Operations from Components::SessionComponent.
-  
+
   void
   CompA_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
@@ -86,51 +86,51 @@ namespace CIAO_CompA_Impl
 
     this->context_ =
       ::CCM_CompA_Context::_narrow (ctx);
-    
+
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
   }
-  
+
   void
   CompA_exec_i::configuration_complete (void)
   {
     /* Your code here. */
     ACE_DEBUG ((LM_DEBUG, "CompA_exec_i::configuration_complete\n"));
   }
-  
+
   void
   CompA_exec_i::ccm_activate (void)
   {
     /* Your code here. */
     ACE_DEBUG ((LM_DEBUG, "CompA_exec_i::ccm_activate\n"));
   }
-  
+
   void
   CompA_exec_i::ccm_passivate (void)
   {
     /* Your code here. */
     ACE_DEBUG ((LM_DEBUG, "CompA_exec_i::ccm_passivate\n"));
   }
-  
+
   void
   CompA_exec_i::ccm_remove (void)
   {
     /* Your code here. */
     ACE_DEBUG ((LM_DEBUG, "CompA_exec_i::ccm_remove\n"));
   }
-  
+
   extern "C" COMPA_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_CompA_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_NORETURN (
       retval,
       CompA_exec_i);
-    
+
     return retval;
   }
 }

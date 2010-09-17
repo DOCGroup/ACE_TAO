@@ -10,7 +10,7 @@
   <!-- Implementations declarations -->
 
   <!-- Home implementation -->
-  
+
   <implementation xmi:id="CompSvrImpl">
     <name>CompSvr</name>
     <source />
@@ -27,7 +27,7 @@
       </value>
     </execParameter>
   </implementation>
-      
+
   <implementation xmi:id="UnexpectedShutdownImplementation">
     <name>UnexpectedShutdownImplementation</name>
     <source/>
@@ -79,7 +79,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
   <instance xmi:id="CompSvrInst">
     <name>ComponentServerInstance</name>
     <node>UnexpectedShutdownNode</node>
@@ -153,7 +153,7 @@
     <node/>
     <location>UnexpectedShutdown_stub</location>
   </artifact>
-  
+
   <localityConstraint>
     <constraint>SameProcess</constraint>
     <constrainedInstance xmi:idref="CompSvrInst" />

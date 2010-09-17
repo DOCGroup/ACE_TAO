@@ -110,7 +110,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
   <implementation xmi:id="VTS_String_ConnectorComponentImplementation">
     <name>VTS_String_ConnectorComponentImplementation</name>
     <source/>
@@ -318,7 +318,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
   <implementation xmi:id="VT_X_Union_ConnectorComponentImplementation">
     <name>VT_X_Union_ConnectorComponentImplementation</name>
     <source/>
@@ -466,7 +466,7 @@
       </value>
     </configProperty>
    </instance>
-  
+
   <instance xmi:id="VTS_String_ConnectorComponentInstance">
     <name>VTS_String_ConnectorComponent</name>
     <node>SenderNode</node>
@@ -614,7 +614,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance xmi:id="VT_X_Union_ConnectorComponentInstance">
     <name>VT_X_Union_ConnectorComponent</name>
     <node>SenderNode</node>
@@ -1035,7 +1035,7 @@
     <node/>
     <location>DDS_VTS_Array_Connector_stub</location>
   </artifact>
-  
+
   <artifact xmi:id="VTS_Seq_Connector_ExecArtifact">
     <name>VTS_Seq_Connector_exec</name>
     <source/>

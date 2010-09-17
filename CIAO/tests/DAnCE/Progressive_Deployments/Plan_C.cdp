@@ -225,7 +225,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <connection>
     <name>TestConnection</name>
    <internalEndpoint>
@@ -233,7 +233,7 @@
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="SimpleProviderComponentInstance" />
-    </internalEndpoint> 
+    </internalEndpoint>
     <externalReference>
       <location>corbaname:rir:/NameService#Progressive_A</location>
       <provider>false</provider>

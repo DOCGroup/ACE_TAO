@@ -21,7 +21,7 @@ module BasicSP
     void start ();
     void stop ();
   };
-    
+
   component EC supports trigger
   {
     publishes TimeOut timeout_value;

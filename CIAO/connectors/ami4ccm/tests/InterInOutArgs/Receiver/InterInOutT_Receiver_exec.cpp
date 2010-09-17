@@ -3,7 +3,7 @@
 
 #include "InterInOutT_Receiver_exec.h"
 #include "ace/OS_NS_unistd.h"
- 
+
 namespace CIAO_InterInOutT_Receiver_Impl
 {
   CORBA::UShort nr_of_received = 0;
@@ -43,11 +43,11 @@ namespace CIAO_InterInOutT_Receiver_Impl
         cmd = cmd + update_val;
       }
     return cmd;
-      
+
   }
 
   void
-  MyFoo_exec_i::var_ins (const char * /*in_str*/,  
+  MyFoo_exec_i::var_ins (const char * /*in_str*/,
                          ::CORBA::String_out answer,
                          ::CORBA::Double_out cmd)
   {
@@ -62,15 +62,15 @@ namespace CIAO_InterInOutT_Receiver_Impl
        {
          ++nr_of_received;
        }
-     answer = CORBA::string_alloc(20); 
+     answer = CORBA::string_alloc(20);
      ACE_OS::sprintf(answer,"double was %2.2f",cmd);
      cmd = 3.2;
   }
 
   void
-  MyFoo_exec_i::var_div_ins (::InterInOutT::TestTopic &test_topic, 
-                             ::InterInOutT::TopicString &topic_str, 
-                             ::InterInOutT::TestArray topic_arr, 
+  MyFoo_exec_i::var_div_ins (::InterInOutT::TestTopic &test_topic,
+                             ::InterInOutT::TopicString &topic_str,
+                             ::InterInOutT::TestArray topic_arr,
                              char * &answer)
   {
     CORBA::Boolean error = false;
@@ -94,7 +94,7 @@ namespace CIAO_InterInOutT_Receiver_Impl
                               topic_str.key.in() ,topic_str.x_str.in()));
         error = true;
       }
- 
+
     if ((ACE_OS::strcmp (topic_arr[0].key, "ddd") != 0) ||
         (topic_arr[1].x_array[2] != 102))
       {
@@ -105,7 +105,7 @@ namespace CIAO_InterInOutT_Receiver_Impl
                               topic_arr[0].key.in(),topic_arr[1].x_array[2] ));
          error = true;
       }
- 
+
     answer = CORBA::string_dup ("This is my answer from var_div_ins");
     if(error == false)
       {
@@ -120,8 +120,8 @@ namespace CIAO_InterInOutT_Receiver_Impl
   }
 
   void
-  MyFoo_exec_i::var_div2_ins (::InterInOutT::X_Union &topic_union, 
-                              ::InterInOutT::test_seq &seq, 
+  MyFoo_exec_i::var_div2_ins (::InterInOutT::X_Union &topic_union,
+                              ::InterInOutT::test_seq &seq,
                               CORBA::String_out answer)
   {
     CORBA::Boolean error = false;
@@ -131,7 +131,7 @@ namespace CIAO_InterInOutT_Receiver_Impl
                               "received the wrong union, "
                               "expected x = 11,"
                               " received x = %u\n",
-                              topic_union.x_long()));  
+                              topic_union.x_long()));
         error = true;
       }
      if ((ACE_OS::strcmp (seq[0].x_teststr, "fff") != 0)||
@@ -155,7 +155,7 @@ namespace CIAO_InterInOutT_Receiver_Impl
   }
 
   void
-    MyFoo_exec_i::enum_in(CORBA::String_out answer, 
+    MyFoo_exec_i::enum_in(CORBA::String_out answer,
                                InterInOutT::test_enum &in_test)
   {
     if (in_test != InterInOutT::ONE)
@@ -220,14 +220,14 @@ namespace CIAO_InterInOutT_Receiver_Impl
     if (nr_of_received == 6)
       {
         ACE_DEBUG ((LM_DEBUG, "OK: Receiver received all expected data"
-                              " from syn- and asynchronous calls\n"));  
+                              " from syn- and asynchronous calls\n"));
       }
     else
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Receiver didn't receive all"
                               " expected data  (%u of 6)"
                               " from syn- and asynchronous calls\n",
-                              nr_of_received));  
+                              nr_of_received));
       }
   }
 

@@ -45,7 +45,7 @@ $B_line = "";
 $B_ns = "two";
 @data = ();
 
-# search for right tag in generated xmi 
+# search for right tag in generated xmi
 open (DAT, $xmi) || die ("ERROR: Could not open file <$xmi>!");
 while ($line = <DAT>) {
     push @data, $line;

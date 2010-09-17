@@ -208,14 +208,14 @@ foreach $file (@files) {
                                                "-x $file -o $cdr_plan");
 
     $convert->Spawn ();
-    
+
     if ($tg_convert_plan->WaitForFileTimed ($cdr_planbase,
                                             30) == -1) {
         print STDERR "ERROR: Convert Plan failed to output $cdr_plan.\n";
         kill_open_processes ();
         next;
     }
-    
+
     $convert->Kill ();
 
     # Invoke executor - start the application -.
@@ -229,7 +229,7 @@ foreach $file (@files) {
                                       "-k file://$ior_emfile -c $cdr_plan -s");
     $E->SpawnWaitKill (120);
     print "Executor finished.\n";
-    
+
     $tg_convert_plan->DeleteFile ($cdr_planbase);
     delete_ior_files ();
     kill_open_processes ();

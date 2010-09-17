@@ -40,5 +40,5 @@ local interface CacheOperation {
         raises (DDS::PreconditionNotMet);
     };
 };
-    
-    
+
+

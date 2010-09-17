@@ -706,7 +706,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     // iterations of the first run are also received during the
     // second run
     // The last addition is from the read action on the getter port.
-    // During the first run, two samples are received. The second run 
+    // During the first run, two samples are received. The second run
     // includes the two samples from the first run and 11 samples (22-34)
     // from the second run.
     this->samples_expected_reader_ =

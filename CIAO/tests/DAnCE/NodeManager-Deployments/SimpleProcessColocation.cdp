@@ -68,7 +68,7 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="ProcessColocationComponentImplementation" />
-    
+
     <configProperty>
       <name>process_name</name>
       <value>
@@ -114,12 +114,12 @@
     <node/>
     <location>ProcessColocation_svnt</location>
   </artifact>
-  
+
   <localityConstraint>
     <constraint>SameProcess</constraint>
     <constrainedInstance xmi:idref="ProcessColocationComponentInstance_1" />
   </localityConstraint>
-    
+
   <localityConstraint>
     <constraint>SameProcess</constraint>
     <constrainedInstance xmi:idref="ProcessColocationComponentInstance_2" />

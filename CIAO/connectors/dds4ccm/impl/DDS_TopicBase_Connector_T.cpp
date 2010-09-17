@@ -312,7 +312,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_subscriber 
                           reactor),
                         ::CORBA::NO_MEMORY ());
     }
-    
+
   ::DDS::ReturnCode_t const retcode = this->subscriber_->set_listener (
                             this->subscriber_listener_.in (),
                             SubscriberListener::get_mask (

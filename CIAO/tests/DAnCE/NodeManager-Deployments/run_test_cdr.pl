@@ -200,7 +200,7 @@ foreach $file (@files) {
         kill_open_processes ();
         next;
     }
-    
+
     $convert->Kill ();
 
     # Invoke executor - start the application -.
@@ -208,13 +208,13 @@ foreach $file (@files) {
     $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                                       "-c $file.cdr -n file://NodeApp1.ior -l -oNode");
     $E->SpawnWaitKill (120);
-    
+
     print "Teardown the application\n";
     $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                                       "-n file://NodeApp1.ior -a file://Node_APP.ior -m file://Node_AM.ior -s");
     $E->SpawnWaitKill (120);
     print "Executor finished.\n";
-    
+
     $tg_convert_plan->DeleteFile ($cdr_planbase);
 
     delete_ior_files ();

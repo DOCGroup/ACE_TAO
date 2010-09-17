@@ -10,7 +10,7 @@
   <!-- Implementations declarations -->
 
   <!-- Home implementation -->
-  
+
   <implementation xmi:id="CompSvrImpl">
     <name>CompSvr</name>
     <source />
@@ -27,7 +27,7 @@
       </value>
     </execParameter>
   </implementation>
-      
+
   <implementation xmi:id="Executor_DestructorComponentImplementation">
     <name>Executor_DestructorComponentImplementation</name>
     <source/>
@@ -149,7 +149,7 @@
       </value>
     </execParameter>
   </implementation>
-    
+
   <instance xmi:id="CompSvrInst">
     <name>ComponentServerInstance</name>
     <node>Executor_DestructorNode</node>
@@ -267,7 +267,7 @@
     <node/>
     <location>Executor_Destructor_stub</location>
   </artifact>
-  
+
   <localityConstraint>
     <constraint>SameProcess</constraint>
     <constrainedInstance xmi:idref="CompSvrInst" />

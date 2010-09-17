@@ -12,7 +12,7 @@ module Simple
   {
     consumes Hello hello_;
   };
-  
+
   home SimpleConsumerHome manages SimpleConsumer
   {
   };

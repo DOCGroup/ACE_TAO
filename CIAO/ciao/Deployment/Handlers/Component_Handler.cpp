@@ -13,13 +13,13 @@ namespace CIAO
   {
     CIAO_TRACE ("Component_Handler_i::Component_Handler_i");
   }
-  
-  // Destructor 
+
+  // Destructor
   Component_Handler_i::~Component_Handler_i (void)
   {
     CIAO_TRACE ("Component_Handler_i::~Component_Handler_i");
   }
-    
+
   void
   Component_Handler_i::close (void)
   {
@@ -33,20 +33,20 @@ namespace CIAO
     ACE_NEW_THROW_EX (retval,
                       ::CORBA::StringSeq (1),
                       CORBA::NO_MEMORY ());
-    
+
     retval->length (1);
     (*retval)[0] = CIAO::Deployment::CCM_CONTAINER;
 
     return retval;
   }
 
-  char * 
+  char *
   Component_Handler_i::instance_type (void)
   {
     CIAO_TRACE ("Component_Handler_i::instance_type");
     return CORBA::string_dup ("edu.dre.vanderbilt.dre.CCM.Component");
   }
-    
+
   void
   Component_Handler_i::install_instance (const ::Deployment::DeploymentPlan &plan,
                                          ::CORBA::ULong instanceRef,
@@ -56,33 +56,33 @@ namespace CIAO
     ACE_NEW_THROW_EX (retval,
                       CORBA::Any (),
                       CORBA::NO_MEMORY ());
-    
+
     instance_reference = retval;
-    
+
     CIAO_TRACE ("Component_Handler_i::install_instance");
-    
+
     const ::Deployment::InstanceDeploymentDescription &idd (plan.instance[instanceRef]);
     const ::Deployment::MonolithicDeploymentDescription &mdd (plan.implementation[idd.implementationRef]);
-    
+
     DAnCE::Utility::PROPERTY_MAP *pmap = 0;
-    
+
     ACE_NEW_THROW_EX (pmap,
                       DAnCE::Utility::PROPERTY_MAP (idd.configProperty.length () +
                                                     mdd.execParameter.length ()),
                       CORBA::NO_MEMORY ());
-    
+
     Deployment_Common::Instance_Info info;
     info.name = idd.name.in ();
     info.pmap.reset (pmap);
-                      
+
 
     DAnCE::Utility::build_property_map (*pmap,
                                         mdd.execParameter);
     DAnCE::Utility::build_property_map (*pmap,
                                         idd.configProperty);
-    
+
     CORBA::String_var exec_art, exec_entry, svnt_art, svnt_entry, cont_id;
-    
+
     using namespace CIAO::Deployment;
     CORBA::Any val;
     const char *tmp = 0;
@@ -138,7 +138,7 @@ namespace CIAO
           throw ::Deployment::PlanError (idd.name.in (),
                                          "No executory artifact identified.\n");
         }
-      
+
       if (pmap->find (COMPONENT_FACTORY, val) == 0)
         {
           val >>= tmp;
@@ -155,7 +155,7 @@ namespace CIAO
           throw ::Deployment::PlanError (idd.name.in (),
                                          "No executor entrypoint provided\n");
         }
-      
+
       if (pmap->find (CONTAINER_ID, val) == 0)
         {
           val >>= tmp;
@@ -172,9 +172,9 @@ namespace CIAO
                           idd.name.in  ()));
           cont_id = "";
         }
-      
+
       ::CIAO::Container_var container = DEPLOYMENT_STATE::instance ()->fetch_container (cont_id);
-      
+
       if (CORBA::is_nil (container))
         {
           CIAO_ERROR (1, (LM_INFO, CLINFO
@@ -184,7 +184,7 @@ namespace CIAO
           throw ::Deployment::PlanError (idd.name.in (),
                                          "Invalid container\n");
         }
-      
+
       Components::CCMObject_var comp_ref;
 
       try
@@ -194,11 +194,11 @@ namespace CIAO
                                                    svnt_art,
                                                    svnt_entry,
                                                    idd.name.in ());
-          
+
           ::Components::ConfigValues attr_config;
           Deployment_Common::create_attribute_configuration (idd.configProperty,
                                                              attr_config);
-          
+
           container->set_attributes (comp_ref.in (),
                                      attr_config);
         }
@@ -219,7 +219,7 @@ namespace CIAO
           throw ::Deployment::StartError (idd.name.in (),
                                           "Unknown C++ exception\n");
         }
-      
+
       if (CORBA::is_nil (comp_ref))
         {
           CIAO_ERROR (1, (LM_ERROR, CLINFO
@@ -228,34 +228,34 @@ namespace CIAO
           throw ::Deployment::StartError (idd.name.in (),
                                           "Container provided nil object reference");
         }
-      
+
       this->instances_[idd.name.in ()] = info;
-      
+
       DEPLOYMENT_STATE::instance ()->add_component (idd.name.in (),
                                                     cont_id,
                                                     comp_ref.in ());
 
       *instance_reference <<= comp_ref;
   }
-  
+
   void
   Component_Handler_i::activate_instance (const ::Deployment::DeploymentPlan &plan,
                                      ::CORBA::ULong instanceRef,
                                      const ::CORBA::Any &)
   {
     CIAO_TRACE ("Component_Handler_i::activate_instance");
-    
+
     const char *name = plan.instance[instanceRef].name.in ();
 
-    const char *container = 
+    const char *container =
       DEPLOYMENT_STATE::instance ()->instance_to_container (name);
-    
-    CIAO::Container_var cont = 
+
+    CIAO::Container_var cont =
       DEPLOYMENT_STATE::instance ()->fetch_container (container);
-    
+
     Components::CCMObject_var comp =
       DEPLOYMENT_STATE::instance ()->fetch_component (name);
-    
+
     if (CORBA::is_nil (cont))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
@@ -265,7 +265,7 @@ namespace CIAO
         throw ::Deployment::StartError (plan.instance[instanceRef].name.in (),
                                         "Unable to activate due to nil container reference");
       }
-    
+
     if (CORBA::is_nil (comp))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
@@ -307,15 +307,15 @@ namespace CIAO
                                            const ::CORBA::Any &)
   {
     CIAO_TRACE ("Component_Handler_i::passivate_instance");
-    
+
     const char *name = plan.instance[instanceRef].name.in ();
 
-    const char *container = 
+    const char *container =
       DEPLOYMENT_STATE::instance ()->instance_to_container (name);
-    
-    CIAO::Container_var cont = 
+
+    CIAO::Container_var cont =
       DEPLOYMENT_STATE::instance ()->fetch_container (container);
-    
+
     Components::CCMObject_var comp =
       DEPLOYMENT_STATE::instance ()->fetch_component (name);
 
@@ -328,7 +328,7 @@ namespace CIAO
         throw ::Deployment::StopError (plan.instance[instanceRef].name.in (),
                                         "Unable to activate due to nil container reference");
       }
-    
+
     if (CORBA::is_nil (comp))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
@@ -338,7 +338,7 @@ namespace CIAO
         throw ::Deployment::StopError (plan.instance[instanceRef].name.in (),
                                         "Unable to activate due to nil reference");
       }
-    
+
     try
       {
         cont->passivate_component (comp.in ());
@@ -363,36 +363,36 @@ namespace CIAO
                                         "Unknown C++ exception during passivation");
       }
   }
-    
+
   void
   Component_Handler_i::remove_instance (const ::Deployment::DeploymentPlan & plan,
                                         ::CORBA::ULong instanceRef,
                                         const ::CORBA::Any &)
   {
     CIAO_TRACE ("Component_Handler_i::remove_instance");
-    
+
     const char *name = plan.instance[instanceRef].name.in ();
     Deployment_Common::INSTANCES::iterator instance
       = this->instances_.find (name);
-    
+
     if (instance == this->instances_.end ())
       {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO 
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Component_Handler_i::remove_instance - "
                         "Instructed to remove unknown component instance <%C>\n",
                         name));
         throw ::Deployment::StopError (name,
                                        "Wrong instance handler for component instance\n");
       }
-    
+
     CIAO_DEBUG (8, (LM_DEBUG, CLINFO
                     "Component_Handler_i::remove_instance - "
                     "Attempting removal of component instance <%C>\n",
                     name));
-        
+
     CORBA::Any val;
     const char *cont_id = 0;
-    
+
     if (instance->second.pmap->find (Deployment::CONTAINER_ID, val) == 0)
         {
           val >>= cont_id;
@@ -410,7 +410,7 @@ namespace CIAO
         }
 
     ::CIAO::Container_var container = DEPLOYMENT_STATE::instance ()->fetch_container (cont_id);
-      
+
       if (CORBA::is_nil (container))
         {
           CIAO_ERROR (1, (LM_INFO, CLINFO
@@ -420,7 +420,7 @@ namespace CIAO
           throw ::Deployment::StopError (name,
                                          "Invalid container\n");
         }
-      
+
       try
         {
           Components::CCMObject_var ref
@@ -448,40 +448,40 @@ namespace CIAO
           throw ::Deployment::StopError (name,
                                           "Unknown C++ exception\n");
         }
-      
+
       this->instances_.erase (instance);
       DEPLOYMENT_STATE::instance ()->remove_component (name);
-      
+
       CIAO_DEBUG (4, (LM_INFO, CLINFO
                       "Component_Handler_i::remove_instance - "
                       "Instance <%C> successfully removed\n",
                       name));
   }
-  
-  void 
+
+  void
   Component_Handler_i::provide_endpoint_reference (const ::Deployment::DeploymentPlan & plan,
                                                    ::CORBA::ULong connectionRef,
                                                    ::CORBA::Any_out endpoint_reference)
   {
     CIAO_TRACE ("Component_Handler_i::provide_endpoint_reference");
-    
+
     DEPLOYMENT_STATE::instance ()->connection_handler.provide_endpoint_reference (plan,
                                                                                   connectionRef,
                                                                                   endpoint_reference);
   }
-    
+
   void
   Component_Handler_i::connect_instance (const ::Deployment::DeploymentPlan & plan,
                                          ::CORBA::ULong connectionRef,
                                          const ::CORBA::Any & provided_reference)
   {
     CIAO_TRACE ("Component_Handler_i::connect_instance");
-    
+
     DEPLOYMENT_STATE::instance ()->connection_handler.connect_instance (plan,
                                                                         connectionRef,
                                                                         provided_reference);
   }
-    
+
   void
   Component_Handler_i::disconnect_instance (const ::Deployment::DeploymentPlan & plan,
                                             ::CORBA::ULong connectionRef)
@@ -489,7 +489,7 @@ namespace CIAO
     CIAO_TRACE ("Component_Handler_i::disconnect_instance");
     DEPLOYMENT_STATE::instance ()->connection_handler.disconnect_instance (plan,
                                                                            connectionRef);
-                                                                        
+
   }
 
   void
@@ -497,10 +497,10 @@ namespace CIAO
                                             ::CORBA::ULong instanceRef)
   {
     CIAO_TRACE ("Component_Handler_i::instance_configured");
-    
-    Components::CCMObject_var ref = 
+
+    Components::CCMObject_var ref =
       DEPLOYMENT_STATE::instance ()->fetch_component (plan.instance[instanceRef].name.in ());
-    
+
     if (CORBA::is_nil (ref))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
@@ -510,7 +510,7 @@ namespace CIAO
         throw ::Deployment::StartError (plan.instance[instanceRef].name.in (),
                                         "Unable to configure due to nil reference");
       }
-    
+
     try
       {
         ref->configuration_complete ();
@@ -531,21 +531,21 @@ namespace CIAO
                         "Caught C++ Exception\n"));
         throw ::Deployment::StartError (plan.instance[instanceRef].name.in (),
                                         "Unknown C++ exception");
-                        
+
       }
-    
+
   }
-  
+
   void
   Component_Handler_i::configure (const ::Deployment::Properties & )
   {
-    
+
   }
 }
 
 extern "C"
 {
-  ::DAnCE::InstanceDeploymentHandler_ptr 
+  ::DAnCE::InstanceDeploymentHandler_ptr
   CIAO_Locality_Handler_Export create_Component_Handler (void)
   {
     return new CIAO::Component_Handler_i ();

@@ -19,7 +19,7 @@ namespace CIAO_UsesSM_Receiver_Impl
   One_exec_i::foo (const char * in_str, ::CORBA::Long cmd,
                    ::CORBA::String_out answer)
   {
-    // sleep to make it possible to test asynchronous behavior. 
+    // sleep to make it possible to test asynchronous behavior.
     ACE_OS::sleep(2);
     ++nr_of_one_received_;
     answer = CORBA::string_dup (in_str);

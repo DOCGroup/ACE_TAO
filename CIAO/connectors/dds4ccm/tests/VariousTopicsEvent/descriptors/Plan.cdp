@@ -110,7 +110,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
   <implementation xmi:id="VT_String_ConnectorComponentImplementation">
     <name>VT_String_ConnectorComponentImplementation</name>
     <source/>
@@ -518,7 +518,7 @@
       </value>
     </configProperty>
    </instance>
-  
+
   <instance xmi:id="VT_String_ConnectorComponentInstance">
     <name>VT_String_ConnectorComponent</name>
     <node>SenderNode</node>

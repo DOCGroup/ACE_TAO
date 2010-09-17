@@ -11,7 +11,7 @@ module ENW
   component TSEC_CheckPoint supports ISessionService
   {
     provides ISessionService sessionService;
-    
+
     consumes  ET_LifeToken lifeTokenIn;
     publishes ET_LifeToken lifeTokenOut;
 

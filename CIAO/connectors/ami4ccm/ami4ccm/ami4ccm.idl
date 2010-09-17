@@ -39,7 +39,7 @@ module CCM_AMI
       provides AMI4CCM_T ami4ccm_provides;
       uses T ami4ccm_uses;
     };
-    
+
     connector AMI4CCM_Connector : AMI4CCM_Base
     {
       port AMI4CCM_Port_Type ami4ccm_port;

@@ -32,7 +32,7 @@ namespace CIAO_Simple_SimpleConsumer_Impl
   {
     CIAO_TRACE ("SimpleConsumer_exec_i::push_hello_ ()");
     // Your code here.
-    
+
     this->pushed_ = true;
     ACE_DEBUG ((LM_EMERGENCY, "SimpleConsumer_exec_i::push_hello_ - "
                  "Received hello event, value is %s\n", ev->hello_ ()));

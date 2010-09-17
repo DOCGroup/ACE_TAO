@@ -11,12 +11,12 @@ module PublishesEmits
   eventtype foo_event
     {
     };
-  
+
   component Foo
     {
       publishes foo_event p_foo;
     };
-  
+
   component Bar
     {
       emits foo_event foo;

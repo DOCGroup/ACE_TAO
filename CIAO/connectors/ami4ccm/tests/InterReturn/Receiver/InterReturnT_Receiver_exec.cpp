@@ -66,7 +66,7 @@ namespace CIAO_InterReturnT_Receiver_Impl
         for (CORBA::UShort y = 0; y < 5; y ++)
         {
           test_array[i].x_array[y] = i * 100 + y ;
-        } 
+        }
       }
     return InterReturnT::TestArray_dup(test_array);
   }

@@ -8,7 +8,7 @@ module dance_test
   {
     attribute string id;
   };
-  
+
   home Home_Destructor manages Exec_Destructor
   {
     attribute string id;

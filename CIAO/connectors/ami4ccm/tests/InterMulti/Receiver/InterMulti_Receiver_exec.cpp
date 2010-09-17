@@ -21,12 +21,12 @@ namespace CIAO_InterMulti_Receiver_Impl
   {
     ACE_DEBUG ((LM_DEBUG, "Receiver: one_foo, in_str = %C"
                           " cmd = <%u>\n",
-                          in_str, cmd));  
+                          in_str, cmd));
     if (cmd != 1)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Receiver ONE::foo,"
                               " origin not 1, but <%u>\n",
-                              cmd));  
+                              cmd));
       }
     else
       {
@@ -50,12 +50,12 @@ namespace CIAO_InterMulti_Receiver_Impl
   {
     ACE_DEBUG ((LM_DEBUG, "Receiver: two_bar,"
                           " cmd = <%u>\n",
-                          cmd)); 
+                          cmd));
     if (cmd != 2)
       {
         ACE_ERROR ((LM_ERROR, "ERROR Receiver: TWO::bar,"
                               " origin not 2, but <%u>\n",
-                              cmd));  
+                              cmd));
       }
     else
       {
@@ -78,7 +78,7 @@ namespace CIAO_InterMulti_Receiver_Impl
   {
     ACE_DEBUG ((LM_DEBUG, "Receiver: three_plus,"
                           " cmd = <%u>\n",
-                          cmd));  
+                          cmd));
     ++nr_of_received;
     answer = CORBA::string_dup ("answer plus three");
   }
@@ -89,12 +89,12 @@ namespace CIAO_InterMulti_Receiver_Impl
   {
     ACE_DEBUG ((LM_DEBUG, "Receiver: three_foo, in_str = %C"
                           " cmd = <%u>\n",
-                          in_str, cmd)); 
+                          in_str, cmd));
     if (cmd != 3)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Receiver THREE::foo,"
                               " origin not 3, but <%u>\n",
-                              cmd));  
+                              cmd));
       }
     else
       {
@@ -115,7 +115,7 @@ namespace CIAO_InterMulti_Receiver_Impl
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Receiver Three::bar,"
                               " origin not 3, but <%u>\n",
-                              cmd));  
+                              cmd));
       }
     else
       {
@@ -185,14 +185,14 @@ namespace CIAO_InterMulti_Receiver_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: not received the expected number of"
                               "correct calls"
                               "Expected: 7, Received: %u.\n",
-                              nr_of_received.value()));  
+                              nr_of_received.value()));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, "OK: Receiver received the expected "
                               "number of correct calls. "
                               "Expected: 7, Received: %u.\n",
-                              nr_of_received.value()));  
+                              nr_of_received.value()));
       }
   }
 

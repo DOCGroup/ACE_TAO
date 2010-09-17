@@ -120,14 +120,14 @@ namespace CIAO_NoReplyH_Receiver_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: not received the expected number of"
                               "calls"
                               "Expected: 10, Received: %u.\n",
-                              this->calls_.value()));  
+                              this->calls_.value()));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, "OK: Receiver received the expected "
                               "number of calls. "
                               "Expected: 10, Received: %u.\n",
-                              this->calls_.value()));  
+                              this->calls_.value()));
       }
   }
 

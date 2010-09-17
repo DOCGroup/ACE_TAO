@@ -63,7 +63,7 @@ namespace CIAO_ExceptionT_Receiver_Impl
   {
     if (new_value == 0)
       {
-        //throw internal excep 
+        //throw internal excep
         ExceptionT::InternalError ex (42, "Rec.Exc.set_rw_attrib",
                                           "thrown by receiver");
         throw ex;

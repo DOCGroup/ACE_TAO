@@ -17,21 +17,21 @@ module AbstractEvents
   abstract eventtype InhFoo_event : foo_event
     {
     };
-  
+
   abstract eventtype bar_event
     {
     };
-  
+
   abstract eventtype foobar_event : foo_event, bar_event
     {
     };
 
   // test event multiple inheretance
-  
+
   eventtype concrete_foo
   {
   };
-  
+
   eventtype concrete_foobar : concrete_foo, foo_event
   {
   };

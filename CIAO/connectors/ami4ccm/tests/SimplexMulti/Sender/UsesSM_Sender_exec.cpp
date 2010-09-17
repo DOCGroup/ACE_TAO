@@ -86,7 +86,7 @@ namespace CIAO_UsesSM_Sender_Impl
       // multiple
     ::UsesSM::Sender::sendc_run_my_um_oneConnections_var my_one_ami_ =
       context_->get_connections_sendc_run_my_um_one();
-    // simplex 
+    // simplex
     ::UsesSM::AMI4CCM_Two_var my_two_ami_ =
       context_->get_connection_sendc_run_my_two();
 
@@ -151,7 +151,7 @@ namespace CIAO_UsesSM_Sender_Impl
   {
     ::UsesSM::Sender::run_my_um_oneConnections_var my_one_ami_ =
          context_->get_connections_run_my_um_one ();
- 
+
     for(CORBA::ULong i = 0; i < my_one_ami_->length(); ++i)
       {
         CORBA::String_var test;
@@ -179,11 +179,11 @@ namespace CIAO_UsesSM_Sender_Impl
                               answer.out ());
         if (result != i)
           {
-            ACE_ERROR ((LM_ERROR, 
+            ACE_ERROR ((LM_ERROR,
                         "ERROR Sender (SYNCH) : CLASS One foo !\n"));
           }
         else
-          { 
+          {
             ++nr_of_received;
             ACE_DEBUG ((LM_DEBUG,
                         "Sender (SYNCH) : received answer = <%C> !\n",

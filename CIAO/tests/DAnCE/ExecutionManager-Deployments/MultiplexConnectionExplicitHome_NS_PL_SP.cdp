@@ -225,7 +225,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance xmi:id="SimpleMultipleUserComponentInstanceReverse">
     <name>SimpleMultipleUserComponentReverse</name>
     <node>NodeTwo</node>
@@ -255,7 +255,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <connection>
     <name>TestConnection</name>
 <!--    <internalEndpoint>
@@ -269,7 +269,7 @@
       <provider>false</provider>
       <kind>MultiplexReceptacle</kind>
       <instance xmi:idref="SimpleMultipleUserComponentInstance" />
-    </internalEndpoint>  
+    </internalEndpoint>
     <externalReference>
       <location>corbaname:rir:/NameService#SimpleProviderComponent</location>
       <provider>true</provider>
@@ -291,7 +291,7 @@
       <provider>false</provider>
       <kind>MultiplexReceptacle</kind>
       <instance xmi:idref="SimpleMultipleUserComponentInstance" />
-    </internalEndpoint> 
+    </internalEndpoint>
     <externalReference>
       <location>corbaname:rir:/NameService#SimpleProviderComponent</location>
       <provider>true</provider>

@@ -105,7 +105,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
 <!-- conn one-->
   <implementation xmi:id="UsesMulti_AMIOneHomeImplementation">
     <name>UsesMulti_AMIHomeImplementation</name>
@@ -157,7 +157,7 @@
       </value>
     </execParameter>
   </implementation>
-   
+
     <instance xmi:id="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.ReceiverA">
     <name>UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.ReceiverA</name>
     <node>Receiver</node>
@@ -279,8 +279,8 @@
       </value>
     </configProperty>
   </instance>
-  
- 
+
+
   <connection>
     <name>run_asynch_one_connectionA</name>
     <deployRequirement>
@@ -338,8 +338,8 @@
       <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneC" />
     </internalEndpoint>
   </connection>
-  
- 
+
+
   <connection>
     <name>do_one_connectionA</name>
     <internalEndpoint>
@@ -385,8 +385,8 @@
       <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneC" />
     </internalEndpoint>
   </connection>
-  
-  
+
+
 
   <connection>
     <name>synch_one_connectionA</name>
@@ -433,9 +433,9 @@
       <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.Sender" />
     </internalEndpoint>
   </connection>
-  
-  
- 
+
+
+
   <artifact xmi:id="UsesMulti_AMIOne_SvntArtifact">
     <name>UsesMulti.ImplementationArtifacts.AMIArtifacts.AMI_svnt</name>
     <source/>
@@ -453,8 +453,8 @@
       </value>
     </execParameter>
   </artifact>
-  
-  
+
+
 
   <artifact xmi:id="UsesMulti_AMIOne_ExecArtifact">
     <name>UsesMulti.ImplementationArtifacts.AMIArtifacts.AMI_exec</name>
@@ -473,7 +473,7 @@
       </value>
     </execParameter>
   </artifact>
-  
+
 
   <artifact xmi:id="UsesMulti_Receiver_SvntArtifact">
     <name>UsesMulti.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</name>

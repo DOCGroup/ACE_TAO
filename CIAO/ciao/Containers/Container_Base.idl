@@ -52,7 +52,7 @@ module CIAO
                                              in string servant_artifact,
                                              in string servant_entrypoint,
                                              in string name);
-    
+
     void set_attributes (in Object name,
                          in Components::ConfigValues values);
 

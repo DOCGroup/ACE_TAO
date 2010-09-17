@@ -13,7 +13,7 @@
 #include "Runnable.idl"
 #include "Publication.idl"
 
-component Administrator {    
+component Administrator {
   uses multiple Runnable runnables;
   uses multiple Publication content;
 };

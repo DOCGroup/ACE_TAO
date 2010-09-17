@@ -13,7 +13,7 @@ module Simple
     uses Trigger trig_out;
     provides Trigger trig_in;
   };
-  
+
   home ProgressiveHome manages Progressive
   {
   };

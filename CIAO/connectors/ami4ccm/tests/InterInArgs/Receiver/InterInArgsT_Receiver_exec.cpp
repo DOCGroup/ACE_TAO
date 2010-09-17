@@ -3,7 +3,7 @@
 
 #include "InterInArgsT_Receiver_exec.h"
 #include "ace/OS_NS_unistd.h"
- 
+
 namespace CIAO_InterInArgsT_Receiver_Impl
 {
   CORBA::UShort nr_of_received = 0;
@@ -35,7 +35,7 @@ namespace CIAO_InterInArgsT_Receiver_Impl
   }
 
   void
-  MyFoo_exec_i::var_ins (const char * /*in_str*/,  
+  MyFoo_exec_i::var_ins (const char * /*in_str*/,
                          ::CORBA::String_out answer,
                          ::CORBA::Double cmd)
   {
@@ -50,14 +50,14 @@ namespace CIAO_InterInArgsT_Receiver_Impl
        {
          ++nr_of_received;
        }
-     answer = CORBA::string_alloc(20); 
+     answer = CORBA::string_alloc(20);
      ACE_OS::sprintf(answer,"double was %2.2f",cmd);
   }
 
   void
-  MyFoo_exec_i::var_div_ins (const ::InterInArgsT::TestTopic &test_topic, 
-                             const ::InterInArgsT::TopicString &topic_str, 
-                             const ::InterInArgsT::TestArray topic_arr, 
+  MyFoo_exec_i::var_div_ins (const ::InterInArgsT::TestTopic &test_topic,
+                             const ::InterInArgsT::TopicString &topic_str,
+                             const ::InterInArgsT::TestArray topic_arr,
                              ::CORBA::String_out answer)
   {
     CORBA::Boolean error = false;
@@ -98,8 +98,8 @@ namespace CIAO_InterInArgsT_Receiver_Impl
   }
 
   void
-  MyFoo_exec_i::var_div2_ins (const ::InterInArgsT::X_Union &topic_union, 
-                              const ::InterInArgsT::test_seq &seq, 
+  MyFoo_exec_i::var_div2_ins (const ::InterInArgsT::X_Union &topic_union,
+                              const ::InterInArgsT::test_seq &seq,
                               ::CORBA::String_out answer)
   {
     CORBA::Boolean error = false;
@@ -109,7 +109,7 @@ namespace CIAO_InterInArgsT_Receiver_Impl
                               "received the wrong union, "
                               "expected x = 11,"
                               " received x = %u\n",
-                              topic_union.x_long()));  
+                              topic_union.x_long()));
         error = true;
       }
     if ((ACE_OS::strcmp (seq[0].x_teststr, "fff") != 0)||
@@ -130,7 +130,7 @@ namespace CIAO_InterInArgsT_Receiver_Impl
   }
 
   void
-  MyFoo_exec_i::enum_in(::CORBA::String_out answer, 
+  MyFoo_exec_i::enum_in(::CORBA::String_out answer,
                                InterInArgsT::test_enum in_test)
   {
     if ( in_test != InterInArgsT::ONE)
@@ -194,14 +194,14 @@ namespace CIAO_InterInArgsT_Receiver_Impl
     if (nr_of_received == 6)
       {
         ACE_DEBUG ((LM_DEBUG, "OK: Receiver received all expected data"
-                              " from syn- and asynchronous calls\n"));  
+                              " from syn- and asynchronous calls\n"));
       }
     else
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Receiver didn't receive all"
                               " expected data  (%u of 6)"
                               " from syn- and asynchronous calls\n",
-                              nr_of_received));  
+                              nr_of_received));
       }
   }
 

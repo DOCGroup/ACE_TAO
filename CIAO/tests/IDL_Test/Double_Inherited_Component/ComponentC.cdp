@@ -61,7 +61,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
   <instance xmi:id="ComponentCComponentInstance">
     <name>ComponentCComponent</name>
     <node>ComponentCNode</node>

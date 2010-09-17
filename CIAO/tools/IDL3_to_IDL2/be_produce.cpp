@@ -107,23 +107,23 @@ BE_produce (void)
                   ACE_TEXT ("No Root\n")));
       BE_abort ();
     }
-    
+
   checking_visitor c_visitor;
-      
+
   if (c_visitor.visit_root (ast_root) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%N:%l) BE_produce - failed")
                   ACE_TEXT (" to accept checking visitor\n")));
-                  
+
       BE_abort ();
     }
-   
+
   // Create and launch the 'equivalent IDL' visitor only if IDL3
   // declarations were seen by the checking visitor, or if we
-  // are not just including an IDL2-only original file in a new file. 
+  // are not just including an IDL2-only original file in a new file.
   if (c_visitor.is_idl3 () || !be_global->encapsulate_idl2 ())
-    {  
+    {
       idl3_to_idl2_visitor visitor;
 
       if (visitor.visit_root (ast_root) == -1)
@@ -141,7 +141,7 @@ BE_produce (void)
                                             "_IDL2.idl",
                                             "_TAO_IDL_",
                                             "_IDL_");
-      
+
       if (status == -1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -152,7 +152,7 @@ BE_produce (void)
           os = 0;
           BE_abort ();
         }
-        
+
       *os << be_nl << be_nl
           << "#include \""
           << idl_global->stripped_filename ()->get_string ()

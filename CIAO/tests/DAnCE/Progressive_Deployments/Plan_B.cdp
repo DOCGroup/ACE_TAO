@@ -123,7 +123,7 @@
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="ProgressiveComponentInstance" />
-    </internalEndpoint> 
+    </internalEndpoint>
     <externalReference>
       <location>corbaname:rir:/NameService#Progressive_A</location>
       <provider>true</provider>

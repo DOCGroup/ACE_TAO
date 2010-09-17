@@ -20,7 +20,7 @@ module InterReturnT
 
  // Array
   struct TestArr {
-    string key; 
+    string key;
     short_array x_array;
     };
 
