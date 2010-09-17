@@ -91,7 +91,7 @@ run_main (int, ACE_TCHAR *[])
                  ACE_TEXT("Wrong value after dynamic_cast, expected %d, got %d\n"),
                  42, d.value));
     }
-  
+
   // Make sure dynamic cast detects invalid casts
   Another a;
   Base * b2 = &a;

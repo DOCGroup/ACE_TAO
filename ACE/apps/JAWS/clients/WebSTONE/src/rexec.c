@@ -147,9 +147,9 @@ static void MyOpenService(const char *remote_host)
             returnerr("Invalid IP address %s\n", remote_host);
             return;
         }
-        
+
         server_addr.sin_addr.S_un.S_addr = addr;
-    } 
+    }
     else {
         struct hostent *hent;
 

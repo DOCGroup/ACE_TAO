@@ -637,7 +637,7 @@ test_format_specs (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%#T\n"), &tv));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("thread id %t\n")));
- 
+
   Log_Spec_Verify  verifier;
 
   ACE_LOG_MSG->msg_callback (&verifier);

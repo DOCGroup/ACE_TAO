@@ -13,7 +13,7 @@
 
 #if defined (ACE_HAS_SOLARIS_ATOMIC_LIB)
 # include <atomic.h>
-#endif 
+#endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

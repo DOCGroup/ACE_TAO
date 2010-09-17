@@ -72,7 +72,7 @@ ETCL_Union_Value::string (void) const
 ACE_INLINE
 ETCL_Union_Pos::ETCL_Union_Pos (void)
 {}
-    
+
 ACE_INLINE
 ETCL_Union_Pos::ETCL_Union_Pos (ETCL_Constraint *union_value,
                                 ETCL_Constraint *component)
@@ -81,7 +81,7 @@ ETCL_Union_Pos::ETCL_Union_Pos (ETCL_Constraint *union_value,
   this->union_value_ =
     dynamic_cast<ETCL_Union_Value*> (union_value);
 }
-    
+
 ACE_INLINE ETCL_Union_Value *
 ETCL_Union_Pos::union_value (void) const
 {

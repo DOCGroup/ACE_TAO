@@ -230,7 +230,7 @@ sub add_path {
 
 sub add_lib_path {
     my($value) = shift;
-  
+
     # Set the library path supporting various platforms.
     foreach my $env ('PATH', 'DYLD_LIBRARY_PATH', 'LD_LIBRARY_PATH',
                      'SHLIB_PATH') {

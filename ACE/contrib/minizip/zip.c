@@ -944,7 +944,7 @@ extern MINIZIP_EXPORT int zipWriteInFileInZip (zipFile file,const void* buf,unsi
         {
           uLong uTotalOutBefore = zi->ci.stream.total_out;
           err=deflate(&zi->ci.stream,  Z_NO_FLUSH);
-          zi->ci.pos_in_buffered_data += 
+          zi->ci.pos_in_buffered_data +=
             (uInt)(zi->ci.stream.total_out - uTotalOutBefore);
         }
       else

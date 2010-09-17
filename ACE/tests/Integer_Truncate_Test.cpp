@@ -117,7 +117,7 @@ sizeof_from_lt_sizeof_to (void)
               success
               ? ACE_TEXT ("PASSED")
               : ACE_TEXT ("FAILED")));
-  
+
   return success;
 }
 
@@ -353,7 +353,7 @@ int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Integer_Truncate_Test"));
-  
+
   typedef bool (*test_func) ();
 
   static test_func const tests[] =

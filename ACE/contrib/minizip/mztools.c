@@ -226,17 +226,17 @@ uLong* bytesRecovered;
       WRITE_32(header + 12, offsetCD);    /* size of CD */
       WRITE_32(header + 16, offset);      /* offset to CD */
       WRITE_16(header + 20, comsize);     /* comment */
-      
+
       /* Header */
       if (fwrite(header, 1, 22, fpOutCD) == 22) {
-        
+
         /* Comment field */
         if (comsize > 0) {
           if ((int)fwrite(comment, 1, comsize, fpOutCD) != comsize) {
             err = Z_ERRNO;
           }
         }
-        
+
       } else {
         err = Z_ERRNO;
       }
@@ -258,14 +258,14 @@ uLong* bytesRecovered;
         fclose(fpOutCD);
       }
     }
-    
+
     /* Close */
     fclose(fpZip);
     fclose(fpOut);
-    
+
     /* Wipe temporary file */
     (void)remove(fileOutTmp);
-    
+
     /* Number of recovered entries */
     if (err == Z_OK) {
       if (nRecovered != 0) {

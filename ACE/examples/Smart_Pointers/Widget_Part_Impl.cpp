@@ -23,7 +23,7 @@ Widget_Part_Impl::Widget_Part_Impl (Widget *owner, const char* name, int size)
 {
   ACE_DEBUG ((LM_DEBUG, "Widget_Part_Impl constructor\n"));
 }
-  
+
 Widget_Part_Impl::~Widget_Part_Impl (void)
 {
   ACE_DEBUG ((LM_DEBUG, "Widget_Part_Impl destructor\n"));

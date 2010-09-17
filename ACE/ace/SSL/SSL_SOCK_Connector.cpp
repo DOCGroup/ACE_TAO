@@ -71,7 +71,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
   ACE_Countdown_Time countdown ((timeout == 0 ? 0 : &t));
 
   int status;
-  
+
   do
     {
       // These handle sets are used to set up for whatever SSL_connect
@@ -138,7 +138,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
             {
               status = -1;
             }
-            
+
           break;
 
         default:

@@ -20,7 +20,7 @@ ff() {
 
 # Remove path with examples, tests and tutorial from STDIN
 drop() {
-  grep -E -v '(examples|tests|tutorials)/' 
+  grep -E -v '(examples|tests|tutorials)/'
 }
 
 # Removed unused/unshipped stuff

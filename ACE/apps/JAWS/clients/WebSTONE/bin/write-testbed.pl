@@ -28,12 +28,12 @@ html_end();
 # end main
 
 sub write_data {
-    rename("$wd/conf/testbed", "$wd/conf/testbed.bak") || 
+    rename("$wd/conf/testbed", "$wd/conf/testbed.bak") ||
 	die "rename testbed: $!\n";
     open(TESTBED, ">>$wd/conf/testbed") || die "open testbed: $!\n";
-    
+
     print CLIENT "<PRE>";
-    
+
     foreach $key (@keylist) {
 	$$key =~ s/\+/ /g;
 	$newvalue = "$key=\"$$key\"\n";

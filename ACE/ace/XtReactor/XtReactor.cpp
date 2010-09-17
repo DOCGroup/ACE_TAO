@@ -359,7 +359,7 @@ ACE_XtReactor::compute_Xt_condition(ACE_HANDLE handle)
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
     ACE_SET_BITS (condition, XtInputWriteWinsock);
   // EXCEPT_MASK is not supported for WIN32. As this was
-  // already handled in register_handler_i, no check here. 
+  // already handled in register_handler_i, no check here.
 #endif /* !ACE_WIN32 */
 
   return condition;

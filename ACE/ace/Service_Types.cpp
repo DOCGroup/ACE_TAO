@@ -375,7 +375,7 @@ ACE_Stream_Type::fini (void) const
 
       // Final arg is an indication to *not* delete the Module.
       str->remove (m->name (),
-                   MT_Module::M_DELETE_NONE);      
+                   MT_Module::M_DELETE_NONE);
       m = t;
     }
   str->close ();

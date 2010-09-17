@@ -233,7 +233,7 @@ ACEXML_Transcoder::utf162ucs4 (const ACEXML_UTF16 *src,
         {
           return ACEXML_END_OF_SOURCE;
         }
-        
+
       return ACEXML_Transcoder::surrogate2ucs4 (*src,
                                                 *(src+1),
                                                 dst);
@@ -244,7 +244,7 @@ ACEXML_Transcoder::utf162ucs4 (const ACEXML_UTF16 *src,
         {
           return ACEXML_END_OF_SOURCE;
         }
-        
+
       dst = *src;
     }
 

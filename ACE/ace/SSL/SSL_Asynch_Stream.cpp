@@ -502,7 +502,7 @@ ACE_SSL_Asynch_Stream::do_SSL_handshake (void)
               return -1;
             }
         }
-      return 1;  
+      return 1;
     }
 
   if (this->flags_ & SF_REQ_SHUTDOWN)

@@ -1,7 +1,7 @@
 // $Id$
 
 // ==========================================================================
-// 
+//
 // = LIBRARY
 //    tests
 //
@@ -53,15 +53,15 @@ run_main (int, ACE_TCHAR *[] )
   if (result != -1 || errno != ENOENT)
     {
       ++failcount;
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("ERROR: did not get expected ENOENT, %p\n"),
                   ACE_TEXT("ACE_Service_Config::open")));
     }
   else
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Success: defaulted Service_Config::open ")
                 ACE_TEXT("with missing file got expected ENOENT\n")));
-  
+
   result = ACE_Service_Config::close();
   if (result != 0)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%p\n"),
@@ -75,13 +75,13 @@ run_main (int, ACE_TCHAR *[] )
   if (result != 0)
     {
       ++failcount;
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("ERROR: missing svc.conf with ")
                   ACE_TEXT("command line directive, %p\n"),
                   ACE_TEXT("ACE_Service_Config::open")));
     }
   else
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Success: Service_Config::open with command line ")
                 ACE_TEXT("directive ignored missing svc.conf\n")));
 

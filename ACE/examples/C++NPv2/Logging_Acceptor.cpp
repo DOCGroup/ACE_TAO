@@ -30,9 +30,9 @@ int Logging_Acceptor::handle_input (ACE_HANDLE) {
   return 0;
 }
 
-int Logging_Acceptor::handle_close (ACE_HANDLE, 
-                                    ACE_Reactor_Mask) { 
+int Logging_Acceptor::handle_close (ACE_HANDLE,
+                                    ACE_Reactor_Mask) {
   acceptor_.close ();
   delete this;
-  return 0; 
+  return 0;
 }

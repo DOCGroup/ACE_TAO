@@ -50,24 +50,24 @@ Reactor_Logging_Server_Adapter<ACCEPTOR>::info
   ACE_OS::sprintf (buf,
                    ACE_TEXT ("%hu"),
                    local_addr.get_port_number ());
-  ACE_OS::strcat 
+  ACE_OS::strcat
     (buf, ACE_TEXT ("/tcp  # Reactor-based logging server\n"));
   if (*bufferp == 0)
     *bufferp = ACE::strnew (buf);
   else
     ACE_OS::strncpy (*bufferp, buf, length);
-    
+
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (*bufferp));
 }
 
 
 template <class ACCEPTOR> int
-Reactor_Logging_Server_Adapter<ACCEPTOR>::suspend () 
+Reactor_Logging_Server_Adapter<ACCEPTOR>::suspend ()
 { return server_->reactor ()->suspend_handler (server_); }
 
 
 template <class ACCEPTOR> int
-Reactor_Logging_Server_Adapter<ACCEPTOR>::resume () 
+Reactor_Logging_Server_Adapter<ACCEPTOR>::resume ()
 { return server_->reactor ()->resume_handler (server_); }
 
 #endif /* _REACTOR_LOGGING_SERVER_ADAPTER_C */
