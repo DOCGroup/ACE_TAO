@@ -1,3 +1,9 @@
+Fri Sep 17 09:23:47 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+          Disabled test for bug#2777 on builds without corba_messaging.
+          tao_nslist requires the later.
+
 Fri Sep 17 09:17:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Utils/Synch_Refcountable.h:
