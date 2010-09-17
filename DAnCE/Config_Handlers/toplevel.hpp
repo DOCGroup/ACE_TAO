@@ -54,7 +54,7 @@ namespace DAnCE
       typedef ACE_Refcounted_Auto_Ptr < TopLevelPackageDescription, ACE_Null_Mutex > _ptr;
 
       // package
-      // 
+      //
       public:
       typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PackageConfiguration, ACE_Null_Mutex > >::iterator package_iterator;
       typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PackageConfiguration, ACE_Null_Mutex > >::const_iterator package_const_iterator;
@@ -161,13 +161,13 @@ namespace DAnCE
   {
     namespace Writer
     {
-      struct TopLevelPackageDescription : Traversal::TopLevelPackageDescription, 
+      struct TopLevelPackageDescription : Traversal::TopLevelPackageDescription,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::DAnCE::Config_Handlers::TopLevelPackageDescription Type;
         TopLevelPackageDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
@@ -176,7 +176,7 @@ namespace DAnCE
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         package_pre (Type &o)
         {
           this->package_pre (const_cast <Type const &> (o));
@@ -185,7 +185,7 @@ namespace DAnCE
         virtual void
         package_pre (Type const&);
 
-        virtual void 
+        virtual void
         package_next (Type &o)
         {
           this->package_next (const_cast <Type const &> (o));
@@ -194,7 +194,7 @@ namespace DAnCE
         virtual void
         package_next (Type const&);
 
-        virtual void 
+        virtual void
         package_post (Type &o)
         {
           this->package_post (const_cast <Type const &> (o));

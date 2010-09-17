@@ -42,7 +42,7 @@ namespace DAnCE
     ::DAnCE::Utility::build_property_sequence (prop, properties);
     PLUGIN_MANAGER::instance ()->set_configuration (prop);
     PLUGIN_MANAGER::instance ()->set_orb (this->orb_);
-    
+
     Plugin_Manager::IH_DEPS deps;
     CORBA::String_var safe_type =
       PLUGIN_MANAGER::instance ()->register_installation_handler (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Locality_Handler"),
@@ -55,7 +55,7 @@ namespace DAnCE
     else
       PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
                                                          ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Standard_Error"));
-    
+
     PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_SHS_Interceptors"),
                                                        ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_SHS_Interceptor"));
     DANCE_DEBUG (8, (LM_INFO, DLINFO

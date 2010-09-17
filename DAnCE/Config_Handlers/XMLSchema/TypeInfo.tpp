@@ -66,7 +66,7 @@ namespace XMLSchema
     add_info<Name<C> > (map, 0);
     add_info<NCName<C> > (map, 0);
     add_info<QName<C> > (map, 0);
-    
+
     add_info<ID<C> > (map, 0);
 
     // IDREF_Base

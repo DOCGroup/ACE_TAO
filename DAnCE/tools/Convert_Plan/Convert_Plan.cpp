@@ -28,14 +28,14 @@ bool
 parse_args (int argc, ACE_TCHAR *argv [])
 {
   DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("dance_split_plan options: ")));
-  
+
   for (int i = 0; i < argc; ++i)
     {
       DANCE_DEBUG (9, (LM_TRACE, ACE_TEXT("\t%s\n"), argv[i]));
     }
-  
+
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("x:o:h"), 0);
-  
+
   int c;
   ACE_CString s;
   while ((c = get_opt ()) != EOF)
@@ -45,7 +45,7 @@ parse_args (int argc, ACE_TCHAR *argv [])
         case 'x':
           input_filename = get_opt.opt_arg ();
           break;
-          
+
         case 'o':
           output_filename = get_opt.opt_arg ();
           break;
@@ -53,12 +53,12 @@ parse_args (int argc, ACE_TCHAR *argv [])
         case 'h':
           usage ();
           return false;
-        default: 
+        default:
           usage ();
           return false;
         }
     }
-  
+
   return true;
 }
 
@@ -67,43 +67,43 @@ parse_args (int argc, ACE_TCHAR *argv [])
 #include <sstream>
 #endif /* GEN_OSTREAM_OPS */
 
-int 
+int
 ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
   DANCE_DISABLE_TRACE ();
-  
+
   int retval = 0;
 
   try
     {
       DAnCE::Logger_Service
         * dlf = ACE_Dynamic_Service<DAnCE::Logger_Service>::instance ("DAnCE_Logger");
-      
+
       if (dlf)
         {
           dlf->init (argc, argv);
         }
-      
+
       DANCE_DEBUG (6, (LM_TRACE, DLINFO
                        ACE_TEXT("Convert_Plan - initializing ORB\n")));
-      
+
       // Need an ORB for the Config handlers
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-      
+
       if (!parse_args (argc, argv))
         {
           return -1;
         }
-      
+
       if (!input_filename)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan - ") 
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan - ")
                            ACE_TEXT ("No input filename provided\n")));
           return -1;
         }
 
       auto_ptr <Deployment::DeploymentPlan> plan (DAnCE::Convert_Plan::read_xml_plan (input_filename));
-      
+
       if (!plan.get ())
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan - ")
@@ -119,7 +119,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
                   plan_stream.str ().c_str ()));
   }
 #endif /* GEN_OSTREAM_OPS */
-  
+
       if (!output_filename)
         {
           DANCE_DEBUG (2, (LM_DEBUG, DLINFO ACE_TEXT ("Convert_Plan - ")
@@ -150,6 +150,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
                        ACE_TEXT ("error: unknown c++ exception\n")));
       retval = -1;
     }
-  
+
   return retval;
 }

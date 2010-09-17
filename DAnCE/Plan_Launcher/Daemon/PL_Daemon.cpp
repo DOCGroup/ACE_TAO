@@ -65,28 +65,28 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       DAnCE::Plan_Launcher_Daemon_i *pl_daemon (0);
-      
+
       ACE_NEW_RETURN (pl_daemon,
                       DAnCE::Plan_Launcher_Daemon_i (orb.in ()),
                       0);
-      
+
       PortableServer::ServantBase_var safe_servant (pl_daemon);
-      
+
       PortableServer::ObjectId_var oid =
         PortableServer::string_to_ObjectId ("Plan_Launcher_Daemon");
       persistent_poa->activate_object_with_id (oid, pl_daemon);
-      
+
       CORBA::Object_var pl_obj = persistent_poa->id_to_reference (oid.in ());
       CORBA::String_var pl_ior = orb->object_to_string (pl_obj.in ());
-      
+
       DAnCE::Utility::write_IOR (ACE_TEXT ("PL_Daemon.ior"),
                                  pl_ior.in ());
-      
+
       orb->run ();
-      
+
       DANCE_DEBUG (6, (LM_TRACE, DLINFO
                        ACE_TEXT("PL_Daemon - destroying ORB\n")));
-      
+
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)

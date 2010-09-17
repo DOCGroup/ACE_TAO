@@ -599,12 +599,12 @@ namespace DAnCE
               {
                 CORBA::Object_ptr
                   obj = this->orb_->string_to_object(plan.connection[i].externalReference[0].location.in());
-                
+
                 if (!CORBA::is_nil (obj))
                   {
                     CORBA::ULong indx = 0;
                     for (; indx < conn.length (); ++indx)
-                      
+
                       if (ACE_OS::strcmp (conn[indx].name.in (),
                                           plan.connection[i].name.in ()) == 0)
                         break;

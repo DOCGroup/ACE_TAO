@@ -264,7 +264,7 @@ namespace DAnCE
       return retval;
     }
 
-    CORBA::TypeCode_ptr 
+    CORBA::TypeCode_ptr
     DynAny_Handler::create_typecode (const DataType &type)
     {
 
@@ -337,7 +337,7 @@ namespace DAnCE
 
         case TCKind::tk_enum_l:
           return DynEnum_Handler::create_typecode (type);
-          
+
         case TCKind::tk_struct_l:
           return DynStruct_Handler::create_typecode (type);
 
@@ -370,7 +370,7 @@ namespace DAnCE
       return 0;
     }
 
-    void 
+    void
     DynAny_Handler::register_typecode (const std::basic_string<ACE_TCHAR> typeID,
                                        CORBA::TypeCode_ptr tc)
     {

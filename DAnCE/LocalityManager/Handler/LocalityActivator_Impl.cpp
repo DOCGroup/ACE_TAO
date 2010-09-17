@@ -560,7 +560,7 @@ namespace DAnCE
                              guard,
                              this->container_mutex_,
                              CORBA::NO_RESOURCES ());
-        
+
         SERVER_INFOS::iterator i;
         for (i = this->server_infos_.begin ();
              i != this->server_infos_.end ();
@@ -585,7 +585,7 @@ namespace DAnCE
           throw ::Deployment::StopError ("locality manager",
                                          "unable to stop locality manager");
         }
-      
+
       if (info->status_ == Server_Info::TERMINATED)
         {
           DANCE_DEBUG (6, (LM_DEBUG, DLINFO
@@ -680,14 +680,14 @@ namespace DAnCE
       // this method is guarenteed to be called synchronously
       // so we can safely call anything we like
 
-      // Check if the termination was requested, log an error if not. 
+      // Check if the termination was requested, log an error if not.
       if (this->server_info_->status_  != Server_Info::TERMINATE_REQUESTED)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
                            ACE_TEXT ("DAnCE_LocalityActivator_i::Server_Child_Handler::handle_exit - ")
                            ACE_TEXT ("Error: Unexpected locality shutdown.\n")));
-          
-          const DAnCE::Plugin_Manager::INTERCEPTORS &interceptors = 
+
+          const DAnCE::Plugin_Manager::INTERCEPTORS &interceptors =
             PLUGIN_MANAGER::instance ()->fetch_interceptors ();
 
         for (Plugin_Manager::INTERCEPTORS::const_iterator i = interceptors.begin ();
@@ -708,7 +708,7 @@ namespace DAnCE
               }
           }
         }
-      
+
       // flag this process as exited
       this->server_info_->status_ = Server_Info::TERMINATED;
 

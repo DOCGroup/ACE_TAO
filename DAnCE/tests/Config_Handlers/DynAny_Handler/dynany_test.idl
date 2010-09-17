@@ -4,7 +4,7 @@ module dynany_test
   typedef sequence<double> DoubleSequence;
   typedef sequence<long> LongSequence;
   typedef sequence<string, 3> StringSequence;
-  
+
   enum COLOR
     {
       yellow,
@@ -15,7 +15,7 @@ module dynany_test
     };
 
   typedef sequence<COLOR> ColorSequence;
-  
+
   struct Foo
   {
     double db;
@@ -23,6 +23,6 @@ module dynany_test
     StringSequence string_sequence;
     ColorSequence color_sequence;
   };
-  
+
   typedef sequence<Foo> FooSequence;
 };

@@ -17,10 +17,10 @@ namespace DAnCE
                                     const CORBA::Any &reference,
                                     const char *inst_type,
                                     Event_Future holder)
-    : Deployment_Event (holder,  
+    : Deployment_Event (holder,
                         plan.instance[instanceRef].name.in (),
                         inst_type),
-      Action_Base (holder,  
+      Action_Base (holder,
                    plan.instance[instanceRef].name.in (),
                    inst_type),
       plan_ (plan),
@@ -28,25 +28,25 @@ namespace DAnCE
       reference_ (reference)
   {
   }
-    
+
   Remove_Instance::~Remove_Instance (void)
   {
   }
-  
+
   void
   Remove_Instance::invoke_pre_interceptor (Plugin_Manager::INTERCEPTORS::const_iterator &)
   {
     DANCE_TRACE ("Remove_Instance::invoke_pre_interceptor");
-    
+
     //no-op
   }
-  
-    
+
+
   void
   Remove_Instance::invoke (::DAnCE::InstanceDeploymentHandler_ptr handler)
   {
     DANCE_TRACE ("Remove_Instance::invoke");
-    
+
     DANCE_DEBUG (10, (LM_TRACE, DLINFO
                       ACE_TEXT ("Remove_Instance::invoke - ")
                       ACE_TEXT ("Invoking remove_instance on handler for type <%C>\n"),
@@ -58,31 +58,31 @@ namespace DAnCE
                       ACE_TEXT ("Remove_Instance::invoke - ")
                       ACE_TEXT ("remove_instance completed\n")));
   }
-  
-  
+
+
   void
   Remove_Instance::invoke_post_interceptor (Plugin_Manager::INTERCEPTORS::const_iterator &i)
   {
     DANCE_TRACE ("Remove_Instance::invoke_post_interceptor");
-    
+
     (*i)->post_remove (this->plan_,
                        this->instanceRef_,
                        this->instance_excep_.in ());
   }
-  
-  
+
+
   void
   Remove_Instance::create_unexpected_exception (const std::string &name,
                                                  const std::string &reason)
   {
     DANCE_TRACE ("Remove_Instance::create_unexpected_exception");
-    
+
     ::Deployment::StopError ex_tmp (name.c_str (),
                                     reason.c_str ());
     this->instance_excep_ =
       DAnCE::Utility::create_any_from_exception (ex_tmp);
   }
-  
+
   void
   Remove_Instance::create_valid_result (Event_Result &)
   {

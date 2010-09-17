@@ -21,7 +21,7 @@ module DAnCE
 
     /// Load a deployment plan from a file
     ::Deployment::DeploymentPlan parse_cdr_plan (in string plan_location);
-    
+
     oneway void shutdown ();
   };
 };

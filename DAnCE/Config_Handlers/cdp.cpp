@@ -22,13 +22,13 @@ namespace DAnCE
   namespace Config_Handlers
   {
     // PlanSubcomponentPropertyReference
-    // 
+    //
 
     PlanSubcomponentPropertyReference::
     PlanSubcomponentPropertyReference (::XMLSchema::string< ACE_TCHAR > const& propertyName__,
                                        ::DAnCE::Config_Handlers::InstanceDeploymentDescription const& instance__)
-    : 
-    ::XSCRT::Type (), 
+    :
+    ::XSCRT::Type (),
     propertyName_ (new ::XMLSchema::string< ACE_TCHAR > (propertyName__)),
     instance_ (new ::DAnCE::Config_Handlers::InstanceDeploymentDescription (instance__)),
     regulator__ ()
@@ -61,7 +61,7 @@ namespace DAnCE
 
 
     // PlanSubcomponentPropertyReference
-    // 
+    //
     ::XMLSchema::string< ACE_TCHAR > const& PlanSubcomponentPropertyReference::
     propertyName () const
     {
@@ -75,7 +75,7 @@ namespace DAnCE
     }
 
     // PlanSubcomponentPropertyReference
-    // 
+    //
     ::DAnCE::Config_Handlers::InstanceDeploymentDescription const& PlanSubcomponentPropertyReference::
     instance () const
     {
@@ -90,13 +90,13 @@ namespace DAnCE
 
 
     // PlanPropertyMapping
-    // 
+    //
 
     PlanPropertyMapping::
     PlanPropertyMapping (::XMLSchema::string< ACE_TCHAR > const& name__,
                          ::XMLSchema::string< ACE_TCHAR > const& externalName__,
                          ::std::list< ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::PlanSubcomponentPropertyReference, ACE_Null_Mutex > > const& delegatesTo__)
-    : 
+    :
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     externalName_ (new ::XMLSchema::string< ACE_TCHAR > (externalName__)),
     delegatesTo_ (delegatesTo__),
@@ -136,7 +136,7 @@ namespace DAnCE
 
 
     // PlanPropertyMapping
-    // 
+    //
     ::XMLSchema::string< ACE_TCHAR > const& PlanPropertyMapping::
     name () const
     {
@@ -150,7 +150,7 @@ namespace DAnCE
     }
 
     // PlanPropertyMapping
-    // 
+    //
     PlanPropertyMapping::source_iterator PlanPropertyMapping::
     begin_source ()
     {
@@ -188,7 +188,7 @@ namespace DAnCE
     }
 
     // PlanPropertyMapping
-    // 
+    //
     ::XMLSchema::string< ACE_TCHAR > const& PlanPropertyMapping::
     externalName () const
     {
@@ -202,7 +202,7 @@ namespace DAnCE
     }
 
     // PlanPropertyMapping
-    // 
+    //
     PlanPropertyMapping::delegatesTo_iterator PlanPropertyMapping::
     begin_delegatesTo ()
     {
@@ -241,11 +241,11 @@ namespace DAnCE
 
 
     // deploymentPlan
-    // 
+    //
 
     deploymentPlan::
     deploymentPlan ()
-    : 
+    :
     regulator__ ()
     {
     }
@@ -311,7 +311,7 @@ namespace DAnCE
 
 
     // deploymentPlan
-    // 
+    //
     bool deploymentPlan::
     label_p () const
     {
@@ -340,7 +340,7 @@ namespace DAnCE
     }
 
     // deploymentPlan
-    // 
+    //
     bool deploymentPlan::
     UUID_p () const
     {
@@ -369,7 +369,7 @@ namespace DAnCE
     }
 
     // deploymentPlan
-    // 
+    //
     bool deploymentPlan::
     realizes_p () const
     {
@@ -398,7 +398,7 @@ namespace DAnCE
     }
 
     // deploymentPlan
-    // 
+    //
     deploymentPlan::implementation_iterator deploymentPlan::
     begin_implementation ()
     {
@@ -436,7 +436,7 @@ namespace DAnCE
     }
 
     // deploymentPlan
-    // 
+    //
     deploymentPlan::instance_iterator deploymentPlan::
     begin_instance ()
     {
@@ -474,7 +474,7 @@ namespace DAnCE
     }
 
     // deploymentPlan
-    // 
+    //
     deploymentPlan::connection_iterator deploymentPlan::
     begin_connection ()
     {
@@ -512,7 +512,7 @@ namespace DAnCE
     }
 
     // deploymentPlan
-    // 
+    //
     deploymentPlan::externalProperty_iterator deploymentPlan::
     begin_externalProperty ()
     {
@@ -550,7 +550,7 @@ namespace DAnCE
     }
 
     // deploymentPlan
-    // 
+    //
     deploymentPlan::dependsOn_iterator deploymentPlan::
     begin_dependsOn ()
     {
@@ -588,7 +588,7 @@ namespace DAnCE
     }
 
     // deploymentPlan
-    // 
+    //
     deploymentPlan::artifact_iterator deploymentPlan::
     begin_artifact ()
     {
@@ -626,7 +626,7 @@ namespace DAnCE
     }
 
     // deploymentPlan
-    // 
+    //
     deploymentPlan::infoProperty_iterator deploymentPlan::
     begin_infoProperty ()
     {
@@ -664,7 +664,7 @@ namespace DAnCE
     }
 
     // deploymentPlan
-    // 
+    //
     deploymentPlan::localityConstraint_iterator deploymentPlan::
     begin_localityConstraint ()
     {
@@ -734,7 +734,7 @@ namespace DAnCE
           instance_->container (this);
         }
 
-        else 
+        else
         {
         }
       }
@@ -779,7 +779,7 @@ namespace DAnCE
           add_delegatesTo (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -866,7 +866,7 @@ namespace DAnCE
           add_localityConstraint (t);
         }
 
-        else 
+        else
         {
         }
       }

@@ -42,13 +42,13 @@ namespace DAnCE
                       CORBA::NO_MEMORY ());
     return retval;
   }
-  
+
   void
   Inst_Handler_Impl::close (void)
   {
-    
+
   }
-  
+
   char * Inst_Handler_Impl::instance_type (void)
   {
     DANCE_TRACE ("Inst_Handler_Impl::instance_type");
@@ -65,7 +65,7 @@ namespace DAnCE
                       CORBA::Any (),
                       CORBA::NO_MEMORY ());
     instance_reference = outany;
-    
+
     if (plan.instance.length () <= instanceRef)
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO
@@ -76,10 +76,10 @@ namespace DAnCE
         throw ::Deployment::PlanError (plan.UUID.in (),
                                        "Invalid instance reference");
       }
-    
+
     const ::Deployment::InstanceDeploymentDescription &idd =
       plan.instance[instanceRef];
-    
+
     if (plan.implementation.length () <= idd.implementationRef)
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO
@@ -90,7 +90,7 @@ namespace DAnCE
         throw ::Deployment::PlanError (plan.UUID.in (),
                                        "Invalid Implementation reference");
       }
-    
+
     const ::Deployment::MonolithicDeploymentDescription &mdd =
       plan.implementation[idd.implementationRef];
 
@@ -122,16 +122,16 @@ namespace DAnCE
         throw ::Deployment::StartError (idd.name.in (),
                                         "No artifact found for plug-in initialization\n");
       }
-    
+
     Plugin_Manager::IH_DEPS deps;
-    
+
     for (CORBA::ULong i = 0; i < idd.configProperty.length (); ++i)
       {
         if (ACE_OS::strcmp (idd.configProperty[i].name.in (),
                             DAnCE::DANCE_IDH_DEPENDSON) == 0)
           {
             const char *id (0);
-            
+
             if (idd.configProperty[i].value >>= CORBA::Any::to_string (id, 0))
               {
                 deps.insert (id);
@@ -146,12 +146,12 @@ namespace DAnCE
                                             "Unable to extract dependency order from string");
           }
       }
-    
-    CORBA::String_var plugin_id = 
+
+    CORBA::String_var plugin_id =
       PLUGIN_MANAGER::instance ()->register_installation_handler (ACE_TEXT_CHAR_TO_TCHAR (artifact),
                                                                   ACE_TEXT_CHAR_TO_TCHAR (entrypt),
                                                                   deps);
-    
+
     (*outany) <<= CORBA::Any::from_string (plugin_id.in (), 0);
   }
 
@@ -181,7 +181,7 @@ namespace DAnCE
   Inst_Handler_Impl::configure (const ::Deployment::Properties &prop )
   {
     ::DAnCE::Utility::PROPERTY_MAP pmap (prop.length ());
-    
+
     ::DAnCE::Utility::build_property_map (pmap,
                                           prop);
   }

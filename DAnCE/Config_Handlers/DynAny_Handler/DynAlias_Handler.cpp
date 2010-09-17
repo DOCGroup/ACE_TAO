@@ -24,17 +24,17 @@ namespace DAnCE
       try
         {
           CORBA::TypeCode_ptr tc;
-            
+
           if (req_tc)
             tc = req_tc;
           else
             tc = DynAlias_Handler::create_typecode (type);
-          
+
           // Make the actual DynAlias
           //          DynamicAny::DynAny_var retval =
           //DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
           //          DynamicAny::DynAlias_var retval = DynamicAny::DynAlias::_narrow (temp.in ());
-          
+
           DynamicAny::DynAny_var alias = DYNANY_HANDLER->extract_into_dynany (type.alias ().elementType (), value, tc);
           return alias._retn ();
           /*
@@ -44,11 +44,11 @@ namespace DAnCE
             case TCKind::tk_null_l:
             case TCKind::tk_void_l:
               DANCE_DEBUG (1, (LM_WARNING, "I don't know how to handle null or void types\n"));
-              
+
             case TCKind::tk_short_l:
               retval->insert_short (CORBA::Short (static_cast < ::XMLSchema::short_ const & > (*value.begin_short ())));
               break;
-              
+
             case TCKind::tk_long_l:
               retval->insert_long (CORBA::Long (static_cast < ::XMLSchema::int_ const& > (*value.begin_long ())));
               break;
@@ -68,7 +68,7 @@ namespace DAnCE
             case TCKind::tk_double_l:
               retval->insert_double (CORBA::Double (*value.begin_double ()));
               break;
-              
+
             case TCKind::tk_boolean_l:
               retval->insert_boolean (static_cast < ::XMLSchema::boolean const& > (*value.begin_boolean ()));
               break;
@@ -76,7 +76,7 @@ namespace DAnCE
             case TCKind::tk_char_l:
               retval->insert_char (CORBA::Char (*value.begin_string ()->c_str ()));
               break;
-              
+
             case TCKind::tk_octet_l:
               retval->insert_octet (static_cast <const unsigned char &> (*value.begin_octet ()));
               break;
@@ -88,7 +88,7 @@ namespace DAnCE
             case TCKind::tk_longlong_l:
               retval->insert_longlong (CORBA::LongLong (static_cast < ::XMLSchema::long_ const& > (*value.begin_longlong ())));
               break;
-              
+
             case TCKind::tk_ulonglong_l:
               retval->insert_ulonglong (CORBA::ULongLong (static_cast < ::XMLSchema::unsignedLong const& > (*value.begin_ulonglong ())));
               break;
@@ -99,10 +99,10 @@ namespace DAnCE
 
         case TCKind::tk_enum_l:
           return DynEnum_Handler::extract_into_dynany (type, value);
-          
+
         case TCKind::tk_sequence_l:
           return DynSequence_Handler::extract_into_dynany (type, value);
-          
+
         case TCKind::tk_struct_l:
           return DynStruct_Handler::extract_into_dynany (type, value);
 
@@ -165,7 +165,7 @@ namespace DAnCE
       ACE_UNUSED_ARG (dyn);
       DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Extracting Enums not yet supported\n")));
     }
-    
+
     CORBA::TypeCode_ptr
     DynAlias_Handler::create_typecode (const DataType &type)
     {
@@ -178,17 +178,17 @@ namespace DAnCE
 
       // @@ Leak this guy onto the heap to avoid a compile problem.
       CORBA::TypeCode_ptr tc =
-        DYNANY_HANDLER->orb ()->create_alias_tc 
+        DYNANY_HANDLER->orb ()->create_alias_tc
         (ACE_TEXT_ALWAYS_CHAR (type.alias ().typeId ().c_str ()),
          ACE_TEXT_ALWAYS_CHAR (type.alias ().name ().c_str ()),
          DYNANY_HANDLER->create_typecode (type.alias ().elementType ()));
-      
+
       DYNANY_HANDLER->register_typecode (type.alias ().typeId (),
                                          tc);
-      
+
       return tc;
     }
-    
+
   }
 }
 

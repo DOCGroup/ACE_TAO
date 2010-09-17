@@ -24,16 +24,16 @@ namespace DAnCE
   SHS_Interceptor::configure (const ::Deployment::Properties &props )
   {
     DAnCE::SHS::SHS_Transport *tmp (0);
-    
+
     ACE_NEW_THROW_EX (tmp,
                       SHS::SHS_CORBA_Transport (),
                       CORBA::NO_MEMORY ());
-    
+
     this->shs_transport_.reset (tmp);
-    
+
     this->shs_transport_->configure (props);
   }
-  
+
   void
   SHS_Interceptor::post_install (const ::Deployment::DeploymentPlan &plan,
                                  ::CORBA::ULong index,
@@ -44,10 +44,10 @@ namespace DAnCE
     CORBA::ULong mdd_idx = plan.instance[index].implementationRef;
 
     update.id = plan.instance[index].name.in ();
-    update.type = 
+    update.type =
       DAnCE::Utility::get_instance_type (plan.implementation[mdd_idx].execParameter);
     CORBA::ULong idx (0);
-    
+
     if (exception.type() != ::CORBA::_tc_null)
       {
         std::string result;
@@ -57,18 +57,18 @@ namespace DAnCE
         update.instance_info.length (idx + 1);
         update.instance_info[idx].name = ::DAnCE::SHS::Constants::SHS_DIAGNOSTIC;
         update.instance_info[idx].value <<= CORBA::Any::from_string (result.c_str (), 0);
-        
+
         ++idx;
       }
     else
       {
         update.new_status = DAnCE::SHS::INST_INSTALLED;
       }
-    
+
     update.instance_info.length (idx + 1);
     update.instance_info[idx].name = ::DAnCE::SHS::Constants::SHS_INSTANCE_REF;
     update.instance_info[idx].value = reference;
-    
+
     if (this->shs_transport_.get ())
       this->shs_transport_->push_event (update);
   }
@@ -89,7 +89,7 @@ namespace DAnCE
         std::string result;
         DAnCE::Utility::stringify_exception_from_any (exception,
                                                       result);
-        
+
         update.new_status = DAnCE::SHS::INST_ERROR;
         update.instance_info.length (info_idx + 1);
         update.instance_info[info_idx].name = ::DAnCE::SHS::Constants::SHS_DIAGNOSTIC;
@@ -100,7 +100,7 @@ namespace DAnCE
       {
         update.new_status = DAnCE::SHS::INST_ACTIVE;
       }
-    
+
     for (CORBA::ULong i = 0; i < pcd.internalEndpoint.length (); ++i)
       {
         std::string id (plan.instance[pcd.internalEndpoint[i].instanceRef].name.in ());
@@ -108,12 +108,12 @@ namespace DAnCE
         id += pcd.internalEndpoint[i].portName.in ();
 
         update.instance_info.length (info_idx + 1);
-        
+
         if (pcd.internalEndpoint[i].provider)
           {
             update.instance_info[info_idx].name = DAnCE::SHS::Constants::SHS_CONN_PROVIDER;
           }
-        else 
+        else
           {
             update.instance_info[info_idx].name = DAnCE::SHS::Constants::SHS_CONN_RECIPIENT;
           }
@@ -129,12 +129,12 @@ namespace DAnCE
         update.instance_info[info_idx].value <<= pcd.externalEndpoint[i];
         ++info_idx;
       }
-    
+
     if (this->shs_transport_.get ())
       this->shs_transport_->push_event (update);
   }
-  
-  void 
+
+  void
   SHS_Interceptor::post_configured (const ::Deployment::DeploymentPlan & plan,
                                     ::CORBA::ULong index,
                                     const ::CORBA::Any &exception )
@@ -143,15 +143,15 @@ namespace DAnCE
     CORBA::ULong mdd_idx = plan.instance[index].implementationRef;
 
     update.id = plan.instance[index].name.in ();
-    update.type = 
+    update.type =
       DAnCE::Utility::get_instance_type (plan.implementation[mdd_idx].execParameter);
-    
+
     if (exception.type() != ::CORBA::_tc_null)
       {
         std::string result;
         DAnCE::Utility::stringify_exception_from_any (exception,
                                                       result);
-        
+
         update.new_status = DAnCE::SHS::INST_ERROR;
         update.instance_info.length (1);
         update.instance_info[0].name = ::DAnCE::SHS::Constants::SHS_DIAGNOSTIC;
@@ -165,8 +165,8 @@ namespace DAnCE
     if (this->shs_transport_.get ())
       this->shs_transport_->push_event (update);
   }
-  
-  
+
+
   void
   SHS_Interceptor::post_activate (const ::Deployment::DeploymentPlan & plan,
                                   ::CORBA::ULong index,
@@ -176,15 +176,15 @@ namespace DAnCE
     CORBA::ULong mdd_idx = plan.instance[index].implementationRef;
 
     update.id = plan.instance[index].name.in ();
-    update.type = 
+    update.type =
       DAnCE::Utility::get_instance_type (plan.implementation[mdd_idx].execParameter);
-    
+
     if (exception.type() != ::CORBA::_tc_null)
       {
         std::string result;
         DAnCE::Utility::stringify_exception_from_any (exception,
                                                       result);
-        
+
         update.new_status = DAnCE::SHS::INST_ERROR;
         update.instance_info.length (1);
         update.instance_info[0].name = ::DAnCE::SHS::Constants::SHS_DIAGNOSTIC;
@@ -198,8 +198,8 @@ namespace DAnCE
     if (this->shs_transport_.get ())
       this->shs_transport_->push_event (update);
   }
-  
-  
+
+
   void
   SHS_Interceptor::post_passivate (const ::Deployment::DeploymentPlan & plan,
                                    ::CORBA::ULong index,
@@ -209,15 +209,15 @@ namespace DAnCE
     CORBA::ULong mdd_idx = plan.instance[index].implementationRef;
 
     update.id = plan.instance[index].name.in ();
-    update.type = 
+    update.type =
       DAnCE::Utility::get_instance_type (plan.implementation[mdd_idx].execParameter);
-    
+
     if (exception.type() != ::CORBA::_tc_null)
       {
         std::string result;
         DAnCE::Utility::stringify_exception_from_any (exception,
                                                       result);
-        
+
         update.new_status = DAnCE::SHS::INST_ERROR;
         update.instance_info.length (1);
         update.instance_info[0].name = ::DAnCE::SHS::Constants::SHS_DIAGNOSTIC;
@@ -231,8 +231,8 @@ namespace DAnCE
     if (this->shs_transport_.get ())
       this->shs_transport_->push_event (update);
   }
-  
-  
+
+
   void
   SHS_Interceptor::post_remove (const ::Deployment::DeploymentPlan & plan,
                                 ::CORBA::ULong index,
@@ -242,15 +242,15 @@ namespace DAnCE
     CORBA::ULong mdd_idx = plan.instance[index].implementationRef;
 
     update.id = plan.instance[index].name.in ();
-    update.type = 
+    update.type =
       DAnCE::Utility::get_instance_type (plan.implementation[mdd_idx].execParameter);
-    
+
     if (exception.type() != ::CORBA::_tc_null)
       {
         std::string result;
         DAnCE::Utility::stringify_exception_from_any (exception,
                                                       result);
-        
+
         update.new_status = DAnCE::SHS::INST_ERROR;
         update.instance_info.length (1);
         update.instance_info[0].name = ::DAnCE::SHS::Constants::SHS_DIAGNOSTIC;
@@ -275,24 +275,24 @@ namespace DAnCE
     CORBA::ULong mdd_idx = plan.instance[index].implementationRef;
 
     update.id = plan.instance[index].name.in ();
-    update.type = 
+    update.type =
       DAnCE::Utility::get_instance_type (plan.implementation[mdd_idx].execParameter);
 
     update.new_status = DAnCE::SHS::INST_ERROR;
     CORBA::ULong pos (0);
-    
+
     if (exception.type() != ::CORBA::_tc_null)
       {
         std::string result;
         DAnCE::Utility::stringify_exception_from_any (exception,
                                                       result);
-        
+
         update.instance_info.length (pos + 1);
         update.instance_info[pos].name = ::DAnCE::SHS::Constants::SHS_DIAGNOSTIC;
         update.instance_info[pos].value <<= CORBA::Any::from_string (result.c_str (), 0);
         ++pos;
       }
-    
+
     if (error)
       {
         update.instance_info.length (pos + 1);
@@ -300,7 +300,7 @@ namespace DAnCE
         update.instance_info[pos].value <<= CORBA::Any::from_string (error, 0);
         ++pos;
       }
-    
+
     if (this->shs_transport_.get ())
       this->shs_transport_->push_event (update);
   }
@@ -308,7 +308,7 @@ namespace DAnCE
 
 extern "C"
 {
-  ::DAnCE::DeploymentInterceptor_ptr 
+  ::DAnCE::DeploymentInterceptor_ptr
   create_DAnCE_SHS_Interceptor (void)
   {
     return new DAnCE::SHS_Interceptor ();

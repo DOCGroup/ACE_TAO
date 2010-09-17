@@ -19,8 +19,8 @@ module DAnCE
     /// Invoked when the interceptor is loaded, before any other
     /// event.
     void configure (in ::Deployment::Properties config);
-    
-    
+
+
     void preprocess_plan (inout ::Deployment::DeploymentPlan plan)
       raises (::Deployment::PlanError);
 
@@ -39,13 +39,13 @@ module DAnCE
               ::Deployment::InvalidProperty,
               ::Deployment::InvalidNodeExecParameter,
               ::Deployment::InvalidComponentExecParameter);
-    
+
     void post_endpoint_reference (in ::Deployment::DeploymentPlan plan,
                                   in unsigned long connectionRef,
                                   in any endpoint_reference,
                                   in any exception_thrown)
       raises (::Deployment::InvalidConnection);
-    
+
     void pre_connect (inout ::Deployment::DeploymentPlan plan,
                       in unsigned long connection_index,
                       inout any provided_reference)
@@ -55,7 +55,7 @@ module DAnCE
                        in unsigned long connectionRef,
                        in any exceptionThrown)
       raises (::Deployment::InvalidConnection);
-    
+
     void post_configured (in ::Deployment::DeploymentPlan plan,
                           in unsigned long instanceRef,
                           in any exception_thrown)
@@ -74,7 +74,7 @@ module DAnCE
                       in unsigned long instanceRef,
                       in any exception_thrown)
       raises (::Deployment::StopError);
-    
+
     /**
      * @brief Invoked on an unexpected event, not usually during normal deployment activity.
      * @param plan The deployment plan which the instance is a part of.

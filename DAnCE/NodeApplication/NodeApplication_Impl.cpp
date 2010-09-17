@@ -245,10 +245,10 @@ NodeApplication_Impl::start_launch_instances (const Deployment::Properties &prop
   ACE_NEW_THROW_EX (tmp,
                    Deployment::Connections (),
                    CORBA::NO_MEMORY ());
-  
+
   providedReference = tmp;
   CORBA::ULong retval_pos (0);
-  
+
   for (LOCALITY_MAP::const_iterator i = this->localities_.begin ();
        i != this->localities_.end (); ++i)
     {
@@ -262,10 +262,10 @@ NodeApplication_Impl::start_launch_instances (const Deployment::Properties &prop
           Deployment::Connections_var instance_references;
           i->second->startLaunch (prop,
                                   instance_references.out ());
-          
-          
+
+
           providedReference->length (retval_pos + instance_references->length ());
-          
+
           for (CORBA::ULong ir_pos = 0;
                ir_pos < instance_references->length ();
                ++ir_pos)

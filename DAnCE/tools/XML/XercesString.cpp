@@ -68,7 +68,7 @@ namespace DAnCE
     {
       int iTailLen = XMLString::stringLen(tail);
       int iWorkLen = XMLString::stringLen(_wstr);
-      
+
       XMLSize_t bytes = (iWorkLen + iTailLen + 1) * sizeof (XMLCh);
       void *tmp = XMLPlatformUtils::fgMemoryManager->allocate (bytes);
       XMLCh *result = reinterpret_cast<XMLCh *> (tmp);
@@ -128,14 +128,14 @@ namespace DAnCE
     {
       return _wstr[i];
     }
-  
-    XMLCh * XStr::release (void) 
-    { 
+
+    XMLCh * XStr::release (void)
+    {
       XMLCh* tmp = _wstr;
       this->_wstr = 0;
       return tmp;
     }
-    
+
     void
     XStr::reset (void)
     {

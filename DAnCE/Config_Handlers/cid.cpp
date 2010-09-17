@@ -22,12 +22,12 @@ namespace DAnCE
   namespace Config_Handlers
   {
     // ComponentPackageReference
-    // 
+    //
 
     ComponentPackageReference::
     ComponentPackageReference (::DAnCE::Config_Handlers::ComponentInterfaceDescription const& requiredType__)
-    : 
-    ::XSCRT::Type (), 
+    :
+    ::XSCRT::Type (),
     requiredType_ (new ::DAnCE::Config_Handlers::ComponentInterfaceDescription (requiredType__)),
     regulator__ ()
     {
@@ -68,7 +68,7 @@ namespace DAnCE
 
 
     // ComponentPackageReference
-    // 
+    //
     bool ComponentPackageReference::
     requiredUUID_p () const
     {
@@ -97,7 +97,7 @@ namespace DAnCE
     }
 
     // ComponentPackageReference
-    // 
+    //
     bool ComponentPackageReference::
     requiredName_p () const
     {
@@ -126,7 +126,7 @@ namespace DAnCE
     }
 
     // ComponentPackageReference
-    // 
+    //
     ::DAnCE::Config_Handlers::ComponentInterfaceDescription const& ComponentPackageReference::
     requiredType () const
     {
@@ -141,11 +141,11 @@ namespace DAnCE
 
 
     // SubcomponentInstantiationDescription
-    // 
+    //
 
     SubcomponentInstantiationDescription::
     SubcomponentInstantiationDescription (::XMLSchema::string< ACE_TCHAR > const& name__)
-    : 
+    :
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     regulator__ ()
     {
@@ -211,7 +211,7 @@ namespace DAnCE
 
 
     // SubcomponentInstantiationDescription
-    // 
+    //
     ::XMLSchema::string< ACE_TCHAR > const& SubcomponentInstantiationDescription::
     name () const
     {
@@ -225,7 +225,7 @@ namespace DAnCE
     }
 
     // SubcomponentInstantiationDescription
-    // 
+    //
     bool SubcomponentInstantiationDescription::
     basePackage_p () const
     {
@@ -254,7 +254,7 @@ namespace DAnCE
     }
 
     // SubcomponentInstantiationDescription
-    // 
+    //
     bool SubcomponentInstantiationDescription::
     specializedConfig_p () const
     {
@@ -283,7 +283,7 @@ namespace DAnCE
     }
 
     // SubcomponentInstantiationDescription
-    // 
+    //
     SubcomponentInstantiationDescription::selectRequirement_iterator SubcomponentInstantiationDescription::
     begin_selectRequirement ()
     {
@@ -321,7 +321,7 @@ namespace DAnCE
     }
 
     // SubcomponentInstantiationDescription
-    // 
+    //
     SubcomponentInstantiationDescription::configProperty_iterator SubcomponentInstantiationDescription::
     begin_configProperty ()
     {
@@ -359,7 +359,7 @@ namespace DAnCE
     }
 
     // SubcomponentInstantiationDescription
-    // 
+    //
     bool SubcomponentInstantiationDescription::
     referencedPackage_p () const
     {
@@ -388,7 +388,7 @@ namespace DAnCE
     }
 
     // SubcomponentInstantiationDescription
-    // 
+    //
     bool SubcomponentInstantiationDescription::
     importedPackage_p () const
     {
@@ -417,7 +417,7 @@ namespace DAnCE
     }
 
     // SubcomponentInstantiationDescription
-    // 
+    //
     bool SubcomponentInstantiationDescription::
     id_p () const
     {
@@ -453,12 +453,12 @@ namespace DAnCE
 
 
     // SubcomponentPropertyReference
-    // 
+    //
 
     SubcomponentPropertyReference::
     SubcomponentPropertyReference (::XMLSchema::string< ACE_TCHAR > const& propertyName__,
                                    ::DAnCE::Config_Handlers::IdRef const& instance__)
-    : 
+    :
     propertyName_ (new ::XMLSchema::string< ACE_TCHAR > (propertyName__)),
     instance_ (new ::DAnCE::Config_Handlers::IdRef (instance__)),
     regulator__ ()
@@ -491,7 +491,7 @@ namespace DAnCE
 
 
     // SubcomponentPropertyReference
-    // 
+    //
     ::XMLSchema::string< ACE_TCHAR > const& SubcomponentPropertyReference::
     propertyName () const
     {
@@ -505,7 +505,7 @@ namespace DAnCE
     }
 
     // SubcomponentPropertyReference
-    // 
+    //
     ::DAnCE::Config_Handlers::IdRef const& SubcomponentPropertyReference::
     instance () const
     {
@@ -520,12 +520,12 @@ namespace DAnCE
 
 
     // AssemblyPropertyMapping
-    // 
+    //
 
     AssemblyPropertyMapping::
     AssemblyPropertyMapping (::XMLSchema::string< ACE_TCHAR > const& name__,
                              ::XMLSchema::string< ACE_TCHAR > const& externalName__)
-    : 
+    :
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     externalName_ (new ::XMLSchema::string< ACE_TCHAR > (externalName__)),
     regulator__ ()
@@ -561,7 +561,7 @@ namespace DAnCE
 
 
     // AssemblyPropertyMapping
-    // 
+    //
     ::XMLSchema::string< ACE_TCHAR > const& AssemblyPropertyMapping::
     name () const
     {
@@ -575,7 +575,7 @@ namespace DAnCE
     }
 
     // AssemblyPropertyMapping
-    // 
+    //
     ::XMLSchema::string< ACE_TCHAR > const& AssemblyPropertyMapping::
     externalName () const
     {
@@ -589,7 +589,7 @@ namespace DAnCE
     }
 
     // AssemblyPropertyMapping
-    // 
+    //
     AssemblyPropertyMapping::delegatesTo_iterator AssemblyPropertyMapping::
     begin_delegatesTo ()
     {
@@ -628,7 +628,7 @@ namespace DAnCE
 
 
     // LocalityKind
-    // 
+    //
 
     LocalityKind::Value LocalityKind::
     integral () const
@@ -655,12 +655,12 @@ namespace DAnCE
     }
 
     // Locality
-    // 
+    //
 
     Locality::
     Locality (::DAnCE::Config_Handlers::LocalityKind const& constraint__,
               ::DAnCE::Config_Handlers::IdRef const& constrainedInstance__)
-    : 
+    :
     constraint_ (new ::DAnCE::Config_Handlers::LocalityKind (constraint__)),
     constrainedInstance_ (new ::DAnCE::Config_Handlers::IdRef (constrainedInstance__)),
     regulator__ ()
@@ -693,7 +693,7 @@ namespace DAnCE
 
 
     // Locality
-    // 
+    //
     ::DAnCE::Config_Handlers::LocalityKind const& Locality::
     constraint () const
     {
@@ -707,7 +707,7 @@ namespace DAnCE
     }
 
     // Locality
-    // 
+    //
     ::DAnCE::Config_Handlers::IdRef const& Locality::
     constrainedInstance () const
     {
@@ -722,11 +722,11 @@ namespace DAnCE
 
 
     // ComponentAssemblyDescription
-    // 
+    //
 
     ComponentAssemblyDescription::
     ComponentAssemblyDescription ()
-    : 
+    :
     regulator__ ()
     {
     }
@@ -759,7 +759,7 @@ namespace DAnCE
 
 
     // ComponentAssemblyDescription
-    // 
+    //
     ComponentAssemblyDescription::instance_iterator ComponentAssemblyDescription::
     begin_instance ()
     {
@@ -797,7 +797,7 @@ namespace DAnCE
     }
 
     // ComponentAssemblyDescription
-    // 
+    //
     ComponentAssemblyDescription::connection_iterator ComponentAssemblyDescription::
     begin_connection ()
     {
@@ -835,7 +835,7 @@ namespace DAnCE
     }
 
     // ComponentAssemblyDescription
-    // 
+    //
     ComponentAssemblyDescription::externalProperty_iterator ComponentAssemblyDescription::
     begin_externalProperty ()
     {
@@ -873,7 +873,7 @@ namespace DAnCE
     }
 
     // ComponentAssemblyDescription
-    // 
+    //
     ComponentAssemblyDescription::locality_iterator ComponentAssemblyDescription::
     begin_locality ()
     {
@@ -912,11 +912,11 @@ namespace DAnCE
 
 
     // MonolithicImplementationDescription
-    // 
+    //
 
     MonolithicImplementationDescription::
     MonolithicImplementationDescription ()
-    : 
+    :
     regulator__ ()
     {
     }
@@ -949,7 +949,7 @@ namespace DAnCE
 
 
     // MonolithicImplementationDescription
-    // 
+    //
     MonolithicImplementationDescription::nodeExecParameter_iterator MonolithicImplementationDescription::
     begin_nodeExecParameter ()
     {
@@ -987,7 +987,7 @@ namespace DAnCE
     }
 
     // MonolithicImplementationDescription
-    // 
+    //
     MonolithicImplementationDescription::componentExecParameter_iterator MonolithicImplementationDescription::
     begin_componentExecParameter ()
     {
@@ -1025,7 +1025,7 @@ namespace DAnCE
     }
 
     // MonolithicImplementationDescription
-    // 
+    //
     MonolithicImplementationDescription::deployRequirement_iterator MonolithicImplementationDescription::
     begin_deployRequirement ()
     {
@@ -1063,7 +1063,7 @@ namespace DAnCE
     }
 
     // MonolithicImplementationDescription
-    // 
+    //
     MonolithicImplementationDescription::primaryArtifact_iterator MonolithicImplementationDescription::
     begin_primaryArtifact ()
     {
@@ -1102,11 +1102,11 @@ namespace DAnCE
 
 
     // ComponentImplementationDescription
-    // 
+    //
 
     ComponentImplementationDescription::
     ComponentImplementationDescription ()
-    : 
+    :
     regulator__ ()
     {
     }
@@ -1179,7 +1179,7 @@ namespace DAnCE
 
 
     // ComponentImplementationDescription
-    // 
+    //
     bool ComponentImplementationDescription::
     label_p () const
     {
@@ -1208,7 +1208,7 @@ namespace DAnCE
     }
 
     // ComponentImplementationDescription
-    // 
+    //
     bool ComponentImplementationDescription::
     UUID_p () const
     {
@@ -1237,7 +1237,7 @@ namespace DAnCE
     }
 
     // ComponentImplementationDescription
-    // 
+    //
     bool ComponentImplementationDescription::
     implements_p () const
     {
@@ -1266,7 +1266,7 @@ namespace DAnCE
     }
 
     // ComponentImplementationDescription
-    // 
+    //
     bool ComponentImplementationDescription::
     assemblyImpl_p () const
     {
@@ -1295,7 +1295,7 @@ namespace DAnCE
     }
 
     // ComponentImplementationDescription
-    // 
+    //
     bool ComponentImplementationDescription::
     monolithicImpl_p () const
     {
@@ -1324,7 +1324,7 @@ namespace DAnCE
     }
 
     // ComponentImplementationDescription
-    // 
+    //
     ComponentImplementationDescription::configProperty_iterator ComponentImplementationDescription::
     begin_configProperty ()
     {
@@ -1362,7 +1362,7 @@ namespace DAnCE
     }
 
     // ComponentImplementationDescription
-    // 
+    //
     ComponentImplementationDescription::capability_iterator ComponentImplementationDescription::
     begin_capability ()
     {
@@ -1400,7 +1400,7 @@ namespace DAnCE
     }
 
     // ComponentImplementationDescription
-    // 
+    //
     ComponentImplementationDescription::dependsOn_iterator ComponentImplementationDescription::
     begin_dependsOn ()
     {
@@ -1438,7 +1438,7 @@ namespace DAnCE
     }
 
     // ComponentImplementationDescription
-    // 
+    //
     ComponentImplementationDescription::infoProperty_iterator ComponentImplementationDescription::
     begin_infoProperty ()
     {
@@ -1476,7 +1476,7 @@ namespace DAnCE
     }
 
     // ComponentImplementationDescription
-    // 
+    //
     bool ComponentImplementationDescription::
     href_p () const
     {
@@ -1512,11 +1512,11 @@ namespace DAnCE
 
 
     // ConnectorImplementationDescription
-    // 
+    //
 
     ConnectorImplementationDescription::
     ConnectorImplementationDescription ()
-    : 
+    :
     regulator__ ()
     {
     }
@@ -1589,7 +1589,7 @@ namespace DAnCE
 
 
     // ConnectorImplementationDescription
-    // 
+    //
     bool ConnectorImplementationDescription::
     label_p () const
     {
@@ -1618,7 +1618,7 @@ namespace DAnCE
     }
 
     // ConnectorImplementationDescription
-    // 
+    //
     bool ConnectorImplementationDescription::
     UUID_p () const
     {
@@ -1647,7 +1647,7 @@ namespace DAnCE
     }
 
     // ConnectorImplementationDescription
-    // 
+    //
     bool ConnectorImplementationDescription::
     implements_p () const
     {
@@ -1676,7 +1676,7 @@ namespace DAnCE
     }
 
     // ConnectorImplementationDescription
-    // 
+    //
     bool ConnectorImplementationDescription::
     assemblyImpl_p () const
     {
@@ -1705,7 +1705,7 @@ namespace DAnCE
     }
 
     // ConnectorImplementationDescription
-    // 
+    //
     bool ConnectorImplementationDescription::
     monolithicImpl_p () const
     {
@@ -1734,7 +1734,7 @@ namespace DAnCE
     }
 
     // ConnectorImplementationDescription
-    // 
+    //
     ConnectorImplementationDescription::configProperty_iterator ConnectorImplementationDescription::
     begin_configProperty ()
     {
@@ -1772,7 +1772,7 @@ namespace DAnCE
     }
 
     // ConnectorImplementationDescription
-    // 
+    //
     ConnectorImplementationDescription::capability_iterator ConnectorImplementationDescription::
     begin_capability ()
     {
@@ -1810,7 +1810,7 @@ namespace DAnCE
     }
 
     // ConnectorImplementationDescription
-    // 
+    //
     ConnectorImplementationDescription::dependsOn_iterator ConnectorImplementationDescription::
     begin_dependsOn ()
     {
@@ -1848,7 +1848,7 @@ namespace DAnCE
     }
 
     // ConnectorImplementationDescription
-    // 
+    //
     ConnectorImplementationDescription::infoProperty_iterator ConnectorImplementationDescription::
     begin_infoProperty ()
     {
@@ -1886,7 +1886,7 @@ namespace DAnCE
     }
 
     // ConnectorImplementationDescription
-    // 
+    //
     bool ConnectorImplementationDescription::
     href_p () const
     {
@@ -1959,7 +1959,7 @@ namespace DAnCE
           requiredType_->container (this);
         }
 
-        else 
+        else
         {
         }
       }
@@ -2022,7 +2022,7 @@ namespace DAnCE
           importedPackage (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -2040,7 +2040,7 @@ namespace DAnCE
           add_id(temp, dynamic_cast<XSCRT::Type*> (this));
         }
 
-        else 
+        else
         {
         }
       }
@@ -2073,7 +2073,7 @@ namespace DAnCE
           instance_->container (this);
         }
 
-        else 
+        else
         {
         }
       }
@@ -2112,7 +2112,7 @@ namespace DAnCE
           add_delegatesTo (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -2133,7 +2133,7 @@ namespace DAnCE
       else if (v == ACE_TEXT ("DifferentNode")) v_ = DifferentNode_l;
       else if (v == ACE_TEXT ("DifferentProcess")) v_ = DifferentProcess_l;
       else if (v == ACE_TEXT ("NoConstraint")) v_ = NoConstraint_l;
-      else 
+      else
       {
       }
     }
@@ -2150,7 +2150,7 @@ namespace DAnCE
       else if (v == ACE_TEXT ("DifferentNode")) v_ = DifferentNode_l;
       else if (v == ACE_TEXT ("DifferentProcess")) v_ = DifferentProcess_l;
       else if (v == ACE_TEXT ("NoConstraint")) v_ = NoConstraint_l;
-      else 
+      else
       {
       }
     }
@@ -2189,7 +2189,7 @@ namespace DAnCE
           constrainedInstance_->container (this);
         }
 
-        else 
+        else
         {
         }
       }
@@ -2234,7 +2234,7 @@ namespace DAnCE
           add_locality (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -2279,7 +2279,7 @@ namespace DAnCE
           add_primaryArtifact (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -2354,7 +2354,7 @@ namespace DAnCE
           add_infoProperty (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -2369,7 +2369,7 @@ namespace DAnCE
           href (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -2444,7 +2444,7 @@ namespace DAnCE
           add_infoProperty (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -2459,7 +2459,7 @@ namespace DAnCE
           href (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -5497,7 +5497,7 @@ namespace DAnCE
         else if (o == ::DAnCE::Config_Handlers::LocalityKind::DifferentNode) s = ACE_TEXT ("DifferentNode");
         else if (o == ::DAnCE::Config_Handlers::LocalityKind::DifferentProcess) s = ACE_TEXT ("DifferentProcess");
         else if (o == ::DAnCE::Config_Handlers::LocalityKind::NoConstraint) s = ACE_TEXT ("NoConstraint");
-        else 
+        else
         {
         }
 
