@@ -10,6 +10,8 @@
 #include "orbsvcs/AV/MCast.h"
 #include "orbsvcs/AV/Fill_ACE_QoS.h"
 
+#include "ace/OS_NS_strings.h"
+
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/AV/QoS_UDP.inl"
 #endif /* __ACE_INLINE__ */
