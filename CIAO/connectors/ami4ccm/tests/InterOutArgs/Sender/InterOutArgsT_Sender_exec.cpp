@@ -8,7 +8,7 @@
 namespace CIAO_InterOutArgsT_Sender_Impl
 {
   CORBA::Short nr_of_received = 0;
- 
+
   //============================================================
   // Facet Executor Implementation Class: MyFoo_callback_exec_i
   //============================================================
@@ -103,7 +103,7 @@ namespace CIAO_InterOutArgsT_Sender_Impl
   {
     excep_holder->raise_exception ();
   }
-  
+
   void
   MyFoo_callback_exec_i::var_div2_outs (
                      const InterOutArgsT::X_Union &x_uni,
@@ -165,7 +165,7 @@ namespace CIAO_InterOutArgsT_Sender_Impl
   {
     excep_holder->raise_exception ();
   }
-  
+
   //============================================================
   // Worker thread for asynchronous invocations for MyFoo
   //============================================================
@@ -183,12 +183,12 @@ namespace CIAO_InterOutArgsT_Sender_Impl
 
     if (CORBA::is_nil (my_foo_ami_))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :\tfoo_ami is NIL !\n"));  
+        ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :\tfoo_ami is NIL !\n"));
        return 1;
       }
     else
       {
-        //Invoke Asynchronous calls to test 
+        //Invoke Asynchronous calls to test
         my_foo_ami_->sendc_var_outs ( new MyFoo_callback_exec_i (),
                                       "Send me a double and a long.");
         my_foo_ami_->sendc_var_div_outs (new MyFoo_callback_exec_i ());
@@ -230,11 +230,11 @@ namespace CIAO_InterOutArgsT_Sender_Impl
           {
             ++nr_of_received;
           }
-      } 
+      }
     catch (const InterOutArgsT::InternalError&)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: synch_foo_generator::var_outs: "
-                              "Unexpected exception.\n"));  
+                              "Unexpected exception.\n"));
       }
     try
       {
@@ -247,13 +247,13 @@ namespace CIAO_InterOutArgsT_Sender_Impl
         else
          {
            ACE_ERROR ((LM_ERROR, "ERROR: synch_foo_generator::var_div_outs: "
-                                "Unexpected data returned.\n"));  
+                                "Unexpected data returned.\n"));
          }
       }
     catch (const InterOutArgsT::InternalError&)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: synch_foo_generator::var_div_outs: "
-                              "Unexpected exception.\n"));  
+                              "Unexpected exception.\n"));
       }
     return 0;
   }
@@ -313,12 +313,12 @@ namespace CIAO_InterOutArgsT_Sender_Impl
     if (nr_of_received == 6)
       {
         ACE_DEBUG ((LM_DEBUG, "OK: Sender received all expected data"
-                              " for syn- and asynchronous calls\n"));  
+                              " for syn- and asynchronous calls\n"));
       }
     else
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Sender didn't receive all expected data"
-                              " for syn- and asynchronous calls\n"));  
+                              " for syn- and asynchronous calls\n"));
       }
   }
 

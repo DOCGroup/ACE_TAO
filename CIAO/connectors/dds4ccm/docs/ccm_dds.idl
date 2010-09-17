@@ -13,7 +13,7 @@ module CCM_DDS {
     // ---------------------------
     typedef unsigned long                 DataNumber_t;    // count or index of data
     typedef sequence<DataNumber_t>        DataNumberSeq;
-    
+
     const DataNumber_t UNLIMITED = 0;
 
     enum AccessStatus {
@@ -28,7 +28,7 @@ module CCM_DDS {
         INSTANCE_FILTERED_OUT,
         INSTANCE_DELETED
         };
- 
+
     struct ReadInfo {
         DDS::InstanceHandle_t    instance_handle;
         DDS::Time_t                source_timestamp;
@@ -41,7 +41,7 @@ module CCM_DDS {
         string                 expression;
         DDS::StringSeq        parameters;
         };
-    
+
     // Data Listener control
     // ---------------------
     enum ListenerMode {
@@ -70,24 +70,24 @@ module CCM_DDS {
                                         // OUT_OF_RESOURCE (5)
         DataNumber_t index;                // of the erroneous
         };
-    
+
     exception NonChangeable {};
-    
+
     // ----------
     // Interfaces
     // ----------
-    
+
     // Listener Control
     // ----------------
     local interface DataListenerControl {
         attribute ListenerMode         mode;                // default NOT_ENABLED
         attribute DataNumber_t         max_delivered_data;    // default 0 (no limit)
         };
-    
+
     local interface StateListenerControl : DataListenerControl {
         attribute boolean             is_filter_interpreted;    // default FALSE
         };
-    
+
     // Content Filter Parameters Setting
     // ---------------------------------
     local interface ContentFilterSetting {
@@ -126,7 +126,7 @@ module CCM_DDS {
             in DDS::Entity                             the_entity,
             in DDS::StatusKind                        status_kind);
         };
-    
+
     // ---------------
     // Connector bases
     // ---------------
@@ -144,26 +144,26 @@ module CCM_DDS {
         attribute DDS::StringSeq            key_fields
             setraises (NonChangeable);
         };
-    
+
     // ===================================================================================
     // Typed sub-part
     //    (here are placed all the construct that are depending on the data type
     //     either directly or indirectly)
     // ===================================================================================
-    
+
     module Typed <typename T, sequence<T> TSeq> {
     // Gathers all the constructs that are dependent on the data type (T),
     // either directly -- interfaces making use of T or TSeq,
     // or indirectly -- porttypes using or providing those intefaces.
     // TSeq is passed as a second parameter to avoid creating a new sequence type.
-    
+
         // -------------------------------------
         // Interfaces to be 'used' or 'provided'
         // -------------------------------------
 
         // Data access - publishing side
         // -----------------------------
-    
+
         // -- InstanceHandle Manager
         local interface InstanceHandleManager {
             DDS::InstanceHandle_t register_instance (in T datum)
@@ -187,7 +187,7 @@ module CCM_DDS {
             // - if is_coherent_write, DDS write orders issued by a write_many
             //     are placed between begin/end coherent updates (even if an error occurs)
             };
-    
+
         // -- Updater: when the instance lifecycle is a concern
         local interface Updater : InstanceHandleManager {
             void create_one (in T datum)
@@ -199,7 +199,7 @@ module CCM_DDS {
             void delete_one (in T datum,in DDS::InstanceHandle_t instance_handle)
                 raises (NonExistent,
                     InternalError);
-    
+
             void create_many (in TSeq data)
                 raises (AlreadyCreated,
                     InternalError);
@@ -209,11 +209,11 @@ module CCM_DDS {
             void delete_many (in TSeq data)
                 raises (NonExistent,
                     InternalError);
-    
+
             attribute boolean is_global_scope                    // FALSE by default
                 setraises (NonChangeable);
             attribute boolean is_coherent_write;                // FALSE by default
-    
+
             // behavior
             // --------
             // - the handle is exactly managed as by DDS (cf. DDS spec for more details)
@@ -235,7 +235,7 @@ module CCM_DDS {
 
         // Data access - subscribing side
         // ------------------------------
-    
+
         // -- Reader: to simply access to the available data (no wait)
         local interface Reader {
             void read_last (inout TSeq data, inout ReadInfoSeq infos)
@@ -390,7 +390,7 @@ module CCM_DDS {
             uses DDS::DataReader        dds_entity;
             provides PortStatusListener status;
             };
-    
+
         // ----------------------------
         // Connectors
         // (Correspond to DDS patterns)

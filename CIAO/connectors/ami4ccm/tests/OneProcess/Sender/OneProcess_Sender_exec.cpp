@@ -75,13 +75,13 @@ namespace CIAO_OneProcess_Sender_Impl
         if (CORBA::is_nil (my_foo_ami_))
           {
              ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :"
-                                   "\tfoo_ami is NIL !\n"));  
+                                   "\tfoo_ami is NIL !\n"));
              return 1;
           }
         if (asynch == true)
           {
             //expect to have receive an answer before you come here again.
-            //if asynch == true, error because no answer received in 
+            //if asynch == true, error because no answer received in
             //MyFoo_callback_exec_i::foo
             ACE_ERROR ((LM_ERROR, "ERROR: not received synchronus answer "
                                    "for asynchronous call\n"));
@@ -89,12 +89,12 @@ namespace CIAO_OneProcess_Sender_Impl
         else
           {
             ++nr_of_sent;
-            //Invoke Asynchronous calls to test 
+            //Invoke Asynchronous calls to test
             if (i == 0)
-              {  
+              {
                 asynch = true;
                 my_foo_ami_->sendc_foo ( cb0.in(),"Hi 1", 1);
-              }   
+              }
             else if (i == 1)
               {
                 asynch = true;
@@ -222,14 +222,14 @@ namespace CIAO_OneProcess_Sender_Impl
   {
     if ((asynch == true) || (nr_of_sent.value() != 5))
       {
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                    "ERROR: All in one proces worked asynchronous, "
-                   "this was not expected!\n"));  
+                   "this was not expected!\n"));
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, 
-                   "OK: All in one proces worked synchronous as expected\n"));  
+        ACE_DEBUG ((LM_DEBUG,
+                   "OK: All in one proces worked synchronous as expected\n"));
       }
   }
 

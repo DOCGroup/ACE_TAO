@@ -107,7 +107,7 @@ namespace CIAO_InterInArgsT_Sender_Impl
   {
     excep_holder->raise_exception ();
   }
-  
+
   void
   MyFoo_callback_exec_i::var_div2_ins (
                     const char * /*answer*/)
@@ -122,7 +122,7 @@ namespace CIAO_InterInArgsT_Sender_Impl
     excep_holder->raise_exception ();
   }
 
-  void 
+  void
   MyFoo_callback_exec_i::enum_in(const char * /*answer*/)
   {
     ++nr_of_received;
@@ -134,7 +134,7 @@ namespace CIAO_InterInArgsT_Sender_Impl
   {
     excep_holder->raise_exception ();
   }
-  
+
   //============================================================
   // Worker thread for asynchronous invocations for MyFoo
   //============================================================
@@ -152,12 +152,12 @@ namespace CIAO_InterInArgsT_Sender_Impl
 
     if (CORBA::is_nil (my_foo_ami_))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :\tfoo_ami is NIL !\n"));  
+        ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :\tfoo_ami is NIL !\n"));
        return 1;
       }
     else
       {
-        //Invoke Asynchronous calls to test 
+        //Invoke Asynchronous calls to test
         my_foo_ami_->sendc_foo ( new MyFoo_callback_exec_i (),
                                 "Hi", cmd_asynch_ok);
         //this shoukd invoke a exception
@@ -165,7 +165,7 @@ namespace CIAO_InterInArgsT_Sender_Impl
                                 "", cmd_asynch_nok);
         my_foo_ami_->sendc_var_ins( new MyFoo_callback_exec_i (),
                                    "Here a double for you.", 1.6);
-         
+
         InterInArgsT::TestTopic test_topic;
         test_topic.key = "aaa";
         test_topic.x = 10;
@@ -179,7 +179,7 @@ namespace CIAO_InterInArgsT_Sender_Impl
             for (CORBA::UShort y = 0; y < 5; y ++)
               {
                 topic_arr[i].x_array[y] = i * 100 + y ;
-              } 
+              }
           }
         my_foo_ami_->sendc_var_div_ins (new MyFoo_callback_exec_i (),
                                         test_topic,topic_str,topic_arr);
@@ -191,13 +191,13 @@ namespace CIAO_InterInArgsT_Sender_Impl
         ttt.x_teststr = "fff" ;
         InterInArgsT::test_seq seq;
         seq.length(2);
-        seq[0] = ttt; 
+        seq[0] = ttt;
 
         my_foo_ami_->sendc_var_div2_ins (new MyFoo_callback_exec_i (),
                                          topic_union, seq);
         InterInArgsT::test_enum in_test;
         in_test = ::InterInArgsT::ONE;
-        my_foo_ami_->sendc_enum_in(new MyFoo_callback_exec_i (), 
+        my_foo_ami_->sendc_enum_in(new MyFoo_callback_exec_i (),
                                           in_test);
       }
     return 0;
@@ -229,11 +229,11 @@ namespace CIAO_InterInArgsT_Sender_Impl
           {
             ++nr_of_received;
           }
-      } 
+      }
     catch (const InterInArgsT::InternalError&)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: synch_foo_generator::foo: "
-                              "Unexpected exception.\n"));  
+                              "Unexpected exception.\n"));
       }
     try
       {
@@ -304,7 +304,7 @@ namespace CIAO_InterInArgsT_Sender_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: not received the expected number of"
                               " exceptions"
                               "Expected: 2, Received: %u.\n",
-                              nr_of_excep_received));  
+                              nr_of_excep_received));
       }
     if (nr_of_received != 6)
       {
@@ -312,13 +312,13 @@ namespace CIAO_InterInArgsT_Sender_Impl
                               " of callbacks and returns  for syn- and "
                               "asynchronous calls. Expected: 6,"
                               " Received: %u.\n",
-                              nr_of_excep_received));  
+                              nr_of_excep_received));
       }
     if ((nr_of_received == 6) && (nr_of_excep_received == 2))
       {
         ACE_DEBUG ((LM_DEBUG, "OK: Sender received the expected number of"
                               " callbacks and exceptions for syn- and "
-                              "asynchronous calls\n"));  
+                              "asynchronous calls\n"));
       }
   }
 

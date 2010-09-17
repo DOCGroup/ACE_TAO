@@ -89,7 +89,7 @@ namespace CIAO
                      CLINFO
                      "CIAO::Session_Container: Unable "
                      "to initialize the POA.\n"));
-        
+
         throw Components::CreateFailure ();
       }
 
@@ -1038,7 +1038,7 @@ namespace CIAO
             CIAO_ERROR (1, (LM_EMERGENCY, "ex in ref to servant\n"));
             throw CIAO::InvalidComponent ();
           }
-        
+
         if (!svt)
           {
             CIAO_ERROR (1, (LM_EMERGENCY, "invalid servant reference\n"));
@@ -1057,7 +1057,7 @@ namespace CIAO
                              "Session_Container::set_attributes - "
                              "Configuring attribute values on "
                              "component object reference.\n"));
-                
+
                 comp->set_attributes (values);
               }
             else if ((home = dynamic_cast <CIAO::Home_Servant_Impl_Base *> (svt.in ())))
@@ -1068,10 +1068,10 @@ namespace CIAO
                              "Session_Container::set_attributes - "
                              "Configuring attribute values on "
                              "home object reference.\n"));
-                
+
                 home->set_attributes (values);
               }
-            else 
+            else
               {
                 CIAO_ERROR (1, (LM_EMERGENCY, "not home or component\n"));
                 throw CIAO::InvalidComponent ();
@@ -1123,7 +1123,7 @@ namespace CIAO
 
         CIAO::Connector_Servant_Impl_Base * svt = 0;
         PortableServer::ServantBase_var servant_from_reference;
-        
+
         try
           {
             servant_from_reference =

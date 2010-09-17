@@ -12,7 +12,7 @@ module Simple
   {
     uses Trigger trig;
   };
-  
+
   home SimpleUserHome manages SimpleUser
   {
   };

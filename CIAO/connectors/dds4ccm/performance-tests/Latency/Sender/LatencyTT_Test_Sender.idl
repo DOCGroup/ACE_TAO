@@ -22,7 +22,7 @@ module LatencyTT_Test
     provides CCM_DDS::ConnectorStatusListener connector_status;
 
     attribute unsigned long iterations;
-    attribute unsigned short sleep; 
+    attribute unsigned short sleep;
     attribute unsigned short number_of_sub; //number of subscribers
   };
 };

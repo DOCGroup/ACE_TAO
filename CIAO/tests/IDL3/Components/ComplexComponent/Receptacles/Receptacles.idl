@@ -13,7 +13,7 @@ module ReceptaclesSingle
   interface foo_interface
     {
     };
-  
+
   interface bar_interface
     {
     };
@@ -22,23 +22,23 @@ module ReceptaclesSingle
     {
       uses foo_interface u_foo;
     };
-  
+
   component Bar : Foo
     {
       uses bar_interface u_bar;
     };
-  
+
   component FooBar
     {
       uses foo_interface foo;
       uses bar_interface bar;
     };
-  
+
   component ObjectFoo
     {
       uses Object foo;
     };
-  
+
 };
 
 module ReceptaclesMultiple
@@ -46,21 +46,21 @@ module ReceptaclesMultiple
   interface foo_interface
     {
     };
-  
+
   interface bar_interface
     {
     };
-  
+
   component Foo
     {
       uses multiple foo_interface um_foo;
     };
-  
+
   component Bar
     {
       uses multiple bar_interface um_bar;
     };
-  
+
   component ObjectFoo
     {
       uses multiple Object foo;

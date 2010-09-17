@@ -238,7 +238,7 @@ namespace CIAO_Hello_Sender_Impl
                 ACE_TEXT("Sender (SYNCH):\tInvoked synchronous call ")
                 ACE_TEXT("(HELLO) answer <%u>\n"), answer));
 
-        try 
+        try
           {
             CORBA::Short rw_attrib = my_foo_ami_->rw_attrib ();
             ACE_DEBUG ((LM_DEBUG,
@@ -251,8 +251,8 @@ namespace CIAO_Hello_Sender_Impl
                 ACE_TEXT("Sender (SYNCH FOO) :\tExpected Except caught :")
                 ACE_TEXT(" <%u> <%C>\n"), ex.id, ex.error_string.in ()));
           }
-          
-        try 
+
+        try
           {
             my_foo_ami_->rw_attrib (15);
             ACE_DEBUG ((LM_DEBUG,
@@ -266,7 +266,7 @@ namespace CIAO_Hello_Sender_Impl
                 ACE_TEXT(" <%u> <%C>\n"), ex.id, ex.error_string.in ()));
           }
 
-        try 
+        try
           {
             CORBA::Short ro_attrib = my_foo_ami_->ro_attrib ();
             ACE_DEBUG ((LM_DEBUG,

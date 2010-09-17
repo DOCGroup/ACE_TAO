@@ -74,7 +74,7 @@
         </value>
       </value>
     </execParameter>
-</implementation>    
+</implementation>
   <instance xmi:id="Null_ComponentHomeInstance">
   <name>Null_ComponentHome</name>
   <node>NodeOne</node>
@@ -117,5 +117,5 @@
   <source/>
   <node/>
   <location>Null_Component_stub</location>
-</artifact>  
+</artifact>
 </Deployment:DeploymentPlan>

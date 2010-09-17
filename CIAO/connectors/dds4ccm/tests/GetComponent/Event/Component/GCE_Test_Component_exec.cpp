@@ -156,7 +156,7 @@ namespace CIAO_GCE_Test_GetComponentEventTestComponent_Impl
                               ACE_TEXT ("getter_data\n")));
       }
     catch (...)
-      {        
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_getter - ")
                               ACE_TEXT ("Unknown exception caught while testing ")
                               ACE_TEXT ("getter_data\n")));
@@ -195,7 +195,7 @@ namespace CIAO_GCE_Test_GetComponentEventTestComponent_Impl
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_getter - ")
                               ACE_TEXT ("CORBA exception caught while testing ")
                               ACE_TEXT ("getter_fresh_data\n")));
-      }    
+      }
     catch (...)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_getter - ")

@@ -35,52 +35,52 @@ namespace CIAO_locality_Shutdown_Impl
   //============================================================
   // Component Executor Implementation Class: Shutdown_exec_i
   //============================================================
-  
+
   Shutdown_exec_i::Shutdown_exec_i (void)
   {
   }
-  
+
   Shutdown_exec_i::~Shutdown_exec_i (void)
   {
   }
-  
+
   // Supported operations and attributes.
-  
+
   // Component attributes and port operations.
-  
+
   // Operations from Components::SessionComponent.
-  
+
   void
   Shutdown_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
     this->ciao_context_ =
       ::locality::CCM_Shutdown_Context::_narrow (ctx);
-    
+
     if ( ::CORBA::is_nil (this->ciao_context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
   }
-  
+
   void
   Shutdown_exec_i::configuration_complete (void)
   {
     /* Your code here. */
   }
-  
+
   void
   Shutdown_exec_i::ccm_activate (void)
   {
-    ::DAnCE::LocalityManager_var lm = 
+    ::DAnCE::LocalityManager_var lm =
       this->ciao_context_->get_connection_lm_port ();
-    
+
     if (CORBA::is_nil (lm.in ()))
       {
         ACE_ERROR ((LM_ERROR, "Error: lm_port has a nil reference\n"));
         return;
       }
-    
+
     try
       {
         lm->shutdown ();
@@ -91,29 +91,29 @@ namespace CIAO_locality_Shutdown_Impl
                     ex._info ().c_str ()));
       }
   }
-  
+
   void
   Shutdown_exec_i::ccm_passivate (void)
   {
     /* Your code here. */
   }
-  
+
   void
   Shutdown_exec_i::ccm_remove (void)
   {
     /* Your code here. */
   }
-  
+
   extern "C" COMMANDLINEPASSAGE_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_locality_Shutdown_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_NORETURN (
       retval,
       Shutdown_exec_i);
-    
+
     return retval;
   }
 }

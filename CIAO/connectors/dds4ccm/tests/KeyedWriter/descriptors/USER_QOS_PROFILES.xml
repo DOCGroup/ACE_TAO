@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
 
 Description
-XML QoS Profile 
+XML QoS Profile
 
-The QoS configuration of the DDS entities in the generated example is 
+The QoS configuration of the DDS entities in the generated example is
 loaded from this file.
 
 This file is used only when it is in the current working directory
 or when the enviroment variable
 NDDS_QOS_PROFILES is defined and points to this file.
 
-For more information about XML QoS Profiles see Chapter 15 in the 
+For more information about XML QoS Profiles see Chapter 15 in the
 RTI Data Distribution Service user manual.
 -->
 <dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="c:/ndds/ndds.4.4d/scripts/../resource/rtiddsgen/../qos_profiles_4.4d/schema/rti_dds_qos_profiles.xsd" version="4.4d">
@@ -20,7 +20,7 @@ RTI Data Distribution Service user manual.
         A QoS library is a named set of QoS profiles.
     -->
   <qos_library name="KeyedWriter_Library">
-    <!-- QoS profile used to configure reliable communication between the DataWriter 
+    <!-- QoS profile used to configure reliable communication between the DataWriter
              and DataReader created in the example code.
 
              A QoS profile groups a set of related QoS.

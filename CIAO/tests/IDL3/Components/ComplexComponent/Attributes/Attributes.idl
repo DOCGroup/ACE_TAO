@@ -13,37 +13,37 @@ module Attributes
       attribute float test;
       attribute long testA, testB;
     };
-  
+
   component Bar
     {
       readonly attribute float test1;
       readonly attribute long testB, testC;
     };
-  
+
   exception FooException
     {
     };
-  
+
   exception BarException
     {
     };
-  
+
   component FooRaises
     {
       attribute float test2 getraises (FooException);
     };
-  
+
   component BarRaises
     {
       attribute float test3 setraises (BarException);
     };
-  
+
   component FooBarRaises
     {
-      attribute float test4 
+      attribute float test4
         getraises (FooException) setraises (BarException);
     };
-  
+
   component ROFooRaises
     {
       readonly attribute float test5 raises (FooException);

@@ -15,7 +15,7 @@ namespace CIAO_InterOutArgsT_Receiver_Impl
   }
 
   void
-  MyFoo_exec_i::var_outs (const char * /*in_str*/,  
+  MyFoo_exec_i::var_outs (const char * /*in_str*/,
                           ::CORBA::String_out answer,
                           ::CORBA::Double_out d_cmd,
                           ::CORBA::Long_out l_cmd)
@@ -25,15 +25,15 @@ namespace CIAO_InterOutArgsT_Receiver_Impl
     l_cmd = 100;
   }
 
-  void  MyFoo_exec_i::var_div_outs (::InterOutArgsT::TestTopic_out test_topic, 
-                                    ::InterOutArgsT::TopicString_out topic_str, 
+  void  MyFoo_exec_i::var_div_outs (::InterOutArgsT::TestTopic_out test_topic,
+                                    ::InterOutArgsT::TopicString_out topic_str,
                                     ::InterOutArgsT::TopicArray_out topic_arr)
   {
     InterOutArgsT::TestTopic *new_topic = new InterOutArgsT::TestTopic();
     test_topic = new_topic;
     test_topic->key = CORBA::string_dup("aaa");
     test_topic->x = 10;
- 
+
     topic_str = new InterOutArgsT::TopicString();
     topic_str->key = CORBA::string_dup("bbb");
     topic_str->x_str = CORBA::string_dup("ccc");
@@ -46,18 +46,18 @@ namespace CIAO_InterOutArgsT_Receiver_Impl
       }
   }
 
-  void  MyFoo_exec_i::var_div2_outs (::InterOutArgsT::X_Union_out x_uni, 
+  void  MyFoo_exec_i::var_div2_outs (::InterOutArgsT::X_Union_out x_uni,
                                      ::InterOutArgsT::test_seq_out seq)
   {
     x_uni = new InterOutArgsT::X_Union();
     x_uni->x_long(11);
-    
+
     InterOutArgsT::test ttt;
     ttt.x_test = 12;
     ttt.x_teststr = CORBA::string_dup("fff") ;
     seq = new InterOutArgsT::test_seq();
     seq->length(2);
-    (*seq)[0]= ttt; 
+    (*seq)[0]= ttt;
   }
 
   void  MyFoo_exec_i::enum_out (::InterOutArgsT::test_enum_out out_test)

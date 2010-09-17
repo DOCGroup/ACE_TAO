@@ -10,9 +10,9 @@
 #define HISTORY_IDL
 
 #include "Message.idl"
-   
+
 #pragma ciao lem "HistoryE.idl"
-   
+
 interface History {
   Messages get_all();
   Message get_latest();

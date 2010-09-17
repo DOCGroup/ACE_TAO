@@ -55,7 +55,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
                           this->condition_manager_),
                         ::CORBA::NO_MEMORY ());
     }
-    
+
   ::DDS::ReturnCode_t const retcode = this->data_reader_->set_listener (
     this->listener_.in (),
     DataReaderListener_type::get_mask (status));

@@ -198,7 +198,7 @@ module HomeMod
 #if !defined (CCM_LW)
     finder kitchen_sink (in string uid, in pkey key, in boolean all)
       raises (ch_except);
-#endif      
+#endif
   };
 };
 

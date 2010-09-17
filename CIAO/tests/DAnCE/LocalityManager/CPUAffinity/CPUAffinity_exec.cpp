@@ -63,7 +63,7 @@ namespace CIAO_cpuaffinity_A_Impl
   {
 #if defined (LINUX_VERSION_CODE) && defined (KERNEL_VERSION)
 # if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,8))
-    
+
     if (ACE_OS::num_processors () < 2)
       {
         ACE_DEBUG ((LM_DEBUG, "This machine only has a single processor, aborting\n"));
@@ -74,13 +74,13 @@ namespace CIAO_cpuaffinity_A_Impl
     CPU_ZERO (&mask);
 
     int retval = sched_getaffinity (0, sizeof (cpu_set_t), &mask);
-    
+
     if (retval != 0)
       {
         ACE_ERROR ((LM_ERROR, "Error: Non-zero return value from sched_getaffinity %p\n"));
         return;
       }
-    
+
     int z_set = CPU_ISSET (0, &mask);
     int o_set = CPU_ISSET (1, &mask);
 
@@ -90,13 +90,13 @@ namespace CIAO_cpuaffinity_A_Impl
         ACE_ERROR ((LM_ERROR, "Error: Expected to only be on processor zero.\n"));
         return;
       }
-    
+
     if (cpu_affinity_ == 1 &&
         (z_set || !o_set))
       {
         ACE_ERROR ((LM_ERROR, "Error: Expected to only be on processor one.\n"));
       }
-    
+
     if (cpu_affinity_ > 1)
       {
         ACE_ERROR ((LM_ERROR, "Error: Trying to test an affinity I don't support\n"));

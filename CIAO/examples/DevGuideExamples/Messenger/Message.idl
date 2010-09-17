@@ -17,5 +17,5 @@ eventtype Message {
   public string text;
 };
 typedef sequence<Message> Messages;
-    
+
 #endif

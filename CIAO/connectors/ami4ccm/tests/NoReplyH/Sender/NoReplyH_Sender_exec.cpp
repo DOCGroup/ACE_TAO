@@ -127,7 +127,7 @@ namespace CIAO_NoReplyH_Sender_Impl
     ACE_OS::sleep (3);
     if (CORBA::is_nil (my_foo_ami_))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :\tfoo_ami is NIL !\n"));  
+        ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :\tfoo_ami is NIL !\n"));
         return 1;
       }
     else
@@ -136,7 +136,7 @@ namespace CIAO_NoReplyH_Sender_Impl
         //test with  replyhandler.
         my_foo_ami_->sendc_foo ( new MyFoo_callback_exec_i (),
                                  "Do something asynchronous");
-        
+
         //test without replyhandlers.
         my_foo_ami_->sendc_foo ( NoReplyH::AMI4CCM_MyFooReplyHandler::_nil (),
                           "Do something asynchronous with no replyhandler");
@@ -146,12 +146,12 @@ namespace CIAO_NoReplyH_Sender_Impl
                                           15);
         my_foo_ami_->sendc_get_ro_attrib (NoReplyH::AMI4CCM_MyFooReplyHandler::_nil ());
       }
-      //Invoke Asynchronous calls to test exception handling 
+      //Invoke Asynchronous calls to test exception handling
       //without replyhandlers.
       my_foo_ami_->sendc_foo ( NoReplyH::AMI4CCM_MyFooReplyHandler::_nil (), "");
       my_foo_ami_->sendc_set_rw_attrib (NoReplyH::AMI4CCM_MyFooReplyHandler::_nil (),
                                         0);
- 
+
       return 0;
   }
 
@@ -167,7 +167,7 @@ namespace CIAO_NoReplyH_Sender_Impl
   {
      ACE_OS::sleep (3);
     //run some synch calls
-    try 
+    try
       {
         CORBA::Short rw_attrib = my_foo_ami_->rw_attrib ();
         ACE_DEBUG ((LM_DEBUG, "OK: SYNCH rw_attrib() returns %u.\n",
@@ -178,7 +178,7 @@ namespace CIAO_NoReplyH_Sender_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: SYNCH rw_attrib(): "
                               "Unexpected return.\n"));
       }
-    try 
+    try
       {
         CORBA::Short ro_attrib = my_foo_ami_->ro_attrib ();
         ACE_DEBUG ((LM_DEBUG, "OK: SYNCH ro_attrib() returns %u.\n",

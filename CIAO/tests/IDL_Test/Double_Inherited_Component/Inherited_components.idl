@@ -25,7 +25,7 @@ module connector_test
     attribute string Z_a;
     void opZ ();
   };
-    
+
   component A
   {
     attribute string topic_name_a;

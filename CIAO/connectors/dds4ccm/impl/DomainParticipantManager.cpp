@@ -120,7 +120,7 @@ namespace CIAO
     DomainParticipantManager::~DomainParticipantManager (void)
     {
       DDS4CCM_TRACE ("DomainParticipantManager::~DomainParticipantManager");
-      
+
       DDSDomainParticipantFactory::finalize_instance ();
     }
 
@@ -229,7 +229,7 @@ namespace CIAO
           if (iter->second->_ref_count () == 1)
             {
               delete iter->second;
-              
+
               // Save to remove from list
               this->dps_.erase (iter);
             }
@@ -252,7 +252,7 @@ namespace CIAO
                                         DDSTopic * tp)
     {
       DDS4CCM_TRACE ("DomainParticipantManager::_inc_ref");
-      DomainParticipants_iterator iter = 
+      DomainParticipants_iterator iter =
         this->get_participanttopic_by_participant (dp);
       if (iter != this->dps_.end ())
         {

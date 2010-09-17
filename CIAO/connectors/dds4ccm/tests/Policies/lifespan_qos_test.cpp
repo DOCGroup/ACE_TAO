@@ -12,5 +12,5 @@ bool
 LifespanPolicyTest::check (const ::DDS_LifespanQosPolicy & dds_qos,
                            const ::DDS::LifespanQosPolicy & qos)
 {
-  return Duration::check (dds_qos.duration, qos.duration); 
+  return Duration::check (dds_qos.duration, qos.duration);
 }

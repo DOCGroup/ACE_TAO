@@ -12,7 +12,7 @@
 #pragma ciao lem "Hello_MyFoo_objE.idl"
 #pragma ciao ami4ccm interface "Hello::MyFoo_obj"
 #pragma ciao lem "Hello_MyFoo_objAE.idl"
-//needed for 'uses multiple', not used in this example 
+//needed for 'uses multiple', not used in this example
 #pragma ciao ami4ccm idl "Hello_MyFoo_objA.idl"
 
 module Hello

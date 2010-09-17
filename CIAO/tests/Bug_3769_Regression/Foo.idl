@@ -47,7 +47,7 @@ enum DataType2
   dtString,
   dtShortType
 };
-union Data2 switch (DataType2) 
+union Data2 switch (DataType2)
 {
   case dtString: string stringData;
   case dtShortType: short shortData;

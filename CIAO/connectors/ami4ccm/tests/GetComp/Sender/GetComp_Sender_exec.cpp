@@ -65,7 +65,7 @@ namespace CIAO_GetComp_Sender_Impl
                               ACE_TEXT (" :\tmy_foo_ami is NIL !\n")));
         return 1;
       }
- 
+
     CORBA::Object_var cmp;
     try
       {
@@ -97,7 +97,7 @@ namespace CIAO_GetComp_Sender_Impl
       {
         ::GetComp::AMI4CCM_MyFoo_Connector::CCM_AMI4CCM_Connector_var conn =
           ::GetComp::AMI4CCM_MyFoo_Connector::CCM_AMI4CCM_Connector::_narrow (cmp.in ());
-        
+
         if (::CORBA::is_nil (conn.in ()))
           {
             GetComp::InternalError ex (1, "Narrowed connector is nil.\n");
@@ -159,7 +159,7 @@ namespace CIAO_GetComp_Sender_Impl
   {
     if (GetComponent != true)
       {
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("ERROR:")
                     ACE_TEXT (" Sender not possible to get component\n")));
       }

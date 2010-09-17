@@ -1,6 +1,6 @@
 Error/Debug messages
 ========================
-ciao_debug_level () and associated environment are no longer used. 
+ciao_debug_level () and associated environment are no longer used.
 Instead, there are error message levels, in order from least to most
 severe:
 
@@ -15,7 +15,7 @@ LM_ALERT
 LM_EMERGENCY
 
 Please use the full range.  Severity LM_TRACE through LM_NOTICE should
-use ACE_DEBUG.  LM_WARNING through LM_EMERGENCY should use ACE_ERROR.  
+use ACE_DEBUG.  LM_WARNING through LM_EMERGENCY should use ACE_ERROR.
 
 The verbosity of the logging output, i.e. which severity of logging
 messages are output, is configured at runtime from the command line of
@@ -31,12 +31,12 @@ to report subactions (e.g. activiation of ports, establishment of
 connections), and LM_NOTICE should be used to report significant
 actions (e.g., component installation complete, container creation).
 
-Debug messages should begin with "ClassName::MethodName - ". 
+Debug messages should begin with "ClassName::MethodName - ".
 There is a macro in CIAO_common.h called CLINFO.  This macro expands
 to a set of default log message decorators, and should be prepended to
 any and all debug messages and error messages, e.g.:
 
-ACE_DEBUG((LM_INFO, CLINFO 
+ACE_DEBUG((LM_INFO, CLINFO
            "Servant_Activator::etherialize - Your message here"));
 
 It is VERY IMPORTANT to follow this format for EVERY MESSAGE to make

@@ -18,7 +18,7 @@ module Perf_Keyed_Test
   component Sender
   {
     port CCM_DDS::PerfKeyedTest::DDS_Write info_write;
-    attribute unsigned short keys;  
+    attribute unsigned short keys;
     attribute unsigned long iterations;
     attribute unsigned short latency_count; //number of samples sent before a latency ping packet is sent. default 100000, < sample_count
     attribute unsigned short sleep; //time in ms to sleep between each send

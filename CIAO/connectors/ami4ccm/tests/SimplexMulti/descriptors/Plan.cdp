@@ -105,7 +105,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
 <!-- conn one-->
   <implementation xmi:id="UsesSM_AMIOneHomeImplementation">
     <name>UsesSM_AMIHomeImplementation</name>
@@ -207,7 +207,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
     <instance xmi:id="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverA">
     <name>UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverA</name>
     <node>Receiver</node>
@@ -276,7 +276,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance xmi:id="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.Sender">
     <name>UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.Sender</name>
     <node>Sender</node>
@@ -346,7 +346,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance xmi:id="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.AMITwoS">
     <name>UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.AMITwoS</name>
     <node>Sender</node>
@@ -364,7 +364,7 @@
       </value>
     </configProperty>
   </instance>
- 
+
   <connection>
     <name>run_asynch_one_connectionA</name>
     <deployRequirement>
@@ -441,7 +441,7 @@
       <instance xmi:idref="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.AMITwoS" />
     </internalEndpoint>
   </connection>
- 
+
   <connection>
     <name>do_one_connectionA</name>
     <internalEndpoint>
@@ -603,7 +603,7 @@
       </value>
     </execParameter>
   </artifact>
-  
+
   <artifact xmi:id="UsesSM_AMITwo_ExecArtifact">
     <name>UsesSM.ImplementationArtifacts.AMIArtifacts.AMI_exec</name>
     <source/>

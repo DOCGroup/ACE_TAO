@@ -81,7 +81,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
                         PortStatusListener_type (status, reactor),
                         ::CORBA::NO_MEMORY ());
     }
-    
+
   ::DDS::ReturnCode_t const retcode = this->data_reader_->set_listener (
       this->listener_.in (),
       PortStatusListener_type::get_mask (status));

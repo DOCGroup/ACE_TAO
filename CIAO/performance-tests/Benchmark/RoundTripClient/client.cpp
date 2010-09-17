@@ -30,13 +30,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         = orb->string_to_object (ior);
       Benchmark::RoundTripClient_var test =
         Benchmark::RoundTripClient::_narrow(obj.in());
-        
+
       if (CORBA::is_nil (test.in ()))
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire RoundTripClient objref\n"), -1);
 
       // Get the RoundTrip reference
       obj = test->provide_facet ("controller");
-      Benchmark::Controller_var trigger = 
+      Benchmark::Controller_var trigger =
         Benchmark::Controller::_narrow (obj.in ());
 
       if (CORBA::is_nil (trigger.in ()))

@@ -26,10 +26,10 @@ public:
 
 int ACE_TMAIN(int argc, ACE_TCHAR** argv) {
   HelloListener listener;
-  int           main_result = 1; /* error by default */ 
+  int           main_result = 1; /* error by default */
   ::DDS::Topic * topic = 0;
   ::DDS::DataReader *data_reader = 0;
-  
+
   if (argc == 2)
     {
       char *end = 0;

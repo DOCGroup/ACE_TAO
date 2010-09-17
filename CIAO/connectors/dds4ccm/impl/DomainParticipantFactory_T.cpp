@@ -230,7 +230,7 @@ namespace CIAO
                         "type, bailing.\n"));
           return DDS::RETCODE_ERROR;
         }
-        
+
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, CLINFO
                     "CCM_DDS_DomainParticipantFactory_T"
                     "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_participant - "
@@ -244,7 +244,7 @@ namespace CIAO
                     "CCM_DDS_DomainParticipantFactory_T"
                     "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_participant - "
                     "Going to delete participant.\n"));
-                    
+
           retval = DDSDomainParticipantFactory::get_instance ()->
               delete_participant (part->get_impl ());
 

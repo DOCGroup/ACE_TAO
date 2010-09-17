@@ -62,24 +62,24 @@ namespace CIAO_DelReplyH_Sender_Impl
 
     if (CORBA::is_nil (my_foo_ami_))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :\tfoo_ami is NIL !\n"));  
+        ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :\tfoo_ami is NIL !\n"));
         return 1;
       }
     else
       {
         //Invoke Asynchronous calls
         //test with  replyhandler.
-        ::DelReplyH::CCM_AMI4CCM_MyFooReplyHandler_var cb = 
+        ::DelReplyH::CCM_AMI4CCM_MyFooReplyHandler_var cb =
           new MyFoo_callback_exec_i ();
         my_foo_ami_->sendc_foo(cb.in(),
                               "Do something asynchronous");
-   
+
       }
-      //Invoke Asynchronous calls to test exception handling 
+      //Invoke Asynchronous calls to test exception handling
       ::DelReplyH::CCM_AMI4CCM_MyFooReplyHandler_var cb2 =
           new MyFoo_callback_exec_i ();
       my_foo_ami_->sendc_foo (cb2.in (), "");
-      
+
       return 0;
   }
 
@@ -99,7 +99,7 @@ namespace CIAO_DelReplyH_Sender_Impl
       context_->get_connection_run_my_foo ();
 
     //run some synch calls
-    try 
+    try
       {
         CORBA::String_var answer;
         my_foo_ami_->foo("synchronous call", answer.out ());
@@ -173,7 +173,7 @@ namespace CIAO_DelReplyH_Sender_Impl
       }
     if ((nr_callbacks.value() == 0) && (nr_exceptions.value() == 1))
       {
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                 "OK: All constructed ReplyHandlers were deleted.\n"));
       }
   }

@@ -193,7 +193,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw ::CORBA::INTERNAL ();
       }
-      
+
     lc->mode (::CCM_DDS::ONE_BY_ONE);
   }
 

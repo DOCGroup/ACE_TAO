@@ -101,12 +101,12 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
         /* In this specific case, this will never fail */
         goto clean_exit;
     }
-    
+
     // Sleep a couple seconds to allow discovery to happen
     ACE_OS::sleep (1);
-    
+
     /* --- Write Data ----------------------------------------------------- */
-    
+
     for (int i = 0; i < number_of_iterations; i++)
       {
         ACE_TCHAR timestamp[16];

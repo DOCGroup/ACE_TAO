@@ -37,7 +37,7 @@ sub run_tests {
 
         print "Start sender with QoS profile <$qos>\n";
         $S = $tg_sender->CreateProcess ("$DDS4CCM_ROOT/performance-tests/DDSLatency/DDS_Sender/DDS_Sender", "-q $qos $rw_extra");
-  
+
         $S->SpawnWaitKill ($tg_sender->ProcessStartWaitInterval () + 180);
         $R->Kill ();
     }

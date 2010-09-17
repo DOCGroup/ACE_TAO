@@ -48,7 +48,7 @@ namespace CIAO_InterReturnT_Sender_Impl
   }
 
   void
-  MyFoo_callback_exec_i::ret_long (::CORBA::Long ami_return_val, 
+  MyFoo_callback_exec_i::ret_long (::CORBA::Long ami_return_val,
                            const char * /*answer*/, CORBA::Long l_cmd)
   {
     if ((l_cmd != 2) || (ami_return_val != 200))
@@ -190,7 +190,7 @@ namespace CIAO_InterReturnT_Sender_Impl
     MyFoo_callback_exec_i::ret_union (
                           const InterReturnT::X_Union &ami_return_val,
                           const char * /*answer*/, CORBA::Long l_cmd)
-  {     
+  {
     if ((l_cmd != 7) || (ami_return_val.x_long() != 11))
       {
         ACE_ERROR ((LM_ERROR, "ERROR MyFoo_callback_exec_i::ret_union: "
@@ -253,12 +253,12 @@ namespace CIAO_InterReturnT_Sender_Impl
 
     if (CORBA::is_nil (my_foo_ami_))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :\tfoo_ami is NIL !\n"));  
+        ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :\tfoo_ami is NIL !\n"));
        return 1;
       }
     else
       {
-        //Invoke Asynchronous calls to test 
+        //Invoke Asynchronous calls to test
         my_foo_ami_->sendc_ret_void (new MyFoo_callback_exec_i (), "Send me a void." );
         my_foo_ami_->sendc_ret_long (new MyFoo_callback_exec_i (),"Send me a long.");
         my_foo_ami_->sendc_ret_double (new MyFoo_callback_exec_i (),"Send me a double.");
@@ -294,21 +294,21 @@ namespace CIAO_InterReturnT_Sender_Impl
     CORBA::String_var out_str;
     try
       {
-        CORBA::Double ret = 
+        CORBA::Double ret =
           my_foo_ami_->ret_double ("Send me synch double",out_str, l_cmd);
         if ( (ret == 3.14 ) && (l_cmd == 3))
           {
             ++nr_of_received;
           }
-      } 
+      }
     catch (const InterReturnT::InternalError&)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: synch_foo_generator::ret_double: "
-                              "Unexpected exception.\n"));  
+                              "Unexpected exception.\n"));
       }
     try
       {
-        InterReturnT::TestArray_slice *arr =  
+        InterReturnT::TestArray_slice *arr =
           my_foo_ami_->ret_array ("Send me synch array",out_str.out (), l_cmd);
         ++arr;
         if ((l_cmd != 5) || (arr->x_array[2] != 102))
@@ -317,17 +317,17 @@ namespace CIAO_InterReturnT_Sender_Impl
                               "received the wrong long or array, expected 5 "
                               "and 102, received %u and %u\n",
                               l_cmd, arr->x_array[2]));
-          } 
+          }
         else
          {
            ++nr_of_received;
          }
        }
-  
+
     catch (const InterReturnT::InternalError&)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: synch_foo_generator::ret_array: "
-                              "Unexpected exception.\n"));  
+                              "Unexpected exception.\n"));
      }
     return 0;
   }
@@ -388,13 +388,13 @@ namespace CIAO_InterReturnT_Sender_Impl
     if (nr_of_received == 10)
       {
         ACE_DEBUG ((LM_DEBUG, "OK: Sender received all expected return data"
-                              " for syn- and asynchronous calls\n"));  
+                              " for syn- and asynchronous calls\n"));
       }
     else
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Sender didn't receive all expected"
                               " return data for syn- and asynchronous"
-                              " calls\n"));  
+                              " calls\n"));
       }
   }
 

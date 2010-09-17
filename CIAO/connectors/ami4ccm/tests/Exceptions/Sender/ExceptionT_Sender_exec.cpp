@@ -8,7 +8,7 @@ namespace CIAO_ExceptionT_Sender_Impl
 {
   CORBA::Short nr_of_received = 0;
   CORBA::Short nr_of_syn_received = 0;
-  
+
   void HandleException (
       long id,
       const char* error_string,
@@ -167,7 +167,7 @@ namespace CIAO_ExceptionT_Sender_Impl
     ACE_OS::sleep (3);
     if (CORBA::is_nil (my_foo_ami_))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :\tfoo_ami is NIL !\n"));  
+        ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :\tfoo_ami is NIL !\n"));
        return 1;
       }
     else
@@ -201,11 +201,11 @@ namespace CIAO_ExceptionT_Sender_Impl
           {
             my_foo_ami_->foo ("Do something synchronous",
                                out_str.out ());
-          } 
+          }
         catch (const ExceptionT::InternalError&)
           {
             ACE_ERROR ((LM_ERROR, "ERROR: synch_foo_generator::foo: "
-                                  "Unexpected exception.\n"));  
+                                  "Unexpected exception.\n"));
           }
         try
           {
@@ -231,7 +231,7 @@ namespace CIAO_ExceptionT_Sender_Impl
                              "hello (syn)");
             ++nr_of_syn_received;
           }
-        try 
+        try
           {
             my_foo_ami_->rw_attrib ();
           }
@@ -242,7 +242,7 @@ namespace CIAO_ExceptionT_Sender_Impl
                              "get_rw_attrib (syn)");
             ++nr_of_syn_received;
           }
-        try 
+        try
           {
             my_foo_ami_->rw_attrib (0);
           }
@@ -253,7 +253,7 @@ namespace CIAO_ExceptionT_Sender_Impl
                              "set_rw_attrib (syn)");
             ++nr_of_syn_received;
           }
-        try 
+        try
           {
             my_foo_ami_->ro_attrib ();
           }
@@ -332,20 +332,20 @@ namespace CIAO_ExceptionT_Sender_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: not received the expected number of"
                               " exceptions for asynchronous calls"
                               "Expected: 5, Received: %u.\n",
-                              nr_of_asyn));  
+                              nr_of_asyn));
       }
     if (nr_of_syn_received != 5)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: not received the expected number of"
                               " exceptions for synchronous calls"
                               "Expected: 5, Received: %u.\n",
-                              nr_of_syn_received));  
+                              nr_of_syn_received));
       }
     if ((nr_of_asyn == 5) && (nr_of_syn_received == 5))
       {
         ACE_DEBUG ((LM_DEBUG, "OK: Receieved the expected number of"
                               " exceptions for  asynchronous and "
-                              "synchronous calls\n"));  
+                              "synchronous calls\n"));
       }
   }
 

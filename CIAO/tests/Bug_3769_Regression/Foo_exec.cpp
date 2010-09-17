@@ -8,7 +8,7 @@ namespace CIAO_Foo_Impl
   //============================================================
   // Component Executor Implementation Class: Foo_exec_i
   //============================================================
-  
+
   Foo_exec_i::Foo_exec_i (void)
     : my_short_ (false),
       my_long_ (false),
@@ -25,22 +25,22 @@ namespace CIAO_Foo_Impl
       my_variable_string_ (false)
   {
   }
-  
+
   Foo_exec_i::~Foo_exec_i (void)
   {
   }
-  
+
   // Supported operations and attributes.
-  
+
   // Component attributes and port operations.
-  
+
   ::CORBA::Short
   Foo_exec_i::my_short (void)
   {
     /* Your code here. */
     return 0;
   }
-  
+
   void
   Foo_exec_i::my_short (
     ::CORBA::Short my_short)
@@ -48,16 +48,16 @@ namespace CIAO_Foo_Impl
     if(my_short != 22)
       ACE_ERROR ((LM_ERROR, "ERROR: my_short != 22, it is %d\n", my_short));
     else my_short_ = true;
-    
+
   }
-  
+
   ::CORBA::Long
   Foo_exec_i::my_long (void)
   {
     /* Your code here. */
     return 0;
   }
-  
+
   void
   Foo_exec_i::my_long (
     ::CORBA::Long my_long)
@@ -65,16 +65,16 @@ namespace CIAO_Foo_Impl
     if(my_long != 33)
       ACE_ERROR ((LM_ERROR, "ERROR: my_long != 33, it is %d\n", my_long));
     else my_long_ = true;
-    
+
   }
-  
+
   ::CORBA::Float
   Foo_exec_i::my_float (void)
   {
     /* Your code here. */
     return 0.0f;
   }
-  
+
   void
   Foo_exec_i::my_float (
     ::CORBA::Float my_float)
@@ -82,16 +82,16 @@ namespace CIAO_Foo_Impl
     if(my_float != 45.67F)
       ACE_ERROR ((LM_ERROR, "ERROR: my_float != 45.67, it is %f\n", my_float));
     else my_float_ = true;
-    
+
   }
-  
+
   ::CORBA::Double
   Foo_exec_i::my_double (void)
   {
     /* Your code here. */
     return 0.0;
   }
-  
+
   void
   Foo_exec_i::my_double (
     ::CORBA::Double my_double)
@@ -100,14 +100,14 @@ namespace CIAO_Foo_Impl
       ACE_ERROR ((LM_ERROR, "ERROR: my_double != 56.78, it is %f\n", my_double));
     else my_double_ = true;
   }
-  
+
   ::short_sequence *
   Foo_exec_i::my_short_sequence (void)
   {
     /* Your code here. */
     return 0;
   }
-  
+
   void
   Foo_exec_i::my_short_sequence (
     const ::short_sequence & my_short_sequence)
@@ -117,9 +117,9 @@ namespace CIAO_Foo_Impl
       ACE_ERROR ((LM_ERROR, "ERROR: my_short_sequence does not have the correct length\n"));
       return;
     }
-    
+
     my_short_sequence_ = true;
-    
+
     if(my_short_sequence[0] != 11)
       {
         my_short_sequence_ = false;
@@ -138,14 +138,14 @@ namespace CIAO_Foo_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: my_short_sequence[2] != 13, it is %d\n", my_short_sequence[2]));
       }
   }
-  
+
   ::long_sequence *
   Foo_exec_i::my_long_sequence (void)
   {
     /* Your code here. */
     return 0;
   }
-  
+
   void
   Foo_exec_i::my_long_sequence (
     const ::long_sequence & my_long_sequence)
@@ -155,9 +155,9 @@ namespace CIAO_Foo_Impl
       ACE_ERROR ((LM_ERROR, "ERROR: my_long_sequence does not have the correct length\n"));
       return;
     }
-    
+
     my_long_sequence_ = true;
-    
+
     if(my_long_sequence[0] != 21)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: my_long_sequence[0] != 21, it is %d\n", my_long_sequence[0]));
@@ -176,14 +176,14 @@ namespace CIAO_Foo_Impl
         my_long_sequence_ = false;
       }
   }
-  
+
   ::float_sequence *
   Foo_exec_i::my_float_sequence (void)
   {
     /* Your code here. */
     return 0;
   }
-  
+
   void
   Foo_exec_i::my_float_sequence (
     const ::float_sequence & my_float_sequence)
@@ -195,7 +195,7 @@ namespace CIAO_Foo_Impl
     }
 
     my_float_sequence_ = true;
-    
+
     if(my_float_sequence[0] != 21.12F)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: my_float_sequence[0] != 21.12, it is %f\n", my_float_sequence[0]));
@@ -214,14 +214,14 @@ namespace CIAO_Foo_Impl
         my_float_sequence_ = false;
       }
   }
-  
+
   ::double_sequence *
   Foo_exec_i::my_double_sequence (void)
   {
     /* Your code here. */
     return 0;
   }
-  
+
   void
   Foo_exec_i::my_double_sequence (
     const ::double_sequence & my_double_sequence)
@@ -231,15 +231,15 @@ namespace CIAO_Foo_Impl
       ACE_ERROR ((LM_ERROR, "ERROR: my_double_sequence does not have the correct length\n"));
       return;
     }
-    
+
     this->my_double_sequence_ = true;
-    
+
     if(my_double_sequence[0] != 621.12)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: my_double_sequence[0] != 621.12, it is %f\n", my_double_sequence[0]));
         this->my_double_sequence_ = false;
       }
-    
+
 
     if(my_double_sequence[1] != 622.22)
       {
@@ -253,20 +253,20 @@ namespace CIAO_Foo_Impl
         this->my_double_sequence_ = false;
       }
   }
-  
+
   ::Bar
   Foo_exec_i::my_bar_struct (void)
   {
     /* Your code here. */
     return ::Bar ();
   }
-  
+
   void
   Foo_exec_i::my_bar_struct (
     const ::Bar & my_bar_struct)
   {
     my_bar_struct_ = true;
-    
+
     if(my_bar_struct.s != 3)
       {
         my_bar_struct_ = false;
@@ -298,7 +298,7 @@ namespace CIAO_Foo_Impl
     /* Your code here. */
     return 0;
   }
-  
+
   void
   Foo_exec_i::my_baz_struct (
     const ::Baz & my_baz_struct)
@@ -308,9 +308,9 @@ namespace CIAO_Foo_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: my_bar_sequence is not 5\n"));
         return;
       }
-    
+
     my_baz_struct_ = true;
-    
+
     if (ACE_OS::strcmp (my_baz_struct.name.in (),
                         "My Baz Struct") != 0)
       {
@@ -318,12 +318,12 @@ namespace CIAO_Foo_Impl
                     my_baz_struct.name.in ()));
         my_baz_struct_ = false;
       }
-      
+
     CORBA::Short inc_s = 0;
     CORBA::Long inc_l = 0;
     CORBA::Float inc_f = 0;
     CORBA::Double inc_d = 0;
-    
+
     for (CORBA::ULong i = 0;
          i < my_baz_struct.my_bar_sequence.length ();
          ++i)
@@ -331,29 +331,29 @@ namespace CIAO_Foo_Impl
         if(my_baz_struct.my_bar_sequence[i].s != 3 + inc_s)
           {
             my_baz_struct_ = false;
-            ACE_ERROR ((LM_ERROR, "ERROR: short value != %d, it is %d\n", 
+            ACE_ERROR ((LM_ERROR, "ERROR: short value != %d, it is %d\n",
                         3 + inc_s,
                         my_baz_struct.my_bar_sequence[i].s));
           }
-        
+
         inc_s += 10;
         if(my_baz_struct.my_bar_sequence[i].l != 4 + inc_l)
           {
             my_baz_struct_ = false;
-            ACE_ERROR ((LM_ERROR, "ERROR: long value != %d, it is %d\n", 
+            ACE_ERROR ((LM_ERROR, "ERROR: long value != %d, it is %d\n",
                         4 + inc_l,
                         my_baz_struct.my_bar_sequence[i].l));
           }
-        
+
         inc_l += 10;
         if(my_baz_struct.my_bar_sequence[i].f != 5.6F + inc_f)
           {
             my_baz_struct_ = false;
-            ACE_ERROR ((LM_ERROR, "ERROR: float value != %f, it is %f\n", 
+            ACE_ERROR ((LM_ERROR, "ERROR: float value != %f, it is %f\n",
                         5.6F + inc_f,
                         my_baz_struct.my_bar_sequence[i].f));
           }
-        
+
         inc_f += 10.0F;
 
         if(my_baz_struct.my_bar_sequence[i].d != 7.8 + inc_d)
@@ -363,7 +363,7 @@ namespace CIAO_Foo_Impl
                         7.8 + inc_d,
                         my_baz_struct.my_bar_sequence[i].d));
           }
-        
+
         inc_d += 10.0;
       }
   }
@@ -373,7 +373,7 @@ namespace CIAO_Foo_Impl
     Data d;
     return d;
   }
-  
+
 
   void
   Foo_exec_i::my_data_union (const ::Data & /*my_data_union*/)
@@ -393,7 +393,7 @@ namespace CIAO_Foo_Impl
   {
     return 0;
   }
-  
+
   void Foo_exec_i::my_string_sequence (
       const ::string_sequence & my_string_sequence)
   {
@@ -402,9 +402,9 @@ namespace CIAO_Foo_Impl
       ACE_ERROR ((LM_ERROR, "ERROR: my_short_sequence does not have the correct length\n"));
       return;
     }
-    
+
     my_string_sequence_ = true;
-    
+
     if(ACE_OS::strcmp (my_string_sequence[0], "Hi") != 0)
       {
         my_string_sequence_ = false;
@@ -484,25 +484,25 @@ namespace CIAO_Foo_Impl
   }
 
   // Operations from Components::SessionComponent.
- 
+
   void
   Foo_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
       ::CCM_Foo_Context::_narrow (ctx);
-    
+
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
   }
-  
+
   void
   Foo_exec_i::configuration_complete (void)
   {
   }
-  
+
   void
   Foo_exec_i::ccm_activate (void)
   {
@@ -523,27 +523,27 @@ namespace CIAO_Foo_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: Not all expected attributes were initialized\n"));
       }
   }
-  
+
   void
   Foo_exec_i::ccm_passivate (void)
   {
   }
-  
+
   void
   Foo_exec_i::ccm_remove (void)
   {
   }
-  
+
   extern "C" FOO_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Foo_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_NORETURN (
       retval,
       Foo_exec_i);
-    
+
     return retval;
   }
 }

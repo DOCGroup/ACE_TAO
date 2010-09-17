@@ -13,21 +13,21 @@ module RegularEvents
   eventtype foo
     {
     };
-  
+
   eventtype bar
     {
     };
-  
+
   eventtype InhFoo : foo
     {
     };
 
-  /* @@ 
-   * TAO_IDL cannot handle custom yet.  
+  /* @@
+   * TAO_IDL cannot handle custom yet.
   custom eventtype custom_foo
     {
     };
-  
+
   custom eventtype custom_InhFoo : foo
     {
     };
@@ -39,6 +39,6 @@ module RegularEvents
     void test_op_a (in long foo, out float bar);
     InhFoo test_op_b ();
   };
-  
-  
+
+
 };

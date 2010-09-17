@@ -96,7 +96,7 @@ namespace CIAO
       this->impl_->on_data_available (
         this->typed_dr_);
     }
-        
+
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     void
     CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_subscription_matched (

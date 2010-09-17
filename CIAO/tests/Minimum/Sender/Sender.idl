@@ -11,7 +11,7 @@ module Minimum
   /* This is a Sender specific interface which will be used to get the
    * process start.
    */
-  
+
   interface trigger
   {
     void bar ();

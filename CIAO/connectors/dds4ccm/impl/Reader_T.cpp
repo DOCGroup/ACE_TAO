@@ -21,7 +21,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::~Reade
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::~Reader_T");
 }
 
-/// For the requirement : 'samples ordered by instances' the following settings 
+/// For the requirement : 'samples ordered by instances' the following settings
 /// are necessary: ordered_access -> true and
 /// DDS_INSTANCE_PRESENTATION_QOS (default)
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>

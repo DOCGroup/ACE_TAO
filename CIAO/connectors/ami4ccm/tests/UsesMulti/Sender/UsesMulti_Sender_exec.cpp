@@ -79,7 +79,7 @@ namespace CIAO_UsesMulti_Sender_Impl
         ++nr_of_sent;
         my_one_ami_[i].objref->sendc_foo (new One_callback_exec_i (),
                                           test.in (),
-                                          i); 
+                                          i);
         ACE_DEBUG ((LM_DEBUG, "Sender (ASYNCH) : send <%C> !\n",
                     test.in ()));
         // There is more than 1 message sent, without receiving callbacks,
@@ -132,11 +132,11 @@ namespace CIAO_UsesMulti_Sender_Impl
                               answer.out ());
         if (result != i)
           {
-            ACE_ERROR ((LM_ERROR, 
+            ACE_ERROR ((LM_ERROR,
                         "ERROR Sender (SYNCH) : CLASS One foo !\n"));
           }
         else
-          { 
+          {
             ++nr_of_received;
             ACE_DEBUG ((LM_DEBUG,
                         "Sender (SYNCH) : received answer = <%C> !\n",

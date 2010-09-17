@@ -203,7 +203,7 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
 
     this->var_samples_.clear ();
     this->fixed_samples_.clear ();
-    
+
     // Check count_
     if (UCCFixedSizedStructTest_i::count_ != 0)
       {
@@ -227,7 +227,7 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
         ACE_DEBUG ((LM_DEBUG, "Reference count for variable sized "
                               "samples is 0\n"));
       }
-      
+
     // Check max_count_, for each sample we allocated an instance so we
     // expect a count of 10
     if (UCCFixedSizedStructTest_i::max_count_ != 10)

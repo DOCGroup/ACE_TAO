@@ -17,25 +17,25 @@ namespace CIAO
     // Also initialize CIAO logger since we reuse parts of CIAO in the locality manager
     CIAO::Logger_Service
       * clf = ACE_Dynamic_Service<CIAO::Logger_Service>::instance ("CIAO_Logger");
-    
+
     int argc (0);
     char **argv (0);
-      
+
     if (clf)
       {
         clf->init (argc, argv);
       }
-    
+
 
     CIAO_TRACE ("Container_Handler_i::Container_Handler_i");
   }
-  
-  // Destructor 
+
+  // Destructor
   Container_Handler_i::~Container_Handler_i (void)
   {
     CIAO_TRACE ("Container_Handler_i::~Container_Handler_i");
   }
-  
+
   void
   Container_Handler_i::close (void)
   {
@@ -46,7 +46,7 @@ namespace CIAO
         ::Deployment::DeploymentPlan plan;
         plan.instance.length (1);
         plan.instance[0].name = "";
-        
+
         CORBA::Any any;
         this->remove_instance (plan, 0, any);
       }
@@ -56,7 +56,7 @@ namespace CIAO
 
     DEPLOYMENT_STATE::instance ()->close ();
     DEPLOYMENT_STATE::close ();
-    
+
     this->orb_ = CORBA::ORB::_nil ();
     this->poa_ = PortableServer::POA::_nil ();
   }
@@ -68,17 +68,17 @@ namespace CIAO
     ACE_NEW_THROW_EX (retval,
                       ::CORBA::StringSeq (0),
                       CORBA::NO_MEMORY ());
-    
+
     return retval;
   }
 
-  char * 
+  char *
   Container_Handler_i::instance_type (void)
   {
     CIAO_TRACE ("Container_Handler_i::instance_type");
     return CORBA::string_dup ("edu.dre.vanderbilt.dre.DAnCE.CCM.Container");
   }
-    
+
   void
   Container_Handler_i::install_instance (const ::Deployment::DeploymentPlan &plan,
                                          ::CORBA::ULong instanceRef,
@@ -90,14 +90,14 @@ namespace CIAO
     ACE_NEW_THROW_EX (outref,
                       ::CORBA::Any (),
                       CORBA::NO_MEMORY ());
-    
+
     instance_reference = outref;
-    
+
     CIAO::Session_Container *cont (0);
     const char *name (plan.instance[instanceRef].name.in ());
     CORBA::PolicyList policies (0);
-    
-    CIAO_DEBUG (6, (LM_DEBUG, CLINFO 
+
+    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                     "Container_Handler_i::install_instance - "
                     "Creating container with id <%C>\n",
                     name));
@@ -110,8 +110,8 @@ namespace CIAO
                                                name,
                                                0 /* no additional policies at this moment */),
                       CORBA::NO_MEMORY ());
-    
-    CIAO_DEBUG (8, (LM_DEBUG, CLINFO 
+
+    CIAO_DEBUG (8, (LM_DEBUG, CLINFO
                     "Container_Handler_i::install_instance - "
                     "Container <%C> successfully created\n",
                     name));
@@ -119,12 +119,12 @@ namespace CIAO
     CIAO::Container_var container_ref (cont);
 
     DEPLOYMENT_STATE::instance ()->add_container (name, cont);
-    
+
     (*outref) <<= container_ref;
-    
+
     *instance_reference <<= container_ref;
   }
-  
+
   void
   Container_Handler_i::activate_instance (const ::Deployment::DeploymentPlan & ,
                                      ::CORBA::ULong ,
@@ -142,14 +142,14 @@ namespace CIAO
     CIAO_TRACE ("Container_Handler_i::passivate_instance");
     // no passivation needed.
   }
-    
-  void 
+
+  void
   Container_Handler_i::provide_endpoint_reference (const ::Deployment::DeploymentPlan &,
                                                    ::CORBA::ULong,
                                                    ::CORBA::Any_out)
   {
     CIAO_TRACE ("Container_Handler_i::provide_endpoint_reference");
-    CIAO_ERROR (1, (LM_ERROR, CLINFO 
+    CIAO_ERROR (1, (LM_ERROR, CLINFO
                     "Container_Handler_i::provide_endpoint_reference - "
                     "Unable to provide any endpoints.\n"));
     throw CORBA::NO_IMPLEMENT ();
@@ -162,12 +162,12 @@ namespace CIAO
     const ::CORBA::Any &)
   {
     CIAO_TRACE ("Container_Handler_i::remove_instance");
-    
+
     const char *name = plan.instance[instanceRef].name.in ();
 
-    ::CIAO::Container_var cont = 
+    ::CIAO::Container_var cont =
         DEPLOYMENT_STATE::instance ()->fetch_container (name);
-    
+
     if (::CORBA::is_nil (cont.in ()))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
@@ -177,47 +177,47 @@ namespace CIAO
         throw ::Deployment::StopError (name,
                                        "No container with ID");
       }
-       
-    
+
+
     CIAO_DEBUG (8, (LM_TRACE, CLINFO
                     "Container_Handler_i::remove_instance - "
                     "Removing container with Id <%C>\n",
                     name));
-    
+
     DEPLOYMENT_STATE::instance ()->remove_container (name);
-    
+
     CIAO_DEBUG (5, (LM_TRACE, CLINFO
                     "Container_Handler_i::remove_instance - "
                     "Container with Id <%C> removed.\n",
                     name));
   }
-    
+
   void
   Container_Handler_i::connect_instance (const ::Deployment::DeploymentPlan &,
                                          ::CORBA::ULong,
                                          const ::CORBA::Any &)
   {
     CIAO_TRACE ("Container_Handler_i::connect_instance");
-    
+
     CIAO_ERROR (1, (LM_ERROR, CLINFO
                     "Container_Handler_i::connect_instance - ",
                     "No connections allowed for containers.\n"));
     throw CORBA::NO_IMPLEMENT ();
   }
-  
-    
+
+
   void
   Container_Handler_i::disconnect_instance (const ::Deployment::DeploymentPlan &,
                                             ::CORBA::ULong)
   {
     CIAO_TRACE ("Container_Handler_i::disconnect_instance");
-    
+
     CIAO_ERROR (1, (LM_ERROR, CLINFO
                     "Container_Handler_i::disconnect_instance - ",
                     "No connections allowed for containers.\n"));
     throw CORBA::NO_IMPLEMENT ();
   }
-  
+
   void
   Container_Handler_i::instance_configured (const ::Deployment::DeploymentPlan &,
                                             ::CORBA::ULong)
@@ -235,7 +235,7 @@ namespace CIAO
                     props.length ()));
 
     this->orb_ = DAnCE::PLUGIN_MANAGER::instance ()->get_orb ();
-    
+
     if (CORBA::is_nil (this->orb_))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
@@ -244,11 +244,11 @@ namespace CIAO
         throw ::Deployment::StartError ("CIAO Container Handler ",
                                         "Unable to locate ORB");
       }
-    
+
     CORBA::Object_var object =
       this->orb_->resolve_initial_references ("RootPOA");
 
-    this->poa_ = 
+    this->poa_ =
       PortableServer::POA::_narrow (object.in ());
 
     if (CORBA::is_nil (this->poa_))
@@ -259,15 +259,15 @@ namespace CIAO
         throw ::Deployment::StartError ("CIAO Container Handler ",
                                         "Unable to locate POA");
       }
-    
+
     CIAO::Server_init (orb_);
 
-    
+
     // For the time being, we are going to go ahead and construct a container.
     ::Deployment::DeploymentPlan plan;
     plan.instance.length (1);
     plan.instance[0].name = "";
-    
+
     ::CORBA::Any_var any;
     this->install_instance (plan, 0, any.out ());
   }
@@ -275,7 +275,7 @@ namespace CIAO
 
 extern "C"
 {
-  ::DAnCE::InstanceDeploymentHandler_ptr 
+  ::DAnCE::InstanceDeploymentHandler_ptr
   CIAO_Locality_Handler_Export create_Container_Handler (void)
   {
     return new CIAO::Container_Handler_i ();
