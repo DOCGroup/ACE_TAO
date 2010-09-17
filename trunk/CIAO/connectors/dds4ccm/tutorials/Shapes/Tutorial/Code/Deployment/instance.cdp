@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <instance xmi:id="ControlComponentInstance">
   <name>ControlComponent</name>
   <node>ControlNode</node>
