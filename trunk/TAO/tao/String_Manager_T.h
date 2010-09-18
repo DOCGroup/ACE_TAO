@@ -135,12 +135,20 @@ private:
   typedef TAO::String_Manager_T<CORBA::WChar> WString_Manager;
 }
 
+inline bool operator== (const TAO::String_Manager &lhs, const TAO::String_Manager &rhs)
+{
+  return ACE_OS::strcmp (lhs.in(), rhs.in ()) == 0;
+}
 
 inline bool operator< (const TAO::String_Manager &lhs, const TAO::String_Manager &rhs)
 {
   return ACE_OS::strcmp (lhs.in(), rhs.in ()) < 0;
 }
 
+inline bool operator== (const TAO::WString_Manager &lhs, const TAO::WString_Manager &rhs)
+{
+  return ACE_OS::strcmp (lhs.in(), rhs.in ()) == 0;
+}
 
 inline bool operator< (const TAO::WString_Manager &lhs, const TAO::WString_Manager &rhs)
 {

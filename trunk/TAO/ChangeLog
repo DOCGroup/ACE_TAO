@@ -1,3 +1,9 @@
+Sat Sep 18 22:38:22 UTC 2010  Scott Harris  <harris_s@ociweb.com>
+
+        * tao/String_Manager_T.h:
+
+          Added equality operators per Bugzilla #3844.
+
 Fri Sep 17 22:15:54 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Codeset/Codeset.mpc:
