@@ -20,15 +20,18 @@
 
 module Extra
 {
+  typedef sequence<octet> OctetSeq;
+  typedef long LongArray[3];
+
   exception NoReason {};
   exception NoRhyme {};
 
   struct UserDataQosPolicy {
-    sequence<octet> value;
+    OctetSeq value;
   };
 
   struct key {
-    long value[3];
+    LongArray value;
   };
 
   interface Superfluous
