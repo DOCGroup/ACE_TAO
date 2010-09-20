@@ -87,4 +87,4 @@ namespace CIAO
 
 #include /**/ "ace/post.h"
 
-#endif /* CIAO_CONTEXT_IMPL_BASE_H */
+#endif /* CIAO_EXTENSIONCONTEXT_H */
