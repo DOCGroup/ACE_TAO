@@ -19,7 +19,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Servant_Impl_Base.h"
+#include "ciao/Servants/Servant_Impl_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -81,11 +81,11 @@ namespace CIAO
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Servant_Impl_T.cpp"
+#include "ciao/Servants/Session/Servant_Impl_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Servant_Impl_T.cpp")
+#pragma implementation ("ciao/Servants/Session/Servant_Impl_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
