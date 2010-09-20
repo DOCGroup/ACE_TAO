@@ -1,3 +1,10 @@
+Mon Sep 20 03:05:29 UTC 2010  Scott Harris  <harris_s@ociweb.com>
+
+        * tao/String_Manager_T.h:
+
+          Reverted previous change because it caused ambigous overloads
+          in code that compared String_Manager == 0.
+
 Sat Sep 18 22:38:22 UTC 2010  Scott Harris  <harris_s@ociweb.com>
 
         * tao/String_Manager_T.h:
