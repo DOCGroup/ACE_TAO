@@ -14,6 +14,7 @@ module Test
   typedef sequence<char> Unbounded_Var_Size_Arg;
   typedef long Fixed_Array[FIX_ARRAY_SIZE];
   typedef string Var_Array [VAR_ARRAY_SIZE];
+  typedef string<BOUNDED_STRING_SIZE> Bounded_String;
 
   struct TimeOfDay {
     short   hour;       // 0 - 23
@@ -35,7 +36,7 @@ module Test
 
      void test_unbounded_string_arg_out(in string message, out string out_message);
 
-     void test_bounded_string_arg(in string<BOUNDED_STRING_SIZE> message);
+     void test_bounded_string_arg(in Bounded_String message);
 
      void test_fixed_array_arg(in Fixed_Array message);
 
@@ -61,7 +62,7 @@ module Test
                        in Fixed_Array arg2,
                        in TimeOfDay arg3);
 
-     void test_args_3 (in string<BOUNDED_STRING_SIZE> arg1,
+     void test_args_3 (in Bounded_String arg1,
                              in Bounded_Var_Size_Arg arg2,
                              in Unbounded_Var_Size_Arg arg3,
                              in Var_Array arg4);

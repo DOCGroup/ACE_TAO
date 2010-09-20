@@ -26,7 +26,7 @@ interface Base
 {
   attribute long value;
 };
-
+ 
 interface Derived : Base
 {
 };
@@ -126,8 +126,10 @@ interface Client
 // attributes.
 interface AttributeTester
 {
+  typedef string string_1[1];
+
   attribute string a_su;
-  attribute string<1> a_sb;
+  attribute string_1 a_sb;
 };
 
 // All of the 'recursion' below is legal.
