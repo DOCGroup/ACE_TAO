@@ -1,3 +1,14 @@
+Mon Sep 20 09:32:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3042_Regression/test.idl:
+        * tests/DII_Collocation_Tests/twoway/Test.idl:
+        * tests/IDL_Test/IDL_Test.mpc:
+        * tests/IDL_Test/interface.idl:
+        * tests/IDL_Test/old_array.idl:
+        * tests/IDL_Test/old_sequence.idl:
+        * tests/IDL_Test/old_struct.idl:
+          Rewritten anonymous types since anonymous types are not allowed.
+
 Mon Sep 20 08:54:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:

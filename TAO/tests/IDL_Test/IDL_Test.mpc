@@ -15,7 +15,6 @@ project(*IDL): taoserver, messaging, gen_ostream {
   }
 
   IDL_Files {
-    array.idl
     Bug_2350_Regression.idl
     Bug_2577_Regression.idl
     Bug_2582_Regression.idl
@@ -25,12 +24,9 @@ project(*IDL): taoserver, messaging, gen_ostream {
     Bug_3243_Regression.idl
     Bug_3819_Regression.idl
     Bug_3821_Regression.idl
-    enum_in_struct.idl
     full.idl
     fwd.idl
     gperf.idl
-    included.idl
-    including.idl
     interface.idl
     nested_scope.idl
 
@@ -48,17 +44,30 @@ project(*IDL): taoserver, messaging, gen_ostream {
     struct.idl
     reopen_include1.idl
     reopen_include2.idl
-    sequence.idl
     typeprefix.idl
+  }
+
+  IDL_Files {
+    idlflags += -as
+    enum_in_struct.idl
+    array.idl
+    included.idl
+    including.idl
+    sequence.idl
     union.idl
   }
 
   IDL_Files {
-    idlflags += -GA
+    idlflags += -GA -as
     anonymous.idl
+    dif2.idl
+    valuetype.idl
+  }
+
+  IDL_Files {
+    idlflags += -GA
     array_only.idl
     constants.idl
-    dif2.idl
     generic_object.idl
     keywords.idl
 
@@ -70,7 +79,6 @@ project(*IDL): taoserver, messaging, gen_ostream {
     repo_id_mod.idl
     typedef.idl
     typecode.idl
-    valuetype.idl
   }
 }
 

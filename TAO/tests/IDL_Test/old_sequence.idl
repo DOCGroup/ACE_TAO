@@ -23,11 +23,12 @@ typedef sequence<c20,23> cc23;
 typedef sequence<char,24> c24;
 typedef sequence< sequence<long,10>, 10> c30;
 
+typedef sequence<string> cstring;
 struct TProgram
 {
-  string           path;
-  sequence<string> argv;
-  sequence<string> envp;
+  string  path;
+  cstring argv;
+  cstring envp;
 };
 
 struct sfoo

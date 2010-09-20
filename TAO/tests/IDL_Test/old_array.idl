@@ -23,12 +23,14 @@ module OldArray
   typedef char str22[22][2];
   typedef boolean boolarray[3][40];
 
+  typedef char char_17[17];
+  typedef char char_10_2[10][2];
 
   struct A
   {
     long a1;
-    char a2[17];
-    char a3[10][2];
+    char_17 a2;
+    char_10_2 a3;
   };
 
   struct B
