@@ -16,11 +16,13 @@
 //
 // ============================================================================
 
+typedef string string_20[20];
+
 struct bar1
 {
   long b1;
   long b2;
-  string<20> b3;
+  string_20 b3;
 };
 
 struct bar2
