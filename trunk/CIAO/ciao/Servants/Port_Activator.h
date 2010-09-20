@@ -55,7 +55,7 @@ namespace CIAO
     /// Return the oid of port that this activator encapulates.
     virtual char* name (void);
 
-    /// Activate the servant reponsible for this port.
+    /// Activate the servant responsible for this port.
     /**
      * There are intentionally no throw specifications. It is the
      * caller's responsibility to handle CORBA and C++

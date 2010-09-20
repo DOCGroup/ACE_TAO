@@ -84,12 +84,7 @@ namespace CIAO
     virtual void set_rollback_only ();
 #endif
 
-#if !defined (CCM_LW)
     virtual CORBA::Object_ptr resolve_service_reference(const char *service_id);
-#endif
-
-    /// CIAO-specific.
-    CIAO::Container_ptr _ciao_the_Container (void) const;
 
   protected:
     Components::CCMHome_var home_;
@@ -100,10 +95,6 @@ namespace CIAO
     Context_Impl_Base (void);
   };
 }
-
-#if defined (__ACE_INLINE__)
-# include "Context_Impl_Base.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 
