@@ -1,3 +1,10 @@
+Mon Sep 20 14:48:01 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/TransportCurrent/TC.mpc:
+        * tao/TransportCurrent/TC_IIOP.mpc:
+
+          *C.inl files are no longer generated.
+
 Mon Sep 20 13:52:02 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
