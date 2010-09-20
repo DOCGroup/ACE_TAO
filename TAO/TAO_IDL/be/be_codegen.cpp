@@ -3453,7 +3453,7 @@ TAO_CodeGen::gen_svnt_hdr_includes (void)
 
   this->gen_standard_include (
     this->ciao_svnt_header_,
-       "ciao/Contexts/Context_Impl_T.h");
+       "ciao/Contexts/Session/Context_Impl_T.h");
 
   this->gen_standard_include (
     this->ciao_svnt_header_,

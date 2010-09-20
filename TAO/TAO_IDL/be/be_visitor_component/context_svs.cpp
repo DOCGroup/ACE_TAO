@@ -44,7 +44,7 @@ be_visitor_context_svs::visit_component (be_component *node)
       << "::CIAO::Container_ptr c," << be_nl
       << "PortableServer::Servant sv)" << be_uidt_nl
       << ": ::CIAO::Context_Impl_Base (h, c)," << be_idt_nl
-      << "::CIAO::Context_Impl<" << be_idt_nl
+      << "::CIAO::Session_Context_Impl<" << be_idt_nl
       << global << sname << "::CCM_"
       << lname << "_Context," << be_nl
       << "::" << node->full_name () << "> (h, c, sv)";
