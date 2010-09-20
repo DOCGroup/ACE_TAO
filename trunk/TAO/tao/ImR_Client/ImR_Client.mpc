@@ -25,7 +25,14 @@ project(ImR_Client) : taolib, tao_output, install, portableserver, taoidldefault
   sharedname   = TAO_ImR_Client
   dynamicflags += TAO_IMR_CLIENT_BUILD_DLL
 
-  Source_Files {
+  Header_Files {
+    *.h
+    ServerObjectC.h
+    ServerObjectA.h
+    ServerObjectS.h
+    ImplRepoC.h
+    ImplRepoA.h
+    ImplRepoS.h
   }
 
   Source_Files {
@@ -35,6 +42,11 @@ project(ImR_Client) : taolib, tao_output, install, portableserver, taoidldefault
     ServerObjectS.cpp
     ImplRepoC.cpp
     ImplRepoS.cpp
+  }
+
+  Inline_Files {
+    ImplRepoC.inl
+    ServerObjectC.inl
   }
 
   specific {
