@@ -3,8 +3,8 @@
 #if !defined (CCM_EXTENSIONCOMPONENT_IDL)
 #define CCM_EXTENSIONCOMPONENT_IDL
 
-#include "ciao/CCM_EnterpriseComponent.idl"
-#include "ciao/CCM_ExtensionContext.idl"
+#include "ccm/CCM_EnterpriseComponent.idl"
+#include "ccm/Extension/CCM_ExtensionContext.idl"
 
 module Components
 {

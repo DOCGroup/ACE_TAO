@@ -3,8 +3,8 @@
 #if !defined (CCM_QOS_IDL)
 #define CCM_QOS_IDL
 
-#include "ciao/CCM_Cookie.idl"
-#include "ciao/CCM_CCMException.idl"
+#include "ccm/CCM_Cookie.idl"
+#include "ccm/CCM_CCMException.idl"
 
 module Components
 {

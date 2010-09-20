@@ -3,8 +3,8 @@
 #if !defined (CCM_CONTAINERSERVANTREQUESTINFO_IDL)
 #define CCM_CONTAINERSERVANTREQUESTINFO_IDL
 
-#include "ciao/CCM_ContainerRequestInfo.idl"
-#include "ciao/CCM_EnterpriseComponent.idl"
+#include "ccm/Extension/CCM_ContainerRequestInfo.idl"
+#include "ccm/CCM_EnterpriseComponent.idl"
 #include "tao/AnyTypeCode/Dynamic.pidl"
 
 module Components

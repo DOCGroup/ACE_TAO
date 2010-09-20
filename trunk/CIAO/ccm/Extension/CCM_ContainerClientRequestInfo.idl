@@ -3,7 +3,7 @@
 #if !defined (CCM_CONTAINERCLIENTREQUESTINFO_IDL)
 #define CCM_CONTAINERCLIENTREQUESTINFO_IDL
 
-#include "ciao/CCM_ContainerRequestInfo.idl"
+#include "ccm/Extension/CCM_ContainerRequestInfo.idl"
 #include "tao/PI/ClientRequestInfo.pidl"
 
 module Components
