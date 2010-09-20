@@ -3749,14 +3749,6 @@ TAO_CodeGen::gen_conn_src_includes (void)
       this->gen_standard_include (
         this->ciao_conn_source_,
         "connectors/ami4ccm/ami4ccm/ami4ccm.h");
-
-        this->gen_standard_include (
-        this->ciao_conn_source_,
-        "ciao/Contexts/Context_Impl_Base.h");
-
-      this->gen_standard_include (
-        this->ciao_conn_source_,
-        "ciao/Containers/Container_Base.h");
     }
 }
 
