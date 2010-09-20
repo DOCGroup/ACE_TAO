@@ -3457,7 +3457,7 @@ TAO_CodeGen::gen_svnt_hdr_includes (void)
 
   this->gen_standard_include (
     this->ciao_svnt_header_,
-    "ciao/Servants/Servant_Impl_T.h");
+    "ciao/Servants/Session/Servant_Impl_T.h");
 
   this->gen_standard_include (
     this->ciao_svnt_header_,
