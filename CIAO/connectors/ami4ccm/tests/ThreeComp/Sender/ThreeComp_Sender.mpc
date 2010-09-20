@@ -104,11 +104,11 @@ project(AMI_ThreeComp_Base_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
 }
 
 project(AMI_ThreeComp_Base_Sender_svnt) : ciao_servant, ami {
-  after      += AMI_ThreeComp_Base_skel AMI_ThreeComp_Base_Sender_lem_stub AMI_ThreeComp_Base_Sender_stub AMI_ThreeComp_Base_exec AMI_ThreeComp_skel
+  after      += AMI_ThreeComp_Base_skel AMI_ThreeComp_Base_Sender_lem_stub AMI_ThreeComp_Base_Sender_stub AMI_ThreeComp_Base_exec AMI_ThreeComp_stub  AMI_ThreeComp_lem_stub AMI_ThreeComp_skel
   sharedname  = ThreeComp_Sender_svnt
   libs       += ThreeComp_Sender_stub ThreeComp_Sender_lem_stub  \
                 ThreeComp_skel \
-                ThreeComp_stub
+                ThreeComp_stub ThreeComp_lem_stub
   libpaths += ../lib
   libout = ../lib
   dynamicflags += THREECOMP_SENDER_SVNT_BUILD_DLL

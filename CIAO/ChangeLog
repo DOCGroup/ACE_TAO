@@ -1,3 +1,8 @@
+Mon Sep 20 15:28:39 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/ThreeComp/Sender/ThreeComp_Sender.mpc:
+	Add missing lib.
+   
 Mon Sep 20 14:36:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Contexts/Context_Impl_Base.h:
