@@ -48,13 +48,11 @@ module Components
       raises (IllegalState);
 #endif
 
-#if !defined (CCM_LW)
     /**
-     * Added for QoS4CCM
+     * Coming for QoS4CCM
      */
     Object resolve_service_reference(in string service_id)
       raises (CCMException);
-#endif
   };
 };
 #endif /* CCM_CONTEXT_IDL */
