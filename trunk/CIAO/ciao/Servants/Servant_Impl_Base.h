@@ -68,7 +68,6 @@ namespace CIAO
     virtual ~Servant_Impl_Base (void);
 
     /// Operations for CCMObject interface.
-
     virtual void remove (void);
 
 #if !defined (CCM_LW)
