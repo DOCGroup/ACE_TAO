@@ -35,10 +35,6 @@ project(TC) : taolib_with_idl, tao_output, taoidldefaults, install, interceptors
     TCS.h
   }
 
-  Inline_Files {
-    TCC.inl
-  }
-
   IDL_Files {
   }
 
