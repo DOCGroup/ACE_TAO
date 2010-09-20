@@ -85,12 +85,9 @@ be_visitor_component_ex_idl::visit_component (
 
   os_ << be_nl << be_nl
       << "module CIAO_" << node->flat_name () << "_Impl" << be_nl
-      << "{" << be_idt_nl
-      << "typedef " << global << sname << "::CCM_" << lname
-      << "_Context " << lname << "_Exec_Context;";
+      << "{" << be_idt_nl;
 
-  os_ << be_nl << be_nl
-      << "local interface " << lname << "_Exec" << be_idt_nl
+  os_ << "local interface " << lname << "_Exec" << be_idt_nl
       << ": " << global << sname << "::CCM_" << lname
       << "," << be_idt_nl
       << "::Components::SessionComponent" << be_uidt << be_uidt_nl
