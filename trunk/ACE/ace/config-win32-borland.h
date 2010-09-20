@@ -144,8 +144,10 @@
 # define ACE_LACKS_PRAGMA_ONCE 1
 #endif
 
-#define ACE_LACKS_ISWCTYPE
-#define ACE_LACKS_ISCTYPE
+#if (__BORLANDC__ < 0x630)
+# define ACE_LACKS_ISWCTYPE
+# define ACE_LACKS_ISCTYPE
+#endif
 
 #if (__BORLANDC__ < 0x620)
 // Older Borland compilers can't handle assembly in inline methods or

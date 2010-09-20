@@ -1,3 +1,22 @@
+Mon Sep 20 13:24:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ASNMP/agent/agent.mpc:
+        * ASNMP/agent/main.cpp:
+          Enable for wchar, thanks to Christian Freund <freund at wrz dot de>
+          for reporting this and providing a patch, fixes bugzilla 3889
+
+        * ace/String_Base.h:
+        * apps/JAWS3/http/HTTP_Service_Handler.h:
+        * apps/JAWS3/small/SS_Service_Handler.h:
+          Fixed typo in comment
+
+        * ace/config-win32-borland.h:
+          Some updates based on QC emails
+
+        * debian/libtao-dev.install:
+        * debian/mpc-ace.install:
+          Fixed paths
+
 Fri Sep 17 20:14:33 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * ace/FlReactor/ace_flreactor.mpc:
