@@ -1,3 +1,30 @@
+Mon Sep 20 09:32:28 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/Extension:
+        * ccm/Extension/CCM_ClientContainerInterceptor.idl:
+        * ccm/Extension/CCM_ClientContainerInterceptorRegistration.idl:
+        * ccm/Extension/CCM_ContainerClientRequestInfo.idl:
+        * ccm/Extension/CCM_ContainerRequestInfo.idl:
+        * ccm/Extension/CCM_ContainerServantRequestInfo.idl:
+        * ccm/Extension/CCM_ContainerServerRequestInfo.idl:
+        * ccm/Extension/CCM_ContainerStubRequestInfo.idl:
+        * ccm/Extension/CCM_ExtensionComponent.idl:
+        * ccm/Extension/CCM_ExtensionContext.idl:
+        * ccm/Extension/CCM_QoS.idl:
+        * ccm/Extension/CCM_ServantContainerInterceptor.idl:
+        * ccm/Extension/CCM_ServantContainerInterceptorRegistration.idl:
+        * ccm/Extension/CCM_ServerContainerInterceptor.idl:
+        * ccm/Extension/CCM_ServerContainerInterceptorRegistration.idl:
+        * ccm/Extension/CCM_StubContainerInterceptor.idl:
+        * ccm/Extension/CCM_StubContainerInterceptorRegistration.idl:
+        * ciao/Extension/ExtensionContext.h:
+        * ciao/Extension/ExtensionContext.cpp:
+          Got these files from svn history, IDL for QoS4CCM
+
+        * ciao/Servants/Home_Servant_Impl_T.cpp:
+        * ciao/Servants/Servant_Impl_Base.h:
+          Layout changes
+
 Mon Sep 20 08:55:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/CCM_Context.idl:
