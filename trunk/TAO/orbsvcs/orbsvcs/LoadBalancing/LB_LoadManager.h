@@ -356,7 +356,7 @@ private:
   /// necessary for application-controlled object group membership.
   TAO_PG_ObjectGroupManager object_group_manager_;
 
-  /// The PropertyManager that is reponsible for parsing all criteria,
+  /// The PropertyManager that is responsible for parsing all criteria,
   /// and keeping track of property-type_id associations.
   TAO_PG_PropertyManager property_manager_;
 
