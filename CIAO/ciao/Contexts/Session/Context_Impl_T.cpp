@@ -3,8 +3,6 @@
 #ifndef CIAO_CONTEXT_IMPL_T_C
 #define CIAO_CONTEXT_IMPL_T_C
 
-#include "Context_Impl_T.h"
-
 namespace CIAO
 {
   template <typename BASE_CTX,
