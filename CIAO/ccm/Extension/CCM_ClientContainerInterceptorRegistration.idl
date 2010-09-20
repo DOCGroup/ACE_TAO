@@ -1,0 +1,24 @@
+// $Id$
+
+#if !defined (CCM_CLIENTCONTAINERINTERCEPTORREGISTRATION_IDL)
+#define CCM_CLIENTCONTAINERINTERCEPTORREGISTRATION_IDL
+
+#include "ciao/CCM_Cookie.idl"
+#include "ciao/CCM_InvalidRegistration.idl"
+
+module Components
+{
+  module ContainerPortableInterceptor
+  {
+    local interface ClientContainerInterceptor;
+
+    local interface ClientContainerInterceptorRegistration
+    {
+      Components::Cookie register_client_interceptor (in ClientContainerInterceptor ci);
+      ClientContainerInterceptor unregister_client_interceptor (in Components::Cookie cookie)
+        raises(InvalidRegistration);
+    };
+  };
+};
+
+#endif /* CCM_CLIENTCONTAINERINTERCEPTORREGISTRATION_IDL */
