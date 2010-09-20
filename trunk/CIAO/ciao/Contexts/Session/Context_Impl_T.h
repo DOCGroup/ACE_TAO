@@ -26,24 +26,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-#if !defined (CCM_LW)
-namespace SecurityLevel2
-{
-  class Credentials;
-}
-#endif
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 namespace CIAO
 {
-  class Container;
-  typedef Container *Container_ptr;
-
   /**
-   * @class Context_Impl
+   * @class Session_Context_Impl
    *
    * @brief Mixin base class for generated context.
    *
@@ -82,11 +68,11 @@ namespace CIAO
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Context_Impl_T.cpp"
+#include "ciao/Contexts/Session/Context_Impl_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Context_Impl_T.cpp")
+#pragma implementation ("ciao/Contexts/Session/Context_Impl_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
