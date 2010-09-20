@@ -13,12 +13,15 @@
 module pre_mod
 {
   typedef long longarray[3][14][7];
+  typedef string reasonsarray[4][2];
+  typedef wstring<3> wstringofthree;
+  typedef sequence<sequence<long> > seqoflongseq;
 
   exception wrong
   {
-    sequence<sequence<long> > longseqseq;
-    string reasons[4][2];
-    wstring<3> why;
+    seqoflongseq longseqseq;
+    reasonsarray reasons;
+    wstringofthree why;
   };
 
   enum which
