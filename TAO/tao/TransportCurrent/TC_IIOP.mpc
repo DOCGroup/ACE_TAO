@@ -38,10 +38,6 @@ project(TC_IIOP) : taolib_with_idl, tao_output, taoidldefaults, install, tc, int
   IDL_Files {
   }
 
-  Inline_Files {
-    TC_IIOPC.inl
-  }
-
   specific {
     install_dir = tao/TransportCurrent
   }
