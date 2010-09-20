@@ -109,7 +109,6 @@ namespace CIAO
   }
 
   // Operations for keyless home interface.
-
   template <typename BASE_SKEL,
             typename EXEC,
             typename COMP_SVNT>
@@ -124,7 +123,6 @@ namespace CIAO
   }
 
   // Operations for implicit home interface.
-
   template <typename BASE_SKEL,
             typename EXEC,
             typename COMP_SVNT>
