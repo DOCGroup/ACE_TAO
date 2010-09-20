@@ -20,7 +20,7 @@ class JAWS_HTTP_Service_Handler
 //     An HTTP Server service handler.
 //
 // = DESCRIPTION
-//     This class is reponsible for initializing the JAWS_Protocol_Handler
+//     This class is responsible for initializing the JAWS_Protocol_Handler
 //     with the correct state and data so that the HTTP Server can
 //     be properly serviced by the underlying framework.
 //

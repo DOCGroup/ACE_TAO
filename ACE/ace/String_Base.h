@@ -99,7 +99,7 @@ public:
    *
    * @param s Zero terminated input string
    * @param the_allocator ACE_Allocator associated with string
-   * @param release Allocator responsible(true)/not reponsible(false) for
+   * @param release Allocator responsible(true)/not responsible(false) for
    *    freeing memory.
    * @return ACE_String_Base containing const ACE_CHAR_T *s
    */
@@ -120,7 +120,7 @@ public:
    * @param s Non-zero terminated input string
    * @param len Length of non-zero terminated input string
    * @param the_allocator ACE_Allocator associated with string
-   * @param release Allocator responsible(true)/not reponsible(false) for
+   * @param release Allocator responsible(true)/not responsible(false) for
    *    freeing memory.
    * @return ACE_String_Base containing const ACE_CHAR_T *s
    */
@@ -224,7 +224,7 @@ public:
    *   used, and instead the internal buffer is set to NULL_String_.
    *
    * @param s Null terminated input string
-   * @param release Allocator responsible(true)/not reponsible(false) for
+   * @param release Allocator responsible(true)/not responsible(false) for
    *    freeing memory.
    */
   void set (const ACE_CHAR_T * s, bool release = true);
@@ -244,7 +244,7 @@ public:
    *
    *  @param s Non-zero terminated input string
    *  @param len Length of input string 's'
-   *  @param release Allocator responsible(true)/not reponsible(false) for
+   *  @param release Allocator responsible(true)/not responsible(false) for
    *    freeing memory.
    */
   void set (const ACE_CHAR_T * s, size_type len, bool release);
