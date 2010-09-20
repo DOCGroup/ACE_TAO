@@ -40,11 +40,10 @@ project(CIAO_Servant_Impl) : install, ciao_servant_activator, ciao_port_activato
      Home_Servant_Impl_Base.cpp
      Home_Servant_Impl_T.cpp
      Servant_Impl_Base.cpp
-     Servant_Impl_T.cpp
      StandardConfigurator_Impl.cpp
      Port_Activator.cpp
    }
-      
+
    Template_Files {
      Connector_Servant_Impl_Utils_T.cpp
      Servant_Impl_Utils_T.cpp
@@ -57,7 +56,6 @@ project(CIAO_Servant_Impl) : install, ciao_servant_activator, ciao_port_activato
      Home_Servant_Impl_Base.h
      Home_Servant_Impl_T.h
      Servant_Impl_Base.h
-     Servant_Impl_T.h
      StandardConfigurator_Impl.h
      Port_Activator.h
      Port_Activator_T.h

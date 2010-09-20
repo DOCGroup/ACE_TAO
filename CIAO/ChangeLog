@@ -1,3 +1,17 @@
+Mon Sep 20 14:36:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Contexts/Context_Impl_Base.h:
+        * ciao/Contexts/Session/Context_Impl_T.h:
+          Cleanup
+
+        * ciao/Servants/Servants.mpc:
+          Removed files
+
+        * ciao/Valuetype_Factories/ConfigValue.h:
+        * ciao/Valuetype_Factories/ConfigValue.cpp:
+        * ciao/Valuetype_Factories/Cookies.h:
+          Layout changes
+
 Mon Sep 20 13:53:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Session/Servant_Impl_T.h:
