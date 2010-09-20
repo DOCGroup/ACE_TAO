@@ -3,8 +3,8 @@
 #if !defined (CCM_SERVERCONTAINERINTERCEPTORREGISTRATION_IDL)
 #define CCM_SERVERCONTAINERINTERCEPTORREGISTRATION_IDL
 
-#include "ciao/CCM_Cookie.idl"
-#include "ciao/CCM_InvalidRegistration.idl"
+#include "ccm/CCM_Cookie.idl"
+#include "ccm/Extension/CCM_InvalidRegistration.idl"
 
 module Components
 {

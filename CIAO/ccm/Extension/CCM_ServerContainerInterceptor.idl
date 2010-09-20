@@ -3,8 +3,8 @@
 #if !defined (CCM_SERVERCONTAINERINTERCEPTOR_IDL)
 #define CCM_SERVERCONTAINERINTERCEPTOR_IDL
 
-#include "ciao/CCM_ContainerInterceptor.idl"
-#include "ciao/CCM_ContainerServerRequestInfo.idl"
+#include "ccm/Extension/CCM_ContainerInterceptor.idl"
+#include "ccm/Extension/CCM_ContainerServerRequestInfo.idl"
 #include "tao/PI/PIForwardRequest.pidl"
 
 module Components

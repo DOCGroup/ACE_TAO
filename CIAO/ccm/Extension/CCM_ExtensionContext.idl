@@ -3,12 +3,12 @@
 #if !defined (CCM_EXTENSIONCONTEXT_IDL)
 #define CCM_EXTENSIONCONTEXT_IDL
 
-#include "ciao/CCM_Context.idl"
-#include "ciao/CCM_ClientContainerInterceptorRegistration.idl"
-#include "ciao/CCM_ServerContainerInterceptorRegistration.idl"
-#include "ciao/CCM_StubContainerInterceptorRegistration.idl"
-#include "ciao/CCM_ServantContainerInterceptorRegistration.idl"
-#include "ciao/CCM_CCMException.idl"
+#include "ccm/CCM_Context.idl"
+#include "ccm/Extension/CCM_ClientContainerInterceptorRegistration.idl"
+#include "ccm/Extension/CCM_ServerContainerInterceptorRegistration.idl"
+#include "ccm/Extension/CCM_StubContainerInterceptorRegistration.idl"
+#include "ccm/Extension/CCM_ServantContainerInterceptorRegistration.idl"
+#include "ccm/CCM_CCMException.idl"
 
 module Components
 {
