@@ -1,8 +1,16 @@
+Mon Sep 20 08:54:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+          Use new methods on the context to get the POA
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.h:
+          Fixed typo
+
 Mon Sep 20 03:05:29 UTC 2010  Scott Harris  <harris_s@ociweb.com>
 
         * tao/String_Manager_T.h:
 
-          Reverted previous change because it caused ambigous overloads
+          Reverted previous change because it caused ambiguous overloads
           in code that compared String_Manager == 0.
 
 Sat Sep 18 22:38:22 UTC 2010  Scott Harris  <harris_s@ociweb.com>
@@ -2881,3 +2889,4 @@ mode: change-log
 add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
 indent-tabs-mode: nil
 End:
+ambiguous
