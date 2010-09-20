@@ -48,7 +48,7 @@ be_visitor_context_svh::visit_component (be_component *node)
   os_ << "class " << export_macro_.c_str () << " " << lname
       << "_Context" << be_idt_nl
       << ": public virtual ::CIAO::"
-      << "Context_Impl<" << be_idt << be_idt_nl
+      << "Session_Context_Impl<" << be_idt << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "_Context," << be_nl
       << "::" << node->name () << ">" << be_uidt << be_uidt << be_uidt_nl
@@ -61,7 +61,7 @@ be_visitor_context_svh::visit_component (be_component *node)
 
   os_ << "// Some useful typedefs." << be_nl<< be_nl
       << "typedef" << be_nl
-      << "::CIAO::Context_Impl<" << be_idt << be_idt_nl
+      << "::CIAO::Session_Context_Impl<" << be_idt << be_idt_nl
       << global << sname << "::CCM_"
       << lname << "_Context," << be_nl
       << "::" << node->name () << ">" << be_uidt_nl
