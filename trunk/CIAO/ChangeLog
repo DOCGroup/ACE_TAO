@@ -1,3 +1,15 @@
+Mon Sep 20 13:21:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Contexts/Context.mpc:
+        * ciao/Contexts/Extension/ExtensionContext.h:
+        * ciao/Contexts/Session:
+        * ciao/Contexts/Session/Context_Impl_T.h:
+        * ciao/Contexts/Session/Context_Impl_T.cpp:
+        * ciao/Contexts/Context_Impl_T.h:
+        * ciao/Contexts/Context_Impl_T.cpp:
+          Moved the SessionContext to its own directory so that we can
+          add the ExtensionContext more easily
+
 Mon Sep 20 09:32:28 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/Extension:
