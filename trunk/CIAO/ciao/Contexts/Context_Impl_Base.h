@@ -26,18 +26,6 @@
 
 #include "ccm/CCM_ContextC.h"
 
-namespace Components
-{
-  class CCMHome;
-  typedef CCMHome *CCMHome_ptr;
-
-  typedef
-    TAO_Objref_Var_T<
-        CCMHome
-      >
-    CCMHome_var;
-}
-
 namespace CIAO
 {
   class Container;

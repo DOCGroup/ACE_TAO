@@ -20,7 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ccm/CCM_CookieC.h"
-
 #include "ace/Active_Map_Manager.h"
 
 namespace CIAO

@@ -11,7 +11,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ConfigValue_Export.h"
-// #include "ace/Active_Map_Manager.h"
 
 namespace CIAO
 {

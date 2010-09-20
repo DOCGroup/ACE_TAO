@@ -58,7 +58,7 @@ namespace CIAO
 
     virtual ~Session_Context_Impl (void);
 
-    // Operations from ::Components::SessionContext.
+    /// Operation from ::Components::SessionContext.
     virtual CORBA::Object_ptr get_CCM_object ();
 
   private:
