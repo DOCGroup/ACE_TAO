@@ -1,3 +1,9 @@
+Mon Sep 20 13:38:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Contexts/Session/Context_Impl_T.h:
+        * ciao/Contexts/Session/Context_Impl_T.cpp:
+          Cleanup
+
 Mon Sep 20 13:21:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Contexts/Context.mpc:
