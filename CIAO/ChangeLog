@@ -1,8 +1,30 @@
+Mon Sep 20 08:55:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/CCM_Context.idl:
+          resolve_service_reference is now available with fullccm and lwccm
+
+        * ciao/Containers/Container_Base.h:
+        * ciao/Containers/Container_Base.cpp:
+        * ciao/Containers/Container_Base.idl:
+          Implemented resolve_service_reference for "POA" to get access to the
+          POA of the container.
+
+        * ciao/Contexts/Context_Impl_Base.h:
+        * ciao/Contexts/Context_Impl_Base.cpp:
+          Implemented resolve_service_reference which delegates to the
+          container. Removed _ciao_the_Container as CIAO specific hack
+
+        * ciao/Servants/Port_Activator.h:
+          Fixed typo
+
+        * ciao/Contexts/Context_Impl_Base.inl:
+          Removed this file.
+
 Mon Sep 20 07:56:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIDL/CodeGen/Basic.idl:
         * tests/IDL3/ImpliedIDL/All/include.idl:
-          Removed anonymous types. 
+          Removed anonymous types.
 
 Fri Sep 17 18:47:05 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 

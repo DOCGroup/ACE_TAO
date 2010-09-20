@@ -33,4 +33,16 @@ namespace CIAO
         this->home_servant_poa_->destroy (1, 1);
       }
   }
+
+  CORBA::Object_ptr
+  Container_i::resolve_service_reference(const char *service_id)
+  {
+    if (ACE_OS::strcmp (service_id, "POA") == 0)
+      {
+        return ::PortableServer::POA::_duplicate (this->component_poa_.in ());
+      }
+
+    throw ::Components::CCMException (::Components::OBJECT_NOT_FOUND);
+  }
+
 }

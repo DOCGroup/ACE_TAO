@@ -92,6 +92,8 @@ namespace CIAO
     /// Get a reference to the underlying ORB.
     CORBA::ORB_ptr the_ORB (void) const;
 
+    virtual CORBA::Object_ptr resolve_service_reference(const char *service_id);
+
   protected:
     /// Reference to the ORB
     CORBA::ORB_var orb_;

@@ -1,11 +1,6 @@
 // $Id$
 
 #include "Context_Impl_Base.h"
-
-#if !defined (__ACE_INLINE__)
-# include "Context_Impl_Base.inl"
-#endif /* __ACE_INLINE__ */
-
 #include "ciao/Containers/Container_BaseC.h"
 
 namespace CIAO
@@ -68,11 +63,9 @@ namespace CIAO
   }
 #endif
 
-#if !defined (CCM_LW)
   CORBA::Object_ptr
-  Context_Impl_Base::resolve_service_reference(const char *)
+  Context_Impl_Base::resolve_service_reference(const char *service_id)
   {
-    throw CORBA::NO_IMPLEMENT ();
+    return this->container_->resolve_service_reference (service_id);
   }
-#endif
 }
