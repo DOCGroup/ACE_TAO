@@ -3,9 +3,6 @@
 #ifndef CIAO_SERVANT_IMPL_T_C
 #define CIAO_SERVANT_IMPL_T_C
 
-#include "Servant_Impl_T.h"
-#include <ccm/CCM_EntityContextC.h>
-
 namespace CIAO
 {
   template <typename BASE_SKEL,
@@ -122,16 +119,6 @@ namespace CIAO
       {
         return sc->get_CCM_object ();
       }
-
-#if !defined (CCM_LW)
-    ::Components::EntityContext_var ec =
-      ::Components::EntityContext::_narrow (this->context_);
-
-    if (! ::CORBA::is_nil (ec.in ()))
-      {
-        return ec->get_CCM_object ();
-      }
-#endif
 
     throw ::CORBA::INTERNAL ();
   }
