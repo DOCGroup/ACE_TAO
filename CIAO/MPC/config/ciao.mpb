@@ -2,6 +2,6 @@
 // $Id$
 
 project {
-  includes += $(CIAO_ROOT) $(CIAO_ROOT)/DAnCE
+  includes += $(CIAO_ROOT)
   libpaths += $(ACE_ROOT)/lib
 }

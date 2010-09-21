@@ -102,12 +102,12 @@ namespace CIAO
                     "Creating container with id <%C>\n",
                     name));
     ACE_NEW_THROW_EX (cont,
-                      CIAO::Session_Container (this->orb_,
-                                               this->poa_,
-                                               false /* we're always dynanic for the moment */,
-                                               0, /*always dynanic */
-                                               name,
-                                               0 /* no additional policies at this moment */),
+                      CIAO::Session_Container_i (this->orb_,
+                                                 this->poa_,
+                                                 false /* we're always dynanic for the moment */,
+                                                 0, /*always dynanic */
+                                                 name,
+                                                 0 /* no additional policies at this moment */),
                       CORBA::NO_MEMORY ());
 
     CIAO_DEBUG (8, (LM_DEBUG, CLINFO

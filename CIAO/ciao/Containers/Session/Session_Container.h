@@ -25,7 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/Servant_Base.h"
-#include "ciao/Containers/Container_Base.h"
+#include "ciao/Containers/Session/Session_ContainerC.h"
+#include "ciao/Containers/Container_Base_T.h"
 #include "ccm/CCM_HomeExecutorBaseC.h"
 #include "ccm/CCM_EnterpriseComponentC.h"
 
@@ -87,17 +88,17 @@ namespace CIAO
     COMPONENTSERVANTCREATOR_FUNCPTR_MAP* component_servant_creator_funcptr_map_;
   };
 
-  class SESSION_CONTAINER_Export Session_Container : public Container_i
+  class SESSION_CONTAINER_Export Session_Container_i : public Container_i < ::CIAO::Session_Container>
   {
   public:
-    Session_Container (CORBA::ORB_ptr o,
+    Session_Container_i (CORBA::ORB_ptr o,
                        PortableServer::POA_ptr poa,
                        bool static_config_flag = false,
                        const Static_Config_EntryPoints_Maps* static_entrypts_maps = 0,
                        const char *name = 0,
                        const CORBA::PolicyList *more_policies = 0);
 
-    virtual ~Session_Container (void);
+    virtual ~Session_Container_i (void);
 
     /**
      * @brief Simply installing a home executor into the component.
@@ -201,7 +202,7 @@ namespace CIAO
                                     PortableServer::POA_ptr root);
 
     /// Not allowed to be
-    Session_Container (void);
+    Session_Container_i (void);
 
   protected:
     /// Static variable to store the highest number we have given out until
