@@ -18,14 +18,13 @@ namespace CIAO
     CIAO::Logger_Service
       * clf = ACE_Dynamic_Service<CIAO::Logger_Service>::instance ("CIAO_Logger");
 
-    int argc (0);
-    char **argv (0);
+    int argc = 0;
+    char **argv = 0;
 
     if (clf)
       {
         clf->init (argc, argv);
       }
-
 
     CIAO_TRACE ("Container_Handler_i::Container_Handler_i");
   }
