@@ -1,3 +1,9 @@
+Tue Sep 21 11:34:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Base/Client_init.h:
+        * ciao/Base/Client_init.cpp:
+          Removed not used methods and includes
+
 Tue Sep 21 11:26:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Base/Server_init.h:
