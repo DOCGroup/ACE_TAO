@@ -93,7 +93,7 @@ namespace CIAO
     Session_Container (CORBA::ORB_ptr o,
                        PortableServer::POA_ptr poa,
                        bool static_config_flag = false,
-                       const Static_Config_EntryPoints_Maps* static_entrypts_maps =0,
+                       const Static_Config_EntryPoints_Maps* static_entrypts_maps = 0,
                        const char *name = 0,
                        const CORBA::PolicyList *more_policies = 0);
 
