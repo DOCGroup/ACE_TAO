@@ -101,7 +101,7 @@ namespace CIAO
 
             CORBA::String_var ior = this->orb_->object_to_string (obj.in ());
 
-            DAnCE::Utility::write_IOR (ACE_TEXT_CHAR_TO_TCHAR (name), ior.in ());
+            CIAO::Name_Utilities::write_ior (ACE_TEXT_CHAR_TO_TCHAR (name), ior.in ());
           }
       }
   }
