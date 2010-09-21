@@ -10,11 +10,11 @@ USER VISIBLE CHANGES BETWEEN TAO-1.8.2 and TAO-1.8.3
   systems where ORB services of several CORBA vendors are
   installed (mainly via the installed packages). The following
   rename actions have been taken place:
-  * 'LifeCycle_Service'   to 'tao_coslifecycle'
-  * 'Dump_Schedule'       to 'tao_dump_schedule'
-  * 'NT_Notify_Service'   to 'tao_nt_cosnotification'
-  * 'Notify_Service'      to 'tao_cosnotification'
-  *
+  * 'LifeCycle_Service'     to 'tao_coslifecycle'
+  * 'Dump_Schedule'         to 'tao_dump_schedule'
+  * 'NT_Notify_Service'     to 'tao_nt_cosnotification'
+  * 'Notify_Service'        to 'tao_cosnotification'
+  * 'FT_ReplicationManager' to 'tao_ft_replicationmanager'
   *
 
 USER VISIBLE CHANGES BETWEEN TAO-1.8.1 and TAO-1.8.2
