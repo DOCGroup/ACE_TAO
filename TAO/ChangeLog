@@ -1,3 +1,10 @@
+Tue Sep 21 06:42:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_provides.cpp:
+          Removed generation for EntityContext, we don't support Entity at
+          all
+
 Mon Sep 20 15:27:54 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * tao/ImR_Client/ImR_Client.mpc:
