@@ -21,17 +21,16 @@ project(CIAO_Container_Base) : install, ciao_lib, ccm_svnt, ciao_servant_activat
   IDL_Files {
   }
   Source_Files {
-    Container_Base.cpp
     Container_BaseC.cpp
   }
-  Inline_Files {
-    Container_Base.inl
-  }
   Header_Files {
-    Container_Base.h
+    Container_Base_T.h
     Container_Base_export.h
     Container_BaseC.h
     Container_BaseS.h
+  }
+  Template_Files {
+    Container_Base_T.cpp
   }
   specific {
     install_dir = ciao/Containers

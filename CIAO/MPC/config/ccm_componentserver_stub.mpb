@@ -4,5 +4,4 @@
 project : ccm_stub {
    after += CCM_ComponentServer_stub
    libs += CCM_ComponentServer_stub
-   includes += $(CIAO_ROOT)/DAnCE
 }

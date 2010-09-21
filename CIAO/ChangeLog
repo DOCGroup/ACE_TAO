@@ -1,3 +1,24 @@
+Tue Sep 21 12:40:55 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ccm_componentserver_stub.mpb:
+        * MPC/config/ciao.mpb:
+          Break dependency on dance
+
+        * ciao/Containers/Container_Base_T.h:
+        * ciao/Containers/Container_Base_T.cpp:
+        * ciao/Containers/Containers.mpc:
+        * ciao/Containers/Container_Base.h:
+        * ciao/Containers/Container_Base.inl:
+        * ciao/Containers/Container_Base.cpp:
+        * ciao/Containers/Session/Session_Container.h:
+        * ciao/Containers/Session/Session_Container.inl:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.h:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+        * ciao/Servants/Home_Servant_Impl_Base.cpp:
+          Changed Container_Base to a template
+
 Tue Sep 21 11:41:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Base/Server_init.cpp:

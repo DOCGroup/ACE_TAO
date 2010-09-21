@@ -34,13 +34,13 @@ namespace CIAO
 
     virtual
       void pre_install (::Deployment::DeploymentPlan & plan,
-                                 ::CORBA::ULong instanceRef);
+                        ::CORBA::ULong instanceRef);
 
     virtual
       void post_install (const ::Deployment::DeploymentPlan & plan,
-                                  ::CORBA::ULong index,
-                                  const ::CORBA::Any & reference,
-                                  const ::CORBA::Any & exception_thrown);
+                         ::CORBA::ULong index,
+                         const ::CORBA::Any & reference,
+                         const ::CORBA::Any & exception_thrown);
 
     virtual
       void configure(const Deployment::Properties&);

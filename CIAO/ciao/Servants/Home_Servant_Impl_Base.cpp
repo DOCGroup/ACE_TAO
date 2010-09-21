@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Home_Servant_Impl_Base.h"
-#include "ciao/Containers/Container_Base.h"
+#include "ciao/Containers/Container_BaseC.h"
 
 namespace CIAO
 {
