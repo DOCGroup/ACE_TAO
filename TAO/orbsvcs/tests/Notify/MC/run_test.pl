@@ -88,7 +88,7 @@ if ($nfs->PutFile ($notify_conf) == -1) {
 
 my $NS = $ns->CreateProcess("../../../Naming_Service/Naming_Service",
                             "-ORBEndpoint iiop://$host:$port -o $nsiorfile");
-my $NFS = $nfs->CreateProcess("../../../Notify_Service/Notify_Service",
+my $NFS = $nfs->CreateProcess("../../../Notify_Service/tao_cosnotification",
                               "-ORBDebugLevel $debug_level ".
                               "$nscorbaloc " .
                               "-IORoutput $nfs_nfsiorfile " .

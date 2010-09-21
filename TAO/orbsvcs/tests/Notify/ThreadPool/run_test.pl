@@ -54,7 +54,7 @@ $con->DeleteFile ($supiorfile);
 $NS = $ns->CreateProcess ("../../../Naming_Service/Naming_Service",
                           " -o $ns_nsiorfile");
 
-$NFS = $nfs->CreateProcess ("../../../Notify_Service/Notify_Service");
+$NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification");
 $NFS_Args = "-ORBInitRef NameService=file://$nfs_nsiorfile -IORoutput $nfs_nfsiorfile -ORBSvcConf $nfs_nfsconffile";
 
 $SUP = $sup->CreateProcess ("../Driver/Notify_Tests_Driver");

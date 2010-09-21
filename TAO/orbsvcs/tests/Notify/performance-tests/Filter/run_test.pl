@@ -41,7 +41,7 @@ my $initref = "-ORBInitRef NameService=iioploc://$host:$port/NameService ";
 
 $NS = $nm_service->CreateProcess ("../../../../Naming_Service/Naming_Service",
                                   "-ORBEndpoint iiop://$host:$port -o $ns_naming_ior");
-$TS = $nt_service->CreateProcess ("../../../../Notify_Service/Notify_Service", $initref.
+$TS = $nt_service->CreateProcess ("../../../../Notify_Service/tao_cosnotification", $initref.
                                   "-IORoutput $ts_notify_ior -ORBSvcConf $ts_notify_conf");
 $STS = $supplier->CreateProcess ("Structured_Supplier", $initref.
                                  "-o $supplier_supplier_ior");

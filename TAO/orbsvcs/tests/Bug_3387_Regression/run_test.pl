@@ -53,7 +53,7 @@ $server->DeleteFile ($msngr_ior);
 
 $NMS = $nm_service->CreateProcess("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
                                   "-ORBdebuglevel $debug_level -o $nm_ns_ior");
-$NFS = $nt_service->CreateProcess("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/Notify_Service",
+$NFS = $nt_service->CreateProcess("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification",
                                   "-ORBdebuglevel $debug_level -ORBInitRef NameService=file://$nt_ns_ior ".
                                   "-IORoutput $nt_nt_ior -UseSeparateDispatchingORB 1 ".
                                   "-ORBSvcConf $nt_svc_conf");
