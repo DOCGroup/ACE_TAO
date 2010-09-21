@@ -1,3 +1,14 @@
+Tue Sep 21 09:41:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/orbsvcs.html:
+        * examples/Quoter/run_test.pl:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.mpc:
+          Renamed LifeCycle_Service to tao_coslifecycle. This is the first
+          commit of a rename action regarding the ORB services. This rename
+          action is performed due to the fact that different CORBA vendors also
+          have these services and it is sometimes hard to distinguish between
+          those. The main change will be the tao_ prefix.
+
 Tue Sep 21 07:06:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/context_svh.cpp:

@@ -92,7 +92,7 @@ $NS = $nstarget->CreateProcess (
     "../../orbsvcs/Naming_Service/Naming_Service",
     "-o $nstarget_nsiorfile");
 $LC = $lctarget->CreateProcess (
-    "../../orbsvcs/LifeCycle_Service/LifeCycle_Service",
+    "../../orbsvcs/LifeCycle_Service/tao_coslifecycle",
     "$debug -ORBInitRef NameService=file://$lctarget_nsiorfile");
 
 $SV = $svtarget->CreateProcess (
@@ -156,7 +156,7 @@ if ($cltarget->PutFile ($nsiorbase) == -1) {
 $lc_status = $LC->Spawn ();
 
 if ($lc_status != 0) {
-    print STDERR "ERROR: LifeCycle_Service returned $lc_status\n";
+    print STDERR "ERROR: tao_coslifecycle returned $lc_status\n";
     $NS->Kill (); $NS->TimedWait (1);
     exit 1;
 }
@@ -234,7 +234,7 @@ if ($sv_status != 0) {
 $lc_status = $LC->TerminateWaitKill ($lctarget->ProcessStopWaitInterval());
 
 if ($lc_status != 0) {
-    print STDERR "ERROR: LifeCycle_Service returned $lc_status\n";
+    print STDERR "ERROR: tao_coslifecycle returned $lc_status\n";
     $status = 1;
 }
 
