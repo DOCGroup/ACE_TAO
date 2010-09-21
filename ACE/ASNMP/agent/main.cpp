@@ -16,7 +16,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 #ifdef ACE_USES_WCHAR
   ACE_Argv_Type_Converter arg_converter(argc, argv);
-  if (the_agent.set_args(arg_converter.get_ASCII_argc (), arg_converter.get_ASCII_argv()))
+  if (the_agent.set_args(arg_converter.get_argc (), arg_converter.get_ASCII_argv()))
 #else
   if (the_agent.set_args(argc, argv))
 #endif
