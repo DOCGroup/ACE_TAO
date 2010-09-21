@@ -44,7 +44,9 @@ namespace CIAO
     : public virtual Components::CCMContext
   {
   public:
-    Context_Impl_Base (Components::CCMHome_ptr home, Container_ptr c);
+    Context_Impl_Base (Components::CCMHome_ptr home,
+                       Container_ptr c,
+                       const char *instance_id);
 
     virtual ~Context_Impl_Base (void);
 
@@ -74,13 +76,18 @@ namespace CIAO
 
     virtual CORBA::Object_ptr resolve_service_reference(const char *service_id);
 
-  protected:
-    Components::CCMHome_var home_;
-    Container_var container_;
+    /// Temporarily added back for a sponsor, this will be removed at some
+    /// moment in favor of a resolve_service_reference() call
+    const char *_ciao_instance_id (void) const;
 
+  private:
+    Components::CCMHome_var home_;
+  protected:
+    Container_var container_;
   private:
     /// Private constructor, not allowed to be called
     Context_Impl_Base (void);
+    CORBA::String_var ciao_instance_id_;
   };
 }
 
