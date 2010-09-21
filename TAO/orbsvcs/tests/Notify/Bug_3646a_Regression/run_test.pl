@@ -42,7 +42,7 @@ $SV1 = $server1->CreateProcess ("../../../Naming_Service/Naming_Service",
                               "-ORBEndpoint iiop://$hostname:$port " .
                               "-o $server1_ior1file");
 
-$SV2 = $server2->CreateProcess ("../../../Notify_Service/Notify_Service",
+$SV2 = $server2->CreateProcess ("../../../Notify_Service/tao_cosnotification",
                               "-ORBdebuglevel $debug_level " .
                               "-ORBInitRef NameService=iioploc://$hostname:$port/NameService " .
                               "-IORoutput $server2_ior2file " .

@@ -34,7 +34,7 @@ $test->DeleteFile ($naming_ior);
 
 $NM_SV = $nm_service->CreateProcess ("../../../../Naming_Service/Naming_Service", "-o $nm_service_nmiorfile");
 $T = $test->CreateProcess ("RedGreen_Test", "-ORBInitRef NameService=file://$test_nmiorfile");
-$NT_SV = $nt_service->CreateProcess ("../../../../Notify_Service/Notify_Service", "");
+$NT_SV = $nt_service->CreateProcess ("../../../../Notify_Service/tao_cosnotification", "");
 
 $nm_service_status = $NM_SV->Spawn ();
 

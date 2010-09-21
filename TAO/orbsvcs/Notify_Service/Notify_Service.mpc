@@ -17,7 +17,7 @@ project(TAO_Notify_Service) : orbsvcslib, orbsvcs_output, install, valuetype, or
 }
 
 project(Notify_Service) : orbsvcsexe, install, tao_notify_service, notify_monitor_control {
-  exename  = Notify_Service
+  exename  = tao_cosnotification
   Source_Files {
     Notify_Server.cpp
   }
@@ -26,7 +26,7 @@ project(Notify_Service) : orbsvcsexe, install, tao_notify_service, notify_monito
 project(NT_Notify_Service) : orbsvcsexe, install, tao_notify_service, notify_monitor_control {
   avoids += ace_for_tao
   requires += winnt
-  exename  = NT_Notify_Service
+  exename  = tao_nt_cosnotification
   Source_Files {
     NT_Notify_Server.cpp
     NT_Notify_Service.cpp

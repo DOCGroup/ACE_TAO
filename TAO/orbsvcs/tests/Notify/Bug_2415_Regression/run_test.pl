@@ -51,7 +51,7 @@ $con->DeleteFile ($supiorfile);
 $NS = $ns->CreateProcess ("../../../Naming_Service/Naming_Service",
                           " -ORBEndpoint iiop://$ns_host:$ns_port");
 
-$NFS = $nfs->CreateProcess ("../../../Notify_Service/Notify_Service",
+$NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification",
                             "-ORBInitRef NameService=corbaloc::" .
                             "$ns_host:$ns_port/NameService " .
                             "-IORoutput $nfs_nfsiorfile -ORBSvcConf " .
@@ -212,7 +212,7 @@ $nfs->DeleteFile ($nfsiorfile);
 
 
 
-$NFS = $nfs->CreateProcess ("../../../Notify_Service/Notify_Service",
+$NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification",
                             "-ORBInitRef NameService=corbaloc::" .
                             "$ns_host:$ns_port/NameService " .
                             "-IORoutput $nfs_nfsiorfile -ORBSvcConf " .

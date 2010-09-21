@@ -68,7 +68,7 @@ foreach my $arg (@ARGV) {
 $NS = $ns->CreateProcess ("../../../Naming_Service/Naming_Service",
                           "-ORBEndpoint iiop://$host:$port -o $ns_nsiorfile");
 
-$NFS = $nfs->CreateProcess ("../../../Notify_Service/Notify_Service",
+$NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification",
                             "-ORBInitRef NameService=iioploc://" .
                             "$host:$port/NameService " .
                             "-IORoutput $nfs_nfsiorfile -ORBSvcConf " .

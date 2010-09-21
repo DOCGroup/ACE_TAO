@@ -39,7 +39,7 @@ $nfs->DeleteFile ($nfsiorfile);
 $con->DeleteFile ($eciorfile);
 $sup->DeleteFile ($eciorfile);
 
-$NotifyService = "$ENV{TAO_ROOT}/orbsvcs/Notify_Service/Notify_Service";
+$NotifyService = "$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification";
 $NFS = $nfs->CreateProcess ($NotifyService, " -boot ".
                                             "-orblistenendpoints iiop://:$port ".
                                             "-NoNameSvc ".
