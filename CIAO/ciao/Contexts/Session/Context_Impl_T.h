@@ -54,7 +54,8 @@ namespace CIAO
 
     Session_Context_Impl (Components::CCMHome_ptr the_home,
                           Container_ptr c,
-                          PortableServer::Servant sv);
+                          PortableServer::Servant sv,
+                          const char* id);
 
     virtual ~Session_Context_Impl (void);
 

@@ -42,7 +42,7 @@ namespace CIDL_SenderImpl
     void configuration_complete (void);
 
   protected:
-    ::CIAO_Protocols_Sender_Impl::Sender_Exec_Context_var context_;
+    ::Protocols::CCM_Sender_Context_var context_;
 
     CORBA::ORB_var orb_;
 

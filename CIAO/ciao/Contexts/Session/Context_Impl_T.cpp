@@ -10,8 +10,9 @@ namespace CIAO
   Session_Context_Impl<BASE_CTX, COMP>::Session_Context_Impl (
       Components::CCMHome_ptr the_home,
       Container_ptr c,
-      PortableServer::Servant sv)
-    : Context_Impl_Base (the_home, c),
+      PortableServer::Servant sv,
+      const char* id)
+    : Context_Impl_Base (the_home, c, id),
       servant_ (sv)
   {
   }

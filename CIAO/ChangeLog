@@ -1,8 +1,26 @@
+Tue Sep 21 07:06:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Contexts/Context_Impl_Base.h:
+        * ciao/Contexts/Context_Impl_Base.cpp:
+        * ciao/Contexts/Session/Context_Impl_T.h:
+        * ciao/Contexts/Session/Context_Impl_T.cpp:
+        * ciao/Servants/Session/Servant_Impl_T.cpp:
+          For the moment readded the instance id as ciao specific method, but
+          this will go away at some moment again, resolve_service_reference
+          is a much better way to get access to some new idl interface that
+          delivers more meta data to a component
+
+        * performance-tests/Protocols/Receiver/Receiver_exec.h:
+        * performance-tests/Protocols/Receiver/Receiver_exec.cpp:
+        * performance-tests/Protocols/Sender/Sender_exec.h:
+        * performance-tests/Protocols/Sender/Sender_exec.cpp:
+          Updated because of the removed ciao specific context
+
 Mon Sep 20 15:28:39 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/ThreeComp/Sender/ThreeComp_Sender.mpc:
-	Add missing lib.
-   
+        Add missing lib.
+
 Mon Sep 20 14:36:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Contexts/Context_Impl_Base.h:

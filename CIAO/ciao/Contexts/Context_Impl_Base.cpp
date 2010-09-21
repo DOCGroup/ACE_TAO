@@ -6,9 +6,11 @@
 namespace CIAO
 {
   Context_Impl_Base::Context_Impl_Base (Components::CCMHome_ptr home,
-                                        Container_ptr c)
+                                        Container_ptr c,
+                                        const char *instance_id)
     : home_ (Components::CCMHome::_duplicate (home)),
-      container_ (Container::_duplicate (c))
+      container_ (Container::_duplicate (c)),
+      ciao_instance_id_ (instance_id)
   {
   }
 
@@ -67,5 +69,11 @@ namespace CIAO
   Context_Impl_Base::resolve_service_reference(const char *service_id)
   {
     return this->container_->resolve_service_reference (service_id);
+  }
+
+  const char *
+  Context_Impl_Base::_ciao_instance_id (void) const
+  {
+    return this->ciao_instance_id_.in ();
   }
 }
