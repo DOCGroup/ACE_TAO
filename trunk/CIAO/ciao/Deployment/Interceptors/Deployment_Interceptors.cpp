@@ -14,8 +14,7 @@ namespace CIAO
   // Implementation skeleton constructor
   CIAO_StoreReferences_i::CIAO_StoreReferences_i (void)
   {
-    this->orb_ =
-      DAnCE::PLUGIN_MANAGER::instance ()->get_orb ();
+    this->orb_ = DAnCE::PLUGIN_MANAGER::instance ()->get_orb ();
 
     if (CORBA::is_nil (this->orb_))
       {

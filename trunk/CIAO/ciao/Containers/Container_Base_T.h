@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Container_Base.h
+ *  @file    Container_Base_T.h
  *
  *  $Id$
  *
@@ -13,19 +13,17 @@
  */
 //=============================================================================
 
-#ifndef CIAO_CONTAINER_BASE_H
-#define CIAO_CONTAINER_BASE_H
+#ifndef CIAO_CONTAINER_BASE_T_H
+#define CIAO_CONTAINER_BASE_T_H
 
 #include /**/ "ace/pre.h"
 
-#include "ciao/Containers/Container_Base_export.h"
+#include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Hash_Map_Manager_T.h"
-#include "tao/LocalObject.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ciao/Containers/Container_BaseC.h"
 
@@ -39,8 +37,10 @@ namespace CIAO
    * Perhaps we can use local interface to define these interfaces as
    * we will also get reference counting automatically.
    */
-  class CIAO_CONTAINER_BASE_Export Container_i :
-    public virtual Container,
+
+  template <typename BASE>
+  class Container_i :
+    public virtual BASE,
     public virtual ::CORBA::LocalObject
   {
   public:
@@ -121,10 +121,14 @@ namespace CIAO
   };
 }
 
-#if defined (__ACE_INLINE__)
-# include "Container_Base.inl"
-#endif /* __ACE_INLINE__ */
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "ciao/Containers/Container_Base_T.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("ciao/Containers/Container_Base_T.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 
-#endif /* CIAO_CONTAINER_BASE_H */
+#endif /* CIAO_CONTAINER_BASE_T_H */
