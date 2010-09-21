@@ -18,7 +18,7 @@ $ns_running = 0;
 
 $nr_daemon = 3;
 @ports = ( 60000, 60001 );
-@iorbases = ( "Sender.ior", "Receiver.ior", "AMI.ior" );
+@iorbases = ( "Sender.ior", "Receiver.ior");
 @iorfiles = 0;
 @nodenames = ( "Sender", "Receiver" );
 
