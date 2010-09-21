@@ -1,3 +1,10 @@
+Tue Sep 21 11:41:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Base/Server_init.cpp:
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+        * ciao/Valuetype_Factories/ConfigValue.h:
+          More cleanup
+
 Tue Sep 21 11:34:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Base/Client_init.h:

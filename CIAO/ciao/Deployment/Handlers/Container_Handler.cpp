@@ -261,7 +261,6 @@ namespace CIAO
 
     CIAO::Server_init (orb_);
 
-
     // For the time being, we are going to go ahead and construct a container.
     ::Deployment::DeploymentPlan plan;
     plan.instance.length (1);
