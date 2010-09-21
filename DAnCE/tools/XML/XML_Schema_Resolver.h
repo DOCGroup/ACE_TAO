@@ -15,7 +15,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "XML/CIAO_XML_Utils_Export.h"
+#include "XML/DAnCE_XML_Utils_Export.h"
 #include "XML/XercesString.h"
 
 #include <xercesc/sax/EntityResolver.hpp>
@@ -88,7 +88,7 @@ namespace DAnCE
      * @class Environment_Resolver
      * @brief Resolves a schema location from a path from an environment variable.
      */
-    struct CIAO_XML_Utils_Export Environment_Resolver
+    struct DANCE_XML_Utils_Export Environment_Resolver
     {
       Environment_Resolver (void);
 
