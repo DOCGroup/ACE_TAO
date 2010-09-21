@@ -33,7 +33,7 @@ namespace CIDL_ReceiverImpl
 
   protected:
 
-    ::CIAO_Protocols_Receiver_Impl::Receiver_Exec_Context_var context_;
+    ::Protocols::CCM_Receiver_Context_var context_;
 
     CORBA::ORB_var orb_;
 

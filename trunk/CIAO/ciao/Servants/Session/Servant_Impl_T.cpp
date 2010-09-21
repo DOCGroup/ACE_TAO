@@ -22,7 +22,7 @@ namespace CIAO
       ins_name_ (ins_name)
   {
     ACE_NEW (this->context_,
-             CONTEXT (home, c, this));
+             CONTEXT (home, c, this, ins_name));
 
     ::Components::SessionComponent_var scom =
       ::Components::SessionComponent::_narrow (exe);
