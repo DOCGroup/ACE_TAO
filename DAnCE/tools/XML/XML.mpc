@@ -2,7 +2,7 @@
 
 project (DAnCE_XML_Utils) : install, acelib, xerces, dance_lib {
   sharedname   += DAnCE_XML_Utils
-  dynamicflags += DAnCE_XML_UTILS_BUILD_DLL
+  dynamicflags += DANCE_XML_UTILS_BUILD_DLL
   includes      += ..
 
   specific {

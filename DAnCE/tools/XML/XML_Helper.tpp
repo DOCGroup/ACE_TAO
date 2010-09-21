@@ -2,7 +2,6 @@
 #include "XML_Helper.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
-//#include "ciao/Logger/Log_Macros.h"
 #include "xercesc/util/XMLUniDefs.hpp"
 #include "xercesc/dom/DOM.hpp"
 #include "XML_Error_Handler.h"

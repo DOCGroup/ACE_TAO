@@ -19,13 +19,13 @@ using std::memcpy;
 
 // Utility class that provides a std::string like facade to XMLString.
 // Doesn't implement all of the methods of std::string.
-#include "XML/CIAO_XML_Utils_Export.h"
+#include "XML/DAnCE_XML_Utils_Export.h"
 
 namespace DAnCE
 {
   namespace XML
   {
-    class CIAO_XML_Utils_Export XStr
+    class DANCE_XML_Utils_Export XStr
     {
     public:
       XStr() : _wstr(0L) { };
@@ -71,10 +71,10 @@ namespace DAnCE
 
     };
 
-    CIAO_XML_Utils_Export bool operator== (const XStr& lhs, const XStr& rhs);
-    CIAO_XML_Utils_Export bool operator!= (const XStr& lhs, const XStr& rhs);
+    DANCE_XML_Utils_Export bool operator== (const XStr& lhs, const XStr& rhs);
+    DANCE_XML_Utils_Export bool operator!= (const XStr& lhs, const XStr& rhs);
 
-    CIAO_XML_Utils_Export std::ostream&
+    DANCE_XML_Utils_Export std::ostream&
     operator<< (std::ostream& o, XStr const& str);
 
   }
