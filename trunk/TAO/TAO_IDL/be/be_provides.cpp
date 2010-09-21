@@ -241,17 +241,6 @@ be_provides::gen_facet_svnt_defn (TAO_OutStream &os)
      << "return sc->get_CCM_object ();" << be_uidt_nl
      << "}" << be_uidt_nl << be_nl;
 
-  if (!be_global->gen_lwccm ())
-    {
-      os << "::Components::EntityContext_var ec =" << be_idt_nl
-         << "::Components::EntityContext::_narrow (this->ctx_.in ());"
-         << be_uidt_nl << be_nl
-         << "if (! ::CORBA::is_nil (ec.in ()))" << be_idt_nl
-         << "{" << be_idt_nl
-         << "return ec->get_CCM_object ();" << be_uidt_nl
-         << "}" << be_uidt_nl << be_nl;
-    }
-
   os << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
      << "}";
 
