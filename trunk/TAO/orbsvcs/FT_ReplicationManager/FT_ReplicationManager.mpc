@@ -20,7 +20,7 @@ project(*Lib): orbsvcslib, orbsvcs_output, conv_lib, fault_tolerance, notificati
 }
 
 project : taoserver, orbsvcsexe, fault_tolerance, notification_skel, iormanip, iortable, ftorb, install {
-  exename  = FT_ReplicationManager
+  exename  = tao_ft_replicationmanager
   libs    += TAO_ReplicationManagerLib
   after   += FT_ReplicationManager_Lib
   Source_Files {
