@@ -1,3 +1,8 @@
+Tue Sep 21 08:27:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ASNMP/agent/main.cpp:
+          Fixed compile error
+
 Mon Sep 20 13:24:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ASNMP/agent/agent.mpc:
