@@ -53,7 +53,7 @@ $con->DeleteFile ($supiorfile);
 $NS = $ns->CreateProcess ("../../../Naming_Service/Naming_Service",
                             "-ORBEndpoint iiop://$host:$port ".
                             "-o $ns_nsiorfile");
-$NFS = $nfs->CreateProcess ("../../../Notify_Service/Notify_Service",
+$NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification",
                             "-ORBEndpoint iiop://$nfs_host:$nfs_port " .
                             "-ORBInitRef NameService=iioploc://" .
                             "$host:$port/NameService " .
@@ -82,7 +82,7 @@ if ($ns->WaitForFileTimed ($nsiorfile,$ns->ProcessStartWaitInterval()) == -1) {
     exit 1;
 }
 
-print "*********** Starting the first Notify_Service  ***********\n";
+print "*********** Starting the first Notify Service  ***********\n";
 $NFS_status = $NFS->Spawn ();
 if ($NFS_status != 0) {
     print STDERR "ERROR: Notify Service returned $NFS_status\n";
@@ -124,7 +124,7 @@ if ($SUP_status != 0) {
 print "*********** Allowing time to register the ec   ***********\n";
 sleep(3);
 
-print "*********** Killing the first Notify_Service   ***********\n";
+print "*********** Killing the first Notify Service   ***********\n";
 $NFS_status = $NFS->Kill ($nfs->ProcessStopWaitInterval());
 if ($NFS_status != 0) {
     print STDERR "ERROR: Notify Service returned $NFS_status\n";
@@ -134,7 +134,7 @@ if ($NFS_status != 0) {
 }
 sleep(1);
 
-print "*********** Starting the second Notify_Service ***********\n";
+print "*********** Starting the second Notify Service ***********\n";
 my $args = $NFS->Arguments();
 my $l = index($args, $nfs_nfsiorfile);
 substr($args, $l, length($nfs_nfsiorfile)) = $nfs_nfs2iorfile;

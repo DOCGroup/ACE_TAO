@@ -130,7 +130,7 @@ for $config (@test_configs) {
 
     my $nfs_config = $nfs->LocalFile ($config);
 
-    $NFS = $nfs->CreateProcess ("../../../Notify_Service/Notify_Service",
+    $NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification",
                                 ' '.$dispatch_opt.' '.
                                 "-ORBInitRef NameService=file://$nfs_nsiorfile " .
                                 "-IORoutput $nfs_nfsiorfile " .

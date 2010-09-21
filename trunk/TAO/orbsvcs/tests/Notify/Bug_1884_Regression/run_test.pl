@@ -45,7 +45,7 @@ if ($#ARGV >= 0 && $ARGV[0] eq '-p') {
     $consumer_runtime = 20;
 }
 
-my $NFS = $nfs->CreateProcess ("../../../Notify_Service/Notify_Service",
+my $NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification",
                                "-ORBDebugLevel $debug_level ".
                                "-NoNameSvc -IORoutput $nfs_nfsiorfile $svcconf " .
                                "-ORBEndpoint iiop://$host:$port");
@@ -54,7 +54,7 @@ my $CON = $con->CreateProcess ("consumer", "$nts_ref -t $consumer_runtime");
 my $FLT = $flt->CreateProcess ("filter", "$nts_ref");
 
 
-print "\n*********** Starting the Notify_Service  ***********\n\n";
+print "\n*********** Starting the Notify Service  ***********\n\n";
 $NFS_status = $NFS->Spawn ();
 if ($NFS_status != 0) {
     print STDERR "ERROR: Notify Service returned $NFS_status\n";
@@ -90,7 +90,7 @@ if ($CON_status != 0) {
 sleep(5);
 
 if ($persistent_test == 1) {
-    print "*********** Killing the first Notify_Service   ***********\n";
+    print "*********** Killing the first Notify Service   ***********\n";
     $NFS_status = $NFS->TerminateWaitKill ($nfs->ProcessStopWaitInterval());
     if ($NFS_status != 0) {
         print STDERR "ERROR: Notification Service returned $NFS_status\n";
@@ -101,7 +101,7 @@ if ($persistent_test == 1) {
 
     $nfs->DeleteFile ($nfsiorfile);
 
-    print "*********** Starting the second Notify_Service ***********\n";
+    print "*********** Starting the second Notify Service ***********\n";
     print STDERR $NFS->CommandLine (). "\n";
     $NFS_status = $NFS->Spawn ();
     if ($NFS_status != 0) {
