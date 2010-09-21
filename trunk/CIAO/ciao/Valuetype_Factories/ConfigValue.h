@@ -21,7 +21,7 @@ namespace CIAO
   public:
     ConfigValue_impl();
     ConfigValue_impl(const char* the_name, const CORBA::Any& the_value);
-    ~ConfigValue_impl() throw();
+    virtual ~ConfigValue_impl() throw();
     virtual CORBA::ValueBase* _copy_value();
   };
 

@@ -2,11 +2,9 @@
 
 #include "Server_init.h"
 
-#include <ccm/CCM_StandardConfiguratorC.h>
+#include "ciao/Base/Client_init.h"
 #include "ciao/Valuetype_Factories/Cookies.h"
 #include "ciao/Logger/Log_Macros.h"
-#include "Client_init.h"
-#include "ace/Tokenizer_T.h"
 
 namespace CIAO
 {
