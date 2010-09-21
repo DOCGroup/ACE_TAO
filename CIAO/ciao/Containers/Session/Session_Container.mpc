@@ -23,12 +23,15 @@ project(CIAO_Session_Container) : install, ccm_svnt, ciao_lib, ciao_container_ba
   }
   Source_Files {
     Session_Container.cpp
+    Session_ContainerC.cpp
   }
   Inline_Files {
     Session_Container.inl
   }
   Header_Files {
     Session_Container.h
+    Session_ContainerC.h
+    Session_ContainerS.h
   }
   specific {
     install_dir = ciao/Containers/Session
