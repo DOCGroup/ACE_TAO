@@ -203,7 +203,7 @@ $client->DeleteFile ($replica2_ior);
 
 ### Create process
 $RM = $rp_manager->CreateProcess ("$ENV{'TAO_ROOT'}/orbsvcs/FT_ReplicationManager" .
-                                  "$build_directory/FT_ReplicationManager",
+                                  "$build_directory/tao_ft_replicationmanager",
                                   "-o $rp_manager_ior " .
                                   "-ORBEndpoint iiop://$hostname:$port");
 
