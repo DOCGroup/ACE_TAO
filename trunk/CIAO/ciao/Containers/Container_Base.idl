@@ -24,6 +24,10 @@ module CIAO
     };
   };
 
+  exception InvalidComponent
+  {
+  };
+
   /**
    * @interface Container
    * @brief Internal container interfaces.
