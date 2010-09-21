@@ -23,7 +23,7 @@ namespace DAnCE
     void build_property_map (PROPERTY_MAP &map,
                              const ::Deployment::Properties &prop)
     {
-      DANCE_TRACE("DAnCE::Utility::build_config_values_map");
+      DANCE_TRACE("DAnCE::Utility::build_property_map");
 
       for (CORBA::ULong i = 0; i < prop.length (); ++i)
         {

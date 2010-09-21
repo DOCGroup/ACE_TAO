@@ -18,7 +18,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "XML/CIAO_XML_Utils_Export.h"
+#include "XML/DAnCE_XML_Utils_Export.h"
 
 #include <xercesc/sax/ErrorHandler.hpp>
 
@@ -34,7 +34,7 @@ namespace DAnCE
      * @brief Error handler for XERCES
      *
      */
-    class CIAO_XML_Utils_Export XML_Error_Handler
+    class DANCE_XML_Utils_Export XML_Error_Handler
       : public xercesc::ErrorHandler
     {
     public:

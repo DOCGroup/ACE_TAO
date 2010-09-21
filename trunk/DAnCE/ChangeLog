@@ -1,3 +1,16 @@
+Tue Sep 21 13:36:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/DAnCE_Utility.cpp:
+        * tools/XML/DAnCE_XML_Utils_Export.h:
+        * tools/XML/XML.mpc:
+        * tools/XML/XML_Error_Handler.h:
+        * tools/XML/XML_Helper.h:
+        * tools/XML/XML_Helper.tpp:
+        * tools/XML/XML_Schema_Resolver.h:
+        * tools/XML/XercesString.h:
+        * tools/XML/CIAO_XML_Utils_Export.h:
+          Updated export macros for Windows
+
 Fri Sep 17 18:52:11 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * DAnCE/DAnCE_Properties.mpc:

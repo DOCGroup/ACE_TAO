@@ -16,7 +16,7 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-#include "XML/CIAO_XML_Utils_Export.h"
+
 #include "XML/XML_Error_Handler.h"
 #include "XML/XML_Schema_Resolver.h"
 
