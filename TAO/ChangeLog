@@ -1,3 +1,9 @@
+Tue Sep 21 09:47:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/orbsvcs.html:
+        * orbsvcs/Dump_Schedule/Dump_Schedule.mpc:
+          Renamed Dump_Schedule to tao_dump_schedule.
+
 Tue Sep 21 09:41:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * docs/orbsvcs.html:
