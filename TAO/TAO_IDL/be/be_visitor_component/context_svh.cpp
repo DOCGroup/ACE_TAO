@@ -92,8 +92,8 @@ be_visitor_context_svh::visit_component (be_component *node)
   os_ << lname << "_Context (" << be_idt_nl
       << "::Components::CCMHome_ptr h," << be_nl
       << "::CIAO::Container_ptr c," << be_nl
-      << "PortableServer::Servant sv);"
-      << be_uidt_nl << be_nl;
+      << "PortableServer::Servant sv," << be_nl
+      << "const char *id);" << be_uidt_nl << be_nl;
 
   os_ << "virtual ~" << lname << "_Context (void);";
 

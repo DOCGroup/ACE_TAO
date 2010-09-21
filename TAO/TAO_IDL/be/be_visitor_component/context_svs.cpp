@@ -39,15 +39,16 @@ be_visitor_context_svs::visit_component (be_component *node)
 
   os_ << be_nl
       << lname <<"_Context::" << lname << "_Context ("
-      << be_idt_nl
+      << be_idt << be_idt_nl
       << "::Components::CCMHome_ptr h," << be_nl
       << "::CIAO::Container_ptr c," << be_nl
-      << "PortableServer::Servant sv)" << be_uidt_nl
-      << ": ::CIAO::Context_Impl_Base (h, c)," << be_idt_nl
+      << "PortableServer::Servant sv," << be_uidt_nl
+      << "const char *id)" << be_uidt_nl
+      << ": ::CIAO::Context_Impl_Base (h, c, id)," << be_idt_nl
       << "::CIAO::Session_Context_Impl<" << be_idt_nl
       << global << sname << "::CCM_"
       << lname << "_Context," << be_nl
-      << "::" << node->full_name () << "> (h, c, sv)";
+      << "::" << node->full_name () << "> (h, c, sv, id)";
 
   os_ << be_uidt << be_uidt_nl
       << "{" << be_nl
