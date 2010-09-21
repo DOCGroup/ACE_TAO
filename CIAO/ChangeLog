@@ -1,3 +1,15 @@
+Tue Sep 21 11:26:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Base/Server_init.h:
+        * ciao/Base/Server_init.cpp:
+          Removed write_ior function, not used
+
+        * ciao/Containers/Session/Session_Container.h:
+          Layout changes
+
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+          Use different write_ior method
+
 Tue Sep 21 10:22:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Contexts/Extension/ExtensionContext_T.h:

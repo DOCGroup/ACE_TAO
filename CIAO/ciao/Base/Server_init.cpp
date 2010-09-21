@@ -19,23 +19,4 @@ namespace CIAO
                                  Components::Cookie);
     return 0;
   }
-
-  namespace Utility
-  {
-    int write_IOR (const ACE_TCHAR *pathname, const char *ior)
-    {
-      FILE* ior_output_file_ = ACE_OS::fopen (pathname, ACE_TEXT("w"));
-
-      if (ior_output_file_)
-        {
-          ACE_OS::fprintf (ior_output_file_,
-                          "%s",
-                          ior);
-          ACE_OS::fclose (ior_output_file_);
-          return 0;
-        }
-
-      return -1;
-    }
-  } /* namespace Utility */
 } /* namespace CIAO */
