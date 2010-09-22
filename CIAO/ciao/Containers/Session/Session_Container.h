@@ -26,7 +26,6 @@
 
 #include "tao/PortableServer/Servant_Base.h"
 #include "ciao/Containers/Session/Session_ContainerC.h"
-#include "ciao/Containers/Container_Base_T.h"
 #include "ccm/CCM_HomeExecutorBaseC.h"
 #include "ccm/CCM_EnterpriseComponentC.h"
 
@@ -72,12 +71,12 @@ namespace CIAO
   COMPONENTSERVANTCREATOR_FUNCPTR_MAP;
 
 
-  class SESSION_CONTAINER_Export Session_Container_i : public Container_i < ::CIAO::Session_Container>
+  class SESSION_CONTAINER_Export Session_Container_i :
+    public Container_i < ::CIAO::Session_Container>
   {
   public:
     Session_Container_i (CORBA::ORB_ptr o,
-                       PortableServer::POA_ptr poa,
-                       const char *name = 0);
+                       PortableServer::POA_ptr poa);
 
     virtual ~Session_Container_i (void);
 
@@ -165,7 +164,7 @@ namespace CIAO
   private:
 
     /// Initialize the container with a name.
-    virtual void init (const char *name = 0);
+    virtual void init (const char *name);
 
     /// Create POA for the component.
     /**

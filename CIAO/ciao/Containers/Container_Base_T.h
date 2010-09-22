@@ -49,7 +49,7 @@ namespace CIAO
     virtual ~Container_i (void);
 
     /// Initialize the container with a name.
-    virtual void init (const char *name = 0) = 0;
+    virtual void init (const char *name) = 0;
 
     /// Get component's POA.
     /**
