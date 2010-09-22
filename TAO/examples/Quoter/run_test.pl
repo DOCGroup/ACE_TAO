@@ -89,7 +89,7 @@ $cltarget->DeleteFile($nsiorbase);
 # Programs that are run
 
 $NS = $nstarget->CreateProcess (
-    "../../orbsvcs/Naming_Service/Naming_Service",
+    "../../orbsvcs/Naming_Service/tao_cosnaming",
     "-o $nstarget_nsiorfile");
 $LC = $lctarget->CreateProcess (
     "../../orbsvcs/LifeCycle_Service/tao_coslifecycle",
@@ -112,7 +112,7 @@ $CL = $cltarget->CreateProcess (
 $ns_status = $NS->Spawn ();
 
 if ($ns_status != 0) {
-    print STDERR "ERROR: Naming_Service returned $ns_status\n";
+    print STDERR "ERROR: tao_cosnaming returned $ns_status\n";
     exit 1;
 }
 
@@ -241,7 +241,7 @@ if ($lc_status != 0) {
 $ns_status = $NS->TerminateWaitKill ($nstarget->ProcessStopWaitInterval());
 
 if ($ns_status != 0) {
-    print STDERR "ERROR: Naming_Service returned $ns_status\n";
+    print STDERR "ERROR: tao_cosnaming returned $ns_status\n";
     $status = 1;
 }
 

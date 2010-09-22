@@ -1,5 +1,5 @@
 /**
-$Id:$
+$Id$
 
 This is a clone of the Hello World test. The differences are that an out string
 argument is used rather than having ::get_string return string.

@@ -29,7 +29,7 @@ $ns_service->DeleteFile ($iorbase);
 $lg_service->DeleteFile ($iorbase);
 $client->DeleteFile ($iorbase);
 
-$NS = $ns_service->CreateProcess ("../../../Naming_Service/Naming_Service",
+$NS = $ns_service->CreateProcess ("../../../Naming_Service/tao_cosnaming",
                                   "-o $ns_iorfile");
 $LS = $lg_service->CreateProcess ("../../../Logging_Service/Basic_Logging_Service/tao_tls_basic",
                                   "-ORBInitRef NameService=file://$lg_iorfile");

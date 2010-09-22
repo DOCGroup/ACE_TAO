@@ -96,7 +96,7 @@ if ($sv3->PutFile ($inputfile) == -1) {
     exit 1;
 }
 
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                           "-ORBDottedDecimalAddresses 1 ".
                           " -o $ns_nsiorfile");
 $SV1 = $sv1->CreateProcess ("sender",

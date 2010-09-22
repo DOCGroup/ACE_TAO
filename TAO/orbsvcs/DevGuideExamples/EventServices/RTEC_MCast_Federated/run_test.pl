@@ -88,7 +88,7 @@ my $c1_hostname = $c1->HostName();
 my $c2_hostname = $c2->HostName();
 my $ns_port = $ns->RandomPort();
 
-$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
+$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 $NS = $ns->CreateProcess ($NameService, "$flags ".
                                         " -o $ns_nsiorfile ".
                                         "-ORBListenEndpoints iiop://$ns_hostname:$ns_port");

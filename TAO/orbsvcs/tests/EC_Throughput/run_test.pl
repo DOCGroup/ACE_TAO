@@ -65,7 +65,7 @@ if ($T_status != 0) {
 
 print STDERR "================ Remote test\n";
 
-$NS = $ns->CreateProcess ("../../Naming_Service/Naming_Service",
+$NS = $ns->CreateProcess ("../../Naming_Service/tao_cosnaming",
                            "-o $ns_nsiorfile");
 
 $ES = $es->CreateProcess ("../../Event_Service/Event_Service",

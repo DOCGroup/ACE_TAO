@@ -63,7 +63,7 @@ my $client2_client_ior = $client2->LocalFile ($client_ior);
 $client2->DeleteFile($ior1file);
 $client2->DeleteFile($client_ior);
 
-$SV1 = $server1->CreateProcess ("../../../Naming_Service/Naming_Service",
+$SV1 = $server1->CreateProcess ("../../../Naming_Service/tao_cosnaming",
                               "-o $server1_ior1file");
 
 $SV2 = $server2->CreateProcess ("../../../Notify_Service/tao_cosnotification",

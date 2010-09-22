@@ -63,7 +63,7 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
 }
 
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                           " -o $ns_nsiorfile");
 
 print STDERR "Starting Naming Service\n";
