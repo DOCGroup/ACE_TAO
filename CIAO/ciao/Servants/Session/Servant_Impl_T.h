@@ -28,7 +28,7 @@
 namespace CIAO
 {
   /**
-   * @class Servant_Impl
+   * @class Session_Servant_Impl
    *
    * @brief Mixin base class for generated servant.
    *
@@ -38,17 +38,17 @@ namespace CIAO
   template <typename BASE_SKEL,
             typename EXEC,
             typename CONTEXT>
-  class Servant_Impl : public virtual BASE_SKEL,
+  class Session_Servant_Impl : public virtual BASE_SKEL,
                        public virtual CONTEXT::svnt_base_type
   {
   public:
-    Servant_Impl (EXEC * exe,
+    Session_Servant_Impl (EXEC * exe,
                   Components::CCMHome_ptr home,
                   const char * ins_name,
                   Home_Servant_Impl_Base *home_servant,
                   ::CIAO::Session_Container_ptr c);
 
-    virtual ~Servant_Impl (void);
+    virtual ~Session_Servant_Impl (void);
 
     // Operations for CCMObject interface.
 
