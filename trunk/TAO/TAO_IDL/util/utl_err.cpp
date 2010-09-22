@@ -183,7 +183,7 @@ error_string (UTL_Error::ErrorCode c)
     case UTL_Error::EIDL_KEYWORD_WARNING:
       return "Warning - spelling differs from IDL keyword only in case: ";
     case UTL_Error::EIDL_ANONYMOUS_ERROR:
-      return "anonymous types are deprecated by OMG spec";
+      return "Error: anonymous types are deprecated by OMG spec";
     case UTL_Error::EIDL_ANONYMOUS_WARNING:
       return "Warning - anonymous tyes are deprecated by OMG spec";
     case UTL_Error::EIDL_ENUM_VAL_EXPECTED:

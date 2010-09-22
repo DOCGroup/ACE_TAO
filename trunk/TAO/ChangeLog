@@ -1,3 +1,9 @@
+Wed Sep 22 09:57:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/util/utl_err.cpp:
+          Put Error in the error string for anonymous types so that the
+          scoreboard will mark the errors
+
 Wed Sep 22 10:00:26 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * NEWS:
