@@ -103,10 +103,7 @@ namespace CIAO
     ACE_NEW_THROW_EX (cont,
                       CIAO::Session_Container_i (this->orb_,
                                                  this->poa_,
-                                                 false /* we're always dynanic for the moment */,
-                                                 0, /*always dynanic */
-                                                 name,
-                                                 0 /* no additional policies at this moment */),
+                                                 name),
                       CORBA::NO_MEMORY ());
 
     CIAO_DEBUG (8, (LM_DEBUG, CLINFO

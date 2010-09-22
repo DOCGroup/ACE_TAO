@@ -13,7 +13,7 @@ namespace CIAO
         Components::CCMHome_ptr home,
         const char * ins_name,
         Home_Servant_Impl_Base *home_servant,
-        Container_ptr c)
+        ::CIAO::Session_Container_ptr c)
     : CONTEXT::svnt_base_type (home, home_servant, c),
       activated_ (false),
       configuration_completed_ (false),
