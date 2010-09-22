@@ -5,11 +5,11 @@
 
 namespace CIAO
 {
-  Context_Impl_Base::Context_Impl_Base (Components::CCMHome_ptr home,
-                                        Container_ptr c,
+  Context_Impl_Base::Context_Impl_Base (::Components::CCMHome_ptr home,
+                                        ::CIAO::Container_ptr c,
                                         const char *instance_id)
-    : home_ (Components::CCMHome::_duplicate (home)),
-      container_ (Container::_duplicate (c)),
+    : home_ (::Components::CCMHome::_duplicate (home)),
+      container_ (::CIAO::Container::_duplicate (c)),
       ciao_instance_id_ (instance_id)
   {
   }
