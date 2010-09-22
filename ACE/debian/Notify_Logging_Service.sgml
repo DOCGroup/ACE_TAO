@@ -7,8 +7,8 @@
   <!ENTITY man_event_logging_service "<citerefentry><refentrytitle>Event_Logging_Service</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
   <!ENTITY man_rt_event_logging_service "<citerefentry><refentrytitle>RTEvent_Logging_Service</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
   <!ENTITY man_naming_service "<citerefentry><refentrytitle>Naming_Service</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
-  <!ENTITY Naming_Service "<application>Naming_Service</application>">
-  <!ENTITY Notify_Logging_Service "<application>Notify_Logging_Service</application>">
+  <!ENTITY Naming_Service "<application>tao_cosnaming</application>">
+  <!ENTITY Notify_Logging_Service "<application>tao_tls_notify</application>">
   <!ENTITY seealso "&man_tao_orb_options;, &man_notify_service;, &man_basic_logging_service;, &man_event_logging_service;, &man_rt_event_logging_service;, &man_naming_service;">
   <!ENTITY year "1999">
   <!ENTITY username "David Hanvey">
