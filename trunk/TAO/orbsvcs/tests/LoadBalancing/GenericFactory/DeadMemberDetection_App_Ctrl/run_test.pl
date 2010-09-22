@@ -76,7 +76,7 @@ for $test (@tests) {
 
     $status = 0;
     #-ORBVerboseLogging 1 -ORBDebugLevel 10 -ORBLogFile lm.log
-    $LM = $server1->CreateProcess ("../../../../LoadBalancer/LoadManager",
+    $LM = $server1->CreateProcess ("../../../../LoadBalancer/tao_loadmanager",
                                 "-ORBVerboseLogging 1 -ORBDebugLevel $debug -s $test->{strategy} -o $ior1file -i 3"
                                 . " -ORBSvcConf $lm_conf");
     $SV1 = $server2->CreateProcess ("server", $test->{svr1_args});
