@@ -25,7 +25,7 @@ my $si = PerlACE::TestTarget::create_target (6) || die "Create target 6 failed\n
 my $sdn = PerlACE::TestTarget::create_target (7) || die "Create target 7 failed\n";
 
 my $implrepo_server = "$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_locator";
-my $imr_activator = "$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/ImR_Activator";
+my $imr_activator = "$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_activator";
 my $tao_imr = "$ENV{ACE_ROOT}/bin/tao_imr";
 
 # The Tests

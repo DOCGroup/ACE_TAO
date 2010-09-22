@@ -27,7 +27,7 @@ my $OBJ_REF_STYLE = "-ORBObjRefStyle url";
 
 my $implrepo_server =
     "$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_locator";
-my $imr_activator = "$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/ImR_Activator";
+my $imr_activator = "$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_activator";
 my $tao_imr = "$ENV{ACE_ROOT}/bin/tao_imr";
 
 my $imriorfile = "imr.ior";
