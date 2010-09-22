@@ -62,7 +62,7 @@ my $MGR = $manager->CreateProcess ("manager_main");
 my $IMPL = $imrtarget->CreateProcess (
     "$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_locator");
 my $ACT = $acttarget->CreateProcess (
-    "$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/ImR_Activator");
+    "$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_activator");
 my $SV = $server->CreateProcess ("server_main");
 my $TI = $titarget->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr");
 $TI->IgnoreExeSubDir (1);

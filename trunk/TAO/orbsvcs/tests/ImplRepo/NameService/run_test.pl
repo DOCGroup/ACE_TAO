@@ -40,7 +40,7 @@ my $test_nsiorfile = $test->LocalFile ($nsiorfile);
 
 $IMR = $imr->CreateProcess ("../../../ImplRepo_Service/tao_imr_locator");
 
-$ACT = $act->CreateProcess ("../../../ImplRepo_Service/ImR_Activator");
+$ACT = $act->CreateProcess ("../../../ImplRepo_Service/tao_imr_activator");
 
 $NS = $ns->CreateProcess ("../../../Naming_Service/tao_cosnaming");
 my $ns_cmd = $NS->Executable();
