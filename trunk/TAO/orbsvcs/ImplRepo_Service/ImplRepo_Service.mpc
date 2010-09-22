@@ -94,7 +94,7 @@ project(ImR_Locator) : orbsvcslib, orbsvcs_output, conv_lib, avoids_minimum_corb
 }
 
 project(ImR_Locator_Service) : orbsvcsexe, install_bin, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, iortable, messaging, acexml ,svc_utils, pi_server, imr_client {
-  exename  = ImplRepo_Service
+  exename  = tao_imr_locator
   after   += ImR_Locator ImR_Activator_IDL ImR_Locator_IDL
   libs    += TAO_ImR_Locator TAO_ImR_Activator_IDL TAO_ImR_Locator_IDL
   avoids  += uses_wchar

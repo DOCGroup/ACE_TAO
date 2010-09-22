@@ -38,7 +38,7 @@ my $act_actiorfile = $act->LocalFile ($actiorfile);
 my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
 my $test_nsiorfile = $test->LocalFile ($nsiorfile);
 
-$IMR = $imr->CreateProcess ("../../../ImplRepo_Service/ImplRepo_Service");
+$IMR = $imr->CreateProcess ("../../../ImplRepo_Service/tao_imr_locator");
 
 $ACT = $act->CreateProcess ("../../../ImplRepo_Service/ImR_Activator");
 

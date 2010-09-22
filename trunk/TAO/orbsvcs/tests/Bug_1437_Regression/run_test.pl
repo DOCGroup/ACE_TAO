@@ -39,7 +39,7 @@ $tao_imr->DeleteFile ($imr_ior);
 # Run the IMR locator on a fixed port
 my $locator_port = $locator->RandomPort();
 
-$LC = $locator->CreateProcess ("../../ImplRepo_Service/ImplRepo_Service",
+$LC = $locator->CreateProcess ("../../ImplRepo_Service/tao_imr_locator",
                                "-ORBdebuglevel $debug_level -o $locator_imr_iorfile ".
                                "-ORBEndpoint iiop://:$locator_port");
 

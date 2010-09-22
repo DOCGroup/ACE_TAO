@@ -60,7 +60,7 @@ my $CLIENT_CMD;
 
 my $MGR = $manager->CreateProcess ("manager_main");
 my $IMPL = $imrtarget->CreateProcess (
-    "$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/ImplRepo_Service");
+    "$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_locator");
 my $ACT = $acttarget->CreateProcess (
     "$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/ImR_Activator");
 my $SV = $server->CreateProcess ("server_main");
