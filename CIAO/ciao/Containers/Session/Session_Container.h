@@ -32,16 +32,15 @@
 
 namespace CIAO
 {
-  class Session_Container;
   class Servant_Activator;
 
   typedef ::Components::HomeExecutorBase_ptr (*HomeFactory) (void);
   typedef ::PortableServer::Servant (*HomeServantFactory) (::Components::HomeExecutorBase_ptr p,
-                                                           ::CIAO::Container_ptr c,
+                                                           ::CIAO::Session_Container_ptr c,
                                                            const char *ins_name);
   typedef ::Components::EnterpriseComponent_ptr (*ComponentFactory) (void);
   typedef ::PortableServer::Servant (*ComponentServantFactory) (::Components::EnterpriseComponent_ptr,
-                                                                ::CIAO::Container_ptr,
+                                                                ::CIAO::Session_Container_ptr,
                                                                 const char *);
 
   typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
@@ -73,30 +72,12 @@ namespace CIAO
   COMPONENTSERVANTCREATOR_FUNCPTR_MAP;
 
 
-  struct SESSION_CONTAINER_Export Static_Config_EntryPoints_Maps
-  {
-    /// Map of home creator entry point name and func ptr
-    HOMECREATOR_FUNCPTR_MAP* home_creator_funcptr_map_;
-
-    /// Map of home servant creator entry point name and func ptr
-    HOMESERVANTCREATOR_FUNCPTR_MAP* home_servant_creator_funcptr_map_;
-
-    /// Map of home creator entry point name and func ptr
-    COMPONENTCREATOR_FUNCPTR_MAP* component_creator_funcptr_map_;
-
-    /// Map of home servant creator entry point name and func ptr
-    COMPONENTSERVANTCREATOR_FUNCPTR_MAP* component_servant_creator_funcptr_map_;
-  };
-
   class SESSION_CONTAINER_Export Session_Container_i : public Container_i < ::CIAO::Session_Container>
   {
   public:
     Session_Container_i (CORBA::ORB_ptr o,
                        PortableServer::POA_ptr poa,
-                       bool static_config_flag = false,
-                       const Static_Config_EntryPoints_Maps* static_entrypts_maps = 0,
-                       const char *name = 0,
-                       const CORBA::PolicyList *more_policies = 0);
+                       const char *name = 0);
 
     virtual ~Session_Container_i (void);
 
@@ -184,8 +165,7 @@ namespace CIAO
   private:
 
     /// Initialize the container with a name.
-    virtual void init (const char *name = 0,
-                       const CORBA::PolicyList *more_policies = 0);
+    virtual void init (const char *name = 0);
 
     /// Create POA for the component.
     /**
@@ -193,12 +173,10 @@ namespace CIAO
      * if they need one.
      */
     void create_component_POA (const char *name,
-                               const CORBA::PolicyList *p,
                                PortableServer::POA_ptr root);
 
     /// Create POA for the facets and consumers alone.
     void create_facet_consumer_POA (const char *name,
-                                    const CORBA::PolicyList *p,
                                     PortableServer::POA_ptr root);
 
     /// Not allowed to be
@@ -208,9 +186,6 @@ namespace CIAO
     /// Static variable to store the highest number we have given out until
     /// now
     static ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned long> serial_number_;
-
-    bool const static_config_flag_;
-    const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
 
     /// The servant activator factory used to activate facets and
     /// consumer servants.

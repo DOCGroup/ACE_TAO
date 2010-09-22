@@ -46,7 +46,7 @@ namespace CIAO
                   Components::CCMHome_ptr home,
                   const char * ins_name,
                   Home_Servant_Impl_Base *home_servant,
-                  Container_ptr c);
+                  ::CIAO::Session_Container_ptr c);
 
     virtual ~Servant_Impl (void);
 

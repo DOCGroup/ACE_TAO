@@ -19,6 +19,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ciao/Contexts/Context_Impl_Base.h"
+#include "ciao/Containers/Session/Session_ContainerC.h"
 #include "tao/LocalObject.h"
 #include "tao/PortableServer/PS_ForwardC.h"
 
@@ -53,7 +54,7 @@ namespace CIAO
     typedef COMP component_type;
 
     Session_Context_Impl (Components::CCMHome_ptr the_home,
-                          Container_ptr c,
+                          ::CIAO::Session_Container_ptr c,
                           PortableServer::Servant sv,
                           const char* id);
 
