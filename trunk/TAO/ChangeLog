@@ -1,3 +1,15 @@
+Wed Sep 22 09:17:10 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+        * docs/orbsvcs.html:
+        * docs/tutorials/Quoter/Event_Service/index.html:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.mpc:
+        * orbsvcs/DevGuideExamples/EventServices/OMG_Basic/run_test.pl:
+        * orbsvcs/DevGuideExamples/EventServices/OMG_TypedEC/run_test.pl:
+        * orbsvcs/examples/CosEC/TypedSimple/run_test.pl:
+        * orbsvcs/tests/CosEvent/Timeout/run_test.pl:
+          Renamed 'CosEvent_Service' to 'tao_cosevent'
+
 Wed Sep 22 08:48:22 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/component_svh.cpp:
