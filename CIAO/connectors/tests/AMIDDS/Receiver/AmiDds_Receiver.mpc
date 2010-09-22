@@ -1,0 +1,136 @@
+// $Id$
+
+project(AMI_AmiDds_Base_Receiver_idl_gen) : componentidldefaults, dds4ccm  {
+  custom_only = 1
+  after += AMI_AmiDds_Base_idl_gen DDS_AMIDDS_Connector_idl_gen
+  idlflags += -Wb,stub_export_macro=AMIDDS_RECEIVER_STUB_Export \
+              -Wb,stub_export_include=AmiDds_Receiver_stub_export.h \
+              -Wb,skel_export_macro=AMIDDS_RECEIVER_SVNT_Export \
+              -Wb,skel_export_include=AmiDds_Receiver_svnt_export.h \
+              -Wb,exec_export_macro=AMIDDS_RECEIVER_EXEC_Export \
+              -Wb,exec_export_include=AmiDds_Receiver_exec_export.h \
+              -Glem -I..
+
+  IDL_Files {
+    AmiDds_Receiver.idl
+  }
+}
+
+project(AMI_AmiDds_Base_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
+  after += AMI_AmiDds_Base_Receiver_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=AMIDDS_RECEIVER_LEM_STUB_Export \
+              -Wb,stub_export_include=AmiDds_Receiver_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    AmiDds_ReceiverE.idl
+  }
+}
+
+project(AMI_AmiDds_Base_Receiver_l_stub) : ccm_svnt, messaging, dds4ccm_base {
+  after += AMI_AmiDds_Base_Receiver_lem_gen AMI_AmiDds_Base_Receiver_stub AMI_AmiDds_Base_stub DDS_AmiDds_Base_stub
+  libs  += AmiDds_Base_stub DDS_AmiDds_Base_stub AmiDds_Receiver_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = AmiDds_Receiver_lem_stub
+  dynamicflags += AMIDDS_RECEIVER_LEM_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    AmiDds_ReceiverEC.cpp
+  }
+
+  Header_Files {
+    AmiDds_ReceiverEC.h
+    AmiDds_Receiver_lem_stub_export.h
+  }
+
+  Inline_Files {
+    AmiDds_ReceiverEC.inl
+  }
+}
+
+project(AMI_AmiDds_Base_Receiver_stub) : ccm_stub, messaging, dds4ccm_base {
+  after += AMI_AmiDds_Base_Receiver_idl_gen AMI_AmiDds_Base_stub DDS_AmiDds_Base_stub DDS_AMIDDS_Connector_lem_gen DDS_AmiDds_Connector_stub
+  libs  += AmiDds_Base_stub DDS_AmiDds_Base_stub DDS_AmiDds_Connector_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = AmiDds_Receiver_stub
+  dynamicflags += AMIDDS_RECEIVER_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    AmiDds_ReceiverC.cpp
+  }
+
+  Header_Files {
+    AmiDds_ReceiverC.h
+    AmiDds_Receiver_stub_export.h
+  }
+
+  Inline_Files {
+    AmiDds_ReceiverC.inl
+  }
+}
+
+project(AMI_AmiDds_Base_AmiDds_Receiver_exec) : ciao_executor, messaging, dds4ccm_lem_stub {
+  after   += AMI_AmiDds_Base_Receiver_l_stub AMI_AmiDds_Base_Receiver_stub AMI_AmiDds_Base_stub AMI_AmiDds_Base_lem_stub DDS_AmiDds_Connector_stub DDS_AMIDDS_Connector_lem_stub
+  sharedname = AmiDds_Receiver_exec
+  libs += AmiDds_Receiver_stub AmiDds_Receiver_lem_stub DDS_AmiDds_Base_stub AmiDds_Base_stub AmiDds_Base_lem_stub DDS_AmiDds_Connector_stub DDS_AMIDDS_Connector_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags += AMIDDS_RECEIVER_EXEC_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    AmiDds_Receiver_exec.cpp
+  }
+
+  Header_Files {
+    AmiDds_Receiver_exec.h
+    AmiDds_Receiver_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(AMI_AmiDds_Base_AmiDds_Receiver_svnt) : ciao_servant, messaging, dds4ccm_lem_stub, dds4ccm_skel {
+  after      += AMI_AmiDds_Base_skel AMI_AmiDds_Base_Receiver_l_stub AMI_AmiDds_Base_stub AMI_AmiDds_Base_skel AMI_AmiDds_Base_lem_stub DDS_AmiDds_Base_stub DDS_AmiDds_Connector_stub DDS_AMIDDS_Connector_lem_stub DDS_AmiDds_Connector_svnt 
+  sharedname  = AmiDds_Receiver_svnt
+  libs       += AmiDds_Receiver_stub AmiDds_Receiver_lem_stub  \
+                AmiDds_Base_skel \
+                AmiDds_Base_stub AmiDds_Base_lem_stub \
+                DDS_AmiDds_Base_stub \
+                DDS_AmiDds_Connector_stub DDS_AMIDDS_Connector_lem_stub DDS_AmiDds_Connector_svnt 
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags += AMIDDS_RECEIVER_SVNT_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    AmiDds_ReceiverS.cpp
+    AmiDds_Receiver_svnt.cpp
+  }
+
+  Header_Files {
+    AmiDds_ReceiverS.h
+    AmiDds_Receiver_svnt.h
+    AmiDds_Receiver_svnt_export.h
+  }
+
+  Inline_Files {
+    AmiDds_ReceiverS.inl
+  }
+}
+
+

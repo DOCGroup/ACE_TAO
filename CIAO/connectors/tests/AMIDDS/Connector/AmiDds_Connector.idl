@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file AmiDds_Connector.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef AMIDDS_CONNECTOR_IDL_
+#define AMIDDS_CONNECTOR_IDL_
+
+#include <Components.idl>
+#include <ccm_dds.idl>
+
+#include "Base/AmiDds_DDS.idl"
+
+#pragma ciao lem "Connector/AmiDds_ConnectorE.idl"
+
+module AmiDds
+{
+	module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> AmiDdsConnector;
+};
+
+#endif /* AMIDDS_CONNECTOR_IDL_ */

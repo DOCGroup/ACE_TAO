@@ -1,0 +1,24 @@
+// $Id$
+
+/**
+ * @file AmiDds_DDS.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef AMIDDS_DDS_IDL
+#define AMIDDS_DDS_IDL
+
+#pragma ndds typesupport "Base/AmiDds_DDSSupport.h"
+
+#pragma DCPS_DATA_TYPE "TestTopic"
+#pragma DCPS_DATA_KEY "TestTopic key"
+
+//topic definition used by dds4ccm functionality
+struct TestTopic {
+    string key; //@key
+    long x;
+  };
+
+  typedef sequence<TestTopic> TestTopicSeq;
+ 
+#endif
