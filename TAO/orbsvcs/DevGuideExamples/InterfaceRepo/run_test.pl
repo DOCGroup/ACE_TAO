@@ -31,7 +31,7 @@ $cli->DeleteFile ($ifriorfile);
 $ti->DeleteFile ($ifriorfile);
 
 
-$ifr_server = "$ENV{TAO_ROOT}/orbsvcs/IFR_Service/IFR_Service";
+$ifr_server = "$ENV{TAO_ROOT}/orbsvcs/IFR_Service/tao_ifr_service";
 $tao_ifr = "$ENV{ACE_ROOT}/bin/tao_ifr";
 $test_idl = "test.idl";
 

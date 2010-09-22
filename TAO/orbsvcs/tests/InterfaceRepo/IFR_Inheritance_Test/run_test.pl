@@ -71,7 +71,7 @@ $test->DeleteFile ($log3);
 my $test_iorfile = $test->LocalFile ($iorbase);
 $test->DeleteFile($iorbase);
 
-$SV1 = $test->CreateProcess ("../../../IFR_Service/IFR_Service",
+$SV1 = $test->CreateProcess ("../../../IFR_Service/tao_ifr_service",
                               " -o $test_iorfile " .
                               "-ORBLogFile $log1_test");
 

@@ -49,7 +49,7 @@ $c->DeleteFile ($nsiorfile);
 $s->DeleteFile ($nsiorfile);
 
 
-$IFRService = "$ENV{TAO_ROOT}/orbsvcs/IFR_Service/IFR_Service";
+$IFRService = "$ENV{TAO_ROOT}/orbsvcs/IFR_Service/tao_ifr_service";
 $IF = $ifr->CreateProcess ($IFRService,  "-ORBdebuglevel $debug_level ".
                                          "-o $ifr_ifriorfile");
 $TAO_IFR = "$ENV{ACE_ROOT}/bin/tao_ifr";
