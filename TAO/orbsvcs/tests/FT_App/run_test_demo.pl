@@ -271,7 +271,7 @@ $RMC = $rp_manager_controller->CreateProcess (".$build_directory/replmgr_control
                                  "-x");
 
 $NOT = $fault_notifier->CreateProcess ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier" .
-                                       "$build_directory/Fault_Notifier" ,
+                                       "$build_directory/tao_fault_notifier" ,
                                         "-ORBInitRef ReplicationManager=corbaloc::$hostname:$port/ReplicationManager " .
                                         "-o $fault_notifier_ior -q");
 
