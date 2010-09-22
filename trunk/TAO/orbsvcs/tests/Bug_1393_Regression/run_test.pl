@@ -38,7 +38,7 @@ $client->DeleteFile ($ifr_ior);
 $taoifr->DeleteFile ($ifr_ior);
 
 $TAO_IDL     = $service->CreateProcess("$tao_idl_bin/tao_idl", "$service_test_idl");
-$IFR_SERVICE = $service->CreateProcess("$ifr_service_bin/IFR_Service", "-o $service_ifr_ior");
+$IFR_SERVICE = $service->CreateProcess("$ifr_service_bin/tao_ifr_service", "-o $service_ifr_ior");
 $TAO_IFR     = $service->CreateProcess("$tao_ifr_bin/tao_ifr",
                                        "-ORBInitRef InterfaceRepository=file://$taoifr_ifr_ior ".
                                        "$taoifr_test_idl");

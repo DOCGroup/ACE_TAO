@@ -38,7 +38,7 @@ $client1->DeleteFile($ior1file);
 my $client2_ior1file = $client2->LocalFile ($ior1file);
 $client2->DeleteFile($ior1file);
 
-$SV = $server->CreateProcess ("../../../IFR_Service/IFR_Service",
+$SV = $server->CreateProcess ("../../../IFR_Service/tao_ifr_service",
                               "-ORBdebuglevel $debug_level " .
                               "$nice " .
                               "-o $server_ior1file " .
