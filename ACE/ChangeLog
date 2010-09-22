@@ -1,3 +1,11 @@
+Wed Sep 22 14:17:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * debian/Basic_Logging_Service.sgml:
+        * debian/Event_Logging_Service.sgml:
+        * debian/Notify_Logging_Service.sgml:
+        * debian/RTEvent_Logging_Service.sgml:
+          Renamed TAO orb services. See $TAO_ROOT/NEWS for details.
+
 Wed Sep 22 14:06:25 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * debian/libtao-orbsvcs-1.8.2.install:
