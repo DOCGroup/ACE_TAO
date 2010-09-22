@@ -23,8 +23,6 @@ project(CCM_lem_stub_idl) : install, ciaolib_with_idl, valuetype {
     idlflags += -SS
     CCM_EnterpriseComponent.idl
     CCM_HomeExecutorBase.idl
-    CCM_SessionContext.idl
-    CCM_SessionComponent.idl
   }
 
 }
@@ -44,23 +42,17 @@ project(CCM_lem_stub) : install, ciaolib_with_idl, ciao_output, valuetype, ifr_c
     CCM_ContextC.h
     CCM_EnterpriseComponentC.h
     CCM_HomeExecutorBaseC.h
-    CCM_SessionComponentC.h
-    CCM_SessionContextC.h
     SecurityC.h
     CCM_CCMExceptionS.h
     CCM_ContextS.h
     CCM_EnterpriseComponentS.h
     CCM_HomeExecutorBaseS.h
-    CCM_SessionComponentS.h
-    CCM_SessionContextS.h
     SecurityS.h
   }
 
   Inline_Files {
     CCM_HomeExecutorBaseC.inl
     CCM_EnterpriseComponentC.inl
-    CCM_SessionContextC.inl
-    CCM_SessionComponentC.inl
   }
 
   Source_Files {
@@ -68,8 +60,6 @@ project(CCM_lem_stub) : install, ciaolib_with_idl, ciao_output, valuetype, ifr_c
     CCM_ContextC.cpp
     CCM_EnterpriseComponentC.cpp
     CCM_HomeExecutorBaseC.cpp
-    CCM_SessionContextC.cpp
-    CCM_SessionComponentC.cpp
     SecurityC.cpp
   }
 }

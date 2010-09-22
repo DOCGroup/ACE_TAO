@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : ccm_stub {
+  after += CCM_lem_stub CCM_session_stub
+  libs  += CCM_lem_stub CCM_session_stub
+}
