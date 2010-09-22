@@ -33,7 +33,7 @@ $server->DeleteFile($iorfile);
 my $client_iorfile = $client->LocalFile ($iorfile);
 $client->DeleteFile($iorfile);
 
-$SV = $server->CreateProcess ("../../../IFR_Service/IFR_Service",
+$SV = $server->CreateProcess ("../../../IFR_Service/tao_ifr_service",
                               "-ORBdebuglevel $debug_level " .
                               "$nice " .
                               "-o $server_iorfile " .

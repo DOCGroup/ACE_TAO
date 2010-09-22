@@ -1,3 +1,33 @@
+Wed Sep 22 07:43:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+        * docs/interfacerepo/index.html:
+        * orbsvcs/DevGuideExamples/EventServices/OMG_TypedEC/run_test.pl:
+        * orbsvcs/DevGuideExamples/InterfaceRepo/run_test.pl:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        * orbsvcs/examples/CosEC/TypedSimple/run_test.pl:
+        * orbsvcs/examples/ORT/run_test.pl:
+        * orbsvcs/tests/Bug_1393_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_1436_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_1630_Regression/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3200_Regression/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3881_Regression/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/IDL_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Recursive_IDL_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Latency_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/run_test.pl:
+          Renamed IFR_Service to tao_ifr_service.
+
 Tue Sep 21 11:04:06 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * NEWS:

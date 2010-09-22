@@ -52,7 +52,7 @@ $ces->DeleteFile ($cesiorfile);
 $con->DeleteFile ($coniorfile);
 
 
-$IFR = $ifr->CreateProcess ($ENV{"TAO_ROOT"}."/orbsvcs/IFR_Service/IFR_Service",
+$IFR = $ifr->CreateProcess ($ENV{"TAO_ROOT"}."/orbsvcs/IFR_Service/tao_ifr_service",
                             " -o $ifr_ifriorfile");
 $TI = $ti->CreateProcess ($ENV{"ACE_ROOT"}."/bin/tao_ifr",
                           " -ORBInitRef InterfaceRepository=file://$ti_ifriorfile ".
