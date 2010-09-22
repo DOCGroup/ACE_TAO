@@ -1,3 +1,9 @@
+Wed Sep 22 18:42:25 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/msvc_mpc_auto_compile.pl:
+
+          Updates for DAnCE.
+
 Wed Sep 22 14:17:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * debian/Basic_Logging_Service.sgml:
