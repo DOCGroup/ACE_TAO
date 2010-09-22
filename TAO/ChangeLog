@@ -1,3 +1,15 @@
+Wed Sep 22 08:12:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+        * docs/orbsvcs.html:
+        * orbsvcs/Fault_Detector/Fault_Detector.mpc:
+        * orbsvcs/tests/FT_App/run_test_demo.pl:
+        * orbsvcs/tests/FT_App/run_test_detector.pl:
+        * orbsvcs/tests/FT_App/run_test_fault_consumer.pl:
+        * orbsvcs/tests/FT_App/run_test_notifier.pl:
+        * orbsvcs/tests/FT_App/run_test_rmnotifier.pl:
+          Renamed Fault_Detector to tao_fault_detector
+
 Wed Sep 22 08:06:48 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * NEWS:
