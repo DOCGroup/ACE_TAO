@@ -1,3 +1,10 @@
+Wed Sep 22 08:15:12 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+        * docs/orbsvcs.html:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.mpc:
+          Renamed Scheduling_Service to tao_cosscheduling.
+
 Wed Sep 22 08:12:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * NEWS:

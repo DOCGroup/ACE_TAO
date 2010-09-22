@@ -2,5 +2,5 @@
 // $Id$
 
 project : orbsvcsexe, install, rtsched, naming, svc_utils, iortable, portableserver, utils {
-  exename  = Scheduling_Service
+  exename  = tao_cosscheduling
 }
