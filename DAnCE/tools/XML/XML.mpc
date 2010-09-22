@@ -10,7 +10,7 @@ project (DAnCE_XML_Utils) : install, acelib, xerces, dance_lib {
   }
 
   Header_Files {
-    CIAO_XML_Utils_Export.h
+    DAnCE_XML_Utils_Export.h
   }
 
   Source_Files {
