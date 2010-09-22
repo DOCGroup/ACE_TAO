@@ -3,7 +3,7 @@
 #if !defined (CCM_CONTAINERREQUESTINFO_IDL)
 #define CCM_CONTAINERREQUESTINFO_IDL
 
-#include "ciao/CCM_Navigation.idl"
+#include "ccm/CCM_Navigation.idl"
 #include "tao/OctetSeq.pidl"
 
 module Components
