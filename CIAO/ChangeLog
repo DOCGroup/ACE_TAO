@@ -1,3 +1,13 @@
+Wed Sep 22 10:34:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/Extension/CCM_ContainerClientRequestInfo.idl:
+        * ccm/Extension/CCM_ContainerRequestInfo.idl:
+        * ccm/Extension/CCM_ServantContainerInterceptor.idl:
+        * ccm/Extension/CCM_ServantContainerInterceptorRegistration.idl:
+        * ccm/Extension/CCM_StubContainerInterceptor.idl:
+        * ccm/Extension/CCM_extension_stub.mpc:
+          Added MPC file and got all files to compile
+
 Wed Sep 22 10:07:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Contexts/Extension/ExtensionContext_T.h:

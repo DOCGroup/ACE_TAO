@@ -4,7 +4,7 @@
 #define CCM_CONTAINERCLIENTREQUESTINFO_IDL
 
 #include "ccm/Extension/CCM_ContainerRequestInfo.idl"
-#include "tao/PI/ClientRequestInfo.pidl"
+#include "tao/PI/PI_include.pidl"
 
 module Components
 {
