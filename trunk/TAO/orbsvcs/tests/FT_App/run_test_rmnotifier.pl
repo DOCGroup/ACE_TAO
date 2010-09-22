@@ -222,7 +222,7 @@ $REP2 = $ft_replica2->CreateProcess (".$build_directory/ft_replica" ,
                                      "-l loc2 -i type1 -q -p $ft_replica2_client_data");
 
 $DET = $fault_detector->CreateProcess ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector" .
-                                       "$build_directory/Fault_Detector" ,
+                                       "$build_directory/tao_fault_detector" ,
                                        "-ORBInitRef ReplicationManager=corbaloc::$hostname:$port/ReplicationManager " .
                                        "-o $fault_detector_ior -q");
 

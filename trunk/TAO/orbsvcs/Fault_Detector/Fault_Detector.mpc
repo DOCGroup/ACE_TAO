@@ -1,6 +1,6 @@
 // $Id$
 project : taoserver, orbsvcsexe, install, fault_tolerance {
-  exename  = Fault_Detector
+  exename  = tao_fault_detector
   Source_Files {
     Fault_Detector_i.cpp
     Fault_Detector_Main.cpp
