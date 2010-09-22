@@ -1,3 +1,9 @@
+Wed Sep 22 11:58:47 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/orbsvcs.html:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.mpc:
+          Renamed 'Concurrency_Service' to 'tao_cosconcurrency'
+
 Wed Sep 22 11:56:25 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * NEWS:
