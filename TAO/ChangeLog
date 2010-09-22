@@ -1,3 +1,11 @@
+Wed Sep 22 09:57:47 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+        * docs/orbsvcs.html:
+        * orbsvcs/Trading_Service/Trading_Service.mpc:
+        * orbsvcs/tests/Trading/run_test.pl:
+          Renamed 'Trading_Service' to 'tao_costrading'
+
 Wed Sep 22 09:54:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * NEWS:
