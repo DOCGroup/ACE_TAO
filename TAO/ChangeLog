@@ -1,3 +1,17 @@
+Wed Sep 22 09:54:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+        * orbsvcs/LoadBalancer/LoadBalancer.mpc:
+        * orbsvcs/examples/LoadBalancing/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/run_test.pl:
+          Renamed 'LoadManager' to 'tao_loadmanager'
+          Renamed 'LoadMonitor'to 'tao_loadmonitor'
+
 Wed Sep 22 09:41:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * NEWS:
