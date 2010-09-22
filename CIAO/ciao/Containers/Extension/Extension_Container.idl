@@ -1,0 +1,15 @@
+/**
+ * @file Extension_Container.idl
+ * @author Johnny Willemsen
+ * $Id$
+ * Extends the basic container interface for extension capabilities.
+ */
+
+#include "ciao/Containers/Container_Base.idl"
+
+module CIAO
+{
+  local interface Extension_Container : Container
+  {
+  };
+};
