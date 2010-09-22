@@ -1,3 +1,11 @@
+Wed Sep 22 08:53:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/LocalityManager/ExplicitExec/run_test.pl:
+        * tests/LocalityManager/ProcessName/run_test.pl:
+        * tests/LocalityManager/SpawnMultiple/run_test.pl:
+        * tests/LocalityManager/SpawnOne/run_test.pl:
+          Renamed Naming_Service to toa_cosnaming.
+
 Tue Sep 21 13:36:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DAnCE_Utility.cpp:
