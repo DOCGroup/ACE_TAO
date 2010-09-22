@@ -18,13 +18,13 @@ namespace CIAO
                     EXEC,
                     COMP_SVNT>::Home_Servant_Impl (
       typename EXEC::_ptr_type exe,
-      Container_ptr c,
-      const char *ins_name
-    )
-    : Home_Servant_Impl_Base (c),
+      ::CIAO::Session_Container_ptr c,
+      const char *ins_name)
+    : Home_Servant_Impl_Base (),
       ins_name_ (ins_name),
       executor_ (EXEC::_duplicate (exe)),
-      serial_number_ (0)
+      serial_number_ (0),
+      container_ (::CIAO::Session_Container::_duplicate(c))
   {
     CIAO_DEBUG (9, (LM_TRACE, CLINFO "Home_Servant_Impl<>::Home_Servant_Impl - "
                  "Creating servant for home with ID %C\n",

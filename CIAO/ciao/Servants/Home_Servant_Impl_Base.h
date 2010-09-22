@@ -26,7 +26,6 @@
 
 #include "ccm/CCM_HomeS.h"
 #include "ccm/CCM_StandardConfiguratorC.h"
-#include "ciao/Containers/Container_BaseC.h"
 
 namespace CIAO
 {
@@ -42,7 +41,7 @@ namespace CIAO
     : public virtual POA_Components::CCMHome
   {
   public:
-    Home_Servant_Impl_Base (Container_ptr c);
+    Home_Servant_Impl_Base (void);
 
     virtual ~Home_Servant_Impl_Base (void);
 
@@ -60,13 +59,6 @@ namespace CIAO
     virtual void set_attributes (const Components::ConfigValues &descr);
 
     virtual void update_component_map (PortableServer::ObjectId &oid) = 0;
-
-  protected:
-    Container_var container_;
-
-  private:
-    /// Not to be used
-    Home_Servant_Impl_Base (void);
   };
 }
 
