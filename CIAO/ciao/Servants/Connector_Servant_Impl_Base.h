@@ -27,7 +27,7 @@
 #include "Home_Servant_Impl_Base.h"
 
 #include "ciao/Containers/CIAO_Servant_ActivatorC.h"
-#include "ccm/CCM_SessionComponentC.h"
+#include "ccm/Session/CCM_SessionComponentC.h"
 #include "ccm/CCM_ObjectS.h"
 #include "ccm/CCM_StandardConfiguratorC.h"
 #include "ciao/Containers/Container_BaseC.h"
@@ -85,6 +85,8 @@ namespace CIAO
     virtual CORBA::IRObject_ptr get_component_def (void);
 #endif
 
+    /* @todo To be removed, Session knowledge in our base :-(
+     */
     virtual Components::SessionComponent_ptr get_executor () = 0;
 
 #if !defined (CCM_LW)

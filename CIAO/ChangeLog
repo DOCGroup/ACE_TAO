@@ -1,3 +1,18 @@
+Wed Sep 22 13:48:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ccm_session_stub.mpb:
+        * MPC/config/ciao_servant.mpb:
+        * ccm/CCM_lem_stub.mpc:
+        * ccm/Extension/CCM_extension.mpc:
+        * ccm/Session/CCM_SessionComponent.idl:
+        * ccm/Session/CCM_SessionContext.idl:
+        * ciao/Servants/Connector_Servant_Impl_Base.h:
+        * ciao/Servants/Servants.mpc:
+        * ccm/CCM_SessionComponent.idl:
+        * ccm/CCM_SessionContext.idl:
+        * ccm/Extension/CCM_extension_stub.mpc:
+          More work in seperating the Session container from the CCM core
+
 Wed Sep 22 12:53:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/CCM_svnt.mpc:

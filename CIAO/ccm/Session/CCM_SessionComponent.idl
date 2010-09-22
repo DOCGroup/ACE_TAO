@@ -3,9 +3,9 @@
 #if !defined (CCM_SESSIONCOMPONENT_IDL)
 #define CCM_SESSIONCOMPONENT_IDL
 
-#include "ccm/CCM_SessionContext.idl"
 #include "ccm/CCM_CCMException.idl"
 #include "ccm/CCM_EnterpriseComponent.idl"
+#include "ccm/Session/CCM_SessionContext.idl"
 
 // *************** Basic Container interfaces ***************
 
