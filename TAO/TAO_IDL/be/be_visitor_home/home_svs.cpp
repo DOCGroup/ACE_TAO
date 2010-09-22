@@ -210,7 +210,7 @@ be_visitor_home_svs::gen_servant_class (void)
       << global << sname << "::CCM_" << lname << "_ptr exe," << be_nl
       << "const char * ins_name," << be_nl
       << "::CIAO::Session_Container_ptr c)" << be_uidt_nl
-      << ": ::CIAO::Home_Servant_Impl_Base (c)," << be_idt_nl
+      << ": ::CIAO::Home_Servant_Impl_Base ()," << be_idt_nl
       << "::CIAO::"
       << "Home_Servant_Impl<" << be_idt_nl
       << "::" << node_->full_skel_name () << "," << be_nl
