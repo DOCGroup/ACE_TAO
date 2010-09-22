@@ -184,7 +184,7 @@ $DET = $fault_detector->CreateProcess ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector"
                                        "-o $fault_detector_ior -q");
 
 $NOT = $fault_notifier->CreateProcess ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier" .
-                                       "$build_directory/Fault_Notifier" ,
+                                       "$build_directory/tao_fault_notifier" ,
                                         "-ORBInitRef ReplicationManager=corbaloc::$hostname:$port/ReplicationManager " .
                                         "-o $fault_notifier_ior -q " .
                                         "-d file://$notifier_detector_ior " .
