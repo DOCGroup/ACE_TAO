@@ -10,7 +10,6 @@ project(CCM_svnt_idl) : install, ciaolib_with_idl, valuetype {
     CCM_Transaction.idl
     CosPersistentState.idl
     CCM_ExecutorLocator.idl
-    CCM_SessionSynchronization.idl
   }
 
 }
@@ -35,15 +34,12 @@ project(CCM_svnt) : install, orbsvcslib, orbsvcs_output \
     CCM_ExecutorLocatorC.h
     CCM_TransactionC.h
     CosPersistentStateC.h
-    CCM_SessionSynchronizationC.h
     CCM_ExecutorLocatorS.h
-    CCM_SessionSynchronizationS.h
     CCM_TransactionS.h
     CosPersistentStateS.h
   }
 
   Inline_Files {
-    CCM_SessionSynchronizationC.inl
     CCM_TransactionC.inl
     CosPersistentStateC.inl
     CCM_ExecutorLocatorC.inl
@@ -52,7 +48,6 @@ project(CCM_svnt) : install, orbsvcslib, orbsvcs_output \
   Source_Files {
     CCM_TransactionC.cpp
     CosPersistentStateC.cpp
-    CCM_SessionSynchronizationC.cpp
     CCM_ExecutorLocatorC.cpp
     CCM_EventsS.cpp
     CCM_EventConsumerBaseS.cpp
