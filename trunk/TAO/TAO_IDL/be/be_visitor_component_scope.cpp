@@ -232,7 +232,7 @@ be_visitor_component_scope::gen_svnt_entrypoint_decl (void)
       << "create_" << node_->flat_name ()
       << "_Servant (" << be_idt_nl
       << "::Components::EnterpriseComponent_ptr p," << be_nl
-      << "::CIAO::Container_ptr c," << be_nl
+      << "::CIAO::Session_Container_ptr c," << be_nl
       << "const char * ins_name);" << be_uidt;
 }
 
@@ -251,7 +251,7 @@ be_visitor_component_scope::gen_svnt_entrypoint_defn (void)
       << "create_" << node_->flat_name ()
       << "_Servant (" << be_idt_nl
       << "::Components::EnterpriseComponent_ptr p," << be_nl
-      << "::CIAO::Container_ptr c," << be_nl
+      << "::CIAO::Session_Container_ptr c," << be_nl
       << "const char * ins_name)" << be_uidt_nl
       << "{" << be_idt_nl
       << global << sname << "::CCM_" << lname
