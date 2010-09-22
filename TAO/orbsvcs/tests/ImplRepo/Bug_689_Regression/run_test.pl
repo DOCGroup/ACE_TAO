@@ -42,7 +42,7 @@ $act->DeleteFile ($actiorfile);
 $srv->DeleteFile ($srviorfile);
 $cli->DeleteFile ($srviorfile);
 
-$IMR = $imr->CreateProcess ("../../../ImplRepo_Service/ImplRepo_Service",
+$IMR = $imr->CreateProcess ("../../../ImplRepo_Service/tao_imr_locator",
                             "-o $imr_imriorfile");
 $ACT = $act->CreateProcess ("../../../ImplRepo_Service/ImR_Activator",
                             "-o $act_actiorfile ".

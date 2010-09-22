@@ -1,3 +1,25 @@
+Wed Sep 22 11:39:59 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+        * docs/orbsvcs.html:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/index.html:
+        * orbsvcs/DevGuideExamples/ImplRepo/Activator/run_test.pl:
+        * orbsvcs/DevGuideExamples/ImplRepo/Basic/run_test.pl:
+        * orbsvcs/DevGuideExamples/ImplRepo/IORTable/run_test.pl:
+        * orbsvcs/DevGuideExamples/ImplRepo/run_test.pl:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/examples/ImR/Advanced/run_test.pl:
+        * orbsvcs/tests/Bug_1395_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_1437_Regression/run_test.pl:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/run_test.pl:
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/run_test.pl:
+        * orbsvcs/tests/ImplRepo/NameService/run_test.pl:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl:
+        * orbsvcs/tests/ImplRepo/locked/run_test.pl:
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+        * orbsvcs/tests/ImplRepo/scale/run_test.pl:
+          Renamed 'ImplRepo_Service' to 'tao_imr_locator'
+
 Wed Sep 22 09:57:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/util/utl_err.cpp:

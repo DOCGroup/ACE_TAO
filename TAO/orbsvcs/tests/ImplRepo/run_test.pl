@@ -49,7 +49,7 @@ my $imr_host = $imr->HostName ();
 my $port = 12345;
 my $endpoint = "-ORBEndpoint " . "$protocol" . "://:" . $port;
 
-$IMR = $imr->CreateProcess ("../../ImplRepo_Service/ImplRepo_Service");
+$IMR = $imr->CreateProcess ("../../ImplRepo_Service/tao_imr_locator");
 $ACT = $act->CreateProcess ("../../ImplRepo_Service/ImR_Activator");
 $TI = $ti->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr");
 
@@ -284,7 +284,7 @@ sub nt_service_test
 
     # To avoid having to ensure that they LocalSystem account has the correct path
     # we simply copy the imr executables to the same directory as the DLL's.
-    my $BIN_IMR = $bin_imr->CreateProcess ("$ENV{ACE_ROOT}/lib/ImplRepo_Service","");
+    my $BIN_IMR = $bin_imr->CreateProcess ("$ENV{ACE_ROOT}/lib/tao_imr_locator","");
     my $BIN_ACT = $bin_act->CreateProcess ("$ENV{ACE_ROOT}/lib/ImR_Activator","");
     $BIN_IMR->IgnoreExeSubDir(1);
     $BIN_ACT->IgnoreExeSubDir(1);
@@ -331,7 +331,7 @@ sub nt_service_test
         print STDERR "ERROR: BIN ImR Service returned $BIN_IMR_status\n";
     }
 
-    print "Removing ImplRepo_Service copy.\n";
+    print "Removing tao_imr_locator copy.\n";
     $bin_imr->DeleteFile ($BIN_IMR->Executable ());
     $bin_act->DeleteFile ($BIN_ACT->Executable ());
 
