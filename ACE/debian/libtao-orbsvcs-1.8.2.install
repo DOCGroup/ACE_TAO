@@ -59,14 +59,14 @@ usr/lib/libTAO_SSLIOP.so.*
 usr/lib/libTAO_Security.so.*
 usr/lib/libTAO_Svc_Utils.so.*
 usr/lib/libTAO_ZIOP.so.*
-usr/lib/libTAO_Notify_Service.so.*
+usr/lib/libTAO_tao_cosnotification.so.*
 usr/lib/libTAO_CosTime_Serv.so.*
 usr/lib/libTAO_CosTime_Skel.so.*
 usr/lib/libTAO_Monitor.so.*
 usr/lib/libTAO_Catior_i.so.*
 usr/lib/libTAO_ImR_Locator_IDL.so.*
-usr/lib/libTAO_ImR_Activator.so.* 
+usr/lib/libTAO_tao_imr_activator.so.* 
 usr/lib/libTAO_ReplicationManagerLib.so.*
-usr/lib/libTAO_ImR_Activator_IDL.so.*                                                                        
+usr/lib/libTAO_tao_imr_activator_IDL.so.*                                                                        
 usr/lib/libTAO_ImR_Locator.so.*     
 
