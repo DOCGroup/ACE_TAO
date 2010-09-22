@@ -1,0 +1,132 @@
+// $Id$
+project(AMI_AmiDds_Base_AmiDds_Sender_idl_gen) : componentidldefaults, dds4ccm  {
+  after += AMI_AmiDds_Base_idl_gen DDS_AMIDDS_Connector_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=AMIDDS_SENDER_STUB_Export \
+              -Wb,stub_export_include=AmiDds_Sender_stub_export.h \
+              -Wb,skel_export_macro=AMIDDS_SENDER_SVNT_Export \
+              -Wb,skel_export_include=AmiDds_Sender_svnt_export.h \
+              -Wb,exec_export_macro=AMIDDS_SENDER_EXEC_Export \
+              -Wb,exec_export_include=AmiDds_Sender_exec_export.h \
+              -I.. -GC
+
+  IDL_Files {
+    AmiDds_Sender.idl
+  }
+}
+
+project(AMI_AmiDds_Base_AmiDds_Sender_lem_gen) : ciaoidldefaults, dds4ccm {
+  after += AMI_AmiDds_Base_AmiDds_Sender_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=AMIDDS_SENDER_LEM_STUB_Export \
+              -Wb,stub_export_include=AmiDds_Sender_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    AmiDds_SenderE.idl
+  }
+}
+
+project(AMI_AmiDds_Base_AmiDds_Sender_lem_stub) : ccm_svnt, ami, dds4ccm_base   {
+  after += AMI_AmiDds_Base_AmiDds_Sender_lem_gen AMI_AmiDds_Base_stub Conn_AmiDds_Base_stub DDS_AmiDds_Base_stub 
+  libs  += AmiDds_Base_stub DDS_AmiDds_Base_stub 
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = AmiDds_Sender_lem_stub
+  dynamicflags += AMIDDS_SENDER_LEM_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    AmiDds_SenderEC.cpp
+  }
+
+  Header_Files {
+    AmiDds_SenderEC.h
+    AmiDds_Sender_lem_stub_export.h
+  }
+
+  Inline_Files {
+    AmiDds_SenderEC.inl
+  }
+}
+
+project(AMI_AmiDds_Base_AmiDds_Sender_stub) : ccm_stub, ami,dds4ccm_base   {
+  after += AMI_AmiDds_Base_AmiDds_Sender_idl_gen AMI_AmiDds_Base_stub AMI_AmiDds_stub Conn_AmiDds_Base_stub
+  libs  += AmiDds_Base_stub DDS_AmiDds_Base_stub 
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = AmiDds_Sender_stub
+  dynamicflags += AMIDDS_SENDER_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    AmiDds_SenderC.cpp
+  }
+
+  Header_Files {
+    AmiDds_SenderC.h
+    AmiDds_Sender_stub_export.h
+  }
+
+  Inline_Files {
+    AmiDds_SenderC.inl
+  }
+}
+
+project(AMI_AmiDds_Base_AmiDds_Sender_exec) : ciao_executor, ami, ami4ccm_stub, dds4ccm_lem_stub {
+  after   += AMI_AmiDds_Base_AmiDds_Sender_lem_stub AMI_AmiDds_Base_AmiDds_Sender_stub AMI_AmiDds_Base_exec Conn_AmiDds_Base_stub AMI_AmiDds_Base_lem_stub DDS_AmiDds_Connector_stub DDS_AMIDDS_Connector_lem_stub
+  sharedname = AmiDds_Sender_exec
+  libs += AmiDds_Sender_stub AmiDds_Sender_lem_stub AmiDds_Base_stub AmiDds_Base_lem_stub DDS_AmiDds_Base_stub DDS_AmiDds_Connector_stub DDS_AMIDDS_Connector_lem_stub 
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags += AMIDDS_SENDER_EXEC_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    AmiDds_Sender_exec.cpp
+  }
+
+  Header_Files {
+    AmiDds_Sender_exec.h
+    AmiDds_Sender_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(AMI_AmiDds_Base_AmiDds_Sender_svnt) : ciao_servant, ami, dds4ccm_lem_stub, dds4ccm_skel {
+  after      += AMI_AmiDds_Base_skel AMI_AmiDds_Base_AmiDds_Sender_lem_stub AMI_AmiDds_Base_AmiDds_Sender_stub AMI_AmiDds_Base_exec AMI_AmiDds_skel DDS_AmiDds_Connector_stub DDS_AMIDDS_Connector_lem_stub DDS_AmiDds_Connector_svnt 
+  sharedname  = AmiDds_Sender_svnt
+  libs       += AmiDds_Sender_stub AmiDds_Sender_lem_stub  \
+                AmiDds_Base_skel AmiDds_Base_stub \
+                DDS_AmiDds_Base_stub \
+                DDS_AmiDds_Connector_stub DDS_AMIDDS_Connector_lem_stub DDS_AmiDds_Connector_svnt 
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags += AMIDDS_SENDER_SVNT_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    AmiDds_SenderS.cpp
+    AmiDds_Sender_svnt.cpp
+  }
+
+  Header_Files {
+    AmiDds_SenderS.h
+    AmiDds_Sender_svnt.h
+    AmiDds_Sender_svnt_export.h
+  }
+
+  Inline_Files {
+    AmiDds_SenderS.inl
+  }
+}

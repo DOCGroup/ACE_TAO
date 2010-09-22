@@ -1,3 +1,31 @@
+Wed Sep 22 12:30:33 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tests:
+        * tests/AMIDDS:
+        * tests/AMIDDS/Sender:
+        * tests/AMIDDS/Sender/AmiDds_Sender.mpc:
+        * tests/AMIDDS/Sender/AmiDds_Sender_exec.h:
+        * tests/AMIDDS/Sender/AmiDds_Sender.idl:
+        * tests/AMIDDS/Sender/AmiDds_Sender_exec.cpp:
+        * tests/AMIDDS/Connector:
+        * tests/AMIDDS/Connector/AmiDds_Connector.mpc:
+        * tests/AMIDDS/Connector/AmiDds_Connector.idl:
+        * tests/AMIDDS/README.txt:
+        * tests/AMIDDS/Base:
+        * tests/AMIDDS/Base/AmiDds_Base.mpc:
+        * tests/AMIDDS/Base/AmiDds_Base.idl:
+        * tests/AMIDDS/Base/AmiDds_DDS.idl:
+        * tests/AMIDDS/descriptors:
+        * tests/AMIDDS/descriptors/Plan.cdp:
+        * tests/AMIDDS/descriptors/run_test.pl:
+        * tests/AMIDDS/Receiver:
+        * tests/AMIDDS/Receiver/AmiDds_Receiver_exec.h:
+        * tests/AMIDDS/Receiver/AmiDds_Receiver.idl:
+        * tests/AMIDDS/Receiver/AmiDds_Receiver_exec.cpp:
+        * tests/AMIDDS/Receiver/AmiDds_Receiver.mpc:
+        * bin/ciao_tests.lst:
+        Add test with combination of AMI4CCM and DDS4CCM.
+
 Wed Sep 22 10:34:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/Extension/CCM_ContainerClientRequestInfo.idl:
