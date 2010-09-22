@@ -35,7 +35,7 @@ $sup->DeleteFile ($nsiorfile);
 
 $NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
                           " -o $ns_nsiorfile");
-$LS = $ls->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service",
+$LS = $ls->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Logging_Service/Event_Logging_Service/tao_tls_event",
                           " -ORBInitRef NameService=file://$ls_nsiorfile");
 $CON = $con->CreateProcess ("Event_Consumer",
                             "-ORBInitRef NameService=file://$con_nsiorfile");
