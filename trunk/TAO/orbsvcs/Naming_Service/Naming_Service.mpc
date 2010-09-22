@@ -11,7 +11,7 @@ project : orbsvcsexe, install, naming_serv, imr_client, svc_utils {
 
 project(NT_Naming_Service) : orbsvcsexe, install, naming_serv, svc_utils {
   requires += winnt
-  exename  = NT_Naming_Service
+  exename  = tao_nt_cosnaming
   Source_Files {
     Naming_Service.cpp
     NT_Naming_Server.cpp
