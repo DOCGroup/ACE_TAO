@@ -23,7 +23,7 @@ sub name_server
              "..$DIR_SEPARATOR".
              "..$DIR_SEPARATOR".
              "orbsvcs$DIR_SEPARATOR".
-             "tao_cosnaming$DIR_SEPARATOR".
+             "Naming_Service$DIR_SEPARATOR".
              "tao_cosnaming$EXE_EXT";
   $NS = Process::Create ($prog,"");
 }
