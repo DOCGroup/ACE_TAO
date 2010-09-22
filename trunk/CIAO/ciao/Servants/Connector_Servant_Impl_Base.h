@@ -30,15 +30,12 @@
 #include "ccm/CCM_SessionComponentC.h"
 #include "ccm/CCM_ObjectS.h"
 #include "ccm/CCM_StandardConfiguratorC.h"
+#include "ciao/Containers/Container_BaseC.h"
 
 #include "ace/Array_Map.h"
 
 namespace CIAO
 {
-  class Container;
-  typedef Container *Container_ptr;
-  typedef TAO_Objref_Var_T<Container> Container_var;
-
 #if !defined (CCM_LW)
   namespace Servant
   {

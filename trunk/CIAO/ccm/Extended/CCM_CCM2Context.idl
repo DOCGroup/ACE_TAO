@@ -5,7 +5,7 @@
 #define CCM_2CONTEXT_IDL
 
 #include "ccm/CCM_Context.idl"
-#include "ccm/CCM_HomeRegistration.idl"
+#include "ccm/Extended/CCM_HomeRegistration.idl"
 #include <CosPersistentState.idl>
 
 module Components

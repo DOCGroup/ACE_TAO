@@ -26,6 +26,7 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "tao/PortableServer/Key_Adapters.h"
+#include "ciao/Containers/Session/Session_ContainerC.h"
 
 namespace CIAO
 {

@@ -1,3 +1,33 @@
+Wed Sep 22 12:53:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/CCM_svnt.mpc:
+        * ccm/Entity/CCM_ComponentId.idl:
+        * ccm/Entity/CCM_Entity2Context.idl:
+        * ccm/Entity/CCM_EntityComponent.idl:
+        * ccm/Entity/CCM_EntityContext.idl:
+        * ccm/Entity/CCM_StateIdFactory.idl:
+        * ccm/Entity/CCM_entity_svnt.mpc:
+        * ccm/Extended:
+        * ccm/Extended/CCM_CCM2Context.idl:
+        * ccm/Extended/CCM_HomeRegistration.idl:
+        * ccm/Extended/CCM_ProxyHomeRegistration.idl:
+        * ccm/Session:
+        * ccm/Session/CCM_Session2Context.idl:
+        * ciao/Servants/Connector_Servant_Impl_Base.h:
+        * ciao/Servants/Home_Servant_Impl_T.h:
+        * ccm/CCM_CCM2Context.idl:
+        * ccm/CCM_ComponentId.idl:
+        * ccm/CCM_Entity2Context.idl:
+        * ccm/CCM_EntityComponent.idl:
+        * ccm/CCM_EntityContext.idl:
+        * ccm/CCM_HomeRegistration.idl:
+        * ccm/CCM_ProxyHomeRegistration.idl:
+        * ccm/CCM_Session2Context.idl:
+        * ccm/CCM_StateIdFactory.idl:
+          Refactoring our ccm idl, each container type will have its own
+          subdirectory with the idl needed for that. IDL currently not used
+          is not compiled and doesn't result in footprint
+
 Wed Sep 22 12:30:33 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * tests:

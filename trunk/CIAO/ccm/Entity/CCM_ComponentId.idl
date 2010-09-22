@@ -4,7 +4,7 @@
 #if !defined (CCM_COMPONENTID_IDL)
 #define CCM_COMPONENTID_IDL
 
-#include "ccm/CCM_StateIdFactory.idl"
+#include "ccm/Entity/CCM_StateIdFactory.idl"
 
 // *************** Extended Container Interfaces ***************
 
