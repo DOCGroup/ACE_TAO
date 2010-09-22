@@ -1,3 +1,11 @@
+Wed Sep 22 10:00:26 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+        * orbsvcs/Time_Service/Time_Service.mpc:
+        * orbsvcs/tests/Time/run_test.pl:
+          Renamed 'Time_Service_Server' to 'tao_costime_server'
+          Renamed 'Time_Service_Clerk' to 'tao_costime_clerk'
+
 Wed Sep 22 09:57:47 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * NEWS:
