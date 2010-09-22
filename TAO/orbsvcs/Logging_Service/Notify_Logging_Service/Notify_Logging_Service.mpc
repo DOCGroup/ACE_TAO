@@ -1,5 +1,5 @@
 // $Id$
 
 project: namingexe, iortable, install, dsnotifylogadmin_serv, valuetype {
-  exename   = Notify_Logging_Service
+  exename   = tao_tls_notify
 }
