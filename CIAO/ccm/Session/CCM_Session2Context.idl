@@ -6,6 +6,7 @@
 
 #include "ccm/CCM_CCM2Context.idl"
 #include "ccm/CCM_SessionContext.idl"
+#include "ccm/CCM_BadComponentReference.idl"
 #include "tao/OctetSeq.pidl"
 
 // *************** Extended Container Interfaces ***************
@@ -15,17 +16,6 @@
 module Components
 {
   typeprefix Components "omg.org";
-
-  enum BadComponentReferenceReason
-  {
-    NON_LOCAL_REFERENCE,
-    NON_COMPONENT_REFERENCE,
-    WRONG_CONTAINER
-  };
-  exception BadComponentReference
-  {
-    BadComponentReferenceReason reason;
-  };
 
   local interface Session2Context : SessionContext, CCM2Context
   {
