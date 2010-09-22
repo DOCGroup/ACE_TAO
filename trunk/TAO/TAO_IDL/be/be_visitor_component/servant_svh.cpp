@@ -45,7 +45,7 @@ be_visitor_servant_svh::visit_component (be_component *node)
       << "class " << export_macro_.c_str () << " " << lname
       << "_Servant" << be_idt_nl
       << ": public virtual" << be_idt << be_idt_nl
-      << "::CIAO::Servant_Impl<" << be_idt_nl
+      << "::CIAO::Session_Servant_Impl<" << be_idt_nl
       << "::" << node_->full_skel_name () << "," << be_nl
       << global << sname << "::CCM_" << lname << "," << be_nl
       << lname << "_Context>"
