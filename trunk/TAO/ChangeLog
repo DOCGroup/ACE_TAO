@@ -1,3 +1,11 @@
+Wed Sep 22 08:22:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+        * docs/releasenotes/index.html:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
+        * orbsvcs/examples/Log/Notify/run_test.pl:
+          Renamed 'Notify_Logging_Service' to 'tao_tls_notify'
+
 Wed Sep 22 08:19:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * NEWS:
