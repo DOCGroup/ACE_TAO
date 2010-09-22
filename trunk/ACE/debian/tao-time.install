@@ -1,2 +1,2 @@
-usr/bin/Time_Service_Server
-usr/bin/Time_Service_Clerk
+usr/bin/tao_costime_server
+usr/bin/tao_costime_clerk
