@@ -66,7 +66,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
       << "::CIAO::Session_Container_ptr c)" << be_uidt << be_uidt_nl
       << ": ::CIAO::" << opt_conn
       << "Servant_Impl_Base (h, hs, c)," << be_idt_nl
-      << "::CIAO::Servant_Impl<" << be_idt_nl
+      << "::CIAO::Session_Servant_Impl<" << be_idt_nl
       << "::" << node_->full_skel_name ()
       << "," << be_nl
       << global << sname << "::CCM_"
