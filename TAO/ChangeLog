@@ -1,3 +1,22 @@
+Wed Sep 22 09:41:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+        * docs/orbsvcs.html:
+        * docs/releasenotes/ec.html:
+        * orbsvcs/DevGuideExamples/EventServices/OMG_Basic/run_test.pl:
+        * orbsvcs/DevGuideExamples/EventServices/OMG_TypedEC/run_test.pl:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Basic/run_test.pl:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Filter/run_test.pl:
+        * orbsvcs/Event_Service/Event_Service.mpc:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/run_test.pl:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/run_test2.pl:
+        * orbsvcs/examples/CosEC/TypedSimple/run_test.pl:
+        * orbsvcs/tests/CosEvent/Timeout/run_test.pl:
+        * orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+        * orbsvcs/tests/EC_Throughput/run_test_overflow.pl:
+          Renamed 'Event_Service' to 'tao_rtevent'
+
 Wed Sep 22 09:19:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/context_svh.cpp:

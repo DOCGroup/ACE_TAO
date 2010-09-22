@@ -44,7 +44,7 @@ print STDERR "================ Overflow test\n";
 $NS = $ns->CreateProcess ("../../Naming_Service/tao_cosnaming",
                           "-o $ns_nsiorfile");
 
-$ES = $es->CreateProcess ("../../Event_Service/Event_Service",
+$ES = $es->CreateProcess ("../../Event_Service/tao_rtevent",
                           "-ORBInitRef NameService=file://$es_nsiorfile ".
                           " -ORBSvcConf $es_ecmtconffile ".
                           " -s local");

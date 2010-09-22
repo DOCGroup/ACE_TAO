@@ -35,7 +35,7 @@ $SV1 = $server1->CreateProcess ("../../Naming_Service/tao_cosnaming",
                                 "-ORBNameServicePort $port " .
                                 "-o $server1_naming_ior");
 
-$SV2 = $server2->CreateProcess ("../../Event_Service/Event_Service",
+$SV2 = $server2->CreateProcess ("../../Event_Service/tao_rtevent",
                                 "-ORBInitRef NameService=file://$server2_naming_ior");
 
 $SV3 = $server3->CreateProcess ("ECM_Supplier",
