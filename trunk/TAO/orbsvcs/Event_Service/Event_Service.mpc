@@ -2,5 +2,5 @@
 // $Id$
 
 project : orbsvcsexe, install, rtevent_serv, rtschedevent, bidir_giop, svc_utils {
-  exename  = Event_Service
+  exename  = tao_rtevent
 }
