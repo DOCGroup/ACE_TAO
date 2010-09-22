@@ -1,3 +1,14 @@
+Wed Sep 22 11:56:25 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+        * docs/orbsvcs.html:
+        * orbsvcs/Fault_Notifier/Fault_Notifier.mpc:
+        * orbsvcs/tests/FT_App/run_test_demo.pl:
+        * orbsvcs/tests/FT_App/run_test_detector.pl:
+        * orbsvcs/tests/FT_App/run_test_notifier.pl:
+        * orbsvcs/tests/FT_App/run_test_rmnotifier.pl:
+          Renamed 'Fault_Notifier' to 'tao_fault_notifier'
+
 Wed Sep 22 11:49:20 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * NEWS:
