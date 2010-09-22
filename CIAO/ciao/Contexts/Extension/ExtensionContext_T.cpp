@@ -9,7 +9,7 @@ namespace CIAO
             typename COMP>
   ExtensionContext_Impl<BASE_CTX, COMP>::ExtensionContext_Impl (
       Components::CCMHome_ptr the_home,
-      ::CIAO::Session_Container_ptr c,
+      ::CIAO::Extension_Container_ptr c,
       PortableServer::Servant sv,
       const char* id)
     : Context_Impl_Base (the_home, c, id),
