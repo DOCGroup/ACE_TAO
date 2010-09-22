@@ -24,6 +24,7 @@ USER VISIBLE CHANGES BETWEEN TAO-1.8.2 and TAO-1.8.3
   * 'Event_Logging_Service'   to 'tao_tls_event'
   * 'RTEvent_Logging_Service' to 'tao_tls_rtevent'
   * 'Naming_Service'          to 'tao_cosnaming'
+  * 'NT_Naming_Service'       to 'tao_nt_cosnaming'
 
 USER VISIBLE CHANGES BETWEEN TAO-1.8.1 and TAO-1.8.2
 ====================================================
