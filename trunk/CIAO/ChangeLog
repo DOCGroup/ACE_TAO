@@ -1,3 +1,15 @@
+Wed Sep 22 09:20:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.h:
+        * ciao/Containers/Session/Session_Container.h:
+        * ciao/Contexts/Extension/ExtensionContext_T.h:
+        * ciao/Contexts/Extension/ExtensionContext_T.cpp:
+        * ciao/Servants/Home_Servant_Impl_Base.h:
+        * ciao/Servants/Home_Servant_Impl_Base.cpp:
+        * ciao/Servants/Home_Servant_Impl_T.h:
+        * ciao/Servants/Home_Servant_Impl_T.cpp:
+          Changes for Session_Container
+
 Wed Sep 22 08:52:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Container_Base_T.h:

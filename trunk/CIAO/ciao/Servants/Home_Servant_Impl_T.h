@@ -49,7 +49,7 @@ namespace CIAO
   {
   public:
     Home_Servant_Impl (typename EXEC::_ptr_type exe,
-                       Container_ptr c,
+                       ::CIAO::Session_Container_ptr c,
                        const char *ins_name);
 
     virtual ~Home_Servant_Impl (void);
@@ -89,6 +89,8 @@ namespace CIAO
     OBJREF_MAP objref_map_;
 
     ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned long> serial_number_;
+
+    ::CIAO::Session_Container_var container_;
   };
 }
 
