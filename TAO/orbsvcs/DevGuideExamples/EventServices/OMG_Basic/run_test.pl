@@ -41,7 +41,7 @@ $NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 $NS = $ns->CreateProcess ($NameService, "-ORBdebuglevel $debug_level -ORBListenEndpoints iiop://:2809 ".
                                         " -o $ns_nsiorfile");
 
-$EventService = "$ENV{TAO_ROOT}/orbsvcs/CosEvent_Service/CosEvent_Service";
+$EventService = "$ENV{TAO_ROOT}/orbsvcs/CosEvent_Service/tao_cosevent";
 $ES = $es->CreateProcess ($EventService, " -o $es_esiorfile ".
                                         "-ORBInitRef NameService=file://$es_nsiorfile");
 $S = $ns->CreateProcess ("EchoEventSupplier", "-ORBInitRef NameService=file://$s_nsiorfile");
