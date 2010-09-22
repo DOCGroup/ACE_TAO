@@ -63,7 +63,7 @@ be_visitor_servant_svh::visit_component (be_component *node)
       << "::Components::CCMHome_ptr h," << be_nl
       << "const char * ins_name," << be_nl
       << "::CIAO::Home_Servant_Impl_Base *hs," << be_nl
-      << "::CIAO::Container_ptr c);" << be_uidt_nl;
+      << "::CIAO::Session_Container_ptr c);" << be_uidt_nl;
 
   os_ << be_nl
       << "virtual ~" << lname << "_Servant"

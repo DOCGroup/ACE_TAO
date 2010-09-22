@@ -113,7 +113,7 @@ be_visitor_component_svh::gen_entrypoint (be_component *node)
       << "create_" << node->flat_name ()
       << "_Servant (" << be_idt_nl
       << "::Components::EnterpriseComponent_ptr p," << be_nl
-      << "::CIAO::Container_ptr c," << be_nl
+      << "::CIAO::Session_Container_ptr c," << be_nl
       << "const char * ins_name);" << be_uidt;
 }
 
