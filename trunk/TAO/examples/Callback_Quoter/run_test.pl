@@ -41,7 +41,7 @@ $starget->DeleteFile($nsiorbase);
 # Programs that are run
 
 $NS = $nstarget->CreateProcess (
-    "../../orbsvcs/Naming_Service/Naming_Service",
+    "../../orbsvcs/Naming_Service/tao_cosnaming",
     "-o $nstarget_nsiorfile");
 $N = $ntarget->CreateProcess (
     "notifier",
@@ -59,7 +59,7 @@ print STDERR "================ Remote test\n";
 $ns_status = $NS->Spawn ();
 
 if ($ns_status != 0) {
-    print STDERR "ERROR: Naming_Service returned $ns_status\n";
+    print STDERR "ERROR: tao_cosnaming returned $ns_status\n";
     exit 1;
 }
 
@@ -136,7 +136,7 @@ if ($n_status != 0) {
 $ns_status = $NS->TerminateWaitKill ($nstarget->ProcessStopWaitInterval());
 
 if ($ns_status != 0) {
-    print STDERR "ERROR: Naming_Service returned $ns_status\n";
+    print STDERR "ERROR: tao_cosnaming returned $ns_status\n";
     $status = 1;
 }
 

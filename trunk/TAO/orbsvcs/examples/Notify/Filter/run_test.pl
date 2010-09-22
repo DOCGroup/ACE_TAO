@@ -35,7 +35,7 @@ $nfs->DeleteFile ($nsiorfile);
 $flt->DeleteFile ($nsiorfile);
 $nfs->DeleteFile ($nfsiorfile);
 
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                           " -o $ns_nsiorfile");
 
 $NFS = $nfs->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification",

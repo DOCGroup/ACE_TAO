@@ -31,7 +31,7 @@ $server3->DeleteFile ($naming_ior);
 $client->DeleteFile ($naming_ior);
 
 
-$SV1 = $server1->CreateProcess ("../../Naming_Service/Naming_Service",
+$SV1 = $server1->CreateProcess ("../../Naming_Service/tao_cosnaming",
                                 "-ORBNameServicePort $port " .
                                 "-o $server1_naming_ior");
 

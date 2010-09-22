@@ -66,7 +66,7 @@ $cli->DeleteFile ($nsiorfile);
 sub name_server
 {
     my $args = "-ORBNameServicePort $ns_multicast_port -o $ns_nsiorfile -m 1 @_";
-    my $prog = "../../../Naming_Service/Naming_Service";
+    my $prog = "../../../Naming_Service/tao_cosnaming";
     $NS = $ns->CreateProcess ($prog, $args);
 
     $ns->DeleteFile ($nsiorfile);
@@ -178,7 +178,7 @@ foreach $o (@opts) {
     }
 
     ## For some reason, only on Windows XP, we need to
-    ## wait before starting another Naming_Service when
+    ## wait before starting another tao_cosnaming when
     ## the mmap persistence option is used
     if ($^O eq "MSWin32") {
       sleep(1);

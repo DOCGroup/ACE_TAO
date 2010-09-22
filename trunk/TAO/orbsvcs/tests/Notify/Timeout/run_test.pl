@@ -49,7 +49,7 @@ $nfs->DeleteFile ($nfsiorfile);
 $sup->DeleteFile ($supiorfile);
 $con->DeleteFile ($supiorfile);
 
-my $NS = $ns->CreateProcess ("../../../Naming_Service/Naming_Service",
+my $NS = $ns->CreateProcess ("../../../Naming_Service/tao_cosnaming",
                              "-o $ns_nsiorfile");
 my $NFS = $ns->CreateProcess ("../../../Notify_Service/tao_cosnotification",
                               "-ORBInitRef NameService=file://$nfs_nsiorfile " .

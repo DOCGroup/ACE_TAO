@@ -43,7 +43,7 @@ $nfs->DeleteFile ($nfsiorfile);
 $srv->DeleteFile ($srviorfile);
 $cli->DeleteFile ($srviorfile);
 
-$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
+$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 $NS = $ns->CreateProcess ($NameService, " -o $ns_nsiorfile");
 
 

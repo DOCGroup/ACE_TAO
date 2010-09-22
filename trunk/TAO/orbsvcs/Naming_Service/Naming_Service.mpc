@@ -2,7 +2,7 @@
 // $Id$
 
 project : orbsvcsexe, install, naming_serv, imr_client, svc_utils {
-  exename  = Naming_Service
+  exename  = tao_cosnaming
   Source_Files {
     Naming_Server.cpp
     Naming_Service.cpp

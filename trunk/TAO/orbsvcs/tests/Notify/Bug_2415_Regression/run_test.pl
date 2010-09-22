@@ -48,7 +48,7 @@ $nfs->DeleteFile ($nfsiorfile);
 $sup->DeleteFile ($supiorfile);
 $con->DeleteFile ($supiorfile);
 
-$NS = $ns->CreateProcess ("../../../Naming_Service/Naming_Service",
+$NS = $ns->CreateProcess ("../../../Naming_Service/tao_cosnaming",
                           " -ORBEndpoint iiop://$ns_host:$ns_port");
 
 $NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification",

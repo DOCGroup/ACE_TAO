@@ -42,7 +42,7 @@ $IMR = $imr->CreateProcess ("../../../ImplRepo_Service/ImplRepo_Service");
 
 $ACT = $act->CreateProcess ("../../../ImplRepo_Service/ImR_Activator");
 
-$NS = $ns->CreateProcess ("../../../Naming_Service/Naming_Service");
+$NS = $ns->CreateProcess ("../../../Naming_Service/tao_cosnaming");
 my $ns_cmd = $NS->Executable();
 my $ns_ns_cmd = $imr->LocalFile ($ns_cmd);
 

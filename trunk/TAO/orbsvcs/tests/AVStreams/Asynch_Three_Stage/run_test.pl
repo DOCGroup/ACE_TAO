@@ -66,7 +66,7 @@ if ($sv1->PutFile ($inputfile) == -1) {
     exit 1;
 }
 
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                           " -o $ns_nsiorfile");
 $SV = $sv->CreateProcess ("sender",
                           " -ORBInitRef NameService=file://$sv_nsiorfile ".

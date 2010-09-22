@@ -55,7 +55,7 @@ $cr->DeleteFile ($srviorfile);
 
 $LM = $lm->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/LoadBalancer/LoadManager",
                           " -o $lm_lmiorfile");
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                           " -o $ns_nsiorfile");
 $SV = $sv->CreateProcess ("server",
                           "-o $sv_srviorfile ".

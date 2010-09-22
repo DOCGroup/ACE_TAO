@@ -32,7 +32,7 @@ $ns->DeleteFile ($nsiorfile);
 $srv->DeleteFile ($msfile);
 
 # start Naming Service
-$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
+$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 $NS = $ns->CreateProcess ($NameService, " -ORBListenEndpoints iiop://$TARGETHOSTNAME:$def_port ".
                                         "-o $ns_nsiorfile");
 $NS_status = $NS->Spawn ();

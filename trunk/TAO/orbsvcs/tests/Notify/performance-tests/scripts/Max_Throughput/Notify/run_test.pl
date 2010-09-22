@@ -85,7 +85,7 @@ $con->DeleteFile ($supiorfile);
 $con->DeleteFile ($chighdat);
 $sup->DeleteFile ($shighdat);
 
-$NS = $ns->CreateProcess ("../../../../../../Naming_Service/Naming_Service",
+$NS = $ns->CreateProcess ("../../../../../../Naming_Service/tao_cosnaming",
                           "-o $ns_nsiorfile");
 $NFS = $nfs->CreateProcess ("../../../../../../Notify_Service/tao_cosnotification");
 $NFS_Args = "-ORBInitRef NameService=file://$nfs_nsiorfile ".

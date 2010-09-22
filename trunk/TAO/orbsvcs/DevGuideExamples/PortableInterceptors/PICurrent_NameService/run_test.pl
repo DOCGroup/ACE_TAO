@@ -28,7 +28,7 @@ $ns->DeleteFile ($nsiorfile);
 $hostname = $ns->HostName ();
 $PORT=9876;
 
-$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
+$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 $NS = $ns->CreateProcess ($NameService, " -o $ns_nsiorfile ".
                                         "-ORBListenEndpoints iiop://$hostname:$PORT");
 

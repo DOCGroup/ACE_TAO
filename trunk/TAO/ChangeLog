@@ -1,3 +1,236 @@
+Wed Sep 22 08:50:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+        * TAO-INSTALL.html:
+
+        * examples/Advanced/ch_18/run_test.pl:
+
+        * examples/Callback_Quoter/run_test.pl:
+
+        * examples/Quoter/run_test.pl:
+
+        * examples/RTCORBA/Activity/run_test.pl:
+
+        * examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl:
+
+        * examples/RTScheduling/MIF_Scheduler/run_test.pl:
+
+        * examples/ior_corbaloc/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/EventServices/OMG_Basic/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/EventServices/OMG_SupplierSideEC/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/EventServices/OMG_TypedEC/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Basic/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Federated/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Filter/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/NamingService/Messenger/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/NamingService/Naming_Client/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/NamingService/Naming_Context_Ext/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/NamingService/corbaloc_Messenger/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/NamingService/corbaname_Messenger/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/NotifyService/EventSequence/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/NotifyService/Filtering/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/NotifyService/Messenger/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/NotifyService/OfferSubscriptions/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/NotifyService/QoSProperties/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/NotifyService/RTNotify/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/NotifyService/SupplierSideNC/run_test.pl:
+
+        * orbsvcs/DevGuideExamples/PortableInterceptors/PICurrent_NameService/run_test.pl:
+
+        * orbsvcs/Naming_Service/Naming_Service.mpc:
+
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/run_test.pl:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/run_test2.pl:
+
+        * orbsvcs/examples/CosEC/TypedSimple/run_test.pl:
+
+        * orbsvcs/examples/LoadBalancing/run_test.pl:
+
+        * orbsvcs/examples/Log/Basic/run_test.pl:
+
+        * orbsvcs/examples/Log/Event/run_test.pl:
+
+        * orbsvcs/examples/Log/Notify/run_test.pl:
+
+        * orbsvcs/examples/Log/RTEvent/run_test.pl:
+
+        * orbsvcs/examples/Notify/Filter/run_test.pl:
+
+        * orbsvcs/examples/Notify/Lanes/run_test.pl:
+
+        * orbsvcs/examples/Notify/Subscribe/run_test.pl:
+
+        * orbsvcs/examples/Notify/ThreadPool/run_test.pl:
+
+        * orbsvcs/examples/RtEC/IIOPGateway/consumerec_crash.pl:
+        * orbsvcs/examples/RtEC/IIOPGateway/run_test.pl:
+
+        * orbsvcs/examples/RtEC/Simple/run_test.pl:
+
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl:
+
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/run_test.pl:
+
+        * orbsvcs/tests/AVStreams/Component_Switching/run_test.pl:
+
+        * orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
+
+        * orbsvcs/tests/AVStreams/Modify_QoS/run_test.pl:
+
+        * orbsvcs/tests/AVStreams/Multicast/run_test.pl:
+
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl:
+
+        * orbsvcs/tests/AVStreams/Multiple_Flows/run_test.pl:
+
+        * orbsvcs/tests/AVStreams/Pluggable/run_test.pl:
+
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/run_test.pl:
+
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl:
+
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl:
+
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/run_test.pl:
+
+        * orbsvcs/tests/BiDir_CORBALOC/run_test.pl:
+
+        * orbsvcs/tests/Bug_1334_Regression/run_test.pl:
+
+        * orbsvcs/tests/Bug_2777_Regression/run_test.pl:
+
+        * orbsvcs/tests/Bug_2800_Regression/run_test_federated.pl:
+
+        * orbsvcs/tests/Bug_3387_Regression/run_test.pl:
+
+        * orbsvcs/tests/CosEvent/Timeout/run_test.pl:
+
+        * orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+
+        * orbsvcs/tests/EC_Multiple/run_test.pl:
+
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+        * orbsvcs/tests/EC_Throughput/run_test_overflow.pl:
+
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/run_test.pl:
+
+        * orbsvcs/tests/HTIOP/Hello/run_test.pl:
+
+        * orbsvcs/tests/ImplRepo/NameService/run_test.pl:
+
+        * orbsvcs/tests/Interoperable_Naming/run_test.pl:
+
+        * orbsvcs/tests/Log/Basic_Log_Test/run_test.pl:
+
+        * orbsvcs/tests/Notify/Basic/run_test.pl:
+        * orbsvcs/tests/Notify/Basic/run_test_ipv6.pl:
+
+        * orbsvcs/tests/Notify/Blocking/run_test.pl:
+
+        * orbsvcs/tests/Notify/Bug_1385_Regression/run_test.pl:
+
+        * orbsvcs/tests/Notify/Bug_2415_Regression/run_test.pl:
+
+        * orbsvcs/tests/Notify/Bug_2561_Regression/run_test.pl:
+
+        * orbsvcs/tests/Notify/Bug_3646a_Regression/run_test.pl:
+
+        * orbsvcs/tests/Notify/Bug_3646c_Regression/run_test.pl:
+
+        * orbsvcs/tests/Notify/Discarding/run_test.pl:
+
+        * orbsvcs/tests/Notify/Lanes/run_test.pl:
+
+        * orbsvcs/tests/Notify/MC/run_test.pl:
+
+        * orbsvcs/tests/Notify/MT_Dispatching/run_test.pl:
+
+        * orbsvcs/tests/Notify/Ordering/run_test.pl:
+
+        * orbsvcs/tests/Notify/Persistent_Filter/run_test.pl:
+
+        * orbsvcs/tests/Notify/Persistent_POA/run_test.pl:
+
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/run_test.pl:
+
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/run_test.pl:
+
+        * orbsvcs/tests/Notify/Structured_Filter/run_test.pl:
+
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl:
+
+        * orbsvcs/tests/Notify/ThreadPool/run_test.pl:
+
+        * orbsvcs/tests/Notify/Timeout/run_test.pl:
+
+        * orbsvcs/tests/Notify/performance-tests/Filter/run_test.pl:
+
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl:
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/run_test.pl:
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/run_test.pl:
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops/run_test.pl:
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops_RTCORBA/run_test.pl:
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops/run_test.pl:
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops_RTCORBA/run_test.pl:
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/run_test.pl:
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/run_test.pl:
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/run_test.pl:
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify_RTCORBA/run_test.pl:
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_notify.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_test.pl:
+
+        * orbsvcs/tests/Property/run_test.pl:
+
+        * orbsvcs/tests/Redundant_Naming/run_test.pl:
+
+        * orbsvcs/tests/Security/ssliop_corbaloc/run_test.pl:
+
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+        * orbsvcs/tests/Simple_Naming/run_test_ffp.pl:
+        * orbsvcs/tests/Simple_Naming/run_test_ipv6.pl:
+
+        * tests/Bug_2791_Regression/README:
+
+        * tests/Bug_3299_Regression/README:
+
+        * tests/Bug_3479_Regression/README:
+
+        * tests/DII_AMI_Forward/README:
+
+        * utils/nslist/run_test.pl:
+          Renamed 'Naming_Service' to 'tao_cosnaming'
+
 Wed Sep 22 08:25:54 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * NEWS:

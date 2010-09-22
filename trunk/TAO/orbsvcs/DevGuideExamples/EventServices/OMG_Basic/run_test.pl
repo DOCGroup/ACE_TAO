@@ -37,7 +37,7 @@ $es->DeleteFile ($esiorfile);
 
 $sleeptime = 10;
 
-$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
+$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 $NS = $ns->CreateProcess ($NameService, "-ORBdebuglevel $debug_level -ORBListenEndpoints iiop://:2809 ".
                                         " -o $ns_nsiorfile");
 

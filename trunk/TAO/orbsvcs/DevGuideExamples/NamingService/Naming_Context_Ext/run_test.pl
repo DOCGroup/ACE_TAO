@@ -33,7 +33,7 @@ $cli->DeleteFile ($srviorfile);
 $hostname = $ns->HostName ();
 $port = "2809";
 
-$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
+$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 $NS = $ns->CreateProcess ($NameService, "-ORBListenEndpoints iiop://$hostname:$port ".
                                         " -o $ns_nsiorfile");
 $SRV = $srv->CreateProcess ("MessengerServer", "-ORBdebuglevel $debug_level ".

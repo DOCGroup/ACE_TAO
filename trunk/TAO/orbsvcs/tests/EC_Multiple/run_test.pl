@@ -26,7 +26,7 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("../../Naming_Service/Naming_Service",
+$SV = $server->CreateProcess ("../../Naming_Service/tao_cosnaming",
                               "-ORBdebuglevel $debug_level -o $server_iorfile");
 
 $CL = $client->CreateProcess ("EC_Multiple",

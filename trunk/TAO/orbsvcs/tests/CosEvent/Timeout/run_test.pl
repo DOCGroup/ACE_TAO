@@ -39,7 +39,7 @@ my $client_ior1file = $client->LocalFile ($ior1file);
 $client->DeleteFile($ior1file);
 
 
-$SV1 = $server1->CreateProcess ("$PerlACE::TAO_ROOT/orbsvcs/Naming_Service/Naming_Service",
+$SV1 = $server1->CreateProcess ("$PerlACE::TAO_ROOT/orbsvcs/Naming_Service/tao_cosnaming",
                               "-ORBdebuglevel $debug_level " .
                               "-o $server1_ior1file");
 

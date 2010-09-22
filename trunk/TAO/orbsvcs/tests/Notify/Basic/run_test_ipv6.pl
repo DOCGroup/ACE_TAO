@@ -88,7 +88,7 @@ else {
     @test_configs = @ARGV;
 }
 
-$NS = $ns->CreateProcess ("../../../Naming_Service/Naming_Service",
+$NS = $ns->CreateProcess ("../../../Naming_Service/tao_cosnaming",
                               "-o $ns_nsiorfile");
 
 $NS_status = $NS->Spawn ();
