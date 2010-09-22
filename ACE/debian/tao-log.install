@@ -1,4 +1,4 @@
-usr/bin/Basic_Logging_Service
-usr/bin/Event_Logging_Service
-usr/bin/Notify_Logging_Service
-usr/bin/RTEvent_Logging_Service
+usr/bin/tao_tls_basic
+usr/bin/tao_tls_event
+usr/bin/tao_tls_notify
+usr/bin/RTtao_tls_event

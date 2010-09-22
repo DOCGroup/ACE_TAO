@@ -1,3 +1,17 @@
+Wed Sep 22 13:58:46 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * debian/tao-concurrency.install:
+        * debian/tao-event.install:
+        * debian/tao-ft.install:
+        * debian/tao-ifr.install:
+        * debian/tao-lifecycle.install:
+        * debian/tao-load.install:
+        * debian/tao-log.install:
+        * debian/tao-scheduling.install:
+        * debian/tao-time.install:
+        * debian/tao-trading.install:
+          Renamed TAO orb services. See $TAO_ROOT/NEWS for details.
+
 Tue Sep 21 08:27:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ASNMP/agent/main.cpp:
