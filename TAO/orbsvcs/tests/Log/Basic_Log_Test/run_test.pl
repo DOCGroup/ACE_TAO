@@ -31,7 +31,7 @@ $client->DeleteFile ($iorbase);
 
 $NS = $ns_service->CreateProcess ("../../../Naming_Service/Naming_Service",
                                   "-o $ns_iorfile");
-$LS = $lg_service->CreateProcess ("../../../Logging_Service/Basic_Logging_Service/Basic_Logging_Service",
+$LS = $lg_service->CreateProcess ("../../../Logging_Service/Basic_Logging_Service/tao_tls_basic",
                                   "-ORBInitRef NameService=file://$lg_iorfile");
 $CL = $client->CreateProcess ("client", "-ORBInitRef NameService=file://$client_iorfile");
 
