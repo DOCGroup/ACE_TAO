@@ -59,7 +59,7 @@ be_visitor_context_svh::visit_component (be_component *node)
       << "friend class " << lname << "_Servant;"
       << be_nl << be_nl;
 
-  os_ << "// Some useful typedefs." << be_nl<< be_nl
+  os_ << "// Some useful typedefs." << be_nl
       << "typedef" << be_nl
       << "::CIAO::Session_Context_Impl<" << be_idt << be_idt_nl
       << global << sname << "::CCM_"
