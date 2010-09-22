@@ -35,7 +35,7 @@ $s->DeleteFile ($nsiorfile);
 $c->DeleteFile ($nsiorfile);
 $es->DeleteFile ($esiorfile);
 
-$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
+$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 $NS = $ns->CreateProcess ($NameService, "-ORBdebuglevel $debug_level ".
                                         " -o $ns_nsiorfile");
 $EventService = "$ENV{TAO_ROOT}/orbsvcs/Event_Service/Event_Service";

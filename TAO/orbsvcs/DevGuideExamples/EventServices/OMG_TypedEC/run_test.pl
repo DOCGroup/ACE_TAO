@@ -55,7 +55,7 @@ $IF = $ifr->CreateProcess ($IFRService,  "-ORBdebuglevel $debug_level ".
 $TAO_IFR = "$ENV{ACE_ROOT}/bin/tao_ifr";
 $TI = $ti->CreateProcess ($TAO_IFR, "-ORBInitRef InterfaceRepository=file://$ti_ifriorfile ".
                                     "$idlfile");
-$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
+$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 $NS = $ns->CreateProcess ($NameService, " -o $ns_nsiorfile");
 $EventService = "$ENV{TAO_ROOT}/orbsvcs/CosEvent_Service/CosEvent_Service";
 $ES = $es->CreateProcess ($EventService, " -t -o $es_esiorfile ".

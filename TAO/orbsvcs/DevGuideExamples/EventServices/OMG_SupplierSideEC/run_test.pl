@@ -30,7 +30,7 @@ $ns->DeleteFile ($iorfile);
 $s->DeleteFile ($iorfile);
 $c->DeleteFile ($iorfile);
 
-$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
+$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 $NS = $ns->CreateProcess ($NameService, "-ORBdebuglevel $debug_level ".
                                         " -o $ns_iorfile");
 $S = $ns->CreateProcess ("EchoEventSupplier", "-ORBInitRef NameService=file://$s_iorfile");

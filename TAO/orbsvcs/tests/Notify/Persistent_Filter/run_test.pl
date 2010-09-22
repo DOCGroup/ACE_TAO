@@ -47,7 +47,7 @@ $nfs->DeleteFile ($nfsiorfile);
 $nfs->DeleteFile ($persistent_xml);
 $nfs->DeleteFile ($persistent_000);
 
-$NS = $ns->CreateProcess ("../../../Naming_Service/Naming_Service",
+$NS = $ns->CreateProcess ("../../../Naming_Service/tao_cosnaming",
                                 "-o $ns_nsiorfile");
 
 $NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification");

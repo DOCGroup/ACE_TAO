@@ -48,7 +48,7 @@ $s2->DeleteFile ($nsiorfile);
 $c1->DeleteFile ($nsiorfile);
 $c2->DeleteFile ($nsiorfile);
 
-$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
+$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 $NS = $ns->CreateProcess ($NameService, "-ORBdebuglevel $debug_level ".
                                         " -o $ns_nsiorfile");
 $args1 = "-ORBSvcConf $supplier_conf_file -ecname ec1 -gateway ec2";

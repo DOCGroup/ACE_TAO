@@ -30,7 +30,7 @@ $srv->DeleteFile ($nsiorfile);
 $cli->DeleteFile ($nsiorfile);
 
 # start Naming Service
-$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
+$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 $NS = $ns->CreateProcess ($NameService, " -o $ns_nsiorfile");
 $SRV = $srv->CreateProcess ("MessengerServer", "-ORBdebuglevel $debug_level ".
                                                "-ORBInitRef NameService=file://$srv_nsiorfile");

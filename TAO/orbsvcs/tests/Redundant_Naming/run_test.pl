@@ -78,7 +78,7 @@ else {
 # in files to find the individual copies of the Naming Servers.
 
 my $args = "-ORBEndPoint $ns_endpoint1 -o $test_iorfile1 -m 0 -r NameService";
-my $prog = "$startdir/../../Naming_Service/Naming_Service";
+my $prog = "$startdir/../../Naming_Service/tao_cosnaming";
 
 $NS1 = $test->CreateProcess ("$prog", "$args");
 
@@ -94,7 +94,7 @@ if ($test->WaitForFileTimed ($iorfile1,
 }
 
 $args = "-ORBEndPoint $ns_endpoint2 -o $test_iorfile2 -m 0 -r NameService";
-$prog = "$startdir/../../Naming_Service/Naming_Service";
+$prog = "$startdir/../../Naming_Service/tao_cosnaming";
 
 $NS2 = $test->CreateProcess ("$prog", "$args");
 

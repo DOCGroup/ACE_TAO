@@ -51,7 +51,7 @@ $consumer2->DeleteFile ($ns_ior);
 $nt_service->DeleteFile ($nt_ior);
 $server->DeleteFile ($msngr_ior);
 
-$NMS = $nm_service->CreateProcess("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
+$NMS = $nm_service->CreateProcess("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                                   "-ORBdebuglevel $debug_level -o $nm_ns_ior");
 $NFS = $nt_service->CreateProcess("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification",
                                   "-ORBdebuglevel $debug_level -ORBInitRef NameService=file://$nt_ns_ior ".

@@ -81,7 +81,7 @@ $nt_service_ntconffile = $nt_service->LocalFile($notify_conf);
 $high_path_hpconffile = $high_path->LocalFile($high_path_conf);
 $other_path_opconffile = $other_path->LocalFile($other_paths_conf);
 
-$NM_SV = $nm_service->CreateProcess ("../../../../../Naming_Service/Naming_Service",
+$NM_SV = $nm_service->CreateProcess ("../../../../../Naming_Service/tao_cosnaming",
                                      "-o $nm_service_nmiorfile $debug");
 $NT_SV = $nt_service->CreateProcess ("../../../../../Notify_Service/tao_cosnotification",
                                      "-ORBInitRef NameService=file://$nt_service_nmiorfile ".

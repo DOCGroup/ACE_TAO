@@ -35,7 +35,7 @@ $t->DeleteFile ($nsiorfile);
 $c->DeleteFile ($nsiorfile);
 $s->DeleteFile ($nsiorfile);
 
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                           " -o $ns_nsiorfile");
 
 $T = $t->CreateProcess ("Service",

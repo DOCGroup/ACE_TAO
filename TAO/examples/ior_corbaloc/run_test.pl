@@ -27,7 +27,7 @@ my @servers = (
 my @iorbases = ("ns1.ior", "ns2.ior", "ns2.ior");
 my @SV_NAMES = ("STATUS", "STATUS1", "STATUS");
 
-# We run two Naming_Service processes.  One on an arbitrary port,
+# We run two tao_cosnaming processes.  One on an arbitrary port,
 # and one on the corbaloc: default port of 2809
 my @nstargets = (
     (PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n"),
@@ -56,7 +56,7 @@ for ($i = 0; $i <= $#nstargets; $i++) {
     }
 
     my $NS = $nstargets[$i]->CreateProcess (
-        "../../orbsvcs/Naming_Service/Naming_Service",
+        "../../orbsvcs/Naming_Service/tao_cosnaming",
         "-ORBListenEndpoints iiop://$TARGETHOSTNAME:$ns_orb_ports[$i] ".
         "-o $ns_iorfile -m 0");
 
