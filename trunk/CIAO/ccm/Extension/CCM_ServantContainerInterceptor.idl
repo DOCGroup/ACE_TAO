@@ -5,7 +5,7 @@
 
 #include "ccm/Extension/CCM_ContainerInterceptor.idl"
 #include "ccm/Extension/CCM_ContainerServantRequestInfo.idl"
-#include "tao/PI/PIForwardRequest.pidl"
+#include "tao/PI/PI_include.pidl"
 
 module Components
 {
