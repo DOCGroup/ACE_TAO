@@ -6,7 +6,7 @@
 
 #include "ccm/CCM_CCMException.idl"
 #include "ccm/CCM_EnterpriseComponent.idl"
-#include "ccm/CCM_EntityContext.idl"
+#include "ccm/Entity/CCM_EntityContext.idl"
 
 #if !defined (CCM_LW)
 

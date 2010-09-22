@@ -4,9 +4,10 @@
 #if !defined (CCM_ENTITY2CONTEXT_IDL)
 #define CCM_ENTITY2CONTEXT_IDL
 
-#include "ccm/CCM_Session2Context.idl"
-#include "ccm/CCM_EntityContext.idl"
-#include "ccm/CCM_ComponentId.idl"
+#include "ccm/Entity/CCM_EntityContext.idl"
+#include "ccm/Entity/CCM_ComponentId.idl"
+#include "ccm/Extended/CCM_CCM2Context.idl"
+#include "ccm/Extended/CCM_BadComponentReference.idl"
 
 // *************** Extended Container Interfaces ***************
 

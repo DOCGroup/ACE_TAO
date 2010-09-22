@@ -4,25 +4,13 @@ project(CCM_svnt_idl) : install, ciaolib_with_idl, valuetype {
   idlflags   += -Wb,export_include=CCM_Svnt_Export.h
   idlflags   += -Wb,export_macro=CCM_Svnt_Export
   custom_only = 1
-  IDL_Files {
-    idlflags += -SS -Sci
-    CCM_EntityComponent.idl
-    CCM_EntityContext.idl
-  }
 
   IDL_Files {
     idlflags += -SS
-    CCM_CCM2Context.idl
-    CCM_ProxyHomeRegistration.idl
-    CCM_Session2Context.idl
     CCM_Transaction.idl
     CosPersistentState.idl
-    CCM_StateIdFactory.idl
-    CCM_Entity2Context.idl
-    CCM_ComponentId.idl
     CCM_ExecutorLocator.idl
     CCM_SessionSynchronization.idl
-    CCM_HomeRegistration.idl
   }
 
 }
@@ -44,62 +32,28 @@ project(CCM_svnt) : install, orbsvcslib, orbsvcs_output \
 
   Header_Files {
     CCM_Svnt_Export.h
-    CCM_CCM2ContextC.h
-    CCM_ComponentIdC.h
-    CCM_Entity2ContextC.h
-    CCM_EntityComponentC.h
-    CCM_EntityContextC.h
     CCM_ExecutorLocatorC.h
-    CCM_HomeRegistrationC.h
     CCM_TransactionC.h
-    CCM_StateIdFactoryC.h
     CosPersistentStateC.h
-    CCM_ProxyHomeRegistrationC.h
-    CCM_Session2ContextC.h
     CCM_SessionSynchronizationC.h
-    CCM_CCM2ContextS.h
-    CCM_ComponentIdS.h
-    CCM_Entity2ContextS.h
-    CCM_EntityComponentS.h
-    CCM_EntityContextS.h
     CCM_ExecutorLocatorS.h
-    CCM_HomeRegistrationS.h
-    CCM_ProxyHomeRegistrationS.h
-    CCM_Session2ContextS.h
     CCM_SessionSynchronizationS.h
-    CCM_StateIdFactoryS.h
     CCM_TransactionS.h
     CosPersistentStateS.h
   }
 
   Inline_Files {
-    CCM_Session2ContextC.inl
-    CCM_ProxyHomeRegistrationC.inl
     CCM_SessionSynchronizationC.inl
-    CCM_StateIdFactoryC.inl
     CCM_TransactionC.inl
     CosPersistentStateC.inl
-    CCM_ComponentIdC.inl
-    CCM_Entity2ContextC.inl
-    CCM_CCM2ContextC.inl
     CCM_ExecutorLocatorC.inl
-    CCM_HomeRegistrationC.inl
   }
 
   Source_Files {
     CCM_TransactionC.cpp
     CosPersistentStateC.cpp
     CCM_SessionSynchronizationC.cpp
-    CCM_StateIdFactoryC.cpp
-    CCM_ComponentIdC.cpp
-    CCM_Entity2ContextC.cpp
     CCM_ExecutorLocatorC.cpp
-    CCM_ProxyHomeRegistrationC.cpp
-    CCM_Session2ContextC.cpp
-    CCM_CCM2ContextC.cpp
-    CCM_HomeRegistrationC.cpp
-    CCM_EntityContextC.cpp
-    CCM_EntityComponentC.cpp
     CCM_EventsS.cpp
     CCM_EventConsumerBaseS.cpp
     CCM_EventBaseS.cpp
