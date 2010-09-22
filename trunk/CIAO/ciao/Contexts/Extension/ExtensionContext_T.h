@@ -49,7 +49,7 @@ namespace CIAO
   {
   public:
     ExtensionContext_Impl(Components::CCMHome_ptr home,
-                          ::CIAO::Session_Container_ptr c,
+                          ::CIAO::Extension_Container_ptr c,
                           PortableServer::Servant sv,
                           const char* id);
 
