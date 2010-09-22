@@ -1,3 +1,13 @@
+Wed Sep 22 14:06:25 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * debian/libtao-orbsvcs-1.8.2.install:
+        * debian/libtao-orbsvcs-dev.install:
+        * debian/tao-imr.install:
+        * debian/tao-naming.install:
+        * debian/tao-notify.install:
+        * debian/tao-rtevent.install:
+          Renamed TAO orb services. See $TAO_ROOT/NEWS for details.
+
 Wed Sep 22 13:58:46 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * debian/tao-concurrency.install:
