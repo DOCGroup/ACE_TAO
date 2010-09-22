@@ -1,3 +1,11 @@
+Wed Sep 22 14:50:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm:
+        * ccm/CCM_svnt.mpc:
+        * ccm/Session/CCM_SessionSynchronization.idl:
+        * ccm/CCM_SessionSynchronization.idl:
+          Moved another file to Session
+
 Wed Sep 22 13:48:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/ccm_session_stub.mpb:
