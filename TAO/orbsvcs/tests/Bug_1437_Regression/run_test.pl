@@ -43,7 +43,7 @@ $LC = $locator->CreateProcess ("../../ImplRepo_Service/tao_imr_locator",
                                "-ORBdebuglevel $debug_level -o $locator_imr_iorfile ".
                                "-ORBEndpoint iiop://:$locator_port");
 
-$AC = $activator->CreateProcess ("../../ImplRepo_Service/ImR_Activator",
+$AC = $activator->CreateProcess ("../../ImplRepo_Service/tao_imr_activator",
                                  "-ORBdebuglevel $debug_level -o $activator_iorfile ".
                                  "-ORBInitRef ImplRepoService=file://$activator_imr_iorfile");
 

@@ -50,7 +50,7 @@ my $port = 12345;
 my $endpoint = "-ORBEndpoint " . "$protocol" . "://:" . $port;
 
 $IMR = $imr->CreateProcess ("../../ImplRepo_Service/tao_imr_locator");
-$ACT = $act->CreateProcess ("../../ImplRepo_Service/ImR_Activator");
+$ACT = $act->CreateProcess ("../../ImplRepo_Service/tao_imr_activator");
 $TI = $ti->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr");
 
 # We want the tao_imr executable to be found exactly in the path
@@ -285,7 +285,7 @@ sub nt_service_test
     # To avoid having to ensure that they LocalSystem account has the correct path
     # we simply copy the imr executables to the same directory as the DLL's.
     my $BIN_IMR = $bin_imr->CreateProcess ("$ENV{ACE_ROOT}/lib/tao_imr_locator","");
-    my $BIN_ACT = $bin_act->CreateProcess ("$ENV{ACE_ROOT}/lib/ImR_Activator","");
+    my $BIN_ACT = $bin_act->CreateProcess ("$ENV{ACE_ROOT}/lib/tao_imr_activator","");
     $BIN_IMR->IgnoreExeSubDir(1);
     $BIN_ACT->IgnoreExeSubDir(1);
 

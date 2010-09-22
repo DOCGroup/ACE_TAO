@@ -44,7 +44,7 @@ $cli->DeleteFile ($srviorfile);
 
 $IMR = $imr->CreateProcess ("../../../ImplRepo_Service/tao_imr_locator",
                             "-o $imr_imriorfile");
-$ACT = $act->CreateProcess ("../../../ImplRepo_Service/ImR_Activator",
+$ACT = $act->CreateProcess ("../../../ImplRepo_Service/tao_imr_activator",
                             "-o $act_actiorfile ".
                             "-ORBInitRef ImplRepoService=file://$act_imriorfile");
 $TI = $ti->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr");
