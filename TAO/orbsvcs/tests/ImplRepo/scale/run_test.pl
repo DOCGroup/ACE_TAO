@@ -46,7 +46,7 @@ my $act_actiorfile = $act->LocalFile ($actiorfile);
 my $imr_persistxml = $imr->LocalFile ($persistxml);
 my $imr_persistdat = $imr->LocalFile ($persistdat);
 
-$IMR = $imr->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/ImplRepo_Service");
+$IMR = $imr->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_locator");
 $ACT = $act->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/ImR_Activator");
 $TI = $ti->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr");
 $SRV = $srv->CreateProcess ("server");

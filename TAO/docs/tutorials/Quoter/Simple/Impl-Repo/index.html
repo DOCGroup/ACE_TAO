@@ -79,7 +79,7 @@
       so that both the activator and the client can find the locator.
     </P>
     <PRE>
-       $ $TAO_ROOT/orbsvcs/ImplRepo_Service/ImplRepo_Service -o implrepo.ior -d 0 -ORBobjrefstyle URL &
+       $ $TAO_ROOT/orbsvcs/ImplRepo_Service/tao_imr_locator -o implrepo.ior -d 0 -ORBobjrefstyle URL &
     </PRE>
     
     <P>Second, we start the activator, pointing it to the locator's IOR file.
@@ -93,12 +93,12 @@
 
     <P> Next, we need to register our server with the implementation
       repository. We can use the
-      <CODE>$TAO_ROOT/orbsvcs/ImplRepo_Service/tao_imr</CODE>
+      <CODE>$TAO_ROOT/orbsvcs/ImplRepo_Service/tao_imr_locator</CODE>
       application provided with TAO to add our server to the server
       database in the implementation repository. 
     </P>
     <PRE>
-       $ $TAO_ROOT/orbsvcs/ImplRepo_Service/tao_imr -ORBInitRef 
+       $ $TAO_ROOT/orbsvcs/ImplRepo_Service/tao_imr_locator -ORBInitRef 
          ImplRepoService=file://implrepo.ior add childPOA -c
          "./server -ORBUseIMR 1 -ORBobjrefstyle URL -ORBInitRef 
          ImplRepoService=file://implrepo.ior"

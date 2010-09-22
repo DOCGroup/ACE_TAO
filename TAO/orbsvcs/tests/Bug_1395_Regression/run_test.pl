@@ -54,7 +54,7 @@ $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_
                                         "-ORBInitRef ImplRepoService=file://$server_imr_ior ".
                                         "-ORBUseIMR 1");
 $CL = $client->CreateProcess ("client", "-k file://$client_srv_ior");
-$LC = $locator->CreateProcess ("$imr_bin_path/ImplRepo_Service", "-o $locator_imr_ior ".
+$LC = $locator->CreateProcess ("$imr_bin_path/tao_imr_locator", "-o $locator_imr_ior ".
                                                                  "-ORBEndpoint iiop://:$port");
 $AC = $activator->CreateProcess ("$imr_bin_path/ImR_Activator",
                                  "-o $activator_actv_ior ".
