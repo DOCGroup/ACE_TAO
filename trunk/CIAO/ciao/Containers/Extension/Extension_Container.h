@@ -2,23 +2,22 @@
 
 //=============================================================================
 /**
- *  @file    Session_Container.h
+ *  @file    Extension_Container.h
  *
  *  $Id$
  *
  *  Header file for CIAO's container implementations
  *
- *  @author Nanbor Wang <nanbor@cs.wustl.edu>
- *  @author Gan Deng <dengg@dre.vanderbilt.edu>
+ *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
 
-#ifndef CIAO_SESSION_CONTAINER_H
-#define CIAO_SESSION_CONTAINER_H
+#ifndef CIAO_EXTENSION_CONTAINER_H
+#define CIAO_EXTENSION_CONTAINER_H
 
 #include /**/ "ace/pre.h"
 
-#include "ciao/Containers/Session/Session_Container_export.h"
+#include "ciao/Containers/Extension/Extension_Container_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,7 +25,7 @@
 
 #include "tao/PortableServer/Servant_Base.h"
 #include "ciao/Containers/Container_Base_T.h"
-#include "ciao/Containers/Session/Session_ContainerC.h"
+#include "ciao/Containers/Extension/Extension_ContainerC.h"
 #include "ccm/CCM_HomeExecutorBaseC.h"
 #include "ccm/CCM_EnterpriseComponentC.h"
 
@@ -36,11 +35,11 @@ namespace CIAO
 
   typedef ::Components::HomeExecutorBase_ptr (*HomeFactory) (void);
   typedef ::PortableServer::Servant (*HomeServantFactory) (::Components::HomeExecutorBase_ptr p,
-                                                           ::CIAO::Session_Container_ptr c,
+                                                           ::CIAO::Extension_Container_ptr c,
                                                            const char *ins_name);
   typedef ::Components::EnterpriseComponent_ptr (*ComponentFactory) (void);
   typedef ::PortableServer::Servant (*ComponentServantFactory) (::Components::EnterpriseComponent_ptr,
-                                                                ::CIAO::Session_Container_ptr,
+                                                                ::CIAO::Extension_Container_ptr,
                                                                 const char *);
 
   typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
@@ -72,15 +71,15 @@ namespace CIAO
   COMPONENTSERVANTCREATOR_FUNCPTR_MAP;
 
 
-  class SESSION_CONTAINER_Export Session_Container_i :
-    public Container_i < ::CIAO::Session_Container>
+  class EXTENSION_CONTAINER_Export Extension_Container_i :
+    public Container_i < ::CIAO::Extension_Container>
   {
   public:
-    Session_Container_i (CORBA::ORB_ptr o,
-                         PortableServer::POA_ptr poa,
-                         const char* name);
+    Extension_Container_i (CORBA::ORB_ptr o,
+                           PortableServer::POA_ptr poa,
+                           const char* name);
 
-    virtual ~Session_Container_i (void);
+    virtual ~Extension_Container_i (void);
 
     /**
      * @brief Simply installing a home executor into the component.
@@ -181,7 +180,7 @@ namespace CIAO
                                     PortableServer::POA_ptr root);
 
     /// Not allowed to be
-    Session_Container_i (void);
+    Extension_Container_i (void);
 
   protected:
     /// Static variable to store the highest number we have given out until
@@ -195,9 +194,9 @@ namespace CIAO
 }
 
 #if defined (__ACE_INLINE__)
-# include "Session_Container.inl"
+# include "Extension_Container.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 
-#endif /* CIAO_SESSION_CONTAINER_H */
+#endif /* CIAO_EXTENSION_CONTAINER_H */

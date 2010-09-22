@@ -1,3 +1,16 @@
+Wed Sep 22 09:53:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Extension/Extension_Container.h:
+        * ciao/Containers/Extension/Extension_Container.idl:
+        * ciao/Containers/Extension/Extension_Container.inl:
+        * ciao/Containers/Extension/Extension_Container.cpp:
+        * ciao/Containers/Extension/Extension_Container.mpc:
+        * ciao/Containers/Session/Session_Container.h:
+          Added ExtensionContainer which is a copy of Session_Container, first
+          we need to get all infrastructure and templates in place, after that
+          we need to move code to base classes or to derived, than we can
+          start adding the real additional code to the Extension_Container
+
 Wed Sep 22 09:20:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Container_Base_T.h:
