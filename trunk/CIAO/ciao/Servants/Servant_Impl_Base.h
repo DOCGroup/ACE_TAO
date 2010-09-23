@@ -111,6 +111,13 @@ namespace CIAO
       const char *port_name);
 #endif
 
+  private:
+
+#if !defined (CCM_LW)
+    ::Components::PublisherDescription *
+    lookup_publisher_description (const char *publisher_name);
+#endif
+
   protected:
     typedef ACE_Array_Map<ACE_CString,
                           ::Components::EventConsumerBase_var>
