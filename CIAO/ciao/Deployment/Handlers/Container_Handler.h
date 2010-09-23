@@ -14,8 +14,8 @@
 
 #include "tao/ORB.h"
 #include "tao/PortableServer/POAC.h"
-#include "DAnCE/DAnCE_LocalityManagerS.h"
-#include "DAnCE/DAnCE_Utility.h"
+#include "dance/DAnCE_LocalityManagerS.h"
+#include "dance/DAnCE_Utility.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

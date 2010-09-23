@@ -11,7 +11,7 @@
 #define COMMAND_LINE_PASSAGE_IDL_
 
 #include  <Components.idl>
-#include "DAnCE/DAnCE_LocalityManager.idl"
+#include "dance/DAnCE_LocalityManager.idl"
 
 module locality
 {

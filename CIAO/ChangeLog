@@ -1,9 +1,31 @@
+Thu Sep 23 20:41:07 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Deployment/Handlers/CIAO_Handler_Common.h:
+        * ciao/Deployment/Handlers/CIAO_Handler_Common.cpp:
+        * ciao/Deployment/Handlers/Component_Handler.h:
+        * ciao/Deployment/Handlers/Connection_Handler.h:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+        * ciao/Deployment/Handlers/Container_Handler.h:
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+        * ciao/Deployment/Handlers/Home_Handler.h:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.h:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.h:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+        * ciao/Deployment/Interceptors/Name_Utilities.cpp:
+        * tests/DAnCE/Executor-Destructor/Exec_Dest_Status.cpp:
+        * tests/DAnCE/Executor-Destructor/Executor_Destructor_Interceptor.h:
+        * tests/DAnCE/Executor-Destructor/Executor_Destructor_Interceptor.cpp:
+        * tests/DAnCE/LocalityManager/UnexpectedShutdown/UnexpectedShutdown.idl:
+
+          Fixes for re-arranged dance.
+
 Thu Sep 23 20:40:02 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_container_base_stub.mpb:
 
-          Slight compile fix. 
-        
+          Slight compile fix.
+
         * ciao/Containers/Containers.mpc:
 
           Formatting.

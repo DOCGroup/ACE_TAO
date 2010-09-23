@@ -15,8 +15,8 @@
 
 #include "Exec_Dest_export.h"
 
-#include "DAnCE/DAnCE_DeploymentInterceptorsC.h"
-#include "DAnCE/DAnCE_DeploymentInterceptors_Base_Impl.h"
+#include "dance/DAnCE_DeploymentInterceptorsC.h"
+#include "dance/DAnCE_DeploymentInterceptors_Base_Impl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

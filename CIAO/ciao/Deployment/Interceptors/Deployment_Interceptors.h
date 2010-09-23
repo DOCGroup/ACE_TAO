@@ -9,7 +9,7 @@
 #ifndef DEPLOYMENT_INTERCEPTORS_H
 #define DEPLOYMENT_INTERCEPTORS_H
 
-#include "DAnCE/DAnCE_DeploymentInterceptors_Base_Impl.h"
+#include "dance/DAnCE_DeploymentInterceptors_Base_Impl.h"
 #include "orbsvcs/CosNamingC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
