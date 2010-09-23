@@ -3,9 +3,11 @@
 
 project(CIAO_Session_Container_idl) : install, ciaoidldefaults {
   custom_only = 1
-  idlflags   += -Wb,export_include=Session_Container_stub_export.h \
-                -Wb,export_macro=SESSION_CONTAINER_STUB_Export \
-                -Gxhst -SS -Sci
+  idlflags   += -Wb,stub_export_include=Session_Container_stub_export.h \
+                -Wb,stub_export_macro=SESSION_CONTAINER_STUB_Export \
+                -Wb,skel_export_include=Session_Container_export.h \
+                -Wb,skel_export_macro=SESSION_CONTAINER_Export \
+                -Gxhst -Gxhsk -SS -Sci
   IDL_Files {
     Session_Container.idl
   }
@@ -44,15 +46,12 @@ project(CIAO_Session_Container) : install, ccm_svnt, ciao_lib, ciao_container_ba
   }
   Source_Files {
     Session_Container.cpp
-    Session_ContainerC.cpp
   }
   Inline_Files {
     Session_Container.inl
   }
   Header_Files {
     Session_Container.h
-    Session_ContainerC.h
-    Session_ContainerS.h
   }
   specific {
     install_dir = ciao/Containers/Session
