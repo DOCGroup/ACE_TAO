@@ -12,5 +12,12 @@ Foo_Bar::~Foo_Bar (void)
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Shutting down the ORB again\n"));
 
-  this->orb_->shutdown (1);
+  try
+    {
+      this->orb_->shutdown (1);
+    }
+  catch (...)
+    {
+      // Don't allow exceptions to leave the destructor.
+    }
 }

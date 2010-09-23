@@ -261,14 +261,14 @@ public:
   // implementation of the trader. However, some names are
   // standardized where they effect the interpretation of other
   // parameters or where they may impact linking and federation of
-  // traders. ° If a policy name in this parameter does not obey the
+  // traders. If a policy name in this parameter does not obey the
   // syntactic rules for legal PolicyName's, then an IllegalPolicyName
-  // exception is raised. ° If the type of the value associated with a
+  // exception is raised. If the type of the value associated with a
   // policy differs from that specified in this specification, then a
-  // PolicyTypeMismatch exception is raised. ° If subsequent
+  // PolicyTypeMismatch exception is raised. If subsequent
   // processing of a PolicyValue yields any errors (e.g., the
   // starting_trader policy value is malformed), then an
-  // InvalidPolicyValue exception is raised. ° If the same policy name
+  // InvalidPolicyValue exception is raised. If the same policy name
   // is included two or more times in this parameter, then the
   // DuplicatePolicyName exception is raised.
   // END SPEC

@@ -38,6 +38,8 @@ public:
 
   virtual void finish (void);
 
+  virtual void shutdown (void);
+
   unsigned long finish_two_way_call_;
 };
 
