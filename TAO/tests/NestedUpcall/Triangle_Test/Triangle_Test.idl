@@ -29,10 +29,14 @@ interface Object_A {
 
   oneway void finish ();
 
+  oneway void shutdown ();
+
 };
 
 interface Object_B {
 
   void foo (in Object_A theObject_A);
+
+  oneway void shutdown ();
 
 };

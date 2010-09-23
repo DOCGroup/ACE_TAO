@@ -141,10 +141,11 @@ Initiator_Server::init (int argc,
 
   try
     {
+      CORBA::ORB_var orb = this->orb_manager_.orb();
       // Get Object A
 
       CORBA::Object_var object_A_obj_var =
-        this->orb_manager_.orb()->string_to_object (this->object_A_key_);
+        orb->string_to_object (this->object_A_key_);
 
       this->object_A_var_ =
         Object_A::_narrow (object_A_obj_var.in());
@@ -166,7 +167,7 @@ Initiator_Server::init (int argc,
       // Get Object B
 
       CORBA::Object_var object_B_obj_var =
-        this->orb_manager_.orb()->string_to_object (this->object_B_key_);
+        orb->string_to_object (this->object_B_key_);
 
       this->object_B_var_ =
         Object_B::_narrow (object_B_obj_var.in());
@@ -252,6 +253,9 @@ Initiator_Server::~Initiator_Server (void)
     ACE_Allocator::instance ()->free (this->object_A_key_);
   if (this->object_B_key_ != 0)
     ACE_Allocator::instance ()->free (this->object_B_key_);
+
+  this->object_A_var_->shutdown ();
+  this->object_B_var_->shutdown ();
 
   try
     {

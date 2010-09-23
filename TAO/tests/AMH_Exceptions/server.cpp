@@ -24,7 +24,7 @@ public:
   //FUZZ: disable check_for_lack_ACE_OS
 
 protected:
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_var orb_;
 };
 
 

@@ -69,8 +69,8 @@ my $status = 0;
 sub print_output
 {
     my $output_file = $_[0];
-    open( TEST_OUTPUT, "< $output_file" ) or return -1;
-    while( <TEST_OUTPUT> ) {
+    open (TEST_OUTPUT, "< $output_file" ) or return -1;
+    while (<TEST_OUTPUT>) {
         print;
     }
     close (TEST_OUTPUT);
@@ -125,7 +125,7 @@ sub do_test
     }
 
     ## Wait a little bit for everything to get started
-    sleep(2);
+    sleep(10);
     print STDERR "Starting test_server -orbuseimr 1 $imr_initref\n";
 
     $SERV->Arguments ("-ORBLogFile $output_files[$id_serv_log] -orbuseimr 1 $imr_initref");
@@ -136,7 +136,7 @@ sub do_test
     }
 
     ## Wait a little bit for everything to get started
-    sleep(2);
+    sleep(10);
     print STDERR "Starting client\n";
 
     # The client should pass the simple test
