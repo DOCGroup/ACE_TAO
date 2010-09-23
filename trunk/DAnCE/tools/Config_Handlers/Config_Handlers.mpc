@@ -35,7 +35,7 @@ project (XSC_XML_Handlers) : install, acelib, xerces, dance_lib, dance_xml_utils
   sharedname    += XSC_XML_Handlers
   dynamicflags += XSC_XML_HANDLERS_BUILD_DLL
   macros += XML_USE_PTHREADS
-  includes += $(DANCE_ROOT)/Config_Handlers
+  includes += $(DANCE_ROOT)/tools/Config_Handlers
   after += XSC_XML_Generation
 
   Source_Files {
