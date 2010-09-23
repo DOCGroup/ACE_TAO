@@ -323,6 +323,7 @@ int
 test_get_named_receptacles (::Components::Receptacles_ptr rec)
 {
   ACE_DEBUG ((LM_DEBUG, "Run test_get_named_receptacles test\n"));
+
   ::Components::ReceptacleDescriptions_var descriptions;
 
   ::Components::NameList one_name;
@@ -545,11 +546,12 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
 
       ::Components::ConsumerDescriptions cds;
       cds = cpd->consumers ();
-      if (cds.length () != 0)
+      if (cds.length () != 1)
         {
           ACE_ERROR ((LM_ERROR, "Receptacle get_all_ports - "
-                                "Error: Found Consumers while not  "
-                                "configured\n"));
+                                "Error: Unexpected number of consumers found:  "
+                                "expected <1> - received <%d>\n",
+                                cds.length ()));
           ++ret;
         }
       else
@@ -639,6 +641,123 @@ test_get_ccm_home (::Components::CCMObject_ptr cmp)
     }
   ACE_DEBUG ((LM_DEBUG, "Receptacle - test_get_ccm_home - "
                         "Test passed\n"));
+  return 0;
+}
+#endif
+
+#if !defined (CCM_LW)
+int
+test_get_all_consumers (::Components::CCMObject_ptr cmp)
+{
+  ACE_DEBUG ((LM_DEBUG, "Receptacle - test_get_all_consumers - "
+                        "Start test\n"));
+  try
+    {
+      ::Components::ConsumerDescriptions_var cds;
+      cds = cmp->get_all_consumers ();
+      if (cds->length () != 1)
+        {
+          ACE_ERROR ((LM_ERROR, "Receptacle test_get_all_consumers - "
+                                "Error: get_all_consumers returned an "
+                                "unexpected number of consumers: "
+                                "expected <1> - received <%d>\n",
+                                cds->length ()));
+          return 1;
+        }
+    }
+  catch (const ::CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Receptacle test_get_all_consumers");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_get_all_consumers - "
+                            "Error: Unexpected exception caught.\n"));
+      return 1;
+    }
+  ACE_DEBUG ((LM_DEBUG, "Receptacle - test_get_all_consumers - "
+                        "Test passed\n"));
+  return 0;
+}
+#endif
+
+#if !defined (CCM_LW)
+int
+test_get_named_consumers (::Components::CCMObject_ptr cmp)
+{
+  ACE_DEBUG ((LM_DEBUG, "Receptacle - test_get_named_consumers - "
+                        "Start test\n"));
+
+  ::Components::ConsumerDescriptions_var cds;
+  try
+    {
+      ::Components::NameList one_name;
+      one_name.length (1);
+      one_name[0] = ::CORBA::string_dup ("consume_do_something");
+      cds = cmp->get_named_consumers (one_name);
+      if (cds->length () != 1)
+        {
+          ACE_ERROR ((LM_ERROR, "Receptacle test_get_named_consumers - "
+                                "Error: get_named_consumers returned an "
+                                "unexpected number of consumers: "
+                                "expected <1> - received <%d>\n",
+                                cds->length ()));
+          return 1;
+        }
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_get_named_consumers - "
+                            "Error: InvalidName "
+                            "exception during get_named_consumers\n"));
+      return 1;
+    }
+  catch (const ::CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Receptacle test_get_named_consumers");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_get_named_consumers - "
+                            "Error: Unexpected exception caught.\n"));
+      return 1;
+    }
+  ACE_DEBUG ((LM_DEBUG, "Receptacle - test_get_named_consumers - "
+                        "Test passed\n"));
+
+   // Test InvalidName exception
+  try
+    {
+      ::Components::NameList invalid_names;
+      invalid_names.length (2);
+      invalid_names[0] = ::CORBA::string_dup ("consume_do_something");
+      invalid_names[1] = ::CORBA::string_dup ("consume_do_something_invalid_name");
+      cds = cmp->get_named_consumers (invalid_names);
+      ACE_ERROR ((LM_ERROR, "Receptacle test_get_named_consumers - "
+                            "Error: No InvalidName exception received\n"));
+      return 1;
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_named_consumers - "
+                            "Received expected InvalidName "
+                            "exception during connect\n"));
+    }
+  catch (const ::CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Receptacle test_get_named_consumers");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_get_named_consumers - "
+                            "Error: Unexpected exception caught.\n"));
+      return 1;
+    }
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_named_consumers - "
+                        "InvalidName test passed!\n"));
   return 0;
 }
 #endif
@@ -743,6 +862,12 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
 
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_get_ccm_home (cmp);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_get_all_consumers (cmp);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_get_named_consumers (cmp);
 #endif
 
       cmd.shutdown ();
