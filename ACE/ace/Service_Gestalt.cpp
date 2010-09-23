@@ -201,6 +201,9 @@ ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
 
   delete this->svc_conf_file_queue_;
   this->svc_conf_file_queue_ = 0;
+
+  delete this->svc_queue_;
+  this->svc_queue_ = 0;
 }
 
 ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
