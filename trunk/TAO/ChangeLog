@@ -1,3 +1,8 @@
+Thu Sep 23 13:16:03 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Fixed indentation problem
+
 Thu Sep 23 12:50:25 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * orbsvcs/orbsvcs/Trader/Service_Type_Repository.h:
