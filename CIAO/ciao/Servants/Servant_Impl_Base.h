@@ -118,6 +118,11 @@ namespace CIAO
     lookup_publisher_description (const char *publisher_name);
 #endif
 
+#if !defined (CCM_LW)
+    ::Components::EmitterDescription *
+    lookup_emitter_description(const char* emitter_name);
+#endif
+
   protected:
     typedef ACE_Array_Map<ACE_CString,
                           ::Components::EventConsumerBase_var>

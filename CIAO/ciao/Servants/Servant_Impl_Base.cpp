@@ -187,10 +187,34 @@ namespace CIAO
 #if !defined (CCM_LW)
   ::Components::EmitterDescriptions *
   Servant_Impl_Base::get_named_emitters (
-      const ::Components::NameList & /* names */)
+      const ::Components::NameList & names)
   {
     CIAO_TRACE("Servant_Impl_Base::get_named_emitters");
-    throw CORBA::NO_IMPLEMENT ();
+    ::Components::EmitterDescriptions_var retval;
+    ACE_NEW_THROW_EX (retval,
+                      ::Components::EmitterDescriptions,
+                      ::CORBA::NO_MEMORY ());
+
+    retval->length (names.length ());
+    ::CORBA::ULong count = 0UL;
+
+    for (::CORBA::ULong name = 0UL;
+         name < names.length ();
+         ++name)
+      {
+        ::Components::EmitterDescription * desc =
+          this->lookup_emitter_description (names[name].in ());
+        if (desc)
+          {
+            retval[count++] = desc;
+          }
+        else
+          {
+            throw ::Components::InvalidName ();
+          }
+      }
+    ::Components::EmitterDescriptions_var safe_retval = retval;
+    return safe_retval._retn ();
   }
 #endif
 
@@ -361,5 +385,40 @@ namespace CIAO
     return 0;
   }
 #endif
+#if !defined (CCM_LW)
+  ::Components::EmitterDescription *
+  Servant_Impl_Base::lookup_emitter_description (const char *emitter_name)
+  {
+    CIAO_TRACE("Servant_Impl_Base::lookup_emitter_description");
+
+    ::Components::EmitterDescriptions_var all_emitters =
+      this->get_all_emitters ();
+
+    if (!emitter_name || all_emitters->length () == 0)
+      {
+        // Calling function will throw InvalidName after getting this.
+        return 0;
+      }
+    for (::CORBA::ULong emitter = 0;
+          emitter < all_emitters->length ();
+          ++emitter)
+      {
+        ::Components::EmitterDescription *emitter_desc =
+          all_emitters[emitter];
+        if (::ACE_OS::strcmp (emitter_name, emitter_desc->name ()) == 0)
+          {
+            ::Components::EmitterDescription *ed = 0;
+
+            ACE_NEW_THROW_EX (ed,
+                              ::OBV_Components::EmitterDescription (),
+                              CORBA::NO_MEMORY ());
+            ::Components::EmitterDescription_var safe = ed;
+            return safe._retn ();
+          }
+      }
+    return 0;
+  }
+#endif
+
 }
 

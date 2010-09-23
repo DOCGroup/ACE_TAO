@@ -1,3 +1,10 @@
+Thu Sep 23 12:28:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Servants/Servant_Impl_Base.h:
+        * ciao/Servants/Servant_Impl_Base.cpp:
+        * tests/CIF/Navigation/client.cpp:
+          Implemented get_named_emitters
+
 Thu Sep 23 12:13:26 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Servants/Servant_Impl_Base.h:
