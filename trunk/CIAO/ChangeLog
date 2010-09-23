@@ -1,3 +1,10 @@
+Thu Sep 23 10:08:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ciao_servant.mpb:
+        * MPC/config/ciao_session_container_stub.mpb:
+        * ciao/Containers/Session/Session_Container.mpc:
+          Moved session container stub to their own shared library
+
 Thu Sep 23 07:55:57 UTC 2010  Marijke Hengstmengelt  <mhengstmengel@remedy.nl>
 
         * connectors/tests/AMIDDS/Sender/AmiDds_Sender.mpc:
