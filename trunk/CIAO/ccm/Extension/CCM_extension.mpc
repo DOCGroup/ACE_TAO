@@ -38,7 +38,7 @@ project(CCM_extension_stub_idl) : install, ciaolib_with_idl {
   }
 }
 
-project(CCM_extension_stub) : install, ciaolib_with_idl, ciao_output, ccm_stub, portableserver {
+project(CCM_extension_stub) : install, ciaolib_with_idl, ciao_output, ccm_stub {
   // This is necessary for MPC to pull in rules.ciao.GNU
   includes += $(CIAO_ROOT)
   dynamicflags += CCM_EXTENSION_STUB_BUILD_DLL
@@ -94,7 +94,7 @@ project(CCM_extension_stub) : install, ciaolib_with_idl, ciao_output, ccm_stub, 
   }
 }
 
-project(CCM_extension_skel) : install, ciaolib_with_idl, ciao_output, valuetype, ifr_client {
+project(CCM_extension_skel) : install, ciaolib_with_idl, ciao_output, valuetype, ifr_client, portableserver {
   // This is necessary for MPC to pull in rules.ciao.GNU
   includes += $(CIAO_ROOT)
   dynamicflags += CCM_EXTENSION_SKEL_BUILD_DLL
