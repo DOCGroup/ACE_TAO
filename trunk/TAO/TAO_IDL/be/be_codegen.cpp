@@ -3573,11 +3573,11 @@ TAO_CodeGen::gen_exec_idl_includes (void)
 
   this->gen_standard_include (
     this->ciao_exec_idl_,
-    "ccm/CCM_SessionContext.idl");
+    "ccm/Session/CCM_SessionContext.idl");
 
   this->gen_standard_include (
     this->ciao_exec_idl_,
-    "ccm/CCM_SessionComponent.idl");
+    "ccm/Session/CCM_SessionComponent.idl");
 
   if (be_global->ami4ccm_call_back ())
     {
