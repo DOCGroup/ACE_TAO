@@ -1,7 +1,7 @@
 // $Id$
 #include "CIAO_Handler_Common.h"
 
-#include "Deployment/Deployment_PlanErrorC.h"
+#include "dance/Deployment/Deployment_PlanErrorC.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "ciao/Valuetype_Factories/ConfigValue.h"
 

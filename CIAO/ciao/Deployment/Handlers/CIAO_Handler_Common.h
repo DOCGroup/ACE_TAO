@@ -12,8 +12,8 @@
 #include <string>
 
 #include "ccm/CCM_StandardConfiguratorC.h"
-#include "Deployment/Deployment_DeploymentPlanC.h"
-#include "DAnCE/DAnCE_Utility.h"
+#include "dance/Deployment/Deployment_DeploymentPlanC.h"
+#include "dance/DAnCE_Utility.h"
 
 namespace CIAO
 {

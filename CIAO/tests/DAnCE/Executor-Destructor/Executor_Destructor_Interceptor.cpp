@@ -4,8 +4,8 @@
 #include "Executor_Destructor_Interceptor.h"
 #include "Exec_Dest_Status.h"
 
-#include "DAnCE/DAnCE_PropertiesC.h"
-#include "DAnCE/DAnCE_Utility.h"
+#include "dance/DAnCE_PropertiesC.h"
+#include "dance/DAnCE_Utility.h"
 
 namespace DAnCE
 {

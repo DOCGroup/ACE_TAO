@@ -9,7 +9,7 @@
 #ifndef CONNECTION_HANDLER_H
 #define CONNECTION_HANDLER_H
 
-#include "Deployment/Deployment_DeploymentPlanC.h"
+#include "dance/Deployment/Deployment_DeploymentPlanC.h"
 #include "ccm/CCM_ObjectC.h"
 
 #include <map>

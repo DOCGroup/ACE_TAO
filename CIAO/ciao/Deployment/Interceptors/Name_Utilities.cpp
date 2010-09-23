@@ -5,7 +5,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 #include "ace/Tokenizer_T.h"
-#include "Logger/Log_Macros.h"
+#include "dance/Logger/Log_Macros.h"
 
 namespace CIAO
 {

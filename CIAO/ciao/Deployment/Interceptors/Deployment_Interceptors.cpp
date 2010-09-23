@@ -3,10 +3,10 @@
 #include "Deployment_Interceptors.h"
 #include "tao/ORB_Core.h"
 #include "Name_Utilities.h"
-#include "Deployment/Deployment_StartErrorC.h"
-#include "DAnCE/DAnCE_PropertiesC.h"
-#include "DAnCE/DAnCE_Utility.h"
-#include "LocalityManager/Scheduler/Plugin_Manager.h"
+#include "dance/Deployment/Deployment_StartErrorC.h"
+#include "dance/DAnCE_PropertiesC.h"
+#include "dance/DAnCE_Utility.h"
+#include "dance/LocalityManager/Scheduler/Plugin_Manager.h"
 #include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
