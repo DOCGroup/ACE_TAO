@@ -1,3 +1,16 @@
+Thu Sep 23 16:14:12 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/SSL/ssl.mpc:
+        * bin/MakeProjectCreator/config/pkgconfig.mpb:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/ace_install_pkgconfig.pl:
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Added support for installing pkg-config (.pc) files as part of the
+          gnuace "make install".  This includes a refactoring of how the
+          shared library version numbers are set internally in the makefiles.
+
 Thu Sep 23 12:32:05 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/Service_Gestalt.cpp:
