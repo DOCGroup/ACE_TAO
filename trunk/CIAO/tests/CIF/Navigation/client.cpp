@@ -472,7 +472,7 @@ test_get_named_publishers (::Components::CCMObject_ptr cmp)
 #if !defined (CCM_LW)
 int
 //============================================================
-// test_get_all_emitters 
+// test_get_all_emitters
 //============================================================
 test_get_all_emitters (::Components::CCMObject_ptr cmp)
 {
