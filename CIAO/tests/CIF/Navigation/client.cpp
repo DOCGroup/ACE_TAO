@@ -8,7 +8,8 @@
 int
 test_provide_facet (::Components::Navigation_ptr nav)
 {
-  ACE_DEBUG ((LM_DEBUG, "Start test: test_provide_facet\n"));
+  ACE_DEBUG ((LM_DEBUG, "Navigation test_provide_facet - "
+                        "Start test\n"));
 
   try
     {
@@ -30,8 +31,8 @@ test_provide_facet (::Components::Navigation_ptr nav)
   ACE_DEBUG ((LM_DEBUG, "Navigation test_provide_facet - "
                         "Provide facet test passed !\n"));
 
-  ACE_DEBUG ((LM_DEBUG, "Start test: Navigation test_provide_facet - "
-                        "InvalidName exception test\n"));
+  ACE_DEBUG ((LM_DEBUG, "Navigation test_provide_facet (InvalidName) - "
+                        "Start test\n"));
   try
     {
       nav->provide_facet ("navigation_foo_1");
@@ -81,7 +82,8 @@ test_provide_facet (::Components::Navigation_ptr nav)
 int
 test_get_all_facets (::Components::Navigation_ptr nav)
 {
-  ACE_DEBUG ((LM_DEBUG, "Start test: Navigation get_all_facets\n"));
+  ACE_DEBUG ((LM_DEBUG, "Navigation test_get_all_facets - "
+                        "Start test\n"));
 
   try
     {
@@ -114,7 +116,8 @@ test_get_all_facets (::Components::Navigation_ptr nav)
 int
 test_get_named_facets (::Components::Navigation_ptr nav)
 {
-  ACE_DEBUG ((LM_DEBUG, "Start test: Navigation test_get_named_facets\n"));
+  ACE_DEBUG ((LM_DEBUG, "Navigation test_get_named_facets - "
+                        "Start test\n"));
   try
     {
       ::Components::NameList names;
@@ -185,7 +188,8 @@ test_get_named_facets (::Components::Navigation_ptr nav)
 int
 test_same_component (::Components::Navigation_ptr nav)
 {
-  ACE_DEBUG ((LM_DEBUG, "Start test:  test_same_component\n"));
+  ACE_DEBUG ((LM_DEBUG, "Navigation test_same_component - "
+                        "Start test\n"));
 
   if (nav->same_component (nav))
     {
@@ -201,8 +205,8 @@ test_same_component (::Components::Navigation_ptr nav)
   ACE_DEBUG ((LM_DEBUG, "Navigation test_same_component - "
                         "Same component test passed!\n"));
 
-  ACE_DEBUG ((LM_DEBUG, "Start test: Navigation test_same_component - "
-                        "Exception test.\n"));
+  ACE_DEBUG ((LM_DEBUG, "Navigation test_same_component (Exception) - "
+                        "Start test\n"));
   try
     {
       nav->same_component (0);
@@ -219,10 +223,13 @@ test_same_component (::Components::Navigation_ptr nav)
 #endif
 
 #if !defined (CCM_LW)
+//============================================================
+// test_get_all_ports
+//============================================================
 int
 test_get_all_ports (::Components::CCMObject_ptr cmp)
 {
-  ACE_DEBUG ((LM_DEBUG, "Navigation - test_get_all_ports - "
+  ACE_DEBUG ((LM_DEBUG, "Navigation test_get_all_ports - "
                         "Start test\n"));
   int ret = 0;
   try
@@ -235,7 +242,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
       fds = cpd->facets ();
       if (fds.length () != 2)
         {
-          ACE_ERROR ((LM_ERROR, "Navigation - test_get_all_ports - "
+          ACE_ERROR ((LM_ERROR, "Navigation test_get_all_ports - "
                                 "Error: Did not receive the expected "
                                 "number of facets: "
                                 "expected <2> - received <%d>\n",
@@ -332,9 +339,265 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
                             "Error: Unexpected exception caught.\n"));
       return 1;
     }
-  ACE_DEBUG ((LM_DEBUG, "Navigation - test_get_all_ports - "
-                        "Test passed\n"));
+  if (ret == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Navigation test_get_all_ports - "
+                            "Test passed\n"));
+    }
   return ret;
+}
+#endif
+
+#if !defined (CCM_LW)
+//============================================================
+// test_get_all_publishers
+//============================================================
+int
+test_get_all_publishers (::Components::CCMObject_ptr cmp)
+{
+  ACE_DEBUG ((LM_DEBUG, "Navigation test_get_all_publishers - "
+                        "Start test\n"));
+  try
+    {
+      ::Components::PublisherDescriptions_var pds;
+      pds = cmp->get_all_publishers ();
+      if (pds->length () != 2)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "Navigation test_get_all_publishers - "
+                            "Error: get_all_publishers returned an "
+                            "unexpected number of publishers: "
+                            "expected <2> - received <%d>\n",
+                            pds->length ()),
+                            1);
+        }
+    }
+  catch (const ::CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Navigation test_get_all_publishers");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Navigation test_get_all_publishers - "
+                            "Error: Unexpected exception caught.\n"));
+      return 1;
+    }
+  ACE_DEBUG ((LM_DEBUG, "Navigation test_get_all_publishers - "
+                        "Test passed\n"));
+  return 0;
+}
+#endif
+
+#if !defined (CCM_LW)
+//============================================================
+// test_get_named_publishers
+//============================================================
+int
+test_get_named_publishers (::Components::CCMObject_ptr cmp)
+{
+  ACE_DEBUG ((LM_DEBUG, "Navigation test_get_named_publishers - "
+                        "Start test\n"));
+
+  ::Components::PublisherDescriptions_var pds;
+  try
+    {
+      ::Components::NameList two_names;
+      two_names.length (2);
+      two_names[0] = ::CORBA::string_dup ("publish_do_something");
+      two_names[1] = ::CORBA::string_dup ("publish_do_something_else");
+      pds = cmp->get_named_publishers (two_names);
+      if (pds->length () != 2)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "Navigation test_get_named_publishers - "
+                            "Error: get_named_publishers returned an "
+                            "unexpected number of publishers: "
+                            "expected <2> - received <%d>\n",
+                            pds->length ()),
+                            1);
+        }
+    }
+  catch (const ::CORBA::NO_IMPLEMENT& )
+    {
+      ACE_DEBUG ((LM_DEBUG, "Navigation test_get_named_publishers - "
+                            "Not implemented yet\n"));
+      return 0;
+    }
+  catch (const ::CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Navigation test_get_named_publishers");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Navigation test_get_named_publishers - "
+                            "Error: Unexpected exception caught.\n"));
+      return 1;
+    }
+  ACE_DEBUG ((LM_DEBUG, "Navigation test_get_named_publishers - "
+                        "Test passed\n"));
+
+  // Test InvalidName exception
+  try
+    {
+      ::Components::NameList invalid_names;
+      invalid_names.length (3);
+      invalid_names[0] = ::CORBA::string_dup ("publish_do_something");
+      invalid_names[1] = ::CORBA::string_dup ("publish_do_something_invalid_name");
+      invalid_names[2] = ::CORBA::string_dup ("publish_do_something_else");
+      pds = cmp->get_named_publishers (invalid_names);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        "Navigation test_get_named_publishers - "
+                        "Error: No InvalidName exception received\n"),
+                        1);
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Navigation test_get_named_publishers - "
+                            "Received expected InvalidName "
+                            "exception during connect\n"));
+    }
+  catch (const ::CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Navigation test_get_named_publishers");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Navigation test_get_named_publishers - "
+                            "Error: Unexpected exception caught.\n"));
+      return 1;
+    }
+  ACE_DEBUG ((LM_DEBUG, "Navigation test_get_named_publishers - "
+                        "InvalidName test passed!\n"));
+  return 0;
+}
+#endif
+
+#if !defined (CCM_LW)
+int
+//============================================================
+// test_get_all_emitters 
+//============================================================
+test_get_all_emitters (::Components::CCMObject_ptr cmp)
+{
+  ACE_DEBUG ((LM_DEBUG, "Navigation test_get_all_emitters - "
+                        "Start test\n"));
+  try
+    {
+      ::Components::EmitterDescriptions_var eds;
+      eds = cmp->get_all_emitters ();
+      if (eds->length () != 1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "Navigation test_get_all_emitters - "
+                            "Error: get_all_emitters returned an "
+                            "unexpected number of emitters: "
+                            "expected <1> - received <%d>\n",
+                            eds->length ()),
+                            1);
+        }
+
+    }
+  catch (const ::CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Navigation test_get_all_emitters");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Navigation test_get_all_emitters - "
+                            "Error: Unexpected exception caught.\n"));
+      return 1;
+    }
+  ACE_DEBUG ((LM_DEBUG, "Navigation test_get_all_emitters - "
+                        "Test passed\n"));
+  return 0;
+}
+#endif
+#if !defined (CCM_LW)
+int
+//============================================================
+// test_get_named_emitters
+//============================================================
+test_get_named_emitters (::Components::CCMObject_ptr cmp)
+{
+  ACE_DEBUG ((LM_DEBUG, "Navigation test_get_named_emitters - "
+                        "Start test\n"));
+  ::Components::EmitterDescriptions_var eds;
+
+  try
+    {
+
+      ::Components::NameList one_name;
+      one_name.length (1);
+      one_name[0] = ::CORBA::string_dup ("emit_do_something");
+      eds = cmp->get_named_emitters (one_name);
+      if (eds->length () != 1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "Navigation test_get_named_emitters - "
+                            "Error: get_named_emitters returned an "
+                            "unexpected number of emitters: "
+                            "expected <1> - received <%d>\n",
+                            eds->length ()),
+                            1);
+        }
+    }
+  catch (const ::CORBA::NO_IMPLEMENT& )
+    {
+      ACE_DEBUG ((LM_DEBUG, "Navigation test_get_named_emitters - "
+                            "Not implemented yet\n"));
+      return 0;
+    }
+  catch (const ::CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Navigation test_get_named_emitters");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Navigation test_get_named_emitters - "
+                            "Error: Unexpected exception caught.\n"));
+      return 1;
+    }
+  ACE_DEBUG ((LM_DEBUG, "Navigation test_get_named_emitters - "
+                        "Test passed\n"));
+
+  // Test InvalidName exception
+  try
+    {
+      ::Components::NameList invalid_names;
+      invalid_names.length (2);
+      invalid_names[0] = ::CORBA::string_dup ("emit_do_something");
+      invalid_names[1] = ::CORBA::string_dup ("emit_do_something_invalid_name");
+      eds = cmp->get_named_emitters (invalid_names);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        "Navigation test_get_named_emitters - "
+                        "Error: No InvalidName exception received\n"),
+                        1);
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Navigation test_get_named_emitters - "
+                            "Received expected InvalidName "
+                            "exception during connect\n"));
+    }
+  catch (const ::CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Navigation test_get_named_emitters");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Navigation test_get_named_emitters - "
+                            "Error: Unexpected exception caught.\n"));
+      return 1;
+    }
+  ACE_DEBUG ((LM_DEBUG, "Navigation test_get_named_emitters - "
+                        "InvalidName test passed!\n"));
+  return 0;
 }
 #endif
 
@@ -358,6 +621,18 @@ run_test (::Components::Navigation_ptr nav,
 
   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
   ret += test_get_all_ports (cmp);
+
+  ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+  ret += test_get_all_publishers (cmp);
+
+  ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+  ret += test_get_named_publishers (cmp);
+
+  ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+  ret += test_get_all_emitters (cmp);
+
+  ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+  ret += test_get_named_emitters (cmp);
 #else
   ACE_UNUSED_ARG (cmp);
 #endif

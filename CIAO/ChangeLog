@@ -1,3 +1,11 @@
+Thu Sep 23 11:43:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Navigation/client.cpp:
+        * tests/CIF/Receptacle/client.cpp:
+          Improved logging.
+          Added tests for get_all_publishers, get_named_publishers,
+          get_all_emitters and get_named_emitters.
+
 Thu Sep 23 10:40:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/ciao_container_base_stub.mpb:

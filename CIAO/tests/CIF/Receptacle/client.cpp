@@ -87,7 +87,8 @@ int
 test_connect_disconnect (::Components::Receptacles_ptr rec,
                          ::CORBA::Object_ptr facet)
 {
-  ACE_DEBUG ((LM_DEBUG, "Run test_connect_disconnect test\n"));
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_connect_disconnect - "
+                        "Start test\n"));
 
   ::Components::Cookie_var ck = connect (rec, facet);
   ::CORBA::Object_var obj = disconnect (rec, ck.in ());
@@ -108,7 +109,8 @@ int
 test_invalid_name_exception (::Components::Receptacles_ptr rec,
                              ::CORBA::Object_ptr facet)
 {
-  ACE_DEBUG ((LM_DEBUG, "Run test_invalid_name_exception test\n"));
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_invalid_name_exception - "
+                        "Start test\n"));
 
   ::Components::Cookie_var ck;
   try
@@ -153,7 +155,8 @@ test_invalid_name_exception (::Components::Receptacles_ptr rec,
 int
 test_invalid_connection_exception (::Components::Receptacles_ptr rec)
 {
-  ACE_DEBUG ((LM_DEBUG, "Run test_invalid_connection_exception test\n"));
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_invalid_connection_exception - "
+                        "Start test\n"));
 
   ::Components::Cookie_var ck;
   try
@@ -199,7 +202,8 @@ int
 test_already_connected_exception (::Components::Receptacles_ptr rec,
                                   ::CORBA::Object_ptr facet)
 {
-  ACE_DEBUG ((LM_DEBUG, "Run test_already_connected_exception test\n"));
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_already_connected_exception - "
+                        "Start test\n"));
 
   ::Components::Cookie_var ck;
   try
@@ -228,7 +232,9 @@ test_already_connected_exception (::Components::Receptacles_ptr rec,
 int
 test_get_connections (::Components::Receptacles_ptr rec)
 {
-  ACE_DEBUG ((LM_DEBUG, "Run test_get_connections test\n"));
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_connections - "
+                        "Start test\n"));
+
   ::Components::ConnectionDescriptions_var descriptions;
   try
     {
@@ -293,7 +299,8 @@ test_get_connections (::Components::Receptacles_ptr rec)
 int
 test_get_all_receptacles (::Components::Receptacles_ptr rec)
 {
-  ACE_DEBUG ((LM_DEBUG, "Run test_get_all_receptacles test\n"));
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_all_receptacles - "
+                        "Start test\n"));
 
   ::Components::ReceptacleDescriptions_var descriptions;
   try
@@ -322,7 +329,8 @@ test_get_all_receptacles (::Components::Receptacles_ptr rec)
 int
 test_get_named_receptacles (::Components::Receptacles_ptr rec)
 {
-  ACE_DEBUG ((LM_DEBUG, "Run test_get_named_receptacles test\n"));
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_named_receptacles - "
+                        "Start test\n"));
 
   ::Components::ReceptacleDescriptions_var descriptions;
 
@@ -488,7 +496,7 @@ test_exceeded_limit_exception (::Components::Receptacles_ptr rec,
 int
 test_get_all_ports (::Components::CCMObject_ptr cmp)
 {
-  ACE_DEBUG ((LM_DEBUG, "Receptacle - test_get_all_ports - "
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_all_ports - "
                         "Start test\n"));
   int ret = 0;
   try
@@ -501,7 +509,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
       fds = cpd->facets ();
       if (fds.length () != 0)
         {
-          ACE_ERROR ((LM_ERROR, "Receptacle - test_get_all_ports - "
+          ACE_ERROR ((LM_ERROR, "Receptacle test_get_all_ports - "
                                 "Error: Did not receive the expected "
                                 "number of facets: "
                                 "expected <0> - received <%d>\n",
@@ -518,7 +526,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
       rds = cpd->receptacles ();
       if (rds.length () != 3)
         {
-          ACE_ERROR ((LM_ERROR, "Receptacle - test_get_all_ports - "
+          ACE_ERROR ((LM_ERROR, "Receptacle test_get_all_ports - "
                                 "Error: Did not receive the expected "
                                 "number of receptacles: "
                                 "expected <3> - received <%d>\n",
@@ -603,7 +611,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
     }
   if (ret == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "Receptacle - test_get_all_ports - "
+      ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_all_ports - "
                             "Test passed\n"));
     }
   return ret;
@@ -614,7 +622,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
 int
 test_get_ccm_home (::Components::CCMObject_ptr cmp)
 {
-  ACE_DEBUG ((LM_DEBUG, "Receptacle - test_get_ccm_home - "
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_ccm_home - "
                         "Start test\n"));
   try
     {
@@ -639,7 +647,7 @@ test_get_ccm_home (::Components::CCMObject_ptr cmp)
                             "Error: Unexpected exception caught.\n"));
       return 1;
     }
-  ACE_DEBUG ((LM_DEBUG, "Receptacle - test_get_ccm_home - "
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_ccm_home - "
                         "Test passed\n"));
   return 0;
 }
@@ -649,7 +657,7 @@ test_get_ccm_home (::Components::CCMObject_ptr cmp)
 int
 test_get_all_consumers (::Components::CCMObject_ptr cmp)
 {
-  ACE_DEBUG ((LM_DEBUG, "Receptacle - test_get_all_consumers - "
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_all_consumers - "
                         "Start test\n"));
   try
     {
@@ -657,12 +665,13 @@ test_get_all_consumers (::Components::CCMObject_ptr cmp)
       cds = cmp->get_all_consumers ();
       if (cds->length () != 1)
         {
-          ACE_ERROR ((LM_ERROR, "Receptacle test_get_all_consumers - "
-                                "Error: get_all_consumers returned an "
-                                "unexpected number of consumers: "
-                                "expected <1> - received <%d>\n",
-                                cds->length ()));
-          return 1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "Receptacle test_get_all_consumers - "
+                            "Error: get_all_consumers returned an "
+                            "unexpected number of consumers: "
+                            "expected <1> - received <%d>\n",
+                            cds->length ()),
+                            1);
         }
     }
   catch (const ::CORBA::Exception& ex)
@@ -676,7 +685,7 @@ test_get_all_consumers (::Components::CCMObject_ptr cmp)
                             "Error: Unexpected exception caught.\n"));
       return 1;
     }
-  ACE_DEBUG ((LM_DEBUG, "Receptacle - test_get_all_consumers - "
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_all_consumers - "
                         "Test passed\n"));
   return 0;
 }
@@ -686,7 +695,7 @@ test_get_all_consumers (::Components::CCMObject_ptr cmp)
 int
 test_get_named_consumers (::Components::CCMObject_ptr cmp)
 {
-  ACE_DEBUG ((LM_DEBUG, "Receptacle - test_get_named_consumers - "
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_named_consumers - "
                         "Start test\n"));
 
   ::Components::ConsumerDescriptions_var cds;
@@ -698,12 +707,13 @@ test_get_named_consumers (::Components::CCMObject_ptr cmp)
       cds = cmp->get_named_consumers (one_name);
       if (cds->length () != 1)
         {
-          ACE_ERROR ((LM_ERROR, "Receptacle test_get_named_consumers - "
-                                "Error: get_named_consumers returned an "
-                                "unexpected number of consumers: "
-                                "expected <1> - received <%d>\n",
-                                cds->length ()));
-          return 1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "Receptacle test_get_named_consumers - "
+                            "Error: get_named_consumers returned an "
+                            "unexpected number of consumers: "
+                            "expected <1> - received <%d>\n",
+                            cds->length ()),
+                            1);
         }
     }
   catch (const ::Components::InvalidName &)
@@ -724,7 +734,7 @@ test_get_named_consumers (::Components::CCMObject_ptr cmp)
                             "Error: Unexpected exception caught.\n"));
       return 1;
     }
-  ACE_DEBUG ((LM_DEBUG, "Receptacle - test_get_named_consumers - "
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_named_consumers - "
                         "Test passed\n"));
 
    // Test InvalidName exception
@@ -735,9 +745,10 @@ test_get_named_consumers (::Components::CCMObject_ptr cmp)
       invalid_names[0] = ::CORBA::string_dup ("consume_do_something");
       invalid_names[1] = ::CORBA::string_dup ("consume_do_something_invalid_name");
       cds = cmp->get_named_consumers (invalid_names);
-      ACE_ERROR ((LM_ERROR, "Receptacle test_get_named_consumers - "
-                            "Error: No InvalidName exception received\n"));
-      return 1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        "Receptacle test_get_named_consumers - "
+                        "Error: No InvalidName exception received\n"),
+                        1);
     }
   catch (const ::Components::InvalidName &)
     {
