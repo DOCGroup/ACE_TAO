@@ -1,3 +1,13 @@
+Thu Sep 23 12:32:05 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Service_Gestalt.cpp:
+          Fixed memory leak. Previously it could happen that svc_queue_ was
+          allocated during processing of arguments but was not freed if
+          application didn't call process_commandline_directives().
+
+        * tests/Network_Adapters_Test.cpp:
+          Removed non-ASCII character from the comments.
+
 Wed Sep 22 18:42:25 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/msvc_mpc_auto_compile.pl:
