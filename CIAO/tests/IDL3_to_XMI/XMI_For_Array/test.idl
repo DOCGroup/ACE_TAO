@@ -4,16 +4,17 @@
 #define TEST_IDL
 
 module TestXMIArray {
-  typedef char CharArray [4][5];
+  typedef char ca_4_5 [4][5];
+  typedef char ca_3_2 [3][2];
 
   struct A
   {
-    CharArray bar;
+    ca_4_5 bar;
   };
 
   struct B
   {
-    char bar[3][2];
+    ca_3_2 bar;
   };
 };
 

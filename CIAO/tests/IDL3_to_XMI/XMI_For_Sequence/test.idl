@@ -8,10 +8,10 @@ module TestXMISequence {
   typedef sequence<char, 10> SeqChar10;
 
   struct A {
-    sequence<char> field;
+    SeqChar field;
   };
   struct A10 {
-    sequence<char, 10> field;
+    SeqChar10 field;
   };
 
   struct B {
