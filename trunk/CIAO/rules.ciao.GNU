@@ -49,18 +49,4 @@ CIAO_MINOR_VERSION := $(shell awk '/CIAO_MINOR_VERSION/ { print $$3}' ${CIAO_ROO
 CIAO_BETA_VERSION := $(shell awk '/CIAO_BETA_VERSION/ { print $$3}' ${CIAO_ROOT}/ciao/Version.h)
 endif
 
-# Version number of the libraries
-#
-ifeq ($(versioned_so),1)
-  # Only set SOVERSION for CIAO if versioning is turned on and SOVERION is
-  # blank, which gives users to ability to override it.
-  ifeq ($(SOVERSION),)
-    SOVERSION = .$(CIAO_MAJOR_VERSION).$(CIAO_MINOR_VERSION).$(CIAO_BETA_VERSION)
-  endif # SOVERSION
-
-  # Name that will be written into the dynamic library
-  #
-  ifneq ($(SONAME),)
-    SONAME = $(SHLIB).$(CIAO_MAJOR_VERSION).$(CIAO_MINOR_VERSION).$(CIAO_BETA_VERSION)
-  endif # SONAME
-endif # versioned_so
+GNUACE_PROJECT_VERSION ?= $(CIAO_MAJOR_VERSION).$(CIAO_MINOR_VERSION).$(CIAO_BETA_VERSION)
