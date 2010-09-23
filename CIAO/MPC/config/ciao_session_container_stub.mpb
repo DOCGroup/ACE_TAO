@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : ccm_componentserver_stub, ciao_port_activator_stub, ciao_servant_activator, ciao_container_base {
+  libs += CIAO_Session_Container_stub
+  after += CIAO_Session_Container_stub
+}
