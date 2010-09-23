@@ -1,3 +1,10 @@
+Thu Sep 23 16:16:12 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * rules.tao.GNU:
+
+          Updated setting the shared library version numbers to match the
+          recent change to gnu.mpd and rules.lib.GNU.
+
 Thu Sep 23 13:16:03 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
