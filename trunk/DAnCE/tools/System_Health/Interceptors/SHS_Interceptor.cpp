@@ -1,10 +1,10 @@
 // $Id$
 
 #include "SHS_Interceptor.h"
-#include "Deployment/Deployment_StartErrorC.h"
-#include "DAnCE/DAnCE_PropertiesC.h"
-#include "DAnCE/DAnCE_Utility.h"
-#include "Logger/Log_Macros.h"
+#include "dance/Deployment/Deployment_StartErrorC.h"
+#include "dance/DAnCE_PropertiesC.h"
+#include "dance/DAnCE_Utility.h"
+#include "dance/Logger/Log_Macros.h"
 #include "System_Health/SHS_DataModelC.h"
 #include "System_Health/Interceptors/SHS_CORBA_Transport.h"
 

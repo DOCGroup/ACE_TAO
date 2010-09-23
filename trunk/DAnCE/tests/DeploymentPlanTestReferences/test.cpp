@@ -2,7 +2,7 @@
 #include "ace/Auto_Ptr.h"
 #include "Config_Handlers/DnC_Dump.h"
 #include "Config_Handlers/XML_File_Intf.h"
-#include "Logger/Log_Macros.h"
+#include "dance/Logger/Log_Macros.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {

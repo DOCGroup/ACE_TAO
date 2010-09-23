@@ -2,8 +2,8 @@
 
 #include "Req_Handler.h"
 #include "Property_Handler.h"
-#include "Deployment/Deployment_BaseC.h"
-#include "Logger/Log_Macros.h"
+#include "dance/Deployment/Deployment_BaseC.h"
+#include "dance/Logger/Log_Macros.h"
 namespace DAnCE
 {
   namespace Config_Handlers

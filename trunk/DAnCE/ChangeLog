@@ -1,3 +1,104 @@
+Thu Sep 23 20:41:48 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance:
+
+          Moved most DAnCE code under this directory to match ACE+TAO layout. 
+        
+        * rules.dance.GNU:
+
+          Updated case of pat to version file. 
+        
+        * tests/DeploymentPlanDump/test.cpp:
+        * tests/DeploymentPlanTestReferences/test.cpp:
+        * tests/DeploymentTest1/test.cpp:
+        * tests/NameServiceTest/clt_main.cpp:
+        * tests/NameServiceTest/srv_main.cpp:
+        * tests/NodeApplicationManager-NodeApplication/test.cpp:
+        * tests/NodeManager-NodeApplicationManager/test.cpp:
+        * tests/Parsing/domain.cpp:
+        * tests/Parsing/test.cpp:
+        * tools/Artifact_Installation/Artifact_Installation_Handler_Svc.cpp:
+        * tools/Artifact_Installation/Artifact_Installation_Impl.h:
+        * tools/Artifact_Installation/Artifact_Installation_Impl.cpp:
+        * tools/Artifact_Installation/Artifact_Installation_exec.cpp:
+        * tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.idl:
+        * tools/Artifact_Installation/File_Installation_Handler.cpp:
+        * tools/Artifact_Installation/Http_Installation_Handler.cpp:
+        * tools/Artifact_Installation/Installation_Repository_Manager.cpp:
+        * tools/Artifact_Installation/Installation_Repository_Manager_Impl.cpp:
+        * tools/Config_Handlers/ADD_Handler.cpp:
+        * tools/Config_Handlers/Any_Handler.cpp:
+        * tools/Config_Handlers/CCD_Handler.cpp:
+        * tools/Config_Handlers/CEPE_Handler.cpp:
+        * tools/Config_Handlers/CPD_Handler.cpp:
+        * tools/Config_Handlers/CRDD_Handler.cpp:
+        * tools/Config_Handlers/ComponentPropertyDescription_Handler.cpp:
+        * tools/Config_Handlers/DD_Handler.cpp:
+        * tools/Config_Handlers/DP_Handler.cpp:
+        * tools/Config_Handlers/DP_PCD_Handler.cpp:
+        * tools/Config_Handlers/DataType_Handler.h:
+        * tools/Config_Handlers/DataType_Handler.cpp:
+        * tools/Config_Handlers/DnC_Dump.h:
+        * tools/Config_Handlers/DnC_Dump.cpp:
+        * tools/Config_Handlers/DnC_Dump_T.cpp:
+        * tools/Config_Handlers/Dump_Obj.h:
+        * tools/Config_Handlers/Dump_Obj.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynAlias_Handler.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynStruct_Handler.cpp:
+        * tools/Config_Handlers/ERE_Handler.cpp:
+        * tools/Config_Handlers/ESD_Handler.cpp:
+        * tools/Config_Handlers/IDD_Handler.cpp:
+        * tools/Config_Handlers/IDREF_Base.cpp:
+        * tools/Config_Handlers/ID_Handler.cpp:
+        * tools/Config_Handlers/IRDD_Handler.cpp:
+        * tools/Config_Handlers/MDD_Handler.cpp:
+        * tools/Config_Handlers/PCD_Handler.cpp:
+        * tools/Config_Handlers/PL_Handler.cpp:
+        * tools/Config_Handlers/PSPE_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.h:
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.h:
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/IAD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/NIA_Handler.h:
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/PC_Intf.cpp:
+        * tools/Config_Handlers/Package_Handlers/SID_Handler.cpp:
+        * tools/Config_Handlers/Property_Handler.cpp:
+        * tools/Config_Handlers/RDD_Handler.cpp:
+        * tools/Config_Handlers/Req_Handler.cpp:
+        * tools/Config_Handlers/STD_CID_Handler.h:
+        * tools/Config_Handlers/STD_CID_Handler.cpp:
+        * tools/Config_Handlers/STD_CPD_Handler.cpp:
+        * tools/Config_Handlers/STD_PC_Intf.cpp:
+        * tools/Config_Handlers/SatisfierProperty_Handler.cpp:
+        * tools/Config_Handlers/XML_File_Intf.cpp:
+        * tools/Convert_Plan/Convert_Plan.cpp:
+        * tools/Convert_Plan/Convert_Plan_Impl.h:
+        * tools/Convert_Plan/Convert_Plan_Impl.cpp:
+        * tools/Split_Plan/Locality_Splitter.h:
+        * tools/Split_Plan/Locality_Splitter.cpp:
+        * tools/Split_Plan/Node_Splitter.h:
+        * tools/Split_Plan/Node_Splitter.cpp:
+        * tools/Split_Plan/Split_Plan.h:
+        * tools/Split_Plan/Split_Plan.cpp:
+        * tools/Split_Plan/Split_Plan_exec.cpp:
+        * tools/Split_Plan/Sub_UUID_Generator.h:
+        * tools/System_Health/Daemon/SHS_Daemon.cpp:
+        * tools/System_Health/Daemon/SHS_Daemon_Impl.cpp:
+        * tools/System_Health/Interceptors/SHS_CORBA_Transport.cpp:
+        * tools/System_Health/Interceptors/SHS_Interceptor.h:
+        * tools/System_Health/Interceptors/SHS_Interceptor.cpp:
+        * tools/System_Health/Interceptors/SHS_Transport.h:
+        * tools/System_Health/SHS_DataModel.idl:
+
+          Updates from the re-arrangement.
+
 Thu Sep 23 17:24:01 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/dance_config_handlers_base.mpb:
@@ -5,7 +106,7 @@ Thu Sep 23 17:24:01 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/Config_Handlers.mpc:
 
           Moved Config handlers to tools subdirectory.
-        
+
         * Config_Handlers:
 
           Removed.

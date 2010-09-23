@@ -4,10 +4,10 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 #include "tao/ORB.h"
-#include "Deployment/Deployment_DeploymentPlanC.h"
-#include "Deployment/Deployment_PlanErrorC.h"
-#include "Logger/Log_Macros.h"
-#include "Logger/Logger_Service.h"
+#include "dance/Deployment/Deployment_DeploymentPlanC.h"
+#include "dance/Deployment/Deployment_PlanErrorC.h"
+#include "dance/Logger/Log_Macros.h"
+#include "dance/Logger/Logger_Service.h"
 #include "Convert_Plan_Impl.h"
 
 

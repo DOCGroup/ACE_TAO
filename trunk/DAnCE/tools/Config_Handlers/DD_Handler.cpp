@@ -5,8 +5,8 @@
 #include "DD_Handler.h"
 #include "Any_Handler.h"
 #include "Deployment.hpp"
-#include "Deployment/Deployment_TargetDataC.h"
-#include "Logger/Log_Macros.h"
+#include "dance/Deployment/Deployment_TargetDataC.h"
+#include "dance/Logger/Log_Macros.h"
 
 using namespace std;
 

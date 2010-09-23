@@ -2,7 +2,7 @@
 
 #include "Http_Installation_Handler.h"
 #include "Installation_Repository_Manager.h"
-#include "Logger/Log_Macros.h"
+#include "dance/Logger/Log_Macros.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/INet/HTTP_URL.h"
 #include "ace/INet/HTTP_ClientRequestHandler.h"

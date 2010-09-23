@@ -32,13 +32,13 @@ endif
 # with different minor or major or beta versions to fail.
 #
 ifeq (cmd,$(findstring cmd,$(SHELL)))
-DANCE_MAJOR_VERSION := $(shell awk "/DANCE_MAJOR_VERSION/ { print $$3}" ${DANCE_ROOT}/DAnCE/Version.h)
-DANCE_MINOR_VERSION := $(shell awk "/DANCE_MINOR_VERSION/ { print $$3}" ${DANCE_ROOT}/DAnCE/Version.h)
-DANCE_BETA_VERSION := $(shell awk "/DANCE_BETA_VERSION/ { print $$3}" ${DANCE_ROOT}/DAnCE/Version.h)
+DANCE_MAJOR_VERSION := $(shell awk "/DANCE_MAJOR_VERSION/ { print $$3}" ${DANCE_ROOT}/dance/Version.h)
+DANCE_MINOR_VERSION := $(shell awk "/DANCE_MINOR_VERSION/ { print $$3}" ${DANCE_ROOT}/dance/Version.h)
+DANCE_BETA_VERSION := $(shell awk "/DANCE_BETA_VERSION/ { print $$3}" ${DANCE_ROOT}/dance/Version.h)
 else
-DANCE_MAJOR_VERSION := $(shell awk '/DANCE_MAJOR_VERSION/ { print $$3}' ${DANCE_ROOT}/DAnCE/Version.h)
-DANCE_MINOR_VERSION := $(shell awk '/DANCE_MINOR_VERSION/ { print $$3}' ${DANCE_ROOT}/DAnCE/Version.h)
-DANCE_BETA_VERSION := $(shell awk '/DANCE_BETA_VERSION/ { print $$3}' ${DANCE_ROOT}/DAnCE/Version.h)
+DANCE_MAJOR_VERSION := $(shell awk '/DANCE_MAJOR_VERSION/ { print $$3}' ${DANCE_ROOT}/dance/Version.h)
+DANCE_MINOR_VERSION := $(shell awk '/DANCE_MINOR_VERSION/ { print $$3}' ${DANCE_ROOT}/dance/Version.h)
+DANCE_BETA_VERSION := $(shell awk '/DANCE_BETA_VERSION/ { print $$3}' ${DANCE_ROOT}/dance/Version.h)
 endif
 
 GNUACE_PROJECT_VERSION ?= $(DANCE_MAJOR_VERSION).$(DANCE_MINOR_VERSION).$(DANCE_BETA_VERSION)

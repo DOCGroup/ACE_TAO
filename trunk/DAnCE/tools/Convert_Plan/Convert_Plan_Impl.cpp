@@ -3,10 +3,10 @@
 #include "Convert_Plan_Impl.h"
 #include "ace/OS_NS_stdio.h"
 #include "tao/CDR.h"
-#include "Deployment/Deployment_PlanErrorC.h"
+#include "dance/Deployment/Deployment_PlanErrorC.h"
 #include "Config_Handlers/XML_File_Intf.h"
 #include "Config_Handlers/Common.h"
-#include "Logger/Log_Macros.h"
+#include "dance/Logger/Log_Macros.h"
 
 namespace DAnCE
 {

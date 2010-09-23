@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Installation_Repository_Manager_Impl.h"
-#include "Logger/Log_Macros.h"
+#include "dance/Logger/Log_Macros.h"
 #include "ace/Service_Config.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/Dirent.h"

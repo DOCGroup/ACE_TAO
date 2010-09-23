@@ -1,7 +1,7 @@
 // $Id$
 #include "Dump_Obj.h"
 #include "ace/Log_Msg.h"
-#include "Logger/Log_Macros.h"
+#include "dance/Logger/Log_Macros.h"
 
 namespace Deployment
 {
