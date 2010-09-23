@@ -20,7 +20,7 @@ ifeq ($(versioned_so),1)
   # Version number of the libraries
   #
   ifeq ($(SOVERSION),)
-    SOVERSION = .$(ACE_MAJOR_VERSION).$(ACE_MINOR_VERSION).$(ACE_BETA_VERSION)
+    SOVERSION = .$(GNUACE_PROJECT_VERSION)
   endif # SOVERSION
 
   # Name that will be written into the dynamic library

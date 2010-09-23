@@ -177,13 +177,7 @@ VSHDIR = <%targetoutdir%>.shobj/
 
 <%endif%>
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-<%if(version)%>
 
-ifeq ($(versioned_so),1)
-  SOVERSION = .<%version%>
-endif # versioned_so
-
-<%endif%>
 <%marker(extension)%>
 <%if(ciao)%>
 include $(CIAO_ROOT)/rules.ciao.GNU
@@ -193,6 +187,12 @@ include $(DANCE_ROOT)/rules.dance.GNU
 <%endif%>
 <%if(tao)%>
 include $(TAO_ROOT)/rules.tao.GNU
+<%endif%>
+
+<%if(version)%>
+GNUACE_PROJECT_VERSION = <%version%>
+<%else%>
+GNUACE_PROJECT_VERSION ?= $(ACE_VERSION)
 <%endif%>
 
 <%if(resource_files)%>
@@ -800,6 +800,13 @@ else
 	$(INSTALLER) -i -s $(subst $(SPACE),$(COMMA),$(INST_TAGS)) \
 	  $(INST_LOCATIONS) $(if $(ARCH),-d $(ARCH)) $(PRJINST_OPTIONS) \
 	  $(INSTALL_PREFIX)
+<%foreach(custom_types)%>
+<%if(compares(custom_type, pkgconfig_files))%>
+<%if(custom_type->input_files)%>
+	$(ACE_ROOT)/bin/ace_install_pkgconfig.pl <%custom_type->input_files%> --prefix $(INSTALL_PREFIX) --libdir $(INSTALL_LIB) --libs "$(LIBS)" --version $(GNUACE_PROJECT_VERSION)<%foreach(pkgconfig_variables)%> --custom "<%pkgconfig_variable%>"<%endfor%>
+<%endif%>
+<%endif%>
+<%endfor%>
 <%marker(postinstall)%>
 endif
 endif
