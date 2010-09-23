@@ -1,3 +1,8 @@
+Thu Sep 23 13:57:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/tests/AMIDDS/descriptors/run_test.pl:
+          Adapted to the new naming convention.
+
 Thu Sep 23 12:28:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Servants/Servant_Impl_Base.h:
