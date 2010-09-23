@@ -539,12 +539,6 @@ test_get_named_emitters (::Components::CCMObject_ptr cmp)
                             1);
         }
     }
-  catch (const ::CORBA::NO_IMPLEMENT& )
-    {
-      ACE_DEBUG ((LM_DEBUG, "Navigation test_get_named_emitters - "
-                            "Not implemented yet\n"));
-      return 0;
-    }
   catch (const ::CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Navigation test_get_named_emitters");
