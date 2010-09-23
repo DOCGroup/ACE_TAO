@@ -10,6 +10,8 @@
 module flowProtocol
 {
   typedef CORBA::ULongSeq my_seq_ulong;
+  typedef char cmagic_nr[4];
+
   enum MsgType
   {
     // The MsgTypes Start and struct Start,StartReply and struct
@@ -34,7 +36,7 @@ module flowProtocol
 
   struct frameHeader
   {
-    char magic_number[4];
+    cmagic_nr magic_number;
     //    my_seq_char magic_number;
     // '=', 'S', 'F', 'P'
     octet flags;
@@ -48,7 +50,7 @@ module flowProtocol
   struct fragment
   {
     //    my_seq_char magic_number;
-    char magic_number[4];
+    cmagic_nr magic_number;
     // 'F', 'R', 'A', 'G'
     octet flags;
     // bit 1 = more fragments, %%bit 0 = byteorder
@@ -62,7 +64,7 @@ module flowProtocol
 
   struct Start
   {
-    char magic_number[4];
+    cmagic_nr magic_number;
     //    my_seq_char magic_number;
     // '=', 'S', 'T', 'A'
     octet major_version;
@@ -77,7 +79,7 @@ module flowProtocol
   struct StartReply
   {
     //    my_seq_char magic_number;
-    char magic_number[4];
+    cmagic_nr magic_number;
     // "=",'S','T','R'
     octet flags;
     // bit 0 = byte order, 1 = exception
@@ -114,7 +116,7 @@ module flowProtocol
   struct credit
   {
     //    my_seq_char magic_number;
-    char magic_number[4];
+    cmagic_nr magic_number;
     // "=",'C','R','E'
     unsigned long cred_num;
   };
