@@ -2,7 +2,7 @@
 // $Id$
 
 project :  utils, ciao_servant, \
-          ccm_componentserver_stub, ciao_port_activator_stub, ciao_servant_activator, ciao_container_base {
+          ccm_componentserver_stub, ciao_port_activator_stub, ciao_servant_activator_stub, ciao_session_container_stub {
   libs += CIAO_Session_Container
   after += CIAO_Session_Container
 }

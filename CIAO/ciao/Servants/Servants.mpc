@@ -30,7 +30,7 @@ project(CIAO_Port_Activator_stub) : install, portableserver, ciao_lib {
   }
 }
 
-project(CIAO_Servant_Impl) : install, ciao_servant_activator, ciao_port_activator_stub, ciao_container_base, ccm_svnt, ccm_session_stub, ciao_output {
+project(CIAO_Servant_Impl) : install, ciao_servant_activator_stub, ciao_port_activator_stub, ciao_container_base_stub, ccm_svnt, ccm_session_stub, ciao_output {
    dynamicflags += CIAO_SERVANT_IMPL_BUILD_DLL
    IDL_Files {
    }
