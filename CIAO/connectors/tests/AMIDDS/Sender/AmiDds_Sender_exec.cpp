@@ -26,7 +26,7 @@ namespace CIAO_AmiDds_Sender_Impl
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Sender (AMI4CCM)) :\treceived ASYNCHRONOUS answer ")
-		        		ACE_TEXT("from Receiver <%u>\n"), answer));
+                ACE_TEXT("from Receiver <%u>\n"), answer));
   }
 
   void
@@ -68,7 +68,7 @@ namespace CIAO_AmiDds_Sender_Impl
 
   // Supported operations and attributes.
   CORBA::Boolean
-	  Sender_exec_i::create_one(CORBA::Short nr)
+  Sender_exec_i::create_one(CORBA::Short nr)
   {
     CORBA::Boolean result = true;
     TestTopic i = this->topic_seq_one_[nr];
@@ -172,7 +172,6 @@ namespace CIAO_AmiDds_Sender_Impl
                         ACE_TEXT("Sender (AMI4CCM)) :\t")
                         ACE_TEXT("Invoke Asynchronous call nr %u\n"),(i + 1)));
             my_foo_ami_->sendc_hello (new MyFoo_callback_exec_i ());
-			
           }
       }
     return result;
@@ -186,8 +185,7 @@ namespace CIAO_AmiDds_Sender_Impl
     CORBA::Boolean result = true;
     ::AmiDds::MyFoo_var my_foo_ami_  =
     context_->get_connection_run_my_foo();
-   
-	  for (CORBA::Short i = 0; i < 2; ++i)
+    for (CORBA::Short i = 0; i < 2; ++i)
       {
         if (CORBA::is_nil (my_foo_ami_))
           {
@@ -223,8 +221,8 @@ namespace CIAO_AmiDds_Sender_Impl
           this->test_ok_ = this->create_one(0);
           if(this->test_ok_.value())
             {
-		          this->test_ok_ = this->update_one(0);
-		        }
+              this->test_ok_ = this->update_one(0);
+            }
           if(this->test_ok_.value())
             {
               this->test_nr_ = SEND_ASYNCH;
@@ -235,7 +233,7 @@ namespace CIAO_AmiDds_Sender_Impl
             }
           break;
         case SEND_ASYNCH:
-	      this->test_ok_ = this->send_asynch_call();
+          this->test_ok_ = this->send_asynch_call();
           if(this->test_ok_.value())
             {
               this->test_nr_ = UPDATE_TWO;
@@ -249,8 +247,8 @@ namespace CIAO_AmiDds_Sender_Impl
           this->test_ok_ = this->create_one(1);
           if(this->test_ok_.value())
             {
-		          this->test_ok_ = this->update_one(1);
-		        }
+              this->test_ok_ = this->update_one(1);
+            }
           if(this->test_ok_.value())
             {
               this->test_nr_ = SEND_SYNCH;
@@ -259,9 +257,9 @@ namespace CIAO_AmiDds_Sender_Impl
             {
               this->test_nr_ = END_TEST;
             }
-          break; 
-        case SEND_SYNCH:
-	  this->test_ok_ = this->send_synch_call();
+          break;
+	case SEND_SYNCH:
+          this->test_ok_ = this->send_synch_call();
           this->test_nr_ = END_TEST;
           break;
         default:

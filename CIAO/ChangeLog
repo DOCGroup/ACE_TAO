@@ -1,3 +1,15 @@
+Thu Sep 23 07:55:57 UTC 2010  Marijke Hengstmengelt  <mhengstmengel@remedy.nl>
+
+        * connectors/tests/AMIDDS/Sender/AmiDds_Sender.mpc:
+        * connectors/tests/AMIDDS/Sender/AmiDds_Sender_exec.cpp:
+        * connectors/tests/AMIDDS/Sender/AmiDds_Sender_exec.h:
+        * connectors/tests/AMIDDS/descriptors/Plan.cdp:
+        * connectors/tests/AMIDDS/Receiver/AmiDds_Receiver_exec.h:
+        * connectors/tests/AMIDDS/Receiver/AmiDds_Receiver_exec.cpp:
+        * connectors/tests/AMIDDS/Connector/AmiDds_Connector.idl:
+        * connectors/tests/AMIDDS/Base/AmiDds_DDS.idl:
+        Fuzz errors.
+
 Thu Sep 23 07:55:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/IDL3_to_XMI/XMI_For_Array/test.idl:
