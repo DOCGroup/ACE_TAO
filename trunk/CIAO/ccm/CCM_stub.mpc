@@ -2,9 +2,9 @@
 
 project(CCM_stub_idl) : install, ciaolib_with_idl, valuetype {
   idlflags  += -Wb,stub_export_include=CCM_Stub_Export.h \
-               -Wb,stub_export_macro=CCM_Stub_Export \
+               -Wb,stub_export_macro=CCM_STUB_Export \
                -Wb,skel_export_include=CCM_Svnt_Export.h \
-               -Wb,skel_export_macro=CCM_Svnt_Export
+               -Wb,skel_export_macro=CCM_SVNT_Export
   custom_only = 1
   IDL_Files {
     idlflags += -SS -Sci -Gxhst -Gxhsk
