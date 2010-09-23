@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : ccm_svnt, ciao_container_base, portableserver {
+project : ccm_svnt, ciao_container_base_stub, portableserver {
   after += CIAO_Context_Impl
   libs  += CIAO_Context_Impl
 }
