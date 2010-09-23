@@ -57,7 +57,7 @@ $TI = $ti->CreateProcess ($TAO_IFR, "-ORBInitRef InterfaceRepository=file://$ti_
                                     "$idlfile");
 $NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 $NS = $ns->CreateProcess ($NameService, " -o $ns_nsiorfile");
-$EventService = "$ENV{TAO_ROOT}/orbsvcs/Event_Service/tao_cosevent";
+$EventService = "$ENV{TAO_ROOT}/orbsvcs/CosEvent_Service/tao_cosevent";
 $ES = $es->CreateProcess ($EventService, " -t -o $es_esiorfile ".
                                         "-ORBInitRef NameService=file://$es_nsiorfile ".
                                         "-ORBInitRef InterfaceRepository=file://$es_ifriorfile ");
