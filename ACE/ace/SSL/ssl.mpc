@@ -14,4 +14,10 @@ project(SSL) : acelib, ace_output, install, ace_openssl {
   pkgconfig_files {
     ACE_SSL.pc.in
   }
+
+  specific(gnuace) {
+    pkgconfig_variables += ACE_TLS_CPPFLAGS=$(PLATFORM_SSL_CPPFLAGS)
+    pkgconfig_variables += ACE_TLS_LDFLAGS=$(PLATFORM_SSL_LDFLAGS)
+    pkgconfig_variables += ACE_TLS_LIBS=$(PLATFORM_SSL_LIBS)
+  }
 }
