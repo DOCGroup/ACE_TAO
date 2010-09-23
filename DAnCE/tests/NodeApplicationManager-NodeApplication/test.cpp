@@ -1,7 +1,7 @@
 // $Id$
-#include "Deployment/Deployment_NodeManagerC.h"
-#include "Deployment/Deployment_NodeApplicationC.h"
-#include "Logger/Log_Macros.h"
+#include "dance/Deployment/Deployment_NodeManagerC.h"
+#include "dance/Deployment/Deployment_NodeApplicationC.h"
+#include "dance/Logger/Log_Macros.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {

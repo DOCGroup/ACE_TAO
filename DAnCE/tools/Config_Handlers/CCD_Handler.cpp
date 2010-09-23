@@ -2,13 +2,13 @@
 
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 
-#include "Logger/Log_Macros.h"
+#include "dance/Logger/Log_Macros.h"
 #include "CCD_Handler.h"
 #include "ccd.hpp"
 #include "Property_Handler.h"
 #include "CPD_Handler.h"
 #include "ComponentPropertyDescription_Handler.h"
-#include "Deployment/Deployment_DataC.h"
+#include "dance/Deployment/Deployment_DataC.h"
 
 namespace DAnCE
 {

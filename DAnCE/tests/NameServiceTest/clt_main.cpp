@@ -1,7 +1,7 @@
 // $Id$
 #include "ace/String_Base.h"
 #include <orbsvcs/CosNamingC.h>
-#include "Logger/Log_Macros.h"
+#include "dance/Logger/Log_Macros.h"
 #include "RegistrationPath.h"
 #include "DummyC.h"
 

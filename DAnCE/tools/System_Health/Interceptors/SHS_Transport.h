@@ -11,7 +11,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Deployment/Deployment_DeploymentPlanC.h"
+#include "dance/Deployment/Deployment_DeploymentPlanC.h"
 #include "System_Health/SHS_DataModelC.h"
 
 namespace DAnCE

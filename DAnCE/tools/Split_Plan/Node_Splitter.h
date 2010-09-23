@@ -10,7 +10,7 @@
 #define DANCE_NODE_SPLITTER_H
 
 #include "ace/SStringfwd.h"
-#include "Deployment/Deployment_DeploymentPlanC.h"
+#include "dance/Deployment/Deployment_DeploymentPlanC.h"
 #include "Split_Plan/DAnCE_Split_Plan_export.h"
 
 namespace DAnCE

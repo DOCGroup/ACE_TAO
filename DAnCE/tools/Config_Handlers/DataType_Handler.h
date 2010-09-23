@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Deployment/DeploymentC.h"
+#include "dance/Deployment/DeploymentC.h"
 #include "Basic_Deployment_Data.hpp"
 
 #include "Config_Handlers_Common_Export.h"

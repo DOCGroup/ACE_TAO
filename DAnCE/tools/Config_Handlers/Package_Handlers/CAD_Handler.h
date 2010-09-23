@@ -11,7 +11,7 @@
 #include /**/ "ace/pre.h"
 
 #include "XML_Typedefs.h"
-#include "Deployment/DeploymentC.h"
+#include "dance/Deployment/DeploymentC.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

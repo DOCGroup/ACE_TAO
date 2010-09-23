@@ -8,7 +8,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Split_Plan.h"
-#include "Logger/Log_Macros.h"
+#include "dance/Logger/Log_Macros.h"
 
 namespace DAnCE
 {

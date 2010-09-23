@@ -15,7 +15,7 @@
 
 #include "IDREF_Base.h"
 #include "Config_Handlers_Export.h"
-#include "Deployment/DeploymentC.h"
+#include "dance/Deployment/DeploymentC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

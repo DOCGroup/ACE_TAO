@@ -2,8 +2,8 @@
 
 #include "ComponentPropertyDescription_Handler.h"
 #include "DataType_Handler.h"
-#include "Deployment/Deployment_DataC.h"
-#include "Logger/Log_Macros.h"
+#include "dance/Deployment/Deployment_DataC.h"
+#include "dance/Logger/Log_Macros.h"
 namespace DAnCE
 {
   namespace Config_Handlers
