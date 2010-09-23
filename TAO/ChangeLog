@@ -1,3 +1,9 @@
+Thu Sep 23 09:34:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ZIOP/ZIOP.h:
+        * tao/ZIOP/ZIOP.cpp:
+          Fixed msvc conversion warnings
+
 Thu Sep 23 08:57:10 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * orbsvcs/DevGuideExamples/EventServices/OMG_Basic/run_test.pl:
