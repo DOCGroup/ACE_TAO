@@ -1,3 +1,10 @@
+Thu Sep 23 16:17:19 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * rules.ciao.GNU:
+
+          Updated setting the shared library version numbers to match the
+          recent change to gnu.mpd and rules.lib.GNU.
+
 Thu Sep 23 13:57:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/tests/AMIDDS/descriptors/run_test.pl:
