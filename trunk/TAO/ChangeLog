@@ -1,3 +1,8 @@
+Thu Sep 23 07:28:48 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * orbsvcs/orbsvcs/sfp.idl:
+          Removed anonymous types.
+
 Thu Sep 23 06:07:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
