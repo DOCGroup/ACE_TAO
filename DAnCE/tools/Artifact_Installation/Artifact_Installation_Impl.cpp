@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Artifact_Installation_Impl.h"
-#include "Logger/Log_Macros.h"
+#include "dance/Logger/Log_Macros.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Artifact_Installation_Impl.inl"

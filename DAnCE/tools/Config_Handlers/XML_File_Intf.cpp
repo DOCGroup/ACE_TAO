@@ -7,9 +7,9 @@
 #include "DD_Handler.h"
 #include "Common.h"
 
-#include "Deployment/Deployment_DataC.h"
-#include "Deployment/Deployment_TargetDataC.h"
-#include "Logger/Log_Macros.h"
+#include "dance/Deployment/Deployment_DataC.h"
+#include "dance/Deployment/Deployment_TargetDataC.h"
+#include "dance/Logger/Log_Macros.h"
 
 namespace DAnCE
 {

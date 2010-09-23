@@ -3,10 +3,10 @@
 #include "CRDD_Handler.h"
 #include "Any_Handler.h"
 #include "Basic_Deployment_Data.hpp"
-#include "Deployment/Deployment_DataC.h"
+#include "dance/Deployment/Deployment_DataC.h"
 #include "Property_Handler.h"
 
-#include "Logger/Log_Macros.h"
+#include "dance/Logger/Log_Macros.h"
 
 namespace DAnCE
 {

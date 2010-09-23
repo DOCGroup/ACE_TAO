@@ -3,7 +3,7 @@
 #ifndef DANCE_ARTIFACT_INSTALLATION_HANDLER_IDL
 #define DANCE_ARTIFACT_INSTALLATION_HANDLER_IDL
 
-#include "Deployment/Deployment_PlanError.idl"
+#include "dance/Deployment/Deployment_PlanError.idl"
 
 module DAnCE
 {

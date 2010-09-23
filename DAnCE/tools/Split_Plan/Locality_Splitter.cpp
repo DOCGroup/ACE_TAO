@@ -1,9 +1,9 @@
 // $Id$
 
 #include "Locality_Splitter.h"
-#include "Logger/Log_Macros.h"
-#include "DAnCE/DAnCE_PropertiesC.h"
-#include "DAnCE/DAnCE_Utility.h"
+#include "dance/Logger/Log_Macros.h"
+#include "dance/DAnCE_PropertiesC.h"
+#include "dance/DAnCE_Utility.h"
 #include "ace/UUID.h"
 #include <algorithm>
 

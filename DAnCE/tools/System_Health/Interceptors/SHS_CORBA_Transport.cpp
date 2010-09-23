@@ -2,9 +2,9 @@
 
 #include "SHS_CORBA_Transport.h"
 #include "orbsvcs/CosNamingC.h"
-#include "DAnCE/DAnCE_PropertiesC.h"
-#include "Logger/Log_Macros.h"
-#include "LocalityManager/Scheduler/Plugin_Manager.h"
+#include "dance/DAnCE_PropertiesC.h"
+#include "dance/Logger/Log_Macros.h"
+#include "dance/LocalityManager/Scheduler/Plugin_Manager.h"
 
 namespace DAnCE
 {

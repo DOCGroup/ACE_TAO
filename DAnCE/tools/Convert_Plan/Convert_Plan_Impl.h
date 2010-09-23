@@ -10,7 +10,7 @@
 #define DANCE_CONVERT_PLAN_H
 
 #include "Convert_Plan/DAnCE_Convert_Plan_export.h"
-#include "Deployment/Deployment_DeploymentPlanC.h"
+#include "dance/Deployment/Deployment_DeploymentPlanC.h"
 
 namespace DAnCE
 {

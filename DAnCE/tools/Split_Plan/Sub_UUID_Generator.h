@@ -9,7 +9,7 @@
 #ifndef DANCE_SUB_UUID_GENERATOR_H
 #define DANCE_SUB_UUID_GENERATOR_H
 
-#include "Deployment/Deployment_DeploymentPlanC.h"
+#include "dance/Deployment/Deployment_DeploymentPlanC.h"
 #include "Split_Plan/DAnCE_Split_Plan_export.h"
 
 namespace DAnCE

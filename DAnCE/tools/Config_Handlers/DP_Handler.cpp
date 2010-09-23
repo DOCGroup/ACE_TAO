@@ -2,7 +2,7 @@
 
 #include "DP_Handler.h"
 #include "ace/UUID.h"
-#include "Deployment/Deployment_DataC.h"
+#include "dance/Deployment/Deployment_DataC.h"
 
 #include "CCD_Handler.h"
 #include "ADD_Handler.h"
@@ -220,7 +220,7 @@ namespace DAnCE
 
       // We are assuming there is a realizes for the moment
       // @@ We may want to change this at a later date by creating a sequence of
-      // @@ ComponentInterfaceDescriptions in the DeploymentPlan in ../Deployment/Deployment_Data.idl
+      // @@ ComponentInterfaceDescriptions in the DeploymentPlan in ../dance/Deployment/Deployment_Data.idl
       // @@ so we can check for length
       this->xsc_dp_->realizes(CCD_Handler::component_interface_descr(plan.realizes));
       if (!this->xsc_dp_->realizes_p())

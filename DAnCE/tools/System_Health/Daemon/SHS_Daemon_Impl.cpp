@@ -6,7 +6,7 @@
 
 #include "SHS_Daemon_Impl.h"
 
-#include "Logger/Log_Macros.h"
+#include "dance/Logger/Log_Macros.h"
 
 #include <sstream>
 

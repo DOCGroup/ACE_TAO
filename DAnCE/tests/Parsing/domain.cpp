@@ -1,9 +1,9 @@
 // $Id$
 
 #include "ace/Auto_Ptr.h"
-#include "Deployment/Deployment_TargetDataC.h"
-#include "Logger/Log_Macros.h"
-#include "Logger/Logger_Service.h"
+#include "dance/Deployment/Deployment_TargetDataC.h"
+#include "dance/Logger/Log_Macros.h"
+#include "dance/Logger/Logger_Service.h"
 #include "Config_Handlers/DnC_Dump.h"
 #include "Config_Handlers/XML_File_Intf.h"
 #include "Config_Handlers/Common.h"
