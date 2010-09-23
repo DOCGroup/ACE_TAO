@@ -1,3 +1,8 @@
+Thu Sep 23 16:39:04 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Navigation/client.cpp:
+          Fuzz
+
 Thu Sep 23 16:17:19 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * rules.ciao.GNU:
