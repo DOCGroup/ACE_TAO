@@ -1,3 +1,15 @@
+Thu Sep 23 17:24:01 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/dance_config_handlers_base.mpb:
+        * tools/Config_Handlers:
+        * tools/Config_Handlers/Config_Handlers.mpc:
+
+          Moved Config handlers to tools subdirectory.
+        
+        * Config_Handlers:
+
+          Removed.
+
 Thu Sep 23 16:17:03 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * rules.dance.GNU:
