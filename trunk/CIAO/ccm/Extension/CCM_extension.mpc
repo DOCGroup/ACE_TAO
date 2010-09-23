@@ -42,7 +42,8 @@ project(CCM_extension_stub) : install, ciaolib_with_idl, ciao_output, ccm_stub {
   // This is necessary for MPC to pull in rules.ciao.GNU
   includes += $(CIAO_ROOT)
   dynamicflags += CCM_EXTENSION_STUB_BUILD_DLL
-  after += CCM_extension_stub_idl
+  after += CCM_extension_stub_idl CCM_lem_stub
+  libs += CCM_lem_stub
   IDL_Files {
   }
 
