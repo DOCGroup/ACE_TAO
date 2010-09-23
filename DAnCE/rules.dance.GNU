@@ -41,18 +41,4 @@ DANCE_MINOR_VERSION := $(shell awk '/DANCE_MINOR_VERSION/ { print $$3}' ${DANCE_
 DANCE_BETA_VERSION := $(shell awk '/DANCE_BETA_VERSION/ { print $$3}' ${DANCE_ROOT}/DAnCE/Version.h)
 endif
 
-# Version number of the libraries
-#
-ifeq ($(versioned_so),1)
-  # Only set SOVERSION for DANCE if versioning is turned on and SOVERION is
-  # blank, which gives users to ability to override it.
-  ifeq ($(SOVERSION),)
-    SOVERSION = .$(DANCE_MAJOR_VERSION).$(DANCE_MINOR_VERSION).$(DANCE_BETA_VERSION)
-  endif # SOVERSION
-
-  # Name that will be written into the dynamic library
-  #
-  ifneq ($(SONAME),)
-    SONAME = $(SHLIB).$(DANCE_MAJOR_VERSION).$(DANCE_MINOR_VERSION).$(DANCE_BETA_VERSION)
-  endif # SONAME
-endif # versioned_so
+GNUACE_PROJECT_VERSION ?= $(DANCE_MAJOR_VERSION).$(DANCE_MINOR_VERSION).$(DANCE_BETA_VERSION)
