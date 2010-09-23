@@ -17,7 +17,7 @@
 
 module AmiDds
 {
-	module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> AmiDdsConnector;
+  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> AmiDdsConnector;
 };
 
 #endif /* AMIDDS_CONNECTOR_IDL_ */
