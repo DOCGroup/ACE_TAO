@@ -43,7 +43,7 @@ $SV1 = $server1->CreateProcess ("$PerlACE::TAO_ROOT/orbsvcs/Naming_Service/tao_c
                               "-ORBdebuglevel $debug_level " .
                               "-o $server1_ior1file");
 
-$SV2 = $server2->CreateProcess ("$PerlACE::TAO_ROOT/orbsvcs/Event_Service/tao_cosevent",
+$SV2 = $server2->CreateProcess ("$PerlACE::TAO_ROOT/orbsvcs/CosEvent_Service/tao_cosevent",
                               "-ORBdebuglevel $debug_level " .
                               "-ORBSvcConf cosevent.conf " .
                               "-b -o $server2_ior2file " .

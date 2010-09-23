@@ -59,7 +59,7 @@ $TI = $ti->CreateProcess ($ENV{"ACE_ROOT"}."/bin/tao_ifr",
                           "-I".$ENV{"TAO_ROOT"}."/orbsvcs $ti_idl");
 $NS = $ns->CreateProcess ($ENV{"TAO_ROOT"}."/orbsvcs/Naming_Service/tao_cosnaming",
                           "-o $ns_nsiorfile");
-$CES = $ces->CreateProcess ($ENV{"TAO_ROOT"}."/orbsvcs/Event_Service/tao_cosevent",
+$CES = $ces->CreateProcess ($ENV{"TAO_ROOT"}."/orbsvcs/CosEvent_Service/tao_cosevent",
                           "-n CountryEventChannel -r -t -d -o $ces_cesiorfile ".
                           "-ORBInitRef InterfaceRepository=file://$ces_ifriorfile ".
                           "-ORBInitRef NameService=file://$ces_nsiorfile ");
