@@ -74,10 +74,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->string_to_object (name);
 
       // Get an object reference for the ORBs IORManipultion object!
-      CORBA::Object_ptr IORM =
+      CORBA::Object_var IORM =
         orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
 
-      TAO_IOP::TAO_IOR_Manipulation_ptr iorm =
+      TAO_IOP::TAO_IOR_Manipulation_var iorm =
         TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM);
 
       TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);

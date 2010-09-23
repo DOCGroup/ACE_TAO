@@ -137,7 +137,7 @@ public:
   // constraint.
 
   // The returned offers are passed back in one of two ways (or a
-  // combination of both). °The "offers" return result conveys a list
+  // combination of both). The "offers" return result conveys a list
   // of offers and the "offer_itr" is a reference to an interface at
   // which offers can be obtained. The "how_many" parameter states
   // how many offers are to be returned via the "offers" result, any
@@ -297,14 +297,14 @@ public:
   // identifies the service type, which contains the interface type of
   // the "reference" and a set of named property types that may be
   // used in further describing this offer (i.e., it restricts what is
-  // acceptable in the properties parameter). °
+  // acceptable in the properties parameter).
 
   // If the string
   // representation of the "type" does not obey the rules for
-  // identifiers, then an IllegalServiceType exception is raised. ° If
+  // identifiers, then an IllegalServiceType exception is raised. If
   // the "type" is correct syntactically but a trader is able to
   // unambiguously determine that it is not a recognized service type,
-  // then an UnknownServiceType exception is raised. °
+  // then an UnknownServiceType exception is raised.
 
   // If the trader
   // can determine that the interface type of the "reference"
@@ -314,21 +314,21 @@ public:
   // the property value types defined for those names. They describe
   // the service being offered. This description typically covers
   // behavioral, non-functional, and non-computational aspects of the
-  // service. °
+  // service.
 
   // If any of the property names do not obey the syntax
   // rules for PropertyNames, then an IllegalPropertyName exception is
-  // raised. °
+  // raised.
 
   // If the type of any of the property values is not the
   // same as the declared type (declared in the service type), then a
   // PropertyTypeMismatch exception is raised.
 
-  // ° If an attempt is made to assign a dynamic property value to a
+  // If an attempt is made to assign a dynamic property value to a
   // readonly property, then the ReadonlyDynamicProperty exception is
-  // raised. ° If the "properties" parameter omits any property
+  // raised. If the "properties" parameter omits any property
   // declared in the service type with a mode of mandatory, then a
-  // MissingMandatoryProperty exception is raised. ° If two or more
+  // MissingMandatoryProperty exception is raised. If two or more
   // properties with the same property name are included in this
   // parameter, the DuplicatePropertyName exception is raised.
   // END SPEC
@@ -339,11 +339,11 @@ public:
   // The withdraw operation removes the service offer from the trader
   // (i.e., after withdraw the offer can no longer be returned as the
   // result of a query). The offer is identified by the "id" parameter
-  // which was originally returned by export. ° If the string
+  // which was originally returned by export. If the string
   // representation of "id" does not obey the rules for offer
-  // identifiers, then an IllegalOfferId exception is raised. ° If the
+  // identifiers, then an IllegalOfferId exception is raised. If the
   // "id" is legal but there is no offer within the trader with that
-  // "id," then an UnknownOfferId exception is raised. ° If the "id"
+  // "id," then an UnknownOfferId exception is raised. If the "id"
   // identifies a proxy offer rather than an ordinary offer, then a
   // ProxyOfferId exception is raised.
   // END SPEC
@@ -357,11 +357,11 @@ public:
   // of the offered service, the "type" of the service offer, and the
   // "properties" that describe this offer of service. The offer is
   // identified by the "id" parameter which was originally returned by
-  // export. ° If the string representation of "id" does not obey the
+  // export. If the string representation of "id" does not obey the
   // rules for object identifiers, then an IllegalOfferId exception is
-  // raised. ° If the "id" is legal but there is no offer within the
+  // raised. If the "id" is legal but there is no offer within the
   // trader with that "id," then an UnknownOfferId exception is
-  // raised. ° If the "id" identifies a proxy offer rather than an
+  // raised. If the "id" identifies a proxy offer rather than an
   // ordinary offer, then a ProxyOfferId exception is raised.
   // END SPEC
 
@@ -373,30 +373,30 @@ public:
   // The modify operation is used to change the description of a
   // service as held within a service offer. The object reference and
   // the service type associated with the offer cannot be
-  // changed. This operation may: ° add new (non-mandatory) properties
-  // to describe an offer, ° change the values of some existing (not
-  // readonly) properties, or ° delete existing (neither mandatory nor
+  // changed. This operation may: add new (non-mandatory) properties
+  // to describe an offer, change the values of some existing (not
+  // readonly) properties, or delete existing (neither mandatory nor
   // readonly) properties.
 
   // The modify operation either succeeds completely or it fails
   // completely. The offer is identified by the "id" parameter which
-  // was originally returned by export. ° If the string representation
+  // was originally returned by export. If the string representation
   // of "id" does not obey the rules for offer identifiers, then an
-  // IllegalOfferId exception is raised. ° If the "id" is legal but
+  // IllegalOfferId exception is raised. If the "id" is legal but
   // there is no offer within the trader with that "id," then an
-  // UnknownOfferId exception is raised. ° If the "id" identifies a
+  // UnknownOfferId exception is raised. If the "id" identifies a
   // proxy offer rather than an ordinary offer, then a ProxyOfferId
   // exception is raised.
 
   // The "del_list" parameter gives the names of the properties that
   // are no longer to be recorded for the identified offer. Future
-  // query and describe operations will not see these properties. ° If
+  // query and describe operations will not see these properties. If
   // any of the names within the "del_list" do not obey the rules for
   // PropertyName's, then an IllegalPropertyName exception is
-  // raised. ° If a "name" is legal but there is no property for the
+  // raised. If a "name" is legal but there is no property for the
   // offer with that "name," then an UnknownPropertyName exception is
-  // raised. ° If the list includes a property that has a mandatory
-  // mode, then the MandatoryProperty exception is raised. ° If the
+  // raised. If the list includes a property that has a mandatory
+  // mode, then the MandatoryProperty exception is raised. If the
   // same property name is included two or more times in this
   // parameter, the DuplicatePropertyName exception is raised.
 
@@ -404,17 +404,17 @@ public:
   // properties to be changed. If the property is not in the offer,
   // then the modify operation adds it. The modified (or added)
   // property values are returned in future query and describe
-  // operations in place of the original values. ° If any of the names
+  // operations in place of the original values. If any of the names
   // within the "modify_list" do not obey the rules for
   // PropertyName's, then an IllegalPropertyName exception is
-  // raised. ° If the list includes a property that has a readonly
+  // raised. If the list includes a property that has a readonly
   // mode, then the ReadonlyProperty exception is raised unless that
   // readonly property is not currently recorded for the offer. The
   // ReadonlyDynamicProperty exception is raised if an attempt is made
-  // to assign a dynamic property value to a readonly property. ° If
+  // to assign a dynamic property value to a readonly property. If
   // the value of any modified property is of a type that is not the
   // same as the type expected, then the PropertyTypeMismatch
-  // exception is raised. ° If two or more properties with the same
+  // exception is raised. If two or more properties with the same
   // property name are included in this argument, the
   // DuplicatePropertyName exception is raised.
 
@@ -434,16 +434,16 @@ public:
   // The "type" parameter conveys the required service type. Each
   // offer of the specified type will have the constraint expression
   // applied to it. If it matches the constraint expression, then the
-  // offer will be withdrawn.° If "type" does not obey the rules for
-  // service types, then an IllegalServiceType exception is raised. °
+  // offer will be withdrawn. If "type" does not obey the rules for
+  // service types, then an IllegalServiceType exception is raised.
   // If the "type" is correct syntactically but is not recognized as a
   // service type by the trader, then an UnknownServiceType exception
   // is raised.
 
   // The constraint "constr" is the means by which the client
   // restricts the set of offers to those that are intended for
-  // withdrawal. ° If "constr" does not obey the syntax rules for a
-  // constraint then an IllegalConstraint exception is raised. ° If
+  // withdrawal. If "constr" does not obey the syntax rules for a
+  // constraint then an IllegalConstraint exception is raised. If
   // the constraint fails to match with any offer of the specified
   // service type, then a NoMatchingOffers exception is raised.
   // END SPEC
@@ -456,13 +456,13 @@ public:
   // another trader. In particular, it is used when exporting to a
   // trader that is known by a name rather than by an object
   // reference. The client provides the name, which will be a sequence
-  // of name components. ° If the content of the parameter cannot
+  // of name components. If the content of the parameter cannot
   // yield legal syntax for the first component, then the
   // IllegalTraderName exception is raised. Otherwise, the first name
-  // component is compared against the name held in each link. ° If no
+  // component is compared against the name held in each link. If no
   // match is found, or the trader does not support links, the
   // UnknownTraderName exception is raised. Otherwise, the trader
-  // obtains the register_if held as part of the matched link. ° If
+  // obtains the register_if held as part of the matched link. If
   // the Register interface is not nil, then the trader binds to the
   // Register interface and invokes resolve but passes the TraderName
   // with the first component removed; if it is nil, then the
@@ -587,10 +587,10 @@ public:
   // offers are not returned via this operation. If the trader does
   // not support the Register interface, the NotImplemented exception
   // is raised. The returned identifiers are passed back in one of two
-  // ways (or a combination of both). ° The "ids" return result
+  // ways (or a combination of both). The "ids" return result
   // conveys a list of offer identifiers and the "id_itr" is a
   // reference to an interface at which additional offer identities
-  // can be obtained. ° The "how_many" parameter states how many
+  // can be obtained. The "how_many" parameter states how many
   // identifiers are to be returned via the "ids" result; any
   // remaining are available via the iterator interface. If the
   // "how_many" exceeds the number of offers held in the trader, then
@@ -705,9 +705,9 @@ public:
   // IllegalLinkName is raised. An UnknownLinkName exception is raised
   // if the named link is not found in the trader.
 
-  // The operation returns a LinkInfo structure comprising: ° the
-  // Lookup interface of the target trading service, ° the Register
-  // interface of the target trading service, and ° the default, as
+  // The operation returns a LinkInfo structure comprising: the
+  // Lookup interface of the target trading service, the Register
+  // interface of the target trading service, and the default, as
   // well as the limiting follow behavior of the named link.
 
   // If the target service does not support the Register interface,

@@ -94,61 +94,68 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::Object_var tmp = orb->string_to_object(ior);
 
-      if (CORBA::is_nil (tmp.in ())) {
-        ACE_ERROR_RETURN ((LM_ERROR, "Invalid IOR.\n")
-        ,1);
-      }
+      if (CORBA::is_nil (tmp.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "Invalid IOR.\n")
+                            ,1);
+        }
 
       {
-  // Set the Synch Scopes
+        // Set the Synch Scopes
 
-  CORBA::Any scope_as_any;
+        CORBA::Any scope_as_any;
 
-  if (synch_none == true)
-    {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Applying SYNC_NONE.\n"));
-      scope_as_any <<= Messaging::SYNC_NONE;
-    }
-  else if (synch_delayed == true)
-    {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Applying SYNC_DELAYED_BUFFERING.\n"));
-      scope_as_any <<= TAO::SYNC_DELAYED_BUFFERING;
-    }
+        if (synch_none == true)
+          {
+            ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Applying SYNC_NONE.\n"));
+            scope_as_any <<= Messaging::SYNC_NONE;
+          }
+        else if (synch_delayed == true)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%P|%t) - Applying SYNC_DELAYED_BUFFERING.\n"));
+            scope_as_any <<= TAO::SYNC_DELAYED_BUFFERING;
+          }
 
-  CORBA::PolicyList policies (1);
-  policies.length (1);
-  policies[0] =
-    orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-            scope_as_any);
+        CORBA::PolicyList policies (1);
+        policies.length (1);
+        policies[0] =
+          orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
+                              scope_as_any);
 
-  if (level_thread == true)
-    {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Applying Synch Scope at thread level.\n"));
+        if (level_thread == true)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%P|%t) - Applying Synch Scope at thread level.\n"));
 
-      CORBA::Object_var object =
-        orb->resolve_initial_references ("PolicyCurrent");
-      CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in ());
+            CORBA::Object_var object =
+              orb->resolve_initial_references ("PolicyCurrent");
+            CORBA::PolicyCurrent_var policy_current =
+              CORBA::PolicyCurrent::_narrow (object.in ());
 
-      policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
-    }
-  else if (level_orb == true)
-    {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Applying Synch Scope at orb level.\n"));
+            policy_current->set_policy_overrides (policies,
+                                                  CORBA::ADD_OVERRIDE);
+          }
+        else if (level_orb == true)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%P|%t) - Applying Synch Scope at orb level.\n"));
 
-      CORBA::Object_var obj =
-        orb->resolve_initial_references("ORBPolicyManager");
-      CORBA::PolicyManager_var policy_manager =
-        CORBA::PolicyManager::_narrow(obj.in());
+            CORBA::Object_var obj =
+              orb->resolve_initial_references("ORBPolicyManager");
+            CORBA::PolicyManager_var policy_manager =
+              CORBA::PolicyManager::_narrow(obj.in());
 
-      policy_manager->set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
-    }
-  else if (level_obj == true)
-  {
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Applying Synch Scope at Object level.\n"));
+            policy_manager->set_policy_overrides (policies,
+                                                  CORBA::ADD_OVERRIDE);
+          }
+        else if (level_obj == true)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%P|%t) - Applying Synch Scope at Object level.\n"));
 
-    tmp = tmp->_set_policy_overrides (policies, CORBA::SET_OVERRIDE);
-  }
+            tmp = tmp->_set_policy_overrides (policies, CORBA::SET_OVERRIDE);
+          }
 
         policies[0]->destroy ();
       }
@@ -156,12 +163,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test::Hello_var hello =
         Test::Hello::_narrow(tmp.in ());
 
-      if (CORBA::is_nil (hello.in ())) {
-        ACE_ERROR_RETURN ((LM_ERROR,
-         "Nil Test::Hello reference <%s>\n",
-         ior),
-        1);
-      }
+      if (CORBA::is_nil (hello.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Nil Test::Hello reference <%s>\n",
+                             ior),
+                            1);
+        }
 
       // If a blocking connection is initiated in the next step
       // the test will get an exception indicating test failure.
@@ -172,18 +180,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       TAO::Transport_Cache_Manager &tcm =
         hello->orb_core ()->lane_resources ().transport_cache ();
 
-      TAO_Transport *transport = 0;
-      TAO_Base_Transport_Property desc (hello->_stubobj ()->profile_in_use()->endpoint ());
+      TAO_Base_Transport_Property desc (hello->_stubobj ()->profile_in_use ()->endpoint ());
 
-      if (tcm.current_size() == 0) {
-        ACE_ERROR_RETURN ((LM_ERROR,
-         "The Transport Cache shouldn't be empty here.\n"),
-        1);
-      }
+      if (tcm.current_size() == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+           "The Transport Cache shouldn't be empty here.\n"),
+          1);
+        }
 
       size_t busy_count = 0;
+      TAO_Transport *transport = 0;
       TAO::Transport_Cache_Manager::Find_Result find_result =
         tcm.find_transport (&desc, transport, busy_count);
+      // We don't need this transport any more. Release the ownership.
+      transport->remove_reference ();
 
       switch (find_result){
         case TAO::Transport_Cache_Manager::CACHE_FOUND_NONE:
@@ -218,7 +229,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               ),1);
           }
       }
-
 
       orb->destroy ();
     }

@@ -45,7 +45,7 @@ Thread_Pool::shutdown (void)
                   i + 1));
       ACE_Message_Block *mb1;
       ACE_NEW_RETURN (mb1,
-                      ACE_Message_Block ((char*)0),
+                      ACE_Message_Block ((char*) Test::Echo::_nil ()),
                       -1);
       mb1->length (0);
 
@@ -125,8 +125,7 @@ Thread_Pool::svc (void)
 
       Test::Echo_var echo = (Test::Echo_ptr)mb->base();
 
-      // Echo_var is responsible for deallocating this.
-      // mb->release ();
+      mb->release ();
 
       if (CORBA::is_nil(echo.in()))
         {

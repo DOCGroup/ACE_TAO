@@ -114,14 +114,14 @@ if ($client_status != 0) {
     $status = 1;
 }
 
-$server_status = $SV1->TerminateWaitKill ($server_a->ProcessStopWaitInterval());
+$server_status = $SV1->WaitKill ($server_a->ProcessStopWaitInterval());
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 
-$server_status = $SV2->TerminateWaitKill ($server_b->ProcessStopWaitInterval());
+$server_status = $SV2->WaitKill ($server_b->ProcessStopWaitInterval());
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";

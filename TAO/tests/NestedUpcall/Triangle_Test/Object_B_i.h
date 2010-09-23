@@ -35,6 +35,8 @@ public:
   // Destructor.
 
   virtual void foo(Object_A_ptr theObject_A_ptr);
+
+  virtual void shutdown (void);
 };
 
 #endif /* OBJECT_B_IMPL_H */

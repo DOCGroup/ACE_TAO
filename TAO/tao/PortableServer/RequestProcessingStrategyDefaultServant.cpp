@@ -185,7 +185,14 @@ namespace TAO
           Non_Servant_Upcall non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
-          servant->_remove_ref ();
+          try
+            {
+              servant->_remove_ref ();
+            }
+          catch (...)
+            {
+              // Ignore exceptions from servant cleanup.
+            }
         }
 
       // This operation causes the association of the Object Id specified

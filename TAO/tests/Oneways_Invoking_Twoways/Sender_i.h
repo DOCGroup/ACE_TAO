@@ -43,7 +43,7 @@ public:
 
 private:
   /// Our local ORB ptr
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_var orb_;
 
   /// Number of invocations to be made on the receiver
   CORBA::ULong number_;
