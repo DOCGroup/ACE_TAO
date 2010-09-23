@@ -197,10 +197,34 @@ namespace CIAO
 #if !defined (CCM_LW)
   ::Components::PublisherDescriptions *
   Servant_Impl_Base::get_named_publishers (
-    const ::Components::NameList & /* names */)
+    const ::Components::NameList & names)
   {
     CIAO_TRACE("Servant_Impl_Base::get_named_publishers");
-    throw ::CORBA::NO_IMPLEMENT ();
+    ::Components::PublisherDescriptions_var retval;
+    ACE_NEW_THROW_EX (retval,
+                      ::Components::PublisherDescriptions,
+                      ::CORBA::NO_MEMORY ());
+
+    retval->length (names.length ());
+    ::CORBA::ULong count = 0UL;
+
+    for (::CORBA::ULong name = 0UL;
+         name < names.length ();
+         ++name)
+      {
+        ::Components::PublisherDescription * desc =
+          this->lookup_publisher_description (names[name].in ());
+        if (desc)
+          {
+            retval[count++] = desc;
+          }
+        else
+          {
+            throw ::Components::InvalidName ();
+          }
+      }
+    ::Components::PublisherDescriptions_var safe_retval = retval;
+    return safe_retval._retn ();
   }
 #endif
 
@@ -299,6 +323,42 @@ namespace CIAO
     }
 
     return cd._retn ();
+  }
+#endif
+
+  /// Private operations.
+#if !defined (CCM_LW)
+  ::Components::PublisherDescription *
+  Servant_Impl_Base::lookup_publisher_description (const char *publisher_name)
+  {
+    CIAO_TRACE("Servant_Impl_Base::lookup_publisher_description");
+
+    ::Components::PublisherDescriptions_var all_publishers =
+      this->get_all_publishers ();
+
+    if (!publisher_name || all_publishers->length () == 0)
+      {
+        // Calling function will throw InvalidName after getting this.
+        return 0;
+      }
+    for (::CORBA::ULong publisher = 0;
+          publisher < all_publishers->length ();
+          ++publisher)
+      {
+        ::Components::PublisherDescription *publisher_desc =
+          all_publishers[publisher];
+        if (::ACE_OS::strcmp (publisher_name, publisher_desc->name ()) == 0)
+          {
+            ::Components::PublisherDescription *pd = 0;
+
+            ACE_NEW_THROW_EX (pd,
+                              ::OBV_Components::PublisherDescription (),
+                              CORBA::NO_MEMORY ());
+            ::Components::PublisherDescription_var safe = pd;
+            return safe._retn ();
+          }
+      }
+    return 0;
   }
 #endif
 }
