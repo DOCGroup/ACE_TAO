@@ -262,7 +262,7 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
 }
 
 CORBA::ULong
-TAO_ZIOP_Loader::compression_policy_value (CORBA::Policy_ptr policy) const
+TAO_ZIOP_Loader::compression_low_value (CORBA::Policy_ptr policy) const
 {
   CORBA::ULong result = 0;
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -275,6 +275,28 @@ TAO_ZIOP_Loader::compression_policy_value (CORBA::Policy_ptr policy) const
       if (!CORBA::is_nil (srp.in ()))
         {
           result = srp->low_value ();
+        }
+    }
+#else
+  ACE_UNUSED_ARG (policy);
+#endif
+  return result;
+}
+
+Compression::CompressionRatio
+TAO_ZIOP_Loader::compression_minratio_value (CORBA::Policy_ptr policy) const
+{
+  Compression::CompressionRatio result = 0;
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
+  if (!CORBA::is_nil (policy))
+    {
+      ZIOP::CompressionMinRatioPolicy_var srp =
+        ZIOP::CompressionMinRatioPolicy::_narrow (policy);
+
+      if (!CORBA::is_nil (srp.in ()))
+        {
+          result = srp->ratio ();
         }
     }
 #else
@@ -563,9 +585,9 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_Stub& stub)
         stub.get_cached_policy (TAO_CACHED_MIN_COMPRESSION_RATIO_POLICY);
 
       CORBA::ULong low_value =
-        this->compression_policy_value (policy_low_value.in ());
+        this->compression_low_value (policy_low_value.in ());
       Compression::CompressionRatio min_ratio =
-        this->compression_policy_value (policy_min_ratio.in ());
+        this->compression_minratio_value (policy_min_ratio.in ());
 
       return compress_data(cdr, compression_manager.in (),
                             low_value, min_ratio,
@@ -613,9 +635,9 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR& cdr, TAO_ORB_Core& orb_core)
           (TAO_CACHED_MIN_COMPRESSION_RATIO_POLICY);
 
       CORBA::ULong low_value =
-        this->compression_policy_value (policy_low_value.in ());
+        this->compression_low_value (policy_low_value.in ());
       Compression::CompressionRatio min_ratio =
-        this->compression_policy_value (policy_min_ratio.in ());
+        this->compression_minratio_value (policy_min_ratio.in ());
 
       return compress_data(cdr, compression_manager.in (),
                            low_value, min_ratio,
