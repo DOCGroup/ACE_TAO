@@ -224,6 +224,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
 {
   ACE_DEBUG ((LM_DEBUG, "Navigation - test_get_all_ports - "
                         "Start test\n"));
+  int ret = 0;
   try
     {
       ::Components::ComponentPortDescription * cpd;
@@ -265,6 +266,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
           ACE_ERROR ((LM_ERROR, "Navigation get_all_ports - "
                                 "Error: Found receptacles an a Navigation "
                                 "Component\n"));
+          ++ret;
         }
       else
         {
@@ -279,6 +281,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
           ACE_ERROR ((LM_ERROR, "Navigation get_all_ports - "
                                 "Error: Found Consumers while not  "
                                 "configured\n"));
+          ++ret;
         }
       else
         {
@@ -288,11 +291,13 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
 
       ::Components::EmitterDescriptions eds;
       eds = cpd->emitters ();
-      if (eds.length () != 0)
+      if (eds.length () != 1)
         {
           ACE_ERROR ((LM_ERROR, "Navigation get_all_ports - "
-                                "Error: Found Emitters while not  "
-                                "configured\n"));
+                                "Error: Unexpected number of emitters found: "
+                                "expected <1> - received <%d>\n",
+                                eds.length ()));
+          ++ret;
         }
       else
         {
@@ -302,11 +307,13 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
 
       ::Components::PublisherDescriptions pds;
       pds = cpd->publishers ();
-      if (pds.length () != 0)
+      if (pds.length () != 2)
         {
           ACE_ERROR ((LM_ERROR, "Navigation get_all_ports - "
-                                "Error: Found Publishers while not  "
-                                "configured\n"));
+                                "Error: Unexpected number publishers found:  "
+                                "expected <2> - received <%d>\n",
+                                pds.length ()));
+          ++ret;
         }
       else
         {
@@ -327,7 +334,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
     }
   ACE_DEBUG ((LM_DEBUG, "Navigation - test_get_all_ports - "
                         "Test passed\n"));
-  return 0;
+  return ret;
 }
 #endif
 

@@ -17,17 +17,30 @@ module CIF
     void do_derived_foo ();
   };
 
+  eventtype DoSomething {
+    public string tobedone;
+  };
+  eventtype DoSomethingElse {
+    public string tobedone;
+  };
+
   component CIF_Provider
   {
-    provides foo           provide_cif_foo;
-    provides derived_foo provide_cif_derived_foo;
+    publishes DoSomething     publish_do_something;
+    publishes DoSomethingElse publish_do_something_else;
+    emits     DoSomething     emit_do_something;
+
+    provides foo          provide_cif_foo;
+    provides derived_foo  provide_cif_derived_foo;
   };
 
   component CIF_User
   {
-    uses foo           use_cif_foo;
-    uses multiple foo  use_multiple_foo;
-    uses derived_foo use_cif_derived_foo;
+    consumes DoSomething consume_do_something;
+
+    uses foo             use_cif_foo;
+    uses multiple foo    use_multiple_foo;
+    uses derived_foo     use_cif_derived_foo;
   };
 
   home CIF_UserHome manages CIF_User
