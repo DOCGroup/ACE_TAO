@@ -14,6 +14,7 @@ project(CIAO_Container_Base_idl) : install, taoidldefaults {
     install_dir = ciao/Containers
   }
 }
+
 project(CIAO_Container_Base_stub) : install, ciao_lib, ccm_svnt, ciao_servant_activator, ciao_port_activator_stub  {
   after += CIAO_Container_Base_idl
   dynamicflags += CIAO_CONTAINER_BASE_BUILD_DLL
