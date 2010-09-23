@@ -5,9 +5,9 @@
 #include "ciao/Logger/Logger_Service.h"
 #include "ciao/Containers/Session/Session_Container.h"
 #include "ciao/Base/Server_init.h"
-#include "DAnCE/DAnCE_Utility.h"
-#include "DAnCE/DAnCE_PropertiesC.h"
-#include "LocalityManager/Scheduler/Plugin_Manager.h"
+#include "dance/DAnCE_Utility.h"
+#include "dance/DAnCE_PropertiesC.h"
+#include "dance/LocalityManager/Scheduler/Plugin_Manager.h"
 #include "CIAO_State.h"
 
 namespace CIAO
