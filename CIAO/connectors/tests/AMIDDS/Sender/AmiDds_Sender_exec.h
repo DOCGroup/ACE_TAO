@@ -37,9 +37,9 @@ namespace CIAO_AmiDds_Sender_Impl
 
   enum UPDATER_TEST {
     UPDATE_ONE,
-	  SEND_SYNCH,
+    SEND_SYNCH,
     UPDATE_TWO,
-	  SEND_ASYNCH,
+    SEND_ASYNCH,
     END_TEST
   };
 
@@ -74,14 +74,14 @@ namespace CIAO_AmiDds_Sender_Impl
     void start (void);
     void stop (void);
     void add_instances_of_topic (void);
-	  CORBA::Boolean create_one(CORBA::Short nr);
+    CORBA::Boolean create_one(CORBA::Short nr);
     CORBA::Boolean update_one(CORBA::Short nr);
-	  CORBA::Boolean send_asynch_call(void);
+    CORBA::Boolean send_asynch_call(void);
     CORBA::Boolean send_synch_call(void);
 
     pulse_Generator * ticker_;
     ::AmiDds::CCM_Sender_Context_var context_;
-  	::AmiDds::AmiDdsConnector::Updater_var updater_;
+    ::AmiDds::AmiDdsConnector::Updater_var updater_;
     UPDATER_TEST test_nr_;
     Atomic_Boolean test_ok_;
     TestTopicSeq topic_seq_one_;

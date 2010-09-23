@@ -48,7 +48,7 @@ namespace CIAO_AmiDds_Receiver_Impl
                                   const TestTopic & an_instance,
                                   const ::CCM_DDS::ReadInfo & info)
   {
-	  ACE_DEBUG ((LM_DEBUG, "Receiver (DDS4CCM)) :\tget data with on_one_data: "
+    ACE_DEBUG ((LM_DEBUG, "Receiver (DDS4CCM)) :\tget data with on_one_data: "
                           "key <%C> - iteration <%d>\n",
                           an_instance.key.in (),
                           an_instance.x));

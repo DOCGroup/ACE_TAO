@@ -211,9 +211,6 @@
       </value>
     </execParameter>
   </implementation>
-  
-  
-  
 
   <instance xmi:id="AmiDds.ComponentImplementations.AmiDdsImplementation.AmiDds.Receiver">
     <name>AmiDds.ComponentImplementations.AmiDdsImplementation.AmiDds.Receiver</name>

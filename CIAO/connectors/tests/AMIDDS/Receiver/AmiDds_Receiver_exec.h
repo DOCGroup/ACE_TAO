@@ -29,7 +29,7 @@ namespace CIAO_AmiDds_Receiver_Impl
 
   //============================================================
   // ListenOneByOneTest_Listener_exec_i
-  //============================================================ 
+  //============================================================
   class AMIDDS_RECEIVER_EXEC_Export ListenOneByOneTest_Listener_exec_i
     : public virtual ::AmiDds::AmiDdsConnector::CCM_Listener,
       public virtual ::CORBA::LocalObject
