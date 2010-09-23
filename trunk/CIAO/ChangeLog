@@ -1,3 +1,9 @@
+Thu Sep 23 07:55:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/IDL3_to_XMI/XMI_For_Array/test.idl:
+        * tests/IDL3_to_XMI/XMI_For_Sequence/test.idl:
+          Fixed errors related to anonymous types.
+
 Thu Sep 23 07:49:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/IDL3_to_XMI/Bug_3607_Regression/test.idl:
