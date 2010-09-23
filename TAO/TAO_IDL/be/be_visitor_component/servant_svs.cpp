@@ -610,7 +610,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << be_uidt_nl << be_nl
       << "this->add_consumer (\"" << port_name << "\", ecb.in ());"
       << be_uidt_nl
-      << "}" << be_uidt_nl
+      << "}" << be_uidt_nl << be_uidt_nl
       << "}";
 
   return 0;
