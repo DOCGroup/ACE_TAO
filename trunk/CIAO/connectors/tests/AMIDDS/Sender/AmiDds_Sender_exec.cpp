@@ -258,7 +258,7 @@ namespace CIAO_AmiDds_Sender_Impl
               this->test_nr_ = END_TEST;
             }
           break;
-	case SEND_SYNCH:
+        case SEND_SYNCH:
           this->test_ok_ = this->send_synch_call();
           this->test_nr_ = END_TEST;
           break;
