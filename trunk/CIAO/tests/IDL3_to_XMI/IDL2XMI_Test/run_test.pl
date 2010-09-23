@@ -27,7 +27,7 @@ foreach my $idl_file (@idls) {
     $target->LocalFile ($xmi);
     $target->DeleteFile ($xmi);
 
-    $I2X->Arguments ("-I$idl_tests_dir -xd $dtd -of $xmi $idl");
+    $I2X->Arguments ("-as -I$idl_tests_dir -xd $dtd -of $xmi $idl");
 
     $target_status = $I2X->SpawnWaitKill ($target->ProcessStartWaitInterval ());
 
