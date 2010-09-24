@@ -2,6 +2,6 @@
 // $Id$
 
 project : ami4ccm_stub {
-  after += AMI4CCM_lem_stub CIAO_Context_Impl
-  libs += AMI4CCM_lem_stub CIAO_Context_Impl
+  after += AMI4CCM_lem_stub
+  libs += AMI4CCM_lem_stub
 }

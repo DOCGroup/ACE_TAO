@@ -1,6 +1,6 @@
 //$Id$
-project(CIAO_Context_Impl) : install, ccm_svnt, ciao_container_base_stub, portableserver, ciao_output {
-   dynamicflags += CONTEXT_IMPL_BUILD_DLL
+
+project(CIAO_Context_Impl) : install {
   specific {
     install_dir = ciao/Contexts
   }

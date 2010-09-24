@@ -68,7 +68,8 @@ namespace CIAO
   template <typename BASE_CTX,
             typename COMP>
   ::CORBA::Object_ptr
-  ExtensionContext_Impl<BASE_CTX, COMP>::uninstall_service_reference (::Components::Cookie * /*ck*/)
+  ExtensionContext_Impl<BASE_CTX, COMP>::uninstall_service_reference (
+    ::Components::Cookie * /*ck*/)
   {
     throw CORBA::NO_IMPLEMENT ();
   }

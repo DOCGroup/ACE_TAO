@@ -1,3 +1,23 @@
+Fri Sep 24 11:51:59 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ami4ccm_lem_stub.mpb:
+        * MPC/config/ciao_servant.mpb:
+        * ciao/Containers/Containers.mpc:
+        * ciao/Contexts/Context.mpc:
+        * ciao/Contexts/Context_Impl_Base_T.h:
+        * ciao/Contexts/Context_Impl_Base_T.cpp:
+        * ciao/Contexts/Extension/ExtensionContext_T.h:
+        * ciao/Contexts/Extension/ExtensionContext_T.cpp:
+        * ciao/Contexts/Session/Context_Impl_T.h:
+        * ciao/Contexts/Session/Context_Impl_T.cpp:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.h:
+        * MPC/config/ciao_context_impl.mpb:
+        * ciao/Contexts/Context_Impl_Base.h:
+        * ciao/Contexts/Context_Impl_Base.cpp:
+        * ciao/Contexts/Context_Impl_export.h:
+          CIAO context base is now a C++ template so that we can store a
+          typed container object reference
+
 Fri Sep 24 10:21:24 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/IDL3_to_XMI/XMI_For_Sequence/run_test.pl:
