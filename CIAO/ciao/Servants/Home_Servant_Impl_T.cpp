@@ -122,7 +122,6 @@ namespace CIAO
     return this->create ();
   }
 
-  // Operations for implicit home interface.
   template <typename BASE_SKEL,
             typename EXEC,
             typename COMP_SVNT>
@@ -148,8 +147,6 @@ namespace CIAO
 
     return this->_ciao_activate_component (_ciao_comp.in ());
   }
-
-  // CIAO-specific operations.
 
   template <typename BASE_SKEL,
             typename EXEC,
