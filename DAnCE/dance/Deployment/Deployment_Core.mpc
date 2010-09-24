@@ -42,7 +42,7 @@ project(Deployment_IDL) : install, dancelib_with_idl, dance_output, valuetype, g
     Deployment_ResourceCommitmentManager.idl
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -59,7 +59,7 @@ project(Deployment_ApplicationManager_IDL) : install, dancelib_with_idl, dance_o
     Deployment_ApplicationManager.idl
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -75,7 +75,7 @@ project(Deployment_TargetManager_IDL) : install, dancelib_with_idl, dance_output
     Deployment_TargetManager.idl
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -90,7 +90,7 @@ project(Deployment_RepositoryManager_IDL) : install, dancelib_with_idl, dance_ou
     Deployment_RepositoryManager.idl
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -106,7 +106,7 @@ project(Deployment_ExecutionManager_IDL) : install, dancelib_with_idl, dance_out
     Deployment_ExecutionManager.idl
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -122,7 +122,7 @@ project(Deployment_DAM_IDL) : install, dancelib_with_idl, dance_output, valuetyp
     Deployment_DomainApplicationManager.idl
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -138,7 +138,7 @@ project(Deployment_DomainApplication_IDL) : install, dancelib_with_idl, dance_ou
     Deployment_DomainApplication.idl
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -154,7 +154,7 @@ project(Deployment_NAM_IDL) : install, dancelib_with_idl, dance_output, valuetyp
     Deployment_NodeApplicationManager.idl
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -170,7 +170,7 @@ project(Deployment_NodeManager_IDL) : install, dancelib_with_idl, dance_output, 
     Deployment_NodeManager.idl
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -186,7 +186,7 @@ project(Deployment_NodeApplication_IDL) : install, dancelib_with_idl, dance_outp
     Deployment_NodeApplication.idl
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -267,7 +267,7 @@ project(Deployment_stub) : install, dancelib_with_idl, dance_output, valuetype, 
   }
 
 	specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -290,7 +290,7 @@ project(Deployment_AM_stub) : install, dance_output, dance_deployment_stub, amh 
     Deployment_ApplicationManagerC.inl
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -316,7 +316,7 @@ project(Deployment_AM_skel) : install, dance_output, dance_deployment_skel, danc
   }
 
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -340,7 +340,7 @@ project(Deployment_DAM_stub) : install, dance_output, dance_applicationmanager_s
     Deployment_DomainApplicationManagerC.inl
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -361,7 +361,7 @@ project(Deployment_DAM_skel) : install, dance_output, dance_applicationmanager_s
   }
 
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -384,7 +384,7 @@ project(Deployment_ExecutionManager_stub) : install, dance_output, dance_deploym
     Deployment_ExecutionManagerC.inl
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -400,7 +400,7 @@ project(Deployment_ExecutionManager_skel) : install, dance_output, dance_deploym
     Deployment_ExecutionManagerS.cpp
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -423,7 +423,7 @@ project(Deployment_DomainApplication_stub) : install, dance_output, dance_deploy
     Deployment_DomainApplicationC.inl
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -444,7 +444,7 @@ project(Deployment_DomainApplication_skel) : install, dance_output, dance_deploy
   }
 
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -467,7 +467,7 @@ project(Deployment_NAM_stub) : install, dance_output, dance_applicationmanager_s
     Deployment_NodeApplicationManagerC.inl
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -488,7 +488,7 @@ project(Deployment_NAM_skel) : install, dance_output, dance_applicationmanager_s
   }
 
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -511,7 +511,7 @@ project(Deployment_NodeManager_stub) : install, dance_output, dance_deployment_s
     Deployment_NodeManagerC.inl
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -532,7 +532,7 @@ project(Deployment_NodeManager_skel) : install, dance_output, dance_deployment_s
   }
 
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -555,7 +555,7 @@ project(Deployment_TargetManager_stub) : install, dance_output, dance_deployment
     Deployment_TargetManagerC.inl
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -571,7 +571,7 @@ project(Deployment_TargetManager_skel) : install, dance_output, dance_deployment
     Deployment_TargetManagerS.cpp
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -594,7 +594,7 @@ project(Deployment_RepositoryManager_stub) : install, dance_output, dance_deploy
     Deployment_RepositoryManagerC.inl
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -615,7 +615,7 @@ project(Deployment_RepositoryManager_skel) : install, dance_output, dance_deploy
   }
 
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -638,7 +638,7 @@ project(Deployment_NodeApplication_stub) : install, dance_output, dance_deployme
     Deployment_NodeApplicationC.inl
   }
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -659,7 +659,7 @@ project(Deployment_NodeApplication_skel) : install, dance_output, dance_deployme
   }
 
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }
 
@@ -686,6 +686,6 @@ project(Deployment_skel) : install, dance_deployment_stub, dance_output, danceli
   }
 
   specific {
-    install_dir = DAnCE/Deployment
+    install_dir = dance/Deployment
   }
 }

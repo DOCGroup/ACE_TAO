@@ -12,6 +12,6 @@ project (DAnCE_NodeApplicationManager) : install, dance_lib, naming, \
   }
 
   specific {
-    install_dir = DAnCE/NodeApplicationManager
+    install_dir = dance/NodeApplicationManager
   }
 }

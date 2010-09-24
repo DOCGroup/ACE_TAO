@@ -15,7 +15,7 @@ project(DAnCE_Logger): install, dance_lib, taolib, acelib {
   }
 
   specific {
-    install_dir = DAnCE/Logger
+    install_dir = dance/Logger
   }
 
 }

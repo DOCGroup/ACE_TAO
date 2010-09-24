@@ -7,7 +7,7 @@ project (DAnCE_RepositoryManagerDaemon_IDL) : install, danceidldefaults {
     RepositoryManagerDaemon.idl
   }
   specific {
-    install_dir = DAnCE/RepositoryManager
+    install_dir = dance/RepositoryManager
   }
 }
 
@@ -32,7 +32,7 @@ project (DAnCE_RepositoryManager_Exec) : install, dance_logger, dance_config_han
   IDL_Files {
   }
   specific {
-    install_dir = DAnCE/RepositoryManager
+    install_dir = dance/RepositoryManager
   }
 }
 

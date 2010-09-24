@@ -1,8 +1,24 @@
+Fri Sep 24 14:49:57 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/DAnCE_Properties.mpc:
+        * dance/Deployment/Deployment_Core.mpc:
+        * dance/DomainApplication/DomainApplication.mpc:
+        * dance/DomainApplicationManager/DomainApplicationManager.mpc:
+        * dance/LocalityManager/Daemon/Locality_Manager.mpc:
+        * dance/LocalityManager/Handler/LocalityHandler.mpc:
+        * dance/LocalityManager/Scheduler/Scheduler.mpc:
+        * dance/Logger/Logger.mpc:
+        * dance/NodeApplication/NodeApplication.mpc:
+        * dance/NodeApplicationManager/NodeApplicationManager.mpc:
+        * dance/RepositoryManager/RepositoryManager.mpc:
+
+          Various 'make install' fixes.
+
 Fri Sep 24 14:25:16 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/LocalityManager/ExplicitExec/ExplicitExec.mpc:
 
-          Compile fix. 
+          Compile fix.
 
 Fri Sep 24 08:02:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 

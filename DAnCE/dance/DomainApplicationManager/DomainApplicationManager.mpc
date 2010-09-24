@@ -20,6 +20,6 @@ project : install, dance_lib, dance_output, dance_domainapplicationmanager_skel,
   }
 
   specific {
-    install_dir = DAnCE/DomainApplicationManager
+    install_dir = dance/DomainApplicationManager
   }
 }
