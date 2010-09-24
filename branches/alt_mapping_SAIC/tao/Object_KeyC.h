@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // .\be\be_codegen.cpp:149
 
-#ifndef _TAO_PIDL_OBJECT_KEYC_RNNW6J_H_
-#define _TAO_PIDL_OBJECT_KEYC_RNNW6J_H_
+#ifndef _TAO_PIDL_OBJECT_KEYC_GNYJHL_H_
+#define _TAO_PIDL_OBJECT_KEYC_GNYJHL_H_
 
 #include /**/ "ace/pre.h"
 

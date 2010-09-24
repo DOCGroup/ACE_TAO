@@ -601,7 +601,7 @@ TAO_Root_POA::create_POA_i (const TAO_Root_POA::String &adapter_name,
 
 #if ! defined (CORBA_E_MICRO)
 PortableServer::POA_ptr
-TAO_Root_POA::find_POA (const std::string adapter_name,
+TAO_Root_POA::find_POA (const std::string & adapter_name,
                         CORBA::Boolean activate_it)
 {
   // Lock access for the duration of this transaction.
@@ -615,7 +615,7 @@ TAO_Root_POA::find_POA (const std::string adapter_name,
 
 #if ! defined (CORBA_E_MICRO)
 TAO_Root_POA *
-TAO_Root_POA::find_POA_i (const std::string &child_name,
+TAO_Root_POA::find_POA_i (const std::string & child_name,
                           CORBA::Boolean activate_it)
 {
   TAO_Root_POA *child = 0;
@@ -693,7 +693,7 @@ TAO_Root_POA::tao_poa_manager ()
 
 #if ! defined (CORBA_E_MICRO)
 PortableServer::POA_ptr
-TAO_Root_POA::create_POA (const std::string adapter_name,
+TAO_Root_POA::create_POA (const std::string & adapter_name,
                           PortableServer::POAManager_ptr poa_manager,
                           const CORBA::PolicyList &policies)
 {
@@ -771,13 +771,13 @@ TAO_Root_POA::id_to_reference (const PortableServer::ObjectId &oid)
 #if ! defined (CORBA_E_MICRO)
 CORBA::Object_ptr
 TAO_Root_POA::create_reference_with_id (const PortableServer::ObjectId &id,
-                                        const std::string intf)
+                                        const std::string & intf)
 {
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (CORBA::Object::_nil ());
 
   return this->create_reference_with_id_i (id,
-                                           intf.c_str (),
+                                           intf,
                                            this->server_priority ());
 }
 #endif
@@ -1291,7 +1291,7 @@ TAO_Root_POA::is_persistent (void) const
 }
 
 CORBA::Object_ptr
-TAO_Root_POA::create_reference (const std::string intf)
+TAO_Root_POA::create_reference (const std::string & intf)
 {
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (CORBA::Object::_nil ());
@@ -1336,7 +1336,7 @@ TAO_Root_POA::invoke_key_to_object_helper_i (const char * repository_id,
 #if ! defined (CORBA_E_MICRO)
 CORBA::Object_ptr
 TAO_Root_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
-                                          std::string intf,
+                                          const std::string & intf,
                                           CORBA::Short priority)
 {
   // If the POA has the SYSTEM_ID policy and it detects that the

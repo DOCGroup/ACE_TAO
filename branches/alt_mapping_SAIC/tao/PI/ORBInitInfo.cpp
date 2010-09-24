@@ -150,7 +150,7 @@ TAO_ORBInitInfo::codec_factory (void)
 
 void
 TAO_ORBInitInfo::register_initial_reference (
-    const std::string id,
+    const std::string & id,
     CORBA::Object_ptr obj)
 {
   this->check_validity ();
@@ -169,7 +169,7 @@ TAO_ORBInitInfo::register_initial_reference (
 }
 
 CORBA::Object_ptr
-TAO_ORBInitInfo::resolve_initial_references (const std::string id)
+TAO_ORBInitInfo::resolve_initial_references (const std::string & id)
 {
   this->check_validity ();
 

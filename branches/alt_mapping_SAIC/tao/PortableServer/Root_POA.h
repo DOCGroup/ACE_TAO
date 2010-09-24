@@ -128,11 +128,11 @@ public:
 
 #if !defined (CORBA_E_MICRO)
   PortableServer::POA_ptr create_POA (
-      const std::string adapter_name,
+      const std::string & adapter_name,
       PortableServer::POAManager_ptr poa_manager,
       const CORBA::PolicyList &policies);
 
-  PortableServer::POA_ptr find_POA (const std::string adapter_name,
+  PortableServer::POA_ptr find_POA (const std::string & adapter_name,
                                     CORBA::Boolean activate_it);
 #endif
 
@@ -222,12 +222,12 @@ public:
 
   void deactivate_object (const PortableServer::ObjectId &oid);
 
-  CORBA::Object_ptr create_reference (const std:: string intf);
+  CORBA::Object_ptr create_reference (const std::string & intf);
 
 #if !defined (CORBA_E_MICRO)
   CORBA::Object_ptr create_reference_with_id (
       const PortableServer::ObjectId &oid,
-      const std::string intf);
+      const std::string & intf);
 #endif
 
   PortableServer::ObjectId servant_to_id (PortableServer::Servant p_servant);
@@ -566,7 +566,7 @@ protected:
 
   CORBA::Object_ptr create_reference_with_id_i (
       const PortableServer::ObjectId &oid,
-      std::string intf,
+      const std::string & intf,
       CORBA::Short priority);
 
   PortableServer::Servant reference_to_servant_i (CORBA::Object_ptr reference);

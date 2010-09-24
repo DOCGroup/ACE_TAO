@@ -321,7 +321,7 @@ int be_visitor_args_arglist::visit_string (be_string *node)
       switch (this->direction ())
         {
           case AST_Argument::dir_IN:
-            *os << "const std::string";
+            *os << "const std::string &";
             break;
           default:
             *os << "std::string &";

@@ -585,9 +585,10 @@ TAO_Object_Adapter::open (void)
                     CORBA::NO_MEMORY ());
 
   ::CORBA::PolicyList policy;
+  std::string default_name (TAO_DEFAULT_ROOTPOAMANAGER_NAME);
   PortableServer::POAManager_var poa_manager
-    = poa_manager_factory_->create_POAManager (TAO_DEFAULT_ROOTPOAMANAGER_NAME,
-                                              policy);
+    = poa_manager_factory_->create_POAManager (default_name,
+                                               policy);
 #else
   PortableServer::POAManager_ptr poa_manager_ptr;
   ::CORBA::PolicyList policy_list;

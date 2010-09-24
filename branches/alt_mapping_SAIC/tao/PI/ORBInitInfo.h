@@ -92,12 +92,12 @@ public:
    * resolve_initial_references() that may be called in the
    * ORBInitializer::post_init() call.
    */
-  virtual void register_initial_reference (const std::string id, CORBA::Object_ptr obj);
+  virtual void register_initial_reference (const std::string & id, CORBA::Object_ptr obj);
 
   /// Obtain a reference to an object that may not yet be available
   /// via the usual CORBA::ORB::resolve_initial_references() mechanism
   /// since the ORB may not be fully initialized yet.
-  virtual CORBA::Object_ptr resolve_initial_references (const std::string id);
+  virtual CORBA::Object_ptr resolve_initial_references (const std::string & id);
 
   /// Register a client request interceptor with the ORB currently
   /// being initialized.

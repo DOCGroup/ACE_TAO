@@ -116,11 +116,11 @@ public:
    * RT_Info is returned.  If the RT_Info already exists, an exception
    * is thrown.
    */
-  virtual RtecScheduler::handle_t create (const std::string entry_point);
+  virtual RtecScheduler::handle_t create (const std::string & entry_point);
 
   /// Lookup a handle for an RT_Info, and return its handle, or an error
   /// value if it's not present.
-  virtual RtecScheduler::handle_t lookup (const std::string entry_point);
+  virtual RtecScheduler::handle_t lookup (const std::string & entry_point);
 
   /// Return a pointer to the RT_Info corresponding to the passed handle.
   virtual RtecScheduler::RT_Info* get (RtecScheduler::handle_t handle);
@@ -174,7 +174,7 @@ public:
 
   /// Returns the priority and subpriority values assigned to an RT_Info,
   /// based on its entry point name.
-  virtual void entry_point_priority (const std::string entry_point,
+  virtual void entry_point_priority (const std::string & entry_point,
                                      RtecScheduler::OS_Priority& o_priority,
                                      RtecScheduler::Preemption_Subpriority_t& p_subpriority,
                                      RtecScheduler::Preemption_Priority_t& p_priority);
