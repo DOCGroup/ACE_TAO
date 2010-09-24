@@ -18,7 +18,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ciao/Contexts/Context_Impl_Base.h"
+#include "ciao/Contexts/Context_Impl_Base_T.h"
 #include "ciao/Containers/Session/Session_ContainerC.h"
 #include "tao/LocalObject.h"
 #include "tao/PortableServer/PS_ForwardC.h"
@@ -40,7 +40,7 @@ namespace CIAO
   template <typename BASE_CTX,
             typename COMP>
   class Session_Context_Impl : public virtual BASE_CTX,
-                               public virtual Context_Impl_Base,
+                               public virtual Context_Impl_Base_T< ::CIAO::Session_Container>,
                                public virtual ::CORBA::LocalObject
   {
   public:
