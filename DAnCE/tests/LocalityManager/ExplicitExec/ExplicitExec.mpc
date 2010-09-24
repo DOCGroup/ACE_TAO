@@ -11,7 +11,7 @@ project (DAnCE_LocalityManager_ExplicitExec) : \
  
   after += DAnCE_LocalityManager_Exec
   Source_Files {
-     $(DANCE_ROOT)/LocalityManager/Daemon/Locality_Manager_Task.cpp
-     $(DANCE_ROOT)/LocalityManager/Daemon/Locality_Manager.cpp
+     $(DANCE_ROOT)/dance/LocalityManager/Daemon/Locality_Manager_Task.cpp
+     $(DANCE_ROOT)/dance/LocalityManager/Daemon/Locality_Manager.cpp
   }
 }
