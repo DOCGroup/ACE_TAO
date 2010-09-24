@@ -1,7 +1,15 @@
+Fri Sep 24 12:32:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Containers_T.h:
+        * ace/Containers_T.cpp:
+        * ace/OS_NS_string.h:
+        * ace/OS_NS_wchar.h:
+          Fixed typo
+
 Fri Sep 24 12:24:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
-          Documented vc10, thanks to Paul Carter <pcarter at SCIRES dot COM>
+          Documented vc10, thanks to Paul Carter <pcarter at scires dot com>
           for reporting this.
 
 Fri Sep 24 11:44:06 UTC 2010  Olli Savia  <ops@iki.fi>

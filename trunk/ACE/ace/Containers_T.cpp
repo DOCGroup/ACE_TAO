@@ -1621,7 +1621,7 @@ template <class T> int
 ACE_Ordered_MultiSet<T>::find (const T &item,
                                ITERATOR &iter) const
 {
-  // search an occurance of item, using iterator's current position as a hint
+  // search an occurence of item, using iterator's current position as a hint
   ACE_DNode<T> *node = iter.current_;
   int const result = locate (item, node, node);
 
@@ -1779,7 +1779,7 @@ ACE_Ordered_MultiSet<T>::locate (const T &item, ACE_DNode<T> *start_position,
     return 0;
 }
 
-// Looks for first occurance of <item> in the ordered set, using the
+// Looks for first occurence of <item> in the ordered set, using the
 // passed starting position as a hint: if there is such an instance,
 // it updates the new_position pointer to point to one such node and
 // returns 0; if there is no such node, then if there is a node before
