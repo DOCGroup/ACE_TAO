@@ -9,7 +9,7 @@ project(CIF_Component_idl_gen) : componentidldefaults   {
               -Wb,skel_export_include=CIF_Component_svnt_export.h \
               -Wb,exec_export_macro=CIF_COMPONENT_EXEC_Export \
               -Wb,exec_export_include=CIF_Component_exec_export.h \
-              -Gxhex -Gxhsk -Gxhst -Gex
+              -Gxhex -Gxhsk -Gxhst
 
   IDL_Files {
     CIF_Component.idl

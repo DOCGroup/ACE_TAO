@@ -5,6 +5,7 @@
 #include "CIF_Common_export.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ccm/ComponentsC.h"
+#include "Component/CIF_ComponentC.h"
 
 class CIF_COMMON_Export CIF_Common
 {
@@ -22,10 +23,14 @@ public:
     ::CORBA::Object_var get_provider_cmp (void);
     ::CORBA::Object_var get_user_cmp (void);
 
+    int test_provider_component (void);
+    int test_user_component (void);
+
 private:
     ::CORBA::ORB_var orb_;
-    ::CORBA::Object_var provider_cmp_;
-    ::CORBA::Object_var user_cmp_;
+
+    ::CIF::CIF_User_var     user_object_;
+    ::CIF::CIF_Provider_var provider_object_;
 
     ACE_TCHAR * naming_;
 
