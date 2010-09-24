@@ -643,7 +643,7 @@ namespace ACE
   ACE_NAMESPACE_INLINE_FUNCTION u_long log2 (u_long num);
 
   /// Helper to avoid comparing floating point values with
-  /// operator== (uses operator< and operator>)
+  /// operator == (uses operator < and operator >)
   template <typename T>
   bool is_equal (const T& a, const T& b)
   {

@@ -1,3 +1,8 @@
+Fri Sep 24 11:44:06 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ace/ACE.h:
+          Adjusted ACE::is_equal() comment to make fuzz happy.
+
 Fri Sep 24 09:35:00 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * examples/C++NPv2/AIO_Client_Logging_Daemon.h:
