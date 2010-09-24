@@ -1,3 +1,16 @@
+Fri Sep 24 12:41:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Updated Remedy platforms
+
+        * ACEXML/parser/parser/Parser.h:
+        * ace/Containers_T.h:
+        * ace/Containers_T.cpp:
+        * ace/OS_NS_string.h:
+        * ace/OS_NS_wchar.h:
+        * apps/JAWS/clients/WebSTONE/src/nsapi-includes/base/shexp.h:
+          Fixed typo
+
 Fri Sep 24 12:32:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Containers_T.h:

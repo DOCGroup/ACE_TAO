@@ -1920,7 +1920,7 @@ private:
                    ACE_DNode<T> **new_position);
 
   /**
-   * Looks for first occurence of @a item in the ordered set, using the
+   * Looks for first occurrence of @a item in the ordered set, using the
    * passed starting position as a hint: if there is such an instance, it
    * updates the new_position pointer to point to this node and returns 0;
    * if there is no such node, then if there is a node before where the
