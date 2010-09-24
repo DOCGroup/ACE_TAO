@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project: aceexe, tmcast {
-  exename = member
-}
-
