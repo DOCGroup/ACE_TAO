@@ -50,6 +50,6 @@ if ($num == 6) {
     $status = 1;
 }
 
-# $target->DeleteFile($xmi);
+$target->DeleteFile($xmi);
 
 exit $status;
