@@ -123,7 +123,7 @@ document</a>.</p><p>
 </thead><tbody>
   <tr>
     <th>DOC Group</th>
-    <td>Windows 2000, XP (MSVC++ 7.1, and 8);
+    <td>Windows 2000, XP (MSVC++ 7.1, 8, 9, and 10);
         many versions of Linux/Intel (many compilers).
     </td>
     <td>DOC sites at <a href="http://www.dre.vanderbilt.edu/">ISIS</a>,
@@ -565,19 +565,18 @@ one will not clean up any old files, and trying to use the environment's
 </p><h3><a name="msvc">Building and Installing ACE on Windows with
 Microsoft Visual Studio</a></h3>
 
-<p>ACE contains project files for Microsoft Visual Studio .NET 2003 (VC7.1)
-and Visual Studio 2005 (VC8). Visual Studio 2005 supports building for
+<p>ACE contains project files for Microsoft Visual Studio .NET 2005 (VC8)
+, Visual Studio 2009 (VC9), and Visual Studio 2010 (VC10).
+Visual Studio 2005 supports building for
 desktop/server Windows as well as for Windows CE and Windows Mobile. Since
 not all users will be interested in the CE/Mobile capability, these platforms
 have separate solution and project files from the desktop/server Windows.
-Furthermore, VC7.1 and VC8 use different file formats but the same file
+Furthermore, VC7.1, VC8, VC9, and 10 use different file formats but the same file
 suffixes (<code>.sln</code> and <code>.vcproj</code>). To support both
 environments, ACE supplies files with different names for the different
 development and target platforms. The platform/name mapping is shown below.
 All solution files have a <code>.sln</code> suffix and all project files have
 a <code>.vcproj</code> suffix.</p>
-
-<p>Visual Studio 2008 (VC9) is also supported.</p>
 
 <p>
 The free Visual C++ 2008 Express Edition will work in place of the traditional
@@ -612,6 +611,11 @@ can be built with the compiler and linker included in the <a href="http://www.mi
   <tr>
     <th>VC9 for desktop/server</th>
     <td><i>name</i><code>_vc9</code>
+    </td>
+  </tr>
+  <tr>
+    <th>VC10 for desktop/server</th>
+    <td><i>name</i><code>_vc10</code>
     </td>
   </tr>
 </tbody></table>

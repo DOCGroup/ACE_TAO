@@ -1,3 +1,9 @@
+Fri Sep 24 12:24:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Documented vc10, thanks to Paul Carter <pcarter at SCIRES dot COM>
+          for reporting this.
+
 Fri Sep 24 11:44:06 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ace/ACE.h:
