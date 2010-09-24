@@ -24,7 +24,7 @@
  * o ? matches one character
  * o \ will escape a special character
  * o $ matches the end of the string
- * o [abc] matches one occurence of a, b, or c. The only character that needs
+ * o [abc] matches one occurrence of a, b, or c. The only character that needs
  *         to be escaped in this is ], all others are not special.
  * o [a-z] matches any character between a and z
  * o [^az] matches any character except a or z

@@ -680,7 +680,7 @@ private:
 
   /**
    * Check for a parameter entity reference. This is used to check for the
-   * occurence of a PE Reference withing markupDecl. Additionally this
+   * occurrence of a PE Reference withing markupDecl. Additionally this
    * function consumes any leading or trailing whitespace around the PE
    * Reference.
    *
