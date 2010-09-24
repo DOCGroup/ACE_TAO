@@ -136,12 +136,12 @@ namespace ACE_OS
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSPBRK */
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSRCHR)
-  /// Emulated wcsrchr (wchar_t version) - Finds the last occurence of a
+  /// Emulated wcsrchr (wchar_t version) - Finds the last occurrence of a
   /// character in a string.
   extern ACE_Export
   wchar_t *wcsrchr_emulation (wchar_t *string, wint_t c);
 
-  /// Emulated wcsrchr (const wchar_t version) - Finds the last occurence of a
+  /// Emulated wcsrchr (const wchar_t version) - Finds the last occurrence of a
   /// character in a string.
   extern ACE_Export
   const wchar_t *wcsrchr_emulation (const wchar_t *string, wint_t c);
