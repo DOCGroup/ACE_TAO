@@ -21,6 +21,6 @@ project(DAnCE_Locality_Handler) : dance_skel, dance_split_plan, dance_lib, dance
      Plugin_Conf.h
   }
   specific {
-    install_dir = DAnCE/LocalityManager/Handler
+    install_dir = dance/LocalityManager/Handler
   }
 }

@@ -13,6 +13,6 @@ project: install, dance_lib, dance_output, dance_domainapplication_skel, \
   }
 
   specific {
-    install_dir = DAnCE/DomainApplication
+    install_dir = dance/DomainApplication
   }
 }
