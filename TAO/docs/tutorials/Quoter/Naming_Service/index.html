@@ -148,7 +148,7 @@ $ setenv NameServicePort `expr 10000 + $uid`
     <P>Now we can start the Naming Service provided with TAO:
     </P>
 <PRE>
-$ $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service
+$ $TAO_ROOT/orbsvcs/Naming_Service/tao_cosnaming
 </PRE>
     <P>and your server:
     </P>
@@ -183,7 +183,7 @@ $ client MSFT RHAT RHAT MSFT
       file, as in:
     </P>
 <PRE>
-$ $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o ns.ior
+$ $TAO_ROOT/orbsvcs/Naming_Service/tao_cosnaming -o ns.ior
 </PRE>
     <P>and then use the <CODE>-ORBInitRef</CODE> to that IOR
       instead of the multicast protocol:
@@ -211,7 +211,7 @@ $ server -ORBInitRef NameService=corbaloc:iiop:ace.cs.wustl.edu:12345/NameServic
       <CODE>-ORBEndPoint</CODE> option:
     </P>
 <PRE>
-$ $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -ORBEndPoint iiop://ace.cs.wustl.edu:12345
+$ $TAO_ROOT/orbsvcs/Naming_Service/tao_cosnaming -ORBEndPoint iiop://ace.cs.wustl.edu:12345
 </PRE>
     <P>Of course, this only works if you are running the program in
       <CODE>ace.cs.wustl.edu</CODE> and the <CODE>12345</CODE> port is
@@ -240,7 +240,7 @@ $ $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -ORBEndPoint iiop://ace.cs.wus
       <STRONG>not</STRONG> persistent, but it is a matter of using a
       flag to save its state on a file:
 <PRE>
-$ $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -f name_service.dat
+$ $TAO_ROOT/orbsvcs/Naming_Service/tao_cosnaming -f name_service.dat
 </PRE>
     </P>
 
