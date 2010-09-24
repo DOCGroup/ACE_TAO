@@ -16,16 +16,16 @@ project(DAnCE_Properties_IDL) : install, dancelib_with_idl, dance_output {
   }
   InstallData_Files {
     gendir = RepositoryManager
-    ../RepositoryManager/README
+    RepositoryManager/README
   }
   InstallData_Files {
     gendir = NodeManager
-    ../NodeManager/README
+    NodeManager/README
   }
 
   verbatim(gnuace, postinstall) {
-"	cp ../rules.dance.GNU $(INSTALL_PREFIX)/share/DAnCE"
-"	perl -i -pe's!\\$$[{(]DANCE_ROOT[})]!$(INSTALL_PREFIX)/include!g;' $(INSTALL_PREFIX)/share/DAnCE/rules.dance.GNU"
-"	echo export DANCE_ROOT=$(INSTALL_PREFIX)/share/DAnCE> $(INSTALL_PREFIX)/share/DAnCE/dance-devel.sh"
+"	cp ../rules.dance.GNU $(INSTALL_PREFIX)/share/dance"
+"	perl -i -pe's!\\$$[{(]DANCE_ROOT[})]!$(INSTALL_PREFIX)/include!g;' $(INSTALL_PREFIX)/share/dance/rules.dance.GNU"
+"	echo export DANCE_ROOT=$(INSTALL_PREFIX)/share/dance> $(INSTALL_PREFIX)/share/dance/dance-devel.sh"
   }
 }

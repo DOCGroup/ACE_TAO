@@ -17,6 +17,6 @@ project(DAnCE_NodeApplication): install, dance_lib, \
   }
 
   specific {
-    install_dir = DAnCE/NodeApplication
+    install_dir = dance/NodeApplication
   }
 }
