@@ -14,6 +14,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/ACE.h"
 #include "ace/OS_NS_math.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
@@ -34,12 +35,6 @@
   ((X)                                                          \
    ? static_cast<void>(0)                                       \
    : ACE_VERSIONED_NAMESPACE_NAME::__ace_assert(__FILE__, __LINE__, ACE_TEXT_CHAR_TO_TCHAR (#X)))
-
-// Simple helper to avoid comparing floating point values with ==
-template <typename T> bool is_equal (const T& a, const T& b)
-{
-  return !((a < b) || (a > b));
-}
 
 // Test ACE_OS::access() to be sure a file's existence is correctly noted.
 int
@@ -1151,7 +1146,7 @@ ceilf_test (void)
   for (size_t i = 0 ; i < sizeof (values) / sizeof (float) ; i++)
     {
       result = ACE_OS::ceil (values [i]);
-      if (!is_equal(result, results[i]))
+      if (!ACE::is_equal(result, results[i]))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("ceilf error: input %.1F, output %1F, expected %1F\n"),
@@ -1179,7 +1174,7 @@ floorf_test (void)
   for (size_t i = 0 ; i < sizeof (values) / sizeof (float) ; i++)
     {
       result = ACE_OS::floor (values [i]);
-      if (!is_equal(result, results[i]))
+      if (!ACE::is_equal(result, results[i]))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("floorf error: input %.1F, output %1F, expected %1F\n"),
@@ -1205,7 +1200,7 @@ ceil_test (void)
   for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; i++)
     {
       result = ACE_OS::ceil (values [i]);
-      if (!is_equal(result, results[i]))
+      if (!ACE::is_equal(result, results[i]))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("ceil error: input %.1F, output %1F, expected %1F\n"),
@@ -1233,7 +1228,7 @@ floor_test (void)
   for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; i++)
     {
       result = ACE_OS::floor (values [i]);
-      if (!is_equal(result, results[i]))
+      if (!ACE::is_equal(result, results[i]))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("floor error: input %.1F, output %1F, expected %1F\n"),
@@ -1261,7 +1256,7 @@ ceill_test (void)
   for (size_t i = 0 ; i < sizeof (values) / sizeof (long double) ; i++)
     {
       result = ACE_OS::ceil (values [i]);
-      if (!is_equal(result, results[i]))
+      if (!ACE::is_equal(result, results[i]))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("ceil error: input %.1F, output %1F, expected %1F\n"),
@@ -1289,7 +1284,7 @@ floorl_test (void)
   for (size_t i = 0 ; i < sizeof (values) / sizeof (long double) ; i++)
     {
       result = ACE_OS::floor (values [i]);
-      if (!is_equal(result, results[i]))
+      if (!ACE::is_equal(result, results[i]))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("floor error: input %.1F, output %1F, expected %1F\n"),
