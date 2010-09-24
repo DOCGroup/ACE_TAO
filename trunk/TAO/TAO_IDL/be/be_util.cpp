@@ -139,6 +139,7 @@ be_util::prep_be_arg (char *s)
   static const char arg_versioning_begin[] = "versioning_begin=";
   static const char arg_versioning_end[]   = "versioning_end=";
   static const char obv_opt_accessor[]     = "obv_opt_accessor";
+  static const char ciao_container_type[]  = "ciao_container_type";
   static const char include_guard[]        = "include_guard=";
   static const char safe_include[]         = "safe_include=";
   static const char unique_include[]       = "unique_include=";
@@ -255,6 +256,11 @@ be_util::prep_be_arg (char *s)
       else if (ACE_OS::strstr (arg, obv_opt_accessor) == arg)
         {
           be_global->obv_opt_accessor (1);
+        }
+      else if (ACE_OS::strstr (arg, ciao_container_type) == arg)
+        {
+          char* val = arg + sizeof (obv_opt_accessor) - 1;
+          be_global->ciao_container_type (val);
         }
       else if (ACE_OS::strstr (arg, arg_versioning_begin) == arg)
         {
@@ -454,6 +460,10 @@ be_util::usage (void)
       ACE_TEXT (" -Wb,unique_include=<include path>\t\tinclude that should ")
       ACE_TEXT ("be generated as only contents of the generated client ")
       ACE_TEXT ("header file.\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,container_type=<type>\t\t\ttype of container we generated\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,

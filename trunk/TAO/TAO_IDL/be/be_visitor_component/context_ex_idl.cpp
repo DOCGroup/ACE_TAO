@@ -39,7 +39,8 @@ be_visitor_context_ex_idl::visit_component (be_component *node)
 
   if (base == 0)
     {
-      os_ << "::Components::SessionContext";
+      os_ << "::Components::"
+          << be_global->ciao_container_type () << "Context";
     }
   else
     {

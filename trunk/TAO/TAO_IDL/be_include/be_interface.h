@@ -310,9 +310,6 @@ public:
   /// applies only to implied IDL
   be_interface *original_interface (void);
 
-  /// Is Components::SessionComponent an immediate parent?
-  int session_component_child (void);
-
   /// Is EventConsumerBase our parent?
   bool is_event_consumer (void);
 
@@ -470,9 +467,6 @@ protected:
   /// The original interface from which this one was created,
   /// applies only to implied IDL
   be_interface *original_interface_;
-
-  /// Are we a direct child of Components::SessionComponent?
-  int session_component_child_;
 
   /// Are we an AMI reply handler?
   bool is_ami_rh_;
