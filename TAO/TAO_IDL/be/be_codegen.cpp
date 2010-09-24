@@ -3459,7 +3459,9 @@ TAO_CodeGen::gen_svnt_hdr_includes (void)
 
   ACE_CString context_file ("ciao/Contexts/");
   context_file += be_global->ciao_container_type ();
-  context_file += "/Context_Impl_T.h";
+  context_file += "/";
+  context_file += be_global->ciao_container_type ();
+  context_file += "_Context_T.h";
 
   this->gen_standard_include (
     this->ciao_svnt_header_,
