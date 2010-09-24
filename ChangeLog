@@ -1,3 +1,24 @@
+Fri Sep 24 15:12:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h:
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+        * tao/PortableServer/POAManagerFactory.cpp:
+        * tao/PortableServer/POAManagerFactory.h:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/Root_POA.h:
+        * tao/Object_KeyC.h:
+        * tao/PI/ORBInitInfo.cpp:
+        * tao/PI/ORBInitInfo.h:
+
+          Changed generation type of std::string IN parameter
+          from const std::string to const std::string &,
+          regenerated, and modified operation implementations
+          accordingly.
+
 Thu Sep 16 18:59:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Sched/DynSched.cpp:

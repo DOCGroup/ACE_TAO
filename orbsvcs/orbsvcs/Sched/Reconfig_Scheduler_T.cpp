@@ -423,7 +423,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close (void)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 RtecScheduler::handle_t
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-create (const std::string entry_point)
+create (const std::string & entry_point)
 {
 #if defined (SCHEDULER_LOGGING)
   ACE_DEBUG ((LM_TRACE,
@@ -450,7 +450,7 @@ create (const std::string entry_point)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 RtecScheduler::handle_t
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-lookup (const std::string entry_point)
+lookup (const std::string & entry_point)
 {
 #if defined (SCHEDULER_LOGGING)
   ACE_DEBUG ((LM_TRACE,
@@ -899,7 +899,7 @@ priority (RtecScheduler::handle_t handle,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-entry_point_priority (const std::string entry_point,
+entry_point_priority (const std::string & entry_point,
                       RtecScheduler::OS_Priority& priority,
                       RtecScheduler::Preemption_Subpriority_t& subpriority,
                       RtecScheduler::Preemption_Priority_t& p_priority)

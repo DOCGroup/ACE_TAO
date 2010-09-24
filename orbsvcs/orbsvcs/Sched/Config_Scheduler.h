@@ -41,9 +41,9 @@ public:
   ACE_Config_Scheduler (void);
   virtual ~ACE_Config_Scheduler (void);
 
-  virtual RtecScheduler::handle_t create (const std::string entry_point);
+  virtual RtecScheduler::handle_t create (const std::string & entry_point);
 
-  virtual RtecScheduler::handle_t lookup (const std::string entry_point);
+  virtual RtecScheduler::handle_t lookup (const std::string & entry_point);
 
   virtual RtecScheduler::RT_Info* get (RtecScheduler::handle_t handle);
 
@@ -63,7 +63,7 @@ public:
                          RtecScheduler::Preemption_Subpriority_t& p_subpriority,
                          RtecScheduler::Preemption_Priority_t& p_priority);
 
-  virtual void entry_point_priority (const std::string entry_point,
+  virtual void entry_point_priority (const std::string & entry_point,
                                      RtecScheduler::OS_Priority& priority,
                                      RtecScheduler::Preemption_Subpriority_t& p_subpriority,
                                      RtecScheduler::Preemption_Priority_t& p_priority);

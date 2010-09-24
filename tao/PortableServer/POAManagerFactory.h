@@ -48,12 +48,12 @@ public:
   virtual ~TAO_POAManager_Factory (void);
 
   virtual ::PortableServer::POAManager_ptr create_POAManager (
-      const std::string id,
+      const std::string & id,
       const ::CORBA::PolicyList & policies);
 
   virtual ::PortableServer::POAManagerFactory::POAManagerSeq list (void);
 
-  virtual ::PortableServer::POAManager_ptr find (const std::string id);
+  virtual ::PortableServer::POAManager_ptr find (const std::string & id);
 
   void remove_all_poamanagers (void);
 

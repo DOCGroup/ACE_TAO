@@ -30,7 +30,7 @@ ACE_Config_Scheduler::~ACE_Config_Scheduler (void)
 }
 
 RtecScheduler::handle_t
-ACE_Config_Scheduler::create (const std::string entry_point)
+ACE_Config_Scheduler::create (const std::string & entry_point)
 {
   typedef RtecScheduler::RT_Info* RT_Info_ptr;
 
@@ -79,7 +79,7 @@ ACE_Config_Scheduler::create (const std::string entry_point)
 }
 
 RtecScheduler::handle_t
-ACE_Config_Scheduler::lookup (const std::string entry_point)
+ACE_Config_Scheduler::lookup (const std::string & entry_point)
 {
   RtecScheduler::RT_Info* rt_info = 0;
   switch (impl->get_rt_info (entry_point.c_str (), rt_info))
@@ -172,7 +172,7 @@ void ACE_Config_Scheduler::priority (RtecScheduler::handle_t handle,
     }
 }
 
-void ACE_Config_Scheduler::entry_point_priority (const std::string entry_point,
+void ACE_Config_Scheduler::entry_point_priority (const std::string & entry_point,
                                                  RtecScheduler::OS_Priority& priority,
                                                  RtecScheduler::Preemption_Subpriority_t& p_subpriority,
                                                  RtecScheduler::Preemption_Priority_t& p_priority)
