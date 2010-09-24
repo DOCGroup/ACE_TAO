@@ -32,18 +32,15 @@ namespace CIAO
     // Destructor
     virtual ~CIAO_StoreReferences_i (void);
 
-    virtual
-      void pre_install (::Deployment::DeploymentPlan & plan,
+    virtual void pre_install (::Deployment::DeploymentPlan & plan,
                         ::CORBA::ULong instanceRef);
 
-    virtual
-      void post_install (const ::Deployment::DeploymentPlan & plan,
+    virtual void post_install (const ::Deployment::DeploymentPlan & plan,
                          ::CORBA::ULong index,
                          const ::CORBA::Any & reference,
                          const ::CORBA::Any & exception_thrown);
 
-    virtual
-      void configure(const Deployment::Properties&);
+    virtual void configure(const Deployment::Properties&);
 
     CORBA::ORB_var orb_;
   private:

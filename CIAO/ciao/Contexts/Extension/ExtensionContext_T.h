@@ -44,7 +44,7 @@ namespace CIAO
             typename COMP>
   class ExtensionContext_Impl
     : public virtual BASE_CTX,
-      public virtual ::CIAO::Context_Impl_Base,
+      public virtual ::CIAO::Context_Impl_Base_T <::CIAO::Extension_Container>,
       public virtual ::CORBA::LocalObject
   {
   public:

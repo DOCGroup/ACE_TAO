@@ -18,37 +18,32 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Context_Impl_export.h"
+#include "ccm/CCM_ContextC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ccm/CCM_ContextC.h"
-
 namespace CIAO
 {
-  class Container;
-  typedef Container *Container_ptr;
-  typedef TAO_Objref_Var_T<Container> Container_var;
-
   /**
-   * @class Context_Impl_Base
+   * @class Context_Impl_Base_T
    *
-   * @brief Non-template base class for Context_Impl.
+   * @brief Template base class for Context_Impl.
    *
    * Holds the non-template parts of its child class
    * Context_Impl.
    */
-  class Context_Impl_Export Context_Impl_Base
+  template <typename CONTAINER_TYPE>
+  class Context_Impl_Base_T
     : public virtual Components::CCMContext
   {
   public:
-    Context_Impl_Base (::Components::CCMHome_ptr home,
-                       ::CIAO::Container_ptr c,
-                       const char *instance_id);
+    Context_Impl_Base_T (::Components::CCMHome_ptr home,
+                         typename CONTAINER_TYPE::_ptr_type c,
+                         const char *instance_id);
 
-    virtual ~Context_Impl_Base (void);
+    virtual ~Context_Impl_Base_T (void);
 
     // Operations from ::Components::CCMContext.
 #if !defined (CCM_LW)
@@ -80,16 +75,21 @@ namespace CIAO
     /// moment in favor of a resolve_service_reference() call
     const char *_ciao_instance_id (void) const;
 
+  protected:
+    typename CONTAINER_TYPE::_var_type container_;
   private:
     ::Components::CCMHome_var home_;
-  protected:
-    ::CIAO::Container_var container_;
-  private:
-    /// Private constructor, not allowed to be called
-    Context_Impl_Base (void);
     ::CORBA::String_var ciao_instance_id_;
   };
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "ciao/Contexts/Context_Impl_Base_T.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("ciao/Contexts/Context_Impl_Base_T.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 
