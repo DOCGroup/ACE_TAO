@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Context_Impl_T.h
+ *  @file    Session_Context_T.h
  *
  *  $Id$
  *
@@ -70,11 +70,11 @@ namespace CIAO
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ciao/Contexts/Session/Context_Impl_T.cpp"
+#include "ciao/Contexts/Session/Session_Context_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ciao/Contexts/Session/Context_Impl_T.cpp")
+#pragma implementation ("ciao/Contexts/Session/Session_Context_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
