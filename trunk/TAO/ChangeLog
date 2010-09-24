@@ -1,3 +1,8 @@
+Fri Sep 24 14:51:28 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+          Disabled test for bug 2777 in static builds.
+
 Fri Sep 24 14:19:37 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/tests/Bug_2777_Regression/run_test.pl:
