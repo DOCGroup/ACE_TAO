@@ -1,0 +1,24 @@
+= Misc =
+ * default tao_idl lookup path?
+ * put IDL in /usr/share/idl
+ * current IDL should be in orvsvcs/orbsvcs
+ * see current bugs:
+   o package netsvcs library
+   o package websvcs library?
+ * rewrite the patch to load TAO libraries by SONAME and RFC it
+ * move ACE_ROOT from /usr/share/ace to /usr/lib/ace?
+ * hide .real programs in /usr/lib/ace?
+ * make all TAO programs start with tao_, and put distribution compatible
+   program in /usr/lib/tao
+
+= MWC and MPC =
+ * they should define $ACE_ROOT and $TAO_ROOT if they're not
+ * some makefile are not regenerated (e.g. JAWS). Seems like a bug.
+
+= autoconf support =
+ * some macros are missing (see rules)
+
+= CIAO =
+ * to restore
+ * autoconf support
+ * cidlc
