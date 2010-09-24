@@ -1,3 +1,37 @@
+Fri Sep 24 13:12:07 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_provides.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/context_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_component_scope.cpp:
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svh.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be_include/be_interface.h:
+        * docs/compiler.html:
+          Added container_type as backend option, this is default Session. This
+          way we can start working on other container types easily, just
+          specifyc Extention of Entity as backend option and all code
+          generated will be tweaked to the other container type
+
+        * tao/ORB_Table.h:
+          Fixed typo
+
 Fri Sep 24 11:51:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:

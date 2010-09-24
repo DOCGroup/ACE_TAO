@@ -132,17 +132,22 @@ be_visitor_executor_exs::visit_component (be_component *node)
     }
 
   os_ << be_nl << be_nl
-      << "// Operations from Components::SessionComponent.";
+      << "// Operations from Components::"
+      << be_global->ciao_container_type () << "Component.";
 
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
   const char *global = (sname_str == "" ? "" : "::");
+  const char *container_type = be_global->ciao_container_type ();
 
   os_ << be_nl << be_nl
       << "void" << be_nl
-      << lname << "_exec_i::set_session_context (" << be_idt_nl
-      << "::Components::SessionContext_ptr ctx)" << be_uidt_nl
+      << lname << "_exec_i::set_"
+      << tao_cg->downcase (container_type)
+      << "_context (" << be_idt_nl
+      << "::Components::" << be_global->ciao_container_type ()
+      << "Context_ptr ctx)" << be_uidt_nl
       << "{" << be_idt_nl
       << "this->ciao_context_ =" << be_idt_nl
       << global << sname << "::CCM_" << lname

@@ -233,8 +233,10 @@ be_provides::gen_facet_svnt_defn (TAO_OutStream &os)
      << lname << "_Servant::_get_component (void)"
      << be_nl
      << "{" << be_idt_nl
-     << "::Components::SessionContext_var sc =" << be_idt_nl
-     << "::Components::SessionContext::_narrow (this->ctx_.in ());"
+     << "::Components::" << be_global->ciao_container_type ()
+     << "Context_var sc =" << be_idt_nl
+     << "::Components::" << be_global->ciao_container_type ()
+     << "Context::_narrow (this->ctx_.in ());"
      << be_uidt_nl << be_nl
      << "if (! ::CORBA::is_nil (sc.in ()))" << be_idt_nl
      << "{" << be_idt_nl

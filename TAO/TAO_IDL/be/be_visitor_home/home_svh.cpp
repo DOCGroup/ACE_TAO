@@ -154,7 +154,8 @@ be_visitor_home_svh::gen_servant_class (void)
   os_ << lname << "_Servant (" << be_idt_nl
       << global << sname << "::CCM_" << lname << "_ptr exe," << be_nl
       << "const char * ins_name," << be_nl
-      << "::CIAO::Session_Container_ptr c);" << be_uidt;
+      << "::CIAO::" << be_global->ciao_container_type ()
+      << "_Container_ptr c);" << be_uidt;
 
   os_ << be_nl << be_nl
       << "virtual ~" << lname << "_Servant (void);";
@@ -256,7 +257,8 @@ be_visitor_home_svh::gen_entrypoint (void)
       << "create_" << node_->flat_name ()
       << "_Servant (" << be_idt_nl
       << "::Components::HomeExecutorBase_ptr p," << be_nl
-      << "::CIAO::Session_Container_ptr c," << be_nl
+      << "::CIAO::" << be_global->ciao_container_type ()
+      << "_Container_ptr c," << be_nl
       << "const char * ins_name);" << be_uidt;
 }
 

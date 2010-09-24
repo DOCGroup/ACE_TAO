@@ -57,7 +57,7 @@ namespace TAO
    *       containing a template type (TAO_Singleton) with a static
    *       member to be introduced.  In turn, this potentially
    *       introduces problems in MS Windows DLL environments due to
-   *       the occurance of multiple singleton instances.  There
+   *       the occurrence of multiple singleton instances.  There
    *       should only be one!
    */
   class TAO_Export ORB_Table

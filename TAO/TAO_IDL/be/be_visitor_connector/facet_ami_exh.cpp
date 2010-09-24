@@ -222,9 +222,14 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
                         -1);
     }
 
+  const char *container_type = be_global->ciao_container_type ();
+
   os_ << be_nl << be_nl
-      << "virtual void set_session_context ("
-      << "::Components::SessionContext_ptr ctx);";
+      << "virtual void set_"
+      << tao_cg->downcase (container_type)
+      << "_context ("
+      << "::Components::"
+      << be_global->ciao_container_type () << "Context_ptr ctx);";
 
   AST_Decl *s = ScopeAsDecl (this->node_->defined_in ());
   bool is_global =
