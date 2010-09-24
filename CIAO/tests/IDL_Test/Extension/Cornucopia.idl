@@ -1,0 +1,204 @@
+// $Id$
+/**
+ * @file Cornucopia.idl
+ * @author Jeff Parsons <j.parsons@vanderbilt.edu>
+ *
+ * Tests TAO_IDL generation of CIAO servant, executor IDL
+ * and executor implementation stencil for a variety of
+ * IDL3 constructs.
+ */
+
+#include <Components.idl>
+
+module Supported
+{
+  interface IfacePawPaw
+  {
+    long paw_paw_op (out short spew);
+    attribute boolean inbred;
+  };
+
+  interface IfaceMom : IfacePawPaw
+  {
+    readonly attribute wchar uni_tag;
+    IfacePawPaw get_paw_paw ();
+  };
+
+  interface IfaceDad : IfacePawPaw
+  {
+    attribute string msg;
+    long long get_big_int (in IfacePawPaw genealogy);
+  };
+
+  interface Iface : IfaceMom, IfaceDad
+  {
+    attribute wstring uni_uuid;
+    void supported_op (inout unsigned long index);
+  };
+};
+
+interface pface {};
+interface uface {};
+interface umface {};
+
+abstract interface IfAb
+{
+  long op (out long value);
+};
+
+interface IfConcr : IfAb
+{
+  long concr_op (out long value);
+};
+
+#if !defined (CCM_LW)
+valuetype pkey : Components::PrimaryKeyBase
+{
+  public string info;
+};
+#endif
+
+eventtype pubtype {};
+eventtype emittype {};
+eventtype eattype {};
+
+exception BadGet {};
+exception BadSet {};
+exception Whatever {};
+
+module BaseMod
+{
+component CompBase supports Supported::Iface
+  {
+    attribute octet the_byte
+      getraises (BadGet, Whatever) setraises (BadSet);
+  };
+};
+
+enum Color
+{
+  RED,
+  WHITE,
+  BLUE
+};
+
+module T2
+{
+  interface Write
+  {
+  };
+
+  porttype MyPort
+  {
+    uses Write writer;
+  };
+
+  component Base
+  {
+    port MyPort usage;
+    attribute string topic_name;
+  };
+
+  component Derived : Base
+  {
+  };
+};
+
+module LocalMod
+{
+  local interface L1
+  {
+  };
+
+  local interface L2
+  {
+    L1 getL1();
+    void setL1 (in L1 x);
+  };
+
+  component CombLocal
+  {
+    provides L1 x;
+    uses L2 y;
+  };
+
+  component CombLocal2
+  {
+    uses L1 x;
+    provides L2 y;
+  };
+
+  porttype L3
+  {
+    provides L1 x;
+    uses L2 y;
+  };
+
+  component CombLocal4
+  {
+    port L3 z;
+    mirrorport L3 z2;
+  };
+
+  component CombLocal3
+  {
+    mirrorport L3 z;
+    port L3 z2;
+  };
+};
+
+module DerivedMod
+{
+  porttype CombinedPort
+  {
+    provides pface pface_provider;
+    uses uface uface_user;
+    uses multiple umface umface_umuser;
+  };
+
+  component CompCombinedPort
+  {
+    port CombinedPort cc;
+  };
+
+  component MirrorCompCombinedPort
+  {
+    mirrorport CombinedPort cc;
+  };
+
+  component CompDerived : BaseMod::CompBase
+  {
+    attribute Color stripe;
+    provides pface pface_provider;
+    uses uface uface_user;
+    uses multiple umface umface_umuser;
+    publishes pubtype pubtype_publisher;
+    emits emittype emittype_emitter;
+    consumes eattype eattype_consumer;
+    uses IfConcr ccre_user;
+  };
+};
+
+module HomeMod
+{
+  home CompBaseHome supports Supported::Iface manages BaseMod::CompBase
+  {
+    readonly attribute Color shade;
+    pface fetch_managed_ports (out uface recep);
+    factory base_init (in string id, in unsigned short uni_raw)
+      raises (Whatever);
+    finder bathroom_sink ();
+  };
+
+  home CompDerivedHome : CompBaseHome manages DerivedMod::CompDerived
+  {
+    exception ch_except {};
+    void ch_op () raises (ch_except);
+    factory def_init ();
+#if !defined (CCM_LW)
+    finder kitchen_sink (in string uid, in pkey key, in boolean all)
+      raises (ch_except);
+#endif
+  };
+};
+
