@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    ExtensionContext_T.h
+ *  @file    Extension_Context_T.h
  *
  *  $Id$
  *
@@ -16,35 +16,22 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CIAO_Server_Export.h"
+#include "ciao/Contexts/Context_Impl_Base_T.h"
+#include "ciao/Containers/Extension/Extension_ContainerC.h"
+#include "tao/LocalObject.h"
+#include "tao/PortableServer/PS_ForwardC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciao/CCM_ExtensionContextC.h"
-#include "ciao/Context_Impl_Base.h"
-#include "tao/Objref_VarOut_T.h"
-
-namespace Components
-{
-  class CCMHome;
-  typedef CCMHome *CCMHome_ptr;
-
-  typedef
-    TAO_Objref_Var_T<
-        CCMHome
-      >
-    CCMHome_var;
-}
-
 namespace CIAO
 {
-  template <typename BASE_CTX>
+  template <typename BASE_CTX,
             typename COMP>
   class ExtensionContext_Impl
     : public virtual BASE_CTX,
-      public virtual ::CIAO::Context_Impl_Base_T <::CIAO::Extension_Container>,
+      public virtual ::CIAO::Context_Impl_Base_T < ::CIAO::Extension_Container>,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -75,11 +62,18 @@ namespace CIAO
         ::Components::Cookie * ck);
 
   private:
-    ExtensionContext_Impl (void);
     PortableServer::Servant servant_;
     typename COMP::_var_type component_;
   };
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "ciao/Contexts/Extension/Extension_Context_T.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("ciao/Contexts/Extension/Extension_Context_T.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 
