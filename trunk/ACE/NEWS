@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN ACE-5.8.2 and ACE-5.8.3
 ====================================================
 
+. Two new methods were added to ACE_Pipe: close_read() and close_write().
+  These methods can be used to close individual pipe handles.
+
 . The ACE::handle_ready() family of methods was changed to prefer using
   poll() over select() on platforms where poll() is available. This
   preference was previously only used if ACE_HAS_LIMITED_SELECT was set.
