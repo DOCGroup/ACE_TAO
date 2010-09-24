@@ -526,6 +526,10 @@ public:
   void ciao_ami_conn_impl_src_ending (const char* s);
   const char* ciao_ami_conn_impl_src_ending (void) const;
 
+  /// For optionally controlling the container type, default is Session
+  void ciao_container_type (const char* s);
+  const char* ciao_container_type (void) const;
+
   /// Set the clonable_in_args.
   void use_clonable_in_args (bool clonable);
 
@@ -973,6 +977,10 @@ private:
   /// CIAO AMI reply handler impl source file name ending.
   /// Default is "A_impl.cpp".
   char* ciao_ami_conn_impl_src_ending_;
+
+  /// CIAO container type
+  /// Default is "Session".
+  char* ciao_container_type_;
 
   /**
    * Directory where all the IDL-Compiler-Generated files are to be

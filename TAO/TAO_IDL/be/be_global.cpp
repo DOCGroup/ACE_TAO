@@ -85,6 +85,7 @@ BE_GlobalData::BE_GlobalData (void)
     ciao_ami_conn_idl_ending_ (ACE::strnew ("A.idl")),
     ciao_ami_conn_impl_hdr_ending_ (ACE::strnew ("_conn_i.h")),
     ciao_ami_conn_impl_src_ending_ (ACE::strnew ("_conn_i.cpp")),
+    ciao_container_type_ (ACE::strnew ("Session")),
     output_dir_ (0),
     stub_include_dir_ (0),
     skel_output_dir_ (0),
@@ -1436,6 +1437,19 @@ const char *
 BE_GlobalData::ciao_ami_conn_impl_src_ending (void) const
 {
   return this->ciao_ami_conn_impl_src_ending_;
+}
+
+void
+BE_GlobalData::ciao_container_type (const char* s)
+{
+  ACE::strdelete (this->ciao_container_type_);
+  this->ciao_container_type_ = ACE::strnew (s);
+}
+
+const char *
+BE_GlobalData::ciao_container_type (void) const
+{
+  return this->ciao_container_type_;
 }
 
 void

@@ -239,11 +239,16 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
 
   ACE_CString scope_str (scope_name, 0, false);
 
+  const char *container_type = be_global->ciao_container_type ();
+
   os_ << be_nl << be_nl
       << "void" << be_nl
-      << iface_name << "_exec_i::set_session_context ("
+      << iface_name << "_exec_i::set_"
+      << tao_cg->downcase (container_type)
+      << "_context ("
       << be_idt_nl
-      << "::Components::SessionContext_ptr ctx)" << be_uidt_nl
+      << "::Components::" << be_global->ciao_container_type ()
+      << "Context_ptr ctx)" << be_uidt_nl
       << "{" << be_idt_nl
       << "this->context_ =" << be_idt_nl
       << "::"

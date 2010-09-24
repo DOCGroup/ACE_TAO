@@ -209,7 +209,8 @@ be_visitor_home_svs::gen_servant_class (void)
       << lname << "_Servant (" << be_idt << be_idt_nl
       << global << sname << "::CCM_" << lname << "_ptr exe," << be_nl
       << "const char * ins_name," << be_nl
-      << "::CIAO::Session_Container_ptr c)" << be_uidt_nl
+      << "::CIAO::" << be_global->ciao_container_type ()
+      << "_Container_ptr c)" << be_uidt_nl
       << ": ::CIAO::Home_Servant_Impl_Base ()," << be_idt_nl
       << "::CIAO::"
       << "Home_Servant_Impl<" << be_idt_nl
@@ -383,7 +384,8 @@ be_visitor_home_svs::gen_entrypoint (void)
       << "create_" << node_->flat_name ()
       << "_Servant (" << be_idt_nl
       << "::Components::HomeExecutorBase_ptr p," << be_nl
-      << "::CIAO::Session_Container_ptr c," << be_nl
+      << "::CIAO::" << be_global->ciao_container_type ()
+      << "_Container_ptr c," << be_nl
       << "const char * ins_name)" << be_uidt_nl
       << "{" << be_idt_nl
       << "::PortableServer::Servant retval = 0;" << be_nl

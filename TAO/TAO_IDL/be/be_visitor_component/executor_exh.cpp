@@ -108,11 +108,17 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   os_ << be_nl
       << "//@{" << be_nl
-      << "/** Operations from Components::SessionComponent. */";
+      << "/** Operations from Components::" << be_global->ciao_container_type ()
+      << "Component. */";
+
+  const char *container_type = be_global->ciao_container_type ();
 
   os_ << be_nl << be_nl
-      << "virtual void set_session_context ("
-      << "::Components::SessionContext_ptr ctx);";
+      << "virtual void set_"
+      << tao_cg->downcase (container_type)
+      << "_context ("
+      << "::Components::" << be_global->ciao_container_type ()
+      << "Context_ptr ctx);";
 
   os_ << be_nl << be_nl
       << "virtual void configuration_complete (void);";

@@ -48,7 +48,8 @@ be_visitor_context_svh::visit_component (be_component *node)
   os_ << "class " << export_macro_.c_str () << " " << lname
       << "_Context" << be_idt_nl
       << ": public virtual ::CIAO::"
-      << "Session_Context_Impl<" << be_idt << be_idt_nl
+      << be_global->ciao_container_type ()
+      << "_Context_Impl<" << be_idt << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "_Context," << be_nl
       << "::" << node->name () << ">" << be_uidt << be_uidt << be_uidt_nl
@@ -61,7 +62,8 @@ be_visitor_context_svh::visit_component (be_component *node)
 
   os_ << "// Some useful typedefs." << be_nl
       << "typedef" << be_nl
-      << "::CIAO::Session_Context_Impl<" << be_idt << be_idt_nl
+      << "::CIAO::" << be_global->ciao_container_type ()
+      << "_Context_Impl<" << be_idt << be_idt_nl
       << global << sname << "::CCM_"
       << lname << "_Context," << be_nl
       << "::" << node->name () << ">" << be_uidt_nl
@@ -91,7 +93,8 @@ be_visitor_context_svh::visit_component (be_component *node)
 
   os_ << lname << "_Context (" << be_idt_nl
       << "::Components::CCMHome_ptr h," << be_nl
-      << "::CIAO::Session_Container_ptr c," << be_nl
+      << "::CIAO::" << be_global->ciao_container_type ()
+      << "_Container_ptr c," << be_nl
       << "PortableServer::Servant sv," << be_nl
       << "const char *id);" << be_uidt_nl << be_nl;
 

@@ -90,7 +90,8 @@ be_visitor_component_ex_idl::visit_component (
   os_ << "local interface " << lname << "_Exec" << be_idt_nl
       << ": " << global << sname << "::CCM_" << lname
       << "," << be_idt_nl
-      << "::Components::SessionComponent" << be_uidt << be_uidt_nl
+      << "::Components::" << be_global->ciao_container_type ()
+      << "Component" << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
 

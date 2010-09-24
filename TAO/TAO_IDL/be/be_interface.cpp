@@ -108,7 +108,6 @@ be_interface::be_interface (UTL_ScopedName *n,
     skel_count_ (0),
     in_mult_inheritance_ (-1),
     original_interface_ (0),
-    session_component_child_ (-1),
     is_ami_rh_ (false),
     is_ami4ccm_rh_ (false),
     full_skel_name_ (0),
@@ -2779,54 +2778,6 @@ be_interface::original_interface (void)
   return this->original_interface_;
 }
 
-int
-be_interface::session_component_child (void)
-{
-  if (this->session_component_child_ == -1)
-    {
-      // We are looking only for executor interfaces.
-      if (!this->is_local_)
-        {
-          this->session_component_child_ = 0;
-          return this->session_component_child_;
-        }
-
-      Identifier tail_id ("SessionComponent");
-      UTL_ScopedName tail (&tail_id, 0);
-      Identifier head_id ("Components");
-      UTL_ScopedName sn (&head_id, &tail);
-
-      AST_Decl *session_component =
-        const_cast<be_interface*> (this)->scope ()->lookup_by_name (&sn, true);
-
-      tail_id.destroy ();
-      head_id.destroy ();
-
-      // If Components::SessionComponent is not in the AST, we are
-      // barking up the wrong tree.
-      if (session_component == 0)
-        {
-          this->session_component_child_ = 0;
-          return this->session_component_child_;
-        }
-
-      for (long i = 0; i < this->pd_n_inherits; ++i)
-        {
-          AST_Decl *tmp = this->pd_inherits[i];
-
-          if (tmp == session_component)
-            {
-              this->session_component_child_ = 1;
-              return this->session_component_child_;
-            }
-        }
-
-      this->session_component_child_ = 0;
-    }
-
-  return this->session_component_child_;
-}
-
 bool
 be_interface::is_event_consumer (void)
 {
@@ -3303,8 +3254,10 @@ be_interface::gen_facet_svnt_src (be_visitor *visitor,
      << lname << "_Servant::_get_component (void)"
      << be_nl
      << "{" << be_idt_nl
-     << "::Components::SessionContext_var sc =" << be_idt_nl
-     << "::Components::SessionContext::_narrow (this->ctx_.in ());"
+     << "::Components::" << be_global->ciao_container_type ()
+     << "Context_var sc =" << be_idt_nl
+     << "::Components::" << be_global->ciao_container_type ()
+     << "Context::_narrow (this->ctx_.in ());"
      << be_uidt_nl << be_nl
      << "if (! ::CORBA::is_nil (sc.in ()))" << be_idt_nl
      << "{" << be_idt_nl
