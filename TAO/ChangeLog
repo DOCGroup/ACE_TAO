@@ -1,3 +1,8 @@
+Fri Sep 24 13:44:07 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Also make the generated includes dependent on the container type
+
 Fri Sep 24 13:40:59 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * docs/releasenotes/ftrt_ec.html:
