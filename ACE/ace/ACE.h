@@ -642,6 +642,14 @@ namespace ACE
   /// Computes the base 2 logarithm of {num}.
   ACE_NAMESPACE_INLINE_FUNCTION u_long log2 (u_long num);
 
+  /// Helper to avoid comparing floating point values with
+  /// operator== (uses operator< and operator>)
+  template <typename T>
+  bool is_equal (const T& a, const T& b)
+  {
+    return !((a < b) || (a > b));
+  }
+
   /// Hex conversion utility.
   extern ACE_Export ACE_TCHAR nibble2hex (u_int n);
 

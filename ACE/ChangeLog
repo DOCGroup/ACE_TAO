@@ -1,3 +1,13 @@
+Fri Sep 24 07:35:27 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ace/ACE.h:
+          Added a simple helper ACE::is_equal() which compares equality of two
+          objects without using operator==. This is useful for comparing floating
+          point values.
+
+        * tests/OS_Test.cpp:
+          Use ACE::is_equal() instead of local copy.
+
 Thu Sep 23 16:14:12 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * ace/SSL/ssl.mpc:
