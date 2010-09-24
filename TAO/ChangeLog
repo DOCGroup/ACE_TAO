@@ -1,3 +1,15 @@
+Fri Sep 24 14:07:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Changed some generated includes because of changes in CIAO
+
+        * TAO_IDL/be/be_util.cpp:
+          Fixed some small issues when really using the ciao_container_type
+          option
+
+        * docs/compiler.html:
+          Updated name of new option
+
 Fri Sep 24 13:44:07 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
@@ -37,7 +49,7 @@ Fri Sep 24 13:12:07 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
         * TAO_IDL/be_include/be_global.h:
         * TAO_IDL/be_include/be_interface.h:
         * docs/compiler.html:
-          Added container_type as backend option, this is default Session. This
+          Added ciao_container_type as backend option, this is default Session. This
           way we can start working on other container types easily, just
           specifyc Extention of Entity as backend option and all code
           generated will be tweaked to the other container type
