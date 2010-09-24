@@ -659,6 +659,8 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
       ::Components::CCMObject_var cmp = ::Components::CCMObject::_narrow (obj);
       ret = run_test (nav.in (), cmp.in ());
 
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      cmd.test_provider_component ();
       cmd.shutdown ();
     }
   catch (const ::CORBA::Exception &ex)

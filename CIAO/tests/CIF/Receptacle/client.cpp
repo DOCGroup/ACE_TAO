@@ -880,6 +880,9 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_get_named_consumers (cmp);
 #endif
+      // one final test.
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      cmd.test_user_component ();
 
       cmd.shutdown ();
     }

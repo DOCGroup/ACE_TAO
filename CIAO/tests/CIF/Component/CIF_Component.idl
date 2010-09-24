@@ -32,6 +32,8 @@ module CIF
 
     provides foo          provide_cif_foo;
     provides derived_foo  provide_cif_derived_foo;
+
+    attribute short provider_id;
   };
 
   component CIF_User
@@ -41,6 +43,8 @@ module CIF
     uses foo             use_cif_foo;
     uses multiple foo    use_multiple_foo;
     uses derived_foo     use_cif_derived_foo;
+
+    attribute short user_id;
   };
 
   home CIF_UserHome manages CIF_User

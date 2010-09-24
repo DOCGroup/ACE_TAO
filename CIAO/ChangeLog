@@ -1,3 +1,15 @@
+Fri Sep 24 12:49:15 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Common/CIF_Common.h:
+        * tests/CIF/Common/CIF_Common.cpp:
+        * tests/CIF/Component/CIF_Component.idl:
+        * tests/CIF/Component/CIF_Component.mpc:
+        * tests/CIF/Component/CIF_Component_exec.h:
+        * tests/CIF/Component/CIF_Component_exec.cpp:
+        * tests/CIF/Navigation/client.cpp:
+        * tests/CIF/Receptacle/client.cpp:
+          Added explicit tests for _get_component.
+
 Fri Sep 24 11:51:59 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/ami4ccm_lem_stub.mpb:
