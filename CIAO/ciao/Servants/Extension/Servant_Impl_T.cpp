@@ -71,7 +71,7 @@ namespace CIAO
         throw ::CORBA::BAD_PARAM ();
       }
 
-    ::CORBA::Object_var me = this->context_->get_CCM_object ();
+    ::CORBA::Object_var me; // @todo = this->context_->get_CCM_object ();
 
     if (::CORBA::is_nil (me.in ()))
       {
