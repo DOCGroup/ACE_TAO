@@ -1,3 +1,9 @@
+Fri Sep 24 11:51:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+          Context is now a full template, updated code generation for this
+
 Fri Sep 24 08:49:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * NEWS:
