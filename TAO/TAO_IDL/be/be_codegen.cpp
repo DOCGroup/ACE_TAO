@@ -3447,17 +3447,31 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
 void
 TAO_CodeGen::gen_svnt_hdr_includes (void)
 {
-  this->gen_standard_include (
-    this->ciao_svnt_header_,
-    "ciao/Containers/Session/Session_ContainerC.h");
+  ACE_CString container_file ("ciao/Containers/");
+  container_file += be_global->ciao_container_type ();
+  container_file += "/";
+  container_file += be_global->ciao_container_type ();
+  container_file += "_ContainerC.h";
 
   this->gen_standard_include (
     this->ciao_svnt_header_,
-       "ciao/Contexts/Session/Context_Impl_T.h");
+    container_file.c_str ());
+
+  ACE_CString context_file ("ciao/Contexts/");
+  context_file += be_global->ciao_container_type ();
+  context_file += "/Context_Impl_T.h";
 
   this->gen_standard_include (
     this->ciao_svnt_header_,
-    "ciao/Servants/Session/Servant_Impl_T.h");
+       context_file.c_str ());
+
+  ACE_CString servant_file ("ciao/Servants/");
+  servant_file += be_global->ciao_container_type ();
+  servant_file += "/Servant_Impl_T.h";
+
+  this->gen_standard_include (
+    this->ciao_svnt_header_,
+    servant_file.c_str ());
 
   this->gen_standard_include (
     this->ciao_svnt_header_,
@@ -3571,13 +3585,16 @@ TAO_CodeGen::gen_exec_idl_includes (void)
     this->ciao_exec_idl_,
     "ccm/CCM_HomeExecutorBase.idl");
 
-  this->gen_standard_include (
-    this->ciao_exec_idl_,
-    "ccm/Session/CCM_SessionContext.idl");
+
+  ACE_CString component_file ("ccm/");
+  component_file += be_global->ciao_container_type ();
+  component_file += "/CCM_";
+  component_file += be_global->ciao_container_type ();
+  component_file += "Component.idl";
 
   this->gen_standard_include (
     this->ciao_exec_idl_,
-    "ccm/Session/CCM_SessionComponent.idl");
+    component_file.c_str ());
 
   if (be_global->ami4ccm_call_back ())
     {
@@ -3605,8 +3622,7 @@ TAO_CodeGen::gen_exec_idl_includes (void)
       /// No need to have the exec IDL file include itself.
       if (ACE_OS::strcmp (*path_tmp, exec_idl_fname) != 0)
         {
-          this->gen_standard_include (this->ciao_exec_idl_,
-                                      *path_tmp);
+          this->gen_standard_include (this->ciao_exec_idl_, *path_tmp);
         }
     }
 }
@@ -3709,7 +3725,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
       char * const idl_name =
         idl_global->included_idl_files ()[j];
 
-      bool system_file =
+      bool const system_file =
         ACE_OS::strcmp (idl_name, "Components.idl") == 0
         || ACE_OS::strcmp (
              idl_name,
