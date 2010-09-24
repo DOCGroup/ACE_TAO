@@ -1,13 +1,19 @@
+Fri Sep 24 08:02:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * dance/RepositoryManager/Repository_Manager_Module.h:
+        * dance/RepositoryManager/Repository_Manager_Module.cpp:
+          Resolved compile error due to movement.
+
 Thu Sep 23 20:41:48 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance:
 
-          Moved most DAnCE code under this directory to match ACE+TAO layout. 
-        
+          Moved most DAnCE code under this directory to match ACE+TAO layout.
+
         * rules.dance.GNU:
 
-          Updated case of pat to version file. 
-        
+          Updated case of pat to version file.
+
         * tests/DeploymentPlanDump/test.cpp:
         * tests/DeploymentPlanTestReferences/test.cpp:
         * tests/DeploymentTest1/test.cpp:
