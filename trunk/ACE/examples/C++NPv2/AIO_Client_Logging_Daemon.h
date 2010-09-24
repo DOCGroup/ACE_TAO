@@ -59,10 +59,6 @@ public:
   virtual void open (ACE_HANDLE new_handle,
                      ACE_Message_Block &message_block);
 
-  // This is to make happy a compiler on HP-UX which complains
-  // that the 'open' above hides "int ACE_Task_Base::open(void *)"
-  using ACE_Task<ACE_NULL_SYNCH>::open;
-
 protected:
   ACE_Asynch_Read_Stream  reader_;   // Detects connection loss
   ACE_Asynch_Write_Stream writer_;   // Sends to server
