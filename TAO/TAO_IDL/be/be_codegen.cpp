@@ -3449,7 +3449,7 @@ TAO_CodeGen::gen_svnt_hdr_includes (void)
 {
   this->gen_standard_include (
     this->ciao_svnt_header_,
-    "ciao/Containers/Container_BaseC.h");
+    "ciao/Containers/Session/Session_ContainerC.h");
 
   this->gen_standard_include (
     this->ciao_svnt_header_,
