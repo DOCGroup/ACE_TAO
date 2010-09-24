@@ -254,21 +254,20 @@ ACE_Pipe::close (void)
 {
   ACE_TRACE ("ACE_Pipe::close");
 
-  int result = 0;
-
-  // Note that the following will work even if we aren't closing down
-  // sockets because <ACE_OS::closesocket> will just call <::close> in
-  // that case!
-
-  if (this->handles_[0] != ACE_INVALID_HANDLE)
-    result = ACE_OS::closesocket (this->handles_[0]);
-  this->handles_[0] = ACE_INVALID_HANDLE;
-
-  if (this->handles_[1] != ACE_INVALID_HANDLE)
-    result |= ACE_OS::closesocket (this->handles_[1]);
-  this->handles_[1] = ACE_INVALID_HANDLE;
-
+  int result = this->close_read ();
+  result |= this->close_write ();
   return result;
+}
+
+int
+ACE_Pipe::close_read (void)
+{
+  return this->close_handle (0);
+}
+
+int ACE_Pipe::close_write (void)
+{
+  return this->close_handle (1);
 }
 
 // Send N char *ptrs and int lengths.  Note that the char *'s precede

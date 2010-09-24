@@ -1,3 +1,15 @@
+Fri Sep 24 14:52:44 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Pipe.{h inl cpp}: Added two new methods, close_read() and
+          close_write() to close individual pipe handles. Refactored the
+          original close() method to use these and factored out the actual
+          closing code to a new inlined close_handle() method.
+
+          Thanks to John Lilley <jlilley at datalever dot com> for this
+          addition.
+
+        * NEWS: Added description of the new methods.
+
 Fri Sep 24 12:41:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
