@@ -1,3 +1,8 @@
+Fri Sep 24 13:40:16 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/BasicSP/RepoMan_Usage.html:
+          Update regarding ORB services rename action
+
 Fri Sep 24 12:49:15 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Common/CIF_Common.h:
