@@ -116,7 +116,7 @@ namespace CIAO
 
     if (! ::CORBA::is_nil (sc.in ()))
       {
-        return sc->get_CCM_object ();
+// @todo        return sc->get_CCM_object ();
       }
 
     throw ::CORBA::INTERNAL ();
@@ -137,7 +137,7 @@ namespace CIAO
 
         if (! ::CORBA::is_nil (temp.in ()))
           {
-            temp->ccm_activate ();
+            // @todo temp->ccm_activate ();
             this->activated_ = true;
           }
       }
@@ -156,7 +156,7 @@ namespace CIAO
 
         if (! ::CORBA::is_nil (temp.in ()))
           {
-            temp->ccm_passivate ();
+            // @todo temp->ccm_passivate ();
             this->activated_ = false;
           }
       }
@@ -175,7 +175,7 @@ namespace CIAO
 
         if (! ::CORBA::is_nil (temp.in ()))
           {
-            temp->configuration_complete ();
+            // @todo temp->configuration_complete ();
             this->configuration_completed_ = true;
           }
       }

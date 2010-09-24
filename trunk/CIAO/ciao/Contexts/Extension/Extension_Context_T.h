@@ -29,18 +29,27 @@ namespace CIAO
 {
   template <typename BASE_CTX,
             typename COMP>
-  class ExtensionContext_Impl
+  class Extension_Context_Impl
     : public virtual BASE_CTX,
       public virtual ::CIAO::Context_Impl_Base_T < ::CIAO::Extension_Container>,
       public virtual ::CORBA::LocalObject
   {
   public:
-    ExtensionContext_Impl(Components::CCMHome_ptr home,
+    /// Type definition of the context type.
+    typedef BASE_CTX context_type;
+
+    /// Type definition of the var type for the context.
+    typedef typename context_type::_var_type _var_type;
+
+    /// Type definition of the component type.
+    typedef COMP component_type;
+
+    Extension_Context_Impl(Components::CCMHome_ptr home,
                           ::CIAO::Extension_Container_ptr c,
                           PortableServer::Servant sv,
                           const char* id);
 
-    virtual ~ExtensionContext_Impl (void);
+    virtual ~Extension_Context_Impl (void);
 
     virtual ::Components::ContainerPortableInterceptor::ClientContainerInterceptorRegistration_ptr
     get_client_interceptor_registration (void);

@@ -6,6 +6,10 @@
  */
 
 #include "ciao/Containers/Container_Base.idl"
+#include "ccm/Extension/CCM_ClientContainerInterceptorRegistration.idl"
+#include "ccm/Extension/CCM_ServerContainerInterceptorRegistration.idl"
+#include "ccm/Extension/CCM_StubContainerInterceptorRegistration.idl"
+#include "ccm/Extension/CCM_ServantContainerInterceptorRegistration.idl"
 
 module CIAO
 {
