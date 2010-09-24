@@ -41,7 +41,8 @@ open (DAT, $xmi) || die ("ERROR: Could not open file <$xmi>!");
 close (DAT);
 
 $num = grep (/<UML:Attribute/, @data);
-if ($num == 8) {
+
+if ($num == 6) {
     print "TEST OK. Correct tags in there.\n";
 } else {
     print STDERR "ERROR: generated XMI does not contain a brace of UML:Attribute tags !\n\nXMI is:\n\n";
@@ -49,6 +50,6 @@ if ($num == 8) {
     $status = 1;
 }
 
-$target->DeleteFile($xmi);
+# $target->DeleteFile($xmi);
 
 exit $status;

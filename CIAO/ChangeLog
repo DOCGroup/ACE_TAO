@@ -1,3 +1,8 @@
+Fri Sep 24 10:20:24 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/IDL3_to_XMI/XMI_For_Sequence/run_test.pl:
+          Corrected test errors.
+
 Thu Sep 23 20:41:07 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Deployment/Handlers/CIAO_Handler_Common.h:
