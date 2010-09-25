@@ -1,3 +1,8 @@
+Sat Sep 25 06:41:39 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ace/ACE.h:
+          Modified ACE::is_equal() comment once again to make fuzz happy.
+
 Fri Sep 24 14:52:44 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/Pipe.{h inl cpp}: Added two new methods, close_read() and
