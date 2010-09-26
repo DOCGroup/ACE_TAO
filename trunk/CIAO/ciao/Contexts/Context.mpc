@@ -1,7 +1,0 @@
-//$Id$
-
-project(CIAO_Context_Impl) : install {
-  specific {
-    install_dir = ciao/Contexts
-  }
-}
