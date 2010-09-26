@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef CIAO_CONTEXT_IMPL_T_C
-#define CIAO_CONTEXT_IMPL_T_C
+#ifndef CIAO_SESSION_CONTEXT_IMPL_T_C
+#define CIAO_SESSION_CONTEXT_IMPL_T_C
 
 namespace CIAO
 {
@@ -54,4 +54,4 @@ namespace CIAO
   }
 }
 
-#endif /* CIAO_CONTEXT_IMPL_T_C */
+#endif /* CIAO_SESSION_CONTEXT_IMPL_T_C */
