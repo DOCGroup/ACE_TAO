@@ -3260,9 +3260,18 @@ be_interface::gen_facet_svnt_src (be_visitor *visitor,
      << "Context::_narrow (this->ctx_.in ());"
      << be_uidt_nl << be_nl
      << "if (! ::CORBA::is_nil (sc.in ()))" << be_idt_nl
-     << "{" << be_idt_nl
-     << "return sc->get_CCM_object ();" << be_uidt_nl
-     << "}" << be_uidt_nl << be_nl;
+     << "{" << be_idt_nl;
+
+  if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
+    {
+      os << "return sc->get_CCM_object ();";
+    }
+  else
+    {
+      os << "return ::CORBA::Object::_nil ();";
+    }
+
+  os  << be_uidt_nl << "}" << be_uidt_nl << be_nl;
 
   os << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
      << "}";

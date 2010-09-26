@@ -216,7 +216,8 @@ be_visitor_home_svs::gen_servant_class (void)
       << "Home_Servant_Impl<" << be_idt_nl
       << "::" << node_->full_skel_name () << "," << be_nl
       << global << sname << "::CCM_" << lname << "," << be_nl
-      << clname << "_Servant> (exe, c, ins_name)"
+      << clname << "_Servant," << be_nl
+      << "::CIAO::" << be_global->ciao_container_type () << "_Container> (exe, c, ins_name)"
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "}";
