@@ -25,6 +25,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ccm/Session/CCM_SessionComponentC.h"
+
 namespace CIAO
 {
   /**
@@ -39,7 +41,7 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT>
   class Session_Servant_Impl : public virtual BASE_SKEL,
-                       public virtual CONTEXT::svnt_base_type
+                               public virtual CONTEXT::svnt_base_type
   {
   public:
     Session_Servant_Impl (EXEC * exe,
@@ -58,7 +60,7 @@ namespace CIAO
 
     virtual CORBA::Object_ptr _get_component ();
 
-    virtual Components::SessionComponent_ptr get_executor ();
+    virtual Components::EnterpriseComponent_ptr get_executor ();
 
     void configuration_complete ();
 
@@ -67,6 +69,8 @@ namespace CIAO
     virtual void passivate_component ();
 
   protected:
+    virtual void ccm_remove (void);
+
     CORBA::Boolean activated_;
     CORBA::Boolean configuration_completed_;
 
