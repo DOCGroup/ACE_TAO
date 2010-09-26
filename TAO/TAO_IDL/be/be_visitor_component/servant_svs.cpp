@@ -513,9 +513,18 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << "::CORBA::Object_ptr" << be_nl
       << comp_lname << "_Servant::" << lname << "Consumer_"
       << port_name << "_Servant::_get_component (void)" << be_nl
-      << "{" << be_idt_nl
-      << "return this->ctx_->get_CCM_object ();" << be_uidt_nl
-      << "}";
+      << "{" << be_idt_nl;
+
+  if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
+    {
+      os_ << "return this->ctx_->get_CCM_object ();";
+    }
+  else
+    {
+      os_ << "return ::CORBA::Object::_nil ();";
+    }
+
+  os_ << be_uidt_nl << "}";
 
   os_ << be_nl << be_nl
       << "void" << be_nl

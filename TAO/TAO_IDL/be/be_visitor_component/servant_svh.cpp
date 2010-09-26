@@ -312,12 +312,12 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
       << "::" << obj_name << " * evt);" << be_uidt;
 
   os_ << be_nl << be_nl
-      << "// Inherited from ::Components::EventConsumerBase." << be_nl
+      << "/// Inherited from ::Components::EventConsumerBase." << be_nl
       << "virtual void" << be_nl
       << "push_event ( ::Components::EventBase * ev);";
 
   os_ << be_nl << be_nl
-      << "// Get component implementation." << be_nl
+      << "/// Get component implementation." << be_nl
       << "virtual ::CORBA::Object_ptr" << be_nl
       << "_get_component (void);";
 
