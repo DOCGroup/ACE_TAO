@@ -146,7 +146,8 @@ be_visitor_home_svh::gen_servant_class (void)
       << "Home_Servant_Impl<" << be_idt_nl
       << "::" << node_->full_skel_name () << "," << be_nl
       << global << sname << "::CCM_" << lname << "," << be_nl
-      << clname << "_Servant>"
+      << clname << "_Servant," << be_nl
+      << "::CIAO::" << be_global->ciao_container_type () << "_Container>"
       << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl;

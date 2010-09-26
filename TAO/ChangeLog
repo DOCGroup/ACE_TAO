@@ -1,3 +1,13 @@
+Sun Sep 26 18:34:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_provides.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svh.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+          Updated for ciao changes
+
 Fri Sep 24 14:51:28 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * bin/tao_other_tests.lst:
