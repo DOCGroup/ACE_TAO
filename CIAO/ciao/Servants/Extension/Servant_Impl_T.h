@@ -61,7 +61,7 @@ namespace CIAO
 
     virtual CORBA::Object_ptr _get_component ();
 
-    virtual Components::ExtensionComponent_ptr get_executor ();
+    virtual Components::EnterpriseComponent_ptr get_executor ();
 
     void configuration_complete ();
 
@@ -70,6 +70,8 @@ namespace CIAO
     virtual void passivate_component ();
 
   protected:
+    virtual void ccm_remove (void);
+
     CORBA::Boolean activated_;
     CORBA::Boolean configuration_completed_;
 

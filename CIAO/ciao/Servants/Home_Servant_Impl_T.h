@@ -26,13 +26,10 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "tao/PortableServer/Key_Adapters.h"
-#include "ciao/Containers/Session/Session_ContainerC.h"
+#include "ciao/Containers/Container_BaseC.h"
 
 namespace CIAO
 {
-  class Container;
-  typedef Container *Container_ptr;
-
   /**
    * @class Home_Servant_Impl
    *
@@ -43,14 +40,15 @@ namespace CIAO
    */
   template <typename BASE_SKEL,
             typename EXEC,
-            typename COMP_SVNT>
+            typename COMP_SVNT,
+            typename CONTAINER>
   class Home_Servant_Impl
     : public virtual BASE_SKEL,
       public virtual Home_Servant_Impl_Base
   {
   public:
     Home_Servant_Impl (typename EXEC::_ptr_type exe,
-                       ::CIAO::Session_Container_ptr c,
+                       typename CONTAINER::_ptr_type c,
                        const char *ins_name);
 
     virtual ~Home_Servant_Impl (void);
@@ -91,7 +89,7 @@ namespace CIAO
 
     ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned long> serial_number_;
 
-    ::CIAO::Session_Container_var container_;
+    typename CONTAINER::_var_type container_;
   };
 }
 

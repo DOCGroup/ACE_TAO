@@ -13,18 +13,20 @@ namespace CIAO
 {
   template <typename BASE_SKEL,
             typename EXEC,
-            typename COMP_SVNT>
+            typename COMP_SVNT,
+            typename CONTAINER>
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
-                    COMP_SVNT>::Home_Servant_Impl (
+                    COMP_SVNT,
+                    CONTAINER>::Home_Servant_Impl (
       typename EXEC::_ptr_type exe,
-      ::CIAO::Session_Container_ptr c,
+      typename CONTAINER::_ptr_type c,
       const char *ins_name)
     : Home_Servant_Impl_Base (),
       ins_name_ (ins_name),
       executor_ (EXEC::_duplicate (exe)),
       serial_number_ (0),
-      container_ (::CIAO::Session_Container::_duplicate(c))
+      container_ (CONTAINER::_duplicate(c))
   {
     CIAO_DEBUG (9, (LM_TRACE, CLINFO "Home_Servant_Impl<>::Home_Servant_Impl - "
                  "Creating servant for home with ID %C\n",
@@ -33,10 +35,12 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename COMP_SVNT>
+            typename COMP_SVNT,
+            typename CONTAINER>
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
-                    COMP_SVNT>::~Home_Servant_Impl (void)
+                    COMP_SVNT,
+                    CONTAINER>::~Home_Servant_Impl (void)
   {
     CIAO_TRACE ("Home_Servant_Impl<>::destructor");
 
@@ -54,11 +58,13 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename COMP_SVNT>
+            typename COMP_SVNT,
+            typename CONTAINER>
   void
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
-                    COMP_SVNT>::remove_component (
+                    COMP_SVNT,
+                    CONTAINER>::remove_component (
       ::Components::CCMObject_ptr comp)
   {
     CIAO_TRACE ("Home_Servant_Impl<>::remove_component");
@@ -91,11 +97,13 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename COMP_SVNT>
+            typename COMP_SVNT,
+            typename CONTAINER>
   void
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
-                    COMP_SVNT>::update_component_map (
+                    COMP_SVNT,
+                    CONTAINER>::update_component_map (
       PortableServer::ObjectId &oid)
   {
     CIAO_TRACE ("Home_Servant_Impl<>::update_component_map");
@@ -111,11 +119,13 @@ namespace CIAO
   // Operations for keyless home interface.
   template <typename BASE_SKEL,
             typename EXEC,
-            typename COMP_SVNT>
+            typename COMP_SVNT,
+            typename CONTAINER>
   Components::CCMObject_ptr
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
-                    COMP_SVNT>::create_component (void)
+                    COMP_SVNT,
+                    CONTAINER>::create_component (void)
   {
     CIAO_TRACE ("Home_Servant_Impl<>::create_component");
 
@@ -124,11 +134,13 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename COMP_SVNT>
+            typename COMP_SVNT,
+            typename CONTAINER>
   typename COMP_SVNT::_stub_ptr_type
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
-                    COMP_SVNT>::create (void)
+                    COMP_SVNT,
+                    CONTAINER>::create (void)
   {
     CIAO_TRACE ("Home_Servant_Impl<>::create");
 
@@ -150,11 +162,13 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename COMP_SVNT>
+            typename COMP_SVNT,
+            typename CONTAINER>
   typename COMP_SVNT::_stub_ptr_type
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
-                    COMP_SVNT>::_ciao_activate_component (
+                    COMP_SVNT,
+                    CONTAINER>::_ciao_activate_component (
       typename COMP_SVNT::_exec_type::_ptr_type exe)
   {
     CIAO_TRACE ("Home_Servant_Impl<>::_ciao_activate_component");
@@ -203,11 +217,13 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename COMP_SVNT>
+            typename COMP_SVNT,
+            typename CONTAINER>
   void
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
-                    COMP_SVNT>::_ciao_passivate_component (
+                    COMP_SVNT,
+                    CONTAINER>::_ciao_passivate_component (
       typename COMP_SVNT::_stub_ptr_type comp)
   {
     CIAO_TRACE ("Home_Servant_Impl<>::_ciao_passivate_component");
