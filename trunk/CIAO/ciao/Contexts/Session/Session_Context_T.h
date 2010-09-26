@@ -13,8 +13,8 @@
  */
 //=============================================================================
 
-#ifndef CIAO_CONTEXT_IMPL_T_H
-#define CIAO_CONTEXT_IMPL_T_H
+#ifndef CIAO_SESSION_CONTEXT_IMPL_T_H
+#define CIAO_SESSION_CONTEXT_IMPL_T_H
 
 #include /**/ "ace/pre.h"
 
@@ -79,4 +79,4 @@ namespace CIAO
 
 #include /**/ "ace/post.h"
 
-#endif /* CIAO_CONTEXT_IMPL_T_H */
+#endif /* CIAO_SESSION_CONTEXT_IMPL_T_H */
