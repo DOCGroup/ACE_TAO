@@ -1,3 +1,15 @@
+Sun Sep 26 18:35:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Connector_Servant_Impl_Base.h:
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+        * ciao/Servants/Extension/Servant_Impl_T.h:
+        * ciao/Servants/Extension/Servant_Impl_T.cpp:
+        * ciao/Servants/Home_Servant_Impl_T.h:
+        * ciao/Servants/Home_Servant_Impl_T.cpp:
+        * ciao/Servants/Session/Servant_Impl_T.h:
+        * ciao/Servants/Session/Servant_Impl_T.cpp:
+          More refactoring for extension components
+
 Fri Sep 24 18:08:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Extension/Extension_Container.idl:

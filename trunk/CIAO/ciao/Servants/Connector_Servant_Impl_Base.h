@@ -27,9 +27,9 @@
 #include "Home_Servant_Impl_Base.h"
 
 #include "ciao/Containers/CIAO_Servant_ActivatorC.h"
-#include "ccm/Session/CCM_SessionComponentC.h"
 #include "ccm/CCM_ObjectS.h"
 #include "ccm/CCM_StandardConfiguratorC.h"
+#include "ccm/CCM_EnterpriseComponentC.h"
 #include "ciao/Containers/Container_BaseC.h"
 
 #include "ace/Array_Map.h"
@@ -78,16 +78,13 @@ namespace CIAO
     virtual ~Connector_Servant_Impl_Base (void);
 
     /// Operations for CCMObject interface.
-
     virtual void remove (void);
 
 #if !defined (CCM_LW)
     virtual CORBA::IRObject_ptr get_component_def (void);
 #endif
 
-    /* @todo To be removed, Session knowledge in our base :-(
-     */
-    virtual Components::SessionComponent_ptr get_executor () = 0;
+    virtual Components::EnterpriseComponent_ptr get_executor () = 0;
 
 #if !defined (CCM_LW)
     virtual ::Components::ConnectionDescriptions *
@@ -193,6 +190,8 @@ namespace CIAO
     virtual void passivate_component (void) = 0;
 
   protected:
+    virtual void ccm_remove (void) = 0;
+
     void add_facet (const char *port_name,
                     ::CORBA::Object_ptr port_ref);
 

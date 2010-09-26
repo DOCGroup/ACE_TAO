@@ -96,13 +96,10 @@ namespace CIAO
   template <typename BASE_SKEL,
             typename EXEC,
             typename CONTEXT>
-  Components::SessionComponent_ptr
+  Components::EnterpriseComponent_ptr
   Session_Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::get_executor (void)
   {
-    ::Components::SessionComponent_var temp =
-      ::Components::SessionComponent::_narrow (this->executor_.in ());
-
-    return temp._retn ();
+    return ::Components::EnterpriseComponent::_duplicate (this->executor_.in ());
   }
 
   template <typename BASE_SKEL,
@@ -178,6 +175,25 @@ namespace CIAO
             temp->configuration_complete ();
             this->configuration_completed_ = true;
           }
+      }
+  }
+
+  template <typename BASE_SKEL,
+            typename EXEC,
+            typename CONTEXT>
+  void
+  Session_Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::ccm_remove (void)
+  {
+    ::Components::SessionComponent_var temp =
+      ::Components::SessionComponent::_narrow (this->executor_.in ());
+
+    if (! ::CORBA::is_nil (temp.in ()))
+      {
+        temp->ccm_remove ();
+      }
+    else
+      {
+        throw ::CORBA::INTERNAL ();
       }
   }
 }

@@ -27,7 +27,6 @@ namespace CIAO
   }
 
   // Operations for CCMObject interface.
-
   void
   Connector_Servant_Impl_Base::remove (void)
   {
@@ -57,12 +56,7 @@ namespace CIAO
             }
         }
 
-      Components::SessionComponent_var temp = this->get_executor ();
-
-      if (!::CORBA::is_nil (temp.in ()))
-        {
-          temp->ccm_remove ();
-        }
+      this->ccm_remove ();
 
       PortableServer::ObjectId_var oid;
       this->container_->uninstall_servant (
