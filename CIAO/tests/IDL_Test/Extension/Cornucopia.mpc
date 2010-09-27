@@ -54,7 +54,7 @@ project(Cornucopia_Ext_stub) : ccm_stub {
   }
 }
 
-project(Cornucopia_Ext_exec) : ciao_executor {
+project(Cornucopia_Ext_exec) : ciao_executor, ciao_extension_stub {
   after   += Cornucopia_Ext_lem_gen Cornucopia_Ext_stub
   sharedname = Cornucopia_exec
   libs += Cornucopia_stub
@@ -80,7 +80,7 @@ project(Cornucopia_Ext_exec) : ciao_executor {
   }
 }
 
-project(Cornucopia_Ext_skel) : ccm_svnt {
+project(Cornucopia_Ext_skel) : ccm_svnt, ciao_extension_stub {
   after += Cornucopia_Ext_stub
   sharedname = Cornucopia_skel
   libs += Cornucopia_stub
@@ -104,7 +104,7 @@ project(Cornucopia_Ext_skel) : ccm_svnt {
   }
 }
 
-project(Cornucopia_Ext_svnt) : ciao_servant {
+project(Cornucopia_Ext_svnt) : ciao_servant, ciao_extension_stub {
   after      += Cornucopia_Ext_exec Cornucopia_Ext_skel Cornucopia_Ext_stub
   sharedname  = Cornucopia_svnt
   libs       += Cornucopia_exec \
