@@ -1,3 +1,11 @@
+Mon Sep 27 08:56:46 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Base/CIAO_Properties.idl:
+          Removed properties that aren't used
+
+        * ciao/Servants/StandardConfigurator_Impl.h:
+          Layout changes
+
 Mon Sep 27 08:51:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/docs/details.txt:
