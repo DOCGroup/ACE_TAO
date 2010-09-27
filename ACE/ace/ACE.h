@@ -90,7 +90,7 @@ namespace ACE
 
   /// Simple wildcard matching function supporting '*' and '?'
   /// return true if string s matches pattern.
-  /// If character_classes is true, '[' is treated as a wildcard character
+  /// If @a character_classes is true, '[' is treated as a wildcard character
   /// as described in the fnmatch() POSIX API.  The following POSIX "bracket
   /// expression" features are not implemented: collating symbols, equivalence
   /// class expressions, and character class expressions.  The POSIX locale is

@@ -1,3 +1,11 @@
+Mon Sep 27 18:04:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.h:
+        * ace/Thread.h:
+        * ace/Thread_Adapter.h:
+        * ace/Thread_Mutex.h:
+          Doxygen changes
+
 Mon Sep 27 14:47:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/String_Base.h:
