@@ -12,7 +12,7 @@ namespace CIAO
       ::CIAO::Extension_Container_ptr c,
       PortableServer::Servant sv,
       const char* id)
-    : Context_Impl_Base_T < ::CIAO::Session_Container> (the_home, c, id),
+    : Context_Impl_Base_T < ::CIAO::Extension_Container> (the_home, c, id),
       servant_ (sv)
   {
   }
