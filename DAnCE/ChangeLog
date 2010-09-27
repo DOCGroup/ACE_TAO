@@ -1,3 +1,9 @@
+Mon Sep 27 19:20:48 UTC 2010  William Otte  <wotte@zifnab>
+
+        * DANCE_TAO.mwc
+
+          Fixed for the restructuring.
+
 Mon Sep 27 09:40:00 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dance/LocalityManager/Handler/DAnCE_Locality_Handler_export.h:
