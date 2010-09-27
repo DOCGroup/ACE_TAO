@@ -16,19 +16,7 @@ workspace {
   $(TAO_ROOT)/orbsvcs/Naming_Service
   $(TAO_ROOT)/orbsvcs/orbsvcs/Svc_Utils.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService.mpc
-  DAnCE
-  DomainApplication
-  DomainApplicationManager
-  Deployment
-  ExecutionManager
-  LocalityManager
-  Logger
-  NodeApplication
-  NodeApplicationManager
-  NodeManager
+  dance
   tools
-  Config_Handlers
-  Plan_Launcher
-  RepositoryManager
-  TargetManager
+  tests
 }
