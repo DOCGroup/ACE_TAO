@@ -6,6 +6,7 @@
 #include "ace/OS_NS_fcntl.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Guard_T.h"
 
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL
