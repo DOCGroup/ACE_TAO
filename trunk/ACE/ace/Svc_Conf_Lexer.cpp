@@ -395,7 +395,7 @@ ACE_Svc_Conf_Lexer::scan (YYSTYPE* ace_yylval,
 
                 if (current == buffer->index_ + 1)
                   {
-                    int lower = ACE_OS::ace_tolower (
+                    int const lower = ACE_OS::ace_tolower (
                                           buffer->input_[current - 1]);
                     if (c == ':' &&
                         (buffer->input_[current - 1] == '%' ||
