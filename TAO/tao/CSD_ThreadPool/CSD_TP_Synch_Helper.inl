@@ -1,6 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
+#include "ace/Guard_T.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
