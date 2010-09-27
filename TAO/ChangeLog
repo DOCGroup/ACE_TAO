@@ -1,3 +1,9 @@
+Mon Sep 27 07:47:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+          Extension component has less methods that need to be generated
+
 Sun Sep 26 18:34:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:
