@@ -51,7 +51,6 @@ project(CCM_svnt) : install, orbsvcslib, orbsvcs_output \
     CCM_ExecutorLocatorC.cpp
     CCM_EventsS.cpp
     CCM_EventConsumerBaseS.cpp
-    CCM_EventBaseS.cpp
     CCM_ConfiguratorS.cpp
     CCM_HomeConfigurationS.cpp
     CCM_KeylessCCMHomeS.cpp
@@ -63,7 +62,6 @@ project(CCM_svnt) : install, orbsvcslib, orbsvcs_output \
     CCM_HomeFinderS.cpp
     CCM_NavigationS.cpp
     CCM_ReceptacleS.cpp
-    ComponentsS.cpp
   }
 }
 

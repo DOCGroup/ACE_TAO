@@ -20,10 +20,11 @@ project(CCM_stub_idl) : install, ciaolib_with_idl, valuetype {
     idlflags += -SS
     CCM_Cookie.idl
     CCM_Enumeration.idl
+    CCM_EventBase.idl
   }
 
   IDL_Files {
-    idlflags += -Ssi -Sci
+    idlflags += -SS -Sci
     Components.idl
   }
 
@@ -47,7 +48,6 @@ project(CCM_stub_idl) : install, ciaolib_with_idl, valuetype {
 
   IDL_Files {
     CCM_Events.idl
-    CCM_EventBase.idl
     CCM_EventConsumerBase.idl
   }
 
@@ -120,7 +120,6 @@ project(CCM_stub) : install, ciaolib_with_idl, ciao_output, valuetype, ifr_clien
     CCM_ReceptacleC.inl
     CCM_StandardConfiguratorC.inl
     CCM_CookieC.inl
-    CCM_EventBaseS.inl
     CCM_EventConsumerBaseS.inl
     CCM_EventsS.inl
     CCM_HomeConfigurationS.inl
