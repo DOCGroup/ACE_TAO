@@ -1,8 +1,6 @@
-
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl CPU_Affinity
 // ------------------------------
 #ifndef CPU_AFFINITY_EXPORT_H
 #define CPU_AFFINITY_EXPORT_H
