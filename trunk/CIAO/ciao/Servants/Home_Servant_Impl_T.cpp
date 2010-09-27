@@ -83,7 +83,7 @@ namespace CIAO
     typename COMP_SVNT::_stub_var_type _ciao_comp =
       stub_type::_narrow (ccm_obj_var.in ());
 
-    if (CORBA::is_nil (_ciao_comp.in ()))
+    if (::CORBA::is_nil (_ciao_comp.in ()))
       {
         throw Components::RemoveFailure ();
       }
