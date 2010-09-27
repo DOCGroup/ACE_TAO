@@ -2,7 +2,7 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl CIAO_Deployment_Interceptors
+
 // ------------------------------
 #ifndef CIAO_DEPLOYMENT_INTERCEPTORS_EXPORT_H
 #define CIAO_DEPLOYMENT_INTERCEPTORS_EXPORT_H

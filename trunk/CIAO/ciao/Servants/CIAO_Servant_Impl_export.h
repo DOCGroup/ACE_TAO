@@ -2,7 +2,6 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl CIAO_Servant_Impl
 // ------------------------------
 #ifndef CIAO_SERVANT_IMPL_EXPORT_H
 #define CIAO_SERVANT_IMPL_EXPORT_H
