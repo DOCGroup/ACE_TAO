@@ -41,7 +41,7 @@ namespace CIAO
    * @brief Servant implementation for Components::StandardConfigurator
    *
    * This class implements the Components::StandardConfigurator
-   * interface as defined by the CCM spcification. This class aids
+   * interface as defined by the CCM specification. This class aids
    * in setting the initial values of component attributes that are
    * defined in the meta data.
    */

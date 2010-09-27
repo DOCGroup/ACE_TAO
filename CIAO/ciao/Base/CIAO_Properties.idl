@@ -19,13 +19,7 @@ module CIAO
     const string HOME_FACTORY = "home factory";
     const string COMPONENT_HOME = "edu.vanderbilt.dre.CIAO.ComponentHomeId";
     const string CONTAINER_ID = "edu.vanderbilt.dre.CIAO.ContainerId";
-    const string SERVER_UUID = "edu.vanderbilt.dre.CIAO.ServerUUID";
-    const string SERVER_EXECUTABLE = "edu.vanderbilt.dre.CIAO.ComponentServer.Executable";
-    const string SERVER_ARGUMENTS = "edu.vanderbilt.dre.CIAO.ComponentServer.Args";
-    const string SERVER_TIMEOUT = "edu.vanderbilt.dre.CIAO.ServerTimeout";
-    const string SERVER_MULTITHREAD = "edu.vanderbilt.dre.CIAO.Multithreaded";
     const string REGISTER_NAMING = "edu.vanderbilt.dre.CIAO.RegisterNaming";
-    const string COMPONENTINSTALLATION_REF = "edu.vanderbilt.dre.CIAO.ComponentInstallation";
 
     const string CCM_CONTAINER = "edu.dre.vanderbilt.dre.CCM.Container";
     const string CCM_HOME = "edu.dre.vanderbilt.dre.CCM.Home";
