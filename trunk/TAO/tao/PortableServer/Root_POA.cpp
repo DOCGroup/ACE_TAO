@@ -2007,6 +2007,9 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
 
       obj = this->orb_core_.orb ()->string_to_object (ior.c_str ());
 
+      // type_id info is not in the corbaloc, so set it here
+      obj->_stubobj()->type_id = type_id;
+
       return obj;
     }
 
