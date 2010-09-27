@@ -285,7 +285,8 @@ namespace CIAO
                     (LM_TRACE,
                       CLINFO
                     "Session_Container_i::install_home - "
-                    "Executor DLL successfully opened\n"));
+                    "Executor DLL [%C] successfully opened\n",
+                     primary_artifact));
       }
 
     ACE_DLL servant_dll;
@@ -313,7 +314,8 @@ namespace CIAO
                     (LM_TRACE,
                       CLINFO
                       "Session_Container_i::install_home - "
-                      "Servant DLL successfully openend.\n"));
+                      "Servant DLL [%C] successfully openend\n",
+                     servant_artifact));
       }
 
     // We have to do this casting in two steps because the C++
@@ -363,8 +365,7 @@ namespace CIAO
                  "Session_Container_i::install_home"
                  " - Loading home executor\n"));
 
-    Components::HomeExecutorBase_var home_executor =
-      hcreator ();
+    Components::HomeExecutorBase_var home_executor = hcreator ();
 
     if (CORBA::is_nil (home_executor.in ()))
       {
@@ -384,9 +385,7 @@ namespace CIAO
                  " - Loading home servant\n"));
 
     PortableServer::Servant home_servant =
-      screator (home_executor.in (),
-                this,
-                name);
+      screator (home_executor.in (), this, name);
 
     if (home_servant == 0)
       {
@@ -530,8 +529,9 @@ namespace CIAO
         CIAO_DEBUG (9,
                     (LM_TRACE,
                       CLINFO
-                      "Session_Container_i::install_component"
-                      " - Executor DLL successfully opened\n"));
+                     "Session_Container_i::install_component"
+                     " - Executor DLL [%C] successfully opened\n",
+                     primary_artifact));
       }
 
     ACE_DLL servant_dll;
@@ -557,9 +557,10 @@ namespace CIAO
       {
         CIAO_DEBUG (9,
                     (LM_TRACE,
-                      CLINFO
-                      "Session_Container_i::install_component "
-                      "- Servant DLL successfully openend.\n"));
+                     CLINFO
+                     "Session_Container_i::install_component "
+                     "- Servant DLL [%C] successfully openend\n",
+                     servant_artifact));
       }
 
     // We have to do this casting in two steps because the C++
