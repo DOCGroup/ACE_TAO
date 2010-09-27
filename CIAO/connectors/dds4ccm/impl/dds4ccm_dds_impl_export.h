@@ -1,8 +1,6 @@
-
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl DDS4CCM_NDDS_IMPL
 // ------------------------------
 #ifndef DDS4CCM_DDS_IMPL_EXPORT_H
 #define DDS4CCM_DDS_IMPL_EXPORT_H
