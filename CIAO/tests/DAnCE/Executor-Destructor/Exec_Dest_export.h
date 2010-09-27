@@ -2,7 +2,6 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl Executor_Destructor_Interceptor
 // ------------------------------
 #ifndef EXECUTOR_DESTRUCTOR_INTERCEPTOR_EXPORT_H
 #define EXECUTOR_DESTRUCTOR_INTERCEPTOR_EXPORT_H
