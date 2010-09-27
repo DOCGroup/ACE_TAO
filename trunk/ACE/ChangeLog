@@ -1,3 +1,21 @@
+Mon Sep 27 14:08:11 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+          Fixed compilation with ACE_HAS_DUMP. The later happens because
+          ACE_Log_Msg depends on ACE_Atomic_Op and ACE_Atomic_Op needs
+          ACE_DEBUG when ACE_HAS_DUMP is defined. This change moves
+          include of ace/Atomic_Op.h from header to CPP file and adds
+          forward declaration for ACE_Atomic_Op.
+
+        * ace/Atomic_Op_T.cpp:
+        * ace/Guard_T.cpp:
+          Removed unnecessary this paramater when doing ACE_END_DUMP.
+
+        * examples/Misc/test_dump.h:
+        * examples/Threads/thread_specific.cpp:
+          Fixed logging in these tests.
+
 Mon Sep 27 11:24:02 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * examples/C++NPv2/AIO_Client_Logging_Daemon.h:

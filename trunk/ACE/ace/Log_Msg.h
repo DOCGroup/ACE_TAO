@@ -24,7 +24,6 @@
 #include "ace/Default_Constants.h"
 #include "ace/Log_Priority.h"
 #include "ace/os_include/os_limits.h"
-#include "ace/Atomic_Op.h"
 #include "ace/Synch_Traits.h"
 
 // The ACE_ASSERT macro used to be defined here, include ace/Assert.h
@@ -144,6 +143,7 @@ class ACE_Log_Msg_Backend;
 // Forward declaration
 class ACE_Thread_Descriptor;
 class ACE_Log_Record;
+template<typename M, typename T> class ACE_Atomic_Op;
 
 /**
  * @class ACE_Log_Msg
