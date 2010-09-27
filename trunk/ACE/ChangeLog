@@ -1,3 +1,8 @@
+Mon Sep 27 11:24:02 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.h:
+          Another attempt to fix compile error.
+
 Mon Sep 27 09:42:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
