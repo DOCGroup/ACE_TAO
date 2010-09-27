@@ -1,8 +1,6 @@
-
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl DAnCE_Error_Interceptors
 // ------------------------------
 #ifndef DANCE_ERROR_INTERCEPTORS_EXPORT_H
 #define DANCE_ERROR_INTERCEPTORS_EXPORT_H
