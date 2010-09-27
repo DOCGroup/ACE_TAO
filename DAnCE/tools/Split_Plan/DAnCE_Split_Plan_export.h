@@ -1,8 +1,6 @@
-
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl DAnCE_Split_Plan
 // ------------------------------
 #ifndef DANCE_SPLIT_PLAN_EXPORT_H
 #define DANCE_SPLIT_PLAN_EXPORT_H
