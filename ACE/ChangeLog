@@ -1,7 +1,18 @@
+Mon Sep 27 14:47:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/String_Base.h:
+          Doxygen changes
+
+        * ace/Svc_Conf_Lexer.cpp:
+          Const changes
+
+        * bin/msvc_static_order.lst:
+          Some updates, but this list is very outdated
+
 Mon Sep 27 14:27:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * THANKS:
-        
+
           Added Matthew Waller <matthewrwaller at gmail dot com>
 
 Mon Sep 27 14:08:11 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
