@@ -1,3 +1,15 @@
+Mon Sep 27 11:58:28 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+          Added 2112 and removed SUNCC_51 checks
+
+        * orbsvcs/tests/Bug_2112_Regression:
+        * orbsvcs/tests/Bug_2112_Regression/Bug_2112_Regression.mpc:
+        * orbsvcs/tests/Bug_2112_Regression/client.cpp:
+        * orbsvcs/tests/Bug_2112_Regression/run_test.pl:
+          Integrated test for bugzilla 2112
+
 Mon Sep 27 11:41:31 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/MProfile_Connection_Timeout/client.cpp:
