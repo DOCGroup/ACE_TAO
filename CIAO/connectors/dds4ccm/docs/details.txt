@@ -3,31 +3,3 @@ $Id$
 For more information regarding DDS4CCM also check the CCM tutoral, see
 $CIAO_ROOT/docs/OMG-CCM-Tutorial.ppt
 
-Currently the exact syntax of IDL3+ is not clear. The batch 4 document has
-been outdated and we are waiting for a new batch 5. Before this will be
-published a decision on IDL3+ has to be made. The latest proposal is to just
-use templated modules, no templated interfaces. The usage of $ as
-concatanation symbol has been removed from the spec.
-
-A lis of all open issues can be found at:
-http://www.omg.org/issues/dds4ccm-ftf.open.html
-
-The list of issues that have been resolved are in the DDS for CCM FTF
-27Aug09 document in the same directory as this file.
-
-One issue that has to be reraised is the fact that DDS SampleInfo is not
-available at the CCM level, we need to have access to that.
-
-The DDS4CCM spec still has to be reviewed whether the given ports deliver the
-correct abstraction. We want to prevent that we get lightweight DDS for
-lightweight CCM.
-
-The CIAO tooling will generate the full connector. The goal is to have just
-template instantiations and simple pass through code inside the connector, all
-real code should be in a supporting core library. That makes it possible to
-change the connector without changing the code generators.
-
-A problem to resolve is the fact that DDS defines an implicit sequence. We
-need to be able to have the same sequence in IDL to be used for DDS and CCM.
-This is not possible at this moment because we have 2 different code
-generators each generating the same type.
