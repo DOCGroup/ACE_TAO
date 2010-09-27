@@ -1,3 +1,19 @@
+Mon Sep 27 08:51:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/docs/details.txt:
+          Removed a lot of contents, outdated
+
+        * connectors/dds4ccm/docs/10-05-06.pdf:
+        * connectors/dds4ccm/docs/10-05-07.pdf:
+        * connectors/dds4ccm/docs/10-05-08.pdf:
+        * connectors/dds4ccm/docs/DDS_DefaultQoS.xml:
+        * connectors/dds4ccm/docs/DDS_QoSProfile.xsd:
+        * connectors/dds4ccm/docs/DDSforCCM-meta.uml:
+        * connectors/dds4ccm/docs/_DDS for CCM Readable Files README.pdf:
+        * connectors/dds4ccm/docs/ccm_dds.idl:
+        * connectors/dds4ccm/docs/ccm_dds_dlrl.idl:
+          Removed these files, can be obtained from the OMG website
+
 Mon Sep 27 08:04:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/CCM_stub.mpc:
