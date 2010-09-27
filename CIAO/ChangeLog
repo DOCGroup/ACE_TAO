@@ -1,3 +1,17 @@
+Mon Sep 27 14:21:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Extension/Extension_Container.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+          Also log dll name in case of no error
+
+        * bin/PerlCIAO:
+        * bin/PerlCIAO/TestUtils.base:
+        * bin/PerlCIAO/TestUtils.pm:
+        * bin/PerlCIAO/TestUtils_Base.pm:
+        * bin/PerlCIAO/generate_container.pl:
+        * bin/PerlCIAO/perlciao.mpc:
+          Removed these files, ancient and not used
+
 Mon Sep 27 09:39:07 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Interceptors/CIAO_Deployment_Interceptors_export.h:

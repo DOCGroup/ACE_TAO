@@ -283,9 +283,10 @@ namespace CIAO
       {
         CIAO_DEBUG (9,
                     (LM_TRACE,
-                      CLINFO
+                     CLINFO
                     "Extension_Container_i::install_home - "
-                    "Executor DLL successfully opened\n"));
+                    "Executor DLL [%C] successfully opened\n",
+                    primary_artifact));
       }
 
     ACE_DLL servant_dll;
@@ -311,9 +312,10 @@ namespace CIAO
       {
         CIAO_DEBUG (9,
                     (LM_TRACE,
-                      CLINFO
-                      "Extension_Container_i::install_home - "
-                      "Servant DLL successfully openend.\n"));
+                     CLINFO
+                     "Extension_Container_i::install_home - "
+                     "Servant DLL [%C] successfully openend\n",
+                     servant_artifact));
       }
 
     // We have to do this casting in two steps because the C++
@@ -529,9 +531,10 @@ namespace CIAO
       {
         CIAO_DEBUG (9,
                     (LM_TRACE,
-                      CLINFO
-                      "Extension_Container_i::install_component"
-                      " - Executor DLL successfully opened\n"));
+                     CLINFO
+                     "Extension_Container_i::install_component"
+                     " - Executor [%C] DLL successfully opened\n",
+                     primary_artifact));
       }
 
     ACE_DLL servant_dll;
@@ -557,9 +560,10 @@ namespace CIAO
       {
         CIAO_DEBUG (9,
                     (LM_TRACE,
-                      CLINFO
-                      "Extension_Container_i::install_component "
-                      "- Servant DLL successfully openend.\n"));
+                     CLINFO
+                     "Extension_Container_i::install_component "
+                     "- Servant DLL [%C] successfully openend\n",
+                     servant_artifact));
       }
 
     // We have to do this casting in two steps because the C++
