@@ -159,27 +159,30 @@ be_visitor_executor_exs::visit_component (be_component *node)
       << "}" << be_uidt << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
-      << "void" << be_nl
-      << lname << "_exec_i::configuration_complete (void)"
-      << be_nl
-      << "{" << be_idt_nl
-      << your_code_here_ << be_uidt_nl
-      << "}";
+  if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
+    {
+      os_ << be_nl << be_nl
+          << "void" << be_nl
+          << lname << "_exec_i::configuration_complete (void)"
+          << be_nl
+          << "{" << be_idt_nl
+          << your_code_here_ << be_uidt_nl
+          << "}";
 
-  os_ << be_nl << be_nl
-      << "void" << be_nl
-      << lname << "_exec_i::ccm_activate (void)" << be_nl
-      << "{" << be_idt_nl
-      << your_code_here_ << be_uidt_nl
-      << "}";
+      os_ << be_nl << be_nl
+          << "void" << be_nl
+          << lname << "_exec_i::ccm_activate (void)" << be_nl
+          << "{" << be_idt_nl
+          << your_code_here_ << be_uidt_nl
+          << "}";
 
-  os_ << be_nl << be_nl
-      << "void" << be_nl
-      << lname << "_exec_i::ccm_passivate (void)" << be_nl
-      << "{" << be_idt_nl
-      << your_code_here_ << be_uidt_nl
-      << "}";
+      os_ << be_nl << be_nl
+          << "void" << be_nl
+          << lname << "_exec_i::ccm_passivate (void)" << be_nl
+          << "{" << be_idt_nl
+          << your_code_here_ << be_uidt_nl
+          << "}";
+    }
 
   os_ << be_nl << be_nl
       << "void" << be_nl

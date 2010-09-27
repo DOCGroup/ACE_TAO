@@ -120,13 +120,17 @@ be_visitor_executor_exh::visit_component (be_component *node)
       << "::Components::" << be_global->ciao_container_type ()
       << "Context_ptr ctx);";
 
-  os_ << be_nl << be_nl
-      << "virtual void configuration_complete (void);";
+  if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
+    {
+      os_ << be_nl << be_nl
+          << "virtual void configuration_complete (void);";
 
-  os_ << be_nl << be_nl
-      << "virtual void ccm_activate (void);" << be_nl
-      << "virtual void ccm_passivate (void);" << be_nl
-      << "virtual void ccm_remove (void);";
+      os_ << be_nl << be_nl
+          << "virtual void ccm_activate (void);" << be_nl
+          << "virtual void ccm_passivate (void);";
+    }
+
+  os_ << be_nl << "virtual void ccm_remove (void);";
 
   os_ << be_nl
       << "//@}";
