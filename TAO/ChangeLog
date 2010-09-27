@@ -1,3 +1,18 @@
+Mon Sep 27 14:25:28 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/PortableServer/Root_POA.cpp:
+
+          Fix for bug #3891: set the type_id in the TAO_Stub for
+          ImR-ified object references.
+
+        * bin/tao_other_tests.lst:
+        * orbsvcs/tests/Bug_3891_Regression/Bug_3891_Regression.mpc:
+        * orbsvcs/tests/Bug_3891_Regression/Test.idl:
+        * orbsvcs/tests/Bug_3891_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_3891_Regression/server.cpp:
+
+          Added regression test.
+
 Mon Sep 27 14:22:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode/SystemExceptionA.cpp:
