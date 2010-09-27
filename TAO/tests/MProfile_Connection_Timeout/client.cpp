@@ -78,7 +78,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
 
       TAO_IOP::TAO_IOR_Manipulation_var iorm =
-        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM);
+        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ());
 
       TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);
       iors.length(2);

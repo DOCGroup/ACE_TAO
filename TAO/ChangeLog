@@ -1,3 +1,8 @@
+Mon Sep 27 11:41:31 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/MProfile_Connection_Timeout/client.cpp:
+          Fixed compile warning.
+
 Mon Sep 27 07:47:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
