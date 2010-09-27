@@ -1,10 +1,9 @@
 // $Id$
 
 #include "Connector_Servant_Impl_Base.h"
-
 #include "StandardConfigurator_Impl.h"
 #include "ciao/Logger/Log_Macros.h"
-#include "ciao/Containers/Container_BaseC.h"
+#include "ciao/Containers/CIAO_Servant_ActivatorC.h"
 
 namespace CIAO
 {

@@ -10,10 +10,6 @@ project(CIAO_Base_IDL) : install, ciaoidldefaults, anytypecode {
     CIAO_Properties.idl
     idlflags += -Gxhst
   }
-
-  IDL_Files {
-    CIAO_FailureReasons.idl
-  }
 }
 
 project(CIAO_Base_stub) : install, ciaolib_with_idl, ciao_output, \
@@ -26,12 +22,10 @@ project(CIAO_Base_stub) : install, ciaolib_with_idl, ciao_output, \
   }
   Source_Files {
     CIAO_PropertiesC.cpp
-    CIAO_FailureReasonsC.cpp
     Server_init.cpp
     Client_init.cpp
   }
   Header_Files {
-    CIAO_FailureReasonsC.h
     CIAO_PropertiesC.h
     Server_init.h
     Client_init.h

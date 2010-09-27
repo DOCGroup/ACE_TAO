@@ -1,3 +1,15 @@
+Mon Sep 27 07:30:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Base/CIAO_Base.mpc:
+        * ciao/Contexts/Extension/Extension_Context_T.cpp:
+        * ciao/Servants/Connector_Servant_Impl_Base.h:
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+        * ciao/Servants/Home_Servant_Impl_T.cpp:
+          Several cleanup and layout changes
+
+        * ciao/Base/CIAO_FailureReasons.idl:
+          Removed this file, not needed anymore
+
 Mon Sep 27 07:09:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Contexts/Extension/Extension_Context_T.cpp:
