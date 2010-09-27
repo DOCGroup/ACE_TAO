@@ -105,7 +105,6 @@ project(Cornucopia_Ext_skel) : ccm_svnt {
 }
 
 project(Cornucopia_Ext_svnt) : ciao_servant {
-  requires += dummy_label
   after      += Cornucopia_Ext_exec Cornucopia_Ext_skel Cornucopia_Ext_stub
   sharedname  = Cornucopia_svnt
   libs       += Cornucopia_exec \
