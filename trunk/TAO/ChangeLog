@@ -1,3 +1,8 @@
+Tue Sep 28 09:31:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2112_Regression/client.cpp:
+          Fixed not used warnings
+
 Tue Sep 28 08:11:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/test.idl:

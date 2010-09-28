@@ -49,10 +49,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       catch(const CORBA::TRANSIENT & e)
         {
-          ACE_ERROR ((LM_ERROR, "Error, caught exception: %C\n"));
+          ACE_ERROR ((LM_ERROR, "Error, caught transient exception\n"));
           retval = 1;
         }
-      catch(const CORBA::TIMEOUT & e)
+      catch(const CORBA::TIMEOUT &)
         {
           ACE_DEBUG ((LM_DEBUG, "Caught correct timeout\n"));
         }
