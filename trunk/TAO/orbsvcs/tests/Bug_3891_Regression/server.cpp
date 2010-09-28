@@ -7,8 +7,7 @@ class Hello : public virtual POA_Test::Hello
 {
 };
 
-int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -37,9 +36,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       pols[1] = PortableServer::IdAssignmentPolicy::_duplicate (assign.in ());
 
       PortableServer::POA_var poa =
-        root_poa->create_POA("ImRified POA", poa_manager.in (), pols);
-      life->destroy();
-      assign->destroy();
+        root_poa->create_POA ("ImRified POA", poa_manager.in (), pols);
+      life->destroy ();
+      assign->destroy ();
 
       Hello *hello_impl = 0;
       ACE_NEW_RETURN (hello_impl, Hello, 1);
@@ -50,10 +49,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa->activate_object_with_id (id.in (), hello_impl);
 
-      CORBA::Object_var obj = poa->id_to_reference(id.in ());
+      CORBA::Object_var obj = poa->id_to_reference (id.in ());
 
       if (!obj->_stubobj ()->type_id.in () ||
-          ACE_OS::strcmp (obj->_stubobj ()->type_id,
+          ACE_OS::strcmp (obj->_stubobj ()->type_id.in (),
                           hello_impl->_repository_id ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR, "ERROR: type_id is incorrect\n"), 1);
