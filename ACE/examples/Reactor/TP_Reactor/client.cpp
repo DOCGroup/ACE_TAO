@@ -12,6 +12,7 @@
 #include <ace/SOCK_Connector.h>
 #include <ace/SOCK_Stream.h>
 #include <ace/streams.h>
+#include <ace/OS_NS_stdlib.h>
 
 #include "common.h"
 
