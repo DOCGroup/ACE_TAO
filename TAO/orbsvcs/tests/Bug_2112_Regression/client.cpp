@@ -39,7 +39,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   obj = Orb->string_to_object(obj_ref);
 
   CosNaming::NamingContext_var inc;
-  if(!CORBA::is_nil(obj))
+  if(!CORBA::is_nil(obj.in ()))
     {
       ACE_DEBUG(( LM_INFO, "Attempting to contact %C\n", obj_ref ));
       try
