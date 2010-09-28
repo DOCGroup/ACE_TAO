@@ -70,6 +70,10 @@ public:
   int init (int &argc,
             ACE_TCHAR *argv[],
             const char *orb_name = 0);
+            
+  int init (int &argc,
+            ACE_TCHAR *argv[],
+            std::string orb_name);
 
 #if !defined (CORBA_E_MICRO)
   /**

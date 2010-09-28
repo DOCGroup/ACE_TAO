@@ -1,3 +1,17 @@
+Tue Sep 28 17:35:31 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/Event_Service/Event_Service.cpp:
+        
+          Cosmetic changes.
+          
+        * tao/CORBA_methods.h:
+        * tao/ORB.cpp:
+        * tao/Utils/ORB_Manager.cpp:
+        * tao/Utils/ORB_Manager.h:
+        
+          Added ORB_init() method that takes a std::string ORB name
+          arg instead of const char*.
+
 Fri Sep 24 15:12:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:

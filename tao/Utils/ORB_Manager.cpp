@@ -73,6 +73,14 @@ TAO_ORB_Manager::init (int &argc,
   return 0;
 }
 
+int
+TAO_ORB_Manager::init (int &argc,
+                       ACE_TCHAR *argv[],
+                       std::string orb_name)
+{
+  return this->init (argc, argv, orb_name.c_str ());
+}
+
 #if !defined (CORBA_E_MICRO)
 int
 TAO_ORB_Manager::init_child_poa (int& argc,

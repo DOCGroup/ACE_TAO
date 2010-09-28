@@ -16,6 +16,8 @@
 
 #include /**/ "ace/pre.h"
 
+#include <string>
+
 #include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -43,6 +45,10 @@ namespace CORBA
   extern TAO_Export ORB_ptr ORB_init (int & argc,
                                       char * argv[],
                                       const char * orb_name = 0);
+                                      
+  extern TAO_Export ORB_ptr ORB_init (int & argc,
+                                      char * argv[],
+                                      std::string orb_name);
 #if defined (ACE_USES_WCHAR)
   extern TAO_Export ORB_ptr ORB_init (int & argc,
                                       wchar_t * argv[],
