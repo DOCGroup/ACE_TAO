@@ -1,3 +1,11 @@
+Tue Sep 28 18:16:52 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * performance-tests/TCP/tcp_test.cpp:
+
+          If the 1st char of the host name is a digit, need to set the IP
+          address and port as network byte order since that is what's
+          returned from ACE_OS::inet_addr().
+
 Tue Sep 28 11:34:05 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Asynch_Connector.cpp:
