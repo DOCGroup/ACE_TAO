@@ -108,8 +108,8 @@ public:
 
   //@@ TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_START
   /**
-   * Set the host name for the given addr.
-   * A hostname may be forced by using specified_hostname.  This
+   * Set the host name for the given @a addr.
+   * A hostname may be forced by using @a specified_hostname.  This
    * is useful if the given address corresponds to more than one
    * hostname and the desired one cannot be determined in any
    * other way.

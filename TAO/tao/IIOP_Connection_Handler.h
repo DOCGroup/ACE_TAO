@@ -125,12 +125,11 @@ protected:
 
   virtual int handle_write_ready (const ACE_Time_Value *timeout);
 
-  // helper function used by the set_dscp_codepoint () methods to
-  // set the TOS field in the IP packets.
+  /// helper function used by the set_dscp_codepoint () methods to
+  /// set the TOS field in the IP packets.
   int set_tos (int tos);
 
 private:
-
   /// Stores the type of service value.
   int dscp_codepoint_;
 };

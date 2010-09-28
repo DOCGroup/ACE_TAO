@@ -21,7 +21,7 @@ public:
   Client_Task (Test::Process_Factory_ptr process_Factory,
                int iterations);
 
-  /// Return the total number of sucessful calls
+  /// Return the total number of successful calls
   int successful_calls (void) const;
 
   /// Thread entry point
