@@ -1,3 +1,8 @@
+Tue Sep 28 18:48:58 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS3/jaws3-todo:
+          Removed, todo for years now
+
 Tue Sep 28 18:16:52 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * performance-tests/TCP/tcp_test.cpp:
