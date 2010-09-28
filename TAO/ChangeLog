@@ -1,3 +1,13 @@
+Tue Sep 28 14:18:36 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/tests/Bug_3891_Regression/Bug_3891_Regression.mpc:
+
+          Test won't build in CORBA/e Micro
+
+        * orbsvcs/tests/Bug_3891_Regression/server.cpp:
+
+          Whitespace cleanup, avoid warnings with older GCC's.
+
 Tue Sep 28 12:10:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Environment.h:
