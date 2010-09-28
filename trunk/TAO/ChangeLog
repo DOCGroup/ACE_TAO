@@ -1,3 +1,9 @@
+Tue Sep 28 15:02:48 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/tests/Bug_2112_Regression/client.cpp:
+
+          Fixed #include to work with installed build.
+
 Tue Sep 28 14:18:36 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/tests/Bug_3891_Regression/Bug_3891_Regression.mpc:

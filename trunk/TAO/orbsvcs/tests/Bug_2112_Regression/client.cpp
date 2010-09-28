@@ -4,7 +4,7 @@
 #include "tao/corba.h"
 #include "tao/TimeBaseC.h"
 #include "tao/Messaging/Messaging.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
