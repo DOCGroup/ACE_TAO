@@ -1,3 +1,36 @@
+Tue Sep 28 11:34:05 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Asynch_Connector.cpp:
+        * ace/Barrier.h:
+        * ace/Barrier.cpp:
+        * ace/Condition_Thread_Mutex.h:
+        * ace/Condition_Thread_Mutex.inl:
+        * ace/Containers_T.cpp:
+        * ace/Functor.h:
+        * ace/Functor.inl:
+        * ace/IO_Cntl_Msg.cpp:
+        * ace/Intrusive_List.cpp:
+        * ace/Local_Tokens.inl:
+        * ace/MEM_IO.cpp:
+        * ace/MEM_Stream.h:
+        * ace/MEM_Stream.inl:
+        * ace/Malloc_T.inl:
+        * ace/OS_NS_Thread.inl:
+        * ace/OS_NS_string.inl:
+        * ace/Object_Manager_Base.cpp:
+        * ace/POSIX_Proactor.cpp:
+        * ace/Ping_Socket.cpp:
+        * ace/Signal.inl:
+        * ace/Throughput_Stats.h:
+        * ace/Throughput_Stats.cpp:
+        * ace/Time_Value.cpp:
+        * ace/Timer_Hash_T.cpp:
+        * ace/Timer_Heap_T.cpp:
+        * ace/Vector_T.h:
+        * ace/Vector_T.cpp:
+        * ace/config-linux-common.h:
+          Removed code that was ifdefed out for years now
+
 Tue Sep 28 08:31:37 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * performance-tests/Misc/test_guard.cpp:
