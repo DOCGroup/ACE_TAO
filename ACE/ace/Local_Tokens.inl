@@ -140,20 +140,6 @@ ACE_Tokens::name (void)
   return this->token_name_;
 }
 
-#if 0
-ACE_INLINE ACE_Token_Proxy *
-ACE_Tokens::current_owner (void)
-{
-  ACE_TRACE ("ACE_Tokens::current_owner");
-  // ACE_GUARD_RETURN ???
-
-  if (this->owner () == 0)
-    return 0;
-  else
-    return this->owner ()->proxy ();
-}
-#endif /* 0 */
-
 // ************************************************************
 
 ACE_INLINE int

@@ -167,26 +167,6 @@ ACE_Thread_Barrier::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-#if 0
-ACE_ALLOC_HOOK_DEFINE(ACE_Process_Barrier)
-
-ACE_Process_Barrier::ACE_Process_Barrier (u_int count,
-                                          const ACE_TCHAR *name)
-  : ACE_Barrier (count, USYNC_PROCESS, name)
-{
-// ACE_TRACE ("ACE_Process_Barrier::ACE_Process_Barrier");
-}
-
-void
-ACE_Process_Barrier::dump (void) const
-{
-#if defined (ACE_HAS_DUMP)
-// ACE_TRACE ("ACE_Process_Barrier::dump");
-  ACE_Barrier::dump ();
-#endif /* ACE_HAS_DUMP */
-}
-#endif /* 0 */
-
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_THREADS */

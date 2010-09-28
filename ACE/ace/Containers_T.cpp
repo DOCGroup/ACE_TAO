@@ -796,35 +796,6 @@ ACE_Double_Linked_List<T>::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-#if 0
-template <class T> T *
-ACE_Double_Linked_List<T>::find (const T &item)
-{
-  for (ACE_Double_Linked_List_Iterator<T> iter (*this);
-       !iter.done ();
-       iter.advance ())
-    {
-      T *temp = iter.next ();
-
-      if (*temp == item)
-        return temp;
-    }
-
-  return 0;
-}
-
-template <class T> int
-ACE_Double_Linked_List<T>::remove (const T &item)
-{
-  T *temp = this->find (item);
-
-  if (temp != 0)
-    return this->remove (temp);
-  else
-    return -1;
-}
-#endif /* 0 */
-
 template <class T> int
 ACE_Double_Linked_List<T>::remove (T *n)
 {

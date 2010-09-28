@@ -63,10 +63,6 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::release (int close)
     {
       int const retv = --this->cb_ptr_->ref_counter_;
 
-#if 0
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P) ACE_Malloc_T::release ->%d\n"),
-                 this->cb_ptr_->ref_counter_ - 1));
-#endif /* 0 */
       if (close)
         this->memory_pool_.release (0);
 
@@ -157,18 +153,5 @@ ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc_FIFO_Iterator (AC
   : ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block> (malloc, name)
 {
 }
-
-
-#if 0
-template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE void
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::init_malloc_header_ptr (void* ptr)
-{
-#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
-  new (ptr) ACE_MALLOC_HEADER_PTR (this->cb_ptr_, 0);
-#else
-  ACE_UNUSED_ARG (ptr);
-#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
-}
-#endif  /* 0 */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

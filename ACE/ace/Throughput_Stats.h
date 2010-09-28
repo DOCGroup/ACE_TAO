@@ -65,18 +65,6 @@ public:
 private:
   /// The last throughput measurement.
   ACE_UINT64 throughput_last_;
-
-#if 0
-  /// These are the fields that we should keep to perform linear
-  /// regression
-  //@{
-  ///@}
-  ACE_UINT64 throughput_sum_x_;
-  ACE_UINT64 throughput_sum_x2_;
-  ACE_UINT64 throughput_sum_y_;
-  ACE_UINT64 throughput_sum_y2_;
-  ACE_UINT64 throughput_sum_xy_;
-#endif /* 0 */
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

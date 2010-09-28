@@ -516,39 +516,6 @@ ACE_POSIX_Proactor::create_asynch_timer
   return implementation;
 }
 
-#if 0
-int
-ACE_POSIX_Proactor::handle_signal (int, siginfo_t *, ucontext_t *)
-{
-  // Perform a non-blocking "poll" for all the I/O events that have
-  // completed in the I/O completion queue.
-
-  ACE_Time_Value timeout (0, 0);
-  int result = 0;
-
-  for (;;)
-    {
-      result = this->handle_events (timeout);
-      if (result != 0 || errno == ETIME)
-        break;
-    }
-
-  // If our handle_events failed, we'll report a failure to the
-  // Reactor.
-  return result == -1 ? -1 : 0;
-}
-
-int
-ACE_POSIX_Proactor::handle_close (ACE_HANDLE handle,
-                                  ACE_Reactor_Mask close_mask)
-{
-  ACE_UNUSED_ARG (close_mask);
-  ACE_UNUSED_ARG (handle);
-
-  return this->close ();
-}
-#endif /* 0 */
-
 void
 ACE_POSIX_Proactor::application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
                                                size_t bytes_transferred,

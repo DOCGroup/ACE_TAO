@@ -48,14 +48,6 @@ void ACE_Vector<T, DEFAULT_SIZE>::push_back (const T& elem)
 template <class T, size_t DEFAULT_SIZE>
 void ACE_Vector<T, DEFAULT_SIZE>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
-#if 0
-  // Can't do this unless the vector is an object with a dump
-  // function.
-  for (size_t i = 0; i < this->size (); ++i)
-    (*this)[i].dump ();
-#endif /* 0 */
-#endif /* ACE_HAS_DUMP */
 }
 
 // Compare this vector with <s> for equality.
@@ -74,61 +66,6 @@ ACE_Vector<T, DEFAULT_SIZE>::operator== (const ACE_Vector<T, DEFAULT_SIZE> &s) c
 
   return true;
 }
-
-#if 0
-template<class T>
-int compare(const ACE_Vector<T>& v1,
-            const ACE_Vector<T>& v2,
-            const size_t from_ndx,
-            const size_t to_ndx)
-{
-  size_t last1 = v1.size () - 1;
-  size_t last2 = v2.size () - 1;
-  if (last1 < from_ndx || last1 < to_ndx)
-    return false;
-  if (last2 < from_ndx || last2 < to_ndx)
-    return false;
-  if (last1 != last2)
-    return false;
-
-  //  cout<<"compare() <================="<<endl;
-  for (size_t i = from_ndx; i <= to_ndx; ++i)
-    //     cout<<"V1["<<i<<"]="<<v1[i];
-    //     cout<<", V2["<<i<<"]="<<v2[i];
-    //     cout<<": NOT EQUAL == "<<(v1[i]!=v2[i])<<endl;
-    if (v1[i] != v2[i])
-      return false;
-
-  //  cout<<"compare() ====================>"<<endl;
-  return true;
-}
-
-template<class T>
-int partial_compare(const ACE_Vector<T>& v1,
-                    const ACE_Vector<T>& v2,
-                    const size_t from_ndx,
-                    const size_t to_ndx)
-{
-  size_t last1 = v1.size () - 1;
-  size_t last2 = v2.size () - 1;
-
-  if (last1 < from_ndx || last1 < to_ndx)
-    return false;
-  if (last2 < from_ndx || last2 < to_ndx)
-    return false;
-
-  //  cout<<"partial_compare() <================="<<endl;
-  for (size_t i = from_ndx; i <= to_ndx; ++i)
-    //     cout<<"V1["<<i<<"]="<<v1[i];
-    //     cout<<", V2["<<i<<"]="<<v2[i];
-    //     cout<<": NOT EQUAL == "<<(v1[i]!=v2[i])<<endl;
-    if (v1[i] != v2[i])
-      return false;
-
-  //  cout<<"partial_compare() ====================>"<<endl;
-  return true;
-}
-#endif
 
 // ****************************************************************
 
