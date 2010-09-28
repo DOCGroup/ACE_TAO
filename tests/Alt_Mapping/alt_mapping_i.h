@@ -27,7 +27,7 @@ public:
   ~Alt_Mapping_i (void);
 
   virtual std::string
-  test_unbounded_string (const std::string s1,
+  test_unbounded_string (const std::string &s1,
                          std::string &s2,
                          std::string &s3);
 

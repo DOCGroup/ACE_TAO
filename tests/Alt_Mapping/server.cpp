@@ -60,7 +60,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-      const char *orb_name = "";
+      std::string orb_name;
       CORBA::ORB_var orb_ptr =
         CORBA::ORB_init (argc, argv, orb_name);
 

@@ -1,3 +1,14 @@
+Tue Sep 28 17:46:42 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Alt_Mapping/alt_mapping_i.cpp:
+        * tests/Alt_Mapping/server.cpp:
+        * tests/Alt_Mapping/alt_mapping_i.h:
+        * tests/Alt_Mapping/driver.cpp:
+        
+          Updated to
+            - use const std::string<>& for IN arg signature
+            - use ORB_init() with std::string for ORB name arg
+
 Tue Sep 28 17:35:31 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/Event_Service/Event_Service.cpp:
