@@ -1,5 +1,5 @@
 // -*- MPC -*-
 // $Id$
 
-project: taoserver {
+project: taoserver, avoids_corba_e_micro {
 }
