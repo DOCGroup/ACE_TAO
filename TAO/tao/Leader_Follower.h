@@ -80,7 +80,7 @@ public:
   /// Wait on the Leader/Followers loop until one event happens.
   /**
    * @param event The event we wait for, the loop iterates until the
-   * event is sucessful, or it fails due to timeout, and error or a
+   * event is successful, or it fails due to timeout, and error or a
    * connection closed.
    * @param transport The transport attached to the event
    * @param max_wait_time Limit the time spent on the loop

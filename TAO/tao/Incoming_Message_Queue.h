@@ -50,7 +50,6 @@ class TAO_Transport;
  *   different.
  *
  */
-
 class TAO_Export TAO_Incoming_Message_Queue
 {
 public:

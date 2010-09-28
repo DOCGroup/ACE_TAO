@@ -1,3 +1,22 @@
+Tue Sep 28 12:10:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Environment.h:
+        * tao/Environment.cpp:
+        * tao/Exception.h:
+        * tao/Fault_Tolerance_Service.h:
+        * tao/Flushing_Strategy.h:
+        * tao/GIOP_Message_State.h:
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Endpoint.h:
+        * tao/Incoming_Message_Queue.h:
+        * tao/Invocation_Adapter.h:
+        * tao/Invocation_Base.h:
+        * tao/Leader_Follower.h:
+        * tests/Client_Leaks/Client_Task.h:
+        * tests/MT_Timeout/Client_Task.h:
+          Doxygen fixes
+
 Tue Sep 28 09:31:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2112_Regression/client.cpp:
