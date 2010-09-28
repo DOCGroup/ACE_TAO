@@ -3156,14 +3156,6 @@ ACE_OS::thr_sigsetmask (int how,
   //FUZZ: enable check_for_lack_ACE_OS
 #   endif /* !ACE_LACKS_PTHREAD_SIGMASK */
 
-#if 0
-  /* Don't know if any platform actually needs this... */
-  // as far as I can tell, this is now pthread_sigaction() -- jwr
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_sigaction (how, nsm, osm),
-                                       result), int, -1);
-#endif /* 0 */
-
 # elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG (osm);
   ACE_UNUSED_ARG (nsm);

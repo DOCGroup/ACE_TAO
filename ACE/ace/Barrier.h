@@ -156,29 +156,6 @@ private:
   ACE_Barrier (const ACE_Barrier &);
 };
 
-#if 0
-/**
- * @class ACE_Process_Barrier
- *
- * @brief Implements "barrier synchronization" using ACE_Process_Mutexes!
- *
- * This class is just a simple wrapper for ACE_Barrier that
- * selects the USYNC_PROCESS variant for the locks.
- */
-class ACE_Export ACE_Process_Barrier : public ACE_Barrier
-{
-public:
-  /// Create a Process_Barrier, passing in the optional @a name.
-  ACE_Process_Barrier (unsigned int count, const ACE_TCHAR *name = 0);
-
-  /// Dump the state of an object.
-  void dump (void) const;
-
-  /// Declare the dynamic allocation hooks.
-  ACE_ALLOC_HOOK_DECLARE;
-};
-#endif /* 0 */
-
 /**
  * @class ACE_Thread_Barrier
  *

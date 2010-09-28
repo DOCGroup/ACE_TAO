@@ -150,22 +150,6 @@ ACE_Sig_Action::handler (ACE_SignalHandler handler)
 #endif /* !ACE_HAS_TANDEM_SIGNALS */
 }
 
-#if 0
-ACE_INLINE ACE_SignalHandler
-ACE_Sig_Action::sigaction (void)
-{
-  ACE_TRACE ("ACE_Sig_Action::sigaction");
-  return ACE_SignalHandler (this->sa_.sa_sigaction);
-}
-
-ACE_INLINE void
-ACE_Sig_Action::sigaction (ACE_SignalHandler handler)
-{
-  ACE_TRACE ("ACE_Sig_Action::sigaction");
-  this->sa_.sa_sigaction = (void (*)()) ACE_SignalHandlerV (handler);
-}
-#endif /* 0 */
-
 ACE_INLINE void
 ACE_Sig_Action::set (struct sigaction *sa)
 {
