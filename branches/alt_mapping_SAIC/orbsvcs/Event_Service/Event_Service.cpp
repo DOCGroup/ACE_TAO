@@ -27,7 +27,8 @@ ACE_RCSID (Event_Service,
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   bool use_thread_per_consumer = false;
-  for(int i = 0; i < argc; i++)
+  
+  for (int i = 0; i < argc; i++)
     {
       if (ACE_OS::strcmp (argv[i], ACE_TEXT ("-a")) == 0)
         {
@@ -36,9 +37,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         }
     }
   if (use_thread_per_consumer)
-    TAO_EC_TPC_Factory::init_svcs ();
+    {
+      TAO_EC_TPC_Factory::init_svcs ();
+    }
   else
-    TAO_EC_Default_Factory::init_svcs ();
+    {
+      TAO_EC_Default_Factory::init_svcs ();
+    }
 
   Event_Service event_service;
   return event_service.run (argc, argv);
@@ -73,21 +78,26 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       TAO_Daemon_Utility::check_for_daemon (argc, argv);
 
       // Make a copy of command line parameter.
-      ACE_Argv_Type_Converter command(argc, argv);
+      ACE_Argv_Type_Converter command (argc, argv);
 
       // Initialize ORB.
       this->orb_ =
-        CORBA::ORB_init (command.get_argc(), command.get_ASCII_argv());
+        CORBA::ORB_init (command.get_argc (), command.get_ASCII_argv ());
 
-      if (this->parse_args (command.get_argc(), command.get_TCHAR_argv()) == -1)
-        return 1;
+      if (this->parse_args (command.get_argc (), command.get_TCHAR_argv ()) == -1)
+        {
+          return 1;
+        }
 
       CORBA::Object_var root_poa_object =
         this->orb_->resolve_initial_references("RootPOA");
+        
       if (CORBA::is_nil (root_poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the root POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the root POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (root_poa_object.in ());
@@ -154,7 +164,8 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
 
           if (CORBA::is_nil (scheduler.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
-                                " (%P|%t) Unable to resolve the Scheduling Service.\n"),
+                                " (%P|%t) Unable to resolve "
+                                "the Scheduling Service.\n"),
                               1);
         }
 
@@ -179,8 +190,9 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       // If the object_id_ is empty and we don't use BiDIR GIOP, activate the
       // servant under the default POA, else create a new child POA with
       // the needed policies
-      int persistent = ACE_OS::strcmp(this->object_id_.c_str(), "");
-      if ((persistent == 0) && (this->use_bidir_giop_ == false))
+      int persistent = ACE_OS::strcmp (this->object_id_.c_str(), "");
+      
+      if (persistent == 0 && !this->use_bidir_giop_)
         {
           // Notice that we activate *this* object with the POA, but we
           // forward all the requests to the underlying EC
@@ -189,30 +201,25 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
         }
       else
         {
-          CORBA::ULong index = 0;
-
           // Create child POA
           CORBA::PolicyList policies (3);
 
           if (persistent != 0)
             {
-              policies.resize (index++);
-              policies[index] =
-                root_poa->create_id_assignment_policy (PortableServer::USER_ID);
+              policies.push_back (
+                root_poa->create_id_assignment_policy (PortableServer::USER_ID));
 
-              policies.resize (index++);
-              policies[index] =
-                root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
+              policies.push_back (
+                root_poa->create_lifespan_policy (PortableServer::PERSISTENT));
             }
 
-          if (this->use_bidir_giop_ == true)
+          if (this->use_bidir_giop_)
             {
               CORBA::Any pol;
               pol <<= BiDirPolicy::BOTH;
-              policies.resize (index++);
-              policies[index] =
+              policies.push_back (
                 this->orb_->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
-                                           pol);
+                                           pol));
             }
 
           ACE_CString child_poa_name = "childPOA";
@@ -222,22 +229,23 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
                                   policies);
 
           // Creation of persistentPOA is over. Destroy the Policy objects.
-          for (CORBA::ULong i = 0;
-               i < policies.size ();
-               ++i)
+          for (CORBA::ULong i = 0; i < policies.size (); ++i)
             {
               policies[i]->destroy ();
             }
 
           if (CORBA::is_nil (child_poa.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               " (%P|%t) Unable to initialize the child POA.\n"),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 " (%P|%t) Unable to initialize "
+                                 "the child POA.\n"),
+                                1);
+            }
 
           PortableServer::ObjectId ec_object_id =
-            PortableServer::string_to_ObjectId(object_id_.c_str());
+            PortableServer::string_to_ObjectId (object_id_.c_str ());
 
-          child_poa->activate_object_with_id(ec_object_id, this);
+          child_poa->activate_object_with_id (ec_object_id, this);
 
           CORBA::Object_var ec_obj =
             child_poa->id_to_reference(ec_object_id);
@@ -249,16 +257,21 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       CORBA::String_var str =
          this->orb_->object_to_string (ec.in ());
 
-      if (ACE_OS::strcmp(this->ior_file_name_.c_str(), ACE_TEXT("")) != 0)
+      if (ACE_OS::strcmp (this->ior_file_name_.c_str (), ACE_TEXT ("")) != 0)
         {
           FILE *output_file=
             ACE_OS::fopen (this->ior_file_name_.c_str(),
                            ACE_TEXT("w"));
+                           
           if (output_file == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               this->ior_file_name_.c_str()),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot open output "
+                                 "file for writing IOR: %s",
+                                 this->ior_file_name_.c_str()),
+                                1);
+            }
+            
           ACE_OS::fprintf (output_file, "%s", str.in ());
           ACE_OS::fclose (output_file);
         }
@@ -285,7 +298,8 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
         {
           CosNaming::Name channel_name (1);
           channel_name.length (1);
-          channel_name[0].id = CORBA::string_dup (this->service_name_.c_str());
+          channel_name[0].id =
+            CORBA::string_dup (this->service_name_.c_str());
           naming_context->rebind (channel_name, ec.in ());
         }
 
@@ -315,7 +329,6 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       ex._tao_print_exception ("EC");
     }
 
-
   return 0;
 }
 
@@ -336,7 +349,8 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
           // This is processed in main()
           break;
         case 'n':
-          this->service_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->service_name_ =
+            ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
 
         case 'o':
@@ -348,7 +362,8 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
           break;
 
         case 'q':
-          this->object_id_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->object_id_ =
+            ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
 
         case 'b':

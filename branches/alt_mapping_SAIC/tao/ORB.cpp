@@ -1385,6 +1385,11 @@ CORBA::ORB_init (int &argc, ACE_TCHAR *argv[], const char *orbid)
   return CORBA::ORB::_duplicate (oc->orb ());
 }
 
+CORBA::ORB_ptr
+CORBA::ORB_init (int &argc, ACE_TCHAR *argv[], std::string orbid)
+{
+  return ORB_init (argc, argv, orbid.c_str ());
+}
 // ****************************************************************
 
 // Object reference stringification.
