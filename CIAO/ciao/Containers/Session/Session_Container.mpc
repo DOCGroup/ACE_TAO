@@ -31,6 +31,7 @@ project(CIAO_Session_Container_stub) : install, ccm_stub, ciao_lib, ciao_contain
   Header_Files {
     Session_ContainerC.h
     Session_ContainerS.h
+    Session_Container_stub_export.h
   }
   specific {
     install_dir = ciao/Containers/Session
@@ -52,6 +53,7 @@ project(CIAO_Session_Container) : install, ccm_svnt, ciao_lib, utils,  ciao_base
   }
   Header_Files {
     Session_Container.h
+    Session_Container_export.h
   }
   specific {
     install_dir = ciao/Containers/Session
