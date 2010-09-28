@@ -1,3 +1,13 @@
+Tue Sep 28 15:46:07 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * ccm/Session/CCM_session.mpc:
+
+          Set install_dir.
+
+        * ciao/Containers/Session/Session_Container.mpc:
+
+          Install the export headers.
+
 Mon Sep 27 14:21:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Extension/Extension_Container.cpp:

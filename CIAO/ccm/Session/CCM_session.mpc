@@ -16,6 +16,9 @@ project(CCM_session_idl) : install, ciaolib_with_idl, valuetype {
     CCM_SessionSynchronization.idl
   }
 
+  specific {
+    install_dir = ccm/Session
+  }
 }
 
 project(CCM_session_stub) : install, ciaolib_with_idl, ciao_output, valuetype, ifr_client, ccm_stub {
@@ -44,6 +47,10 @@ project(CCM_session_stub) : install, ciaolib_with_idl, ciao_output, valuetype, i
     CCM_SessionContextC.cpp
     CCM_SessionComponentC.cpp
     CCM_SessionSynchronizationC.cpp
+  }
+
+  specific {
+    install_dir = ccm/Session
   }
 }
 
