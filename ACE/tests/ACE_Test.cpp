@@ -17,6 +17,7 @@
 #include "test_config.h"
 
 #include "ace/ACE.h"
+#include "ace/OS_NS_stdlib.h"
 
 
 
