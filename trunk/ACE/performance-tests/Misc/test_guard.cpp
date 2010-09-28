@@ -5,6 +5,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
 #include "ace/Profile_Timer.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Guard_T.h"
 
 #if defined (ACE_HAS_THREADS)
 

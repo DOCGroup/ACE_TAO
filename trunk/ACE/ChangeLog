@@ -1,3 +1,10 @@
+Tue Sep 28 08:31:37 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * performance-tests/Misc/test_guard.cpp:
+        * tests/ACE_Test.cpp:
+        * examples/Reactor/TP_Reactor/client.cpp:
+          Fixed compilation errors with missing includes.
+
 Mon Sep 27 18:04:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ACE.h:
