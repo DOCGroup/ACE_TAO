@@ -68,7 +68,7 @@ public:
   /// Cancel all scheduled output for the transport argument
   virtual int cancel_output (TAO_Transport *transport) = 0;
 
-  /// Wait until msg is sent out.  Potentially other messages are
+  /// Wait until @a msg is sent out.  Potentially other messages are
   /// flushed too, for example, because there are ahead in the queue.
   virtual int flush_message (TAO_Transport *transport,
                              TAO_Queued_Message *msg,

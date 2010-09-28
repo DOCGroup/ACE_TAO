@@ -102,7 +102,7 @@ namespace CORBA
      */
     CORBA::Exception* exception (void) const;
 
-    /// Set the contained CORBA::Exception to <ex>
+    /// Set the contained CORBA::Exception to @a ex
     /**
      * CORBA::Environment assumes ownership of the exception, this is
      * contrary to the normal memory management rules in the C++
@@ -126,8 +126,7 @@ namespace CORBA
 
     /// Print the exception to output determined by f.  This function
     /// is not CORBA compliant.
-    void print_exception (const char *info,
-                          FILE *f=stdout) const;
+    void print_exception (const char *info, FILE *f=stdout) const;
 
     // = Obtain a default environment to use with TAO.
     static CORBA::Environment &default_environment (void);
@@ -140,7 +139,7 @@ namespace CORBA
   private:
 
     /// Initialize using a well known ORB Core; this is intended for
-    /// the bootstraping of the ORB_Core, not for general
+    /// the bootstrapping of the ORB_Core, not for general
     /// consumption.
     Environment (TAO_ORB_Core *orb_core);
 

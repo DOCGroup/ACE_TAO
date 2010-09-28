@@ -47,7 +47,7 @@ namespace TAO
    *
    * @brief The base class for the invocation object
    *
-   * This class is the base of the invocation object hiererachy. This
+   * This class is the base of the invocation object hierarchy. This
    * hierarchy is classified  based on the type of invocation and the
    * mode of invocation. One of the objects from the hierarchy is
    * created on the stack for every invocation.
