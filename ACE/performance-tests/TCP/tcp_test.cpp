@@ -668,9 +668,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (ACE_OS::ace_isdigit(argv[get_opt.opt_ind ()][0]))
     {
-      if (remote_addr.set (dstport,
+      if (remote_addr.set (ACE_HTONS(dstport),
                            (ACE_UINT32) ACE_OS::inet_addr
-                           (ACE_TEXT_ALWAYS_CHAR(argv[get_opt.opt_ind ()]))) == -1)
+                           (ACE_TEXT_ALWAYS_CHAR(argv[get_opt.opt_ind ()])), 0) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "invalid IP address: %s\n",
                            argv[get_opt.opt_ind ()]),
