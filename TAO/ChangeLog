@@ -1,3 +1,8 @@
+Tue Sep 28 08:11:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/test.idl:
+          Resolved error regarding anonymous types.
+
 Mon Sep 27 15:19:09 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * orbsvcs/orbsvcs/Notify/Random_File.cpp:
