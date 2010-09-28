@@ -65,18 +65,22 @@ Driver::init (int argc, ACE_TCHAR **argv)
   try
     {
       ACE_OS::strcpy (exception_string, "ORB Initialization");
+      std::string orb_name ("internet");
 
       // Retrieve the underlying ORB
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
-                                    "internet");
+                                    orb_name);
 
       // Parse command line and verify parameters.
       if (opt->parse_args (argc, argv) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) driver.cpp - "
-                           "parse_args failed\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) driver.cpp - "
+                             "parse_args failed\n"),
+                            -1);
+        }
+        
       // Retrieve a Param_Test object reference
       ACE_OS::strcpy (exception_string,"ORB::string_to_object() failed.");
 

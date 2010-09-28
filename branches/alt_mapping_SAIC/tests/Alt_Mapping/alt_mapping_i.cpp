@@ -30,7 +30,7 @@ Alt_Mapping_i::~Alt_Mapping_i (void)
 // the in string. For the inout, we append the same string to itself and send
 // it back
 std::string
-Alt_Mapping_i::test_unbounded_string (const std::string s1,
+Alt_Mapping_i::test_unbounded_string (const std::string &s1,
                                       std::string &s2,
                                       std::string &s3)
 {
