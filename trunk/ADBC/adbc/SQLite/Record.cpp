@@ -9,7 +9,7 @@
 #include "Query.h"
 #include "Exception.h"
 #include "ace/Date_Time.h"
-#include "ace/Array.h"
+#include "ace/Array_Base.h"
 #include <sstream>
 
 namespace ADBC

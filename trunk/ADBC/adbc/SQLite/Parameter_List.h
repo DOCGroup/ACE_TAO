@@ -13,7 +13,7 @@
 #ifndef _ADBC_SQLITE_PARAMATER_LIST_H_
 #define _ADBC_SQLITE_PARAMATER_LIST_H_
 
-#include "ace/Array.h"
+#include "ace/Array_Base.h"
 #include "ace/SStringfwd.h"
 #include "adbc/Parameter_List.h"
 #include "Parameter.h"
@@ -77,7 +77,7 @@ public:
 
 private:
   /// Type definition for the parameter list implementation.
-  typedef ACE_Array <Parameter> array_type;
+  typedef ACE_Array_Base <Parameter> array_type;
 
   /// The owner of the parameter list.
   const Query & parent_;

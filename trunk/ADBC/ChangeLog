@@ -1,7 +1,15 @@
+Wed Sep 29 21:05:32 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * adbc/ODBC/ODBC_Parameter_List.h:
+        * adbc/SQLite/Parameter_List.h:
+        * adbc/SQLite/Record.cpp:
+
+          Updated to HEAD of DOC middleware.
+
 Thu May 20 14:57:25 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * adbc/SQLite/Query.cpp:
-        
+
           Implemented the reset () method.
 
 Mon Apr 19 13:50:33 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
