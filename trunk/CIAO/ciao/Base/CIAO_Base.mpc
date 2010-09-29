@@ -10,6 +10,10 @@ project(CIAO_Base_IDL) : install, ciaoidldefaults, anytypecode {
     CIAO_Properties.idl
     idlflags += -Gxhst
   }
+
+  specific {
+   install_dir = ciao/Base
+  }
 }
 
 project(CIAO_Base_stub) : install, ciaolib_with_idl, ciao_output, \
@@ -32,6 +36,13 @@ project(CIAO_Base_stub) : install, ciaolib_with_idl, ciao_output, \
     CIAO_Base_stub_export.h
   }
 
+  specific {
+   install_dir = ciao/Base
+  }
+}
+
+project(*_install) : install, install_data {
+  custom_only = 1
   specific {
     install_dir = ciao
   }

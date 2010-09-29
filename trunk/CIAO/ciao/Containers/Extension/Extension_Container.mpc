@@ -31,6 +31,7 @@ project(CIAO_Extension_Container_stub) : install, ccm_stub, ciao_lib, ciao_conta
   Header_Files {
     Extension_ContainerC.h
     Extension_ContainerS.h
+    Extension_Container_stub_export.h
   }
   specific {
     install_dir = ciao/Containers/Extension
@@ -52,6 +53,7 @@ project(CIAO_Extension_Container) : install, ccm_svnt, ciao_lib, ciao_extension_
   }
   Header_Files {
     Extension_Container.h
+    Extension_Container_export.h
   }
   specific {
     install_dir = ciao/Containers/Extension
