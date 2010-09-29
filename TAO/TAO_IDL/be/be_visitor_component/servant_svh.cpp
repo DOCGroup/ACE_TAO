@@ -222,135 +222,142 @@ be_visitor_servant_svh::visit_uses (be_uses *node)
 int
 be_visitor_servant_svh::visit_publishes (be_publishes *node)
 {
-  const char *obj_name = node->publishes_type ()->full_name ();
-  const char *port_name = node->local_name ()->get_string ();
+  if(!be_global->gen_noeventccm ())
+    {
+      const char *obj_name = node->publishes_type ()->full_name ();
+      const char *port_name = node->local_name ()->get_string ();
 
-  os_ << be_uidt_nl << be_nl
-      << "public:" << be_idt_nl;
+      os_ << be_uidt_nl << be_nl
+          << "public:" << be_idt_nl;
 
-  os_ << "virtual ::Components::Cookie *" << be_nl
-      << "subscribe_" << port_name << " (" << be_idt_nl
-      << "::" << obj_name << "Consumer_ptr c);" << be_uidt_nl;
+      os_ << "virtual ::Components::Cookie *" << be_nl
+          << "subscribe_" << port_name << " (" << be_idt_nl
+          << "::" << obj_name << "Consumer_ptr c);" << be_uidt_nl;
 
-  os_ << be_nl
-      << "virtual ::" << obj_name << "Consumer_ptr" << be_nl
-      << "unsubscribe_" << port_name << " (" << be_idt_nl
-      << "::Components::Cookie * ck);" << be_uidt;
-
+      os_ << be_nl
+          << "virtual ::" << obj_name << "Consumer_ptr" << be_nl
+          << "unsubscribe_" << port_name << " (" << be_idt_nl
+          << "::Components::Cookie * ck);" << be_uidt;
+    }
   return 0;
 }
 
 int
 be_visitor_servant_svh::visit_emits (be_emits *node)
 {
-  const char *obj_name = node->emits_type ()->full_name ();
-  const char *port_name = node->local_name ()->get_string ();
+   if(!be_global->gen_noeventccm ())
+    {
+      const char *obj_name = node->emits_type ()->full_name ();
+      const char *port_name = node->local_name ()->get_string ();
 
-  os_ << be_nl << be_nl
-      << "virtual void" << be_nl
-      << "connect_" << port_name << " (" << be_idt_nl
-      << "::" << obj_name << "Consumer_ptr c);" << be_uidt;
+      os_ << be_nl << be_nl
+          << "virtual void" << be_nl
+          << "connect_" << port_name << " (" << be_idt_nl
+          << "::" << obj_name << "Consumer_ptr c);" << be_uidt;
 
-  os_ << be_nl << be_nl
-      << "virtual ::" << obj_name << "Consumer_ptr" << be_nl
-      << "disconnect_" << port_name << " (void);";
-
+      os_ << be_nl << be_nl
+          << "virtual ::" << obj_name << "Consumer_ptr" << be_nl
+          << "disconnect_" << port_name << " (void);";
+    }
   return 0;
 }
 
 int
 be_visitor_servant_svh::visit_consumes (be_consumes *node)
 {
-  const char *obj_name = node->consumes_type ()->full_name ();
-  const char *port_name = node->local_name ()->get_string ();
-
-  ACE_CString holder (obj_name);
-  ACE_CString::size_type pos = holder.rfind (':');
-  const char *ev_lname = 0;
-
-  if (pos == ACE_CString::npos)
+  if(!be_global->gen_noeventccm ())
     {
-      ev_lname = obj_name;
+
+      const char *obj_name = node->consumes_type ()->full_name ();
+      const char *port_name = node->local_name ()->get_string ();
+
+      ACE_CString holder (obj_name);
+      ACE_CString::size_type pos = holder.rfind (':');
+      const char *ev_lname = 0;
+
+      if (pos == ACE_CString::npos)
+        {
+          ev_lname = obj_name;
+        }
+      else
+        {
+          holder = holder.substr (pos + 1);
+          ev_lname = holder.c_str ();
+        }
+
+      os_ << be_uidt_nl << be_nl
+          << "public:" << be_idt_nl;
+
+      os_ << "// Servant class for the " << port_name
+          << " consumer." << be_nl
+          << "class " << export_macro_.c_str () << " " << ev_lname
+          << "Consumer_" << port_name << "_Servant" << be_idt_nl
+          << ": public virtual ::POA_" << obj_name << "Consumer"
+          << be_uidt_nl
+          << "{" << be_nl
+          << "public:" << be_idt_nl;
+
+      ACE_CString sname_str (
+        ScopeAsDecl (node_->defined_in ())->full_name ());
+      const char *sname = sname_str.c_str ();
+      const char *lname = node_->local_name ();
+      const char *global = (sname_str == "" ? "" : "::");
+
+      os_ << ev_lname << "Consumer_" << port_name
+          << "_Servant (" << be_idt_nl
+          << global << sname << "::CCM_" << lname
+          << "_ptr executor," << be_nl
+          << global << sname << "::CCM_" << lname
+          << "_Context_ptr c);" << be_uidt_nl << be_nl;
+
+      os_ << "virtual ~" << ev_lname << "Consumer_" << port_name
+          << "_Servant (void);";
+
+      os_ << be_nl << be_nl
+          << "virtual void" << be_nl
+          << "push_" << ev_lname << " (" << be_idt_nl
+          << "::" << obj_name << " * evt);" << be_uidt;
+
+      os_ << be_nl << be_nl
+          << "/// Inherited from ::Components::EventConsumerBase." << be_nl
+          << "virtual void" << be_nl
+          << "push_event ( ::Components::EventBase * ev);";
+
+      os_ << be_nl << be_nl
+          << "/// Get component implementation." << be_nl
+          << "virtual ::CORBA::Object_ptr" << be_nl
+          << "_get_component (void);";
+
+      os_ << be_uidt_nl << be_nl
+          << "protected:" << be_idt_nl;
+
+      os_ << global << sname << "::CCM_" << lname << "_var" << be_nl
+          << "executor_;";
+
+      os_ << be_nl << be_nl
+          << global << sname << "::CCM_"
+          << lname << "_Context_var" << be_nl
+          << "ctx_;";
+
+      os_ << be_uidt_nl
+          << "};";
+
+      os_ << be_nl << be_nl
+          << "virtual ::" << obj_name << "Consumer_ptr" << be_nl
+          << "get_consumer_" << port_name << " (void);";
+
+      os_ << be_uidt_nl << be_nl
+          << "private:" << be_idt_nl;
+
+      os_ << "void" << be_nl
+          << "setup_consumer_" << port_name << "_i (void);";
+
+      os_ << be_uidt_nl << be_nl
+          << "private:" << be_idt_nl;
+
+      os_ << "::" << obj_name << "Consumer_var" << be_nl
+          << "consumes_" << port_name << "_;";
     }
-  else
-    {
-      holder = holder.substr (pos + 1);
-      ev_lname = holder.c_str ();
-    }
-
-  os_ << be_uidt_nl << be_nl
-      << "public:" << be_idt_nl;
-
-  os_ << "// Servant class for the " << port_name
-      << " consumer." << be_nl
-      << "class " << export_macro_.c_str () << " " << ev_lname
-      << "Consumer_" << port_name << "_Servant" << be_idt_nl
-      << ": public virtual ::POA_" << obj_name << "Consumer"
-      << be_uidt_nl
-      << "{" << be_nl
-      << "public:" << be_idt_nl;
-
-  ACE_CString sname_str (
-    ScopeAsDecl (node_->defined_in ())->full_name ());
-  const char *sname = sname_str.c_str ();
-  const char *lname = node_->local_name ();
-  const char *global = (sname_str == "" ? "" : "::");
-
-  os_ << ev_lname << "Consumer_" << port_name
-      << "_Servant (" << be_idt_nl
-      << global << sname << "::CCM_" << lname
-      << "_ptr executor," << be_nl
-      << global << sname << "::CCM_" << lname
-      << "_Context_ptr c);" << be_uidt_nl << be_nl;
-
-  os_ << "virtual ~" << ev_lname << "Consumer_" << port_name
-      << "_Servant (void);";
-
-  os_ << be_nl << be_nl
-      << "virtual void" << be_nl
-      << "push_" << ev_lname << " (" << be_idt_nl
-      << "::" << obj_name << " * evt);" << be_uidt;
-
-  os_ << be_nl << be_nl
-      << "/// Inherited from ::Components::EventConsumerBase." << be_nl
-      << "virtual void" << be_nl
-      << "push_event ( ::Components::EventBase * ev);";
-
-  os_ << be_nl << be_nl
-      << "/// Get component implementation." << be_nl
-      << "virtual ::CORBA::Object_ptr" << be_nl
-      << "_get_component (void);";
-
-  os_ << be_uidt_nl << be_nl
-      << "protected:" << be_idt_nl;
-
-  os_ << global << sname << "::CCM_" << lname << "_var" << be_nl
-      << "executor_;";
-
-  os_ << be_nl << be_nl
-      << global << sname << "::CCM_"
-      << lname << "_Context_var" << be_nl
-      << "ctx_;";
-
-  os_ << be_uidt_nl
-      << "};";
-
-  os_ << be_nl << be_nl
-      << "virtual ::" << obj_name << "Consumer_ptr" << be_nl
-      << "get_consumer_" << port_name << " (void);";
-
-  os_ << be_uidt_nl << be_nl
-      << "private:" << be_idt_nl;
-
-  os_ << "void" << be_nl
-      << "setup_consumer_" << port_name << "_i (void);";
-
-  os_ << be_uidt_nl << be_nl
-      << "private:" << be_idt_nl;
-
-  os_ << "::" << obj_name << "Consumer_var" << be_nl
-      << "consumes_" << port_name << "_;";
-
   return 0;
 }
 
@@ -384,7 +391,8 @@ be_visitor_servant_svh::gen_non_type_specific (void)
   AST_Decl::NodeType nt = this->node_->node_type ();
   bool is_connector = (nt == AST_Decl::NT_connector);
 
-  if (!be_global->gen_lwccm () && !is_connector)
+  if (!be_global->gen_lwccm () && !is_connector &&
+      !be_global->gen_noeventccm ())
     {
       os_ << be_nl << be_nl
           << "virtual ::Components::PublisherDescriptions *"
@@ -397,9 +405,9 @@ be_visitor_servant_svh::gen_non_type_specific (void)
           << "get_all_emitters (void);";
     }
 
-  /// If the node is a connector, event sources and sinks cannot
-  /// be declared.
-  if (!is_connector)
+  /// If the node is a connector or the events must be disabled, event sources
+  /// and sinks cannot be declared.
+  if ((!is_connector) || (!be_global->gen_noeventccm ()))
     {
       if (this->node_->n_publishes () > 0UL)
         {
