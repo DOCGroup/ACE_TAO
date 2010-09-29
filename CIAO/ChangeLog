@@ -1,3 +1,12 @@
+Wed Sep 29 12:03:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.cpp:
+          Reverted my last change.
+
+        * ciao/Containers/Extension/Extension_Container.cpp:
+          First check internal list of services. If not found,
+          invoke resolve_service_reference on base.
+
 Wed Sep 29 10:23:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * ccm/CCM_CCMException.idl:
