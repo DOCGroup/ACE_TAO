@@ -1,3 +1,12 @@
+Wed Sep 29 12:21:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2112_Regression/client.cpp:
+          Fixed warning
+
+        * tao/PortableServer/Servant_var.h:
+        * tao/PortableServer/Servant_var.inl:
+          Removed commented out code
+
 Wed Sep 28 12:18:42 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
@@ -6,7 +15,7 @@ Wed Sep 28 12:18:42 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
         * TAO_IDL/be/be_global.cpp:
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
         * TAO_IDL/be_include/be_global.h:
-        First step of making it possible to disable events in CCM. 
+        First step of making it possible to disable events in CCM.
 
 Tue Sep 28 15:02:48 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
