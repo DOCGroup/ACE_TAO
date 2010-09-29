@@ -1,3 +1,17 @@
+Wed Sep 29 19:53:17 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/bug_689_regression.idl:
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/bug_689_regression_i.h:
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/bug_689_regression_i.cpp:
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/client.cpp:
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/run_test.pl:
+
+          Added a no-op two way CORBA call from client to server to make sure
+          they are connected before the shutdown() call.  The implicit call to
+          _is_a() used to do this, but now with the change from
+          Mon Sep 27 14:25:28 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+          the _is_a() is no longer needed.
+
 Wed Sep 29 13:35:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
