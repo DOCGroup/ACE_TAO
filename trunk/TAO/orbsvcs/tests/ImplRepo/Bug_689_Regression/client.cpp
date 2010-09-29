@@ -57,6 +57,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         }
 
+      servant->noop ();
       servant->shutdown ();
 
       ACE_Time_Value tv (0, 500);
