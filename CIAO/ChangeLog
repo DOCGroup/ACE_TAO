@@ -1,3 +1,10 @@
+Wed Sep 29 21:05:24 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/ami4ccm_lem_stub.mpb:
+        * connectors/tests/AMIDDS/Base/AmiDds_Base.mpc:
+
+          Compile fixes.
+
 Wed Sep 29 18:38:17 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * ccm/Extension/CCM_extension.mpc:
