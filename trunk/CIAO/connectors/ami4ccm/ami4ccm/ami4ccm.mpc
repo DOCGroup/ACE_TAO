@@ -64,7 +64,7 @@ project(AMI4CCM_stub) : install, ciao_lib, messaging, ccm_stub {
   }
 }
 
-project (AMI4CCM_lem_stub) : install, ccm_lem_stub, ciao_lib, ciao_output, taolib, valuetype, ifr_client {
+project (AMI4CCM_lem_stub) : install, ccm_session_stub, ciao_lib, ciao_output, taolib, valuetype, ifr_client {
   after += AMI4CCM_stub AMI4CCM_lem_gen
   libs  += AMI4CCM_stub
   includes += $(CIAO_ROOT)/connectors
