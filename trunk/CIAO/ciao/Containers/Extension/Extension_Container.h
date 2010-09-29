@@ -164,7 +164,7 @@ namespace CIAO
     /// servants for facets and consumers.
     ::CIAO::Servant_Activator_ptr ports_servant_activator (void);
 
-    /// Inherited from extension context. 
+    /// Inherited from extension context.
     Components::Cookie * install_service_reference (const char * service_id,
                                                     CORBA::Object_ptr objref);
 
