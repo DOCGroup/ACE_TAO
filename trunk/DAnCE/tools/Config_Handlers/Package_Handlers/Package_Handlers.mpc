@@ -37,7 +37,7 @@ project (Package_Config_Handlers) : install, acelib, dance_deployment_stub, danc
   }
 
   specific {
-    install_dir = Config_Handlers/Package_Handlers
+    install_dir = tools/Config_Handlers/Package_Handlers
   }
 }
 

@@ -21,6 +21,6 @@ project (XSC_DynAny_Handler) : install, xerces, dynamicany, typecodefactory, dan
   }
 
   specific {
-    install_dir = Config_Handlers/DynAny_Handler
+    install_dir = tools/Config_Handlers/DynAny_Handler
   }
 }
