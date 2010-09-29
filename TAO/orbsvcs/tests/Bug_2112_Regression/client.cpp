@@ -47,7 +47,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           inc = CosNaming::NamingContext::_narrow(obj.in());
           ACE_DEBUG(( LM_INFO, "OK\n" ));
         }
-      catch(const CORBA::TRANSIENT & e)
+      catch(const CORBA::TRANSIENT &)
         {
           ACE_ERROR ((LM_ERROR, "Error, caught transient exception\n"));
           retval = 1;

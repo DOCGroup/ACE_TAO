@@ -62,43 +62,6 @@ namespace PortableServer
     /// Assignment operator.  Assumes ownership of @c p.
     Servant_var<T> & operator= (T * p);
 
-    /**
-       @@ Ciju:
-       The below member templates was commented out because:
-       1. gcc 2.95 doesn't support them.
-       2. Sun cc 5.8 member templates support is buggy (Bug Id: 6463114).
-
-       Once these have been fixed a decision can be made regards
-       uncommenting them. My own openion is that they shouldn't be used
-       since making implicit constructors, member templates, you could
-       potentially get an unwanted conversion where one was unwarranted.
-     */
-    /*
-      # if !defined(ACE_LACKS_MEMBER_TEMPLATES)
-      /// Template member constructor from a pointer that will implicitly
-      /// cast to type T.  Assumes ownership of @c p.
-      /// This constructor allows constructs such as:
-      /// Servant_Base<Base> p(new Derived);
-      template <class Y>
-      Servant_var (Y * p);
-
-      /// Template member copy constructor from a Servant_var<Y>, where
-      /// Y can be implicitly cast to type T.
-      template <class Y>
-      Servant_var (Servant_var<Y> const & rhs);
-
-      /// Template member assignment operator from a Servant_var<Y>, where
-      /// Y can be implicitly cast to type T.
-      template <class Y>
-      Servant_var<T> & operator= (Servant_var<Y> const & rhs);
-
-      /// Template member assignment operator from a pointer to Y, where Y
-      /// can be implicitly cast to type T.
-      template <class Y>
-      Servant_var<T> & operator= (Y * p);
-      # endif / * ACE_LACKS_MEMBER_TEMPLATES * /
-    */
-
     /// Smart pointer operator-> provides access to the underlying object.
     T * operator->() const;
 
