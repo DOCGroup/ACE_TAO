@@ -49,7 +49,7 @@ $ACT = $act->CreateProcess ("../../../ImplRepo_Service/tao_imr_activator",
                             "-ORBInitRef ImplRepoService=file://$act_imriorfile");
 $TI = $ti->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr");
 $CLI = $cli->CreateProcess ("client",
-                            "-k file://$cli_srviorfile");
+                            "-k file://$cli_srviorfile -ORBDebugLevel $debug_level");
 $SRV = $srv->CreateProcess ("server");
 
 my $server_cmd = $SRV->Executable();
@@ -58,7 +58,7 @@ my $srv_server_cmd = $imr->LocalFile ($server_cmd);
 $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
                 "add test_server -c \"$srv_server_cmd ".
                 "-ORBInitRef ImplRepoService=file://$imr_imriorfile ".
-                "-ORBUseIMR 1 ".
+                "-ORBUseIMR 1 -ORBDebugLevel $debug_level ".
                 "-o $srv_srviorfile\"");
 
 
