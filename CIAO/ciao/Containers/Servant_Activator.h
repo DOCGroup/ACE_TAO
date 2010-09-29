@@ -21,7 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Array_Base.h"
 #include "tao/PortableServer/ServantActivatorC.h"
 #include "tao/LocalObject.h"
 #include "ciao/Containers/CIAO_Servant_ActivatorC.h"

@@ -31,7 +31,7 @@
 #include "ccm/CCM_EnterpriseComponentC.h"
 #include "ciao/Containers/Container_BaseC.h"
 
-#include "ace/Array_Map.h"
+#include <map>
 
 namespace CIAO
 {
@@ -50,7 +50,7 @@ namespace CIAO
     void describe_multiplex_receptacle (
         const char *port_name,
         const char *port_type_repo_id,
-        ACE_Array_Map<ptrdiff_t, T_var> &objrefs,
+        std::map<ptrdiff_t, T_var> &objrefs,
         ::Components::ReceptacleDescriptions_var &descriptions,
         CORBA::ULong slot);
   } /* Servant */
@@ -207,8 +207,8 @@ namespace CIAO
 #endif
 
   protected:
-    typedef ACE_Array_Map<ACE_CString,
-                          ::CORBA::Object_var>
+    typedef std::map<ACE_CString,
+                     ::CORBA::Object_var>
        FacetTable;
 
     FacetTable facet_table_;

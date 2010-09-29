@@ -50,7 +50,7 @@ namespace CIAO
   Servant::describe_multiplex_receptacle (
     const char *port_name,
     const char *port_type_repo_id,
-    ACE_Array_Map<ptrdiff_t, T_var> &objrefs,
+    std::map<ptrdiff_t, T_var> &objrefs,
     ::Components::ReceptacleDescriptions_var &descriptions,
     CORBA::ULong slot)
   {
@@ -71,7 +71,7 @@ namespace CIAO
     CORBA::ULong seq_slot = 0UL;
     ::Components::ConnectionDescription *conn = 0;
 
-    typedef typename ACE_Array_Map<ptrdiff_t, T_var>::const_iterator
+    typedef typename std::map<ptrdiff_t, T_var>::const_iterator
       CONST_ITERATOR;
 
     for (CONST_ITERATOR iter = objrefs.begin ();

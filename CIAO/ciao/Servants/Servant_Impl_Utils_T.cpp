@@ -15,7 +15,7 @@ namespace CIAO
   Servant::describe_pub_event_source (
     const char *port_name,
     const char *port_type_repo_id,
-    ACE_Array_Map<ptrdiff_t, T_var> &consumers,
+    std::map<ptrdiff_t, T_var> &consumers,
     ::Components::PublisherDescriptions_var &descriptions,
     CORBA::ULong slot)
   {
@@ -35,7 +35,7 @@ namespace CIAO
     ptrdiff_t map_slot = 0UL;
     ::Components::SubscriberDescription *sub = 0;
 
-    typedef typename ACE_Array_Map<ptrdiff_t, T_var>::const_iterator
+    typedef typename std::map<ptrdiff_t, T_var>::const_iterator
       CONST_ITERATOR;
 
     for (CONST_ITERATOR iter = consumers.begin ();

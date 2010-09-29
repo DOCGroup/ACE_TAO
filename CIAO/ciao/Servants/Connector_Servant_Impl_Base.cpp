@@ -456,15 +456,11 @@ namespace CIAO
         throw ::CORBA::BAD_PARAM ();
       }
 
-    FacetTable::value_type entry;
-    entry.first = port_name;
-    entry.second = ::CORBA::Object::_duplicate (port_ref);
-
     {
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, mon, this->lock_,
                           CORBA::NO_RESOURCES ());
 
-      (void) this->facet_table_.insert (entry);
+      this->facet_table_[port_name] = ::CORBA::Object::_duplicate (port_ref);
     }
   }
 
