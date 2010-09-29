@@ -29,6 +29,8 @@
 #include "ccm/CCM_HomeExecutorBaseC.h"
 #include "ccm/CCM_EnterpriseComponentC.h"
 
+#include <map>
+
 namespace CIAO
 {
   class Servant_Activator;
@@ -162,6 +164,14 @@ namespace CIAO
     /// servants for facets and consumers.
     ::CIAO::Servant_Activator_ptr ports_servant_activator (void);
 
+    /// Inherited from extension context. 
+    Components::Cookie * install_service_reference (const char * service_id,
+                                                    CORBA::Object_ptr objref);
+
+    CORBA::Object_ptr uninstall_service_reference (Components::Cookie * ck);
+
+    CORBA::Object_ptr resolve_service_reference(const char *service_id);
+
   private:
 
     /// Initialize the container with a name.
@@ -181,6 +191,12 @@ namespace CIAO
 
     /// Not allowed to be
     Extension_Container_i (void);
+
+    /// Administration of installed CCM services
+    typedef std::map<const char *,
+                     std::pair<Components::Cookie *, CORBA::Object_ptr>
+                    > InstalledServices;
+    InstalledServices installed_services_;
 
   protected:
     /// Static variable to store the highest number we have given out until

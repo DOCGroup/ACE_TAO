@@ -42,8 +42,7 @@ namespace CIAO
       {
         return ::PortableServer::POA::_duplicate (this->component_poa_.in ());
       }
-
-    throw ::Components::CCMException (::Components::OBJECT_NOT_FOUND);
+    return CORBA::Object::_nil ();
   }
 
   template <typename BASE>

@@ -1,3 +1,29 @@
+Wed Sep 29 10:23:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * ccm/CCM_CCMException.idl:
+
+        * ciao/Containers/Container_Base_T.cpp:
+
+        * ciao/Containers/Extension/Extension_Container.h:
+        * ciao/Containers/Extension/Extension_Container.idl:
+        * ciao/Containers/Extension/Extension_Container.cpp:
+          Added and implemented install_service_reference,
+          uninstall_service_reference, and, resolve_service_reference.
+
+        * ciao/Containers/Servant_Activator.h:
+
+        * ciao/Contexts/Extension/Extension_Context_T.cpp:
+          Calling new implemented methods (install_service_refence and
+          uninstall_service_reference).
+
+        * ciao/Servants/Connector_Servant_Impl_Base.h:
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+        * ciao/Servants/Connector_Servant_Impl_Utils_T.cpp:
+        * ciao/Servants/Servant_Impl_Base.h:
+        * ciao/Servants/Servant_Impl_Base.cpp:
+        * ciao/Servants/Servant_Impl_Utils_T.cpp:
+          Replaced ACE_Array_Map with a std::map.
+
 Wed Sep 29 02:22:43 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ccm_lem_stub.mpb:
@@ -7,7 +33,7 @@ Wed Sep 29 02:22:43 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ccm/Session/CCM_session.mpc:
         * connectors/ami4ccm/ami4ccm/ami4ccm.mpc:
 
-          Some compilation fixes. 
+          Some compilation fixes.
 
 Tue Sep 28 15:46:07 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
