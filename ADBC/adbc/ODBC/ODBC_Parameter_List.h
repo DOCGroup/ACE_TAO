@@ -13,7 +13,7 @@
 #ifndef _ADBC_ODBC_PARAMETER_LIST_H_
 #define _ADBC_ODBC_PARAMETER_LIST_H_
 
-#include "ace/Array.h"
+#include "ace/Array_Base.h"
 #include "adbc/Parameter_List.h"
 #include "ODBC_Parameter.h"
 
@@ -69,7 +69,7 @@ private:
   void init (Parameter & p, size_t index);
 
   /// Type definition of the list of parameters.
-  ACE_Array <Parameter> params_;
+  ACE_Array_Base <Parameter> params_;
 
   /// The parent of the query.
   const Query & query_;
