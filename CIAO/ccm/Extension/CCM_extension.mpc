@@ -94,15 +94,17 @@ project(CCM_extension_stub) : install, ciaolib_with_idl, ciao_output, ccm_lem_st
   }
 }
 
-project(CCM_extension_skel) : install, ciaolib_with_idl, ciao_output, valuetype, ifr_client, ccm_lem_stub, portableserver {
+project(CCM_extension_skel) : install, ciaolib_with_idl, ciao_output, valuetype, ifr_client, ccm_lem_stub, ccm_extension_stub, portableserver {
   // This is necessary for MPC to pull in rules.ciao.GNU
   includes += $(CIAO_ROOT)
   dynamicflags += CCM_EXTENSION_SKEL_BUILD_DLL
-  after += CCM_extension_stub_idl CCM_extension_stub
-  libs += CCM_extension_stub
+  after += CCM_extension_stub_idl
   IDL_Files {
   }
   Source_Files {
     CCM_QoSS.cpp
+  }
+  Header_Files {
+    CCM_QoSS.h
   }
 }
