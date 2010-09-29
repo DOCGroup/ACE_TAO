@@ -1,3 +1,8 @@
+Wed Sep 29 12:22:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/Extension/CCM_extension.mpc:
+          Added inline file
+
 Wed Sep 29 12:22:37 UTC 2010  Marijke Hengstmengel  <mhengstmengel>
 
         * MPC/config/ciaoidldefaults.mpb:
