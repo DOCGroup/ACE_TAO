@@ -1,3 +1,21 @@
+Wed Sep 29 13:35:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+        * tests/Bug_3896_Regression:
+        * tests/Bug_3896_Regression/Bug_3896_Regression.mpc:
+        * tests/Bug_3896_Regression/Hello.h:
+        * tests/Bug_3896_Regression/Hello.cpp:
+        * tests/Bug_3896_Regression/Test.idl:
+        * tests/Bug_3896_Regression/client.cpp:
+        * tests/Bug_3896_Regression/run_test.pl:
+        * tests/Bug_3896_Regression/server.cpp:
+          Added new regression test to validate that an invocation that is
+          aborted because of an orb shutdown gives a comm_failure exception
+          and not a timeout
+
+        * tests/No_Server_MT_Connect_Test/client.cpp:
+          layout changes
+
 Wed Sep 29 12:21:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2112_Regression/client.cpp:
