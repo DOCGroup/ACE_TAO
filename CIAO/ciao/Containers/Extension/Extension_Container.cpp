@@ -1306,7 +1306,7 @@ namespace CIAO
     if (this->installed_services_.find(service_id) !=
         this->installed_services_.end())
       {
-        throw (Components::CCMException (::Components::SERVICE_INSTALLATION_ERROR));
+        throw Components::CCMException (::Components::SERVICE_INSTALLATION_ERROR);
       }
 
     //first create a cookie out of the given object reference.
