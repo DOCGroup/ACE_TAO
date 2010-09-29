@@ -70,6 +70,7 @@ project(CCM_extension_stub) : install, ciaolib_with_idl, ciao_output, ccm_lem_st
   }
 
   Inline_Files {
+    CCM_QoSC.inl
   }
 
   Source_Files {
