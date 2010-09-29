@@ -652,6 +652,12 @@ public:
   /// Check if we want to generate for Minimum CORBA
   bool gen_minimum_corba (void) const;
 
+  /// Set whether we want to generate for noeventCCM
+  void gen_noeventccm (bool);
+
+  /// Check if we want to generate for noeventCCM
+  bool gen_noeventccm (void) const;
+
   /// Set whether we want to generate for LwCCM
   void gen_lwccm (bool);
 
@@ -1044,6 +1050,9 @@ private:
 
   /// are we generating for LwCCM
   bool gen_lwccm_;
+
+  /// are we generating for noeventCCM
+  bool gen_noeventccm_;
 
   /// do we generate optimized typecodes?
   bool opt_tc_;

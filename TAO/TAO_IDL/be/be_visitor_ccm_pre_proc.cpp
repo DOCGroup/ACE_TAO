@@ -248,7 +248,8 @@ be_visitor_ccm_pre_proc::visit_provides (be_provides *node)
 int
 be_visitor_ccm_pre_proc::visit_uses (be_uses *node)
 {
-  if (node->uses_type ()->is_local ())
+  if (node->uses_type ()->is_local () ||
+      be_global->gen_noeventccm ())
     {
       return 0;
     }
@@ -321,64 +322,70 @@ be_visitor_ccm_pre_proc::visit_uses (be_uses *node)
 int
 be_visitor_ccm_pre_proc::visit_publishes (be_publishes *node)
 {
-  if (this->gen_subscribe (node) == -1)
+  if (!be_global->gen_noeventccm ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("visit_publishes - ")
-                         ACE_TEXT ("gen_subscribe failed\n")),
-                        -1);
-    }
+      if (this->gen_subscribe (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("visit_publishes - ")
+                             ACE_TEXT ("gen_subscribe failed\n")),
+                            -1);
+        }
 
-  if (this->gen_unsubscribe (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("visit_publishes - ")
-                         ACE_TEXT ("gen_unsubscribe failed\n")),
-                        -1);
+      if (this->gen_unsubscribe (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("visit_publishes - ")
+                             ACE_TEXT ("gen_unsubscribe failed\n")),
+                            -1);
+        }
     }
-
   return 0;
 }
 
 int
 be_visitor_ccm_pre_proc::visit_emits (be_emits *node)
 {
-  if (this->gen_emits_connect (node) == -1)
+  if (!be_global->gen_noeventccm ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("visit_emits - ")
-                         ACE_TEXT ("gen_emits_connect failed\n")),
-                        -1);
-    }
+      if (this->gen_emits_connect (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("visit_emits - ")
+                             ACE_TEXT ("gen_emits_connect failed\n")),
+                            -1);
+        }
 
-  if (this->gen_emits_disconnect (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("visit_emits - ")
-                         ACE_TEXT ("gen_emits_disconnect failed\n")),
-                        -1);
+      if (this->gen_emits_disconnect (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("visit_emits - ")
+                             ACE_TEXT ("gen_emits_disconnect failed\n")),
+                            -1);
+        }
     }
-
   return 0;
 }
 
 int
 be_visitor_ccm_pre_proc::visit_consumes (be_consumes *node)
 {
-  if (this->gen_get_consumer (node) == -1)
+  if (!be_global->gen_noeventccm ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("visit_comsumes - ")
-                         ACE_TEXT ("gen_get_consumer failed\n")),
-                        -1);
-    }
-
-  return 0;
+      if (this->gen_get_consumer (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("visit_comsumes - ")
+                             ACE_TEXT ("gen_get_consumer failed\n")),
+                            -1);
+        }
+     }
+   return 0;
 }
 
 int
@@ -431,21 +438,24 @@ be_visitor_ccm_pre_proc::visit_home (be_home *node)
 int
 be_visitor_ccm_pre_proc::visit_eventtype (be_eventtype *node)
 {
-  if (node->ccm_pre_proc_gen ())
+  if (!be_global->gen_noeventccm ())
     {
-      return 0;
-    }
+      if (node->ccm_pre_proc_gen ())
+        {
+          return 0;
+        }
 
-  if (this->create_event_consumer (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("visit_eventtype - code generation ")
-                         ACE_TEXT ("for consumer failed\n")),
-                        -1);
-    }
+      if (this->create_event_consumer (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("visit_eventtype - code generation ")
+                             ACE_TEXT ("for consumer failed\n")),
+                            -1);
+        }
 
-  node->ccm_pre_proc_gen (true);
+      node->ccm_pre_proc_gen (true);
+    }
   return 0;
 }
 
@@ -803,50 +813,52 @@ int
 be_visitor_ccm_pre_proc::gen_push_op (be_eventtype *node,
                                       AST_Interface *consumer)
 {
-  UTL_ScopedName *op_full_name =
-    this->create_scoped_name ("push_",
-                              node->local_name (),
-                              0,
-                              consumer);
-  be_operation *push_op = 0;
-  ACE_NEW_RETURN (push_op,
-                  be_operation (be_global->void_type (),
-                                AST_Operation::OP_noflags,
-                                0,
-                                false,
-                                false),
-                  -1);
-  push_op->set_defined_in (consumer);
-  push_op->set_imported (node->imported ());
-  push_op->set_name (op_full_name);
-  ACE_CString arg_string ("the_",
-                          0,
-                          false);
-  arg_string += node->local_name ();
-  Identifier arg_id (arg_string.fast_rep ());
-  UTL_ScopedName arg_name (&arg_id,
-                           0);
-  be_argument *arg = 0;
-  ACE_NEW_RETURN (arg,
-                  be_argument (AST_Argument::dir_IN,
-                               node,
-                               &arg_name),
-                  -1);
-  arg_id.destroy ();
-  push_op->be_add_argument (arg);
-
-  if (0 == consumer->be_add_operation (push_op))
+  if (!be_global->gen_noeventccm ())
     {
-      return -1;
-    }
+      UTL_ScopedName *op_full_name =
+        this->create_scoped_name ("push_",
+                                  node->local_name (),
+                                  0,
+                                  consumer);
+      be_operation *push_op = 0;
+      ACE_NEW_RETURN (push_op,
+                      be_operation (be_global->void_type (),
+                                    AST_Operation::OP_noflags,
+                                    0,
+                                    false,
+                                    false),
+                      -1);
+      push_op->set_defined_in (consumer);
+      push_op->set_imported (node->imported ());
+      push_op->set_name (op_full_name);
+      ACE_CString arg_string ("the_",
+                              0,
+                              false);
+      arg_string += node->local_name ();
+      Identifier arg_id (arg_string.fast_rep ());
+      UTL_ScopedName arg_name (&arg_id,
+                               0);
+      be_argument *arg = 0;
+      ACE_NEW_RETURN (arg,
+                      be_argument (AST_Argument::dir_IN,
+                                   node,
+                                   &arg_name),
+                      -1);
+      arg_id.destroy ();
+      push_op->be_add_argument (arg);
 
+      if (0 == consumer->be_add_operation (push_op))
+        {
+          return -1;
+        }
+     }
   return 0;
 }
 
 int
 be_visitor_ccm_pre_proc::gen_subscribe (be_publishes *node)
 {
-  if (be_global->gen_lwccm ())
+  if ((be_global->gen_lwccm ()) ||(be_global->gen_noeventccm ()))
     {
       return 0;
     }
@@ -907,7 +919,7 @@ be_visitor_ccm_pre_proc::gen_subscribe (be_publishes *node)
 int
 be_visitor_ccm_pre_proc::gen_unsubscribe (be_publishes *node)
 {
-  if (be_global->gen_lwccm ())
+  if (be_global->gen_lwccm () ||be_global->gen_noeventccm ())
     {
       return 0;
     }
@@ -967,7 +979,7 @@ be_visitor_ccm_pre_proc::gen_unsubscribe (be_publishes *node)
 int
 be_visitor_ccm_pre_proc::gen_emits_connect (be_emits *node)
 {
-  if (be_global->gen_lwccm ())
+  if ((be_global->gen_lwccm ()) ||(be_global->gen_noeventccm ()))
     {
       return 0;
     }
@@ -1027,7 +1039,7 @@ be_visitor_ccm_pre_proc::gen_emits_connect (be_emits *node)
 int
 be_visitor_ccm_pre_proc::gen_emits_disconnect (be_emits *node)
 {
-  if (be_global->gen_lwccm ())
+  if ((be_global->gen_lwccm ()) ||(be_global->gen_noeventccm ()))
     {
       return 0;
     }
@@ -1077,7 +1089,7 @@ be_visitor_ccm_pre_proc::gen_emits_disconnect (be_emits *node)
 int
 be_visitor_ccm_pre_proc::gen_get_consumer (be_consumes *node)
 {
-  if (be_global->gen_lwccm ())
+  if (be_global->gen_lwccm () || be_global->gen_noeventccm ())
     {
       return 0;
     }
