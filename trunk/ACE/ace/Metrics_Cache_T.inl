@@ -5,6 +5,8 @@
 #ifndef ACE_METRICS_CACHE_T_INL
 #define ACE_METRICS_CACHE_T_INL
 
+#if defined (ACE_COMPILE_TIMEPROBES)
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /////////////////////////////
@@ -236,5 +238,7 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::metrics_enabled(void) const
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif
 
 #endif /* ACE_METRICS_CACHE_T_INL */

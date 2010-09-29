@@ -251,7 +251,7 @@ public:
 
   // = Traits.
   /// The actual value mapped to the key in the cache. The <attributes>
-  /// are used by the strategy and is transperant to the cache user.
+  /// are used by the strategy and is transparent to the cache user.
   typedef ACE_Reference_Pair<KEY, VALUE>
           value_type;
   typedef ACE_Pair <VALUE, ATTRIBUTES>
@@ -274,7 +274,7 @@ public:
       (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION,
                                     CACHING_STRATEGY, ATTRIBUTES> &rhs);
 
-  /// Comparision operators.
+  /// Comparison operators.
   bool operator== (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
   bool operator!= (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
 
@@ -327,7 +327,7 @@ public:
 
   // = Traits.
   /// The actual value mapped to the key in the cache. The <attributes>
-  /// are used by the strategy and is transperant to the cache user.
+  /// are used by the strategy and is transparent to the cache user.
   typedef ACE_Reference_Pair<KEY, VALUE> value_type;
   typedef ACE_Pair <VALUE, ATTRIBUTES> CACHE_VALUE;
 
@@ -348,7 +348,7 @@ public:
      (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION,
                                            CACHING_STRATEGY, ATTRIBUTES> &rhs);
 
-  /// Comparision operators.
+  /// Comparison operators.
   bool operator== (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
   bool operator!= (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
 
