@@ -102,6 +102,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_corba_e_ (false),
     gen_minimum_corba_ (false),
     gen_lwccm_ (false),
+    gen_noeventccm_ (false),
     opt_tc_ (false),
     ami4ccm_call_back_ (false),
     ami_call_back_ (false),
@@ -1637,6 +1638,18 @@ BE_GlobalData::gen_minimum_corba (void) const
 }
 
 void
+BE_GlobalData::gen_noeventccm (bool val)
+{
+  this->gen_noeventccm_ = val;
+}
+
+bool
+BE_GlobalData::gen_noeventccm (void) const
+{
+  return this->gen_noeventccm_;
+}
+
+void
 BE_GlobalData::gen_lwccm (bool val)
 {
   this->gen_lwccm_ = val;
@@ -3019,6 +3032,11 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 // CORBA/e.
                 be_global->gen_lwccm (true);
+              }
+            else if (av[i][3] == 'm')
+              {
+                // NOEVENTS ccm, ccm without events .
+                be_global->gen_noeventccm (true);
               }
             else
               {

@@ -3560,9 +3560,12 @@ TAO_CodeGen::gen_exec_src_includes (void)
 void
 TAO_CodeGen::gen_exec_idl_includes (void)
 {
-  this->gen_standard_include (
-    this->ciao_exec_idl_,
-    "ccm/CCM_Events.idl");
+  if (!be_global->gen_noeventccm ())
+    {
+      this->gen_standard_include (
+      this->ciao_exec_idl_,
+      "ccm/CCM_Events.idl");
+     }
 
   this->gen_standard_include (
     this->ciao_exec_idl_,
