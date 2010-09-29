@@ -29,6 +29,10 @@ project (XSC_XML_Generation) : install, xscdefaults {
 
   Source_Files {
   }
+
+  specific {
+    install_dir = tools/Config_Handlers
+  }
 }
 
 project (XSC_XML_Handlers) : install, acelib, xerces, dance_lib, dance_xml_utils {
@@ -62,6 +66,9 @@ project (XSC_XML_Handlers) : install, acelib, xerces, dance_lib, dance_xml_utils
     override no_hidden_visibility = 1
   }
 
+  specific {
+    install_dir = tools/Config_Handlers
+  }
 }
 
 project (XSC_Config_Handlers) : install, dance_deployment_stub, dance_config_handlers_base, dance_lib, dance, dance_logger {
@@ -104,6 +111,9 @@ project (XSC_Config_Handlers) : install, dance_deployment_stub, dance_config_han
     Common.h
   }
 
+  specific {
+    install_dir = tools/Config_Handlers
+  }
 }
 
 project (XSC_Config_Handlers_Common) : install, dance_deployment_stub, dance_config_handlers_base, dance_lib, dance {
@@ -123,5 +133,8 @@ project (XSC_Config_Handlers_Common) : install, dance_deployment_stub, dance_con
     CEPE_Handler.cpp
     Any_Handler.cpp
   }
-}
 
+  specific {
+    install_dir = tools/Config_Handlers
+  }
+}
