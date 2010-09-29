@@ -1,3 +1,12 @@
+Wed Sep 29 14:06:40 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Cache_Map_Manager_T.h:
+        * ace/MEM_SAP.h:
+        * ace/Metrics_Cache_T.h:
+        * ace/Metrics_Cache_T.inl:
+        * ace/Metrics_Cache_T.cpp:
+          Doxygen changes
+
 Wed Sep 29 12:19:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Caching_Utility_T.h:
