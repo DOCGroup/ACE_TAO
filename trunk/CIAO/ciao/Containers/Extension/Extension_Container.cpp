@@ -1344,18 +1344,13 @@ namespace CIAO
   Extension_Container_i::resolve_service_reference (const char *service_id)
   {
     CIAO_TRACE ("Extension_Container_i::resolve_service_reference");
-    CORBA::Object_ptr obj = 
-      Container_i< CIAO::Extension_Container >::resolve_service_reference (service_id);
-    if (!CORBA::is_nil(obj))
-      {
-        return obj;
-      }
     //search
     InstalledServices::iterator it = this->installed_services_.find (service_id);
-    if (it == this->installed_services_.end ())
+    if (it != this->installed_services_.end ())
       {
-        throw Components::CCMException (Components::OBJECT_NOT_FOUND);
+        return CORBA::Object::_duplicate(it->second.second);
       }
-    return CORBA::Object::_duplicate(it->second.second);
+    // not found. Calling base.
+    return Container_i< CIAO::Extension_Container >::resolve_service_reference (service_id);
   }
 }
