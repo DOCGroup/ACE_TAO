@@ -1,8 +1,18 @@
+Wed Sep 29 12:19:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Caching_Utility_T.h:
+        * ace/Caching_Utility_T.cpp:
+          Use bool and ACE_Copy_Disabled
+
+        * ace/Malloc_Base.h:
+        * ace/Malloc_T.h:
+          Typo fixes
+
 Wed Sep 29 12:08:58 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/MakeProjectCreator/config/global.features:
-	Add ccm_noevent option, default 0, events in CCM are enabled.
-        If set, events in CCM are disabled.
+          Add ccm_noevent option, default 0, events in CCM are enabled.
+          If set, events in CCM are disabled.
 
 Tue Sep 28 18:48:58 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
