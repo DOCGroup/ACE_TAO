@@ -1,3 +1,9 @@
+Wed Sep 29 12:22:37 UTC 2010  Marijke Hengstmengel  <mhengstmengel>
+
+        * MPC/config/ciaoidldefaults.mpb:
+        * MPC/config/ccm_noevent.mpb:
+        Add option to disable events in ccm. Default enabled.
+
 Wed Sep 29 12:03:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Containers/Container_Base_T.cpp:
