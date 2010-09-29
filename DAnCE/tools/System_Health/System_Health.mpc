@@ -10,7 +10,7 @@ project (DAnCE_System_Health) : install, dance_deployment_stub, dance_output, ge
   }
 
   specific {
-    install_dir = DAnCE/tools/System_Health
+    install_dir = tools/System_Health
   }
 }
 
@@ -28,5 +28,9 @@ project (DAnCE_System_Health_stub) : install, dance_lib, dance_output, gen_ostre
 
   Header_Files {
     SHS_DataModelC.h
+  }
+
+  specific {
+    install_dir = tools/System_Health
   }
 }

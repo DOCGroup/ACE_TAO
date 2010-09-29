@@ -8,6 +8,10 @@ project (DAnCE_SHS_Daemon_idl) : install, dance_shs_stub, gen_ostream {
   IDL_Files {
     SHS_Daemon.idl
   }
+
+  specific {
+    install_dir = tools/System_Health/Daemon
+  }
 }
 
 project (DAnCE_SHS_Daemon_stub) : install, dance_lib, dance_output, gen_ostream, \
@@ -23,6 +27,10 @@ project (DAnCE_SHS_Daemon_stub) : install, dance_lib, dance_output, gen_ostream,
 
   Header_Files {
     SHS_DaemonC.h
+  }
+
+  specific {
+    install_dir = tools/System_Health/Daemon
   }
 }
 

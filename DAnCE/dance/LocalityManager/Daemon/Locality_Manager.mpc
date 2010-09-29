@@ -18,13 +18,9 @@ project (DAnCE_LocalityManager_Impl) : dance_lib, dance_output, naming, \
    specific {
      install_dir = dance/LocalityManager/Daemon
    }
-  verbatim(gnuace, postinstall) {
-"	$(MKDIR) $(INSTALL_PREFIX)/share/dance/LocalityManager/Daemon"
-"	cp  Locality_Manager_Impl.h $(INSTALL_PREFIX)/share/dance/LocalityManager/Daemon/"
-  }
 }
 
-project (DAnCE_LocalityManager_Exec) : dance_exe, dance_exe, dance_output, \
+project (DAnCE_LocalityManager_Exec) : dance_exe, dance_output, \
         dance_locality_manager, dance_logger, install {
   exename = dance_locality_manager
 
@@ -38,9 +34,6 @@ project (DAnCE_LocalityManager_Exec) : dance_exe, dance_exe, dance_output, \
   }
 
   verbatim(gnuace, postinstall) {
-"	$(MKDIR) $(INSTALL_PREFIX)/share/dance/LocalityManager/Daemon"
-"	cp  Locality_Manager_Task.cpp $(INSTALL_PREFIX)/share/dance/LocalityManager/Daemon/"
-"	cp  Locality_Manager_Task.h $(INSTALL_PREFIX)/share/dance/LocalityManager/Daemon/"
-"	cp  Locality_Manager.cpp $(INSTALL_PREFIX)/share/dance/LocalityManager/Daemon/"
+"	cp Locality_Manager_Task.cpp Locality_Manager.cpp Locality_Manager_Task.h $(INSTALL_PREFIX)/include/dance/LocalityManager/Daemon"
   }
 }
