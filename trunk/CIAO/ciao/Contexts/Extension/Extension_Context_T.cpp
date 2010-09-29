@@ -59,19 +59,20 @@ namespace CIAO
             typename COMP>
   ::Components::Cookie *
   Extension_Context_Impl<BASE_CTX, COMP>::install_service_reference (
-        const char * /*service_id*/,
-        ::CORBA::Object_ptr /*objref*/)
+        const char * service_id,
+        ::CORBA::Object_ptr objref)
   {
-    throw CORBA::NO_IMPLEMENT ();
+    return this->container_->install_service_reference (service_id,
+                                                        objref);
   }
 
   template <typename BASE_CTX,
             typename COMP>
   ::CORBA::Object_ptr
   Extension_Context_Impl<BASE_CTX, COMP>::uninstall_service_reference (
-    ::Components::Cookie * /*ck*/)
+    ::Components::Cookie * ck)
   {
-    throw CORBA::NO_IMPLEMENT ();
+    return this->container_->uninstall_service_reference (ck);
   }
 }
 

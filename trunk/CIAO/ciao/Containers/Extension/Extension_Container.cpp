@@ -1297,4 +1297,65 @@ namespace CIAO
 
     return objref._retn ();
   }
+
+  Components::Cookie *
+  Extension_Container_i::install_service_reference (const char * service_id,
+                                                    CORBA::Object_ptr objref)
+  {
+    CIAO_TRACE ("Extension_Container_i::install_service_reference");
+    if (this->installed_services_.find(service_id) !=
+        this->installed_services_.end())
+      {
+        throw (Components::CCMException (::Components::SERVICE_INSTALLATION_ERROR));
+      }
+
+    //first create a cookie out of the given object reference.
+    Components::Cookie *key_cookie = 0;
+    ACE_NEW_THROW_EX (key_cookie,
+                      CIAO::Cookie_Impl (reinterpret_cast<ptrdiff_t> (objref)),
+                      CORBA::NO_MEMORY ());
+    //create a pair of cookie and object reference
+    std::pair<Components::Cookie *, CORBA::Object_ptr>
+      ck_obj(key_cookie, CORBA::Object::_duplicate(objref));
+    this->installed_services_[service_id] = ck_obj;
+
+    return key_cookie;
+  }
+
+  CORBA::Object_ptr
+  Extension_Container_i::uninstall_service_reference (Components::Cookie * ck)
+  {
+    CIAO_TRACE ("Extension_Container_i::uninstall_service_reference");
+    for (InstalledServices::iterator it = this->installed_services_.begin ();
+         it != this->installed_services_.end ();
+         ++it)
+      {
+        if (it->second.first == ck)
+          {
+            CORBA::Object_ptr obj = it->second.second;
+            this->installed_services_.erase (it);
+            return CORBA::Object::_duplicate (obj);
+          }
+      }
+    throw Components::CCMException (::Components::SERVICE_INSTALLATION_ERROR);
+  }
+
+  CORBA::Object_ptr
+  Extension_Container_i::resolve_service_reference (const char *service_id)
+  {
+    CIAO_TRACE ("Extension_Container_i::resolve_service_reference");
+    CORBA::Object_ptr obj = 
+      Container_i< CIAO::Extension_Container >::resolve_service_reference (service_id);
+    if (!CORBA::is_nil(obj))
+      {
+        return obj;
+      }
+    //search
+    InstalledServices::iterator it = this->installed_services_.find (service_id);
+    if (it == this->installed_services_.end ())
+      {
+        throw Components::CCMException (Components::OBJECT_NOT_FOUND);
+      }
+    return CORBA::Object::_duplicate(it->second.second);
+  }
 }

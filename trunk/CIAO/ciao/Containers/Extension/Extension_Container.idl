@@ -15,5 +15,9 @@ module CIAO
 {
   local interface Extension_Container : Container
   {
+    Components::Cookie install_service_reference(in string service_id, in Object objref)
+      raises (Components::CCMException);
+    Object uninstall_service_reference(in Components::Cookie ck)
+      raises (Components::CCMException);
   };
 };

@@ -270,15 +270,11 @@ namespace CIAO
         throw ::CORBA::BAD_PARAM ();
       }
 
-    ConsumerTable::value_type entry;
-    entry.first = port_name;
-    entry.second = ::Components::EventConsumerBase::_duplicate (port_ref);
-
     {
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, mon, this->lock_,
                           CORBA::NO_RESOURCES ());
 
-      (void) this->consumer_table_.insert (entry);
+      this->consumer_table_[port_name] = ::Components::EventConsumerBase::_duplicate (port_ref);
     }
   }
 
