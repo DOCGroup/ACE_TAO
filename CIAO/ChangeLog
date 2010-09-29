@@ -1,3 +1,14 @@
+Wed Sep 29 02:22:43 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/ccm_lem_stub.mpb:
+        * MPC/config/ccm_session_stub.mpb:
+        * MPC/config/ccm_svnt.mpb:
+        * ccm/Extension/CCM_extension.mpc:
+        * ccm/Session/CCM_session.mpc:
+        * connectors/ami4ccm/ami4ccm/ami4ccm.mpc:
+
+          Some compilation fixes. 
+
 Tue Sep 28 15:46:07 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * ccm/Session/CCM_session.mpc:
