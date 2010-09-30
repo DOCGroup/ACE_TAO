@@ -1,3 +1,9 @@
+Thu Sep 30 07:09:50 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3896_Regression/Hello.cpp:
+        * tests/Bug_3896_Regression/client.cpp:
+          Added include to get sleep
+
 Thu Sep 30 05:46:16 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h:
