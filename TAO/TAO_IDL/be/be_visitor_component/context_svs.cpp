@@ -151,41 +151,31 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "{" << be_idt_nl
       << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "std::pair<" << tao_cg->upcase (port_name)
-      << "_TABLE::iterator, bool> result;" << be_nl
-      << tao_cg->upcase (port_name)
-      << "_TABLE::value_type entry;" << be_nl
-      << "entry.first = reinterpret_cast<ptrdiff_t> (c);"
-      << be_nl
-      << "entry.second = ::" << fname
-      << "Consumer::_duplicate (c);" << be_nl << be_nl;
+      << be_nl;
+
+  os_ << "ptrdiff_t ptr = reinterpret_cast<ptrdiff_t> (c);"
+      << be_nl << be_nl;
 
   os_ << "{" << be_idt_nl
       << "ACE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
       << "                  mon," << be_nl
       << "                  this->" << port_name
       << "_lock_," << be_nl
-      << "                  0);" << be_nl << be_nl;
+      << "                  0);";
 
-  os_ << "result = this->ciao_publishes_" << port_name
-      << "_.insert (entry);";
+  os_ << be_nl << be_nl
+      << "this->ciao_publishes_" << port_name
+      << "_[ptr] =" << be_nl
+      << "  ::" << fname << "Consumer::_duplicate (c);";
 
   os_ << be_uidt_nl
       << "}";
 
   os_ << be_nl << be_nl
-      << "if (! result.second)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "ACE_ERROR_RETURN ((LM_ERROR," << be_nl
-      << "                   ACE_TEXT (\"subscribe on %s failed\\n\"),"
-      << be_nl
-      << "                   ACE_TEXT (\"" << port_name
-      << "\"))," << be_nl
-      << "                  0);" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
+      << be_uidt_nl << be_nl
       << "::Components::Cookie * retv = 0;" << be_nl
       << "ACE_NEW_THROW_EX (retv," << be_nl
-      << "                  ::CIAO::Cookie_Impl (entry.first),"
+      << "                  ::CIAO::Cookie_Impl (ptr),"
       << be_nl
       << "                  ::CORBA::NO_MEMORY ());"
       << be_nl << be_nl
@@ -422,14 +412,9 @@ be_visitor_context_svs::gen_uses_multiplex (
       << "if ( ::CORBA::is_nil (c))" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::InvalidConnection ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "std::pair<" << tao_cg->upcase (port_name)
-      << "_TABLE::iterator, bool> result;" << be_nl
-      << tao_cg->upcase (port_name)
-      << "_TABLE::value_type entry;" << be_nl
-      << "entry.first = reinterpret_cast<ptrdiff_t> (c);" << be_nl
-      << "entry.second = ::" << fname
-      << "::_duplicate (c);";
+      << "}" << be_uidt_nl << be_nl;
+
+  os_ << "ptrdiff_t ptr = reinterpret_cast<ptrdiff_t> (c);";
 
   os_ << be_nl << be_nl
       << "{" << be_idt_nl
@@ -440,21 +425,17 @@ be_visitor_context_svs::gen_uses_multiplex (
       << "                  0);";
 
   os_ << be_nl << be_nl
-      << "result = this->ciao_uses_" << port_name
-      << "_.insert (entry);";
+      << "this->ciao_uses_" << port_name
+      << "_[ptr] =" << be_nl
+      << "  ::" << fname << "::_duplicate (c);";
 
   os_ << be_uidt_nl
       << "}";
 
   os_ << be_nl << be_nl
-      << "if (! result.second)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "throw ::Components::InvalidConnection ();"
-      << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
       << "::Components::Cookie * ck = 0;" << be_nl
       << "ACE_NEW_THROW_EX (ck," << be_nl
-      << "                  ::CIAO::Cookie_Impl (entry.first),"
+      << "                  ::CIAO::Cookie_Impl (ptr),"
       << be_nl
       << "                  ::CORBA::NO_MEMORY ());"
       << be_nl << be_nl

@@ -1,3 +1,11 @@
+Thu Sep 30 09:11:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+          Fixed compile issues in generated code related to the
+          replacement of ACE_Array_Map with std::map.
+          These changes only affects full ccm.
+
 Thu Sep 30 07:09:50 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3896_Regression/Hello.cpp:
