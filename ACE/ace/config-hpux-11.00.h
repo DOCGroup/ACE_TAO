@@ -24,9 +24,7 @@
 // aC++...
 
 // Precompiler needs extra flags to ignore "invalid #pragma directive"
-#    ifndef ACE_USING_MCPP_PREPROCESSOR
-#     define ACE_CC_PREPROCESSOR_ARGS "-E +W 67"
-#    endif
+#  define ACE_CC_PREPROCESSOR_ARGS "-E +W 67"
 
 // If the -AA compile option is used, the compiler defines _HP_NAMESPACE_STD.
 // The -AA option enables the 2.0 standard C++ library. If not used, then

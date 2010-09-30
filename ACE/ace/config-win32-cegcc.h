@@ -14,14 +14,8 @@
 #  error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
-#define ACE_CC_NAME ACE_TEXT ("g++")
 #define ACE_CC_PREPROCESSOR "cpp"
 #define ACE_CC_PREPROCESOR_ARGS ""
-
-// Why all this is not in config-g++-common.h?
-#define ACE_CC_MAJOR_VERSION __GNUC__
-#define ACE_CC_MINOR_VERSION __GNUC_MINOR__
-#define ACE_CC_BETA_VERSION (0)
 
 #if !defined (ACE_HAS_CEGCC)
 #  error You do not seem to be using cegcc

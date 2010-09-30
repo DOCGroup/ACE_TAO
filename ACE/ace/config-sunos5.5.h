@@ -363,16 +363,7 @@
 # define ACE_CC_MAJOR_VERSION (__SUNPRO_CC >> 8)
 # define ACE_CC_MINOR_VERSION (__SUNPRO_CC & 0x00ff)
 # define ACE_CC_BETA_VERSION  (0)
-#elif defined (__GNUG__)
-# define ACE_CC_MAJOR_VERSION __GNUC__
-# define ACE_CC_MINOR_VERSION __GNUC_MINOR__
-# define ACE_CC_BETA_VERSION  (0)
-# if __GNUC_MINOR__ >= 90
-#   define ACE_CC_NAME ACE_TEXT ("egcs")
-# else
-#   define ACE_CC_NAME ACE_TEXT ("g++")
-# endif /* __GNUC_MINOR__ */
-#endif /* __GNUG__ */
+#endif /* __SUNPRO_CC */
 
 #if defined (i386) && (_FILE_OFFSET_BITS==32)
 # define ACE_HAS_X86_STAT_MACROS
