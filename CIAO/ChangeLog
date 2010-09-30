@@ -1,3 +1,8 @@
+Thu Sep 30 11:33:07 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds4ccm_lem_stub.mpc:
+          Another missing base project
+
 Thu Sep 30 11:01:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dds4ccm_lem_stub.mpb:
