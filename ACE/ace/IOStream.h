@@ -64,14 +64,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #      endif /* ! ACE_HAS_STDCPP_STL_INCLUDES */
 #    endif /* ACE_WIN32 && defined (_MSC_VER) */
 
-#    if defined (__DECCXX_VER)
-#      if __DECCXX_VER < 50700000
-#        include /**/ <stl_macros>
-#      else
-#        include /**/ <stdcomp>
-#      endif /* __DECCXX_VER < 50700000 */
-#    endif /* __DECCXX_VER */
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Export ACE_Quoted_String : public ACE_IOStream_String

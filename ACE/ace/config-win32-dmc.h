@@ -28,10 +28,8 @@
 # define ACE_CC_MAJOR_VERSION (1)
 # define ACE_CC_MINOR_VERSION (8)
 # define ACE_CC_BETA_VERSION (9)
-# ifndef ACE_USING_MCPP_PREPROCESSOR
-#  define ACE_CC_PREPROCESSOR "DMC.EXE"
-#  define ACE_CC_PREPROCESSOR_ARGS "-E"
-# endif
+# define ACE_CC_PREPROCESSOR "DMC.EXE"
+# define ACE_CC_PREPROCESSOR_ARGS "-E"
 
 // Microsoft's standard cpp library auto_ptr doesn't have reset ().
 # define ACE_AUTO_PTR_LACKS_RESET

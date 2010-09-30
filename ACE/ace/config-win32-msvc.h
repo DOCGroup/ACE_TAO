@@ -22,10 +22,8 @@
 #endif /* ACE_CONFIG_WIN32_H */
 
 #define ACE_CC_NAME ACE_TEXT ("Visual C++")
-#ifndef ACE_USING_MCPP_PREPROCESSOR
-# define ACE_CC_PREPROCESSOR "CL.EXE"
-# define ACE_CC_PREPROCESSOR_ARGS "-nologo -E"
-#endif
+#define ACE_CC_PREPROCESSOR "CL.EXE"
+#define ACE_CC_PREPROCESSOR_ARGS "-nologo -E"
 
 #define ACE_CC_MAJOR_VERSION (_MSC_VER / 100 - 6)
 #define ACE_CC_MINOR_VERSION (_MSC_VER % 100)

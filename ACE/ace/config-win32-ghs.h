@@ -34,10 +34,8 @@
 # define ACE_CC_MAJOR_VERSION (1)
 # define ACE_CC_MINOR_VERSION (8)
 # define ACE_CC_BETA_VERSION (9)
-# ifndef ACE_USING_MCPP_PREPROCESSOR
-#  define ACE_CC_PREPROCESSOR "GCX.EXE"
-#  define ACE_CC_PREPROCESSOR_ARGS "-E"
-# endif
+# define ACE_CC_PREPROCESSOR "GCX.EXE"
+# define ACE_CC_PREPROCESSOR_ARGS "-E"
 
 // GHS uses Microsoft's standard cpp library, which has auto_ptr.
 # undef ACE_LACKS_AUTO_PTR

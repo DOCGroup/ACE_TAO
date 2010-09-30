@@ -168,10 +168,6 @@
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
 # include "ace/config-g++-common.h"
-#define ACE_CC_NAME ACE_TEXT ("g++")
-#define ACE_CC_MAJOR_VERSION __GNUC__
-#define ACE_CC_MINOR_VERSION __GNUC_MINOR__
-//#define ACE_CC_BETA_VERSION 0 /* ??? */
 #elif defined (__SUNCC_PRO) || defined (__SUNPRO_CC)
 # include "ace/config-suncc-common.h"
 #elif defined (__PGI)
