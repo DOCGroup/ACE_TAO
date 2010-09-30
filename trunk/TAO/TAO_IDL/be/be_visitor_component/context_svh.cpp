@@ -182,8 +182,8 @@ be_visitor_context_svh::visit_uses (be_uses *node)
   if (is_multiple)
     {
       os_ << "// Multiplex " << port_name << " connection." << be_nl
-          << "typedef ACE_Array_Map<ptrdiff_t," << be_nl
-          << "                      ::"
+          << "typedef std::map<ptrdiff_t," << be_nl
+          << "                 ::"
           << obj_name << "_var>" << be_idt_nl
           << tao_cg->upcase (port_name)
           << "_TABLE;" << be_uidt_nl
@@ -228,8 +228,8 @@ be_visitor_context_svh::visit_publishes (be_publishes *node)
   os_ << be_uidt_nl << be_nl
       << "protected:" << be_idt_nl;
 
-  os_ << "typedef ACE_Array_Map<ptrdiff_t," << be_nl
-      << "                      ::" << obj_name
+  os_ << "typedef std::map<ptrdiff_t," << be_nl
+      << "                 ::" << obj_name
       << "Consumer_var>" << be_idt_nl
       << tao_cg->upcase (port_name) << "_TABLE;" << be_uidt_nl
       << tao_cg->upcase (port_name) << "_TABLE ciao_publishes_"
