@@ -16,7 +16,6 @@
  * has been created to remove the dependency from the rest of module
  * PortableInterceptor.
  *
- * This file is used to generate the code in IORInfoC.*
  */
 
 // File: IORInfo.idl

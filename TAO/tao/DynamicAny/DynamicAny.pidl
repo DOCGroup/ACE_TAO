@@ -7,8 +7,7 @@
  *
  * @brief IDL source for the DynamicAny module.
  *
- * This file is used to generate the code in DynamicAnyC.{h,cpp}, it
- * was obtained from the OMG website as part of the full CORBA IDL,
+ * It was obtained from the OMG website as part of the full CORBA IDL,
  * the document reference number is: formal/04-03-01, or use the
  * following URL:
  * http://www.omg.org/technology/documents/formal/corba_omg_idl_text_file.htm

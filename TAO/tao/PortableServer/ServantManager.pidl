@@ -4,17 +4,6 @@
  * $Id$
  *
  * @brief Pre-compiled IDL source for the PortableServer module.
- *
- * This file is used to generate the code in
- * ServantManagerC.{h,inl,cpp}, using the following command:
- *
- * tao_idl.exe \
- *     -o orig -Gp -Gd -Sci -GA -I$(TAO_ROOT)
- *          -Wb,export_macro=TAO_PortableServer_Export \
- *          -Wb,export_include="portableserver_export.h" \
- *          -Wb,pre_include="ace/pre.h" \
- *          -Wb,post_include="ace/post.h" \
- *          ServantManager.pidl
  */
 
 #ifndef _PORTABLESERVER_SERVANT_MANAGER_IDL_

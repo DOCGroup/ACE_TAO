@@ -5,40 +5,6 @@
  *
  * @brief Pre-compiled IDL source for the CORBA::Policy related
  * classes.
- *
- * This file is used to generate the code in PolicyC.{h,inl,cpp}.
- * Also, skeleton code for the only non local Policy interface is
- * generated from this pidl file and then the declaration code is
- * moved to tao/PortableServer/PolicyS.{h,inl,cpp}
- *
- *   The steps to regenerate the code are as follows:
- *
- *   1. Run the tao_idl compiler on the patched pidl file.  The
- *   command used for this is:
- *
- *     tao_idl.exe
- *        -o orig -Gp -Gd -GA -Ssi
- *          -Wb,stub_export_macro=TAO_Export
- *          -Wb,stub_export_include="tao/TAO_Export.h"
- *          -Wb,skel_export_macro=TAO_PortableServer_Export
- *          -Wb,skel_export_include=portableserver_export.h
- *          -Wb,pre_include="ace/pre.h"
- *          -Wb,post_include="ace/post.h"
- *          Policy.pidl
- *
- *   2. Then patch the generated code using patches in
- *      diff/Policy.diff. To patch  the generated code in
- *      PortableServer look for diffs in PortableServer/diffs
- *      directory.
- *
- *   Note: The diffs were generated with these commands:
- *
- *   for i in PolicyC.{h,i,cpp}; do
- *     diff -wBbu orig/$i $i;
- *   done > diffs/Policy.diff
- *   for i in Policy{S,S_T}.{h,i,cpp}; do
- *     diff -wBbu orig/$i PortableServer/$i;
- *   done >> diffs/Policy.diff
  */
 
 #ifndef TAO_CORBA_POLICY_PIDL

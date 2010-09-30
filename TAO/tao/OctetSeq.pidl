@@ -1,10 +1,5 @@
 // -*- IDL -*-
-//
 // $Id$
-
-/**
- * This file is used to generate the code in OctetSeqC.*
- */
 
 #ifndef TAO_CORBA_OCTET_SEQ_IDL
 #define TAO_CORBA_OCTET_SEQ_IDL

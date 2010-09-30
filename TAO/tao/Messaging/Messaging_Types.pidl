@@ -1,14 +1,10 @@
 // -*- IDL -*-
 
-//=============================================================================
 /**
  *  @file   Messaging_Types.pidl
  *
  *  $Id$
- *
- * This file is used to generate the code in Messaging__Types{C}.{h,cpp}
  */
-//=============================================================================
 
 #ifndef TAO_MESSAGING_NO_IMPL_TYPES_PIDL
 #define TAO_MESSAGING_NO_IMPL_TYPES_PIDL
