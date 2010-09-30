@@ -150,10 +150,9 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "if ( ::CORBA::is_nil (c))" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << be_nl;
+      << "}" << be_uidt_nl << be_nl;
 
-  os_ << "ptrdiff_t ptr = reinterpret_cast<ptrdiff_t> (c);"
+  os_ << "ptrdiff_t const ptr = reinterpret_cast<ptrdiff_t> (c);"
       << be_nl << be_nl;
 
   os_ << "{" << be_idt_nl
@@ -171,8 +170,8 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
   os_ << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
-      << be_uidt_nl << be_nl
+  os_ << be_nl
+      << be_nl
       << "::Components::Cookie * retv = 0;" << be_nl
       << "ACE_NEW_THROW_EX (retv," << be_nl
       << "                  ::CIAO::Cookie_Impl (ptr),"
@@ -188,9 +187,7 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << port_name << " (" << be_idt_nl
       << "::Components::Cookie * ck)" << be_uidt_nl
       << "{" << be_idt_nl
-      << "ptrdiff_t key = 0UL;" << be_nl
-      << tao_cg->upcase (port_name)
-      << "_TABLE::size_type n = 0UL;" << be_nl << be_nl
+      << "ptrdiff_t key = 0UL;" << be_nl << be_nl
       << "if (ck == 0 || ! ::CIAO::Cookie_Impl::extract (ck, key))"
       << be_idt_nl
       << "{" << be_idt_nl
@@ -214,25 +211,21 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "{" << be_idt_nl
       << "::" << fname
       << "Consumer_var retv = iter->second;" << be_nl
-      << "n = this->ciao_publishes_" << port_name
-      << "_.erase (key);" << be_nl << be_nl
+      << tao_cg->upcase (port_name)
+      << "_TABLE::size_type n =" << be_idt_nl
+      << "this->ciao_publishes_" << port_name
+      << "_.erase (key);" << be_uidt_nl << be_nl
       << "if (n == 1UL)" << be_idt_nl
       << "{" << be_idt_nl
       << "return retv._retn ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "throw ::Components::InvalidConnection ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
+      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl;
 
   os_ << be_uidt_nl
       << "}";
 
   os_ << be_nl << be_nl
-      << "if (n != 1UL)" << be_idt_nl
-      << "{" << be_idt_nl
       << "throw ::Components::InvalidConnection ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "return ::" << fname << "Consumer::_nil ();"
-      << be_uidt_nl
       << "}";
 
   return 0;
@@ -414,7 +407,7 @@ be_visitor_context_svs::gen_uses_multiplex (
       << "throw ::Components::InvalidConnection ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
-  os_ << "ptrdiff_t ptr = reinterpret_cast<ptrdiff_t> (c);";
+  os_ << "ptrdiff_t const ptr = reinterpret_cast<ptrdiff_t> (c);";
 
   os_ << be_nl << be_nl
       << "{" << be_idt_nl
