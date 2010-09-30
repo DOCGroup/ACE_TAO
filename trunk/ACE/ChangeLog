@@ -1,3 +1,28 @@
+Thu Sep 30 05:45:10 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+        * ace/Cache_Map_Manager_T.h:
+        * ace/Cache_Map_Manager_T.inl:
+        * ace/Cache_Map_Manager_T.cpp:
+        * ace/Cached_Connect_Strategy_T.h:
+        * ace/Cached_Connect_Strategy_T.cpp:
+        * ace/Caching_Strategies_T.h:
+        * ace/Caching_Utility_T.cpp:
+        * ace/Cleanup_Strategies_T.cpp:
+        * ace/Hash_Cache_Map_Manager_T.h:
+        * ace/Hash_Cache_Map_Manager_T.cpp:
+        * ace/Map_T.h:
+        * ace/Map_T.inl:
+        * ace/Map_T.cpp:
+        * ace/Pair_T.h:
+        * ace/Pair_T.inl:
+        * examples/Web_Crawler/URL_Visitor.h:
+        * tests/Cache_Map_Manager_Test.cpp:
+        * tests/Cached_Accept_Conn_Test.h:
+        * tests/Cached_Conn_Test.cpp:
+        * tests/Map_Manager_Test.cpp:
+          Removed ACE_Pair from the ACE library.
+
 Wed Sep 29 14:06:40 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Cache_Map_Manager_T.h:

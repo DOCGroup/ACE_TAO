@@ -47,7 +47,7 @@
 
 
 typedef size_t ATTRIBUTES;
-typedef ACE_Pair<Svc_Handler *, ATTRIBUTES>
+typedef std::pair<Svc_Handler *, ATTRIBUTES>
         CACHED_HANDLER;
 typedef ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
         ACE_ADDR;

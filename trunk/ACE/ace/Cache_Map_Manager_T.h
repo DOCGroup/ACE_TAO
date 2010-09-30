@@ -91,7 +91,7 @@ public:
    * are used by the strategy and is transparent to the user of this
    * class.
    */
-  typedef ACE_Pair<VALUE, ATTRIBUTES> CACHE_VALUE;
+  typedef std::pair<VALUE, ATTRIBUTES> CACHE_VALUE;
 
   // = Initialization and termination methods.
 
@@ -254,7 +254,7 @@ public:
   /// are used by the strategy and is transparent to the cache user.
   typedef ACE_Reference_Pair<KEY, VALUE>
           value_type;
-  typedef ACE_Pair <VALUE, ATTRIBUTES>
+  typedef std::pair <VALUE, ATTRIBUTES>
           CACHE_VALUE;
 
   // = Initialisation and termination methods.
@@ -329,7 +329,7 @@ public:
   /// The actual value mapped to the key in the cache. The <attributes>
   /// are used by the strategy and is transparent to the cache user.
   typedef ACE_Reference_Pair<KEY, VALUE> value_type;
-  typedef ACE_Pair <VALUE, ATTRIBUTES> CACHE_VALUE;
+  typedef std::pair <VALUE, ATTRIBUTES> CACHE_VALUE;
 
   // = Initialisation and termination methods.
 
