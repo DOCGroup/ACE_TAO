@@ -1,3 +1,11 @@
+Thu Sep 30 14:17:18 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Extension/Extension_Container.h:
+        * ciao/Containers/Extension/Extension_Container.cpp:
+        * ciao/Containers/Session/Session_Container.h:
+        * ciao/Containers/Session/Session_Container.cpp:
+          Removed id generation, we have an empty id or get an id from the cdp
+
 Thu Sep 30 11:33:07 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds4ccm_lem_stub.mpc:
