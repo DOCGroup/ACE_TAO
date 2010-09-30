@@ -1,3 +1,8 @@
+Thu Sep 30 05:46:16 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h:
+          Removed comments refering to ACE_Pair.
+
 Wed Sep 29 19:53:17 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/Bug_689_Regression/bug_689_regression.idl:
