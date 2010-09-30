@@ -3,6 +3,7 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task_T.h"
+#include "ace/OS_NS_unistd.h"
 #include "tao/TimeBaseC.h"
 #include "tao/Messaging/Messaging.h"
 
