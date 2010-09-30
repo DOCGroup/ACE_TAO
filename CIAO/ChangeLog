@@ -1,3 +1,8 @@
+Thu Sep 30 11:01:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm_lem_stub.mpb:
+          Added missing base project
+
 Thu Sep 30 06:36:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * ccm/Extension/CCM_ServerContainerInterceptorRegistration.idl:
