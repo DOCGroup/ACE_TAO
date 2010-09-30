@@ -23,7 +23,7 @@ project (DDS4CCM_lem_gen) : install, dds4ccm, ciaoidldefaults {
   }
 }
 
-project (DDS4CCM_lem_stub) : install, dds4ccm, ccm_lem_stub, ciaolib_with_idl, ciao_output, taolib, valuetype, ifr_client {
+project (DDS4CCM_lem_stub) : install, dds4ccm, ccm_lem_stub, ccm_session_stub, ciaolib_with_idl, ciao_output, taolib, valuetype, ifr_client {
   after += DDS4CCM_stub DDS4CCM_lem_gen
   libs  += DDS4CCM_stub
   includes += $(CIAO_ROOT)/connectors
