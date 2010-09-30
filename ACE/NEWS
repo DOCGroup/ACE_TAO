@@ -23,6 +23,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.8.2 and ACE-5.8.3
 
 . Removed Irix/Tru64/SCO/Uniware/Cray support
 
+. ACE_Pair has been removed. Users should now use std::pair.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.8.1 and ACE-5.8.2
 ====================================================
 
