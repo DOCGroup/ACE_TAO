@@ -16,9 +16,6 @@ namespace CIAO
 {
   ///////////////////////////////////////////////////////////////
 
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned long>
-  Session_Container_i::serial_number_ (0);
-
   Session_Container_i::Session_Container_i (
         CORBA::ORB_ptr o,
         PortableServer::POA_ptr poa,
@@ -37,35 +34,6 @@ namespace CIAO
   Session_Container_i::init (const char *name)
   {
     CIAO_TRACE ("Session_Container_i::init");
-
-    char buffer[MAXPATHLEN];
-
-    if (!name)
-      {
-        unsigned long number = ++Session_Container_i::serial_number_;
-        CIAO_DEBUG (9,
-                    (LM_TRACE,
-                     CLINFO
-                     "Session_Container_i::init - "
-                     "Constructing container name "
-                     "from serial number %u\n",
-                     number));
-
-        if (ACE_OS::sprintf (buffer,
-                             "CIAO::Session_Container_i-%ld",
-                             number) < 0)
-          {
-            CIAO_ERROR (1,
-                        (LM_ERROR,
-                         CLINFO
-                         "CIAO::Session_Container_i: Unable "
-                         ":to create name from number.\n"));
-
-            throw Components::CreateFailure ();
-          }
-
-        name = buffer;
-      }
 
     CIAO_DEBUG (9,
                 (LM_TRACE,
