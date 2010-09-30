@@ -17,36 +17,6 @@
  *     2.  TAO-specific support for named mutexes has been added.
  *     3.  Added RT_ORB::create_tcp_protocol_properties which seems
  *         to come and go from the formal specification, but is needed.
- *
- *   This file is used to generate the code in RTCORBAC.{h,inl,cpp}.
- *   The steps to regenerate the code are as follows:
- *
- *   1. Run the tao_idl compiler on the pidl file.  The command used for
- *   this is:
- *
- *     tao_idl -o orig -Gp -Gd -Sci -I../..
- *          -Wb,export_macro=TAO_RTCORBA_Export
- *          -Wb,export_include="rtcorba_export.h"
- *          -Wb,pre_include="ace/pre.h"
- *          -Wb,post_include="ace/post.h"
- *          RTCORBA.pidl
- *
- *   2. Then apply the patches in tao/RTCORBA/diffs to the generated code.
- *   The patches provide the following fixes: 1) remove several unnecessary
- *   includes, e.g., corba.h, stream.h, Policy.h, 3) add anything else we
- *   need into the namespace, i.e., TAO_Priority_Mapping, and 4) fix
- *   "nested_class" occurrences in the .cpp.
- *
- * Apply patches using the following commands:
- *
- *   patch < diffs/RTCORBA.diff
- *
- * Note: The diffs were generated with these commands:
- *
- *   for i in RTCORBAC.{h,inl,cpp}; do
- *     diff -wBbu orig/$i $i
- *   done > diffs/RTCORBA.diff
- *
  */
 
 #ifndef _RT_CORBA_IDL_
