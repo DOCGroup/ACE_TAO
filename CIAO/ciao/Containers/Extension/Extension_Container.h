@@ -199,10 +199,6 @@ namespace CIAO
     InstalledServices installed_services_;
 
   protected:
-    /// Static variable to store the highest number we have given out until
-    /// now
-    static ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned long> serial_number_;
-
     /// The servant activator factory used to activate facets and
     /// consumer servants.
     Servant_Activator_var sa_;
