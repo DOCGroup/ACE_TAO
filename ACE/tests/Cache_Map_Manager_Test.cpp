@@ -29,14 +29,13 @@
 #include "ace/Map_Manager.h"
 #include "ace/Caching_Strategies_T.h"
 #include "ace/Functor.h"
-#include "ace/Pair_T.h"
 #include "ace/Get_Opt.h"
 #include "Cache_Map_Manager_Test.h"     // Hash_Key class defined in here
 
 typedef size_t KEY;
 typedef size_t VALUE;
 typedef int ATTR;
-typedef ACE_Pair<VALUE, ATTR> CACHE_VALUE;
+typedef std::pair<VALUE, ATTR> CACHE_VALUE;
 typedef ACE_Equal_To<KEY> COMPARE_KEYS;
 
 typedef ACE_Hash_Map_Manager_Ex<KEY, CACHE_VALUE, Hash_Key, ACE_Equal_To<KEY>, ACE_Null_Mutex>

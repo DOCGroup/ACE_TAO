@@ -89,7 +89,7 @@ template <class KEY, class VALUE, class IMPLEMENTATION, class CACHING_STRATEGY, 
 ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>::operator* (void) const
 {
   value_type retn ((*this->iterator_implementation_).ext_id_,
-                   (*this->iterator_implementation_).int_id_.first ());
+                   (*this->iterator_implementation_).int_id_.first);
   return retn;
 }
 
@@ -183,7 +183,7 @@ template <class KEY, class VALUE, class REVERSE_IMPLEMENTATION, class CACHING_ST
 ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>::operator* (void) const
 {
   value_type retv ((*this->reverse_iterator_implementation_).ext_id_,
-                   (*this->reverse_iterator_implementation_).int_id_.first ());
+                   (*this->reverse_iterator_implementation_).int_id_.first);
   return retv;
 }
 

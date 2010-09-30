@@ -94,7 +94,7 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::minimum (
   // Starting values.
   ITERATOR iter = container.begin ();
   ITERATOR end = container.end ();
-  ATTRIBUTES min = (*iter).int_id_.second ();
+  ATTRIBUTES min = (*iter).int_id_.second;
   key_to_remove = &(*iter).ext_id_;
   value_to_remove = &(*iter).int_id_;
 
@@ -104,10 +104,10 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::minimum (
        iter != end;
        ++iter)
     {
-      if (min > (*iter).int_id_.second ())
+      if (min > (*iter).int_id_.second)
         {
           // Ah! an item with lower ATTTRIBUTES...
-          min = (*iter).int_id_.second ();
+          min = (*iter).int_id_.second;
           key_to_remove = &(*iter).ext_id_;
           value_to_remove = &(*iter).int_id_;
         }
@@ -194,7 +194,7 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
   // Starting values.
   ITERATOR end = container.end ();
   ITERATOR iter = container.begin ();
-  ATTRIBUTES min = (*iter).int_id_.second ();
+  ATTRIBUTES min = (*iter).int_id_.second;
   key_to_remove = 0;
   value_to_remove = 0;
   // Found the minimum entry to be purged?
@@ -214,7 +214,7 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
         {
           if (found == 0)
             {
-              min = (*iter).int_id_.second ();
+              min = (*iter).int_id_.second;
               key_to_remove = &(*iter).ext_id_;
               value_to_remove = &(*iter).int_id_;
               found = 1;
@@ -222,9 +222,9 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
           else
             {
               // Ah! an entry with lower ATTTRIBUTES...
-              if (min > (*iter).int_id_.second ())
+              if (min > (*iter).int_id_.second)
                 {
-                  min = (*iter).int_id_.second ();
+                  min = (*iter).int_id_.second;
                   key_to_remove = &(*iter).ext_id_;
                   value_to_remove = &(*iter).int_id_;
                 }
