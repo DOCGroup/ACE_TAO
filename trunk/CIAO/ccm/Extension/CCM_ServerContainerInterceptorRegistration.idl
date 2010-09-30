@@ -15,7 +15,7 @@ module Components
     local interface ServerContainerInterceptorRegistration
     {
       Components::Cookie register_server_interceptor (in ServerContainerInterceptor ci);
-      ServerContainerInterceptor unregister_client_interceptor (in Components::Cookie cookie)
+      ServerContainerInterceptor unregister_server_interceptor (in Components::Cookie cookie)
         raises(InvalidRegistration);
     };
   };
