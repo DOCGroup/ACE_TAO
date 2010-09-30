@@ -7,21 +7,6 @@
  *
  * @brief Pre-compiled IDL source to forward declare some critical
  * Policy-related types.
- *
- * This file is used to generate the code in
- * Policy_ForwardC.{h,cpp}.
- *
- *   The steps to regenerate the code are as follows:
- *
- *   1. Run the tao_idl compiler on the patched pidl file.  The
- *   command used for this is:
- *
- *     tao_idl.exe
- *        -o orig -GA -SS -Sci -Sorb
- *          -Wb,export_macro="tao/TAO_Export"
- *          -Wb,pre_include="ace/pre.h"
- *          -Wb,post_include="ace/post.h"
- *          Policy_Forward.pidl
  */
 
 #ifndef TAO_CORBA_POLICY_FORWARD_PIDL
