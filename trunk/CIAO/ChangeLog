@@ -1,3 +1,8 @@
+Thu Sep 30 05:58:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Containers/Extension/Extension_Container.cpp:
+          Making use of make_pair to initialize a pair.
+
 Wed Sep 29 21:05:24 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ami4ccm_lem_stub.mpb:
