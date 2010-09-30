@@ -48,8 +48,16 @@ if ($nslist_path eq "") {
     exit 1;
 }
 
+## The two test targets will communicate over shared memory (SHMIOP) so they
+## can't be 32-bit and 64-bit executables on the same host.
+my $target_ns_list = 2;
+if (exists $ENV{'DOC_TEST_2_EXE_SUBDIR'} && $ENV{'DOC_TEST_2_OS'} eq 'local' &&
+    $ENV{'DOC_TEST_2_EXE_SUBDIR'} ne $PerlACE::Process::ExeSubDir) {
+  $target_ns_list = 1;
+}
+
 my $ns_service = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $ns_list = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+my $ns_list = PerlACE::TestTarget::create_target ($target_ns_list) || die "Create target $target_ns_list failed\n";
 
 my $iorbase = "ns.ior";
 my $ns_service_iorfile = $ns_service->LocalFile ($iorbase);

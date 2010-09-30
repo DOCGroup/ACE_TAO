@@ -1,3 +1,10 @@
+Thu Sep 30 14:48:58 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/tests/Bug_2777_Regression/run_test.pl:
+
+          The two test targets will communicate over shared memory (SHMIOP)
+          so they can't be 32-bit and 64-bit executables on the same host.
+
 Thu Sep 30 10:17:00 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/context_svs.cpp:
