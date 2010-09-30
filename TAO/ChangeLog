@@ -1,3 +1,10 @@
+Thu Sep 30 10:17:00 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Layout changes to the generated code and simplified the subscribe
+          methods, a few checks where done multiple times
+
 Thu Sep 30 09:47:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/AnySeq.pidl:
