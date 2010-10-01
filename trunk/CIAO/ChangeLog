@@ -1,3 +1,13 @@
+Fri Oct  1 12:00:04 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/ExecutionManager-Deployments/run_test.pl:
+        * tests/DAnCE/ExecutionManager-Deployments/run_test_cdr.pl:
+        * tests/DAnCE/NodeManager-Deployments/run_test.pl:
+        * tests/DAnCE/NodeManager-Deployments/run_test_cdr.pl:
+
+          Added a 5 second sleep after each execution to give everything a chance
+          to shut down and clean up.
+
 Fri Oct  1 11:34:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Handlers/Container_Handler.cpp:

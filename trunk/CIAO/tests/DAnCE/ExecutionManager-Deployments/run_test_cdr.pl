@@ -233,6 +233,9 @@ foreach $file (@files) {
     $tg_convert_plan->DeleteFile ($cdr_planbase);
     delete_ior_files ();
     kill_open_processes ();
+
+    # Sleep for a couple seconds to make sure everything has a chance to shut down.
+    sleep 5;
 }
 
 delete_ior_files ();
