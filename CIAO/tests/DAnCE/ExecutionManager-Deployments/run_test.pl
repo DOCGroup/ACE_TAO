@@ -220,6 +220,9 @@ foreach $file (@files) {
     kill_open_processes ();
 
     $daemons_running = 0;
+
+    # Sleep for a couple seconds to make sure everything has a chance to shut down.
+    sleep 5;
 }
 
 delete_ior_files ();
