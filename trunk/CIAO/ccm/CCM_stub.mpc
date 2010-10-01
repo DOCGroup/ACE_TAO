@@ -44,13 +44,9 @@ project(CCM_stub_idl) : install, ciaolib_with_idl, valuetype {
     CCM_KeylessCCMHome.idl
     CCM_Navigation.idl
     CCM_Receptacle.idl
-  }
-
-  IDL_Files {
     CCM_Events.idl
     CCM_EventConsumerBase.idl
   }
-
 }
 
 project(CCM_stub) : install, ciaolib_with_idl, ciao_output, valuetype, ifr_client {
@@ -120,8 +116,6 @@ project(CCM_stub) : install, ciaolib_with_idl, ciao_output, valuetype, ifr_clien
     CCM_ReceptacleC.inl
     CCM_StandardConfiguratorC.inl
     CCM_CookieC.inl
-    CCM_EventConsumerBaseS.inl
-    CCM_EventsS.inl
     CCM_HomeConfigurationS.inl
     CCM_HomeS.inl
     CCM_HomesS.inl
