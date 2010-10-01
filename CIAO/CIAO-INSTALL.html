@@ -9,12 +9,13 @@
       variable <code>CIAO_ROOT</code> to
       be <code>$TAO_ROOT/CIAO</code>, or whereever you have installed
       the CIAO sources.  The <code>DANCE_ROOT</code> environment
-      variable should also be set to <code>$CIAO_ROOT/DAnCE</code>, or
+      variable should also be set to <code>$TAO_ROOT/DAnCE</code>, or
       wherever you have installed the DAnCE sources. Please refer 
-      to the <A href="../../ACE-INSTALL.html">ACE installation notes</A> and <A href="../TAO-INSTALL.html">
-        TAO installation notes</A> for instructions on setting <code>$ACE_ROOT</code> 
-      and <code>$TAO_ROOT</code>, respectively. They are needed since CIAO sits on 
-      top of ACE+TAO. Compiling ACE+TAO successfully is the <strong>first</strong> requirement 
+      to the <A href="../../ACE-INSTALL.html">ACE installation notes</A>, <A href="../TAO-INSTALL.html">
+        TAO installation notes</A>, and the <a href="../DAnCE/DAnCE-INSTALL.html">DAnCE installation
+        notes </a> for instructions on setting <code>$ACE_ROOT</code>, 
+      <code>$TAO_ROOT</code>, and <code>$DANCE_ROOT</code> respectively. They are needed since CIAO sits on 
+      top of ACE+TAO+DAnCE. Compiling ACE+TAO+DAnCE successfully is the <strong>first</strong> requirement 
       for compiling CIAO.
     </p>
     <p>CIAO is divided into several parts, so different installation/building rules 
@@ -24,23 +25,15 @@
     <ol>
       <li>
         CIAO core/examples: This part of CIAO include following directories: <code>$CIAO_ROOT/ccm</code>, <code>$CIAO_ROOT/ciao</code>,
-        <code>$CIAO_ROOT/examples</code>.
-      <li>
-        CIAO Deployment and Configuration Framework: This part of CIAO includes all the 
-        directories in <code>$CIAO_ROOT/DAnCE</code>. DAnCE is an implementation of the 
-        new <a href="http://www.omg.org/spec/DEPL/">Deployment and 
-          Configuration</a> specification. We refer, henceforth, to all pieces as CIAO 
-        in general. This piece will be referred specifically by their name
-        as DAnCE though they are part of CIAO.
-      </li>
+        <code>$CIAO_ROOT/examples</code>. </li>
     </ol>
     <hr>
     <h3>Supported Platforms for CIAO</h3>
-    <p>CIAO should be usable on all platforms that TAO runs on. Please see <A href="../TAO-INSTALL.html">
-        TAO's installation</A> pages for details
+    <p>CIAO should be usable on most platforms that TAO+DAnCE runs on. Please see <A href="../TAO-INSTALL.html">
+        TAO+DAnCE installation</A> pages for details
     </p>
     <p>If you have <A href="../../docs/ACE-porting.html">porting questions</A> or 
-      have a problem compiling CIAO with TAO and ACE on the platforms shown above 
+      have a problem compiling DAnCE or CIAO with TAO and ACE on the platforms shown above 
       please send email to either <A href="news:comp.soft-sys.ace">ACE Newsgroup</A> or 
       the <A href="mailto:ciao-users@list.isis.vanderbilt.edu">CIAO mailing list</A> and we'll
       try to help you fix the problems. You can also submit bug reports and 
@@ -53,37 +46,6 @@
       version of ACE and TAO because CIAO tracks changes to ACE and TAO very closely.
     </p>
     <hr>
-    <h3>Obtaining and Installing Xerces-C</h3>
-    <p>The Xerces-C XML parsing library is a necessary component to build parts of 
-      DAnCE that need to process XML based descriptor files, which include the <b>Plan 
-        Launcher</b> and the <b>Repository Manager</b>. Currently, the only Xerces-C 
-      versions supported by the DOC group is version 2.6 or later or 3.0 or later.
-      Earlier versions of the Xerces-C library may work.
-    </p>
-    <h4>Building Xerces-C</h4>
-    <p>You 
-      will have to obtain the source from the <a href="http://xml.apache.org/xerces-c/download.cgi">
-        Xerces-C webpage</a> and build it. Building Xerces-C is fairly 
-      straightfoward. Please see the documentation available <a href="http://xerces.apache.org/xerces-c/build-3.html">
-        here</a> for instructions particular to your platform.
-    </p>
-    <ul>
-      <li>
-        <strong>NOTE</strong>: Some of the provided projects with Xerces-C attach 
-      inconsistant library decorators onto the end of the Xerces-C libraries. The MPC 
-      build tool will expect these libraries to be named xerces-c for non debug 
-      versions, and xerces-cd for debug versions.
-    </ul>
-    <h4>Xerces-C Environment Settings</h4>
-    <p>If the Xerces includes and libraries are in your system include and library 
-      paths, respectively, then you need not set up any environment and may proceed 
-      to the next step. If not, you will need to set an environment variable named 
-      XERCESCROOT to a path such that $XERCESCROOT/include points to the includes and 
-      $XERCESCROOT/lib points to the libraries. Also make sure that $XERCESCROOT/lib 
-      is in the appropriate environment variable that your platform uses to search 
-      for dynamically linked libraries.
-    </p>
-    <hr>
     <h3>Install CIAO core/tools/examples</h3>
     <p>Most of the GNUmakefiles/project files/solution files required to build CIAO 
       are available in the release. If you don't like the configurations used, please 
@@ -94,14 +56,9 @@
     </p>
     <ol>
       <li>
-      Make sure ACE and TAO are built.
+      Make sure ACE, TAO, and DAnCE are built.
       <li>
-      Make sure you have the Xerces-C libraries installed/built
-      <li>
-      Enable Xerces-C in default.features by setting <code>xerces3=1</code> or 
-      <code>xerces2=1</code>, depending on your version Xerces-C libraries.
-      <li>
-        Make sure all ACE/TAO/etc. generated libs are in <code>$ACE_ROOT/lib</code>. To 
+        Make sure all ACE/TAO/DAnCE/etc. generated libs are in <code>$ACE_ROOT/lib</code>. To 
         build CIAO you will need:
         <ul>
           <li>
@@ -121,20 +78,15 @@
           <li>
             <code>ACEXML</code>
           </li>
+          <li>
+            <code>DAnCE</code>
+          </li>
         </ul>
       <li>
         Generate the Makefile/Solution/Project files and build
         <p>For the supported build tools please see <a href="../../MPC/docs/html/MakeProjectCreator.html">
             MPC manual</a>.
         </p>
-        <p>You have to execute the MPC command in the following directories if you only 
-          want to build the examples and have a peek at CIAO:
-        </p>
-        <ul>
-          <li>
-            <code>$CIAO_ROOT/DAnCE/</code>
-          </li>
-        </ul>
         <p>On <strong>Linux</strong>: do <code>$ACE_ROOT/bin/mwc.pl -type gnuace</code> at the 
           locations specified above then <code>make</code>.
         </p>
@@ -163,7 +115,7 @@
       <li>
       Type 'make'
       <li style="LIST-STYLE-TYPE: none">
-        This will build all the required ACE+TAO libraries including CIAO libraries and 
+        This will build all the required ACE+TAO+DAnCE libraries including CIAO libraries and 
         tools.
       </li>
     </ul>
