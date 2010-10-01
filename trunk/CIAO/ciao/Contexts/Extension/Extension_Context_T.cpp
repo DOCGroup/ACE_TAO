@@ -28,23 +28,7 @@ namespace CIAO
   ::Components::ContainerPortableInterceptor::ClientContainerInterceptorRegistration_ptr
   Extension_Context_Impl<BASE_CTX, COMP>::get_client_interceptor_registration (void)
   {
-    throw CORBA::NO_IMPLEMENT ();
-  }
-
-  template <typename BASE_CTX,
-            typename COMP>
-  ::Components::ContainerPortableInterceptor::ServerContainerInterceptorRegistration_ptr
-  Extension_Context_Impl<BASE_CTX, COMP>::get_server_interceptor_registration (void)
-  {
-    throw CORBA::NO_IMPLEMENT ();
-  }
-
-  template <typename BASE_CTX,
-            typename COMP>
-  ::Components::ContainerPortableInterceptor::StubContainerInterceptorRegistration_ptr
-  Extension_Context_Impl<BASE_CTX, COMP>::get_stub_interceptor_registration (void)
-  {
-    throw CORBA::NO_IMPLEMENT ();
+    return this->container_->get_client_interceptor_registration ();
   }
 
   template <typename BASE_CTX,
@@ -52,7 +36,23 @@ namespace CIAO
   ::Components::ContainerPortableInterceptor::ServantContainerInterceptorRegistration_ptr
   Extension_Context_Impl<BASE_CTX, COMP>::get_servant_interceptor_registration (void)
   {
-    throw CORBA::NO_IMPLEMENT ();
+    return this->container_->get_servant_interceptor_registration ();
+  }
+
+  template <typename BASE_CTX,
+            typename COMP>
+  ::Components::ContainerPortableInterceptor::ServerContainerInterceptorRegistration_ptr
+  Extension_Context_Impl<BASE_CTX, COMP>::get_server_interceptor_registration (void)
+  {
+    return this->container_->get_server_interceptor_registration ();
+  }
+
+  template <typename BASE_CTX,
+            typename COMP>
+  ::Components::ContainerPortableInterceptor::StubContainerInterceptorRegistration_ptr
+  Extension_Context_Impl<BASE_CTX, COMP>::get_stub_interceptor_registration (void)
+  {
+    return this->container_->get_stub_interceptor_registration ();
   }
 
   template <typename BASE_CTX,

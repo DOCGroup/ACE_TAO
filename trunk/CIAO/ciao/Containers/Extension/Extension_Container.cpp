@@ -8,6 +8,11 @@
 #include "ciao/Servants/Servant_Impl_Base.h"
 #include "ciao/Logger/Log_Macros.h"
 
+#include "ciao/Containers/Extension/ClientContainerInterceptorRegistration_Impl.h"
+#include "ciao/Containers/Extension/ServantContainerInterceptorRegistration_Impl.h"
+#include "ciao/Containers/Extension/ServerContainerInterceptorRegistration_Impl.h"
+#include "ciao/Containers/Extension/StubContainerInterceptorRegistration_Impl.h"
+
 #if !defined (__ACE_INLINE__)
 # include "Extension_Container.inl"
 #endif /* __ACE_INLINE__ */
@@ -21,6 +26,10 @@ namespace CIAO
         PortableServer::POA_ptr poa,
         const char *name)
     : Container_i < ::CIAO::Extension_Container> (o, poa),
+      client_copi_registration_ (0),
+      servant_copi_registration_ (0),
+      server_copi_registration_ (0),
+      stub_copi_registration_ (0),
       sa_ (0)
   {
     this->init (name);
@@ -28,6 +37,10 @@ namespace CIAO
 
   Extension_Container_i::~Extension_Container_i (void)
   {
+    ::CORBA::release (this->client_copi_registration_);
+    ::CORBA::release (this->servant_copi_registration_);
+    ::CORBA::release (this->server_copi_registration_);
+    ::CORBA::release (this->stub_copi_registration_);
   }
 
   void
@@ -63,6 +76,20 @@ namespace CIAO
       this->root_poa_->the_POAManager ();
 
     poa_manager->activate ();
+
+    // Create the Portable Interceptor Registration objects
+    ACE_NEW_THROW_EX (this->client_copi_registration_,
+                      ClientContainerInterceptorRegistration_Impl,
+                      CORBA::NO_MEMORY ());
+    ACE_NEW_THROW_EX (this->servant_copi_registration_,
+                      ServantContainerInterceptorRegistration_Impl,
+                      CORBA::NO_MEMORY ());
+    ACE_NEW_THROW_EX (this->server_copi_registration_,
+                      ServerContainerInterceptorRegistration_Impl,
+                      CORBA::NO_MEMORY ());
+    ACE_NEW_THROW_EX (this->stub_copi_registration_,
+                      StubContainerInterceptorRegistration_Impl,
+                      CORBA::NO_MEMORY ());
   }
 
   void
@@ -1320,5 +1347,57 @@ namespace CIAO
       }
     // not found. Calling base.
     return Container_i< CIAO::Extension_Container >::resolve_service_reference (service_id);
+  }
+
+  Components::ContainerPortableInterceptor::ClientContainerInterceptorRegistration_ptr
+  Extension_Container_i::get_client_interceptor_registration (void)
+  {
+    CIAO_TRACE ("Extension_Container_i::get_client_interceptor_registration");
+
+    if (!this->client_copi_registration_)
+      {
+        throw Components::CCMException (::Components::REGISTRATION_ERROR);
+      }
+    return ::Components::ContainerPortableInterceptor::ClientContainerInterceptorRegistration::_duplicate (
+      this->client_copi_registration_);
+  }
+
+  Components::ContainerPortableInterceptor::ServantContainerInterceptorRegistration_ptr
+  Extension_Container_i::get_servant_interceptor_registration (void)
+  {
+    CIAO_TRACE ("Extension_Container_i::get_servant_interceptor_registration");
+
+    if (!this->servant_copi_registration_)
+      {
+        throw Components::CCMException (::Components::REGISTRATION_ERROR);
+      }
+    return ::Components::ContainerPortableInterceptor::ServantContainerInterceptorRegistration::_duplicate (
+      this->servant_copi_registration_);
+  }
+
+  Components::ContainerPortableInterceptor::ServerContainerInterceptorRegistration_ptr
+  Extension_Container_i::get_server_interceptor_registration (void)
+  {
+    CIAO_TRACE ("Extension_Container_i::get_server_interceptor_registration");
+
+    if (!this->server_copi_registration_)
+      {
+        throw Components::CCMException (::Components::REGISTRATION_ERROR);
+      }
+    return ::Components::ContainerPortableInterceptor::ServerContainerInterceptorRegistration::_duplicate (
+      this->server_copi_registration_);
+  }
+
+  Components::ContainerPortableInterceptor::StubContainerInterceptorRegistration_ptr
+  Extension_Container_i::get_stub_interceptor_registration (void)
+  {
+    CIAO_TRACE ("Extension_Container_i::get_stub_interceptor_registration");
+
+    if (!this->stub_copi_registration_)
+      {
+        throw Components::CCMException (::Components::REGISTRATION_ERROR);
+      }
+    return ::Components::ContainerPortableInterceptor::StubContainerInterceptorRegistration::_duplicate (
+      this->stub_copi_registration_);
   }
 }

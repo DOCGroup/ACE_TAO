@@ -7,9 +7,9 @@
 
 #include "ciao/Containers/Container_Base.idl"
 #include "ccm/Extension/CCM_ClientContainerInterceptorRegistration.idl"
+#include "ccm/Extension/CCM_ServantContainerInterceptorRegistration.idl"
 #include "ccm/Extension/CCM_ServerContainerInterceptorRegistration.idl"
 #include "ccm/Extension/CCM_StubContainerInterceptorRegistration.idl"
-#include "ccm/Extension/CCM_ServantContainerInterceptorRegistration.idl"
 
 module CIAO
 {
@@ -19,5 +19,18 @@ module CIAO
       raises (Components::CCMException);
     Object uninstall_service_reference(in Components::Cookie ck)
       raises (Components::CCMException);
+
+    Components::ContainerPortableInterceptor::ClientContainerInterceptorRegistration
+      get_client_interceptor_registration ()
+        raises (Components::CCMException);
+    Components::ContainerPortableInterceptor::ServerContainerInterceptorRegistration
+      get_server_interceptor_registration ()
+        raises (Components::CCMException);
+    Components::ContainerPortableInterceptor::StubContainerInterceptorRegistration
+      get_stub_interceptor_registration()
+        raises (Components::CCMException);
+    Components::ContainerPortableInterceptor::ServantContainerInterceptorRegistration
+      get_servant_interceptor_registration()
+        raises (Components::CCMException);
   };
 };
