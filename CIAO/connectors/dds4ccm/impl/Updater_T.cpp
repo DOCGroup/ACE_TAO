@@ -207,7 +207,7 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_many (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::create_many");
 
-  // Check for existance of instances
+  // Check for existence of instances
   this->check_already_created (data);
 
   Coherent_Changes_Guard guard (this->impl ()->get_publisher(),
@@ -274,7 +274,7 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::update_many (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::update_many");
 
-  // Check for existance of instances
+  // Check for existence of instances
   this->check_existent (data);
 
   Coherent_Changes_Guard guard (this->impl ()->get_publisher(),
@@ -293,7 +293,7 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_many (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::delete_many");
 
-  // Check for existance of instances
+  // Check for existence of instances
   this->check_existent (data);
 
   Coherent_Changes_Guard guard (this->impl ()->get_publisher(),
