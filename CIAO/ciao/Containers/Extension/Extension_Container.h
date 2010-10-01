@@ -33,6 +33,11 @@
 
 namespace CIAO
 {
+  class ClientContainerInterceptorRegistration_Impl;
+  class ServantContainerInterceptorRegistration_Impl;
+  class ServerContainerInterceptorRegistration_Impl;
+  class StubContainerInterceptorRegistration_Impl;
+
   class Servant_Activator;
 
   typedef ::Components::HomeExecutorBase_ptr (*HomeFactory) (void);
@@ -164,6 +169,7 @@ namespace CIAO
     /// servants for facets and consumers.
     ::CIAO::Servant_Activator_ptr ports_servant_activator (void);
 
+    // @{
     /// Inherited from extension context.
     Components::Cookie * install_service_reference (const char * service_id,
                                                     CORBA::Object_ptr objref);
@@ -171,6 +177,25 @@ namespace CIAO
     CORBA::Object_ptr uninstall_service_reference (Components::Cookie * ck);
 
     CORBA::Object_ptr resolve_service_reference(const char *service_id);
+    // @}
+
+    // @{
+    /**
+     * Getters for the Containter Portable Interceptor registration
+     * Objects.
+     */
+    Components::ContainerPortableInterceptor::ClientContainerInterceptorRegistration_ptr
+    get_client_interceptor_registration (void);
+
+    Components::ContainerPortableInterceptor::ServantContainerInterceptorRegistration_ptr
+    get_servant_interceptor_registration (void);
+
+    Components::ContainerPortableInterceptor::ServerContainerInterceptorRegistration_ptr
+    get_server_interceptor_registration (void);
+
+    Components::ContainerPortableInterceptor::StubContainerInterceptorRegistration_ptr
+    get_stub_interceptor_registration (void);
+    // @}
 
   private:
 
@@ -197,6 +222,16 @@ namespace CIAO
                      std::pair<Components::Cookie *, CORBA::Object_ptr>
                     > InstalledServices;
     InstalledServices installed_services_;
+
+    // @{
+    /// Caching of the COPI registration objects
+    /// When a component want to register a Portable Interceptor, it'll
+    /// need the registration object.
+    ClientContainerInterceptorRegistration_Impl *client_copi_registration_;
+    ServantContainerInterceptorRegistration_Impl *servant_copi_registration_;
+    ServerContainerInterceptorRegistration_Impl *server_copi_registration_;
+    StubContainerInterceptorRegistration_Impl *stub_copi_registration_;
+    // @}
 
   protected:
     /// The servant activator factory used to activate facets and

@@ -54,14 +54,14 @@ namespace CIAO
     virtual ::Components::ContainerPortableInterceptor::ClientContainerInterceptorRegistration_ptr
     get_client_interceptor_registration (void);
 
+    virtual ::Components::ContainerPortableInterceptor::ServantContainerInterceptorRegistration_ptr
+    get_servant_interceptor_registration (void);
+
     virtual ::Components::ContainerPortableInterceptor::ServerContainerInterceptorRegistration_ptr
     get_server_interceptor_registration (void);
 
     virtual ::Components::ContainerPortableInterceptor::StubContainerInterceptorRegistration_ptr
     get_stub_interceptor_registration (void);
-
-    virtual ::Components::ContainerPortableInterceptor::ServantContainerInterceptorRegistration_ptr
-    get_servant_interceptor_registration (void);
 
     virtual ::Components::Cookie * install_service_reference (
         const char * service_id,
