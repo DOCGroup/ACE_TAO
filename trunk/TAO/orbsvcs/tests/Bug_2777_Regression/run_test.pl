@@ -38,7 +38,7 @@ for my $p (@nslist_paths) {
     last;
   }
   if ($exec_extn ne "" && -e $p->[0] . '/tao_nslist' . $exec_extn) {
-    $nslist_path = $use_path . '/tao_nslist' . $exec_extn;
+    $nslist_path = $use_path . '/tao_nslist';
     last;
   }
 }
