@@ -1,3 +1,9 @@
+Fri Oct  1 16:00:51 UTC 2010  William Otte  <wotte@zifnab>
+
+        * COPYING:
+
+          Updated to include DAnCE.
+
 Fri Oct  1 14:35:01 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/DAnCE/EM-Launch-Failures/run_test.pl:
