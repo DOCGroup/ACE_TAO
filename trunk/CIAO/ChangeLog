@@ -1,3 +1,8 @@
+Fri Oct  1 12:59:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/Updater_T.cpp:
+          Typo fix
+
 Fri Oct  1 13:03:01 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Containers/Extension/ClientContainerInterceptorRegistration_Impl.h:
