@@ -13,6 +13,7 @@ workspace {
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming_Serv.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming_Skel.mpc
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Svc_Utils.mpc
   $(TAO_ROOT)/orbsvcs/Naming_Service
   dance
   tools
