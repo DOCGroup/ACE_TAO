@@ -1,3 +1,24 @@
+Fri Oct  1 13:03:01 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Containers/Extension/ClientContainerInterceptorRegistration_Impl.h:
+        * ciao/Containers/Extension/ClientContainerInterceptorRegistration_Impl.cpp:
+        * ciao/Containers/Extension/Extension_Container.h:
+        * ciao/Containers/Extension/Extension_Container.cpp:
+        * ciao/Containers/Extension/Extension_Container.idl:
+        * ciao/Containers/Extension/Extension_Container.mpc:
+        * ciao/Containers/Extension/Interceptor_Registration_T.h:
+        * ciao/Containers/Extension/Interceptor_Registration_T.cpp:
+        * ciao/Containers/Extension/ServantContainerInterceptorRegistration_Impl.h:
+        * ciao/Containers/Extension/ServantContainerInterceptorRegistration_Impl.cpp:
+        * ciao/Containers/Extension/ServerContainerInterceptorRegistration_Impl.h:
+        * ciao/Containers/Extension/ServerContainerInterceptorRegistration_Impl.cpp:
+        * ciao/Containers/Extension/StubContainerInterceptorRegistration_Impl.h:
+        * ciao/Containers/Extension/StubContainerInterceptorRegistration_Impl.cpp:
+        * ciao/Contexts/Extension/Extension_Context_T.h:
+        * ciao/Contexts/Extension/Extension_Context_T.cpp:
+          Implemented the registration of Container Portable Interceptors
+          within CIAO. This is part of the Extension Container.
+
 Fri Oct  1 12:03:45 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/DAnCE/EM-Launch-Failures/run_test.pl:

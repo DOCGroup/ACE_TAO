@@ -47,6 +47,10 @@ project(CIAO_Extension_Container) : install, ccm_svnt, ciao_lib, ciao_extension_
   }
   Source_Files {
     Extension_Container.cpp
+    ClientContainerInterceptorRegistration_Impl.cpp
+    ServantContainerInterceptorRegistration_Impl.cpp
+    ServerContainerInterceptorRegistration_Impl.cpp
+    StubContainerInterceptorRegistration_Impl.cpp
   }
   Inline_Files {
     Extension_Container.inl
@@ -54,6 +58,13 @@ project(CIAO_Extension_Container) : install, ccm_svnt, ciao_lib, ciao_extension_
   Header_Files {
     Extension_Container.h
     Extension_Container_export.h
+    ClientContainerInterceptorRegistration_Impl.h
+    ServantContainerInterceptorRegistration_Impl.h
+    ServerContainerInterceptorRegistration_Impl.h
+    StubContainerInterceptorRegistration_Impl.h
+  }
+  Template_Files {
+    Interceptor_List_T.cpp
   }
   specific {
     install_dir = ciao/Containers/Extension
