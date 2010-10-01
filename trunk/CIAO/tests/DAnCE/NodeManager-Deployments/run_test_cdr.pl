@@ -219,7 +219,7 @@ foreach $file (@files) {
 
     delete_ior_files ();
     kill_open_processes ();
-    
+
     # Sleep for a couple seconds to make sure everything has a chance to shut down.
     sleep 5;
 }
