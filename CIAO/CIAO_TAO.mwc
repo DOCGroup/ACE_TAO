@@ -16,7 +16,6 @@ workspace {
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming_Skel.mpc
   $(TAO_ROOT)/orbsvcs/Naming_Service
   $(TAO_ROOT)/orbsvcs/orbsvcs/Svc_Utils.mpc
-  $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService.mpc
   ccm
   ciao
   $(DANCE_ROOT)
