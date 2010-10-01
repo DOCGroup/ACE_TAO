@@ -1,3 +1,11 @@
+Fri Oct  1 14:35:01 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/EM-Launch-Failures/run_test.pl:
+        * tests/DAnCE/EM-Redeployment/run_test.pl:
+        * tests/DAnCE/NodeManager-Deployments/run_test_cdr.pl:
+
+          Fuzz.
+
 Fri Oct  1 14:30:15 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIAO-INSTALL.html:
