@@ -271,6 +271,7 @@ foreach $file (@files) {
     delete_ior_files ();
     kill_open_processes ();
     $tg_executor->DeleteFile ('dummy.log');
+    sleep 5;
 }
 
 exit $status;

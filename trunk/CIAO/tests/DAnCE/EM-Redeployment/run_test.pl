@@ -219,6 +219,8 @@ foreach $file (@files) {
 
     delete_ior_files ();
     kill_open_processes ();
+    
+    sleep 5;
 }
 
 delete_ior_files ();
