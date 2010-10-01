@@ -1,3 +1,11 @@
+Fri Oct  1 12:03:45 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/EM-Launch-Failures/run_test.pl:
+        * tests/DAnCE/EM-Redeployment/run_test.pl:
+        * tests/DAnCE/EM-Shutdown-Failures/run_test.pl:
+
+          Add 5 second sleep.
+
 Fri Oct  1 12:00:04 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/DAnCE/ExecutionManager-Deployments/run_test.pl:
