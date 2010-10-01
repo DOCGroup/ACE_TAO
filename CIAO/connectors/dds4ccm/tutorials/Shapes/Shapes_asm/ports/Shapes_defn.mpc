@@ -25,6 +25,9 @@ project(Shapes_defn_stub) : ccm_stub {
   sharedname = Shapes_defn_stub
   dynamicflags += SHAPES_CONTROL_STUB_BUILD_DLL
 
+  IDL_Files {
+  }
+
   Source_Files {
     GeneratedCode/Shapes_defnC.cpp
   }
