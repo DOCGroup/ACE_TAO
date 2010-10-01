@@ -55,8 +55,7 @@ namespace TAO
           {
             /// If the Interceptor is not anonymous, make sure an
             /// Interceptor with the same isn't already registered.
-            CORBA::String_var name =
-              interceptor->name ();
+            CORBA::String_var name = interceptor->name ();
 
             if (ACE_OS::strlen (name.in ()) != 0)
               {
@@ -80,8 +79,7 @@ namespace TAO
                     CORBA::String_var existing_name =
                       this->interceptor (i)->name ();
 
-                    if (ACE_OS::strcmp (existing_name.in (),
-                                        name.in ()) == 0)
+                    if (ACE_OS::strcmp (existing_name.in (), name.in ()) == 0)
                       {
                         throw PortableInterceptor::ORBInitInfo::DuplicateName ();
                       }
