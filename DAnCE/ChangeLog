@@ -1,3 +1,8 @@
+Fri Oct  1 10:51:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE_TAO.mwc:
+          Removed projects we don't use in DAnCE
+
 Wed Sep 29 18:37:07 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * dance/LocalityManager/Daemon/Locality_Manager.mpc:
