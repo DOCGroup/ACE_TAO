@@ -152,7 +152,7 @@ Client::svc (void)
                   "(%P|%t) Shutting down ORB\n"));
       orb_->shutdown (true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
   return 0;
