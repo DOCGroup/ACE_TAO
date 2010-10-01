@@ -62,9 +62,10 @@ project(CIAO_Extension_Container) : install, ccm_svnt, ciao_lib, ciao_extension_
     ServantContainerInterceptorRegistration_Impl.h
     ServerContainerInterceptorRegistration_Impl.h
     StubContainerInterceptorRegistration_Impl.h
+    Interceptor_Registration_T.h
   }
   Template_Files {
-    Interceptor_List_T.cpp
+    Interceptor_Registration_T.cpp
   }
   specific {
     install_dir = ciao/Containers/Extension
