@@ -1,3 +1,8 @@
+Fri Oct  1 09:54:07 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * orbsvcs/tests/Bug_2777_Regression/run_test.pl:
+          Fixed append of .exe part to tao_nslist on Windows.
+
 Thu Sep 30 14:48:58 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/tests/Bug_2777_Regression/run_test.pl:
