@@ -24,8 +24,6 @@
 # endif /* __X86__ */
 #endif /* __OPTIMIZE__ */
 
-#include "ace/config-g++-common.h"
-
 // The following defines the Neutrino compiler.
 // gcc should know to call g++ as necessary
 #ifdef __GNUC__
@@ -33,6 +31,8 @@
 #else
 # define ACE_CC_NAME ACE_TEXT ("NTO compiler ??")
 #endif
+
+#include "ace/config-g++-common.h"
 
 // /usr/nto/include/float.h defines
 //  FLT_MAX_EXP 127

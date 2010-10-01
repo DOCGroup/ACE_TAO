@@ -10,7 +10,9 @@
 #define ACE_GNUG_COMMON_H
 #include /**/ "ace/pre.h"
 
-#define ACE_CC_NAME ACE_TEXT ("g++")
+#if !defined (ACE_CC_NAME)
+# define ACE_CC_NAME ACE_TEXT ("g++")
+#endif
 #define ACE_CC_MAJOR_VERSION __GNUC__
 #define ACE_CC_MINOR_VERSION __GNUC_MINOR__
 #define ACE_CC_BETA_VERSION (0)

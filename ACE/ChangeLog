@@ -1,3 +1,21 @@
+Fri Oct  1 11:55:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-g++-common.h:
+        * ace/config-qnx-neutrino.h:
+        * ace/config-qnx-rtp-common.h:
+          Fixed redefinition warnings
+
+        * ace/ace_for_tao.mpc:
+          Zapped some files
+
+        * ace/config-win32-common.h:
+        * ace/config-win32-msvc.h:
+        * ace/config-win32.h:
+          Cleanup
+
+        * ace/config-win32-ghs.h:
+          Removed this file.
+
 Thu Sep 30 10:49:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debian/mpc-ace.install:
