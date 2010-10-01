@@ -1300,7 +1300,7 @@ IDL_GlobalData::check_gperf (void)
   if (ACE_OS::strcmp (this->gperf_path_, "ace_gperf") != 0)
 #endif /* ACE_GPERF */
     {
-      // It is absolute path. Check the existance, permissions and
+      // It is absolute path. Check the existence, permissions and
       // the modes.
       if (ACE_OS::access (this->gperf_path_,
                           F_OK | X_OK) == -1)
