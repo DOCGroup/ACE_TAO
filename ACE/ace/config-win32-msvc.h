@@ -138,7 +138,7 @@
 // To resume any of these warning: #pragma warning(default: 4xxx)
 // which should be placed after these defines
 
-#if !defined (ALL_WARNINGS) && defined(_MSC_VER) && !defined(ghs) && !defined(__MINGW32__)
+#if !defined (ALL_WARNINGS) && defined(_MSC_VER) && !defined(__MINGW32__)
 #     pragma warning(disable: 4127)  /* constant expression for TRACE/ASSERT */
 #     pragma warning(disable: 4134)  /* message map member fxn casts */
 #     pragma warning(disable: 4511)  /* private copy constructors are good to have */

@@ -353,8 +353,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     config-minimal.h
     config-win32-borland.h
     config-win32-common.h
-    config-win32-ghs.h
-    config-win32-msvc-6.h
     config-win32-msvc-7.h
     config-win32-msvc.h
     config-win32.h
