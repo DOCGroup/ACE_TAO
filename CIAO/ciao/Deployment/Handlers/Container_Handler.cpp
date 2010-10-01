@@ -19,7 +19,7 @@ namespace CIAO
       * clf = ACE_Dynamic_Service<CIAO::Logger_Service>::instance ("CIAO_Logger");
 
     int argc = 0;
-    char **argv = 0;
+    ACE_TCHAR **argv = 0;
 
     if (clf)
       {
