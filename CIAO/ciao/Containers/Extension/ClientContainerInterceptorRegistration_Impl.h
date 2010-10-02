@@ -8,6 +8,10 @@
 #if !defined CLIENTCONTAINERINTERCEPTORREGISTRATION_IMPL_H
 #define CLIENTCONTAINERINTERCEPTORREGISTRATION_IMPL_H
 
+#include /**/ "ace/pre.h"
+
+#include "ciao/Containers/Extension/Extension_Container_export.h"
+
 #include "ccm/Extension/CCM_ClientContainerInterceptorC.h"
 #include "ccm/Extension/CCM_ClientContainerInterceptorRegistrationC.h"
 #include "ciao/Containers/Extension/Interceptor_Registration_T.h"
@@ -24,7 +28,7 @@ namespace CIAO
    *
    * Part of COPI (Container Portable Interceptor)
    */
-  class ClientContainerInterceptorRegistration_Impl
+  class EXTENSION_CONTAINER_Export ClientContainerInterceptorRegistration_Impl
     : public Interceptor_Registration_T<
       ::Components::ContainerPortableInterceptor::ClientContainerInterceptorRegistration,
       ::Components::ContainerPortableInterceptor::ClientContainerInterceptor>
@@ -47,5 +51,7 @@ namespace CIAO
     unregister_client_interceptor (::Components::Cookie * cookie);
   };
 }
+
+#include /**/ "ace/post.h"
 
 #endif /* CLIENTCONTAINERINTERCEPTORREGISTRATION_IMPL_H */
