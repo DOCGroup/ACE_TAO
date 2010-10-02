@@ -1,3 +1,11 @@
+Sat Oct  2 12:14:50 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Extension/ClientContainerInterceptorRegistration_Impl.h:
+        * ciao/Containers/Extension/ServantContainerInterceptorRegistration_Impl.h:
+        * ciao/Containers/Extension/ServerContainerInterceptorRegistration_Impl.h:
+        * ciao/Containers/Extension/StubContainerInterceptorRegistration_Impl.h:
+          Added missing export macros
+
 Fri Oct  1 16:00:51 UTC 2010  William Otte  <wotte@zifnab>
 
         * COPYING:
