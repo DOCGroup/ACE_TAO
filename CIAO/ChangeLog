@@ -1,3 +1,8 @@
+Mon Oct  4 10:35:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Port_Activator.h:
+          Fixed typo
+
 Mon Oct  4 07:38:15 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Navigation/Navigation.mpc:
