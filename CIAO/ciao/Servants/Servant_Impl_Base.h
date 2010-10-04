@@ -26,14 +26,14 @@
 
 namespace CIAO
 {
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   namespace Servant
   {
     template<typename T_var>
     void describe_pub_event_source (
         const char *port_name,
         const char *port_type_repo_id,
-        std::map<ptrdiff_t, T_var> &consumers,
+        ACE_Array_Map<ptrdiff_t, T_var> &consumers,
         ::Components::PublisherDescriptions_var &descriptions,
         CORBA::ULong slot);
 
@@ -77,59 +77,68 @@ namespace CIAO
 #if !defined (CCM_LW)
     virtual ::Components::PrimaryKeyBase * get_primary_key (void);
 #endif
-#if !defined (CCM_LW)
+
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
     virtual ::Components::ConsumerDescriptions * get_all_consumers (void);
 #endif
 
+#if !defined (CCM_NOEVENT)
     virtual ::Components::EventConsumerBase_ptr
     get_consumer (const char *sink_name);
+#endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
     virtual ::Components::ConsumerDescriptions *
     get_named_consumers (const ::Components::NameList & names);
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
     virtual ::Components::EmitterDescriptions *
     get_named_emitters (const ::Components::NameList & names);
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
     virtual ::Components::PublisherDescriptions *
     get_named_publishers (const ::Components::NameList & names);
 #endif
 
   protected:
+#if !defined (CCM_NOEVENT)
     void add_consumer (const char *port_name,
                        ::Components::EventConsumerBase_ptr port_ref);
+#endif
 
+#if !defined (CCM_NOEVENT)
     ::Components::EventConsumerBase_ptr lookup_consumer (
       const char *port_name);
+#endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
     ::Components::ConsumerDescription *lookup_consumer_description (
       const char *port_name);
 #endif
 
   private:
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
     ::Components::PublisherDescription *
     lookup_publisher_description (const char *publisher_name);
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
     ::Components::EmitterDescription *
     lookup_emitter_description(const char* emitter_name);
 #endif
 
   protected:
-    typedef std::map<ACE_CString,
-                     ::Components::EventConsumerBase_var>
+#if !defined (CCM_NOEVENT)
+    typedef ACE_Array_Map<ACE_CString,
+                          ::Components::EventConsumerBase_var>
        ConsumerTable;
 
     ConsumerTable consumer_table_;
-  };
+#endif
+    };
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
