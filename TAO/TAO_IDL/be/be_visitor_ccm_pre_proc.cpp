@@ -248,8 +248,7 @@ be_visitor_ccm_pre_proc::visit_provides (be_provides *node)
 int
 be_visitor_ccm_pre_proc::visit_uses (be_uses *node)
 {
-  if (node->uses_type ()->is_local () ||
-      be_global->gen_noeventccm ())
+  if (node->uses_type ()->is_local ())
     {
       return 0;
     }
@@ -1482,6 +1481,7 @@ be_visitor_ccm_pre_proc::lookup_one_exception (const char *name,
 int
 be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
 {
+
   UTL_Scope *s = node->defined_in ();
 
   UTL_ScopedName *consumer_name =
