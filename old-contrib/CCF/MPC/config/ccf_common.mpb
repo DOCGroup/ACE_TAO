@@ -1,6 +1,6 @@
 // $Id$
 
-project : boost_filesystem, boost_regex, exceptions, crosscompile {
+project : boost_filesystem, boost_regex, crosscompile {
   includes += $(CCF_ROOT) $(CCF_ROOT)/CCF $(ACE_ROOT)/contrib/utility
   libpaths += $(CCF_ROOT)/CCF $(ACE_ROOT)/lib
 
