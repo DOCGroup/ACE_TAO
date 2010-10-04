@@ -11,6 +11,7 @@
 #include "ccm/CCM_EventBase.idl"
 #include "ccm/CCM_EventConsumerBase.idl"
 
+#if !defined (CCM_NOEVENT)
 module Components
 {
   typeprefix Components "omg.org";
@@ -102,4 +103,5 @@ module Components
 #endif
   };
 };
+#endif
 #endif /* CCM_EVENTS_IDL */

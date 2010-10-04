@@ -109,24 +109,26 @@ namespace CIAO
     virtual ::Components::ComponentPortDescription * get_all_ports (void);
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
     virtual ::Components::ConsumerDescriptions * get_all_consumers (void);
 #endif
 
+#if !defined (CCM_NOEVENT)
     virtual ::Components::EventConsumerBase_ptr
     get_consumer (const char *sink_name);
+#endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
     virtual ::Components::ConsumerDescriptions *
     get_named_consumers (const ::Components::NameList & names);
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
     virtual ::Components::EmitterDescriptions *
     get_all_emitters (void);
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
     virtual ::Components::EmitterDescriptions *
     get_named_emitters (const ::Components::NameList & names);
 #endif
@@ -136,30 +138,38 @@ namespace CIAO
     get_named_receptacles (const ::Components::NameList & names);
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
     virtual ::Components::PublisherDescriptions *
     get_all_publishers (void);
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
     virtual ::Components::PublisherDescriptions *
     get_named_publishers (const ::Components::NameList & names);
 #endif
 
+#if !defined (CCM_NOEVENT)
     virtual ::Components::Cookie *
     subscribe (const char * publisher_name,
                ::Components::EventConsumerBase_ptr subscriber);
+#endif
 
+#if !defined (CCM_NOEVENT)
     virtual ::Components::EventConsumerBase_ptr
     unsubscribe (const char * publisher_name,
                  ::Components::Cookie * ck);
+#endif
 
+#if !defined (CCM_NOEVENT)
     virtual void
     connect_consumer (const char * emitter_name,
                       ::Components::EventConsumerBase_ptr consumer);
+#endif
 
+#if !defined (CCM_NOEVENT)
     virtual ::Components::EventConsumerBase_ptr
     disconnect_consumer (const char * source_name);
+#endif
 
     virtual ::Components::Cookie *
     connect (const char * name,
