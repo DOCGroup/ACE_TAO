@@ -1139,7 +1139,6 @@ nobase_include_HEADERS += \
   config-minimal.h \
   config-win32-borland.h \
   config-win32-common.h \
-  config-win32-ghs.h \
   config-win32-msvc-7.h \
   config-win32-msvc-8.h \
   config-win32-msvc.h \
