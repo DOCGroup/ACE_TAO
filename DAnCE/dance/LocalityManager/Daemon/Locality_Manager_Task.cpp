@@ -65,8 +65,7 @@ namespace DAnCE
     PortableServer::POA_var root_poa =
       PortableServer::POA::_narrow (object.in ());
 
-    PortableServer::POAManager_var poa_manager =
-      root_poa->the_POAManager ();
+    PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
     poa_manager->activate ();
 
@@ -196,9 +195,10 @@ namespace DAnCE
                      ACE_TEXT ("ORB Event loop completed.\n")));
 
     root_poa->destroy (1, 1);
+    root_poa = ::PortableServer::POA::_nil ();
 
     this->orb_->destroy ();
-    this->orb_ = CORBA::ORB::_nil ();
+    this->orb_ = ::CORBA::ORB::_nil ();
 
     return 0;
   }
