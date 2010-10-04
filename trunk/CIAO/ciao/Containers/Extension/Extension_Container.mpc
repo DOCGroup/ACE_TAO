@@ -41,7 +41,7 @@ project(CIAO_Extension_Container_stub) : install, ccm_stub, ciao_lib, ciao_conta
 project(CIAO_Extension_Container) : install, ccm_svnt, ciao_lib, ciao_extension_container_stub, utils, \
                                   ciao_base, ccm_componentserver_stub, ciao_servant_activator, \
                                   ciao_servant, ccm_extension_stub {
-  after += CIAO_Extension_Container_idl CCM_extension_stub
+  after += CIAO_Extension_Container_idl
   dynamicflags += EXTENSION_CONTAINER_BUILD_DLL
 
   IDL_Files {
