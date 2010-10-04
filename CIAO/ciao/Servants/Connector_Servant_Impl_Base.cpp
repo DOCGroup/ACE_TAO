@@ -239,7 +239,7 @@ namespace CIAO
   }
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   ::Components::ConsumerDescriptions *
   Connector_Servant_Impl_Base::get_all_consumers (void)
   {
@@ -247,14 +247,17 @@ namespace CIAO
   }
 #endif
 
+#if !defined (CCM_NOEVENT)
   ::Components::EventConsumerBase_ptr
   Connector_Servant_Impl_Base::get_consumer (
     const char * /* name */)
   {
     return ::Components::EventConsumerBase::_nil ();
   }
+#endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
+
   ::Components::ConsumerDescriptions *
   Connector_Servant_Impl_Base::get_named_consumers (
     const ::Components::NameList & /* names */)
@@ -263,7 +266,7 @@ namespace CIAO
   }
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   ::Components::EmitterDescriptions *
   Connector_Servant_Impl_Base::get_all_emitters (void)
   {
@@ -271,7 +274,7 @@ namespace CIAO
   }
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   ::Components::EmitterDescriptions *
   Connector_Servant_Impl_Base::get_named_emitters (
       const ::Components::NameList & /* names */)
@@ -316,7 +319,7 @@ namespace CIAO
   }
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   ::Components::PublisherDescriptions *
   Connector_Servant_Impl_Base::get_all_publishers (void)
   {
@@ -324,7 +327,7 @@ namespace CIAO
   }
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   ::Components::PublisherDescriptions *
   Connector_Servant_Impl_Base::get_named_publishers (
     const ::Components::NameList & /* names */)
@@ -333,6 +336,7 @@ namespace CIAO
   }
 #endif
 
+#if !defined (CCM_NOEVENT)
   ::Components::Cookie *
   Connector_Servant_Impl_Base::subscribe (
     const char * /* publisher_name */,
@@ -340,7 +344,9 @@ namespace CIAO
   {
     throw ::Components::InvalidName ();
   }
+#endif
 
+#if !defined (CCM_NOEVENT)
   ::Components::EventConsumerBase_ptr
   Connector_Servant_Impl_Base::unsubscribe (
     const char * /* publisher_name */,
@@ -348,7 +354,9 @@ namespace CIAO
   {
     throw ::Components::InvalidName ();
   }
+#endif
 
+#if !defined (CCM_NOEVENT)
   void
   Connector_Servant_Impl_Base::connect_consumer (
     const char * emitter_name,
@@ -361,7 +369,9 @@ namespace CIAO
 
     throw ::Components::InvalidName ();
   }
+#endif
 
+#if !defined (CCM_NOEVENT)
   ::Components::EventConsumerBase_ptr
   Connector_Servant_Impl_Base::disconnect_consumer (
     const char * source_name)
@@ -373,6 +383,7 @@ namespace CIAO
 
     throw ::Components::InvalidName ();
   }
+#endif
 
   ::Components::Cookie *
   Connector_Servant_Impl_Base::connect (

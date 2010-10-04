@@ -1,3 +1,16 @@
+Mon Oct  4 13:42:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * ccm/CCM_Events.idl:
+        * ccm/CCM_EventConsumerBase.idl:
+        * ccm/CCM_Object.idl:
+        * ccm/CCM_EventBase.idl:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+        * ciao/Servants/Servant_Impl_Base.h:
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+        * ciao/Servants/Connector_Servant_Impl_Base.h:
+        * ciao/Servants/Servant_Impl_Base.cpp:
+        Step 2 to remove events from ccm if ccm_noevents =1
+
 Mon Oct  4 10:35:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Port_Activator.h:
