@@ -42,7 +42,7 @@ namespace CIAO
                     "Unable to locate artifact <%C>\n",
                     name));
     throw ::Deployment::PlanError (name,
-                                   "Nonexistant artifact");
+                                   "Nonexistent artifact");
     return 0;
   }
 

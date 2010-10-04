@@ -217,9 +217,7 @@ namespace CIAO
 #endif
 
   protected:
-    typedef std::map<ACE_CString,
-                     ::CORBA::Object_var>
-       FacetTable;
+    typedef std::map<ACE_CString, ::CORBA::Object_var> FacetTable;
 
     FacetTable facet_table_;
     Container_var container_;
