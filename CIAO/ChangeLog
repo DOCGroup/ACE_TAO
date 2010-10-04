@@ -1,7 +1,26 @@
+Mon Oct  4 18:15:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO-INSTALL.html:
+          Minor updates
+
+        * COPYING:
+          Small update
+
+        * ciao/Base/Client_init.h:
+        * ciao/Containers/Extension/Extension_Container.cpp:
+        * ciao/Contexts/Session/Session_Context_T.cpp:
+        * ciao/Deployment/Handlers/CIAO_Handler_Common.cpp:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
+        * ciao/Servants/Connector_Servant_Impl_Base.h:
+          Layout changes
+
+        * ciao/Servants/Servant_Impl_Base.h:
+          Fixed merge problem
+
 Mon Oct  4 14:29:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/tests/AMIDDS/Base/AmiDds_Base.mpc:
-	Add missing after. 
+        Add missing after.
 
 Mon Oct  4 13:42:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 

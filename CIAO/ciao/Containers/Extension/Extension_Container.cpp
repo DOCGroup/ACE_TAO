@@ -144,8 +144,8 @@ namespace CIAO
 
   CORBA::Object_ptr
   Extension_Container_i::install_servant (PortableServer::Servant p,
-                                        Container_Types::OA_Type t,
-                                        PortableServer::ObjectId_out oid)
+                                          Container_Types::OA_Type t,
+                                          PortableServer::ObjectId_out oid)
   {
     CIAO_TRACE ("Extension_Container_i::install_servant");
 

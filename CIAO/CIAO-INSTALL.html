@@ -5,20 +5,20 @@
   <body text="#000000" vLink="#ff0f0f" link="#000fff" bgColor="#ffffff">
     <hr>
     <h3>Building and Installing CIAO</h3>
-    <p>The first thing you should do to install CIAO is to set the environment 
+    <p>The first thing you should do to install CIAO is to set the environment
       variable <code>CIAO_ROOT</code> to
       be <code>$TAO_ROOT/CIAO</code>, or whereever you have installed
       the CIAO sources.  The <code>DANCE_ROOT</code> environment
       variable should also be set to <code>$TAO_ROOT/DAnCE</code>, or
-      wherever you have installed the DAnCE sources. Please refer 
+      wherever you have installed the DAnCE sources. Please refer
       to the <A href="../../ACE-INSTALL.html">ACE installation notes</A>, <A href="../TAO-INSTALL.html">
         TAO installation notes</A>, and the <a href="../DAnCE/DAnCE-INSTALL.html">DAnCE installation
-        notes </a> for instructions on setting <code>$ACE_ROOT</code>, 
-      <code>$TAO_ROOT</code>, and <code>$DANCE_ROOT</code> respectively. They are needed since CIAO sits on 
-      top of ACE+TAO+DAnCE. Compiling ACE+TAO+DAnCE successfully is the <strong>first</strong> requirement 
+        notes </a> for instructions on setting <code>$ACE_ROOT</code>,
+      <code>$TAO_ROOT</code>, and <code>$DANCE_ROOT</code> respectively. They are needed since CIAO sits on
+      top of ACE+TAO+DAnCE. Compiling ACE+TAO+DAnCE successfully is the <strong>first</strong> requirement
       for compiling CIAO.
     </p>
-    <p>CIAO is divided into several parts, so different installation/building rules 
+    <p>CIAO is divided into several parts, so different installation/building rules
       apply to different parts of CIAO.<br>
       <br>
     </p>
@@ -32,23 +32,23 @@
     <p>CIAO should be usable on most platforms that TAO+DAnCE runs on. Please see <A href="../TAO-INSTALL.html">
         TAO+DAnCE installation</A> pages for details
     </p>
-    <p>If you have <A href="../../docs/ACE-porting.html">porting questions</A> or 
-      have a problem compiling DAnCE or CIAO with TAO and ACE on the platforms shown above 
-      please send email to either <A href="news:comp.soft-sys.ace">ACE Newsgroup</A> or 
+    <p>If you have <A href="../../docs/ACE-porting.html">porting questions</A> or
+      have a problem compiling DAnCE or CIAO with TAO and ACE on the platforms shown above
+      please send email to either <A href="news:comp.soft-sys.ace">ACE Newsgroup</A> or
       the <A href="mailto:ciao-users@list.isis.vanderbilt.edu">CIAO mailing list</A> and we'll
-      try to help you fix the problems. You can also submit bug reports and 
-      enhancement requests in our <A href="../../docs/usage-bugzilla.html">bug tracking 
+      try to help you fix the problems. You can also submit bug reports and
+      enhancement requests in our <A href="../../docs/usage-bugzilla.html">bug tracking
         system</A>.
     </p>
     <p>CIAO can be obtained <a href="http://www.dre.vanderbilt.edu/Download.html">electronically</a>
-      via the WWW and ftp. <a href="http://www.dre.vanderbilt.edu/CIAO">CIAO</a> is 
-      bundled with the ACE and TAO release. You'll always need the most recent 
+      via the WWW and ftp. <a href="http://www.dre.vanderbilt.edu/CIAO">CIAO</a> is
+      bundled with the ACE and TAO release. You'll always need the most recent
       version of ACE and TAO because CIAO tracks changes to ACE and TAO very closely.
     </p>
     <hr>
     <h3>Install CIAO core/tools/examples</h3>
-    <p>Most of the GNUmakefiles/project files/solution files required to build CIAO 
-      are available in the release. If you don't like the configurations used, please 
+    <p>Most of the GNUmakefiles/project files/solution files required to build CIAO
+      are available in the release. If you don't like the configurations used, please
       feel free to regenerate them using MPC. Please see <A href="../../MPC/docs/README">this file</A>
       for more details.
     </p>
@@ -58,7 +58,7 @@
       <li>
       Make sure ACE, TAO, and DAnCE are built.
       <li>
-        Make sure all ACE/TAO/DAnCE/etc. generated libs are in <code>$ACE_ROOT/lib</code>. To 
+        Make sure all ACE/TAO/DAnCE/etc. generated libs are in <code>$ACE_ROOT/lib</code>. To
         build CIAO you will need:
         <ul>
           <li>
@@ -67,8 +67,6 @@
             <code>TAO</code>
           <li>
             <code>TAO_IDL</code>
-          <li>
-            <code>IFR_Client</code>
           <li>
             <code>IORTable</code>
           <li>
@@ -87,35 +85,35 @@
         <p>For the supported build tools please see <a href="../../MPC/docs/html/MakeProjectCreator.html">
             MPC manual</a>.
         </p>
-        <p>On <strong>Linux</strong>: do <code>$ACE_ROOT/bin/mwc.pl -type gnuace</code> at the 
+        <p>On <strong>Linux</strong>: do <code>$ACE_ROOT/bin/mwc.pl -type gnuace</code> at the
           locations specified above then <code>make</code>.
         </p>
         <p>On <strong>Windows/VC8</strong>: do <code>%ACE_ROOT%/bin/mwc.pl -type vc8</code>
           at the locations specified above then Open the solution file and build.
         </p>
         <p><strong>Note:</strong> You can run <code>mwc.pl</code> at <code>$CIAO_ROOT.</code>
-          After running the command 
-          with proper augment once then you 
-          can do <code>make</code> at <code>$CIAO_ROOT</code> (Linux) or open the 
+          After running the command
+          with proper augment once then you
+          can do <code>make</code> at <code>$CIAO_ROOT</code> (Linux) or open the
           workspace/solution file at <code>$CIAO_ROOT</code> (Windows) to build.
         </p>
       </li>
     </ol>
-    <strong>Building CIAO quickly</strong> : You can build CIAO quickly by doing 
+    <strong>Building CIAO quickly</strong> : You can build CIAO quickly by doing
     the following:
     <ul class="noindent">
       <li>
-      Remove all the GNUmakefiles or project files that are shipped with the release or download a source only distribution. 
+      Remove all the GNUmakefiles or project files that are shipped with the release or download a source only distribution.
       <li>
-        Open up <code>$CIAO_ROOT/CIAO_TAO.mwc</code>
+        Open up <code>$CIAO_ROOT/CIAO_TAO_DAmCE.mwc</code>
       .
       <li>
-        Run <code>$ACE_ROOT/bin/mwc.pl CIAO_TAO.mwc -type gnuace</code> from <code>$CIAO_ROOT</code>
+        Run <code>$ACE_ROOT/bin/mwc.pl CIAO_TAO_DAnCE.mwc -type gnuace</code> from <code>$CIAO_ROOT</code>
       .
       <li>
       Type 'make'
       <li style="LIST-STYLE-TYPE: none">
-        This will build all the required ACE+TAO+DAnCE libraries including CIAO libraries and 
+        This will build all the required ACE+TAO+DAnCE libraries including CIAO libraries and
         tools.
       </li>
     </ul>
@@ -128,7 +126,7 @@
       for more information on how to build and install the DDS4CCM connector.
     </p>
     <hr>
-    <p>Back to the <a href="http://www.cs.wustl.edu/~schmidt/CIAO.html">CIAO</a> home 
+    <p>Back to the <a href="http://www.cs.wustl.edu/~schmidt/CIAO.html">CIAO</a> home
       page. <!--#include virtual="/~schmidt/cgi-sig.html" --></p>
   </body>
 </html>
