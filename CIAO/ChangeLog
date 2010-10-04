@@ -1,3 +1,8 @@
+Mon Oct  4 07:14:18 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Containers/Extension/Extension_Container.mpc:
+          Removed unnecessary after.
+
 Mon Oct  4 06:12:53 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Containers/Extension/Extension_Container.mpc:
