@@ -315,7 +315,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
       << "::CIAO::Servant_Activator_var sa =" << be_idt_nl
       << "this->container_->ports_servant_activator ();"
       << be_uidt_nl << be_nl
-      << "if (sa->register_port_activator (pa._retn ()))"
+      << "if (sa->register_port_activator (pa.in ()))"
       << be_idt_nl
       << "{" << be_idt_nl
       << "::CORBA::Object_var obj =" << be_idt_nl
@@ -599,7 +599,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << "::CIAO::Servant_Activator_var sa =" << be_idt_nl
       << "this->container_->ports_servant_activator ();"
       << be_uidt_nl << be_nl
-      << "if (sa->register_port_activator (pa._retn ()))"
+      << "if (sa->register_port_activator (pa.in ()))"
       << be_idt_nl
       << "{" << be_idt_nl
       << "::CORBA::Object_var obj =" << be_idt_nl
