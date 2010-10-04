@@ -1,6 +1,6 @@
 // $Id$
 
-project (Navigation_Test_Client) : ccm_configvalue, naming {
+project (Navigation_Test_Client) : ccm_configvalue, naming, ciao_base {
   after += CIF_Common CIF_Component_stub
   libpaths += ../lib
   libs += CIF_Common CIF_Component_stub
