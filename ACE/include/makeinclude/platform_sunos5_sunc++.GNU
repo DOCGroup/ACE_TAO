@@ -163,10 +163,6 @@ endif # CC 5.0 or later
 
 CCFLAGS         += $(TEMPLATES_FLAG)
 
-#### Sun CC-specific "Pure virtual function called" bug fix trigger.
-#### XXX: Shouldn't this go into a compiler version specific guard ???
-CPPFLAGS       += -DSUN_CC_HAS_PVFC_BUG
-
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
 
@@ -213,7 +209,7 @@ else
     ifeq ($(stdcpplib),1)
       CC_LIBRARY = Cstd
     else
-      CC_LIBRARY = no%Cstd,iostream 
+      CC_LIBRARY = no%Cstd,iostream
       CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
     endif
   endif
