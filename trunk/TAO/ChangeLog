@@ -1,7 +1,19 @@
+Mon Oct  4 19:26:55 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * COPYING:
+        * TAO-INSTALL.html:
+          Small updates
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Fixed memory leak of the Port_Activator
+
+        * tao/Valuetype/ValueBase.h:
+          Docu update
+
 Mon Oct  4 13:35:02 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
-        Remove one noevents ifdef.   
+          Remove one noevents ifdef.
 
 Mon Oct  4 10:35:02 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
