@@ -25,12 +25,12 @@ namespace CIAO
 
   template <typename BASE_CTX,
             typename COMP>
-  CORBA::Object_ptr
+  ::CORBA::Object_ptr
   Session_Context_Impl<BASE_CTX, COMP>::get_CCM_object (void)
   {
-    if (CORBA::is_nil (this->component_.in ()))
+    if (::CORBA::is_nil (this->component_.in ()))
       {
-        CORBA::Object_var obj;
+        ::CORBA::Object_var obj;
 
         try
           {
@@ -39,14 +39,13 @@ namespace CIAO
         catch (const CORBA::Exception& ex)
           {
             ex._tao_print_exception ("Caught Exception\n");
-            return CORBA::Object::_nil ();
           }
 
         this->component_ = COMP::_narrow (obj.in ());
 
-        if (CORBA::is_nil (this->component_.in ()))
+        if (::CORBA::is_nil (this->component_.in ()))
           {
-            throw CORBA::INTERNAL ();
+            throw ::CORBA::INTERNAL ();
           }
       }
 

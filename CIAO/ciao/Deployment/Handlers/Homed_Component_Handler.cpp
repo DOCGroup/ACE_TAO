@@ -80,12 +80,10 @@ namespace CIAO
     info.name = idd.name.in ();
     info.pmap.reset (pmap);
 
-
     DAnCE::Utility::build_property_map (*pmap,
                                         mdd.execParameter);
     DAnCE::Utility::build_property_map (*pmap,
                                         idd.configProperty);
-
 
     using namespace CIAO::Deployment;
     CORBA::Any val;

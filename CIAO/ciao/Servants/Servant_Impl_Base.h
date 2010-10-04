@@ -33,7 +33,7 @@ namespace CIAO
     void describe_pub_event_source (
         const char *port_name,
         const char *port_type_repo_id,
-        ACE_Array_Map<ptrdiff_t, T_var> &consumers,
+        std::map <ptrdiff_t, T_var> &consumers,
         ::Components::PublisherDescriptions_var &descriptions,
         CORBA::ULong slot);
 
@@ -132,8 +132,7 @@ namespace CIAO
 
   protected:
 #if !defined (CCM_NOEVENT)
-    typedef ACE_Array_Map<ACE_CString,
-                          ::Components::EventConsumerBase_var>
+    typedef std::map <ACE_CString, ::Components::EventConsumerBase_var>
        ConsumerTable;
 
     ConsumerTable consumer_table_;
