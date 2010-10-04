@@ -12,6 +12,8 @@ import pysvn
 import re
 import tempfile
 import shutil
+import subprocess
+import shlex
 
 ##################################################
 #### Global variables
@@ -366,6 +368,7 @@ def update_debianbuild ():
     tao = re.compile ("tao", re.IGNORECASE)
 
     for fname in glob.iglob(doc_root + '/ACE/debian/*'):
+        print "Considering " + fname
         match = None
 
         fbase = basename (fname)
@@ -379,6 +382,9 @@ def update_debianbuild ():
             else:
                 fnewname = join (dirname (fname), match.group (1) + match.group (2) + comp_versions["ACE_version"] + match.group (4))
                 prev_ace_ver = match.group (3)
+        
+        print prev_ace_ver
+#        print prev_tao_var
 
         if fnewname is not None:
             if opts.take_action:
@@ -388,6 +394,8 @@ def update_debianbuild ():
 
             files.append (fname)
             files.append (fnewname)
+            
+            print "Appending " + fname + " and " + fnewname
 
     # update debianbuild/control
     def update_ver (match):
@@ -402,6 +410,7 @@ def update_debianbuild ():
             if re.search ("^(Package|Depends|Suggests):", line) is not None:
                 line = mask.sub (update_ver, line)
             elif re.search ('^Replaces:', line) is not None:
+                print comp_versions["ACE_version"]
                 line = line.replace (prev_ace_ver, comp_versions["ACE_version"])
 
             new_ctrl += line
@@ -427,7 +436,7 @@ Build-Depends: gcc, make, g++, debhelper (>= 5), libssl-dev (>= 0.9.7d), dpatch 
 Files:
  65b34001c9605f056713a7e146b052d1 46346654 ACE+TAO+CIAO-src-%s.tar.gz
 
-""" % (comp_versions["TAO_version"], comp_versions["ACE_version"])
+""" % (comp_versions["ACE_version"], comp_versions["TAO_version"], comp_versions["ACE_version"])
     if opts.take_action:
         with open (doc_root + "/ACE/debian/ace.dsc", 'r+') as dsc_file:
             dsc_file.seek (0)
@@ -437,7 +446,7 @@ Files:
         print "New dsc file:\n"
         print dsc_lines
 
-    files.append (doc_root + "/ACE/debian/ace/dsc")
+    files.append (doc_root + "/ACE/debian/ace.dsc")
 
     return files
 
@@ -463,6 +472,8 @@ def get_and_update_versions ():
         files += create_changelog ("DAnCE")
         files += update_spec_file ()
         files += update_debianbuild ()
+        
+        print "Committing " + str(files)
 
         commit (files)
     except:
@@ -558,15 +569,15 @@ def get_comp_versions (component):
         elif opts.release_type == "beta":
             comp_versions[component + "_beta"] += 1
 
-    if opts.release_type == "beta":
-        comp_versions [component + "_version"] = \
-                      str (comp_versions[component + "_major"])  + '.' + \
-                      str (comp_versions[component + "_minor"])  + '.' + \
-                      str (comp_versions[component + "_beta"])
-    else:
-        comp_versions [component + "_version"] = \
-                      str (comp_versions[component + "_major"])  + '.' + \
-                      str (comp_versions[component + "_minor"])
+    #if opts.release_type == "beta":
+    comp_versions [component + "_version"] = \
+        str (comp_versions[component + "_major"])  + '.' + \
+        str (comp_versions[component + "_minor"])  + '.' + \
+        str (comp_versions[component + "_beta"])
+    # else:
+    #     comp_versions [component + "_version"] = \
+    #                   str (comp_versions[component + "_major"])  + '.' + \
+    #                   str (comp_versions[component + "_minor"])
 
 
 def update_latest_tag (which, branch):
@@ -666,7 +677,8 @@ def update_packages (text_files, bin_files, stage_dir, package_dir):
 
     # Zip binary files
     print "\tAdding binary files to zip...."
-    instream, outstream = os.popen2 ("xargs zip " + zip_base_args + zip_file)
+    p = subprocess.Popen (shlex.split ("xargs zip " + zip_base_args + zip_file), stdin=subprocess.PIPE, stdout=subprocess.PIPE, close_fds=True)
+    instream, outstream = (p.stdin, p.stdout)
 
     instream.write (bin_files)
 
@@ -678,7 +690,8 @@ def update_packages (text_files, bin_files, stage_dir, package_dir):
     os.wait ()
 
     print "\tAdding text files to zip....."
-    instream, outstream = os.popen2 ("xargs zip " + zip_base_args + zip_text_args + zip_file)
+    p = subprocess.Popen (shlex.split ("xargs zip " + zip_base_args + zip_text_args + zip_file), stdin=subprocess.PIPE, stdout=subprocess.PIPE, close_fds=True)
+    instream, outstream = (p.stdin, p.stdout)
 
     instream.write (text_files)
 
@@ -691,11 +704,16 @@ def update_packages (text_files, bin_files, stage_dir, package_dir):
 
     # Tar files
     print "\tAdding to tar file...."
-    instream, outstream = os.popen2 ("xargs tar " + tar_args + tar_file)
+    if (not os.path.exists (tar_file)):
+        open(tar_file, 'w').close ()
 
+    p = subprocess.Popen (shlex.split ("xargs tar " + tar_args + tar_file), stdin=subprocess.PIPE, stdout=subprocess.PIPE, close_fds=True)
+    instream, outstream = (p.stdin, p.stdout)
     instream.write (' ' + bin_files + ' ' + text_files)
-
+    
     instream.close ()
+    
+    print outstream.read ()
     outstream.close ()
 
     os.wait ()
@@ -847,9 +865,9 @@ def package (stage_dir, package_dir, decorator):
     text_files = list ()
     bin_files = list ()
 
-    # for TAO:
-    text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO"),
-                                               "ACE_wrappers/DAnCE", ["autom4te.cache"])
+    # for DAnCE:
+    text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO/DAnCE"),
+                                               "ACE_wrappers/TAO/DAnCE", ["CIAO", "autom4te.cache"])
 
 #    write_file_lists ("fTAO" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
@@ -863,7 +881,7 @@ def package (stage_dir, package_dir, decorator):
     bin_files = list ()
     # for CIAO:
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO/CIAO"),
-                                               "ACE_wrappers/TAO/CIAO", "")
+                                               "ACE_wrappers/TAO/CIAO", ["DAnCE", "autom4te.cache"])
 
 #    write_file_lists ("fCIAO" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
