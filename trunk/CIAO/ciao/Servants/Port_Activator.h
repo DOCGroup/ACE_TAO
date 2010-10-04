@@ -46,13 +46,13 @@ namespace CIAO
 
     virtual ~Port_Activator_i (void);
 
-    /// Return the oid of port that this activator encapulates.
+    /// Return the oid of port that this activator encapsulates.
     virtual char* oid (void);
 
     /// Set the oid
     virtual void oid (const char* oid);
 
-    /// Return the oid of port that this activator encapulates.
+    /// Return the oid of port that this activator encapsulates.
     virtual char* name (void);
 
     /// Activate the servant responsible for this port.
