@@ -2359,7 +2359,7 @@ TAO_ORB_Core::destroy (void)
   //
 
   // Shutdown the ORB and block until the shutdown is complete.
-  this->shutdown (1);
+  this->shutdown (true);
 
   // Invoke Interceptor::destroy() on all registered interceptors.
   this->destroy_interceptors ();
