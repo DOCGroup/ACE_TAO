@@ -4,10 +4,12 @@
 #if !defined (CCM_EVENTBASE_IDL)
 #define CCM_EVENTBASE_IDL
 
+#if !defined (CCM_NOEVENT)
 module Components
 {
   typeprefix Components "omg.org";
 
   abstract valuetype EventBase {};
 };
+#endif
 #endif /* CCM_EVENTBASE_IDL */

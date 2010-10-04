@@ -23,6 +23,7 @@ namespace CIAO
     CIAO_TRACE("Servant_Impl_Base::remove (void)");
     try
     {
+#if !defined (CCM_NOEVENT)
       for (ConsumerTable::const_iterator iter =
              this->consumer_table_.begin ();
            iter != this->consumer_table_.end ();
@@ -43,6 +44,7 @@ namespace CIAO
               sa->update_port_activator (cons_id.in ());
             }
         }
+#endif
     }
     catch (const CORBA::Exception& ex)
     {
@@ -92,7 +94,7 @@ namespace CIAO
   }
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   ::Components::ConsumerDescriptions *
   Servant_Impl_Base::get_all_consumers (void)
   {
@@ -129,7 +131,7 @@ namespace CIAO
     return retval._retn ();
   }
 #endif
-
+#if !defined (CCM_NOEVENT)
   ::Components::EventConsumerBase_ptr
   Servant_Impl_Base::get_consumer (const char *sink_name)
   {
@@ -150,8 +152,9 @@ namespace CIAO
 
     return retval;
   }
+#endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   ::Components::ConsumerDescriptions *
   Servant_Impl_Base::get_named_consumers (
     const ::Components::NameList & names)
@@ -184,7 +187,7 @@ namespace CIAO
   }
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   ::Components::EmitterDescriptions *
   Servant_Impl_Base::get_named_emitters (
       const ::Components::NameList & names)
@@ -218,7 +221,7 @@ namespace CIAO
   }
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   ::Components::PublisherDescriptions *
   Servant_Impl_Base::get_named_publishers (
     const ::Components::NameList & names)
@@ -253,6 +256,7 @@ namespace CIAO
 #endif
 
   /// Protected operations.
+#if  !defined (CCM_NOEVENT)
   void
   Servant_Impl_Base::add_consumer (const char *port_name,
                                    ::Components::EventConsumerBase_ptr port_ref)
@@ -277,7 +281,9 @@ namespace CIAO
       this->consumer_table_[port_name] = ::Components::EventConsumerBase::_duplicate (port_ref);
     }
   }
+#endif
 
+#if !defined (CCM_NOEVENT)
   ::Components::EventConsumerBase_ptr
   Servant_Impl_Base::lookup_consumer (const char *port_name)
   {
@@ -303,8 +309,9 @@ namespace CIAO
 
     return ::Components::EventConsumerBase::_duplicate (iter->second);
   }
+#endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   ::Components::ConsumerDescription *
   Servant_Impl_Base::lookup_consumer_description (
     const char *port_name)
@@ -347,7 +354,7 @@ namespace CIAO
 #endif
 
   /// Private operations.
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   ::Components::PublisherDescription *
   Servant_Impl_Base::lookup_publisher_description (const char *publisher_name)
   {
@@ -381,7 +388,8 @@ namespace CIAO
     return 0;
   }
 #endif
-#if !defined (CCM_LW)
+
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   ::Components::EmitterDescription *
   Servant_Impl_Base::lookup_emitter_description (const char *emitter_name)
   {

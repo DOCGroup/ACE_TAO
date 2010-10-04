@@ -8,6 +8,7 @@
 #include "tao/Typecode_types.pidl"
 #include "tao/orb_types.pidl"
 
+#if !defined (CCM_NOEVENT)
 module Components
 {
   typeprefix Components "omg.org";
@@ -22,4 +23,5 @@ module Components
     void push_event (in EventBase evt) raises (BadEventType);
   };
 };
+#endif
 #endif /* CCM_EVENTCONSUMERBASE_IDL */

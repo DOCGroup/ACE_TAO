@@ -63,13 +63,13 @@ namespace CIAO
                           comp->provide_facet (conn.internalEndpoint[i].portName.in ());
                         (*out) <<= ref.in ();
                         break;
-
+#if !defined (CCM_NOEVENT)
                       case ::Deployment::EventConsumer:
                         ref =
                           comp->get_consumer (conn.internalEndpoint[i].portName.in ());
                         (*out) <<= ref.in ();
                         break;
-
+#endif
                       default:
                         throw ::Deployment::InvalidConnection (conn.name.in (),
                                                                "Invalid provider port type.");
@@ -419,7 +419,7 @@ namespace CIAO
     this->cookies_[conn.name.in ()] = CONNECTION_INFO (cookie,
                                                        ::Components::CCMObject::_duplicate (receptacle.in ()));
   }
-
+#if !defined (CCM_NOEVENT)
   void
   Connection_Handler::connect_publisher (const ::Deployment::DeploymentPlan & plan,
                                          ::CORBA::ULong connectionRef,
@@ -480,7 +480,8 @@ namespace CIAO
     this->cookies_[conn.name.in ()] = CONNECTION_INFO (cookie,
                                                        ::Components::CCMObject::_duplicate (publisher.in ()));
   }
-
+#endif
+#if !defined (CCM_NOEVENT)
   void
   Connection_Handler::connect_consumer (const ::Deployment::DeploymentPlan & plan,
                                         ::CORBA::ULong connectionRef,
@@ -504,7 +505,9 @@ namespace CIAO
                                            "ExternalReference connection of consumers "
                                            "currently unsupported.\n");
   }
+#endif
 
+#if !defined (CCM_NOEVENT)
   void
   Connection_Handler::connect_emitter (const ::Deployment::DeploymentPlan & plan,
                                        ::CORBA::ULong connectionRef,
@@ -567,6 +570,7 @@ namespace CIAO
     this->cookies_[conn.name.in ()] = CONNECTION_INFO (nil_cookie,
                                                        ::Components::CCMObject::_duplicate (emitter.in ()));
   }
+#endif
 
   void
   Connection_Handler::disconnect_facet (const ::Deployment::DeploymentPlan &,
@@ -584,6 +588,7 @@ namespace CIAO
     CIAO_TRACE ("Connection_Handler::disconnect_receptacle");
   }
 
+#if !defined (CCM_NOEVENT)
   void
   Connection_Handler::disconnect_publisher (const ::Deployment::DeploymentPlan &,
                                             ::CORBA::ULong)
@@ -591,7 +596,9 @@ namespace CIAO
   {
     CIAO_TRACE ("Connection_Handler::disconnect_publisher");
   }
+#endif
 
+#if !defined (CCM_NOEVENT)
   void
   Connection_Handler::disconnect_subscriber (const ::Deployment::DeploymentPlan &,
                                              ::CORBA::ULong)
@@ -599,6 +606,7 @@ namespace CIAO
   {
     CIAO_TRACE ("Connection_Handler::disconnect_subscriber");
   }
+#endif
 
   void
   Connection_Handler::connect_local_port (const char *facet_id,
