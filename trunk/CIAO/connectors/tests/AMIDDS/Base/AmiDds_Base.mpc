@@ -19,7 +19,7 @@ project(AMI_AmiDds_Base_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
 }
 
 project(AMI_AmiDds_Base_lem_gen) : ciaoidldefaults {
-  after += AMI_AmiDds_Base_idl_gen AMI_AmiDds_Base_lema_gen
+  after += AMI_AmiDds_Base_idl_gen AMI_AmiDds_Base_lema_gen AMI_AmiDds_Base_lemae_gen
   custom_only = 1
   idlflags += -Wb,export_macro=AMIDDS_BASE_LEM_STUB_Export \
               -Wb,export_include=AmiDds_Base_lem_stub_export.h \
