@@ -39,7 +39,7 @@ namespace TAO
    *
    * @brief Base class for remote invocations.
    *
-   * This class encapulates some of the common functionalities used by
+   * This class encapsulates some of the common functionalities used by
    * synchronous, asynchronous, DII and DSI invocations.
    *
    */
