@@ -154,7 +154,7 @@ namespace CIAO
           case Deployment::MultiplexReceptacle:
             this->connect_receptacle (plan, c_id, endpoint, provided_reference);
             break;
-
+#if !defined (CCM_NOEVENT)
           case Deployment::EventEmitter:
             this->connect_emitter (plan, c_id, endpoint, provided_reference);
             break;
@@ -166,7 +166,7 @@ namespace CIAO
           case Deployment::EventConsumer:
             this->connect_consumer (plan, c_id, endpoint, provided_reference);
             break;
-
+#endif
           default:
             CIAO_ERROR (1, (LM_ERROR, CLINFO
                             "Connection_Handler::connect_instance - "
@@ -246,7 +246,7 @@ namespace CIAO
           case Deployment::MultiplexReceptacle:
             this->disconnect_receptacle (plan, c_id);
             break;
-
+#if !defined (CCM_NOEVENT)
           case Deployment::EventEmitter:
             this->disconnect_emitter (plan, c_id);
             break;
@@ -258,7 +258,7 @@ namespace CIAO
           case Deployment::EventConsumer:
             this->disconnect_consumer (plan, c_id);
             break;
-
+#endif
           default:
             CIAO_ERROR (1, (LM_ERROR, CLINFO
                             "Connection_Handler::disconnect_instance - "
