@@ -751,7 +751,8 @@ namespace CIAO
                          user_port,
                          provider_port));
 
-            user_serv->connect (user_port, exec.in ());
+            ::Components::Cookie_var cookie =
+              user_serv->connect (user_port, exec.in ());
           }
         else
           {
@@ -867,7 +868,7 @@ namespace CIAO
         // Note: Spec says that facet executor provided by component MAY BE NIL
         if (!::CORBA::is_nil (exec.in ()))
           {
-            user_serv->disconnect (user_port, 0);
+            ::CORBA::Object_var port = user_serv->disconnect (user_port, 0);
           }
         else
           {
