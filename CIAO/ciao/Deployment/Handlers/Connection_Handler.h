@@ -42,21 +42,26 @@ namespace CIAO
                              ::CORBA::ULong connectionRef,
                              ::CORBA::ULong endpoint,
                              const ::CORBA::Any & provided_reference);
-
+#if !defined (CCM_NOEVENT)
     void connect_publisher (const ::Deployment::DeploymentPlan & plan,
                             ::CORBA::ULong connectionRef,
                             ::CORBA::ULong endpoint,
                             const ::CORBA::Any & provided_reference);
+#endif
 
+#if !defined (CCM_NOEVENT)
     void connect_emitter (const ::Deployment::DeploymentPlan & plan,
                           ::CORBA::ULong connectionRef,
                           ::CORBA::ULong endpoint,
                           const ::CORBA::Any & provided_reference);
+#endif
 
+#if !defined (CCM_NOEVENT)
     void connect_consumer (const ::Deployment::DeploymentPlan & plan,
                              ::CORBA::ULong connectionRef,
                              ::CORBA::ULong endpoint,
                              const ::CORBA::Any & provided_reference);
+#endif
 
     void disconnect_facet (const ::Deployment::DeploymentPlan & plan,
                            ::CORBA::ULong connectionRef);
@@ -64,15 +69,20 @@ namespace CIAO
 
     void disconnect_receptacle (const ::Deployment::DeploymentPlan & plan,
                              ::CORBA::ULong connectionRef);
-
+#if !defined (CCM_NOEVENT)
     void disconnect_publisher (const ::Deployment::DeploymentPlan & plan,
                             ::CORBA::ULong connectionRef);
+#endif
 
+#if !defined (CCM_NOEVENT)
     void disconnect_emitter (const ::Deployment::DeploymentPlan & plan,
                             ::CORBA::ULong connectionRef);
+#endif
 
+#if !defined (CCM_NOEVENT)
     void disconnect_consumer (const ::Deployment::DeploymentPlan & plan,
                              ::CORBA::ULong connectionRef);
+#endif
 
     void connect_local_port (const char *facet_id,
                              const char *facet_port,
