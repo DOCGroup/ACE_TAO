@@ -1,3 +1,20 @@
+Tue Oct  5 13:44:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * ccm/Extension/CCM_ContainerInterceptor.idl:
+          Added priority
+
+        * ciao/Containers/Extension/Extension_Container.mpc:
+          Added PortableServer as base project.
+
+        * ciao/Containers/Extension/Interceptor_Registration_T.h:
+        * ciao/Containers/Extension/Interceptor_Registration_T.cpp:
+          Rename action.
+
+        * tests/CIF/Common/CIF_Common.cpp:
+        * tests/CIF/Navigation/client.cpp:
+        * tests/CIF/Receptacle/client.cpp:
+          Resolved valgrind errors.
+
 Tue Oct  5 13:13:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * ciao/Deployment/Handlers/Connection_Handler.cpp:
