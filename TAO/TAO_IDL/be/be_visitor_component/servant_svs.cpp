@@ -732,7 +732,7 @@ be_visitor_servant_svs::gen_publishes_top (void)
           << "}";
     }
 
-  if (!be_global->gen_lwccm ())
+  if (!be_global->gen_lwccm () && !be_global->gen_noeventccm ())
     {
       os_ << be_nl << be_nl
           << "::Components::PublisherDescriptions *" << be_nl
@@ -957,7 +957,7 @@ be_visitor_servant_svs::gen_emits_top (void)
 void
 be_visitor_servant_svs::gen_get_all_emitters (void)
 {
-  if (be_global->gen_lwccm ())
+  if (be_global->gen_lwccm () || be_global->gen_noeventccm () )
     {
       return;
     }
