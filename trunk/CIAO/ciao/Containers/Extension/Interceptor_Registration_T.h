@@ -56,13 +56,12 @@ namespace CIAO
     InterceptorType_ptr_type unregister_interceptor (
       ::Components::Cookie *ck);
 
-
   private:
     /// Dynamic array of registered interceptors.
     typedef std::map< ::Components::Cookie *,
-                      InterceptorType_ptr_type> RegisteredArray;
+                        InterceptorType_ptr_type> RegisteredInterceptors;
 
-    RegisteredArray interceptors_;
+    RegisteredInterceptors interceptors_;
   };
 }
 

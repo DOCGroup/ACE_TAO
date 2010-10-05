@@ -334,7 +334,7 @@ test_get_named_receptacles (::Components::Receptacles_ptr rec)
 
   ::Components::ReceptacleDescriptions_var descriptions;
 
-  ::Components::NameList one_name;
+  ::Components::NameList_var one_name;
   one_name.length (1);
   one_name[0] = ::CORBA::string_dup ("use_cif_foo");
 
@@ -372,7 +372,7 @@ test_get_named_receptacles (::Components::Receptacles_ptr rec)
   ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_named_receptacles - "
                         "Test with one name passed!\n"));
 
-  ::Components::NameList two_names;
+  ::Components::NameList_var two_names;
   two_names.length (2);
   two_names[0] = ::CORBA::string_dup ("use_cif_foo");
   two_names[1] = ::CORBA::string_dup ("use_cif_derived_foo");
@@ -413,7 +413,7 @@ test_get_named_receptacles (::Components::Receptacles_ptr rec)
 
 
   // test invalid name exception during invocation of get_named_receptacles
-  ::Components::NameList invalid_names;
+  ::Components::NameList_var invalid_names;
   invalid_names.length (2);
   invalid_names[0] = ::CORBA::string_dup ("use_cif_foo");
   invalid_names[1] = ::CORBA::string_dup ("use_cif_foo_invalid_name");
@@ -701,7 +701,7 @@ test_get_named_consumers (::Components::CCMObject_ptr cmp)
   ::Components::ConsumerDescriptions_var cds;
   try
     {
-      ::Components::NameList one_name;
+      ::Components::NameList_var one_name;
       one_name.length (1);
       one_name[0] = ::CORBA::string_dup ("consume_do_something");
       cds = cmp->get_named_consumers (one_name);
@@ -740,7 +740,7 @@ test_get_named_consumers (::Components::CCMObject_ptr cmp)
    // Test InvalidName exception
   try
     {
-      ::Components::NameList invalid_names;
+      ::Components::NameList_var invalid_names;
       invalid_names.length (2);
       invalid_names[0] = ::CORBA::string_dup ("consume_do_something");
       invalid_names[1] = ::CORBA::string_dup ("consume_do_something_invalid_name");
@@ -831,6 +831,7 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
                             1);
 
         }
+
       ::Components::Receptacles_var rec = cmd.get_receptacle_interface ();
       ::Components::Navigation_var nav = cmd.get_navigation_interface ();
 

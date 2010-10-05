@@ -11,6 +11,7 @@ CIF_Common::CIF_Common(void)
 
 CIF_Common::~CIF_Common(void)
 {
+  this->orb_->destroy ();
 }
 
 //============================================================
@@ -106,7 +107,7 @@ CIF_Common::init(int argc, ACE_TCHAR *argv[])
   int ret = 0;
 
   this->orb_ = ::CORBA::ORB_init(argc, argv);
-  ::CIAO::Client_init(this->orb_);
+  ::CIAO::Client_init(this->orb_.in ());
 
   if (this->parse_args(argc, argv) != 0)
     return 1;
@@ -115,9 +116,11 @@ CIF_Common::init(int argc, ACE_TCHAR *argv[])
     {
       // Resolving naming service
       ::CORBA::Object_var naming_context_object =
-        this->orb_->string_to_object(naming_);
+        this->orb_->string_to_object(this->naming_);
       if (::CORBA::is_nil(naming_context_object.in()))
-        return -1;
+        {
+          return 1;
+        }
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow(naming_context_object.in());
 
@@ -234,7 +237,7 @@ CIF_Common::test_provider_component()
              "Start test\n"));
   int ret = 0;
   ::CORBA::Object_var provider_cmp = this->provider_object_->_get_component();
-  ::CIF::CIF_Provider_var provider_object = ::CIF::CIF_Provider::_narrow(provider_cmp);
+  ::CIF::CIF_Provider_var provider_object = ::CIF::CIF_Provider::_narrow(provider_cmp.in ());
 
   if (::CORBA::is_nil(provider_cmp.in()))
     {
@@ -288,7 +291,7 @@ CIF_Common::test_user_component()
              "Start test\n"));
   int ret = 0;
   ::CORBA::Object_var user_cmp = this->user_object_->_get_component();
-  ::CIF::CIF_User_ptr user_object = ::CIF::CIF_User::_narrow(user_cmp);
+  ::CIF::CIF_User_var user_object = ::CIF::CIF_User::_narrow(user_cmp.in ());
   if (::CORBA::is_nil(user_object))
     {
       ACE_ERROR_RETURN((LM_ERROR,

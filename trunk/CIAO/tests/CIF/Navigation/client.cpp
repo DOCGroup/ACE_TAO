@@ -13,8 +13,24 @@ test_provide_facet (::Components::Navigation_ptr nav)
 
   try
     {
-      nav->provide_facet ("provide_cif_foo");
-      nav->provide_facet ("provide_cif_derived_foo");
+      ::CORBA::Object_var prov_cif_foo =
+        nav->provide_facet ("provide_cif_foo");
+      if (::CORBA::is_nil (prov_cif_foo.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, "Navigation test_provide_facet - "
+                                "Error: provide_facet with provide_cif_foo "
+                                "returned a NIL pointer\n"));
+          return 1;
+        }
+      ::CORBA::Object_var prov_cif_der_foo =
+        nav->provide_facet ("provide_cif_derived_foo");
+      if (::CORBA::is_nil (prov_cif_der_foo.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, "Navigation test_provide_facet - "
+                                "Error: provide_facet with provide_cif_derived_foo "
+                                "returned a NIL pointer\n"));
+          return 1;
+        }
     }
   catch (const ::Components::InvalidName &)
     {
@@ -120,7 +136,7 @@ test_get_named_facets (::Components::Navigation_ptr nav)
                         "Start test\n"));
   try
     {
-      ::Components::NameList names;
+      ::Components::NameList_var names;
       names.length (2);
       names[0] = CORBA::string_dup ("provide_cif_foo");
       names[1] = CORBA::string_dup ("provide_cif_derived_foo");
@@ -154,7 +170,7 @@ test_get_named_facets (::Components::Navigation_ptr nav)
                         "InvalidName exception\n"));
   try
     {
-      ::Components::NameList names;
+      ::Components::NameList_var names;
       names.length (2);
       names[0] = CORBA::string_dup ("provide_cif_foo_invalid_name");
       names[1] = CORBA::string_dup ("provide_cif_derived_foo_invalid_name");
@@ -402,7 +418,7 @@ test_get_named_publishers (::Components::CCMObject_ptr cmp)
   ::Components::PublisherDescriptions_var pds;
   try
     {
-      ::Components::NameList two_names;
+      ::Components::NameList_var two_names;
       two_names.length (2);
       two_names[0] = ::CORBA::string_dup ("publish_do_something");
       two_names[1] = ::CORBA::string_dup ("publish_do_something_else");
@@ -435,7 +451,7 @@ test_get_named_publishers (::Components::CCMObject_ptr cmp)
   // Test InvalidName exception
   try
     {
-      ::Components::NameList invalid_names;
+      ::Components::NameList_var invalid_names;
       invalid_names.length (3);
       invalid_names[0] = ::CORBA::string_dup ("publish_do_something");
       invalid_names[1] = ::CORBA::string_dup ("publish_do_something_invalid_name");
@@ -524,7 +540,7 @@ test_get_named_emitters (::Components::CCMObject_ptr cmp)
   try
     {
 
-      ::Components::NameList one_name;
+      ::Components::NameList_var one_name;
       one_name.length (1);
       one_name[0] = ::CORBA::string_dup ("emit_do_something");
       eds = cmp->get_named_emitters (one_name);
@@ -556,7 +572,7 @@ test_get_named_emitters (::Components::CCMObject_ptr cmp)
   // Test InvalidName exception
   try
     {
-      ::Components::NameList invalid_names;
+      ::Components::NameList_var invalid_names;
       invalid_names.length (2);
       invalid_names[0] = ::CORBA::string_dup ("emit_do_something");
       invalid_names[1] = ::CORBA::string_dup ("emit_do_something_invalid_name");
@@ -641,11 +657,11 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
                             1);
 
         }
-      ::CORBA::Object_var obj = cmd.get_provider_cmp ();
-      if (::CORBA::is_nil (obj.in ()))
+      ::CORBA::Object_var prov = cmd.get_provider_cmp ();
+      if (::CORBA::is_nil (prov.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                            "Unable to get navigation component\n"),
+                            "Unable to get provider component\n"),
                             1);
         }
 
@@ -656,8 +672,8 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
                             "Unable to get navigation interface\n"),
                             1);
         }
-      ::Components::CCMObject_var cmp = ::Components::CCMObject::_narrow (obj);
-      ret = run_test (nav.in (), cmp.in ());
+      ::Components::CCMObject_var prov_cmp = ::Components::CCMObject::_narrow (prov);
+      ret = run_test (nav.in (), prov_cmp.in ());
 
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       cmd.test_provider_component ();
