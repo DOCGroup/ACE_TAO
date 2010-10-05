@@ -1,6 +1,6 @@
 Tue Oct  5 08:57:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
-        *ccm/CCM_Events.idl:
+        * ccm/CCM_Events.idl:
         * ccm/CCM_Object.idl:
         * ciao/Servants/Servant_Impl_Utils_T.cpp:
         * ciao/Servants/Servant_Impl_Base.cpp:
