@@ -12,6 +12,9 @@ module Components {
     local interface ContainerInterceptor
     {
       readonly attribute string name;
+
+      attribute unsigned short priority;
+
       void destroy ();
       void set_slot_id(in PortableInterceptor::SlotId slot_id);
     };
