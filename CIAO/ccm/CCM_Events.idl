@@ -11,12 +11,11 @@
 #include "ccm/CCM_EventBase.idl"
 #include "ccm/CCM_EventConsumerBase.idl"
 
-#if !defined (CCM_NOEVENT)
 module Components
 {
   typeprefix Components "omg.org";
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   valuetype ConsumerDescription : PortDescription
   {
     public EventConsumerBase consumer;
@@ -24,7 +23,7 @@ module Components
   typedef sequence<ConsumerDescription> ConsumerDescriptions;
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   valuetype EmitterDescription : PortDescription
   {
     public EventConsumerBase consumer;
@@ -32,7 +31,7 @@ module Components
   typedef sequence<EmitterDescription> EmitterDescriptions;
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   valuetype SubscriberDescription
   {
     public Cookie ck;
@@ -41,7 +40,7 @@ module Components
   typedef sequence<SubscriberDescription> SubscriberDescriptions;
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   valuetype PublisherDescription : PortDescription
   {
     public SubscriberDescriptions consumers;
@@ -51,57 +50,66 @@ module Components
 
   interface Events
   {
+#if !defined (CCM_NOEVENT)
     EventConsumerBase get_consumer (in FeatureName sink_name)
       raises (InvalidName);
+#endif
 
+#if !defined (CCM_NOEVENT)
     Cookie subscribe (in FeatureName publisher_name,
                       in EventConsumerBase subscriber)
       raises (InvalidName,
               InvalidConnection,
               ExceededConnectionLimit);
+#endif
 
+#if !defined (CCM_NOEVENT)
     EventConsumerBase unsubscribe (in FeatureName publisher_name,
                                    in Cookie ck)
       raises (InvalidName,
               InvalidConnection);
+#endif
 
+#if !defined (CCM_NOEVENT)
     void connect_consumer (in FeatureName emitter_name,
                            in EventConsumerBase consumer)
       raises (InvalidName,
               AlreadyConnected,
               InvalidConnection);
+#endif
 
+#if !defined (CCM_NOEVENT)
     EventConsumerBase disconnect_consumer (in FeatureName source_name)
       raises (InvalidName,
               NoConnection);
+#endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
     ConsumerDescriptions get_all_consumers ();
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
     ConsumerDescriptions get_named_consumers (in NameList names)
       raises (InvalidName);
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
     EmitterDescriptions get_all_emitters ();
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
     EmitterDescriptions get_named_emitters (in NameList names)
       raises (InvalidName);
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
     PublisherDescriptions get_all_publishers ();
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
     PublisherDescriptions get_named_publishers (in NameList names)
       raises (InvalidName);
 #endif
   };
 };
-#endif
 #endif /* CCM_EVENTS_IDL */

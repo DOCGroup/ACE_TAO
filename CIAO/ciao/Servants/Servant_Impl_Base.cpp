@@ -67,7 +67,7 @@ namespace CIAO
 
     ::Components::ComponentPortDescription_var retv =
       this->Connector_Servant_Impl_Base::get_all_ports ();
-
+#if !defined (CCM_NOEVENT)
     ::Components::ConsumerDescriptions_var consumer_desc =
       this->get_all_consumers ();
 
@@ -80,7 +80,7 @@ namespace CIAO
     retv->consumers (consumer_desc.in ());
     retv->emitters (emitter_desc.in ());
     retv->publishers (publisher_desc.in ());
-
+#endif
     return retv._retn ();
   }
 #endif
