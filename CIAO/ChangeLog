@@ -1,7 +1,14 @@
+Tue Oct  5 10:48:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.h:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Implement disconnect, this now delegates to the separate disconnect
+          methods which are still a noop
+
 Tue Oct  5 09:20:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * MPC/config/avoids_ccm_noevent.mpb:
-	Add base project to avoids compiling if ccm_noevent is set.
+        Add base project to avoids compiling if ccm_noevent is set.
 
 Tue Oct  5 08:57:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
@@ -10,7 +17,7 @@ Tue Oct  5 08:57:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * ciao/Servants/Servant_Impl_Utils_T.cpp:
         * ciao/Servants/Servant_Impl_Base.cpp:
         * ciao/Base/Client_init.cpp:
-        Add removed Events interface and some ifdefs ccm_noevent 
+        Add removed Events interface and some ifdefs ccm_noevent
 
 Tue Oct  5 08:28:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 

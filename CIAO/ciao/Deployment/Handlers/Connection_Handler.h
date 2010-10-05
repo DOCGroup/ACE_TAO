@@ -26,11 +26,11 @@ namespace CIAO
                                 ::CORBA::Any_out endpoint_reference);
 
     void connect_instance (const ::Deployment::DeploymentPlan & plan,
-                           ::CORBA::ULong connectionRef,
+                           ::CORBA::ULong c_id,
                            const ::CORBA::Any & provided_reference);
 
     void disconnect_instance (const ::Deployment::DeploymentPlan & plan,
-                              ::CORBA::ULong connectionRef);
+                              ::CORBA::ULong c_id);
 
   private:
     void connect_facet (const ::Deployment::DeploymentPlan & plan,
@@ -68,7 +68,10 @@ namespace CIAO
     void disconnect_publisher (const ::Deployment::DeploymentPlan & plan,
                             ::CORBA::ULong connectionRef);
 
-    void disconnect_subscriber (const ::Deployment::DeploymentPlan & plan,
+    void disconnect_emitter (const ::Deployment::DeploymentPlan & plan,
+                            ::CORBA::ULong connectionRef);
+
+    void disconnect_consumer (const ::Deployment::DeploymentPlan & plan,
                              ::CORBA::ULong connectionRef);
 
     void connect_local_port (const char *facet_id,
