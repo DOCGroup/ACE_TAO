@@ -55,6 +55,7 @@ namespace CIAO_UsesSM_Receiver_Impl
   {
     return new One_exec_i (nr_of_one_received_);
   }
+
   ::UsesSM::CCM_Two_ptr
   Receiver_exec_i::get_do_my_two (void)
   {
