@@ -1,3 +1,8 @@
+Tue Oct  5 13:51:02 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Valuetype_Factories/Cookies.h:
+          Make this refcounted
+
 Tue Oct  5 13:44:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * ccm/Extension/CCM_ContainerInterceptor.idl:
