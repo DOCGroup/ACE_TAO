@@ -203,11 +203,95 @@ namespace CIAO
   }
 
   void
-  Connection_Handler::disconnect_instance (const ::Deployment::DeploymentPlan &,
-                                           ::CORBA::ULong)
+  Connection_Handler::disconnect_instance (const ::Deployment::DeploymentPlan &plan,
+                                           ::CORBA::ULong c_id)
   {
     CIAO_TRACE ("Connection_Handler::disconnect_instance");
-    // no-op is current behavior, we'll do that for now.
+
+    const ::Deployment::PlanConnectionDescription &conn = plan.connection[c_id];
+    const char *name = conn.name.in ();
+
+    if (conn.internalEndpoint.length () == 0)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::disconnect_instance - "
+                        "Connection <%C> lacks an internalEndpoint.\n",
+                        name));
+        throw ::Deployment::InvalidConnection (name,
+                                       "No internal endpoint for connection\n");
+      }
+
+    CORBA::ULong endpoint (0);
+
+    if (conn.internalEndpoint.length () > 1)
+      {
+        for (CORBA::ULong i = 0;
+             i < conn.internalEndpoint.length ();
+             ++i)
+          {
+            if (!conn.internalEndpoint[i].provider)
+              endpoint = i;
+          }
+      }
+
+    try
+      {
+        switch (conn.internalEndpoint[endpoint].kind)
+          {
+          case Deployment::Facet:
+            this->disconnect_facet (plan, c_id);
+            break;
+
+          case Deployment::SimplexReceptacle:
+          case Deployment::MultiplexReceptacle:
+            this->disconnect_receptacle (plan, c_id);
+            break;
+
+          case Deployment::EventEmitter:
+            this->disconnect_emitter (plan, c_id);
+            break;
+
+          case Deployment::EventPublisher:
+            this->disconnect_publisher (plan, c_id);
+            break;
+
+          case Deployment::EventConsumer:
+            this->disconnect_consumer (plan, c_id);
+            break;
+
+          default:
+            CIAO_ERROR (1, (LM_ERROR, CLINFO
+                            "Connection_Handler::disconnect_instance - "
+                            "Unsupported port type.\n"));
+            throw ::Deployment::InvalidConnection (name,
+                                                   "Unsupported port type");
+
+          }
+      }
+    catch (const ::Deployment::InvalidConnection &)
+      {
+        // pass through
+        throw;
+      }
+    catch (CORBA::Exception &ex)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::disconnect_instance - "
+                        "Caught CORBA exception whilst disconnecting <%C>: %C\n",
+                        name,
+                        ex._info ().c_str ()));
+        throw ::Deployment::InvalidConnection (name,
+                                               ex._info ().c_str ());
+      }
+    catch (...)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::disconnect_instance - "
+                        "Caught C++ exception whilst disconnecting <%C>\n",
+                        name));
+        throw ::Deployment::InvalidConnection (name,
+                                               "Unknown C++ Exception");
+      }
   }
 
   void
@@ -600,11 +684,21 @@ namespace CIAO
 
 #if !defined (CCM_NOEVENT)
   void
-  Connection_Handler::disconnect_subscriber (const ::Deployment::DeploymentPlan &,
+  Connection_Handler::disconnect_emitter (const ::Deployment::DeploymentPlan &,
+                                          ::CORBA::ULong)
+
+  {
+    CIAO_TRACE ("Connection_Handler::disconnect_emitter");
+  }
+#endif
+
+#if !defined (CCM_NOEVENT)
+  void
+  Connection_Handler::disconnect_consumer (const ::Deployment::DeploymentPlan &,
                                              ::CORBA::ULong)
 
   {
-    CIAO_TRACE ("Connection_Handler::disconnect_subscriber");
+    CIAO_TRACE ("Connection_Handler::disconnect_consumer");
   }
 #endif
 
@@ -668,6 +762,6 @@ namespace CIAO
             return true;
           }
       }
-  return false;
+    return false;
   }
 }
