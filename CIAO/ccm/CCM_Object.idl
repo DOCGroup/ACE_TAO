@@ -34,7 +34,6 @@ module Components
   exception NoKeyAvailable {};
 #endif
 
-#if !defined (CCM_NOEVENT)
   interface CCMObject : Navigation, Receptacles, Events
   {
 #if !defined (CCM_LW)
@@ -53,27 +52,7 @@ module Components
     ComponentPortDescription get_all_ports ();
 #endif
   };
-#else
-  interface CCMObject : Navigation, Receptacles
-  {
-#if !defined (CCM_LW)
-    CORBA::IRObject get_component_def ( );
-#endif
-    CCMHome get_ccm_home( );
-#if !defined (CCM_LW)
-    PrimaryKeyBase get_primary_key( )
-      raises (NoKeyAvailable);
-#endif
-    void configuration_complete ()
-      raises (InvalidConfiguration);
-    void remove()
-      raises (RemoveFailure);
-#if !defined (CCM_LW)
-    ComponentPortDescription get_all_ports ();
-#endif
-  };
-#endif
 
-  typedef sequence<CCMObject> CCMObjectSeq;
+typedef sequence<CCMObject> CCMObjectSeq;
 };
 #endif /* CCM_OBJECT_IDL */

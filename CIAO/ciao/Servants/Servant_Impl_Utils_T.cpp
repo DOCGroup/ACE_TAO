@@ -7,7 +7,7 @@
 #include "ciao/Valuetype_Factories/Cookies.h"
 #include "ciao/Logger/Log_Macros.h"
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
 namespace CIAO
 {
   template<typename T_var>
