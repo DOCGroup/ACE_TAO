@@ -749,6 +749,53 @@ namespace CIAO
                     receptacle_id, receptacle_port));
   }
 
+  void
+  Connection_Handler::disconnect_local_port (const char *facet_id,
+                                             const char *facet_port,
+                                             const char *receptacle_id,
+                                             const char *receptacle_port)
+  {
+    CIAO_TRACE ("Connection_Handler::disconnect_local_port");
+
+    const char *facet_cont =
+      DEPLOYMENT_STATE::instance ()->instance_to_container (facet_id);
+    const char *recep_cont =
+      DEPLOYMENT_STATE::instance ()->instance_to_container (receptacle_id);
+
+    if (facet_cont && recep_cont &&
+        ACE_OS::strcmp (facet_cont, recep_cont) != 0)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::disconnect_local_port - "
+                        "Ports <%C> and <%C> participate in local facet/receptacle connection, "
+                        "but are installed in differing containers <%C> and <%C>\n",
+                        facet_id,
+                        receptacle_id,
+                        facet_cont,
+                        recep_cont));
+        throw ::Deployment::InvalidConnection (facet_id,
+                                               "Component instance participates in a local connection with "
+                                               "a non-local entity.");
+      }
+
+    CIAO::Container_var cont =
+      DEPLOYMENT_STATE::instance ()->fetch_container (facet_cont);
+
+    Components::CCMObject_var
+      facet = DEPLOYMENT_STATE::instance ()->fetch_component (facet_id),
+      receptacle = DEPLOYMENT_STATE::instance ()->fetch_component (receptacle_id);
+
+    cont->disconnect_local_facet (facet,
+                               facet_port,
+                               receptacle,
+                               receptacle_port);
+    CIAO_DEBUG (5, (LM_INFO, CLINFO
+                    "Connection_Handler::connect_local_port - "
+                    "Disconnected local port <%C>:<%C> to <%C>:<%C>\n",
+                    facet_id, facet_port,
+                    receptacle_id, receptacle_port));
+  }
+
   bool
   Connection_Handler::is_local_facet (const ::Deployment::PlanConnectionDescription &conn)
   {
