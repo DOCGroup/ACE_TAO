@@ -679,6 +679,11 @@ endif
 ec_typed_events ?= 1
 zlib ?= 1
 
+valgrind ?=
+ifeq ($(valgrind),1)
+  CPPFLAGS += -DACE_HAS_VALGRIND
+endif
+
 profile ?=
 ifeq ($(profile),0)
   override profile =
