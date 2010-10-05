@@ -31,7 +31,8 @@ namespace CIAO
    *  big enough to hold an address, even on a 64-bit machine.
    */
   class Cookie_Factory_Export Cookie_Impl
-    : public virtual OBV_Components::Cookie
+    : public virtual OBV_Components::Cookie,
+      public virtual CORBA::DefaultValueRefCountBase
   {
   public:
     Cookie_Impl (void);
