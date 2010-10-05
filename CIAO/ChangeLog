@@ -1,3 +1,8 @@
+Tue Oct  5 09:20:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * MPC/config/avoids_ccm_noevent.mpb:
+	Add base project to avoids compiling if ccm_noevent is set.
+
 Tue Oct  5 08:57:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * ccm/CCM_Events.idl:
