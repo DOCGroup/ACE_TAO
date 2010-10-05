@@ -1,8 +1,20 @@
+Tue Oct  5 07:23:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+        * COPYING:
+          Small updates
+
+        * docs/ACE-porting.html:
+          Updated links
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Added support for valgrind=1
+
 Mon Oct  4 19:55:33 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/make_release.py:
 
-          Updates. 
+          Updates.
 
 Mon Oct  4 12:32:02 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
