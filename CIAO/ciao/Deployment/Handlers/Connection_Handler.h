@@ -89,6 +89,11 @@ namespace CIAO
                              const char *receptacle_id,
                              const char *receptacle_port);
 
+    void disconnect_local_port (const char *facet_id,
+                                const char *facet_port,
+                                const char *receptacle_id,
+                                const char *receptacle_port);
+
     bool is_local_facet (const ::Deployment::PlanConnectionDescription &conn);
 
     typedef std::pair < ::Components::Cookie_var,
