@@ -16,20 +16,22 @@ module CIF
   {
     void do_derived_foo ();
   };
-
+#if !defined (CCM_NOEVENT)
   eventtype DoSomething {
     public string tobedone;
   };
   eventtype DoSomethingElse {
     public string tobedone;
   };
+#endif
 
   component CIF_Provider
   {
+#if !defined (CCM_NOEVENT)
     publishes DoSomething     publish_do_something;
     publishes DoSomethingElse publish_do_something_else;
     emits     DoSomething     emit_do_something;
-
+#endif
     provides foo          provide_cif_foo;
     provides derived_foo  provide_cif_derived_foo;
 
@@ -38,8 +40,9 @@ module CIF
 
   component CIF_User
   {
+#if !defined (CCM_NOEVENT)
     consumes DoSomething consume_do_something;
-
+#endif
     uses foo             use_cif_foo;
     uses multiple foo    use_multiple_foo;
     uses derived_foo     use_cif_derived_foo;

@@ -49,22 +49,23 @@ module static
       interface _connector
       {
       };
-
+#if !defined (CCM_NOEVENT)
       eventtype _eventtype
       {
         private virtual _public;
       };
+#endif
     };
   };
 };
-
+#if !defined (CCM_NOEVENT)
 eventtype _eventtype
 {
   public string _factory;
   private string friend;
   public string _wstring;
 };
-
+#endif
 interface _oneway {};
 
 module _component
@@ -84,7 +85,7 @@ module _component
     uses _interface::_attribute _union;
     uses _oneway _struct;
     uses static::_readonly::protected::virtual volatile;
-
+#if !defined (CCM_NOEVENT)
     publishes _eventtype _object;
     publishes static::_readonly::protected::_eventtype do;
 
@@ -93,15 +94,17 @@ module _component
 
     emits _eventtype class;
     emits static::_readonly::protected::_eventtype delete;
+#endif
   };
 
   home new manages _out
   {
+#if !defined (CCM_NOEVENT)
     static::_readonly::protected::virtual
     catch (
         inout static::_readonly::protected::_eventtype try)
       raises (_interface::_attribute::_inout);
-
+#endif
     finder continue (in _interface::_attribute _inout);
   };
 };

@@ -53,10 +53,11 @@ namespace CIAO_Simple_SimpleEmitter_Impl
   {
     CIAO_TRACE ("SimpleEmitter_exec_i::ccm_activate ()");
     // Your code here.
-
+#if !defined (CCM_NOEVENT)
     ::Simple::Hello_var hello = new OBV_Simple::Hello ("Test successful, hello from SimpleEmitter_exec_i");
 
     this->context_->push_hello_ (hello._retn ());
+#endif
   }
 
   void

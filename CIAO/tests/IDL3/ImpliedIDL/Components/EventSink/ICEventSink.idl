@@ -10,13 +10,16 @@
 
 module ImpliedEventSink
 {
+#if !defined (CCM_NOEVENT)
   eventtype foo_event
     {
     };
-
+#endif
   component Foo
     {
+#if !defined (CCM_NOEVENT)
       consumes foo_event c_foo;
+#endif
     };
   /*
   interface test

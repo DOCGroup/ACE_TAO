@@ -14,10 +14,11 @@ module Basic
   {
     provides  ReadData data_out;
     uses      ReadData data_in;
+#if !defined (CCM_NOEVENT)
     publishes DataAvailable out_avail;
     consumes  DataAvailable in_avail;
     provides  AnalyzeData data_crunch;
-
+#endif
     readonly attribute boolean is_necessary;
   };
 

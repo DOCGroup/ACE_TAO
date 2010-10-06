@@ -21,7 +21,9 @@ module Thread
   component Sender supports trigger
   {
     provides ReadMessage push_message;
+#if !defined (CCM_NOEVENT)
     publishes TimeOut click_out;
+#endif
   };
 
   home SenderHome manages Sender

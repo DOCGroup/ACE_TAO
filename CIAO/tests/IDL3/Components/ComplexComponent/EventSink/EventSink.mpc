@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n EventSink"
 
-project(EventSink_stub): ccm_stub {
+project(EventSink_stub): ccm_stub, avoids_ccm_noevent {
 
   sharedname = EventSink_stub
   idlflags += -Wb,stub_export_macro=EVENTSINK_STUB_Export -Wb,stub_export_include=EventSink_stub_export.h -Wb,skel_export_macro=EVENTSINK_SVNT_Export -Wb,skel_export_include=EventSink_svnt_export.h -Gxhst -Gxhsk

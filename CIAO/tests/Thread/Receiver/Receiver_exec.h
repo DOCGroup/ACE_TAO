@@ -25,9 +25,11 @@ namespace CIAO_Thread_Receiver_Impl
     Receiver_exec_i (const ACE_Thread_ID &thr);
     virtual ~Receiver_exec_i (void);
 
+#if !defined (CCM_NOEVENT)
     virtual void
     push_click_in (
       ::Thread::TimeOut * ev);
+#endif
 
     virtual ::CORBA::Short
     iterations (void);

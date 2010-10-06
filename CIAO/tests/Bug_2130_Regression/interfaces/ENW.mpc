@@ -1,6 +1,6 @@
 //$Id$
 
-project(ENW_stub): ccm_stub, event {
+project(ENW_stub): ccm_stub, event, avoids_ccm_noevent {
   sharedname = ENW_stub
   idlflags -= -GT
   idlflags += -Wb,stub_export_macro=ENW_STUB_Export \
@@ -18,7 +18,7 @@ project(ENW_stub): ccm_stub, event {
   }
 }
 
-project(ENW_skel) : ciao_servant, event {
+project(ENW_skel) : ciao_servant, event, avoids_ccm_noevent {
   after +=  ENW_stub
   sharedname  = ENW_skel
   libs    += ENW_stub
