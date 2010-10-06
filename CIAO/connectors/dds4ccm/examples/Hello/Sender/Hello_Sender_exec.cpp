@@ -132,16 +132,20 @@ namespace CIAO_Hello_Sender_Impl
       {
         if (this->iteration_ < this->iterations_)
           {
-            DDSHello * new_msg = new DDSHello();
-            ACE_CString msg = create_message (this->msg_);
-            new_msg->hello = msg.c_str ();
-            new_msg->iterator = ++this->iteration_;
-            this->writer_->write_one (*new_msg, ::DDS::HANDLE_NIL);
-            ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::tick - "
-                                  "Written sample: <%C> - <%u>\n",
-                                  msg.c_str (),
-                                  new_msg->iterator));
-            delete new_msg;
+            Hello::Writer_var writer =
+              this->context_->get_connection_info_in_data ();
+            if (! ::CORBA::is_nil (writer.in ()))
+              {
+                DDSHello new_msg;
+                ACE_CString msg = create_message (this->msg_);
+                new_msg.hello = msg.c_str ();
+                new_msg.iterator = ++this->iteration_;
+                writer->write_one (new_msg, ::DDS::HANDLE_NIL);
+                ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::tick - "
+                                      "Written sample: <%C> - <%u>\n",
+                                      msg.c_str (),
+                                      new_msg.iterator));
+              }
           }
         else
           { //we're done
@@ -248,7 +252,6 @@ namespace CIAO_Hello_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    this->writer_ = this->context_->get_connection_info_in_data ();
   }
 
   void
