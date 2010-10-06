@@ -13,7 +13,7 @@ project(Display_Base_idl_gen) : componentidldefaults {
   }
 }
 
-project(Display_Base_lem_gen) : ciaoidldefaults {
+project(Display_Base_lem_gen) : ciaoidldefaults, avoids_ccm_noevent {
   after += Display_Base_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=DISPLAY_BASE_STUB_Export \
@@ -24,7 +24,7 @@ project(Display_Base_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(Display_Base_stub) : ccm_stub {
+project(Display_Base_stub) : ccm_stub, avoids_ccm_noevent {
   after += Display_Base_lem_gen
   libout = ../lib
   libpaths += ../lib
