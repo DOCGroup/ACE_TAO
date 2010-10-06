@@ -461,40 +461,40 @@ namespace CIAO_Updater_Sender_Impl
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: AlreadyCreated  with test updater delete_many.\n")));
       result = false;
     }
-    if(result==true)
-    {
-    //delete many with no exception
-    //reset instances to original values
-      for (int i = 1; i < 4; i++)
+    if (result==true)
+      {
+        // Delete many with no exception
+        // reset instances to original values
+        for (int i = 1; i < 4; i++)
+          {
+            char key[7];
+            TestTopic new_key;
+            ACE_OS::sprintf (key, "many_%d", i);
+            new_key.key = CORBA::string_dup(key);
+            new_key.x = i;
+            this->topic_seq_many_[i-1] = new_key;
+          }
+        try
         {
-          char key[7];
-          TestTopic new_key;
-          ACE_OS::sprintf (key, "many_%d", i);
-          new_key.key = CORBA::string_dup(key);
-          new_key.x = i;
-          this->topic_seq_many_[i-1] = new_key;
-        }
-      try
-      {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("delete_many : deleted <%u> samples\n"),
-                                          this->topic_seq_many_.length ()));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("delete_many : deleted <%u> samples\n"),
+                                            this->topic_seq_many_.length ()));
 
-        this->updater_->delete_many (this->topic_seq_many_);
-        result = true;
+          this->updater_->delete_many (this->topic_seq_many_);
+          result = true;
+        }
+        catch(const CCM_DDS::NonExistent& )
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater delete_many\n")));
+          result = false;
+        }
+        catch (const CCM_DDS::InternalError& ex)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
+                    ACE_TEXT ("with test updater delete_many: index <%d> - retval <%d>\n"),
+                    ex.index, ex.error_code));
+          result = false;
+        }
       }
-      catch(const CCM_DDS::NonExistent& )
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with test updater delete_many\n")));
-        result = false;
-      }
-      catch (const CCM_DDS::InternalError& ex)
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
-                   ACE_TEXT ("with test updater delete_many: index <%d> - retval <%d>\n"),
-                   ex.index, ex.error_code));
-        result = false;
-      }
-    }
     return result;
   }
 

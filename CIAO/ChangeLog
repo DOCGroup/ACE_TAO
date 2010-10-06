@@ -1,3 +1,22 @@
+Wed Oct  6 08:31:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender_exec.cpp:
+          layout changes
+
+        * performance-tests/mico:
+        * performance-tests/mico/mico-thrput-st:
+        * performance-tests/mico/mico-thrput-st/README:
+        * performance-tests/mico/mico-thrput-st/RoundTrip:
+        * performance-tests/mico/mico-thrput-st/RoundTrip.idl:
+        * performance-tests/mico/mico-thrput-st/RoundTrip_impl.cc:
+        * performance-tests/mico/mico-thrput-st/RoundTrip_impl.h:
+        * performance-tests/mico/mico-thrput-st/client.cc:
+        * performance-tests/mico/mico-thrput-st/mico-env:
+        * performance-tests/mico/mico-thrput-st/server.cc:
+          Removed these files, no idea why we have a mico performance test
+          in CIAO
+
 Wed Oct  6 07:49:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
