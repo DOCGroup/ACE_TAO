@@ -302,7 +302,7 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
       cerr << "RECEIVER: Error detaching query condition" << endl;
       return clean_up (participant);
     }
-  //delete the query condition from the data reader
+  // Delete the query condition from the data reader
   typed_dr->delete_readcondition (qc);
 
   rc = typed_dr->create_readcondition (
