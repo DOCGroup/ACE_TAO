@@ -13,7 +13,7 @@ project(Hello_Base_idl_gen) : componentidldefaults {
   }
 }
 
-project(Hello_Base_lem_gen) : ciaoidldefaults {
+project(Hello_Base_lem_gen) : ciaoidldefaults, avoids_ccm_noevent {
   custom_only = 1
   after += Hello_Base_idl_gen
   idlflags += -Wb,export_macro=HELLO_BASE_STUB_Export \
@@ -24,7 +24,7 @@ project(Hello_Base_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(Hello_Base_stub) : ccm_stub {
+project(Hello_Base_stub) : ccm_stub,avoids_ccm_noevent {
   after += Hello_Base_lem_gen
   libout = ../lib
   sharedname = Hello_Base_stub

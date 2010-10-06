@@ -18,7 +18,7 @@ project(ENW_stub): ccm_stub, event, avoids_ccm_noevent {
   }
 }
 
-project(ENW_skel) : ciao_servant, event, avoids_ccm_noevent {
+project(ENW_skel) : ciao_servant, event {
   after +=  ENW_stub
   sharedname  = ENW_skel
   libs    += ENW_stub
