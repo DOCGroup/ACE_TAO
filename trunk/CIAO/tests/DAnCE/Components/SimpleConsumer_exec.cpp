@@ -25,7 +25,7 @@ namespace CIAO_Simple_SimpleConsumer_Impl
   // Attribute operations.
 
   // Port operations.
-
+#if !defined (CCM_NOEVENT)
   void
   SimpleConsumer_exec_i::push_hello_ (
     ::Simple::Hello * ev )
@@ -37,7 +37,7 @@ namespace CIAO_Simple_SimpleConsumer_Impl
     ACE_DEBUG ((LM_EMERGENCY, "SimpleConsumer_exec_i::push_hello_ - "
                  "Received hello event, value is %s\n", ev->hello_ ()));
   }
-
+#endif
   // Operations from Components::SessionComponent
 
   void

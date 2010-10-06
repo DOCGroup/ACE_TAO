@@ -168,10 +168,11 @@ namespace CIAO_CIF_CIF_User_Impl
     //@{
     /** Component attributes and port operations. */
 
-
+#if !defined (CCM_NOEVENT)
     virtual void
     push_consume_do_something (
       ::CIF::DoSomething * ev);
+#endif
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:36

@@ -29,11 +29,11 @@ namespace CIAO_Simple_SimpleConsumer_Impl
     // Attribute operations.
 
     // Port operations.
-
+#if  !defined (CCM_NOEVENT)
     virtual void
     push_hello_ (
       ::Simple::Hello *ev);
-
+#endif
     // Operations from Components::SessionComponent
 
     virtual void

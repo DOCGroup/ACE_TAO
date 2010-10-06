@@ -125,14 +125,15 @@ namespace CIAO_Thread_Sender_Impl
   void
   Sender_exec_i::start (void)
   {
+#if !defined (CCM_NOEVENT)
     Thread::TimeOut_var event = new OBV_Thread::TimeOut;
     event->data ("start sending");
     ACE_DEBUG ((LM_DEBUG, "Sender initiates the process.\n"));
     this->context_->push_click_out (event.in ());
+#endif
   }
 
   // Component attributes and port operations.
-
   ::Thread::CCM_ReadMessage_ptr
   Sender_exec_i::get_push_message (void)
   {

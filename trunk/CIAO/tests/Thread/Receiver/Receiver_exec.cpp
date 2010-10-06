@@ -62,7 +62,7 @@ namespace CIAO_Thread_Receiver_Impl
   // Supported operations and attributes.
 
   // Component attributes and port operations.
-
+#if !defined (CCM_NOEVENT)
   void
   Receiver_exec_i::push_click_in (
     ::Thread::TimeOut * ev)
@@ -105,7 +105,7 @@ namespace CIAO_Thread_Receiver_Impl
         ACE_OS::sleep (tv);
       }
   }
-
+#endif
   ::CORBA::Short
   Receiver_exec_i::iterations (void)
   {

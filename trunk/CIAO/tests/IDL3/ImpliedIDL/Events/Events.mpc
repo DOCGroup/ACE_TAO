@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n Events"
 
-project(Events_stub): ccm_stub {
+project(Events_stub): ccm_stub, avoids_ccm_noevent {
 
   sharedname = Events_stub
   idlflags += -Wb,stub_export_macro=EVENTS_STUB_Export -Wb,stub_export_include=Events_stub_export.h -Wb,skel_export_macro=EVENTS_SVNT_Export -Wb,skel_export_include=Events_svnt_export.h -Gxhst -Gxhsk

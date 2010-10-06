@@ -13,11 +13,12 @@ module Thread
   {
     string get_message();
   };
-
+#if !defined (CCM_NOEVENT)
   eventtype TimeOut
   {
     public string data;
   };
+#endif
 };
 
 #endif /* CIAO_HELLO_IDL */

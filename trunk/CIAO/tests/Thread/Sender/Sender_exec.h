@@ -56,10 +56,8 @@ namespace CIAO_Thread_Sender_Impl
     //@{
     /** Component attributes and port operations. */
 
-
     virtual ::Thread::CCM_ReadMessage_ptr
     get_push_message (void);
-
 
     //@{
     /** Operations from Components::SessionComponent. */
