@@ -126,7 +126,6 @@ namespace CIAO_Hello_Sender_Impl
 
   private:
     ::Hello::CCM_Sender_Context_var context_;
-    Hello::Writer_var writer_;
     pulse_Generator * ticker_;
     CORBA::ULong rate_;
     CORBA::ULong iteration_, iterations_;
