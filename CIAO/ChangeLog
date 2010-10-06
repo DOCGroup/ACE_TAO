@@ -1,3 +1,44 @@
+Wed Oct  6 13:15:38 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tests/CIF/Component/CIF_Component_exec.cpp:
+        * tests/CIF/Component/CIF_Component.idl:
+        * tests/CIF/Component/CIF_Component_exec.h:
+        * tests/Bug_2130_Regression/interfaces/ENW.mpc:
+        * tests/IDL_Test/Cornucopia/Cornucopia.idl:
+        * tests/IDL_Test/Keywords/Keyword_Clash.idl:
+        * tests/IDL_Test/Reused_Facet_Interface/Basic.idl:
+        * tests/IDL_Test/Reused_Facet_Interface/CodeGen.idl:
+        * tests/IDL_Test/Extension/Cornucopia.idl:
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.mpc:
+        * tests/Thread/Sender/Sender_exec.cpp:
+        * tests/Thread/Sender/Sender.idl:
+        * tests/Thread/Sender/Sender_exec.h:
+        * tests/Thread/Thread_Base/Thread_Base.idl:
+        * tests/Thread/Receiver/Receiver_exec.cpp:
+        * tests/Thread/Receiver/Receiver.idl:
+        * tests/Thread/Receiver/Receiver_exec.h:
+        * tests/DAnCE/Components/SimpleConsumer_exec.cpp:
+        * tests/DAnCE/Components/SimpleCommon.idl:
+        * tests/DAnCE/Components/SimplePublisher.idl:
+        * tests/DAnCE/Components/SimpleEmitter.idl:
+        * tests/DAnCE/Components/SimplePublisher_exec.cpp:
+        * tests/DAnCE/Components/SimpleConsumer_exec.h:
+        * tests/DAnCE/Components/SimpleEmitter_exec.cpp:
+        * tests/DAnCE/Components/SimpleConsumer.idl:
+        * tests/CIDL/CodeGen/Basic.idl:
+        * tests/CIDL/CodeGen/CodeGen.idl:
+        * tests/IDL3/Events/Regular/Regular.mpc:
+        * tests/IDL3/Events/Abstract/Abstract.mpc:
+        * tests/IDL3/Events/Any/Any.mpc:
+        * tests/IDL3/Components/ComplexComponent/EventSource/EventSource.mpc:
+        * tests/IDL3/Components/ComplexComponent/EventSink/EventSink.mpc:
+        * tests/IDL3/Homes/Factory/Factory.idl:
+        * tests/IDL3/ImpliedIDL/Events/Events.mpc:
+        * tests/IDL3/ImpliedIDL/Components/EventSource/ICEventSource.mpc:
+        * tests/IDL3/ImpliedIDL/Components/EventSink/ICEventSink.idl:
+        * tests/IDL3/ImpliedIDL/All/all.mpc:
+        Add !defined(CCM_NOEVENT) in case of ccm builds with events disabled.
+
 Wed Oct  6 08:31:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:

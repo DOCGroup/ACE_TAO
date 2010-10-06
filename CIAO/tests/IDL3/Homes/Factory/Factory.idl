@@ -27,9 +27,10 @@ module FactoryHomes
       factory FooFactory (in string foo, in short bar) raises (foo_exception);
     };
 
+#if !defined (CCM_NOEVENT)
   eventtype food
     {
     };
-
+#endif
 
 };

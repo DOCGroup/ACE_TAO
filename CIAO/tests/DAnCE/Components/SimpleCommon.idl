@@ -19,10 +19,12 @@ module Simple
     void hello (in string hello);
   };
 
+#if  !defined (CCM_NOEVENT)
   eventtype Hello
   {
     public string hello_;
   };
+#endif
 };
 
 #endif /*SIMPLE_COMMON_IDL*/

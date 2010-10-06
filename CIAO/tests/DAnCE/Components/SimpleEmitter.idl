@@ -10,7 +10,9 @@ module Simple
 {
   component SimpleEmitter
   {
+#if !defined (CCM_NOEVENT)
     emits Hello hello_;
+#endif
   };
 
   home SimpleEmitterHome manages SimpleEmitter

@@ -10,7 +10,9 @@ module Simple
 {
   component SimplePublisher
   {
+#if !defined (CCM_NOEVENT)
     publishes Hello hello_;
+#endif
   };
 
   home SimplePublisherHome manages SimplePublisher

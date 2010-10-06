@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(ConvertIDL3) : taoidl3toidl2defaults, ciao_executor {
+project(ConvertIDL3) : taoidl3toidl2defaults, ciao_executor, avoids_ccm_noevent {
   avoids += mfc
   idlflags += -Sm
 

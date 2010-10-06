@@ -10,8 +10,9 @@ module Thread
   component Receiver
   {
     uses ReadMessage read_message;
+#if !defined (CCM_NOEVENT)
     consumes TimeOut click_in;
-
+#endif
     attribute short iterations;
   };
 

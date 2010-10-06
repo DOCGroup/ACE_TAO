@@ -230,13 +230,14 @@ namespace CIAO_CIF_CIF_User_Impl
   // Supported operations and attributes.
 
   // Component attributes and port operations.
-
+#if  !defined (CCM_NOEVENT)
   void
   CIF_User_exec_i::push_consume_do_something (
     ::CIF::DoSomething * /* ev */)
   {
     /* Your code here. */
   }
+#endif
 
   ::CORBA::Short
   CIF_User_exec_i::user_id (void)

@@ -58,9 +58,11 @@ valuetype pkey : Components::PrimaryKeyBase
 };
 #endif
 
+#if !defined (CCM_NOEVENT)
 eventtype pubtype {};
 eventtype emittype {};
 eventtype eattype {};
+#endif
 
 exception BadGet {};
 exception BadSet {};
@@ -172,9 +174,11 @@ module DerivedMod
     provides pface pface_provider;
     uses uface uface_user;
     uses multiple umface umface_umuser;
+#if !defined (CCM_NOEVENT)
     publishes pubtype pubtype_publisher;
     emits emittype emittype_emitter;
     consumes eattype eattype_consumer;
+#endif
     uses IfConcr ccre_user;
   };
 };
