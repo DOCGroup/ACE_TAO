@@ -239,24 +239,24 @@ namespace CIAO
         switch (conn.internalEndpoint[endpoint].kind)
           {
           case Deployment::Facet:
-            this->disconnect_facet (plan, c_id);
+            this->disconnect_facet (plan, c_id, endpoint);
             break;
 
           case Deployment::SimplexReceptacle:
           case Deployment::MultiplexReceptacle:
-            this->disconnect_receptacle (plan, c_id);
+            this->disconnect_receptacle (plan, c_id, endpoint);
             break;
 #if !defined (CCM_NOEVENT)
           case Deployment::EventEmitter:
-            this->disconnect_emitter (plan, c_id);
+            this->disconnect_emitter (plan, c_id, endpoint);
             break;
 
           case Deployment::EventPublisher:
-            this->disconnect_publisher (plan, c_id);
+            this->disconnect_publisher (plan, c_id, endpoint);
             break;
 
           case Deployment::EventConsumer:
-            this->disconnect_consumer (plan, c_id);
+            this->disconnect_consumer (plan, c_id, endpoint);
             break;
 #endif
           default:
@@ -655,17 +655,57 @@ namespace CIAO
                                                        ::Components::CCMObject::_duplicate (emitter.in ()));
   }
 #endif
-
   void
-  Connection_Handler::disconnect_facet (const ::Deployment::DeploymentPlan &,
-                                        ::CORBA::ULong)
+  Connection_Handler::disconnect_facet (const ::Deployment::DeploymentPlan &plan,
+                                        ::CORBA::ULong connectionRef,
+                                        ::CORBA::ULong endpointRef)
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_facet");
+
+    const ::Deployment::PlanConnectionDescription &conn =
+      plan.connection[connectionRef];
+    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
+      conn.internalEndpoint[endpointRef];
+
+    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                    "Connection_Handler::disconnect_facet - "
+                    "Disconnecting connection <%C> on instance <%C>\n",
+                    conn.name.in (),
+                    plan.instance[endpoint.instanceRef].name.in ()));
+
+    if (this->is_local_facet (conn))
+      {
+        CORBA::ULong other_endpointRef = (endpointRef + 1) % 2;
+        if (conn.internalEndpoint.length () == 2 &&
+            (conn.internalEndpoint[other_endpointRef].kind == ::Deployment::MultiplexReceptacle ||
+             conn.internalEndpoint[other_endpointRef].kind == ::Deployment::SimplexReceptacle))
+          {
+            const ::Deployment::PlanSubcomponentPortEndpoint &other_endpoint =
+              conn.internalEndpoint[other_endpointRef];
+            this->disconnect_local_port (plan.instance[endpoint.instanceRef].name.in (),
+                                      endpoint.portName.in (),
+                                      plan.instance[other_endpoint.instanceRef].name.in (),
+                                      other_endpoint.portName.in ());
+            return;
+          }
+        else
+          {
+            CIAO_ERROR (1, (LM_ERROR, CLINFO
+                            "Connection_Handler::disconnect_facet - "
+                            "Error: Wrong number of internal endpoints for local facet connection: "
+                            "expected <2> - found <%d>\n",
+                            conn.internalEndpoint.length ()));
+
+            throw ::Deployment::InvalidConnection (conn.name.in (),
+                                                   "Local facet connections require exactly 2 internalEndpoints");
+          }
+      }
   }
 
   void
   Connection_Handler::disconnect_receptacle (const ::Deployment::DeploymentPlan &,
+                                             ::CORBA::ULong,
                                              ::CORBA::ULong)
 
   {
@@ -675,6 +715,7 @@ namespace CIAO
 #if !defined (CCM_NOEVENT)
   void
   Connection_Handler::disconnect_publisher (const ::Deployment::DeploymentPlan &,
+                                            ::CORBA::ULong,
                                             ::CORBA::ULong)
 
   {
@@ -685,6 +726,7 @@ namespace CIAO
 #if !defined (CCM_NOEVENT)
   void
   Connection_Handler::disconnect_emitter (const ::Deployment::DeploymentPlan &,
+                                          ::CORBA::ULong,
                                           ::CORBA::ULong)
 
   {
@@ -695,7 +737,8 @@ namespace CIAO
 #if !defined (CCM_NOEVENT)
   void
   Connection_Handler::disconnect_consumer (const ::Deployment::DeploymentPlan &,
-                                             ::CORBA::ULong)
+                                           ::CORBA::ULong,
+                                           ::CORBA::ULong)
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_consumer");
