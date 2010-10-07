@@ -275,26 +275,31 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_default_top
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::activate_default_topic");
 
-  if (::CORBA::is_nil (this->topiclistener_.in ()))
-    {
-      ACE_NEW_THROW_EX (this->topiclistener_,
-                        TopicListener (
-                          this->context_->get_connection_error_listener (),
-                          reactor),
-                        ::CORBA::NO_MEMORY ());
-    }
+  ::DDS::StatusMask const mask =
+    TopicListener::get_mask (this->context_->get_connection_error_listener ());
 
-  ::DDS::ReturnCode_t const retcode = this->topic_->set_listener (
-                              this->topiclistener_.in (),
-                              TopicListener::get_mask (
-                              this->context_->get_connection_error_listener ()));
-  if (retcode != ::DDS::RETCODE_OK)
+  if (mask != 0)
     {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    "DDS_TopicBase_Connector_T::activate_default_topic - "
-                    "Error while setting the listener on the topic - <%C>\n",
-                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
-      throw ::CORBA::INTERNAL ();
+      if (::CORBA::is_nil (this->topiclistener_.in ()))
+        {
+          ACE_NEW_THROW_EX (this->topiclistener_,
+                            TopicListener (
+                              this->context_->get_connection_error_listener (),
+                              reactor),
+                            ::CORBA::NO_MEMORY ());
+        }
+
+      ::DDS::ReturnCode_t const retcode = this->topic_->set_listener (
+                                  this->topiclistener_.in (), mask);
+
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                        "DDS_TopicBase_Connector_T::activate_default_topic - "
+                        "Error while setting the listener on the topic - <%C>\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CORBA::INTERNAL ();
+        }
     }
 }
 
@@ -304,26 +309,32 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_subscriber 
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::activate_subscriber");
 
-  if (::CORBA::is_nil (this->subscriber_listener_.in ()))
-    {
-      ACE_NEW_THROW_EX (this->subscriber_listener_,
-                        SubscriberListener (
-                          this->context_->get_connection_error_listener (),
-                          reactor),
-                        ::CORBA::NO_MEMORY ());
-    }
+  ::DDS::StatusMask const mask =
+    SubscriberListener::get_mask (
+      this->context_->get_connection_error_listener ());
 
-  ::DDS::ReturnCode_t const retcode = this->subscriber_->set_listener (
-                            this->subscriber_listener_.in (),
-                            SubscriberListener::get_mask (
-                              this->context_->get_connection_error_listener ()));
-  if (retcode != ::DDS::RETCODE_OK)
+  if (mask != 0)
     {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    "DDS_TopicBase_Connector_T::activate_subscriber - "
-                    "Error while setting the listener on the subscriber - <%C>\n",
-                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
-      throw ::CORBA::INTERNAL ();
+      if (::CORBA::is_nil (this->subscriber_listener_.in ()))
+        {
+          ACE_NEW_THROW_EX (this->subscriber_listener_,
+                            SubscriberListener (
+                              this->context_->get_connection_error_listener (),
+                              reactor),
+                            ::CORBA::NO_MEMORY ());
+        }
+
+      ::DDS::ReturnCode_t const retcode =
+        this->subscriber_->set_listener (this->subscriber_listener_.in (), mask);
+
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                        "DDS_TopicBase_Connector_T::activate_subscriber - "
+                        "Error while setting the listener on the subscriber - <%C>\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CORBA::INTERNAL ();
+        }
     }
 }
 
@@ -334,26 +345,32 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_publisher (
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::activate_publisher");
 
-  if (::CORBA::is_nil (this->publisher_listener_.in ()))
-    {
-      ACE_NEW_THROW_EX (this->publisher_listener_,
-                        PublisherListener (
-                          this->context_->get_connection_error_listener (),
-                          reactor),
-                        ::CORBA::NO_MEMORY ());
-    }
+  ::DDS::StatusMask const mask =
+    PublisherListener::get_mask (
+      this->context_->get_connection_error_listener ());
 
-  ::DDS::ReturnCode_t const retcode = this->publisher_->set_listener (
-                            this->publisher_listener_.in (),
-                            PublisherListener::get_mask (
-                              this->context_->get_connection_error_listener ()));
-  if (retcode != ::DDS::RETCODE_OK)
+  if (mask != 0)
     {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    "DDS_TopicBase_Connector_T::activate_publisher - "
-                    "Error while setting the listener on the publisher - <%C>\n",
-                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
-      throw ::CORBA::INTERNAL ();
+      if (::CORBA::is_nil (this->publisher_listener_.in ()))
+        {
+          ACE_NEW_THROW_EX (this->publisher_listener_,
+                            PublisherListener (
+                              this->context_->get_connection_error_listener (),
+                              reactor),
+                            ::CORBA::NO_MEMORY ());
+        }
+
+      ::DDS::ReturnCode_t const retcode = this->publisher_->set_listener (
+                                this->publisher_listener_.in (), mask);
+
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                        "DDS_TopicBase_Connector_T::activate_publisher - "
+                        "Error while setting the listener on the publisher - <%C>\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CORBA::INTERNAL ();
+        }
     }
 }
 
@@ -363,19 +380,21 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate_default_to
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::passivate_default_topic");
 
-  ::DDS::ReturnCode_t const retcode = this->topic_->set_listener (
-                                                    ::DDS::TopicListener::_nil (),
-                                                    0);
-  if (retcode != ::DDS::RETCODE_OK)
+  if (!::CORBA::is_nil (this->topiclistener_.in ()))
     {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    "DDS_TopicBase_Connector_T::passivate_default_topic - "
-                    "Error while setting the listener on the topic - <%C>\n",
-                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
-      throw ::CORBA::INTERNAL ();
-    }
+      ::DDS::ReturnCode_t const retcode =
+        this->topic_->set_listener (::DDS::TopicListener::_nil (), 0);
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                        "DDS_TopicBase_Connector_T::passivate_default_topic - "
+                        "Error while setting the listener on the topic - <%C>\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CORBA::INTERNAL ();
+        }
 
-  this->topiclistener_ = ::DDS::TopicListener::_nil ();
+      this->topiclistener_ = ::DDS::TopicListener::_nil ();
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -384,19 +403,22 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate_subscriber
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::passivate_subscriber");
 
-  ::DDS::ReturnCode_t const retcode = this->subscriber_->set_listener (
-                                              ::DDS::SubscriberListener::_nil (),
-                                              0);
-  if (retcode != ::DDS::RETCODE_OK)
+  if (!::CORBA::is_nil (this->subscriber_listener_.in ()))
     {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    "DDS_TopicBase_Connector_T::passivate_subscriber - "
-                    "Error while setting the listener on the subscriber - <%C>\n",
-                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
-      throw ::CORBA::INTERNAL ();
-    }
+      ::DDS::ReturnCode_t const retcode = this->subscriber_->set_listener (
+                                                  ::DDS::SubscriberListener::_nil (),
+                                                  0);
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                        "DDS_TopicBase_Connector_T::passivate_subscriber - "
+                        "Error while setting the listener on the subscriber - <%C>\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CORBA::INTERNAL ();
+        }
 
-  this->subscriber_listener_ = ::DDS::SubscriberListener::_nil ();
+      this->subscriber_listener_ = ::DDS::SubscriberListener::_nil ();
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -405,19 +427,22 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate_publisher 
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::passivate_publisher");
 
-  ::DDS::ReturnCode_t const retcode =   this->publisher_->set_listener (
-                                                ::DDS::PublisherListener::_nil (),
-                                                0);
-  if (retcode != ::DDS::RETCODE_OK)
+  if (!::CORBA::is_nil (this->publisher_listener_.in ()))
     {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    "DDS_TopicBase_Connector_T::passivate_publisher - "
-                    "Error while setting the listener on the publisher - <%C>\n",
-                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
-      throw ::CORBA::INTERNAL ();
-    }
+      ::DDS::ReturnCode_t const retcode =
+        this->publisher_->set_listener (::DDS::PublisherListener::_nil (), 0);
 
-  this->publisher_listener_ = ::DDS::PublisherListener::_nil ();
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                        "DDS_TopicBase_Connector_T::passivate_publisher - "
+                        "Error while setting the listener on the publisher - <%C>\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CORBA::INTERNAL ();
+        }
+
+      this->publisher_listener_ = ::DDS::PublisherListener::_nil ();
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>

@@ -44,29 +44,34 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
 {
   DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate");
 
-  if (::CORBA::is_nil (this->listener_.in ()))
-    {
-      ACE_NEW_THROW_EX (this->listener_,
-                        DataReaderListener_type (
-                          listener,
-                          status,
-                          this->data_control_,
-                          reactor,
-                          this->condition_manager_),
-                        ::CORBA::NO_MEMORY ());
-    }
+  ::DDS::StatusMask const mask =
+    DataReaderListener_type::get_mask (status);
 
-  ::DDS::ReturnCode_t const retcode = this->data_reader_->set_listener (
-    this->listener_.in (),
-    DataReaderListener_type::get_mask (status));
-
-  if (retcode != ::DDS::RETCODE_OK)
+  if (mask != 0)
     {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    "DDS_Listen_T::activate - "
-                    "Error while setting the listener on the listen - <%C>\n",
-                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
-      throw ::CORBA::INTERNAL ();
+      if (::CORBA::is_nil (this->listener_.in ()))
+        {
+          ACE_NEW_THROW_EX (this->listener_,
+                            DataReaderListener_type (
+                              listener,
+                              status,
+                              this->data_control_,
+                              reactor,
+                              this->condition_manager_),
+                            ::CORBA::NO_MEMORY ());
+        }
+
+      ::DDS::ReturnCode_t const retcode = this->data_reader_->set_listener (
+        this->listener_.in (), mask);
+
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                        "DDS_Listen_T::activate - "
+                        "Error while setting the listener on the listen - <%C>\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CORBA::INTERNAL ();
+        }
     }
 }
 

@@ -79,13 +79,7 @@ namespace CIAO_Hello_Sender_Impl
 
     // Supported operations and attributes.
 
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-
     void start (void);
-
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
 
     void stop (void);
 
