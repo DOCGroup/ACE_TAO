@@ -50,18 +50,10 @@ namespace CIAO_Hello_Receiver_Impl
     PortStatusListener_exec_i (Atomic_ULong &);
     virtual ~PortStatusListener_exec_i (void);
 
-    // Operations and attributes from ::CCM_DDS::PortStatusListener
-
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-
     virtual void
     on_requested_deadline_missed (
       ::DDS::DataReader_ptr the_reader,
       const ::DDS::RequestedDeadlineMissedStatus & status);
-
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
 
     virtual void
     on_sample_lost (

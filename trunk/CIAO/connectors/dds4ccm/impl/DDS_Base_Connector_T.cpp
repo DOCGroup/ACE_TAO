@@ -182,25 +182,30 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ccm_activate (void)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ccm_activate");
 
-  if (::CORBA::is_nil (this->domainparticipantlistener_.in ()))
-    {
-      ACE_NEW_THROW_EX (this->domainparticipantlistener_,
-                        DomainParticipantListener(
-                          this->context_->
-                            get_connection_error_listener ()),
-                        ::CORBA::NO_MEMORY ());
-    }
-  ::DDS::ReturnCode_t const retcode = this->domain_participant_->set_listener (
-                              this->domainparticipantlistener_.in (),
-                              DomainParticipantListener::get_mask ());
+  ::DDS::StatusMask const mask =
+    DomainParticipantListener::get_mask ();
 
-  if (retcode != DDS_RETCODE_OK)
+  if (mask != 0)
     {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    "DDS_Base_Connector_T::ccm_activate - "
-                    "Error setting the listener on the domain participant - <%C>\n",
-                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
-      throw ::CORBA::INTERNAL ();
+      if (::CORBA::is_nil (this->domainparticipantlistener_.in ()))
+        {
+          ACE_NEW_THROW_EX (this->domainparticipantlistener_,
+                            DomainParticipantListener(
+                              this->context_->
+                                get_connection_error_listener ()),
+                            ::CORBA::NO_MEMORY ());
+        }
+      ::DDS::ReturnCode_t const retcode = this->domain_participant_->set_listener (
+                                  this->domainparticipantlistener_.in (), mask);
+
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                        "DDS_Base_Connector_T::ccm_activate - "
+                        "Error setting the listener on the domain participant - <%C>\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CORBA::INTERNAL ();
+        }
     }
 }
 
@@ -210,20 +215,24 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ccm_passivate (void)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ccm_passivate");
 
-  ::DDS::ReturnCode_t const retcode = this->domain_participant_->set_listener (
-                                      ::DDS::DomainParticipantListener::_nil (),
-                                      0);
-  if (retcode != DDS_RETCODE_OK)
+  if (!::CORBA::is_nil (this->domainparticipantlistener_.in ()))
     {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    "DDS_Base_Connector_T::ccm_passivate - "
-                    "Error while setting the listener on the "
-                    "domain participant - <%C>\n",
-                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
-      throw ::CORBA::INTERNAL ();
-    }
+      ::DDS::ReturnCode_t const retcode =
+        this->domain_participant_->set_listener (
+          ::DDS::DomainParticipantListener::_nil (), 0);
 
-  this->domainparticipantlistener_ = ::DDS::DomainParticipantListener::_nil ();
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                        "DDS_Base_Connector_T::ccm_passivate - "
+                        "Error while setting the listener on the "
+                        "domain participant - <%C>\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CORBA::INTERNAL ();
+        }
+
+      this->domainparticipantlistener_ = ::DDS::DomainParticipantListener::_nil ();
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>

@@ -75,24 +75,29 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate");
 
-  if (::CORBA::is_nil (this->listener_.in ()))
-    {
-      ACE_NEW_THROW_EX (this->listener_,
-                        PortStatusListener_type (status, reactor),
-                        ::CORBA::NO_MEMORY ());
-    }
+  ::DDS::StatusMask const mask =
+    PortStatusListener_type::get_mask (status);
 
-  ::DDS::ReturnCode_t const retcode = this->data_reader_->set_listener (
-      this->listener_.in (),
-      PortStatusListener_type::get_mask (status));
-
-  if (retcode != ::DDS::RETCODE_OK)
+  if (mask != 0)
     {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    "DDS_Subscriber_Base_T::activate - "
-                    "Error while setting the listener on the subscriber - <%C>\n",
-                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
-      throw ::CORBA::INTERNAL ();
+      if (::CORBA::is_nil (this->listener_.in ()))
+        {
+          ACE_NEW_THROW_EX (this->listener_,
+                            PortStatusListener_type (status, reactor),
+                            ::CORBA::NO_MEMORY ());
+        }
+
+      ::DDS::ReturnCode_t const retcode = this->data_reader_->set_listener (
+          this->listener_.in (), mask);
+
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                        "DDS_Subscriber_Base_T::activate - "
+                        "Error while setting the listener on the subscriber - <%C>\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CORBA::INTERNAL ();
+        }
     }
 }
 
@@ -104,7 +109,22 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::passivate ()
 
   this->condition_manager_.passivate ();
   this->data_reader_->passivate ();
-  this->listener_ = ::DDS::DataReaderListener::_nil ();
+
+  if (!::CORBA::is_nil (this->listener_.in ()))
+    {
+      ::DDS::ReturnCode_t const retcode =
+        this->data_reader_->set_listener (::DDS::DataReaderListener::_nil (), 0);
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                        "DDS_Subscriber_Base_T::passivate - "
+                        "Error while setting the listener on the reader - <%C>\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CORBA::INTERNAL ();
+        }
+
+      this->listener_ = ::DDS::DataReaderListener::_nil ();
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>

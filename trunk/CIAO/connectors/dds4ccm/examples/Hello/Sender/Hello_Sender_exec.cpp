@@ -97,6 +97,7 @@ namespace CIAO_Hello_Sender_Impl
 
   Sender_exec_i::~Sender_exec_i (void)
   {
+    delete this->ticker_;
   }
 
   // Supported operations and attributes.
@@ -148,8 +149,9 @@ namespace CIAO_Hello_Sender_Impl
               }
           }
         else
-          { //we're done
-            this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+          {
+            // We are done
+            this->stop ();
           }
        }
   }
@@ -157,28 +159,65 @@ namespace CIAO_Hello_Sender_Impl
   void
   Sender_exec_i::start (void)
   {
-    // calculate the interval time
-    long const usec = 1000000 / this->rate_;
-    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
-                this->ticker_,
-                0,
-                ACE_Time_Value (3, usec),
-                ACE_Time_Value (0, usec)) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
-                             ACE_TEXT ("Error scheduling timer")));
-    }
+    ACE_Reactor* reactor = 0;
+
+    ::CORBA::Object_var ccm_object = this->context_->get_CCM_object();
+    if (!::CORBA::is_nil (ccm_object.in ()))
+      {
+        ::CORBA::ORB_var orb = ccm_object->_get_orb ();
+        if (!::CORBA::is_nil (orb.in ()))
+          {
+            reactor = orb->orb_core ()->reactor ();
+          }
+      }
+
+    if (reactor)
+      {
+        // calculate the interval time
+        long const usec = 1000000 / this->rate_;
+        if (reactor->schedule_timer (
+                    this->ticker_,
+                    0,
+                    ACE_Time_Value (3, usec),
+                    ACE_Time_Value (0, usec)) == -1)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
+                                ACE_TEXT ("Error scheduling timer")));
+        }
+      }
+    else
+      {
+        throw ::CORBA::INTERNAL ();
+      }
   }
 
   void
   Sender_exec_i::stop (void)
   {
-    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
-    delete this->ticker_;
+    ACE_Reactor* reactor = 0;
+
+    ::CORBA::Object_var ccm_object = this->context_->get_CCM_object();
+    if (!::CORBA::is_nil (ccm_object.in ()))
+      {
+        ::CORBA::ORB_var orb = ccm_object->_get_orb ();
+        if (!::CORBA::is_nil (orb.in ()))
+          {
+            reactor = orb->orb_core ()->reactor ();
+          }
+      }
+
+    if (reactor)
+      {
+        reactor->cancel_timer (this->ticker_);
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
+      }
+    else
+      {
+        throw ::CORBA::INTERNAL ();
+      }
   }
 
-  // Component attributes.
+  // Component attributes
   ::CORBA::ULong
   Sender_exec_i::iterations (void)
   {

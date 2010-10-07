@@ -78,24 +78,30 @@ void
 DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate ()
 {
   DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate");
-  if (::CORBA::is_nil (this->data_listener_.in ()))
-    {
-      ACE_NEW_THROW_EX (this->data_listener_,
-                        DataWriterListener_type (),
-                        ::CORBA::NO_MEMORY ());
-    }
 
-  ::DDS::ReturnCode_t const retcode = this->ccm_dds_writer_->set_listener (
-    this->data_listener_.in (),
-    DataWriterListener_type::get_mask ());
+  ::DDS::StatusMask const mask =
+    DataWriterListener_type::get_mask ();
 
-  if (retcode != ::DDS::RETCODE_OK)
+  if (mask != 0)
     {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    "DDS_Update_T::activate - "
-                    "Error while setting the listener on the updater - <%C>\n",
-                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
-      throw ::CORBA::INTERNAL ();
+      if (::CORBA::is_nil (this->data_listener_.in ()))
+        {
+          ACE_NEW_THROW_EX (this->data_listener_,
+                            DataWriterListener_type (),
+                            ::CORBA::NO_MEMORY ());
+        }
+
+      ::DDS::ReturnCode_t const retcode = this->ccm_dds_writer_->set_listener (
+        this->data_listener_.in (), mask);
+
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                        "DDS_Update_T::activate - "
+                        "Error while setting the listener on the updater - <%C>\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CORBA::INTERNAL ();
+        }
     }
 }
 
@@ -105,19 +111,22 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate ()
 {
   DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate");
 
-  ::DDS::ReturnCode_t const retcode =
-    this->ccm_dds_writer_->set_listener (::DDS::DataWriterListener::_nil (), 0);
-
-  if (retcode != ::DDS::RETCODE_OK)
+  if (!::CORBA::is_nil (this->data_listener_.in ()))
     {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    "DDS_Update_T::passivate - "
-                    "Error while setting the listener on the writer - <%C>\n",
-                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
-      throw ::CORBA::INTERNAL ();
-    }
+      ::DDS::ReturnCode_t const retcode =
+        this->ccm_dds_writer_->set_listener (::DDS::DataWriterListener::_nil (), 0);
 
-  this->data_listener_ = ::DDS::DataWriterListener::_nil ();
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                        "DDS_Update_T::passivate - "
+                        "Error while setting the listener on the writer - <%C>\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CORBA::INTERNAL ();
+        }
+
+      this->data_listener_ = ::DDS::DataWriterListener::_nil ();
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
