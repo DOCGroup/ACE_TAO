@@ -186,7 +186,7 @@ ETCL_Literal_Constraint::operator== (const ETCL_Literal_Constraint & rhs)
       return_value = (ACE_OS::strcmp ((const char*) *this, (const char*) rhs) == 0);
       break;
     case ACE_ETCL_DOUBLE:
-      return_value = (ACE_CDR::Double) *this == (ACE_CDR::Double) rhs;
+      return_value = ACE::is_equal ((ACE_CDR::Double) *this, (ACE_CDR::Double) rhs);
       break;
     case ACE_ETCL_INTEGER:
     case ACE_ETCL_SIGNED:
@@ -357,7 +357,7 @@ ETCL_Literal_Constraint::operator/ (const ETCL_Literal_Constraint & rhs)
     {
     case ACE_ETCL_DOUBLE:
       {
-        if ((ACE_CDR::Double) rhs == 0.0)
+        if (ACE::is_equal ((ACE_CDR::Double) rhs, 0.0))
           return ETCL_Literal_Constraint ((ACE_CDR::Double) 0.0);
 
         ACE_CDR::Double result = (ACE_CDR::Double) *this / (ACE_CDR::Double) rhs;
