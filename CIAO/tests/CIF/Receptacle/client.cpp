@@ -597,7 +597,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
           ACE_DEBUG ((LM_DEBUG, "Receptacle get_all_ports - "
                                 "Expected number of Publishers found\n"));
         }
-#endif       
+#endif
     }
   catch (const ::CORBA::Exception& ex)
     {
