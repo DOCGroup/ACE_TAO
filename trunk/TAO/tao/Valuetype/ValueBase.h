@@ -286,14 +286,6 @@ namespace CORBA
 
   private:
     ValueBase & operator= (const ValueBase &);
-
-#ifdef SUN_CC_HAS_PVFC_BUG
-    // Need ugly fix for sun cc "pure virtual function called" bug.
-  private:
-    unsigned long tao_sun_cc_pvfc_bug_fix_;
-
-#endif /* SUN_CC_HAS_PVFC_BUG */
-
   }; // ValueBase
 
   /// Valuetype-related type codes.

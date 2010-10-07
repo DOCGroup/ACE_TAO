@@ -1,3 +1,11 @@
+Thu Oct  7 11:14:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.cpp:
+          Layout changes
+
+        * tao/Valuetype/ValueBase.h:
+          Removed suncc workaround
+
 Mon Oct  4 19:26:55 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * COPYING:
