@@ -296,7 +296,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
           ACE_DEBUG ((LM_DEBUG, "Navigation get_all_ports - "
                                 "Expected number of Receptacles found\n"));
         }
-
+#if !defined (CCM_NOEVENT)
       ::Components::ConsumerDescriptions cds;
       cds = cpd->consumers ();
       if (cds.length () != 0)
@@ -343,6 +343,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
           ACE_DEBUG ((LM_DEBUG, "Navigation get_all_ports - "
                                 "Expected number of Publishers found\n"));
         }
+#endif
     }
   catch (const ::CORBA::Exception& ex)
     {
