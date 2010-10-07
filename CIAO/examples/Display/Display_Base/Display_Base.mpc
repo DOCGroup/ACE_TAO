@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n Display_Base"
 
-project(Display_Base_idl_gen) : componentidldefaults {
+project(Display_Base_idl_gen) : componentidldefaults, avoids_ccm_noevent {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=DISPLAY_BASE_STUB_Export \
               -Wb,stub_export_include=Display_Base_stub_export.h \

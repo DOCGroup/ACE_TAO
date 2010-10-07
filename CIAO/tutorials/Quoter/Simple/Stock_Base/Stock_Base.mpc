@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n Stock_Base -l ../lib -o ../lib"
 
-project(Stock_Base_idl_gen) : componentidldefaults {
+project(Stock_Base_idl_gen) : componentidldefaults, avoids_ccm_noevent {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=STOCK_BASE_STUB_Export \
               -Wb,stub_export_include=Stock_Base_stub_export.h \
