@@ -88,8 +88,7 @@ namespace TAO
       const PortableServer::ObjectId &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-      bool &wait_occurred_restart_call
-      )
+      bool &wait_occurred_restart_call)
     {
       PortableServer::Servant servant = 0;
 
@@ -187,10 +186,9 @@ namespace TAO
     RequestProcessingStrategyServantActivator::etherealize_servant (
       const PortableServer::ObjectId& object_id,
       PortableServer::Servant servant,
-      CORBA::Boolean cleanup_in_progress
-      )
+      CORBA::Boolean cleanup_in_progress)
     {
-      CORBA::Boolean remaining_activations =
+      CORBA::Boolean const remaining_activations =
         this->poa_->servant_has_remaining_activations (servant);
 
       // ATTENTION: Trick locking here, see class header for details
