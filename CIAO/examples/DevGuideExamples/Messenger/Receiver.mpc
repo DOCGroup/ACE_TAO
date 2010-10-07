@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Messenger Receiver"
 
-project(Messenger_Receiver_idl_gen) : componentidldefaults {
+project(Messenger_Receiver_idl_gen) : componentidldefaults, avoids_ccm_noevent {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
               -Wb,stub_export_include=Receiver_stub_export.h \
@@ -15,7 +15,7 @@ project(Messenger_Receiver_idl_gen) : componentidldefaults {
   }
 }
 
-project(Messenger_Receiver_lem_gen) : ciaoidldefaults {
+project(Messenger_Receiver_lem_gen) : ciaoidldefaults , avoids_ccm_noevent{
   custom_only = 1
   after += Messenger_Receiver_idl_gen Messenger_idl_gen
   idlflags += -Wb,export_macro=RECEIVER_EXEC_Export \

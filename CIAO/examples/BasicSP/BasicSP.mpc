@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n HUDisplay"
 
-project(BasicSP_idl_gen): componentidldefaults {
+project(BasicSP_idl_gen): componentidldefaults, avoids_ccm_noevent{
   custom_only = 1
   idlflags += -Wb,stub_export_macro=BASICSP_STUB_Export \
               -Wb,stub_export_include=BasicSP_stub_export.h \
@@ -47,8 +47,8 @@ project(BasicSP_stub): ccm_stub, avoids_ccm_noevent  {
   }
 }
 
-project(BasicSP_svnt) : ciao_servant  {
-  after +=  BasicSP_exec
+project(BasicSP_svnt) : ciao_servant, avoids_ccm_noevent {
+  after +=  BasicSP_exec BasicSP_stub
   sharedname = BasicSP_svnt
   libs    += BasicSP_exec BasicSP_stub
   includes += $(CIAO_ROOT)/examples/BasicSP
@@ -73,7 +73,7 @@ project(BasicSP_svnt) : ciao_servant  {
   }
 }
 
-project(BasicSP_exec) : ciao_executor,  avoids_ccm_noevent {
+project(BasicSP_exec) : ciao_executor, avoids_ccm_noevent {
   after += BasicSP_stub BasicSP_lem_gen
   sharedname = BasicSP_exec
   libs += BasicSP_stub

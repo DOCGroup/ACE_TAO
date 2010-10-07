@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Stock_Base -c StockBrokerDriver StockBroker -l ../lib -o ../lib"
 
-project(Stock_Base_StockBroker_idl_gen) : componentidldefaults {
+project(Stock_Base_StockBroker_idl_gen) : componentidldefaults, avoids_ccm_noevent {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=STOCKBROKER_STUB_Export \
               -Wb,stub_export_include=StockBroker_stub_export.h \
@@ -52,7 +52,7 @@ project(Stock_Base_StockBroker_lem_stub) : ccm_svnt, avoids_ccm_noevent {
   }
 }
 
-project(Stock_Base_StockBroker_stub) : ccm_stub   {
+project(Stock_Base_StockBroker_stub) : ccm_stub, avoids_ccm_noevent   {
   after += Stock_Base_StockBroker_idl_gen Stock_Base_stub
   libs  += Stock_Base_stub
   libpaths += ../lib
@@ -77,7 +77,7 @@ project(Stock_Base_StockBroker_stub) : ccm_stub   {
   }
 }
 
-project(Stock_Base_StockBroker_exec) : ciao_executor   {
+project(Stock_Base_StockBroker_exec) : ciao_executor, avoids_ccm_noevent   {
   after   += Stock_Base_StockBroker_lem_stub Stock_Base_StockBroker_stub
   sharedname = StockBroker_exec
   libs += StockBroker_stub StockBroker_lem_stub Stock_Base_stub
@@ -102,7 +102,7 @@ project(Stock_Base_StockBroker_exec) : ciao_executor   {
 }
 
 
-project(Stock_Base_StockBroker_svnt) : ciao_servant   {
+project(Stock_Base_StockBroker_svnt) : ciao_servant, avoids_ccm_noevent   {
   after      += Stock_Base_skel  Stock_Base_StockBroker_lem_stub
   sharedname  = StockBroker_svnt
   libs       += StockBroker_stub StockBroker_lem_stub  \
@@ -131,7 +131,7 @@ project(Stock_Base_StockBroker_svnt) : ciao_servant   {
   }
 }
 
-project (Stock_Base_StockBrokerDriver) : ccm_stub, valuetype   {
+project (Stock_Base_StockBrokerDriver) : ccm_stub, valuetype , avoids_ccm_noevent  {
   exename = StockBrokerDriver
   after += Stock_Base_StockBroker_stub
   libs  += StockBroker_stub Stock_Base_stub
