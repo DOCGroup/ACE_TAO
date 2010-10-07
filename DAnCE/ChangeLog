@@ -1,8 +1,19 @@
+Thu Oct  7 10:59:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * COPYING:
+          Small fix
+
+        * dance/LocalityManager/Daemon/Locality_Manager_Task.cpp:
+          Layout changes
+
+        * dance/LocalityManager/Handler/Plugin_Conf.cpp:
+          Fixed memory leak coming from ACE_Read_Buffer::rec_read
+
 Mon Oct  4 14:29:30 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/LocalityManager/ExplicitExec/ExplicitExec.mpc:
 
-          Removed dependency on CIAO Deployment handlers. 
+          Removed dependency on CIAO Deployment handlers.
 
 Fri Oct  1 16:00:51 UTC 2010  William Otte  <wotte@zifnab>
 
