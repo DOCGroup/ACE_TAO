@@ -63,7 +63,7 @@ namespace ACE
         this->user_ + this->wait_ + this->kernel_ + this->idle_;
       double delta_total = total - this->prev_total_;
 
-      if (delta_total == 0.0)
+      if (ACE::is_equal (delta_total, 0.0))
         {
           /// The system hasn't updated /proc/stat since the last call
           /// to update(), we must avoid dividing by 0.

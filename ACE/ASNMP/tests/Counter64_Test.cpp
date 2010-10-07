@@ -106,7 +106,7 @@ static void TestCounter64()
 
   Counter64 c6;
   c6.assign(ld);
-  ACE_ASSERT(c6.to_long_double() == ld);
+  ACE_ASSERT(ACE::is_equal(c6.to_long_double(), ld));
 
   Counter64 c7(ull);
   ACE_ASSERT(c7 == ull);
