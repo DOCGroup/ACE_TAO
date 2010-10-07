@@ -1,6 +1,9 @@
 // -*- C++ -*-
 // $Id$
 
+// TAO_IDL - Generated from
+// be/be_codegen.cpp:1344
+
 #include "Hello_Receiver_exec.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
@@ -8,37 +11,39 @@
 
 namespace CIAO_Hello_Receiver_Impl
 {
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_component/facet_exs.cpp:75
   //============================================================
-  // Facet Executor Implementation Class: DDSHello_Listener_exec_i
+  // Facet Executor Implementation Class: info_out_data_listener_exec_i
   //============================================================
 
-  DDSHello_Listener_exec_i::DDSHello_Listener_exec_i (Atomic_ULong &received,
-                                                      const ACE_CString &name)
-      : received_ (received),
-        name_ (name)
+  info_out_data_listener_exec_i::info_out_data_listener_exec_i (
+        ::Hello::CCM_Receiver_Context_ptr ctx,
+        Atomic_ULong &received,
+        const ACE_CString &name)
+    : ciao_context_ (
+        ::Hello::CCM_Receiver_Context::_duplicate (ctx)),
+      received_ (received),
+      name_ (name)
+
   {
   }
 
-  DDSHello_Listener_exec_i::~DDSHello_Listener_exec_i (void)
+  info_out_data_listener_exec_i::~info_out_data_listener_exec_i (void)
   {
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("~info_out_data_listener_exec_i\n")));
   }
 
-  // Operations from ::CCM_DDS::DDSHello_Listener
+  // Operations from ::Hello::Listener
 
   void
-  DDSHello_Listener_exec_i::on_many_data (
-    const DDSHelloSeq & /* an_instance */,
-    const ::CCM_DDS::ReadInfoSeq & /* info */)
-  {
-  }
-
-  void
-  DDSHello_Listener_exec_i::on_one_data (
-    const DDSHello & an_instance ,
+  info_out_data_listener_exec_i::on_one_data (
+    const ::DDSHello & datum,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
     ++this->received_;
-    ACE_CString rec (an_instance.hello.in ());
+    ACE_CString rec (datum.hello.in ());
     ACE_Date_Time now;
     int const sec_rec = ACE_OS::atoi (rec.substr (0, 2).c_str() );
     if (sec_rec > 0)
@@ -50,42 +55,59 @@ namespace CIAO_Hello_Receiver_Impl
           }
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<%C> received <%C> - <%d>. difference <%d>\n"),
                     this->name_.c_str (),
-                    an_instance.hello.in (),
-                    an_instance.iterator,
+                    datum.hello.in (),
+                    datum.iterator,
                     now.microsec () - usec_rec));
       }
     else
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("<%C> received <%C> - <%d>.\n"),
       this->name_.c_str (),
-      an_instance.hello.in (),
-      an_instance.iterator));
+      datum.hello.in (),
+      datum.iterator));
     }
   }
+
+  void
+  info_out_data_listener_exec_i::on_many_data (
+    const ::DDSHelloSeq & /* data */,
+    const ::CCM_DDS::ReadInfoSeq & /* infos */)
+  {
+    /* Your code here. */
+  }
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_component/facet_exs.cpp:75
   //============================================================
-  // Facet Executor Implementation Class: PortStatusListener_exec_i
+  // Facet Executor Implementation Class: info_out_status_exec_i
   //============================================================
 
-  PortStatusListener_exec_i::PortStatusListener_exec_i (Atomic_ULong &lost)
-    : lost_ (lost)
+  info_out_status_exec_i::info_out_status_exec_i (
+        ::Hello::CCM_Receiver_Context_ptr ctx,
+        Atomic_ULong &lost)
+    : ciao_context_ (
+        ::Hello::CCM_Receiver_Context::_duplicate (ctx)),
+      lost_ (lost)
   {
   }
 
-  PortStatusListener_exec_i::~PortStatusListener_exec_i (void)
+  info_out_status_exec_i::~info_out_status_exec_i (void)
   {
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("~info_out_status_exec_i\n")));
   }
 
   // Operations from ::CCM_DDS::PortStatusListener
 
   void
-  PortStatusListener_exec_i::on_requested_deadline_missed (
+  info_out_status_exec_i::on_requested_deadline_missed (
     ::DDS::DataReader_ptr /* the_reader */,
     const ::DDS::RequestedDeadlineMissedStatus & /* status */)
   {
+    /* Your code here. */
   }
 
   void
-  PortStatusListener_exec_i::on_sample_lost (
+  info_out_status_exec_i::on_sample_lost (
     ::DDS::DataReader_ptr /* the_reader */,
     const ::DDS::SampleLostStatus & /* status */)
   {
@@ -93,79 +115,82 @@ namespace CIAO_Hello_Receiver_Impl
     ACE_DEBUG ((LM_ERROR, ACE_TEXT("port status listener::on_sample_lost\n")));
   }
 
-
+  // TAO_IDL - Generated from
+  // be/be_visitor_component/facet_exs.cpp:75
   //============================================================
-  // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
+  // Facet Executor Implementation Class: info_out_connector_status_exec_i
   //============================================================
 
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (void)
+  info_out_connector_status_exec_i::info_out_connector_status_exec_i (
+        ::Hello::CCM_Receiver_Context_ptr ctx)
+    : ciao_context_ (
+        ::Hello::CCM_Receiver_Context::_duplicate (ctx))
   {
   }
 
-  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
+  info_out_connector_status_exec_i::~info_out_connector_status_exec_i (void)
   {
-
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("~info_out_connector_status_exec_i\n")));
   }
 
   // Operations from ::CCM_DDS::ConnectorStatusListener
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-     ::DDS::Topic_ptr /* the_topic */,
-     const DDS::InconsistentTopicStatus & /* status */)
+
+  void
+  info_out_connector_status_exec_i::on_inconsistent_topic (
+    ::DDS::Topic_ptr /* the_topic */,
+    const ::DDS::InconsistentTopicStatus & /* status */)
   {
-    ACE_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Receiver: ")
           ACE_TEXT ("ConnectorStatusListener_exec_i::on_inconsistent_topic\n")));
   }
 
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
-    ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::RequestedIncompatibleQosStatus & /*status*/)
+  void
+  info_out_connector_status_exec_i::on_requested_incompatible_qos (
+    ::DDS::DataReader_ptr /* the_reader */,
+    const ::DDS::RequestedIncompatibleQosStatus & /* status */)
   {
-    ACE_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Receiver: ")
           ACE_TEXT ("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n")));
   }
 
-  void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::SampleRejectedStatus & /*status*/)
+  void
+  info_out_connector_status_exec_i::on_sample_rejected (
+    ::DDS::DataReader_ptr /* the_reader */,
+    const ::DDS::SampleRejectedStatus & /* status */)
   {
-    ACE_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Receiver: ")
           ACE_TEXT ("ConnectorStatusListener_exec_i::on_sample_rejected\n")));
   }
 
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/)
+  void
+  info_out_connector_status_exec_i::on_offered_deadline_missed (
+    ::DDS::DataWriter_ptr /* the_writer */,
+    const ::DDS::OfferedDeadlineMissedStatus & /* status */)
   {
-    ACE_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Receiver: ")
           ACE_TEXT ("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n")));
   }
 
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedIncompatibleQosStatus & /*status*/)
+  void
+  info_out_connector_status_exec_i::on_offered_incompatible_qos (
+    ::DDS::DataWriter_ptr /* the_writer */,
+    const ::DDS::OfferedIncompatibleQosStatus & /* status */)
   {
-    ACE_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Receiver: ")
           ACE_TEXT ("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n")));
   }
 
-  void ConnectorStatusListener_exec_i::on_unexpected_status(
-    ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind  /*status_kind*/)
+  void
+  info_out_connector_status_exec_i::on_unexpected_status (
+    ::DDS::Entity_ptr /* the_entity */,
+    ::DDS::StatusKind /* status_kind */)
   {
-    ACE_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Receiver: ")
           ACE_TEXT ("ConnectorStatusListener_exec_i::on_unexpected_status\n")));
   }
 
-  void ConnectorStatusListener_exec_i::on_subscription_matched (
-    ::DDS::DataReader_ptr /*the_reader*/,
-    const ::DDS::SubscriptionMatchedStatus & /*status*/)
-  {
-    ACE_ERROR ((LM_DEBUG, ACE_TEXT ("Receiver: ")
-          ACE_TEXT ("ConnectorStatusListener_exec_i::on_subscription_matched\n")));
-  }
-
   //============================================================
-  // Component Executor Implementation Class: Receiver_exec_iDDSHello_Listener_exec_i ();
+  // Component Executor Implementation Class: Receiver_exec_i
   //============================================================
 
   Receiver_exec_i::Receiver_exec_i (void)
@@ -177,18 +202,77 @@ namespace CIAO_Hello_Receiver_Impl
 
   Receiver_exec_i::~Receiver_exec_i (void)
   {
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("~Receiver_exec_i\n")));
   }
 
-  ::CORBA::ULong
-  Receiver_exec_i::expected_samples (void)
+  // Supported operations and attributes.
+
+  // Component attributes and port operations.
+
+  ::Hello::CCM_Listener_ptr
+  Receiver_exec_i::get_info_out_data_listener (void)
   {
-    return this->expected_;
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new DDSHello RAW listener\n")));
+    if ( ::CORBA::is_nil (this->ciao_info_out_data_listener_.in ()))
+      {
+        info_out_data_listener_exec_i *tmp = 0;
+        ACE_NEW_RETURN (
+          tmp,
+          info_out_data_listener_exec_i (
+            this->ciao_context_.in (),
+            this->received_,
+            this->name_),
+          ::Hello::CCM_Listener::_nil ());
+
+        this->ciao_info_out_data_listener_ = tmp;
+      }
+
+    return
+      ::Hello::CCM_Listener::_duplicate (
+        this->ciao_info_out_data_listener_.in ());
   }
 
-  void
-  Receiver_exec_i::expected_samples (::CORBA::ULong expected_samples)
+  ::CCM_DDS::CCM_PortStatusListener_ptr
+  Receiver_exec_i::get_info_out_status (void)
   {
-    this->expected_ = expected_samples;
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
+    if ( ::CORBA::is_nil (this->ciao_info_out_status_.in ()))
+      {
+        info_out_status_exec_i *tmp = 0;
+        ACE_NEW_RETURN (
+          tmp,
+          info_out_status_exec_i (
+            this->ciao_context_.in (),
+            this->lost_),
+          ::CCM_DDS::CCM_PortStatusListener::_nil ());
+
+        this->ciao_info_out_status_ = tmp;
+      }
+
+    return
+      ::CCM_DDS::CCM_PortStatusListener::_duplicate (
+        this->ciao_info_out_status_.in ());
+  }
+
+  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
+  Receiver_exec_i::get_info_out_connector_status (void)
+  {
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new ConnectorStatusListener\n")));
+    if ( ::CORBA::is_nil (this->ciao_info_out_connector_status_.in ()))
+      {
+        info_out_connector_status_exec_i *tmp = 0;
+        ACE_NEW_RETURN (
+          tmp,
+          info_out_connector_status_exec_i (
+            this->ciao_context_.in ()),
+          ::CCM_DDS::CCM_ConnectorStatusListener::_nil ());
+
+        this->ciao_info_out_connector_status_ = tmp;
+      }
+
+    return
+      ::CCM_DDS::CCM_ConnectorStatusListener::_duplicate (
+        this->ciao_info_out_connector_status_.in ());
   }
 
   char *
@@ -198,40 +282,35 @@ namespace CIAO_Hello_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::name (const char *name)
+  Receiver_exec_i::name (
+    const char * name)
   {
     this->name_ = name;
   }
 
-  // Port operations.
-  ::Hello::CCM_Listener_ptr
-  Receiver_exec_i::get_info_out_data_listener (void)
+  ::CORBA::ULong
+  Receiver_exec_i::expected_samples (void)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new DDSHello RAW listener\n")));
-    return new DDSHello_Listener_exec_i (this->received_, this->name_);
+    return this->expected_;
   }
 
-  ::CCM_DDS::CCM_PortStatusListener_ptr
-  Receiver_exec_i::get_info_out_status (void)
+  void
+  Receiver_exec_i::expected_samples (
+    ::CORBA::ULong expected_samples)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
-    return new PortStatusListener_exec_i (this->lost_);
-  }
-
-  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-  Receiver_exec_i::get_info_out_connector_status (void)
-  {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new ConnectorStatusListener\n")));
-    return new ConnectorStatusListener_exec_i ();
+    this->expected_ = expected_samples;
   }
 
   // Operations from Components::SessionComponent.
+
   void
   Receiver_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    this->context_ = ::Hello::CCM_Receiver_Context::_narrow (ctx);
-    if ( ::CORBA::is_nil (this->context_.in ()))
+    this->ciao_context_ =
+      ::Hello::CCM_Receiver_Context::_narrow (ctx);
+
+    if ( ::CORBA::is_nil (this->ciao_context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
@@ -240,13 +319,14 @@ namespace CIAO_Hello_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
+    /* Your code here. */
   }
 
   void
   Receiver_exec_i::ccm_activate (void)
   {
     ::CCM_DDS::DataListenerControl_var lc =
-      this->context_->get_connection_info_out_data_control ();
+      this->ciao_context_->get_connection_info_out_data_control ();
 
     if (::CORBA::is_nil (lc.in ()))
       {
@@ -261,6 +341,7 @@ namespace CIAO_Hello_Receiver_Impl
   void
   Receiver_exec_i::ccm_passivate (void)
   {
+    /* Your code here. */
   }
 
   void
@@ -296,7 +377,3 @@ namespace CIAO_Hello_Receiver_Impl
     return retval;
   }
 }
-
-
-
-
