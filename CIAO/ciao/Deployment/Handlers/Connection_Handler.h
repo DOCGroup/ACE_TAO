@@ -64,24 +64,30 @@ namespace CIAO
 #endif
 
     void disconnect_facet (const ::Deployment::DeploymentPlan & plan,
-                           ::CORBA::ULong connectionRef);
+                           ::CORBA::ULong connectionRef,
+                           ::CORBA::ULong endpoint);
 
 
     void disconnect_receptacle (const ::Deployment::DeploymentPlan & plan,
-                             ::CORBA::ULong connectionRef);
+                                ::CORBA::ULong connectionRef,
+                                ::CORBA::ULong endpoint);
+
 #if !defined (CCM_NOEVENT)
     void disconnect_publisher (const ::Deployment::DeploymentPlan & plan,
-                            ::CORBA::ULong connectionRef);
+                               ::CORBA::ULong connectionRef,
+                               ::CORBA::ULong endpoint);
 #endif
 
 #if !defined (CCM_NOEVENT)
     void disconnect_emitter (const ::Deployment::DeploymentPlan & plan,
-                            ::CORBA::ULong connectionRef);
+                             ::CORBA::ULong connectionRef,
+                             ::CORBA::ULong endpoint);
 #endif
 
 #if !defined (CCM_NOEVENT)
     void disconnect_consumer (const ::Deployment::DeploymentPlan & plan,
-                             ::CORBA::ULong connectionRef);
+                              ::CORBA::ULong connectionRef,
+                              ::CORBA::ULong endpoint);
 #endif
 
     void connect_local_port (const char *facet_id,

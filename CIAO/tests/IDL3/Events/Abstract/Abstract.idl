@@ -26,7 +26,7 @@ module AbstractEvents
     {
     };
 
-  // test event multiple inheretance
+  // test event multiple inheritance
 
   eventtype concrete_foo
   {
