@@ -1,6 +1,6 @@
 // $Id$
 
-project(BMClosedED_idl_gen) : componentidldefaults {
+project(BMClosedED_idl_gen) : componentidldefaults, avoids_ccm_noevent {
   custom_only = 1
   after += BasicSP_idl_gen
   idlflags += -I.. \
@@ -52,7 +52,7 @@ project(BMClosedED_stub): ccm_stub, avoids_ccm_noevent {
   }
 }
 
-project(BMClosedED_exec) : ciao_executor {
+project(BMClosedED_exec) : ciao_executor, avoids_ccm_noevent {
   after      += BMClosedED_stub BMClosedED_lem_gen BasicSP_exec
   sharedname = BMClosedED_exec
   libs       += BMClosedED_stub
@@ -81,7 +81,7 @@ project(BMClosedED_exec) : ciao_executor {
   }
 }
 
-project(BMClosedED_svnt) : ciao_servant {
+project(BMClosedED_svnt) : ciao_servant, avoids_ccm_noevent {
   after += BasicSP_svnt BMClosedED_exec BasicSP_exec
 
   includes += ..

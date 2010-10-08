@@ -50,7 +50,7 @@ project(Display_Base_stub) : ccm_stub, avoids_ccm_noevent {
   }
 }
 
-project(Display_Base_skel) : ciao_executor {
+project(Display_Base_skel) : ciao_executor, avoids_ccm_noevent {
   after      += Display_Base_stub
   sharedname  = Display_Base_skel
   libs       += Display_Base_stub

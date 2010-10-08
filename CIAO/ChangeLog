@@ -1,3 +1,24 @@
+Fri Oct  8 09:57:38 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tutorials/Quoter/Simple/Distributor/StockDistributor.mpc:
+        * tutorials/Quoter/Simple/Stock_Base/Stock_Base.mpc:
+        * examples/Hello/Sender/Sender.mpc:
+        * examples/Hello/Receiver/Receiver.mpc:
+        * examples/Hello/Hello_Base/Hello_Base.mpc:
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/BasicSP/BMDisplay/BMDisplay.mpc:
+        * examples/BasicSP/EC/EC.mpc:
+        * examples/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/Display/Display_Base/Display_Base.mpc:
+        * examples/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+        * examples/Display/RateGen/RateGen.mpc:
+        * examples/Display/GPS/GPS.mpc:
+        * examples/Display/NavDisplay/NavDisplay.mpc:
+        * examples/DevGuideExamples/Messenger/Receiver.mpc:
+        * examples/DevGuideExamples/Messenger/Administrator.mpc:
+        * examples/DevGuideExamples/Messenger/Messenger.mpc:
+	Add avoids_ccm_noevent in projects using events.
+
 Fri Oct  8 09:50:09 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * rules.ciao.GNU:

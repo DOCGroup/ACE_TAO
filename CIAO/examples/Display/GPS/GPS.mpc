@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Display_Base -u Display GPS"
 
-project(Display_GPS_idl_gen) : componentidldefaults {
+project(Display_GPS_idl_gen) : componentidldefaults, avoids_ccm_noevent {
   after += Display_Base_idl_gen
   custom_only = 1
   idlflags +=  \
@@ -17,7 +17,7 @@ project(Display_GPS_idl_gen) : componentidldefaults {
   }
 }
 
-project(Display_GPS_lem_gen) : ciaoidldefaults {
+project(Display_GPS_lem_gen) : ciaoidldefaults, avoids_ccm_noevent {
   custom_only = 1
   after += Display_GPS_idl_gen
   idlflags += -Wb,export_macro=GPS_EXEC_Export \
@@ -29,7 +29,7 @@ project(Display_GPS_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(Display_GPS_stub) : ccm_stub {
+project(Display_GPS_stub) : ccm_stub, avoids_ccm_noevent {
   after += Display_GPS_idl_gen Display_Base_stub
   libs  += Display_Base_stub
   libout = ../lib
@@ -55,7 +55,7 @@ project(Display_GPS_stub) : ccm_stub {
   }
 }
 
-project(Display_GPS_exec) : ciao_executor {
+project(Display_GPS_exec) : ciao_executor, avoids_ccm_noevent {
   after   += Display_GPS_lem_gen Display_GPS_stub Display_Base_stub
   sharedname = GPS_exec
   libs += GPS_stub Display_Base_stub
@@ -83,7 +83,7 @@ project(Display_GPS_exec) : ciao_executor {
   }
 }
 
-project(Display_GPS_svnt) : ciao_servant {
+project(Display_GPS_svnt) : ciao_servant, avoids_ccm_noevent {
   after      += Display_Base_skel Display_GPS_exec Display_Base_stub
   sharedname  = GPS_svnt
   libs       += GPS_exec \
