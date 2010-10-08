@@ -1,3 +1,9 @@
+Fri Oct  8 11:45:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.h:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+          Layout changes
+
 Fri Oct  8 10:00:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
