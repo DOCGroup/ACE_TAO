@@ -21,7 +21,7 @@ namespace DAnCE
   int
   Deployment_Scheduler::schedule_event (Deployment_Event *event)
   {
-    int retval = this->event_queue_.enqueue (event);
+    int const retval = this->event_queue_.enqueue (event);
 
     if (retval == -1)
       {

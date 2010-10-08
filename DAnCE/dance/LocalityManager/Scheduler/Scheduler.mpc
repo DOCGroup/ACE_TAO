@@ -1,9 +1,9 @@
 // $Id$
 project(DAnCE_Deployment_Scheduler) : dance_lib, dance_output, dance_skel, dance_logger, install {
   dynamicflags += DEPLOYMENT_SCHEDULER_BUILD_DLL
- 
+
   includes += $(DANCE_ROOT)/tools
-  
+
   Source_Files {
     Deployment_Event.cpp
     Plugin_Manager.cpp
@@ -14,12 +14,13 @@ project(DAnCE_Deployment_Scheduler) : dance_lib, dance_output, dance_skel, dance
     Events/Install.cpp
     Events/Remove.cpp
     Events/Connect.cpp
+    Events/Disconnect.cpp
     Events/Endpoint.cpp
     Events/Start.cpp
     Events/Passivate.cpp
     Events/Configured.cpp
   }
- 
+
   Inline_Files {
     Deployment_Event.inl
   }
@@ -35,6 +36,7 @@ project(DAnCE_Deployment_Scheduler) : dance_lib, dance_output, dance_skel, dance
     Events/Install.h
     Events/Remove.h
     Events/Connect.h
+    Events/Disconnect.h
     Events/Endpoint.h
   }
 

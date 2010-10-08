@@ -56,6 +56,15 @@ module DAnCE
                        in any exceptionThrown)
       raises (::Deployment::InvalidConnection);
 
+    void pre_disconnect (inout ::Deployment::DeploymentPlan plan,
+                         in unsigned long connection_index)
+      raises (::Deployment::InvalidConnection);
+
+    void post_disconnect (in Deployment::DeploymentPlan plan,
+                          in unsigned long connectionRef,
+                          in any exceptionThrown)
+      raises (::Deployment::InvalidConnection);
+
     void post_configured (in ::Deployment::DeploymentPlan plan,
                           in unsigned long instanceRef,
                           in any exception_thrown)
