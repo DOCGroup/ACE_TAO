@@ -1,7 +1,7 @@
 // $Id$
 
 #include "SimpleNilFacetProvider_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 
 namespace CIAO_Simple_SimpleNilFacetProvider_Impl
 {
@@ -11,12 +11,12 @@ namespace CIAO_Simple_SimpleNilFacetProvider_Impl
 
   Trigger_exec_i::Trigger_exec_i (void)
   {
-    CIAO_TRACE ("Trigger_exec_i::Trigger_exec_i (void)");
+    ACE_TRACE ("Trigger_exec_i::Trigger_exec_i (void)");
   }
 
   Trigger_exec_i::~Trigger_exec_i (void)
   {
-    CIAO_TRACE ("Trigger_exec_i::~Trigger_exec_i (void)");
+    ACE_TRACE ("Trigger_exec_i::~Trigger_exec_i (void)");
   }
 
   // Operations from ::Simple::Trigger
@@ -25,7 +25,7 @@ namespace CIAO_Simple_SimpleNilFacetProvider_Impl
   Trigger_exec_i::hello (
     const char * hello )
   {
-    CIAO_TRACE ("Trigger_exec_i::hello ()");
+    ACE_TRACE ("Trigger_exec_i::hello ()");
     // Your code here.
     ACE_DEBUG ((LM_EMERGENCY, "Trigger_exec_i::hello - "
                  "Got the following information from trig port: %C\n",
@@ -38,12 +38,12 @@ namespace CIAO_Simple_SimpleNilFacetProvider_Impl
 
   SimpleNilFacetProvider_exec_i::SimpleNilFacetProvider_exec_i (void)
   {
-    CIAO_TRACE ("SimpleNilFacetProvider_exec_i::SimpleNilFacetProvider_exec_i (void)");
+    ACE_TRACE ("SimpleNilFacetProvider_exec_i::SimpleNilFacetProvider_exec_i (void)");
   }
 
   SimpleNilFacetProvider_exec_i::~SimpleNilFacetProvider_exec_i (void)
   {
-    CIAO_TRACE ("SimpleNilFacetProvider_exec_i::~SimpleNilFacetProvider_exec_i (void)");
+    ACE_TRACE ("SimpleNilFacetProvider_exec_i::~SimpleNilFacetProvider_exec_i (void)");
   }
 
   // Supported or inherited operations.
@@ -55,7 +55,7 @@ namespace CIAO_Simple_SimpleNilFacetProvider_Impl
   ::Simple::CCM_Trigger_ptr
   SimpleNilFacetProvider_exec_i::get_trig ()
   {
-    CIAO_TRACE ("SimpleNilFacetProvider_exec_i::get_trig ()");
+    ACE_TRACE ("SimpleNilFacetProvider_exec_i::get_trig ()");
     return ::Simple::CCM_Trigger::_nil ();
   }
 
@@ -65,7 +65,7 @@ namespace CIAO_Simple_SimpleNilFacetProvider_Impl
   SimpleNilFacetProvider_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    CIAO_TRACE ("SimpleNilFacetProvider_exec_i::set_session_context ()");
+    ACE_TRACE ("SimpleNilFacetProvider_exec_i::set_session_context ()");
     this->context_ =
       ::Simple::CCM_SimpleNilFacetProvider_Context::_narrow (ctx);
 
@@ -78,28 +78,28 @@ namespace CIAO_Simple_SimpleNilFacetProvider_Impl
   void
   SimpleNilFacetProvider_exec_i::configuration_complete ()
   {
-    CIAO_TRACE ("SimpleNilFacetProvider_exec_i::configuration_complete ()");
+    ACE_TRACE ("SimpleNilFacetProvider_exec_i::configuration_complete ()");
     // Your code here.
   }
 
   void
   SimpleNilFacetProvider_exec_i::ccm_activate ()
   {
-    CIAO_TRACE ("SimpleNilFacetProvider_exec_i::ccm_activate ()");
+    ACE_TRACE ("SimpleNilFacetProvider_exec_i::ccm_activate ()");
     // Your code here.
   }
 
   void
   SimpleNilFacetProvider_exec_i::ccm_passivate ()
   {
-    CIAO_TRACE ("SimpleNilFacetProvider_exec_i::ccm_passivate ()");
+    ACE_TRACE ("SimpleNilFacetProvider_exec_i::ccm_passivate ()");
     // Your code here.
   }
 
   void
   SimpleNilFacetProvider_exec_i::ccm_remove ()
   {
-    CIAO_TRACE ("SimpleNilFacetProvider_exec_i::ccm_remove ()");
+    ACE_TRACE ("SimpleNilFacetProvider_exec_i::ccm_remove ()");
     // Your code here.
   }
 
@@ -109,12 +109,12 @@ namespace CIAO_Simple_SimpleNilFacetProvider_Impl
 
   SimpleNilFacetProviderHome_exec_i::SimpleNilFacetProviderHome_exec_i (void)
   {
-    CIAO_TRACE ("SimpleNilFacetProviderHome_exec_i::SimpleNilFacetProviderHome_exec_i (void)");
+    ACE_TRACE ("SimpleNilFacetProviderHome_exec_i::SimpleNilFacetProviderHome_exec_i (void)");
   }
 
   SimpleNilFacetProviderHome_exec_i::~SimpleNilFacetProviderHome_exec_i (void)
   {
-    CIAO_TRACE ("SimpleNilFacetProviderHome_exec_i::~SimpleNilFacetProviderHome_exec_i (void)");
+    ACE_TRACE ("SimpleNilFacetProviderHome_exec_i::~SimpleNilFacetProviderHome_exec_i (void)");
   }
 
   // Supported or inherited operations.
@@ -130,7 +130,7 @@ namespace CIAO_Simple_SimpleNilFacetProvider_Impl
   ::Components::EnterpriseComponent_ptr
   SimpleNilFacetProviderHome_exec_i::create ()
   {
-    CIAO_TRACE ("SimpleNilFacetProviderHome_exec_i::create ()");
+    ACE_TRACE ("SimpleNilFacetProviderHome_exec_i::create ()");
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
 
@@ -145,7 +145,7 @@ namespace CIAO_Simple_SimpleNilFacetProvider_Impl
   extern "C" SIMPLENILFACETPROVIDER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Simple_SimpleNilFacetProviderHome_Impl (void)
   {
-    CIAO_TRACE ("create_Simple_SimpleNilFacetProviderHome_Impl (void)");
+    ACE_TRACE ("create_Simple_SimpleNilFacetProviderHome_Impl (void)");
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
 

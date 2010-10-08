@@ -8,6 +8,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_time.h"
 #include "dds4ccm/impl/Utils.h"
+#include "ace/Reactor.h"
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
 

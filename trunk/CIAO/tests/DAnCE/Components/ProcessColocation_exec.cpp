@@ -2,7 +2,7 @@
 // $Id$
 
 #include "ProcessColocation_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "ace/Singleton.h"
 
 namespace

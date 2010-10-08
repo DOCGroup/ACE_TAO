@@ -30,7 +30,7 @@
 
 #include "Progressive_exec.h"
 
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 
 namespace CIAO_Simple_Progressive_Impl
 {
@@ -42,12 +42,12 @@ namespace CIAO_Simple_Progressive_Impl
     : triggered_ (triggered),
       context_ (context)
   {
-    CIAO_TRACE ("Trigger_exec_i::Trigger_exec_i (void)");
+    ACE_TRACE ("Trigger_exec_i::Trigger_exec_i (void)");
   }
 
   Trigger_exec_i::~Trigger_exec_i (void)
   {
-    CIAO_TRACE ("Trigger_exec_i::~Trigger_exec_i (void)");
+    ACE_TRACE ("Trigger_exec_i::~Trigger_exec_i (void)");
   }
 
   // Operations from ::Simple::Trigger
@@ -56,7 +56,7 @@ namespace CIAO_Simple_Progressive_Impl
   Trigger_exec_i::hello (
     const char * hello )
   {
-    CIAO_TRACE ("Trigger_exec_i::hello ()");
+    ACE_TRACE ("Trigger_exec_i::hello ()");
     this->triggered_ = true;
     // Your code here.
     ACE_DEBUG ((LM_EMERGENCY, "Trigger_exec_i::hello - "
@@ -109,7 +109,7 @@ namespace CIAO_Simple_Progressive_Impl
   ::Simple::CCM_Trigger_ptr
   Progressive_exec_i::get_trig_in (void)
   {
-    CIAO_TRACE ("SimpleProvider_exec_i::get_trig ()");
+    ACE_TRACE ("SimpleProvider_exec_i::get_trig ()");
     return new Trigger_exec_i (this->triggered_,
                                this->context_);
   }
@@ -150,7 +150,7 @@ namespace CIAO_Simple_Progressive_Impl
   void
   Progressive_exec_i::ccm_remove (void)
   {
-    CIAO_TRACE ("SimpleProvider_exec_i::ccm_remove ()");
+    ACE_TRACE ("SimpleProvider_exec_i::ccm_remove ()");
     if (!triggered_)
       ACE_ERROR ((LM_EMERGENCY, "Error:  My facet wasn't triggered!!\n"));
   }

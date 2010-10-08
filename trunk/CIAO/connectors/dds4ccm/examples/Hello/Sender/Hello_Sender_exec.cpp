@@ -3,51 +3,81 @@
 
 #include "Hello_Sender_exec.h"
 #include "ace/Guard_T.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 #include "ace/Date_Time.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Reactor.h"
 
 namespace CIAO_Hello_Sender_Impl
 {
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &ready_to_start)
-    :ready_to_start_(ready_to_start)
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_component/facet_exs.cpp:75
+  //============================================================
+  // Facet Executor Implementation Class: connector_status_exec_i
+  //============================================================
+
+  connector_status_exec_i::connector_status_exec_i (
+        ::Hello::CCM_Sender_Context_ptr ctx,
+        Atomic_Boolean &ready_to_start)
+    : ciao_context_ (
+        ::Hello::CCM_Sender_Context::_duplicate (ctx)),
+      ready_to_start_(ready_to_start)
   {
   }
-  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
+
+  connector_status_exec_i::~connector_status_exec_i (void)
   {
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("~connector_status_exec_i\n")));
   }
 
   // Operations from ::CCM_DDS::ConnectorStatusListener
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-     ::DDS::Topic_ptr /*the_topic*/,
-     const DDS::InconsistentTopicStatus & /*status*/)
-    {
-    }
 
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
-    ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
-    }
+  void
+  connector_status_exec_i::on_inconsistent_topic (
+    ::DDS::Topic_ptr /* the_topic */,
+    const ::DDS::InconsistentTopicStatus & /* status */)
+  {
+    /* Your code here. */
+  }
 
-  void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::SampleRejectedStatus & /*status*/)  {
-    }
+  void
+  connector_status_exec_i::on_requested_incompatible_qos (
+    ::DDS::DataReader_ptr /* the_reader */,
+    const ::DDS::RequestedIncompatibleQosStatus & /* status */)
+  {
+    /* Your code here. */
+  }
 
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
-    }
+  void
+  connector_status_exec_i::on_sample_rejected (
+    ::DDS::DataReader_ptr /* the_reader */,
+    const ::DDS::SampleRejectedStatus & /* status */)
+  {
+    /* Your code here. */
+  }
 
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
-    }
+  void
+  connector_status_exec_i::on_offered_deadline_missed (
+    ::DDS::DataWriter_ptr /* the_writer */,
+    const ::DDS::OfferedDeadlineMissedStatus & /* status */)
+  {
+    /* Your code here. */
+  }
 
-  void ConnectorStatusListener_exec_i::on_unexpected_status(
-    ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind  status_kind)
+  void
+  connector_status_exec_i::on_offered_incompatible_qos (
+    ::DDS::DataWriter_ptr /* the_writer */,
+    const ::DDS::OfferedIncompatibleQosStatus & /* status */)
+  {
+    /* Your code here. */
+  }
+
+  void
+  connector_status_exec_i::on_unexpected_status (
+    ::DDS::Entity_ptr /* the_entity */,
+    ::DDS::StatusKind status_kind)
   {
     if(!this->ready_to_start_.value())
       {
@@ -56,7 +86,6 @@ namespace CIAO_Hello_Sender_Impl
         this->ready_to_start_ = (status_kind == DDS::PUBLICATION_MATCHED_STATUS);
       }
   }
-
 
   //============================================================
   // Pulse generator
@@ -101,10 +130,87 @@ namespace CIAO_Hello_Sender_Impl
   }
 
   // Supported operations and attributes.
-  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-    Sender_exec_i::get_connector_status (void)
+
+  // Component attributes and port operations.
+
+  ::CORBA::ULong
+  Sender_exec_i::rate (void)
   {
-    return new ConnectorStatusListener_exec_i (this->ready_to_start_);
+    return this->rate_;
+  }
+
+  void
+  Sender_exec_i::rate (
+    ::CORBA::ULong rate)
+  {
+    if (rate == 0)
+      {
+        rate = 1;
+      }
+    else
+      {
+        this->rate_ = rate;
+      }
+  }
+
+  ::CORBA::ULong
+  Sender_exec_i::iterations (void)
+  {
+    return this->iterations_;
+  }
+
+  void
+  Sender_exec_i::iterations (
+    ::CORBA::ULong iterations)
+  {
+    this->iterations_ = iterations;
+  }
+
+  char *
+  Sender_exec_i::message (void)
+  {
+    return CORBA::string_dup (this->msg_.c_str());
+  }
+
+  void
+  Sender_exec_i::message (
+    const char * message)
+  {
+    this->msg_ = message;
+  }
+
+  ::CORBA::Boolean
+  Sender_exec_i::log_time (void)
+  {
+    return this->log_time_;
+  }
+
+  void
+  Sender_exec_i::log_time (
+    ::CORBA::Boolean log_time)
+  {
+    this->log_time_ = log_time;
+  }
+
+  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
+  Sender_exec_i::get_connector_status (void)
+  {
+    if ( ::CORBA::is_nil (this->ciao_connector_status_.in ()))
+      {
+        connector_status_exec_i *tmp = 0;
+        ACE_NEW_RETURN (
+          tmp,
+          connector_status_exec_i (
+            this->ciao_context_.in (),
+            this->ready_to_start_),
+          ::CCM_DDS::CCM_ConnectorStatusListener::_nil ());
+
+        this->ciao_connector_status_ = tmp;
+      }
+
+    return
+      ::CCM_DDS::CCM_ConnectorStatusListener::_duplicate (
+        this->ciao_connector_status_.in ());
   }
 
   ACE_CString
@@ -134,7 +240,7 @@ namespace CIAO_Hello_Sender_Impl
         if (this->iteration_ < this->iterations_)
           {
             Hello::Writer_var writer =
-              this->context_->get_connection_info_in_data ();
+              this->ciao_context_->get_connection_info_in_data ();
             if (! ::CORBA::is_nil (writer.in ()))
               {
                 DDSHello new_msg;
@@ -161,7 +267,7 @@ namespace CIAO_Hello_Sender_Impl
   {
     ACE_Reactor* reactor = 0;
 
-    ::CORBA::Object_var ccm_object = this->context_->get_CCM_object();
+    ::CORBA::Object_var ccm_object = this->ciao_context_->get_CCM_object();
     if (!::CORBA::is_nil (ccm_object.in ()))
       {
         ::CORBA::ORB_var orb = ccm_object->_get_orb ();
@@ -196,7 +302,7 @@ namespace CIAO_Hello_Sender_Impl
   {
     ACE_Reactor* reactor = 0;
 
-    ::CORBA::Object_var ccm_object = this->context_->get_CCM_object();
+    ::CORBA::Object_var ccm_object = this->ciao_context_->get_CCM_object();
     if (!::CORBA::is_nil (ccm_object.in ()))
       {
         ::CORBA::ORB_var orb = ccm_object->_get_orb ();
@@ -217,72 +323,17 @@ namespace CIAO_Hello_Sender_Impl
       }
   }
 
-  // Component attributes
-  ::CORBA::ULong
-  Sender_exec_i::iterations (void)
-  {
-    return this->iterations_;
-  }
-
-  void
-  Sender_exec_i::iterations (::CORBA::ULong iterations)
-  {
-    this->iterations_ = iterations;
-  }
-
-  char *
-  Sender_exec_i::message (void)
-  {
-    return CORBA::string_dup (this->msg_.c_str());
-  }
-  void
-  Sender_exec_i::message (const char *msg)
-  {
-    this->msg_ = msg;
-  }
-
-  ::CORBA::Boolean
-  Sender_exec_i::log_time (void)
-  {
-    return this->log_time_;
-  }
-
-  void
-  Sender_exec_i::log_time (::CORBA::Boolean log_time)
-  {
-    this->log_time_ = log_time;
-  }
-
-  ::CORBA::ULong
-  Sender_exec_i::rate (void)
-  {
-    return this->rate_;
-  }
-
-  void
-  Sender_exec_i::rate (::CORBA::ULong rate)
-  {
-    if (rate == 0)
-      {
-        rate = 1;
-      }
-    else
-      {
-        this->rate_ = rate;
-      }
-  }
-
-  // Port operations.
 
   // Operations from Components::SessionComponent.
+
   void
   Sender_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    this->context_ =
+    this->ciao_context_ =
       ::Hello::CCM_Sender_Context::_narrow (ctx);
 
-    if ( ::CORBA::is_nil (this->context_.in ()))
+    if ( ::CORBA::is_nil (this->ciao_context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
@@ -291,6 +342,7 @@ namespace CIAO_Hello_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
+    /* Your code here. */
   }
 
   void
@@ -308,6 +360,7 @@ namespace CIAO_Hello_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
+    /* Your code here. */
   }
 
   extern "C" HELLO_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
@@ -323,4 +376,3 @@ namespace CIAO_Hello_Sender_Impl
     return retval;
   }
 }
-

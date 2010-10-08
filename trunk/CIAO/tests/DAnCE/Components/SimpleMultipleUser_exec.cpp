@@ -1,7 +1,7 @@
 // $Id$
 
 #include "SimpleMultipleUser_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 
 namespace CIAO_Simple_SimpleMultipleUser_Impl
 {
@@ -11,12 +11,12 @@ namespace CIAO_Simple_SimpleMultipleUser_Impl
 
   SimpleMultipleUser_exec_i::SimpleMultipleUser_exec_i (void)
   {
-    CIAO_TRACE ("SimpleMultipleUser_exec_i::SimpleMultipleUser_exec_i (void)");
+    ACE_TRACE ("SimpleMultipleUser_exec_i::SimpleMultipleUser_exec_i (void)");
   }
 
   SimpleMultipleUser_exec_i::~SimpleMultipleUser_exec_i (void)
   {
-    CIAO_TRACE ("SimpleMultipleUser_exec_i::~SimpleMultipleUser_exec_i (void)");
+    ACE_TRACE ("SimpleMultipleUser_exec_i::~SimpleMultipleUser_exec_i (void)");
   }
 
   // Supported or inherited operations.
@@ -31,7 +31,7 @@ namespace CIAO_Simple_SimpleMultipleUser_Impl
   SimpleMultipleUser_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    CIAO_TRACE ("SimpleMultipleUser_exec_i::set_session_context ()");
+    ACE_TRACE ("SimpleMultipleUser_exec_i::set_session_context ()");
     this->context_ =
       ::Simple::CCM_SimpleMultipleUser_Context::_narrow (ctx);
 
@@ -44,14 +44,14 @@ namespace CIAO_Simple_SimpleMultipleUser_Impl
   void
   SimpleMultipleUser_exec_i::configuration_complete ()
   {
-    CIAO_TRACE ("SimpleMultipleUser_exec_i::configuration_complete ()");
+    ACE_TRACE ("SimpleMultipleUser_exec_i::configuration_complete ()");
     // Your code here.
   }
 
   void
   SimpleMultipleUser_exec_i::ccm_activate ()
   {
-    CIAO_TRACE ("SimpleMultipleUser_exec_i::ccm_activate ()");
+    ACE_TRACE ("SimpleMultipleUser_exec_i::ccm_activate ()");
 
     ::Simple::SimpleMultipleUser::trigConnections_var conns =
         this->context_->get_connections_trig ();
@@ -90,14 +90,14 @@ namespace CIAO_Simple_SimpleMultipleUser_Impl
   void
   SimpleMultipleUser_exec_i::ccm_passivate ()
   {
-    CIAO_TRACE ("SimpleMultipleUser_exec_i::ccm_passivate ()");
+    ACE_TRACE ("SimpleMultipleUser_exec_i::ccm_passivate ()");
     // Your code here.
   }
 
   void
   SimpleMultipleUser_exec_i::ccm_remove ()
   {
-    CIAO_TRACE ("SimpleMultipleUser_exec_i::ccm_remove ()");
+    ACE_TRACE ("SimpleMultipleUser_exec_i::ccm_remove ()");
     // Your code here.
   }
 
@@ -107,12 +107,12 @@ namespace CIAO_Simple_SimpleMultipleUser_Impl
 
   SimpleMultipleUserHome_exec_i::SimpleMultipleUserHome_exec_i (void)
   {
-    CIAO_TRACE ("SimpleMultipleUserHome_exec_i::SimpleMultipleUserHome_exec_i (void)");
+    ACE_TRACE ("SimpleMultipleUserHome_exec_i::SimpleMultipleUserHome_exec_i (void)");
   }
 
   SimpleMultipleUserHome_exec_i::~SimpleMultipleUserHome_exec_i (void)
   {
-    CIAO_TRACE ("SimpleMultipleUserHome_exec_i::~SimpleMultipleUserHome_exec_i (void)");
+    ACE_TRACE ("SimpleMultipleUserHome_exec_i::~SimpleMultipleUserHome_exec_i (void)");
   }
 
   // Supported or inherited operations.
@@ -128,7 +128,7 @@ namespace CIAO_Simple_SimpleMultipleUser_Impl
   ::Components::EnterpriseComponent_ptr
   SimpleMultipleUserHome_exec_i::create ()
   {
-    CIAO_TRACE ("SimpleMultipleUserHome_exec_i::create ()");
+    ACE_TRACE ("SimpleMultipleUserHome_exec_i::create ()");
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
 
@@ -143,7 +143,7 @@ namespace CIAO_Simple_SimpleMultipleUser_Impl
   extern "C" SIMPLEMULTIPLEUSER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Simple_SimpleMultipleUserHome_Impl (void)
   {
-    CIAO_TRACE ("create_Simple_SimpleMultipleUserHome_Impl (void)");
+    ACE_TRACE ("create_Simple_SimpleMultipleUserHome_Impl (void)");
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
 

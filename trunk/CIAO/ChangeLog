@@ -1,3 +1,72 @@
+Fri Oct  8 10:00:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Regenerated these executors and readded their original implementation
+
+        * ciao/Containers/Session/Session_Container.cpp:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver_exec.h:
+        * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Latency/Receiver/LatencyTT_Test_Receiver_exec.h:
+        * connectors/dds4ccm/performance-tests/Latency/Receiver/LatencyTT_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.h:
+        * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Receiver/CFTLE_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.h:
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp_exec.cpp:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip_exec.cpp:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
+        * performance-tests/Benchmark/RoundTripServer/LatencyTest.cpp:
+        * tests/DAnCE/Components/ProcessColocation_exec.cpp:
+        * tests/DAnCE/Components/Progressive_exec.cpp:
+        * tests/DAnCE/Components/SimpleAttribute_exec.cpp:
+        * tests/DAnCE/Components/SimpleConsumer_exec.cpp:
+        * tests/DAnCE/Components/SimpleEmitter_exec.cpp:
+        * tests/DAnCE/Components/SimpleFailure_exec.cpp:
+        * tests/DAnCE/Components/SimpleLocalProvider_exec.cpp:
+        * tests/DAnCE/Components/SimpleLocalUser_exec.cpp:
+        * tests/DAnCE/Components/SimpleMultipleUser_exec.cpp:
+        * tests/DAnCE/Components/SimpleNilFacetProvider_exec.cpp:
+        * tests/DAnCE/Components/SimpleNilFacetUser_exec.cpp:
+        * tests/DAnCE/Components/SimpleNull_exec.cpp:
+        * tests/DAnCE/Components/SimpleProvider_exec.cpp:
+        * tests/DAnCE/Components/SimplePublisher_exec.cpp:
+        * tests/DAnCE/Components/SimpleUser_exec.cpp:
+        * tests/DAnCE/LocalityManager/CPUAffinity/CPUAffinity_exec.cpp:
+        * tests/DAnCE/LocalityManager/CommandlinePassage/CommandlinePassage_exec.cpp:
+        * tests/IDL_Test/Double_Inherited_Component/ComponentC_exec.cpp:
+          Include and cleanup changes
+
 Fri Oct  8 09:57:38 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * tutorials/Quoter/Simple/Distributor/StockDistributor.mpc:
@@ -17,7 +86,7 @@ Fri Oct  8 09:57:38 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * examples/DevGuideExamples/Messenger/Receiver.mpc:
         * examples/DevGuideExamples/Messenger/Administrator.mpc:
         * examples/DevGuideExamples/Messenger/Messenger.mpc:
-	Add avoids_ccm_noevent in projects using events.
+        Add avoids_ccm_noevent in projects using events.
 
 Fri Oct  8 09:50:09 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
