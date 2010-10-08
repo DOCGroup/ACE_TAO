@@ -239,9 +239,7 @@ ACE_Svc_Conf_Lexer::input (ACE_Svc_Conf_Param* param,
           if (errno == EINTR)
             {
               errno = 0;
-#if !defined (ACE_LACKS_CLEARERR)
               ACE_OS::clearerr (param->source.file);
-#endif /* !ACE_LACKS_CLEARERR */
             }
           else
             {
