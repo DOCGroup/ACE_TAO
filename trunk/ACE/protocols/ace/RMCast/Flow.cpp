@@ -3,6 +3,7 @@
 
 #include "Flow.h"
 
+#include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"   // sleep
 #include "ace/OS_NS_sys_time.h" // gettimeofday
 
