@@ -1,3 +1,9 @@
+Fri Oct  8 07:51:46 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ace/config-integritySCA.h:
+          Removed references to ACE_LACKS_IPC_H. It is no
+          longer used.
+
 Fri Oct  8 07:48:38 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ace/README:
