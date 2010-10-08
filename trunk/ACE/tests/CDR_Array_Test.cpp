@@ -617,7 +617,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
         tellalign (src);
 
         T cv = CDR_Test<T, H>::checkval (i);
-        if (rv != cv)
+        if (!ACE::is_equal (rv, cv))
           {
             static char rs[32 + 1];
             static char cs[32 + 1];
