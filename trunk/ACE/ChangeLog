@@ -1,3 +1,12 @@
+Fri Oct  8 08:42:37 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux-common.h:
+        * ace/os_include/os_unistd.h:
+        * configure.ac:
+        * m4/config_h.m4:
+          Removed references to ACE_LACKS_PREAD_PROTOTYPE. It is no
+          longer used.
+
 Fri Oct  8 08:20:04 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_stdio.inl:

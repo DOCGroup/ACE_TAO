@@ -781,9 +781,6 @@ AH_TEMPLATE([ACE_LACKS_TIMESPEC_T],
 AH_TEMPLATE([ACE_LACKS_STRTOK_R_PROTOTYPE],
 [Platform/compiler lacks the strtok_r() prototype])
 
-AH_TEMPLATE([ACE_LACKS_PREAD_PROTOTYPE],
-[Platform/compiler lacks the pread() and pwrite() prototypes])
-
 AH_TEMPLATE([ACE_LACKS_CHAR_RIGHT_SHIFTS],
 [Compiler does not have any istream operator>> for chars, u_chars, or
    signed chars.])
