@@ -3480,30 +3480,6 @@ if test $ac_cv_func_gethrtime = "yes"; then
                 [#include <sys/time.h>])
 fi
 
-AC_CHECK_FUNC([pread],
-  [AC_CHECK_FUNC([pwrite],
-    [
-     AC_DEFINE([ACE_HAS_P_READ_WRITE])
-     dnl Check if _XOPEN_SOURCE=500 macro is needed to make the pread() and
-     dnl pwrite() prototypes visible.
-     ACE_CACHE_CHECK([for pread prototype],
-       [ace_cv_lib_has_pread_prototype],
-       [
-        ace_save_CPPFLAGS="$CPPFLAGS"
-        ace_no_xopen="-U_XOPEN_SOURCE"
-        CPPFLAGS="$CPPFLAGS $ace_no_xopen"
-        AC_EGREP_HEADER([[^_]+pread], [unistd.h],
-          [
-           ace_cv_lib_has_pread_prototype=yes
-          ],
-          [
-           ace_cv_lib_has_pread_prototype=no
-          ])
-        dnl Reset the compiler flags
-        CPPFLAGS="$ace_save_CPPFLAGS"
-       ],,[AC_DEFINE([ACE_LACKS_PREAD_PROTOTYPE])])
-    ],)],)
-
 ACE_CHECK_LACKS_FUNCS(readv writev)
 
 ACE_CHECK_HAS_FUNCS(set_t_errno)
