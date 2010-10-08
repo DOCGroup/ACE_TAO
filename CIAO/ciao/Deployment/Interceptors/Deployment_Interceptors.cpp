@@ -38,9 +38,9 @@ namespace CIAO
   }
 
   void CIAO_StoreReferences_i::post_install (const ::Deployment::DeploymentPlan &plan,
-                                                       ::CORBA::ULong index,
-                                                       const ::CORBA::Any &reference,
-                                                       const ::CORBA::Any &)
+                                             ::CORBA::ULong index,
+                                             const ::CORBA::Any &reference,
+                                             const ::CORBA::Any &)
   {
     const ::Deployment::InstanceDeploymentDescription &inst =
       plan.instance[index];
