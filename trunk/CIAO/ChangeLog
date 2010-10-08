@@ -1,3 +1,9 @@
+Fri Oct  8 07:55:47 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Containers/Extension/Interceptor_Registration_T.cpp:
+        * ciao/Servants/Servant_Impl_Utils_T.cpp:
+          Using _var to create a cookie.
+
 Fri Oct  8 07:47:48 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Navigation/client.cpp:

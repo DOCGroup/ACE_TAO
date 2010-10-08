@@ -47,13 +47,11 @@ namespace CIAO
                           CORBA::NO_MEMORY ());
         ::Components::SubscriberDescription_var safe_sub = sub;
 
-        ::Components::Cookie *key_cookie = 0;
+        ::Components::Cookie_var key_cookie;
         ACE_NEW (key_cookie,
                  CIAO::Cookie_Impl (iter->first));
 
-        // Valuetype member set operation calls add_ref.
-        sub->ck (key_cookie);
-        CORBA::remove_ref (key_cookie);
+        sub->ck (key_cookie.in ());
 
         sub->consumer (iter->second.in ());
 
