@@ -4,7 +4,7 @@
 //
 //  @author Don Busch <busch_d@ociweb.com>
 
-project(Administrator_Client_IDL3): ccm_stub, valuetype {
+project(Administrator_Client_IDL3): ccm_stub, valuetype, avoids_ccm_noevent {
   after += Messenger_stub
   libs += Messenger_stub
   after += Administrator_Client_IDL2_Compile
