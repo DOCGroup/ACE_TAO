@@ -1,3 +1,11 @@
+Fri Oct  8 09:50:09 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * rules.ciao.GNU:
+          Corrected the path to tao_idl3_to_idl2.
+
+        * connectors/dds4ccm/impl/Getter_T.h:
+          Removed non-ASCII characters.
+
 Fri Oct  8 09:10:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Containers/Extension/Extension_Container.cpp:
