@@ -1,3 +1,17 @@
+Fri Oct  8 11:44:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/DAnCE_DeploymentInterceptors.idl:
+        * dance/DAnCE_DeploymentInterceptors_Base_Impl.h:
+        * dance/DAnCE_DeploymentInterceptors_Base_Impl.cpp:
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.h:
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * dance/LocalityManager/Scheduler/Deployment_Scheduler.cpp:
+        * dance/LocalityManager/Scheduler/Events/Disconnect.h:
+        * dance/LocalityManager/Scheduler/Events/Disconnect.cpp:
+        * dance/LocalityManager/Scheduler/Scheduler.mpc:
+          Some starter code to let DAnCE also disconnect all connections in
+          the plan at shutdown, this code is currently not called
+
 Thu Oct  7 10:59:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * COPYING:

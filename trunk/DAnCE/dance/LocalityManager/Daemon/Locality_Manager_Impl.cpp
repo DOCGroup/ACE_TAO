@@ -16,6 +16,7 @@
 #include "dance/LocalityManager/Scheduler/Events/Configured.h"
 #include "dance/LocalityManager/Scheduler/Events/Remove.h"
 #include "dance/LocalityManager/Scheduler/Events/Passivate.h"
+#include "dance/LocalityManager/Scheduler/Events/Disconnect.h"
 
 using DAnCE::Utility::extract_and_throw_exception;
 
@@ -325,7 +326,6 @@ namespace DAnCE
                 const char  *inst_type =
                   Utility::get_instance_type (this->plan_.implementation[implRef].execParameter);
 
-
                 Endpoint_Reference *event (0);
                 Event_Future result;
                 completion.accept (result);
@@ -425,7 +425,6 @@ namespace DAnCE
                                    ::CORBA::Boolean start)
   {
     DANCE_TRACE ("LocalityManager_i::finishLaunch");
-    // Add your implementation here
 
     typedef std::map < std::string, CORBA::ULong > ConnMap;
     ConnMap conns;
@@ -434,7 +433,7 @@ namespace DAnCE
 
     DANCE_DEBUG (6, (LM_TRACE, DLINFO
                      ACE_TEXT ("LocalityManager_i::finishLaunch - ")
-                     ACE_TEXT ("Starting finsihLaunch, received %u references, ")
+                     ACE_TEXT ("Starting finishLaunch, received %u references, ")
                      ACE_TEXT ("have %u connections\n"),
                      providedReference.length (),
                      this->plan_.connection.length ()
@@ -646,6 +645,139 @@ namespace DAnCE
   }
 
   void
+  LocalityManager_i::disconnect_connections (void)
+  {
+    DANCE_TRACE ("LocalityManager_i::disconnect_connections");
+
+    typedef std::map < std::string, CORBA::ULong > ConnMap;
+    ConnMap conns;
+
+    Deployment_Completion completion (this->scheduler_);
+
+    DANCE_DEBUG (6, (LM_TRACE, DLINFO
+                     ACE_TEXT ("LocalityManager_i::disconnect_connections - ")
+                     ACE_TEXT ("Starting disconnect_connections, ")
+                     ACE_TEXT ("have %u connections\n"),
+                     this->plan_.connection.length ()
+                     ));
+
+    for (CORBA::ULong i = 0; i < this->plan_.connection.length (); ++i)
+      {
+        conns[this->plan_.connection[i].name.in ()] = i;
+      }
+
+    CORBA::ULong dispatched (0);
+
+    for (CORBA::ULong i = 0; i < this->plan_.connection.length (); ++i)
+      {
+        const char * name = this->plan_.connection[i].name.in ();
+        CORBA::ULong j (0);
+
+        const ::Deployment::PlanConnectionDescription &conn =
+          this->plan_.connection[i];
+
+        DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                         ACE_TEXT ("LocalityManager_i::disconnect_connections - ")
+                         ACE_TEXT ("Connection <%C> has %u endpoints\n"),
+                         conn.name.in (),
+                         conn.internalEndpoint.length ()));
+
+        if (conn.internalEndpoint.length () == 2)
+          {
+            if (!conn.internalEndpoint[1].provider)
+              j = 1;
+          }
+        else if (conn.internalEndpoint[0].provider &&
+                 conn.externalReference.length () == 0)
+          {
+            DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                             ACE_TEXT ("LocalityManager_i::disconnect_connections - ")
+                             ACE_TEXT ("Skipping connection <%C>\n"),
+                             conn.name.in ()));
+            continue;
+          }
+
+        DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+                         ACE_TEXT ("LocalityManager_i::disconnect_connections - ")
+                         ACE_TEXT ("Starting disconnect connection <%C>\n"),
+                         name));
+
+        CORBA::ULong instRef =
+          conn.internalEndpoint[j].instanceRef;
+        CORBA::ULong implRef =
+          this->plan_.instance[instRef].implementationRef;
+
+        const char  *inst_type =
+          Utility::get_instance_type (this->plan_.implementation[implRef].execParameter);
+
+        Disconnect_Instance *event (0);
+        Event_Future result;
+        completion.accept (result);
+
+        ACE_NEW_THROW_EX (event,
+                          Disconnect_Instance (this->plan_,
+                                               i,
+                                               inst_type,
+                                               result),
+                          CORBA::NO_MEMORY ());
+
+        this->scheduler_.schedule_event (event);
+        ++dispatched;
+      }
+
+    ACE_Time_Value tv (ACE_OS::gettimeofday () + ACE_Time_Value (this->spawn_delay_));
+
+    if (!completion.wait_on_completion (&tv))
+      {
+        DANCE_ERROR (1, (LM_ERROR, DLINFO
+                         ACE_TEXT ("LocalityManager_i::disconnect_connections - ")
+                         ACE_TEXT ("Timed out while waiting on completion of scheduler\n")));
+      }
+
+    tv = ACE_Time_Value::zero;
+
+    Event_List completed_events;
+    completion.completed_events (completed_events);
+
+    if (completed_events.size () != dispatched)
+      {
+        DANCE_ERROR (2, (LM_WARNING, DLINFO
+                         ACE_TEXT ("LocalityManager_i::disconnect_connections - ")
+                         ACE_TEXT ("Received only %u completed events, expected %u\n"),
+                         dispatched,
+                         completed_events.size ()));
+      }
+
+    for (Event_List::iterator i = completed_events.begin ();
+         i != completed_events.end ();
+         ++i)
+      {
+        Event_Result event;
+        if (i->get (event, &tv) != 0)
+          {
+            DANCE_ERROR (1, (LM_ERROR, DLINFO
+                             ACE_TEXT ("LocalityManager_i::disconnect_connections - ")
+                             ACE_TEXT ("Failed to get future value for current instance\n")));
+            continue;
+          }
+
+        if (event.exception_ &&
+            !(extract_and_throw_exception < Deployment::StartError >
+              (event.contents_.in ()) ||
+              extract_and_throw_exception < Deployment::InvalidConnection >
+              (event.contents_.in ()))
+            )
+          {
+            DANCE_ERROR (1, (LM_ERROR, DLINFO
+                             ACE_TEXT ("LocalityManager_i::disconnect_connections - ")
+                             ACE_TEXT ("Error: Unknown exception propagated\n")));
+            throw ::Deployment::StartError (event.id_.c_str (),
+                                            "Unknown exception");
+          }
+      }
+  }
+
+  void
   LocalityManager_i::start (void)
   {
     DANCE_TRACE ("LocalityManager_i::start");
@@ -829,6 +961,9 @@ namespace DAnCE
                          ACE_TEXT ("Instance <%C> successfully passivated\n"),
                          event.id_.c_str ()));
       }
+
+    // Now disconnect all connections in the plan
+    //this->disconnect_connections();
 
     for (size_t i = this->handler_order_.size ();
          i > 0;

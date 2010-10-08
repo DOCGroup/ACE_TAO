@@ -81,6 +81,8 @@ namespace DAnCE
 
     void collect_references (::Deployment::Connections_out &providedReference);
 
+    void disconnect_connections (void);
+
     ACE_TString uuid_;
 
     std::list< std::string > plugin_config_files_;
