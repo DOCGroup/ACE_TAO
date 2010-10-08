@@ -50,17 +50,15 @@
  * using the pre-processor.
  *
  */
-#if !defined (ACE_LACKS_CLEARERR)
 inline void ace_clearerr_helper (FILE *stream)
 {
-#  if defined (clearerr)
+#if defined (clearerr)
   clearerr (stream);
-#  undef clearerr
-#  else
+#undef clearerr
+#else
   ACE_STD_NAMESPACE::clearerr (stream);
-#  endif /* defined (clearerr) */
+#endif /* defined (clearerr) */
 }
-#endif /* !ACE_LACKS_CLEARERR */
 
 inline int ace_fgetc_helper (FILE *fp)
 {
@@ -199,10 +197,8 @@ namespace ACE_OS {
   void checkUnicodeFormat (FILE* fp);
 # endif  // ACE_USES_WCHAR
 
-# if !defined (ACE_LACKS_CLEARERR)
   ACE_NAMESPACE_INLINE_FUNCTION
   void clearerr (FILE* fp);
-# endif /* !ACE_LACKS_CLEARERR */
 
   //@{ @name Wrappers to obtain the current user id
   // Legacy as per SUSV3
