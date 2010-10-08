@@ -654,7 +654,7 @@ test_get_ccm_home (::Components::CCMObject_ptr cmp)
 }
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
 int
 test_get_all_consumers (::Components::CCMObject_ptr cmp)
 {
@@ -692,7 +692,7 @@ test_get_all_consumers (::Components::CCMObject_ptr cmp)
 }
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
 int
 test_get_named_consumers (::Components::CCMObject_ptr cmp)
 {
@@ -875,12 +875,13 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
 
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_get_ccm_home (cmp);
-
+#if !defined (CCM_NOEVENT)
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_get_all_consumers (cmp);
 
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_get_named_consumers (cmp);
+#endif
 #endif
       // one final test.
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));

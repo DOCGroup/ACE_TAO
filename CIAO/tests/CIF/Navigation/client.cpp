@@ -365,7 +365,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
 }
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
 //============================================================
 // test_get_all_publishers
 //============================================================
@@ -406,7 +406,7 @@ test_get_all_publishers (::Components::CCMObject_ptr cmp)
 }
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
 //============================================================
 // test_get_named_publishers
 //============================================================
@@ -486,7 +486,7 @@ test_get_named_publishers (::Components::CCMObject_ptr cmp)
 }
 #endif
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
 int
 //============================================================
 // test_get_all_emitters
@@ -527,7 +527,7 @@ test_get_all_emitters (::Components::CCMObject_ptr cmp)
   return 0;
 }
 #endif
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
 int
 //============================================================
 // test_get_named_emitters
@@ -626,7 +626,7 @@ run_test (::Components::Navigation_ptr nav,
 
   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
   ret += test_get_all_ports (cmp);
-
+#if !defined (CCM_NOEVENT)
   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
   ret += test_get_all_publishers (cmp);
 
@@ -638,6 +638,7 @@ run_test (::Components::Navigation_ptr nav,
 
   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
   ret += test_get_named_emitters (cmp);
+#endif  
 #else
   ACE_UNUSED_ARG (cmp);
 #endif
