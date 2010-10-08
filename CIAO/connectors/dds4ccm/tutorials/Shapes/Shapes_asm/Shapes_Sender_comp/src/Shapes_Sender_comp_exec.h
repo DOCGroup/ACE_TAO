@@ -14,7 +14,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "ace/Reactor.h"
 
 namespace CIAO_Shapes_Sender_comp_Impl
 {

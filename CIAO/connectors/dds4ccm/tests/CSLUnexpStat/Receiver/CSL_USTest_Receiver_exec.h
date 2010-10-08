@@ -14,8 +14,6 @@
 
 #include "tao/LocalObject.h"
 
-#include "ace/Reactor.h"
-
 namespace CIAO_CSL_USTest_Receiver_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;

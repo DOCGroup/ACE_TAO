@@ -2,7 +2,7 @@
 // $Id$
 
 #include "Throughput_Sender_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"

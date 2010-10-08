@@ -14,7 +14,6 @@
 
 #include /**/ "Broker_exec_export.h"
 #include "tao/LocalObject.h"
-#include "ace/Reactor.h"
 
 namespace CIAO_Quoter_Broker_Impl
 {

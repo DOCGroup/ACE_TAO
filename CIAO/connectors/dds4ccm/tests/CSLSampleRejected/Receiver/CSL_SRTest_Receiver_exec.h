@@ -14,8 +14,6 @@
 
 #include "tao/LocalObject.h"
 #include "ace/OS_NS_Thread.h"
-#include "ace/Reactor.h"
-
 
 namespace CIAO_CSL_SRTest_Receiver_Impl
 {

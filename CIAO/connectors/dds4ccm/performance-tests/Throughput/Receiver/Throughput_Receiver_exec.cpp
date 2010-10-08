@@ -3,7 +3,7 @@
 // $Id$
 #include "Throughput_Receiver_exec.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "ace/High_Res_Timer.h"
 
 

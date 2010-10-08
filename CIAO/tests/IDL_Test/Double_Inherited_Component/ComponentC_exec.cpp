@@ -2,7 +2,7 @@
 // $Id$
 
 #include "ComponentC_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 
 namespace CIAO_connector_test_C_Impl
 {

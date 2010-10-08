@@ -3,7 +3,7 @@
 
 #include "Shapes_Sender_comp_exec.h"
 #include "ace/Guard_T.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 
 namespace CIAO_Shapes_Sender_comp_Impl

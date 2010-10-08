@@ -1,11 +1,11 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "Keyed_Test_Receiver_exec.h"
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_time.h"
+#include "ace/Reactor.h"
 #include "dds4ccm/impl/TimeUtilities.h"
 
 namespace CIAO_Keyed_Test_Receiver_Impl
