@@ -229,7 +229,7 @@ namespace CIAO
              i < conn.internalEndpoint.length ();
              ++i)
           {
-            if (!conn.internalEndpoint[i].provider)
+            if (conn.internalEndpoint[i].provider)
               endpoint = i;
           }
       }
@@ -662,7 +662,6 @@ namespace CIAO
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_facet");
-
     const ::Deployment::PlanConnectionDescription &conn =
       plan.connection[connectionRef];
     const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
@@ -833,7 +832,7 @@ namespace CIAO
                                receptacle,
                                receptacle_port);
     CIAO_DEBUG (5, (LM_INFO, CLINFO
-                    "Connection_Handler::connect_local_port - "
+                    "Connection_Handler::disconnect_local_port - "
                     "Disconnected local port <%C>:<%C> to <%C>:<%C>\n",
                     facet_id, facet_port,
                     receptacle_id, receptacle_port));
