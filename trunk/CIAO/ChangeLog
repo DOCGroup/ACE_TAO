@@ -1,3 +1,12 @@
+Fri Oct  8 14:42:38 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tests/CIF/Navigation/client.cpp:
+        * tests/CIF/Receptacle/client.cpp:
+        Change test for no_event feature. 
+        * examples/DevGuideExamples/Messenger/Administrator_Client_IDL2.mpc:
+        * examples/DevGuideExamples/Messenger/Administrator_Client_IDL3.mpc:
+        Add avoids_ccm_noevent.
+
 Fri Oct  8 14:01:07 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Handlers/Connection_Handler.cpp:
