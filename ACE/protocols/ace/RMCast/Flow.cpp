@@ -50,9 +50,9 @@ namespace ACE_RMCast
         }
       }
 
-      if (cap_tput_ != 0.0
-          && current_tput_ != 0.0
-          && current_tput_ > cap_tput_)
+      if (!ACE::is_equal (cap_tput_, 0.0) &&
+          !ACE::is_equal (current_tput_, 0.0) &&
+          current_tput_ > cap_tput_)
       {
         double dev = (current_tput_ - cap_tput_) / current_tput_;
 
@@ -111,10 +111,10 @@ namespace ACE_RMCast
 
         nak_time_ = nak_time;
 
-        if (cap_tput_ == 0.0)
+        if (ACE::is_equal (cap_tput_, 0.0))
           cap_tput_ = current_tput_;
 
-        if (cap_tput_ != 0.0)
+        if (!ACE::is_equal (cap_tput_, 0.0))
         {
           cap_tput_ = cap_tput_ - cap_tput_ / 6.0;
 

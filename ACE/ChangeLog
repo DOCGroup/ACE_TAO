@@ -1,3 +1,12 @@
+Fri Oct  8 06:58:56 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * protocols/ace/RMCast/Flow.cpp:
+        * tests/CDR_Array_Test.cpp:
+        * tests/CDR_File_Test.cpp:
+        * tests/CDR_Test.cpp:
+        * tests/Upgradable_RW_Test.cpp:
+          Use ACE::is_equal() to compare floating point values.
+
 Thu Oct  7 12:34:20 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ASNMP/tests/Counter64_Test.cpp:

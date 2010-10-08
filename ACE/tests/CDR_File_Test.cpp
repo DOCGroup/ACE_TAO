@@ -185,9 +185,9 @@ CDR_Test::operator == (const CDR_Test &rhs) const
     return false;
   if (this->word8_ != rhs.word8_)
     return false;
-  if (this->fpoint_ != rhs.fpoint_)
+  if (!ACE::is_equal (this->fpoint_, rhs.fpoint_))
     return false;
-  if (this->dprec_ != rhs.dprec_)
+  if (!ACE::is_equal (this->dprec_, rhs.dprec_))
     return false;
   return true;
 }
