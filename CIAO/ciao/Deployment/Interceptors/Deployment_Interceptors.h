@@ -59,13 +59,13 @@ namespace CIAO
 
     virtual
       void pre_connect (::Deployment::DeploymentPlan & plan,
-                                 ::CORBA::ULong connection_index,
-                                 ::CORBA::Any & provided_reference);
+                        ::CORBA::ULong connection_index,
+                       ::CORBA::Any & provided_reference);
 
     virtual
       void post_connect (const ::Deployment::DeploymentPlan & plan,
-                                  ::CORBA::ULong connectionRef,
-                                  const ::CORBA::Any & exceptionThrown);
+                         ::CORBA::ULong connectionRef,
+                         const ::CORBA::Any & exceptionThrown);
 
     virtual
       void configure(const Deployment::Properties&);
