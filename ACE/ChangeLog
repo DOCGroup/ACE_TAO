@@ -1,3 +1,12 @@
+Fri Oct  8 07:48:38 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ace/README:
+          Removed references to ACE_LACKS_IOSTREAMS_TOTALLY. It is no
+          longer used.
+
+        * ace/os_include/os_stropts.h:
+          Fixed typo.
+
 Fri Oct  8 07:42:26 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_stdio.h:

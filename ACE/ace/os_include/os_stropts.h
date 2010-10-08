@@ -34,7 +34,7 @@
 
 #if !defined (ACE_LACKS_SYS_IOCTL_H)
 #  include /**/ <sys/ioctl.h>
-#endif /* !ACE_LACKS_IOCTL_H */
+#endif /* !ACE_LACKS_SYS_IOCTL_H */
 
 #if defined (ACE_HAS_SYS_FILIO_H)
 #  include /**/ <sys/filio.h>
