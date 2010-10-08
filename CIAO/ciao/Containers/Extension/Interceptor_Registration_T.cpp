@@ -14,12 +14,12 @@ namespace CIAO
   Interceptor_Registration_T<BASE, COPITYPE>::register_interceptor (
     InterceptorType_ptr_type ict)
   {
-    Components::Cookie *key_cookie = 0;
+    Components::Cookie_var key_cookie;
     ACE_NEW_THROW_EX (key_cookie,
                       Cookie_Impl (reinterpret_cast<ptrdiff_t> (ict)),
                       CORBA::NO_MEMORY ());
     this->interceptors_[key_cookie] = ict;
-    return key_cookie;
+    return key_cookie.in ();
   }
 
   template <typename BASE, typename COPITYPE>
