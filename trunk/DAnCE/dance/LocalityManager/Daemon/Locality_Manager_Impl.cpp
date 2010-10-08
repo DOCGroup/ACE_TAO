@@ -650,7 +650,6 @@ namespace DAnCE
     DANCE_TRACE ("LocalityManager_i::disconnect_connections");
 
     typedef std::map < std::string, CORBA::ULong > ConnMap;
-    ConnMap conns;
 
     Deployment_Completion completion (this->scheduler_);
 
@@ -660,11 +659,6 @@ namespace DAnCE
                      ACE_TEXT ("have %u connections\n"),
                      this->plan_.connection.length ()
                      ));
-
-    for (CORBA::ULong i = 0; i < this->plan_.connection.length (); ++i)
-      {
-        conns[this->plan_.connection[i].name.in ()] = i;
-      }
 
     CORBA::ULong dispatched (0);
 
@@ -684,7 +678,7 @@ namespace DAnCE
 
         if (conn.internalEndpoint.length () == 2)
           {
-            if (!conn.internalEndpoint[1].provider)
+            if (conn.internalEndpoint[1].provider)
               j = 1;
           }
         else if (conn.internalEndpoint[0].provider &&
@@ -963,7 +957,7 @@ namespace DAnCE
       }
 
     // Now disconnect all connections in the plan
-    //this->disconnect_connections();
+    this->disconnect_connections();
 
     for (size_t i = this->handler_order_.size ();
          i > 0;
