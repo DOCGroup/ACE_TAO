@@ -1,3 +1,8 @@
+Fri Oct  8 12:31:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Scheduler/Events/Passivate.cpp:
+          Fixed incorrect logging
+
 Fri Oct  8 11:44:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dance/DAnCE_DeploymentInterceptors.idl:
