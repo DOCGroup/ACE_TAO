@@ -1,6 +1,6 @@
 // $Id$
 
-project(EC_idl_gen): componentidldefaults {
+project(EC_idl_gen): componentidldefaults, avoids_ccm_noevent {
   custom_only = 1
   idlflags += -I.. \
               -Wb,stub_export_macro=EC_STUB_Export \
@@ -57,7 +57,7 @@ project(EC_stub): ccm_stub, avoids_ccm_noevent {
   }
 }
 
-project(EC_exec) : ciao_executor {
+project(EC_exec) : ciao_executor, avoids_ccm_noevent {
   after      += EC_stub EC_lem_gen
   sharedname = EC_exec
   libs       += EC_stub BasicSP_stub
@@ -85,7 +85,7 @@ project(EC_exec) : ciao_executor {
   }
 }
 
-project(EC_svnt) : ciao_servant {
+project(EC_svnt) : ciao_servant, avoids_ccm_noevent {
   after += BasicSP_svnt EC_exec
   includes += ..
 
@@ -112,7 +112,7 @@ project(EC_svnt) : ciao_servant {
   }
 }
 
-project (EC_client) : ccm_stub {
+project (EC_client) : ccm_stub , avoids_ccm_noevent{
   after += EC_stub
   exename = client
   libs += EC_stub BasicSP_stub
@@ -134,7 +134,7 @@ project (EC_client) : ccm_stub {
   }
 }
 
-project (EC_controller) : ccm_stub {
+project (EC_controller) : ccm_stub, avoids_ccm_noevent {
   after += EC_stub
   exename = controller
   includes += ..

@@ -49,7 +49,7 @@ project(Hello_Base_stub) : ccm_stub,avoids_ccm_noevent {
 }
 
 
-project(Hello_Base_skel) : ccm_svnt {
+project(Hello_Base_skel) : ccm_svnt, avoids_ccm_noevent {
   after      +=  Hello_Base_stub
   sharedname  = Hello_Base_skel
   libs       += Hello_Base_stub

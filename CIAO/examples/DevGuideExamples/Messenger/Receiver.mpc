@@ -27,7 +27,7 @@ project(Messenger_Receiver_lem_gen) : ciaoidldefaults , avoids_ccm_noevent{
   }
 }
 
-project(Messenger_Receiver_stub) : ccm_stub {
+project(Messenger_Receiver_stub) : ccm_stub, avoids_ccm_noevent {
   after += Messenger_Receiver_idl_gen Messenger_stub
   libs  += Messenger_stub
 
@@ -51,7 +51,7 @@ project(Messenger_Receiver_stub) : ccm_stub {
   }
 }
 
-project(Messenger_Receiver_exec) : ciao_executor {
+project(Messenger_Receiver_exec) : ciao_executor, avoids_ccm_noevent {
   after   += Messenger_Receiver_lem_gen Messenger_Receiver_stub
   sharedname = Receiver_exec
   libs += Receiver_stub Messenger_stub
@@ -78,7 +78,7 @@ project(Messenger_Receiver_exec) : ciao_executor {
 }
 
 
-project(Messenger_Receiver_svnt) : ciao_servant {
+project(Messenger_Receiver_svnt) : ciao_servant, avoids_ccm_noevent {
   after      += Messenger_svnt Messenger_Receiver_exec
   sharedname  = Receiver_svnt
   libs       += Receiver_exec \

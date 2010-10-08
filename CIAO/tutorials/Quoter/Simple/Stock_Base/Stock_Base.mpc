@@ -54,7 +54,7 @@ project(Stock_Base_stub) : ccm_stub, avoids_ccm_noevent   {
 }
 
 
-project(Stock_Base_skel) : ciao_executor   {
+project(Stock_Base_skel) : ciao_executor, avoids_ccm_noevent   {
   after      +=  Stock_Base_stub Stock_Base_lem_stub
   sharedname  = Stock_Base_skel
   libs       += Stock_Base_stub
