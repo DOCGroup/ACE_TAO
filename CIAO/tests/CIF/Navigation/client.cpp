@@ -137,7 +137,7 @@ test_get_named_facets (::Components::Navigation_ptr nav)
   try
     {
       ::Components::NameList_var names;
-      names.length (2);
+      names->length (2);
       names[0] = CORBA::string_dup ("provide_cif_foo");
       names[1] = CORBA::string_dup ("provide_cif_derived_foo");
       ::Components::FacetDescriptions_var named_facets = nav->get_named_facets (names);
@@ -171,7 +171,7 @@ test_get_named_facets (::Components::Navigation_ptr nav)
   try
     {
       ::Components::NameList_var names;
-      names.length (2);
+      names->length (2);
       names[0] = CORBA::string_dup ("provide_cif_foo_invalid_name");
       names[1] = CORBA::string_dup ("provide_cif_derived_foo_invalid_name");
       ::Components::FacetDescriptions_var named_facets = nav->get_named_facets (names);
@@ -420,7 +420,7 @@ test_get_named_publishers (::Components::CCMObject_ptr cmp)
   try
     {
       ::Components::NameList_var two_names;
-      two_names.length (2);
+      two_names->length (2);
       two_names[0] = ::CORBA::string_dup ("publish_do_something");
       two_names[1] = ::CORBA::string_dup ("publish_do_something_else");
       pds = cmp->get_named_publishers (two_names);
@@ -453,7 +453,7 @@ test_get_named_publishers (::Components::CCMObject_ptr cmp)
   try
     {
       ::Components::NameList_var invalid_names;
-      invalid_names.length (3);
+      invalid_names->length (3);
       invalid_names[0] = ::CORBA::string_dup ("publish_do_something");
       invalid_names[1] = ::CORBA::string_dup ("publish_do_something_invalid_name");
       invalid_names[2] = ::CORBA::string_dup ("publish_do_something_else");
@@ -574,7 +574,7 @@ test_get_named_emitters (::Components::CCMObject_ptr cmp)
   try
     {
       ::Components::NameList_var invalid_names;
-      invalid_names.length (2);
+      invalid_names->length (2);
       invalid_names[0] = ::CORBA::string_dup ("emit_do_something");
       invalid_names[1] = ::CORBA::string_dup ("emit_do_something_invalid_name");
       eds = cmp->get_named_emitters (invalid_names);

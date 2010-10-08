@@ -1,3 +1,9 @@
+Fri Oct  8 07:47:48 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Navigation/client.cpp:
+        * tests/CIF/Receptacle/client.cpp:
+          Resolved compile issues.
+
 Thu Oct  7 12:50:38 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * tutorials/Quoter/Simple/Broker/StockBroker.mpc:
@@ -15,7 +21,7 @@ Thu Oct  7 12:50:38 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * examples/BasicSP/BMDevice/BMDevice.mpc:
         * examples/Display/Display_Base/Display_Base.mpc:
         * examples/DevGuideExamples/Messenger/Receiver.mpc:
-        Add avoids_ccm_noevent tp MPC and if !defined(CCM_NOEVENT) tp cpp files. 
+        Add avoids_ccm_noevent tp MPC and if !defined(CCM_NOEVENT) tp cpp files.
 
 Thu Oct  7 11:39:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
