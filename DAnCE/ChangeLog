@@ -1,3 +1,8 @@
+Fri Oct  8 13:59:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+          Made some fixes
+
 Fri Oct  8 12:31:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dance/LocalityManager/Scheduler/Events/Passivate.cpp:
