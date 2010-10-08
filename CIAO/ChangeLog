@@ -1,3 +1,12 @@
+Fri Oct  8 09:10:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Containers/Extension/Extension_Container.cpp:
+        * ciao/Servants/Connector_Servant_Impl_Utils_T.cpp:
+          Used _var to create a cookie.
+
+        * tests/CIF/Navigation/client.cpp:
+          Resolved compile issue.
+
 Fri Oct  8 07:55:47 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Containers/Extension/Interceptor_Registration_T.cpp:

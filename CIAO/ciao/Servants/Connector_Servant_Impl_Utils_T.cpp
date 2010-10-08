@@ -83,15 +83,13 @@ namespace CIAO
                           CORBA::NO_MEMORY ());
         ::Components::ConnectionDescription_var safe_conn = conn;
 
-        ::Components::Cookie *key_cookie = 0;
+        ::Components::Cookie_var key_cookie;
 
         ACE_NEW_THROW_EX (key_cookie,
                           CIAO::Cookie_Impl (iter->first),
                           CORBA::NO_MEMORY ());
 
-        // Valuetype member set operation calls add_ref.
-        conn->ck (key_cookie);
-        CORBA::remove_ref (key_cookie);
+        conn->ck (key_cookie.in ());
 
         conn->objref (iter->second.in ());
 

@@ -542,7 +542,7 @@ test_get_named_emitters (::Components::CCMObject_ptr cmp)
     {
 
       ::Components::NameList_var one_name;
-      one_name.length (1);
+      one_name->length (1);
       one_name[0] = ::CORBA::string_dup ("emit_do_something");
       eds = cmp->get_named_emitters (one_name);
       if (eds->length () != 1)
