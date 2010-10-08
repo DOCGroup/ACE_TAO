@@ -13,8 +13,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "ace/Reactor.h"
-
 #include <map>
 
 namespace CIAO_Keyed_Test_Receiver_Impl

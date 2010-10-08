@@ -1,7 +1,7 @@
 // $Id$
 
 #include "SimpleLocalUser_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 
 namespace CIAO_Simple_SimpleLocalUser_Impl
 {
@@ -11,12 +11,12 @@ namespace CIAO_Simple_SimpleLocalUser_Impl
 
   SimpleLocalUser_exec_i::SimpleLocalUser_exec_i (void)
   {
-    CIAO_TRACE ("SimpleLocalUser_exec_i::SimpleLocalUser_exec_i (void)");
+    ACE_TRACE ("SimpleLocalUser_exec_i::SimpleLocalUser_exec_i (void)");
   }
 
   SimpleLocalUser_exec_i::~SimpleLocalUser_exec_i (void)
   {
-    CIAO_TRACE ("SimpleLocalUser_exec_i::~SimpleLocalUser_exec_i (void)");
+    ACE_TRACE ("SimpleLocalUser_exec_i::~SimpleLocalUser_exec_i (void)");
   }
 
   // Supported or inherited operations.
@@ -31,7 +31,7 @@ namespace CIAO_Simple_SimpleLocalUser_Impl
   SimpleLocalUser_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    CIAO_TRACE ("SimpleLocalUser_exec_i::set_session_context ()");
+    ACE_TRACE ("SimpleLocalUser_exec_i::set_session_context ()");
     this->context_ =
       ::Simple::CCM_SimpleLocalUser_Context::_narrow (ctx);
 
@@ -44,14 +44,14 @@ namespace CIAO_Simple_SimpleLocalUser_Impl
   void
   SimpleLocalUser_exec_i::configuration_complete ()
   {
-    CIAO_TRACE ("SimpleLocalUser_exec_i::configuration_complete ()");
+    ACE_TRACE ("SimpleLocalUser_exec_i::configuration_complete ()");
     // Your code here.
   }
 
   void
   SimpleLocalUser_exec_i::ccm_activate ()
   {
-    CIAO_TRACE ("SimpleLocalUser_exec_i::ccm_activate ()");
+    ACE_TRACE ("SimpleLocalUser_exec_i::ccm_activate ()");
 
     ::Simple::LocalTrigger_var trig (this->context_->get_connection_trig ());
 
@@ -83,14 +83,14 @@ namespace CIAO_Simple_SimpleLocalUser_Impl
   void
   SimpleLocalUser_exec_i::ccm_passivate ()
   {
-    CIAO_TRACE ("SimpleLocalUser_exec_i::ccm_passivate ()");
+    ACE_TRACE ("SimpleLocalUser_exec_i::ccm_passivate ()");
     // Your code here.
   }
 
   void
   SimpleLocalUser_exec_i::ccm_remove ()
   {
-    CIAO_TRACE ("SimpleLocalUser_exec_i::ccm_remove ()");
+    ACE_TRACE ("SimpleLocalUser_exec_i::ccm_remove ()");
     // Your code here.
   }
 
@@ -100,12 +100,12 @@ namespace CIAO_Simple_SimpleLocalUser_Impl
 
   SimpleLocalUserHome_exec_i::SimpleLocalUserHome_exec_i (void)
   {
-    CIAO_TRACE ("SimpleLocalUserHome_exec_i::SimpleLocalUserHome_exec_i (void)");
+    ACE_TRACE ("SimpleLocalUserHome_exec_i::SimpleLocalUserHome_exec_i (void)");
   }
 
   SimpleLocalUserHome_exec_i::~SimpleLocalUserHome_exec_i (void)
   {
-    CIAO_TRACE ("SimpleLocalUserHome_exec_i::~SimpleLocalUserHome_exec_i (void)");
+    ACE_TRACE ("SimpleLocalUserHome_exec_i::~SimpleLocalUserHome_exec_i (void)");
   }
 
   // Supported or inherited operations.
@@ -121,7 +121,7 @@ namespace CIAO_Simple_SimpleLocalUser_Impl
   ::Components::EnterpriseComponent_ptr
   SimpleLocalUserHome_exec_i::create ()
   {
-    CIAO_TRACE ("SimpleLocalUserHome_exec_i::create ()");
+    ACE_TRACE ("SimpleLocalUserHome_exec_i::create ()");
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
 
@@ -136,7 +136,7 @@ namespace CIAO_Simple_SimpleLocalUser_Impl
   extern "C" SIMPLEUSER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Simple_SimpleLocalUserHome_Impl (void)
   {
-    CIAO_TRACE ("create_Simple_SimpleLocalUserHome_Impl (void)");
+    ACE_TRACE ("create_Simple_SimpleLocalUserHome_Impl (void)");
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
 

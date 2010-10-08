@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "SimpleNilFacetUser_exec.h"
 
 namespace CIAO_Simple_SimpleNilFacetUser_Impl
@@ -11,12 +11,12 @@ namespace CIAO_Simple_SimpleNilFacetUser_Impl
 
   SimpleNilFacetUser_exec_i::SimpleNilFacetUser_exec_i (void)
   {
-    CIAO_TRACE ("SimpleNilFacetUser_exec_i::SimpleNilFacetUser_exec_i (void)");
+    ACE_TRACE ("SimpleNilFacetUser_exec_i::SimpleNilFacetUser_exec_i (void)");
   }
 
   SimpleNilFacetUser_exec_i::~SimpleNilFacetUser_exec_i (void)
   {
-    CIAO_TRACE ("SimpleNilFacetUser_exec_i::~SimpleNilFacetUser_exec_i (void)");
+    ACE_TRACE ("SimpleNilFacetUser_exec_i::~SimpleNilFacetUser_exec_i (void)");
   }
 
   // Supported or inherited operations.
@@ -31,7 +31,7 @@ namespace CIAO_Simple_SimpleNilFacetUser_Impl
   SimpleNilFacetUser_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    CIAO_TRACE ("SimpleNilFacetUser_exec_i::set_session_context ()");
+    ACE_TRACE ("SimpleNilFacetUser_exec_i::set_session_context ()");
     this->context_ =
       ::Simple::CCM_SimpleNilFacetUser_Context::_narrow (ctx);
 
@@ -44,14 +44,14 @@ namespace CIAO_Simple_SimpleNilFacetUser_Impl
   void
   SimpleNilFacetUser_exec_i::configuration_complete ()
   {
-    CIAO_TRACE ("SimpleNilFacetUser_exec_i::configuration_complete ()");
+    ACE_TRACE ("SimpleNilFacetUser_exec_i::configuration_complete ()");
     // Your code here.
   }
 
   void
   SimpleNilFacetUser_exec_i::ccm_activate ()
   {
-    CIAO_TRACE ("SimpleNilFacetUser_exec_i::ccm_activate ()");
+    ACE_TRACE ("SimpleNilFacetUser_exec_i::ccm_activate ()");
     bool caught_exception = false;
     ::Simple::Trigger_var trig (this->context_->get_connection_trig ());
 
@@ -93,13 +93,13 @@ namespace CIAO_Simple_SimpleNilFacetUser_Impl
   void
   SimpleNilFacetUser_exec_i::ccm_passivate ()
   {
-    CIAO_TRACE ("SimpleNilFacetUser_exec_i::ccm_passivate ()");
+    ACE_TRACE ("SimpleNilFacetUser_exec_i::ccm_passivate ()");
   }
 
   void
   SimpleNilFacetUser_exec_i::ccm_remove ()
   {
-    CIAO_TRACE ("SimpleNilFacetUser_exec_i::ccm_remove ()");
+    ACE_TRACE ("SimpleNilFacetUser_exec_i::ccm_remove ()");
   }
 
   //==================================================================
@@ -108,12 +108,12 @@ namespace CIAO_Simple_SimpleNilFacetUser_Impl
 
   SimpleNilFacetUserHome_exec_i::SimpleNilFacetUserHome_exec_i (void)
   {
-    CIAO_TRACE ("SimpleNilFacetUserHome_exec_i::SimpleNilFacetUserHome_exec_i (void)");
+    ACE_TRACE ("SimpleNilFacetUserHome_exec_i::SimpleNilFacetUserHome_exec_i (void)");
   }
 
   SimpleNilFacetUserHome_exec_i::~SimpleNilFacetUserHome_exec_i (void)
   {
-    CIAO_TRACE ("SimpleNilFacetUserHome_exec_i::~SimpleNilFacetUserHome_exec_i (void)");
+    ACE_TRACE ("SimpleNilFacetUserHome_exec_i::~SimpleNilFacetUserHome_exec_i (void)");
   }
 
   // Supported or inherited operations.
@@ -129,7 +129,7 @@ namespace CIAO_Simple_SimpleNilFacetUser_Impl
   ::Components::EnterpriseComponent_ptr
   SimpleNilFacetUserHome_exec_i::create ()
   {
-    CIAO_TRACE ("SimpleNilFacetUserHome_exec_i::create ()");
+    ACE_TRACE ("SimpleNilFacetUserHome_exec_i::create ()");
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
 
@@ -144,7 +144,7 @@ namespace CIAO_Simple_SimpleNilFacetUser_Impl
   extern "C" SIMPLENILFACETUSER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Simple_SimpleNilFacetUserHome_Impl (void)
   {
-    CIAO_TRACE ("create_Simple_SimpleNilFacetUserHome_Impl (void)");
+    ACE_TRACE ("create_Simple_SimpleNilFacetUserHome_Impl (void)");
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
 

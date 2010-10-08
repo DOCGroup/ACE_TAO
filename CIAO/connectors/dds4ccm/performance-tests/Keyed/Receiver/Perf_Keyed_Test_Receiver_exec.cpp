@@ -3,7 +3,7 @@
 // $Id$
 
 #include "Perf_Keyed_Test_Receiver_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "ace/High_Res_Timer.h"
 
 namespace CIAO_Perf_Keyed_Test_Receiver_Impl

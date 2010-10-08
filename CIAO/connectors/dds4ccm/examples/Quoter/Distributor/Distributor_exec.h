@@ -16,8 +16,6 @@
 #include /**/ "Distributor_exec_export.h"
 #include "tao/LocalObject.h"
 #include "ace/Thread_Mutex.h"
-#include "ace/Reactor.h"
-
 #include <map>
 
 namespace CIAO_Quoter_Distributor_Impl

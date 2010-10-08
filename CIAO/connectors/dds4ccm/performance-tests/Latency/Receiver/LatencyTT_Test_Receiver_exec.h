@@ -13,7 +13,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "ace/Reactor.h"
 #include "ace/Task.h"
 
 namespace CIAO_LatencyTT_Test_Receiver_Impl

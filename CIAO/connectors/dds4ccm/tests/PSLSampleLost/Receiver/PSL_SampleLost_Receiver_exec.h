@@ -14,8 +14,6 @@
 
 #include "tao/LocalObject.h"
 #include "ace/OS_NS_Thread.h"
-#include "ace/Reactor.h"
-
 
 namespace CIAO_PSL_SampleLost_Receiver_Impl
 {

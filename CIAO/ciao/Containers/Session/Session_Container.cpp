@@ -6,7 +6,7 @@
 #include "ciao/Containers/Servant_Activator.h"
 #include "ccm/ComponentServer/CCM_ComponentServer_BaseC.h"
 #include "ciao/Servants/Servant_Impl_Base.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Session_Container.inl"

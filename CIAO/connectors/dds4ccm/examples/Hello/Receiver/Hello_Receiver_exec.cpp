@@ -5,7 +5,7 @@
 // be/be_codegen.cpp:1344
 
 #include "Hello_Receiver_exec.h"
-#include "ciao/Logger/Log_Macros.h"
+#include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 #include "ace/Date_Time.h"
 
