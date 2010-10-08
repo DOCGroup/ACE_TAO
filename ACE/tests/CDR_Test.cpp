@@ -265,13 +265,13 @@ short_stream (void)
                        ACE_TEXT ("ulong transfer error")),
                       1);
 
-  if (f1 != f)
+  if (!ACE::is_equal (f1, f))
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("float transfer error")),
                       1);
 
-  if (d1 != d)
+  if (!ACE::is_equal (d1, d))
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("double transfer error")),
@@ -292,14 +292,14 @@ short_stream (void)
                         1);
 
   for (i = 0 ; i < 3; i++)
-    if (f_array1[i] != f_array[i])
+    if (!ACE::is_equal (f_array1[i], f_array[i]))
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("float array transfer error")),
                         1);
 
   for (i = 0 ; i < 3; i++)
-    if (d_array1[i] != d_array[i])
+    if (!ACE::is_equal (d_array1[i], d_array[i]))
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("double array transfer error")),

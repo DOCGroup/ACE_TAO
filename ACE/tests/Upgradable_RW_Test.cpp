@@ -294,7 +294,7 @@ Time_Calculation ::print_stats (void)
 
       double tmp = 0.0;
 
-      if (elapsed_time.real_time != 0.0)
+      if (!ACE::is_equal (elapsed_time.real_time, 0.0))
         tmp = 1000 / elapsed_time.real_time;
 
       ACE_DEBUG ((LM_DEBUG,
