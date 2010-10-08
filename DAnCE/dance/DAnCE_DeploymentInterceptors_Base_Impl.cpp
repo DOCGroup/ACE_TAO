@@ -68,6 +68,21 @@ namespace DAnCE
     // Add your implementation here
   }
 
+  void
+  DeploymentInterceptor_Base::pre_disconnect (::Deployment::DeploymentPlan &,
+                                       ::CORBA::ULong)
+  {
+    // Add your implementation here
+  }
+
+  void
+  DeploymentInterceptor_Base::post_disconnect (const ::Deployment::DeploymentPlan &,
+                                             ::CORBA::ULong,
+                                             const ::CORBA::Any &)
+  {
+    // Add your implementation here
+  }
+
   void DeploymentInterceptor_Base::post_configured (const ::Deployment::DeploymentPlan & ,
                                                                 ::CORBA::ULong ,
                                                                 const ::CORBA::Any &)

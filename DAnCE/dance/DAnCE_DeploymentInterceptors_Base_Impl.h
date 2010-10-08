@@ -71,6 +71,15 @@ namespace DAnCE
                          const ::CORBA::Any & exceptionThrown);
 
     virtual
+      void pre_disconnect (::Deployment::DeploymentPlan & plan,
+                           ::CORBA::ULong connection_index_);
+
+    virtual
+      void post_disconnect (const ::Deployment::DeploymentPlan & plan,
+                            ::CORBA::ULong connectionRef,
+                            const ::CORBA::Any & exceptionThrown);
+
+    virtual
       void post_configured (const ::Deployment::DeploymentPlan & plan,
                             ::CORBA::ULong instanceRef,
                             const ::CORBA::Any & exception_thrown);
