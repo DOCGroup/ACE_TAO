@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Messenger Administrator"
 
-project(Messenger_Administrator_idl_gen) : componentidldefaults {
+project(Messenger_Administrator_idl_gen) : componentidldefaults , avoids_ccm_noevent{
   custom_only = 1
   idlflags += -Wb,stub_export_macro=ADMINISTRATOR_STUB_Export \
               -Wb,stub_export_include=Administrator_stub_export.h \
@@ -15,7 +15,7 @@ project(Messenger_Administrator_idl_gen) : componentidldefaults {
   }
 }
 
-project(Messenger_Administrator_lem_gen) : ciaoidldefaults {
+project(Messenger_Administrator_lem_gen) : ciaoidldefaults , avoids_ccm_noevent{
   custom_only = 1
   after += Messenger_Administrator_idl_gen Messenger_idl_gen
   idlflags += -Wb,export_macro=ADMINISTRATOR_EXEC_Export \
@@ -27,7 +27,7 @@ project(Messenger_Administrator_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(Messenger_Administrator_stub) : ccm_stub {
+project(Messenger_Administrator_stub) : ccm_stub, avoids_ccm_noevent {
   after += Messenger_Administrator_idl_gen Messenger_stub
   libs  += Messenger_stub
 
@@ -51,7 +51,7 @@ project(Messenger_Administrator_stub) : ccm_stub {
   }
 }
 
-project(Messenger_Administrator_exec) : ciao_executor {
+project(Messenger_Administrator_exec) : ciao_executor, avoids_ccm_noevent {
   after   += Messenger_Administrator_lem_gen Messenger_Administrator_stub
   sharedname = Administrator_exec
   libs += Administrator_stub Messenger_stub
@@ -78,7 +78,7 @@ project(Messenger_Administrator_exec) : ciao_executor {
 }
 
 
-project(Messenger_Administrator_svnt) : ciao_servant {
+project(Messenger_Administrator_svnt) : ciao_servant, avoids_ccm_noevent {
   after      += Messenger_svnt Messenger_Administrator_exec
   sharedname  = Administrator_svnt
   libs       += Administrator_exec \
