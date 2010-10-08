@@ -32,11 +32,11 @@ namespace CIAO
       * @brief Templated base class for the Getter port.
       *
       *        Spec:  Get operations are performed with the following parameters
-      *                · SampleStateMask: NO_READ,
-      *                · ViewStateMask: NEW or NOT_NEW,
-      *                · InstanceStateMask: ALIVE or NOT_ALIVE,
-      *               · Through the query (if any) of the Reader associated to the port,
-      *                · Within the time limit specified in time_out.
+      *                . SampleStateMask: NO_READ,
+      *                . ViewStateMask: NEW or NOT_NEW,
+      *                . InstanceStateMask: ALIVE or NOT_ALIVE,
+      *                . Through the query (if any) of the Reader associated to the port,
+      *                . Within the time limit specified in time_out.
       *
       *               All methods return a boolean as result indicating whether actual data
       *               are provided (TRUE) or if the time-out occurred (FALSE).
