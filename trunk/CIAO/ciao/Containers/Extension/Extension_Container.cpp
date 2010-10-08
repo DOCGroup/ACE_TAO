@@ -1306,13 +1306,13 @@ namespace CIAO
       }
 
     //first create a cookie out of the given object reference.
-    Components::Cookie *key_cookie = 0;
+    Components::Cookie_var key_cookie;
     ACE_NEW_THROW_EX (key_cookie,
                       CIAO::Cookie_Impl (reinterpret_cast<ptrdiff_t> (objref)),
                       CORBA::NO_MEMORY ());
     //create a pair of cookie and object reference
     std::pair<Components::Cookie *, CORBA::Object_ptr> ck_obj;
-    ck_obj = std::make_pair(key_cookie, CORBA::Object::_duplicate(objref));
+    ck_obj = std::make_pair(key_cookie.in (), CORBA::Object::_duplicate(objref));
     this->installed_services_[service_id] = ck_obj;
 
     return key_cookie;
