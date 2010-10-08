@@ -833,8 +833,6 @@ ACE_LACKS_AUTO_MMAP_REPLACEMENT         No system support for replacing any
 ACE_LACKS_BSEARCH                       Compiler/platform lacks the
                                         standard C library bsearch()
                                         function
-ACE_LACKS_CLEARERR                      Platform lacks the clearerr system
-                                        call.
 ACE_LACKS_CLOSEDIR                      Platform lacks closedir and the closedir
                                         emulation must be used
 ACE_LACKS_OPENDIR                       Platform lacks opendir and the opendir

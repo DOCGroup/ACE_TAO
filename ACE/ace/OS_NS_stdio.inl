@@ -339,13 +339,11 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock,
 #endif /* ACE_WIN32 */
 }
 
-#if !defined (ACE_LACKS_CLEARERR)
 ACE_INLINE void
 ACE_OS::clearerr (FILE* fp)
 {
   ace_clearerr_helper (fp);
 }
-#endif /* !ACE_LACKS_CLEARERR */
 
 #if !defined (ACE_LACKS_CUSERID)
 ACE_INLINE char *
