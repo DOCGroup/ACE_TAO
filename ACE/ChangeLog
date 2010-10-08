@@ -1,3 +1,11 @@
+Fri Oct  8 08:20:04 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdio.inl:
+        * ace/README:
+        * tests/OS_Test.cpp:
+          Removed references to ACE_LACKS_RENAME. It is no
+          longer used.
+
 Fri Oct  8 07:51:46 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ace/config-integritySCA.h:

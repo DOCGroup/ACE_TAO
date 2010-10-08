@@ -973,7 +973,6 @@ ACE_LACKS_RAND_REENTRANT_FUNCTIONS      Platform lacks rand_r()
 ACE_LACKS_READLINK                      Platform lacks the readlink() function.
 ACE_LACKS_READV                         Platform doesn't define readv,
                                         so use our own
-ACE_LACKS_RENAME                        Platform lacks rename().
 ACE_LACKS_RLIMIT                        Platform/compiler lacks
                                         {get,set}rlimit() function
                                         (e.g., VxWorks, Chorus, and
