@@ -1,3 +1,8 @@
+Fri Oct  8 13:53:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Session/Session_Container.cpp:
+          Simplified disconnect_local_facet logic
+
 Fri Oct  8 11:45:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Interceptors/Deployment_Interceptors.h:

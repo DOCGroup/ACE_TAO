@@ -776,8 +776,8 @@ namespace CIAO
 
   void
   Session_Container_i::disconnect_local_facet (
-    ::Components::CCMObject_ptr provider,
-    const char * provider_port,
+    ::Components::CCMObject_ptr,
+    const char *,
     ::Components::CCMObject_ptr user,
     const char * user_port)
   {
@@ -786,36 +786,14 @@ namespace CIAO
     try
       {
         PortableServer::ServantBase_var srv_tmp =
-          this->component_poa_->reference_to_servant (provider);
+          this->component_poa_->reference_to_servant (user);
 
         CIAO_DEBUG (9,
                     (LM_TRACE,
                      CLINFO
                      "Session_Container_i::disconnect_local_facet - "
-                     "Successfully fetched provider servant from POA\n"));
-
-        CIAO::Connector_Servant_Impl_Base *prov_serv =
-          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (srv_tmp.in ());
-
-        if (prov_serv == 0)
-          {
-            CIAO_ERROR (1,
-                        (LM_ERROR,
-                         CLINFO
-                         "Session_Container_i::disconnect_local_facet - "
-                         "Unable to cast to provider servant "
-                         "implementation\n"));
-
-            throw ::Components::InvalidConnection ();
-          }
-
-        srv_tmp = this->component_poa_->reference_to_servant (user);
-
-        CIAO_DEBUG (9,
-                    (LM_TRACE,
-                     CLINFO
-                     "Session_Container_i::disconnect_local_facet - "
-                     "Successfully fetched user servant from POA\n"));
+                     "Successfully fetched user servant from POA for user port <%C>\n",
+                     user_port));
 
         CIAO::Connector_Servant_Impl_Base *user_serv =
           dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (srv_tmp.in ());
@@ -832,18 +810,7 @@ namespace CIAO
             throw ::Components::InvalidConnection ();
           }
 
-        ::CORBA::Object_var exec =
-          prov_serv->get_facet_executor (provider_port);
-
-        // Note: Spec says that facet executor provided by component MAY BE NIL
-        if (!::CORBA::is_nil (exec.in ()))
-          {
-            ::CORBA::Object_var port = user_serv->disconnect (user_port, 0);
-          }
-        else
-          {
-            throw ::Components::InvalidConnection ();
-          }
+        ::CORBA::Object_var port = user_serv->disconnect (user_port, 0);
       }
     catch (const ::Components::InvalidConnection &)
       {
