@@ -888,8 +888,6 @@ ACE_LACKS_INET_ATON                     Platform lacks the inet_aton()
 ACE_LACKS_INET_ATON_PROTOTYPE           Platform/compiler lacks the
                                         inet_aton() prototype (e.g.,
                                         LynxOS)
-ACE_LACKS_IOSTREAMS_TOTALLY             Iostreams are not supported
-                                        adequately on the given platform.
 ACE_LACKS_IOSTREAM_FX                   iostream header does not
                                         declare ipfx (), opfx (),
                                         etc.
