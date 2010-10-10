@@ -15,7 +15,7 @@ TAO/CIAO/examples/BasicSP/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COM
 TAO/CIAO/examples/Null_Component/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
 TAO/CIAO/examples/Null_Component/descriptors/run_test_without_ns.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
 TAO/CIAO/examples/Null_Component_Glfa/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
-TAO/CIAO/examples/Hello/descriptors/run_test_without_ns.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
+TAO/CIAO/examples/Hello/descriptors/run_test_without_ns.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
 TAO/CIAO/tutorials/Quoter/Simple/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
 TAO/CIAO/tests/Bug_3834_Regression/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
 TAO/CIAO/tests/Bug_3834_Regression/descriptors/run_test_without_ns.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
@@ -113,11 +113,11 @@ TAO/CIAO/connectors/dds4ccm/performance-tests/DDSLatency/descriptors/run_test_dd
 TAO/CIAO/connectors/dds4ccm/performance-tests/DDSLatency/descriptors/run_test_ndds.pl: !ACE_FOR_TAO !ST NDDS
 TAO/CIAO/connectors/dds4ccm/performance-tests/Throughput/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
 TAO/CIAO/connectors/dds4ccm/performance-tests/DDSThroughput/descriptors/run_test_dds.pl: !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/tests/DAnCE/NodeManager-Deployments/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
-TAO/CIAO/tests/DAnCE/NodeManager-Deployments/run_test_cdr.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
-TAO/CIAO/tests/DAnCE/ExecutionManager-Deployments/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
-TAO/CIAO/tests/DAnCE/ExecutionManager-Deployments/run_test_cdr.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
-TAO/CIAO/tests/DAnCE/EM-Redeployment/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
+TAO/CIAO/tests/DAnCE/NodeManager-Deployments/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
+TAO/CIAO/tests/DAnCE/NodeManager-Deployments/run_test_cdr.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
+TAO/CIAO/tests/DAnCE/ExecutionManager-Deployments/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
+TAO/CIAO/tests/DAnCE/ExecutionManager-Deployments/run_test_cdr.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
+TAO/CIAO/tests/DAnCE/EM-Redeployment/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
 TAO/CIAO/tests/DAnCE/EM-Launch-Failures/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
 TAO/CIAO/tests/DAnCE/EM-Shutdown-Failures/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
 TAO/CIAO/tests/DAnCE/Executor-Destructor/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
