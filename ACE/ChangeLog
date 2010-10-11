@@ -1,3 +1,10 @@
+Mon Oct 11 16:31:12 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/DependencyGenerator/GNUObjectGenerator.pm:
+
+          If the source file contains '../', remove the directory part from
+          the name of the object file (see gnu.mpd:383 OBJS make variable).
+
 Mon Oct 11 11:53:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Dev_Poll_Reactor.cpp:
