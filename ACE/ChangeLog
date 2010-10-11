@@ -1,3 +1,10 @@
+Mon Oct 11 11:53:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Select_Reactor_T.cpp:
+          Fixed problems with threads=0, thanks to Elez <elezsh at gmail dot com>
+          for reporting this and providing a patch
+
 Fri Oct  8 11:19:44 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * protocols/ace/RMCast/Flow.cpp:
