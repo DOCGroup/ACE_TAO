@@ -1392,7 +1392,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events
   (ACE_Time_Value *max_wait_time)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::handle_events");
-  
+
   // Stash the current time -- the destructor of this object will
   // automatically compute how much time elapsed since this method was
   // called.
