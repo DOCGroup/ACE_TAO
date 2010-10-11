@@ -1392,13 +1392,13 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events
   (ACE_Time_Value *max_wait_time)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::handle_events");
-
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-
+  
   // Stash the current time -- the destructor of this object will
   // automatically compute how much time elapsed since this method was
   // called.
   ACE_Countdown_Time countdown (max_wait_time);
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 
   ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1);
 

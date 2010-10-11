@@ -997,7 +997,7 @@ ACE_Dev_Poll_Reactor::handle_events (ACE_Time_Value *max_wait_time)
   //
   // The destructor of this object will automatically compute how much
   // time elapsed since this method was called.
-  ACE_MT (ACE_Countdown_Time countdown (max_wait_time));
+  ACE_Countdown_Time countdown (max_wait_time);
 
   Token_Guard guard (this->token_);
   int const result = guard.acquire_quietly (max_wait_time);
