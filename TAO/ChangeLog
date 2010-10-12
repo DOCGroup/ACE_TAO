@@ -1,3 +1,28 @@
+Tue Oct 12 13:15:30 UTC 2010  Simon Massey  <sma at prismtech dot com>
+
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_home.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/ast_valuetype.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        * tests/IDL_Test/invalid_scoping1.idl: (renamed from invalid_scoping.idl)
+        * tests/IDL_Test/invalid_scoping2.idl:
+        * tests/IDL_Test/run_test.pl:
+
+          Fix another invalid_scoping regression (TAO#522/801), the test
+          prismtech were using "invalid_scoping2.idl" was suttley different
+          to the "invalid_scoping1.idl" being tested here. Bringing
+          head into line with the prismtech tests.
+
 Thu Oct  7 11:14:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/RequestProcessingStrategyServantActivator.cpp:

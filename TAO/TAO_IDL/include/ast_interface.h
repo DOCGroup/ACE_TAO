@@ -148,7 +148,8 @@ public:
   virtual bool legal_for_primary_key (void) const;
 
   virtual AST_Decl *special_lookup (UTL_ScopedName *e,
-                                    bool full_def_only);
+                                    bool full_def_only,
+                                    AST_Decl *&final_parent_decl);
 
   /// Accessors for the members.
   AST_Interface *ami_handler (void) const;

@@ -183,6 +183,10 @@ public:
   AST_Decl *lookup_by_name_r (UTL_ScopedName *,
                               bool full_def_only);
 
+  AST_Decl *lookup_by_name_r (UTL_ScopedName *,
+                              bool full_def_only,
+                              AST_Decl *&final_parent_decl);
+
   // Look up the Identifier * specified only in the local scope.
   AST_Decl *lookup_by_name_local (Identifier *,
                                   bool full_def_only = false);
@@ -199,7 +203,8 @@ public:
   // A no-op here, overridden for types like interface
   // (look_in_inherited), modules (look_in_prev_mods) etc.
   virtual AST_Decl *special_lookup (UTL_ScopedName *e,
-                                    bool ful_def_only);
+                                    bool ful_def_only,
+                                    AST_Decl *&final_parent_decl);
 
   // How many entries are used?
   virtual unsigned long nmembers (void);

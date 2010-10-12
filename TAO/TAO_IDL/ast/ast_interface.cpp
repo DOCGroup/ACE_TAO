@@ -1070,7 +1070,8 @@ AST_Interface::legal_for_primary_key (void) const
 
 AST_Decl *
 AST_Interface::special_lookup (UTL_ScopedName *e,
-                               bool full_def_only)
+                               bool full_def_only,
+                               AST_Decl *&final_parent_decl)
 {
   AST_Decl *d = this->look_in_inherited_local (e->head (),
                                                full_def_only);
@@ -1082,7 +1083,7 @@ AST_Interface::special_lookup (UTL_ScopedName *e,
         static_cast<UTL_ScopedName *> (e->tail ());
 
       return (s != 0 && sn != 0
-                ? s->lookup_by_name_r (sn, full_def_only)
+                ? s->lookup_by_name_r (sn, full_def_only, final_parent_decl)
                 : d);
     }
 
