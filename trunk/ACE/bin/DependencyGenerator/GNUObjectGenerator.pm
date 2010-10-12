@@ -23,7 +23,7 @@ use vars qw(@ISA);
 sub process {
   my($noext) = $_[1];
   $noext =~ s/\.[^\.]+$//o;
-  $noext =~ s/.+\/// if $noext =~ /..\//;
+  $noext =~ s/.+\/// if $noext =~ /\.\.\//;
   return ["\$(VDIR)$noext.\$(SOEXT)",
           "\$(VDIR)$noext.\$(OBJEXT)",
           "\$(VSHDIR)$noext.\$(SOEXT)",

@@ -1,3 +1,9 @@
+Tue Oct 12 21:12:51 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/DependencyGenerator/GNUObjectGenerator.pm:
+
+          Fixed incorrect Perl regex escaping from my previous commit.
+
 Tue Oct 12 11:41:00 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Bug_3911_Regression_Test.cpp:
