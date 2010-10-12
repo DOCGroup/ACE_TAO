@@ -128,7 +128,8 @@ public:
   // Called to look up some declaration
   // in a previous opening of this module.
   AST_Decl *look_in_prev_mods (UTL_ScopedName *e,
-                               bool full_def_only = false);
+                               bool full_def_only,
+                               AST_Decl *&final_parent_decl);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
@@ -139,7 +140,8 @@ public:
 
   // Override that looks in previous openings.
   virtual AST_Decl *special_lookup (UTL_ScopedName *e,
-                                    bool full_def_only);
+                                    bool full_def_only,
+                                    AST_Decl *&final_parent_decl);
 
   // We actually want to match the LAST module found in
   // the scope being searched not the FIRST one in the

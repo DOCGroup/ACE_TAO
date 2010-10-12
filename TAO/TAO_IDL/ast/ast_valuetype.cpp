@@ -303,7 +303,8 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
 
 AST_Decl *
 AST_ValueType::special_lookup (UTL_ScopedName *e,
-                               bool full_def_only)
+                               bool full_def_only,
+                               AST_Decl *&/*final_parent_decl*/)
 {
   AST_Decl *d = this->look_in_inherited (e, full_def_only);
 

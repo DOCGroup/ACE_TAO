@@ -34,7 +34,8 @@ public:
 
   // Overridden for homes from the UTL_Scope method.
   virtual AST_Decl *special_lookup (UTL_ScopedName *,
-                                    bool full_def_only);
+                                    bool full_def_only,
+                                    AST_Decl *&final_parent_decl);
 
   // Accessors.
 

@@ -264,7 +264,8 @@ AST_Module::look_in_prev_mods_local (Identifier *e,
 
 AST_Decl *
 AST_Module::look_in_prev_mods (UTL_ScopedName *e,
-                               bool full_def_only)
+                               bool full_def_only,
+                               AST_Decl *&final_parent_decl)
 {
   for (AST_Module *po = this->previous_opening_;
        po;
@@ -283,6 +284,7 @@ AST_Module::look_in_prev_mods (UTL_ScopedName *e,
                 static_cast<UTL_ScopedName *> (e->tail ());
               if (!sn)
                 {
+                  final_parent_decl= static_cast<AST_Decl *> (po);
                   return d; // Nothing left in path, found wanted name
                 }
 
@@ -290,7 +292,7 @@ AST_Module::look_in_prev_mods (UTL_ScopedName *e,
               if (s)
                 {
                   // Recurse down what is left of the path
-                  return s->lookup_by_name_r (sn, full_def_only);
+                  return s->lookup_by_name_r (sn, full_def_only, final_parent_decl);
                 }
 
               // Find next match, this one didn't work out.
@@ -321,9 +323,10 @@ AST_Module::from_inst (AST_Template_Module_Inst *node)
 
 AST_Decl *
 AST_Module::special_lookup (UTL_ScopedName *e,
-                            bool full_def_only)
+                            bool full_def_only,
+                            AST_Decl *&final_parent_decl)
 {
-  return this->look_in_prev_mods (e, full_def_only);
+  return this->look_in_prev_mods (e, full_def_only, final_parent_decl);
 }
 
 //================================================

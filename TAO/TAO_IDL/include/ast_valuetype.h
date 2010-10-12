@@ -51,7 +51,8 @@ public:
 
   // Overridden for valuetype from UTL_Scope method.
   virtual AST_Decl *special_lookup (UTL_ScopedName *,
-                                    bool full_def_only);
+                                    bool full_def_only,
+                                    AST_Decl *&final_parent_decl);
 
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
