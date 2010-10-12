@@ -49,10 +49,10 @@ namespace DAnCE
     if (retval != 0)
       {
         std::stringstream str;
-        ACE_Auto_Basic_Array_Ptr<char> safe_error (ACE_OS::strerror (ACE_OS::last_error ()));
+        const char * safe_error (ACE_OS::strerror (ACE_OS::last_error ()));
 
         str << "Unable to set process priority to <" << prio << ">: "
-            << safe_error.get ();
+            << safe_error;
         std::string message = str.str ();
 
         DANCE_ERROR (1, (LM_ERROR, DLINFO

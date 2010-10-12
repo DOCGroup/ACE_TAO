@@ -1,3 +1,9 @@
+Tue Oct 12 14:27:03 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/LocalityManager/Configuration/Process_Priority.cpp:
+
+          Crash fix. 
+
 Fri Oct  8 13:59:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
