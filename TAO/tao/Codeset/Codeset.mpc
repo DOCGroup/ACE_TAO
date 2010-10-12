@@ -12,7 +12,7 @@ project(*idl) : tao_versioning_idl_defaults {
 
 project(Codeset) : taolib, tao_output, install, taoidldefaults, nolink_codecfactory {
   sharedname   = TAO_Codeset
-  after       += *idl
+  after        += *idl
   dynamicflags += TAO_CODESET_BUILD_DLL
 
   Source_Files {
@@ -24,6 +24,10 @@ project(Codeset) : taolib, tao_output, install, taoidldefaults, nolink_codecfact
     *.h
     CodeSetContextC.h
     CodeSetContextS.h
+  }
+
+  Template_Files {
+    Codeset_Translator_Factory_T.cpp
   }
 
   specific {
