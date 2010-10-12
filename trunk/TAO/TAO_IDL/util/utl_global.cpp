@@ -1193,12 +1193,6 @@ IDL_GlobalData::dds4ccm_impl_fnames (void)
   return this->dds4ccm_impl_fnames_;
 }
 
-ACE_Unbounded_Queue<AST_Decl *> &
-IDL_GlobalData::masking_scopes (void)
-{
-  return this->masking_scopes_;
-}
-
 ACE_Unbounded_Queue<AST_Interface *> &
 IDL_GlobalData::mixed_parentage_interfaces (void)
 {

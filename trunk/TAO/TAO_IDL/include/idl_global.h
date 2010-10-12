@@ -631,9 +631,6 @@ public:
   ACE_Unbounded_Queue<char *> & dds4ccm_impl_fnames (void);
   // Accessor mutator for the dds4ccm_impl_fnames_ member.
 
-  ACE_Unbounded_Queue<AST_Decl *> & masking_scopes (void);
-  // Accessor for the member
-
   ACE_Unbounded_Queue<AST_Interface *> & mixed_parentage_interfaces (void);
   // Accessor for the member
 
@@ -881,10 +878,6 @@ private:
 
   ACE_Unbounded_Queue<char *> dds4ccm_impl_fnames_;
   // Stores directives from #pragma dds4ccm impl "xxx".
-
-  ACE_Unbounded_Queue<AST_Decl *> masking_scopes_;
-  // Used to check for an incorrect lookup success that should
-  // have been masked by an inner scope of the same name.
 
   /**
    * Used in the generation of overrides for CORBA::release and

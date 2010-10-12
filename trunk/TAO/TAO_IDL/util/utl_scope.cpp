@@ -1025,7 +1025,8 @@ UTL_Scope::look_in_prev_mods_local (Identifier *,
 
 AST_Decl *
 UTL_Scope::special_lookup (UTL_ScopedName *,
-                           bool /* full_def_only */)
+                           bool /* full_def_only */,
+                           AST_Decl *&/*final_parent_decl*/)
 {
   return 0;
 }
@@ -1211,7 +1212,6 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
   // scope-expanding iteration below.
   Identifier *name = e->head ();
   const bool global_scope_name = work->is_global_name (name);
-
   if (global_scope_name)
     {
       // Remove the preceeding "::" or "" from the scopename
@@ -1222,8 +1222,11 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
       work = idl_global->root ();
     }
 
-  AST_Decl *d = work->lookup_by_name_r (e, full_def_only);
-
+  AST_Decl *first_found_final_parent_decl= 0;
+  const bool searching_module_path= (e->length () != 1);
+  AST_Decl *d = searching_module_path ?
+    work->lookup_by_name_r (e, full_def_only, first_found_final_parent_decl) :
+    work->lookup_by_name_r (e, full_def_only);
   if (d == 0)
     {
       // If all else fails, look though each outer scope.
@@ -1231,46 +1234,27 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
            outer;
            outer = ScopeAsDecl (outer)->defined_in ())
         {
-          d = outer->lookup_by_name_r (e, full_def_only);
-
+          AST_Decl *next_found_final_parent_decl= 0;
+          d = outer->lookup_by_name_r (e, full_def_only, next_found_final_parent_decl);
           if (d != 0)
             {
               work = outer;
-              break; // Ok found it, stop searching.
-            }
-        }
-    }
-
-  ACE_Unbounded_Queue<AST_Decl *> &masks =
-    idl_global->masking_scopes ();
-
-  if (d != 0 && !global_scope_name)
-    {
-      ACE_Unbounded_Queue<AST_Decl *>::CONST_ITERATOR i (masks);
-      AST_Decl **item = 0;
-
-      if (i.next (item))
-        {
-          // The first queue item (last enqueued) will always
-          // match "name", but does not indicate an error.
-          AST_Decl *outer_decl = *item;
-
-          // Now check that the rest of the names don't collide
-          const char *const name_str = name->get_string ();
-
-          while (i.advance ())
-            {
-              i.next (item);
-              const char *const item_name_str =
-                (*item)->local_name ()->get_string ();
-
-              if (!ACE_OS::strcmp (item_name_str, name_str)
-                  && !(*item)->masking_checks (outer_decl))
+              if (first_found_final_parent_decl)
                 {
-                  idl_global->err ()->scope_masking_error (d, *item);
-                  d = 0; // Hidden scopes can't be used indirectly.
-                  break;
+                  // Hidden scopes can't be used indirectly, therefore we didn't actually
+                  // find this one because the "first_found_final_parent_decl" was found and
+                  // this one just found is hidden by it.
+                  idl_global->err ()->scope_masking_error (d, first_found_final_parent_decl);
+                  d = 0; // Ignore this one; continue searching to report other ambiguous matches.
                 }
+              else
+                {
+                  break; // Ok found it, stop searching.
+                }
+            }
+          else if (searching_module_path && !first_found_final_parent_decl)
+            {
+              first_found_final_parent_decl = next_found_final_parent_decl;
             }
         }
     }
@@ -1281,7 +1265,6 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
       work->add_to_referenced (d, false, name);
     }
 
-  masks.reset ();
   return d;
 }
 
@@ -1289,8 +1272,18 @@ AST_Decl *
 UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
                              bool full_def_only)
 {
+  AST_Decl *ignored= 0;
+  return UTL_Scope::lookup_by_name_r (e, full_def_only, ignored);
+}
+
+AST_Decl *
+UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
+                             bool full_def_only,
+                             AST_Decl *&final_parent_decl)
+{
   bool work_another_level;
   UTL_Scope *work = this;
+  final_parent_decl= (e->length () == 1) ? ScopeAsDecl (work) : 0;
 
   do
     {
@@ -1299,7 +1292,6 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
       // generation of some #includes and, whether successful or not,
       // incurs no extra overhead.
       AST_Decl *d = work->lookup_pseudo (e->head ());
-
       if (d)
         {
           return d;
@@ -1314,7 +1306,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
       // matches a template module parameter. If so, the return
       // value is created on the heap and is owned by the caller
       // of this lookup.
-      if (e->length () == 1)
+      if (final_parent_decl)
         {
           // Since we are inside the scope of a template module, any
           // single-segment scoped name that matches a template
@@ -1350,7 +1342,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
               && d->local_name ()->case_compare (e->head ()))
             {
               // Ok we found a match, is there any more to find?
-              if (e->length () == 1)
+              if (final_parent_decl)
                 {
                   return d; // Last scope name matched
                 }
@@ -1361,8 +1353,8 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
                 {
                   work = next;
                   work_another_level = true;
-                  idl_global->masking_scopes ().enqueue_head (d);
                   e = static_cast<UTL_ScopedName *> (e->tail ());
+                  final_parent_decl= (e->length () == 1) ? d : 0;
                   break;
                 }
 
@@ -1375,7 +1367,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
   // A rare enough case that it's worth it to separate it and
   // do it as a last resort. Catches anonymnous types, enums
   // and members with their types defined all in one statement.
-  if (e->length () == 1)
+  if (final_parent_decl)
     {
       for (UTL_ScopeActiveIterator i (work, IK_localtypes);
            !i.is_done ();
@@ -1391,7 +1383,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
     }
 
   // Last resort, check other module openings of working scope.
-  return work->special_lookup (e, full_def_only);
+  return work->special_lookup (e, full_def_only, final_parent_decl);
 }
 
 // Add a node to set of nodes referenced in this scope.
