@@ -61,6 +61,7 @@ Bug_3729_Regression_Test:
 Bug_3744_Regression_Test: !FIXED_BUGS_ONLY
 Bug_3758_Regression_Test: !FIXED_BUGS_ONLY
 Bug_3878_Regression_Test
+Bug_3911_Regression_Test: !FIXED_BUGS_ONLY
 CDR_Array_Test: !ACE_FOR_TAO
 CDR_File_Test: !ACE_FOR_TAO
 CDR_Test
