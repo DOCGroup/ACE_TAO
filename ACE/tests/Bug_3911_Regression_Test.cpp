@@ -60,7 +60,7 @@ protected:
     if (no_crash)
     {
       ACE_MMAP_Memory_Pool_Options options (ACE_DEFAULT_BASE_ADDR);
-      c_memory_pool = new ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, 
+      c_memory_pool = new ACE_Malloc_T<ACE_MMAP_MEMORY_POOL,
                       ACE_Null_Mutex,
                       ACE_PI_Control_Block>(MMAP_FILENAME
                                             , "", &options
@@ -68,7 +68,7 @@ protected:
     }
     else
     {
-      c_memory_pool = new ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, 
+      c_memory_pool = new ACE_Malloc_T<ACE_MMAP_MEMORY_POOL,
                       ACE_Null_Mutex,
                       ACE_PI_Control_Block>(MMAP_FILENAME);
     }
@@ -139,7 +139,7 @@ public:
 
     return shared;
   };
-      
+
 };
 
 ShmemMan* ShmemMan::c_instance = 0;
@@ -152,16 +152,16 @@ run_main (int argc, ACE_TCHAR * argv[])
   ACE_START_TEST (ACE_TEXT ("Bug_3911_Regression_Test"));
 
   init_test ();
-  
+
   bool no_crash = (argc>1 && argv[1][0]=='1');
   ShmemMan* smm = ShmemMan::getInstance (no_crash);
-  
+
   void* buf = smm->getMemoryBlock ("block_1", 10 * 4096);
-  
+
   ACE_DEBUG((LM_INFO, ACE_TEXT("allocated shmem block at %@\n"), buf));
-  
+
   smm->clean ();
-  
+
   ACE_END_TEST;
   return 0;
 }

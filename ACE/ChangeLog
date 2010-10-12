@@ -1,3 +1,8 @@
+Tue Oct 12 11:41:00 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Bug_3911_Regression_Test.cpp:
+          Fuzz fixes.
+
 Tue Oct 12 08:06:00 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Bug_3911_Regression_Test.cpp:
