@@ -1,7 +1,13 @@
+Wed Oct 13 06:42:36 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+          Mentioned the fact that a new option has been added to the
+          TAO IDL compiler.
+
 Sun Oct 10 08:06:38 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst:
-	Disable tests in case of CCM_NOEVENT.
+        Disable tests in case of CCM_NOEVENT.
 
 Sat Oct  9 15:59:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
@@ -12,7 +18,7 @@ Fri Oct  8 14:42:38 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * tests/CIF/Navigation/client.cpp:
         * tests/CIF/Receptacle/client.cpp:
-        Change test for no_event feature. 
+        Change test for no_event feature.
         * examples/DevGuideExamples/Messenger/Administrator_Client_IDL2.mpc:
         * examples/DevGuideExamples/Messenger/Administrator_Client_IDL3.mpc:
         Add avoids_ccm_noevent.
