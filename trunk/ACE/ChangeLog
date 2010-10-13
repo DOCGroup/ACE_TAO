@@ -1,3 +1,16 @@
+Wed Oct 13 06:15:00 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Framework_Component.h:
+        * ace/Framework_Component.inl:
+        * ace/Framework_Component.cpp:
+        * ace/Framework_Component_T.h:
+          Use ACE_Copy_Disabled, change c-style cast to const cast, use
+          sync macros instead of ACE_MT. Thanks to Ranjit Hande
+          <hande at avaya dot com> for reporting the c-style cast warnings
+
+        * tests/Framework_Component_Test.h:
+          Layout change
+
 Tue Oct 12 21:12:51 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/DependencyGenerator/GNUObjectGenerator.pm:

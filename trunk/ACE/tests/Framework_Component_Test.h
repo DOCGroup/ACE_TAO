@@ -22,7 +22,7 @@
 
 #include "ace/Log_Msg.h"
 
-/// This  we will use to test the ACE_Framework_Repository
+/// This we will use to test the ACE_Framework_Repository
 class Simple_Service
 {
 public:
