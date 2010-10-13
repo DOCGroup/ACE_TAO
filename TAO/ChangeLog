@@ -14,6 +14,9 @@ Wed Oct 13 06:27:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
           of the ORB of the Component. When the reactor
           can't be retrieved, a CORBA::INTERNAL exception will be thrown.
 
+          Also removed the comments which states where the code
+          has been generated in the TAO IDL compiler.
+
 Tue Oct 12 14:18:00 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Codeset/Codeset.mpc:
