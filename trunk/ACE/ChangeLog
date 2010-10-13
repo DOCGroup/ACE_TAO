@@ -1,3 +1,8 @@
+Wed Oct 13 08:24:00 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Bug_3911_Regression_Test.cpp:
+          Wchar build fixes.
+
 Wed Oct 13 06:15:00 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Framework_Component.h:

@@ -9,9 +9,6 @@
 
 #include "test_config.h"
 
-#include <string>
-using namespace std;
-
 #include <ace/Malloc_T.h>
 #include <ace/Memory_Pool.h>
 #include <ace/Process_Mutex.h>
@@ -63,7 +60,7 @@ protected:
       c_memory_pool = new ACE_Malloc_T<ACE_MMAP_MEMORY_POOL,
                       ACE_Null_Mutex,
                       ACE_PI_Control_Block>(MMAP_FILENAME
-                                            , "", &options
+                                            , ACE_TEXT(""), &options
                                             );
     }
     else
@@ -98,25 +95,25 @@ public:
     return 0;
   };
 
-  void* getMemoryBlock(string block_name, unsigned int block_size)
+  void* getMemoryBlock(ACE_TCHAR* block_name, unsigned int block_size)
   {
     void* shared;
 
     ACE_DEBUG((LM_INFO, ACE_TEXT("errno = %d. Looking for a Shared Memory block named %s\n"),
                         ACE_OS::last_error(),
-                        block_name.c_str()));
+                        block_name));
 
-    if (c_memory_pool->find(block_name.c_str(), shared) == 0)
+    if (c_memory_pool->find(block_name, shared) == 0)
     {
       // An existing block was found, so take that:
       ACE_DEBUG((LM_INFO, ACE_TEXT("Shared Memory block %s was found."),
-                          block_name.c_str()));
+                          block_name));
     }
     else
     {
       // Allocate the memory and bind it to a name:
       ACE_DEBUG((LM_INFO, ACE_TEXT("Shared Memory block %s was not found. errno = %d. Trying to allocate new block\n"),
-                          block_name.c_str(),
+                          block_name,
                           ACE_OS::last_error()));
       shared = c_memory_pool->malloc(block_size);
       if (shared < 0)
@@ -126,11 +123,11 @@ public:
         return (void*)(-1);
       }
       ACE_DEBUG((LM_INFO, ACE_TEXT("New Shared Memory block was allocated, trying to bind it to the name %s\n"),
-                          block_name.c_str()));
-      if (c_memory_pool->bind(block_name.c_str(), shared) < 0)
+                          block_name));
+      if (c_memory_pool->bind(block_name, shared) < 0)
       {
         ACE_DEBUG((LM_INFO, ACE_TEXT("New Shared Memory block could not be bound to the name %s. errno = %d.\n"),
-                            block_name.c_str(),
+                            block_name,
                             ACE_OS::last_error()));
 
         return (void*)(-1);
@@ -156,7 +153,7 @@ run_main (int argc, ACE_TCHAR * argv[])
   bool no_crash = (argc>1 && argv[1][0]=='1');
   ShmemMan* smm = ShmemMan::getInstance (no_crash);
 
-  void* buf = smm->getMemoryBlock ("block_1", 10 * 4096);
+  void* buf = smm->getMemoryBlock (ACE_TEXT("block_1"), 10 * 4096);
 
   ACE_DEBUG((LM_INFO, ACE_TEXT("allocated shmem block at %@\n"), buf));
 
