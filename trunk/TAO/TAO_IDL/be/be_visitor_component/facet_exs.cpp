@@ -70,10 +70,6 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
   lname_str += node->original_local_name ()->get_string ();
   const char *lname = lname_str.c_str ();
 
-  os_ << be_nl << be_nl
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
   os_ << be_nl
       << comment_border_ << be_nl
       << "// Facet Executor Implementation Class: "

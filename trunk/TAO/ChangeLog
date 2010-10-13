@@ -1,3 +1,19 @@
+Wed Oct 13 06:27:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
+        * TAO_IDL/be_include/be_global.h:
+          Added another option to the -Gex option. When a user
+          passes -Gexr, the TAO IDL compiler will generate an extra
+          method in the executor class which retrieves the ACE_Reactor
+          of the ORB of the Component. When the reactor
+          can't be retrieved, a CORBA::INTERNAL exception will be thrown.
+
 Tue Oct 12 14:18:00 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Codeset/Codeset.mpc:

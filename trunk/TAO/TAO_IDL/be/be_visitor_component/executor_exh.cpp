@@ -152,6 +152,12 @@ be_visitor_executor_exh::visit_component (be_component *node)
                         -1);
     }
 
+  if (be_global->gen_ciao_exec_reactor_impl ())
+    {
+      os_ << be_nl << be_nl
+          << "ACE_Reactor* reactor (void);";
+    }
+
   os_ << be_uidt_nl
       << "};";
 

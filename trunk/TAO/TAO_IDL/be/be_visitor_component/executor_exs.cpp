@@ -11,6 +11,7 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
+#include <TAO_IDL/be_include/be_helper.h>
 
 be_visitor_executor_exs::be_visitor_executor_exs (
       be_visitor_context *ctx)
@@ -92,6 +93,31 @@ be_visitor_executor_exs::visit_component (be_component *node)
 
   os_ << be_nl << be_nl
       << "// Supported operations and attributes.";
+
+  if (be_global->gen_ciao_exec_reactor_impl ())
+    {
+      os_ << be_nl
+          << "ACE_Reactor*" << be_nl
+          << lname << "_exec_i::reactor (void)" << be_nl
+          << "{" << be_idt_nl
+          << "ACE_Reactor* reactor = 0;" << be_nl
+          << "::CORBA::Object_var ccm_object = " << be_idt_nl
+          << "this->ciao_context_->get_CCM_object();" << be_uidt_nl
+          << "if (! ::CORBA::is_nil (ccm_object.in ())) " << be_idt_nl
+          << "{" << be_idt_nl
+          << "::CORBA::ORB_var orb = ccm_object->_get_orb ();" << be_nl
+          << "if (! ::CORBA::is_nil (orb.in ()))" << be_idt_nl
+          << "{" << be_idt_nl
+          << "reactor = orb->orb_core ()->reactor ();"
+          << be_uidt_nl << "}"
+          << be_uidt << be_uidt_nl << "}"
+          << be_uidt_nl << "if (reactor == 0)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "throw ::CORBA::INTERNAL ();"
+          << be_uidt_nl << "}"
+          << be_uidt_nl << "return reactor;"
+          << be_uidt_nl << "}";
+    }
 
   op_scope_ = node;
 
