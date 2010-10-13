@@ -1,3 +1,8 @@
+Wed Oct 13 12:07:24 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Do not run the CIF test when DAnCE isn't build
+
 Wed Oct 13 06:42:36 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * NEWS:
