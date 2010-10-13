@@ -1004,6 +1004,18 @@ also receives other options that are specific to it.<p>
     to be filled in by the developer.</td>
   </tr>
 
+  <tr><a name="Gexr">
+    <td><tt>-Gexr</tt></td>
+
+    <td>Generate CIAO executor implementation code for component and home IDL declarations, including
+      an implementation of the ACE_Reactor</td>
+    <td>When applying <tt>-Gexr</tt>, the TAO IDL compiler will generate an extra method which
+      retrieves the ACE_Reactor from the ORB. One should use this option when an ACE_reactor.
+      In code, use 'this-&gt;reactor ()' to get the ACE_Reactor. A CORBA::INTERNAL
+      exception is thrown when the ACE_Reactor cannot be retrieved.<br/>
+      The goal of this method is to prevent memory leaks.</td>
+  </tr>
+
   <tr><a name="Gcn">
     <td><tt>-Gcn</tt></td>
 
