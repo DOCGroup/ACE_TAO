@@ -10,6 +10,14 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.8.2 and CIAO-0.8.3
   been moved from ACE_wrappers/TAO/CIAO/DAnCE to
   ACE_wrappers/TAO/DAnCE.
 
+. A new option has been added to the TAO IDL compiler. This option
+  extends the -Gex option. When applying -Gexr, the TAO IDL compiler
+  will generate an extra method which retrieves the ACE_Reactor from
+  the ORB. One should use this option when an ACE_reactor. In code,
+  use 'this->reactor ()' to get the ACE_Reactor. A CORBA::INTERNAL
+  exception is thrown when the ACE_Reactor cannot be retrieved.
+  The goal of this method is to prevent memory leaks.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.8.1 and CIAO-0.8.2
 =======================================================
 
