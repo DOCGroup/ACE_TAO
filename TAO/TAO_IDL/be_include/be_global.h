@@ -819,6 +819,9 @@ public:
   bool gen_ciao_exec_impl (void) const;
   void gen_ciao_exec_impl (bool val);
 
+  bool gen_ciao_exec_reactor_impl (void) const;
+  void gen_ciao_exec_reactor_impl (bool val);
+
   bool gen_ciao_conn_impl (void) const;
   void gen_ciao_conn_impl (bool val);
 
@@ -1175,6 +1178,8 @@ private:
   bool gen_ciao_svnt_;
   bool gen_ciao_exec_idl_;
   bool gen_ciao_exec_impl_;
+  bool gen_ciao_exec_reactor_impl_;
+
 
   /// False by default, this flag triggers code generation
   /// for CCM connector implementations.

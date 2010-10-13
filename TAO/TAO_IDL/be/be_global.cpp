@@ -136,6 +136,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_ciao_svnt_ (false),
     gen_ciao_exec_idl_ (false),
     gen_ciao_exec_impl_ (false),
+    gen_ciao_exec_reactor_impl_ (false),
     gen_ciao_conn_impl_ (false),
     gen_ciao_valuefactory_reg_ (true),
     gen_stub_export_hdr_file_ (false),
@@ -2355,6 +2356,18 @@ BE_GlobalData::gen_ciao_exec_impl (bool val)
 }
 
 bool
+BE_GlobalData::gen_ciao_exec_reactor_impl (void) const
+{
+  return this->gen_ciao_exec_reactor_impl_;
+}
+
+void
+BE_GlobalData::gen_ciao_exec_reactor_impl (bool val)
+{
+  this->gen_ciao_exec_reactor_impl_ = val;
+}
+
+bool
 BE_GlobalData::gen_ciao_conn_impl (void) const
 {
   return this->gen_ciao_conn_impl_;
@@ -2903,6 +2916,11 @@ BE_GlobalData::parse_args (long &i, char **av)
             // CIAO executor impl code generation.
             be_global->gen_ciao_exec_impl (true);
 
+            // should the reactor code be generated?
+            if (av[i][4] == 'r')
+              {
+                be_global->gen_ciao_exec_reactor_impl (true);
+              }
             break;
           }
         else if (av[i][2] == 's')

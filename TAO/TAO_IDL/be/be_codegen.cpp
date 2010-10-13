@@ -1278,11 +1278,6 @@ TAO_CodeGen::start_ciao_exec_header (const char *fname)
 
   TAO_OutStream &os = *this->ciao_exec_header_;
 
-  os << be_nl
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__
-     << be_nl << be_nl;
-
   // Generate the #ident string, if any.
   this->gen_ident_string (this->ciao_exec_header_);
 
@@ -1336,13 +1331,6 @@ TAO_CodeGen::start_ciao_exec_source (const char *fname)
                          ACE_TEXT ("Error opening file\n")),
                         -1);
     }
-
-  TAO_OutStream &os = *this->ciao_exec_source_;
-
-  os << be_nl
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__
-     << be_nl;
 
   // Generate the #ident string, if any.
   this->gen_ident_string (this->ciao_exec_source_);
@@ -1732,9 +1720,8 @@ TAO_CodeGen::start_implementation_header (const char *fname)
 
   if (idl_global->local_iface_seen_)
     {
-      *this->implementation_header_ << "#include \"tao/LocalObject.h\"\n\n";
+      *this->implementation_header_ << "#include \"tao/LocalObject.h\"\n";
     }
-
   return 0;
 }
 
@@ -3555,6 +3542,8 @@ TAO_CodeGen::gen_exec_src_includes (void)
   this->gen_standard_include (
     this->ciao_exec_source_,
     be_global->be_get_ciao_exec_hdr_fname (true));
+  this->gen_standard_include (
+    this->ciao_exec_source_, "tao/ORB_Core.h");
 }
 
 void
