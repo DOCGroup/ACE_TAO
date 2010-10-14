@@ -1,3 +1,11 @@
+Thu Oct 14 13:15:00 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Process.h:
+        * ace/Process.cpp:
+          Changes to allow to dynamically define the max. number of cmdline args.
+          The tao_idl compiler was running out of room in certain instances and
+          the static max was very conservative.
+
 Thu Oct 14 09:38:00 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Bug_3911_Regression_Test.cpp:
