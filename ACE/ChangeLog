@@ -1,3 +1,9 @@
+Thu Oct 14 18:29:35 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          3911 doesn't work with ace_for_tao
+
 Thu Oct 14 13:15:00 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Process.h:

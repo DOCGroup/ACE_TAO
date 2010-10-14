@@ -425,6 +425,7 @@ project(Bug_3878_Regression_Test) : acetest {
 }
 
 project(Bug_3911_Regression_Test) : acetest {
+  avoids += ace_for_tao
   exename = Bug_3911_Regression_Test
   Source_Files {
     Bug_3911_Regression_Test.cpp
