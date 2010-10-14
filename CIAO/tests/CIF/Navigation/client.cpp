@@ -47,7 +47,7 @@ test_provide_facet (::Components::Navigation_ptr nav)
   ACE_DEBUG ((LM_DEBUG, "Navigation test_provide_facet - "
                         "Provide facet test passed !\n"));
 
-  ACE_DEBUG ((LM_DEBUG, "Navigation test_provide_facet (InvalidName) - "
+  ACE_DEBUG ((LM_DEBUG, "Navigation test_provide_facet - InvalidName - "
                         "Start test\n"));
   try
     {
@@ -137,9 +137,12 @@ test_get_named_facets (::Components::Navigation_ptr nav)
   try
     {
       ::Components::NameList_var names;
+      ACE_NEW_THROW_EX (names,
+                        ::Components::NameList,
+                        CORBA::NO_MEMORY ());
       names->length (2);
-      names[0] = CORBA::string_dup ("provide_cif_foo");
-      names[1] = CORBA::string_dup ("provide_cif_derived_foo");
+      (*names)[0] = CORBA::string_dup ("provide_cif_foo");
+      (*names)[1] = CORBA::string_dup ("provide_cif_derived_foo");
       ::Components::FacetDescriptions_var named_facets = nav->get_named_facets (names);
 
       if (named_facets->length () != 2)
@@ -171,9 +174,12 @@ test_get_named_facets (::Components::Navigation_ptr nav)
   try
     {
       ::Components::NameList_var names;
+      ACE_NEW_THROW_EX (names,
+                        ::Components::NameList,
+                        CORBA::NO_MEMORY ());
       names->length (2);
-      names[0] = CORBA::string_dup ("provide_cif_foo_invalid_name");
-      names[1] = CORBA::string_dup ("provide_cif_derived_foo_invalid_name");
+      (*names)[0] = CORBA::string_dup ("provide_cif_foo_invalid_name");
+      (*names)[1] = CORBA::string_dup ("provide_cif_derived_foo_invalid_name");
       ::Components::FacetDescriptions_var named_facets = nav->get_named_facets (names);
       ACE_ERROR ((LM_ERROR, "Navigation test_get_named_facets - "
                             "Error: No InvalidName exception caught "
@@ -420,9 +426,12 @@ test_get_named_publishers (::Components::CCMObject_ptr cmp)
   try
     {
       ::Components::NameList_var two_names;
+      ACE_NEW_THROW_EX (two_names,
+                        ::Components::NameList,
+                        ::CORBA::NO_MEMORY ());
       two_names->length (2);
-      two_names[0] = ::CORBA::string_dup ("publish_do_something");
-      two_names[1] = ::CORBA::string_dup ("publish_do_something_else");
+      (*two_names)[0] = ::CORBA::string_dup ("publish_do_something");
+      (*two_names)[1] = ::CORBA::string_dup ("publish_do_something_else");
       pds = cmp->get_named_publishers (two_names);
       if (pds->length () != 2)
         {
@@ -453,10 +462,13 @@ test_get_named_publishers (::Components::CCMObject_ptr cmp)
   try
     {
       ::Components::NameList_var invalid_names;
+      ACE_NEW_THROW_EX (invalid_names,
+                        ::Components::NameList,
+                        ::CORBA::NO_MEMORY ());
       invalid_names->length (3);
-      invalid_names[0] = ::CORBA::string_dup ("publish_do_something");
-      invalid_names[1] = ::CORBA::string_dup ("publish_do_something_invalid_name");
-      invalid_names[2] = ::CORBA::string_dup ("publish_do_something_else");
+      (*invalid_names)[0] = ::CORBA::string_dup ("publish_do_something");
+      (*invalid_names)[1] = ::CORBA::string_dup ("publish_do_something_invalid_name");
+      (*invalid_names)[2] = ::CORBA::string_dup ("publish_do_something_else");
       pds = cmp->get_named_publishers (invalid_names);
       ACE_ERROR_RETURN ((LM_ERROR,
                         "Navigation test_get_named_publishers - "
@@ -542,8 +554,11 @@ test_get_named_emitters (::Components::CCMObject_ptr cmp)
     {
 
       ::Components::NameList_var one_name;
+      ACE_NEW_THROW_EX (one_name,
+                        ::Components::NameList,
+                        ::CORBA::NO_MEMORY ());
       one_name->length (1);
-      one_name[0] = ::CORBA::string_dup ("emit_do_something");
+      (*one_name)[0] = ::CORBA::string_dup ("emit_do_something");
       eds = cmp->get_named_emitters (one_name);
       if (eds->length () != 1)
         {
@@ -574,9 +589,12 @@ test_get_named_emitters (::Components::CCMObject_ptr cmp)
   try
     {
       ::Components::NameList_var invalid_names;
+      ACE_NEW_THROW_EX (invalid_names,
+                        ::Components::NameList,
+                        ::CORBA::NO_MEMORY ());
       invalid_names->length (2);
-      invalid_names[0] = ::CORBA::string_dup ("emit_do_something");
-      invalid_names[1] = ::CORBA::string_dup ("emit_do_something_invalid_name");
+      (*invalid_names)[0] = ::CORBA::string_dup ("emit_do_something");
+      (*invalid_names)[1] = ::CORBA::string_dup ("emit_do_something_invalid_name");
       eds = cmp->get_named_emitters (invalid_names);
       ACE_ERROR_RETURN ((LM_ERROR,
                         "Navigation test_get_named_emitters - "
