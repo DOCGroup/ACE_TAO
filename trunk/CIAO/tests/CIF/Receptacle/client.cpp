@@ -335,8 +335,11 @@ test_get_named_receptacles (::Components::Receptacles_ptr rec)
   ::Components::ReceptacleDescriptions_var descriptions;
 
   ::Components::NameList_var one_name;
+  ACE_NEW_THROW_EX (one_name,
+                    ::Components::NameList,
+                    ::CORBA::NO_MEMORY ());
   one_name->length (1);
-  one_name[0] = ::CORBA::string_dup ("use_cif_foo");
+  (*one_name)[0] = ::CORBA::string_dup ("use_cif_foo");
 
   try
     {
@@ -373,9 +376,12 @@ test_get_named_receptacles (::Components::Receptacles_ptr rec)
                         "Test with one name passed!\n"));
 
   ::Components::NameList_var two_names;
+  ACE_NEW_THROW_EX (two_names,
+                    ::Components::NameList,
+                    ::CORBA::NO_MEMORY ());
   two_names->length (2);
-  two_names[0] = ::CORBA::string_dup ("use_cif_foo");
-  two_names[1] = ::CORBA::string_dup ("use_cif_derived_foo");
+  (*two_names)[0] = ::CORBA::string_dup ("use_cif_foo");
+  (*two_names)[1] = ::CORBA::string_dup ("use_cif_derived_foo");
 
   try
     {
@@ -414,9 +420,12 @@ test_get_named_receptacles (::Components::Receptacles_ptr rec)
 
   // test invalid name exception during invocation of get_named_receptacles
   ::Components::NameList_var invalid_names;
+  ACE_NEW_THROW_EX (invalid_names,
+                    ::Components::NameList,
+                    ::CORBA::NO_MEMORY ());
   invalid_names->length (2);
-  invalid_names[0] = ::CORBA::string_dup ("use_cif_foo");
-  invalid_names[1] = ::CORBA::string_dup ("use_cif_foo_invalid_name");
+  (*invalid_names)[0] = ::CORBA::string_dup ("use_cif_foo");
+  (*invalid_names)[1] = ::CORBA::string_dup ("use_cif_foo_invalid_name");
   try
     {
       descriptions = rec->get_named_receptacles (invalid_names);
@@ -703,8 +712,11 @@ test_get_named_consumers (::Components::CCMObject_ptr cmp)
   try
     {
       ::Components::NameList_var one_name;
+      ACE_NEW_THROW_EX (one_name,
+                        ::Components::NameList,
+                        ::CORBA::NO_MEMORY ());
       one_name->length (1);
-      one_name[0] = ::CORBA::string_dup ("consume_do_something");
+      (*one_name)[0] = ::CORBA::string_dup ("consume_do_something");
       cds = cmp->get_named_consumers (one_name);
       if (cds->length () != 1)
         {
@@ -742,9 +754,12 @@ test_get_named_consumers (::Components::CCMObject_ptr cmp)
   try
     {
       ::Components::NameList_var invalid_names;
+      ACE_NEW_THROW_EX (invalid_names,
+                        ::Components::NameList,
+                        ::CORBA::NO_MEMORY ());
       invalid_names->length (2);
-      invalid_names[0] = ::CORBA::string_dup ("consume_do_something");
-      invalid_names[1] = ::CORBA::string_dup ("consume_do_something_invalid_name");
+      (*invalid_names)[0] = ::CORBA::string_dup ("consume_do_something");
+      (*invalid_names)[1] = ::CORBA::string_dup ("consume_do_something_invalid_name");
       cds = cmp->get_named_consumers (invalid_names);
       ACE_ERROR_RETURN ((LM_ERROR,
                         "Receptacle test_get_named_consumers - "
