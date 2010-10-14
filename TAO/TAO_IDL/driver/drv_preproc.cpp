@@ -1089,15 +1089,13 @@ DRV_pre_proc (const char *myfile)
   // works on NT.
   ACE_Process process;
 
-  // For complex builds, the default command line buffer size of 1024
-  // is sometimes not enough. We use 8192 here.
-//  ACE_Process_Options cpp_options (1,       // Inherit environment.
-//                                   TAO_IDL_COMMAND_LINE_BUFFER_SIZE);
-
   DRV_cpp_expand_output_arg (t_file);
   DRV_cpp_putarg (t_ifile);
   DRV_cpp_putarg (0); // Null terminate the DRV_arglist.
 
+  // For complex builds, the default command line buffer size of 1024
+  // is often not enough. We determin the required space and arg nr
+  // dynamically here.
   ACE_Process_Options cpp_options (1,       // Inherit environment.
                                    DRV_cpp_calc_total_argsize (),
                                    16 * 1024,
