@@ -1094,7 +1094,7 @@ DRV_pre_proc (const char *myfile)
   DRV_cpp_putarg (0); // Null terminate the DRV_arglist.
 
   // For complex builds, the default command line buffer size of 1024
-  // is often not enough. We determin the required space and arg nr
+  // is often not enough. We determine the required space and arg nr
   // dynamically here.
   ACE_Process_Options cpp_options (1,       // Inherit environment.
                                    DRV_cpp_calc_total_argsize (),

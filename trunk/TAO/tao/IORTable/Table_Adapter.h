@@ -84,8 +84,8 @@ public:
   /// Constructor
   TAO_Table_Adapter_Factory (void);
 
-  // = The TAO_Adapter_Factory methods, please read tao/Adapter.h for
-  // details.
+  /// The TAO_Adapter_Factory methods, please read tao/Adapter.h for
+  /// details.
   virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);
 };
 
