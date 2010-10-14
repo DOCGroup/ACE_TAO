@@ -1,3 +1,15 @@
+Thu Oct 14 17:47:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+          Fixed typo in comment
+
+        * TAO_IDL/include/drv_extern.h:
+        * orbsvcs/IFR_Service/drv_private_ifr.h:
+          Removed TAO_IDL_COMMAND_LINE_BUFFER_SIZE, not used anymore
+
+        * tao/IORTable/Table_Adapter.h:
+          layout changes
+
 Thu Oct 14 13:33:45 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * TAO_IDL/driver/drv_preproc.cpp:
