@@ -1,3 +1,9 @@
+Thu Oct 14 10:06:01 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Navigation/client.cpp:
+        * tests/CIF/Receptacle/client.cpp:
+          Resolved runtime issues on Full CCM builds.
+
 Wed Oct 13 12:07:24 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
