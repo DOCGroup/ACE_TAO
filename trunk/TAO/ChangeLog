@@ -1,3 +1,11 @@
+Thu Oct 14 13:21:45 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+          Changes to dynamically determin the required size for the
+          command line arguments buffer and the number of cmdline args.
+          The static max is far too inflexible (and the used constant
+          too small) for CCM type projects currently in development.
+
 Wed Oct 13 11:18:45 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * docs/compiler.html:

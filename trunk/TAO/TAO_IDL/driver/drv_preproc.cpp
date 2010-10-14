@@ -160,6 +160,20 @@ DRV_cpp_expand_output_arg (const char *filename)
     }
 }
 
+// calculate the total size of all commandline arguments
+unsigned int
+DRV_cpp_calc_total_argsize(void)
+{
+  unsigned long size = 0;
+  unsigned long ix = 0;
+  while (DRV_arglist[ix] != 0)
+    {
+      size += ACE_OS::strlen (DRV_arglist[ix]) + 1;
+      ++ix;
+    }
+  return size;
+}
+
 // Get a line from stdin.
 static bool
 DRV_get_line (FILE *file)
@@ -1077,12 +1091,18 @@ DRV_pre_proc (const char *myfile)
 
   // For complex builds, the default command line buffer size of 1024
   // is sometimes not enough. We use 8192 here.
-  ACE_Process_Options cpp_options (1,       // Inherit environment.
-                                   TAO_IDL_COMMAND_LINE_BUFFER_SIZE);
+//  ACE_Process_Options cpp_options (1,       // Inherit environment.
+//                                   TAO_IDL_COMMAND_LINE_BUFFER_SIZE);
 
   DRV_cpp_expand_output_arg (t_file);
   DRV_cpp_putarg (t_ifile);
   DRV_cpp_putarg (0); // Null terminate the DRV_arglist.
+
+  ACE_Process_Options cpp_options (1,       // Inherit environment.
+                                   DRV_cpp_calc_total_argsize (),
+                                   16 * 1024,
+                                   512,
+                                   DRV_argcount);
 
   if (cpp_options.command_line (DRV_arglist) != 0)
     {
