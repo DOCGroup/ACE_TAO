@@ -2338,6 +2338,7 @@ Frank Preischl <Frank dot Preischl at ids dot de>
 Matthew Waller <matthewrwaller at gmail dot com>
 Elez <elezsh at gmail dot com>
 Ranjit Hande <hande at avaya dot com>
+Van Vuong <vanvuong1 at us dot ibm dot com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
@@ -2358,6 +2359,7 @@ hear about it.  Please see the instructions in
 $ACE_ROOT/PROBLEM-REPORT-FORM
 $TAO_ROOT/PROBLEM-REPORT-FORM
 $CIAO_ROOT/PROBLEM-REPORT-FORM
+$DANCE_ROOT/PROBLEM-REPORT-FORM
 
 for instructions on submitting suggestions or fixes.
 
