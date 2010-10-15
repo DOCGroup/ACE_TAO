@@ -120,8 +120,7 @@ namespace TAO
             ACE_TEXT ("Transport[%d] @ hash:index{%d:%d}\n"),
             int_id.transport ()->id (),
             ext_id.hash (),
-            ext_id.index ()
-            ));
+            ext_id.index ()));
        }
 
     // Get the entry too

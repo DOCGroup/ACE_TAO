@@ -1,3 +1,16 @@
+Fri Oct 15 07:37:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/LRU_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/FIFO_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/LFU_Connection_Purging_Strategy.cpp:
+          Only use the transport pointer when it has a value. Thanks to
+          Van Vuong <vanvuong1 at us dot ibm dot com> for providing some stack
+          traces where the transport pointer is zero when reaching a purging
+          strategy
+
+        * tao/Transport_Cache_Manager_T.cpp:
+          Layout changes
+
 Thu Oct 14 17:47:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/driver/drv_preproc.cpp:

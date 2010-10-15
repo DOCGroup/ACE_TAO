@@ -17,11 +17,14 @@ TAO_FIFO_Connection_Purging_Strategy::TAO_FIFO_Connection_Purging_Strategy (
 void
 TAO_FIFO_Connection_Purging_Strategy::update_item (TAO_Transport* transport)
 {
-  // FIFO, so only update the purging order if this
-  // item has not been cached yet.
-  if (transport->purging_order () == 0)
+  if (transport)
     {
-      transport->purging_order (this->order_++);
+      // FIFO, so only update the purging order if this
+      // item has not been cached yet.
+      if (transport->purging_order () == 0)
+        {
+          transport->purging_order (this->order_++);
+        }
     }
 }
 
