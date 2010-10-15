@@ -24,8 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO__________TUTORIAL_CODE_SHAPES_SENDER_COMP_SHAPES_SENDER_COMP_EXEC_RZ9EJJ_H_
-#define CIAO__________TUTORIAL_CODE_SHAPES_SENDER_COMP_SHAPES_SENDER_COMP_EXEC_RZ9EJJ_H_
+#ifndef CIAO__________TUTORIAL_CODE_SHAPES_SENDER_COMP_SHAPES_SENDER_COMP_EXEC_UBAZAU_H_
+#define CIAO__________TUTORIAL_CODE_SHAPES_SENDER_COMP_SHAPES_SENDER_COMP_EXEC_UBAZAU_H_
 
 #include /**/ "ace/pre.h"
 
