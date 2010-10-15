@@ -215,7 +215,7 @@ namespace DAnCE
                      ACE_TEXT("Threading: %C\n"),
                      multithread ? "Multi" : "Single"));
 
-    CORBA::ORB_var orb = TAO_ORB_Core_instance ()->orb ();
+    CORBA::ORB_var orb = DAnCE::PLUGIN_MANAGER::instance ()->get_orb ();
 
     DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Locality_Handler_i - ")
                      ACE_TEXT("Spawning Locality handler\n")));
