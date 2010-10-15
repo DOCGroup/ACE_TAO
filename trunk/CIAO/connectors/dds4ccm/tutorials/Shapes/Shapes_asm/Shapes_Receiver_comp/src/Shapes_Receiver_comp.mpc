@@ -18,6 +18,18 @@ project(Shapes_Receiver_idl_gen) : componentidldefaults, dds4ccm {
   }
 }
 
+project(Shapes_Receiver_executor_gen) : componentidldefaults, dds4ccm {
+  requires += dummy_label
+  custom_only = 1
+  idlflags += -Gex -SS -Sci -Ssi \
+              -I../../ports \
+              -o ../../../Tutorial/Code/Shapes_Receiver_comp
+
+  IDL_Files {
+    Shapes_Receiver_comp.idl
+  }
+}
+
 project(Shapes_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
   after += Shapes_Receiver_idl_gen Shapes_Sender_idl_lem_gen
   custom_only = 1
