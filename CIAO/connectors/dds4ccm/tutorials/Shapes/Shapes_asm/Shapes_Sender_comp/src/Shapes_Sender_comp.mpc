@@ -18,6 +18,19 @@ project(Shapes_Sender_idl_gen) : componentidldefaults, dds4ccm {
   }
 }
 
+project(Shapes_Sender_executor_gen) : componentidldefaults, dds4ccm {
+  requires += dummy_label
+  custom_only = 1
+  idlflags += -Gex -SS -Sci -Ssi \
+              -I../ports \
+              -I../../ports \
+              -o ../../../Tutorial/Code/Shapes_Sender_comp
+
+  IDL_Files {
+    Shapes_Sender_comp.idl
+  }
+}
+
 project(Shapes_Sender_lem_gen) : ciaoidldefaults, dds4ccm {
   after += Shapes_Sender_idl_gen
   custom_only = 1
