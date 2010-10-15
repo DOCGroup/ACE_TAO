@@ -19,6 +19,19 @@ project(Shapes_Control_idl_gen) : componentidldefaults {
   }
 }
 
+project(Shapes_Control_executor_gen) : componentidldefaults {
+  requires += dummy_label
+  custom_only = 1
+  idlflags += -Gexr -SS -Sci -Ssi \
+              -I../ports \
+              -I../../ports \
+              -o ../../../Tutorial/Code/Shapes_Control_comp
+
+  IDL_Files {
+    Shapes_Control_comp.idl
+  }
+}
+
 project(Shapes_Control_lem_gen) : ciaoidldefaults {
   after += Shapes_Control_idl_gen Shapes_Control_obj_idl_gen
   custom_only = 1
