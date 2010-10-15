@@ -154,7 +154,7 @@ void HelloListener::on_data_available(::DDS::DataReader *reader) {
           int usec_rec = ACE_OS::atoi (rec.substr (3, 6).c_str ());
           if (sec_rec != now.second ())
             usec_rec += 10000000;
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("%C dur <%d>\n"), sample, now.microsec () - usec_rec));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("%C duration <%d>\n"), sample, now.microsec () - usec_rec));
         }
       else
         {
