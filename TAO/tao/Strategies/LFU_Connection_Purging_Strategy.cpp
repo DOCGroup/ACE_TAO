@@ -14,7 +14,10 @@ TAO_LFU_Connection_Purging_Strategy::TAO_LFU_Connection_Purging_Strategy (
 void
 TAO_LFU_Connection_Purging_Strategy::update_item (TAO_Transport* transport)
 {
-  transport->purging_order (transport->purging_order () + 1);
+  if (transport)
+    {
+      transport->purging_order (transport->purging_order () + 1);
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
