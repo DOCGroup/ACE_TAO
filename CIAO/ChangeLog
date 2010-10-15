@@ -1,3 +1,9 @@
+Fri Oct 15 10:01:24 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/tests/AMIDDS/Sender/AmiDds_Sender.mpc:
+        * connectors/tests/AMIDDS/Receiver/AmiDds_Receiver.mpc:
+        Add missing afters.
+
 Fri Oct 15 07:11:24 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Navigation/client.cpp:
