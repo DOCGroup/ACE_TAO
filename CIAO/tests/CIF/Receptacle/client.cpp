@@ -510,7 +510,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
   int ret = 0;
   try
     {
-      ::Components::ComponentPortDescription * cpd;
+      ::Components::ComponentPortDescription_var cpd;
       cpd = cmp->get_all_ports ();
 
       //only the facets are available.
