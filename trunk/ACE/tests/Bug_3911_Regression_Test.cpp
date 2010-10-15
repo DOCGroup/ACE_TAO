@@ -95,7 +95,7 @@ public:
     return 0;
   };
 
-  void* getMemoryBlock(char* block_name, unsigned int block_size)
+  void* getMemoryBlock(const char* block_name, unsigned int block_size)
   {
     void* shared;
 
@@ -141,8 +141,9 @@ public:
 
 ShmemMan* ShmemMan::c_instance = 0;
 
-// Main function.
+const char* block_name = "block_1";
 
+// Main function.
 int
 run_main (int argc, ACE_TCHAR * argv[])
 {
@@ -153,7 +154,7 @@ run_main (int argc, ACE_TCHAR * argv[])
   bool no_crash = (argc>1 && argv[1][0]=='1');
   ShmemMan* smm = ShmemMan::getInstance (no_crash);
 
-  void* buf = smm->getMemoryBlock ("block_1", 10 * 4096);
+  void* buf = smm->getMemoryBlock (block_name, 10 * 4096);
 
   ACE_DEBUG((LM_INFO, ACE_TEXT("allocated shmem block at %@\n"), buf));
 
