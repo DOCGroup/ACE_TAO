@@ -26,7 +26,6 @@
  **/
 
 #include "Shapes_Sender_comp_exec.h"
-#include "tao/ORB_Core.h"
 
 namespace CIAO_Shapes_Sender_comp_Impl
 {

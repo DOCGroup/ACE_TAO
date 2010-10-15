@@ -26,7 +26,6 @@
  **/
 
 #include "Shapes_Receiver_comp_exec.h"
-#include "tao/ORB_Core.h"
 
 namespace CIAO_Shapes_Receiver_comp_Impl
 {
