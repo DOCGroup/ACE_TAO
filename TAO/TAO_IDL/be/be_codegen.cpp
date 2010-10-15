@@ -3542,8 +3542,11 @@ TAO_CodeGen::gen_exec_src_includes (void)
   this->gen_standard_include (
     this->ciao_exec_source_,
     be_global->be_get_ciao_exec_hdr_fname (true));
-  this->gen_standard_include (
-    this->ciao_exec_source_, "tao/ORB_Core.h");
+  if (be_global->gen_ciao_exec_reactor_impl ())
+    {
+      this->gen_standard_include (
+        this->ciao_exec_source_, "tao/ORB_Core.h");
+    }
 }
 
 void
