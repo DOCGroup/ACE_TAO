@@ -20,6 +20,19 @@ project(AMI_Hello_Tuto_Hello_Sender_idl_gen) : componentidldefaults {
   }
 }
 
+project(AMI_Hello_Hello_Sender_exec_idl_gen) : componentidldefaults {
+  requires += dummy_label
+  custom_only = 1
+  idlflags += -Gex -SS -Sci -Ssi \
+              -I../ports \
+              -I../../ports \
+              -o ../../../Tutorial/Code/GeneratedExec
+
+  IDL_Files {
+    Hello_Sender_comp.idl
+  }
+}
+
 project(AMI_Hello_Tuto_Hello_Sender_lem_gen) : ciaoidldefaults {
   after += AMI_Hello_Tuto_Hello_Sender_idl_gen
   custom_only = 1
