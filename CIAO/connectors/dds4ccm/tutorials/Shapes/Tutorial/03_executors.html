@@ -33,7 +33,7 @@
     <code>
         tao_idl -I../ports -I../ports/GeneratedCode
         -I../../ports -I%TAO_ROOT% -I%TAO_ROOT%/tao -I%CIAO_ROOT%
-        -I%CIAO_ROOT%/ccm -I%CIAO_ROOT%/ciao -Gex
+        -I%CIAO_ROOT%/ccm -I%CIAO_ROOT%/ciao -Gexr
         Shapes_Control_comp.idl
     </code>
     <br/><br/>
@@ -41,10 +41,16 @@
     Shapes_Control_comp_exec.cpp&quot; as name. Once generated, the user should
     implement the business logic for the controller.<br/><br/>
 
-    The generated code can be found
-    <a href="./Code/Shapes_Control_comp/Shapes_Control_comp_exec.cpp">here</a>.<br/>
-    The implemented executor can be found
+    The generated code cpp can be found
+    <a href="./Code/Shapes_Control_comp/Shapes_Control_comp_exec.cpp">here</a>.
+    The header can be found
+    <a href="./Code/Shapes_Control_comp/Shapes_Control_comp_exec.h">here</a>
+    <br/>
+
+    The implemented executor cpp can be found
     <a href="../Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp_exec.cpp">
+    here</a> and the header can be found
+    <a href="../Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp_exec.h">
     here</a><br/>
     <br/>
   </p>
@@ -62,11 +68,17 @@
         -DCIAO_DDS4CCM_NDDS -Gex Shapes_Sender_comp.idl
     </code>
     <br/><br/>
-    The generated code can be found
-    <a href="./Code/Shapes_Sender_comp/Shapes_Sender_comp_exec.cpp">here</a>.<br/>
-    The implemented executor can be found
+    The generated cpp code can be found
+    <a href="./Code/Shapes_Sender_comp/Shapes_Sender_comp_exec.cpp">here</a>.
+    The header can be found
+    <a href="./Code/Shapes_Sender_comp/Shapes_Sender_comp_exec.h">here</a>.
+    <br/>
+    The implemented executor cpp can be found
     <a href="../Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp_exec.cpp">
+    here</a> and the header can be found
+    <a href="../Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp_exec.h">
     here</a><br/>
+    <br/>
     <br/>
   </p>
 
@@ -84,9 +96,14 @@
     </code>
     <br/><br/>
     The generated code can be found
-    <a href="./Code/Shapes_Receiver_comp/Shapes_Receiver_comp_exec.cpp">here</a>.<br/>
+    <a href="./Code/Shapes_Receiver_comp/Shapes_Receiver_comp_exec.cpp">here</a>.
+    The header can be found
+    <a href="./Code/Shapes_Receiver_comp/Shapes_Receiver_comp_exec.h">here</a>.
+    <br/>
     The implemented executor can be found
     <a href="../Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.cpp">
+    here</a> and the header can be found
+    <a href="../Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.h">
     here</a><br/>
     <br/>
   </p>
