@@ -16,7 +16,7 @@ project(AMI_AmiDds_Base_AmiDds_Sender_idl_gen) : componentidldefaults, dds4ccm  
 }
 
 project(AMI_AmiDds_Base_AmiDds_Sender_lem_gen) : ciaoidldefaults, dds4ccm {
-  after += AMI_AmiDds_Base_AmiDds_Sender_idl_gen
+  after += AMI_AmiDds_Base_AmiDds_Sender_idl_gen AMI_AmiDds_Base_lem_gen DDS_AMIDDS_Connector_lem_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=AMIDDS_SENDER_LEM_STUB_Export \
               -Wb,stub_export_include=AmiDds_Sender_lem_stub_export.h \
