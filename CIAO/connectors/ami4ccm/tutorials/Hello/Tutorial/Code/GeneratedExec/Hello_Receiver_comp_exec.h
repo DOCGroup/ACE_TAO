@@ -47,41 +47,41 @@ namespace CIAO_Hello_Receiver_comp_Impl
     do_my_foo_exec_i (
       ::Hello::CCM_Receiver_comp_Context_ptr ctx);
     virtual ~do_my_foo_exec_i (void);
-    
+
     // Operations and attributes from ::Hello::MyFoo_obj
-    
+
     virtual
     ::CORBA::Long foo (
       const char * in_str,
       ::CORBA::String_out answer);
-    
+
     virtual
     void hello (
       ::CORBA::Long_out answer);
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:36
-    
+
     virtual ::CORBA::Short
     rw_attrib (void);
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:36
-    
+
     virtual void
     rw_attrib (
       ::CORBA::Short rw_attrib);
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:36
-    
+
     virtual ::CORBA::Short
     ro_attrib (void);
-  
+
   private:
     ::Hello::CCM_Receiver_comp_Context_var ciao_context_;
   };
-  
+
   class  Receiver_comp_exec_i
     : public virtual Receiver_comp_Exec,
       public virtual ::CORBA::LocalObject
@@ -89,37 +89,37 @@ namespace CIAO_Hello_Receiver_comp_Impl
   public:
     Receiver_comp_exec_i (void);
     virtual ~Receiver_comp_exec_i (void);
-    
+
     //@{
     /** Supported operations and attributes. */
-    
+
     //@}
-    
+
     //@{
     /** Component attributes and port operations. */
-    
-    
+
+
     virtual ::Hello::CCM_MyFoo_obj_ptr
     get_do_my_foo (void);
     //@}
-    
+
     //@{
     /** Operations from Components::SessionComponent. */
-    
+
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     //@}
-  
+
   private:
     ::Hello::CCM_Receiver_comp_Context_var ciao_context_;
     ::Hello::CCM_MyFoo_obj_var ciao_do_my_foo_;
   };
-  
+
   extern "C"  ::Components::EnterpriseComponent_ptr
   create_Hello_Receiver_comp_Impl (void);
 }

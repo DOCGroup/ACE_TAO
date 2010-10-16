@@ -47,22 +47,22 @@ namespace CIAO_Shapes_Sender_comp_Impl
     control_exec_i (
       ::Shapes::CCM_Sender_comp_Context_ptr ctx);
     virtual ~control_exec_i (void);
-    
+
     // Operations and attributes from ::Shapes::Control_obj
-    
+
     virtual
     ::Shapes::ReturnStatus setSize (
       ::CORBA::UShort size);
-    
+
     virtual
     ::Shapes::ReturnStatus setLocation (
       ::CORBA::UShort x,
       ::CORBA::UShort y);
-  
+
   private:
     ::Shapes::CCM_Sender_comp_Context_var ciao_context_;
   };
-  
+
   class  Sender_comp_exec_i
     : public virtual Sender_comp_Exec,
       public virtual ::CORBA::LocalObject
@@ -70,37 +70,37 @@ namespace CIAO_Shapes_Sender_comp_Impl
   public:
     Sender_comp_exec_i (void);
     virtual ~Sender_comp_exec_i (void);
-    
+
     //@{
     /** Supported operations and attributes. */
-    
+
     //@}
-    
+
     //@{
     /** Component attributes and port operations. */
-    
-    
+
+
     virtual ::Shapes::CCM_Control_obj_ptr
     get_control (void);
     //@}
-    
+
     //@{
     /** Operations from Components::SessionComponent. */
-    
+
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     //@}
-  
+
   private:
     ::Shapes::CCM_Sender_comp_Context_var ciao_context_;
     ::Shapes::CCM_Control_obj_var ciao_control_;
   };
-  
+
   extern "C"  ::Components::EnterpriseComponent_ptr
   create_Shapes_Sender_comp_Impl (void);
 }
