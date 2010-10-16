@@ -7,6 +7,7 @@
 #include "tao/ORB_Core.h"
 #include "Locality_Manager_Handler_Impl.h"
 #include "LocalityActivator_Impl.h"
+#include "dance/LocalityManager/Scheduler/Plugin_Manager.h"
 
 #include "dance/DAnCE_PropertiesC.h"
 
