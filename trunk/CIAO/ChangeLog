@@ -1,3 +1,10 @@
+Sat Oct 16 10:59:42 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Control_comp/Shapes_Control_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Receiver_comp/Shapes_Receiver_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Sender_comp/Shapes_Sender_comp_exec.cpp:
+          Fuzz. Removed trailing whitespaces.
+
 Sat Oct 16 07:25:54 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Receiver_comp_exec.h:
