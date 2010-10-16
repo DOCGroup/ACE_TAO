@@ -39,7 +39,7 @@
 
 namespace CIAO_Shapes_Control_comp_Impl
 {
-  
+
   class  Control_comp_exec_i
     : public virtual Control_comp_Exec,
       public virtual ::CORBA::LocalObject
@@ -47,100 +47,100 @@ namespace CIAO_Shapes_Control_comp_Impl
   public:
     Control_comp_exec_i (void);
     virtual ~Control_comp_exec_i (void);
-    
+
     //@{
     /** Supported operations and attributes. */
-    
+
     //@}
-    
+
     //@{
     /** Component attributes and port operations. */
-    
-    
+
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:36
-    
+
     virtual ::CORBA::ULong
     rate (void);
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:36
-    
+
     virtual void
     rate (
       ::CORBA::ULong rate);
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:36
-    
+
     virtual ::CORBA::UShort
     max_x (void);
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:36
-    
+
     virtual void
     max_x (
       ::CORBA::UShort max_x);
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:36
-    
+
     virtual ::CORBA::UShort
     max_y (void);
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:36
-    
+
     virtual void
     max_y (
       ::CORBA::UShort max_y);
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:36
-    
+
     virtual ::CORBA::UShort
     max_size (void);
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:36
-    
+
     virtual void
     max_size (
       ::CORBA::UShort max_size);
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:36
-    
+
     virtual ::CORBA::Boolean
     resize_shape (void);
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:36
-    
+
     virtual void
     resize_shape (
       ::CORBA::Boolean resize_shape);
     //@}
-    
+
     //@{
     /** Operations from Components::SessionComponent. */
-    
+
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     //@}
-  
+
   private:
     ::Shapes::CCM_Control_comp_Context_var ciao_context_;
-    
+
     ACE_Reactor* reactor (void);
   };
-  
+
   extern "C"  ::Components::EnterpriseComponent_ptr
   create_Shapes_Control_comp_Impl (void);
 }
