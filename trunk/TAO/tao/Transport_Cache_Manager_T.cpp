@@ -128,7 +128,7 @@ namespace TAO
 
     // Update the purging strategy information while we
     // are holding our lock
-    this->purging_strategy_->update_item (int_id.transport ());
+    this->purging_strategy_->update_item (*(int_id.transport ()));
     int retval = 0;
     bool more_to_do = true;
     while (more_to_do)
@@ -368,7 +368,7 @@ namespace TAO
         {
           // Update the purging strategy information while we
           // are holding our lock
-          this->purging_strategy_->update_item (transport);
+          this->purging_strategy_->update_item (*transport);
         }
     }
     return found;
@@ -395,7 +395,7 @@ namespace TAO
       return -1;
 
     purging_strategy *st = this->purging_strategy_;
-    (void) st->update_item (entry->item ().transport ());
+    (void) st->update_item (*(entry->item ().transport ()));
 
     return 0;
   }
