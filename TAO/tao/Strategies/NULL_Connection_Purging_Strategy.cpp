@@ -12,7 +12,7 @@ TAO_NULL_Connection_Purging_Strategy::TAO_NULL_Connection_Purging_Strategy (
 }
 
 void
-TAO_NULL_Connection_Purging_Strategy::update_item (TAO_Transport*)
+TAO_NULL_Connection_Purging_Strategy::update_item (TAO_Transport&)
 {
 }
 

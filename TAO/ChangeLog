@@ -1,3 +1,18 @@
+Sun Oct 17 12:21:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Connection_Purging_Strategy.h:
+        * tao/LRU_Connection_Purging_Strategy.h:
+        * tao/LRU_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/FIFO_Connection_Purging_Strategy.h:
+        * tao/Strategies/FIFO_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/LFU_Connection_Purging_Strategy.h:
+        * tao/Strategies/LFU_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/NULL_Connection_Purging_Strategy.h:
+        * tao/Strategies/NULL_Connection_Purging_Strategy.cpp:
+        * tao/Transport_Cache_Manager_T.cpp:
+          Pass the transport by reference to the purging strategy, it always
+          has a value
+
 Fri Oct 15 13:49:28 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
