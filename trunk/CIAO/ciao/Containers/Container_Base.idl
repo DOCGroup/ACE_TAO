@@ -99,5 +99,9 @@ module CIAO
 
     Object resolve_service_reference(in string service_id)
       raises (::Components::CCMException);
+
+    void init (in string name);
+
+    void fini ();
   };
 };
