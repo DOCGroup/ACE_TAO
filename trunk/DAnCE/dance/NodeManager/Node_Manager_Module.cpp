@@ -430,7 +430,7 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
       load_artifact_installation_modules (argc, argv);
 
       // Creating in process artifact installation service
-      DAnCE::ArtifactInstallation_Impl* installer;
+      DAnCE::ArtifactInstallation_Impl* installer = 0;
       ACE_NEW_RETURN (installer,
                       DAnCE::ArtifactInstallation_Impl (),
                       CORBA::Object::_nil ());
