@@ -55,7 +55,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
         }
       if (!this->data_reader_->get_impl ())
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
                       "CCM_DDS_Subscriber_Base_T::create_datareader - "
                       "Error: Proxy returned a nil DataReader.\n"));
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
@@ -92,7 +92,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
 
       if (retcode != ::DDS::RETCODE_OK)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Subscriber_Base_T::activate - "
                         "Error while setting the listener on the subscriber - <%C>\n",
                         ::CIAO::DDS4CCM::translate_retcode (retcode)));
@@ -116,7 +116,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::passivate ()
         this->data_reader_->set_listener (::DDS::DataReaderListener::_nil (), 0);
       if (retcode != ::DDS::RETCODE_OK)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Subscriber_Base_T::passivate - "
                         "Error while setting the listener on the reader - <%C>\n",
                         ::CIAO::DDS4CCM::translate_retcode (retcode)));

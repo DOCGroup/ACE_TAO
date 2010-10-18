@@ -28,7 +28,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, VENDOR_TYPE>::on_requested_incompa
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::SubscriberListener_T::on_requested_incompatible_qos");
 
-  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, DDS4CCM_INFO
                 ACE_TEXT ("SubscriberListener_T::on_requested_incompatible_qos: ")
                 ACE_TEXT ("total count <%d> - total change <%d> - ")
                 ACE_TEXT ("last policy id <%d> - policies\n"),
@@ -55,7 +55,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, VENDOR_TYPE>::on_requested_incompa
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
-                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                                 ACE_TEXT ("SubscriberListener_T::")
                                 ACE_TEXT ("on_requested_incompatible_qos - ")
                                 ACE_TEXT ("failed to use reactor.\n")));
@@ -75,14 +75,14 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, VENDOR_TYPE>::on_requested_incompa
         }
       catch (...)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
             "SubscriberListener_T::on_requested_incompatible_qos - "
             "Unexpected exception caught\n"));
         }
     }
   else
     {
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                   ACE_TEXT ("SubscriberListener_T::on_requested_incompatible_qos - ")
                   ACE_TEXT ("No error listener connected\n")));
     }
@@ -109,7 +109,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, VENDOR_TYPE>::on_unexpected_status
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
-                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                                 ACE_TEXT ("SubscriberListener_T::on_unexpected_status - ")
                                 ACE_TEXT ("failed to use reactor.\n")));
                 }
@@ -128,7 +128,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, VENDOR_TYPE>::on_unexpected_status
         }
       catch (...)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
             "SubscriberListener_T::on_unexpected_status - "
             "Unexpected exception caught for <%C>\n",
             translate_statuskind (status_kind)));
@@ -136,7 +136,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, VENDOR_TYPE>::on_unexpected_status
    }
   else
     {
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                   ACE_TEXT ("SubscriberListener_T::on_unexpected_status - ")
                   ACE_TEXT ("No error listener connected for <%C>\n"),
                   translate_statuskind (status_kind)));
@@ -151,7 +151,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, VENDOR_TYPE>::on_liveliness_change
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::SubscriberListener_T::on_liveliness_changed");
 
-  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, DDS4CCM_INFO
                 ACE_TEXT ("SubscriberListener_T::on_liveliness_changed: ")
                 ACE_TEXT ("alive count <%d> - not alive count <%d> - ")
                 ACE_TEXT ("alive count change <%d> - not alive count change <%d> ")
@@ -172,7 +172,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, VENDOR_TYPE>::on_sample_rejected (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::SubscriberListener_T::on_sample_rejected");
 
-  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, DDS4CCM_INFO
                 ACE_TEXT ("SubscriberListener_T::on_sample_rejected: ")
                 ACE_TEXT ("total count <%d> - count change <%d> - ")
                 ACE_TEXT ("last reason <%C> - last instance handle ")
@@ -195,7 +195,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, VENDOR_TYPE>::on_sample_rejected (
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
-                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                                 ACE_TEXT ("SubscriberListener_T::on_sample_rejected - ")
                                 ACE_TEXT ("failed to use reactor.\n")));
                 }
@@ -214,14 +214,14 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, VENDOR_TYPE>::on_sample_rejected (
         }
       catch (...)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
             "SubscriberListener_T::on_sample_rejected - "
             "Unexpected exception caught\n"));
         }
     }
   else
     {
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     ACE_TEXT ("SubscriberListener_T::on_sample_rejected - ")
                     ACE_TEXT ("No error listener connected\n")));
     }
@@ -235,7 +235,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, VENDOR_TYPE>::on_subscription_matc
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::SubscriberListener_T::on_subscription_matched");
 
-  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, DDS4CCM_INFO
                 ACE_TEXT ("SubscriberListener_T::on_subscription_matched: ")
                 ACE_TEXT ("total count <%d> - count change <%d> - ")
                 ACE_TEXT ("current count <%d> - current count change <%d> ")
@@ -288,7 +288,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, VENDOR_TYPE>::get_mask (
   ::DDS::StatusMask mask = 0;
 
   if (! ::CORBA::is_nil (csl) ||
-      CIAO_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
+      DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
     {
       mask = ::DDS::REQUESTED_INCOMPATIBLE_QOS_STATUS |
              ::DDS::SAMPLE_REJECTED_STATUS |
@@ -296,11 +296,11 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, VENDOR_TYPE>::get_mask (
              ::DDS::SUBSCRIPTION_MATCHED_STATUS;
     }
 
-  if (CIAO_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
+  if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
     {
       ACE_CString msk = "";
       translate_statusmask (msk, mask);
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, DDS4CCM_INFO
                     "SubscriberListener_T::get_mask - "
                     "Mask becomes %C\n",
                     msk.c_str ()));

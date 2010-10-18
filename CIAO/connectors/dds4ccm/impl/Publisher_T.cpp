@@ -50,7 +50,7 @@ namespace CIAO
 
       if (!topic)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::create_datawriter - "
                         "Error: Unable to cast provided topic to its servant.\n"));
@@ -73,7 +73,7 @@ namespace CIAO
 
       if (!ccm_dds_dw)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::create_datawriter - "
                         "Error: RTI Topic returned a nil datawriter.\n"));
@@ -105,7 +105,7 @@ namespace CIAO
 
       if (!topic)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::create_datawriter_with_profile - "
                         "Error: Unable to cast provided topic to its servant.\n"));
@@ -128,7 +128,7 @@ namespace CIAO
 
       if (!ccm_dds_dw)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::create_datawriter_with_profile - "
                         "Error: RTI Topic returned a nil datawriter.\n"));
@@ -137,7 +137,7 @@ namespace CIAO
         }
       else
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::create_datawriter_with_profile - "
                         "Successfully created datawriter with profile <%C#%C>.\n",
@@ -165,14 +165,14 @@ namespace CIAO
 
       if (!top)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::delete_datawriter - "
                         "Unable to cast provided object reference to servant.\n"));
           return ::DDS::RETCODE_BAD_PARAMETER;
         }
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, DDS4CCM_INFO
                     "CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, "
                     "VENDOR_TYPE>::delete_datawriter - "
                     "Successfully casted provided object reference to servant.\n"));
@@ -181,7 +181,7 @@ namespace CIAO
 
       if (retval != DDS_RETCODE_OK)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::delete_datawriter - "
                         "Error: RTI delete_datawriter returned non-ok error code %C\n",
@@ -189,7 +189,7 @@ namespace CIAO
         }
       else
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                         "CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::delete_datawriter - "
                         "Provided datawriter successfully deleted\n"));
@@ -273,7 +273,7 @@ namespace CIAO
         dynamic_cast <PublisherListener_type *> (ccm_dds_pub_list);
       if (!list_proxy)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::get_listener - "
                         "DDS returned a NIL listener.\n"));

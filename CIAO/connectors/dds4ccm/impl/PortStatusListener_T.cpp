@@ -29,7 +29,7 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, VENDOR_TYPE>::on_requested_deadlin
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::on_requested_deadline_missed");
 
-  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, DDS4CCM_INFO
                 ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
                 ACE_TEXT ("total count <%d> - total change <%d> - ")
                 ACE_TEXT ("last instance handle <length <%l> - isValid <%l>\n"),
@@ -49,7 +49,7 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, VENDOR_TYPE>::on_requested_deadlin
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
-                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                               ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
                               ACE_TEXT ("failed to use reactor.\n")));
                 }
@@ -68,14 +68,14 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, VENDOR_TYPE>::on_requested_deadlin
         }
       catch (...)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
             "PortStatusListener_T::on_requested_deadline_missed - "
             "Unexpected exception caught\n"));
         }
     }
   else
     {
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
                     ACE_TEXT ("No portstatus listener installed\n")));
     }
@@ -89,7 +89,7 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, VENDOR_TYPE>::on_sample_lost (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::on_sample_lost");
 
-  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, DDS4CCM_INFO
                 ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
                 ACE_TEXT ("total count <%d> - total change <%d>\n"),
                 status.total_count, status.total_count_change));
@@ -109,7 +109,7 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, VENDOR_TYPE>::on_sample_lost (
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
-                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                                 ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
                                 ACE_TEXT ("failed to use reactor.\n")));
                 }
@@ -128,7 +128,7 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, VENDOR_TYPE>::on_sample_lost (
         }
       catch (...)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
             "PortStatusListener_T::on_sample_lost - "
             "Unexpected exception caught\n"));
         }
@@ -189,17 +189,17 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, VENDOR_TYPE>::get_mask (
 
   ::DDS::StatusMask mask = 0;
   if (! ::CORBA::is_nil (psl) ||
-      CIAO_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
+      DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
     {
       mask = ::DDS::REQUESTED_DEADLINE_MISSED_STATUS |
              ::DDS::SAMPLE_LOST_STATUS;
     }
 
-    if (CIAO_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
+    if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
     {
       ACE_CString msk = "";
       translate_statusmask (msk, mask);
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, DDS4CCM_INFO
                     "PortStatusListener_T::get_mask - "
                     "Mask becomes %C\n",
                     msk.c_str ()));
