@@ -1,3 +1,8 @@
+Mon Oct 18 07:15:28 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Transport_Cache_Manager/mock_ps.h:
+          Updated for change below
+
 Sun Oct 17 12:21:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Connection_Purging_Strategy.h:
