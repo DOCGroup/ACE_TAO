@@ -121,6 +121,10 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DomainParticipantManager::~DomainParticipantManager");
 
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+                    "DomainParticipantManager::~DomainParticipantManager - "
+                    "Finalizing DDS\n"));
+
       DDSDomainParticipantFactory::finalize_instance ();
     }
 

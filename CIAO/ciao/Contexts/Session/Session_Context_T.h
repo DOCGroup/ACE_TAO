@@ -65,7 +65,6 @@ namespace CIAO
 
   private:
     PortableServer::Servant servant_;
-    typename COMP::_var_type component_;
   };
 }
 
