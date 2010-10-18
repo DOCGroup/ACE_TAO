@@ -1,12 +1,12 @@
 // -*- C++ -*-
 // $Id$
 
-#include "dds4ccm/impl/Log_Macros.h"
 #include "dds4ccm/impl/DomainParticipant_T.h"
 #include "ace/Tokenizer_T.h"
 #include "ace/Env_Value_T.h"
 
 #include "dds4ccm/impl/Utils.h"
+#include "dds4ccm/impl/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_Base_Connector_T (void)
@@ -19,6 +19,9 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_Base_Connector_T (voi
 
   ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), this->domain_id_);
   this->domain_id_ = id;
+
+  ACE_Env_Value<int> log_level (ACE_TEXT("DDS4CCM_LOG_LEVEL"), DDS4CCM_debug_level);
+  DDS4CCM_debug_level = log_level;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -29,7 +32,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~DDS_Base_Connector_T (vo
   ACE_OS::free (library_name_);
   ACE_OS::free (profile_name_);
 
-  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, CLINFO
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
                 "DDS_Base_Connector_T::~DDS_Base_Connector_T - "
                 "Connector has been destructed\n"));
 }
@@ -92,7 +95,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_domain (void
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_domain");
 
-  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, CLINFO
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                 "DDS_Base_Connector_T::init_default_domain - "
                 "Start configuring default domain <%d>\n",
                 this->domain_id_));
@@ -200,7 +203,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ccm_activate (void)
 
       if (retcode != DDS_RETCODE_OK)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Base_Connector_T::ccm_activate - "
                         "Error setting the listener on the domain participant - <%C>\n",
                         ::CIAO::DDS4CCM::translate_retcode (retcode)));
@@ -223,7 +226,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ccm_passivate (void)
 
       if (retcode != DDS_RETCODE_OK)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Base_Connector_T::ccm_passivate - "
                         "Error while setting the listener on the "
                         "domain participant - <%C>\n",

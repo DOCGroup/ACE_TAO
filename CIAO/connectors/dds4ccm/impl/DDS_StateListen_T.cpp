@@ -70,7 +70,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
 
       if (retcode != ::DDS::RETCODE_OK)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "DDS_StateListen_T::activate - "
                         "Error setting the listener on the DataReader - <%C>\n",
                         ::CIAO::DDS4CCM::translate_retcode (retcode)));

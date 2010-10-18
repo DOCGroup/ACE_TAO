@@ -18,6 +18,20 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.8.2 and CIAO-0.8.3
   exception is thrown when the ACE_Reactor cannot be retrieved.
   The goal of this method is to prevent memory leaks.
 
+. The DDS4CC connector now has its own logging level. This log level
+  can only be set using an environment variable, called DDS4CCM_LOG_LEVEL.
+  The following log levels are defined:
+    - DDS4CCM_LOG_LEVEL_ERROR           1
+    - DDS4CCM_LOG_LEVEL_CAST_ERROR      2
+    - DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN  3
+    - DDS4CCM_LOG_LEVEL_4               4 //unused
+    - DDS4CCM_LOG_LEVEL_5               5 //unused
+    - DDS4CCM_LOG_LEVEL_ACTION          6
+    - DDS4CCM_LOG_LEVEL_UNIMP_ACTION    7
+    - DDS4CCM_LOG_LEVEL_ACTION_STARTING 8
+    - DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL 9
+    - DDS4CCM_LOG_LEVEL_DDS_STATUS     10
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.8.1 and CIAO-0.8.2
 =======================================================
 

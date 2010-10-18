@@ -58,7 +58,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::create_publisher_with_profile");
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                     "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                     "VENDOR_TYPE>::create_publisher_with_profile - "
                     "Start creating Publisher\n"));
@@ -77,7 +77,7 @@ namespace CIAO
 
       if (!ccm_dds_pub)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::create_publisher_with_profile - "
                         "Error: Unable to create Publisher\n"));
@@ -91,7 +91,7 @@ namespace CIAO
                         ::CORBA::NO_MEMORY ());
 
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                     "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                     "VENDOR_TYPE>::create_publisher_with_profile - "
                     "Successfully created a DDSPublisher\n"));
@@ -110,7 +110,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::create_publisher");
       ACE_UNUSED_ARG (qos);
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                     "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                     "VENDOR_TYPE>::create_publisher - "
                     "Start creating Publisher\n"));
@@ -132,7 +132,7 @@ namespace CIAO
 
       if (!ccm_dds_pub)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                        "CCM_DDS_DomainParticipant_T"
                        "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_publisher - "
                        "Error: Unable to create Publisher\n"));
@@ -145,7 +145,7 @@ namespace CIAO
                         Publisher_type (ccm_dds_pub),
                         ::CORBA::NO_MEMORY ());
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                     "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                     "VENDOR_TYPE>::create_publisher - "
                     "Successfully created a DDSPublisher\n"));
@@ -164,14 +164,14 @@ namespace CIAO
 
       if (!ccm_dds_pub)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T"
                         "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_publisher - "
                         "Unable to cast provided object reference to servant pointer.\n"));
           return ::DDS::RETCODE_ERROR;
         }
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, DDS4CCM_INFO
                    "CCM_DDS_DomainParticipant_T"
                    "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_publisher - "
                    "Successfully casted provided object reference to "
@@ -181,7 +181,7 @@ namespace CIAO
 
       if (retval != DDS_RETCODE_OK)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T"
                         "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_publisher - "
                         "Error: RTI delete_publisher returned non-ok error code %C\n",
@@ -189,7 +189,7 @@ namespace CIAO
         }
       else
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::delete_publisher - "
                         "Provided publisher successfully deleted\n"));
@@ -209,7 +209,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::create_subscriber_with_profile");
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                    "CCM_DDS_DomainParticipant_T"
                    "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_subscriber_with_profile - "
                    "Creating Subscriber\n"));
@@ -230,7 +230,7 @@ namespace CIAO
 
       if (!ccm_dds_sub)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T::"
                         "create_subscriber_with_profile - "
                         "Error: RTI DDS returned a nil subscriber.\n"));
@@ -243,7 +243,7 @@ namespace CIAO
                         Subscriber_type (ccm_dds_sub),
                         ::CORBA::NO_MEMORY ());
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                     "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                     "VENDOR_TYPE>::create_subscriber_with_profile - "
                     "Successfully created a DDSSubscriber\n"));
@@ -264,7 +264,7 @@ namespace CIAO
 
       ACE_UNUSED_ARG (qos);
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                     "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                     "VENDOR_TYPE>::create_subscriber - "
                     "Creating Subscriber\n"));
@@ -285,7 +285,7 @@ namespace CIAO
 
       if (!ccm_dds_sub)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T::"
                         "create_subscriber_with_profile - "
                         "Error: RTI DDS returned a nil subscriber.\n"));
@@ -298,7 +298,7 @@ namespace CIAO
                         Subscriber_type (ccm_dds_sub),
                         ::CORBA::NO_MEMORY ());
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                     "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                     "VENDOR_TYPE>::create_subscriber - "
                     "Successfully created a DDSSubscriber\n"));
@@ -316,14 +316,14 @@ namespace CIAO
 
       if (!ccm_dds_sub)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::delete_subscriber - Unable to cast "
                         "provided object reference to servant pointer.\n"));
           return ::DDS::RETCODE_ERROR;
         }
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, DDS4CCM_INFO
                     "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                     "VENDOR_TYPE>::delete_subscriber - Successfully casted "
                     "provided object reference to Subscriber_type\n"));
@@ -332,7 +332,7 @@ namespace CIAO
 
       if (retval != DDS_RETCODE_OK)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::delete_subscriber - Error: RTI "
                         "delete_subscriber returned non-ok error code %C\n",
@@ -340,7 +340,7 @@ namespace CIAO
         }
       else
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::delete_subscriber - "
                         "Provided subscriber successfully deleted\n"));
@@ -377,7 +377,7 @@ namespace CIAO
 
       ACE_UNUSED_ARG (qos);
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_DEBUG, DDS4CCM_INFO
                     "CCM_DDS_DomainParticipant_T::create_topic - "
                     "Attempting to create topic with name %C and type %C\n",
                     impl_name, type_name));
@@ -410,7 +410,7 @@ namespace CIAO
 
           if (!dds_tp)
             {
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, CLINFO
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                             "CCM_DDS_DomainParticipant_T::create_topic - "
                             "Error: RTI DDS returned a nil topic\n"));
               delete ccm_dds_tl;
@@ -422,7 +422,7 @@ namespace CIAO
                             Topic_type (dds_tp),
                             ::CORBA::NO_MEMORY ());
 
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T::create_topic - "
                         "Successfully created topic with name %C and type %C\n",
                         impl_name, type_name));
@@ -437,7 +437,7 @@ namespace CIAO
         }
       else
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T::create_topic - "
                         "Re-using topic with name %C and type %C.\n",
                         impl_name, type_name));
@@ -468,7 +468,7 @@ namespace CIAO
 
       if (impl_name == 0)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T::create_topic_with_profile - "
                         "Error: provided nil topic name\n"));
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
@@ -476,13 +476,13 @@ namespace CIAO
 
       if (type_name == 0)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T::create_topic_with_profile - "
                         "Error: provided nil type name\n"));
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
         }
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_DEBUG, DDS4CCM_INFO
                     "CCM_DDS_DomainParticipant_T::create_topic_with_profile - "
                     "Attempting to create topic with name %C and type %C\n",
                     impl_name, type_name));
@@ -515,7 +515,7 @@ namespace CIAO
 
           if (!dds_tp)
             {
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, CLINFO
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                             "CCM_DDS_DomainParticipant_T::create_topic_with_profile - "
                             "Error: RTI DDS returned a nil topic\n"));
               delete ccm_dds_tl;
@@ -527,7 +527,7 @@ namespace CIAO
                             Topic_type (dds_tp),
                             ::CORBA::NO_MEMORY ());
 
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T::create_topic_with_profile - "
                         "Successfully created topic with name %C and type %C\n",
                         impl_name, type_name));
@@ -542,7 +542,7 @@ namespace CIAO
         }
       else
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T::create_topic_with_profile - "
                         "Re-using topic with name %C and type %C.\n",
                         impl_name, type_name));
@@ -573,7 +573,7 @@ namespace CIAO
 
       if (!tp)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::delete_topic <%C> - Unable to cast "
                         "provided object reference to servant.\n",
@@ -581,7 +581,7 @@ namespace CIAO
           return ::DDS::RETCODE_BAD_PARAMETER;
         }
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, DDS4CCM_INFO
                     "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                     "VENDOR_TYPE>::delete_topic <%C> - "
                     "Successfully casted provided object reference to servant.\n",
@@ -594,7 +594,7 @@ namespace CIAO
 
           if (retval != DDS_RETCODE_OK)
             {
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                             "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                             "VENDOR_TYPE>::delete_topic <%C> - "
                             "Error: RTI delete_topic returned non-ok error code %C\n",
@@ -603,7 +603,7 @@ namespace CIAO
             }
           else
             {
-              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                             "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                             "VENDOR_TYPE>::delete_topic <%C> - "
                             "Provided topic successfully deleted\n",
@@ -637,7 +637,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::lookup_topicdescription");
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_UNIMP_ACTION, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_UNIMP_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                     "VENDOR_TYPE>::lookup_topicdescription - "
                     "Looking up topic: name <%C>\n",
@@ -683,7 +683,7 @@ namespace CIAO
       Topic_type *top = dynamic_cast< Topic_type *> (related_topic);
       if (!top)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::create_contentfilteredtopic - "
                         "Unable to cast provided topic.\n"));
@@ -710,7 +710,7 @@ namespace CIAO
       delete [] parameterlist;
       if (!ccm_dds_cft)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::create_contentfilteredtopic - "
                         "RTI DDS returned a nil ContentFilteredTopic for "
@@ -724,7 +724,7 @@ namespace CIAO
                         ContentFilteredTopic_type (ccm_dds_cft),
                         ::CORBA::NO_MEMORY ());
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                     "CCM_DDS_DomainParticipant_T::create_contentfilteredtopic - "
                     "Successfully created contentfilteredtopic with name <%C> and "
                     "filter expression <%C>\n",
@@ -749,7 +749,7 @@ namespace CIAO
           dynamic_cast < ContentFilteredTopic_type *> (a_contentfilteredtopic);
       if (!ccm_dds_cft)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::delete_contentfilteredtopic - "
                         "Unable to cast provided ContentFilteredTopic.\n"));
@@ -863,7 +863,7 @@ namespace CIAO
         dynamic_cast <CCM_DDS_DomainParticipantListener_i *> (ccm_dds_dp_list);
       if (!list_proxy)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::get_listener - "
                         "DDS returned a NIL listener.\n"));

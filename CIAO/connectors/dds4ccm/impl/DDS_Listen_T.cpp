@@ -66,7 +66,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
 
       if (retcode != ::DDS::RETCODE_OK)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Listen_T::activate - "
                         "Error while setting the listener on the listen - <%C>\n",
                         ::CIAO::DDS4CCM::translate_retcode (retcode)));

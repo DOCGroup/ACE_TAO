@@ -1,3 +1,50 @@
+Mon Oct 18 13:49:28 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dds4ccm_impl.mpb:
+          Added Log_Macros.cpp
+
+        * NEWS:
+          Mentioned DDS4CCM_LOG_LEVEL environment variable.
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+          Reading the DDS4CCM_LOG_LEVEL environment variable and assigning it
+          to DDS4CCM_log_level.
+
+        * connectors/dds4ccm/impl/Log_Macros.h:
+          Renamed CLINFO define to DDS4CCM_INFO.
+
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+        * connectors/dds4ccm/impl/ContentFilterSetting.cpp:
+        * connectors/dds4ccm/impl/DDSCallbackStatusHandler.cpp:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderHandler_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipantFactory_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+        * connectors/dds4ccm/impl/DomainParticipant_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/PortStatusListener_T.cpp:
+        * connectors/dds4ccm/impl/PublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/Publisher_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+        * connectors/dds4ccm/impl/SubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/Subscriber_T.cpp:
+        * connectors/dds4ccm/impl/TopicListener_T.cpp:
+        * connectors/dds4ccm/impl/Topic_T.cpp:
+        * connectors/dds4ccm/impl/Updater_T.cpp:
+        * connectors/dds4ccm/impl/Writer_T.cpp:
+        * connectors/dds4ccm/impl/dds4ccm_impl.mpc:
+          Renamed CLINFO define to DDS4CCM_INFO.
+
 Mon Oct 18 13:00:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Container_Base_T.h:

@@ -12,11 +12,10 @@
 // default information printed with CIAO logging messages.
 
 #include "ace/Log_Msg.h"
-#include "ciao/Logger/Log_Macros.h"
 #include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
 
-#if !defined (CLINFO)
-#  define CLINFO "(%P|%t) [%M] - %T - "
+#if !defined (DDS4CCM_INFO)
+#  define DDS4CCM_INFO "(%P|%t) [%M] - %T - "
 #endif
 
 // Defines for log levels
@@ -59,8 +58,8 @@ extern DDS4CCM_DDS_IMPL_Export unsigned int DDS4CCM_debug_level;
 #  define DDS4CCM_TRACE(X) ACE_TRACE_IMPL(X)
 #  define DDS4CCM_ENABLE_TRACE() ACE_Trace::start_tracing ()
 #  define DDS4CCM_DISABLE_TRACE() ACE_Trace::stop_tracing ()
-#  undef CLINFO // Make log messages indent with tracing.
-#  define CLINFO "%I(%P|%t) [%M] - %T - "
+#  undef DDS4CCM_INFO // Make log messages indent with tracing.
+#  define DDS4CCM_INFO "%I(%P|%t) [%M] - %T - "
 #  include "ace/Trace.h"
 #endif /* DDS4CCM_NTRACE */
 
@@ -75,7 +74,7 @@ extern DDS4CCM_DDS_IMPL_Export unsigned int DDS4CCM_debug_level;
 # if !defined (DDS4CCM_ERROR)
 #  define DDS4CCM_ERROR(L, X) \
   do { \
-    if (CIAO_debug_level >= L) \
+    if (DDS4CCM_debug_level >= L) \
       { \
         int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
         ACE_Log_Msg *ace___ = ACE_Log_Msg::instance ();               \
@@ -87,7 +86,7 @@ extern DDS4CCM_DDS_IMPL_Export unsigned int DDS4CCM_debug_level;
 # if !defined (DDS4CCM_DEBUG)
 #  define DDS4CCM_DEBUG(L, X) \
   do { \
-    if (CIAO_debug_level >= L) \
+    if (DDS4CCM_debug_level >= L) \
       { \
         int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
         ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
@@ -100,7 +99,7 @@ extern DDS4CCM_DDS_IMPL_Export unsigned int DDS4CCM_debug_level;
 # if !defined (DDS4CCM_PRINT_INTERNAL_EXCEPTION)
 #  define DDS4CCM_PRINT_INTERNAL_EXCEPTION(L, E, X) \
   do { \
-    if (CIAO_debug_level >= L) \
+    if (DDS4CCM_debug_level >= L) \
       { \
         ACE_CString msg (X);\
         msg += " - Caught CCM_DDS internal exception: error <";\
@@ -113,7 +112,7 @@ extern DDS4CCM_DDS_IMPL_Export unsigned int DDS4CCM_debug_level;
 # if !defined (DDS4CCM_PRINT_CORBA_EXCEPTION)
 #  define DDS4CCM_PRINT_CORBA_EXCEPTION(L, E, X) \
   do { \
-    if (CIAO_debug_level >= L) \
+    if (DDS4CCM_debug_level >= L) \
       { \
         ACE_CString msg (X);\
         msg += " - Caught CORBA exception.\n";\
@@ -125,7 +124,7 @@ extern DDS4CCM_DDS_IMPL_Export unsigned int DDS4CCM_debug_level;
 # if !defined (DDS4CCM_ERROR_RETURN)
 #  define DDS4CCM_ERROR_RETURN(L, X, Y) \
   do { \
-    if (CIAO_debug_level >= L) \
+    if (DDS4CCM_debug_level >= L) \
       { \
         int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
         ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \

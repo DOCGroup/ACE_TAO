@@ -127,7 +127,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_many
               // RETCODE_NO_DATA should be an error
               // because after a timeout there should be
               // data.
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                     "Getter_Base_T::get_many - "
                     "Error while reading from DDS: <%C>\n",
                     translate_retcode (retcode)));
@@ -135,7 +135,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_many
                 this->impl ()->return_loan (data, sample_info);
               if (retval != DDS_RETCODE_OK)
                 {
-                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                     "Getter_Base_T::get_many - "
                     "Error returning loan to DDS - <%C>\n",
                     translate_retcode (retval)));
@@ -147,7 +147,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_many
             this->impl ()->return_loan (data, sample_info);
           if (retval != DDS_RETCODE_OK)
             {
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                 "Getter_Base_T::get_many - "
                 "Error returning loan to DDS - <%C>\n",
                 translate_retcode (retval)));
@@ -239,7 +239,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true, VENDOR_TYPE>::get_one
 
               if (retcode == ::DDS::RETCODE_NO_DATA)
                 {
-                  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+                  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                                 "Getter_T::get_one - "
                                 "DDS returned <%C>. No data available in DDS.\n",
                                 translate_retcode (retcode)));
@@ -247,7 +247,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true, VENDOR_TYPE>::get_one
                 }
               else if (retcode != ::DDS::RETCODE_OK)
                 {
-                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "Getter_T::get_one - "
                         "Error while reading from DDS: <%C>\n",
                         translate_retcode (retcode)));
@@ -255,7 +255,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true, VENDOR_TYPE>::get_one
                     this->impl ()->return_loan (data, sample_info);
                   if (retval != ::DDS::RETCODE_OK)
                     {
-                      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "Getter_Base_T::get_one - "
                         "Error returning loan to DDS - <%C>\n",
                         translate_retcode (retval)));
@@ -271,7 +271,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true, VENDOR_TYPE>::get_one
                 }
               else
                 {
-                  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+                  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "Getter_T::get_one - "
                         "No valid available in DDS.\n"));
                 }
@@ -280,7 +280,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true, VENDOR_TYPE>::get_one
                 this->impl ()->return_loan (data, sample_info);
               if (retval != DDS_RETCODE_OK)
                 {
-                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                     "Getter_T::get_one - "
                     "Error returning loan to DDS - <%C>\n",
                     translate_retcode (retval)));
@@ -328,7 +328,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_on
                                                           1);
               if (retcode == ::DDS::RETCODE_NO_DATA)
                 {
-                  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+                  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "Getter_T::get_one - "
                         "DDS returned <%C>. No data available in DDS.\n",
                         translate_retcode (retcode)));
@@ -336,7 +336,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_on
                 }
               else if (retcode != DDS_RETCODE_OK)
                 {
-                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "Getter_T::get_one - "
                         "Error while reading from DDS: <%C>\n",
                         translate_retcode (retcode)));
@@ -344,7 +344,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_on
                     this->impl ()->return_loan (data, sample_info);
                   if (retval != DDS_RETCODE_OK)
                     {
-                      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "Getter_T::get_one - "
                         "Error returning loan to DDS - <%C>\n",
                         translate_retcode (retval)));
@@ -359,7 +359,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_on
                 }
               else
                 {
-                  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+                  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "Getter_T::get_one - "
                         "No valid available in DDS.\n"));
                 }
@@ -367,7 +367,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_on
               ::DDS::ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
               if (retval != DDS_RETCODE_OK)
                 {
-                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                     "Getter_T::get_one - "
                     "Error returning loan to DDS - <%C>\n",
                     translate_retcode (retval)));

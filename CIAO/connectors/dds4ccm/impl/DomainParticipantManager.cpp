@@ -41,7 +41,7 @@ namespace CIAO
         {
           this->tps_[tp] = 1;
 
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "DomainParticipantManager::DDSParticipantTopic"
                         "::add_topic - Added provided topic. topic <%C> - "
                         "ref_count <%d>\n",
@@ -61,7 +61,7 @@ namespace CIAO
           return true;
         }
       --this->tps_[tp];
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     "DomainParticipantManager::DDSParticipantTopic"
                     "::remove_topic - Decremented ref_count. topic <%C> - "
                     "ref_count <%d>\n",
@@ -101,7 +101,7 @@ namespace CIAO
 
       ++this->tps_[tp];
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     "DomainParticipantManager::DDSParticipantTopic"
                     "::_inc_ref_topic - Increment topic ref_count. topic <%C> "
                     "- ref_count <%d>\n",
@@ -135,7 +135,7 @@ namespace CIAO
         {
           return iter->second->add_topic (tp);
         }
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                     "DomainParticipantManager::add_topic - "
                     "Unable to find provided DomainParticipant.\n"));
       return false;
@@ -167,14 +167,14 @@ namespace CIAO
       if (dpt)
         {
           dpt->_inc_ref ();
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "DomainParticipantManager::get_participant - "
                         "DomainParticipant found. profile <%C> - ref_count <%d>\n",
                         qos_profile,
                         dpt->_ref_count ()));
           return dpt->get_participant ();
         }
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     "DomainParticipantManager::get_participant - "
                     "DomainParticipant with profile <%C> does not exist.\n",
                     qos_profile));
@@ -199,13 +199,13 @@ namespace CIAO
                             DDSParticipantTopic (dp),
                             ::CORBA::NO_MEMORY ());
           this->dps_[qos_profile] = dpt;
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "DomainParticipantManager::add_participant - "
                         "Added participant with profile <%C>.\n",
                         qos_profile));
           return true;
         }
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     "DomainParticipantManager::add_participant - "
                     "Don't add participant with profile <%C> since it already "
                     "exists.\n",
@@ -235,7 +235,7 @@ namespace CIAO
             }
           else
             {
-              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_UNIMP_ACTION, (LM_TRACE, CLINFO
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_UNIMP_ACTION, (LM_TRACE, DDS4CCM_INFO
                             "DomainParticipantManager::remove_participant - "
                             "Don't delete participant since "
                             "it's still used - ref_count <%d>\n",
