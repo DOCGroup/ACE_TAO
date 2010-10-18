@@ -207,8 +207,7 @@ namespace DAnCE
     DANCE_TRACE ( "NodeManager_Impl::getDynamicResources ()");
     DANCE_DEBUG (6, (LM_ERROR, DLINFO ACE_TEXT("NodeManager_Impl::getDynamicResources - ")
                 ACE_TEXT("getDynamicResources not implemented\n")));
-      throw CORBA::NO_IMPLEMENT ();
-    return 0;
+    throw CORBA::NO_IMPLEMENT ();
   }
 } //DAnCE
 

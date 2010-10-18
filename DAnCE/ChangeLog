@@ -1,8 +1,21 @@
+Mon Oct 18 12:59:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * dance/LocalityManager/Daemon/Locality_Manager_Task.cpp:
+          Some memory leak fixes, but we still have a lot to resolve
+
+        * dance/NodeManager/NodeManager_Impl.cpp:
+        * dance/NodeManager/Node_Manager_Module.cpp:
+          Layout
+
+        * etc/DAnCE.doxygen:
+          Changed directories
+
 Sat Oct 16 13:43:55 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/LocalityManager/Handler/Locality_Manager_Handler_Impl.cpp:
 
-          Compile fix. 
+          Compile fix.
 
 Fri Oct 15 15:50:08 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 

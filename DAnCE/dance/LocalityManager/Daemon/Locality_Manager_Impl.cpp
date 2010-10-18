@@ -37,12 +37,13 @@ namespace DAnCE
     this->scheduler_.activate_scheduler (0);
   }
 
-  // Implementation skeleton destructor
   LocalityManager_i::~LocalityManager_i (void)
   {
     DANCE_TRACE ("LocalityManager_i::~LocalityManager_i");
 
     this->scheduler_.terminate_scheduler ();
+
+    PLUGIN_MANAGER::instance ()->set_orb (::CORBA::ORB::_nil ());
   }
 
   void
