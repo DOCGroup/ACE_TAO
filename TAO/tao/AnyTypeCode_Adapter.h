@@ -41,7 +41,6 @@ namespace CORBA
   typedef Policy *Policy_ptr;
 }
 
-
 /**
  * @class TAO_AnyTypeCode_Adapter
  */
