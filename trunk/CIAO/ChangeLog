@@ -1,3 +1,9 @@
+Mon Oct 18 07:09:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Navigation/Navigation.mpc:
+        * tests/CIF/Receptacle/Receptacle.mpc:
+          Prevent MPC from using left over idl files.
+
 Sat Oct 16 11:04:16 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Receiver_comp_exec.cpp:

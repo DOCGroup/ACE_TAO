@@ -7,6 +7,9 @@ project (Navigation_Test_Client) : ccm_configvalue, naming, ciao_base {
   exename=Navigation_Test_Client
   includes += ..
 
+  IDL_Files {
+  }
+
   Source_Files {
     client.cpp
   }
