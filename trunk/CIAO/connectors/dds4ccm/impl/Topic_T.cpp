@@ -79,7 +79,7 @@ namespace CIAO
         dynamic_cast <TopicListener_type *> (ccm_dds_topic_list);
       if (!list_proxy)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "CCM_DDS_Topic_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::"
                         "get_listener - DDS returned a NIL listener.\n"));
           return ::DDS::TopicListener::_nil ();

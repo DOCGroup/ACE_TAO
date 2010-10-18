@@ -34,16 +34,16 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_ContentFilterSetting_i::filter");
 
       this->filter_ = filter;
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     "CCM_DDS_ContentFilterSetting_i::filter - "));
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
                     "Expression : <%C>\t\n",
                     filter.expression.in ()));
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     "Parameters :\n"));
       for (::CORBA::ULong i = 0; i < filter.parameters.length (); ++i)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "\t<%C>\n",
                         filter.parameters[i].in ()));
         }
@@ -59,7 +59,7 @@ namespace CIAO
       ::DDS::DomainParticipant_var dp = subscriber->get_participant ();
       if (::CORBA::is_nil (dp.in ()))
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic: "
                         "Unable to get DomainParticipant.\n"));
           throw ::CORBA::INTERNAL ();
@@ -83,12 +83,12 @@ namespace CIAO
                                                     this->filter_.parameters);
       if (::CORBA::is_nil (this->cft_.in ()))
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic: "
                         "Error creating ContentfilteredTopic.\n"));
           throw ::CORBA::INTERNAL ();
         }
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     "CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic: "
                     "successfully created ContentFilteredTopic <%C>\n",
                     name.get ()));
@@ -117,7 +117,7 @@ namespace CIAO
       if (::CORBA::is_nil (this->cft_.in ()) ||
           ACE_OS::strlen (this->filter_.expression.in ()) == 0)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_ContentFilterSetting_i::set_filter_parameters: "
                         "Calling set_filter_parameters without having set a filter\n"));
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
@@ -126,14 +126,14 @@ namespace CIAO
       ::DDS::ReturnCode_t retcode = this->cft_->set_expression_parameters (parameters);
       if (retcode == DDS_RETCODE_OK)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "CCM_DDS_ContentFilterSetting_i::set_filter_parameters: "
                         "successfully set parameters on ContentfilteredTopic\n"));
           this->filter_.parameters = parameters;
         }
       else
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_ContentFilterSetting_i::set_filter_parameters: "
                         "Error setting filter parameters: <%C>\n",
                         translate_retcode (retcode)));

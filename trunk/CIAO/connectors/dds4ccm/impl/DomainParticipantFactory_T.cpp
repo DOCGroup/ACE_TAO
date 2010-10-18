@@ -50,7 +50,7 @@ namespace CIAO
 #if (CIAO_DDS4CCM_NDDS==1)
       ACE_UNUSED_ARG (qos);
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                     "CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE, "
                     "VENDOR_TYPE>::create_participant - "
                     "Start creating domain participant for domain <%d>\n",
@@ -79,7 +79,7 @@ namespace CIAO
 
           if (!dds_dp)
             {
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                           "CCM_DDS_DomainParticipantFactory_T"
                           "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_participant - "
                           "Error: Unable to create DomainParticipant for domain <%d>\n",
@@ -99,7 +99,7 @@ namespace CIAO
         }
       else
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::create_participant - Re-using participant "
                         "for QOS profile <%C> and domain <%d>.\n",
@@ -133,7 +133,7 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::"
                      "create_participant_with_profile");
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                     "CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE, "
                     "VENDOR_TYPE>::create_participant_with_profile - "
                     "Start creating domain participant: "
@@ -157,7 +157,7 @@ namespace CIAO
 
       if (!dds_dp)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::create_participant_with_profile - "
                         "Creating participant: profile <%C> - domain <%d>\n",
@@ -171,7 +171,7 @@ namespace CIAO
                                                              mask);
           if (!dds_dp)
             {
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                             "CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE, "
                             "VENDOR_TYPE>::create_participant_with_profile - "
                             "Error: Unable to create DomainParticipant\n"));
@@ -194,7 +194,7 @@ namespace CIAO
         }
       else
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::create_participant_with_profile - Re-using "
                         "participant for QOS profile <%C> and domain <%d>.\n",
@@ -223,7 +223,7 @@ namespace CIAO
 
       if (!part)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_DomainParticipantFactory_T"
                         "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_participant - "
                         "Unable to cast provided object reference to servant "
@@ -231,7 +231,7 @@ namespace CIAO
           return DDS::RETCODE_ERROR;
         }
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, DDS4CCM_INFO
                     "CCM_DDS_DomainParticipantFactory_T"
                     "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_participant - "
                     "Successfully casted provided object reference to servant type.\n"));
@@ -240,7 +240,7 @@ namespace CIAO
 
       if (DPMANAGER->remove_participant (part->get_impl ()))
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
                     "CCM_DDS_DomainParticipantFactory_T"
                     "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_participant - "
                     "Going to delete participant.\n"));
@@ -250,7 +250,7 @@ namespace CIAO
 
           if (retval != DDS::RETCODE_OK)
             {
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                             "CCM_DDS_DomainParticipantFactory_T"
                             "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_participant - "
                             "RTI delete_participant returned non-ok error code %C\n",
@@ -258,7 +258,7 @@ namespace CIAO
             }
           else
             {
-              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                              "CCM_DDS_DomainParticipantFactory_T"
                              "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_participant - "
                              "Successfully deleted provided participant.\n"));

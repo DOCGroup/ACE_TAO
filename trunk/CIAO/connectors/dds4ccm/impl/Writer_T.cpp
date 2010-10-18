@@ -37,7 +37,7 @@ CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::write_i (
 
   if (retval != DDS_RETCODE_OK)
     {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                     "Writer_T::write_i - "
                     "Write unsuccessful, received error code %C\n",
                     translate_retcode (retval)));
@@ -55,7 +55,7 @@ CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::write_one (
 
   this->write_i (an_instance, instance_handle, 0);
 
-  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_UNIMP_ACTION, (LM_TRACE, CLINFO
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_UNIMP_ACTION, (LM_TRACE, DDS4CCM_INFO
                 "Writer_T::write_one - "
                 "Write successful\n"));
 }
@@ -70,7 +70,7 @@ CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::write_many (
   Coherent_Changes_Guard guard (this->impl ()->get_publisher(),
                                 this->is_coherent_write_);
 
-  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, CLINFO
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                 "Writer_T::write_many - "
                 "Preparing to write to DDS\n"));
 
@@ -81,7 +81,7 @@ CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::write_many (
       this->write_i (instances[index], ::DDS::HANDLE_NIL, index);
     }
 
-  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_UNIMP_ACTION, (LM_TRACE, CLINFO
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_UNIMP_ACTION, (LM_TRACE, DDS4CCM_INFO
                 "Writer_T::write_many - "
                 "Write successful\n"));
 }
