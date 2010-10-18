@@ -28,28 +28,25 @@ namespace CIAO
   ::CORBA::Object_ptr
   Session_Context_Impl<BASE_CTX, COMP>::get_CCM_object (void)
   {
-    if (::CORBA::is_nil (this->component_.in ()))
+    ::CORBA::Object_var obj;
+
+    try
       {
-        ::CORBA::Object_var obj;
-
-        try
-          {
-            obj = this->container_->get_objref (this->servant_);
-          }
-        catch (const CORBA::Exception& ex)
-          {
-            ex._tao_print_exception ("Caught Exception\n");
-          }
-
-        this->component_ = COMP::_narrow (obj.in ());
-
-        if (::CORBA::is_nil (this->component_.in ()))
-          {
-            throw ::CORBA::INTERNAL ();
-          }
+        obj = this->container_->get_objref (this->servant_);
+      }
+    catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("Caught Exception\n");
       }
 
-    return COMP::_duplicate (this->component_.in ());
+    typename COMP::_var_type component = COMP::_narrow (obj.in ());
+
+    if (::CORBA::is_nil (component.in ()))
+      {
+        throw ::CORBA::INTERNAL ();
+      }
+
+    return component._retn ();
   }
 }
 
