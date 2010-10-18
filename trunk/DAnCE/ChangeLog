@@ -1,3 +1,8 @@
+Mon Oct 18 18:39:55 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/DAnCE_Properties.idl:
+          Fixed typo in property names
+
 Mon Oct 18 12:59:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
