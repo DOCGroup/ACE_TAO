@@ -58,7 +58,7 @@ public:
 protected:
   typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
     ConditionManager_type;
-  typedef ::CIAO::DDS4CCM::PortStatusListener_T <DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+  typedef ::CIAO::DDS4CCM::PortStatusListener_T <DDS_TYPE, VENDOR_TYPE>
     PortStatusListener_type;
   typedef ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
     Reader_type;
