@@ -24,7 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/Servant_Base.h"
 #include "ciao/Containers/Container_Base_T.h"
 #include "ciao/Containers/Session/Session_ContainerC.h"
 #include "ccm/CCM_HomeExecutorBaseC.h"
@@ -77,10 +76,14 @@ namespace CIAO
   {
   public:
     Session_Container_i (CORBA::ORB_ptr o,
-                         PortableServer::POA_ptr poa,
-                         const char* name);
+                         PortableServer::POA_ptr poa);
 
     virtual ~Session_Container_i (void);
+
+    /// Initialize the container with a name.
+    virtual void init (const char *name);
+
+    virtual void fini (void);
 
     /**
      * @brief Simply installing a home executor into the component.
@@ -164,29 +167,8 @@ namespace CIAO
     ::CIAO::Servant_Activator_ptr ports_servant_activator (void);
 
   private:
-
-    /// Initialize the container with a name.
-    virtual void init (const char *name);
-
-    /// Create POA for the component.
-    /**
-     * This is the POA that is returned to the component applications
-     * if they need one.
-     */
-    void create_component_POA (const char *name,
-                               PortableServer::POA_ptr root);
-
-    /// Create POA for the facets and consumers alone.
-    void create_facet_consumer_POA (const char *name,
-                                    PortableServer::POA_ptr root);
-
     /// Not allowed to be
     Session_Container_i (void);
-
-  protected:
-    /// The servant activator factory used to activate facets and
-    /// consumer servants.
-    Servant_Activator_var sa_;
   };
 }
 

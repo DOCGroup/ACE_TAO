@@ -2,8 +2,6 @@
 
 #include "Extension_Container.h"
 
-#include "tao/Utils/PolicyList_Destroyer.h"
-#include "ciao/Containers/Servant_Activator.h"
 #include "ccm/ComponentServer/CCM_ComponentServer_BaseC.h"
 #include "ciao/Servants/Servant_Impl_Base.h"
 #include "ciao/Logger/Log_Macros.h"
@@ -23,59 +21,23 @@ namespace CIAO
 
   Extension_Container_i::Extension_Container_i (
         CORBA::ORB_ptr o,
-        PortableServer::POA_ptr poa,
-        const char *name)
+        PortableServer::POA_ptr poa)
     : Container_i < ::CIAO::Extension_Container> (o, poa),
       client_copi_registration_ (0),
       servant_copi_registration_ (0),
       server_copi_registration_ (0),
-      stub_copi_registration_ (0),
-      sa_ (0)
+      stub_copi_registration_ (0)
   {
-    this->init (name);
   }
 
   Extension_Container_i::~Extension_Container_i (void)
   {
-    ::CORBA::release (this->client_copi_registration_);
-    ::CORBA::release (this->servant_copi_registration_);
-    ::CORBA::release (this->server_copi_registration_);
-    ::CORBA::release (this->stub_copi_registration_);
   }
 
   void
   Extension_Container_i::init (const char *name)
   {
     CIAO_TRACE ("Extension_Container_i::init");
-
-    CIAO_DEBUG (9,
-                (LM_TRACE,
-                 CLINFO
-                 "Extension_Container_i::init - "
-                 "Initializing a container with name <%C>\n",
-                 name));
-
-    if (CORBA::is_nil (this->root_poa_.in ()))
-      {
-        CIAO_ERROR (1,
-                    (LM_ERROR,
-                     CLINFO
-                     "CIAO::Extension_Container_i: Unable "
-                     "to initialize the POA.\n"));
-
-        throw Components::CreateFailure ();
-      }
-
-    this->create_component_POA (name, this->root_poa_.in ());
-
-    ACE_CString port_poa_name (name);
-    port_poa_name += ":Port_POA";
-    this->create_facet_consumer_POA (port_poa_name.c_str (), this->root_poa_.in ());
-
-    PortableServer::POAManager_var poa_manager =
-      this->root_poa_->the_POAManager ();
-
-    poa_manager->activate ();
 
     // Create the Portable Interceptor Registration objects
     ACE_NEW_THROW_EX (this->client_copi_registration_,
@@ -90,56 +52,21 @@ namespace CIAO
     ACE_NEW_THROW_EX (this->stub_copi_registration_,
                       StubContainerInterceptorRegistration_Impl,
                       CORBA::NO_MEMORY ());
+
+    Container_i < ::CIAO::Extension_Container>::init (name);
   }
 
   void
-  Extension_Container_i::create_component_POA (const char *name,
-                                             PortableServer::POA_ptr root)
+  Extension_Container_i::fini (void)
   {
-    CIAO_TRACE ("Extension_Container_i::create_component_POA");
+    CIAO_TRACE ("Extension_Container_i::fini");
 
-    PortableServer::POAManager_var poa_manager =
-      root->the_POAManager ();
+    ::CORBA::release (this->client_copi_registration_);
+    ::CORBA::release (this->servant_copi_registration_);
+    ::CORBA::release (this->server_copi_registration_);
+    ::CORBA::release (this->stub_copi_registration_);
 
-    CORBA::PolicyList policies;
-    this->component_poa_ =
-      root->create_POA (name, poa_manager.in (), policies);
-  }
-
-  void
-  Extension_Container_i::create_facet_consumer_POA (const char *name,
-                                                  PortableServer::POA_ptr root)
-  {
-    CIAO_TRACE ("Extension_Container_i::create_facet_consumer_POA");
-
-    PortableServer::POAManager_var poa_manager = root->the_POAManager ();
-
-    TAO::Utils::PolicyList_Destroyer policies (3);
-    policies.length (3);
-
-    policies[0] =
-      root->create_id_assignment_policy (PortableServer::USER_ID);
-
-    // Servant Manager Policy
-    policies[1] =
-      root->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER);
-
-    // Servant Retention Policy
-    policies[2] =
-      root->create_servant_retention_policy (PortableServer::RETAIN);
-
-    this->facet_cons_poa_ =
-      root->create_POA (name,
-                        poa_manager.in (),
-                        policies);
-
-    Servant_Activator_i *sa = 0;
-    ACE_NEW_THROW_EX (sa,
-                      Servant_Activator_i (this->orb_.in ()),
-                      CORBA::NO_MEMORY ());
-    this->sa_ = sa;
-
-    this->facet_cons_poa_->set_servant_manager (this->sa_.in ());
+    Container_i < ::CIAO::Extension_Container>::fini ();
   }
 
   CORBA::Object_ptr

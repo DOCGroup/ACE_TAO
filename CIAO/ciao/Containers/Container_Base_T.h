@@ -26,6 +26,7 @@
 
 #include "tao/PortableServer/PortableServer.h"
 #include "ciao/Containers/Container_BaseC.h"
+#include "tao/PortableServer/Servant_Base.h"
 
 namespace CIAO
 {
@@ -49,7 +50,10 @@ namespace CIAO
     virtual ~Container_i (void);
 
     /// Initialize the container with a name.
-    virtual void init (const char *name) = 0;
+    virtual void init (const char *name);
+
+    /// Cleanup method
+    virtual void fini (void);
 
     /// Get component's POA.
     /**
@@ -114,9 +118,25 @@ namespace CIAO
 
     PortableServer::POA_var home_servant_poa_;
 
+    /// The servant activator factory used to activate facets and
+    /// consumer servants.
+    Servant_Activator_var sa_;
+
   private:
     /// Not allowed to be used
     Container_i (void);
+
+    /// Create POA for the component.
+    /**
+     * This is the POA that is returned to the component applications
+     * if they need one.
+     */
+    void create_component_POA (const char *name,
+                               PortableServer::POA_ptr root);
+
+    /// Create POA for the facets and consumers alone.
+    void create_facet_consumer_POA (const char *name,
+                                    PortableServer::POA_ptr root);
   };
 }
 
