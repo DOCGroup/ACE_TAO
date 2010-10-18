@@ -17,8 +17,7 @@ class DDS_Base_Connector_T
     public virtual ::CORBA::LocalObject,
     private virtual ACE_Copy_Disabled
 {
-
-typedef ::CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+typedef ::CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, VENDOR_TYPE>
   DomainParticipantListener;
 typedef ::CIAO::DDS4CCM::CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
   DomainParticipantFactory;

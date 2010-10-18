@@ -18,12 +18,6 @@
 # include "ndds/ndds_cpp.h"
 #endif
 
-#if (CIAO_DDS4CCM_OPENDDS==1)
-typedef ::DDS::TopicListener DDSTopicListener;
-typedef ::DDS::Topic DDSTopic;
-typedef ::DDS::InconsistentTopicStatus DDS_InconsistentTopicStatus;
-#endif
-
 namespace CIAO
 {
   namespace DDS4CCM

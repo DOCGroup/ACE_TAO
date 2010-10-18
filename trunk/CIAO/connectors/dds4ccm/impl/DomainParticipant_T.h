@@ -21,15 +21,11 @@
 #include "ndds/ndds_cpp.h"
 #endif
 
-#if (CIAO_DDS4CCM_OPENDDS==1)
-typedef ::DDS::DomainParticipant DDSDomainParticipant;
-#endif
-
 namespace CIAO
 {
   namespace DDS4CCM
   {
-    //Forward declarations
+    // Forward declarations
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_Topic_T;
 
@@ -54,7 +50,7 @@ namespace CIAO
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_PublisherListener_T;
 
-    //Class declaration
+    // Class declaration
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_DomainParticipant_T :
       public virtual ::DDS::CCM_DomainParticipant,

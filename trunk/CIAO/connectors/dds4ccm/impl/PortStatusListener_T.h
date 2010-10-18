@@ -21,7 +21,7 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class PortStatusListener_T :
       public ::DDS::DataReaderListener,
       private ACE_Copy_Disabled
