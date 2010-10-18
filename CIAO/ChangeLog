@@ -1,3 +1,8 @@
+Mon Oct 18 18:39:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DAnCE/LocalityManager/CommandlinePassage/CommandlinePassage_exec.cpp:
+          Fixed memory leak in this test
+
 Mon Oct 18 13:49:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Contexts/Session/Session_Context_T.h:
