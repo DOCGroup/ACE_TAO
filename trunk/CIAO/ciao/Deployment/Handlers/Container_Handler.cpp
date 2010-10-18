@@ -85,16 +85,12 @@ namespace CIAO
   {
     CIAO_TRACE ("Container_Handler_i::install_instance");
 
-    ::CORBA::Any_ptr outref;
-    ACE_NEW_THROW_EX (outref,
+    ACE_NEW_THROW_EX (instance_reference,
                       ::CORBA::Any (),
                       CORBA::NO_MEMORY ());
 
-    instance_reference = outref;
-
     CIAO::Session_Container *cont (0);
     const char *name (plan.instance[instanceRef].name.in ());
-    CORBA::PolicyList policies (0);
 
     CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                     "Container_Handler_i::install_instance - "
@@ -104,24 +100,21 @@ namespace CIAO
                       CIAO::Session_Container_i (this->orb_,
                                                  this->poa_),
                       CORBA::NO_MEMORY ());
+    CIAO::Container_var container_ref (cont);
 
     CIAO_DEBUG (8, (LM_DEBUG, CLINFO
                     "Container_Handler_i::install_instance - "
                     "Container <%C> successfully created\n",
                     name));
 
-    cont->init (name);
+    container_ref->init (name);
 
     CIAO_DEBUG (8, (LM_DEBUG, CLINFO
                     "Container_Handler_i::install_instance - "
                     "Container <%C> successfully initialized\n",
                     name));
 
-    CIAO::Container_var container_ref (cont);
-
-    DEPLOYMENT_STATE::instance ()->add_container (name, cont);
-
-    (*outref) <<= container_ref;
+    DEPLOYMENT_STATE::instance ()->add_container (name, container_ref.in ());
 
     *instance_reference <<= container_ref;
   }
