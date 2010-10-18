@@ -65,140 +65,143 @@ namespace DAnCE
     PortableServer::POA_var root_poa =
       PortableServer::POA::_narrow (object.in ());
 
-    PortableServer::POAManager_var poa_manager =
-      root_poa->the_POAManager ();
+    {
+        PortableServer::POAManager_var poa_manager =
+          root_poa->the_POAManager ();
 
-    poa_manager->activate ();
+        poa_manager->activate ();
 
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                     ACE_TEXT ("LocalityManager_Task::svc - ")
-                     ACE_TEXT ("Creating server implementation object\n")));
-
-    DAnCE::LocalityManager_i *lm_srv = 0;
-    ACE_NEW_NORETURN (lm_srv,
-                      LocalityManager_i (this->uuid_,
-                                         this->plugin_config_,
-                                         this->orb_.in (),
-                                         root_poa.in ()));
-
-    if (lm_srv == 0)
-      {
-        DANCE_ERROR (1, (LM_CRITICAL,
-                         ACE_TEXT ("LocalityManager_Task::run - ")
-                         ACE_TEXT ("Out of memory error while allocating servant.")));
-        throw Error ("Out of memory whilst allocating servant.");
-      }
-
-    PortableServer::ServantBase_var safe_config = lm_srv;
-    PortableServer::ObjectId_var id =
-      root_poa->activate_object (lm_srv);
-    CORBA::Object_var lm_object = root_poa->id_to_reference (id.in ());
-    DAnCE::LocalityManager_var lm =
-      DAnCE::LocalityManager::_narrow (lm_object.in ());
-
-    if (this->output_file_ != ACE_TEXT(""))
-      {
-        CORBA::String_var ior = this->orb_->object_to_string (lm.in ());
-        ::DAnCE::Utility::write_IOR (this->output_file_.c_str (), ior.in ());
-      }
-
-    if (this->callback_ior_str_ != ACE_TEXT(""))
-      {
         DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                         ACE_TEXT ("LocalityManager_Task::run - ")
-                         ACE_TEXT ("Resolving callback IOR\n")));
-        CORBA::Object_var obj =
-          this->orb_->string_to_object (this->callback_ior_str_.c_str ());
-        LocalityManagerActivator_var sa (LocalityManagerActivator::_narrow (obj));
+                        ACE_TEXT ("LocalityManager_Task::svc - ")
+                        ACE_TEXT ("Creating server implementation object\n")));
 
-        if (CORBA::is_nil (sa.in ()))
+        DAnCE::LocalityManager_i *lm_srv = 0;
+        ACE_NEW_NORETURN (lm_srv,
+                          LocalityManager_i (this->uuid_,
+                                            this->plugin_config_,
+                                            this->orb_.in (),
+                                            root_poa.in ()));
+
+        if (lm_srv == 0)
           {
-            DANCE_DEBUG (6, (LM_ERROR, DLINFO
-                             ACE_TEXT ("LocalityManager_Task::svc - ")
-                             ACE_TEXT ("Failed to narrow callback IOR [%s]\n"),
-                             this->callback_ior_str_.c_str ()));
-            throw Error ("Failed to narrow callback IOR");
+            DANCE_ERROR (1, (LM_CRITICAL,
+                            ACE_TEXT ("LocalityManager_Task::run - ")
+                            ACE_TEXT ("Out of memory error while allocating servant.")));
+            throw Error ("Out of memory whilst allocating servant.");
           }
 
-        Deployment::Properties_var config;
-        {
-          Deployment::Properties *cf = 0;
-          ACE_NEW_NORETURN (cf, Deployment::Properties (0));
+        PortableServer::ServantBase_var safe_config = lm_srv;
+        PortableServer::ObjectId_var id =
+          root_poa->activate_object (lm_srv);
+        CORBA::Object_var lm_object = root_poa->id_to_reference (id.in ());
+        DAnCE::LocalityManager_var lm =
+          DAnCE::LocalityManager::_narrow (lm_object.in ());
 
-          if  (cf == 0)
-            {
-              DANCE_ERROR (1, (LM_CRITICAL, ACE_TEXT ("LocalityManager_Task::run - ")
-                               ACE_TEXT ("Out of memory error while allocating config ")
-                               ACE_TEXT ("values.")));
-            }
-          else
-            {
-              config = cf;
-            }
-        }
-
-        // Make callback.
-        DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                         ACE_TEXT ("LocalityManager_Task::svc - ")
-                         ACE_TEXT ("Making callback on my Activator\n")));
-
-        try
+        if (this->output_file_ != ACE_TEXT(""))
           {
-            // Callback to NodeApplication to get configuration
-            sa->locality_manager_callback (lm.in (),
-                                           ACE_TEXT_ALWAYS_CHAR (this->uuid_.c_str ()),
-                                           config.out ());
+            CORBA::String_var ior = this->orb_->object_to_string (lm.in ());
+            ::DAnCE::Utility::write_IOR (this->output_file_.c_str (), ior.in ());
+          }
 
+        if (this->callback_ior_str_ != ACE_TEXT(""))
+          {
             DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                             ACE_TEXT ("LocalityManager_Task::svc - ")
-                             ACE_TEXT ("Configuration received, got %u values\n"),
-                             config->length ()));
+                            ACE_TEXT ("LocalityManager_Task::run - ")
+                            ACE_TEXT ("Resolving callback IOR\n")));
+            CORBA::Object_var obj =
+              this->orb_->string_to_object (this->callback_ior_str_.c_str ());
+            LocalityManagerActivator_var sa (LocalityManagerActivator::_narrow (obj));
 
-            lm_srv->init (config._retn ());
+            if (CORBA::is_nil (sa.in ()))
+              {
+                DANCE_DEBUG (6, (LM_ERROR, DLINFO
+                                ACE_TEXT ("LocalityManager_Task::svc - ")
+                                ACE_TEXT ("Failed to narrow callback IOR [%s]\n"),
+                                this->callback_ior_str_.c_str ()));
+                throw Error ("Failed to narrow callback IOR");
+              }
 
-            DANCE_DEBUG (6, (LM_NOTICE, DLINFO
-                             ACE_TEXT ("LocalityManager_Task::svc - ")
-                             ACE_TEXT ("Configuration complete for component server %C\n"),
-                            this->uuid_.c_str ()));
+            Deployment::Properties_var config;
+            {
+              Deployment::Properties *cf = 0;
+              ACE_NEW_NORETURN (cf, Deployment::Properties (0));
 
-            sa->configuration_complete (ACE_TEXT_ALWAYS_CHAR (this->uuid_.c_str ()));
+              if  (cf == 0)
+                {
+                  DANCE_ERROR (1, (LM_CRITICAL, ACE_TEXT ("LocalityManager_Task::run - ")
+                                  ACE_TEXT ("Out of memory error while allocating config ")
+                                  ACE_TEXT ("values.")));
+                }
+              else
+                {
+                  config = cf;
+                }
+            }
+
+            // Make callback.
+            DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                            ACE_TEXT ("LocalityManager_Task::svc - ")
+                            ACE_TEXT ("Making callback on my Activator\n")));
+
+            try
+              {
+                // Callback to NodeApplication to get configuration
+                sa->locality_manager_callback (lm.in (),
+                                              ACE_TEXT_ALWAYS_CHAR (this->uuid_.c_str ()),
+                                              config.out ());
+
+                DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                                ACE_TEXT ("LocalityManager_Task::svc - ")
+                                ACE_TEXT ("Configuration received, got %u values\n"),
+                                config->length ()));
+
+                lm_srv->init (config._retn ());
+
+                DANCE_DEBUG (6, (LM_NOTICE, DLINFO
+                                ACE_TEXT ("LocalityManager_Task::svc - ")
+                                ACE_TEXT ("Configuration complete for component server %C\n"),
+                                this->uuid_.c_str ()));
+
+                sa->configuration_complete (ACE_TEXT_ALWAYS_CHAR (this->uuid_.c_str ()));
+              }
+            catch (const CORBA::BAD_PARAM &)
+              {
+                DANCE_ERROR (1, (LM_ERROR, DLINFO
+                                ACE_TEXT ("LocalityManager_Task::svc - ")
+                                ACE_TEXT ("The Callback IOR provided pointed to the ")
+                                ACE_TEXT ("wrong Activator\n")));
+                throw Error ("Bad callback IOR");
+              }
+            catch (...)
+              {
+                DANCE_ERROR (1, (LM_ERROR, DLINFO
+                                ACE_TEXT ("LocalityManager_Task::svc - ")
+                                ACE_TEXT ("Caught exception while calling back\n")));
+                throw Error ("Caught exception while calling back");
+              }
+
           }
-        catch (const CORBA::BAD_PARAM &)
+        else
           {
-            DANCE_ERROR (1, (LM_ERROR, DLINFO
-                             ACE_TEXT ("LocalityManager_Task::svc - ")
-                             ACE_TEXT ("The Callback IOR provided pointed to the ")
-                             ACE_TEXT ("wrong Activator\n")));
-            throw Error ("Bad callback IOR");
-          }
-        catch (...)
-          {
-            DANCE_ERROR (1, (LM_ERROR, DLINFO
-                             ACE_TEXT ("LocalityManager_Task::svc - ")
-                             ACE_TEXT ("Caught exception while calling back\n")));
-            throw Error ("Caught exception while calling back");
+            DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                            ACE_TEXT ("LocalityManager_Task::svc - ")
+                            ACE_TEXT ("Initializing ComponentServer without ServantActivator ")
+                            ACE_TEXT ("callback\n")));
+            lm_srv->init (0);
           }
 
-      }
-    else
-      {
+        this->orb_->run ();
+
         DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                         ACE_TEXT ("LocalityManager_Task::svc - ")
-                         ACE_TEXT ("Initializing ComponentServer without ServantActivator ")
-                         ACE_TEXT ("callback\n")));
-        lm_srv->init (0);
-      }
-
-    this->orb_->run ();
-
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                     ACE_TEXT ("LocalityManager_Task::svc - ")
-                     ACE_TEXT ("ORB Event loop completed.\n")));
+                        ACE_TEXT ("LocalityManager_Task::svc - ")
+                        ACE_TEXT ("ORB Event loop completed.\n")));
+    }
 
     root_poa->destroy (1, 1);
+    root_poa = ::PortableServer::POA::_nil ();
 
     this->orb_->destroy ();
-    this->orb_ = CORBA::ORB::_nil ();
+    this->orb_ = ::CORBA::ORB::_nil ();
 
     return 0;
   }

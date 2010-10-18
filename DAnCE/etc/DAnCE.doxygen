@@ -48,10 +48,10 @@ WARN_FORMAT           = "$file:$line: $text"
 # configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                 = TAO/DAnCE
+INPUT                 = TAO/DAnCE/dance TAO/DAnCE/tools
 FILE_PATTERNS         = *.cpp *.h *.i *.inl *.pidl *.txt *.idl
 RECURSIVE             = YES
-EXCLUDE               = TAO/DAnCE/examples TAO/DAnCE/tests
+EXCLUDE               =
 EXCLUDE_PATTERNS      =
 EXAMPLE_PATH          =
 EXAMPLE_PATTERNS      =
