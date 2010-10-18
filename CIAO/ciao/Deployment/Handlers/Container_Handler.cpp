@@ -102,13 +102,19 @@ namespace CIAO
                     name));
     ACE_NEW_THROW_EX (cont,
                       CIAO::Session_Container_i (this->orb_,
-                                                 this->poa_,
-                                                 name),
+                                                 this->poa_),
                       CORBA::NO_MEMORY ());
 
     CIAO_DEBUG (8, (LM_DEBUG, CLINFO
                     "Container_Handler_i::install_instance - "
                     "Container <%C> successfully created\n",
+                    name));
+
+    cont->init (name);
+
+    CIAO_DEBUG (8, (LM_DEBUG, CLINFO
+                    "Container_Handler_i::install_instance - "
+                    "Container <%C> successfully initialized\n",
                     name));
 
     CIAO::Container_var container_ref (cont);
@@ -173,6 +179,13 @@ namespace CIAO
                                        "No container with ID");
       }
 
+    CIAO_DEBUG (8, (LM_TRACE, CLINFO
+                    "Container_Handler_i::remove_instance - "
+                    "Finalizing container with Id <%C>\n",
+                    name));
+
+    // Instructing container to cleanup its state
+    cont->fini ();
 
     CIAO_DEBUG (8, (LM_TRACE, CLINFO
                     "Container_Handler_i::remove_instance - "

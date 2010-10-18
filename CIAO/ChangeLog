@@ -1,3 +1,17 @@
+Mon Oct 18 11:56:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Container_Base.idl:
+        * ciao/Containers/Container_Base_T.h:
+        * ciao/Containers/Container_Base_T.cpp:
+        * ciao/Containers/Extension/Extension_Container.h:
+        * ciao/Containers/Extension/Extension_Container.cpp:
+        * ciao/Containers/Session/Session_Container.h:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+          Use an explicit init/fini call to the container to initialize itself
+          and to cleanup, due to reference counting the destructors are not
+          called at this moment.
+
 Mon Oct 18 08:53:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDSSubscriberListener_T.h:
