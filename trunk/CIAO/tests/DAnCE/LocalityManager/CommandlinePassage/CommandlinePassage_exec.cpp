@@ -64,10 +64,18 @@ namespace CIAO_command_line_test_A_Impl
   void
   Component_exec_i::ccm_remove (void)
   {
+    ::CORBA::ORB_var orb;
+
+    ::CORBA::Object_var ccm_object = this->context_->get_CCM_object();
+    if (!::CORBA::is_nil (ccm_object.in ()))
+      {
+        orb = ccm_object->_get_orb ();
+      }
+
     try
       {
         long tc =
-          this->context_->get_CCM_object ()->_get_orb ()->orb_core ()->lane_resources ().transport_cache ().total_size ();
+          orb->orb_core ()->lane_resources ().transport_cache ().total_size ();
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Transport cache : set <%d>, current_size <%d>\n"),
               this->tc_max_, tc));
         if (this->tc_max_ != tc)
