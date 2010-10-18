@@ -22,7 +22,7 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class SubscriberListener_T :
       public ::DDS::CCM_SubscriberListener,
       private ACE_Copy_Disabled
@@ -70,8 +70,6 @@ namespace CIAO
         ::CCM_DDS::ConnectorStatusListener_ptr csl);
 
     private:
-      typename CCM_TYPE::context_type::_var_type context_;
-
       virtual void on_unexpected_status(
         ::DDS::Entity_ptr entity,
         ::DDS::StatusKind status_kind);

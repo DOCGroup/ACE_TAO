@@ -11,7 +11,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DataReader
   ::CCM_DDS::DataListenerControl_ptr control,
   ACE_Reactor * reactor,
   ConditionManager_type& condition_manager)
-  : PortStatusListener_T <DDS_TYPE, CCM_TYPE, VENDOR_TYPE> (port_status_listener, reactor) ,
+  : PortStatusListener_T <DDS_TYPE, VENDOR_TYPE> (port_status_listener, reactor) ,
     listener_ (CCM_TYPE::listener_type::_duplicate (listener)),
     control_ (::CCM_DDS::DataListenerControl::_duplicate (control)),
     condition_manager_ (condition_manager)

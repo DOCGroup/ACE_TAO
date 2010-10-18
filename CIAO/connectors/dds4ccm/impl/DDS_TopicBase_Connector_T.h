@@ -64,9 +64,9 @@ protected:
   ::DDS::Subscriber_var subscriber_;
   ::DDS::SubscriberListener_var subscriber_listener_;
 
-  typedef ::CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> TopicListener;
-  typedef ::CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> SubscriberListener;
-  typedef ::CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> PublisherListener;
+  typedef ::CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, VENDOR_TYPE> TopicListener;
+  typedef ::CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, VENDOR_TYPE> SubscriberListener;
+  typedef ::CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, VENDOR_TYPE> PublisherListener;
   typedef DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> BaseConnector;
 };
 

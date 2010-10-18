@@ -95,7 +95,7 @@ namespace CIAO
       DDS_InconsistentTopicStatus ddsstatus;
       ::DDS::ReturnCode_t const retval =
         this->impl ()->get_inconsistent_topic_status (ddsstatus);
-      a_status <<= ddsstatus;;
+      a_status <<= ddsstatus;
       return retval;
     }
 
