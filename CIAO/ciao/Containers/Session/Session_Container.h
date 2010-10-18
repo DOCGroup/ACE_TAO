@@ -31,8 +31,6 @@
 
 namespace CIAO
 {
-  class Servant_Activator;
-
   typedef ::Components::HomeExecutorBase_ptr (*HomeFactory) (void);
   typedef ::PortableServer::Servant (*HomeServantFactory) (::Components::HomeExecutorBase_ptr p,
                                                            ::CIAO::Session_Container_ptr c,

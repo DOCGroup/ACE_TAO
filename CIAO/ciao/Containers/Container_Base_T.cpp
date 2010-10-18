@@ -27,7 +27,7 @@ template <typename BASE>
   void
   Container_i<BASE>::fini (void)
   {
-    this->sa_ = PortableServer::ServantActivator::_nil ();
+    //this->sa_ = ::CIAO::ServantActivator::_nil ();
 
     if (! CORBA::is_nil (this->component_poa_.in ()))
       {
