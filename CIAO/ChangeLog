@@ -1,3 +1,10 @@
+Mon Oct 18 13:00:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.h:
+        * ciao/Containers/Container_Base_T.cpp:
+          Cleanup and don't activate the poamanger, that is for the locality
+          manager todo
+
 Mon Oct 18 11:56:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Container_Base.idl:
