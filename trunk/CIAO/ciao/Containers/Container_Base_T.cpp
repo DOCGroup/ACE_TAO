@@ -27,7 +27,7 @@ template <typename BASE>
   void
   Container_i<BASE>::fini (void)
   {
-    //this->sa_ = ::CIAO::ServantActivator::_nil ();
+    this->sa_ = ::CIAO::Servant_Activator::_nil ();
 
     if (! CORBA::is_nil (this->component_poa_.in ()))
       {
@@ -41,12 +41,7 @@ template <typename BASE>
         this->facet_cons_poa_ = ::PortableServer::POA::_nil ();
       }
 
-    if (! CORBA::is_nil (this->home_servant_poa_.in ()))
-      {
-        this->home_servant_poa_->destroy (1, 1);
-        this->home_servant_poa_ = ::PortableServer::POA::_nil ();
-      }
-
+    this->root_poa_ = ::PortableServer::POA::_nil ();
     this->orb_ = ::CORBA::ORB::_nil ();
   }
 
@@ -74,16 +69,15 @@ template <typename BASE>
         throw Components::CreateFailure ();
       }
 
-    this->create_component_POA (name, this->root_poa_.in ());
+    ACE_CString component_poa_name (name);
+    component_poa_name += ":Component_POA";
+    this->create_component_POA (
+      component_poa_name.c_str (), this->root_poa_.in ());
 
     ACE_CString port_poa_name (name);
     port_poa_name += ":Port_POA";
-    this->create_facet_consumer_POA (port_poa_name.c_str (), this->root_poa_.in ());
-
-    PortableServer::POAManager_var poa_manager =
-      this->root_poa_->the_POAManager ();
-
-    poa_manager->activate ();
+    this->create_facet_consumer_POA (
+      port_poa_name.c_str (), this->root_poa_.in ());
   }
 
   template <typename BASE>

@@ -116,8 +116,6 @@ namespace CIAO
      */
     PortableServer::POA_var facet_cons_poa_;
 
-    PortableServer::POA_var home_servant_poa_;
-
     /// The servant activator factory used to activate facets and
     /// consumer servants.
     Servant_Activator_var sa_;
