@@ -18,12 +18,12 @@ namespace CIAO
       const char *oid,
       const char *name,
       Port_Activator_Types::Type t,
-      EXEC *e,
-      CONTEXT *c,
+      typename EXEC::ptr_type e,
+      typename CONTEXT::ptr_type c,
       COMP_SERV *cc)
     : Port_Activator_i (oid, name, t)
-    , executor_ (e)
-    , context_ (c)
+    , executor_ (EXEC::_duplicate (e))
+    , context_ (CONTEXT::_duplicate (c))
     , comp_serv_ (cc)
   {
   }
@@ -34,8 +34,7 @@ namespace CIAO
             typename COMP_SERV>
   void
   Port_Activator_T<SERV, EXEC, CONTEXT, COMP_SERV>::deactivate (
-      PortableServer::Servant servant,
-      CORBA::Boolean)
+      PortableServer::Servant servant, CORBA::Boolean)
   {
     SERVANT *s = dynamic_cast<SERVANT *> (servant);
     if (s)
@@ -58,9 +57,9 @@ namespace CIAO
     // side.
     if (ACE_OS::strcmp (this->oid_.in (), str.in ()) == 0)
       {
-        if (this->executor_ == 0 && this->t_ == Port_Activator_Types::FACET)
+        if (EXEC::is_nil (this->executor_.in ()) && this->t_ == Port_Activator_Types::FACET)
           {
-            CORBA::Object_var tmp =
+            ::CORBA::Object_var tmp =
               this->comp_serv_->get_facet_executor (this->name_.in ());
 
             this->executor_ = EXEC::_narrow (tmp.in ());
@@ -69,14 +68,14 @@ namespace CIAO
         SERVANT *s = 0;
 
         ACE_NEW_THROW_EX (s,
-                          SERVANT (this->executor_,
-                                   this->context_),
-                          CORBA::NO_MEMORY ());
+                          SERVANT (this->executor_.in (),
+                                   this->context_.in ()),
+                          ::CORBA::NO_MEMORY ());
 
         return s;
       }
 
-    throw CORBA::OBJECT_NOT_EXIST ();
+    throw ::CORBA::OBJECT_NOT_EXIST ();
   }
 }
 

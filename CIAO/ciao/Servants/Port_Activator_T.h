@@ -47,8 +47,8 @@ namespace CIAO
     Port_Activator_T (const char *oid,
                       const char *name,
                       Port_Activator_Types::Type t,
-                      EXEC *e,
-                      CONTEXT *c,
+                      typename EXEC::ptr_type e,
+                      typename CONTEXT::ptr_type c,
                       COMP_SERV *cs);
 
     /// Template method from the base class, please see the base class
@@ -61,10 +61,10 @@ namespace CIAO
 
   private:
     /// The executor
-    EXEC *executor_;
+    typename EXEC::_var_type executor_;
 
     /// Context classes
-    CONTEXT *context_;
+    typename CONTEXT::_var_type context_;
 
     /// Component servant which created @c this
     COMP_SERV *comp_serv_;
