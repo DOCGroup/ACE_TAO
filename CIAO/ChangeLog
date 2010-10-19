@@ -1,3 +1,9 @@
+Tue Oct 19 13:18:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/MemLeakDetection/Event_MemLeakDetection_Test/descriptors/Listen.cdp:
+        * connectors/dds4ccm/tests/MemLeakDetection/State_MemLeakDetection_Test/descriptors/Listen.cdp:
+          Added to explicitly test memory leaks in a listener.
+
 Tue Oct 19 12:37:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * *.pl:
