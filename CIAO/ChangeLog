@@ -1,3 +1,8 @@
+Tue Oct 19 11:52:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:
+          Fixed incorrect number of deamons
+
 Tue Oct 19 06:35:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Servants/Connector_Servant_Impl_Base.cpp:
