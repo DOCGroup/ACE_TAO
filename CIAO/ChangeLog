@@ -1,3 +1,13 @@
+Tue Oct 19 18:54:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+          Fixed memory leaks, *always* when you get a reference from the
+          context, first assign it to a _var before using it, else you get
+          a memory leak
+
 Tue Oct 19 18:33:35 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Extension/Extension_Container.cpp:
