@@ -50,7 +50,7 @@ sub create_targets {
     $tg_naming->AddLibPath ('..');
     #   daemon
     for ($i = 0; $i < $nr_daemon; ++$i) {
-        $tg_daemons[$i] = PerlACE::TestTarget::create_target ($i+2) || die "Create target for deamon $i failed\n";
+        $tg_daemons[$i] = PerlACE::TestTarget::create_target ($i+2) || die "Create target for daemon $i failed\n";
         $tg_daemons[$i]->AddLibPath ('../Components');
     }
     #   execution manager

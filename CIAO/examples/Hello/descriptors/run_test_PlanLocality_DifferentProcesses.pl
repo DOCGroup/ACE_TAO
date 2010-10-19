@@ -43,7 +43,7 @@ $tg_executor = 0;
 sub create_targets {
     #   daemon
     for ($i = 0; $i < $daemons; ++$i) {
-        $tg_daemons[$i] = PerlACE::TestTarget::create_target ($i+1) || die "Create target for deamon $i failed\n";
+        $tg_daemons[$i] = PerlACE::TestTarget::create_target ($i+1) || die "Create target for daemon $i failed\n";
         $tg_daemons[$i]->AddLibPath ('../lib');
     }
     #   execution manager
