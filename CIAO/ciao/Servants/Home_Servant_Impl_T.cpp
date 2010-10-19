@@ -173,7 +173,6 @@ namespace CIAO
   {
     CIAO_TRACE ("Home_Servant_Impl<>::_ciao_activate_component");
 
-
     CORBA::Object_var hobj = this->container_->get_objref (this);
 
     Components::CCMHome_var home =
