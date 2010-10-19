@@ -16,7 +16,7 @@ $daemons_running = 0;
 $em_running = 0;
 $ns_running = 0;
 
-$nr_daemon = 3;
+$nr_daemon = 2;
 @ports = ( 60000, 60001 );
 @iorbases = ( "Sender.ior", "Receiver.ior");
 @iorfiles = 0;
