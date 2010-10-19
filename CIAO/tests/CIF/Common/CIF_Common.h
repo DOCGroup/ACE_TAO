@@ -20,8 +20,8 @@ public:
 
     ::Components::Navigation_ptr get_navigation_interface (void);
     ::Components::Receptacles_ptr get_receptacle_interface (void);
-    ::CORBA::Object_var get_provider_cmp (void);
-    ::CORBA::Object_var get_user_cmp (void);
+    ::CORBA::Object_ptr get_provider_cmp (void);
+    ::CORBA::Object_ptr get_user_cmp (void);
 
     int test_provider_component (void);
     int test_user_component (void);
