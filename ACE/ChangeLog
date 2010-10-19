@@ -1,3 +1,8 @@
+Tue Oct 19 18:11:57 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ace/Caching_Utility_T.cpp:
+          Added missing include.
+
 Tue Oct 19 09:44:45 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ace/Caching_Utility_T.cpp:

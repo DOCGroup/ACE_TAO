@@ -9,6 +9,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/ACE.h"
 #include "ace/Min_Max.h"
 #include "ace/OS_Memory.h"
 #include "ace/Recyclable.h"
