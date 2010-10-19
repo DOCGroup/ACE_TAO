@@ -177,8 +177,10 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
     {
       TopicBaseConnector::configuration_complete ();
 
+      typename CCM_TYPE::listener_type::_var_type push_consumer_data_listener =
+        this->context_->get_connection_push_consumer_data_listener ();
       this->push_consumer_obtained_ |=
-        ! ::CORBA::is_nil (this->context_->get_connection_push_consumer_data_listener ());
+        ! ::CORBA::is_nil (push_consumer_data_listener.in ());
 
       ::CCM_DDS::PortStatusListener_var push_consumer_psl =
         this->context_->get_connection_push_consumer_status ();
@@ -303,9 +305,14 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_activate (voi
 
       if (this->push_consumer_obtained_)
         {
+          typename CCM_TYPE::listener_type::_var_type push_consumer_data_listener =
+            this->context_->get_connection_push_consumer_data_listener ();
+          ::CCM_DDS::PortStatusListener_var push_consumer_psl =
+            this->context_->get_connection_push_consumer_status ();
+
           this->push_consumer_.activate (
-            this->context_->get_connection_push_consumer_data_listener (),
-            this->context_->get_connection_push_consumer_status (),
+            push_consumer_data_listener.in (),
+            push_consumer_psl.in (),
             reactor);
         }
 
@@ -316,8 +323,11 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_activate (voi
 
       if (this->pull_consumer_obtained_)
         {
+          ::CCM_DDS::PortStatusListener_var pull_consumer_psl =
+            this->context_->get_connection_pull_consumer_status ();
+
           this->pull_consumer_.activate (
-            this->context_->get_connection_pull_consumer_status (),
+            pull_consumer_psl.in (),
             reactor);
         }
     }

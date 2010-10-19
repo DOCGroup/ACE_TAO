@@ -414,31 +414,48 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_activate (voi
 
       if (this->push_observer_obtained_)
         {
+          typename CCM_TYPE::listener_type::_var_type push_observer_dl =
+            this->context_->get_connection_push_observer_data_listener ();
+          ::CCM_DDS::PortStatusListener_var push_observer_psl =
+            this->context_->get_connection_push_observer_status ();
+
           this->push_observer_.activate (
-            this->context_->get_connection_push_observer_data_listener (),
-            this->context_->get_connection_push_observer_status (),
+            push_observer_dl.in (),
+            push_observer_psl.in (),
             reactor);
         }
 
       if (this->push_state_observer_obtained_)
         {
+          typename CCM_TYPE::statelistener_type::_var_type push_state_observer_dl =
+            this->context_->get_connection_push_state_observer_data_listener ();
+
+          ::CCM_DDS::PortStatusListener_var push_state_observer_psl =
+            this->context_->get_connection_push_state_observer_status ();
+
           this->push_state_observer_.activate (
-            this->context_->get_connection_push_state_observer_data_listener (),
-            this->context_->get_connection_push_state_observer_status (),
+            push_state_observer_dl.in (),
+            push_state_observer_psl.in (),
             reactor);
         }
 
       if (this->pull_observer_obtained_)
         {
+          ::CCM_DDS::PortStatusListener_var pull_observer_psl =
+            this->context_->get_connection_pull_observer_status ();
+
           this->pull_observer_.activate (
-            this->context_->get_connection_pull_observer_status (),
+            pull_observer_psl.in (),
             reactor);
         }
 
       if (this->passive_observer_obtained_)
         {
+          ::CCM_DDS::PortStatusListener_var passive_observer_psl =
+            this->context_->get_connection_passive_observer_status ();
+
           this->passive_observer_.activate (
-            this->context_->get_connection_passive_observer_status (),
+            passive_observer_psl.in (),
             reactor);
         }
     }

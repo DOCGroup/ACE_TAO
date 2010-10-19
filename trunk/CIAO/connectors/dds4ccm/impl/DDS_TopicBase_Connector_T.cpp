@@ -275,8 +275,11 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_default_top
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::activate_default_topic");
 
+  ::CCM_DDS::ConnectorStatusListener_var error_listener =
+    this->context_->get_connection_error_listener ();
+
   ::DDS::StatusMask const mask =
-    TopicListener::get_mask (this->context_->get_connection_error_listener ());
+    TopicListener::get_mask (error_listener.in ());
 
   if (mask != 0)
     {
@@ -284,7 +287,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_default_top
         {
           ACE_NEW_THROW_EX (this->topiclistener_,
                             TopicListener (
-                              this->context_->get_connection_error_listener (),
+                              error_listener.in (),
                               reactor),
                             ::CORBA::NO_MEMORY ());
         }
@@ -309,9 +312,11 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_subscriber 
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::activate_subscriber");
 
+  ::CCM_DDS::ConnectorStatusListener_var error_listener =
+    this->context_->get_connection_error_listener ();
+
   ::DDS::StatusMask const mask =
-    SubscriberListener::get_mask (
-      this->context_->get_connection_error_listener ());
+    SubscriberListener::get_mask (error_listener.in ());
 
   if (mask != 0)
     {
@@ -319,7 +324,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_subscriber 
         {
           ACE_NEW_THROW_EX (this->subscriber_listener_,
                             SubscriberListener (
-                              this->context_->get_connection_error_listener (),
+                              error_listener.in (),
                               reactor),
                             ::CORBA::NO_MEMORY ());
         }
@@ -345,9 +350,11 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_publisher (
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::activate_publisher");
 
+  ::CCM_DDS::ConnectorStatusListener_var error_listener =
+    this->context_->get_connection_error_listener ();
+
   ::DDS::StatusMask const mask =
-    PublisherListener::get_mask (
-      this->context_->get_connection_error_listener ());
+    PublisherListener::get_mask (error_listener.in ());
 
   if (mask != 0)
     {
@@ -355,7 +362,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_publisher (
         {
           ACE_NEW_THROW_EX (this->publisher_listener_,
                             PublisherListener (
-                              this->context_->get_connection_error_listener (),
+                              error_listener.in (),
                               reactor),
                             ::CORBA::NO_MEMORY ());
         }
