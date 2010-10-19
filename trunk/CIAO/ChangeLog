@@ -1,3 +1,9 @@
+Tue Oct 19 13:46:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/MemLeakDetection/Event_MemLeakDetection_Test/descriptors/Listen.cdp:
+        * connectors/dds4ccm/tests/MemLeakDetection/State_MemLeakDetection_Test/descriptors/Listen.cdp:
+          Resolved errors in deployment plan.
+
 Tue Oct 19 13:18:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/MemLeakDetection/Event_MemLeakDetection_Test/descriptors/Listen.cdp:
