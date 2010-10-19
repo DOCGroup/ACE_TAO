@@ -192,10 +192,12 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ccm_activate (void)
     {
       if (::CORBA::is_nil (this->domainparticipantlistener_.in ()))
         {
+          ::CCM_DDS::ConnectorStatusListener_var error_listener =
+            this->context_->get_connection_error_listener ();
+
           ACE_NEW_THROW_EX (this->domainparticipantlistener_,
                             DomainParticipantListener(
-                              this->context_->
-                                get_connection_error_listener ()),
+                              error_listener.in ()),
                             ::CORBA::NO_MEMORY ());
         }
       ::DDS::ReturnCode_t const retcode = this->domain_participant_->set_listener (
