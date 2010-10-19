@@ -157,26 +157,6 @@
     </internalEndpoint>
   </connection>
 
-  <connection>
-    <name>listen_datacontrol</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
-    <internalEndpoint>
-      <portName>info_listen_data_control</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>push_consumer_data_control</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Event_MemLeakDetection_Test_ConnectorComponentInstance" />
-    </internalEndpoint>
-  </connection>
-
   <artifact xmi:id="Event_MemLeakDetection_Test_Connector_ExecArtifact">
     <name>Event_MemLeakDetection_Test_Connector_exec</name>
     <source/>
