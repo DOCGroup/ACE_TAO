@@ -106,7 +106,7 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
       << smart_scope << c_scope->full_name () << "::CCM_"
       << this->node_->local_name ()
       << "_Context_var ciao_context_;" << be_uidt_nl
-      << "};";
+      << "};" << be_nl;
 
   return 0;
 }
