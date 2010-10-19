@@ -43,7 +43,7 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
                                                                                     double purge_percent)
 {
   // Check that the purge_percent is non-zero.
-  if (purge_percent == 0)
+  if (ACE::is_equal (purge_percent, 0.0))
     return 0;
 
   // Get the number of entries in the container.
@@ -142,7 +142,7 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
                                                                                                   double purge_percent)
 {
   // Check that the purge_percent is non-zero.
-  if (purge_percent == 0)
+  if (ACE::is_equal (purge_percent, 0.0))
     return 0;
 
   // Get the number of entries in the container.
@@ -262,7 +262,7 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
                                                                                                              double purge_percent)
 {
   // Check that the purge_percent is non-zero.
-  if (purge_percent == 0)
+  if (ACE::is_equal (purge_percent, 0.0))
     return 0;
 
   // Get the number of entries in the container which can be considered for purging.
@@ -386,7 +386,7 @@ ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_
                                                                                        double purge_percent)
 {
   // Check that the purge_percent is non-zero.
-  if (purge_percent == 0)
+  if (ACE::is_equal (purge_percent, 0.0))
     return 0;
 
   // Get the number of entries in the container.
