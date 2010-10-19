@@ -119,7 +119,7 @@
   </instance>
   <instance xmi:id="State_MemLeakDetection_Test_ConnectorComponentInstance">
     <name>State_MemLeakDetection_Test_ConnectorComponent</name>
-    <node>SenderNode</node>
+    <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="State_MemLeakDetection_Test_ConnectorComponentImplementation" />
