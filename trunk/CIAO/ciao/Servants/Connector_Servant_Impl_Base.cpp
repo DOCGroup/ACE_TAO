@@ -94,9 +94,9 @@ namespace CIAO
   {
     CIAO_TRACE("Connector_Servant_Impl_Base::get_connections");
 
-    ::Components::ReceptacleDescription *receptacle_desc =
+    ::Components::ReceptacleDescription_var receptacle_desc =
       this->lookup_receptacle_description (name);
-    if (!receptacle_desc)
+    if (::CORBA::is_nil (receptacle_desc.in ()))
       {
         throw ::Components::InvalidName ();
       }
@@ -109,7 +109,7 @@ namespace CIAO
     ACE_NEW_THROW_EX (cd,
                       ::OBV_Components::ConnectionDescription,
                       ::CORBA::NO_MEMORY ());
-    CORBA::Object_var obj = dynamic_cast < ::CORBA::Object_ptr > (receptacle_desc);
+    CORBA::Object_var obj = dynamic_cast < ::CORBA::Object_ptr > (receptacle_desc.in ());
     cd->objref (::CORBA::Object::_duplicate (obj.in ()));
 
     ::CORBA::ULong i = 0UL;

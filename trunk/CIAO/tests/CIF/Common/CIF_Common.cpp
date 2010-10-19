@@ -11,7 +11,10 @@ CIF_Common::CIF_Common(void)
 
 CIF_Common::~CIF_Common(void)
 {
-  this->orb_->destroy ();
+  if (! ::CORBA::is_nil (this->orb_.in ()))
+    {
+      this->orb_->destroy ();
+    }
 }
 
 //============================================================
@@ -50,9 +53,12 @@ CIF_Common::parse_args(int argc, ACE_TCHAR *argv[])
 int
 CIF_Common::init_provider_component(::CosNaming::NamingContext_ptr naming_context)
 {
-  ::CosNaming::Name name(1);
-  name.length(1);
-  name[0].id = ::CORBA::string_dup("ProviderComponentInstance");
+  ::CosNaming::Name_var name;
+  ACE_NEW_THROW_EX (name,
+                    ::CosNaming::Name,
+                    ::CORBA::NO_MEMORY ());
+  name->length(1);
+  (*name)[0].id = ::CORBA::string_dup("ProviderComponentInstance");
 
   ::CORBA::Object_var obj_ref = naming_context->resolve(name);
 
@@ -77,9 +83,12 @@ CIF_Common::init_provider_component(::CosNaming::NamingContext_ptr naming_contex
 int
 CIF_Common::init_user_component(::CosNaming::NamingContext_ptr naming_context)
 {
-  ::CosNaming::Name name(1);
-  name.length(1);
-  name[0].id = ::CORBA::string_dup("UserComponentInstance");
+  ::CosNaming::Name_var name;
+  ACE_NEW_THROW_EX (name,
+                    ::CosNaming::Name,
+                    ::CORBA::NO_MEMORY ());
+  name->length(1);
+  (*name)[0].id = ::CORBA::string_dup("UserComponentInstance");
 
   ::CORBA::Object_var obj_ref = naming_context->resolve(name);
 
@@ -183,7 +192,7 @@ CIF_Common::get_receptacle_interface()
 //============================================================
 // get_provider_cmp
 //============================================================
-::CORBA::Object_var
+::CORBA::Object_ptr
 CIF_Common::get_provider_cmp()
 {
   ::CORBA::Object_var provider_cmp = this->provider_object_->_get_component();
@@ -202,7 +211,7 @@ CIF_Common::get_provider_cmp()
 //============================================================
 // get_user_cmp
 //============================================================
-::CORBA::Object_var
+::CORBA::Object_ptr
 CIF_Common::get_user_cmp()
 {
   ::CORBA::Object_var user_cmp = this->user_object_->_get_component();
