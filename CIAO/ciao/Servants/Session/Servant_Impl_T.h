@@ -45,10 +45,10 @@ namespace CIAO
   {
   public:
     Session_Servant_Impl (EXEC * exe,
-                  Components::CCMHome_ptr home,
-                  const char * ins_name,
-                  Home_Servant_Impl_Base *home_servant,
-                  ::CIAO::Session_Container_ptr c);
+                          Components::CCMHome_ptr home,
+                          const char * ins_name,
+                          Home_Servant_Impl_Base *home_servant,
+                          ::CIAO::Session_Container_ptr c);
 
     virtual ~Session_Servant_Impl (void);
 
@@ -78,7 +78,7 @@ namespace CIAO
     typename EXEC::_var_type executor_;
 
     /// Initialized in this constructor.
-    CONTEXT * context_;
+    CONTEXT* context_;
 
     const char * ins_name_;
   };

@@ -1,3 +1,12 @@
+Tue Oct 19 17:58:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Port_Activator_T.h:
+        * ciao/Servants/Port_Activator_T.cpp:
+          Fixed memory leaks
+
+        * ciao/Servants/Session/Servant_Impl_T.h:
+          Layout changes
+
 Tue Oct 19 13:46:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/MemLeakDetection/Event_MemLeakDetection_Test/descriptors/Listen.cdp:
