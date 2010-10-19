@@ -619,7 +619,7 @@ namespace CIAO
 
     try
       {
-        PortableServer::ServantBase_var srv_tmp =
+        PortableServer::ServantBase_var provider_tmp =
           this->component_poa_->reference_to_servant (provider);
 
         CIAO_DEBUG (9,
@@ -631,7 +631,7 @@ namespace CIAO
                      provider_port));
 
         CIAO::Connector_Servant_Impl_Base *prov_serv =
-          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (srv_tmp.in ());
+          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (provider_tmp.in ());
 
         if (!prov_serv)
           {
@@ -644,12 +644,14 @@ namespace CIAO
             throw ::Components::InvalidConnection ();
           }
 
-        srv_tmp = this->component_poa_->reference_to_servant (user);
+        PortableServer::ServantBase_var user_tmp =
+          this->component_poa_->reference_to_servant (user);
+
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "Extension_Container_i::connect_local_facet - "
                      "Successfully fetched user servant [%C] from POA\n", user_port));
 
         CIAO::Connector_Servant_Impl_Base *user_serv =
-          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (srv_tmp.in ());
+          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (user_tmp.in ());
 
         if (user_serv == 0)
           {
@@ -834,7 +836,7 @@ namespace CIAO
   Extension_Container_i::set_attributes (CORBA::Object_ptr compref,
                                      const ::Components::ConfigValues & values)
   {
-    CIAO_TRACE("Extension_Container_i::activate_component");
+    CIAO_TRACE("Extension_Container_i::set_attributes");
 
     try
       {

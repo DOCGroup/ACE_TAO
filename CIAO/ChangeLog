@@ -1,3 +1,10 @@
+Tue Oct 19 18:33:35 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Extension/Extension_Container.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Servants/Home_Servant_Impl_T.cpp:
+          Tracing fixes and memory leak fixes
+
 Tue Oct 19 17:58:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Port_Activator_T.h:
