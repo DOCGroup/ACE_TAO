@@ -1,3 +1,10 @@
+Tue Oct 19 12:40:36 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/MemLeakDetection/*:
+          Added two test which are especially there to test for
+          memory leaks.
+
 Tue Oct 19 11:52:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:
