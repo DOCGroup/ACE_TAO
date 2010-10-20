@@ -1,3 +1,11 @@
+Wed Oct 20 16:07:09 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Timer_Queue_Adapters.cpp (ACE_Thread_Timer_Queue_Adapter::svc):
+        * ace/Timer_Queue_T.cpp (expire):
+          Temporarily release and reacquire the mutex around timer dispatch.
+          This prevents a deadlock on user code with multiple threads doing
+          timer-related operations.
+
 Wed Oct 20 09:22:46 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/global.features:
