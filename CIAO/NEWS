@@ -32,6 +32,17 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.8.2 and CIAO-0.8.3
     - DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL 9
     - DDS4CCM_LOG_LEVEL_DDS_STATUS     10
 
+. Started the implementation of the Qos4CCM specification.
+  Therefor an Extension Container has been added to CIAO.
+  For now its possible to register the various interceptors
+  (Client, Server, Servant and Stub interceptors) with an Extension
+  Container (see $CIAO_ROOT/tests/COPI/Registration/Client).
+  At this moment, DAnCE is unable to deploy an Extension Container
+  'out of the box'. If the DANCE_DEPLOYS_EXTENSION_CONTAINER define
+  in config.h is set, DAnCE will deploy only Extension Containers
+  (and no Session Containers). In the future, DAnCE should be able
+  to deploy Extension Containers via a Deployment plan.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.8.1 and CIAO-0.8.2
 =======================================================
 

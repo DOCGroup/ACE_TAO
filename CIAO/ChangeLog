@@ -1,3 +1,8 @@
+Wed Oct 20 08:43:03 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+          Mentioned the implementation of the Extension Container.
+
 Wed Oct 20 08:11:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/ciao_extension_container.mpb:
