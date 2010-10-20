@@ -19,7 +19,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Registration_Client_Registration_Impl</string>
+          <string>create_Registration_Servant_Registration_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -30,7 +30,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Registration_Client_Registration_Servant</string>
+          <string>create_Registration_Servant_Registration_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -41,7 +41,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Client_Component_svnt</string>
+          <string>Servant_Component_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -52,14 +52,14 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Client_Component_exec</string>
+          <string>Servant_Component_exec</string>
         </value>
       </value>
     </execParameter>
   </implementation>
 
   <instance xmi:id="Component">
-    <name>Client_Component</name>
+    <name>Servant_Component</name>
     <node>ComponentNode</node>
     <!-- hostname -->
     <source/>
@@ -78,15 +78,15 @@
   </instance>
 
   <artifact xmi:id="Component_ExecArtifact">
-    <name>Client_Component_exec</name>
+    <name>Servant_Component_exec</name>
     <source/>
     <node/>
-    <location>Client_Component_exec</location>
+    <location>Servant_Component_exec</location>
   </artifact>
   <artifact xmi:id="Component_SvntArtifact">
-    <name>Client_Component_svnt</name>
+    <name>Servant_Component_svnt</name>
     <source/>
     <node/>
-    <location>Client_Component_svnt</location>
+    <location>Servant_Component_svnt</location>
   </artifact>
 </Deployment:DeploymentPlan>

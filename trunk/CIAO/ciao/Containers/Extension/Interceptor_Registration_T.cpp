@@ -50,7 +50,7 @@ namespace CIAO
          it != this->interceptors_.end ();
          ++it)
       {
-        if (it->second.first == ck)
+        if (it->second.first.in () == ck)
           {
             return COPITYPE::_duplicate (it->second.second);
           }
@@ -71,8 +71,8 @@ namespace CIAO
     this->interceptors_.insert (
       std::pair < ::CORBA::UShort, InterceptorCookie > (
         ict->priority (),
-        InterceptorCookie (key_cookie, ict)));
-     return key_cookie.in ();
+        InterceptorCookie (key_cookie.in (), ict)));
+     return key_cookie._retn ();
   }
 
   template <typename BASE, typename COPITYPE> 
@@ -85,7 +85,7 @@ namespace CIAO
          it != this->interceptors_.end ();
          ++it)
       {
-        if (it->second.first == ck)
+        if (it->second.first.in () == ck)
           {
             InterceptorType_ptr_type interceptor = it->second.second;
             this->interceptors_.erase (it);

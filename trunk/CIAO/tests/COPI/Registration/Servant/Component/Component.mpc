@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -c TestDriver Component"
 
-project(Client_Component_idl_gen) : componentidldefaults   {
+project(Servant_Component_idl_gen) : componentidldefaults   {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=COMPONENT_STUB_Export \
               -Wb,stub_export_include=Component_stub_export.h \
@@ -17,8 +17,8 @@ project(Client_Component_idl_gen) : componentidldefaults   {
   }
 }
 
-project(Client_Component_lem_gen) : ciaoidldefaults   {
-  after += Client_Component_idl_gen
+project(Servant_Component_lem_gen) : ciaoidldefaults   {
+  after += Servant_Component_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=COMPONENT_LEM_STUB_Export \
               -Wb,stub_export_include=Component_lem_stub_export.h \
@@ -29,14 +29,14 @@ project(Client_Component_lem_gen) : ciaoidldefaults   {
   }
 }
 
-project(Client_Component_lem_stub) : ccm_svnt, ccm_extension_stub   {
-  after += Client_Component_lem_gen Client_Component_stub
-  libs  += Client_Component_stub
+project(Servant_Component_lem_stub) : ccm_svnt, ccm_extension_stub   {
+  after += Servant_Component_lem_gen Servant_Component_stub
+  libs  += Servant_Component_stub
 
   libpaths += ../lib
   libout = ../lib
 
-  sharedname = Client_Component_lem_stub
+  sharedname = Servant_Component_lem_stub
   dynamicflags += COMPONENT_LEM_STUB_BUILD_DLL
 
   IDL_Files {
@@ -56,14 +56,14 @@ project(Client_Component_lem_stub) : ccm_svnt, ccm_extension_stub   {
   }
 }
 
-project(Client_Component_stub) : ccm_stub, ccm_extension_stub {
-  after += Client_Component_idl_gen
-  libs  += 
+project(Servant_Component_stub) : ccm_stub   {
+  after += Servant_Component_idl_gen
+  libs  +=
 
   libpaths += ../lib
   libout = ../lib
 
-  sharedname = Client_Component_stub
+  sharedname = Servant_Component_stub
   dynamicflags += COMPONENT_STUB_BUILD_DLL
 
   IDL_Files {
@@ -83,10 +83,10 @@ project(Client_Component_stub) : ccm_stub, ccm_extension_stub {
   }
 }
 
-project(Client_Component_exec) : ciao_executor, ciao_extension_container, ccm_extension_stub {
-  after   += Client_Component_lem_stub Client_Component_stub
-  sharedname = Client_Component_exec
-  libs += Client_Component_stub Client_Component_lem_stub
+project(Servant_Component_exec) : ciao_executor, ciao_extension_container, ccm_extension_stub {
+  after   += Servant_Component_lem_stub Servant_Component_stub
+  sharedname = Servant_Component_exec
+  libs += Servant_Component_stub Servant_Component_lem_stub
 
   libpaths += ../lib
   libout = ../lib
@@ -110,10 +110,10 @@ project(Client_Component_exec) : ciao_executor, ciao_extension_container, ccm_ex
 }
 
 
-project(Client_Component_svnt) : ciao_servant, ccm_extension_stub, ciao_extension_container_stub {
-  after      += Client_Component_lem_stub
-  sharedname  = Client_Component_svnt
-  libs       += Client_Component_stub Client_Component_lem_stub
+project(Servant_Component_svnt) : ciao_servant, ccm_extension_stub, ciao_extension_container_stub {
+  after      += Servant_Component_lem_stub
+  sharedname  = Servant_Component_svnt
+  libs       += Servant_Component_stub Servant_Component_lem_stub
 
   libpaths += ../lib
   libout = ../lib

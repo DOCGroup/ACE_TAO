@@ -72,7 +72,7 @@ namespace CIAO
 
   private:
     /// Dynamic array of registered interceptors.
-    typedef std::pair< ::Components::Cookie *,
+    typedef std::pair< ::Components::Cookie_var,
                        InterceptorType_ptr_type>
             InterceptorCookie;
 
