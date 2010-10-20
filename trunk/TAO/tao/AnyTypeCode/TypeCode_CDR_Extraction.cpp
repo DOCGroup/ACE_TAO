@@ -1361,7 +1361,7 @@ namespace
     TAO::TypeCodeFactory::TC_Info_List recursive_tc;
     if (find_recursive_tc (id.in (), recursive_tc, infos))
       {
-        tc = recursive_tc[0].type;
+        tc = CORBA::TypeCode::_duplicate(recursive_tc[0].type);
       }
     else switch (kind)
       {
