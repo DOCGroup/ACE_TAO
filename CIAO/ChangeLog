@@ -1,3 +1,49 @@
+Wed Oct 20 13:14:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/ccm_svnt.mpb:
+        * MPC/config/ciao_deployment_handlers.mpb:
+        * MPC/config/ciao_servant.mpb:
+        * MPC/config/ciao_session_container.mpb:
+          Reverted last changes.
+
+        * bin/ciao_tests.lst:
+          Added more registration tests.
+
+        * ciao/Containers/Extension/Interceptor_Registration_T.h:
+        * ciao/Containers/Extension/Interceptor_Registration_T.cpp:
+          Resolved runtime errors.
+
+        * tests/COPI/Registration/Client/Component/Component.mpc:
+        * tests/COPI/Registration/Client/descriptors/Plan.cdp:
+        * tests/COPI/Registration/Servant:
+        * tests/COPI/Registration/Servant/Component:
+        * tests/COPI/Registration/Servant/Component/Component.idl:
+        * tests/COPI/Registration/Servant/Component/Component.mpc:
+        * tests/COPI/Registration/Servant/Component/Component_exec.h:
+        * tests/COPI/Registration/Servant/Component/Component_exec.cpp:
+        * tests/COPI/Registration/Servant/descriptors:
+        * tests/COPI/Registration/Servant/descriptors/Plan.cdp:
+        * tests/COPI/Registration/Servant/descriptors/run_test.pl:
+        * tests/COPI/Registration/Server:
+        * tests/COPI/Registration/Server/Component:
+        * tests/COPI/Registration/Server/Component/Component.idl:
+        * tests/COPI/Registration/Server/Component/Component.mpc:
+        * tests/COPI/Registration/Server/Component/Component_exec.h:
+        * tests/COPI/Registration/Server/Component/Component_exec.cpp:
+        * tests/COPI/Registration/Server/descriptors:
+        * tests/COPI/Registration/Server/descriptors/Plan.cdp:
+        * tests/COPI/Registration/Server/descriptors/run_test.pl:
+        * tests/COPI/Registration/Stub:
+        * tests/COPI/Registration/Stub/Component:
+        * tests/COPI/Registration/Stub/Component/Component.idl:
+        * tests/COPI/Registration/Stub/Component/Component.mpc:
+        * tests/COPI/Registration/Stub/Component/Component_exec.h:
+        * tests/COPI/Registration/Stub/Component/Component_exec.cpp:
+        * tests/COPI/Registration/Stub/descriptors:
+        * tests/COPI/Registration/Stub/descriptors/Plan.cdp:
+        * tests/COPI/Registration/Stub/descriptors/run_test.pl:
+          Added new Interceptor registration tests.
+
 Wed Oct 20 10:34:42 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/ciao_servant.mpb:
