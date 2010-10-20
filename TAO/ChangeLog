@@ -1,3 +1,17 @@
+Wed Oct 20 14:14:28 UTC 2010  Martin Corino  <corino_m@remedy.nl>
+
+        * tests/Bug_3919_Regression:
+        * tests/Bug_3919_Regression/Bug_3919_Regression.mpc:
+        * tests/Bug_3919_Regression/Hello.h:
+        * tests/Bug_3919_Regression/Hello.cpp:
+        * tests/Bug_3919_Regression/Test.idl:
+        * tests/Bug_3919_Regression/client.cpp:
+        * tests/Bug_3919_Regression/run_test.pl:
+        * tests/Bug_3919_Regression/server.cpp:
+        * bin/tao_orb_tests.lst:
+          Added a new test to watch for regression of recursive typecode
+          fixes.
+
 Wed Oct 20 13:01:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
