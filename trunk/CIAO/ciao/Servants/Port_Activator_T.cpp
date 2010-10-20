@@ -18,8 +18,8 @@ namespace CIAO
       const char *oid,
       const char *name,
       Port_Activator_Types::Type t,
-      typename EXEC::ptr_type e,
-      typename CONTEXT::ptr_type c,
+      typename EXEC::_ptr_type e,
+      typename CONTEXT::_ptr_type c,
       COMP_SERV *cc)
     : Port_Activator_i (oid, name, t)
     , executor_ (EXEC::_duplicate (e))
@@ -57,7 +57,7 @@ namespace CIAO
     // side.
     if (ACE_OS::strcmp (this->oid_.in (), str.in ()) == 0)
       {
-        if (EXEC::is_nil (this->executor_.in ()) && this->t_ == Port_Activator_Types::FACET)
+        if (this->t_ == Port_Activator_Types::FACET && ::CORBA::is_nil (this->executor_.in ()))
           {
             ::CORBA::Object_var tmp =
               this->comp_serv_->get_facet_executor (this->name_.in ());

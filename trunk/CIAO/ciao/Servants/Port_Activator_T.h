@@ -47,8 +47,8 @@ namespace CIAO
     Port_Activator_T (const char *oid,
                       const char *name,
                       Port_Activator_Types::Type t,
-                      typename EXEC::ptr_type e,
-                      typename CONTEXT::ptr_type c,
+                      typename EXEC::_ptr_type e,
+                      typename CONTEXT::_ptr_type c,
                       COMP_SERV *cs);
 
     /// Template method from the base class, please see the base class
