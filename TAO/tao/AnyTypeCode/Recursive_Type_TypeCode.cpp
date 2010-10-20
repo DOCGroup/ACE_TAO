@@ -22,24 +22,21 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                     false);
 
   // Top-level TypeCode case.
-  if (!(this->in_recursion_))
+  if (this->recursion_start_offset_ == 0)
     {
-      this->in_recursion_ = true;
-
       // Starting offset should point to the CORBA::TCKind value.
-
       // Note that this doesn't need to take into account alignment
       // padding since CORBA::TCKind (encoded as a CORBA::ULong) is
       // already aligned on the appropriate boundary, and since the
       // CORBA::TCKind was the last thing marshaled into the CDR
       // stream before getting here.
-      offset = sizeof (CORBA::ULong);
+      this->recursion_start_offset_ = offset - sizeof (CORBA::ULong);
 
       // Reset recursion flag to false in an exception-safe manner once
       // marshaling is done.
       //
       // Only reset the recursion flag at the top-level.
-      Reset flag (this->in_recursion_);
+      Reset flag (this->recursion_start_offset_);
 
       return this->TypeCodeBase::tao_marshal (cdr, offset);
     }
@@ -49,7 +46,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
 //   ACE_ASSERT (offset > 4
 //               && offset < static_cast<CORBA::ULong> (ACE_INT32_MAX));
 
-  return (cdr << -static_cast<CORBA::Long> (offset));
+  return (cdr << -static_cast<CORBA::Long> (offset - this->recursion_start_offset_));
 }
 
 template <class TypeCodeBase, typename TypeCodeType, typename MemberArrayType>
@@ -65,15 +62,17 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                     false);
 
   // Top-level TypeCode case.
-  if (!(this->in_recursion_))
+  if (this->recursion_start_offset_ == 0)
     {
-      this->in_recursion_ = true;
+      // no need for real start offset here
+      // just set to non-zero to flag recursion
+      this->recursion_start_offset_ = 1;
 
       // Reset recursion flag to false in an exception-safe manner once
       // equality determination is done.
       //
       // Only reset the recursion flag at the top-level.
-      Reset flag (this->in_recursion_);
+      Reset flag (this->recursion_start_offset_);
 
       return this->TypeCodeBase::equal_i (tc);
     }
@@ -95,15 +94,17 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                     false);
 
   // Top-level TypeCode case.
-  if (!(this->in_recursion_))
+  if (this->recursion_start_offset_ == 0)
     {
-      this->in_recursion_ = true;
+      // no need for real start offset here
+      // just set to non-zero to flag recursion
+      this->recursion_start_offset_ = 1;
 
       // Reset recursion flag to false in an exception-safe manner once
       // equivalence determination is done.
       //
       // Only reset the recursion flag at the top-level.
-      Reset flag (this->in_recursion_);
+      Reset flag (this->recursion_start_offset_);
 
       return this->TypeCodeBase::equivalent_i (tc);
     }
@@ -125,7 +126,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                     false);
 
   // Top-level TypeCode case.
-  if (!(this->in_recursion_))
+  if (this->recursion_start_offset_ == 0)
     return this->::CORBA::TypeCode::tao_marshal_kind (cdr);
 
   // Recursive/indirected TypeCode case.

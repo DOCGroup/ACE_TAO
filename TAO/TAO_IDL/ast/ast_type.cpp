@@ -138,7 +138,7 @@ AST_Type::compute_size_type (void)
 }
 
 bool
-AST_Type::in_recursion (ACE_Unbounded_Queue<AST_Type *> &)
+AST_Type::in_recursion (ACE_Unbounded_Queue<AST_Type *> & /*list*/)
 {
   // By default we are not involved in recursion.
   return 0;

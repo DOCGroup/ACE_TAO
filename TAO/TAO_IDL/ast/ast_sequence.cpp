@@ -159,12 +159,10 @@ AST_Sequence::~AST_Sequence (void)
 bool
 AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
-  // We should calculate this only once. If it has already been
-  // done, just return it.
-  if (this->in_recursion_ != -1)
-    {
-      return this->in_recursion_;
-    }
+  if (list.size () == 0) // only structs, unions and valuetypes can be recursive
+    return false;
+
+  list.enqueue_tail(this);
 
   AST_Type *type = AST_Type::narrow_from_decl (this->base_type ());
   AST_Decl::NodeType nt = type->node_type ();
@@ -193,25 +191,23 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
       return false;
     }
 
-  if (this->match_names (type, list))
+  bool recursion_found = false;
+  AST_Type** recursable_type = 0;
+  list.get (recursable_type, 0);
+  if (!ACE_OS::strcmp (type->full_name (),
+                           (*recursable_type)->full_name ()))
     {
       // They match.
-      this->in_recursion_ = 1;
+      recursion_found = true;
       idl_global->recursive_type_seen_ = true;
     }
   else
     {
       // Check the element type.
-      list.enqueue_tail (type);
-      this->in_recursion_ = type->in_recursion (list);
-
-      if (this->in_recursion_ == 1)
-        {
-          idl_global->recursive_type_seen_ = true;
-        }
+      recursion_found = type->in_recursion (list);
     }
 
-  return this->in_recursion_;
+  return recursion_found;
 }
 
 // Redefinition of inherited virtual operations.
