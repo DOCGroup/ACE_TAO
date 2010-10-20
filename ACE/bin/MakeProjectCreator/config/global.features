@@ -59,6 +59,7 @@ xerces2       = 0
 xerces3       = 0
 ofccm         = 0
 ndds          = 0
+nddsmonitor   = 0
 mcpp          = 0
 wireshark     = 0
 old_stdstream = 0
