@@ -64,6 +64,7 @@ protected:
   be_component *node_;
   TAO_OutStream &os_;
   ACE_CString export_macro_;
+  bool in_ext_port_;
 };
 
 #endif /* _BE_COMPONENT_COMPONENT_SCOPE_H_ */

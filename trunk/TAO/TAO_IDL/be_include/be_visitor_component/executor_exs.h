@@ -45,5 +45,25 @@ private:
   const char *your_code_here_;
 };
 
+// =============================================
+
+/// Worker class passed to traverse_inheritance_graph(),
+/// generates code to initialize attribute members in
+/// the executor impl constructor.
+class Component_Exec_Attr_Init_Generator
+  : public TAO_IDL_Inheritance_Hierarchy_Worker
+{
+public:
+  Component_Exec_Attr_Init_Generator (
+    be_visitor_scope * visitor);
+
+  virtual int emit (be_interface * derived_interface,
+                    TAO_OutStream * os,
+                    be_interface * base_interface);
+
+private:
+  be_visitor_scope * visitor_;
+};
+
 #endif /* _BE_COMPONENT_EXECUTOR_EXS_H_ */
 

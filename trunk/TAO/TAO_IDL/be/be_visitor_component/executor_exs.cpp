@@ -48,10 +48,86 @@ be_visitor_executor_exs::visit_operation (be_operation *node)
 int
 be_visitor_executor_exs::visit_attribute (be_attribute *node)
 {
-  this->ctx_->interface (this->node_);
-  be_visitor_attribute v (this->ctx_);
-  v.op_scope (op_scope_);
-  return v.visit_attribute (node);
+  AST_Decl::NodeType nt = this->node_->node_type ();
+
+  // Executor attribute code generated for porttype attributes
+  // always in connectors and only for mirrorports in components.
+  if (this->in_ext_port_ && nt == AST_Decl::NT_component)
+    {
+      return 0;
+    }
+    
+  os_ << be_nl << be_nl;
+
+  be_type *ft = node->field_type ();
+  be_visitor_operation_rettype rt_visitor (this->ctx_);
+  
+  if (ft->accept (&rt_visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_executor_exs::")
+                         ACE_TEXT ("visit_attribute - ")
+                         ACE_TEXT ("accept on return type failed\n")),
+                        -1);
+    }
+    
+  os_ << be_nl
+      << this->node_->original_local_name () << "_exec_i::"
+      << this->ctx_->port_prefix ().c_str ()
+      << node->local_name () << " (void)" << be_nl
+      << "{" << be_idt;
+      
+  be_visitor_attr_return ar_visitor (this->ctx_);
+  ar_visitor.attr_name (node->original_local_name ()->get_string ());
+      
+  if (ft->accept (&ar_visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_executor_exs::")
+                         ACE_TEXT ("visit_attribute - ")
+                         ACE_TEXT ("accept on get visitor failed\n")),
+                        -1);
+    }
+    
+  os_ << be_uidt_nl
+      << "}";
+      
+  os_ << be_nl << be_nl
+      << "void" << be_nl
+      << this->node_->original_local_name () << "_exec_i::"
+      << this->ctx_->port_prefix ().c_str ()
+      << node->local_name () << " (" << be_idt_nl;
+      
+  be_visitor_attr_setarg_type at_visitor (this->ctx_);
+  
+  if (ft->accept (&at_visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_executor_exs::")
+                         ACE_TEXT ("visit_attribute - ")
+                         ACE_TEXT ("accept on set arg type failed\n")),
+                        -1);
+    }
+    
+  os_ << node->local_name () << ")" << be_uidt_nl
+      << "{" << be_idt;
+      
+  be_visitor_attr_assign as_visitor (this->ctx_);
+  as_visitor.attr_name (node->original_local_name ()->get_string ());
+      
+  if (ft->accept (&as_visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_executor_exs::")
+                         ACE_TEXT ("visit_attribute - ")
+                         ACE_TEXT ("accept on set func body failed\n")),
+                        -1);
+    }
+    
+  os_ << be_uidt_nl
+      << "}";
+
+  return 0;
 }
 
 int
@@ -82,12 +158,47 @@ be_visitor_executor_exs::visit_component (be_component *node)
       << comment_border_;
 
   os_ << be_nl << be_nl
-      << lname << "_exec_i::" << lname << "_exec_i (void)" << be_nl
-      << "{" << be_nl
-      << "}";
+      << lname << "_exec_i::" << lname
+      << "_exec_i (void)";
+      
+  /// The overload of traverse_inheritance_graph() used here
+  /// doesn't automatically prime the queues.
+  node->get_insert_queue ().reset ();
+  node->get_del_queue ().reset ();
+  node->get_insert_queue ().enqueue_tail (this->node_);
+  
+  be_visitor_executor_exs_attr_init ai_visitor (this->ctx_);
+  ai_visitor.node (node);
 
+  Component_Exec_Attr_Init_Generator attr_init_gen (&ai_visitor);
+
+  int status =
+    node->traverse_inheritance_graph (attr_init_gen,
+                                      &os_,
+                                      false,
+                                      false);
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_executor_exs::")
+                         ACE_TEXT ("visit_component - ")
+                         ACE_TEXT ("traverse_inheritance_graph() ")
+                         ACE_TEXT ("for attr init failed\n")),
+                        -1);
+    }
+    
+  if (ai_visitor.attr_generated ())
+    {
+      os_ << be_uidt << be_uidt_nl;
+    }
+
+  os_ << "{" << be_nl
+      << "}";
+      
   os_ << be_nl << be_nl
-      << lname << "_exec_i::~" << lname << "_exec_i (void)" << be_nl
+      << lname << "_exec_i::~" << lname
+      << "_exec_i (void)" << be_nl
       << "{" << be_nl
       << "}";
 
@@ -129,7 +240,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
 
   Component_Exec_Op_Attr_Generator op_attr_gen (this);
 
-  int status =
+  status =
     node->traverse_inheritance_graph (op_attr_gen,
                                       &os_,
                                       false,
@@ -141,7 +252,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
                          ACE_TEXT ("be_visitor_executor_exs::")
                          ACE_TEXT ("visit_component - ")
                          ACE_TEXT ("traverse_inheritance_graph() ")
-                         ACE_TEXT ("failed\n")),
+                         ACE_TEXT ("for operations failed\n")),
                         -1);
     }
 
@@ -285,5 +396,24 @@ be_visitor_executor_exs::visit_consumes (be_consumes *node)
       << "}";
 
   return 0;
+}
+
+// ==================================================
+
+Component_Exec_Attr_Init_Generator::Component_Exec_Attr_Init_Generator (
+      be_visitor_scope * visitor)
+  : visitor_ (visitor)
+{
+}
+
+int
+Component_Exec_Attr_Init_Generator::emit (be_interface * /*derived_interface */,
+                                        TAO_OutStream * /* os */,
+                                        be_interface * base_interface)
+{
+  // Even though this call seems unaware of CCM types, the
+  // visitor must inherit from be_visitor_component_scope so
+  // it will pick up attributes via porttypes.
+  return visitor_->visit_scope (base_interface);
 }
 
