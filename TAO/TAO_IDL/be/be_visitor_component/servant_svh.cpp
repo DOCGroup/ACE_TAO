@@ -127,6 +127,15 @@ be_visitor_servant_svh::visit_connector (be_connector *node)
 int
 be_visitor_servant_svh::visit_attribute (be_attribute *node)
 {
+  AST_Decl::NodeType nt = this->node_->node_type ();
+
+  // Executor attribute code generated for porttype attributes
+  // always in connectors and only for mirrorports in components.
+  if (this->in_ext_port_ && nt == AST_Decl::NT_component)
+    {
+      return 0;
+    }
+    
   this->ctx_->interface (this->node_);
   be_visitor_attribute v (this->ctx_);
   return v.visit_attribute (node);

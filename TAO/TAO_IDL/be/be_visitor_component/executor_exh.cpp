@@ -30,6 +30,15 @@ be_visitor_executor_exh::~be_visitor_executor_exh (void)
 int
 be_visitor_executor_exh::visit_attribute (be_attribute *node)
 {
+  AST_Decl::NodeType nt = this->node_->node_type ();
+
+  // Executor attribute code generated for porttype attributes
+  // always in connectors and only for mirrorports in components.
+  if (this->in_ext_port_ && nt == AST_Decl::NT_component)
+    {
+      return 0;
+    }
+    
   this->ctx_->interface (this->node_);
   be_visitor_attribute v (this->ctx_);
   return v.visit_attribute (node);
@@ -140,14 +149,15 @@ be_visitor_executor_exh::visit_component (be_component *node)
       << global << sname << "::CCM_" << lname
       << "_Context_var ciao_context_;";
 
-  be_visitor_facet_private_exh v (this->ctx_);
+  be_visitor_executor_private_exh v (this->ctx_);
+  v.node (node);
 
   if (v.visit_component_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_executor_exh::")
                          ACE_TEXT ("visit_component - ")
-                         ACE_TEXT ("facet private member ")
+                         ACE_TEXT ("private member ")
                          ACE_TEXT ("visitor failed\n")),
                         -1);
     }

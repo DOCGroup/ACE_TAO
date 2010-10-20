@@ -1,38 +1,37 @@
 /* -*- c++ -*- */
 //=============================================================================
 /**
- *  @file    be_visitor_any_extracted_type_decl.h
+ *  @file    be_visitor_attr_return.h
  *
  *  $Id$
  *
- *  Encapsulation of rules for declaring variables
- *  for Any extraction
+ *  Encapsulation of rules for component attribute accessor.
  *
  *
  *  @author Jeff Parsons
  */
 //=============================================================================
 
-#ifndef BE_VISITOR_ANY_EXTRACTED_TYPE_DECL_H
-#define BE_VISITOR_ANY_EXTRACTED_TYPE_DECL_H
+#ifndef BE_VISITOR_ATTR_RETURN_H
+#define BE_VISITOR_ATTR_RETURN_H
 
 #include "be_visitor_decl.h"
 
 class TAO_OutStream;
 
 /**
- * @class be_visitor_any_extracted_type_decl
+ * @class be_visitor_attr_return
  *
- * @brief be_visitor_any_extracted_type_decl
+ * @brief be_visitor_attr_return
  *
- * Contains overloaded methods that generate declarations of
- * CORBA typenames for Any extraction
+ * Contains overloaded methods that generate return
+ * statements in component attribute get operations.
  */
-class be_visitor_any_extracted_type_decl : public be_visitor_decl
+class be_visitor_attr_return : public be_visitor_decl
 {
 public:
-  be_visitor_any_extracted_type_decl (be_visitor_context *ctx);
-  virtual ~be_visitor_any_extracted_type_decl (void);
+  be_visitor_attr_return (be_visitor_context *ctx);
+  virtual ~be_visitor_attr_return (void);
 
   virtual int visit_array (be_array *);
   virtual int visit_component (be_component *);
@@ -48,11 +47,12 @@ public:
   virtual int visit_union (be_union *);
   virtual int visit_valuebox (be_valuebox *);
   virtual int visit_valuetype (be_valuetype *);
-
-protected:
-  const char * var_name_;
-  const char * tmp_name_;
+  
+  void attr_name (const char *name);
+  
+private:
+  ACE_CString attr_name_string_;
 };
 
-#endif /* BE_VISITOR_ANY_EXTRACTED_TYPE_DECL_H */
+#endif /* BE_VISITOR_ATTR_RETURN_H */
 

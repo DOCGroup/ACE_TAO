@@ -31,7 +31,8 @@ be_visitor_component_scope::be_visitor_component_scope (
   : be_visitor_scope (ctx),
     node_ (0),
     os_ (*ctx->stream ()),
-    export_macro_ (be_global->svnt_export_macro ())
+    export_macro_ (be_global->svnt_export_macro ()),
+    in_ext_port_ (false)
 {
   /// All existing CIAO examples set the servant export values in the CIDL
   /// compiler to equal the IDL compiler's skel export values. Below is a
@@ -52,6 +53,7 @@ int
 be_visitor_component_scope::visit_extended_port (
   be_extended_port *node)
 {
+  this->in_ext_port_ = true;
   this->ctx_->interface (this->node_);
 
   AST_Decl::NodeType nt =
@@ -79,6 +81,7 @@ be_visitor_component_scope::visit_extended_port (
 
   /// Reset port prefix string.
   this->ctx_->port_prefix () = "";
+  this->in_ext_port_ = false;
   return 0;
 }
 

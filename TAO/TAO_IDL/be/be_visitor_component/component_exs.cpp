@@ -52,6 +52,7 @@ be_visitor_component_exs::visit_component (be_component *node)
     }
 
   be_visitor_executor_exs exec_visitor (this->ctx_);
+  exec_visitor.node (node);
 
   if (exec_visitor.visit_component (node) == -1)
     {

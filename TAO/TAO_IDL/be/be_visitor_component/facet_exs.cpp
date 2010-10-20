@@ -39,15 +39,26 @@ be_visitor_facet_exs::visit_operation (be_operation *node)
     }
 
   be_visitor_operation_exs v (this->ctx_);
-  v.scope (op_scope_);
+  v.scope (this->op_scope_);
   return v.visit_operation (node);
 }
 
 int
 be_visitor_facet_exs::visit_attribute (be_attribute *node)
 {
-  AST_Decl::NodeType nt =
-    ScopeAsDecl (node->defined_in ())->node_type ();
+  AST_Decl::NodeType nt = this->node_->node_type ();
+  
+  // Executor attribute code generated for porttype attributes
+  // always in connectors and only for mirrorports in components.
+  if (this->in_ext_port_ && nt == AST_Decl::NT_component)
+    {
+      return 0;
+    }
+    
+  this->op_scope_ =
+    be_decl::narrow_from_decl (ScopeAsDecl (node->defined_in ()));
+  
+  nt = this->op_scope_->node_type ();
 
   // Components have implied IDL operations added to the AST, but
   // we are interested only in supported interface operations.
@@ -57,7 +68,7 @@ be_visitor_facet_exs::visit_attribute (be_attribute *node)
     }
 
   be_visitor_attribute v (this->ctx_);
-  v.op_scope (op_scope_);
+  v.op_scope (this->op_scope_);
   return v.visit_attribute (node);
 }
 
@@ -137,4 +148,3 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
 
   return 0;
 }
-

@@ -1,11 +1,11 @@
 /* -*- c++ -*- */
 //=============================================================================
 /**
- *  @file    facet_private_exh.h
+ *  @file    executor_private_exh.h
  *
  *  $Id$
  *
- *  This provides code generation for private facet members
+ *  This provides code generation for private members
  *  in the exec impl header,
  *
  *
@@ -13,15 +13,15 @@
  */
 //=============================================================================
 
-#ifndef _BE_COMPONENT_FACET_PRIVATE_EXH_H_
-#define _BE_COMPONENT_FACET_PRIVATE_EXH_H_
+#ifndef _BE_COMPONENT_EXECUTOR_PRIVATE_EXH_H_
+#define _BE_COMPONENT_EXECUTOR_PRIVATE_EXH_H_
 
-class be_visitor_facet_private_exh
+class be_visitor_executor_private_exh
   : public be_visitor_component_scope
 {
   //
   // = TITLE
-  //   be_visitor_facet_private_exh
+  //   be_visitor_executor_private_exh
   //
   // = DESCRIPTION
   //   This is a concrete visitor to generate
@@ -30,12 +30,13 @@ class be_visitor_facet_private_exh
   //
   //
 public:
-  be_visitor_facet_private_exh (be_visitor_context *ctx);
+  be_visitor_executor_private_exh (be_visitor_context *ctx);
 
-  ~be_visitor_facet_private_exh (void);
+  ~be_visitor_executor_private_exh (void);
 
   virtual int visit_provides (be_provides *node);
+  virtual int visit_attribute (be_attribute *node);
 };
 
-#endif /* _BE_COMPONENT_FACET_PRIVATE_EXH_H_ */
+#endif /* _BE_COMPONENT_EXECUTOR_PRIVATE_EXH_H_ */
 

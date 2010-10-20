@@ -1,3 +1,56 @@
+Wed Oct 20 19:50:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/facet_private_exh.cpp:
+        * TAO_IDL/be_include/be_visitor_component/facet_private_exh.h:
+
+          Renamed these files (and visitor classes) to the entries below.
+
+        * TAO_IDL/be/be_visitor_component/executor_private_exh.cpp:
+        * TAO_IDL/be_include/be_visitor_component/executor_private_exh.h:
+
+          Renamed these files (and visitor classes) from the entries above.
+
+        * TAO_IDL/be/be_visitor_attr_setarg_type.cpp:
+        * TAO_IDL/be/be_visitor_member_type_decl.cpp:
+        * TAO_IDL/be/be_visitor_attr_return.cpp:
+        * TAO_IDL/be/be_visitor_attr_assign.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs_attr_init.cpp:
+        * TAO_IDL/be_include/be_visitor_attr_assign.h:
+        * TAO_IDL/be_include/be_visitor_attr_setarg_type.h:
+        * TAO_IDL/be_include/be_visitor_component/executor_exs_attr_init.h:
+        * TAO_IDL/be_include/be_visitor_attr_return.h:
+        * TAO_IDL/be_include/be_visitor_member_type_decl.h:
+
+          New files and visitor classes, to generate args, return types,
+          member types, and initialization of members, according to
+          the naming rules for CORBA types.
+
+        * TAO_IDL/be/be_attribute.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
+        * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be/be_visitor_component_scope.cpp:
+        * TAO_IDL/be/be_visitor_null_return_value.cpp:
+        * TAO_IDL/be_include/be_visitor_any_extracted_type_decl.h:
+        * TAO_IDL/be_include/be_attribute.h:
+        * TAO_IDL/be_include/be_visitor_component_scope.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_exs.h:
+        * TAO_IDL/be_include/be_visitor_component/executor_exs.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+
+          Added code generation for attributes in executor impl classes
+
+          - declaration of private members
+          - initialization of these members in the constructor
+          - working set/get operations (formerly empty) for the members
+
 Wed Oct 20 14:14:28 UTC 2010  Martin Corino  <corino_m@remedy.nl>
 
         * tests/Bug_3919_Regression:
