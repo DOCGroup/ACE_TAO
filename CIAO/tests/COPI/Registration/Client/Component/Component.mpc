@@ -138,26 +138,3 @@ project(Component_svnt) : ciao_servant   {
     ComponentS.inl
   }
 }
-
-// project (TestDriver) : ccm_stub, valuetype, naming {
-//   exename = TestDriver
-//   after += Component_stub
-//   libs  += Component_stub
-// 
-//   libpaths += ../lib
-//   exeout = ../lib
-// 
-//   IDL_Files {
-//   }
-// 
-//   Source_Files {
-//     TestDriver.cpp
-//   }
-// 
-//   Header_Files {
-//   }
-// 
-//   Inline_Files {
-//   }
-// }
-

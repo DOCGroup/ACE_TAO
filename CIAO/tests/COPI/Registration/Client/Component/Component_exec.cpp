@@ -84,11 +84,6 @@ ClientContainerInterceptor::set_slot_id (
 {
 }
 
-void
-ClientContainerInterceptor::do_default ()
-{
-}
-
 namespace CIAO_Registration_Client_Registration_Impl
 {
   //============================================================
@@ -145,7 +140,7 @@ namespace CIAO_Registration_Client_Registration_Impl
                               1);
           }
       }
-    catch (const ::Components::CCMException &e)
+    catch (const ::Components::CCMException &)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                           "Client_Registration_exec_i::test_registration - "
