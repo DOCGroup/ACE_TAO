@@ -43,6 +43,11 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.8.2 and CIAO-0.8.3
   (and no Session Containers). In the future, DAnCE should be able
   to deploy Extension Containers via a Deployment plan.
 
+. Added nddsmonitor as MPC feature to enable linking with the rtimonitor
+  library
+
+. Resolved several memory leaks in CIAO/DAnCE/DDS4CCM
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.8.1 and CIAO-0.8.2
 =======================================================
 
