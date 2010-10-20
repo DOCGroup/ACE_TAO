@@ -1,3 +1,27 @@
+Wed Oct 20 13:02:07 UTC 2010  Martin Corino  <corino_m@remedy.nl>
+
+        * TAO_IDL/ast/ast_exception.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
+        * TAO_IDL/include/ast_type.h:
+          Fixed incorrect (unnecessary) generation of Recursive typecodes.
+
+        * tao/AnyTypeCode/Recursive_Type_TypeCode.h:
+        * tao/AnyTypeCode/Recursive_Type_TypeCode.inl:
+        * tao/AnyTypeCode/Recursive_Type_TypeCode.cpp:
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+          Fixed incorrect marshaling/demarshaling of Recursive typecodes
+          (specifically nested recursions) as well as incorrect reference
+          counting of recursive typecodes.
+
+        These changes fix Bugzilla #2804 and 2844.
+
 Wed Oct 20 12:48:50 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
@@ -33,6 +57,7 @@ Fri Oct 15 13:49:28 UTC 2010  Marcel Smit  <msmit@remedy.nl>
         * TAO_IDL/be/be_codegen.cpp:
           Only include ORB_core.h when the reactor method is created.
 
+>>>>>>> .r92277
 Fri Oct 15 07:37:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/LRU_Connection_Purging_Strategy.cpp:
