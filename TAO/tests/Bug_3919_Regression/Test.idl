@@ -1,0 +1,44 @@
+//
+// $Id$
+//
+
+#include "tao/OctetSeq.pidl"
+#include "tao/StringSeq.pidl"
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  exception Recursive_Type_In_Any_Test_Failed {};
+  exception Demarshaling_From_Any_Failed {};
+
+  enum MyAttRefValEnum {
+    ArvAttribute,
+    ArvInteger,
+    ArvComposition
+  };
+
+  // NOTE: the (deprecated) anonymous sequence type in the union
+  //       is intentional; the IDL compiler generated different
+  //       code for this case as compared to using a proper
+  //       forward and typedef.
+  struct MyAttRef {
+    wstring attRefName;
+    wstring attRefQualifier;
+    union MyAttRefValue switch(MyAttRefValEnum) {
+      case ArvAttribute:    wstring attrValue; //value of a simple attribute
+      case ArvInteger:      long intValue; // just for testing
+      case ArvComposition:  sequence <MyAttRef> compValue; //a composition by specifying a sequence of MyAttRef elements.
+    } attRefValue;
+  };
+  typedef sequence <MyAttRef> MyAttRefSequence;
+
+  /// Simple test interface.
+  interface Hello
+  {
+    /// Return the any provided as the "in" argument.
+    any get_any (in any the_any);
+
+    /// Shutdown the server ORB.
+    oneway void shutdown ();
+  };
+};
