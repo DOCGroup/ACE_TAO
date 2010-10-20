@@ -1,3 +1,35 @@
+Wed Oct 20 08:11:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/ciao_extension_container.mpb:
+          Layout changes.
+
+        * bin/ciao_tests.lst:
+          Added first COPI tests: Client Interceptor Registration.
+
+        * ciao/Containers/Extension/Interceptor_Registration_T.h:
+        * ciao/Containers/Extension/Interceptor_Registration_T.cpp:
+          Reworked the internal list of registered interceptors.
+
+        * ciao/Deployment/Handlers/CIAO_Deployment_Handlers.mpc:
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+          Added a define with which one can deploy an extension container.
+          When set, DAnCE deploys a extension container in stead of a
+          session container. This is temporary. In the future, DAnCE should
+          be able to deploy an extension container via a deployment plan.
+
+        * tests/COPI:
+        * tests/COPI/Registration:
+        * tests/COPI/Registration/Client:
+        * tests/COPI/Registration/Client/Component:
+        * tests/COPI/Registration/Client/Component/Component.idl:
+        * tests/COPI/Registration/Client/Component/Component.mpc:
+        * tests/COPI/Registration/Client/Component/Component_exec.h:
+        * tests/COPI/Registration/Client/Component/Component_exec.cpp:
+        * tests/COPI/Registration/Client/descriptors:
+        * tests/COPI/Registration/Client/descriptors/Plan.cdp:
+        * tests/COPI/Registration/Client/descriptors/run_test.pl:
+          Added first COPI test: Registration of client interceptors.
+
 Wed Oct 20 07:15:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Port_Activator_T.h:

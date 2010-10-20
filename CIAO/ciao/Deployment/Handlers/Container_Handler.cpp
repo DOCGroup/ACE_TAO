@@ -3,7 +3,11 @@
 #include "Container_Handler.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "ciao/Logger/Logger_Service.h"
-#include "ciao/Containers/Session/Session_Container.h"
+#ifdef DANCE_DEPLOYS_EXTENSION_CONTAINER
+  #include "ciao/Containers/Extension/Extension_Container.h"
+#else
+  #include "ciao/Containers/Session/Session_Container.h"
+#endif
 #include "ciao/Base/Server_init.h"
 #include "dance/DAnCE_Utility.h"
 #include "dance/DAnCE_PropertiesC.h"
@@ -89,17 +93,31 @@ namespace CIAO
                       ::CORBA::Any (),
                       CORBA::NO_MEMORY ());
 
-    CIAO::Session_Container *cont (0);
     const char *name (plan.instance[instanceRef].name.in ());
+#ifdef DANCE_DEPLOYS_EXTENSION_CONTAINER
+    CIAO::Extension_Container *cont (0);
 
     CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                     "Container_Handler_i::install_instance - "
-                    "Creating container with id <%C>\n",
+                    "Creating extension container with id <%C>\n",
+                    name));
+    ACE_NEW_THROW_EX (cont,
+                      CIAO::Extension_Container_i (this->orb_,
+                                                   this->poa_),
+                      CORBA::NO_MEMORY ());
+#else
+    CIAO::Session_Container *cont (0);
+
+    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                    "Container_Handler_i::install_instance - "
+                    "Creating session container with id <%C>\n",
                     name));
     ACE_NEW_THROW_EX (cont,
                       CIAO::Session_Container_i (this->orb_,
                                                  this->poa_),
                       CORBA::NO_MEMORY ());
+#endif
+
     CIAO::Container_var container_ref (cont);
 
     CIAO_DEBUG (8, (LM_DEBUG, CLINFO
