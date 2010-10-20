@@ -55,20 +55,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
 {
   this->ctx_->node (node);
   this->ctx_->attribute (node);
-  be_interface *intf = this->ctx_->interface ();
-
-  if (intf != 0)
-    {
-      AST_Decl::NodeType snt = intf->node_type ();
-      AST_Decl::NodeType ant =
-        ScopeAsDecl (node->defined_in ())->node_type ();
-
-      if (snt == AST_Decl::NT_component
-          && ant == AST_Decl::NT_porttype)
-        {
-          return 0;
-        }
-    }
 
   UTL_Scope *s = node->defined_in ();
   AST_Decl *d = ScopeAsDecl (s);

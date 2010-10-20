@@ -18,13 +18,13 @@
 #define BE_ATTRIBUTE_H
 
 #include "ast_attribute.h"
-#include "be_decl.h"
+#include "be_field.h"
 
 class AST_Type;
 class be_visitor;
 
 class be_attribute : public virtual AST_Attribute,
-                     public virtual be_decl
+                     public virtual be_field
 {
 public:
   be_attribute (bool ro,

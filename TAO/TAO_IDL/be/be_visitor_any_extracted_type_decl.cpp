@@ -25,7 +25,6 @@
 be_visitor_any_extracted_type_decl::be_visitor_any_extracted_type_decl (
     be_visitor_context *ctx)
   : be_visitor_decl (ctx),
-    os_ (*ctx->stream ()),
     var_name_ ("_extract_val"),
     tmp_name_ ("_extract_tmp")
 {
