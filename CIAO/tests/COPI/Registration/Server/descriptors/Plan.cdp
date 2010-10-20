@@ -19,29 +19,29 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Registration_Client_Registration_Impl</string>
+          <string>create_Registration_Server_Registration_Impl</string>
         </value>
       </value>
     </execParameter>
     <execParameter>
-      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <name>edu.vanderbilt.dre.CIAO.ServerEntrypoint</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Registration_Client_Registration_Servant</string>
+          <string>create_Registration_Server_Registration_Server</string>
         </value>
       </value>
     </execParameter>
     <execParameter>
-      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <name>edu.vanderbilt.dre.CIAO.ServerArtifact</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Client_Component_svnt</string>
+          <string>Server_Component_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -52,14 +52,14 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Client_Component_exec</string>
+          <string>Server_Component_exec</string>
         </value>
       </value>
     </execParameter>
   </implementation>
 
   <instance xmi:id="Component">
-    <name>Client_Component</name>
+    <name>Server_Component</name>
     <node>ComponentNode</node>
     <!-- hostname -->
     <source/>
@@ -78,15 +78,15 @@
   </instance>
 
   <artifact xmi:id="Component_ExecArtifact">
-    <name>Client_Component_exec</name>
+    <name>Server_Component_exec</name>
     <source/>
     <node/>
-    <location>Client_Component_exec</location>
+    <location>Server_Component_exec</location>
   </artifact>
   <artifact xmi:id="Component_SvntArtifact">
-    <name>Client_Component_svnt</name>
+    <name>Server_Component_svnt</name>
     <source/>
     <node/>
-    <location>Client_Component_svnt</location>
+    <location>Server_Component_svnt</location>
   </artifact>
 </Deployment:DeploymentPlan>
