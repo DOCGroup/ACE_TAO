@@ -75,7 +75,7 @@ namespace CIAO
      return key_cookie._retn ();
   }
 
-  template <typename BASE, typename COPITYPE> 
+  template <typename BASE, typename COPITYPE>
   typename Interceptor_Registration_T<BASE, COPITYPE>::InterceptorType_ptr_type
   Interceptor_Registration_T<BASE, COPITYPE>::unregister_interceptor (
     ::Components::Cookie *ck)
