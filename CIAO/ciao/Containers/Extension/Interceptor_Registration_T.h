@@ -17,6 +17,11 @@
 
 #include <map>
 
+struct priority_compare {
+  bool operator() (const ::CORBA::UShort& lhs, const ::CORBA::UShort& rhs) const
+  {return lhs>rhs;}
+};
+
 namespace CIAO
 {
   /**
@@ -40,6 +45,7 @@ namespace CIAO
   protected :
     /// Constructor.
     Interceptor_Registration_T (void);
+    ~Interceptor_Registration_T (void);
 
     /// Define the traits for the underlying portable interceptor array.
     typedef typename COPITYPE::_ptr_type InterceptorType_ptr_type;
@@ -56,10 +62,24 @@ namespace CIAO
     InterceptorType_ptr_type unregister_interceptor (
       ::Components::Cookie *ck);
 
+  public:
+    /// List accessors.
+    size_t size (void) const;
+    InterceptorType_ptr_type interceptor (size_t index);
+
+    /// Return the interceptor with the given cookie.
+    InterceptorType_ptr_type interceptor (::Components::Cookie *ck);
+
   private:
     /// Dynamic array of registered interceptors.
-    typedef std::map< ::Components::Cookie *,
-                        InterceptorType_ptr_type> RegisteredInterceptors;
+    typedef std::pair< ::Components::Cookie *,
+                       InterceptorType_ptr_type>
+            InterceptorCookie;
+
+    typedef std::multimap< ::CORBA::UShort,
+                           InterceptorCookie,
+                           priority_compare >
+            RegisteredInterceptors;
 
     RegisteredInterceptors interceptors_;
   };
