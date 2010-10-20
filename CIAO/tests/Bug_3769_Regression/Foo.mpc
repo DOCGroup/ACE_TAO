@@ -3,7 +3,8 @@
 
 project(Foo_idl_gen) : componentidldefaults {
   custom_only = 1
-  idlflags += -Wb,stub_export_macro=FOO_STUB_Export \
+  idlflags += -Gex \
+              -Wb,stub_export_macro=FOO_STUB_Export \
               -Wb,stub_export_include=Foo_stub_export.h \
               -Wb,skel_export_macro=FOO_SVNT_Export \
               -Wb,skel_export_include=Foo_svnt_export.h \
@@ -30,8 +31,6 @@ project(Foo_lem_gen) : ciaoidldefaults {
 project(Foo_lem_stub) : ccm_svnt   {
   after += Foo_lem_gen Foo_stub
   libs  +=  Foo_stub
-
-
   sharedname = Foo_lem_stub
   dynamicflags += FOO_LEM_STUB_BUILD_DLL
 
@@ -55,8 +54,6 @@ project(Foo_lem_stub) : ccm_svnt   {
 project(Foo_stub) : ccm_stub   {
   after += Foo_idl_gen
   libs  +=
-
-
   sharedname = Foo_stub
   dynamicflags += FOO_STUB_BUILD_DLL
 
@@ -81,8 +78,6 @@ project(Foo_exec) : ciao_executor   {
   after   += Foo_lem_stub Foo_stub
   sharedname = Foo_exec
   libs += Foo_stub Foo_lem_stub
-
-
   dynamicflags += FOO_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -101,13 +96,10 @@ project(Foo_exec) : ciao_executor   {
   }
 }
 
-
 project(Foo_svnt) : ciao_servant   {
   after      +=   Foo_lem_stub
   sharedname  = Foo_svnt
   libs       += Foo_stub Foo_lem_stub
-
-
   dynamicflags += FOO_SVNT_BUILD_DLL
 
   IDL_Files {
