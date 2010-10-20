@@ -99,7 +99,7 @@ namespace CIAO_Registration_Client_Registration_Impl
 
   // Supported operations and attributes.
   //============================================================
-  // test_registration 
+  // test_registration
   //============================================================
   int
   Client_Registration_exec_i::test_registration (
