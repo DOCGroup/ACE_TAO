@@ -1,3 +1,8 @@
+Wed Oct 20 12:48:50 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added 2918
+
 Tue Oct 19 13:25:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
