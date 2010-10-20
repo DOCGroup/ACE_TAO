@@ -1,3 +1,9 @@
+Wed Oct 20 07:15:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Port_Activator_T.h:
+        * ciao/Servants/Port_Activator_T.cpp:
+          Fixed compile errors
+
 Tue Oct 19 18:54:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
