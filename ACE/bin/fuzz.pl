@@ -225,6 +225,9 @@ sub check_for_id_string ()
                 if (/\$Id:\$/) {
                     print_error ("$file:$.: Incorrect \$Id:\$ found (remove colon)");
                 }
+                if (/\$Id\$/) {
+                    print_error ("$file:$.: Seems to lack svn:keywords property");
+                }
             }
             close (FILE);
             if ($found == 0) {
