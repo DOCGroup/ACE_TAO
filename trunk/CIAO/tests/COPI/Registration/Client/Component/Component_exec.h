@@ -21,7 +21,7 @@
 #include <map>
 
 //============================================================
-// ClientContainerInterceptor with default priority
+// ClientContainerInterceptor
 //============================================================
 class ClientContainerInterceptor
   : public ::Components::ContainerPortableInterceptor::ClientContainerInterceptor
@@ -66,9 +66,6 @@ public:
 
   virtual void
   set_slot_id (::PortableInterceptor::SlotId slot_id);
-
-  void
-  do_default (void);
 
 private:
   CORBA::UShort priority_;

@@ -1,3 +1,16 @@
+Wed Oct 20 10:25:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/ccm_svnt.mpb:
+        * MPC/config/ciao_deployment_handlers.mpb:
+        * MPC/config/ciao_servant.mpb:
+        * MPC/config/ciao_session_container.mpb:
+          Resolved link errors on windows.
+
+        * tests/COPI/Registration/Client/Component/Component.mpc:
+        * tests/COPI/Registration/Client/Component/Component_exec.h:
+        * tests/COPI/Registration/Client/Component/Component_exec.cpp:
+          Code clean up.
+
 Wed Oct 20 09:23:35 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dds4ccm_base.mpb:
