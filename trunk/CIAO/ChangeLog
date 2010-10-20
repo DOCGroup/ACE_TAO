@@ -1,3 +1,9 @@
+Wed Oct 20 10:34:42 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/ciao_servant.mpb:
+        * MPC/config/ciao_session_container.mpb:
+          Resolved errors.
+
 Wed Oct 20 10:25:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/ccm_svnt.mpb:
