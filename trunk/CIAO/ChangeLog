@@ -1,3 +1,21 @@
+Wed Oct 20 20:00:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Bug_3769_Regression/Foo_exec.h:
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+        
+          Removed these files from the repository, since they
+          are now generated.
+          
+        * tests/Bug_3769_Regression/Foo.mpc:
+          Added -Gex option to IDL compiler command line, to
+          generate the executor impl classes.
+          
+        * tests/Bug_3769_Regression/Foo.idl:
+        
+          Added interface and valuetype attributes, to test
+          code generation of member declaration, initialization,
+          and accessors.
+
 Wed Oct 20 13:18:45 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Containers/Extension/Interceptor_Registration_T.cpp:

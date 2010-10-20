@@ -37,24 +37,33 @@ enum DataType
   dtLong,
   dtShort
 };
+
 union Data switch (DataType)
 {
   case dtLong: long longData;
   case dtShort: short shortData;
 };
+
 enum DataType2
 {
   dtString,
   dtShortType
 };
+
 union Data2 switch (DataType2)
 {
   case dtString: string stringData;
   case dtShortType: short shortData;
 };
 
+interface intf {};
+valuetype vtype {};
+
 component Foo
 {
+  attribute intf my_intf;
+  attribute vtype my_vtype;
+  
   attribute short  my_short;
   attribute long   my_long;
   attribute float  my_float;
