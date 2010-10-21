@@ -21,6 +21,7 @@ module CoherentUpdate_Test
     uses CoherentUpdateRestarter updater_restart;
 
     attribute unsigned short nr_runs;
+    attribute unsigned short iterations;
   };
 };
 
