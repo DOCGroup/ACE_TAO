@@ -36,7 +36,7 @@ public:
   virtual int visit_operation (be_operation *node);
   virtual int visit_attribute (be_attribute *node);
   virtual int visit_provides (be_provides *node);
-  
+
 private:
   be_decl *op_scope_;
   const char *comment_border_;
