@@ -26,7 +26,7 @@ TAO::be_visitor_enum_typecode::visit_enum (be_enum * node)
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << "// TAO_IDL - Generated from" << be_nl
      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 

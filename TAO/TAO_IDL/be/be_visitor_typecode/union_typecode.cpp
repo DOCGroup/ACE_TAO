@@ -58,9 +58,9 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   be_type * const discriminant_type =
     be_type::narrow_from_decl (node->disc_type ());

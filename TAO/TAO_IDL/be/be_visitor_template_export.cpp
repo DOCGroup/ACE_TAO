@@ -37,7 +37,7 @@ be_visitor_template_export::visit_root (be_root *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT";
 

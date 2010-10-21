@@ -53,8 +53,8 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
   TAO_OutStream *os = this->ctx_->stream ();
   const char *macro = this->ctx_->export_macro ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   be_module *module = 0;
 

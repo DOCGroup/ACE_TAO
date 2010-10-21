@@ -37,8 +37,8 @@ be_visitor_module_ch::visit_module (be_module *node)
   TAO_OutStream *os = this->ctx_->stream ();
   TAO_OutStream *aos = 0;
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "namespace " << node->local_name () << be_nl
       << "{" << be_idt;
@@ -47,8 +47,8 @@ be_visitor_module_ch::visit_module (be_module *node)
     {
       aos = tao_cg->anyop_header ();
 
-      *aos << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-           << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      *aos << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+           << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
       *aos << "namespace " << node->local_name () << be_nl
            << "{" << be_idt;

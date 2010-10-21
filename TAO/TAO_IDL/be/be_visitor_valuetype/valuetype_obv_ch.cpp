@@ -45,13 +45,13 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ ;
 
   // OBV_ class maps only to a typedef if we are optimizing accessors.
   if (node->opt_accessor ())
     {
-      *os << be_nl << be_nl << "typedef " << node->full_name () << " ";
+      *os << be_nl_2 << "typedef " << node->full_name () << " ";
 
       if (!node->is_nested ())
         {
@@ -62,7 +62,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
     }
   else
     {
-      *os << be_nl << be_nl << "// OBV_ class" << be_nl;
+      *os << be_nl_2 << "// OBV_ class" << be_nl;
       *os << "class " << be_global->stub_export_macro() << " ";;
 
       if (!node->is_nested())
@@ -147,10 +147,10 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       // to avoid ambiguity.
       if (node->n_supports () > 0)
         {
-          *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+          *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
               << "// " << __FILE__ << ":" << __LINE__ ;
 
-          *os << be_nl << be_nl << "virtual void _add_ref (void);" << be_nl;
+          *os << be_nl_2 << "virtual void _add_ref (void);" << be_nl;
           *os << "virtual void _remove_ref (void);";
         }
 
@@ -209,11 +209,11 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
           *os << "virtual ::CORBA::Boolean" << be_nl
               << "_tao_marshal__" << node->flat_name ()
-              << " (TAO_OutputCDR &, TAO_ChunkInfo &) const;" << be_nl << be_nl;
+              << " (TAO_OutputCDR &, TAO_ChunkInfo &) const;" << be_nl_2;
 
           *os << "virtual ::CORBA::Boolean" << be_nl
               << "_tao_unmarshal__" << node->flat_name ()
-              << " (TAO_InputCDR &, TAO_ChunkInfo &);" << be_nl << be_nl;
+              << " (TAO_InputCDR &, TAO_ChunkInfo &);" << be_nl_2;
 
           *os << "::CORBA::Boolean "
               << "_tao_marshal_state (TAO_OutputCDR &, TAO_ChunkInfo &) const;"

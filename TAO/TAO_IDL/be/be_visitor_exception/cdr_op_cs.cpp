@@ -45,7 +45,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   *os << be_global->core_versioning_begin () << be_nl;
@@ -53,7 +53,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
       << "const " << node->name () << " &_tao_aggregate" << be_uidt_nl
@@ -105,7 +105,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
           << "return (strm << _tao_aggregate._rep_id ());" << be_uidt_nl;
     }
 
-  *os << "}" << be_nl << be_nl;
+  *os << "}" << be_nl_2;
 
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);

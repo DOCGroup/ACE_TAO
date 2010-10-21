@@ -142,7 +142,7 @@ be_structure::gen_ostream_operator (TAO_OutStream *os,
     }
 
   *os << be_nl
-      << "     << \")\";" << be_nl << be_nl
+      << "     << \")\";" << be_nl_2
       << "return strm;" << be_uidt_nl
       << "}" << be_nl;
 }

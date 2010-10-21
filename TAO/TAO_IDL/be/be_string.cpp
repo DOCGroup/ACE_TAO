@@ -68,7 +68,7 @@ be_string::gen_member_ostream_operator (TAO_OutStream *os,
     }
   else
     {
-      *os << "\"[\";" << be_nl << be_nl
+      *os << "\"[\";" << be_nl_2
           << "for (size_t i = 0; i < " << "ACE_OS::strlen ("
           << instance_name
           << (accessor ? " ()" : ".in ()") << "); ++i)" << be_idt_nl

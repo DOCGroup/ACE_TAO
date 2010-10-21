@@ -146,13 +146,13 @@ be_visitor_root_ch::gen_fwd_decls (void)
   // forward declaration of the proxy broker for a possible collocated call.
   if (idl_global->non_local_iface_seen_)
     {
-      *o_ << be_nl << be_nl
+      *o_ << be_nl_2
           << "// TAO_IDL - Generated from " << be_nl
           << "// " << __FILE__ << ":" << __LINE__;
 
       *o_ << be_global->core_versioning_begin () << be_nl;
 
-      *o_ << be_nl << be_nl
+      *o_ << be_nl_2
           << "namespace TAO" << be_nl
           << "{" << be_idt_nl;
 
@@ -186,9 +186,9 @@ be_visitor_root_ch::gen_proxy_broker_factory_pointers (void)
   size_t index = 0;
   be_interface *i = 0;
 
-  *o_ << be_nl << be_nl
+  *o_ << be_nl_2
       << "// Proxy Broker Factory function pointer declarations."
-      << be_nl << be_nl
+      << be_nl_2
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
@@ -198,7 +198,7 @@ be_visitor_root_ch::gen_proxy_broker_factory_pointers (void)
 
       if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
         {
-          *o_ << be_nl << be_nl
+          *o_ << be_nl_2
               << "extern " << be_global->stub_export_macro () << be_nl
               << "TAO::Collocation_Proxy_Broker *" << be_nl
               << "(*" << i->flat_client_enclosing_scope ()
@@ -223,7 +223,7 @@ be_visitor_root_ch::gen_ref_counting_overrides (void)
   size_t index = 0;
   be_interface_fwd *ifwd = 0;
 
-  *o_ << be_nl << be_nl
+  *o_ << be_nl_2
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
@@ -231,12 +231,12 @@ be_visitor_root_ch::gen_ref_counting_overrides (void)
     {
       be_global->non_defined_interfaces.dequeue_head (ifwd);
 
-      *o_ << be_nl << be_nl;
+      *o_ << be_nl_2;
 
       if (ifwd->is_valuetype ())
         {
           *o_ << "// External declarations for undefined valuetype"
-              << be_nl << be_nl
+              << be_nl_2
               << "// " << ifwd->full_name () << be_nl;
 
           *o_ << be_global->stub_export_macro () << be_nl
@@ -269,7 +269,7 @@ be_visitor_root_ch::gen_static_corba_overrides (void)
   size_t index = 0;
   AST_Interface *i = 0;
 
-  *o_ << be_nl << be_nl
+  *o_ << be_nl_2
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__
       << be_nl;
@@ -280,7 +280,7 @@ be_visitor_root_ch::gen_static_corba_overrides (void)
       << "// Overrides of CORBA::release and CORBA::is_nil for"
       << be_nl
       << "// interfaces that inherit from both CORBA::Object" << be_nl
-      << "// and CORBA::AbstractBase." << be_nl << be_nl
+      << "// and CORBA::AbstractBase." << be_nl_2
       << "namespace CORBA" << be_nl
       << "{" << be_idt;
 

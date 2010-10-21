@@ -55,7 +55,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
   const char *opt_conn =
     (de_facto ? "Connector_" : "");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << lname << "_Servant::"
       << lname << "_Servant (" << be_idt << be_idt << be_idt_nl
       << global << sname << "::CCM_" << lname
@@ -107,7 +107,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
 
   os_ << be_uidt_nl << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << lname << "_Servant::~"
       << lname << "_Servant (void)" << be_nl
       << "{" << be_nl
@@ -115,7 +115,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
 
   if (this->node_->has_rw_attributes ())
     {
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "void" << be_nl
           << lname << "_Servant::set_attributes (" << be_idt_nl
           << "const ::Components::ConfigValues & descr)"
@@ -150,7 +150,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
           << "}";
     }
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "/// Supported operations and attributes.";
 
   this->op_scope_ = node;
@@ -178,7 +178,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
                         -1);
     }
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "/// All ports and component attributes.";
 
   /// Port operations that require scope traversal to get all the
@@ -244,7 +244,7 @@ be_visitor_servant_svs::visit_attribute (be_attribute *node)
     {
       return 0;
     }
-    
+
   this->ctx_->interface (this->node_);
   be_visitor_attribute v (this->ctx_);
 
@@ -281,7 +281,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
 
   if (!be_global->gen_lwccm ())
     {
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "::" << obj_name << "_ptr" << be_nl
           << node_->local_name () << "_Servant::provide_"
           << port_name << " (void)" << be_nl
@@ -293,7 +293,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
           << "}";
     }
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << node_->local_name () << "_Servant::setup_"
       << port_name << "_i (void)" << be_nl
@@ -309,7 +309,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
       << "MACRO_MADNESS_TYPEDEF;" << be_uidt_nl << be_nl
       << "MACRO_MADNESS_TYPEDEF * tmp = 0;" << be_nl
       << "ACE_CString obj_id (this->ins_name_);" << be_nl
-      << "obj_id += \"_" << port_name << "\";" << be_nl << be_nl
+      << "obj_id += \"_" << port_name << "\";" << be_nl_2
       << "ACE_NEW_THROW_EX (" << be_idt_nl
       << "tmp," << be_nl
       << "MACRO_MADNESS_TYPEDEF (" << be_idt_nl
@@ -320,7 +320,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
       << "this->context_," << be_nl
       << "this)," << be_uidt_nl
       << "::CORBA::NO_MEMORY ());" << be_uidt_nl << be_nl
-      << "::CIAO::Port_Activator_var pa = tmp;" << be_nl << be_nl
+      << "::CIAO::Port_Activator_var pa = tmp;" << be_nl_2
       << "::CIAO::Servant_Activator_var sa =" << be_idt_nl
       << "this->container_->ports_servant_activator ();"
       << be_uidt_nl << be_nl
@@ -356,7 +356,7 @@ be_visitor_servant_svs::visit_uses (be_uses *node)
   const char *obj_name = node->uses_type ()->full_name ();
   bool const is_multiple = node->is_multiple ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << (is_multiple ? "::Components::Cookie *" : "void")
       << be_nl
       << node_->local_name () << "_Servant::connect_"
@@ -373,7 +373,7 @@ be_visitor_servant_svs::visit_uses (be_uses *node)
       << " (c);" << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::" << obj_name << "_ptr" << be_nl
       << node_->local_name () << "_Servant::disconnect_"
       << port_name << " (";
@@ -395,7 +395,7 @@ be_visitor_servant_svs::visit_uses (be_uses *node)
       << ");" << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::";
 
   if (is_multiple)
@@ -427,7 +427,7 @@ be_visitor_servant_svs::visit_publishes (be_publishes *node)
   const char *obj_name = node->publishes_type ()->full_name ();
   const char *port_name = node->local_name ()->get_string ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::Components::Cookie *" << be_nl
       << node_->local_name () << "_Servant::subscribe_"
       << port_name << " (" << be_idt_nl
@@ -438,7 +438,7 @@ be_visitor_servant_svs::visit_publishes (be_publishes *node)
       << " (c);" << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::" << obj_name << "Consumer_ptr" << be_nl
       << node_->local_name () << "_Servant::unsubscribe_"
       << port_name << " (" << be_idt_nl
@@ -458,7 +458,7 @@ be_visitor_servant_svs::visit_emits (be_emits *node)
   const char *obj_name = node->emits_type ()->full_name ();
   const char *port_name = node->local_name ()->get_string ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << node_->local_name () << "_Servant::connect_"
       << port_name << " (" << be_idt_nl
@@ -468,7 +468,7 @@ be_visitor_servant_svs::visit_emits (be_emits *node)
       << " (c);" << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::" << obj_name << "Consumer_ptr" << be_nl
       << node_->local_name () << "_Servant::disconnect_"
       << port_name << " (void)" << be_nl
@@ -495,7 +495,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
   const char *lname = obj->local_name ()->get_string ();
   const char *fname = obj->full_name ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << comp_lname << "_Servant::" << lname << "Consumer_"
       << port_name << "_Servant::" << lname << "Consumer_"
       << port_name << "_Servant (" << be_idt << be_idt_nl
@@ -511,14 +511,14 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << "{" << be_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << comp_lname << "_Servant::" << lname << "Consumer_"
       << port_name << "_Servant::~" << lname << "Consumer_"
       << port_name << "_Servant (void)" << be_nl
       << "{" << be_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::CORBA::Object_ptr" << be_nl
       << comp_lname << "_Servant::" << lname << "Consumer_"
       << port_name << "_Servant::_get_component (void)" << be_nl
@@ -535,7 +535,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
 
   os_ << be_uidt_nl << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << comp_lname << "_Servant::" << lname << "Consumer_"
       << port_name << "_Servant::push_" << lname
@@ -546,7 +546,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << " (evt);" << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "/// Inherited from ::Components::EventConsumerBase."
       << be_nl
       << "void" << be_nl
@@ -565,7 +565,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << "throw ::Components::BadEventType ();" << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::" << fname << "Consumer_ptr" << be_nl
       << node_->local_name () << "_Servant::get_consumer_"
       << port_name << " (void)" << be_nl
@@ -576,7 +576,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << node_->local_name () << "_Servant::setup_consumer_"
       << port_name << "_i (void)" << be_nl
@@ -593,7 +593,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << "MACRO_MADNESS_TYPEDEF;" << be_uidt_nl << be_nl
       << "MACRO_MADNESS_TYPEDEF * tmp = 0;" << be_nl
       << "ACE_CString obj_id (this->ins_name_);" << be_nl
-      << "obj_id += \"_" << port_name << "\";" << be_nl << be_nl
+      << "obj_id += \"_" << port_name << "\";" << be_nl_2
       << "ACE_NEW_THROW_EX (" << be_idt_nl
       << "tmp," << be_nl
       << "MACRO_MADNESS_TYPEDEF (" << be_idt_nl
@@ -604,7 +604,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << "this->context_," << be_nl
       << "this)," << be_uidt_nl
       << "::CORBA::NO_MEMORY ());" << be_uidt_nl << be_nl
-      << "::CIAO::Port_Activator_var pa = tmp;" << be_nl << be_nl
+      << "::CIAO::Port_Activator_var pa = tmp;" << be_nl_2
       << "::CIAO::Servant_Activator_var sa =" << be_idt_nl
       << "this->container_->ports_servant_activator ();"
       << be_uidt_nl << be_nl
@@ -644,7 +644,7 @@ be_visitor_servant_svs::gen_provides_top (void)
       return;
     }
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "/// CIAO-specific." << be_nl
       << "::CORBA::Object_ptr" << be_nl
       << node_->local_name ()
@@ -669,7 +669,7 @@ be_visitor_servant_svs::gen_provides_top (void)
       return;
     }
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "throw ::Components::InvalidName ();" << be_uidt_nl
       << "}";
 }
@@ -681,7 +681,7 @@ be_visitor_servant_svs::gen_publishes_top (void)
 
   if (npubs > 0UL)
     {
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "::Components::Cookie *" << be_nl
           << node_->local_name () << "_Servant::subscribe ("
           << be_idt_nl
@@ -707,11 +707,11 @@ be_visitor_servant_svs::gen_publishes_top (void)
           return;
         }
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "throw ::Components::InvalidName ();" << be_uidt_nl
           << "}";
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "::Components::EventConsumerBase_ptr" << be_nl
           << node_->local_name () << "_Servant::unsubscribe ("
           << be_idt_nl
@@ -736,14 +736,14 @@ be_visitor_servant_svs::gen_publishes_top (void)
           return;
         }
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "throw ::Components::InvalidName ();" << be_uidt_nl
           << "}";
     }
 
   if (!be_global->gen_lwccm () && !be_global->gen_noeventccm ())
     {
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "::Components::PublisherDescriptions *" << be_nl
           << node_->local_name ()
           << "_Servant::get_all_publishers (void)" << be_nl
@@ -753,7 +753,7 @@ be_visitor_servant_svs::gen_publishes_top (void)
           << "ACE_NEW_RETURN (retval," << be_nl
           << "                ::Components::PublisherDescriptions,"
           << be_nl
-          << "                0);" << be_nl << be_nl
+          << "                0);" << be_nl_2
           << "::Components::PublisherDescriptions_var "
           << "safe_retval = retval;" << be_nl
           << "safe_retval->length (" << this->node_->n_publishes ()
@@ -775,7 +775,7 @@ be_visitor_servant_svs::gen_publishes_top (void)
             }
         }
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "return safe_retval._retn ();" << be_uidt_nl
           << "}";
     }
@@ -788,7 +788,7 @@ be_visitor_servant_svs::gen_uses_top (void)
 
   if (nuses > 0UL)
     {
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "::Components::Cookie *" << be_nl
           << node_->local_name () << "_Servant::connect ("
           << be_idt_nl
@@ -813,11 +813,11 @@ be_visitor_servant_svs::gen_uses_top (void)
           return;
         }
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "throw ::Components::InvalidName ();" << be_uidt_nl
           << "}";
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "::CORBA::Object_ptr" << be_nl
           << node_->local_name () << "_Servant::disconnect ("
           << be_idt_nl
@@ -843,14 +843,14 @@ be_visitor_servant_svs::gen_uses_top (void)
           return;
         }
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "throw ::Components::InvalidName ();" << be_uidt_nl
           << "}";
     } // nuses > 0UL
 
   if (!be_global->gen_lwccm ())
     {
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "::Components::ReceptacleDescriptions *" << be_nl
           << node_->local_name ()
           << "_Servant::get_all_receptacles (void)" << be_nl
@@ -882,7 +882,7 @@ be_visitor_servant_svs::gen_uses_top (void)
             }
         }
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "return safe_retval._retn ();" << be_uidt_nl
           << "}";
     }
@@ -904,7 +904,7 @@ be_visitor_servant_svs::gen_emits_top (void)
       return;
     }
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << node_->local_name () << "_Servant::connect_consumer ("
       << be_idt_nl
@@ -930,11 +930,11 @@ be_visitor_servant_svs::gen_emits_top (void)
       return;
     }
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "throw ::Components::InvalidName ();" << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::Components::EventConsumerBase_ptr" << be_nl
       << node_->local_name ()
       << "_Servant::disconnect_consumer (" << be_idt_nl
@@ -958,7 +958,7 @@ be_visitor_servant_svs::gen_emits_top (void)
       return;
     }
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "throw ::Components::InvalidName ();" << be_uidt_nl
       << "}";
 }
@@ -971,7 +971,7 @@ be_visitor_servant_svs::gen_get_all_emitters (void)
       return;
     }
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::Components::EmitterDescriptions *" << be_nl
       << node_->local_name ()
       << "_Servant::get_all_emitters (void)" << be_nl
@@ -981,7 +981,7 @@ be_visitor_servant_svs::gen_get_all_emitters (void)
       << "ACE_NEW_RETURN (retval," << be_nl
       << "                ::Components::EmitterDescriptions,"
       << be_nl
-      << "                0);" << be_nl << be_nl
+      << "                0);" << be_nl_2
       << "::Components::EmitterDescriptions_var "
       << "safe_retval = retval;" << be_nl
       << "safe_retval->length (" << this->node_->n_emits ()
@@ -999,7 +999,7 @@ be_visitor_servant_svs::gen_get_all_emitters (void)
       return;
     }
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "return safe_retval._retn ();" << be_uidt_nl
       << "}";
 }
@@ -1103,7 +1103,7 @@ be_visitor_facet_executor_block::visit_provides (
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "if (ACE_OS::strcmp (name, \"" << port_name
       << "\") == 0)" << be_idt_nl
       << "{" << be_idt_nl
@@ -1136,7 +1136,7 @@ be_visitor_connect_block::visit_uses (be_uses *node)
   const char *obj_name = node->uses_type ()->full_name ();
   bool const is_multiple = node->is_multiple ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "if (ACE_OS::strcmp (name, \"" << port_name
       << "\") == 0)" << be_idt_nl
       << "{" << be_idt_nl
@@ -1198,7 +1198,7 @@ be_visitor_disconnect_block::visit_uses (be_uses *node)
 
   bool const is_multiple = node->is_multiple ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "if (ACE_OS::strcmp (name, \"" << port_name
       << "\") == 0)" << be_idt_nl
       << "{" << be_idt_nl
@@ -1251,7 +1251,7 @@ be_visitor_receptacle_desc::visit_uses (be_uses *node)
   AST_Type *obj = node->uses_type ();
   bool const is_multiple = node->is_multiple ();
 
-  os_ << be_nl << be_nl;
+  os_ << be_nl_2;
 
   bool gen_guard = is_multiple;
 
@@ -1262,7 +1262,7 @@ be_visitor_receptacle_desc::visit_uses (be_uses *node)
           << "                  mon," << be_nl
           << "                  this->context_->"
           << port_name << "_lock_," << be_nl
-          << "                  0);" << be_nl << be_nl;
+          << "                  0);" << be_nl_2;
     }
 
   os_ << "::CIAO::Servant::describe_"
@@ -1307,7 +1307,7 @@ be_visitor_subscribe_block::visit_publishes (
   const char *port_name =
     node->local_name ()->get_string ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "if (ACE_OS::strcmp (publisher_name, \""
       << port_name << "\") == 0)" << be_idt_nl
       << "{" << be_idt_nl
@@ -1341,7 +1341,7 @@ be_visitor_unsubscribe_block::visit_publishes (
   const char *port_name =
     node->local_name ()->get_string ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "if (ACE_OS::strcmp (publisher_name, \""
       << port_name << "\") == 0)" << be_idt_nl
       << "{" << be_idt_nl
@@ -1374,14 +1374,14 @@ be_visitor_event_source_desc::visit_publishes (
   const char *port_name =
     node->local_name ()->get_string ();
 
-  os_ << be_nl << be_nl;
+  os_ << be_nl_2;
 
   os_ << "{" << be_idt_nl
       << "ACE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
       << "                  mon," << be_nl
       << "                  this->context_->"
       << port_name << "_lock_," << be_nl
-      << "                  0);" << be_nl << be_nl;
+      << "                  0);" << be_nl_2;
 
   os_ << "::CIAO::Servant::describe_pub_event_source<"
       << be_idt_nl
@@ -1421,7 +1421,7 @@ be_visitor_connect_consumer_block::visit_emits (
   const char *port_name =
     node->local_name ()->get_string ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "if (ACE_OS::strcmp (emitter_name, \""
       << port_name << "\") == 0)" << be_idt_nl
       << "{" << be_idt_nl
@@ -1435,7 +1435,7 @@ be_visitor_connect_consumer_block::visit_emits (
       << "throw ::Components::InvalidConnection ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "this->connect_" << port_name
-      << " (_ciao_consumer.in ());" << be_nl << be_nl
+      << " (_ciao_consumer.in ());" << be_nl_2
       << "return;" << be_uidt_nl
       << "}" << be_uidt;
 
@@ -1462,7 +1462,7 @@ be_visitor_disconnect_consumer_block::visit_emits (
   const char *port_name =
     node->local_name ()->get_string ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "if (ACE_OS::strcmp (source_name, \""
       << port_name << "\") == 0)" << be_idt_nl
       << "{" << be_idt_nl
@@ -1494,7 +1494,7 @@ be_visitor_emitter_desc::visit_emits (be_emits *node)
   const char *port_name =
     node->local_name ()->get_string ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::CIAO::Servant::describe_emit_event_source<"
       << be_idt_nl
       << "::" << obj->full_name () << "Consumer_var> ("

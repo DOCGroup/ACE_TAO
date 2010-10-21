@@ -28,11 +28,11 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_interface (be_interface *node)
 {
   this->iface_ = node;
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "local interface AMI4CCM_"
       << node->original_local_name () << be_nl
       << "{" << be_idt;

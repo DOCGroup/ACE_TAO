@@ -148,7 +148,7 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
       << "{" << be_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << iface_name << suffix << "::~"
       << iface_name << suffix << " (void)" << be_nl
       << "{" << be_nl
@@ -215,13 +215,13 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
     ScopeAsDecl (this->iface_->defined_in ())->full_name ();
   const char *iface_name = this->iface_->local_name ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << iface_name << suffix << "::"
       << iface_name << suffix << " (void)" << be_nl
       << "{" << be_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << iface_name << suffix << "::~"
       << iface_name << suffix << " (void)" << be_nl
       << "{" << be_nl
@@ -241,7 +241,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
 
   const char *container_type = be_global->ciao_container_type ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << iface_name << "_exec_i::set_"
       << tao_cg->downcase (container_type)
@@ -267,7 +267,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
    (s->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (is_global ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::CORBA::Object_ptr" << be_nl
       << iface_name << "_exec_i::_get_component (void)" << be_nl
       << "{" << be_idt_nl
@@ -279,7 +279,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
       << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << iface_name << "_exec_i::_set_component (" << be_idt_nl
       << "::" << s->name () << smart_scope
@@ -299,7 +299,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
 int
 be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
 {
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << this->iface_->local_name () << "_reply_handler::"
       << node->local_name ();
@@ -384,7 +384,7 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
 int
 be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
 {
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << this->iface_->local_name () << "_exec_i::"
       << node->local_name ();
@@ -423,7 +423,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
       << "{" << be_idt_nl
       << "::" << scope->full_name () << smart_scope << "AMI_"
       << orig_iface_name << "Handler_var the_handler_var;"
-      << be_nl << be_nl;
+      << be_nl_2;
 
   os_ << "if (! ::CORBA::is_nil (ami_handler))" << be_idt_nl
       << "{" << be_idt_nl

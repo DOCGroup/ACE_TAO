@@ -47,15 +47,15 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   AST_Component *c = AST_Component::narrow_from_decl (node);
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   if (node->is_defined ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "// Traits specializations for " << node->name () << ".";
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << node->name () << "_ptr" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::duplicate ("
           << be_idt << be_idt_nl
@@ -64,7 +64,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "return " << node->name () << "::_duplicate (p);" << be_uidt_nl
           << "}";
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "void" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::release ("
           << be_idt << be_idt_nl
@@ -73,7 +73,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "::CORBA::release (p);" << be_uidt_nl
           << "}";
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << node->name () << "_ptr" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::nil (void)"
           << be_nl
@@ -81,7 +81,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "return " << node->name () << "::_nil ();" << be_uidt_nl
           << "}";
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "::CORBA::Boolean" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
           << be_idt << be_idt_nl
@@ -105,7 +105,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (c == 0 && be_global->gen_ostream_operators ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "std::ostream &" << be_nl
           << node->name () << "::_tao_stream_v (std::ostream &strm) const"
           << be_nl
@@ -117,7 +117,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (node->has_mixed_parentage ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "void" << be_nl
           << "CORBA::release ("
           << node->name ()
@@ -127,7 +127,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "::CORBA::release (abs);" << be_uidt_nl
           << "}";
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "::CORBA::Boolean" << be_nl
           << "CORBA::is_nil ("
           << node->name ()
@@ -142,7 +142,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ()))
     {
       // Generate the proxy broker factory function pointer definition.
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "// Function pointer for collocation factory initialization."
           << be_nl
           << "TAO::Collocation_Proxy_Broker * " << be_nl
@@ -166,7 +166,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (node->is_local ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << node->name () << "::" << node->local_name ()
           << " (void)" << be_nl
           << "{}";
@@ -174,7 +174,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (! node->is_abstract () && ! node->is_local ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << node->name () << "::" << node->local_name ()
           << " (void)" << be_nl;
 
@@ -197,7 +197,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
      (be_global->gen_direct_collocation()
       || be_global->gen_thru_poa_collocation ()))
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "void" << be_nl
           << node->name () << "::" << node->flat_name ()
           << "_setup_collocation ()" << be_nl
@@ -248,10 +248,10 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_uidt_nl << "}";
     }
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << node->name () << "::~" << node->local_name ()
       << " (void)" << be_nl;
-  *os << "{}" << be_nl << be_nl;
+  *os << "{}" << be_nl_2;
 
   bool gen_any_destructor =
     be_global->any_support ()
@@ -268,7 +268,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "static_cast<"
           << node->local_name () << " *> (_tao_void_pointer);" << be_uidt_nl
           << "::CORBA::release (_tao_tmp_pointer);" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
     }
 
   if (node->has_mixed_parentage ())
@@ -278,7 +278,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "{" << be_idt_nl
           << "this->::CORBA::Object::_add_ref ();"
           << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
     }
 
   // The _narrow method
@@ -308,7 +308,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << be_nl
       << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // The _duplicate method
   *os << node->full_name () << "_ptr" << be_nl
@@ -321,7 +321,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "obj->_add_ref ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "return obj;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // The _tao_release method
   if (c == 0)
@@ -332,7 +332,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "_ptr obj)" << be_nl
           << "{" << be_idt_nl
           << "::CORBA::release (obj);" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
     }
 
   *os << "::CORBA::Boolean" << be_nl
@@ -369,7 +369,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
 
   *os << "}" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   *os << "const char* " << node->full_name ()
       << "::_interface_repository_id (void) const"
@@ -381,7 +381,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   bool is_loc = node->is_local ();
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "::CORBA::Boolean" << be_nl
       << node->name () << "::marshal (TAO_OutputCDR &"
       << (is_loc ? " /* " : "") << "cdr"
@@ -465,7 +465,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
           << "_ptr> (_tao_objref)"
           << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
 
       return true;
     }
@@ -473,7 +473,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
            !node->is_abstract ())
     {
       *os << node->full_name () << " *proxy = 0;"
-      << be_nl << be_nl
+      << be_nl_2
           << "proxy = TAO::Narrow_Utils<"
           << node->local_name () << ">::" << pre << " (";
 
@@ -496,7 +496,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
           << "return TAO_" << node->flat_name ()
           << "_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (proxy);"
           << be_uidt << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
     }
   else
     {
@@ -529,7 +529,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
           *os << "0" << be_uidt_nl;
         }
       *os << ");" << be_uidt << be_uidt << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
     }
 
   return true;

@@ -229,7 +229,7 @@ be_visitor_component_scope::node (be_component *c)
 void
 be_visitor_component_scope::gen_svnt_entrypoint_decl (void)
 {
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::PortableServer::Servant" << be_nl
       << "create_" << node_->flat_name ()
@@ -250,7 +250,7 @@ be_visitor_component_scope::gen_svnt_entrypoint_defn (void)
   const char *lname = node_->local_name ();
   const char *global = (sname_str == "" ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::PortableServer::Servant" << be_nl
       << "create_" << node_->flat_name ()
@@ -276,7 +276,7 @@ be_visitor_component_scope::gen_svnt_entrypoint_defn (void)
       << "                ins_name," << be_nl
       << "                0," << be_nl
       << "                c)," << be_uidt_nl
-      << "                0);" << be_nl << be_nl
+      << "                0);" << be_nl_2
       << "return retval;" << be_uidt_nl
       << "}";
 }
@@ -284,7 +284,7 @@ be_visitor_component_scope::gen_svnt_entrypoint_defn (void)
 void
 be_visitor_component_scope::gen_exec_entrypoint_decl (void)
 {
-  os_ << be_uidt_nl << be_idt_nl
+  os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::EnterpriseComponent_ptr" << be_nl
       << "create_" << node_->flat_name ()
@@ -294,7 +294,7 @@ be_visitor_component_scope::gen_exec_entrypoint_decl (void)
 void
 be_visitor_component_scope::gen_exec_entrypoint_defn (void)
 {
-  os_ << be_uidt_nl << be_idt_nl
+  os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::EnterpriseComponent_ptr" << be_nl
       << "create_" << node_->flat_name ()
@@ -303,12 +303,11 @@ be_visitor_component_scope::gen_exec_entrypoint_defn (void)
       << "::Components::EnterpriseComponent_ptr retval ="
       << be_idt_nl
       << "::Components::EnterpriseComponent::_nil ();"
-      << be_uidt_nl << be_uidt << be_idt
+      << be_uidt << be_nl_2
       << "ACE_NEW_NORETURN (" << be_idt_nl
       << "retval," << be_nl
       << node_->local_name () << "_exec_i);"
-      << be_uidt_nl << be_uidt << be_idt
+      << be_uidt << be_nl_2
       << "return retval;" << be_uidt_nl
       << "}";
 }
-

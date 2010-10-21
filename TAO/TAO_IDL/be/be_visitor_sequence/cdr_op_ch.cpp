@@ -57,7 +57,7 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
   be_type *bt = be_type::narrow_from_decl (node);
   be_typedef *tdef = be_typedef::narrow_from_decl (bt);
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // If we're an anonymous sequence, we must protect against
@@ -73,7 +73,7 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
 
   *os << be_global->core_versioning_begin ();
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
@@ -109,7 +109,7 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
 
   if (be_global->gen_ostream_operators ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << be_global->stub_export_macro () << " std::ostream&"
           << " operator<< (" << be_idt_nl
           << "std::ostream &strm," << be_nl

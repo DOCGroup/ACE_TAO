@@ -167,8 +167,8 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -189,7 +189,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
                         -1);
     }
 
-  *os << "}" << be_nl << be_nl;
+  *os << "}" << be_nl_2;
 
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
   *os << "::CORBA::Boolean operator>> (" << be_idt << be_idt_nl
@@ -874,7 +874,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
       *os << be_uidt_nl << "}" << be_uidt;
     }
 
-  *os << be_nl << be_nl << "return _tao_marshal_flag;" << be_uidt_nl;
+  *os << be_nl_2 << "return _tao_marshal_flag;" << be_uidt_nl;
 
   return 0;
 }

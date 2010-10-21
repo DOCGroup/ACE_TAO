@@ -41,8 +41,8 @@ be_visitor_obv_module::visit_module (be_module *node)
 
       if (this->ctx_->state () == TAO_CodeGen::TAO_MODULE_OBV_CH)
         {
-          *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-              << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+          *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+              << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
           *os << "namespace ";
 

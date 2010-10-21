@@ -43,7 +43,7 @@ be_visitor_context_svh::visit_component (be_component *node)
 
   os_ << be_nl
       << "class " << lname << "_Servant;"
-      << be_nl << be_nl;
+      << be_nl_2;
 
   os_ << "class " << export_macro_.c_str () << " " << lname
       << "_Context" << be_idt_nl
@@ -58,7 +58,7 @@ be_visitor_context_svh::visit_component (be_component *node)
 
   os_ << "// Allow the servant to access our state." << be_nl
       << "friend class " << lname << "_Servant;"
-      << be_nl << be_nl;
+      << be_nl_2;
 
   os_ << "// Some useful typedefs." << be_nl
       << "typedef" << be_nl
@@ -89,7 +89,7 @@ be_visitor_context_svh::visit_component (be_component *node)
 
   os_ << "typedef ::CIAO::"
       << (de_facto ? "Connector_" : "")
-      << "Servant_Impl_Base svnt_base_type;" << be_nl << be_nl;
+      << "Servant_Impl_Base svnt_base_type;" << be_nl_2;
 
   os_ << lname << "_Context (" << be_idt_nl
       << "::Components::CCMHome_ptr h," << be_nl
@@ -100,7 +100,7 @@ be_visitor_context_svh::visit_component (be_component *node)
 
   os_ << "virtual ~" << lname << "_Context (void);";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "// Operations for " << lname
       << " receptacles and event sources,"
       << be_nl
@@ -162,7 +162,7 @@ be_visitor_context_svh::visit_uses (be_uses *node)
       << be_nl
       << "connect_" << port_name << " ("
       << "::" << obj_name << "_ptr);"
-      << be_nl << be_nl;
+      << be_nl_2;
 
   os_ << "virtual ::" << obj_name << "_ptr" << be_nl
       << "disconnect_" << port_name << " (";
@@ -235,7 +235,7 @@ be_visitor_context_svh::visit_publishes (be_publishes *node)
       << tao_cg->upcase (port_name) << "_TABLE ciao_publishes_"
       << port_name << "_;" << be_nl
       << "TAO_SYNCH_MUTEX " << port_name << "_lock_;"
-      << be_nl << be_nl;
+      << be_nl_2;
 
   return 0;
 }
@@ -260,7 +260,7 @@ be_visitor_context_svh::visit_emits (be_emits *node)
       << "connect_" << port_name << " (" << be_idt_nl
       << "::" << obj_name << "Consumer_ptr c);" << be_uidt;
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "virtual ::" << obj_name << "Consumer_ptr" << be_nl
       << "disconnect_" << port_name << " (void);";
 

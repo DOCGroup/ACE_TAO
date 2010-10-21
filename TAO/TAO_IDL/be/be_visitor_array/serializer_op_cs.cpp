@@ -165,8 +165,8 @@ be_visitor_array_serializer_op_cs::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   //  Set the sub state as generating code for the size method
   this->ctx_->sub_state (TAO_CodeGen::TAO_MAX_MARSHALED_SIZE);
@@ -184,7 +184,7 @@ be_visitor_array_serializer_op_cs::visit_array (be_array *node)
                         -1);
     }
 
-  *os << "}" << be_nl << be_nl;
+  *os << "}" << be_nl_2;
 
   //  Set the sub state as generating code for the size method
   this->ctx_->sub_state (TAO_CodeGen::TAO_IS_BOUNDED_SIZE);
@@ -202,7 +202,7 @@ be_visitor_array_serializer_op_cs::visit_array (be_array *node)
                         -1);
     }
 
-  *os << "}" << be_nl << be_nl;
+  *os << "}" << be_nl_2;
 
   //  Set the sub state as generating code for the size method
   this->ctx_->sub_state (TAO_CodeGen::TAO_FIND_SIZE);
@@ -220,7 +220,7 @@ be_visitor_array_serializer_op_cs::visit_array (be_array *node)
                         -1);
     }
 
-  *os << "}" << be_nl << be_nl;
+  *os << "}" << be_nl_2;
 
 
   //  Set the sub state as generating code for the output operator.
@@ -240,7 +240,7 @@ be_visitor_array_serializer_op_cs::visit_array (be_array *node)
                         -1);
     }
 
-  *os << "}" << be_nl << be_nl;
+  *os << "}" << be_nl_2;
 
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
   *os << "::CORBA::Boolean operator>> (" << be_idt << be_idt_nl
@@ -1209,11 +1209,11 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
 
     if (TAO_CodeGen::TAO_FIND_SIZE == this->ctx_->sub_state ())
       {
-      *os << be_nl << be_nl << "return the_length;" << be_uidt_nl;
+      *os << be_nl_2 << "return the_length;" << be_uidt_nl;
       }
     else
       {
-        *os << be_nl << be_nl << "return _tao_marshal_flag;" << be_uidt_nl;
+        *os << be_nl_2 << "return _tao_marshal_flag;" << be_uidt_nl;
       }
 
     } // end INPUT/OUTPUT_CDR case

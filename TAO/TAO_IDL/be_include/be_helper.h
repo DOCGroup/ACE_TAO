@@ -31,6 +31,11 @@ struct TAO_NL
   TAO_NL (void);
 };
 
+struct TAO_NL_2
+{
+  TAO_NL_2 (void);
+};
+
 struct TAO_INDENT
 {
   // = TITLE
@@ -60,6 +65,7 @@ struct TAO_UNINDENT
 };
 
 extern const TAO_NL be_nl;
+extern const TAO_NL_2 be_nl_2;
 extern const TAO_INDENT be_idt;
 extern const TAO_INDENT be_idt_nl;
 extern const TAO_UNINDENT be_uidt;
@@ -176,6 +182,7 @@ public:
   // = MANIPULATORS
 
   TAO_OutStream &operator<< (const TAO_NL& nl);
+  TAO_OutStream &operator<< (const TAO_NL_2& nl_twice);
   TAO_OutStream &operator<< (const TAO_INDENT& i);
   TAO_OutStream &operator<< (const TAO_UNINDENT& i);
 

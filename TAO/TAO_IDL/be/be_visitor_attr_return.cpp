@@ -66,7 +66,7 @@ be_visitor_attr_return::visit_eventtype (be_eventtype *)
 {
   os_ << be_nl
       << "this->" << this->attr_name_string_.c_str ()
-      << "->_add_ref ();" << be_nl << be_nl
+      << "->_add_ref ();" << be_nl_2
       << "return" << be_idt_nl
       << "this->" << this->attr_name_string_.c_str ()
       << ".in ();" << be_uidt;
@@ -177,7 +177,7 @@ int
 be_visitor_attr_return::visit_structure (be_structure *node)
 {
   os_ << be_nl;
-  
+
   if (node->size_type () == AST_Type::FIXED)
     {
       os_ << "::" << node->full_name () << " retval ="
@@ -225,7 +225,7 @@ int
 be_visitor_attr_return::visit_union (be_union *node)
 {
   os_ << be_nl;
-  
+
   if (node->size_type () == AST_Type::FIXED)
     {
       os_ << "::" << node->full_name () << " retval ="
@@ -255,7 +255,7 @@ be_visitor_attr_return::visit_valuebox (be_valuebox *)
 {
   os_ << be_nl
       << this->attr_name_string_.c_str () << "->_add_ref ();"
-      << be_nl << be_nl
+      << be_nl_2
       << "return" << be_idt_nl
       << this->attr_name_string_.c_str ()
       << ".in ();" << be_uidt;
@@ -268,7 +268,7 @@ be_visitor_attr_return::visit_valuetype (be_valuetype *)
 {
   os_ << be_nl
       << this->attr_name_string_.c_str () << "->_add_ref ();"
-      << be_nl << be_nl
+      << be_nl_2
       << "return" << be_idt_nl
       << this->attr_name_string_.c_str ()
       << ".in ();" << be_uidt;

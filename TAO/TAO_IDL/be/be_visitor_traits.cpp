@@ -55,7 +55,7 @@ be_visitor_traits::visit_root (be_root *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
@@ -115,7 +115,7 @@ be_visitor_traits::visit_interface (be_interface *node)
     {
       os->gen_ifdef_macro (node->flat_name (), "traits", false);
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "template<>" << be_nl
           << "struct " << be_global->stub_export_macro () << " Objref_Traits<"
           << " ::" << node->name () << ">" << be_nl
@@ -187,7 +187,7 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
     {
       os->gen_ifdef_macro (node->flat_name (), "traits", false);
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "template<>" << be_nl
           << "struct " << be_global->stub_export_macro () << " Value_Traits<"
           << node->name () << ">" << be_nl
@@ -259,7 +259,7 @@ be_visitor_traits::visit_valuebox (be_valuebox *node)
     {
       os->gen_ifdef_macro (node->flat_name (), "traits", false);
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "template<>" << be_nl
           << "struct " << be_global->stub_export_macro () << " Value_Traits<"
           << node->name () << ">" << be_nl

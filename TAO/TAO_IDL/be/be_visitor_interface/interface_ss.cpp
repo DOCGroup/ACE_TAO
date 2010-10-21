@@ -91,12 +91,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   *os << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   // Find if we are at the top scope or inside some module,
   // pre-compute the prefix that must be added to the local name in
@@ -123,7 +123,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "{" << be_idt_nl
       << "this->optable_ = &tao_" << flat_name
       << "_optable;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // find if we are at the top scope or inside some module
   *os << full_skel_name << "::"
@@ -146,7 +146,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << be_uidt_nl
       << "{" << be_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   *os << full_skel_name << "::~"
       << local_name_prefix << node_local_name
@@ -164,12 +164,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   *os << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   // Generate code for the _is_a skeleton.
   {
@@ -210,7 +210,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                                   full_skel_name,
                                   is_a_upcall_command_name.c_str ());
 
-    *os << be_nl << be_nl
+    *os << be_nl_2
         << "void " << full_skel_name
         << "::_is_a_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest & server_request, " << be_nl
@@ -235,7 +235,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     op_visitor.gen_skel_body_arglist (&is_a,
                                       os);
 
-    *os << be_nl << be_nl
+    *os << be_nl_2
         << "TAO::Argument * const args[] =" << be_idt_nl
         << "{" << be_idt_nl
         << "&retval," << be_nl
@@ -243,7 +243,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << be_uidt_nl
         << "};" << be_uidt_nl << be_nl;
 
-    *os << "static size_t const nargs = 2;" << be_nl << be_nl;
+    *os << "static size_t const nargs = 2;" << be_nl_2;
 
     // Get the right object implementation.
     *os << full_skel_name << " * const impl =" << be_idt_nl
@@ -287,7 +287,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     this->generate_send_reply (os);
 
     *os << be_uidt_nl
-        << "}" << be_nl << be_nl;
+        << "}" << be_nl_2;
 
     is_a.destroy ();
     rt.destroy ();
@@ -320,7 +320,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                                   full_skel_name,
                                   non_exist_upcall_command_name.c_str ());
 
-    *os << be_nl << be_nl
+    *os << be_nl_2
         << "void " << full_skel_name
         << "::_non_existent_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest & server_request, " << be_nl
@@ -345,14 +345,14 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     op_visitor.gen_skel_body_arglist (&non_existent,
                                       os);
 
-    *os << be_nl << be_nl
+    *os << be_nl_2
         << "TAO::Argument * const args[] =" << be_idt_nl
         << "{" << be_idt_nl
         << "&retval"
         << be_uidt_nl
         << "};" << be_uidt_nl << be_nl;
 
-    *os << "static size_t const nargs = 1;" << be_nl << be_nl;
+    *os << "static size_t const nargs = 1;" << be_nl_2;
 
     // Get the right object implementation.
     *os << full_skel_name << " * const impl =" << be_idt_nl
@@ -434,7 +434,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                                   full_skel_name,
                                   repository_id_upcall_command_name.c_str ());
 
-    *os << be_nl << be_nl
+    *os << be_nl_2
         << "void " << full_skel_name
         << "::_repository_id_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest & server_request, " << be_nl
@@ -459,14 +459,14 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     op_visitor.gen_skel_body_arglist (&repository_id,
                                       os);
 
-    *os << be_nl << be_nl
+    *os << be_nl_2
         << "TAO::Argument * const args[] =" << be_idt_nl
         << "{" << be_idt_nl
         << "&retval"
         << be_uidt_nl
         << "};" << be_uidt_nl << be_nl;
 
-    *os << "static size_t const nargs = 1;" << be_nl << be_nl;
+    *os << "static size_t const nargs = 1;" << be_nl_2;
 
     // Get the right object implementation.
     *os << full_skel_name << " * const impl =" << be_idt_nl
@@ -519,12 +519,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   if (!be_global->gen_corba_e ()
       && !be_global->gen_minimum_corba ())
   {
-    *os << be_nl << be_nl;
+    *os << be_nl_2;
 
     *os << "// TAO_IDL - Generated from " << be_nl
         << "// " << __FILE__ << ":" << __LINE__;
 
-    *os << be_nl << be_nl
+    *os << be_nl_2
         << "void " << full_skel_name
         << "::_interface_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest & server_request, " << be_nl
@@ -553,12 +553,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << be_nl
         << "server_request.init_reply ();" << be_nl
         << "TAO_OutputCDR &_tao_out = *server_request.outgoing ();"
-        << be_nl << be_nl
+        << be_nl_2
         << "::CORBA::Boolean const _tao_result =" << be_idt_nl
         << "_tao_adapter->interfacedef_cdr_insert (_tao_out, _tao_retval);"
         << be_uidt_nl << be_nl
         << "_tao_adapter->dispose (_tao_retval);"
-        << be_nl << be_nl;
+        << be_nl_2;
 
     *os << "if (!_tao_result)" << be_idt_nl
         << "{" << be_idt_nl
@@ -568,7 +568,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     this->generate_send_reply (os);
 
     *os << be_uidt_nl
-        << "}" << be_nl << be_nl;
+        << "}" << be_nl_2;
   }
 
   // Generate code for the _component skeleton, don't generate it when
@@ -600,7 +600,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                                   full_skel_name,
                                   get_component_upcall_command_name.c_str());
 
-    *os << be_nl << be_nl
+    *os << be_nl_2
         << "void " << full_skel_name
         << "::_component_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest & server_request, " << be_nl
@@ -623,14 +623,14 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
     *os << ">::ret_val retval;";
 
-    *os << be_nl << be_nl
+    *os << be_nl_2
         << "TAO::Argument * const args[] =" << be_idt_nl
         << "{" << be_idt_nl
         << "&retval"
         << be_uidt_nl
         << "};" << be_uidt_nl << be_nl;
 
-    *os << "static size_t const nargs = 1;" << be_nl << be_nl;
+    *os << "static size_t const nargs = 1;" << be_nl_2;
 
     // Get the right object implementation.
     *os << full_skel_name << " * const impl =" << be_idt_nl
@@ -679,7 +679,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   // Generate code for the _is_a override.
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "::CORBA::Boolean " << full_skel_name
       << "::_is_a (const char* value)" << be_nl
       << "{" << be_idt_nl
@@ -713,7 +713,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << be_uidt << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   *os << "const char* " << full_skel_name
       << "::_interface_repository_id (void) const"
@@ -878,12 +878,12 @@ be_visitor_interface_ss::this_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   // The _this () operation.
   *os << node->full_name () << " *" << be_nl
@@ -891,13 +891,13 @@ be_visitor_interface_ss::this_method (be_interface *node)
       << "::_this (void)" << be_nl
       << "{" << be_idt_nl
       << "TAO_Stub *stub = this->_create_stub ();"
-      << be_nl << be_nl
+      << be_nl_2
       << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl;
 
   /* Coverity whines about an unused return value from _nil() when
      initializing tmp.  Just use zero instead. */
   *os << "::CORBA::Object_ptr tmp = CORBA::Object_ptr ();"
-      << be_nl << be_nl;
+      << be_nl_2;
 
    if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
      {
@@ -925,7 +925,7 @@ be_visitor_interface_ss::this_method (be_interface *node)
       << ");" << be_uidt_nl << be_nl;
 
   *os << "::CORBA::Object_var obj = tmp;" << be_nl
-      << "(void) safe_stub.release ();" << be_nl << be_nl
+      << "(void) safe_stub.release ();" << be_nl_2
       << "typedef ::" << node->name () << " STUB_SCOPED_NAME;"
       << be_nl
       << "return" << be_idt_nl
@@ -960,12 +960,12 @@ be_visitor_interface_ss::dispatch_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   *os << "void " << node->full_skel_name ()
       << "::_dispatch (TAO_ServerRequest & req, void * servant_upcall)"
@@ -1023,13 +1023,13 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
       if (be_global->gen_direct_collocation()
           || be_global->gen_thru_poa_collocation ())
       {
-        *os << be_nl << be_nl;
+        *os << be_nl_2;
 
         *os << "// TAO_IDL - Generated from" << be_nl
             << "// " << __FILE__ << ":" << __LINE__;
 
         // Proxy Broker Factory Function.
-        *os << be_nl << be_nl
+        *os << be_nl_2
             << "TAO::Collocation_Proxy_Broker *" << be_nl
             << node->flat_client_enclosing_scope ()
             << node->base_proxy_broker_name ()
@@ -1063,7 +1063,7 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
           }
 
         *os << be_uidt_nl
-            << "}" << be_nl << be_nl;
+            << "}" << be_nl_2;
 
         // Proxy Broker Function Pointer Initializer.
         *os << "int" << be_nl
@@ -1081,7 +1081,7 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
             << be_uidt_nl
             << be_nl
             << "return 0;" << be_uidt_nl
-            << "}" << be_nl << be_nl;
+            << "}" << be_nl_2;
 
         *os << "static int" << be_nl
             << node->flat_client_enclosing_scope ()

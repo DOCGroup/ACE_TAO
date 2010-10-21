@@ -70,11 +70,11 @@ be_visitor_union_discriminant_ch::visit_enum (be_enum *node)
         }
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // The set method.
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "void _d (" << bt->nested_type_name (bu) << ");" << be_nl;
   // The get method.
   *os << bt->nested_type_name (bu) << " _d (void) const;";
@@ -103,11 +103,11 @@ be_visitor_union_discriminant_ch::visit_predefined_type (be_predefined_type
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // The set method.
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "void _d ( " << bt->nested_type_name (bu) << ");" << be_nl;
   // The get method.
   *os << bt->nested_type_name (bu) << " _d (void) const;";

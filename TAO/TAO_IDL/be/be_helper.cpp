@@ -56,6 +56,11 @@ TAO_NL::TAO_NL (void)
   ACE_UNUSED_ARG (copyright);
 }
 
+TAO_NL_2::TAO_NL_2 (void)
+{
+  ACE_UNUSED_ARG (copyright);
+}
+
 TAO_INDENT::TAO_INDENT (int do_now)
   :  do_now_ (do_now)
 {
@@ -67,6 +72,7 @@ TAO_UNINDENT::TAO_UNINDENT (int do_now)
 }
 
 const TAO_NL be_nl;
+const TAO_NL_2 be_nl_2;
 const TAO_INDENT be_idt;
 const TAO_INDENT be_idt_nl (1);
 const TAO_UNINDENT be_uidt;
@@ -386,6 +392,17 @@ TAO_OutStream::operator<< (const TAO_NL&)
                    "\n");
   this->indent ();
 
+  return *this;
+}
+
+TAO_OutStream &
+TAO_OutStream::operator<< (const TAO_NL_2&)
+{
+  ACE_OS::fprintf (this->fp_ ,
+                   "\n");
+  ACE_OS::fprintf (this->fp_ ,
+                   "\n");
+  this->indent ();
   return *this;
 }
 

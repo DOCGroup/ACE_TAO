@@ -37,8 +37,8 @@ be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -47,7 +47,7 @@ be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
       << "{" << be_idt_nl
       << "return strm << static_cast< ::CORBA::ULong> (_tao_enumerator);"
       << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   *os << "::CORBA::Boolean operator>> (TAO_InputCDR &strm, "
       << node->name () << " & _tao_enumerator)" << be_nl
