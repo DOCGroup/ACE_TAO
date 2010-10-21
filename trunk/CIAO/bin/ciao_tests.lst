@@ -27,10 +27,10 @@ TAO/CIAO/tests/CIF/descriptors/run_test.pl: !ACE_FOR_TAO !ST !NOXERCES !STATIC
 TAO/CIAO/tests/IDL_Test/Double_Inherited_Component/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
 TAO/CIAO/tests/IDL3/Connectors/run_test.pl !CCM_NOEVENT
 TAO/CIAO/tests/Bug_3832_Regression/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/tests/COPI/Registration/Client/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/tests/COPI/Registration/Servant/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/tests/COPI/Registration/Server/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/tests/COPI/Registration/Stub/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
+TAO/CIAO/tests/COPI/Registration/Client/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
+TAO/CIAO/tests/COPI/Registration/Servant/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
+TAO/CIAO/tests/COPI/Registration/Server/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
+TAO/CIAO/tests/COPI/Registration/Stub/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
 TAO/CIAO/connectors/tests/AMIDDS/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
 TAO/CIAO/connectors/ami4ccm/examples/Hello/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
 TAO/CIAO/connectors/ami4ccm/tests/Exceptions/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
