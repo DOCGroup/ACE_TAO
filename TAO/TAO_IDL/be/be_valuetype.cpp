@@ -17,11 +17,15 @@
 #include "be_visitor.h"
 #include "be_extern.h"
 #include "be_helper.h"
+
 #include "ast_module.h"
+#include "ast_attribute.h"
+
 #include "utl_identifier.h"
 #include "idl_defines.h"
 #include "nr_extern.h"
 #include "global_extern.h"
+
 #include "ace/Log_Msg.h"
 
 be_valuetype::be_valuetype (UTL_ScopedName *n,
@@ -625,8 +629,9 @@ be_valuetype::data_members_count (AST_Field::Visibility vis)
         }
 
       AST_Field *field = AST_Field::narrow_from_decl (d);
+      AST_Attribute *attr = AST_Attribute::narrow_from_decl (d);
 
-      if (!field)
+      if (field == 0 || attr != 0)
         {
           continue;
         }
