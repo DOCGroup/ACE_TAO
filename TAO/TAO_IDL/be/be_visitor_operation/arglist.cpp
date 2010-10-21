@@ -38,11 +38,6 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 
   *os << " (";
 
-  if (has_args)
-    {
-      *os << be_idt_nl;
-    }
-
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS:
