@@ -2268,11 +2268,9 @@ ACE::restore_non_blocking_mode (ACE_HANDLE handle, int val)
     }
 }
 
-
-// Format buffer into printable format.  This is useful for debugging.
-// Portions taken from mdump by J.P. Knight (J.P.Knight@lut.ac.uk)
-// Modifications by Todd Montgomery.
-
+/// Format buffer into printable format.  This is useful for debugging.
+/// Portions taken from mdump by J.P. Knight (J.P.Knight@lut.ac.uk)
+/// Modifications by Todd Montgomery.
 size_t
 ACE::format_hexdump (const char *buffer,
                      size_t size,

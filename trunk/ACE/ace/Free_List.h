@@ -61,7 +61,7 @@ public:
  * @brief Implements a free list.
  *
  * This class maintains a free list of nodes of type T.  It
- * depends on the type T having a <get_next> and <set_next>
+ * depends on the type T having a get_next() and set_next()
  * method.  It maintains a mutex so the freelist can be used in
  * a multithreaded program .
  */
