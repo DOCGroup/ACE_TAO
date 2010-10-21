@@ -1,3 +1,9 @@
+Thu Oct 21 11:06:36 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO_IDL/be/be_visitor_component_scope.cpp:
+          Removed some more whitespaces from the generated code.
+
 Thu Oct 21 10:26:18 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
