@@ -1,3 +1,11 @@
+Thu Oct 21 17:39:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
+        
+          Fixed more code generation bugs related to be_attribute
+          newly inheriting from be_field.
+
 Thu Oct 21 17:19:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
