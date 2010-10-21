@@ -685,8 +685,9 @@ be_visitor_valuetype::gen_pd (be_valuetype *node)
         }
 
       be_field *field = be_field::narrow_from_decl (d);
+      be_attribute *attr = be_attribute::narrow_from_decl (d);
 
-      if (!field)
+      if (field == 0 || attr != 0)
         {
           continue;
         }
@@ -780,9 +781,13 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
        !si.is_done ();
        si.next())
     {
+      // be_attribute inherits from be_field
+      // so we have to also screen out attributes
       be_field *f = be_field::narrow_from_decl (si.item ());
+      be_attribute *attr =
+        be_attribute::narrow_from_decl (si.item ());
 
-      if (f == 0)
+      if (f == 0 || attr != 0)
         {
           continue;
         }

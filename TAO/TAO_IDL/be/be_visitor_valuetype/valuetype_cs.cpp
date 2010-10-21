@@ -490,9 +490,13 @@ be_visitor_valuetype_cs::gen_ostream_operator_r (be_valuetype *node,
        i.next ())
     {
       be_field *f = be_field::narrow_from_decl (i.item ());
+      be_attribute *attr =
+        be_attribute::narrow_from_decl (i.item ());
 
       // No way to access the private members from generated code.
-      if (f == 0 || f->visibility () != AST_Field::vis_PUBLIC)
+      if (f == 0
+          || f->visibility () != AST_Field::vis_PUBLIC
+          || attr != 0)
         {
           continue;
         }

@@ -198,11 +198,13 @@ be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
        !si.is_done ();
        si.next())
     {
-      // be_attribute doesn't inherit from be_field (unlike the
-      // AST_* counterparts, so this screens attributes and operations.
+      // be_attribute inherits from be_field
+      // so we have to also screen out attributes
       be_field *f = be_field::narrow_from_decl (si.item ());
+      be_attribute *attr =
+        be_attribute::narrow_from_decl (si.item ());
 
-      if (f == 0)
+      if (f == 0 || attr != 0)
         {
           continue;
         }
@@ -231,11 +233,13 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_inits (
        !si.is_done ();
        si.next())
     {
+      // be_attribute inherits from be_field
+      // so we have to also screen out attributes
       be_field *f = be_field::narrow_from_decl (si.item ());
+      be_attribute *attr =
+        be_attribute::narrow_from_decl (si.item ());
 
-      // be_attribute doesn't inherit from be_field (unlike the
-      // AST_* counterparts, so this screens attributes and operations.
-      if (f == 0)
+      if (f == 0 || attr != 0)
         {
           continue;
         }
