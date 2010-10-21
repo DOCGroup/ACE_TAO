@@ -30,6 +30,7 @@
 
 namespace CIAO_Shapes_Control_comp_Impl
 {
+
   //============================================================
   // Component Executor Implementation Class: Control_comp_exec_i
   //============================================================
@@ -48,7 +49,6 @@ namespace CIAO_Shapes_Control_comp_Impl
   }
 
   // Supported operations and attributes.
-
   ACE_Reactor*
   Control_comp_exec_i::reactor (void)
   {
@@ -185,17 +185,17 @@ namespace CIAO_Shapes_Control_comp_Impl
   {
     /* Your code here. */
   }
-  
+
   extern "C"  ::Components::EnterpriseComponent_ptr
   create_Shapes_Control_comp_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_NORETURN (
       retval,
       Control_comp_exec_i);
-    
+
     return retval;
   }
 }
