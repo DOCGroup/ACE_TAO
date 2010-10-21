@@ -24,8 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO__________TUTORIAL_CODE_SHAPES_RECEIVER_COMP_SHAPES_RECEIVER_COMP_EXEC_DUJOV1_H_
-#define CIAO__________TUTORIAL_CODE_SHAPES_RECEIVER_COMP_SHAPES_RECEIVER_COMP_EXEC_DUJOV1_H_
+#ifndef CIAO__________TUTORIAL_CODE_SHAPES_RECEIVER_COMP_SHAPES_RECEIVER_COMP_EXEC_U1VLAY_H_
+#define CIAO__________TUTORIAL_CODE_SHAPES_RECEIVER_COMP_SHAPES_RECEIVER_COMP_EXEC_U1VLAY_H_
 
 #include /**/ "ace/pre.h"
 
@@ -47,22 +47,23 @@ namespace CIAO_Shapes_Receiver_comp_Impl
     info_out_data_listener_exec_i (
       ::Shapes::CCM_Receiver_comp_Context_ptr ctx);
     virtual ~info_out_data_listener_exec_i (void);
-
+    
     // Operations and attributes from ::Shapes::ShapeType_conn::Listener
-
+    
     virtual
     void on_one_data (
       const ::ShapeType & datum,
       const ::CCM_DDS::ReadInfo & info);
-
+    
     virtual
     void on_many_data (
       const ::Shapes::ShapeTypeSeq & data,
       const ::CCM_DDS::ReadInfoSeq & infos);
-
+  
   private:
     ::Shapes::CCM_Receiver_comp_Context_var ciao_context_;
   };
+  
   class  info_out_status_exec_i
     : public virtual ::CCM_DDS::CCM_PortStatusListener,
       public virtual ::CORBA::LocalObject
@@ -71,23 +72,24 @@ namespace CIAO_Shapes_Receiver_comp_Impl
     info_out_status_exec_i (
       ::Shapes::CCM_Receiver_comp_Context_ptr ctx);
     virtual ~info_out_status_exec_i (void);
-
+    
     // Operations and attributes from ::CCM_DDS::PortStatusListener
-
+    
     virtual
     void on_requested_deadline_missed (
       ::DDS::DataReader_ptr the_reader,
       const ::DDS::RequestedDeadlineMissedStatus & status);
-
+    
     virtual
     void on_sample_lost (
       ::DDS::DataReader_ptr the_reader,
       const ::DDS::SampleLostStatus & status);
-
+  
   private:
     ::Shapes::CCM_Receiver_comp_Context_var ciao_context_;
   };
-
+  
+  
   class  Receiver_comp_exec_i
     : public virtual Receiver_comp_Exec,
       public virtual ::CORBA::LocalObject
@@ -95,41 +97,41 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   public:
     Receiver_comp_exec_i (void);
     virtual ~Receiver_comp_exec_i (void);
-
+    
     //@{
     /** Supported operations and attributes. */
-
+    
     //@}
-
+    
     //@{
     /** Component attributes and port operations. */
-
-
+    
+    
     virtual ::Shapes::ShapeType_conn::CCM_Listener_ptr
     get_info_out_data_listener (void);
-
+    
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
     //@}
-
+    
     //@{
     /** Operations from Components::SessionComponent. */
-
+    
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
-
+    
     virtual void configuration_complete (void);
-
+    
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     //@}
-
+  
   private:
     ::Shapes::CCM_Receiver_comp_Context_var ciao_context_;
     ::Shapes::ShapeType_conn::CCM_Listener_var ciao_info_out_data_listener_;
     ::CCM_DDS::CCM_PortStatusListener_var ciao_info_out_status_;
   };
-
+  
   extern "C"  ::Components::EnterpriseComponent_ptr
   create_Shapes_Receiver_comp_Impl (void);
 }
