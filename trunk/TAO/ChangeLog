@@ -1,3 +1,19 @@
+Thu Oct 21 17:19:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+        
+          Fixed code generation for valuetypes fields. In
+          
+          Wed Oct 20 19:50:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          class be_valuetypes was modified to inherit from class
+          be_field, requiring some extra checks to distinguish a
+          field from an attribute in valuetypes.
+
 Thu Oct 21 16:23:10 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_attr_setarg_type.cpp:
