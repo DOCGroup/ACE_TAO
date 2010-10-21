@@ -1,3 +1,17 @@
+Thu Oct 21 08:47:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo.idl:
+        * tests/Bug_3769_Regression/Foo.mpc:
+        * tests/Bug_3769_Regression/Foo_exec.h:
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Reverted changes made by Jeff. Created a new test for
+          explicit testing valuetypes.
+
+        * tests/Bug_3890_Regression:
+        * tests/Bug_3890_Regression/Foo.idl:
+        * tests/Bug_3890_Regression/Foo.mpc:
+          New test.
+
 Thu Oct 21 08:19:03 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:

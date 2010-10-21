@@ -3,7 +3,8 @@
 
 project(Foo_idl_gen) : componentidldefaults {
   custom_only = 1
-  idlflags += -Wb,stub_export_macro=FOO_STUB_Export \
+  idlflags += -Gex \
+              -Wb,stub_export_macro=FOO_STUB_Export \
               -Wb,stub_export_include=Foo_stub_export.h \
               -Wb,skel_export_macro=FOO_SVNT_Export \
               -Wb,skel_export_include=Foo_svnt_export.h \
