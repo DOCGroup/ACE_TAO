@@ -56,12 +56,12 @@ be_visitor_executor_exs::visit_attribute (be_attribute *node)
     {
       return 0;
     }
-    
-  os_ << be_nl << be_nl;
+
+  os_ << be_uidt_nl << be_idt_nl;
 
   be_type *ft = node->field_type ();
   be_visitor_operation_rettype rt_visitor (this->ctx_);
-  
+
   if (ft->accept (&rt_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -70,16 +70,16 @@ be_visitor_executor_exs::visit_attribute (be_attribute *node)
                          ACE_TEXT ("accept on return type failed\n")),
                         -1);
     }
-    
+
   os_ << be_nl
       << this->node_->original_local_name () << "_exec_i::"
       << this->ctx_->port_prefix ().c_str ()
       << node->local_name () << " (void)" << be_nl
       << "{" << be_idt;
-      
+
   be_visitor_attr_return ar_visitor (this->ctx_);
   ar_visitor.attr_name (node->original_local_name ()->get_string ());
-      
+
   if (ft->accept (&ar_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -88,18 +88,18 @@ be_visitor_executor_exs::visit_attribute (be_attribute *node)
                          ACE_TEXT ("accept on get visitor failed\n")),
                         -1);
     }
-    
+
   os_ << be_uidt_nl
-      << "}";
-      
-  os_ << be_nl << be_nl
+      << "}" << be_uidt_nl;
+
+  os_ << be_idt_nl
       << "void" << be_nl
       << this->node_->original_local_name () << "_exec_i::"
       << this->ctx_->port_prefix ().c_str ()
       << node->local_name () << " (" << be_idt_nl;
-      
+
   be_visitor_attr_setarg_type at_visitor (this->ctx_);
-  
+
   if (ft->accept (&at_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -108,13 +108,13 @@ be_visitor_executor_exs::visit_attribute (be_attribute *node)
                          ACE_TEXT ("accept on set arg type failed\n")),
                         -1);
     }
-    
+
   os_ << node->local_name () << ")" << be_uidt_nl
       << "{" << be_idt;
-      
+
   be_visitor_attr_assign as_visitor (this->ctx_);
   as_visitor.attr_name (node->original_local_name ()->get_string ());
-      
+
   if (ft->accept (&as_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -123,7 +123,6 @@ be_visitor_executor_exs::visit_attribute (be_attribute *node)
                          ACE_TEXT ("accept on set func body failed\n")),
                         -1);
     }
-    
   os_ << be_uidt_nl
       << "}";
 
@@ -155,12 +154,12 @@ be_visitor_executor_exs::visit_component (be_component *node)
       << comment_border_ << be_nl
       << "// Component Executor Implementation Class: "
       << lname << "_exec_i" << be_nl
-      << comment_border_;
+      << comment_border_ << be_uidt_nl;
 
-  os_ << be_nl << be_nl
+  os_ << be_idt_nl
       << lname << "_exec_i::" << lname
       << "_exec_i (void)";
-      
+
   /// The overload of traverse_inheritance_graph() used here
   /// doesn't automatically prime the queues.
   node->get_insert_queue ().reset ();
@@ -187,23 +186,24 @@ be_visitor_executor_exs::visit_component (be_component *node)
                          ACE_TEXT ("for attr init failed\n")),
                         -1);
     }
-    
+
   if (ai_visitor.attr_generated ())
     {
       os_ << be_uidt << be_uidt_nl;
     }
 
   os_ << "{" << be_nl
-      << "}";
-      
-  os_ << be_nl << be_nl
+      << "}" << be_uidt_nl;
+
+  os_ << be_idt_nl
       << lname << "_exec_i::~" << lname
       << "_exec_i (void)" << be_nl
       << "{" << be_nl
-      << "}";
+      << "}" << be_uidt_nl;
 
-  os_ << be_nl << be_nl
-      << "// Supported operations and attributes.";
+  os_ << be_idt_nl
+      << "// Supported operations and attributes."
+      << be_uidt_nl << be_idt;
 
   if (be_global->gen_ciao_exec_reactor_impl ())
     {
@@ -227,7 +227,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
           << "throw ::CORBA::INTERNAL ();"
           << be_uidt_nl << "}"
           << be_uidt_nl << "return reactor;"
-          << be_uidt_nl << "}";
+          << be_uidt_nl << "}" << be_uidt << be_uidt_nl;
     }
 
   op_scope_ = node;
@@ -256,8 +256,9 @@ be_visitor_executor_exs::visit_component (be_component *node)
                         -1);
     }
 
-  os_ << be_nl << be_nl
-      << "// Component attributes and port operations.";
+  os_ << be_idt_nl
+      << "// Component attributes and port operations."
+      << be_uidt << be_idt;
 
   if (this->visit_component_scope (node) == -1)
     {
@@ -268,9 +269,10 @@ be_visitor_executor_exs::visit_component (be_component *node)
                         -1);
     }
 
-  os_ << be_nl << be_nl
+  os_ << be_uidt_nl << be_idt_nl
       << "// Operations from Components::"
-      << be_global->ciao_container_type () << "Component.";
+      << be_global->ciao_container_type () << "Component."
+      << be_uidt_nl;
 
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
   ACE_CString sname_str (scope->full_name ());
@@ -278,7 +280,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
   const char *global = (sname_str == "" ? "" : "::");
   const char *container_type = be_global->ciao_container_type ();
 
-  os_ << be_nl << be_nl
+  os_ << be_idt_nl
       << "void" << be_nl
       << lname << "_exec_i::set_"
       << tao_cg->downcase (container_type)
@@ -288,45 +290,46 @@ be_visitor_executor_exs::visit_component (be_component *node)
       << "{" << be_idt_nl
       << "this->ciao_context_ =" << be_idt_nl
       << global << sname << "::CCM_" << lname
-      << "_Context::_narrow (ctx);" << be_uidt_nl << be_nl
+      << "_Context::_narrow (ctx);" << be_uidt << be_uidt
+      << be_uidt_nl << be_idt << be_idt_nl
       << "if ( ::CORBA::is_nil (this->ciao_context_.in ()))"
       << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
-      << "}";
+      << "}" << be_uidt_nl;
 
   if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
     {
-      os_ << be_nl << be_nl
+      os_ << be_idt_nl
           << "void" << be_nl
           << lname << "_exec_i::configuration_complete (void)"
           << be_nl
           << "{" << be_idt_nl
           << your_code_here_ << be_uidt_nl
-          << "}";
+          << "}" << be_uidt_nl;
 
-      os_ << be_nl << be_nl
+      os_ << be_idt_nl
           << "void" << be_nl
           << lname << "_exec_i::ccm_activate (void)" << be_nl
           << "{" << be_idt_nl
           << your_code_here_ << be_uidt_nl
-          << "}";
+          << "}" << be_uidt_nl;
 
-      os_ << be_nl << be_nl
+      os_ << be_idt_nl
           << "void" << be_nl
           << lname << "_exec_i::ccm_passivate (void)" << be_nl
           << "{" << be_idt_nl
           << your_code_here_ << be_uidt_nl
-          << "}";
+          << "}" << be_uidt_nl;
     }
 
-  os_ << be_nl << be_nl
+  os_ << be_idt_nl
       << "void" << be_nl
       << lname << "_exec_i::ccm_remove (void)" << be_nl
       << "{" << be_idt_nl
       << your_code_here_ << be_uidt_nl
-      << "}";
+      << "}" << be_uidt_nl;
 
   return 0;
 }
