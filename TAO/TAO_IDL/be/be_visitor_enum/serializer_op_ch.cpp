@@ -36,8 +36,8 @@ be_visitor_enum_serializer_op_ch::visit_enum (be_enum *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // generate the Serializer << and >> operators
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean"

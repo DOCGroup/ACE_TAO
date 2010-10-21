@@ -41,8 +41,8 @@ be_visitor_union_serializer_op_ch::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
     //- _dcps_max_marshaled_size(type) method
   *os << be_global->stub_export_macro ()

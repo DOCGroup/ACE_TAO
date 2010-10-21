@@ -222,7 +222,7 @@ be_visitor_operation::gen_stub_operation_body (
   // Declare the argument helper classes.
   this->gen_stub_body_arglist (node, os);
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "TAO::Argument *_the_tao_operation_signature [] =" << be_idt_nl
       << "{" << be_idt_nl
       << "&_tao_retval";
@@ -251,7 +251,7 @@ be_visitor_operation::gen_stub_operation_body (
                         -1);
     }
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "TAO::" << (node->is_abstract () ? "AbstractBase_" : "" )
       << "Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
       << "this," << be_nl
@@ -309,7 +309,7 @@ be_visitor_operation::gen_stub_operation_body (
   *os << be_uidt_nl
       << ");" << be_uidt;
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   // Since oneways cannot raise user exceptions, we have that
   // case covered as well.
@@ -328,7 +328,7 @@ be_visitor_operation::gen_stub_operation_body (
 
   if (!this->void_return_type (return_type))
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "return _tao_retval.retn ();";
     }
 

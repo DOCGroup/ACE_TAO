@@ -57,7 +57,7 @@ be_visitor_executor_exs::visit_attribute (be_attribute *node)
       return 0;
     }
 
-  os_ << be_uidt_nl << be_idt_nl;
+  os_ << be_nl_2;
 
   be_type *ft = node->field_type ();
   be_visitor_operation_rettype rt_visitor (this->ctx_);
@@ -90,9 +90,9 @@ be_visitor_executor_exs::visit_attribute (be_attribute *node)
     }
 
   os_ << be_uidt_nl
-      << "}" << be_uidt_nl;
+      << "}";
 
-  os_ << be_idt_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << this->node_->original_local_name () << "_exec_i::"
       << this->ctx_->port_prefix ().c_str ()
@@ -123,6 +123,7 @@ be_visitor_executor_exs::visit_attribute (be_attribute *node)
                          ACE_TEXT ("accept on set func body failed\n")),
                         -1);
     }
+
   os_ << be_uidt_nl
       << "}";
 
@@ -150,13 +151,13 @@ be_visitor_executor_exs::visit_component (be_component *node)
   node_ = node;
   const char *lname = node->local_name ();
 
-  os_ << be_nl
+  os_ << be_nl_2
       << comment_border_ << be_nl
       << "// Component Executor Implementation Class: "
       << lname << "_exec_i" << be_nl
-      << comment_border_ << be_uidt_nl;
+      << comment_border_;
 
-  os_ << be_idt_nl
+  os_ << be_nl_2
       << lname << "_exec_i::" << lname
       << "_exec_i (void)";
 
@@ -165,7 +166,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
   node->get_insert_queue ().reset ();
   node->get_del_queue ().reset ();
   node->get_insert_queue ().enqueue_tail (this->node_);
-  
+
   be_visitor_executor_exs_attr_init ai_visitor (this->ctx_);
   ai_visitor.node (node);
 
@@ -193,17 +194,16 @@ be_visitor_executor_exs::visit_component (be_component *node)
     }
 
   os_ << "{" << be_nl
-      << "}" << be_uidt_nl;
+      << "}";
 
-  os_ << be_idt_nl
+  os_ << be_nl_2
       << lname << "_exec_i::~" << lname
       << "_exec_i (void)" << be_nl
       << "{" << be_nl
-      << "}" << be_uidt_nl;
+      << "}";
 
-  os_ << be_idt_nl
-      << "// Supported operations and attributes."
-      << be_uidt_nl << be_idt;
+  os_ << be_nl_2
+      << "// Supported operations and attributes.";
 
   if (be_global->gen_ciao_exec_reactor_impl ())
     {
@@ -227,7 +227,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
           << "throw ::CORBA::INTERNAL ();"
           << be_uidt_nl << "}"
           << be_uidt_nl << "return reactor;"
-          << be_uidt_nl << "}" << be_uidt << be_uidt_nl;
+          << be_uidt_nl << "}";
     }
 
   op_scope_ = node;
@@ -256,9 +256,8 @@ be_visitor_executor_exs::visit_component (be_component *node)
                         -1);
     }
 
-  os_ << be_idt_nl
-      << "// Component attributes and port operations."
-      << be_uidt << be_idt;
+  os_ << be_nl_2
+      << "// Component attributes and port operations.";
 
   if (this->visit_component_scope (node) == -1)
     {
@@ -269,10 +268,9 @@ be_visitor_executor_exs::visit_component (be_component *node)
                         -1);
     }
 
-  os_ << be_uidt_nl << be_idt_nl
+  os_ << be_nl_2
       << "// Operations from Components::"
-      << be_global->ciao_container_type () << "Component."
-      << be_uidt_nl;
+      << be_global->ciao_container_type () << "Component.";
 
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
   ACE_CString sname_str (scope->full_name ());
@@ -280,7 +278,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
   const char *global = (sname_str == "" ? "" : "::");
   const char *container_type = be_global->ciao_container_type ();
 
-  os_ << be_idt_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << lname << "_exec_i::set_"
       << tao_cg->downcase (container_type)
@@ -290,8 +288,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
       << "{" << be_idt_nl
       << "this->ciao_context_ =" << be_idt_nl
       << global << sname << "::CCM_" << lname
-      << "_Context::_narrow (ctx);" << be_uidt << be_uidt
-      << be_uidt_nl << be_idt << be_idt_nl
+      << "_Context::_narrow (ctx);" << be_uidt << be_nl_2
       << "if ( ::CORBA::is_nil (this->ciao_context_.in ()))"
       << be_idt_nl
       << "{" << be_idt_nl
@@ -301,7 +298,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
 
   if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
     {
-      os_ << be_uidt_nl << be_idt_nl
+      os_ << be_nl_2
           << "void" << be_nl
           << lname << "_exec_i::configuration_complete (void)"
           << be_nl
@@ -309,14 +306,14 @@ be_visitor_executor_exs::visit_component (be_component *node)
           << your_code_here_ << be_uidt_nl
           << "}";
 
-      os_ << be_uidt_nl << be_idt_nl
+      os_ << be_nl_2
           << "void" << be_nl
           << lname << "_exec_i::ccm_activate (void)" << be_nl
           << "{" << be_idt_nl
           << your_code_here_ << be_uidt_nl
           << "}";
 
-      os_ << be_uidt_nl << be_idt_nl
+      os_ << be_nl_2
           << "void" << be_nl
           << lname << "_exec_i::ccm_passivate (void)" << be_nl
           << "{" << be_idt_nl
@@ -324,7 +321,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
           << "}";
     }
 
-  os_ << be_uidt_nl << be_idt_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << lname << "_exec_i::ccm_remove (void)" << be_nl
       << "{" << be_idt_nl
@@ -354,7 +351,7 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
   lname_str += node->original_local_name ()->get_string ();
   const char *lname = lname_str.c_str ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << global << sname << "::CCM_"
       << iname << "_ptr" << be_nl
       << node_->local_name () << "_exec_i::get_"
@@ -367,11 +364,11 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
       << "ACE_NEW_RETURN (" << be_idt_nl
       << "tmp," << be_nl
       << lname << "_exec_i (" << be_idt_nl
-      << "this->ciao_context_.in ())," << be_uidt_nl
+      << "this->ciao_context_.in ())," << be_nl
       << global << sname << "::CCM_" << iname << "::_nil ());"
-      << be_uidt_nl << be_nl
-      << "this->ciao_" << port_name << "_ = tmp;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
+      << be_uidt << be_nl_2
+      << "this->ciao_" << port_name << "_ = tmp;" << be_uidt << be_uidt_nl
+      << "}" << be_uidt << be_nl_2
       << "return" << be_idt_nl
       << global << sname << "::CCM_" << iname
       << "::_duplicate (" << be_idt_nl
@@ -388,7 +385,7 @@ be_visitor_executor_exs::visit_consumes (be_consumes *node)
   be_eventtype *obj = node->consumes_type ();
   const char *port_name = node->local_name ()->get_string ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << node_->original_local_name () << "_exec_i::push_"
       << port_name << " (" << be_idt_nl
@@ -419,4 +416,3 @@ Component_Exec_Attr_Init_Generator::emit (be_interface * /*derived_interface */,
   // it will pick up attributes via porttypes.
   return visitor_->visit_scope (base_interface);
 }
-

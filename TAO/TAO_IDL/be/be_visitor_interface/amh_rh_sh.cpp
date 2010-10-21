@@ -47,8 +47,8 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
       rh_skel_class_name = "POA_TAO_";
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   rh_skel_class_name += rh_base_class_name.c_str ();
 
@@ -57,7 +57,7 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
   // Generate the _ptr declaration.
   *os << "typedef " << rh_skel_class_name.c_str () << " *"
       << rh_skel_class_name.c_str()
-      << "_ptr;" << be_nl << be_nl;
+      << "_ptr;" << be_nl_2;
 
   ACE_CString inherit_client_parent = node->client_enclosing_scope ();
   inherit_client_parent +=  rh_base_class_name;

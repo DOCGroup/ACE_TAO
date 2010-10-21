@@ -152,7 +152,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate the array traits specialization definitions,
@@ -186,7 +186,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
 
   unique += "_traits";
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << "TAO::Array_Traits<" << fname << "_forany>::free ("
@@ -197,7 +197,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << fname << "_free (_tao_slice);" << be_uidt_nl
       << "}";
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
       << "TAO::Array_Traits<" << fname << "_forany>::dup ("
@@ -208,7 +208,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "return " << fname << "_dup (_tao_slice);" << be_uidt_nl
       << "}";
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << "TAO::Array_Traits<" << fname << "_forany>::copy ("
@@ -220,7 +220,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << fname << "_copy (_tao_to, _tao_from);" << be_uidt_nl
       << "}";
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << "TAO::Array_Traits<" << fname << "_forany>::zero ("
@@ -348,7 +348,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
     }
   *os << be_uidt_nl << "}";
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
      << "TAO::Array_Traits<" << fname << "_forany>::alloc (void)"

@@ -54,8 +54,8 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   //---------------------------------------------------------------
   //  Set the sub state as generating code for _dcps_max_marshaled_size.
@@ -69,10 +69,10 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
   *os << "// do not try getting the _dcps_max_marshaled_size" << be_nl
       << "// doing so may produce an access violation" << be_nl
       << "return 100000;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
 /*
-      << "size_t max_size = 0;" << be_nl << be_nl;
+      << "size_t max_size = 0;" << be_nl_2;
 
   *os << "// find the maximum field size." << be_nl;
   if (this->visit_scope (node) == -1)
@@ -111,7 +111,7 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
 
   *os << be_nl
       << "return max_size;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 */
 
   //---------------------------------------------------------------
@@ -126,10 +126,10 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
       << "// _dcps_max_marshaled_size may produce an access violation."
       << be_nl
       << "return false;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 /*
       << "CORBA::Boolean is_bounded = true;"
-      << " // all discrimenent types are bounded" << be_nl << be_nl;
+      << " // all discrimenent types are bounded" << be_nl_2;
 
   *os << "// bounded if all branches are bounded." << be_nl;
   if (this->visit_scope (node) == -1)
@@ -143,7 +143,7 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
 
   *os << be_nl
       << "return is_bounded;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 */
 
   //---------------------------------------------------------------
@@ -202,9 +202,9 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
       *os << "break;"<< be_uidt;
     }
 
-    *os << be_uidt << be_uidt_nl << "}" << be_nl << be_nl
+    *os << be_uidt << be_uidt_nl << "}" << be_nl_2
       << "return result;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   //---------------------------------------------------------------
   //  Set the sub state as generating code for the output operator.
@@ -242,7 +242,7 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
   *os << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "::CORBA::Boolean result = true;" << be_nl << be_nl
+      << "::CORBA::Boolean result = true;" << be_nl_2
       << "switch (_tao_union._d ())" << be_nl
       << "{" << be_idt;
 
@@ -267,9 +267,9 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
       *os << "break;"<< be_uidt;
     }
 
-  *os << be_uidt_nl << "}" << be_nl << be_nl
+  *os << be_uidt_nl << "}" << be_nl_2
       << "return result;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   //---------------------------------------------------------------
   // Set the substate as generating code for the input operator.
@@ -313,7 +313,7 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
   *os << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "::CORBA::Boolean result = true;" << be_nl << be_nl
+      << "::CORBA::Boolean result = true;" << be_nl_2
       << "switch (_tao_discriminant)" << be_nl
       << "{" << be_idt;
 
@@ -341,7 +341,7 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
     }
 
   *os << be_uidt_nl
-      << "}" << be_nl << be_nl
+      << "}" << be_nl_2
       << "return result;" << be_uidt_nl
       << "}";
 

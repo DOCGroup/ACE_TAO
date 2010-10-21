@@ -147,7 +147,7 @@ TAO_CodeGen::start_client_header (const char *fname)
 
   *this->client_header_ << be_nl << "// TAO_IDL - Generated from" << be_nl
                         << "// " << __FILE__ << ":" << __LINE__
-                        << be_nl << be_nl;
+                        << be_nl_2;
 
   // Generate the #ident string, if any.
   this->gen_ident_string (this->client_header_);
@@ -195,9 +195,9 @@ TAO_CodeGen::start_client_header (const char *fname)
                                           fname);
 
       // Add #if 0 to disable TAO specific code
-      *this->client_header_ << be_nl << be_nl
+      *this->client_header_ << be_nl_2
         << "#if 0 // disable TAO specific code"
-        << be_nl << be_nl;
+        << be_nl_2;
     }
   else
     {
@@ -424,7 +424,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
 
   *this->client_stubs_ << be_nl << "// TAO_IDL - Generated from" << be_nl
                        << "// " << __FILE__ << ":" << __LINE__
-                       << be_nl << be_nl;
+                       << be_nl_2;
 
   this->gen_stub_src_includes ();
 
@@ -509,7 +509,7 @@ TAO_CodeGen::start_server_header (const char *fname)
   *this->server_header_ << be_nl
                         << "// TAO_IDL - Generated from" << be_nl
                         << "// " << __FILE__ << ":" << __LINE__
-                        << be_nl << be_nl;
+                        << be_nl_2;
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->server_header_);
@@ -581,7 +581,7 @@ TAO_CodeGen::start_server_header (const char *fname)
   // copyright text and an informative message.
   if (!be_global->gen_skel_files ())
     {
-      *this->server_header_ << be_nl << be_nl
+      *this->server_header_ << be_nl_2
                             << "// Skeleton file generation suppressed with "
                             << "command line option -SS";
 
@@ -678,7 +678,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
                                  << be_nl
                                  << "// " << __FILE__
                                  << ":" << __LINE__
-                                 << be_nl << be_nl;
+                                 << be_nl_2;
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->server_template_header_);
@@ -729,9 +729,9 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
       return -1;
     }
 
-  *this->server_skeletons_ << be_nl << be_nl << "// TAO_IDL - Generated from "
+  *this->server_skeletons_ << be_nl_2 << "// TAO_IDL - Generated from "
                            << be_nl << "// " << __FILE__ << ":" << __LINE__
-                           << be_nl << be_nl;
+                           << be_nl_2;
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->server_skeletons_);
@@ -806,7 +806,7 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
   *this->server_template_skeletons_ << be_nl << "// TAO_IDL - Generated from "
                                     << be_nl << "// "
                                     << __FILE__ << ":" << __LINE__
-                                    << be_nl << be_nl;
+                                    << be_nl_2;
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->server_template_skeletons_);
@@ -918,7 +918,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
   *this->anyop_header_ << be_nl
                        << "// TAO_IDL - Generated from" << be_nl
                        << "// " << __FILE__ << ":" << __LINE__
-                       << be_nl << be_nl;
+                       << be_nl_2;
 
   // Generate the #ident string, if any.
   this->gen_ident_string (this->anyop_header_);
@@ -1153,7 +1153,7 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
   os << be_nl
      << "// TAO_IDL - Generated from" << be_nl
      << "// " << __FILE__ << ":" << __LINE__
-     << be_nl << be_nl;
+     << be_nl_2;
 
   // Generate the #ident string, if any.
   this->gen_ident_string (this->ciao_svnt_header_);
@@ -1227,7 +1227,7 @@ TAO_CodeGen::start_ciao_svnt_source (const char *fname)
   os << be_nl
      << "// TAO_IDL - Generated from" << be_nl
      << "// " << __FILE__ << ":" << __LINE__
-     << be_nl << be_nl;
+     << be_nl_2;
 
   // Generate the #ident string, if any.
   this->gen_ident_string (this->ciao_svnt_source_);
@@ -1422,7 +1422,7 @@ TAO_CodeGen::start_ciao_conn_header (const char *fname)
   os << be_nl
      << "// TAO_IDL - Generated from" << be_nl
      << "// " << __FILE__ << ":" << __LINE__
-     << be_nl << be_nl;
+     << be_nl_2;
 
   // Generate the #ident string, if any.
   this->gen_ident_string (this->ciao_conn_header_);
@@ -1582,7 +1582,7 @@ TAO_CodeGen::start_ciao_ami_rh_impl_header (const char *fname)
   os << be_nl
      << "// TAO_IDL - Generated from" << be_nl
      << "// " << __FILE__ << ":" << __LINE__
-     << be_nl << be_nl;
+     << be_nl_2;
 
   // Generate the #ident string, if any.
   this->gen_ident_string (this->ciao_conn_header_);
@@ -1698,7 +1698,7 @@ TAO_CodeGen::start_implementation_header (const char *fname)
   *this->implementation_header_ << be_nl << "// TAO_IDL - Generated from "
                                 << be_nl << "// "
                                 << __FILE__ << ":" << __LINE__
-                                << be_nl << be_nl;
+                                << be_nl_2;
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->implementation_header_);
@@ -1755,7 +1755,7 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
   *this->implementation_skeleton_ << be_nl << "// TAO_IDL - Generated from "
                                   << be_nl << "// "
                                   << __FILE__ << ":" << __LINE__
-                                  << be_nl << be_nl;
+                                  << be_nl_2;
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->implementation_skeleton_);
@@ -1782,7 +1782,7 @@ TAO_CodeGen::end_client_header (void)
 {
   // Generate the <<= and >>= operators here.
 
-  *this->client_header_ << be_nl << be_nl << "// TAO_IDL - Generated from"
+  *this->client_header_ << be_nl_2 << "// TAO_IDL - Generated from"
                         << be_nl << "// " << __FILE__ << ":"
                         << __LINE__ << be_nl;
 
@@ -1812,9 +1812,9 @@ TAO_CodeGen::end_client_header (void)
 
   if (be_global->gen_dcps_type_support_only ())
     {
-      *this->client_header_ << be_nl << be_nl
+      *this->client_header_ << be_nl_2
         << "#endif /* end of disabling TAO specific code */"
-        << be_nl << be_nl;
+        << be_nl_2;
     }
 
   *this->client_header_ << "#endif /* ifndef */\n"
@@ -1882,13 +1882,13 @@ TAO_CodeGen::end_server_header (void)
 
   if (be_global->post_include () != 0)
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "#include /**/ \""
           << be_global->post_include ()
           << "\"";
     }
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "#endif /* ifndef */\n"
       << "\n";
 
@@ -1956,7 +1956,7 @@ TAO_CodeGen::end_implementation_header (const char *fname)
 int
 TAO_CodeGen::end_server_template_header (void)
 {
-  *this->server_template_header_ << be_nl << be_nl << "// TAO_IDL - Generated from "
+  *this->server_template_header_ << be_nl_2 << "// TAO_IDL - Generated from "
                                  << be_nl << "// "
                                  << __FILE__ << ":" << __LINE__ << "\n";
 
@@ -2146,7 +2146,7 @@ TAO_CodeGen::end_ciao_ami_conn_idl (void)
 int
 TAO_CodeGen::end_ciao_ami_rh_impl_header (void)
 {
-  *this->ciao_ami_rh_impl_header_ << be_nl << be_nl << "// TAO_IDL - Generated from"
+  *this->ciao_ami_rh_impl_header_ << be_nl_2 << "// TAO_IDL - Generated from"
                                   << be_nl << "// " << __FILE__ << ":"
                                   << __LINE__ << be_nl;
 
@@ -2215,7 +2215,7 @@ TAO_CodeGen::gen_ident_string (TAO_OutStream *stream) const
 
   if (str != 0)
     {
-      *stream << "#" << str << be_nl << be_nl;
+      *stream << "#" << str << be_nl_2;
     }
 }
 
@@ -2799,7 +2799,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
   if (be_global->gen_dcps_type_support_only ())
     {
       *this->client_stubs_ << "\n\n#if 0 // disable TAO specific code "
-                           << be_nl << be_nl;
+                           << be_nl_2;
     }
 
   // Always generated.

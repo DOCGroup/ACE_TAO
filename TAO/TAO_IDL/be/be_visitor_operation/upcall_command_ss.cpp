@@ -77,8 +77,8 @@ be_visitor_operation_upcall_command_ss::visit (
   // save the node.
   this->ctx_->node (node);
 
-  os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Generate the operation-specific TAO::Upcall_Command concrete
   // class.
@@ -132,7 +132,7 @@ be_visitor_operation_upcall_command_ss::visit (
   os << be_uidt_nl;
 
   os << "{" << be_nl
-     << "}" << be_nl << be_nl;
+     << "}" << be_nl_2;
 
   // Generate execute() method.
   os << "virtual void execute (void)" << be_nl

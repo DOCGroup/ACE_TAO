@@ -11,7 +11,6 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
-#include <TAO_IDL/be_include/be_helper.h>
 
 be_visitor_executor_exh::be_visitor_executor_exh (
       be_visitor_context *ctx)
@@ -59,7 +58,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   const char *global = (sname_str == "" ? "" : "::");
 
-  os_ << be_uidt_nl << be_idt_nl
+  os_ << be_nl_2
       << "class " << export_macro_.c_str () << " " << lname
       << "_exec_i" << be_idt_nl
       << ": public virtual " << lname << "_Exec," << be_idt_nl
@@ -73,11 +72,9 @@ be_visitor_executor_exh::visit_component (be_component *node)
   os_ << be_nl
       << "virtual ~" << lname << "_exec_i (void);";
 
-  os_ << be_uidt << be_uidt_nl << be_idt << be_idt_nl
+  os_ << be_nl_2
       << "//@{" << be_nl
-      << "/** Supported operations and attributes. */"
-      << be_uidt << be_uidt_nl << be_idt << be_idt_nl;
-
+      << "/** Supported operations and attributes. */";
 
   int status =
     node->traverse_inheritance_graph (
@@ -86,7 +83,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
       false,
       false);
 
-  os_ << "//@}";
+  os_ << be_nl_2 << "//@}" << be_nl_2;
 
   if (status == -1)
     {
@@ -98,13 +95,13 @@ be_visitor_executor_exh::visit_component (be_component *node)
                         -1);
     }
 
-  os_ << be_uidt << be_uidt_nl << be_idt << be_idt_nl
-      << "//@{" << be_nl
+  os_ << "//@{" << be_nl
       << "/** Component attributes and port operations. */";
 
   status = this->visit_component_scope (node);
 
-  os_ << be_idt_nl << "//@}";
+  os_ << be_nl
+      << "//@}" << be_nl_2;
 
   if (status == -1)
     {
@@ -116,14 +113,13 @@ be_visitor_executor_exh::visit_component (be_component *node)
                         -1);
     }
 
-  os_ << be_uidt << be_uidt_nl << be_idt << be_idt_nl
-      << "//@{" << be_nl
+  os_ << "//@{" << be_nl
       << "/** Operations from Components::" << be_global->ciao_container_type ()
       << "Component. */";
 
   const char *container_type = be_global->ciao_container_type ();
 
-  os_ << be_uidt << be_uidt_nl << be_idt << be_idt_nl
+  os_ << be_nl_2
       << "virtual void set_"
       << tao_cg->downcase (container_type)
       << "_context ("
@@ -132,10 +128,10 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
     {
-      os_ << be_uidt << be_uidt_nl << be_idt << be_idt_nl
+      os_ << be_nl_2
           << "virtual void configuration_complete (void);";
 
-      os_ << be_uidt << be_uidt_nl << be_idt << be_idt_nl
+      os_ << be_nl_2
           << "virtual void ccm_activate (void);" << be_nl
           << "virtual void ccm_passivate (void);";
     }
@@ -145,14 +141,13 @@ be_visitor_executor_exh::visit_component (be_component *node)
   os_ << be_nl
       << "//@}";
 
-  os_ << be_uidt << be_uidt_nl << be_idt << be_idt_nl
+  os_ << be_nl_2
       << "//@{" << be_nl
-      << "/** User defined operations */"
-      << be_uidt << be_uidt_nl << be_idt << be_idt_nl;
-  os_ << be_nl
-      << "//@}";
+      << "/** User defined operations */";
 
-  os_ << be_uidt << be_uidt_nl << be_idt_nl
+  os_ << be_nl_2 << "//@}";
+
+  os_ << be_uidt << be_nl_2
       << "private:" << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "_Context_var ciao_context_;";
@@ -172,7 +167,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   if (be_global->gen_ciao_exec_reactor_impl ())
     {
-      os_ << be_uidt << be_uidt_nl << be_idt << be_idt_nl
+      os_ << be_nl_2
           << "ACE_Reactor* reactor (void);";
     }
 
@@ -201,7 +196,7 @@ be_visitor_executor_exh::visit_provides (be_provides *node)
 
   const char *global = (sname_str == "" ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "virtual " << global << sname << "::CCM_"
       << lname << "_ptr" << be_nl
       << "get_" << port_name << " (void);";
@@ -218,11 +213,10 @@ be_visitor_executor_exh::visit_consumes (be_consumes *node)
   const char *port_name =
     node->local_name ()->get_string ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "virtual void" << be_nl
       << "push_" << port_name << " (" << be_idt_nl
       << "::" << obj_name << " * ev);" << be_uidt;
 
   return 0;
 }
-

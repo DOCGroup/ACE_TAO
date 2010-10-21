@@ -124,8 +124,8 @@ be_visitor_valuebox_field_ch::visit_array (be_array *node)
     }
 
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "void " << field->local_name () << " (" << fname << ");" << be_nl;
 
@@ -162,8 +162,8 @@ be_visitor_valuebox_field_ch::visit_enum (be_enum *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   this->emit_member_set (field, bt, "", "");
   this->emit_member_get (field, bt, "", "", "const");
@@ -198,8 +198,8 @@ be_visitor_valuebox_field_ch::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   this->emit_member_set (field, bt, "", "_ptr");
   this->emit_member_get (field, bt, "", "_ptr", "const");
@@ -234,8 +234,8 @@ be_visitor_valuebox_field_ch::visit_interface_fwd (be_interface_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   this->emit_member_set (field, bt, "", "_ptr");
   this->emit_member_get (field, bt, "", "_ptr", "const");
@@ -284,8 +284,8 @@ be_visitor_valuebox_field_ch::visit_predefined_type (be_predefined_type *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   switch (node->pt ())
     {
@@ -337,8 +337,8 @@ be_visitor_valuebox_field_ch::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   this->emit_member_set (field, bt, "const ", " &");
   this->emit_member_get (field, bt, "const ", " &", "const");
@@ -375,8 +375,8 @@ be_visitor_valuebox_field_ch::visit_string (be_string *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   this->emit_member_set (field, bt, "", "");
   this->emit_member_set (field, bt, "const ", "");
@@ -426,8 +426,8 @@ be_visitor_valuebox_field_ch::visit_structure (be_structure *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   this->emit_member_set (field, bt, "const ", " &");
   this->emit_member_get (field, bt, "const ", " &", "const");
@@ -486,8 +486,8 @@ be_visitor_valuebox_field_ch::visit_union (be_union *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   this->emit_member_set (field, bt, "const ", " &");
   this->emit_member_get (field, bt, "const ", " &", "const");

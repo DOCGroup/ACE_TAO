@@ -78,9 +78,9 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
   this->is_nested_ = true;
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   if (this->gen_member_typecodes (node) != 0)
     {

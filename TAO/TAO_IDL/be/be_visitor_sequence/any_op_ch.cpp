@@ -41,12 +41,12 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
   const char *macro = this->ctx_->export_macro ();
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   ACE_CString name;
 
@@ -125,7 +125,7 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
           be_util::gen_nested_namespace_end (os, module);
 
           // Emit #else.
-          *os << be_nl << be_nl
+          *os << be_nl_2
               << "#else\n\n";
         }
     }

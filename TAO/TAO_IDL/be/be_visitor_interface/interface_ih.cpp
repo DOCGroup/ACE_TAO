@@ -48,7 +48,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
   if (be_global->gen_impl_debug_info ())
     {
       *os << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
     }
 
   // Now generate the class definition.
@@ -79,7 +79,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
       << "public:" << be_idt_nl
       << "// Constructor " << be_nl
       <<  be_global->impl_class_prefix () << namebuf
-      << be_global->impl_class_suffix () << " (void);" << be_nl << be_nl;
+      << be_global->impl_class_suffix () << " (void);" << be_nl_2;
 
   if (be_global->gen_copy_ctor () && !node->is_local ())
     {
@@ -96,7 +96,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
           << be_global->impl_class_prefix () << namebuf
           << be_global->impl_class_suffix () << "& " << "operator=(const "
           << be_global->impl_class_prefix () << namebuf
-          << be_global->impl_class_suffix () << "&);" << be_nl << be_nl;
+          << be_global->impl_class_suffix () << "&);" << be_nl_2;
 
     }
 
@@ -133,7 +133,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
 
 
   *os << be_uidt_nl
-      << "};" << be_nl << be_nl;
+      << "};" << be_nl_2;
 
   return 0;
 }

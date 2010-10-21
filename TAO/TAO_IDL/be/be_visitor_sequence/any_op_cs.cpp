@@ -41,9 +41,9 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -110,7 +110,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
           << "_tao_elem);" << be_uidt << be_uidt_nl
           << "}";
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "::CORBA::Boolean operator>>= (" << be_idt_nl
           << "const ::CORBA::Any &_tao_any," << be_nl
           << "std::vector<" << bt->full_name ()
@@ -168,7 +168,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
           << "return false;" << be_uidt_nl
           << "}";
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "template<>" << be_nl
           << "::CORBA::Boolean" << be_nl
           << "Any_Dual_Impl_T<" << node->name ()
@@ -235,7 +235,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
               << "::" << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
               << "_tao_elem" << be_uidt_nl
               << ");" << be_uidt << be_uidt << be_uidt_nl
-              << "}" << be_nl << be_nl;
+              << "}" << be_nl_2;
 
           // Non-copying insertion.
           *os << "// Non-copying insertion." << be_nl
@@ -251,7 +251,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
               << "::" << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
               << "_tao_elem" << be_uidt_nl
               << ");" << be_uidt << be_uidt_nl
-              << "}" << be_nl << be_nl;
+              << "}" << be_nl_2;
 
           // Extraction to non-const pointer (deprecated, just calls the other).
           *os << "// Extraction to non-const pointer (deprecated)." << be_nl
@@ -264,7 +264,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
               << "const ::" << node->name () << " *&> (" << be_nl
               << "_tao_elem" << be_uidt_nl
               << ");" << be_uidt << be_uidt_nl
-              << "}" << be_nl << be_nl;
+              << "}" << be_nl_2;
 
           // Extraction to const pointer.
           *os << "// Extraction to const pointer." << be_nl
@@ -286,7 +286,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
           be_util::gen_nested_namespace_end (os, module);
 
           // Emit #else.
-          *os << be_nl << be_nl
+          *os << be_nl_2
               << "#else\n\n";
         }
     }
@@ -315,7 +315,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Non-copying insertion.
   *os << "// Non-copying insertion." << be_nl
@@ -331,7 +331,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Extraction to non-const pointer (deprecated, just calls the other).
   *os << "// Extraction to non-const pointer (deprecated)." << be_nl
@@ -344,7 +344,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "const " << node->name () << " *&> (" << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Extraction to const pointer.
   *os << "// Extraction to const pointer." << be_nl

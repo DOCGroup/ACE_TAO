@@ -22,15 +22,15 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "///////////////////////////////////////////////////////////////////////"
       << be_nl
       << "//                    Direct  Impl. Declaration" << be_nl
-      << "//" << be_nl << be_nl;
+      << "//" << be_nl_2;
 
   // Generate Class Declaration.
   *os << "class " << be_global->skel_export_macro ()
@@ -109,11 +109,11 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
     }
 
   *os << be_uidt_nl
-      << "};" << be_nl << be_nl
+      << "};" << be_nl_2
       << "//" << be_nl
       << "//                Direct  Proxy Impl. Declaration" << be_nl
       << "///////////////////////////////////////////////////////////////////////"
-      << be_nl << be_nl;
+      << be_nl_2;
 
   return 0;
 }

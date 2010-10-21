@@ -39,7 +39,7 @@ be_visitor_connector_ami_exh::visit_connector (be_connector *node)
 
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "namespace CIAO_" << node->flat_name ()
       << "_Impl" << be_nl
       << "{" << be_idt;
@@ -122,7 +122,7 @@ be_visitor_connector_ami_exh::visit_connector (be_connector *node)
 void
 be_visitor_connector_ami_exh::gen_entrypoint (void)
 {
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "extern \"C\" " << this->export_macro_.c_str ()
       << " ::Components::EnterpriseComponent_ptr" << be_nl
       << "create_"

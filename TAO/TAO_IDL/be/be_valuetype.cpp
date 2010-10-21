@@ -428,9 +428,9 @@ be_valuetype::gen_helper_header (char *, char *)
 {
   TAO_OutStream *os = tao_cg->client_header ();
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -459,10 +459,10 @@ be_valuetype::gen_helper_inline (char *, char *)
   // is not getting generated... Actually this is a much bigger
   // problem. Just hacking  it up for the timebeing..
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
-  *os << "#if defined (__ACE_INLINE__)" << be_nl << be_nl
+  *os << "#if defined (__ACE_INLINE__)" << be_nl_2
       << be_global->core_versioning_begin () << be_nl
       << "namespace CORBA" << be_nl
       << "{"
@@ -472,7 +472,7 @@ be_valuetype::gen_helper_inline (char *, char *)
       << "extern " << be_global->stub_export_macro () << " void remove_ref ("
       << this->full_name () << " *);"
       <<  be_uidt_nl
-      << "}" << be_nl << be_nl
+      << "}" << be_nl_2
       << be_global->core_versioning_end () << be_nl
       << "#endif /*__ACE_INLINE__*/";
 
@@ -485,8 +485,8 @@ be_valuetype::gen_helper_stubs (char *, char *)
 {
   TAO_OutStream *os = tao_cg->client_stubs ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "void" << be_nl
       << "CORBA::add_ref (" << this->full_name () << " * vt)" << be_nl
@@ -495,7 +495,7 @@ be_valuetype::gen_helper_stubs (char *, char *)
       << "{" << be_idt_nl
       << "vt->_add_ref ();" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   *os << "void" << be_nl
       << "CORBA::remove_ref (" << this->full_name () << " * vt)" << be_nl
@@ -537,8 +537,8 @@ be_valuetype::gen_var_out_seq_decls (void)
 
   TAO_OutStream *os = tao_cg->client_header ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Generate the ifdefined macro for this interface.
   os->gen_ifdef_macro (this->flat_name (),
@@ -546,7 +546,7 @@ be_valuetype::gen_var_out_seq_decls (void)
 
   const char *lname = this->local_name ();
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "class " << lname << ";" << be_nl
       << "typedef" << be_idt_nl
       << "TAO_Value_Var_T<" << be_idt << be_idt_nl
@@ -800,7 +800,7 @@ be_valuetype::gen_skel_helper (be_interface *concrete,
               os->indent ();
 
               *os << "// TAO_IDL - Generated from" << be_nl
-                  << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+                  << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
               if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
                 {

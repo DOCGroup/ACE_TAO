@@ -61,10 +61,10 @@ be_visitor_sequence_serializer_op_ch::visit_sequence (be_sequence *node)
   if (be_global->gen_dcps_type_support_only ())
     {
       *os << "\n#endif /* end of disabling TAO specific code */"
-          << be_nl << be_nl;
+          << be_nl_2;
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // If we're an anonymous sequence, we must protect against
@@ -76,7 +76,7 @@ be_visitor_sequence_serializer_op_ch::visit_sequence (be_sequence *node)
           << "\n#define _TAO_SERIALIZER_OP_" << node->flat_name () << "_H_";
     }
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   *os << be_global->stub_export_macro ()
       << " ::CORBA::Boolean _tao_is_bounded_size (" << be_idt << be_idt_nl
@@ -91,7 +91,7 @@ be_visitor_sequence_serializer_op_ch::visit_sequence (be_sequence *node)
       << "const " << node->name () << " &" << be_uidt_nl
       << ");" << be_uidt_nl;
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator<< (" << be_idt << be_idt_nl
       << "TAO::DCPS::Serializer &," << be_nl
@@ -112,7 +112,7 @@ be_visitor_sequence_serializer_op_ch::visit_sequence (be_sequence *node)
   if (be_global->gen_dcps_type_support_only ())
     {
       *os << be_nl  << be_nl << "#if 0 // disable TAO specific code"
-          << be_nl << be_nl;
+          << be_nl_2;
     }
   node->cli_hdr_serializer_op_gen (1);
   return 0;

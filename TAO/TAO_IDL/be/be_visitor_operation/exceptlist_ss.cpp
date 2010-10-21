@@ -72,7 +72,7 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
           << "static ::CORBA::ULong const nexceptions = 0;";
     }
 
-  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl << be_nl;
+  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl_2;
 
   return 0;
 }

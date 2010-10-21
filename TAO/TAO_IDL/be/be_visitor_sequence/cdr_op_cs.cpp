@@ -90,7 +90,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
         }
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
     << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
   *os << "#if !defined _TAO_CDR_OP_"
@@ -115,7 +115,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
           << "{" << be_idt_nl
           << "::CORBA::ULong length = _tao_vector.size ();"
           << be_nl
-          << "strm << length;" << be_nl << be_nl
+          << "strm << length;" << be_nl_2
           << "for ( ::CORBA::ULong i = 0UL; i < length; ++i)"
           << be_idt_nl
           << "{" << be_idt_nl
@@ -125,7 +125,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
           << "}" << be_uidt << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
           << "return true;" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
     }
   else
     {
@@ -138,7 +138,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
           << "{" << be_idt_nl
           << "return TAO::marshal_sequence(strm, _tao_sequence);"
           << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
         }
 
   //  Set the sub state as generating code for the input operator.
@@ -159,12 +159,12 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
           *os << " *";
         }
 
-      *os << " tmp;" << be_nl << be_nl
+      *os << " tmp;" << be_nl_2
           << "if (! (strm >> length))" << be_idt_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
-          << "_tao_vector.resize (length);" << be_nl << be_nl
+          << "_tao_vector.resize (length);" << be_nl_2
           << "for ( ::CORBA::ULong i = 0UL; i < length; ++i)"
           << be_idt_nl
           << "{" << be_idt_nl

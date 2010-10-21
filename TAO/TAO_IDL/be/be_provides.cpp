@@ -70,7 +70,7 @@ be_provides::gen_facet_svnt_decl (TAO_OutStream &os)
       suffix = ACE_CString ("_") + suffix;
     }
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << "namespace CIAO_FACET" << suffix.c_str () << be_nl
      << "{" << be_idt_nl;
 
@@ -119,7 +119,7 @@ be_provides::gen_facet_svnt_decl (TAO_OutStream &os)
         }
     }
 
-  os << be_nl << be_nl << "/// Get component implementation." << be_nl
+  os << be_nl_2 << "/// Get component implementation." << be_nl
      << "virtual CORBA::Object_ptr _get_component (void);"
      << be_uidt_nl << be_nl;
 
@@ -127,7 +127,7 @@ be_provides::gen_facet_svnt_decl (TAO_OutStream &os)
 
   os << "/// Facet executor." << be_nl
      << global << sname << "::CCM_"
-     << lname << "_var executor_;" << be_nl << be_nl;
+     << lname << "_var executor_;" << be_nl_2;
 
   os << "/// Context object." << be_nl
      << "::Components::CCMContext_var ctx_;" << be_uidt_nl;
@@ -170,7 +170,7 @@ be_provides::gen_facet_svnt_defn (TAO_OutStream &os)
       suffix = ACE_CString ("_") + suffix;
     }
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << "namespace CIAO_FACET" << suffix.c_str () << be_nl
      << "{" << be_idt_nl;
 
@@ -187,7 +187,7 @@ be_provides::gen_facet_svnt_defn (TAO_OutStream &os)
      << "{" << be_nl
      << "}";
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << lname << "_Servant::~"
      << lname << "_Servant (void)" << be_nl
      << "{" << be_nl
@@ -200,7 +200,7 @@ be_provides::gen_facet_svnt_defn (TAO_OutStream &os)
       be_interface *op_scope =
         be_interface::narrow_from_decl (impl);
 
-      os << be_nl << be_nl
+      os << be_nl_2
          << "// All facet operations and attributes.";
 
       /// The overload of traverse_inheritance_graph() used here
@@ -228,7 +228,7 @@ be_provides::gen_facet_svnt_defn (TAO_OutStream &os)
         }
     }
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << "::CORBA::Object_ptr" << be_nl
      << lname << "_Servant::_get_component (void)"
      << be_nl

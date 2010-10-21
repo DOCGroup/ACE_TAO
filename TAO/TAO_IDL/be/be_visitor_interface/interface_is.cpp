@@ -41,7 +41,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
   if (be_global->gen_impl_debug_info ())
     {
       *os << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
     }
 
   *os << "// Implementation skeleton constructor" << be_nl;
@@ -54,7 +54,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
       << " (void)" << be_nl;
 
   *os << "{" << be_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   os->indent ();
   *os << "// Implementation skeleton destructor" << be_nl;
@@ -66,7 +66,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
       << " (void)" << be_nl;
 
   *os << "{" <<be_nl;
-  *os << "}" << be_nl << be_nl;
+  *os << "}" << be_nl_2;
 
   if (be_global->gen_copy_ctor () && !node->is_local ())
     {

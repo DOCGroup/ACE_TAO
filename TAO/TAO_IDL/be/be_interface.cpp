@@ -669,7 +669,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
   // Generate the constructor from stub and servant.
   if (!this->is_local ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "ACE_INLINE" << be_nl;
       *os << this->name () << "::"
           << this->local_name () << " ("
@@ -780,7 +780,7 @@ be_interface:: gen_var_out_seq_decls (void)
   const char *lname = this->local_name ();
   TAO_OutStream *os = tao_cg->client_header ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate the ifdefined macro for this interface.
@@ -807,7 +807,7 @@ be_interface:: gen_var_out_seq_decls (void)
   if (be_global->ami_call_back ()
       && !already_ami)
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "class AMI_" << lname << "Handler;" << be_nl
           << "typedef AMI_" << lname << "Handler *AMI_"
           << lname << "Handler_ptr;";
@@ -816,17 +816,17 @@ be_interface:: gen_var_out_seq_decls (void)
   if (be_global->ami4ccm_call_back ()
       && !already_ami)
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "class AMI4CCM_" << lname << "Handler;" << be_nl
           << "typedef AMI4CCM_" << lname << "Handler *AMI4CCM_"
           << lname << "Handler_ptr;";
     }
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "class " << lname << ";" << be_nl
       << "typedef " << lname << " *" << lname << "_ptr;";
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "typedef" << be_idt_nl
       << "TAO_Objref_Var_T<" << be_idt << be_idt_nl
       << lname << be_uidt_nl
@@ -977,7 +977,7 @@ be_interface::gen_operation_table (const char *flat_name,
         os->indent ();
 
         // Start the table generation.
-        *os << be_nl << be_nl
+        *os << be_nl_2
             << "static const TAO_operation_db_entry " << flat_name
             << "_operations [] = {" << be_idt_nl;
 
@@ -1042,7 +1042,7 @@ be_interface::gen_operation_table (const char *flat_name,
             ++this->skel_count_;
           }
 
-        *os << "};" << be_nl << be_nl;
+        *os << "};" << be_nl_2;
         *os << "static const ::CORBA::Long _tao_" << flat_name
             << "_optable_size = sizeof (ACE_Hash_Map_Entry<const char *,"
             << " TAO::Operation_Skeletons>) * (" << (3 * this->skel_count_)
@@ -1507,11 +1507,11 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
                                         UTL_ExceptList *,
                                         TAO_OutStream *os)
 {
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate the static method corresponding to this method.
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "ACE_INLINE void" << be_nl
       << derived->full_direct_proxy_impl_name ()
       << "::" << prefix << d->local_name () << " ("
@@ -1710,8 +1710,8 @@ be_interface::gen_gperf_things (const char *flat_name)
 
   TAO_OutStream *os = tao_cg->server_skeletons ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Generate the correct class definition for the operation lookup
   // strategy. Then, get the lookup method from GPERF. And then,
@@ -2218,10 +2218,10 @@ be_interface::gen_skel_helper (be_interface *derived,
                   continue;
                 }
 
-              *os << be_nl << be_nl
+              *os << be_nl_2
                   << "// TAO_IDL - Generated from" << be_nl
                   << "// " << __FILE__ << ":" << __LINE__
-                  << be_nl << be_nl;
+                  << be_nl_2;
 
               if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
                 {
@@ -2273,7 +2273,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                   return -1;
                 }
 
-              *os << be_nl << be_nl;
+              *os << be_nl_2;
 
               if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
                 {
@@ -2317,7 +2317,7 @@ be_interface::gen_skel_helper (be_interface *derived,
 
               if (!attr->readonly ())
                 {
-                  *os << be_nl << be_nl;
+                  *os << be_nl_2;
 
                   if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
                     {
@@ -2399,8 +2399,8 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
 
       if (d->node_type () == AST_Decl::NT_op)
         {
-          *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-              << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+          *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+              << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
           // Generate the static method corresponding to this method.
           *os << "static void" << be_nl
@@ -2427,7 +2427,7 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
 
           if (!attr->readonly ())
             {
-              *os << be_nl << be_nl;
+              *os << be_nl_2;
 
               // Generate the static method corresponding to
               // this method.
@@ -3112,7 +3112,7 @@ be_interface::gen_facet_svnt_hdr (be_visitor *visitor,
       suffix = ACE_CString ("_") + suffix;
     }
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << "namespace CIAO_FACET" << suffix.c_str () << be_nl
      << "{" << be_idt_nl;
 
@@ -3155,7 +3155,7 @@ be_interface::gen_facet_svnt_hdr (be_visitor *visitor,
                         -1);
     }
 
-  os << be_nl << be_nl << "// Get component implementation." << be_nl
+  os << be_nl_2 << "// Get component implementation." << be_nl
      << "virtual CORBA::Object_ptr _get_component (void);"
      << be_uidt_nl << be_nl;
 
@@ -3163,12 +3163,12 @@ be_interface::gen_facet_svnt_hdr (be_visitor *visitor,
 
   os << "// Facet executor." << be_nl
      << global << sname << "::CCM_"
-     << lname << "_var executor_;" << be_nl << be_nl;
+     << lname << "_var executor_;" << be_nl_2;
 
   os << "// Context object." << be_nl
      << "::Components::CCMContext_var ctx_;" << be_uidt_nl;
 
-  os << "};" << be_nl << be_nl;
+  os << "};" << be_nl_2;
 
   os << be_uidt_nl
      << "}";
@@ -3199,7 +3199,7 @@ be_interface::gen_facet_svnt_src (be_visitor *visitor,
       suffix = ACE_CString ("_") + suffix;
     }
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << "namespace CIAO_FACET" << suffix.c_str () << be_nl
      << "{" << be_idt_nl;
 
@@ -3216,13 +3216,13 @@ be_interface::gen_facet_svnt_src (be_visitor *visitor,
      << "{" << be_nl
      << "}";
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << lname << "_Servant::~"
      << lname << "_Servant (void)" << be_nl
      << "{" << be_nl
      << "}";
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << "// All facet operations and attributes.";
 
   /// The overload of traverse_inheritance_graph() used here
@@ -3249,7 +3249,7 @@ be_interface::gen_facet_svnt_src (be_visitor *visitor,
                         -1);
     }
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << "::CORBA::Object_ptr" << be_nl
      << lname << "_Servant::_get_component (void)"
      << be_nl

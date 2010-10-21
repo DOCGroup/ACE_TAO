@@ -41,10 +41,10 @@ be_visitor_native_ch::visit_native (be_native *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__
-      << be_nl << be_nl;
+      << be_nl_2;
 
   const char *node_name = node->full_name ();
 
@@ -60,7 +60,7 @@ be_visitor_native_ch::visit_native (be_native *node)
            && 0 == ACE_OS::strcmp (node->full_name (),"DDS::SampleInfoSeq"))
     {
       // DDS/DCPS zero-copy read sequence type support.
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "typedef ::TAO::DCPS::ZeroCopyInfoSeq< "
           << "SampleInfo"
           << ", DCPS_ZERO_COPY_SEQ_DEFAULT_SIZE> "
@@ -87,7 +87,7 @@ be_visitor_native_ch::visit_native (be_native *node)
                        ACE_OS::strlen (node_name) - 3);
       sample_name[ACE_OS::strlen (node_name) - 3] = '\0';
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "typedef ::TAO::DCPS::ZeroCopyDataSeq< "
           << sample_name
           << ", DCPS_ZERO_COPY_SEQ_DEFAULT_SIZE> "

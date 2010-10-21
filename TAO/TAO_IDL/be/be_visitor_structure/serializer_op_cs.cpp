@@ -50,8 +50,8 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   IDL_GlobalData::DCPS_Data_Type_Info* info;
   if (0 != (info =  idl_global->is_dcps_type(node->name())))
@@ -106,7 +106,7 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
 #ifdef DCPS_DEBUG_IDL
   *os << "return result;" <<  be_uidt_nl;
 #endif
-  *os << "}" << be_nl << be_nl;
+  *os << "}" << be_nl_2;
 
 
   //- _tao_is_bounded_size(type) method
@@ -134,7 +134,7 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
       }
   }
   *os << ";" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   //- _dcps_find_size(type) method -- like max_marshaled_size but use len - not max.
   this->ctx_->sub_state (TAO_CodeGen::TAO_FIND_SIZE);
@@ -168,7 +168,7 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
 #ifdef DCPS_DEBUG_IDL
   *os << "return result;" <<  be_uidt_nl;
 #endif
-  *os << "}" << be_nl << be_nl;
+  *os << "}" << be_nl_2;
 
 
   //  Set the sub state as generating code for the output operator.
@@ -196,7 +196,7 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
     }
 
   *os << ";" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
@@ -249,7 +249,7 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
 
   // QueryCondition support
 
-  *os << be_nl << be_nl << "#ifdef DDS_USE_QUERY_CONDITION_COMPARATOR" << be_nl
+  *os << be_nl_2 << "#ifdef DDS_USE_QUERY_CONDITION_COMPARATOR" << be_nl
       << "namespace OpenDDS" << be_nl
       << "{" << be_idt_nl
       << "namespace DCPS" << be_nl

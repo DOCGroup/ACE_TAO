@@ -83,7 +83,7 @@ be_visitor_component_ex_idl::visit_component (
 
   const char *global = (sname_str == "" ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "module CIAO_" << node->flat_name () << "_Impl" << be_nl
       << "{" << be_idt_nl;
 

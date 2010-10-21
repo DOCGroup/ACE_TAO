@@ -53,7 +53,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
 
   AST_Decl::NodeType nt = bt->node_type ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
                << "// " __FILE__ << ":" << __LINE__;
 
   // If we contain an anonymous sequence,
@@ -115,7 +115,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
         }
     }
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "typedef ";
 
   if (bt->accept (this) == -1)
@@ -204,7 +204,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
       // An _out decl is generated only for a variable size array.
       if (node->size_type () == AST_Type::VARIABLE)
         {
-          *os << be_nl << be_nl
+          *os << be_nl_2
               << "typedef" << be_idt_nl
               << "TAO_VarArray_Var_T<" << be_idt << be_idt_nl
               << node->local_name () << "," << be_nl
@@ -213,7 +213,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
               << ">" << be_uidt_nl
               << node->local_name () << "_var;" << be_uidt;
 
-          *os << be_nl << be_nl
+          *os << be_nl_2
               << "typedef" << be_idt_nl
               << "TAO_Array_Out_T<" << be_idt << be_idt_nl
               << node->local_name () << "," << be_nl
@@ -225,7 +225,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
         }
       else
         {
-          *os << be_nl << be_nl
+          *os << be_nl_2
               << "typedef" << be_idt_nl
               << "TAO_FixedArray_Var_T<" << be_idt << be_idt_nl
               << node->local_name () << "," << be_nl
@@ -234,14 +234,14 @@ int be_visitor_array_ch::visit_array (be_array *node)
               << ">" << be_uidt_nl
               << node->local_name () << "_var;" << be_uidt;
 
-          *os << be_nl << be_nl
+          *os << be_nl_2
               << "typedef" << be_idt_nl << node->local_name () << be_nl
               << node->local_name () << "_out;" << be_uidt;
         }
     }
 
   // Generate _forany decl.
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "typedef" << be_idt_nl
       << "TAO_Array_Forany_T<" << be_idt << be_idt_nl
       << anon_p << node->local_name () << "," << be_nl
@@ -250,7 +250,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
       << ">" << be_uidt_nl
       << anon_p << node->local_name () << "_forany;" << be_uidt;
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   // The _alloc, _dup, copy, and free methods. If the node is nested, the
   // methods become static
@@ -278,7 +278,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
       *os << storage_class << node->nested_type_name (scope, "_slice")
           << " *" << be_nl;
       *os << node->nested_type_name (scope, "_alloc") << " (void);"
-          << be_nl << be_nl;
+          << be_nl_2;
       *os << storage_class << "void" << be_nl
           << node->nested_type_name (scope, "_free")
           << " (" << be_idt << be_idt_nl;
@@ -308,7 +308,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
       *os << storage_class << node->nested_type_name (scope, "_slice", "_")
           << " *" << be_nl;
       *os << node->nested_type_name (scope, "_alloc", "_")
-          << " (void);" << be_nl << be_nl;
+          << " (void);" << be_nl_2;
       *os << storage_class << "void" << be_nl
           << node->nested_type_name (scope, "_free", "_")
           << " (" << be_idt << be_idt_nl;

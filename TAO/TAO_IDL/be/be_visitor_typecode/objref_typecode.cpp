@@ -71,9 +71,9 @@ TAO::be_visitor_objref_typecode::visit_i (char const * kind,
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Generate the TypeCode instantiation.
   os

@@ -93,18 +93,18 @@ be_visitor_sequence_serializer_op_cs::visit_sequence (be_sequence *node)
 
   if (be_global->gen_dcps_type_support_only ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "#endif /* end of disabling TAO specific code */"
-          << be_nl << be_nl;
+          << be_nl_2;
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-    << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+    << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "#if !defined _TAO_SERIALIZER_OP_"
       << node->flat_name () << "_CPP_" << be_nl
       << "#define _TAO_SERIALIZER_OP_" << node->flat_name () << "_CPP_"
-      << be_nl << be_nl;
+      << be_nl_2;
 
   // --- _tao_is_bounded_size ---
   this->ctx_->sub_state (TAO_CodeGen::TAO_IS_BOUNDED_SIZE);
@@ -132,7 +132,7 @@ be_visitor_sequence_serializer_op_cs::visit_sequence (be_sequence *node)
     }
 
   *os << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // --- _dcps_max_marshaled_size ---
 
@@ -161,7 +161,7 @@ be_visitor_sequence_serializer_op_cs::visit_sequence (be_sequence *node)
     }
 
   *os << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // --- _dcps_find_size ---
   this->ctx_->sub_state (TAO_CodeGen::TAO_FIND_SIZE);
@@ -189,7 +189,7 @@ be_visitor_sequence_serializer_op_cs::visit_sequence (be_sequence *node)
     }
 
   *os << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
 
   // --- operator<< ---
@@ -206,7 +206,7 @@ be_visitor_sequence_serializer_op_cs::visit_sequence (be_sequence *node)
 
   // First encode the sequence length.
   *os << "const ::CORBA::ULong _tao_seq_len = _tao_sequence.length ();"
-      << be_nl << be_nl;
+      << be_nl_2;
   *os << "if (strm << _tao_seq_len)" << be_idt_nl
       << "{" << be_idt_nl;
 
@@ -232,7 +232,7 @@ be_visitor_sequence_serializer_op_cs::visit_sequence (be_sequence *node)
 
   *os << "}" << be_uidt_nl << be_nl
       << "return 0;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // --- operator>> ---
 
@@ -262,7 +262,7 @@ be_visitor_sequence_serializer_op_cs::visit_sequence (be_sequence *node)
   if (! bt->is_local ())
     {
       // First retrieve the length and adjust the sequence length accordingly.
-      *os << "::CORBA::ULong _tao_seq_len;" << be_nl << be_nl;
+      *os << "::CORBA::ULong _tao_seq_len;" << be_nl_2;
       *os << "if (strm >> _tao_seq_len)" << be_idt_nl
           << "{" << be_idt_nl;
 
@@ -299,7 +299,7 @@ be_visitor_sequence_serializer_op_cs::visit_sequence (be_sequence *node)
         }
 
       *os << "// Set the length of the sequence." << be_nl
-          << "_tao_sequence.length (_tao_seq_len);" << be_nl << be_nl;
+          << "_tao_sequence.length (_tao_seq_len);" << be_nl_2;
 
       // Now we do a check for the sequence length to be non zero.
       // If length is 0 we return true.
@@ -339,7 +339,7 @@ be_visitor_sequence_serializer_op_cs::visit_sequence (be_sequence *node)
   *os << "return 0;" << be_uidt_nl
       << "}";
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "#endif /* _TAO_SERIALIZER_OP_"
       << node->flat_name () << "_CPP_ */";
 
@@ -1025,7 +1025,7 @@ switch (this->ctx_->sub_state ())
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       {
     // Initialize a boolean variable.
-  *os << "::CORBA::Boolean _tao_marshal_flag = true;" << be_nl << be_nl;
+  *os << "::CORBA::Boolean _tao_marshal_flag = true;" << be_nl_2;
 
 
   if (expr->ev ()->et == AST_Expression::EV_ulong)

@@ -75,7 +75,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
   os->indent ();
 
   // Generate the return type. Return type is simply void.
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "void" << be_nl;
 
   // Get the scope name.
@@ -112,7 +112,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
 
   *os << parent->full_name ();
   *os << "::_narrow (_tao_reply_handler);" << be_uidt
-      << be_nl << be_nl
+      << be_nl_2
       << "// Exception handling" << be_nl
       << "switch (reply_status)" << be_nl
       << "{" << be_idt_nl
@@ -199,7 +199,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
 
         }
 
-      *os << be_uidt_nl << "};" << be_nl << be_nl;
+      *os << be_uidt_nl << "};" << be_nl_2;
 
       *os << "::CORBA::ULong const exceptions_count = "
           << excep_count << ";\n" << be_nl;

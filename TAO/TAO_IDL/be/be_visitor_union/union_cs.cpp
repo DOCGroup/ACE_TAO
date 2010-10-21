@@ -78,11 +78,11 @@ int be_visitor_union_cs::visit_union (be_union *node)
   // Now generate the operations on the union such as the copy constructor
   // and the assignment operator.
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate the copy constructor and the assignment operator here.
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << node->name () << "::" << node->local_name () << " (void)" << be_nl
       << "{" << be_idt_nl
       << "ACE_OS::memset (&this->u_, 0, sizeof (this->u_));" << be_nl;
@@ -144,7 +144,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
         }
     }
 
-  *os << be_uidt_nl << "}" << be_nl << be_nl;
+  *os << be_uidt_nl << "}" << be_nl_2;
 
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
 
@@ -182,14 +182,14 @@ int be_visitor_union_cs::visit_union (be_union *node)
     }
 
   *os << be_uidt_nl << "}" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   *os << node->name () << "::~" << node->local_name ()
       << " (void)" << be_nl
       << "{" << be_idt_nl
       << "// Finalize." << be_nl
       << "this->_reset ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   if (be_global->any_support ())
     {
@@ -201,7 +201,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
           << "static_cast<"
           << node->local_name () << " *> (_tao_void_pointer);" << be_uidt_nl
           << "delete tmp;" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
     }
 
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
@@ -221,7 +221,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
       << "}" << be_uidt_nl << be_nl;
   // Reset and set the discriminant.
   *os << "this->_reset ();" << be_nl;
-  *os << "this->disc_ = u.disc_;" << be_nl << be_nl;
+  *os << "this->disc_ = u.disc_;" << be_nl_2;
   // now switch based on the disc value
   *os << "switch (this->disc_)" << be_nl;
   *os << "{" << be_idt;
@@ -249,9 +249,9 @@ int be_visitor_union_cs::visit_union (be_union *node)
     }
 
   *os << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
   *os << "return *this;" << be_uidt_nl;
-  *os << "}" << be_nl << be_nl;
+  *os << "}" << be_nl_2;
 
   // The reset method.
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_RESET_CS);

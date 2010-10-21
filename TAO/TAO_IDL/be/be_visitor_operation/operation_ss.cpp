@@ -169,8 +169,8 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
                                 intf->full_skel_name (),
                                 upcall_command_name.c_str ());
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "void " << intf->full_skel_name () << "::";
 
@@ -222,7 +222,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   // Declare the argument helper classes.
   this->gen_skel_body_arglist (node, os);
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "TAO::Argument * const args[] =" << be_idt_nl
       << "{" << be_idt_nl
       << "&retval";
@@ -242,7 +242,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "};" << be_uidt_nl << be_nl;
 
   *os << "static size_t const nargs = "
-      << (node->argument_count () + 1) << ";" << be_nl << be_nl;
+      << (node->argument_count () + 1) << ";" << be_nl_2;
 
   // Get the right object implementation.
   *os << intf->full_skel_name () << " * const impl =" << be_idt_nl
@@ -281,7 +281,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "                       , nexceptions"
       << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
       << "                       );" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   return 0;
 }

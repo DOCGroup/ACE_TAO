@@ -28,7 +28,7 @@ be_visitor_operation_svs::visit_operation (be_operation *node)
 {
   this->ctx_->node (node);
 
-  os_ << be_nl << be_nl;
+  os_ << be_nl_2;
 
   // Retrieve the operation return type.
   be_type *bt = be_type::narrow_from_decl (node->return_type ());

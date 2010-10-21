@@ -68,9 +68,9 @@ be_visitor_valuetype_fwd_cdr_op_ci::visit_valuetype_fwd (
 
   //@@ Boris: Can I move this to be_valuetype? (as with _var, _out, etc?)
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__
-      << be_nl << be_nl;
+      << be_nl_2;
 
   //This is just declaration so no ACE_INLINE
   *os << be_global->stub_export_macro ()
