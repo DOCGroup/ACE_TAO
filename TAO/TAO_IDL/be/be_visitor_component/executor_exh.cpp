@@ -145,6 +145,13 @@ be_visitor_executor_exh::visit_component (be_component *node)
   os_ << be_nl
       << "//@}";
 
+  os_ << be_uidt << be_uidt_nl << be_idt << be_idt_nl
+      << "//@{" << be_nl
+      << "/** User defined operations */"
+      << be_uidt << be_uidt_nl << be_idt << be_idt_nl;
+  os_ << be_nl
+      << "//@}";
+
   os_ << be_uidt << be_uidt_nl << be_idt_nl
       << "private:" << be_idt_nl
       << global << sname << "::CCM_" << lname
