@@ -11,6 +11,7 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
+#include <TAO_IDL/be_include/be_helper.h>
 
 be_visitor_executor_exh::be_visitor_executor_exh (
       be_visitor_context *ctx)
@@ -103,7 +104,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   status = this->visit_component_scope (node);
 
-  os_ << "//@}";
+  os_ << be_idt_nl << "//@}";
 
   if (status == -1)
     {
@@ -118,12 +119,11 @@ be_visitor_executor_exh::visit_component (be_component *node)
   os_ << be_uidt << be_uidt_nl << be_idt << be_idt_nl
       << "//@{" << be_nl
       << "/** Operations from Components::" << be_global->ciao_container_type ()
-      << "Component. */"
-      << be_uidt << be_uidt_nl << be_idt << be_idt_nl;
+      << "Component. */";
 
   const char *container_type = be_global->ciao_container_type ();
 
-  os_ << be_nl << be_nl
+  os_ << be_uidt << be_uidt_nl << be_idt << be_idt_nl
       << "virtual void set_"
       << tao_cg->downcase (container_type)
       << "_context ("
@@ -132,10 +132,10 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
     {
-      os_ << be_nl << be_nl
+      os_ << be_uidt << be_uidt_nl << be_idt << be_idt_nl
           << "virtual void configuration_complete (void);";
 
-      os_ << be_nl << be_nl
+      os_ << be_uidt << be_uidt_nl << be_idt << be_idt_nl
           << "virtual void ccm_activate (void);" << be_nl
           << "virtual void ccm_passivate (void);";
     }
@@ -145,7 +145,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
   os_ << be_nl
       << "//@}";
 
-  os_ << be_uidt_nl << be_nl
+  os_ << be_uidt << be_uidt_nl << be_idt_nl
       << "private:" << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "_Context_var ciao_context_;";
