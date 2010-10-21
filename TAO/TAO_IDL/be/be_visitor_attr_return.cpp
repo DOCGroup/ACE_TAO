@@ -48,7 +48,7 @@ be_visitor_attr_return::visit_component (be_component *node)
       << "::" << node->full_name () << "::_duplicate ("
       << this->attr_name_string_.c_str ()
       << ".in ());" << be_uidt;
-      
+
   return 0;
 }
 
@@ -57,7 +57,7 @@ be_visitor_attr_return::visit_enum (be_enum *)
 {
   os_ << be_nl
       << "return " << this->attr_name_string_.c_str () << ";";
-      
+
   return 0;
 }
 
@@ -70,7 +70,7 @@ be_visitor_attr_return::visit_eventtype (be_eventtype *)
       << "return" << be_idt_nl
       << "this->" << this->attr_name_string_.c_str ()
       << ".in ();" << be_uidt;
-      
+
   return 0;
 }
 
@@ -82,7 +82,7 @@ be_visitor_attr_return::visit_home (be_home *node)
       << "::" << node->full_name () << "::_duplicate ("
       << this->attr_name_string_.c_str ()
       << ".in ());" << be_uidt;
-      
+
   return 0;
 }
 
@@ -95,7 +95,7 @@ be_visitor_attr_return::visit_interface (
       << "::" << node->full_name () << "::_duplicate ("
       << this->attr_name_string_.c_str ()
       << ".in ());" << be_uidt;
-      
+
   return 0;
 }
 
@@ -104,7 +104,7 @@ be_visitor_attr_return::visit_predefined_type (
   be_predefined_type *node)
 {
   os_ << be_nl;
-      
+
   switch (node->pt ())
     {
       case AST_PredefinedType::PT_abstract:
@@ -139,7 +139,7 @@ be_visitor_attr_return::visit_predefined_type (
             << ";" << be_uidt;
         break;
     }
-  
+
   return 0;
 }
 
@@ -169,7 +169,7 @@ be_visitor_attr_return::visit_string (be_string *node)
       << (node->width () == sizeof (char) ? "" : "w")
       << "string_dup (" << this->attr_name_string_.c_str ()
       << ".in ());" << be_uidt;
-    
+
   return 0;
 }
 
@@ -198,7 +198,7 @@ be_visitor_attr_return::visit_structure (be_structure *node)
           << be_uidt_nl << be_nl
           << "return retval;";
     }
-    
+
   return 0;
 }
 
@@ -246,7 +246,7 @@ be_visitor_attr_return::visit_union (be_union *node)
           << be_uidt_nl << be_nl
           << "return retval;";
     }
-    
+
   return 0;
 }
 
@@ -259,7 +259,7 @@ be_visitor_attr_return::visit_valuebox (be_valuebox *)
       << "return" << be_idt_nl
       << this->attr_name_string_.c_str ()
       << ".in ();" << be_uidt;
-      
+
   return 0;
 }
 
@@ -272,7 +272,7 @@ be_visitor_attr_return::visit_valuetype (be_valuetype *)
       << "return" << be_idt_nl
       << this->attr_name_string_.c_str ()
       << ".in ();" << be_uidt;
-      
+
   return 0;
 }
 

@@ -53,8 +53,8 @@ be_visitor_executor_private_exh::visit_attribute (be_attribute *node)
     {
       return 0;
     }
-    
-  os_ << be_nl << be_nl;
+
+  os_ << be_uidt << be_uidt_nl << be_idt << be_idt_nl;
 
   be_visitor_member_type_decl v (this->ctx_);
   
@@ -66,10 +66,10 @@ be_visitor_executor_private_exh::visit_attribute (be_attribute *node)
                          ACE_TEXT ("accept on field type failed\n")),
                         -1);
     }
-    
+
   os_ << this->ctx_->port_prefix ().c_str ()
       << node->local_name () << "_;";
-  
+
   return 0;
 }
 

@@ -47,7 +47,7 @@ be_visitor_attr_assign::visit_component (be_component *node)
       << this->attr_name_string_.c_str () << " =" << be_idt_nl
       << "::" << node->full_name () << "::_duplicate ("
       << this->attr_name_ << ");" << be_uidt;
-      
+
   return 0;
 }
 
@@ -57,7 +57,7 @@ be_visitor_attr_assign::visit_enum (be_enum *)
   os_ << be_nl
       << this->attr_name_string_.c_str () << " =" << be_idt_nl
       << this->attr_name_ << ";" << be_uidt;
-      
+
   return 0;
 }
 
@@ -68,7 +68,7 @@ be_visitor_attr_assign::visit_eventtype (be_eventtype *)
       << this->attr_name_ << "->_add_ref ();" << be_nl
       << this->attr_name_string_.c_str () << " =" << be_idt_nl
       << this->attr_name_ << ";" << be_uidt;
-      
+
   return 0;
 }
 
@@ -79,7 +79,7 @@ be_visitor_attr_assign::visit_home (be_home *node)
       << this->attr_name_string_.c_str () << " =" << be_idt_nl
       << "::" << node->full_name () << "::_duplicate ("
       << this->attr_name_ << ");" << be_uidt;
-      
+
   return 0;
 }
 
@@ -91,7 +91,7 @@ be_visitor_attr_assign::visit_interface (
       << this->attr_name_string_.c_str () << " =" << be_idt_nl
       << "::" << node->full_name () << "::_duplicate ("
       << this->attr_name_ << ");" << be_uidt;
-      
+
   return 0;
 }
 
@@ -102,7 +102,7 @@ be_visitor_attr_assign::visit_predefined_type (
   os_ << be_nl
       << this->attr_name_string_.c_str () << " =" << be_idt_nl
       << this->attr_name_ << ";" << be_uidt;
-         
+
   return 0;
 }
 
@@ -186,7 +186,7 @@ be_visitor_attr_assign::visit_valuebox (be_valuebox *)
       << this->attr_name_ << "->_add_ref ();" << be_nl
       << this->attr_name_string_.c_str () << " =" << be_idt_nl
       << this->attr_name_ << ";" << be_uidt;
-      
+
   return 0;
 }
 
@@ -197,7 +197,7 @@ be_visitor_attr_assign::visit_valuetype (be_valuetype *)
       << this->attr_name_ << "->_add_ref ();" << be_nl
       << this->attr_name_string_.c_str () << " =" << be_idt_nl
       << this->attr_name_ << ";" << be_uidt;
-      
+
   return 0;
 }
 
@@ -207,7 +207,7 @@ be_visitor_attr_assign::attr_name (const char *name)
   // No need for copying, the lifetime of the attr
   // the arg is from is longer than that of this visitor.
   this->attr_name_ = name;
-  
+
   // Add to this string for convenience, it's generated
   // in each method above at least once.
   this->attr_name_string_ += this->ctx_->port_prefix ();
