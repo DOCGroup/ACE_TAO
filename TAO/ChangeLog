@@ -1,3 +1,9 @@
+Thu Oct 21 08:01:49 UTC 2010  Martin Corino  <mcorinom@remedy.nl>
+
+        * tests/Bug_3919_Regression/Test.idl:
+        * tests/Bug_3919_Regression/client.cpp:
+          Changes to get rid of wchar problems.
+
 Wed Oct 20 19:50:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/facet_private_exh.cpp:

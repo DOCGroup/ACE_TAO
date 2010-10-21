@@ -22,10 +22,10 @@ module Test
   //       code for this case as compared to using a proper
   //       forward and typedef.
   struct MyAttRef {
-    wstring attRefName;
-    wstring attRefQualifier;
+    string attRefName;
+    string attRefQualifier;
     union MyAttRefValue switch(MyAttRefValEnum) {
-      case ArvAttribute:    wstring attrValue; //value of a simple attribute
+      case ArvAttribute:    string attrValue; //value of a simple attribute
       case ArvInteger:      long intValue; // just for testing
       case ArvComposition:  sequence <MyAttRef> compValue; //a composition by specifying a sequence of MyAttRef elements.
     } attRefValue;
