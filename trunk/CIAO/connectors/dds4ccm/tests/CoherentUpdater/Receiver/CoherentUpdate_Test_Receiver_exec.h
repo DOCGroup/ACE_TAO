@@ -1,20 +1,19 @@
 // -*- C++ -*-
 // $Id$
 
-#ifndef CIAO_RECEIVER_EXEC_H_
-#define CIAO_RECEIVER_EXEC_H_
+#ifndef CIAO_COHERENTUPDATE_TEST_RECEIVER_EXEC_94WCEL_H_
+#define CIAO_COHERENTUPDATE_TEST_RECEIVER_EXEC_94WCEL_H_
+
+#include /**/ "ace/pre.h"
 
 #include "CoherentUpdate_Test_ReceiverEC.h"
-
-#include /**/ "Receiver_exec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include /**/ "Receiver_exec_export.h"
 #include "tao/LocalObject.h"
-
-
 
 namespace CIAO_CoherentUpdate_Test_Receiver_Impl
 {
@@ -39,27 +38,32 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
     int run_;
   };
 
-  //============================================================
-  // Starter_exec_i
-  //============================================================
-  class Starter_exec_i
+  class RECEIVER_EXEC_Export reader_start_exec_i
     : public virtual ::CCM_CoherentUpdateStarter,
       public virtual ::CORBA::LocalObject
   {
   public:
-    Starter_exec_i (Receiver_exec_i & callback);
-    virtual ~Starter_exec_i (void);
+    reader_start_exec_i (
+      ::CoherentUpdate_Test::CCM_Receiver_Context_ptr ctx,
+      Receiver_exec_i & callback);
+    virtual ~reader_start_exec_i (void);
 
-    virtual void set_reader_properties (CORBA::UShort nr_iterations);
-    virtual void start_read (CORBA::UShort run);
+    // Operations and attributes from ::CoherentUpdateStarter
+
+    virtual
+    void set_reader_properties (
+      ::CORBA::UShort nr_iterations);
+
+    virtual
+    void start_read (
+      ::CORBA::UShort run);
 
   private:
+    ::CoherentUpdate_Test::CCM_Receiver_Context_var ciao_context_;
     Receiver_exec_i &callback_;
   };
 
-  //============================================================
-  // Receiver_exec_i
-  //============================================================
+
   class RECEIVER_EXEC_Export Receiver_exec_i
     : public virtual Receiver_Exec,
       public virtual ::CORBA::LocalObject
@@ -68,58 +72,72 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
     Receiver_exec_i (void);
     virtual ~Receiver_exec_i (void);
 
-    // Supported operations and attributes.
-    // Component attributes.
+    //@{
+    /** Supported operations and attributes. */
 
-    // Port operations.
-    virtual ::CoherentUpdate_Test::CCM_Listener_ptr
-    get_info_out_data_listener (void);
+    //@}
+
+    //@{
+    /** Component attributes and port operations. */
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
 
     virtual ::CCM_CoherentUpdateStarter_ptr
-    get_reader_start ();
+    get_reader_start (void);
 
-    bool check_last ();
+    virtual ::CORBA::UShort
+    nr_runs (void);
 
-    void start_read (CORBA::UShort run);
-    void run (CORBA::UShort run);
+    virtual void
+    nr_runs (
+      ::CORBA::UShort nr_runs);
 
     ::CORBA::UShort iterations (void);
     void iterations (::CORBA::UShort iterations);
+    //@}
 
-    ::CORBA::UShort nr_runs (void);
-    void nr_runs (::CORBA::UShort nr_runs);
+    //@{
+    /** Operations from Components::SessionComponent. */
 
-    // Operations from Components::SessionComponent.
-    virtual void
-    set_session_context (
-      ::Components::SessionContext_ptr ctx);
+
+
+    virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);
 
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
+    //@}
+
+    bool check_last ();
+
+    void start_read (CORBA::UShort run);
+    void run (CORBA::UShort run);
 
   private:
-    ::CoherentUpdate_Test::CCM_Receiver_Context_var context_;
+    ::CoherentUpdate_Test::CCM_Receiver_Context_var ciao_context_;
+    ::CCM_CoherentUpdateStarter_var ciao_reader_start_;
 
-    CORBA::UShort   iterations_;
-    CORBA::UShort   run_;
-    CORBA::UShort   nr_runs_;
-    CORBA::Long     last_iter_;
+    ::CORBA::UShort nr_runs_;
+
+    ::CORBA::UShort iterations_;
+    ::CORBA::UShort run_;
+    ::CORBA::Long last_iter_;
 
     read_action_Generator *ticker_;
 
     void read_all (
       ::CoherentUpdate_Test::Reader_ptr reader);
+
+    ACE_Reactor* reactor (void);
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_CoherentUpdate_Test_Receiver_Impl (void);
 }
 
-#endif /* ifndef */
+#include /**/ "ace/post.h"
 
+#endif /* ifndef */
