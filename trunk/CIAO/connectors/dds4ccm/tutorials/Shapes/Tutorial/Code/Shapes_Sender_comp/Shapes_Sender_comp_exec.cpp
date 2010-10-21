@@ -29,23 +29,24 @@
 
 namespace CIAO_Shapes_Sender_comp_Impl
 {
+
   //============================================================
   // Facet Executor Implementation Class: control_exec_i
   //============================================================
-  
+
   control_exec_i::control_exec_i (
         ::Shapes::CCM_Sender_comp_Context_ptr ctx)
     : ciao_context_ (
         ::Shapes::CCM_Sender_comp_Context::_duplicate (ctx))
   {
   }
-  
+
   control_exec_i::~control_exec_i (void)
   {
   }
-  
+
   // Operations from ::Shapes::Control_obj
-  
+
   ::Shapes::ReturnStatus
   control_exec_i::setSize (
     ::CORBA::UShort /* size */)
@@ -53,7 +54,7 @@ namespace CIAO_Shapes_Sender_comp_Impl
     /* Your code here. */
     return static_cast< ::Shapes::ReturnStatus> (0UL);
   }
-  
+
   ::Shapes::ReturnStatus
   control_exec_i::setLocation (
     ::CORBA::UShort /* x */,
@@ -63,6 +64,7 @@ namespace CIAO_Shapes_Sender_comp_Impl
     return static_cast< ::Shapes::ReturnStatus> (0UL);
   }
   
+
   //============================================================
   // Component Executor Implementation Class: Sender_comp_exec_i
   //============================================================
@@ -76,77 +78,77 @@ namespace CIAO_Shapes_Sender_comp_Impl
 
   // Supported operations and attributes.
 
-    // Component attributes and port operations.
-    
-    ::Shapes::CCM_Control_obj_ptr
-    Sender_comp_exec_i::get_control (void)
-    {
-      if ( ::CORBA::is_nil (this->ciao_control_.in ()))
-        {
-          control_exec_i *tmp = 0;
-          ACE_NEW_RETURN (
-            tmp,
-            control_exec_i (
-              this->ciao_context_.in ()),
+  // Component attributes and port operations.
+
+  ::Shapes::CCM_Control_obj_ptr
+  Sender_comp_exec_i::get_control (void)
+  {
+    if ( ::CORBA::is_nil (this->ciao_control_.in ()))
+      {
+        control_exec_i *tmp = 0;
+        ACE_NEW_RETURN (
+          tmp,
+          control_exec_i (
+            this->ciao_context_.in ()),
             ::Shapes::CCM_Control_obj::_nil ());
-          
+
           this->ciao_control_ = tmp;
-        }
-      
-      return
-        ::Shapes::CCM_Control_obj::_duplicate (
-          this->ciao_control_.in ());
-    }
-  
-    // Operations from Components::SessionComponent.
-  
-    void
-    Sender_comp_exec_i::set_session_context (
-      ::Components::SessionContext_ptr ctx)
-    {
-      this->ciao_context_ =
-        ::Shapes::CCM_Sender_comp_Context::_narrow (ctx);
-  
-      if ( ::CORBA::is_nil (this->ciao_context_.in ()))
-        {
-          throw ::CORBA::INTERNAL ();
-        }
-    }
-  
-    void
-    Sender_comp_exec_i::configuration_complete (void)
-    {
-      /* Your code here. */
-    }
-  
-    void
-    Sender_comp_exec_i::ccm_activate (void)
-    {
-      /* Your code here. */
-    }
-  
-    void
-    Sender_comp_exec_i::ccm_passivate (void)
-    {
-      /* Your code here. */
-    }
-  
-    void
-    Sender_comp_exec_i::ccm_remove (void)
-    {
-      /* Your code here. */
-    }
-    
-    extern "C"  ::Components::EnterpriseComponent_ptr
-    create_Shapes_Sender_comp_Impl (void)
-    {
-      ::Components::EnterpriseComponent_ptr retval =
-        ::Components::EnterpriseComponent::_nil ();
-      
-      ACE_NEW_NORETURN (
-        retval,
-        Sender_comp_exec_i);
-      
-      return retval;
-    }
+      }
+
+    return
+      ::Shapes::CCM_Control_obj::_duplicate (
+        this->ciao_control_.in ());
   }
+
+  // Operations from Components::SessionComponent.
+
+  void
+  Sender_comp_exec_i::set_session_context (
+    ::Components::SessionContext_ptr ctx)
+  {
+    this->ciao_context_ =
+      ::Shapes::CCM_Sender_comp_Context::_narrow (ctx);
+
+    if ( ::CORBA::is_nil (this->ciao_context_.in ()))
+      {
+        throw ::CORBA::INTERNAL ();
+      }
+  }
+
+  void
+  Sender_comp_exec_i::configuration_complete (void)
+  {
+    /* Your code here. */
+  }
+
+  void
+  Sender_comp_exec_i::ccm_activate (void)
+  {
+    /* Your code here. */
+  }
+
+  void
+  Sender_comp_exec_i::ccm_passivate (void)
+  {
+    /* Your code here. */
+  }
+
+  void
+  Sender_comp_exec_i::ccm_remove (void)
+  {
+    /* Your code here. */
+  }
+
+  extern "C"  ::Components::EnterpriseComponent_ptr
+  create_Shapes_Sender_comp_Impl (void)
+  {
+    ::Components::EnterpriseComponent_ptr retval =
+      ::Components::EnterpriseComponent::_nil ();
+
+    ACE_NEW_NORETURN (
+      retval,
+      Sender_comp_exec_i);
+
+    return retval;
+  }
+}
