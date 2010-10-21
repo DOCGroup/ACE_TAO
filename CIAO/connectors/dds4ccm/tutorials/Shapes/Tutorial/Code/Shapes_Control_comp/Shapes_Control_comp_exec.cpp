@@ -33,7 +33,7 @@ namespace CIAO_Shapes_Control_comp_Impl
   //============================================================
   // Component Executor Implementation Class: Control_comp_exec_i
   //============================================================
-  
+
   Control_comp_exec_i::Control_comp_exec_i (void)
     : rate_ (0)
       , max_x_ (0)
@@ -42,12 +42,13 @@ namespace CIAO_Shapes_Control_comp_Impl
       , resize_shape_ (false)
   {
   }
-  
+
   Control_comp_exec_i::~Control_comp_exec_i (void)
   {
   }
-  
+
   // Supported operations and attributes.
+
   ACE_Reactor*
   Control_comp_exec_i::reactor (void)
   {
@@ -68,16 +69,16 @@ namespace CIAO_Shapes_Control_comp_Impl
       }
     return reactor;
   }
-  
+
   // Component attributes and port operations.
-  
+
   ::CORBA::ULong
   Control_comp_exec_i::rate (void)
   {
     return
       this->rate_;
   }
-  
+
   void
   Control_comp_exec_i::rate (
     const ::CORBA::ULong rate)
@@ -85,14 +86,14 @@ namespace CIAO_Shapes_Control_comp_Impl
     this->rate_ =
       rate;
   }
-  
+
   ::CORBA::UShort
   Control_comp_exec_i::max_x (void)
   {
     return
       this->max_x_;
   }
-  
+
   void
   Control_comp_exec_i::max_x (
     const ::CORBA::UShort max_x)
@@ -100,14 +101,14 @@ namespace CIAO_Shapes_Control_comp_Impl
     this->max_x_ =
       max_x;
   }
-  
+
   ::CORBA::UShort
   Control_comp_exec_i::max_y (void)
   {
     return
       this->max_y_;
   }
-  
+
   void
   Control_comp_exec_i::max_y (
     const ::CORBA::UShort max_y)
@@ -115,14 +116,14 @@ namespace CIAO_Shapes_Control_comp_Impl
     this->max_y_ =
       max_y;
   }
-  
+
   ::CORBA::UShort
   Control_comp_exec_i::max_size (void)
   {
     return
       this->max_size_;
   }
-  
+
   void
   Control_comp_exec_i::max_size (
     const ::CORBA::UShort max_size)
@@ -130,14 +131,14 @@ namespace CIAO_Shapes_Control_comp_Impl
     this->max_size_ =
       max_size;
   }
-  
+
   ::CORBA::Boolean
   Control_comp_exec_i::resize_shape (void)
   {
     return
       this->resize_shape_;
   }
-  
+
   void
   Control_comp_exec_i::resize_shape (
     const ::CORBA::Boolean resize_shape)
@@ -145,40 +146,40 @@ namespace CIAO_Shapes_Control_comp_Impl
     this->resize_shape_ =
       resize_shape;
   }
-  
+
   // Operations from Components::SessionComponent.
-  
+
   void
   Control_comp_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
     this->ciao_context_ =
       ::Shapes::CCM_Control_comp_Context::_narrow (ctx);
-    
+
     if ( ::CORBA::is_nil (this->ciao_context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
   }
-  
+
   void
   Control_comp_exec_i::configuration_complete (void)
   {
     /* Your code here. */
   }
-  
+
   void
   Control_comp_exec_i::ccm_activate (void)
   {
     /* Your code here. */
   }
-  
+
   void
   Control_comp_exec_i::ccm_passivate (void)
   {
     /* Your code here. */
   }
-  
+
   void
   Control_comp_exec_i::ccm_remove (void)
   {

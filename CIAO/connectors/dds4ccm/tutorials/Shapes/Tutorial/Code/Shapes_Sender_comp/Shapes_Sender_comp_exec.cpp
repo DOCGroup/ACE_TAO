@@ -66,87 +66,87 @@ namespace CIAO_Shapes_Sender_comp_Impl
   //============================================================
   // Component Executor Implementation Class: Sender_comp_exec_i
   //============================================================
-  
+
   Sender_comp_exec_i::Sender_comp_exec_i (void){
   }
-  
+
   Sender_comp_exec_i::~Sender_comp_exec_i (void)
   {
   }
-  
+
   // Supported operations and attributes.
-  
-  // Component attributes and port operations.
-  
-  ::Shapes::CCM_Control_obj_ptr
-  Sender_comp_exec_i::get_control (void)
-  {
-    if ( ::CORBA::is_nil (this->ciao_control_.in ()))
-      {
-        control_exec_i *tmp = 0;
-        ACE_NEW_RETURN (
-          tmp,
-          control_exec_i (
-            this->ciao_context_.in ()),
-          ::Shapes::CCM_Control_obj::_nil ());
-        
-        this->ciao_control_ = tmp;
-      }
+
+    // Component attributes and port operations.
     
-    return
-      ::Shapes::CCM_Control_obj::_duplicate (
-        this->ciao_control_.in ());
-  }
+    ::Shapes::CCM_Control_obj_ptr
+    Sender_comp_exec_i::get_control (void)
+    {
+      if ( ::CORBA::is_nil (this->ciao_control_.in ()))
+        {
+          control_exec_i *tmp = 0;
+          ACE_NEW_RETURN (
+            tmp,
+            control_exec_i (
+              this->ciao_context_.in ()),
+            ::Shapes::CCM_Control_obj::_nil ());
+          
+          this->ciao_control_ = tmp;
+        }
+      
+      return
+        ::Shapes::CCM_Control_obj::_duplicate (
+          this->ciao_control_.in ());
+    }
   
-  // Operations from Components::SessionComponent.
+    // Operations from Components::SessionComponent.
   
-  void
-  Sender_comp_exec_i::set_session_context (
-    ::Components::SessionContext_ptr ctx)
-  {
-    this->ciao_context_ =
-      ::Shapes::CCM_Sender_comp_Context::_narrow (ctx);
+    void
+    Sender_comp_exec_i::set_session_context (
+      ::Components::SessionContext_ptr ctx)
+    {
+      this->ciao_context_ =
+        ::Shapes::CCM_Sender_comp_Context::_narrow (ctx);
+  
+      if ( ::CORBA::is_nil (this->ciao_context_.in ()))
+        {
+          throw ::CORBA::INTERNAL ();
+        }
+    }
+  
+    void
+    Sender_comp_exec_i::configuration_complete (void)
+    {
+      /* Your code here. */
+    }
+  
+    void
+    Sender_comp_exec_i::ccm_activate (void)
+    {
+      /* Your code here. */
+    }
+  
+    void
+    Sender_comp_exec_i::ccm_passivate (void)
+    {
+      /* Your code here. */
+    }
+  
+    void
+    Sender_comp_exec_i::ccm_remove (void)
+    {
+      /* Your code here. */
+    }
     
-    if ( ::CORBA::is_nil (this->ciao_context_.in ()))
-      {
-        throw ::CORBA::INTERNAL ();
-      }
+    extern "C"  ::Components::EnterpriseComponent_ptr
+    create_Shapes_Sender_comp_Impl (void)
+    {
+      ::Components::EnterpriseComponent_ptr retval =
+        ::Components::EnterpriseComponent::_nil ();
+      
+      ACE_NEW_NORETURN (
+        retval,
+        Sender_comp_exec_i);
+      
+      return retval;
+    }
   }
-  
-  void
-  Sender_comp_exec_i::configuration_complete (void)
-  {
-    /* Your code here. */
-  }
-  
-  void
-  Sender_comp_exec_i::ccm_activate (void)
-  {
-    /* Your code here. */
-  }
-  
-  void
-  Sender_comp_exec_i::ccm_passivate (void)
-  {
-    /* Your code here. */
-  }
-  
-  void
-  Sender_comp_exec_i::ccm_remove (void)
-  {
-    /* Your code here. */
-  }
-  
-  extern "C"  ::Components::EnterpriseComponent_ptr
-  create_Shapes_Sender_comp_Impl (void)
-  {
-    ::Components::EnterpriseComponent_ptr retval =
-      ::Components::EnterpriseComponent::_nil ();
-    
-    ACE_NEW_NORETURN (
-      retval,
-      Sender_comp_exec_i);
-    
-    return retval;
-  }
-}

@@ -96,107 +96,107 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   //============================================================
   // Component Executor Implementation Class: Receiver_comp_exec_i
   //============================================================
-  
+
   Receiver_comp_exec_i::Receiver_comp_exec_i (void){
   }
-  
+
   Receiver_comp_exec_i::~Receiver_comp_exec_i (void)
   {
   }
-  
+
   // Supported operations and attributes.
-  
-  // Component attributes and port operations.
-  
-  ::Shapes::ShapeType_conn::CCM_Listener_ptr
-  Receiver_comp_exec_i::get_info_out_data_listener (void)
-  {
-    if ( ::CORBA::is_nil (this->ciao_info_out_data_listener_.in ()))
-      {
-        info_out_data_listener_exec_i *tmp = 0;
-        ACE_NEW_RETURN (
-          tmp,
-          info_out_data_listener_exec_i (
-            this->ciao_context_.in ()),
-          ::Shapes::ShapeType_conn::CCM_Listener::_nil ());
-        
-        this->ciao_info_out_data_listener_ = tmp;
-      }
+
+    // Component attributes and port operations.
     
-    return
-      ::Shapes::ShapeType_conn::CCM_Listener::_duplicate (
-        this->ciao_info_out_data_listener_.in ());
-  }
-  
-  ::CCM_DDS::CCM_PortStatusListener_ptr
-  Receiver_comp_exec_i::get_info_out_status (void)
-  {
-    if ( ::CORBA::is_nil (this->ciao_info_out_status_.in ()))
-      {
-        info_out_status_exec_i *tmp = 0;
-        ACE_NEW_RETURN (
-          tmp,
-          info_out_status_exec_i (
-            this->ciao_context_.in ()),
-          ::CCM_DDS::CCM_PortStatusListener::_nil ());
-        
-        this->ciao_info_out_status_ = tmp;
-      }
+    ::Shapes::ShapeType_conn::CCM_Listener_ptr
+    Receiver_comp_exec_i::get_info_out_data_listener (void)
+    {
+      if ( ::CORBA::is_nil (this->ciao_info_out_data_listener_.in ()))
+        {
+          info_out_data_listener_exec_i *tmp = 0;
+          ACE_NEW_RETURN (
+            tmp,
+            info_out_data_listener_exec_i (
+              this->ciao_context_.in ()),
+            ::Shapes::ShapeType_conn::CCM_Listener::_nil ());
+          
+          this->ciao_info_out_data_listener_ = tmp;
+        }
+      
+      return
+        ::Shapes::ShapeType_conn::CCM_Listener::_duplicate (
+          this->ciao_info_out_data_listener_.in ());
+    }
     
-    return
-      ::CCM_DDS::CCM_PortStatusListener::_duplicate (
-        this->ciao_info_out_status_.in ());
-  }
+    ::CCM_DDS::CCM_PortStatusListener_ptr
+    Receiver_comp_exec_i::get_info_out_status (void)
+    {
+      if ( ::CORBA::is_nil (this->ciao_info_out_status_.in ()))
+        {
+          info_out_status_exec_i *tmp = 0;
+          ACE_NEW_RETURN (
+            tmp,
+            info_out_status_exec_i (
+              this->ciao_context_.in ()),
+            ::CCM_DDS::CCM_PortStatusListener::_nil ());
+          
+          this->ciao_info_out_status_ = tmp;
+        }
+      
+      return
+        ::CCM_DDS::CCM_PortStatusListener::_duplicate (
+          this->ciao_info_out_status_.in ());
+    }
   
-  // Operations from Components::SessionComponent.
+    // Operations from Components::SessionComponent.
   
-  void
-  Receiver_comp_exec_i::set_session_context (
-    ::Components::SessionContext_ptr ctx)
-  {
-    this->ciao_context_ =
-      ::Shapes::CCM_Receiver_comp_Context::_narrow (ctx);
+    void
+    Receiver_comp_exec_i::set_session_context (
+      ::Components::SessionContext_ptr ctx)
+    {
+      this->ciao_context_ =
+        ::Shapes::CCM_Receiver_comp_Context::_narrow (ctx);
+  
+      if ( ::CORBA::is_nil (this->ciao_context_.in ()))
+        {
+          throw ::CORBA::INTERNAL ();
+        }
+    }
+  
+    void
+    Receiver_comp_exec_i::configuration_complete (void)
+    {
+      /* Your code here. */
+    }
+  
+    void
+    Receiver_comp_exec_i::ccm_activate (void)
+    {
+      /* Your code here. */
+    }
+  
+    void
+    Receiver_comp_exec_i::ccm_passivate (void)
+    {
+      /* Your code here. */
+    }
+  
+    void
+    Receiver_comp_exec_i::ccm_remove (void)
+    {
+      /* Your code here. */
+    }
     
-    if ( ::CORBA::is_nil (this->ciao_context_.in ()))
-      {
-        throw ::CORBA::INTERNAL ();
-      }
+    extern "C"  ::Components::EnterpriseComponent_ptr
+    create_Shapes_Receiver_comp_Impl (void)
+    {
+      ::Components::EnterpriseComponent_ptr retval =
+        ::Components::EnterpriseComponent::_nil ();
+      
+      ACE_NEW_NORETURN (
+        retval,
+        Receiver_comp_exec_i);
+      
+      return retval;
+    }
   }
-  
-  void
-  Receiver_comp_exec_i::configuration_complete (void)
-  {
-    /* Your code here. */
-  }
-  
-  void
-  Receiver_comp_exec_i::ccm_activate (void)
-  {
-    /* Your code here. */
-  }
-  
-  void
-  Receiver_comp_exec_i::ccm_passivate (void)
-  {
-    /* Your code here. */
-  }
-  
-  void
-  Receiver_comp_exec_i::ccm_remove (void)
-  {
-    /* Your code here. */
-  }
-  
-  extern "C"  ::Components::EnterpriseComponent_ptr
-  create_Shapes_Receiver_comp_Impl (void)
-  {
-    ::Components::EnterpriseComponent_ptr retval =
-      ::Components::EnterpriseComponent::_nil ();
-    
-    ACE_NEW_NORETURN (
-      retval,
-      Receiver_comp_exec_i);
-    
-    return retval;
-  }
-}
