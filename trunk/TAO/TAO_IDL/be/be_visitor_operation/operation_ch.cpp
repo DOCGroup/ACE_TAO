@@ -32,9 +32,6 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
 
   this->ctx_->node (node);
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
   // Every operation is declared virtual in the client code.
   *os << be_nl << be_nl
       << "virtual ";

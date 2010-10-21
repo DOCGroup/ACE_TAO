@@ -38,7 +38,7 @@ be_visitor_executor_exh::visit_attribute (be_attribute *node)
     {
       return 0;
     }
-    
+
   this->ctx_->interface (this->node_);
   be_visitor_attribute v (this->ctx_);
   return v.visit_attribute (node);
@@ -58,7 +58,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   const char *global = (sname_str == "" ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_uidt_nl << be_idt_nl
       << "class " << export_macro_.c_str () << " " << lname
       << "_exec_i" << be_idt_nl
       << ": public virtual " << lname << "_Exec," << be_idt_nl
@@ -72,9 +72,11 @@ be_visitor_executor_exh::visit_component (be_component *node)
   os_ << be_nl
       << "virtual ~" << lname << "_exec_i (void);";
 
-  os_ << be_nl << be_nl
+  os_ << be_uidt << be_uidt_nl << be_idt << be_idt_nl
       << "//@{" << be_nl
-      << "/** Supported operations and attributes. */" << be_nl;
+      << "/** Supported operations and attributes. */"
+      << be_uidt << be_uidt_nl << be_idt << be_idt_nl;
+
 
   int status =
     node->traverse_inheritance_graph (
@@ -83,8 +85,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
       false,
       false);
 
-  os_ << be_nl
-      << "//@}" << be_nl;
+  os_ << "//@}";
 
   if (status == -1)
     {
@@ -96,14 +97,13 @@ be_visitor_executor_exh::visit_component (be_component *node)
                         -1);
     }
 
-  os_ << be_nl
+  os_ << be_uidt << be_uidt_nl << be_idt << be_idt_nl
       << "//@{" << be_nl
-      << "/** Component attributes and port operations. */" << be_nl;
+      << "/** Component attributes and port operations. */";
 
   status = this->visit_component_scope (node);
 
-  os_ << be_nl
-      << "//@}" << be_nl;
+  os_ << "//@}";
 
   if (status == -1)
     {
@@ -115,10 +115,11 @@ be_visitor_executor_exh::visit_component (be_component *node)
                         -1);
     }
 
-  os_ << be_nl
+  os_ << be_uidt << be_uidt_nl << be_idt << be_idt_nl
       << "//@{" << be_nl
       << "/** Operations from Components::" << be_global->ciao_container_type ()
-      << "Component. */";
+      << "Component. */"
+      << be_uidt << be_uidt_nl << be_idt << be_idt_nl;
 
   const char *container_type = be_global->ciao_container_type ();
 
@@ -164,7 +165,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   if (be_global->gen_ciao_exec_reactor_impl ())
     {
-      os_ << be_nl << be_nl
+      os_ << be_uidt << be_uidt_nl << be_idt << be_idt_nl
           << "ACE_Reactor* reactor (void);";
     }
 
