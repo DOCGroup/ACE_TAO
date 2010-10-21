@@ -37,15 +37,15 @@ be_visitor_executor_exs_attr_init::visit_attribute (
     {
       return 0;
     }
-    
+
   os_ << this->ctx_->port_prefix ().c_str ()
       << node->local_name () << "_ (";
-  
+
   be_visitor_null_return_value nrt_visitor (this->ctx_);
-  
+
   int status =
     node->field_type ()->accept (&nrt_visitor);
-    
+
    if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -55,7 +55,7 @@ be_visitor_executor_exs_attr_init::visit_attribute (
                          ACE_TEXT ("visitor failed\n")),
                         -1);
     }
-    
+
   os_ << ")";
 
   return 0;
@@ -72,7 +72,7 @@ be_visitor_executor_exs_attr_init::pre_process (be_decl *node)
     {
       return 0;
     }
-    
+
   if (node->node_type () == AST_Decl::NT_attr)
     {
       if (this->semicolon_generated_)
@@ -84,11 +84,11 @@ be_visitor_executor_exs_attr_init::pre_process (be_decl *node)
         {
           os_ << be_idt_nl
               << ": " << be_idt;
-              
+
           this->semicolon_generated_ = true;
         }
     }
-    
+
   return 0;
 }
 

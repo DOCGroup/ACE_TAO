@@ -25,7 +25,6 @@
 
 #include "utl_identifier.h"
 #include "nr_extern.h"
-#include <TAO_IDL/be_include/be_helper.h>
 
 be_visitor_component_scope::be_visitor_component_scope (
       be_visitor_context *ctx)
@@ -285,7 +284,7 @@ be_visitor_component_scope::gen_svnt_entrypoint_defn (void)
 void
 be_visitor_component_scope::gen_exec_entrypoint_decl (void)
 {
-  os_ << be_nl << be_nl
+  os_ << be_uidt_nl << be_idt_nl
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::EnterpriseComponent_ptr" << be_nl
       << "create_" << node_->flat_name ()

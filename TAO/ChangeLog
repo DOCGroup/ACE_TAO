@@ -1,3 +1,16 @@
+Thu Oct 21 11:56:04 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_attr_assign.cpp:
+        * TAO_IDL/be/be_visitor_attr_return.cpp:
+          Removed trailing whitespaces.
+
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs_attr_init.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_private_exh.cpp:
+        * TAO_IDL/be/be_visitor_component_scope.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+          Reduced the amount of whitespaces in the generated code.
+
 Thu Oct 21 11:06:36 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
