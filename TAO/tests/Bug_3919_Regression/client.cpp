@@ -86,18 +86,18 @@ recursive_typecode_test (CORBA::ORB_ptr /* orb */,
   Test::MyAttRefSequence test;
 
   Test::MyAttRef attr;
-  attr.attRefName=L"attr";
-  attr.attRefValue.attrValue(L"value");
-  attr.attRefQualifier=L"atrQ1";
+  attr.attRefName="attr";
+  attr.attRefValue.attrValue("value");
+  attr.attRefQualifier="atrQ1";
 
   Test::MyAttRef attr2;
-  attr2.attRefName=L"attr2";
-  attr2.attRefValue.attrValue(L"value2");
-  attr2.attRefQualifier=L"atrQ2";
+  attr2.attRefName="attr2";
+  attr2.attRefValue.attrValue("value2");
+  attr2.attRefQualifier="atrQ2";
 
   Test::MyAttRef comp;
-  comp.attRefName=L"comp1";
-  comp.attRefQualifier=L"compQ";
+  comp.attRefName="comp1";
+  comp.attRefQualifier="compQ";
 
   Test::MyAttRef::MyAttRefValue::_compValue_seq compSeq(1);
   compSeq.length(1);
@@ -105,7 +105,7 @@ recursive_typecode_test (CORBA::ORB_ptr /* orb */,
   comp.attRefValue.compValue(compSeq);
 
   Test::MyAttRef inti;
-  inti.attRefName=L"intval";
+  inti.attRefName="intval";
   inti.attRefValue.intValue(0xAFFEAFFE);
 
   test.length(3);
