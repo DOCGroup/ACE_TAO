@@ -2,9 +2,9 @@
 // $Id$
 
 #include "Writer_Sender_exec.h"
+#include "tao/ORB_Core.h"
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
-#include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
 namespace CIAO_Writer_Sender_Impl
@@ -26,19 +26,143 @@ namespace CIAO_Writer_Sender_Impl
   }
 
   //============================================================
-  // Sender_exec_i
+  // Component Executor Implementation Class: Sender_exec_i
   //============================================================
+
   Sender_exec_i::Sender_exec_i (void)
-    : rate_ (1),
-      iterations_ (10),
-      keys_ (5),
-      assignment_ (WRITE_KEYED),
-      last_iteration_ (0)
+    : rate_ (1)
+      , iterations_ (10)
+      , keys_ (5)
+      , assignment_ (WRITE_KEYED)
+      , last_iteration_ (0)
   {
     this->ticker_ = new pulse_Generator (*this);
   }
 
   Sender_exec_i::~Sender_exec_i (void)
+  {
+    delete this->ticker_;
+  }
+
+  // Supported operations and attributes.
+
+  ACE_Reactor*
+  Sender_exec_i::reactor (void)
+  {
+    ACE_Reactor* reactor = 0;
+    ::CORBA::Object_var ccm_object =
+      this->ciao_context_->get_CCM_object();
+    if (! ::CORBA::is_nil (ccm_object.in ()))
+      {
+        ::CORBA::ORB_var orb = ccm_object->_get_orb ();
+        if (! ::CORBA::is_nil (orb.in ()))
+          {
+            reactor = orb->orb_core ()->reactor ();
+          }
+      }
+    if (reactor == 0)
+      {
+        throw ::CORBA::INTERNAL ();
+      }
+    return reactor;
+  }
+
+  // Component attributes and port operations.
+
+  ::CORBA::UShort
+  Sender_exec_i::rate (void)
+  {
+    return
+      this->rate_;
+  }
+
+  void
+  Sender_exec_i::rate (
+    const ::CORBA::UShort rate)
+  {
+    this->rate_ =
+      rate;
+  }
+
+  ::CORBA::UShort
+  Sender_exec_i::iterations (void)
+  {
+    return
+      this->iterations_;
+  }
+
+  void
+  Sender_exec_i::iterations (
+    const ::CORBA::UShort iterations)
+  {
+    this->iterations_ = iterations + 2; //for extra tests.
+  }
+
+  ::CORBA::UShort
+  Sender_exec_i::keys (void)
+  {
+    return
+      this->keys_;
+  }
+
+  void
+  Sender_exec_i::keys (
+    const ::CORBA::UShort keys)
+  {
+    this->keys_ = keys + 1; //for extra tests.
+  }
+
+  // Operations from Components::SessionComponent.
+
+  void
+  Sender_exec_i::set_session_context (
+    ::Components::SessionContext_ptr ctx)
+  {
+    this->ciao_context_ =
+      ::Writer::CCM_Sender_Context::_narrow (ctx);
+
+    if ( ::CORBA::is_nil (this->ciao_context_.in ()))
+      {
+        throw ::CORBA::INTERNAL ();
+      }
+  }
+
+  void
+  Sender_exec_i::configuration_complete (void)
+  {
+  }
+
+  void
+  Sender_exec_i::ccm_activate (void)
+  {
+    this->start ();
+
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
+                        this->mutex_, CORBA::INTERNAL ());
+
+    for (CORBA::UShort i = 1; i < this->keys_ + 1; ++i)
+      {
+        char key[7];
+        WriterTest *new_key = new WriterTest;
+        ACE_OS::sprintf (key, "KEY_%d", i);
+        new_key->key = CORBA::string_dup(key);
+        new_key->iteration = 1;
+
+        this->ktests_[key] = new_key;
+      }
+    this->last_key_ = this->ktests_.begin ();
+    register_handles ();
+    reset_iterations ();
+  }
+
+  void
+  Sender_exec_i::ccm_passivate (void)
+  {
+    this->stop ();
+  }
+
+  void
+  Sender_exec_i::ccm_remove (void)
   {
   }
 
@@ -64,7 +188,7 @@ namespace CIAO_Writer_Sender_Impl
           {
             ::DDS::InstanceHandle_t const hnd = this->handles_[i->first.c_str ()];
             WriterTestConnector::Writer_var writer =
-              this->context_->get_connection_info_write_data ();
+              this->ciao_context_->get_connection_info_write_data ();
             writer->unregister_instance (i->second, hnd);
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Unregistered <%C> - iteration <%d> - valid handle <%d>\n"),
                       i->first.c_str (),
@@ -83,7 +207,7 @@ namespace CIAO_Writer_Sender_Impl
   Sender_exec_i::register_handles()
   {
     WriterTestConnector::Writer_var writer =
-      this->context_->get_connection_info_write_data ();
+      this->ciao_context_->get_connection_info_write_data ();
 
     Writer_Table::iterator i = this->ktests_.begin ();
     ::DDS::InstanceHandle_t hnd = writer->register_instance (i->second);
@@ -98,8 +222,8 @@ namespace CIAO_Writer_Sender_Impl
                 hnd.isValid));
     this->handles_[i->first.c_str ()] = hnd;
     ++i;
-    //test exception. In Qos, max_instances is set to 1
-    //so only one instance may be registered.
+    // Test exception. In Qos, max_instances is set to 1
+    // so only one instance may be registered.
     hnd = writer->register_instance (i->second);
     if (hnd.isValid)
       {
@@ -125,7 +249,7 @@ namespace CIAO_Writer_Sender_Impl
   Sender_exec_i::write_keyed ()
   {
     WriterTestConnector::Writer_var writer =
-      this->context_->get_connection_info_write_data ();
+      this->ciao_context_->get_connection_info_write_data ();
 
     if (this->last_key_ != this->ktests_.end ())
       {
@@ -144,14 +268,15 @@ namespace CIAO_Writer_Sender_Impl
           {
             exception_caught = true;
             if (this->last_key_ == this->ktests_.begin ())
-              { // the first key should throw this exception; all others
+              {
+                // The first key should throw this exception; all others
                 // shouldn't
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                             ACE_TEXT ("while updating writer info for <%C>.\n"),
                               this->last_key_->first.c_str ()));
               }
           }
-        //only the first iterations are registered.
+        // Only the first iterations are registered.
         if (this->last_key_ != this->ktests_.begin () && !exception_caught)
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: No exception caught ")
@@ -161,7 +286,7 @@ namespace CIAO_Writer_Sender_Impl
       }
     else
       {
-        //onto the next iteration
+        // Onto the next iteration
         this->last_key_ = this->ktests_.begin ();
         while (this->last_key_ != this->ktests_.end ())
           {
@@ -188,7 +313,7 @@ namespace CIAO_Writer_Sender_Impl
   {
     bool expected_exception_thrown = false;
     WriterTestConnector::Writer_var writer =
-      this->context_->get_connection_info_write_data ();
+      this->ciao_context_->get_connection_info_write_data ();
 
     WriterTestSeq write_many_seq;
     write_many_seq.length (this->keys_ * this->iterations_);
@@ -256,7 +381,7 @@ namespace CIAO_Writer_Sender_Impl
   Sender_exec_i::start (void)
   {
     long const usec = 1000000 / this->rate_;
-    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
+    if (this->reactor ()->schedule_timer (
                 this->ticker_,
                 0,
                 ACE_Time_Value (0, usec),
@@ -270,96 +395,8 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::stop (void)
   {
-    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+    this->reactor ()->cancel_timer (this->ticker_);
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
-    delete this->ticker_;
-  }
-
-  ::CORBA::UShort
-  Sender_exec_i::rate (void)
-  {
-    return this->rate_;
-  }
-
-  void
-  Sender_exec_i::rate (::CORBA::UShort rate)
-  {
-    this->rate_ = rate;
-  }
-
-  ::CORBA::UShort
-  Sender_exec_i::iterations (void)
-  {
-    return this->iterations_;
-  }
-
-  void
-  Sender_exec_i::iterations (::CORBA::UShort iterations)
-  {
-    this->iterations_ = iterations + 2; //for extra tests.
-  }
-
-  ::CORBA::UShort
-  Sender_exec_i::keys (void)
-  {
-    return this->keys_;
-  }
-
-  void
-  Sender_exec_i::keys (::CORBA::UShort keys)
-  {
-    this->keys_ = keys + 1; //for extra tests.
-  }
-
-  void
-  Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
-  {
-    this->context_ =
-      ::Writer::CCM_Sender_Context::_narrow (ctx);
-
-    if ( ::CORBA::is_nil (this->context_.in ()))
-      {
-        throw ::CORBA::INTERNAL ();
-      }
-  }
-
-  void
-  Sender_exec_i::configuration_complete (void)
-  {
-  }
-
-  void
-  Sender_exec_i::ccm_activate (void)
-  {
-    this->start ();
-
-    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
-                        this->mutex_, CORBA::INTERNAL ());
-
-    for (CORBA::UShort i = 1; i < this->keys_ + 1; ++i)
-      {
-        char key[7];
-        WriterTest *new_key = new WriterTest;
-        ACE_OS::sprintf (key, "KEY_%d", i);
-        new_key->key = CORBA::string_dup(key);
-        new_key->iteration = 1;
-
-        this->ktests_[key] = new_key;
-      }
-    this->last_key_ = this->ktests_.begin ();
-    register_handles ();
-    reset_iterations ();
-  }
-
-  void
-  Sender_exec_i::ccm_passivate (void)
-  {
-    this->stop ();
-  }
-
-  void
-  Sender_exec_i::ccm_remove (void)
-  {
   }
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
@@ -367,11 +404,9 @@ namespace CIAO_Writer_Sender_Impl
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-
     ACE_NEW_NORETURN (
       retval,
       Sender_exec_i);
-
     return retval;
   }
 }

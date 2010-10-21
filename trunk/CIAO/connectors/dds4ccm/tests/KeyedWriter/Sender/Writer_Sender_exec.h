@@ -1,18 +1,18 @@
 // -*- C++ -*-
 // $Id$
 
-#ifndef CIAO_SENDER_EXEC_H_
-#define CIAO_SENDER_EXEC_H_
+#ifndef CIAO_WRITER_SENDER_EXEC_AJ8QK5_H_
+#define CIAO_WRITER_SENDER_EXEC_AJ8QK5_H_
 
+#include /**/ "ace/pre.h"
 
 #include "Writer_SenderEC.h"
-
-#include /**/ "Sender_exec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include /**/ "Sender_exec_export.h"
 #include "tao/LocalObject.h"
 
 #include <map>
@@ -43,10 +43,7 @@ namespace CIAO_Writer_Sender_Impl
     Sender_exec_i &pulse_callback_;
   };
 
-  //============================================================
-  // Sender_exec_i
-  //============================================================
-  class Sender_exec_i
+  class SENDER_EXEC_Export Sender_exec_i
     : public virtual Sender_Exec,
       public virtual ::CORBA::LocalObject
   {
@@ -54,17 +51,38 @@ namespace CIAO_Writer_Sender_Impl
     Sender_exec_i (void);
     virtual ~Sender_exec_i (void);
 
-    virtual ::CORBA::UShort rate (void);
+    //@{
+    /** Supported operations and attributes. */
 
-    virtual void rate (::CORBA::UShort rate);
+    //@}
 
-    virtual ::CORBA::UShort iterations (void);
+    //@{
+    /** Component attributes and port operations. */
 
-    virtual void iterations (::CORBA::UShort iterations);
+    virtual ::CORBA::UShort
+    rate (void);
 
-    virtual ::CORBA::UShort keys (void);
+    virtual void
+    rate (
+      ::CORBA::UShort rate);
 
-    virtual void keys (::CORBA::UShort keys);
+    virtual ::CORBA::UShort
+    iterations (void);
+
+    virtual void
+    iterations (
+      ::CORBA::UShort iterations);
+
+    virtual ::CORBA::UShort
+    keys (void);
+
+    virtual void
+    keys (
+      ::CORBA::UShort keys);
+    //@}
+
+    //@{
+    /** Operations from Components::SessionComponent. */
 
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
@@ -73,6 +91,7 @@ namespace CIAO_Writer_Sender_Impl
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
+    //@}
 
     void tick ();
 
@@ -81,10 +100,13 @@ namespace CIAO_Writer_Sender_Impl
     void stop (void);
 
     pulse_Generator * ticker_;
-    ::Writer::CCM_Sender_Context_var context_;
-    CORBA::UShort rate_;
-    CORBA::UShort iterations_;
-    CORBA::UShort keys_;
+    ::Writer::CCM_Sender_Context_var ciao_context_;
+
+    ::CORBA::UShort rate_;
+
+    ::CORBA::UShort iterations_;
+
+    ::CORBA::UShort keys_;
     WRITER_ASSIGNMENT assignment_;
     CORBA::Long last_iteration_;
 
@@ -104,11 +126,14 @@ namespace CIAO_Writer_Sender_Impl
     Writer_Table_Handles handles_;
 
     Writer_Table::iterator last_key_;
+
+    ACE_Reactor* reactor (void);
   };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Writer_Sender_Impl (void);
 }
 
-#endif /* ifndef */
+#include /**/ "ace/post.h"
 
+#endif /* ifndef */
