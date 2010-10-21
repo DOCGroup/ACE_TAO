@@ -28,7 +28,7 @@ be_visitor_member_type_decl::~be_visitor_member_type_decl (void)
 }
 
 int
-be_visitor_member_type_decl::visit_array (be_array *node)
+be_visitor_member_type_decl::visit_array (be_array *)
 {
   be_type *bt = this->ctx_->alias ();
 
@@ -100,15 +100,15 @@ be_visitor_member_type_decl::visit_predefined_type (
       default:
         break;
     }
-    
+
   os_ << " ";
-    
+
   return 0;
 }
 
 /// Unused if anonymous types are not allowed.
 int
-be_visitor_member_type_decl::visit_sequence (be_sequence *node)
+be_visitor_member_type_decl::visit_sequence (be_sequence *)
 {
   be_type *bt = this->ctx_->alias ();
 

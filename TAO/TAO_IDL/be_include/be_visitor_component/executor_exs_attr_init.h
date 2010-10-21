@@ -35,11 +35,11 @@ public:
   ~be_visitor_executor_exs_attr_init (void);
 
   virtual int visit_attribute (be_attribute *node);
-  
+
   virtual int pre_process (be_decl *);
-  
+
   bool attr_generated (void) const;
-  
+
 private:
   bool semicolon_generated_;
 };
