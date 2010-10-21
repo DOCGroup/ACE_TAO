@@ -84,7 +84,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
       << "{" << be_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << this->node_->local_name () << "_exec_i::~"
       << this->node_->local_name () << "_exec_i (void)" << be_nl
       << "{" << be_nl

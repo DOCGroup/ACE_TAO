@@ -32,7 +32,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
 
   *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "::CORBA::Boolean" << be_nl;
 
@@ -125,7 +125,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
     }
 
   *os << "return true;" << be_uidt_nl;
-  *os << "}" << be_nl << be_nl;
+  *os << "}" << be_nl_2;
 
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
@@ -205,7 +205,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
     }
     else
       *os << "return true;";
-  *os << be_uidt_nl << "}" << be_nl << be_nl;
+  *os << be_uidt_nl << "}" << be_nl_2;
 
   *os << "void" << be_nl;
 
@@ -214,7 +214,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   *os << "::truncation_hook (void)" << be_nl
       << "{" << be_idt_nl
       << "this->require_truncation_ = true;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   return 0;
 }

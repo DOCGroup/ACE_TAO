@@ -48,7 +48,7 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
   bool is_global = (c_scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (is_global ? "" : "::");
 
-  os_ << be_nl
+  os_ << be_nl_2
       << "class " << export_macro_.c_str () << " "
       << lname << "_exec_i" << be_idt_nl
       << ": public virtual " << global << sname << "::CCM_"
@@ -68,7 +68,7 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
       be_interface *intf =
         be_interface::narrow_from_decl (impl);
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "// Operations and attributes from ::"
           << intf->full_name ();
 
@@ -101,12 +101,12 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
         }
     }
 
-  os_ << be_uidt_nl << be_nl
+  os_ << be_uidt << be_nl_2
       << "private:" << be_idt_nl
       << smart_scope << c_scope->full_name () << "::CCM_"
       << this->node_->local_name ()
       << "_Context_var ciao_context_;" << be_uidt_nl
-      << "};" << be_nl;
+      << "};" << be_nl_2;
 
   return 0;
 }

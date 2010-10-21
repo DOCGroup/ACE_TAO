@@ -35,7 +35,7 @@ be_visitor_connector_ami_rh_exs::visit_component (be_component *node)
 
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "namespace CIAO_" << node->flat_name ()
       << "_Impl" << be_nl
       << "{" << be_idt;
@@ -72,7 +72,7 @@ be_visitor_connector_ami_rh_exs::visit_provides (be_provides *node)
       << "{" << be_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << this->iface_name_ << suffix << "::~"
       << this->iface_name_ << suffix << " (void)" << be_nl
       << "{" << be_nl

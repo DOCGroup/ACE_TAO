@@ -45,7 +45,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       // are in the same scope as the proxy.
       be_decl* scope = be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << scope->full_name ();
 
       // Only if there exists any nesting "::" is needed!
@@ -79,7 +79,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "{" << be_nl
           << "}";
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << node->full_name () << "_ptr" << be_nl << be_uidt << be_uidt;
       *os << scope->full_name ();
 
@@ -96,7 +96,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "return proxy;" << be_uidt_nl
           << "}";
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << scope->full_name ();
 
       // Only if there exists any nesting "::" is needed!
@@ -236,7 +236,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << be_uidt << be_uidt_nl
           << "}";
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << scope->full_name ();
 
       // Only if there exists any nesting "::" is needed!
@@ -247,7 +247,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       *os << "TAO_"
           <<  node->flat_name () << "_Smart_Proxy_Base (void)" << be_uidt_nl
           << "{" << be_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
 
       os->indent ();
       *os << scope->full_name ();
@@ -275,7 +275,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       *os << "_stubobj (void) const"<<be_nl
           << "{" << be_idt_nl
           << "return this->base_proxy_->_stubobj ();"<< be_uidt_nl
-          << "}"<< be_nl << be_nl;
+          << "}"<< be_nl_2;
 
       // Implement the <stubobj> method of the base class
       os->indent ();
@@ -289,7 +289,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       *os << "_stubobj (void)"<<be_nl
           << "{" << be_idt_nl
           << "return this->base_proxy_->_stubobj ();"<< be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
 
       if (this->visit_scope (node) == -1)
         {
@@ -327,7 +327,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << be_uidt_nl
           << "}" << be_uidt_nl
           << "return this->proxy_.in ();" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
     }
   else
     {

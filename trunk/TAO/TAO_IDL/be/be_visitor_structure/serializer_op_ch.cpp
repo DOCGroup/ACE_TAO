@@ -43,8 +43,8 @@ be_visitor_structure_serializer_op_ch::visit_structure (be_structure *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   IDL_GlobalData::DCPS_Data_Type_Info* info;
   if (0 != (info =  idl_global->is_dcps_type(node->name())))
@@ -103,7 +103,7 @@ be_visitor_structure_serializer_op_ch::visit_structure (be_structure *node)
             }
         }
       *os << "}" << be_uidt_nl
-          << "};" << be_nl << be_nl;
+          << "};" << be_nl_2;
     }
 
   //- _dcps_max_marshaled_size(type) method

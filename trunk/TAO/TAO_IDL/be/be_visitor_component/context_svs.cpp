@@ -58,7 +58,7 @@ be_visitor_context_svs::visit_component (be_component *node)
       << "{" << be_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << lname << "_Context::~"
       << lname << "_Context (void)" << be_nl
       << "{" << be_nl
@@ -116,7 +116,7 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
   ACE_CString sname_str (
     ScopeAsDecl (obj->defined_in ())->full_name ());
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << node_->local_name () << "_Context::push_"
       << port_name << " (" << be_idt_nl
@@ -126,7 +126,7 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
   os_ << "ACE_GUARD (TAO_SYNCH_MUTEX," << be_nl
       << "           mon," << be_nl
       << "           this->" << port_name
-      << "_lock_);" << be_nl << be_nl;
+      << "_lock_);" << be_nl_2;
 
   os_ << "for (" << tao_cg->upcase (port_name)
       << "_TABLE::const_iterator iter =" << be_nl
@@ -141,7 +141,7 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "}" << be_uidt << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::Components::Cookie *" << be_nl
       << node_->local_name () << "_Context::subscribe_"
       << port_name << " (" << be_idt_nl
@@ -153,7 +153,7 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "}" << be_uidt_nl << be_nl;
 
   os_ << "ptrdiff_t const ptr = reinterpret_cast<ptrdiff_t> (c);"
-      << be_nl << be_nl;
+      << be_nl_2;
 
   os_ << "{" << be_idt_nl
       << "ACE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
@@ -162,7 +162,7 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "_lock_," << be_nl
       << "                  0);";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "this->ciao_publishes_" << port_name
       << "_[ptr] =" << be_nl
       << "  ::" << fname << "Consumer::_duplicate (c);";
@@ -177,17 +177,17 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "                  ::CIAO::Cookie_Impl (ptr),"
       << be_nl
       << "                  ::CORBA::NO_MEMORY ());"
-      << be_nl << be_nl
+      << be_nl_2
       << "return retv;" << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::" << fname << "Consumer_ptr" << be_nl
       << node_->local_name () << "_Context::unsubscribe_"
       << port_name << " (" << be_idt_nl
       << "::Components::Cookie * ck)" << be_uidt_nl
       << "{" << be_idt_nl
-      << "ptrdiff_t key = 0UL;" << be_nl << be_nl
+      << "ptrdiff_t key = 0UL;" << be_nl_2
       << "if (ck == 0 || ! ::CIAO::Cookie_Impl::extract (ck, key))"
       << be_idt_nl
       << "{" << be_idt_nl
@@ -200,7 +200,7 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "                  this->" << port_name
       << "_lock_," << be_nl
       << "                  ::" << fname
-      << "Consumer::_nil ());" << be_nl << be_nl;
+      << "Consumer::_nil ());" << be_nl_2;
 
   os_ << tao_cg->upcase (port_name) << "_TABLE::iterator iter ="
       << be_idt_nl
@@ -224,7 +224,7 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
   os_ << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "throw ::Components::InvalidConnection ();" << be_uidt_nl
       << "}";
 
@@ -241,7 +241,7 @@ be_visitor_context_svs::visit_emits (be_emits *node)
   const char *fname = obj->full_name ();
   const char *lname = obj->local_name ()->get_string ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << node_->local_name () << "_Context::push_" << port_name
       << " (" << be_idt_nl
@@ -255,7 +255,7 @@ be_visitor_context_svs::visit_emits (be_emits *node)
       << "}" << be_uidt << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << node_->local_name () << "_Context::connect_" << port_name
       << " (" << be_idt_nl
@@ -276,7 +276,7 @@ be_visitor_context_svs::visit_emits (be_emits *node)
       << be_uidt << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::" << fname << "Consumer_ptr" << be_nl
       << node_->local_name () << "_Context::disconnect_"
       << port_name << " (void)" << be_nl
@@ -299,7 +299,7 @@ be_visitor_context_svs::gen_uses_simplex (AST_Type *obj,
 {
   const char *fname = obj->full_name ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::" << fname << "_ptr" << be_nl
       << node_->local_name () << "_Context::get_connection_"
       << port_name << " (void)" << be_nl
@@ -310,7 +310,7 @@ be_visitor_context_svs::gen_uses_simplex (AST_Type *obj,
       << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << node_->local_name () << "_Context::connect_"
       << port_name << " (" << be_idt_nl
@@ -330,7 +330,7 @@ be_visitor_context_svs::gen_uses_simplex (AST_Type *obj,
       << be_uidt << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::" << fname << "_ptr" << be_nl
       << node_->local_name () << "_Context::disconnect_"
       << port_name << " (void)" << be_nl
@@ -352,7 +352,7 @@ be_visitor_context_svs::gen_uses_multiplex (
 {
   const char *fname = obj->full_name ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::" << node_->full_name () << "::" << port_name
       << "Connections *" << be_nl
       << node_->local_name () << "_Context::get_connections_"
@@ -363,7 +363,7 @@ be_visitor_context_svs::gen_uses_multiplex (
       << "                  mon," << be_nl
       << "                  this->" << port_name
       << "_lock_," << be_nl
-      << "                  0);" << be_nl << be_nl;
+      << "                  0);" << be_nl_2;
 
   os_ << "::" << node_->full_name () << "::" << port_name
       << "Connections * tmp_retv = 0;" << be_nl
@@ -373,12 +373,12 @@ be_visitor_context_svs::gen_uses_multiplex (
       << "                    this->ciao_uses_"
       << port_name << "_.size ())," << be_nl
       << "                  ::CORBA::NO_MEMORY ());"
-      << be_nl << be_nl
+      << be_nl_2
       << "::" << node_->full_name () << "::" << port_name
       << "Connections_var retv = tmp_retv;" << be_nl
       << "retv->length (this->ciao_uses_" << port_name
       << "_.size ());" << be_nl
-      << "::CORBA::ULong i = 0UL;" << be_nl << be_nl
+      << "::CORBA::ULong i = 0UL;" << be_nl_2
       << "for (" << tao_cg->upcase (port_name)
       << "_TABLE::const_iterator iter =" << be_nl
       << "       this->ciao_uses_" << port_name << "_.begin ();"
@@ -387,7 +387,7 @@ be_visitor_context_svs::gen_uses_multiplex (
       << port_name << "_.end ();" << be_nl
       << "     ++iter, ++i)" << be_idt_nl
       << "{" << be_idt_nl
-      << "retv[i].objref = iter->second;" << be_nl << be_nl
+      << "retv[i].objref = iter->second;" << be_nl_2
       << "ACE_NEW_THROW_EX (retv[i].ck.inout ()," << be_nl
       << "                  ::CIAO::Cookie_Impl (iter->first),"
       << be_nl
@@ -396,7 +396,7 @@ be_visitor_context_svs::gen_uses_multiplex (
       << "return retv._retn (); " << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::Components::Cookie *" << be_nl
       << node_->local_name () << "_Context::connect_"
       << port_name << " (" << be_idt_nl
@@ -409,7 +409,7 @@ be_visitor_context_svs::gen_uses_multiplex (
 
   os_ << "ptrdiff_t const ptr = reinterpret_cast<ptrdiff_t> (c);";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "{" << be_idt_nl
       << "ACE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
       << "                  mon," << be_nl
@@ -417,7 +417,7 @@ be_visitor_context_svs::gen_uses_multiplex (
       << "_lock_," << be_nl
       << "                  0);";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "this->ciao_uses_" << port_name
       << "_[ptr] =" << be_nl
       << "  ::" << fname << "::_duplicate (c);";
@@ -425,17 +425,17 @@ be_visitor_context_svs::gen_uses_multiplex (
   os_ << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::Components::Cookie * ck = 0;" << be_nl
       << "ACE_NEW_THROW_EX (ck," << be_nl
       << "                  ::CIAO::Cookie_Impl (ptr),"
       << be_nl
       << "                  ::CORBA::NO_MEMORY ());"
-      << be_nl << be_nl
+      << be_nl_2
       << "return ck;" << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::" << fname << "_ptr" << be_nl
       << node_->local_name  () << "_Context::disconnect_"
       << port_name << " (" << be_idt_nl
@@ -444,14 +444,14 @@ be_visitor_context_svs::gen_uses_multiplex (
       << "::" << fname << "_var retv;" << be_nl
       << "ptrdiff_t key = 0UL;" << be_nl
       << tao_cg->upcase (port_name)
-      << "_TABLE::size_type n = 0UL;" << be_nl << be_nl
+      << "_TABLE::size_type n = 0UL;" << be_nl_2
       << "if (ck == 0 || ! ::CIAO::Cookie_Impl::extract (ck, key))"
       << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::InvalidConnection ();" << be_uidt_nl
       << "}" << be_uidt;
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "{" << be_idt_nl
       << "ACE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
       << "                  mon," << be_nl
@@ -460,7 +460,7 @@ be_visitor_context_svs::gen_uses_multiplex (
       << "                  ::" << fname
       << "::_nil ());";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << tao_cg->upcase (port_name)
       << "_TABLE::iterator iter =" << be_idt_nl
       << "this->ciao_uses_" << port_name
@@ -477,7 +477,7 @@ be_visitor_context_svs::gen_uses_multiplex (
   os_ << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "if (n != 1UL)" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::InvalidConnection ();" << be_uidt_nl

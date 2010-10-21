@@ -47,17 +47,17 @@ int
 be_visitor_facet_exs::visit_attribute (be_attribute *node)
 {
   AST_Decl::NodeType nt = this->node_->node_type ();
-  
+
   // Executor attribute code generated for porttype attributes
   // always in connectors and only for mirrorports in components.
   if (this->in_ext_port_ && nt == AST_Decl::NT_component)
     {
       return 0;
     }
-    
+
   this->op_scope_ =
     be_decl::narrow_from_decl (ScopeAsDecl (node->defined_in ()));
-  
+
   nt = this->op_scope_->node_type ();
 
   // Components have implied IDL operations added to the AST, but
@@ -81,7 +81,7 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
   lname_str += node->original_local_name ()->get_string ();
   const char *lname = lname_str.c_str ();
 
-  os_ << be_nl
+  os_ << be_nl_2
       << comment_border_ << be_nl
       << "// Facet Executor Implementation Class: "
       << lname << "_exec_i" << be_nl
@@ -91,7 +91,7 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
   bool is_global = (c_scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (is_global ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << lname << "_exec_i::" << lname
       << "_exec_i (" << be_idt << be_idt << be_idt_nl
       << smart_scope << c_scope->full_name () << "::CCM_"
@@ -105,7 +105,7 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
       << "{" << be_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << lname << "_exec_i::~" << lname
       << "_exec_i (void)" << be_nl
       << "{" << be_nl
@@ -118,7 +118,7 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
       be_interface *intf =
         be_interface::narrow_from_decl (impl);
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "// Operations from ::" << intf->full_name ();
 
       /// The overload of traverse_inheritance_graph() used here

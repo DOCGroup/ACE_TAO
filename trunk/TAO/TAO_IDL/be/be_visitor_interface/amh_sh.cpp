@@ -43,8 +43,8 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
   ACE_CString class_name;
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // We shall have a POA_ prefix only if we are at the topmost level.
   if (!node->is_nested ())
@@ -64,7 +64,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
 
   // Generate the _ptr declaration.
   *os << "typedef " << class_name.c_str () << " *" << class_name.c_str ()
-      << "_ptr;" << be_nl << be_nl;
+      << "_ptr;" << be_nl_2;
 
   // Now generate the class definition.
   *os << "class " << be_global->skel_export_macro ()
@@ -116,7 +116,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
       << "& rhs);" << be_nl
       << "virtual ~" << class_name.c_str () << " (void);\n\n"
       << be_nl
-      << "virtual ::CORBA::Boolean _is_a (const char* logical_type_id);" << be_nl << be_nl;
+      << "virtual ::CORBA::Boolean _is_a (const char* logical_type_id);" << be_nl_2;
 
   // Add a skeleton for our _is_a method.
   *os << "static void _is_a_skel (" << be_idt << be_idt_nl

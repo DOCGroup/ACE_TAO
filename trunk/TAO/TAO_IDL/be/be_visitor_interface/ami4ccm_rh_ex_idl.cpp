@@ -31,7 +31,7 @@ be_visitor_ami4ccm_rh_ex_idl::visit_interface (be_interface *node)
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "local interface AMI4CCM_"
       << node->original_local_name ()
       << "ReplyHandler" << be_idt_nl

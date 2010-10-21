@@ -51,7 +51,7 @@ be_visitor_home_svs::visit_home (be_home *node)
 
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "namespace CIAO_" << comp_->flat_name () << "_Impl" << be_nl
       << "{" << be_idt;
 
@@ -111,7 +111,7 @@ be_visitor_home_svs::visit_factory (be_factory *node)
 
   AST_Component *c = h->managed_component ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::" << c->name () << "_ptr" << be_nl
       << node_->original_local_name ()->get_string ()
       << "_Servant::" << node->local_name ();
@@ -222,7 +222,7 @@ be_visitor_home_svs::gen_servant_class (void)
       << "{" << be_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << lname << "_Servant::~" << lname << "_Servant (void)"
       << be_nl
       << "{" << be_nl
@@ -230,7 +230,7 @@ be_visitor_home_svs::gen_servant_class (void)
 
   if (this->node_->has_rw_attributes ())
     {
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "void" << be_nl
           << lname << "_Servant::set_attributes (" << be_idt_nl
           << "const ::Components::ConfigValues & descr)"
@@ -264,7 +264,7 @@ be_visitor_home_svs::gen_servant_class (void)
 
   if (pk != 0)
     {
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "::" << comp_->name () << "_ptr" << be_nl
           << lname << "_Servant::create (" << be_idt_nl
           << "::" << pk->name () << " * /* key */)" << be_uidt_nl
@@ -277,7 +277,7 @@ be_visitor_home_svs::gen_servant_class (void)
 
       if (!be_global->gen_lwccm ())
         {
-          os_ << be_nl << be_nl
+          os_ << be_nl_2
               << "::" << comp_->name () << "_ptr" << be_nl
               << lname << "_Servant::find_by_primary_key (" << be_idt_nl
               << "::" << pk->name () << " * /* key */)" << be_uidt_nl
@@ -289,7 +289,7 @@ be_visitor_home_svs::gen_servant_class (void)
               << "}";
         }
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "void" << be_nl
           << lname << "_Servant::remove (" << be_idt_nl
           << "::" << pk->name () << " * /* key */)" << be_uidt_nl
@@ -302,7 +302,7 @@ be_visitor_home_svs::gen_servant_class (void)
 
       if (!be_global->gen_lwccm ())
         {
-          os_ << be_nl << be_nl
+          os_ << be_nl_2
               << "::" << pk->name () << " *" << be_nl
               << lname << "_Servant::get_primary_key (" << be_idt_nl
               << "::" << comp_->name () << "_ptr /* comp */)" << be_uidt_nl
@@ -379,7 +379,7 @@ be_visitor_home_svs::gen_entrypoint (void)
 
   const char *global = (sname_str == "" ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::PortableServer::Servant" << be_nl
       << "create_" << node_->flat_name ()

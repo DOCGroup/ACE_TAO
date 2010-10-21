@@ -104,7 +104,7 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
       << "const " << this->name () << " &_tao_union" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "strm << \"" << this->name () << "(\";" << be_nl << be_nl
+      << "strm << \"" << this->name () << "(\";" << be_nl_2
       << "switch (_tao_union._d ())" << be_nl
       << "{" << be_idt;
 
@@ -173,7 +173,7 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
     }
 
   *os << be_uidt_nl
-      << "}" << be_nl << be_nl
+      << "}" << be_nl_2
       << "return strm << \")\";" << be_uidt_nl
       << "}" << be_nl;
 }

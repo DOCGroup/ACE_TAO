@@ -83,7 +83,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
 
       *os << be_nl
           << "TAO_InputCDR & _tao_in ="
-          << " *_tao_server_request.incoming ();" << be_nl << be_nl
+          << " *_tao_server_request.incoming ();" << be_nl_2
           << "if (!(" << be_idt << be_idt;
 
       // Marshal each in and inout argument.
@@ -237,7 +237,7 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
   *os << be_nl
       << "TAO_InputCDR & _tao_in ="
       << " *_tao_server_request.incoming ();"
-      << be_nl << be_nl
+      << be_nl_2
       << "if (!(" << be_idt << be_idt;
 
   {
@@ -302,8 +302,8 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
                                                        TAO_OutStream *os,
                                                        const char *skel_prefix)
 {
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this

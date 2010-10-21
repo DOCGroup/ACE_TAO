@@ -48,7 +48,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
   // Generate _var and _out class typedefs.
   node->gen_common_varout (os);
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "class " << be_global->stub_export_macro () << " "
       << node->local_name () << be_nl
       << "{" << be_nl
@@ -62,7 +62,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
       << "~" << node->local_name () << " (void);";
 
     // Generate assignment operator.
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << node->local_name () << " &operator= (const "
       << node->local_name () << " &);";
 
@@ -123,12 +123,12 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
   if ((dv.computed_ != 0) && (node->default_index () == -1))
     {
-      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
           << "// " << __FILE__ << ":" << __LINE__;
 
       // Only if all cases are not covered AND there is no explicit
       // default, we get the _default () method.
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "void _default (void);";
     }
 
@@ -137,7 +137,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
   // Now generate the private data members of the union.
   *os << "private:" << be_idt_nl;
   *os << bt->nested_type_name (node) << " disc_;" << be_nl;
-  *os << bt->nested_type_name (node) << " holder_;" << be_nl << be_nl;
+  *os << bt->nested_type_name (node) << " holder_;" << be_nl_2;
 
   // The members are inside of a union.
   *os << "union" << be_nl;
@@ -159,7 +159,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
   *os << "} u_;";
 
   // The reset method (TAO extension).
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "/// TAO extension - frees any allocated storage." << be_nl;
   *os << "void _reset (void);";
 

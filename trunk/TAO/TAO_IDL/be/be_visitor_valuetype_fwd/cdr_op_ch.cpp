@@ -65,7 +65,7 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
   // generate the CDR << and >> operator declarations (prototypes)
 
   *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << be_global->core_versioning_begin () << be_nl;
 

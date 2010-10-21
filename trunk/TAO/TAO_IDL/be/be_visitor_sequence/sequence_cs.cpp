@@ -59,7 +59,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   *os << "// TAO_IDL - Generated from " << be_nl
       << "// "__FILE__ << ":" << __LINE__;
@@ -67,7 +67,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   os->gen_ifdef_macro (node->flat_name ());
 
   // default constructor
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << node->name () << "::" << node->local_name ()
       << " (void)" << be_nl
       << "{}";
@@ -75,7 +75,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   // for unbounded sequences, we have a different set of constructors
   if (node->unbounded ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << node->name () << "::" << node->local_name () << " ("
           << be_idt << be_idt_nl
           << "::CORBA::ULong max)" << be_uidt_nl
@@ -107,7 +107,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   if (!be_global->alt_mapping () || !node->unbounded ())
     {
       // Constructor with the buffer
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << node->name () << "::" << node->local_name () << " ("
           << be_idt << be_idt_nl;
 
@@ -162,7 +162,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   }
 
   // Copy constructor.
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << node->name () << "::" << node->local_name ()
       << " (" << be_idt << be_idt << be_idt_nl
       << "const " << node->local_name ()
@@ -186,21 +186,21 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       << "{}";
 
   // Destructor.
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << node->name () << "::~" << node->local_name ()
       << " (void)" << be_nl
       << "{}";
 
   if (be_global->alt_mapping () && node->unbounded ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "::CORBA::ULong" << be_nl
           << node->name () << "::length (void) const" << be_nl
           << "{" << be_idt_nl
           << "return this->size ();" << be_uidt_nl
           << "}";
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "void" << be_nl
           << node->name () << "::length ( ::CORBA::ULong length)"
           << be_nl
@@ -208,7 +208,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
           << "this->resize (length);" << be_uidt_nl
           << "}";
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "::CORBA::ULong" << be_nl
           << node->name () << "::maximum (void) const" << be_nl
           << "{" << be_idt_nl
@@ -221,7 +221,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       && (!node->is_local ()
           || be_global->gen_local_iface_anyops ()))
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "void "
           << node->name () << "::_tao_any_destructor ("
           << be_idt << be_idt_nl

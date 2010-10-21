@@ -41,7 +41,7 @@ be_visitor_servant_svh::visit_component (be_component *node)
 
   const char *global = (sname_str == "" ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "class " << export_macro_.c_str () << " " << lname
       << "_Servant" << be_idt_nl
       << ": public virtual" << be_idt << be_idt_nl
@@ -135,7 +135,7 @@ be_visitor_servant_svh::visit_attribute (be_attribute *node)
     {
       return 0;
     }
-    
+
   this->ctx_->interface (this->node_);
   be_visitor_attribute v (this->ctx_);
   return v.visit_attribute (node);
@@ -205,13 +205,13 @@ be_visitor_servant_svh::visit_uses (be_uses *node)
           << "get_connection_" << port_name << " (void);";
     }
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "virtual "
       << (is_multiple ? "::Components::Cookie *" : "void")
       << be_nl
       << "connect_" << port_name << " ("
       << "::" << obj_name << "_ptr);"
-      << be_nl << be_nl;
+      << be_nl_2;
 
   os_ << "virtual ::" << obj_name << "_ptr" << be_nl
       << "disconnect_" << port_name << " (";
@@ -259,12 +259,12 @@ be_visitor_servant_svh::visit_emits (be_emits *node)
       const char *obj_name = node->emits_type ()->full_name ();
       const char *port_name = node->local_name ()->get_string ();
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "virtual void" << be_nl
           << "connect_" << port_name << " (" << be_idt_nl
           << "::" << obj_name << "Consumer_ptr c);" << be_uidt;
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "virtual ::" << obj_name << "Consumer_ptr" << be_nl
           << "disconnect_" << port_name << " (void);";
     }
@@ -322,17 +322,17 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
       os_ << "virtual ~" << ev_lname << "Consumer_" << port_name
           << "_Servant (void);";
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "virtual void" << be_nl
           << "push_" << ev_lname << " (" << be_idt_nl
           << "::" << obj_name << " * evt);" << be_uidt;
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "/// Inherited from ::Components::EventConsumerBase." << be_nl
           << "virtual void" << be_nl
           << "push_event ( ::Components::EventBase * ev);";
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "/// Get component implementation." << be_nl
           << "virtual ::CORBA::Object_ptr" << be_nl
           << "_get_component (void);";
@@ -343,7 +343,7 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
       os_ << global << sname << "::CCM_" << lname << "_var" << be_nl
           << "executor_;";
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << global << sname << "::CCM_"
           << lname << "_Context_var" << be_nl
           << "ctx_;";
@@ -351,7 +351,7 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
       os_ << be_uidt_nl
           << "};";
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "virtual ::" << obj_name << "Consumer_ptr" << be_nl
           << "get_consumer_" << port_name << " (void);";
 
@@ -373,7 +373,7 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
 void
 be_visitor_servant_svh::gen_non_type_specific (void)
 {
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "// Base class overrides."
       << be_uidt_nl << be_nl
       << "public:" << be_idt;
@@ -384,14 +384,14 @@ be_visitor_servant_svh::gen_non_type_specific (void)
           << "virtual ::Components::Cookie *" << be_nl
           << "connect (const char * name, ::CORBA::Object_ptr connection);";
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "virtual ::CORBA::Object_ptr " << be_nl
           << "disconnect (const char * name, ::Components::Cookie * ck);";
     }
 
   if (!be_global->gen_lwccm ())
     {
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "virtual ::Components::ReceptacleDescriptions *"
           << be_nl
           << "get_all_receptacles (void);";
@@ -403,12 +403,12 @@ be_visitor_servant_svh::gen_non_type_specific (void)
   if (!be_global->gen_lwccm () && !is_connector &&
       !be_global->gen_noeventccm ())
     {
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "virtual ::Components::PublisherDescriptions *"
           << be_nl
           << "get_all_publishers (void);";
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "virtual ::Components::EmitterDescriptions *"
           << be_nl
           << "get_all_emitters (void);";
@@ -420,14 +420,14 @@ be_visitor_servant_svh::gen_non_type_specific (void)
     {
       if (this->node_->n_publishes () > 0UL)
         {
-          os_ << be_nl << be_nl
+          os_ << be_nl_2
               << "virtual ::Components::Cookie *" << be_nl
               << "subscribe (const char * publisher_name,"
               << be_nl
               << "           ::Components::"
               << "EventConsumerBase_ptr subscriber);";
 
-          os_ << be_nl << be_nl
+          os_ << be_nl_2
               << "virtual ::Components::EventConsumerBase_ptr"
               << be_nl
               << "unsubscribe (const char * publisher_name,"
@@ -437,14 +437,14 @@ be_visitor_servant_svh::gen_non_type_specific (void)
 
       if (this->node_->n_emits () > 0UL)
         {
-          os_ << be_nl << be_nl
+          os_ << be_nl_2
               << "virtual void" << be_nl
               << "connect_consumer (const char * emitter_name,"
               << be_nl
               << "                  ::Components::"
               << "EventConsumerBase_ptr consumer);";
 
-          os_ << be_nl << be_nl
+          os_ << be_nl_2
               << "virtual ::Components::EventConsumerBase_ptr"
               << be_nl
               << "disconnect_consumer (const char * source_name);";
@@ -453,7 +453,7 @@ be_visitor_servant_svh::gen_non_type_specific (void)
 
   if (this->node_->n_provides () > 0UL)
     {
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "/// CIAO-specific." << be_nl
           << "::CORBA::Object_ptr" << be_nl
           << "get_facet_executor (const char * name);";

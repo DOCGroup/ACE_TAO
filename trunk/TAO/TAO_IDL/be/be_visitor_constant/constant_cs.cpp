@@ -57,10 +57,10 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
   if (be_global->gen_inline_constants () && !forbidden_in_class)
     {
       // Some compilers (especially Microsoft) always define storeage

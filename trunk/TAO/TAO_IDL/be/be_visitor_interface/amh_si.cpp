@@ -127,10 +127,10 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                   continue;
                 }
 
-              *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+              *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
                   << "// " << __FILE__ << ":" << __LINE__;
 
-              *os << be_nl << be_nl;
+              *os << be_nl_2;
 
               // Generate code in the inline file.
               // Generate the static method corresponding to this method.
@@ -166,7 +166,7 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                   return -1;
                 }
 
-              *os << be_nl << be_nl;
+              *os << be_nl_2;
 
               // Generate code in the inline file.
               // Generate the static method corresponding to this method.
@@ -197,7 +197,7 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
 
               if (!attr->readonly ())
                 {
-                  *os << be_nl << be_nl;
+                  *os << be_nl_2;
 
                   // Generate code in the inline file.
                   // Generate the static method corresponding to

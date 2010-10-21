@@ -40,9 +40,9 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -54,7 +54,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
   // type is inserted into an Any and then marshaled.
   if (node->is_local ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "namespace TAO" << be_nl
           << "{" << be_idt_nl
           << "template<>" << be_nl
@@ -67,7 +67,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
           << "return false;" << be_uidt_nl
           << "}";
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "template<>" << be_nl
           << "::CORBA::Boolean" << be_nl
           << "Any_Array_Impl_T<" << be_idt << be_idt_nl
@@ -102,7 +102,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << ": "
       << node->name () << "_dup (_tao_elem.in ())" << be_uidt << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   *os << "::CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
       << "const ::CORBA::Any &_tao_any," << be_nl

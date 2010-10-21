@@ -72,13 +72,13 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       class_name +=  node->local_name ();
     }
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate the skeleton class name.
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "class " << class_name.c_str () << ";" << be_nl;
 
   // Generate the _ptr declaration.
@@ -88,7 +88,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   if (be_global->gen_direct_collocation ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "class " << node->direct_proxy_impl_name ()
           << ";" << be_nl
           << "class " << node->strategized_proxy_broker_name ()
@@ -96,7 +96,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
     }
 
   // Now generate the class definition.
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "class " << be_global->skel_export_macro ()
       << " " << class_name.c_str () << be_idt_nl
       << ": " << be_idt;
@@ -119,15 +119,15 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "typedef ::" << node->name () << "_ptr _stub_ptr_type;"
       << be_nl
       << "typedef ::" << node->name () << "_var _stub_var_type;"
-      << be_nl << be_nl;
+      << be_nl_2;
 
   // Copy constructor and destructor.
   *os << class_name.c_str () << " (const "
       << class_name.c_str () << "& rhs);" << be_nl
-      << "virtual ~" << class_name.c_str () << " (void);" << be_nl << be_nl;
+      << "virtual ~" << class_name.c_str () << " (void);" << be_nl_2;
 
   // _is_a
-  *os << "virtual ::CORBA::Boolean _is_a (const char* logical_type_id);" << be_nl << be_nl;
+  *os << "virtual ::CORBA::Boolean _is_a (const char* logical_type_id);" << be_nl_2;
 
   // Add a skeleton for our _is_a method.
   *os << "static void _is_a_skel (" << be_idt << be_idt_nl

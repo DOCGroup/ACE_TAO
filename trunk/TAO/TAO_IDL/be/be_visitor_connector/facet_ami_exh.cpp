@@ -199,7 +199,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
     ScopeAsDecl (this->iface_->defined_in ())->full_name ();
   const char *iface_name = this->iface_->local_name ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "class " << export_macro_.c_str () << " "
       << iface_name << suffix << be_idt_nl
       << ": public virtual ::" << scope_name << "::CCM_"
@@ -208,7 +208,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
       << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << iface_name << suffix << " (void);" << be_nl << be_nl
+      << iface_name << suffix << " (void);" << be_nl_2
       << "virtual ~" << iface_name << suffix
       << " (void);";
 
@@ -224,7 +224,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
 
   const char *container_type = be_global->ciao_container_type ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "virtual void set_"
       << tao_cg->downcase (container_type)
       << "_context ("
@@ -236,10 +236,10 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
    (s->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (is_global ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "virtual ::CORBA::Object_ptr _get_component (void);";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "virtual void _set_component (" << be_idt_nl
       << "::" << s->name () << smart_scope
       << "CCM_" << this->node_->local_name ()

@@ -251,17 +251,17 @@ be_type::gen_common_varout (TAO_OutStream *os)
       return;
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   AST_Type::SIZE_TYPE st = this->size_type ();
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << (this->node_type () == AST_Decl::NT_struct ? "struct "
                                                     : "class ")
       << this->local_name () << ";";
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "typedef" << be_idt_nl
       << (st == AST_Type::FIXED ? "::TAO_Fixed_Var_T<"
                                 : "::TAO_Var_Var_T<")
@@ -296,7 +296,7 @@ be_type::gen_stub_decls (TAO_OutStream *os)
       return;
     }
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
@@ -340,7 +340,7 @@ be_type::gen_stub_decls (TAO_OutStream *os)
 
   if (gen_any_destructor)
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "static void _tao_any_destructor (void *);";
     }
 }

@@ -222,7 +222,7 @@ be_visitor_attribute_ccm_init::emit_error (
       << corba_kind << "\"" << be_nl
       << "            \"IDL type are not yet "
       << "supported by CIAO\\n\"));"
-      << be_nl << be_nl
+      << be_nl_2
       << "ACE_UNUSED_ARG (descr_value);" << be_nl;
 
   this->close_if_block ();
@@ -231,7 +231,7 @@ be_visitor_attribute_ccm_init::emit_error (
 void
 be_visitor_attribute_ccm_init::open_if_block (void)
 {
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "if (ACE_OS::strcmp (descr_name, \""
       << this->ctx_->port_prefix ().c_str ()
       << attr_->local_name ()->get_string ()

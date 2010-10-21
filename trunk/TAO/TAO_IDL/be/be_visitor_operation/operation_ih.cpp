@@ -37,12 +37,12 @@ be_visitor_operation_ih::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   if (be_global->gen_impl_debug_info ())
     {
       *os << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
     }
 
   // every operation is declared virtual in the client code

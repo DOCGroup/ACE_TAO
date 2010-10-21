@@ -34,7 +34,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
   class_name_str += suffix;
   const char *class_name = class_name_str.c_str ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << class_name << "::"
       << class_name << " (void)" << be_idt_nl
       << ": facet_exec_ (new ";
@@ -61,7 +61,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
       << "{" << be_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << class_name << "::~"
       << class_name << " (void)" << be_nl
       << "{" << be_idt_nl
@@ -79,7 +79,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
 
   const char *container_type = be_global->ciao_container_type ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << class_name << "::set_"
       << tao_cg->downcase (container_type)
@@ -94,20 +94,20 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
       << "(ctx);" << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << class_name << "::configuration_complete (void)" << be_nl
       << "{" << be_idt_nl
       << "this->facet_exec_->_set_component (this);" << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << class_name << "::ccm_activate (void)" << be_nl
       << "{" << be_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << class_name << "::ccm_passivate (void)" << be_nl
       << "{" << be_nl
@@ -118,7 +118,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
    (s->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (is_global ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << class_name << "::ccm_remove (void)" << be_nl
       << "{" << be_idt_nl
@@ -139,7 +139,7 @@ be_visitor_executor_ami_exs::visit_provides (be_provides *node)
   bool global = (scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (global ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << smart_scope << scope->full_name () << "::CCM_"
       << t->local_name () << "_ptr" << be_nl
       << ScopeAsDecl (this->node_->defined_in ())->local_name ()

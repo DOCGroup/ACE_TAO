@@ -59,7 +59,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
   /// Assumes parent connector exists and is either DDS_State
   /// or DDS_Event, so we generate inheritance from the
   /// corresponding template. May have to generalize this logic.
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "class " << this->export_macro_.c_str () << " "
       << this->node_->local_name () << "_exec_i" << be_idt_nl
       << ": public " << this->base_tname_ << "_Connector_T";
@@ -215,7 +215,7 @@ be_visitor_connector_dds_exh::gen_connector_traits (void)
   bool global_comp =
     (comp_scope->node_type () == AST_Decl::NT_root);
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "struct DDS_" << this->node_->local_name ()
       << "_Traits" << be_nl
       << "{" << be_idt_nl

@@ -76,8 +76,8 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       return 0;
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Retrieve the operation return type.
   be_type *bt = be_type::narrow_from_decl (node->return_type ());

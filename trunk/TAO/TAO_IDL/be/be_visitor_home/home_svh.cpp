@@ -51,7 +51,7 @@ be_visitor_home_svh::visit_home (be_home *node)
 
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "namespace CIAO_" << comp_->flat_name () << "_Impl" << be_nl
       << "{" << be_idt;
 
@@ -96,7 +96,7 @@ be_visitor_home_svh::visit_factory (be_factory *node)
 
   AST_Component *c = h->managed_component ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "virtual ::" << c->name () << "_ptr" << be_nl
       << node->local_name ();
 
@@ -158,12 +158,12 @@ be_visitor_home_svh::gen_servant_class (void)
       << "::CIAO::" << be_global->ciao_container_type ()
       << "_Container_ptr c);" << be_uidt;
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "virtual ~" << lname << "_Servant (void);";
 
   if (this->node_->has_rw_attributes ())
     {
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "virtual void" << be_nl
           << "set_attributes (const "
           << "::Components::ConfigValues & descr);";
@@ -173,30 +173,30 @@ AST_Type *pk = node_->primary_key ();
 
   if (pk != 0)
     {
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "// Implicit home primary key operations - not supported.";
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "virtual ::" << comp_->name () << "_ptr" << be_nl
           << "create (" << be_idt_nl
           << "::" << pk->name () << " * key);" << be_uidt;
 
       if (!be_global->gen_lwccm ())
         {
-          os_ << be_nl << be_nl
+          os_ << be_nl_2
               << "virtual ::" << comp_->name () << "_ptr" << be_nl
               << "find_by_primary_key (" << be_idt_nl
               << "::" << pk->name () << " * key);" << be_uidt;
         }
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "virtual void" << be_nl
           << "remove (" << be_idt_nl
           << "::" << pk->name () << " * key);" << be_uidt;
 
       if (!be_global->gen_lwccm ())
         {
-          os_ << be_nl << be_nl
+          os_ << be_nl_2
               << "virtual ::" << pk->name () << " *" << be_nl
               << "get_primary_key (" << be_idt_nl
               << "::" << comp_->name () << "_ptr comp);" << be_uidt;
@@ -252,7 +252,7 @@ AST_Type *pk = node_->primary_key ();
 void
 be_visitor_home_svh::gen_entrypoint (void)
 {
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::PortableServer::Servant" << be_nl
       << "create_" << node_->flat_name ()

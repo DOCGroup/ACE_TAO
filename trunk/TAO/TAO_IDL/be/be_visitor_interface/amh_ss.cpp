@@ -62,14 +62,14 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << non_amh_name.c_str () << "*" << be_nl
       << full_skel_name
       << "::_this (void)" << be_nl
       << "{" << be_idt_nl
-      << "TAO_Stub *stub = this->_create_stub ();" << be_nl << be_nl;
+      << "TAO_Stub *stub = this->_create_stub ();" << be_nl_2;
 
   *os << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl
       << "::CORBA::Object_ptr tmp = CORBA::Object_ptr ();" << be_nl
@@ -84,7 +84,7 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
       << ");" << be_uidt_nl << be_nl;
 
   *os << "::CORBA::Object_var obj = tmp;" << be_nl
-      << "(void) safe_stub.release ();" << be_nl << be_nl;
+      << "(void) safe_stub.release ();" << be_nl_2;
 
   *os << "typedef ::" << node->name () << " STUB_SCOPED_NAME;" << be_nl
       << "return" << be_idt_nl;
@@ -125,8 +125,8 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "void" << be_nl
       << full_skel_name << "::_dispatch (" << be_idt << be_idt_nl
@@ -145,7 +145,7 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
 void
 be_visitor_amh_interface_ss::generate_send_reply (TAO_OutStream * os)
 {
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "server_request.tao_send_reply ();";
 }
 

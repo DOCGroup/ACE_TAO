@@ -124,8 +124,8 @@ be_visitor_array_serializer_op_ch::visit_array (be_array *node)
         }
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   //  Set the sub state as generating code for the size method
   *os << be_global->stub_export_macro ()

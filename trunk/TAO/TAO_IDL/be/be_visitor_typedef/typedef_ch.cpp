@@ -174,8 +174,8 @@ be_visitor_typedef_ch::visit_array (be_array *node)
     }
   else
     {
-      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
       // Base type is simply an alias to an array node. Simply output the
       // required typedefs.
@@ -285,8 +285,8 @@ be_visitor_typedef_ch::visit_enum (be_enum *node)
         }
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // typedef the type and the _slice type.
   *os << "typedef " << bt->nested_type_name (scope)
@@ -316,8 +316,8 @@ be_visitor_typedef_ch::visit_interface (be_interface *node)
       bt = node;
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Typedef the object.
   *os << "typedef " << bt->nested_type_name (scope) << " "
@@ -365,8 +365,8 @@ be_visitor_typedef_ch::visit_predefined_type (be_predefined_type *node)
       bt = node;
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Typedef the type.
   *os << "typedef " << bt->nested_type_name (scope)
@@ -399,8 +399,8 @@ be_visitor_typedef_ch::visit_string (be_string *node)
   be_typedef *tdef = this->ctx_->tdef ();
   be_decl *scope = this->ctx_->scope ()->decl ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   if (node->width () == (long) sizeof (char))
     {
@@ -458,8 +458,8 @@ be_visitor_typedef_ch::visit_sequence (be_sequence *node)
     }
   else
     {
-      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
       // Typedef the type.
       *os << "typedef " << bt->nested_type_name (scope)
@@ -505,8 +505,8 @@ be_visitor_typedef_ch::visit_structure (be_structure *node)
         }
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Typedef the type.
   *os << "typedef " << bt->nested_type_name (scope)
@@ -551,8 +551,8 @@ be_visitor_typedef_ch::visit_union (be_union *node)
         }
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Typedef the type.
   *os << "typedef " << bt->nested_type_name (scope)
@@ -584,8 +584,8 @@ be_visitor_typedef_ch::visit_valuebox (be_valuebox *node)
       bt = node;
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Typedef the object.
   *os << "typedef " << bt->nested_type_name (scope) << " "
@@ -620,8 +620,8 @@ be_visitor_typedef_ch::visit_valuetype (be_valuetype *node)
       bt = node;
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Typedef the object.
   *os << "typedef " << bt->nested_type_name (scope) << " "

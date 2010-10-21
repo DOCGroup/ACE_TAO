@@ -56,7 +56,7 @@ be_visitor_component_svs::visit_component (be_component *node)
 
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "namespace CIAO_" << node->flat_name ()
       << "_Impl" << be_nl
       << "{" << be_idt;
@@ -106,7 +106,7 @@ be_visitor_component_svs::gen_entrypoint (AST_Component *node)
   const char *lname = node->local_name ()->get_string ();
   const char *global = (sname_str == "" ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::PortableServer::Servant" << be_nl
       << "create_" << node->flat_name ()

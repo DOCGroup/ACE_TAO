@@ -42,8 +42,8 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "ACE_INLINE" << be_nl;
   *os << node->name () << "::" << node->local_name () << " (void)" << be_nl;
@@ -52,10 +52,10 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
     {
       *os << "{" << be_idt_nl
           << "this->is_truncatable_ = true;" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
     }
   else
-    *os << "{}" << be_nl << be_nl;
+    *os << "{}" << be_nl_2;
 
 
   *os << "ACE_INLINE const char* " << be_nl

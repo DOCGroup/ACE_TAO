@@ -54,7 +54,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
     }
 
   *os << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "void" << be_nl
       << intf->full_direct_proxy_impl_name () << "::";

@@ -58,8 +58,8 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
                         -1);
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   if ((dv.computed_ != 0) && (bu->default_index () == -1))
     {
@@ -87,7 +87,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
           // out-of-bounds value for the _default() function.
           *os << "(" << bt->name () << ") -1";
         }
-      *os << ";" << be_uidt_nl << "}" << be_nl << be_nl;
+      *os << ";" << be_uidt_nl << "}" << be_nl_2;
     }
 
   // the set method
@@ -98,7 +98,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
       << " discval)" << be_nl
       << "{" << be_idt_nl
       << "this->disc_ = discval;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // the get method
   *os << "// Accessor to get the discriminant." << be_nl
@@ -145,8 +145,8 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
                         -1);
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   if ((dv.computed_ != 0) && (bu->default_index () == -1))
     {
@@ -206,7 +206,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
     }
 
   // The set method.
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "// Accessor to set the discriminant." << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
@@ -214,7 +214,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
       << " discval)" << be_nl
       << "{" << be_idt_nl
       << "this->disc_ = discval;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // The get method.
   *os << "// Accessor to get the discriminant." << be_nl

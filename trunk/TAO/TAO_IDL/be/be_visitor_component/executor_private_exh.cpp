@@ -46,7 +46,7 @@ int
 be_visitor_executor_private_exh::visit_attribute (be_attribute *node)
 {
   AST_Decl::NodeType nt = this->node_->node_type ();
-  
+
   // Executor attribute code generated for porttype attributes
   // always in connectors and only for mirrorports in components.
   if (this->in_ext_port_ && nt == AST_Decl::NT_component)
@@ -54,10 +54,10 @@ be_visitor_executor_private_exh::visit_attribute (be_attribute *node)
       return 0;
     }
 
-  os_ << be_uidt << be_uidt_nl << be_idt << be_idt_nl;
+  os_ << be_nl_2;
 
   be_visitor_member_type_decl v (this->ctx_);
-  
+
   if (node->field_type ()->accept (&v) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -72,4 +72,3 @@ be_visitor_executor_private_exh::visit_attribute (be_attribute *node)
 
   return 0;
 }
-

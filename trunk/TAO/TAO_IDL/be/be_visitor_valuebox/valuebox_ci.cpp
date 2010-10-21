@@ -47,14 +47,14 @@ be_visitor_valuebox_ci::visit_valuebox (be_valuebox *node)
                         -1);
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
   *os << "ACE_INLINE const char* " << be_nl
       << node->name () << "::_tao_obv_static_repository_id ()" << be_nl
       << "{" << be_idt_nl
       << "return \"" << node->repoID () << "\";" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Indicate that code is already generated for this node.
   node->cli_inline_gen (true);
@@ -70,15 +70,15 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
   // Retrieve the node being visited by this be_visitor_valuebox_ch.
   be_decl * vb_node = this->ctx_->node ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Public default constructor
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " (void)"
       << be_nl << "{" << be_idt_nl
       << "this->_pd_value = " << node->full_name () << "_alloc ();"
-      << be_uidt_nl << "}" << be_nl << be_nl;
+      << be_uidt_nl << "}" << be_nl_2;
 
   // Public constructor that takes a const array argument
   *os << "ACE_INLINE" << be_nl
@@ -87,7 +87,7 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
       << "{" << be_idt_nl
       << "this->_pd_value = " << node->full_name () << "_dup (val);"
       << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Public copy constructor
   *os << "ACE_INLINE" << be_nl
@@ -99,7 +99,7 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
       << "{" << be_idt_nl
       << "this->_pd_value = " << node->full_name ()
       << "_dup (val._pd_value.in ());" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Public assignment operator that takes a const array argument
   *os << "ACE_INLINE " << vb_node->name () << " &" << be_nl
@@ -109,20 +109,20 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
       << "this->_pd_value = " << node->full_name ()
       << "_dup (val);" << be_nl
       << "return *this;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Public accessor and modifier methods
   *os << "ACE_INLINE const " << node->full_name () << "_slice*" << be_nl
       << vb_node->name () << "::_value (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   *os << "ACE_INLINE " << node->full_name () << "_slice*" << be_nl
       << vb_node->name () << "::_value (void)" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.inout ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   *os << "ACE_INLINE void" << be_nl
       << vb_node->name () << "::_value (const " << node->full_name ()
@@ -130,7 +130,7 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
       << "{" << be_idt_nl
       << "this->_pd_value = " << node->full_name () << "_dup (val);"
       << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Overloaded subscript operators
   *os << "ACE_INLINE const " << node->full_name () << "_slice &" << be_nl
@@ -138,32 +138,32 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
       << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value[index];" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   *os << "ACE_INLINE "<< node->full_name () << "_slice &" << be_nl
       << vb_node->name () << "::operator[] ( ::CORBA::ULong index)" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value[index];" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Explicit conversion functions
   *os << "ACE_INLINE const " << node->full_name () << "_slice *" << be_nl
       << vb_node->name () << "::_boxed_in (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   *os << "ACE_INLINE " << node->full_name () << "_slice *" << be_nl
       << vb_node->name () << "::_boxed_inout (void)" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.inout ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   *os << "ACE_INLINE " << node->full_name () << "_slice *" << be_nl
       << vb_node->name () << "::_boxed_out (void)" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.out ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   return 0;
 }
@@ -225,8 +225,8 @@ be_visitor_valuebox_ci::visit_sequence (be_sequence *node)
   // Retrieve the node being visited by this be_visitor_valuebox_ch.
   be_decl * vb_node = this->ctx_->node ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   this->emit_default_constructor_alloc (node);
   this->emit_constructor_one_arg_alloc (node);
@@ -240,21 +240,21 @@ be_visitor_valuebox_ci::visit_sequence (be_sequence *node)
       << vb_node->name () << "::maximum (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value->maximum ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Generate length() accessor
   *os << "ACE_INLINE ::CORBA::ULong " << be_nl
       << vb_node->name () << "::length (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value->length ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Generate length() setter
   *os << "ACE_INLINE void " << be_nl
       << vb_node->name () << "::length ( ::CORBA::ULong length)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value->length (length);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   return 0;
 }
@@ -287,8 +287,8 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
   // Retrieve the node being visited by this be_visitor_valuebox_ch.
   be_decl * vb_node = this->ctx_->node ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   this->emit_default_constructor ();
   this->emit_constructor_one_arg (node, "");
@@ -301,7 +301,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
       << node->full_name () << " val)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
 
   // Public constructor with one argument of type const CORBA::String_var&
@@ -310,7 +310,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
       << " (const ::CORBA::" << string_type << "_var& var)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = var;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Public assignment operator with one argument of type const char *
   *os << "ACE_INLINE " << vb_node->name () << " &" << be_nl
@@ -319,7 +319,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
       << "{" << be_idt_nl
       << "this->_pd_value = val;" << be_nl
       << "return *this;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Public assignment operator with one argument of type
   // const CORBA::String_var&
@@ -330,14 +330,14 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
       << "{" << be_idt_nl
       << "this->_pd_value = var;" << be_nl
       << "return *this;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Accessor function takes no arguments and returns a const char *
   *os << "ACE_INLINE const " << node->full_name () << be_nl
       << vb_node->name () << "::_value (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Modifier function with one argument of type char *
   *os << "ACE_INLINE void" << be_nl
@@ -345,7 +345,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
       << node->full_name () << " val)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Modifier function with one argument of type const char *
   *os << "ACE_INLINE void" << be_nl
@@ -353,7 +353,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
       << node->full_name () << " val)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Modifier function with one argument of type const CORBA::String_var&
   *os << "ACE_INLINE void" << be_nl
@@ -361,39 +361,39 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
       << "_var& var)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = var;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Access to the boxed value for method signatures
   *os << "ACE_INLINE const " << node->full_name () << be_nl
       << vb_node->name () << "::_boxed_in (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   *os << "ACE_INLINE " << node->full_name () << "&" << be_nl
       << vb_node->name () << "::_boxed_inout (void)" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.inout ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   *os << "ACE_INLINE " << node->full_name () << "&" << be_nl
       << vb_node->name () << "::_boxed_out (void)" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.out ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Overloaded subscript operators
   *os << "ACE_INLINE " << char_type << " &" << be_nl
       << vb_node->name () << "::operator[] ( ::CORBA::ULong slot)" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value[slot];" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   *os << "ACE_INLINE " << char_type << be_nl
       << vb_node->name () << "::operator[] ( ::CORBA::ULong slot) const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value[slot];" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   return 0;
 }
@@ -403,8 +403,8 @@ be_visitor_valuebox_ci::visit_structure (be_structure *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   this->emit_default_constructor_alloc (node);
   this->emit_constructor_one_arg_alloc (node);
@@ -484,8 +484,8 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   this->emit_default_constructor_alloc (node);
   this->emit_constructor_one_arg_alloc (node);
@@ -561,13 +561,13 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
       << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value->_d (val);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   *os << "ACE_INLINE " << bt->nested_type_name (node) << be_nl
       << vb_node->name () << "::_d (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value->_d ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   return 0;
 }
@@ -584,8 +584,8 @@ be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
   // Retrieve the node being visited by this be_visitor_valuebox_ci.
   be_decl * vb_node = this->ctx_->node ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   if (is_any)
     {
@@ -608,7 +608,7 @@ be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
           << vb_node->name () << "::_value (void) const" << be_nl
           << "{" << be_idt_nl
           << "return this->_pd_value;" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
 
       // Public modifier method
       *os << "ACE_INLINE void" << be_nl
@@ -617,26 +617,26 @@ be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
           << type_suffix << " val)" << be_nl
           << "{" << be_idt_nl
           << "this->_pd_value = val;" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
 
       // Explicit conversion functions
       *os << "ACE_INLINE " << node->full_name () << type_suffix << be_nl
           << vb_node->name () << "::_boxed_in (void) const" << be_nl
           << "{" << be_idt_nl
           << "return this->_pd_value;" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
 
       *os << "ACE_INLINE " << node->full_name () << type_suffix << "&" << be_nl
           << vb_node->name () << "::_boxed_inout (void)" << be_nl
           << "{" << be_idt_nl
           << "return this->_pd_value;" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
 
       *os << "ACE_INLINE " << node->full_name () << type_suffix << "&" << be_nl
           << vb_node->name () << "::_boxed_out (void)" << be_nl
           << "{" << be_idt_nl
           << "return this->_pd_value;" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
 
     }
 
@@ -655,7 +655,7 @@ be_visitor_valuebox_ci::emit_default_constructor (void)
   *os << "ACE_INLINE" << be_nl;
   *os << vb_node->name () << "::" << vb_node->local_name ()
       << " (void)" << be_nl;
-  *os << "{}" << be_nl << be_nl;
+  *os << "{}" << be_nl_2;
 }
 
 void
@@ -678,7 +678,7 @@ be_visitor_valuebox_ci::emit_default_constructor_alloc (be_decl *node)
       << node->full_name ()
       << (node_not_pod ? " ()" : "") << ");" << be_uidt_nl
       << "this->_pd_value = p;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 }
 
 void
@@ -696,7 +696,7 @@ be_visitor_valuebox_ci::emit_constructor_one_arg (be_decl *node,
       << node->full_name () << type_suffix << " val)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 }
 
 void
@@ -717,7 +717,7 @@ be_visitor_valuebox_ci::emit_constructor_one_arg_alloc (be_decl *node)
       << "p," << be_nl
       << node->full_name () << " (value));" << be_uidt_nl
       << "this->_pd_value = p;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 }
 
 void
@@ -737,7 +737,7 @@ be_visitor_valuebox_ci::emit_copy_constructor (void)
       << be_uidt_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val._pd_value;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 }
 
 void
@@ -761,7 +761,7 @@ be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node)
       << "p," << be_nl
       << node->full_name () << " (val._pd_value.in ()));" << be_uidt_nl
       << "this->_pd_value = p;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 }
 
 
@@ -781,7 +781,7 @@ be_visitor_valuebox_ci::emit_assignment (be_decl *node,
       << "{" << be_idt_nl
       << "this->_pd_value = val;" << be_nl
       << "return *this;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 }
 
 void
@@ -804,7 +804,7 @@ be_visitor_valuebox_ci::emit_assignment_alloc (be_decl *node)
       << "*this);" << be_uidt_nl << be_nl
       << "this->_pd_value = p;" << be_nl
       << "return *this;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 }
 
 
@@ -821,14 +821,14 @@ be_visitor_valuebox_ci::emit_accessor_modifier (be_decl *node)
       << vb_node->name () << "::_value (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Public accessor method
   *os << "ACE_INLINE " << node->full_name () << " &" << be_nl
       << vb_node->name () << "::_value (void)" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.inout ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Public modifier method
   *os << "ACE_INLINE void" << be_nl
@@ -840,7 +840,7 @@ be_visitor_valuebox_ci::emit_accessor_modifier (be_decl *node)
       << "p," << be_nl
       << node->full_name () << " (value));" << be_uidt_nl
       << "this->_pd_value = p;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 }
 
 void
@@ -857,18 +857,18 @@ be_visitor_valuebox_ci::emit_boxed_access (be_decl *node,
       << vb_node->name () << "::_boxed_in (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   *os << "ACE_INLINE " << node->full_name () << "&" << be_nl
       << vb_node->name () << "::_boxed_inout (void)" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.inout ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   *os << "ACE_INLINE " << node->full_name ()
       << out_ref_modifier << "&" << be_nl
       << vb_node->name () << "::_boxed_out (void)" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.out ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 }

@@ -175,7 +175,7 @@ be_visitor_typedef_ci::visit_array (be_array *node)
       *os << tdef->name () << "_alloc (void)" << be_nl;
       *os << "{" << be_idt_nl;
       *os << "return " << bt->name () << "_alloc ();" << be_uidt_nl;
-      *os << "}" << be_nl << be_nl;
+      *os << "}" << be_nl_2;
 
       // dup method
       *os << "ACE_INLINE " << be_nl
@@ -186,7 +186,7 @@ be_visitor_typedef_ci::visit_array (be_array *node)
           << ")" << be_uidt_nl;
       *os << "{" << be_idt_nl;
       *os << "return " << bt->name () << "_dup (_tao_src);" << be_uidt_nl;
-      *os << "}" << be_nl << be_nl;
+      *os << "}" << be_nl_2;
 
       // copy method
       *os << "ACE_INLINE" << be_nl
@@ -198,7 +198,7 @@ be_visitor_typedef_ci::visit_array (be_array *node)
           << ")" << be_uidt_nl;
       *os << "{" << be_idt_nl;
       *os << bt->name () << "_copy (_tao_dest, _tao_src);" << be_uidt_nl;
-      *os << "}" << be_nl << be_nl;
+      *os << "}" << be_nl_2;
 
       // free method
       *os << "ACE_INLINE" << be_nl
@@ -208,7 +208,7 @@ be_visitor_typedef_ci::visit_array (be_array *node)
           << ")" << be_uidt_nl;
       *os << "{" << be_idt_nl;
       *os << bt->name () << "_free (_tao_src);" << be_uidt_nl;
-      *os << "}" << be_nl << be_nl;
+      *os << "}" << be_nl_2;
     }
 
   bt->cli_inline_gen (true);

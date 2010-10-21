@@ -49,7 +49,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
                          "codegen for scope failed\n"), -1);
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
   *os << be_global->core_versioning_begin () << be_nl;
@@ -80,7 +80,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   *os << " _tao_corba_obj = _tao_objref;" << be_nl;
   *os << "return (strm << _tao_corba_obj);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
@@ -104,13 +104,13 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       *os << "::CORBA::Object_var obj;";
     }
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "if (!(strm >> obj.inout ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "return false;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "typedef ::" << node->name () << " RHS_SCOPED_NAME;"
-      << be_nl << be_nl
+      << be_nl_2
       << "// Narrow to the right type." << be_nl;
 
   *os << "_tao_objref =" << be_idt_nl;

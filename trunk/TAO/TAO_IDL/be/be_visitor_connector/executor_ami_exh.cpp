@@ -36,7 +36,7 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
   const char *suffix = "_exec_i";
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "class " << this->export_macro_.c_str () << " "
       << scope->local_name () << suffix << be_idt_nl
       << ": public virtual AMI4CCM_Connector_Exec," << be_idt_nl
@@ -59,15 +59,15 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
 
   const char *container_type = be_global->ciao_container_type ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "virtual void set_"
       << tao_cg->downcase (container_type)
       << "_context ("
       << "::Components::" << be_global->ciao_container_type ()
       << "Context_ptr ctx);"
-      << be_nl << be_nl
+      << be_nl_2
       << "virtual void configuration_complete (void);"
-      << be_nl << be_nl
+      << be_nl_2
       << "virtual void ccm_activate (void);" << be_nl
       << "virtual void ccm_passivate (void);" << be_nl
       << "virtual void ccm_remove (void);";
@@ -102,7 +102,7 @@ be_visitor_executor_ami_exh::visit_provides (be_provides *node)
   bool global = (scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (global ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "virtual " << smart_scope << scope->full_name ()
       << "::CCM_" << t->local_name () << "_ptr" << be_nl
       << "get_";

@@ -41,8 +41,8 @@ be_visitor_valuetype_any_op_ch::visit_valuetype (be_valuetype *node)
   TAO_OutStream *os = this->ctx_->stream ();
   const char *macro = this->ctx_->export_macro ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   be_module *module = 0;
 
@@ -82,7 +82,7 @@ be_visitor_valuetype_any_op_ch::visit_valuetype (be_valuetype *node)
       be_util::gen_nested_namespace_end (os, module);
 
       // Emit #else.
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "#else\n\n";
     }
 

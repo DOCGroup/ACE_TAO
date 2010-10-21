@@ -40,9 +40,9 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Since we don't generate CDR stream operators for types that
   // explicitly contain a local interface (at some level), we
@@ -54,7 +54,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
     {
       *os << be_global->core_versioning_begin () << be_nl;
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "namespace TAO" << be_nl
           << "{" << be_idt_nl
           << "template<>" << be_nl
@@ -65,7 +65,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
           << "return false;" << be_uidt_nl
           << "}";
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "template<>" << be_nl
           << "::CORBA::Boolean" << be_nl
           << "Any_Dual_Impl_T<" << node->name ()
@@ -127,7 +127,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
               << "::" << node->tc_name () << "," << be_nl
               << "_tao_elem" << be_uidt_nl
               << ");" << be_uidt << be_uidt << be_uidt_nl
-              << "}" << be_nl << be_nl;
+              << "}" << be_nl_2;
 
           // Non-copying insertion.
           *os << "// Non-copying insertion." << be_nl
@@ -143,7 +143,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
               << "::" << node->tc_name () << "," << be_nl
               << "_tao_elem" << be_uidt_nl
               << ");" << be_uidt << be_uidt_nl
-              << "}" << be_nl << be_nl;
+              << "}" << be_nl_2;
 
           // Extraction to non-const pointer (deprecated, just calls the other).
           *os << "// Extraction to non-const pointer (deprecated)." << be_nl
@@ -156,7 +156,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
               << "const ::" << node->name () << " *&> (" << be_nl
               << "_tao_elem" << be_uidt_nl
               << ");" << be_uidt << be_uidt_nl
-              << "}" << be_nl << be_nl;
+              << "}" << be_nl_2;
 
           // Extraction to const pointer.
           *os << "// Extraction to const pointer." << be_nl
@@ -178,7 +178,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
           be_util::gen_nested_namespace_end (os, module);
 
           // Emit #else.
-          *os << be_nl << be_nl
+          *os << be_nl_2
               << "#else\n";
         }
     }
@@ -204,7 +204,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << node->tc_name () << "," << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Non-copying insertion.
   *os << "// Non-copying insertion." << be_nl
@@ -220,7 +220,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << node->tc_name () << "," << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Extraction to non-const pointer (deprecated, just calls the other).
   *os << "// Extraction to non-const pointer (deprecated)." << be_nl
@@ -233,7 +233,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << "const " << node->name () << " *&> (" << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Extraction to const pointer.
   *os << "// Extraction to const pointer." << be_nl

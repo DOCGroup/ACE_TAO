@@ -45,7 +45,7 @@ be_visitor_home_exs::visit_home (be_home *node)
 
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "namespace CIAO_" << comp_->flat_name () << "_Impl" << be_nl
       << "{" << be_idt;
 
@@ -91,7 +91,7 @@ be_visitor_home_exs::visit_factory (be_factory *node)
   const char *lname = comp_->local_name ()->get_string ();
   const char *global = (sname_str == "" ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::Components::EnterpriseComponent_ptr" << be_nl
       << node_->original_local_name ()->get_string ()
       << "_exec_i::" << node->local_name ();
@@ -131,12 +131,12 @@ be_visitor_home_exs::gen_exec_class (void)
       << lname << "_exec_i" << be_nl
       << comment_border_;
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << lname << "_exec_i::" << lname << "_exec_i (void)" << be_nl
       << "{" << be_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << lname << "_exec_i::~" << lname << "_exec_i (void)" << be_nl
       << "{" << be_nl
       << "}";
@@ -189,10 +189,10 @@ be_visitor_home_exs::gen_exec_class (void)
       h = be_home::narrow_from_decl (h->base_home ());
     }
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "// Implicit operations.";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::Components::EnterpriseComponent_ptr" << be_nl
       << lname << "_exec_i::create (void)" << be_nl
       << "{" << be_idt_nl
@@ -215,7 +215,7 @@ be_visitor_home_exs::gen_exec_class (void)
 void
 be_visitor_home_exs::gen_entrypoint (void)
 {
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::HomeExecutorBase_ptr" << be_nl
       << "create_" << node_->flat_name ()
