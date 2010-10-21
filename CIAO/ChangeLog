@@ -1,3 +1,10 @@
+Thu Oct 21 12:21:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/CoherentUpdater/Receiver/CoherentUpdate_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/CoherentUpdater/Receiver/CoherentUpdate_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CoherentUpdater/Receiver/CoherentUpdate_Test_Receiver_exec.cpp:
+          Regenerated using -Gex and -Gexr and added the test code again
+
 Thu Oct 21 11:54:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender_exec.h:

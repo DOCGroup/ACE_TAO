@@ -1,11 +1,9 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "CoherentUpdate_Test_Receiver_exec.h"
-
-#include "ace/OS_NS_unistd.h"
 #include "tao/ORB_Core.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Reactor.h"
 #include "ace/Log_Msg.h"
 
@@ -36,36 +34,46 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
   }
 
   //============================================================
-  // Starter_exec_i
+  // Facet Executor Implementation Class: reader_start_exec_i
   //============================================================
-  Starter_exec_i::Starter_exec_i (Receiver_exec_i & callback)
-    : callback_ (callback)
+
+  reader_start_exec_i::reader_start_exec_i (
+        ::CoherentUpdate_Test::CCM_Receiver_Context_ptr ctx,
+        Receiver_exec_i & callback)
+    : ciao_context_ (
+        ::CoherentUpdate_Test::CCM_Receiver_Context::_duplicate (ctx))
+      , callback_ (callback)
   {
   }
 
-  Starter_exec_i::~Starter_exec_i (void)
+  reader_start_exec_i::~reader_start_exec_i (void)
   {
   }
+
+  // Operations from ::CoherentUpdateStarter
 
   void
-  Starter_exec_i::set_reader_properties (CORBA::UShort nr_iterations)
+  reader_start_exec_i::set_reader_properties (
+    ::CORBA::UShort nr_iterations)
   {
     this->callback_.iterations (nr_iterations);
   }
 
   void
-  Starter_exec_i::start_read (CORBA::UShort run)
+  reader_start_exec_i::start_read (
+    ::CORBA::UShort run)
   {
     this->callback_.start_read (run);
   }
 
   //============================================================
-  // Receiver_exec_i
+  // Component Executor Implementation Class: Receiver_exec_i
   //============================================================
+
   Receiver_exec_i::Receiver_exec_i (void)
-    : iterations_ (10),
+    : nr_runs_ (5),
+      iterations_ (10),
       run_ (0),
-      nr_runs_ (5),
       last_iter_ (0),
       ticker_ (0)
   {
@@ -75,14 +83,13 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
   {
   }
 
-
   bool
   Receiver_exec_i::check_last ()
   {
     try
       {
         ::CoherentUpdate_Test::Reader_var reader =
-          this->context_->get_connection_info_out_data ();
+          this->ciao_context_->get_connection_info_out_data ();
         if (::CORBA::is_nil (reader.in ()))
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_last - "
@@ -104,7 +111,7 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
       }
     catch (...)
       {
-        // no need to catch. An error is given
+        // No need to catch. An error is given
         // when this example didn't run at all.
         ACE_DEBUG ((LM_INFO, "CRASH !\n"));
       }
@@ -142,7 +149,7 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
         if (this->run_ < this->nr_runs () + 1)
           {
              CoherentUpdateRestarter_var restarter =
-              this->context_->get_connection_updater_restart ();
+              this->ciao_context_->get_connection_updater_restart ();
             if (! ::CORBA::is_nil (restarter))
               {
                 restarter->restart_update ();
@@ -187,7 +194,7 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
     ACE_NEW_THROW_EX (this->ticker_,
                       read_action_Generator (*this, run),
                       ::CORBA::INTERNAL ());
-    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
+    if (this->reactor ()->schedule_timer (
                                           this->ticker_,
                                           0,
                                           ACE_Time_Value(1, 0),
@@ -202,7 +209,7 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
   {
     if (this->ticker_)
       {
-        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+        this->reactor ()->cancel_timer (this->ticker_);
         delete this->ticker_;
         this->ticker_ = 0;
       }
@@ -211,7 +218,7 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
                           run));
     this->run_ = run;
     ::CoherentUpdate_Test::Reader_var reader =
-      this->context_->get_connection_info_out_data ();
+      this->ciao_context_->get_connection_info_out_data ();
     if (! ::CORBA::is_nil (reader.in ()))
       {
         this->read_all (reader);
@@ -221,6 +228,73 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
         ACE_ERROR ((LM_ERROR, "Receiver_exec_i::run - "
                               "Unable to start: reader is nil.\n"));
       }
+  }
+
+  // Supported operations and attributes.
+
+  ACE_Reactor*
+  Receiver_exec_i::reactor (void)
+  {
+    ACE_Reactor* reactor = 0;
+    ::CORBA::Object_var ccm_object =
+      this->ciao_context_->get_CCM_object();
+    if (! ::CORBA::is_nil (ccm_object.in ()))
+      {
+        ::CORBA::ORB_var orb = ccm_object->_get_orb ();
+        if (! ::CORBA::is_nil (orb.in ()))
+          {
+            reactor = orb->orb_core ()->reactor ();
+          }
+      }
+    if (reactor == 0)
+      {
+        throw ::CORBA::INTERNAL ();
+      }
+    return reactor;
+  }
+
+  // Component attributes and port operations.
+
+  ::CCM_DDS::CCM_PortStatusListener_ptr
+  Receiver_exec_i::get_info_out_status (void)
+  {
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
+  }
+
+  ::CCM_CoherentUpdateStarter_ptr
+  Receiver_exec_i::get_reader_start (void)
+  {
+    if ( ::CORBA::is_nil (this->ciao_reader_start_.in ()))
+      {
+        reader_start_exec_i *tmp = 0;
+        ACE_NEW_RETURN (
+          tmp,
+          reader_start_exec_i (
+            this->ciao_context_.in (),
+            *this),
+          ::CCM_CoherentUpdateStarter::_nil ());
+
+        this->ciao_reader_start_ = tmp;
+      }
+
+    return
+      ::CCM_CoherentUpdateStarter::_duplicate (
+        this->ciao_reader_start_.in ());
+  }
+
+  ::CORBA::UShort
+  Receiver_exec_i::nr_runs (void)
+  {
+    return
+      this->nr_runs_;
+  }
+
+  void
+  Receiver_exec_i::nr_runs (
+    const ::CORBA::UShort nr_runs)
+  {
+    this->nr_runs_ =
+      nr_runs;
   }
 
   ::CORBA::UShort
@@ -235,45 +309,16 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
     this->iterations_ = iterations;
   }
 
-  ::CORBA::UShort
-  Receiver_exec_i::nr_runs (void)
-  {
-    return this->nr_runs_;
-  }
-
-  void
-  Receiver_exec_i::nr_runs (::CORBA::UShort nr_runs)
-  {
-    this->nr_runs_ = nr_runs;
-  }
-
-  // Port operations.
-  ::CoherentUpdate_Test::CCM_Listener_ptr
-  Receiver_exec_i::get_info_out_data_listener (void)
-  {
-    return ::CoherentUpdate_Test::CCM_Listener::_nil ();
-  }
-
-  ::CCM_DDS::CCM_PortStatusListener_ptr
-  Receiver_exec_i::get_info_out_status (void)
-  {
-    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
-  }
-
-  ::CCM_CoherentUpdateStarter_ptr
-  Receiver_exec_i::get_reader_start ()
-  {
-    return new Starter_exec_i (*this);
-  }
-
   // Operations from Components::SessionComponent.
+
   void
   Receiver_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    this->context_ =
+    this->ciao_context_ =
       ::CoherentUpdate_Test::CCM_Receiver_Context::_narrow (ctx);
-    if ( ::CORBA::is_nil (this->context_.in ()))
+
+    if ( ::CORBA::is_nil (this->ciao_context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
@@ -299,7 +344,7 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
   {
     if (this->ticker_)
       {
-        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+        this->reactor ()->cancel_timer (this->ticker_);
         delete this->ticker_;
         this->ticker_ = 0;
       }
@@ -320,12 +365,9 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-
     ACE_NEW_NORETURN (
       retval,
       Receiver_exec_i);
-
     return retval;
   }
 }
-
