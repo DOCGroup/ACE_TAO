@@ -85,9 +85,10 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
   // field.
 
   TAO_OutStream *os = this->ctx_->stream ();
+  
   be_field *f =
     be_field::narrow_from_decl (this->ctx_->node ());
-
+    
   if (f == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
