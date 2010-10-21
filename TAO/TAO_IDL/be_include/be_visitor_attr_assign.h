@@ -47,9 +47,9 @@ public:
   virtual int visit_union (be_union *);
   virtual int visit_valuebox (be_valuebox *);
   virtual int visit_valuetype (be_valuetype *);
-  
+
   void attr_name (const char *name);
-  
+
 private:
   const char *attr_name_;
   ACE_CString attr_name_string_;

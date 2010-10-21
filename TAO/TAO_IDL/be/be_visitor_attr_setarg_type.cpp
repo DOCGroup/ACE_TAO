@@ -28,7 +28,7 @@ be_visitor_attr_setarg_type::~be_visitor_attr_setarg_type (void)
 }
 
 int
-be_visitor_attr_setarg_type::visit_array (be_array *node)
+be_visitor_attr_setarg_type::visit_array (be_array *)
 {
   be_type *bt = this->ctx_->alias ();
 
@@ -99,13 +99,13 @@ be_visitor_attr_setarg_type::visit_predefined_type (
         os_ << "const ::" << node->full_name () << " ";
         break;
     }
-    
+
   return 0;
 }
 
 /// Unused if anonymous types are not allowed.
 int
-be_visitor_attr_setarg_type::visit_sequence (be_sequence *node)
+be_visitor_attr_setarg_type::visit_sequence (be_sequence *)
 {
   be_type *bt = this->ctx_->alias ();
 
@@ -131,7 +131,7 @@ be_visitor_attr_setarg_type::visit_string (be_string *node)
     {
       os_ << "const ::CORBA::WChar * ";
     }
-    
+
   return 0;
 }
 
@@ -139,7 +139,7 @@ int
 be_visitor_attr_setarg_type::visit_structure (be_structure *node)
 {
   os_ << "const ::" << node->full_name () << " & ";
-  
+
   return 0;
 }
 

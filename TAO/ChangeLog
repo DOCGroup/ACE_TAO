@@ -1,3 +1,14 @@
+Thu Oct 21 16:23:10 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_attr_setarg_type.cpp:
+        * TAO_IDL/be/be_visitor_member_type_decl.cpp:
+        * TAO_IDL/be_include/be_visitor_attr_assign.h:
+        * TAO_IDL/be_include/be_visitor_component/executor_exs_attr_init.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_exs.h:
+        * TAO_IDL/be_include/be_visitor_attr_return.h:
+        
+          Fixed trailing whitespace and unused parameter warnings.
+
 Thu Oct 21 15:21:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_array.cpp:
