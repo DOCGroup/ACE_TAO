@@ -56,8 +56,14 @@ union Data2 switch (DataType2)
   case dtShortType: short shortData;
 };
 
+interface intf {};
+valuetype vtype {};
+
 component Foo
 {
+  attribute intf my_intf;
+  attribute vtype my_vtype;
+  
   attribute short  my_short;
   attribute long   my_long;
   attribute float  my_float;
