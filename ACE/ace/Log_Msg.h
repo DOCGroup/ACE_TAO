@@ -183,7 +183,7 @@ public:
   {
     /// Write messages to stderr.
     STDERR = 1,
-    /// Write messages to the local client logger deamon.
+    /// Write messages to the local client logger daemon.
     LOGGER = 2,
     /// Write messages to the ostream * stored in thread-specific
     /// storage.
