@@ -37,14 +37,13 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::DataWriter_ptr
-    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datawriter (::DDS::Topic_ptr a_topic,
-                                        const ::DDS::DataWriterQos & qos,
-                                        ::DDS::DataWriterListener_ptr a_listener,
-                                        ::DDS::StatusMask mask)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datawriter (
+      ::DDS::Topic_ptr a_topic,
+      const ::DDS::DataWriterQos &,
+      ::DDS::DataWriterListener_ptr a_listener,
+      ::DDS::StatusMask mask)
     {
       DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datawriter");
-
-      ACE_UNUSED_ARG (qos);
 
       Topic_type * topic = dynamic_cast < Topic_type * > (a_topic);
 
