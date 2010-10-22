@@ -1,8 +1,18 @@
+Fri Oct 22 06:28:07 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_attr_assign.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
+          Fuzz. Trailing whitespaces.
+
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+          Fuzz. Newline at end of file.
+
 Thu Oct 21 17:39:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_valuetype.cpp:
         * TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
-        
+
           Fixed more code generation bugs related to be_attribute
           newly inheriting from be_field.
 
@@ -13,9 +23,9 @@ Thu Oct 21 17:19:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
         * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
         * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
-        
+
           Fixed code generation for valuetypes fields. In
-          
+
           Wed Oct 20 19:50:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           class be_valuetypes was modified to inherit from class
@@ -30,7 +40,7 @@ Thu Oct 21 16:23:10 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be_include/be_visitor_component/executor_exs_attr_init.h:
         * TAO_IDL/be_include/be_visitor_component/facet_exs.h:
         * TAO_IDL/be_include/be_visitor_attr_return.h:
-        
+
           Fixed trailing whitespace and unused parameter warnings.
 
 Thu Oct 21 15:21:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
