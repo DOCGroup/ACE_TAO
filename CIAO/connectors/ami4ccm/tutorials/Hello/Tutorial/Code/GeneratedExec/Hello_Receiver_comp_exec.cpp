@@ -29,6 +29,7 @@
 
 namespace CIAO_Hello_Receiver_comp_Impl
 {
+
   //============================================================
   // Facet Executor Implementation Class: do_my_foo_exec_i
   //============================================================
@@ -47,37 +48,34 @@ namespace CIAO_Hello_Receiver_comp_Impl
   // Operations from ::Hello::MyFoo_obj
 
   ::CORBA::Long
-  do_my_foo_exec_i::foo (
-    const char * /* in_str */,
-    ::CORBA::String_out /* answer */)
+  do_my_foo_exec_i::foo (const char * /* in_str */,
+  ::CORBA::String_out /* answer */)
   {
     /* Your code here. */
     return 0;
   }
 
   void
-  do_my_foo_exec_i::hello (
-    ::CORBA::Long_out /* answer */)
+  do_my_foo_exec_i::hello (::CORBA::Long_out /* answer */)
   {
     /* Your code here. */
   }
 
   ::CORBA::Short
-  do_my_foo_exec_i::rw_attrib (void)
+  MyFoo_obj_exec_i::rw_attrib (void)
   {
     /* Your code here. */
     return 0;
   }
 
   void
-  do_my_foo_exec_i::rw_attrib (
-    ::CORBA::Short /* rw_attrib */)
+  MyFoo_obj_exec_i::rw_attrib (::CORBA::Short /* rw_attrib */)
   {
     /* Your code here. */
   }
 
   ::CORBA::Short
-  do_my_foo_exec_i::ro_attrib (void)
+  MyFoo_obj_exec_i::ro_attrib (void)
   {
     /* Your code here. */
     return 0;
@@ -87,8 +85,7 @@ namespace CIAO_Hello_Receiver_comp_Impl
   // Component Executor Implementation Class: Receiver_comp_exec_i
   //============================================================
 
-  Receiver_comp_exec_i::Receiver_comp_exec_i (void)
-  {
+  Receiver_comp_exec_i::Receiver_comp_exec_i (void){
   }
 
   Receiver_comp_exec_i::~Receiver_comp_exec_i (void)
@@ -109,9 +106,9 @@ namespace CIAO_Hello_Receiver_comp_Impl
           tmp,
           do_my_foo_exec_i (
             this->ciao_context_.in ()),
-          ::Hello::CCM_MyFoo_obj::_nil ());
+            ::Hello::CCM_MyFoo_obj::_nil ());
 
-        this->ciao_do_my_foo_ = tmp;
+          this->ciao_do_my_foo_ = tmp;
       }
 
     return

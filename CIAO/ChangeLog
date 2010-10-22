@@ -1,3 +1,11 @@
+Fri Oct 22 10:35:07 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Receiver_comp_exec.h:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Receiver_comp_exec.cpp:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Sender_comp_exec.h:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Sender_comp_exec.cpp:
+          Regenerated, using the latest version of the IDL compiler.
+
 Fri Oct 22 10:28:42 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp_exec.cpp:

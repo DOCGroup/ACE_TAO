@@ -24,8 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO__________TUTORIAL_CODE_GENERATEDEXEC_HELLO_SENDER_COMP_EXEC_EIGDGL_H_
-#define CIAO__________TUTORIAL_CODE_GENERATEDEXEC_HELLO_SENDER_COMP_EXEC_EIGDGL_H_
+#ifndef CIAO__________TUTORIAL_CODE_GENERATEDEXEC_HELLO_SENDER_COMP_EXEC_F5TEI4_H_
+#define CIAO__________TUTORIAL_CODE_GENERATEDEXEC_HELLO_SENDER_COMP_EXEC_F5TEI4_H_
 
 #include /**/ "ace/pre.h"
 
@@ -39,6 +39,10 @@
 
 namespace CIAO_Hello_Sender_comp_Impl
 {
+
+  //============================================================
+  // Component Executor Implementation Class: Sender_comp_exec_i
+  //============================================================
 
   class  Sender_comp_exec_i
     : public virtual Sender_comp_Exec,
@@ -54,9 +58,7 @@ namespace CIAO_Hello_Sender_comp_Impl
     //@}
 
     //@{
-    /** Component attributes and port operations. */
-
-    //@}
+    /** Component attributes and port operations. *///@}
 
     //@{
     /** Operations from Components::SessionComponent. */
@@ -68,6 +70,11 @@ namespace CIAO_Hello_Sender_comp_Impl
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
+    //@}
+
+    //@{
+    /** User defined operations */
+
     //@}
 
   private:

@@ -29,12 +29,12 @@
 
 namespace CIAO_Hello_Sender_comp_Impl
 {
+
   //============================================================
   // Component Executor Implementation Class: Sender_comp_exec_i
   //============================================================
 
-  Sender_comp_exec_i::Sender_comp_exec_i (void)
-  {
+  Sender_comp_exec_i::Sender_comp_exec_i (void){
   }
 
   Sender_comp_exec_i::~Sender_comp_exec_i (void)
