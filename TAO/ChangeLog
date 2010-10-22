@@ -1,3 +1,10 @@
+Fri Oct 22 06:39:15 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+          Removed some more trailing whitespaces from the
+          generated code.
+
 Fri Oct 22 06:28:07 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_attr_assign.cpp:
