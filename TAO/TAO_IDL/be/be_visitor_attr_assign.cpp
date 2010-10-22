@@ -33,9 +33,9 @@ int
 be_visitor_attr_assign::visit_array (be_array *node)
 {
   os_ << be_nl
-      << this->attr_name_string_.c_str () << " =" << be_idt_nl
+      << this->attr_name_string_.c_str () << " = "
       << "::" << node->full_name () << "_dup ("
-      << this->attr_name_ << ");" << be_uidt;
+      << this->attr_name_ << ");";
 
   return 0;
 }
@@ -44,9 +44,9 @@ int
 be_visitor_attr_assign::visit_component (be_component *node)
 {
   os_ << be_nl
-      << this->attr_name_string_.c_str () << " =" << be_idt_nl
+      << this->attr_name_string_.c_str () << " = "
       << "::" << node->full_name () << "::_duplicate ("
-      << this->attr_name_ << ");" << be_uidt;
+      << this->attr_name_ << ");";
 
   return 0;
 }
@@ -55,8 +55,8 @@ int
 be_visitor_attr_assign::visit_enum (be_enum *)
 {
   os_ << be_nl
-      << this->attr_name_string_.c_str () << " =" << be_idt_nl
-      << this->attr_name_ << ";" << be_uidt;
+      << this->attr_name_string_.c_str () << " = "
+      << this->attr_name_ << ";";
 
   return 0;
 }
@@ -66,8 +66,8 @@ be_visitor_attr_assign::visit_eventtype (be_eventtype *)
 {
   os_ << be_nl
       << this->attr_name_ << "->_add_ref ();" << be_nl
-      << this->attr_name_string_.c_str () << " =" << be_idt_nl
-      << this->attr_name_ << ";" << be_uidt;
+      << this->attr_name_string_.c_str () << " = "
+      << this->attr_name_ << ";";
 
   return 0;
 }
@@ -76,9 +76,9 @@ int
 be_visitor_attr_assign::visit_home (be_home *node)
 {
   os_ << be_nl
-      << this->attr_name_string_.c_str () << " =" << be_idt_nl
+      << this->attr_name_string_.c_str () << " = "
       << "::" << node->full_name () << "::_duplicate ("
-      << this->attr_name_ << ");" << be_uidt;
+      << this->attr_name_ << ");";
 
   return 0;
 }
@@ -88,9 +88,9 @@ be_visitor_attr_assign::visit_interface (
   be_interface *node)
 {
   os_ << be_nl
-      << this->attr_name_string_.c_str () << " =" << be_idt_nl
+      << this->attr_name_string_.c_str () << " = "
       << "::" << node->full_name () << "::_duplicate ("
-      << this->attr_name_ << ");" << be_uidt;
+      << this->attr_name_ << ");";
 
   return 0;
 }
@@ -100,8 +100,8 @@ be_visitor_attr_assign::visit_predefined_type (
   be_predefined_type *)
 {
   os_ << be_nl
-      << this->attr_name_string_.c_str () << " =" << be_idt_nl
-      << this->attr_name_ << ";" << be_uidt;
+      << this->attr_name_string_.c_str () << " = "
+      << this->attr_name_ << ";";
 
   return 0;
 }
@@ -125,9 +125,9 @@ int
 be_visitor_attr_assign::visit_string (be_string *node)
 {
   os_ << be_nl
-      << this->attr_name_string_.c_str () << " =" << be_idt_nl
+      << this->attr_name_string_.c_str () << " = "
       << "::CORBA::" << (node->width () == sizeof (char) ? "" : "w")
-      << "string_dup (" << this->attr_name_ << ");" << be_uidt;
+      << "string_dup (" << this->attr_name_ << ");";
 
   return 0;
 }
@@ -184,8 +184,8 @@ be_visitor_attr_assign::visit_valuebox (be_valuebox *)
 {
   os_ << be_nl
       << this->attr_name_ << "->_add_ref ();" << be_nl
-      << this->attr_name_string_.c_str () << " =" << be_idt_nl
-      << this->attr_name_ << ";" << be_uidt;
+      << this->attr_name_string_.c_str () << " = "
+      << this->attr_name_ << ";";
 
   return 0;
 }
@@ -195,8 +195,8 @@ be_visitor_attr_assign::visit_valuetype (be_valuetype *)
 {
   os_ << be_nl
       << this->attr_name_ << "->_add_ref ();" << be_nl
-      << this->attr_name_string_.c_str () << " =" << be_idt_nl
-      << this->attr_name_ << ";" << be_uidt;
+      << this->attr_name_string_.c_str () << " = "
+      << this->attr_name_ << ";";
 
   return 0;
 }
