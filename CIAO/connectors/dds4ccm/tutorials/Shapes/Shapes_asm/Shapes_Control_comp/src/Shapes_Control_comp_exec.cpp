@@ -2,9 +2,10 @@
 // $Id$
 
 #include "Shapes_Control_comp_exec.h"
+#include "tao/ORB_Core.h"
+
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
-#include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
 #define MIN_SIZE 5
@@ -31,20 +32,21 @@ namespace CIAO_Shapes_Control_comp_Impl
   }
 
   //============================================================
-  // Control_comp_exec_i
+  // Component Executor Implementation Class: Control_comp_exec_i
   //============================================================
+
   Control_comp_exec_i::Control_comp_exec_i (void)
-    : rate_ (1),
-      max_x_ (100),
-      max_y_ (100),
-      max_size_ (25),
-      resize_ (false),
-      x_increasing_ (false),
-      y_increasing_ (false),
-      size_increasing_ (false),
-      current_size_ (ACE_OS::rand () % max_size_),
-      current_x_ (ACE_OS::rand () % max_x_),
-      current_y_ (ACE_OS::rand () % max_y_)
+    : rate_ (0)
+      , max_x_ (0)
+      , max_y_ (0)
+      , max_size_ (0)
+      , resize_shape_ (false)
+      , x_increasing_ (false)
+      , y_increasing_ (false)
+      , size_increasing_ (false)
+      , current_size_ (ACE_OS::rand () % max_size_)
+      , current_x_ (ACE_OS::rand () % max_x_)
+      , current_y_ (ACE_OS::rand () % max_y_)
   {
     this->ticker_ = new pulse_Generator (*this);
   }
@@ -54,6 +56,26 @@ namespace CIAO_Shapes_Control_comp_Impl
   }
 
   // Supported operations and attributes.
+  ACE_Reactor*
+  Control_comp_exec_i::reactor (void)
+  {
+    ACE_Reactor* reactor = 0;
+    ::CORBA::Object_var ccm_object = 
+      this->ciao_context_->get_CCM_object();
+    if (! ::CORBA::is_nil (ccm_object.in ())) 
+      {
+        ::CORBA::ORB_var orb = ccm_object->_get_orb ();
+        if (! ::CORBA::is_nil (orb.in ()))
+          {
+            reactor = orb->orb_core ()->reactor ();
+          }
+      }
+    if (reactor == 0)
+      {
+        throw ::CORBA::INTERNAL ();
+      }
+    return reactor;
+  }
 
   void
   Control_comp_exec_i::tick ()
@@ -99,7 +121,7 @@ namespace CIAO_Shapes_Control_comp_Impl
           }
       }
     ::Shapes::Control_obj_var control =
-      this->context_->get_connection_control ();
+      this->ciao_context_->get_connection_control ();
     if (! ::CORBA::is_nil (control))
       {
         if (control->setSize (this->current_size_) == ::Shapes::RETURN_ERROR)
@@ -131,14 +153,14 @@ namespace CIAO_Shapes_Control_comp_Impl
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to control shapes\n")));
       }
-  }
+   }
 
   void
   Control_comp_exec_i::start (void)
   {
     // calculate the interval time
     long const usec = 1000000 / this->rate_;
-    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
+    if (this->reactor ()->schedule_timer (
                 this->ticker_,
                 0,
                 ACE_Time_Value (0, usec),
@@ -152,9 +174,11 @@ namespace CIAO_Shapes_Control_comp_Impl
   void
   Control_comp_exec_i::stop (void)
   {
-    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+    this->reactor ()->cancel_timer (this->ticker_);
     delete this->ticker_;
   }
+
+  // Component attributes and port operations.
 
   ::CORBA::ULong
   Control_comp_exec_i::rate (void)
@@ -163,7 +187,8 @@ namespace CIAO_Shapes_Control_comp_Impl
   }
 
   void
-  Control_comp_exec_i::rate (::CORBA::ULong rate)
+  Control_comp_exec_i::rate (
+    const ::CORBA::ULong rate)
   {
     this->rate_ = rate;
   }
@@ -175,7 +200,8 @@ namespace CIAO_Shapes_Control_comp_Impl
   }
 
   void
-  Control_comp_exec_i::max_x (::CORBA::UShort max_x)
+  Control_comp_exec_i::max_x (
+    const ::CORBA::UShort max_x)
   {
     this->max_x_ = max_x;
   }
@@ -187,7 +213,8 @@ namespace CIAO_Shapes_Control_comp_Impl
   }
 
   void
-  Control_comp_exec_i::max_y (::CORBA::UShort max_y)
+  Control_comp_exec_i::max_y (
+    const ::CORBA::UShort max_y)
   {
     this->max_y_ = max_y;
   }
@@ -199,36 +226,35 @@ namespace CIAO_Shapes_Control_comp_Impl
   }
 
   void
-  Control_comp_exec_i::max_size (::CORBA::UShort max_size)
+  Control_comp_exec_i::max_size (
+    const ::CORBA::UShort max_size)
   {
     this->max_size_ = max_size;
   }
 
-  void
-  Control_comp_exec_i::resize_shape (::CORBA::Boolean resize)
-  {
-    this->resize_ = resize;
-  }
-
   ::CORBA::Boolean
-  Control_comp_exec_i::resize_shape ()
+  Control_comp_exec_i::resize_shape (void)
   {
-    return this->resize_;
-  }
-
-  ::Shapes::CCM_Control_obj_ptr
-  Control_comp_exec_i::get_control (void)
-  {
-    return ::Shapes::CCM_Control_obj::_nil ();
+    return this->resize_shape_;
   }
 
   void
-  Control_comp_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
+  Control_comp_exec_i::resize_shape (
+    const ::CORBA::Boolean resize_shape)
   {
-    this->context_ =
+    this->resize_shape_ = resize_shape;
+  }
+
+  // Operations from Components::SessionComponent.
+
+  void
+  Control_comp_exec_i::set_session_context (
+    ::Components::SessionContext_ptr ctx)
+  {
+    this->ciao_context_ =
       ::Shapes::CCM_Control_comp_Context::_narrow (ctx);
 
-    if ( ::CORBA::is_nil (this->context_.in ()))
+    if ( ::CORBA::is_nil (this->ciao_context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
@@ -237,12 +263,13 @@ namespace CIAO_Shapes_Control_comp_Impl
   void
   Control_comp_exec_i::configuration_complete (void)
   {
+    /* Your code here. */
   }
 
   void
   Control_comp_exec_i::ccm_activate (void)
   {
-    this->start ();
+     this->start ();
   }
 
   void
@@ -254,6 +281,7 @@ namespace CIAO_Shapes_Control_comp_Impl
   void
   Control_comp_exec_i::ccm_remove (void)
   {
+    /* Your code here. */
   }
 
   extern "C" SHAPES_CONTROL_COMP_EXEC_Export ::Components::EnterpriseComponent_ptr
@@ -269,4 +297,3 @@ namespace CIAO_Shapes_Control_comp_Impl
     return retval;
   }
 }
-

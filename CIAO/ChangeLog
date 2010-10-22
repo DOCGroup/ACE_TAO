@@ -1,3 +1,13 @@
+Fri Oct 22 09:09:12 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp_exec.cpp:
+          Rewritten, based on the generated code.
+
 Fri Oct 22 07:54:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Control_comp/Shapes_Control_comp_exec.h:

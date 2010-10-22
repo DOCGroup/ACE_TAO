@@ -2,42 +2,47 @@
 // $Id$
 
 #include "Shapes_Sender_comp_exec.h"
-#include "ace/Guard_T.h"
-#include "ace/Log_Msg.h"
-#include "tao/ORB_Core.h"
 
 namespace CIAO_Shapes_Sender_comp_Impl
 {
+
   //============================================================
-  // Controller_exec_i
+  // Facet Executor Implementation Class: control_exec_i
   //============================================================
-  Controller_exec_i::Controller_exec_i (Sender_exec_i &callback)
-    : callback_ (callback)
+
+  control_exec_i::control_exec_i (
+        ::Shapes::CCM_Sender_comp_Context_ptr ctx,
+        Sender_comp_exec_i &callback)
+    : ciao_context_ (
+        ::Shapes::CCM_Sender_comp_Context::_duplicate (ctx)),
+      callback_ (callback)
   {
   }
 
-  Controller_exec_i::~Controller_exec_i (void)
+  control_exec_i::~control_exec_i (void)
   {
   }
+
+  // Operations from ::Shapes::Control_obj
 
   ::Shapes::ReturnStatus
-  Controller_exec_i::setSize (::CORBA::UShort size)
+  control_exec_i::setSize (::CORBA::UShort size)
   {
     return this->callback_.setSize (size);
   }
 
   ::Shapes::ReturnStatus
-  Controller_exec_i::setLocation (::CORBA::UShort x,
-                                  ::CORBA::UShort y)
+  control_exec_i::setLocation (::CORBA::UShort x,
+  ::CORBA::UShort y)
   {
     return this->callback_.setLocation (x, y);
   }
 
+  //============================================================
+  // Component Executor Implementation Class: Sender_comp_exec_i
+  //============================================================
 
-  //============================================================
-  // Sender_exec_i
-  //============================================================
-  Sender_exec_i::Sender_exec_i (void)
+  Sender_comp_exec_i::Sender_comp_exec_i (void)
     : instance_handle_ (::DDS::HANDLE_NIL)
   {
     this->square_.x = 10;
@@ -46,38 +51,32 @@ namespace CIAO_Shapes_Sender_comp_Impl
     this->square_.color = CORBA::string_dup("GREEN");
   }
 
-  Sender_exec_i::~Sender_exec_i (void)
+  Sender_comp_exec_i::~Sender_comp_exec_i (void)
   {
   }
 
   // Supported operations and attributes.
-  ::Shapes::CCM_Control_obj_ptr
-  Sender_exec_i::get_control (void)
-  {
-    return new Controller_exec_i (*this);
-  }
-
   ::Shapes::ReturnStatus
-  Sender_exec_i::setSize (::CORBA::UShort size)
+  Sender_comp_exec_i::setSize (::CORBA::UShort size)
   {
     this->square_.shapesize = size;
     return this->update_square ();
   }
 
   ::Shapes::ReturnStatus
-  Sender_exec_i::setLocation (::CORBA::UShort x,
+  Sender_comp_exec_i::setLocation (::CORBA::UShort x,
                               ::CORBA::UShort y)
-  {
+   {
     this->square_.x = x;
     this->square_.y = y;
     return this->update_square ();
   }
 
   ::Shapes::ReturnStatus
-  Sender_exec_i::update_square ()
+  Sender_comp_exec_i::update_square ()
   {
     ::Shapes::ShapeType_conn::Writer_var writer =
-      this->context_->get_connection_info_write_data ();
+      this->ciao_context_->get_connection_info_write_data ();
     if (::CORBA::is_nil (writer.in ()))
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::update_square - ")
@@ -109,28 +108,55 @@ namespace CIAO_Shapes_Sender_comp_Impl
     return ::Shapes::RETURN_OK;
   }
 
-  void
-  Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
+  // Component attributes and port operations.
+
+  ::Shapes::CCM_Control_obj_ptr
+  Sender_comp_exec_i::get_control (void)
   {
-    this->context_ =
+    if ( ::CORBA::is_nil (this->ciao_control_.in ()))
+      {
+        control_exec_i *tmp = 0;
+        ACE_NEW_RETURN (
+          tmp,
+          control_exec_i (
+            this->ciao_context_.in (),
+            *this),
+            ::Shapes::CCM_Control_obj::_nil ());
+
+          this->ciao_control_ = tmp;
+      }
+
+    return
+      ::Shapes::CCM_Control_obj::_duplicate (
+        this->ciao_control_.in ());
+  }
+
+  // Operations from Components::SessionComponent.
+
+  void
+  Sender_comp_exec_i::set_session_context (
+    ::Components::SessionContext_ptr ctx)
+  {
+    this->ciao_context_ =
       ::Shapes::CCM_Sender_comp_Context::_narrow (ctx);
 
-    if ( ::CORBA::is_nil (this->context_.in ()))
+    if ( ::CORBA::is_nil (this->ciao_context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
   }
 
   void
-  Sender_exec_i::configuration_complete (void)
+  Sender_comp_exec_i::configuration_complete (void)
   {
+    /* Your code here. */
   }
 
   void
-  Sender_exec_i::ccm_activate (void)
+  Sender_comp_exec_i::ccm_activate (void)
   {
     ::Shapes::ShapeType_conn::Writer_var writer =
-      this->context_->get_connection_info_write_data ();
+      this->ciao_context_->get_connection_info_write_data ();
     if (::CORBA::is_nil (writer.in ()))
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::update_square - ")
@@ -161,10 +187,10 @@ namespace CIAO_Shapes_Sender_comp_Impl
   }
 
   void
-  Sender_exec_i::ccm_passivate (void)
+  Sender_comp_exec_i::ccm_passivate (void)
   {
     ::Shapes::ShapeType_conn::Writer_var writer =
-      this->context_->get_connection_info_write_data ();
+      this->ciao_context_->get_connection_info_write_data ();
     if (::CORBA::is_nil (writer.in ()))
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::update_square - ")
@@ -192,8 +218,9 @@ namespace CIAO_Shapes_Sender_comp_Impl
   }
 
   void
-  Sender_exec_i::ccm_remove (void)
+  Sender_comp_exec_i::ccm_remove (void)
   {
+    /* Your code here. */
   }
 
   extern "C" SHAPES_SENDER_COMP_EXEC_Export ::Components::EnterpriseComponent_ptr
@@ -204,9 +231,8 @@ namespace CIAO_Shapes_Sender_comp_Impl
 
     ACE_NEW_NORETURN (
       retval,
-      Sender_exec_i);
+      Sender_comp_exec_i);
 
     return retval;
   }
 }
-
