@@ -32,10 +32,10 @@ int
 be_visitor_attr_return::visit_array (be_array *node)
 {
   os_ << be_nl
-      << "return" << be_idt_nl
+      << "return "
       << "::" << node->full_name () << "_dup ("
       << this->attr_name_string_.c_str ()
-      << ".in ());" << be_uidt;
+      << ".in ());";
 
   return 0;
 }
@@ -44,10 +44,10 @@ int
 be_visitor_attr_return::visit_component (be_component *node)
 {
   os_ << be_nl
-      << "return" << be_idt_nl
+      << "return "
       << "::" << node->full_name () << "::_duplicate ("
       << this->attr_name_string_.c_str ()
-      << ".in ());" << be_uidt;
+      << ".in ());";
 
   return 0;
 }
@@ -67,9 +67,9 @@ be_visitor_attr_return::visit_eventtype (be_eventtype *)
   os_ << be_nl
       << "this->" << this->attr_name_string_.c_str ()
       << "->_add_ref ();" << be_nl_2
-      << "return" << be_idt_nl
+      << "return "
       << "this->" << this->attr_name_string_.c_str ()
-      << ".in ();" << be_uidt;
+      << ".in ();";
 
   return 0;
 }
@@ -78,10 +78,10 @@ int
 be_visitor_attr_return::visit_home (be_home *node)
 {
   os_ << be_nl
-      << "return" << be_idt_nl
+      << "return "
       << "::" << node->full_name () << "::_duplicate ("
       << this->attr_name_string_.c_str ()
-      << ".in ());" << be_uidt;
+      << ".in ());";
 
   return 0;
 }
@@ -91,10 +91,10 @@ be_visitor_attr_return::visit_interface (
   be_interface *node)
 {
   os_ << be_nl
-      << "return" << be_idt_nl
+      << "return "
       << "::" << node->full_name () << "::_duplicate ("
       << this->attr_name_string_.c_str ()
-      << ".in ());" << be_uidt;
+      << ".in ());";
 
   return 0;
 }
@@ -110,11 +110,10 @@ be_visitor_attr_return::visit_predefined_type (
       case AST_PredefinedType::PT_abstract:
       case AST_PredefinedType::PT_object:
       case AST_PredefinedType::PT_pseudo:
-        os_ << "return" << be_idt_nl
+        os_ << "return "
             << "::" << node->full_name ()
             << "::_duplicate (" << be_idt_nl
-            << this->attr_name_string_.c_str () << ".in ());"
-            << be_uidt << be_uidt;
+            << this->attr_name_string_.c_str () << ".in ());";
         break;
       case AST_PredefinedType::PT_any:
         os_ << "::CORBA::Any * retval = 0;" << be_nl
@@ -134,9 +133,9 @@ be_visitor_attr_return::visit_predefined_type (
             << "return retval;";
         break;
       default:
-        os_ << "return" << be_idt_nl
+        os_ << "return "
             << this->attr_name_string_.c_str ()
-            << ";" << be_uidt;
+            << ";";
         break;
     }
 
@@ -164,11 +163,11 @@ int
 be_visitor_attr_return::visit_string (be_string *node)
 {
   os_ << be_nl
-      << "return" << be_idt_nl
+      << "return "
       << "::CORBA::"
       << (node->width () == sizeof (char) ? "" : "w")
       << "string_dup (" << this->attr_name_string_.c_str ()
-      << ".in ());" << be_uidt;
+      << ".in ());";
 
   return 0;
 }
@@ -256,9 +255,9 @@ be_visitor_attr_return::visit_valuebox (be_valuebox *)
   os_ << be_nl
       << this->attr_name_string_.c_str () << "->_add_ref ();"
       << be_nl_2
-      << "return" << be_idt_nl
+      << "return "
       << this->attr_name_string_.c_str ()
-      << ".in ();" << be_uidt;
+      << ".in ();";
 
   return 0;
 }
@@ -269,9 +268,9 @@ be_visitor_attr_return::visit_valuetype (be_valuetype *)
   os_ << be_nl
       << this->attr_name_string_.c_str () << "->_add_ref ();"
       << be_nl_2
-      << "return" << be_idt_nl
+      << "return "
       << this->attr_name_string_.c_str ()
-      << ".in ();" << be_uidt;
+      << ".in ();";
 
   return 0;
 }

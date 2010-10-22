@@ -1,3 +1,15 @@
+Fri Oct 22 07:03:47 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_attr_assign.cpp:
+        * TAO_IDL/be/be_visitor_attr_return.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+          Declaration of the getter and setter methods for
+          component attributes on one line in the generated
+          executor header file.
+          Return value and setting the attribute value on one
+          line in the generated executor source file.
+
 Fri Oct 22 06:39:15 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
