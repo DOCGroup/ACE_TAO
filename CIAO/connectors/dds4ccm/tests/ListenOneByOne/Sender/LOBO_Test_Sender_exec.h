@@ -39,7 +39,7 @@ namespace CIAO_LOBO_Test_Sender_Impl
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
 
-  class SENDER_EXEC_Export Sender_exec_i
+  class Sender_exec_i
     : public virtual Sender_Exec,
       public virtual ::CORBA::LocalObject
   {
