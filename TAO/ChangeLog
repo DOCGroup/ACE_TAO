@@ -1,3 +1,8 @@
+Fri Oct 22 11:59:58 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+          More layout and documentation generation
+
 Fri Oct 22 11:50:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
