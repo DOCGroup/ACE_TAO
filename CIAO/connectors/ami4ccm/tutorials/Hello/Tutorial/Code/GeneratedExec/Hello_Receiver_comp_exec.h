@@ -24,8 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO__________TUTORIAL_CODE_GENERATEDEXEC_HELLO_RECEIVER_COMP_EXEC_WWUCAH_H_
-#define CIAO__________TUTORIAL_CODE_GENERATEDEXEC_HELLO_RECEIVER_COMP_EXEC_WWUCAH_H_
+#ifndef CIAO__________TUTORIAL_CODE_GENERATEDEXEC_HELLO_RECEIVER_COMP_EXEC_IHOFDC_H_
+#define CIAO__________TUTORIAL_CODE_GENERATEDEXEC_HELLO_RECEIVER_COMP_EXEC_IHOFDC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -39,6 +39,11 @@
 
 namespace CIAO_Hello_Receiver_comp_Impl
 {
+
+  //============================================================
+  // Provider Executor Implementation Class: do_my_foo_exec_i
+  //============================================================
+
   class  do_my_foo_exec_i
     : public virtual ::Hello::CCM_MyFoo_obj,
       public virtual ::CORBA::LocalObject
@@ -51,36 +56,25 @@ namespace CIAO_Hello_Receiver_comp_Impl
     // Operations and attributes from ::Hello::MyFoo_obj
 
     virtual
-    ::CORBA::Long foo (
-      const char * in_str,
-      ::CORBA::String_out answer);
+    ::CORBA::Long foo (const char * in_str,
+    ::CORBA::String_out answer);
 
     virtual
-    void hello (
-      ::CORBA::Long_out answer);
+    void hello (::CORBA::Long_out answer);
 
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:36
+    virtual ::CORBA::Short rw_attrib (void);
 
-    virtual ::CORBA::Short
-    rw_attrib (void);
+    virtual void rw_attrib (::CORBA::Short rw_attrib);
 
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:36
-
-    virtual void
-    rw_attrib (
-      ::CORBA::Short rw_attrib);
-
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:36
-
-    virtual ::CORBA::Short
-    ro_attrib (void);
+    virtual ::CORBA::Short ro_attrib (void);
 
   private:
     ::Hello::CCM_Receiver_comp_Context_var ciao_context_;
   };
+
+  //============================================================
+  // Component Executor Implementation Class: Receiver_comp_exec_i
+  //============================================================
 
   class  Receiver_comp_exec_i
     : public virtual Receiver_comp_Exec,
@@ -98,10 +92,8 @@ namespace CIAO_Hello_Receiver_comp_Impl
     //@{
     /** Component attributes and port operations. */
 
-
     virtual ::Hello::CCM_MyFoo_obj_ptr
-    get_do_my_foo (void);
-    //@}
+    get_do_my_foo (void);//@}
 
     //@{
     /** Operations from Components::SessionComponent. */
@@ -113,6 +105,11 @@ namespace CIAO_Hello_Receiver_comp_Impl
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
+    //@}
+
+    //@{
+    /** User defined operations */
+
     //@}
 
   private:
