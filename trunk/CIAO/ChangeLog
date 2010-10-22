@@ -1,3 +1,13 @@
+Fri Oct 22 07:12:29 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Control_comp/Shapes_Control_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Control_comp/Shapes_Control_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Receiver_comp/Shapes_Receiver_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Receiver_comp/Shapes_Receiver_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Sender_comp/Shapes_Sender_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Sender_comp/Shapes_Sender_comp_exec.cpp:
+          Regenerated with the latest version of the IDL compiler.
+
 Fri Oct 22 06:25:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3890_Regression/Foo.idl:

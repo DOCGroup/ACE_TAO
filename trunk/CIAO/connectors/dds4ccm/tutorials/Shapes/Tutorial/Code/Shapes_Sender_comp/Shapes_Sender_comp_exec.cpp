@@ -48,22 +48,20 @@ namespace CIAO_Shapes_Sender_comp_Impl
   // Operations from ::Shapes::Control_obj
 
   ::Shapes::ReturnStatus
-  control_exec_i::setSize (
-    ::CORBA::UShort /* size */)
+  control_exec_i::setSize (::CORBA::UShort /* size */)
   {
     /* Your code here. */
     return static_cast< ::Shapes::ReturnStatus> (0UL);
   }
 
   ::Shapes::ReturnStatus
-  control_exec_i::setLocation (
-    ::CORBA::UShort /* x */,
-    ::CORBA::UShort /* y */)
+  control_exec_i::setLocation (::CORBA::UShort /* x */,
+  ::CORBA::UShort /* y */)
   {
     /* Your code here. */
     return static_cast< ::Shapes::ReturnStatus> (0UL);
   }
-  
+
 
   //============================================================
   // Component Executor Implementation Class: Sender_comp_exec_i

@@ -24,8 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO__________TUTORIAL_CODE_SHAPES_SENDER_COMP_SHAPES_SENDER_COMP_EXEC_WFXNF1_H_
-#define CIAO__________TUTORIAL_CODE_SHAPES_SENDER_COMP_SHAPES_SENDER_COMP_EXEC_WFXNF1_H_
+#ifndef CIAO__________TUTORIAL_CODE_SHAPES_SENDER_COMP_SHAPES_SENDER_COMP_EXEC_HPZOAE_H_
+#define CIAO__________TUTORIAL_CODE_SHAPES_SENDER_COMP_SHAPES_SENDER_COMP_EXEC_HPZOAE_H_
 
 #include /**/ "ace/pre.h"
 
@@ -52,19 +52,15 @@ namespace CIAO_Shapes_Sender_comp_Impl
     // Operations and attributes from ::Shapes::Control_obj
 
     virtual
-    ::Shapes::ReturnStatus setSize (
-      ::CORBA::UShort size);
+    ::Shapes::ReturnStatus setSize (::CORBA::UShort size);
 
     virtual
-    ::Shapes::ReturnStatus setLocation (
-      ::CORBA::UShort x,
-      ::CORBA::UShort y);
+    ::Shapes::ReturnStatus setLocation (::CORBA::UShort x,
+    ::CORBA::UShort y);
 
   private:
     ::Shapes::CCM_Sender_comp_Context_var ciao_context_;
   };
-
-  
 
   class  Sender_comp_exec_i
     : public virtual Sender_comp_Exec,
@@ -83,8 +79,7 @@ namespace CIAO_Shapes_Sender_comp_Impl
     /** Component attributes and port operations. */
 
     virtual ::Shapes::CCM_Control_obj_ptr
-    get_control (void);
-    //@}
+    get_control (void);//@}
 
     //@{
     /** Operations from Components::SessionComponent. */

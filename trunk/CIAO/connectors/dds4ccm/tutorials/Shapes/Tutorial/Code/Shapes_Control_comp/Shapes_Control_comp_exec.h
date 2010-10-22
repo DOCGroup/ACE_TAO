@@ -24,8 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO__________TUTORIAL_CODE_SHAPES_CONTROL_COMP_SHAPES_CONTROL_COMP_EXEC_CUJIE3_H_
-#define CIAO__________TUTORIAL_CODE_SHAPES_CONTROL_COMP_SHAPES_CONTROL_COMP_EXEC_CUJIE3_H_
+#ifndef CIAO__________TUTORIAL_CODE_SHAPES_CONTROL_COMP_SHAPES_CONTROL_COMP_EXEC_MIMZ3T_H_
+#define CIAO__________TUTORIAL_CODE_SHAPES_CONTROL_COMP_SHAPES_CONTROL_COMP_EXEC_MIMZ3T_H_
 
 #include /**/ "ace/pre.h"
 
@@ -55,42 +55,26 @@ namespace CIAO_Shapes_Control_comp_Impl
 
     //@{
     /** Component attributes and port operations. */
-    
-    virtual ::CORBA::ULong
-    rate (void);
-    
-    virtual void
-    rate (
-      ::CORBA::ULong rate);
-    
-    virtual ::CORBA::UShort
-    max_x (void);
-    
-    virtual void
-    max_x (
-      ::CORBA::UShort max_x);
-    
-    virtual ::CORBA::UShort
-    max_y (void);
-    
-    virtual void
-    max_y (
-      ::CORBA::UShort max_y);
-    
-    virtual ::CORBA::UShort
-    max_size (void);
-    
-    virtual void
-    max_size (
-      ::CORBA::UShort max_size);
-    
-    virtual ::CORBA::Boolean
-    resize_shape (void);
-    
-    virtual void
-    resize_shape (
-      ::CORBA::Boolean resize_shape);
-    //@}
+
+    virtual ::CORBA::ULong rate (void);
+
+    virtual void rate (::CORBA::ULong rate);
+
+    virtual ::CORBA::UShort max_x (void);
+
+    virtual void max_x (::CORBA::UShort max_x);
+
+    virtual ::CORBA::UShort max_y (void);
+
+    virtual void max_y (::CORBA::UShort max_y);
+
+    virtual ::CORBA::UShort max_size (void);
+
+    virtual void max_size (::CORBA::UShort max_size);
+
+    virtual ::CORBA::Boolean resize_shape (void);
+
+    virtual void resize_shape (::CORBA::Boolean resize_shape);//@}
 
     //@{
     /** Operations from Components::SessionComponent. */

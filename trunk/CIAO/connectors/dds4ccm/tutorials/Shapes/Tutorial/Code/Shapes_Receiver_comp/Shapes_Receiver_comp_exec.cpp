@@ -48,17 +48,15 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   // Operations from ::Shapes::ShapeType_conn::Listener
 
   void
-  info_out_data_listener_exec_i::on_one_data (
-    const ::ShapeType & /* datum */,
-    const ::CCM_DDS::ReadInfo & /* info */)
+  info_out_data_listener_exec_i::on_one_data (const ::ShapeType & /* datum */,
+  const ::CCM_DDS::ReadInfo & /* info */)
   {
     /* Your code here. */
   }
 
   void
-  info_out_data_listener_exec_i::on_many_data (
-    const ::Shapes::ShapeTypeSeq & /* data */,
-    const ::CCM_DDS::ReadInfoSeq & /* infos */)
+  info_out_data_listener_exec_i::on_many_data (const ::Shapes::ShapeTypeSeq & /* data */,
+  const ::CCM_DDS::ReadInfoSeq & /* infos */)
   {
     /* Your code here. */
   }
@@ -81,17 +79,15 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   // Operations from ::CCM_DDS::PortStatusListener
 
   void
-  info_out_status_exec_i::on_requested_deadline_missed (
-    ::DDS::DataReader_ptr /* the_reader */,
-    const ::DDS::RequestedDeadlineMissedStatus & /* status */)
+  info_out_status_exec_i::on_requested_deadline_missed (::DDS::DataReader_ptr /* the_reader */,
+  const ::DDS::RequestedDeadlineMissedStatus & /* status */)
   {
     /* Your code here. */
   }
 
   void
-  info_out_status_exec_i::on_sample_lost (
-    ::DDS::DataReader_ptr /* the_reader */,
-    const ::DDS::SampleLostStatus & /* status */)
+  info_out_status_exec_i::on_sample_lost (::DDS::DataReader_ptr /* the_reader */,
+  const ::DDS::SampleLostStatus & /* status */)
   {
     /* Your code here. */
   }
