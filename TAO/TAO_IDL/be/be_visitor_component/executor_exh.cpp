@@ -14,7 +14,9 @@
 
 be_visitor_executor_exh::be_visitor_executor_exh (
       be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx)
+  : be_visitor_component_scope (ctx),
+    comment_border_ ("//=============================="
+                   "==============================")
 {
   // This is initialized in the base class to svnt_export_macro()
   // or skel_export_macro(), since there are many more visitor
@@ -57,6 +59,12 @@ be_visitor_executor_exh::visit_component (be_component *node)
     node->original_local_name ()->get_string ();
 
   const char *global = (sname_str == "" ? "" : "::");
+
+  os_ << be_nl_2
+      << comment_border_ << be_nl
+      << "// Component Executor Implementation Class: "
+      << lname << "_exec_i" << be_nl
+      << comment_border_;
 
   os_ << be_nl_2
       << "class " << export_macro_.c_str () << " " << lname
