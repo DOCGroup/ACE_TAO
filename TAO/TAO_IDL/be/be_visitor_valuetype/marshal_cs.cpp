@@ -270,9 +270,9 @@ be_visitor_valuetype_marshal_cs::gen_fields (be_valuetype *node,
       // (JP) 2010-10-21
       // be_attribute now inherits from be_field, so we need this check.
       be_attribute *attr = be_attribute::narrow_from_decl (d);
-      
+
       be_field *field = be_field::narrow_from_decl (d);
-    
+
       if (field != 0 && attr == 0)
         {
           if (n_processed > 0)

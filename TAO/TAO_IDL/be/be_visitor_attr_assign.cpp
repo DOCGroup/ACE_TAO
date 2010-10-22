@@ -128,7 +128,7 @@ be_visitor_attr_assign::visit_string (be_string *node)
       << this->attr_name_string_.c_str () << " =" << be_idt_nl
       << "::CORBA::" << (node->width () == sizeof (char) ? "" : "w")
       << "string_dup (" << this->attr_name_ << ");" << be_uidt;
-    
+
   return 0;
 }
 
