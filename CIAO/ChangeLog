@@ -1,3 +1,15 @@
+Fri Oct 22 11:20:59 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/Publisher_T.cpp:
+          Layout
+
+        * tests/Bug_3769_Regression/Bug_3769_Regression.mpc:
+        * tests/Bug_3890_Regression:
+        * tests/Bug_3890_Regression/Bug_3890_Regression.mpc:
+        * tests/Bug_3769_Regression/Foo.mpc:
+        * tests/Bug_3890_Regression/Foo.mpc:
+          Make mpc filenames similar to the test
+
 Fri Oct 22 10:35:07 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Receiver_comp_exec.h:
