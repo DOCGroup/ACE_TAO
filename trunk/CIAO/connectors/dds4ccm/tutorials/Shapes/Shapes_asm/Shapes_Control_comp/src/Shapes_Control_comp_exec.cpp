@@ -37,9 +37,9 @@ namespace CIAO_Shapes_Control_comp_Impl
 
   Control_comp_exec_i::Control_comp_exec_i (void)
     : rate_ (0)
-      , max_x_ (0)
-      , max_y_ (0)
-      , max_size_ (0)
+      , max_x_ (100)
+      , max_y_ (100)
+      , max_size_ (25)
       , resize_shape_ (false)
       , x_increasing_ (false)
       , y_increasing_ (false)
