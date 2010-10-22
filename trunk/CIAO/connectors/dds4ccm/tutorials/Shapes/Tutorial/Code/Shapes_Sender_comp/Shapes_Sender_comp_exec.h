@@ -24,8 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO__________TUTORIAL_CODE_SHAPES_SENDER_COMP_SHAPES_SENDER_COMP_EXEC_HPZOAE_H_
-#define CIAO__________TUTORIAL_CODE_SHAPES_SENDER_COMP_SHAPES_SENDER_COMP_EXEC_HPZOAE_H_
+#ifndef CIAO__________TUTORIAL_CODE_SHAPES_SENDER_COMP_SHAPES_SENDER_COMP_EXEC_FZBRNR_H_
+#define CIAO__________TUTORIAL_CODE_SHAPES_SENDER_COMP_SHAPES_SENDER_COMP_EXEC_FZBRNR_H_
 
 #include /**/ "ace/pre.h"
 
@@ -39,6 +39,10 @@
 
 namespace CIAO_Shapes_Sender_comp_Impl
 {
+
+  //============================================================
+  // Provider Executor Implementation Class: control_exec_i
+  //============================================================
 
   class  control_exec_i
     : public virtual ::Shapes::CCM_Control_obj,
@@ -61,6 +65,10 @@ namespace CIAO_Shapes_Sender_comp_Impl
   private:
     ::Shapes::CCM_Sender_comp_Context_var ciao_context_;
   };
+
+  //============================================================
+  // Component Executor Implementation Class: Sender_comp_exec_i
+  //============================================================
 
   class  Sender_comp_exec_i
     : public virtual Sender_comp_Exec,

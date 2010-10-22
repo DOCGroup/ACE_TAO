@@ -24,8 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO__________TUTORIAL_CODE_SHAPES_RECEIVER_COMP_SHAPES_RECEIVER_COMP_EXEC_GYBLIT_H_
-#define CIAO__________TUTORIAL_CODE_SHAPES_RECEIVER_COMP_SHAPES_RECEIVER_COMP_EXEC_GYBLIT_H_
+#ifndef CIAO__________TUTORIAL_CODE_SHAPES_RECEIVER_COMP_SHAPES_RECEIVER_COMP_EXEC_GD0QCU_H_
+#define CIAO__________TUTORIAL_CODE_SHAPES_RECEIVER_COMP_SHAPES_RECEIVER_COMP_EXEC_GD0QCU_H_
 
 #include /**/ "ace/pre.h"
 
@@ -39,6 +39,10 @@
 
 namespace CIAO_Shapes_Receiver_comp_Impl
 {
+
+  //============================================================
+  // Provider Executor Implementation Class: info_out_data_listener_exec_i
+  //============================================================
 
   class  info_out_data_listener_exec_i
     : public virtual ::Shapes::ShapeType_conn::CCM_Listener,
@@ -63,6 +67,10 @@ namespace CIAO_Shapes_Receiver_comp_Impl
     ::Shapes::CCM_Receiver_comp_Context_var ciao_context_;
   };
 
+  //============================================================
+  // Provider Executor Implementation Class: info_out_status_exec_i
+  //============================================================
+
   class  info_out_status_exec_i
     : public virtual ::CCM_DDS::CCM_PortStatusListener,
       public virtual ::CORBA::LocalObject
@@ -85,6 +93,10 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   private:
     ::Shapes::CCM_Receiver_comp_Context_var ciao_context_;
   };
+
+  //============================================================
+  // Component Executor Implementation Class: Receiver_comp_exec_i
+  //============================================================
 
   class  Receiver_comp_exec_i
     : public virtual Receiver_comp_Exec,
