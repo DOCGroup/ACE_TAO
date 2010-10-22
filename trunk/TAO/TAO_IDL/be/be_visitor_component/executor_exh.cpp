@@ -172,6 +172,12 @@ be_visitor_executor_exh::visit_component (be_component *node)
                         -1);
     }
 
+  os_ << be_nl_2
+      << "//@{" << be_nl
+      << "/** User defined members*/";
+
+  os_ << be_nl_2 << "//@}";
+
   if (be_global->gen_ciao_exec_reactor_impl ())
     {
       os_ << be_nl_2
