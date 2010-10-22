@@ -133,21 +133,6 @@ be_visitor_executor_exs::visit_attribute (be_attribute *node)
 int
 be_visitor_executor_exs::visit_component (be_component *node)
 {
-  // In the interest of pretty formatting, if we have generated
-  // at least one facet executor impl class, add a linebreak.
-  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
-       !si.is_done ();
-       si.next ())
-    {
-      AST_Decl *d = si.item ();
-
-      if (d->node_type () == AST_Decl::NT_provides)
-        {
-          os_ << be_nl;
-          break;
-        }
-    }
-
   node_ = node;
   const char *lname = node->local_name ();
 

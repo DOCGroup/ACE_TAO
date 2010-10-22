@@ -14,7 +14,9 @@
 
 be_visitor_facet_exh::be_visitor_facet_exh (
       be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx)
+  : be_visitor_component_scope (ctx),
+    comment_border_ ("//=============================="
+                   "==============================")
 {
   // This is initialized in the base class to svnt_export_macro()
   // or skel_export_macro(), since there are many more visitor
@@ -47,6 +49,12 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
   AST_Decl *c_scope = ScopeAsDecl (this->node_->defined_in ());
   bool is_global = (c_scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (is_global ? "" : "::");
+
+  os_ << be_nl_2
+      << comment_border_ << be_nl
+      << "// Provider Executor Implementation Class: "
+      << lname << "_exec_i" << be_nl
+      << comment_border_;
 
   os_ << be_nl_2
       << "class " << export_macro_.c_str () << " "
@@ -106,7 +114,7 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
       << smart_scope << c_scope->full_name () << "::CCM_"
       << this->node_->local_name ()
       << "_Context_var ciao_context_;" << be_uidt_nl
-      << "};" << be_nl_2;
+      << "};";
 
   return 0;
 }
