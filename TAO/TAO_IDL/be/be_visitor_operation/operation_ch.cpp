@@ -33,7 +33,7 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
   this->ctx_->node (node);
 
   // Every operation is declared virtual in the client code.
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "virtual ";
 
   // STEP I: generate the return type.
@@ -92,7 +92,7 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
       && !node->is_excep_ami ()
       && !node->has_native ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "static void " << be_nl
           << node->local_name () << "_reply_stub (" << be_idt_nl
           << "TAO_InputCDR &_tao_reply_cdr," << be_nl
