@@ -126,7 +126,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   const char *container_type = be_global->ciao_container_type ();
 
-  os_ << be_nl_2
+  os_ << be_nl
       << "virtual void set_"
       << tao_cg->downcase (container_type)
       << "_context ("
@@ -135,10 +135,10 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
     {
-      os_ << be_nl_2
+      os_ << be_nl
           << "virtual void configuration_complete (void);";
 
-      os_ << be_nl_2
+      os_ << be_nl
           << "virtual void ccm_activate (void);" << be_nl
           << "virtual void ccm_passivate (void);";
     }
@@ -150,17 +150,20 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   os_ << be_nl_2
       << "//@{" << be_nl
-      << "/** User defined operations */";
+      << "/** User defined public operations. */";
 
   os_ << be_nl_2 << "//@}";
 
   os_ << be_uidt << be_nl_2
       << "private:" << be_idt_nl
       << global << sname << "::CCM_" << lname
-      << "_Context_var ciao_context_;";
+      << "_Context_var ciao_context_;" << be_nl_2;
 
   be_visitor_executor_private_exh v (this->ctx_);
   v.node (node);
+
+  os_ << "//@{" << be_nl
+      << "/** Component attributes and port operations. */";
 
   if (v.visit_component_scope (node) == -1)
     {
@@ -172,15 +175,23 @@ be_visitor_executor_exh::visit_component (be_component *node)
                         -1);
     }
 
+  os_<< be_nl << "//@}" << be_nl_2;
+
+  os_ << "//@{" << be_nl
+      << "/** User defined members. */";
+
+  os_ << be_nl_2 << "//@}";
+
   os_ << be_nl_2
       << "//@{" << be_nl
-      << "/** User defined members*/";
+      << "/** User defined private operations. */";
 
   os_ << be_nl_2 << "//@}";
 
   if (be_global->gen_ciao_exec_reactor_impl ())
     {
       os_ << be_nl_2
+          << "/// Get the ACE_Reactor" << be_nl
           << "ACE_Reactor* reactor (void);";
     }
 
