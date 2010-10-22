@@ -1,8 +1,10 @@
 // -*- C++ -*-
 // $Id$
 
-#ifndef CIAO_CONTROL_EXEC_H_
-#define CIAO_CONTROL_EXEC_H_
+#ifndef CIAO__________TUTORIAL_CODE_SHAPES_CONTROL_COMP_SHAPES_CONTROL_COMP_EXEC_J4CMMK_H_
+#define CIAO__________TUTORIAL_CODE_SHAPES_CONTROL_COMP_SHAPES_CONTROL_COMP_EXEC_J4CMMK_H_
+
+#include /**/ "ace/pre.h"
 
 #include "Shapes_Control_compEC.h"
 
@@ -35,8 +37,9 @@ namespace CIAO_Shapes_Control_comp_Impl
   };
 
   //============================================================
-  // Control_comp_exec_i
+  // Component Executor Implementation Class: Control_comp_exec_i
   //============================================================
+
   class SHAPES_CONTROL_COMP_EXEC_Export Control_comp_exec_i
     : public virtual Control_comp_Exec,
       public virtual ::CORBA::LocalObject
@@ -45,28 +48,36 @@ namespace CIAO_Shapes_Control_comp_Impl
     Control_comp_exec_i (void);
     virtual ~Control_comp_exec_i (void);
 
-    ::CORBA::ULong rate (void);
+    //@{
+    /** Supported operations and attributes. */
 
-    void rate (::CORBA::ULong rate);
+    //@}
 
-    ::CORBA::UShort max_x (void);
+    //@{
+    /** Component attributes and port operations. */
 
-    void max_x (::CORBA::UShort max_x);
+    virtual ::CORBA::ULong rate (void);
 
-    ::CORBA::UShort max_y (void);
+    virtual void rate (::CORBA::ULong rate);
 
-    void max_y (::CORBA::UShort max_y);
+    virtual ::CORBA::UShort max_x (void);
 
-    ::CORBA::UShort max_size (void);
+    virtual void max_x (::CORBA::UShort max_x);
 
-    void max_size (::CORBA::UShort max_size);
+    virtual ::CORBA::UShort max_y (void);
 
-    void resize_shape (::CORBA::Boolean resize);
+    virtual void max_y (::CORBA::UShort max_y);
 
-    ::CORBA::Boolean resize_shape (void);
+    virtual ::CORBA::UShort max_size (void);
 
-    virtual ::Shapes::CCM_Control_obj_ptr
-    get_control (void);
+    virtual void max_size (::CORBA::UShort max_size);
+
+    virtual ::CORBA::Boolean resize_shape (void);
+
+    virtual void resize_shape (::CORBA::Boolean resize_shape);//@}
+
+    //@{
+    /** Operations from Components::SessionComponent. */
 
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
@@ -75,19 +86,26 @@ namespace CIAO_Shapes_Control_comp_Impl
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
+    //@}
 
-    void tick ();
+    //@{
+    /** User defined operations */
+    void tick (void);
+
+    //@}
 
   private:
-    ::Shapes::CCM_Control_comp_Context_var context_;
-
-    pulse_Generator * ticker_;
+    ::Shapes::CCM_Control_comp_Context_var ciao_context_;
 
     ::CORBA::ULong rate_;
+
     ::CORBA::UShort max_x_;
+
     ::CORBA::UShort max_y_;
+
     ::CORBA::UShort max_size_;
-    ::CORBA::Boolean resize_;
+
+    ::CORBA::Boolean resize_shape_;
 
     bool x_increasing_;
     bool y_increasing_;
@@ -97,13 +115,18 @@ namespace CIAO_Shapes_Control_comp_Impl
     ::CORBA::UShort current_x_;
     ::CORBA::UShort current_y_;
 
+    pulse_Generator * ticker_;
+
     void start (void);
     void stop (void);
+
+    ACE_Reactor* reactor (void);
   };
 
   extern "C" SHAPES_CONTROL_COMP_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Shapes_Control_comp_Impl (void);
 }
 
-#endif /* ifndef */
+#include /**/ "ace/post.h"
 
+#endif /* ifndef */
