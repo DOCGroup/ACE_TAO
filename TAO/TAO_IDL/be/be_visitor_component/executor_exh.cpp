@@ -67,7 +67,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
       << comment_border_;
 
   os_ << be_nl_2
-      << "class " << export_macro_.c_str () << " " << lname
+      << "class " << lname
       << "_exec_i" << be_idt_nl
       << ": public virtual " << lname << "_Exec," << be_idt_nl
       << "public virtual ::CORBA::LocalObject"
@@ -108,7 +108,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   status = this->visit_component_scope (node);
 
-  os_<< "//@}" << be_nl_2;
+  os_<< be_nl << "//@}" << be_nl_2;
 
   if (status == -1)
     {
