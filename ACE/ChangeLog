@@ -1,3 +1,8 @@
+Fri Oct 22 11:19:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Reactor.h:
+          Doxygen changes
+
 Thu Oct 21 11:10:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ACE.cpp:
