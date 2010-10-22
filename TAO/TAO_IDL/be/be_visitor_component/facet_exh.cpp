@@ -108,7 +108,7 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
                              ACE_TEXT ("failed\n")),
                             -1);
         }
-      os_ << be_nl_2 << "//@}";
+      os_ << be_nl << "//@}";
     }
 
   os_ << be_uidt << be_nl_2
