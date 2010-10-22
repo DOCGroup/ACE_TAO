@@ -62,7 +62,6 @@ namespace CIAO_Shapes_Sender_comp_Impl
     return static_cast< ::Shapes::ReturnStatus> (0UL);
   }
 
-
   //============================================================
   // Component Executor Implementation Class: Sender_comp_exec_i
   //============================================================
