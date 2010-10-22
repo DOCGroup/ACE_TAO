@@ -75,76 +75,66 @@ namespace CIAO_Shapes_Control_comp_Impl
   ::CORBA::ULong
   Control_comp_exec_i::rate (void)
   {
-    return
-      this->rate_;
+    return this->rate_;
   }
 
   void
   Control_comp_exec_i::rate (
     const ::CORBA::ULong rate)
   {
-    this->rate_ =
-      rate;
+    this->rate_ = rate;
   }
 
   ::CORBA::UShort
   Control_comp_exec_i::max_x (void)
   {
-    return
-      this->max_x_;
+    return this->max_x_;
   }
 
   void
   Control_comp_exec_i::max_x (
     const ::CORBA::UShort max_x)
   {
-    this->max_x_ =
-      max_x;
+    this->max_x_ = max_x;
   }
 
   ::CORBA::UShort
   Control_comp_exec_i::max_y (void)
   {
-    return
-      this->max_y_;
+    return this->max_y_;
   }
 
   void
   Control_comp_exec_i::max_y (
     const ::CORBA::UShort max_y)
   {
-    this->max_y_ =
-      max_y;
+    this->max_y_ = max_y;
   }
 
   ::CORBA::UShort
   Control_comp_exec_i::max_size (void)
   {
-    return
-      this->max_size_;
+    return this->max_size_;
   }
 
   void
   Control_comp_exec_i::max_size (
     const ::CORBA::UShort max_size)
   {
-    this->max_size_ =
-      max_size;
+    this->max_size_ = max_size;
   }
 
   ::CORBA::Boolean
   Control_comp_exec_i::resize_shape (void)
   {
-    return
-      this->resize_shape_;
+    return this->resize_shape_;
   }
 
   void
   Control_comp_exec_i::resize_shape (
     const ::CORBA::Boolean resize_shape)
   {
-    this->resize_shape_ =
-      resize_shape;
+    this->resize_shape_ = resize_shape;
   }
 
   // Operations from Components::SessionComponent.
