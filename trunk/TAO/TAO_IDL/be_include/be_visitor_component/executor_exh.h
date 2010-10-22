@@ -37,6 +37,8 @@ public:
   virtual int visit_component (be_component *node);
   virtual int visit_provides (be_provides *node);
   virtual int visit_consumes (be_consumes *node);
+private:
+  const char *comment_border_;
 };
 
 #endif /* _BE_COMPONENT_EXECUTOR_EXH_H_ */

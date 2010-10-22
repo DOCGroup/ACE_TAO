@@ -33,6 +33,9 @@ public:
   ~be_visitor_facet_exh (void);
 
   virtual int visit_provides (be_provides *node);
+
+private:
+  const char *comment_border_;
 };
 
 #endif /* _BE_COMPONENT_FACET_EXH_H_ */
