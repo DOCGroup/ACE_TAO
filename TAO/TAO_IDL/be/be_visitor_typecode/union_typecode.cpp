@@ -34,8 +34,8 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
     this->queue_lookup (this->tc_queue_, node);
 
   ACE_Unbounded_Queue<AST_Type *> recursion_queue;
-  this->is_recursive_ = node->in_recursion (recursion_queue);
-  if (qnode && this->is_recursive_)
+  bool in_recursion = node->in_recursion (recursion_queue);
+  if (qnode && in_recursion)
     {
     // we're repeated and we're recursive so just leave
       return 0;
@@ -53,6 +53,9 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
     {
       return 0;
     }
+
+  // as this was no nested visit mark this typecode as recursive
+  this->is_recursive_ = in_recursion;
 
   this->is_nested_ = true;
 

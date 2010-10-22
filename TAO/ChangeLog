@@ -1,3 +1,11 @@
+Fri Oct 22 11:32:10 UTC 2010  Martin Corino  <corino_m@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
+          Some changes to fix behaviour when encountering nested
+          recursive type.
+
 Fri Oct 22 07:50:54 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
