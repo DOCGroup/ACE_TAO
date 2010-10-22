@@ -57,7 +57,7 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
       << comment_border_;
 
   os_ << be_nl_2
-      << "class " << export_macro_.c_str () << " "
+      << "class "
       << lname << "_exec_i" << be_idt_nl
       << ": public virtual " << global << sname << "::CCM_"
       << iname << "," << be_idt_nl
@@ -77,8 +77,9 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
         be_interface::narrow_from_decl (impl);
 
       os_ << be_nl_2
-          << "// Operations and attributes from ::"
-          << intf->full_name ();
+          << "//@{" << be_nl
+          << "/** Operations and attributes from ::"
+          << intf->full_name () << ". */";
 
       be_visitor_context ctx (*this->ctx_);
       be_visitor_interface_ih v (&ctx);
@@ -93,7 +94,7 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
                             -1);
         }
 
-      int status =
+      int const status =
         intf->traverse_inheritance_graph (
           be_visitor_interface_ih::method_helper,
           &os_);
@@ -107,6 +108,7 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
                              ACE_TEXT ("failed\n")),
                             -1);
         }
+      os_ << be_nl_2 << "//@}";
     }
 
   os_ << be_uidt << be_nl_2
