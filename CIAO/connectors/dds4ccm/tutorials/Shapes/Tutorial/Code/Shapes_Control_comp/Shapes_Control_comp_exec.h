@@ -24,8 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO__________TUTORIAL_CODE_SHAPES_CONTROL_COMP_SHAPES_CONTROL_COMP_EXEC_MIMZ3T_H_
-#define CIAO__________TUTORIAL_CODE_SHAPES_CONTROL_COMP_SHAPES_CONTROL_COMP_EXEC_MIMZ3T_H_
+#ifndef CIAO__________TUTORIAL_CODE_SHAPES_CONTROL_COMP_SHAPES_CONTROL_COMP_EXEC_J4CMMK_H_
+#define CIAO__________TUTORIAL_CODE_SHAPES_CONTROL_COMP_SHAPES_CONTROL_COMP_EXEC_J4CMMK_H_
 
 #include /**/ "ace/pre.h"
 
@@ -39,6 +39,10 @@
 
 namespace CIAO_Shapes_Control_comp_Impl
 {
+
+  //============================================================
+  // Component Executor Implementation Class: Control_comp_exec_i
+  //============================================================
 
   class  Control_comp_exec_i
     : public virtual Control_comp_Exec,
