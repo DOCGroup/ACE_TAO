@@ -15,8 +15,8 @@
 be_visitor_facet_exh::be_visitor_facet_exh (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),
-    comment_border_ ("//=============================="
-                   "==============================")
+    comment_start_border_ ("/**"),
+    comment_end_border_ (" */")
 {
   // This is initialized in the base class to svnt_export_macro()
   // or skel_export_macro(), since there are many more visitor
@@ -51,10 +51,10 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
   const char *smart_scope = (is_global ? "" : "::");
 
   os_ << be_nl_2
-      << comment_border_ << be_nl
-      << "// Provider Executor Implementation Class: "
+      << comment_start_border_ << be_nl
+      << " * Provider Executor Implementation Class: "
       << lname << "_exec_i" << be_nl
-      << comment_border_;
+      << comment_end_border_;
 
   os_ << be_nl_2
       << "class "

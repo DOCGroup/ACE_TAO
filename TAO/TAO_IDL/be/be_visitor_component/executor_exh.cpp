@@ -15,8 +15,8 @@
 be_visitor_executor_exh::be_visitor_executor_exh (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),
-    comment_border_ ("//=============================="
-                   "==============================")
+    comment_start_border_ ("/**"),
+    comment_end_border_ (" */")
 {
   // This is initialized in the base class to svnt_export_macro()
   // or skel_export_macro(), since there are many more visitor
@@ -61,10 +61,10 @@ be_visitor_executor_exh::visit_component (be_component *node)
   const char *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl_2
-      << comment_border_ << be_nl
-      << "// Component Executor Implementation Class: "
+      << comment_start_border_ << be_nl
+      << " * Component Executor Implementation Class: "
       << lname << "_exec_i" << be_nl
-      << comment_border_;
+      << comment_end_border_;
 
   os_ << be_nl_2
       << "class " << lname
@@ -167,6 +167,9 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   be_visitor_executor_private_exh v (this->ctx_);
   v.node (node);
+
+  os_ << "//@{" << be_nl
+      << "/** Component attributes. */";
 
   Exec_Attr_Decl_Generator attr_decl (&v);
 

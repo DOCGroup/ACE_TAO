@@ -21,8 +21,8 @@ be_visitor_home_exs::be_visitor_home_exs (be_visitor_context *ctx)
     node_ (0),
     comp_ (0),
     os_ (*ctx->stream ()),
-    comment_border_ ("//=============================="
-                     "=============================="),
+    comment_start_border_ ("/**"),
+    comment_end_border_ (" */"),
     your_code_here_ ("/* Your code here. */"),
     export_macro_ (be_global->exec_export_macro ())
 {
@@ -126,10 +126,10 @@ be_visitor_home_exs::gen_exec_class (void)
     node_->original_local_name ()->get_string ();
 
   os_ << be_nl
-      << comment_border_ << be_nl
-      << "// Home Executor Implementation Class: "
+      << comment_start_border_ << be_nl
+      << " * Home Executor Implementation Class: "
       << lname << "_exec_i" << be_nl
-      << comment_border_;
+      << comment_end_border_;
 
   os_ << be_nl_2
       << lname << "_exec_i::" << lname << "_exec_i (void)" << be_nl
