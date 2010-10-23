@@ -2,16 +2,16 @@
 // $Id$
 
 #include "LMBM_Test_Sender_exec.h"
+#include "tao/ORB_Core.h"
+#include "ace/Reactor.h"
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Date_Time.h"
-#include "tao/ORB_Core.h"
-#include "ace/Reactor.h"
 
 namespace CIAO_LMBM_Test_Sender_Impl
 {
   //============================================================
-  // WriteManyHandler
+  // WriteTicker
   //============================================================
   WriteTicker::WriteTicker (Sender_exec_i &callback)
     : callback_ (callback)
@@ -41,26 +41,26 @@ namespace CIAO_LMBM_Test_Sender_Impl
     return 0;
   }
 
-
   //============================================================
-  // Sender_exec_i
+  // Component Executor Implementation Class: Sender_exec_i
   //============================================================
   Sender_exec_i::Sender_exec_i (void)
-    : iterations_ (10),
-      keys_ (5)
+    : keys_ (5)
+      , iterations_ (10)
   {
     this->ticker_ = new WriteTicker (*this);
   }
 
   Sender_exec_i::~Sender_exec_i (void)
   {
+    delete this->ticker_;
   }
 
   void
   Sender_exec_i::write_one (void)
   {
     ::LMBM_Test::ListenManyByManyTestConnector::Writer_var writer =
-      this->context_->get_connection_info_write_data ();
+      this->ciao_context_->get_connection_info_write_data ();
     if (this->last_key_ != this->samples_.end ())
       {
         try
@@ -81,13 +81,13 @@ namespace CIAO_LMBM_Test_Sender_Impl
       }
     else
       {
-        //onto the next iteration
+        // Onto the next iteration
         this->last_key_ = this->samples_.begin ();
         while (this->last_key_ != this->samples_.end ())
           {
             if (this->last_key_->second->iteration == this->iterations_)
               {
-                //next key
+                // Next key
                 ++this->last_key_;
               }
             else
@@ -97,7 +97,7 @@ namespace CIAO_LMBM_Test_Sender_Impl
           }
         if (this->last_key_ == this->samples_.end ())
           {
-            this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+            this->reactor ()->cancel_timer (this->ticker_);
           }
       }
   }
@@ -120,7 +120,7 @@ namespace CIAO_LMBM_Test_Sender_Impl
         this->samples_[key] = new_key;
       }
    this->last_key_ = this->samples_.begin ();
-   if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
+   if (this->reactor ()->schedule_timer (
                 this->ticker_,
                 0,
                 ACE_Time_Value (5, 50000),
@@ -131,17 +131,29 @@ namespace CIAO_LMBM_Test_Sender_Impl
       }
   }
 
-  ::CORBA::UShort
-  Sender_exec_i::iterations (void)
+  // Supported operations and attributes.
+  ACE_Reactor*
+  Sender_exec_i::reactor (void)
   {
-    return this->iterations_;
+    ACE_Reactor* reactor = 0;
+    ::CORBA::Object_var ccm_object =
+      this->ciao_context_->get_CCM_object();
+    if (! ::CORBA::is_nil (ccm_object.in ()))
+      {
+        ::CORBA::ORB_var orb = ccm_object->_get_orb ();
+        if (! ::CORBA::is_nil (orb.in ()))
+          {
+            reactor = orb->orb_core ()->reactor ();
+          }
+      }
+    if (reactor == 0)
+      {
+        throw ::CORBA::INTERNAL ();
+      }
+    return reactor;
   }
 
-  void
-  Sender_exec_i::iterations (::CORBA::UShort iterations)
-  {
-    this->iterations_ = iterations;
-  }
+  // Component attributes and port operations.
 
   ::CORBA::UShort
   Sender_exec_i::keys (void)
@@ -150,18 +162,35 @@ namespace CIAO_LMBM_Test_Sender_Impl
   }
 
   void
-  Sender_exec_i::keys (::CORBA::UShort keys)
+  Sender_exec_i::keys (
+    const ::CORBA::UShort keys)
   {
     this->keys_ = keys;
   }
 
-  void
-  Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
+  ::CORBA::UShort
+  Sender_exec_i::iterations (void)
   {
-    this->context_ =
+    return this->iterations_;
+  }
+
+  void
+  Sender_exec_i::iterations (
+    const ::CORBA::UShort iterations)
+  {
+    this->iterations_ = iterations;
+  }
+
+  // Operations from Components::SessionComponent.
+
+  void
+  Sender_exec_i::set_session_context (
+    ::Components::SessionContext_ptr ctx)
+  {
+    this->ciao_context_ =
       ::LMBM_Test::CCM_Sender_Context::_narrow (ctx);
 
-    if ( ::CORBA::is_nil (this->context_.in ()))
+    if ( ::CORBA::is_nil (this->ciao_context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }

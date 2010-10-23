@@ -1,3 +1,11 @@
+Sat Oct 23 07:27:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/CoherentUpdater/Sender/CoherentUpdate_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/CoherentUpdater/Sender/CoherentUpdate_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ListenManyByMany/Sender/LMBM_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/ListenManyByMany/Sender/LMBM_Test_Sender_exec.cpp:
+          Regenerated using -Gexr and reimplemented
+
 Fri Oct 22 11:44:40 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/ListenOneByOne/Sender/LOBO_Test_Sender_exec.h:

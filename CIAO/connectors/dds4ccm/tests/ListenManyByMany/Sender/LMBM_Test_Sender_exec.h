@@ -1,17 +1,18 @@
 // -*- C++ -*-
 // $Id$
 
-#ifndef CIAO_SENDER_EXEC_H_
-#define CIAO_SENDER_EXEC_H_
+#ifndef CIAO_LMBM_TEST_SENDER_EXEC_HRZ3NN_H_
+#define CIAO_LMBM_TEST_SENDER_EXEC_HRZ3NN_H_
+
+#include /**/ "ace/pre.h"
 
 #include "LMBM_Test_SenderEC.h"
-
-#include /**/ "Sender_exec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include /**/ "Sender_exec_export.h"
 #include "tao/LocalObject.h"
 
 #include <map>
@@ -46,6 +47,10 @@ namespace CIAO_LMBM_Test_Sender_Impl
     Sender_exec_i &callback_;
   };
 
+  //============================================================
+  // Component Executor Implementation Class: Sender_exec_i
+  //============================================================
+
   class Sender_exec_i
     : public virtual Sender_Exec,
       public virtual ::CORBA::LocalObject
@@ -54,43 +59,71 @@ namespace CIAO_LMBM_Test_Sender_Impl
     Sender_exec_i (void);
     virtual ~Sender_exec_i (void);
 
-    virtual ::CORBA::UShort iterations (void);
+    //@{
+    /** Supported operations and attributes. */
 
-    virtual void iterations (::CORBA::UShort iterations);
+    //@}
+
+    //@{
+    /** Component attributes and port operations. */
 
     virtual ::CORBA::UShort keys (void);
 
     virtual void keys (::CORBA::UShort keys);
 
+    virtual ::CORBA::UShort iterations (void);
+
+    virtual void iterations (::CORBA::UShort iterations);
+    //@}
+
+    //@{
+    /** Operations from Components::SessionComponent. */
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
-
     virtual void configuration_complete (void);
-
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
+    //@}
 
+    //@{
+    /** User defined public operations. */
     void start (void);
     void write_one (void);
+    //@}
 
   private:
-    ::LMBM_Test::CCM_Sender_Context_var context_;
+    ::LMBM_Test::CCM_Sender_Context_var ciao_context_;
 
+    //@{
+    /** Component attributes and port operations. */
+
+    ::CORBA::UShort keys_;
+
+    ::CORBA::UShort iterations_;
+    //@}
+
+    //@{
+    /** User defined members. */
     WriteTicker *ticker_;
-
-    CORBA::UShort iterations_;
-    CORBA::UShort keys_;
-
     TAO_SYNCH_MUTEX mutex_;
     typedef std::map<ACE_CString, ListenManyByManyTest_var> Writer_Table;
     Writer_Table samples_;
-
     Writer_Table::iterator last_key_;
- };
+    //@}
+
+    //@{
+    /** User defined private operations. */
+
+    //@}
+
+    /// Get the ACE_Reactor
+    ACE_Reactor* reactor (void);
+  };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_LMBM_Test_Sender_Impl (void);
 }
 
-#endif /* ifndef */
+#include /**/ "ace/post.h"
 
+#endif /* ifndef */
