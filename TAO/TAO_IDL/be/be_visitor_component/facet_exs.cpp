@@ -55,10 +55,10 @@ be_visitor_facet_exs::visit_attribute (be_attribute *node)
       return 0;
     }
 
-  this->op_scope_ =
+  be_decl *attr_scope =
     be_decl::narrow_from_decl (ScopeAsDecl (node->defined_in ()));
-
-  nt = this->op_scope_->node_type ();
+  
+  nt = attr_scope->node_type ();
 
   // Components have implied IDL operations added to the AST, but
   // we are interested only in supported interface operations.
@@ -111,7 +111,7 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
       << "{" << be_nl
       << "}";
 
-  op_scope_ = node;
+  this->op_scope_ = node;
 
   if (impl->node_type () == AST_Decl::NT_interface)
     {
