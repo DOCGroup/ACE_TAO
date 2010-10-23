@@ -1,6 +1,6 @@
 // $Id$
 
-#include "TestC.h"
+#include "Test2C.h"
 #include "tao/IFR_Client/IFR_BaseC.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
 
@@ -79,7 +79,7 @@ recursive_typecode_test (CORBA::ORB_ptr /* orb */,
                               Test::Hello_ptr hello)
 {
   ACE_DEBUG ((LM_INFO,
-              "Executing nested recursive struct test\n"));
+              "Executing recursive typecode test\n"));
 
   CORBA::Any the_any;
 
@@ -116,6 +116,51 @@ recursive_typecode_test (CORBA::ORB_ptr /* orb */,
   the_any <<= test;
 
   ::perform_invocation<Test::MyAttRefSequence> (hello, the_any);
+
+}
+
+void
+nested_recursive_typecode_test (CORBA::ORB_ptr /* orb */,
+                              Test::Hello_ptr hello)
+{
+  ACE_DEBUG ((LM_INFO,
+              "Executing nested recursive typecode test\n"));
+
+  CORBA::Any the_any;
+
+  Test2::MyAttRefSeqStruct test;
+
+  Test::MyAttRef attr;
+  attr.attRefName="attr";
+  attr.attRefValue.attrValue("value");
+  attr.attRefQualifier="atrQ1";
+
+  Test::MyAttRef attr2;
+  attr2.attRefName="attr2";
+  attr2.attRefValue.attrValue("value2");
+  attr2.attRefQualifier="atrQ2";
+
+  Test::MyAttRef comp;
+  comp.attRefName="comp1";
+  comp.attRefQualifier="compQ";
+
+  Test::MyAttRef::MyAttRefValue::_compValue_seq compSeq(1);
+  compSeq.length(1);
+  compSeq[0]=attr2;
+  comp.attRefValue.compValue(compSeq);
+
+  Test::MyAttRef inti;
+  inti.attRefName="intval";
+  inti.attRefValue.intValue(0xAFFEAFFE);
+
+  test.attRefSeq.length(3);
+  test.attRefSeq[0] = comp;
+  test.attRefSeq[1] = inti;
+  test.attRefSeq[2] = attr;
+
+  the_any <<= test;
+
+  ::perform_invocation<Test2::MyAttRefSeqStruct> (hello, the_any);
 
 }
 
@@ -188,7 +233,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       static test_func const tests[] =
         {
-          recursive_typecode_test
+          recursive_typecode_test,
+          nested_recursive_typecode_test
         };
 
       static size_t const test_count = sizeof (tests) / sizeof (test_func);

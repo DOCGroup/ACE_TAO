@@ -1,0 +1,10 @@
+
+#include "Test.idl"
+
+
+module Test2
+{
+  struct MyAttRefSeqStruct {
+    Test::MyAttRefSequence attRefSeq;
+  };
+};
