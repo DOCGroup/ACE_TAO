@@ -125,10 +125,10 @@ public:
   /// Called when a process exits.
   virtual int handle_exit (ACE_Process *);
 
-  /// Called when a <handle_*()> method returns -1 or when the
-  /// <remove_handler> method is called on an ACE_Reactor.  The
+  /// Called when a handle_*() method returns -1 or when the
+  /// remove_handler() method is called on an ACE_Reactor.  The
   /// @a close_mask indicates which event has triggered the
-  /// <handle_close> method callback on a particular @a handle.
+  /// handle_close() method callback on a particular @a handle.
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
 
@@ -146,13 +146,14 @@ public:
       /// The application takes responsibility of resuming the handler
       ACE_APPLICATION_RESUMES_HANDLER
     };
+
   /**
    * Called to figure out whether the handler needs to resumed by the
    * reactor or the application can take care of it. The default
    * value of 0 would be returned which would allow the reactor to
    * take care of resumption of the handler. The application can
    * return a value more than zero and decide to resume the handler
-   * themseleves.
+   * themselves.
    *
    * @note This method has an affect only when used with the
    * ACE_Dev_Poll_Reactor (and then, only on Linux) or the ACE_TP_Reactor.
