@@ -18,8 +18,8 @@ be_visitor_executor_exs::be_visitor_executor_exs (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),
     op_scope_ (0),
-    comment_border_ ("//=============================="
-                     "=============================="),
+    comment_start_border_ ("/**"),
+    comment_end_border_ (" */"),
     your_code_here_ ("/* Your code here. */")
 {
 }
@@ -92,7 +92,7 @@ be_visitor_executor_exs::visit_attribute (be_attribute *node)
 
   os_ << be_uidt_nl
       << "}";
-      
+
   if (node->readonly ())
     {
       // Skip the mutator operation generation.
@@ -144,10 +144,10 @@ be_visitor_executor_exs::visit_component (be_component *node)
   const char *lname = node->local_name ();
 
   os_ << be_nl_2
-      << comment_border_ << be_nl
-      << "// Component Executor Implementation Class: "
+      << comment_start_border_ << be_nl
+      << " * Component Executor Implementation Class: "
       << lname << "_exec_i" << be_nl
-      << comment_border_;
+      << comment_end_border_;
 
   os_ << be_nl_2
       << lname << "_exec_i::" << lname

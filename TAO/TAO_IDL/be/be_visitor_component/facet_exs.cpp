@@ -16,8 +16,8 @@ be_visitor_facet_exs::be_visitor_facet_exs (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),
     op_scope_ (0),
-    comment_border_ ("//=============================="
-                     "==============================")
+    comment_start_border_ ("/**"),
+    comment_end_border_ (" */")
 {
 }
 
@@ -57,7 +57,7 @@ be_visitor_facet_exs::visit_attribute (be_attribute *node)
 
   be_decl *attr_scope =
     be_decl::narrow_from_decl (ScopeAsDecl (node->defined_in ()));
-  
+
   nt = attr_scope->node_type ();
 
   // Components have implied IDL operations added to the AST, but
@@ -82,10 +82,10 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
   const char *lname = lname_str.c_str ();
 
   os_ << be_nl_2
-      << comment_border_ << be_nl
-      << "// Facet Executor Implementation Class: "
+      << comment_start_border_ << be_nl
+      << " * Facet Executor Implementation Class: "
       << lname << "_exec_i" << be_nl
-      << comment_border_;
+      << comment_end_border_;
 
   AST_Decl *c_scope = ScopeAsDecl (this->node_->defined_in ());
   bool is_global = (c_scope->node_type () == AST_Decl::NT_root);

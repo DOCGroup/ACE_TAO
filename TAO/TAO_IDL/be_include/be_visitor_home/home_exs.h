@@ -46,7 +46,8 @@ private:
   be_home *node_;
   AST_Component *comp_;
   TAO_OutStream &os_;
-  const char *comment_border_;
+  const char *comment_start_border_;
+  const char *comment_end_border_;
   const char *your_code_here_;
   ACE_CString export_macro_;
 };

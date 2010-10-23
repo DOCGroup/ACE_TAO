@@ -41,7 +41,8 @@ public:
 
 private:
   be_interface *op_scope_;
-  const char *comment_border_;
+  const char *comment_start_border_;
+  const char *comment_end_border_;
   const char *your_code_here_;
 };
 

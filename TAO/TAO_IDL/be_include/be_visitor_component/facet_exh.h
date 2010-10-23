@@ -35,7 +35,8 @@ public:
   virtual int visit_provides (be_provides *node);
 
 private:
-  const char *comment_border_;
+  const char *comment_start_border_;
+  const char *comment_end_border_;
 };
 
 #endif /* _BE_COMPONENT_FACET_EXH_H_ */
