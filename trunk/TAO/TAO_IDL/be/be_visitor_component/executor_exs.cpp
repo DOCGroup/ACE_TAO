@@ -11,6 +11,7 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
+
 #include <TAO_IDL/be_include/be_helper.h>
 
 be_visitor_executor_exs::be_visitor_executor_exs (
@@ -91,6 +92,12 @@ be_visitor_executor_exs::visit_attribute (be_attribute *node)
 
   os_ << be_uidt_nl
       << "}";
+      
+  if (node->readonly ())
+    {
+      // Skip the mutator operation generation.
+      return 0;
+    }
 
   os_ << be_nl_2
       << "void" << be_nl
@@ -392,9 +399,10 @@ Component_Exec_Attr_Init_Generator::Component_Exec_Attr_Init_Generator (
 }
 
 int
-Component_Exec_Attr_Init_Generator::emit (be_interface * /*derived_interface */,
-                                        TAO_OutStream * /* os */,
-                                        be_interface * base_interface)
+Component_Exec_Attr_Init_Generator::emit (
+  be_interface * /*derived_interface */,
+  TAO_OutStream * /* os */,
+  be_interface * base_interface)
 {
   // Even though this call seems unaware of CCM types, the
   // visitor must inherit from be_visitor_component_scope so

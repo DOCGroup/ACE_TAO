@@ -159,19 +159,30 @@ be_visitor_executor_exh::visit_component (be_component *node)
       << global << sname << "::CCM_" << lname
       << "_Context_var ciao_context_;" << be_nl_2;
 
+  /// The overload of traverse_inheritance_graph() used here
+  /// doesn't automatically prime the queues.
+  node->get_insert_queue ().reset ();
+  node->get_del_queue ().reset ();
+  node->get_insert_queue ().enqueue_tail (node_);
+
   be_visitor_executor_private_exh v (this->ctx_);
   v.node (node);
 
-  os_ << "//@{" << be_nl
-      << "/** Component attributes and port operations. */";
+  Exec_Attr_Decl_Generator attr_decl (&v);
 
-  if (v.visit_component_scope (node) == -1)
+  status =
+    node->traverse_inheritance_graph (attr_decl,
+                                      &os_,
+                                      false,
+                                      false);
+
+  if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_executor_exh::")
                          ACE_TEXT ("visit_component - ")
-                         ACE_TEXT ("private member ")
-                         ACE_TEXT ("visitor failed\n")),
+                         ACE_TEXT ("traverse_inheritance_graph() ")
+                         ACE_TEXT ("for attr decls failed\n")),
                         -1);
     }
 
@@ -243,4 +254,24 @@ be_visitor_executor_exh::visit_consumes (be_consumes *node)
       << "::" << obj_name << " * ev);" << be_uidt;
 
   return 0;
+}
+
+// ==================================================
+
+Exec_Attr_Decl_Generator::Exec_Attr_Decl_Generator (
+      be_visitor_scope * visitor)
+  : visitor_ (visitor)
+{
+}
+
+int
+Exec_Attr_Decl_Generator::emit (
+  be_interface * /*derived_interface */,
+  TAO_OutStream * /* os */,
+  be_interface * base_interface)
+{
+  // Even though this call seems unaware of CCM types, the
+  // visitor must inherit from be_visitor_component_scope so
+  // it will pick up attributes via porttypes.
+  return visitor_->visit_scope (base_interface);
 }

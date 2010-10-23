@@ -41,5 +41,25 @@ private:
   const char *comment_border_;
 };
 
+// =============================================
+
+/// Worker class passed to traverse_inheritance_graph(),
+/// generates code to declare attribute members in
+/// the executor impl class.
+class Exec_Attr_Decl_Generator
+  : public TAO_IDL_Inheritance_Hierarchy_Worker
+{
+public:
+  Exec_Attr_Decl_Generator (
+    be_visitor_scope * visitor);
+
+  virtual int emit (be_interface * derived_interface,
+                    TAO_OutStream * os,
+                    be_interface * base_interface);
+
+private:
+  be_visitor_scope * visitor_;
+};
+
 #endif /* _BE_COMPONENT_EXECUTOR_EXH_H_ */
 

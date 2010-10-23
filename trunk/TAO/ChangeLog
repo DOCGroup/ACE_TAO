@@ -1,3 +1,13 @@
+Sat Oct 23 000:25:53 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO_IDL/be_include/be_visitor_component/executor_exh.h:
+        
+          More fixes in logic to support attribute impl generation
+          in the executor.
+
 Fri Oct 22 12:12:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
