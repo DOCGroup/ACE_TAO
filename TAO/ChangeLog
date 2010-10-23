@@ -1,10 +1,18 @@
+Sat Oct 23 10:29:26 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Bug_3919_Regression/Bug_3919_Regression.mpc:
+        * tests/Bug_3919_Regression/Test2.idl:
+        * tests/Bug_3919_Regression/client.cpp:
+          Added test for nested use of recursive typecode from another
+          IDL file (including the recursive type IDL file).
+
 Sat Oct 23 000:25:53 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
         * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
         * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
         * TAO_IDL/be_include/be_visitor_component/executor_exh.h:
-        
+
           More fixes in logic to support attribute impl generation
           in the executor.
 
