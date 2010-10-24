@@ -32,7 +32,7 @@ class ACE_Allocator;
 /**
  * @class ACE_Read_Buffer
  *
- * @brief Efficiently reads an artibrarily large buffer from an input
+ * @brief Efficiently reads an arbitrarily large buffer from an input
  * stream up to and including a termination character.  Also
  * performs search/replace on single occurrences a character in
  * the buffer using the principles of Integrated Layer

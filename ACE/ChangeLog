@@ -1,3 +1,13 @@
+Sun Oct 24 12:35:28 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Event_Handler.h:
+        * ace/Reactor.h:
+        * ace/Reactor_Notification_Strategy.h:
+        * ace/Read_Buffer.h:
+        * ace/Registry_Name_Space.h:
+        * ace/Remote_Tokens.h:
+          Doxygen changes
+
 Fri Oct 22 11:19:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Reactor.h:
