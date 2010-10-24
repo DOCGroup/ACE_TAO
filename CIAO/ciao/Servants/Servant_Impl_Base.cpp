@@ -21,9 +21,9 @@ namespace CIAO
   Servant_Impl_Base::remove (void)
   {
     CIAO_TRACE("Servant_Impl_Base::remove (void)");
+#if !defined (CCM_NOEVENT)
     try
     {
-#if !defined (CCM_NOEVENT)
       for (ConsumerTable::const_iterator iter =
              this->consumer_table_.begin ();
            iter != this->consumer_table_.end ();
@@ -44,7 +44,6 @@ namespace CIAO
               sa->update_port_activator (cons_id.in ());
             }
         }
-#endif
     }
     catch (const CORBA::Exception& ex)
     {
@@ -52,6 +51,7 @@ namespace CIAO
       CIAO_ERROR (1, (LM_ERROR, CLINFO "Servant_Impl_Base::remove - CORBA exception : %C\n", ex._info ().c_str ()));
       ex._raise (); // propagate
     }
+#endif
 
     /// This call deactivates facets, removes executor and home
     /// servant (if any), and uninstalls us from the container.
