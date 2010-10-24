@@ -54,6 +54,8 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.8.2 and CIAO-0.8.3
 . Added mpc feature ccm_noevent which disable the CORBA event support in
   the core libraries and generated code
 
+. Implemented disconnect for local facets
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.8.1 and CIAO-0.8.2
 =======================================================
 
