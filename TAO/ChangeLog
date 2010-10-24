@@ -1,3 +1,8 @@
+Sun Oct 24 11:34:00 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_null_return_value.cpp:
+          Simplified member initialization
+
 Sat Oct 23 11:54:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
