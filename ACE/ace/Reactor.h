@@ -43,7 +43,7 @@ class ACE_Sig_Set;
 
 /*
  * Hook to specialize the Reactor implementation with the concrete
- * Reactor type, for exmaple, select, thread pool reactor known
+ * Reactor type, for example, select, thread pool reactor known
  * at compile time.
  */
 //@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
@@ -234,7 +234,7 @@ public:
   /**
    * Initialize the ACE_Reactor to manage @a max_number_of_handles.
    * If @a restart is false then the ACE_Reactor's handle_events()
-   * method will be restarted automatically when <EINTR> occurs.  If
+   * method will be restarted automatically when @c EINTR occurs.  If
    * @a signal_handler or @a timer_queue are non-0 they are used as the
    * signal handler and timer queue, respectively.
    */
@@ -544,7 +544,7 @@ public:
   /**
    * Schedule a timer event.
    *
-   * Schedule a timer event that will expire after an <delay> amount
+   * Schedule a timer event that will expire after an @a delay amount
    * of time.  The return value of this method, a timer_id value,
    * uniquely identifies the @a event_handler in the ACE_Reactor's
    * internal list of timers.  This timer_id value can be used to
@@ -578,7 +578,7 @@ public:
    *
    * Resets the interval of the timer represented by @a timer_id to
    * @a interval, which is specified in relative time to the current
-   * <gettimeofday>.  If @a interval is equal to
+   * gettimeofday().  If @a interval is equal to
    * ACE_Time_Value::zero, the timer will become a non-rescheduling
    * timer.  Returns 0 if successful, -1 if not.
    *
