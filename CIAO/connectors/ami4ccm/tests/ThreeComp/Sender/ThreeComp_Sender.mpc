@@ -30,8 +30,8 @@ project(AMI_ThreeComp_Base_Sender_lem_gen) : ciaoidldefaults {
 }
 
 project(AMI_ThreeComp_Base_Sender_lem_stub) : ccm_svnt, ami   {
-  after += AMI_ThreeComp_Base_Sender_lem_gen AMI_ThreeComp_stub Conn_ThreeComp_Base_stub
-  libs  += ThreeComp_stub
+  after += AMI_ThreeComp_Base_Sender_lem_gen AMI_ThreeComp_stub Conn_ThreeComp_Base_stub AMI_ThreeComp_Base_Sender_stub
+  libs  += ThreeComp_stub ThreeComp_Sender_stub
   libpaths += ../lib
   libout = ../lib
   sharedname = ThreeComp_Sender_lem_stub
