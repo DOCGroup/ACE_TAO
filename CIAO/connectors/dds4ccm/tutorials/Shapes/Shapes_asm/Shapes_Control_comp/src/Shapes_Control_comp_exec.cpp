@@ -53,6 +53,7 @@ namespace CIAO_Shapes_Control_comp_Impl
 
   Control_comp_exec_i::~Control_comp_exec_i (void)
   {
+    delete this->ticker_;
   }
 
   // Supported operations and attributes.
@@ -60,9 +61,9 @@ namespace CIAO_Shapes_Control_comp_Impl
   Control_comp_exec_i::reactor (void)
   {
     ACE_Reactor* reactor = 0;
-    ::CORBA::Object_var ccm_object = 
+    ::CORBA::Object_var ccm_object =
       this->ciao_context_->get_CCM_object();
-    if (! ::CORBA::is_nil (ccm_object.in ())) 
+    if (! ::CORBA::is_nil (ccm_object.in ()))
       {
         ::CORBA::ORB_var orb = ccm_object->_get_orb ();
         if (! ::CORBA::is_nil (orb.in ()))
@@ -175,7 +176,6 @@ namespace CIAO_Shapes_Control_comp_Impl
   Control_comp_exec_i::stop (void)
   {
     this->reactor ()->cancel_timer (this->ticker_);
-    delete this->ticker_;
   }
 
   // Component attributes and port operations.
