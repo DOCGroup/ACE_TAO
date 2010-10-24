@@ -30,11 +30,8 @@ be_visitor_null_return_value::~be_visitor_null_return_value (void)
 }
 
 int
-be_visitor_null_return_value::visit_array (be_array *node)
+be_visitor_null_return_value::visit_array (be_array *)
 {
-  os_ << "static_cast< ::" << node->full_name ()
-      << "_slice *> (0)";
-
   return 0;
 }
 
@@ -121,42 +118,20 @@ be_visitor_null_return_value::visit_predefined_type (be_predefined_type *node)
 }
 
 int
-be_visitor_null_return_value::visit_sequence (be_sequence *node)
+be_visitor_null_return_value::visit_sequence (be_sequence *)
 {
-  os_ << "static_cast< ::" << node->full_name ()
-      << " *> (0)";
-
   return 0;
 }
 
 int
-be_visitor_null_return_value::visit_string (be_string *node)
+be_visitor_null_return_value::visit_string (be_string *)
 {
-  if (node->width () == sizeof (char))
-    {
-      os_ << "static_cast<char *> (0)";
-    }
-  else
-    {
-      os_ << "static_cast< ::CORBA::WChar *> (0)";
-    }
-
   return 0;
 }
 
 int
-be_visitor_null_return_value::visit_structure (be_structure *node)
+be_visitor_null_return_value::visit_structure (be_structure *)
 {
-  if (node->size_type () == AST_Type::FIXED)
-    {
-      os_ << " ::" << node->full_name () << " ()";
-    }
-  else
-    {
-      os_ << "static_cast< ::" << node->full_name ()
-          << " *> (0)";
-    }
-
   return 0;
 }
 
@@ -167,18 +142,8 @@ be_visitor_null_return_value::visit_typedef (be_typedef *node)
 }
 
 int
-be_visitor_null_return_value::visit_union (be_union *node)
+be_visitor_null_return_value::visit_union (be_union *)
 {
-  if (node->size_type () == AST_Type::FIXED)
-    {
-      os_ << " ::" << node->full_name () << " ()";
-    }
-  else
-    {
-      os_ << "static_cast< ::" << node->full_name ()
-          << " *> (0)";
-    }
-
   return 0;
 }
 
