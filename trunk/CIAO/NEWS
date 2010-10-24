@@ -51,6 +51,9 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.8.2 and CIAO-0.8.3
 . The tao_idl option -Gex now also generates a member and implemented set/get
   methods for attributes defined in components
 
+. Added mpc feature ccm_noevent which disable the CORBA event support in
+  the core libraries and generated code
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.8.1 and CIAO-0.8.2
 =======================================================
 
