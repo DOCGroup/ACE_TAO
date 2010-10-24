@@ -369,7 +369,7 @@ public:
   ACE_Notification_Buffer (ACE_Event_Handler *eh,
                            ACE_Reactor_Mask mask);
 
-  /// Default dtor.
+  /// Default destructor.
   ~ACE_Notification_Buffer (void);
 
   /// Pointer to the Event_Handler that will be dispatched
