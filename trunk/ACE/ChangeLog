@@ -1,3 +1,13 @@
+Mon Oct 25 14:07:15 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Gestalt.cpp:         
+          Another fix to error processing behavior. If the result of
+          process_directives() was > 0, that value was replaced by the
+          result of process_commandline_directives(), which is contrary to
+          the expected behavior. Now the result is the sum of these to
+          return values, unless either returns -1, then the result is just
+          -1.
+
 Mon Oct 25 06:30:35 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Atomic_Op_T.h:

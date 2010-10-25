@@ -1112,7 +1112,12 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
     {
       result = this->process_directives ();
       if (result != -1)
-        result = this->process_commandline_directives ();
+        {
+          int temp = this->process_commandline_directives ();
+          if (temp == -1)
+            result = -1;
+          else result += temp;
+        }
     }
 
   // Reset debugging back to the way it was when we came into
