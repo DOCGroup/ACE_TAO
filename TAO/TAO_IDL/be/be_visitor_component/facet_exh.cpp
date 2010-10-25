@@ -81,22 +81,9 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
           << "/** Operations and attributes from ::"
           << intf->full_name () << ". */";
 
-      be_visitor_context ctx (*this->ctx_);
-      be_visitor_interface_ih v (&ctx);
-
-      if (v.visit_scope (intf) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_facet_exh::")
-                             ACE_TEXT ("visit_provides - ")
-                             ACE_TEXT ("visit_scope() ")
-                             ACE_TEXT ("failed\n")),
-                            -1);
-        }
-
       int const status =
         intf->traverse_inheritance_graph (
-          be_visitor_interface_ih::method_helper,
+          be_visitor_facet_exh::method_helper,
           &os_);
 
       if (status == -1)
@@ -108,6 +95,7 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
                              ACE_TEXT ("failed\n")),
                             -1);
         }
+        
       os_ << be_nl << "//@}";
     }
 
@@ -117,6 +105,28 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
       << this->node_->local_name ()
       << "_Context_var ciao_context_;" << be_uidt_nl
       << "};";
+
+  return 0;
+}
+
+int
+be_visitor_facet_exh::method_helper (be_interface *derived,
+                                     be_interface *node,
+                                     TAO_OutStream *os)
+{
+  be_visitor_context ctx;
+  ctx.state (TAO_CodeGen::TAO_ROOT_IH);
+  ctx.interface (derived);
+  ctx.stream (os);
+  be_visitor_interface_ih visitor (&ctx);
+
+  if (visitor.visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_facet_exh::method_helper "
+                         "- visit_scope() failed\n"),
+                        -1);
+    }
 
   return 0;
 }
