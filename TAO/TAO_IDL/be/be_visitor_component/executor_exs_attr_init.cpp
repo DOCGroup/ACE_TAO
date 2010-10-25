@@ -20,8 +20,7 @@ be_visitor_executor_exs_attr_init::be_visitor_executor_exs_attr_init (
 {
 }
 
-be_visitor_executor_exs_attr_init::~be_visitor_executor_exs_attr_init (
-  void)
+be_visitor_executor_exs_attr_init::~be_visitor_executor_exs_attr_init (void)
 {
 }
 
@@ -41,7 +40,7 @@ be_visitor_executor_exs_attr_init::visit_attribute (
   os_ << this->ctx_->port_prefix ().c_str ()
       << node->local_name () << "_ (";
 
-  be_visitor_null_return_value nrt_visitor (this->ctx_);
+  be_visitor_attr_init nrt_visitor (this->ctx_);
 
   int status =
     node->field_type ()->accept (&nrt_visitor);

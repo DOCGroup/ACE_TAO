@@ -52,6 +52,7 @@
 #include "be_visitor_attr_assign.h"
 #include "be_visitor_attr_return.h"
 #include "be_visitor_null_return_value.h"
+#include "be_visitor_attr_init.h"
 #include "be_util.h"
 #include "be_helper.h"
 #include "be_identifier_helper.h"

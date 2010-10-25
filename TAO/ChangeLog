@@ -1,3 +1,12 @@
+Mon Oct 25 05:58:18 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_attr_init.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs_attr_init.cpp:
+        * TAO_IDL/be_include/be_visitor_attr_init.h:
+          Added new visitor to generate the attribute initialization in the
+          executor constructor
+
 Mon Oct 25 05:37:24 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_null_return_value.cpp:
