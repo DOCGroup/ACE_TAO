@@ -1,3 +1,9 @@
+Mon Oct 25 05:37:24 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_null_return_value.cpp:
+          Reverted change below, this visitor seems to be used in multiple
+          places, need to add a new one for attribute initialization
+
 Sun Oct 24 11:34:00 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_null_return_value.cpp:
