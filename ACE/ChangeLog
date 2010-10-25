@@ -1,6 +1,11 @@
+Mon Oct 25 21:01:02 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * NEWS:
+          Updated.
+
 Mon Oct 25 14:07:15 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
-        * ace/Service_Gestalt.cpp:         
+        * ace/Service_Gestalt.cpp:
           Another fix to error processing behavior. If the result of
           process_directives() was > 0, that value was replaced by the
           result of process_commandline_directives(), which is contrary to
