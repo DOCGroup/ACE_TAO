@@ -8,10 +8,10 @@ USER VISIBLE CHANGES BETWEEN TAO-1.8.2 and TAO-1.8.3
   types are used: 'anonymous types are deprecated by OMG spec'.
   One can changes this error into a warning. There's also a possibility
   to silence the TAO IDL compiler about this message. One of the following
-  defines can be added to your config.h file in order to change the behaviour
+  defines can be added to your config.h file in order to change the behavior
   of the TAO IDL compiler:
   * IDL_ANON_ERROR:   The TAO IDL generates an error when it encounters
-                      an anonymous type (default behaviour).
+                      an anonymous type (default behavior).
   * IDL_ANON_WARNING: The TAO IDL generates a warning when it encounters
                       an anonymous type.
   * ANON_TYPE_SILENT: The TAO IDL doesn't generate a warning nor an error
@@ -19,7 +19,7 @@ USER VISIBLE CHANGES BETWEEN TAO-1.8.2 and TAO-1.8.3
 
 . Renamed ALL ORB services executables. This because of
   the fact that the TAO ORB services should be recognizable
-  between the ORB services of other CORBA vendors. The're
+  between the ORB services of other CORBA vendors. There are
   systems where ORB services of several CORBA vendors are
   installed (mainly via the installed packages). The following
   rename actions have been taken place:
