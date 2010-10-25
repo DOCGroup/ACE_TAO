@@ -123,8 +123,15 @@ be_visitor_null_return_value::visit_predefined_type (be_predefined_type *node)
 int
 be_visitor_null_return_value::visit_sequence (be_sequence *node)
 {
-  os_ << "static_cast< ::" << node->full_name ()
-      << " *> (0)";
+  const char *fname = node->full_name ();
+  be_typedef *td = this->ctx_->tdef ();
+  
+  if (td != 0)
+    {
+      fname = td->full_name ();
+    }
+    
+  os_ << "static_cast< ::" << fname << " *> (0)";
 
   return 0;
 }
@@ -163,6 +170,7 @@ be_visitor_null_return_value::visit_structure (be_structure *node)
 int
 be_visitor_null_return_value::visit_typedef (be_typedef *node)
 {
+  this->ctx_->tdef (node);
   return node->primitive_base_type ()->accept (this);
 }
 
