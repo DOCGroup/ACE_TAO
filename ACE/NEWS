@@ -18,6 +18,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.8.2 and ACE-5.8.3
   numbers of handles and use of ACE_Dev_Poll_Reactor on Linux,
   the rate at which this problem was cropping up was increasing.
 
+. Added a simple helper ACE::is_equal() which compares equality of two
+  objects without using operator==. This is useful for comparing floating
+  point values.
+
 . Removed all deprecated methods, arguments, files, classes, macros and
   anything else we kept for years.
 
