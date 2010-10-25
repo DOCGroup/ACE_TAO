@@ -39,6 +39,7 @@ module Extra
     attribute string useless_attr;
     long superfluous_op (in string empty_arg)
       raises (NoReason);
+    OctetSeq do_seq ();
   };
 
   interface Supernumerary

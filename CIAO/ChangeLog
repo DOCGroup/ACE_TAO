@@ -1,3 +1,12 @@
+Mon Oct 25 14:47:22 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/CIDL/CodeGen/Basic.idl:
+        
+          Added a method to the base interface of an interface used
+          in a facet. Method was supplied by Johnny Willemsen
+          <jwillemsen at remedy dot nl> and uncovered a bug in
+          executor code generation.
+
 Sun Oct 24 12:44:24 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Servant_Impl_Base.cpp:
