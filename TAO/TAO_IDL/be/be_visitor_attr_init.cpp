@@ -61,10 +61,8 @@ be_visitor_attr_init::visit_home (be_home *node)
 }
 
 int
-be_visitor_attr_init::visit_interface (be_interface *node)
+be_visitor_attr_init::visit_interface (be_interface *)
 {
-  os_ << " ::" << node->full_name () << "::_nil ()";
-
   return 0;
 }
 
@@ -156,11 +154,8 @@ be_visitor_attr_init::visit_valuebox (be_valuebox *node)
 }
 
 int
-be_visitor_attr_init::visit_valuetype (be_valuetype *node)
+be_visitor_attr_init::visit_valuetype (be_valuetype *)
 {
-  os_ << "static_cast< ::" << node->full_name ()
-      << " *> (0)";
-
   return 0;
 }
 
