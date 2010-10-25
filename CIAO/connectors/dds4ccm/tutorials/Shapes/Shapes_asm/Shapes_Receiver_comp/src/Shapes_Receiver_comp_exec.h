@@ -19,8 +19,11 @@
 namespace CIAO_Shapes_Receiver_comp_Impl
 {
 
+  /**
+   * Provider Executor Implementation Class: info_out_data_listener_exec_i
+   */
   //============================================================
-  // Provider Executor Implementation Class: info_out_data_listener_exec_i
+  //
   //============================================================
 
   class SHAPES_RECEIVER_COMP_EXEC_Export info_out_data_listener_exec_i
