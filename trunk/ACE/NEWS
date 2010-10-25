@@ -25,6 +25,9 @@ USER VISIBLE CHANGES BETWEEN ACE-5.8.2 and ACE-5.8.3
 
 . ACE_Pair has been removed. Users should now use std::pair.
 
+. This is the last micro release that will work with GCC < 3, after x.8.3
+  support for GCC < 3 will be removed
+
 USER VISIBLE CHANGES BETWEEN ACE-5.8.1 and ACE-5.8.2
 ====================================================
 
