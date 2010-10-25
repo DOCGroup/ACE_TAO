@@ -1,3 +1,21 @@
+Mon Oct 25 14:42:46 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+        
+          Cosmetic changes.
+          
+        * TAO_IDLbe/be_visitor_null_return_value.cpp:
+        
+          Fixed bug in static_cast<> template parameter name
+          generation for sequences.
+          
+        * TAO_IDLbe/be_visitor_component/facet_exh.cpp:
+        * TAO_IDLbe_include/be_visitor_component/facet_exh.h:
+        
+          Reuse of static function be_visitor_interface_ih::method_helper
+          was not a perfect fit, so added a modified version to
+          be_visitor_facet_exh.
+          
 Mon Oct 25 13:46:03 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * NEWS:

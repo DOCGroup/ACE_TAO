@@ -145,8 +145,10 @@ be_visitor_interface_ih::method_helper (be_interface *derived,
                                         be_interface *node,
                                         TAO_OutStream *os)
 {
-
-  if (ACE_OS::strcmp (derived->flat_name (), node->flat_name ()) != 0)
+  int compare =
+    ACE_OS::strcmp (derived->flat_name (), node->flat_name ());
+    
+  if (compare != 0)
     {
       be_visitor_context ctx;
       ctx.state (TAO_CodeGen::TAO_ROOT_IH);
