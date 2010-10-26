@@ -1,34 +1,40 @@
+Tue Oct 26 17:05:35 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_3755_Ext_Regression/dp_svc.conf:
+        
+          Fix a misspelling in the library name.
+
 Tue Oct 26 12:57:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
         * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
         * TAO_IDL/be/be_visitor_null_return_value.cpp:
         * TAO_IDL/be_include/be_visitor_component/facet_exh.h:
-        
+
           Fixed fuzz errors.
 
 Mon Oct 25 14:42:46 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
-        
+
           Cosmetic changes.
-          
+
         * TAO_IDLbe/be_visitor_null_return_value.cpp:
-        
+
           Fixed bug in static_cast<> template parameter name
           generation for sequences.
-          
+
         * TAO_IDLbe/be_visitor_component/facet_exh.cpp:
         * TAO_IDLbe_include/be_visitor_component/facet_exh.h:
-        
+
           Reuse of static function be_visitor_interface_ih::method_helper
           was not a perfect fit, so added a modified version to
           be_visitor_facet_exh.
-          
+
 Mon Oct 25 13:46:03 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * NEWS:
-        
+
           Updated with 2 IDL compiler changes.
 
 Mon Oct 25 08:09:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
