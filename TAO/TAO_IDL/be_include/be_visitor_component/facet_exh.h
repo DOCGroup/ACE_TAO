@@ -33,7 +33,7 @@ public:
   ~be_visitor_facet_exh (void);
 
   virtual int visit_provides (be_provides *node);
-  
+
   static int method_helper (be_interface *derived,
                             be_interface *node,
                             TAO_OutStream *os);

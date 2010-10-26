@@ -125,12 +125,12 @@ be_visitor_null_return_value::visit_sequence (be_sequence *node)
 {
   const char *fname = node->full_name ();
   be_typedef *td = this->ctx_->tdef ();
-  
+
   if (td != 0)
     {
       fname = td->full_name ();
     }
-    
+
   os_ << "static_cast< ::" << fname << " *> (0)";
 
   return 0;

@@ -1,3 +1,12 @@
+Tue Oct 26 12:57:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
+        * TAO_IDL/be/be_visitor_null_return_value.cpp:
+        * TAO_IDL/be_include/be_visitor_component/facet_exh.h:
+        
+          Fixed fuzz errors.
+
 Mon Oct 25 14:42:46 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
