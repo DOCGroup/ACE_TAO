@@ -147,7 +147,7 @@ be_visitor_interface_ih::method_helper (be_interface *derived,
 {
   int compare =
     ACE_OS::strcmp (derived->flat_name (), node->flat_name ());
-    
+
   if (compare != 0)
     {
       be_visitor_context ctx;
