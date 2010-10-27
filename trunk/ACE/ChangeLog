@@ -1,3 +1,12 @@
+Wed Oct 27 22:16:12 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/INET_Addr.cpp (set): When looking up a hostname, always use
+          gethostbyname() for IPv4 requests, even if IPv6 is available.
+          getaddrinfo() (used when IPv4 and 6 are both available) is hugely
+          slower than gethostbyname() in large vlan environments. Note that
+          even though gethostbyname() can grok IPv6 on Linux, it can't
+          anywhere else, so I avoided trying to go that route.
+
 Wed Oct 27 19:35:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debian/libace-5.8.3.docs:
