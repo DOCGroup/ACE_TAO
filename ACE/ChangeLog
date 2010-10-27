@@ -1,3 +1,17 @@
+Wed Oct 27 12:29:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/index.html:
+          Added x.8.3
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+          Updated for x.8.3
+
+        * bin/make_release.py:
+          Generate spaces and removed some not needed excludes
+
+        * bin/generate_rel_manpages:
+          Print a message when we are ready
+
 Wed Oct 27 10:38:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ChangeLog:

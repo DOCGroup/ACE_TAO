@@ -78,6 +78,8 @@ my $build_command =
 &ex ($build_command)
     && die "$0: failed to package ACE man pages\n";
 
+print "Finished doxygen document generation \n";
+
 exit $status;
 
 

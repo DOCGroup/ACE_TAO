@@ -382,7 +382,7 @@ def update_debianbuild ():
             else:
                 fnewname = join (dirname (fname), match.group (1) + match.group (2) + comp_versions["ACE_version"] + match.group (4))
                 prev_ace_ver = match.group (3)
-        
+
         print prev_ace_ver
 #        print prev_tao_var
 
@@ -394,7 +394,7 @@ def update_debianbuild ():
 
             files.append (fname)
             files.append (fnewname)
-            
+
             print "Appending " + fname + " and " + fnewname
 
     # update debianbuild/control
@@ -472,7 +472,7 @@ def get_and_update_versions ():
         files += create_changelog ("DAnCE")
         files += update_spec_file ()
         files += update_debianbuild ()
-        
+
         print "Committing " + str(files)
 
         commit (files)
@@ -490,7 +490,7 @@ def create_changelog (component):
     # generate our changelog entry
     changelog_entry = """%s  %s  <%s>
 
-\t* %s version %s released.
+        * %s version %s released.
 
 """ % (release_date, signature, mailid,
        component,
@@ -710,9 +710,9 @@ def update_packages (text_files, bin_files, stage_dir, package_dir):
     p = subprocess.Popen (shlex.split ("xargs tar " + tar_args + tar_file), stdin=subprocess.PIPE, stdout=subprocess.PIPE, close_fds=True)
     instream, outstream = (p.stdin, p.stdout)
     instream.write (' ' + bin_files + ' ' + text_files)
-    
+
     instream.close ()
-    
+
     print outstream.read ()
     outstream.close ()
 
@@ -836,14 +836,13 @@ def package (stage_dir, package_dir, decorator):
         pass # swallow any errors
 
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers"),
-                                               "ACE_wrappers", ["TAO", "autom4te.cache"])
+                                               "ACE_wrappers", ["TAO"])
 
 #    write_file_lists ("fACE" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
                      "\n".join (bin_files),
                      stage_dir,
                      package_dir)
-
 
     move_packages ("ACE" + decorator, stage_dir, package_dir)
 
@@ -852,7 +851,7 @@ def package (stage_dir, package_dir, decorator):
 
     # for TAO:
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO"),
-                                                     "ACE_wrappers/TAO", ["CIAO", "DAnCE", "autom4te.cache"])
+                                                     "ACE_wrappers/TAO", ["CIAO", "DAnCE"])
 
 #    write_file_lists ("fTAO" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
@@ -867,7 +866,7 @@ def package (stage_dir, package_dir, decorator):
 
     # for DAnCE:
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO/DAnCE"),
-                                               "ACE_wrappers/TAO/DAnCE", ["CIAO", "autom4te.cache"])
+                                               "ACE_wrappers/TAO/DAnCE", [])
 
 #    write_file_lists ("fTAO" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
@@ -881,7 +880,7 @@ def package (stage_dir, package_dir, decorator):
     bin_files = list ()
     # for CIAO:
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO/CIAO"),
-                                               "ACE_wrappers/TAO/CIAO", ["DAnCE", "autom4te.cache"])
+                                               "ACE_wrappers/TAO/CIAO", [])
 
 #    write_file_lists ("fCIAO" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
