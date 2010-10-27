@@ -1107,22 +1107,22 @@ install -d %{buildroot}%{_sbindir}
 
 # Rename the service binaries:
 
-install ${ACE_ROOT}/TAO/orbsvcs/Naming_Service/Naming_Service \
+install ${ACE_ROOT}/TAO/orbsvcs/Naming_Service/tao_cosnaming \
     %{buildroot}%{_sbindir}/tao-cosnaming
 
-install ${ACE_ROOT}/TAO/orbsvcs/CosEvent_Service/CosEvent_Service \
+install ${ACE_ROOT}/TAO/orbsvcs/CosEvent_Service/tao_cosevent \
     %{buildroot}%{_sbindir}/tao-cosevent
 
-install ${ACE_ROOT}/TAO/orbsvcs/Notify_Service/Notify_Service \
+install ${ACE_ROOT}/TAO/orbsvcs/Notify_Service/tao_cosnotification \
     %{buildroot}%{_sbindir}/tao-cosnotification
 
-install ${ACE_ROOT}/TAO/orbsvcs/Trading_Service/Trading_Service \
+install ${ACE_ROOT}/TAO/orbsvcs/Trading_Service/tao_costrading \
     %{buildroot}%{_sbindir}/tao-costrading
 
-install ${ACE_ROOT}/TAO/orbsvcs/Event_Service/Event_Service \
+install ${ACE_ROOT}/TAO/orbsvcs/Event_Service/tao_rtevent \
     %{buildroot}%{_sbindir}/tao-rtevent
 
-install ${ACE_ROOT}/TAO/orbsvcs/Concurrency_Service/Concurrency_Service \
+install ${ACE_ROOT}/TAO/orbsvcs/Concurrency_Service/tao_cosconcurrency \
     %{buildroot}%{_sbindir}/tao-cosconcurrency
 
 #Create directories
