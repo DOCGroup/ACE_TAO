@@ -1,3 +1,9 @@
+Wed Oct 27 19:35:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/libace-5.8.3.docs:
+        * rpmbuild/ace-tao.spec:
+          FAQ got removed
+
 Wed Oct 27 17:47:55 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-g++-common.h:
