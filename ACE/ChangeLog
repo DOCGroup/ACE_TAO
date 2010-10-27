@@ -1,3 +1,14 @@
+Wed Oct 27 17:40:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Make x.8.3 available for download
+
+        * debian/ace.dsc:
+          Updated size and md5
+
+        * rpmbuild/ace-tao.spec:
+          Corrected executable names
+
 Wed Oct 27 12:29:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/index.html:
