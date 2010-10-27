@@ -1,11 +1,11 @@
 Wed Oct 27 12:01:05 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO version 1.8.3 released.
+        * TAO version 1.8.3 released.
 
 Tue Oct 26 17:05:35 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Bug_3755_Ext_Regression/dp_svc.conf:
-        
+
           Fix a misspelling in the library name.
 
 Tue Oct 26 12:57:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
