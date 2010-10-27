@@ -24,11 +24,6 @@
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
-#if ( __GNUC__ == 2 && __GNUC_MINOR__ < 97 )
-  // gcc 2.97 and lower use old iostreams
-# define ACE_USES_OLD_IOSTREAMS
-#endif /* __GNUC__ >= 2.97 */
-
 #if (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4))
 # define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
 #endif /* __GNUC__ >= 3.4 */
