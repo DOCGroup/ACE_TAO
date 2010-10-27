@@ -334,16 +334,20 @@ ACE_INET_Addr::set (u_short port_number,
                   sizeof this->inet_addr_);
 
 #if defined (ACE_HAS_IPV6)
-  struct addrinfo hints;
-  struct addrinfo *res = 0;
-  int error = 0;
-  ACE_OS::memset (&hints, 0, sizeof (hints));
-# if defined (ACE_USES_IPV4_IPV6_MIGRATION)
-  if (address_family == AF_UNSPEC && !ACE::ipv6_enabled())
+  // Let the IPv4 case fall through to the non-IPv6-capable section.
+  // We don't need the additional getaddrinfo() capability and the Linux
+  // getaddrinfo() is substantially slower than gethostbyname() w/
+  // large vlans.
+#  if defined (ACE_USES_IPV4_IPV6_MIGRATION)
+  if (address_family == AF_UNSPEC && !ACE::ipv6_enabled ())
     address_family = AF_INET;
-# endif /* ACE_USES_IPV4_IPV6_MIGRATION */
-  if (address_family == AF_UNSPEC || address_family == AF_INET6)
+#  endif /* ACE_USES_IPV4_IPV6_MIGRATION */
+  if (address_family != AF_INET)
     {
+      struct addrinfo hints;
+      struct addrinfo *res = 0;
+      int error = 0;
+      ACE_OS::memset (&hints, 0, sizeof (hints));
       hints.ai_family = AF_INET6;
       error = ::getaddrinfo (host_name, 0, &hints, &res);
       if (error)
@@ -355,35 +359,32 @@ ACE_INET_Addr::set (u_short port_number,
               errno = error;
               return -1;
             }
-          address_family = AF_INET;
+          // Let AF_UNSPEC try again w/ IPv4.
+          hints.ai_family = AF_INET;
+          error = ::getaddrinfo (host_name, 0, &hints, &res);
+          if (error)
+            {
+              if (res)
+                ::freeaddrinfo(res);
+              errno = error;
+              return -1;
+            }
         }
+      this->set_type (res->ai_family);
+      this->set_addr (res->ai_addr, res->ai_addrlen);
+      this->set_port_number (port_number, encode);
+      ::freeaddrinfo (res);
+      return 0;
     }
-  if (address_family == AF_INET)
-    {
-      hints.ai_family = AF_INET;
-      error = ::getaddrinfo (host_name, 0, &hints, &res);
-      if (error)
-        {
-          if (res)
-            ::freeaddrinfo(res);
-          errno = error;
-          return -1;
-        }
-    }
-  this->set_type (res->ai_family);
-  this->set_addr (res->ai_addr, res->ai_addrlen);
-  this->set_port_number (port_number, encode);
-  ::freeaddrinfo (res);
-  return 0;
 #else /* ACE_HAS_IPV6 */
 
   // IPv6 not supported... insure the family is set to IPv4
   address_family = AF_INET;
   this->set_type (address_family);
   this->inet_addr_.in4_.sin_family = static_cast<short> (address_family);
-#ifdef ACE_HAS_SOCKADDR_IN_SIN_LEN
+#  ifdef ACE_HAS_SOCKADDR_IN_SIN_LEN
   this->inet_addr_.in4_.sin_len = sizeof (this->inet_addr_.in4_);
-#endif
+#  endif
   struct in_addr addrv4;
   if (ACE_OS::inet_aton (host_name,
                          &addrv4) == 1)
