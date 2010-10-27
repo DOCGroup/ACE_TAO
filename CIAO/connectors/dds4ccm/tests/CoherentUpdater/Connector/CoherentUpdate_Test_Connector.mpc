@@ -24,7 +24,7 @@ project(CoherentUpdate_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   after += CoherentUpdate_Connector_idl_gen
   idlflags += -Wb,stub_export_macro=COHERENT_UPDATE_TEST_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=CoherentUpdate_Connector_lem_stub_export.h \
-              -SS -Gxhst \
+              -SS -Gxhst -Sci \
               -I ..
 
   IDL_Files {
@@ -33,8 +33,8 @@ project(CoherentUpdate_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project(CoherentUpdate_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
-  after += CoherentUpdate_Connector_lem_gen CoherentUpdate_Connector_stub CoherentUpdate_Test_Base_stub 
-  libs  += CoherentUpdate_Test_Base_stub CoherentUpdate_Connector_stub 
+  after += CoherentUpdate_Connector_lem_gen CoherentUpdate_Connector_stub CoherentUpdate_Test_Base_stub
+  libs  += CoherentUpdate_Test_Base_stub CoherentUpdate_Connector_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -115,12 +115,12 @@ project(CoherentUpdate_Connector_exec) : ciao_executor, dds4ccm_impl {
 project(CoherentUpdate_Connector_svnt) : ciao_servant, dds4ccm_impl {
   after      += CoherentUpdate_Connector_lem_stub \
                 CoherentUpdate_Connector_exec \
-                CoherentUpdate_Connector_stub 
+                CoherentUpdate_Connector_stub
   sharedname  = CoherentUpdate_Connector_svnt
   libs       += CoherentUpdate_Connector_stub \
                 CoherentUpdate_Connector_lem_stub  \
                 CoherentUpdate_Test_Base_stub \
-                CoherentUpdate_Connector_exec 
+                CoherentUpdate_Connector_exec
   libpaths += ../lib
   libout = ../lib
   includes += ..
