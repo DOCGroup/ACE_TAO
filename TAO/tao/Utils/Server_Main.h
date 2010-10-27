@@ -59,6 +59,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/orbconf.h"
+#include "ace/Copy_Disabled.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -67,17 +68,13 @@ namespace TAO
   namespace Utils
   {
     template <typename SERVANT>
-    class Server_Main
+    class Server_Main : private ACE_Copy_Disabled
     {
     public:
       Server_Main(const char * name);
       ~Server_Main();
 
       int run (int argc, ACE_TCHAR *argv[]);
-
-    private:
-      Server_Main( const Server_Main &);
-      Server_Main & operator = (const Server_Main &);
 
     private:
       const char * name_;

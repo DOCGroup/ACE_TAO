@@ -5,7 +5,6 @@ project (TAO_Utils) : taolib, tao_output, install, portableserver, pi {
 
   Template_Files {
     RIR_Narrow.cpp
-    Servant_Var.cpp
     Server_Main.cpp
   }
 
