@@ -42,17 +42,13 @@ int
 TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
-  // hide unicode if necessary.
-  ACE_Argv_Type_Converter command_line (argc, argv);
-
-  ACE_TCHAR ** asciiArgv = command_line.get_TCHAR_argv ();
 
   try
   {
     // Initialize the orb
 
     CORBA::ORB_var orb =
-      CORBA::ORB_init (argc, asciiArgv, name_);
+      CORBA::ORB_init (argc, argv, name_);
 
     if (! ::CORBA::is_nil(orb.in ()))
     {
@@ -69,7 +65,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
         if (result == 0)
         {
           ACE_ERROR ((LM_INFO,
-            "%T %s (%P|%t) Ready %s\n", name_, servant.identity ()
+            "%T %C (%P|%t) Ready %C\n", name_, servant.identity ()
             ));
 
           //////////////////////////////////
@@ -91,7 +87,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
           orb->shutdown (1);
 
           ACE_ERROR ((LM_INFO,
-                      "%T %s (%P|%t) Terminated normally. %s\n",
+                      "%T %C (%P|%t) Terminated normally. %C\n",
                       name_,
                       servant.identity ()
             ));
@@ -99,7 +95,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
         else
         {
           ACE_ERROR ((LM_ERROR,
-            "%T %s (%P|%t) Registration failed: %m\n", name_
+            "%T %C (%P|%t) Registration failed: %m\n", name_
             ));
           result = -1;
         }
@@ -107,7 +103,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
       else
       {
         ACE_ERROR ((LM_ERROR,
-          "%T %s (%P|%t) ORB manager init failed\n", name_
+          "%T %C (%P|%t) ORB manager init failed\n", name_
         ));
         result = -1;
       }
