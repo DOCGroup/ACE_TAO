@@ -1,6 +1,12 @@
+Wed Oct 27 10:38:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ChangeLog:
+        * NEWS:
+          Updated for next release
+
 Wed Oct 27 12:01:05 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACE version 5.8.3 released.
+       * ACE version 5.8.3 released.
 
 Tue Oct 26 11:21:35 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
