@@ -1,0 +1,26 @@
+// $Id$
+
+/**
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef COMPONENT_IDL
+#define COMPONENT_IDL
+
+#include "Connector/GCE_Test_Connector.idl"
+
+module GCE_Test
+{
+  component GetComponentEventTestComponent
+  {
+    port GCETestConnector::DDS_Listen  info_listen;
+    port GCETestConnector::DDS_Get     info_get;
+    provides CCM_DDS::ConnectorStatusListener status_listener;
+
+    port GCETestConnector::DDS_Write info_write;
+
+    attribute boolean act_as_sender;
+  };
+};
+
+#endif
