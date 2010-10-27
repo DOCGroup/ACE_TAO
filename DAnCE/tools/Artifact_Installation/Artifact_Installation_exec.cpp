@@ -138,7 +138,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
         }
 
       // instantiate artifact installation service
-      DAnCE::ArtifactInstallation_Impl* installer;
+      DAnCE::ArtifactInstallation_Impl* installer = 0;
       ACE_NEW_RETURN (installer,
                       DAnCE::ArtifactInstallation_Impl (),
                       1);
