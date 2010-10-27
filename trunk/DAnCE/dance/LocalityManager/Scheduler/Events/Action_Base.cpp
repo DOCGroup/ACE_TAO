@@ -8,8 +8,8 @@
 namespace DAnCE
 {
   Action_Base::Action_Base (Event_Future holder,
-                                        const char *name,
-                                        const char *instance_type)
+                            const char *name,
+                            const char *instance_type)
     : Deployment_Event (holder, name, instance_type)
   {
     CORBA::Any *tmp;
