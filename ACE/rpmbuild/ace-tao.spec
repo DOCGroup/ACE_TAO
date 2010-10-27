@@ -1967,7 +1967,6 @@ fi
 %doc ACE-INSTALL.html
 %doc AUTHORS
 %doc COPYING
-%doc FAQ
 %doc PROBLEM-REPORT-FORM
 %doc README
 %doc THANKS
