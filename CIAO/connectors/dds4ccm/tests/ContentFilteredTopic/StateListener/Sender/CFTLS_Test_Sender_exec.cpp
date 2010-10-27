@@ -2,16 +2,16 @@
 // $Id$
 
 #include "CFTLS_Test_Sender_exec.h"
-#include "ace/Log_Msg.h"
-#include "ace/Date_Time.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
+#include "ace/Log_Msg.h"
+#include "ace/Date_Time.h"
 
 namespace CIAO_CFTLS_Test_Sender_Impl
 {
-  //============================================================
-  // StartHandler
-  //============================================================
+  /**
+   * StartHandler
+   */
   StartHandler::StartHandler(Sender_exec_i &callback)
     : callback_ (callback)
   {
@@ -24,9 +24,9 @@ namespace CIAO_CFTLS_Test_Sender_Impl
     return 0;
   }
 
-  //============================================================
-  // UpdateTicker
-  //============================================================
+  /**
+   * UpdateTicker
+   */
   UpdateTicker::UpdateTicker (Sender_exec_i &callback)
     : callback_ (callback),
       last_iter_ (0)
@@ -41,12 +41,14 @@ namespace CIAO_CFTLS_Test_Sender_Impl
     return 0;
   }
 
-  //============================================================
-  // Component Executor Implementation Class: Sender_exec_i
-  //============================================================
+
+  /**
+   * Component Executor Implementation Class: Sender_exec_i
+   */
+
   Sender_exec_i::Sender_exec_i (void)
-    : iterations_ (10),
-      keys_ (5)
+    : keys_ (5)
+      , iterations_ (10)
   {
     ACE_NEW_THROW_EX (this->ticker_,
                       UpdateTicker (*this),
@@ -55,11 +57,14 @@ namespace CIAO_CFTLS_Test_Sender_Impl
 
   Sender_exec_i::~Sender_exec_i (void)
   {
+    delete this->ticker_;
   }
 
   void
   Sender_exec_i::update_one (CORBA::UShort iter)
   {
+    ::CFTLS_Test::ContentFilteredTopicListenStateTestConnector::Updater_var
+      updater = this->ciao_context_->get_connection_info_update_data ();
     if (iter <= this->iterations ())
       {
         for (CORBA::UShort i = 1; i < this->keys () + 1; ++i)
@@ -69,7 +74,7 @@ namespace CIAO_CFTLS_Test_Sender_Impl
             ContentFilteredTopicListenStateTest update_key;
             update_key.key = CORBA::string_dup (key);
             update_key.iteration = iter;
-            this->updater_->update_one (update_key, ::DDS::HANDLE_NIL);
+            updater->update_one (update_key, ::DDS::HANDLE_NIL);
             ACE_DEBUG ((LM_DEBUG, "Updated key <%C> - <%u>\n",
                           key, iter));
 
@@ -79,16 +84,17 @@ namespace CIAO_CFTLS_Test_Sender_Impl
       {
         ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::update_one - "
                               "Finished updating. Cancel Timer.\n"));
-        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (
-                this->ticker_);
+        this->reactor ()->cancel_timer (this->ticker_);
       }
   }
 
   void
   Sender_exec_i::run ()
   {
+    ::CFTLS_Test::ContentFilteredTopicListenStateTestConnector::Updater_var
+      updater = this->ciao_context_->get_connection_info_update_data ();
 
-    //first create the instances for consecutive updating.
+    // First create the instances for consecutive updating.
     for (CORBA::UShort i = 1; i < this->keys () + 1; ++i)
       {
         char key[7];
@@ -96,16 +102,16 @@ namespace CIAO_CFTLS_Test_Sender_Impl
         ContentFilteredTopicListenStateTest new_key;
         new_key.key = CORBA::string_dup(key);
         new_key.iteration = 0;
-        this->updater_->create_one (new_key);
+        updater->create_one (new_key);
       }
 
-   if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
+   if (this->reactor ()->schedule_timer (
                 this->ticker_,
                 0,
                 ACE_Time_Value (5, 50000),
                 ACE_Time_Value (0, 50000)) == -1)
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::run : ")
                               ACE_TEXT ("Error scheduling timer")));
       }
   }
@@ -114,7 +120,44 @@ namespace CIAO_CFTLS_Test_Sender_Impl
   Sender_exec_i::start (void)
   {
     StartHandler *rh = new StartHandler (*this);
-    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
+    this->reactor ()->notify (rh);
+  }
+
+  // Supported operations and attributes.
+  ACE_Reactor*
+  Sender_exec_i::reactor (void)
+  {
+    ACE_Reactor* reactor = 0;
+    ::CORBA::Object_var ccm_object =
+      this->ciao_context_->get_CCM_object();
+    if (! ::CORBA::is_nil (ccm_object.in ()))
+      {
+        ::CORBA::ORB_var orb = ccm_object->_get_orb ();
+        if (! ::CORBA::is_nil (orb.in ()))
+          {
+            reactor = orb->orb_core ()->reactor ();
+          }
+      }
+    if (reactor == 0)
+      {
+        throw ::CORBA::INTERNAL ();
+      }
+    return reactor;
+  }
+
+  // Component attributes and port operations.
+
+  ::CORBA::UShort
+  Sender_exec_i::keys (void)
+  {
+    return this->keys_;
+  }
+
+  void
+  Sender_exec_i::keys (
+    const ::CORBA::UShort keys)
+  {
+    this->keys_ = keys;
   }
 
   ::CORBA::UShort
@@ -124,30 +167,22 @@ namespace CIAO_CFTLS_Test_Sender_Impl
   }
 
   void
-  Sender_exec_i::iterations (::CORBA::UShort iterations)
+  Sender_exec_i::iterations (
+    const ::CORBA::UShort iterations)
   {
     this->iterations_ = iterations;
   }
 
-  ::CORBA::UShort
-  Sender_exec_i::keys (void)
-  {
-    return this->keys_;
-  }
+  // Operations from Components::SessionComponent.
 
   void
-  Sender_exec_i::keys (::CORBA::UShort keys)
+  Sender_exec_i::set_session_context (
+    ::Components::SessionContext_ptr ctx)
   {
-    this->keys_ = keys;
-  }
-
-  void
-  Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
-  {
-    this->context_ =
+    this->ciao_context_ =
       ::CFTLS_Test::CCM_Sender_Context::_narrow (ctx);
 
-    if ( ::CORBA::is_nil (this->context_.in ()))
+    if ( ::CORBA::is_nil (this->ciao_context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
@@ -163,7 +198,6 @@ namespace CIAO_CFTLS_Test_Sender_Impl
   {
     try
       {
-        this->updater_ = this->context_->get_connection_info_update_data ();
         start ();
       }
     catch (const ::CORBA::Exception& ex)
@@ -187,7 +221,6 @@ namespace CIAO_CFTLS_Test_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
-    delete this->ticker_;
   }
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
