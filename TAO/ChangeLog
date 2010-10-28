@@ -1,3 +1,10 @@
+Thu Oct 28 08:26:46 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3755_Ext_Regression/run_test.pl:
+        * bin/tao_orb_tests.lst:
+          Disabled in e_micro and e_compact builds parts of this test
+          that are not built in those configurations.
+
 Thu Oct 28 07:57:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Utils/Server_Main.h:
