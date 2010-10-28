@@ -3,6 +3,9 @@
 #include "Node_Locator.h"
 #include "ace/Read_Buffer.h"
 #include "dance/Logger/Log_Macros.h"
+#include "Config_Handlers/XML_File_Intf.h"
+#include "Config_Handlers/Common.h"
+
 
 namespace DAnCE
 {
@@ -78,6 +81,57 @@ namespace DAnCE
     return true;
   }
 
+   bool
+    Node_Locator::process_cdd (const ACE_TCHAR *filename)
+    {
+      DANCE_TRACE ("Node_Locator::process_cdd");
+
+      if (!filename)
+        {
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Node_Locator::process_cdd - ")
+                        ACE_TEXT("Error: Provided with nil filename\n")));
+          return false;
+        }
+
+      ::DAnCE::Config_Handlers::XML_File_Intf file (filename);
+      file.add_search_path (ACE_TEXT ("DANCE_ROOT"), ACE_TEXT ("/docs/schema/"));
+      ::Deployment::Domain *plan = file.release_domain ();
+
+      if (!plan)
+        {
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Node_Locator::process_cdd - ")
+                        ACE_TEXT("Error: Processing file <%C>\n"), filename));
+          return false;
+        }
+
+      // install nodes
+      for (CORBA::ULong i=0;
+               i < plan->node.length ();
+               ++i)
+      {
+        ::Deployment::SatisfierProperties properties =  plan->node[i].resource[0].property;
+        ::Deployment::SatisfierProperty property = properties[0];
+          CORBA::Any any = property.value;
+          const char *val = 0;
+          any >>= CORBA::Any::to_string(val, 0);
+          ACE_CString ior(val);
+          ior += "/";
+          ior += plan->node[i].name;
+          ior += ".NodeManager";
+
+          ACE_CString destination (plan->node[i].name);
+
+          DANCE_DEBUG (8,
+                      (LM_INFO, DLINFO ACE_TEXT("Node_Locator::process_cdd - ")
+                       ACE_TEXT("Storing IOR %C for destination %C\n"),
+                       ior.c_str (), destination.c_str ()));
+
+          this->nodes_.bind (destination, ior);
+      }
+
+    return true;
+  }
+
   ::Deployment::NodeManager_ptr
   Node_Locator::resolve_ior (const char *name, const char *ior)
   {
@@ -131,6 +185,7 @@ namespace DAnCE
         name[0].kind = "NodeManager";
 
         CORBA::Object_var obj = this->nc_->resolve (name);
+
         ::Deployment::NodeManager_var nm = ::Deployment::NodeManager::_narrow (obj.in ());
 
         if (CORBA::is_nil (nm.in ()))
