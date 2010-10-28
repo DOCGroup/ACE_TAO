@@ -19,7 +19,7 @@ project(Shapes_Receiver_idl_gen) : componentidldefaults, dds4ccm {
 }
 
 project(Shapes_Receiver_executor_gen) : componentidldefaults, dds4ccm {
-//   requires += dummy_label
+  requires += dummy_label
   custom_only = 1
   idlflags += -Gex -SS -Sci -Ssi \
               -I../../ports \
@@ -108,9 +108,9 @@ project(Shapes_Receiver_comp_stub) : ccm_stub, dds4ccm_base {
 
 project(Shapes_Receiver_comp_exec) : ciao_executor, dds4ccm_lem_stub {
   after += Shapes_Receiver_comp_lem_stub Shapes_Receiver_comp_stub \
-           Shapes_ShapeType_msg_stub Shapes_ShapeType_conn_stub Shapes_ShapeType_conn_lem_stub 
+           Shapes_ShapeType_msg_stub Shapes_ShapeType_conn_stub Shapes_ShapeType_conn_lem_stub
   libs += Shapes_Receiver_comp_stub Shapes_Receiver_comp_lem_stub Shapes_ShapeType_msg_stub \
-          Shapes_ShapeType_conn_stub Shapes_ShapeType_conn_lem_stub 
+          Shapes_ShapeType_conn_stub Shapes_ShapeType_conn_lem_stub
   libpaths += ../../lib
   libout = ../../lib
 
@@ -139,11 +139,11 @@ project(Shapes_Receiver_comp_exec) : ciao_executor, dds4ccm_lem_stub {
 project(Shapes_Receiver_comp_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   after      += Shapes_Receiver_comp_lem_stub Shapes_ShapeType_msg_stub \
                 Shapes_ShapeType_conn_stub Shapes_ShapeType_conn_svnt Shapes_Receiver_comp_exec \
-                Shapes_ShapeType_conn_lem_stub 
+                Shapes_ShapeType_conn_lem_stub
 
   libs       += Shapes_Receiver_comp_stub Shapes_Receiver_comp_lem_stub Shapes_ShapeType_msg_stub \
                 Shapes_ShapeType_conn_stub Shapes_ShapeType_conn_svnt Shapes_Receiver_comp_exec \
-                Shapes_ShapeType_conn_lem_stub 
+                Shapes_ShapeType_conn_lem_stub
   libpaths += ../../lib
   libout = ../../lib
 
