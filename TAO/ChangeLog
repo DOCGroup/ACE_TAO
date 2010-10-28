@@ -1,3 +1,9 @@
+Thu Oct 28 07:57:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Utils/Server_Main.h:
+        * tao/Utils/Server_Main.cpp:
+          Fixed compile errors
+
 Thu Oct 28 07:51:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
