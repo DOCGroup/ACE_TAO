@@ -155,7 +155,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_ES_EVENT_SOURCE_ANY; // Any source is OK
 
       // To receive events we need to setup an event handler:
-      TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver = TAO_ECG_UDP_Receiver::create();
+      PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver =
+        TAO_ECG_UDP_Receiver::create();
       TAO_ECG_Mcast_EH mcast_eh (&(*receiver));
 
       // The event handler uses the ORB reactor to wait for multicast

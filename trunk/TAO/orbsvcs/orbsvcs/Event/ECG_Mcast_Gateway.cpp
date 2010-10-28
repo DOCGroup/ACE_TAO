@@ -20,17 +20,13 @@
 #include "orbsvcs/Event/ECG_Mcast_Gateway.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef TAO_EC_Shutdown_Command<TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> >
+typedef TAO_EC_Shutdown_Command<PortableServer::Servant_var<TAO_ECG_UDP_Sender> >
 UDP_Sender_Shutdown;
 
-typedef TAO_EC_Shutdown_Command<TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> >
+typedef TAO_EC_Shutdown_Command<PortableServer::Servant_var<TAO_ECG_UDP_Receiver> >
 UDP_Receiver_Shutdown;
-
 
 int
 TAO_ECG_Mcast_Gateway::init_svcs (void)
@@ -364,7 +360,7 @@ TAO_ECG_Mcast_Gateway::init_address_server (void)
 
   if (this->address_server_type_ == ECG_ADDRESS_SERVER_BASIC)
     {
-      TAO_EC_Servant_Var<TAO_ECG_Simple_Address_Server> impl =
+      PortableServer::Servant_var<TAO_ECG_Simple_Address_Server> impl =
         TAO_ECG_Simple_Address_Server::create ();
       if (!impl.in ())
         return 0;
@@ -378,7 +374,7 @@ TAO_ECG_Mcast_Gateway::init_address_server (void)
 
   else if (this->address_server_type_ == ECG_ADDRESS_SERVER_SOURCE)
     {
-      TAO_EC_Servant_Var<TAO_ECG_Complex_Address_Server> impl =
+      PortableServer::Servant_var<TAO_ECG_Complex_Address_Server> impl =
         TAO_ECG_Complex_Address_Server::create (1);
       if (!impl.in ())
         return 0;
@@ -392,7 +388,7 @@ TAO_ECG_Mcast_Gateway::init_address_server (void)
 
   else if (this->address_server_type_ == ECG_ADDRESS_SERVER_TYPE)
     {
-      TAO_EC_Servant_Var<TAO_ECG_Complex_Address_Server> impl =
+      PortableServer::Servant_var<TAO_ECG_Complex_Address_Server> impl =
         TAO_ECG_Complex_Address_Server::create (0);
       if (!impl.in ())
         return 0;
@@ -484,13 +480,13 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
   return handler;
 }
 
-TAO_EC_Servant_Var<TAO_ECG_UDP_Sender>
+PortableServer::Servant_var<TAO_ECG_UDP_Sender>
 TAO_ECG_Mcast_Gateway::init_sender (
                                RtecEventChannelAdmin::EventChannel_ptr ec,
                                RtecUDPAdmin::AddrServer_ptr address_server,
                                TAO_ECG_Refcounted_Endpoint endpoint_rptr)
 {
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Sender>
+  PortableServer::Servant_var<TAO_ECG_UDP_Sender>
     sender (TAO_ECG_UDP_Sender::create ());
   if (!sender.in ())
     return sender;
@@ -527,13 +523,13 @@ TAO_ECG_Mcast_Gateway::init_sender (
   return sender;
 }
 
-TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver>
+PortableServer::Servant_var<TAO_ECG_UDP_Receiver>
 TAO_ECG_Mcast_Gateway::init_receiver (
                                RtecEventChannelAdmin::EventChannel_ptr ec,
                                RtecUDPAdmin::AddrServer_ptr address_server,
                                TAO_ECG_Refcounted_Endpoint endpoint_rptr)
 {
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver>
+  PortableServer::Servant_var<TAO_ECG_UDP_Receiver>
     receiver (TAO_ECG_UDP_Receiver::create ());
   if (!receiver.in ())
     return receiver;
@@ -612,7 +608,7 @@ TAO_ECG_Mcast_Gateway::run (CORBA::ORB_ptr orb,
             address_server_deactivator);
 
   TAO_ECG_Refcounted_Endpoint endpoint_rptr;
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender;
+  PortableServer::Servant_var<TAO_ECG_UDP_Sender> sender;
 
   // Set up event sender.
   if (this->service_type_ == ECG_MCAST_SENDER
@@ -636,7 +632,7 @@ TAO_ECG_Mcast_Gateway::run (CORBA::ORB_ptr orb,
     }
 
   // Set up event receiver.
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver;
+  PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver;
   if (this->service_type_ == ECG_MCAST_RECEIVER
       || this->service_type_ == ECG_MCAST_TWO_WAY)
     {

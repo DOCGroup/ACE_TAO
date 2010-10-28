@@ -157,7 +157,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       // Create the consumer and register it with POA.
-      TAO_EC_Servant_Var<EC_Consumer> consumer_impl =
+      PortableServer::Servant_var<EC_Consumer> consumer_impl =
         new EC_Consumer (orb, ec);
 
       if (!consumer_impl.in ())
