@@ -131,7 +131,7 @@
 #  define ACE_HAS_TR24731_2005_CRT
 #endif
 
-//Detect Platform SDK 64-bit (AMD64) compiler using _MSC_FULL_VER
+// Detect Platform SDK 64-bit (AMD64) compiler using _MSC_FULL_VER
 #if (defined (_WIN64) || defined (WIN64)) && _MSC_FULL_VER < 140050000
 #  define ACE_AUTO_PTR_LACKS_RESET
 #  define ACE_MSVC_USES_DOUBLE_UNDERSCORE_STAT64

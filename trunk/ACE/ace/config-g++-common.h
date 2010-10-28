@@ -28,11 +28,6 @@
 # define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
 #endif /* __GNUC__ >= 3.4 */
 
-#if (__GNUC__ < 3)
-# define ACE_LACKS_MEMBER_TEMPLATES
-# define ACE_LACKS_NUMERIC_LIMITS
-#endif /* __GNUC__ < 3 */
-
 #define ACE_NEW_THROWS_EXCEPTIONS
 #if (__GNUC__ >= 4 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
 // Versions of g++ prior to 3.3 had a buggy operator // new(nothrow)[]().
