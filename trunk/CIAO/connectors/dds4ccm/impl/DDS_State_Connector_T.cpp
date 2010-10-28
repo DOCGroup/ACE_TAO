@@ -302,7 +302,9 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::topic_name (
 
   this->late_binding (ACE_OS::strlen (topic_name) == 0);
 
-  if (this->late_binding () && ACE_OS::strlen (topic_name) > 0)
+  if (this->late_binding () &&
+      ACE_OS::strlen (topic_name) > 0 &&
+      ACE_OS::strlen (this->topic_name_.in ()) == 0)
     {
       TopicBaseConnector::topic_name (topic_name);
       this->do_configuration_complete ();
