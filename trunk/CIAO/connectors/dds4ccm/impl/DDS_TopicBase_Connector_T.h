@@ -55,6 +55,7 @@ protected:
 
   bool late_binding (void);
   void late_binding (bool late_binding);
+  bool late_binded (const char * topic_name);
 
   CORBA::String_var topic_name_;
   DDS::StringSeq key_fields_;
