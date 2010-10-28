@@ -33,6 +33,33 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::late_binding (bool l
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+bool
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::late_binded (
+  const char * topic_name)
+{
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::late_binded");
+
+  this->late_binding (ACE_OS::strlen (topic_name) == 0);
+
+  if (this->late_binding () &&
+      ACE_OS::strlen (topic_name) > 0 &&
+      ACE_OS::strlen (this->topic_name_.in ()) == 0)
+    {
+      DDS_TopicBase_Connector_T::topic_name (topic_name);
+      return true;
+    }
+  else if (this->configuration_complete_)
+    {
+      throw ::CCM_DDS::NonChangeable ();
+    }
+  else
+    {
+      DDS_TopicBase_Connector_T::topic_name (topic_name);
+    }
+  return false;
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (void)
 {
