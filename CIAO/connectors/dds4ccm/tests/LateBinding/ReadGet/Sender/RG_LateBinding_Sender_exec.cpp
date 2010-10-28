@@ -44,7 +44,7 @@ namespace CIAO_RG_LateBinding_Sender_Impl
   int
   Timeout_Handler::handle_timeout (const ACE_Time_Value &, const void *)
   {
-    this->callback_.start_event_test ();
+    this->callback_.start_write ();
     return 0;
   }
 
@@ -85,7 +85,7 @@ namespace CIAO_RG_LateBinding_Sender_Impl
   }
 
   void
-  Sender_exec_i::start_event_test (void )
+  Sender_exec_i::start_write (void)
   {
     try
       {

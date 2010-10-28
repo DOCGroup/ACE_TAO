@@ -223,7 +223,7 @@
           <kind>tk_ushort</kind>
         </type>
         <value>
-          <ushort>10</ushort>
+          <ushort>50</ushort>
         </value>
       </value>
     </configProperty>
@@ -321,17 +321,6 @@
     <node>SenderNode</node>
     <source/>
     <implementation xmi:idref="SenderComponentImplementation" />
-    <configProperty>
-      <name>rate</name>
-      <value>
-        <type>
-          <kind>tk_ushort</kind>
-        </type>
-        <value>
-          <ushort>15</ushort>
-        </value>
-      </value>
-    </configProperty>
     <configProperty>
       <name>keys</name>
       <value>
