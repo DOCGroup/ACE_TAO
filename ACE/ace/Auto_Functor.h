@@ -69,13 +69,11 @@ public:
 
   Auto_Functor<X,Functor>& operator= (Auto_Functor & rhs); // throw()
 
-#if !defined(ACE_LACKS_MEMBER_TEMPLATES)
   template<typename Y>
   Auto_Functor(Auto_Functor<Y,Functor>& rhs); // throw()
 
   template<typename Y>
   Auto_Functor<X,Functor>& operator= (Auto_Functor<Y,Functor>& rhs); // throw()
-#endif /* ACE_LACKS_MEMBER_TEMPLATES */
 
   ~Auto_Functor(); // throw()
 
@@ -97,13 +95,9 @@ public:
 
   Auto_Functor<X,Functor> & operator=(Auto_Functor_Ref<X,Functor> rhs); // throw()
 
-#if !defined(ACE_LACKS_MEMBER_TEMPLATES)
   template<typename Y> operator Auto_Functor_Ref<Y,Functor>(); // throw()
 
   template<typename Y> operator Auto_Functor<Y,Functor>(); // throw()
-#else
-  operator Auto_Functor_Ref<X,Functor>(); // throw()
-#endif /* ACE_LACKS_MEMBER_TEMPLATES */
 
 private:
   X * p_;

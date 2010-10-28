@@ -166,7 +166,6 @@ template ACE_Singleton<DC_Singleton, ACE_SYNCH_MUTEX> *
   ACE_Singleton<DC_Singleton, ACE_SYNCH_MUTEX>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
 
-
 #else
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
