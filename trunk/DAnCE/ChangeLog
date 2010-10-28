@@ -1,3 +1,15 @@
+Thu Oct 28 12:33:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * MPC/config/dance_domainapplicationmanager.mpb:
+        * dance/DomainApplicationManager/Node_Locator.cpp:
+        * dance/DomainApplicationManager/Node_Locator.h:
+        * dance/ExecutionManager/ExecutionManager_Impl.cpp:
+        * dance/ExecutionManager/ExecutionManager_Module.cpp:
+        * dance/ExecutionManager/ExecutionManager_Impl.h:
+        * dance/ExecutionManager/ExecutionManager_Module.h:
+        Add posibility to the Node_Locator to use cdd files.
+
+
 Thu Oct 28 11:36:01 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * dance/Version.h:

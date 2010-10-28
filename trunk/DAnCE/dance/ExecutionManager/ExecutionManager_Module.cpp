@@ -63,6 +63,7 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, ACE_TCHAR *argv[])
                         "n:e::p::c::r::ifh",
                         0,
                         0,
+                        0,
                         ACE_Get_Opt::RETURN_IN_ORDER);
 
   get_opts.long_option (ACE_TEXT("exec-mgr"), 'e', ACE_Get_Opt::ARG_OPTIONAL);
@@ -75,6 +76,9 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, ACE_TCHAR *argv[])
   get_opts.long_option (ACE_TEXT("help"), 'h', ACE_Get_Opt::NO_ARG);
   get_opts.long_option (ACE_TEXT("node-map"), ACE_Get_Opt::ARG_REQUIRED);
   get_opts.long_option (ACE_TEXT("domain-nc"), ACE_Get_Opt::ARG_REQUIRED);
+  get_opts.long_option (ACE_TEXT("cdd"), ACE_Get_Opt::ARG_REQUIRED);
+
+
 
   //get_opts.long_option ("help", '?');
 
@@ -148,6 +152,15 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, ACE_TCHAR *argv[])
               this->options_.domain_nc_ = get_opts.opt_arg ();
               break;
             }
+          else if (ACE_OS::strcmp (get_opts.long_option (),
+                                    ACE_TEXT("cdd")) == 0)
+             {
+               DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+                             ACE_TEXT("Found Node map filename %s.\n"),
+                             get_opts.opt_arg ()));
+               this->options_.cdd_ = get_opts.opt_arg ();
+               break;
+             }
 
         case 'h':
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -330,7 +343,13 @@ DAnCE_ExecutionManager_Module::init (CORBA::ORB_ptr orb,
                         this->options_.node_map_));
           this->em_impl_->load_node_map (this->options_.node_map_);
         }
-
+      else if (this->options_.cdd_ != 0)
+        {
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::init - ")
+                        ACE_TEXT("Parsing cdd file %C\n"),
+                        this->options_.cdd_));
+          this->em_impl_->load_cdd (this->options_.cdd_);
+        }
 
       mgr->activate ();
 

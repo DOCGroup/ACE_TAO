@@ -245,6 +245,13 @@ ExecutionManager_Impl::load_node_map (const ACE_TCHAR *filename)
   this->locator_.process_node_map (filename);
 }
 
+void
+ExecutionManager_Impl::load_cdd (const ACE_TCHAR *filename)
+{
+  DANCE_TRACE ("ExecutionManager_Impl::load_cdd");
+  this->locator_.process_cdd (filename);
+}
+
 ExecutionManager_Impl::PreparePlanCompletionHandler::PreparePlanCompletionHandler (
     ExecutionManager_Impl *em_servant,
     ::Deployment::AMH_ExecutionManagerResponseHandler_ptr _tao_rh)
