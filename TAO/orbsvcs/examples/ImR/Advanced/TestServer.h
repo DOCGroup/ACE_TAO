@@ -4,7 +4,6 @@
 #include "ace/Auto_Ptr.h"
 
 #include "tao/IORTable/IORTable.h"
-#include "tao/Utils/Servant_Var.h"
 
 #include <string>
 #include <vector>

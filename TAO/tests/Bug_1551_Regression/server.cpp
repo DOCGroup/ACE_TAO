@@ -2,7 +2,6 @@
 
 #include "Hello.h"
 #include "Server_Task.h"
-#include "tao/Utils/Servant_Var.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
@@ -81,7 +80,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return -1;
 
-      TAO::Utils::Servant_Var<Hello> hello_impl(
+      PortableServer::ServantBase_var hello_impl(
           new Hello(orb.in(), simulate_crashes));
 
       PortableServer::ObjectId_var id =

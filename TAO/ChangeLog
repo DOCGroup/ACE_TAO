@@ -1,3 +1,44 @@
+Thu Oct 28 07:41:02 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/RTScheduling/DT_Creator.h:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/test.h:
+        * examples/RTScheduling/MIF_Scheduler/test.h:
+        * orbsvcs/examples/ImR/Advanced/TestServer.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.h:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.inl:
+        * orbsvcs/performance-tests/RTEvent/lib/Loopback_Consumer.h:
+        * orbsvcs/performance-tests/RTEvent/lib/Loopback_Consumer.cpp:
+        * orbsvcs/performance-tests/RTEvent/lib/Send_Task.h:
+        * orbsvcs/performance-tests/RTEvent/lib/Send_Task.cpp:
+        * performance-tests/POA/Demux/demux_test_server.h:
+        * tao/Array_Traits_T.h:
+        * tao/Object_Reference_Traits_T.h:
+        * tao/PortableServer/Servant_var.h:
+        * tao/String_Traits_T.h:
+        * tao/Value_Traits_T.h:
+        * tao/Valuetype/Valuetype_Traits_T.h:
+        * tests/Bug_1020_Basic_Regression/client.cpp:
+        * tests/Bug_1020_Basic_Regression/server.cpp:
+        * tests/Bug_1020_Regression/client.cpp:
+        * tests/Bug_1020_Regression/server.cpp:
+        * tests/Bug_1269_Regression/client.cpp:
+        * tests/Bug_1269_Regression/server.cpp:
+        * tests/Bug_1270_Regression/client.cpp:
+        * tests/Bug_1270_Regression/server.cpp:
+        * tests/Bug_1361_Regression/client.cpp:
+        * tests/Bug_1361_Regression/server.cpp:
+        * tests/Bug_1535_Regression/bug_1535_regression.cpp:
+        * tests/Bug_1551_Regression/Client_Task.h:
+        * tests/Bug_1551_Regression/server.cpp:
+        * tests/Bug_1568_Regression/server.cpp:
+        * tests/Bug_1670_Regression/server.cpp:
+        * tests/Bug_2503_Regression/test_i.cpp:
+        * tests/Bug_2560_Regression/Stock_Factory_i.cpp:
+        * tests/Bug_3647_Regression/backend_server.cpp:
+        * tests/Bug_3647_Regression/middle_server.cpp:
+          Fixed compile errors, removed gcc < 3 support
+
 Wed Oct 27 17:45:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/idltocpp0x/IDLC++0xRFP.odt:

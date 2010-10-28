@@ -140,7 +140,7 @@ public:
 
   /// Connect or reconnect to the EC with the given subscriptions.
   /**
-   * NOTE: if we are already connected to EC and a reconnection is
+   * @note if we are already connected to EC and a reconnection is
    * necessary, the EC must have reconnects enabled in order for this
    * method to succeed.
    */

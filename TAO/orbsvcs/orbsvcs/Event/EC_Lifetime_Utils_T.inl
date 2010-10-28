@@ -194,7 +194,6 @@ ACE_INLINE TAO_EC_Servant_Var<T>::
   }
 }
 
-#if !defined(ACE_LACKS_MEMBER_TEMPLATES)
 template <class T> template <class Y>
 ACE_INLINE TAO_EC_Servant_Var<T>::
 TAO_EC_Servant_Var(Y * p)
@@ -240,7 +239,6 @@ operator=(Y * p)
 
   return *this;
 }
-#endif /* ACE_LACKS_MEMBER_TEMPLATES */
 
 template <class T>
 ACE_INLINE T const * TAO_EC_Servant_Var<T>::

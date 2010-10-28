@@ -39,7 +39,7 @@ Send_Task::init (int iterations,
   this->event_type_ = event_type;
   this->event_source_ = event_source;
   this->supplier_ =
-    TAO::Utils::Servant_Var<Supplier>::_duplicate (supplier);
+    PortableServer::Servant_var<Supplier>::_duplicate (supplier);
   this->barrier_ = barrier;
 }
 
