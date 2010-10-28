@@ -98,7 +98,7 @@ namespace CIAO_RG_LateBinding_Sender_Impl
 
     //@{
     /** User defined public operations. */
-    void start_event_test (void);
+    void start_write (void);
     //@}
 
   private:
