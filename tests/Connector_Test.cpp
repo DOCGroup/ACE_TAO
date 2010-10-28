@@ -30,7 +30,8 @@
 
 ACE_RCSID(tests, Connector_Test, "$Id$")
 
-#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL))
+
 
 // This test is really checking to see if the correct callbacks happen and
 // nothing bad happens. Results remembers what happens so it can be verified.
@@ -211,7 +212,9 @@ int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Connector_Test"));
-  ACE_DEBUG ((LM_INFO, ACE_TEXT ("Connector_Test requires threads.")));
+  ACE_DEBUG ((LM_INFO,
+	      ACE_TEXT ("Connector_Test requires threads and dev/[e]poll.")));
   ACE_END_TEST;
   return 0;
-#endif /* ACE_HAS_THREADS */
+}
+#endif /* ACE_HAS_THREADS && (ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL) */
