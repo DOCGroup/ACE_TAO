@@ -1,3 +1,9 @@
+Thu Oct 28 12:19:07 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/Bug_3312_Regression.idl:
+        * tests/IDL_Test/IDL_Test.mpc:
+          Added test for 3312, doesn't seem to be fixed yet
+
 Thu Oct 28 08:26:46 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_3755_Ext_Regression/run_test.pl:

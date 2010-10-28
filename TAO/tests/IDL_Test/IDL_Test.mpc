@@ -1,5 +1,6 @@
 // -*- MPC -*-
 // $Id$
+
 project(*IDL): taoserver, messaging, gen_ostream {
   custom_only=1
   idlflags += -GC -GH -Gd -GT
@@ -22,6 +23,7 @@ project(*IDL): taoserver, messaging, gen_ostream {
     Bug_2616_Regression.idl
     Bug_2619_Regression.idl
     Bug_3243_Regression.idl
+    Bug_3312_Regression.idl
     Bug_3819_Regression.idl
     Bug_3821_Regression.idl
     full.idl
@@ -115,6 +117,8 @@ project(*DLL): taoidldefaults, taolib, messaging {
     Bug_2619_RegressionS.cpp
     Bug_3243_RegressionC.cpp
     Bug_3243_RegressionS.cpp
+    Bug_3312_RegressionC.cpp
+    Bug_3312_RegressionS.cpp
     Bug_3819_RegressionC.cpp
     Bug_3819_RegressionS.cpp
     Bug_3821_RegressionC.cpp
@@ -226,10 +230,10 @@ project(*Main): taoserver, messaging, gen_ostream {
   Source_Files {
     main.cpp
   }
-  
+
   Header_Files {
   }
-  
+
   Inline_Files {
   }
 
@@ -252,6 +256,7 @@ project(*NDDS_IDL): ndds_ts_defaults {
     Bug_2616_Regression.idl
     Bug_2619_Regression.idl
     Bug_3243_Regression.idl
+    Bug_3312_Regression.idl
     Bug_3819_Regression.idl
     Bug_3821_Regression.idl
     constants.idl
@@ -341,6 +346,8 @@ project(*NDDS_Lib): taolib, messaging, gen_ostream, nddslib {
     Bug_3243_Regression.cxx
     Bug_3243_RegressionPlugin.cxx
     Bug_3243_RegressionSupport.cxx
+    Bug_3312_RegressionPlugin.cxx
+    Bug_3312_RegressionSupport.cxx
     Bug_3819_Regression.cxx
     Bug_3819_RegressionPlugin.cxx
     Bug_3819_RegressionSupport.cxx
