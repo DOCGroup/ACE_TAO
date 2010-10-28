@@ -1,3 +1,9 @@
+Thu Oct 28 07:08:00 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Logging/Trace_Return.cpp:
+        * examples/APG/Logging/Wrap_Macros.cpp:
+          Fixed compile errors
+
 Wed Oct 27 22:16:12 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/INET_Addr.cpp (set): When looking up a hostname, always use
