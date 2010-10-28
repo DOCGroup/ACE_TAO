@@ -53,6 +53,8 @@ namespace CIAO_WU_LateBinding_Sender_Impl
     else if (assingment == 1)
       {
         this->callback_.start_state_test ();
+        this->callback_.set_topic_name_writer (true);
+        this->callback_.set_topic_name_updater (true);
       }
     return 0;
   }
@@ -132,41 +134,74 @@ namespace CIAO_WU_LateBinding_Sender_Impl
   }
 
   void
-  Sender_exec_i::start_event_test (void )
+  Sender_exec_i::set_topic_name_writer (bool test_non_changeable)
+  {
+    try
+      {
+        ::WU_LateBinding::WU_LateBindingTestConnector:: Writer_var writer =
+          this->ciao_context_->get_connection_info_write_data ();
+        if (::CORBA::is_nil (writer.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_writer - "
+                                  "Unable to get writer interface\n"));
+            throw ::CORBA::INTERNAL ();
+          }
+        ::CORBA::Object_var cmp = writer->_get_component ();
+        if (::CORBA::is_nil (cmp.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_writer - "
+                                  "Unable to get component interface\n"));
+            throw ::CORBA::INTERNAL ();
+          }
+        ::WU_LateBinding::WU_LateBindingTestConnector::CCM_DDS_Event_var conn =
+          ::WU_LateBinding::WU_LateBindingTestConnector::CCM_DDS_Event::_narrow (cmp.in ());
+        if (::CORBA::is_nil (conn.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_writer - "
+                                  "Unable to narrow connector interface\n"));
+            throw ::CORBA::INTERNAL ();
+          }
+        if (test_non_changeable)
+          {
+            conn->topic_name ("LateBindingTopicSecondTime");
+            ACE_ERROR ((LM_ERROR, "Sender_exec_i::set_topic_name_writer - "
+                        "ERROR: No NonChangeable exception thrown.\n"));
+          }
+        else
+          {
+            conn->topic_name ("LateBindingTopic");
+          }
+      }
+    catch (const ::CCM_DDS::NonChangeable &)
+      {
+        if (test_non_changeable)
+          {
+            ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::set_topic_name_writer - "
+                        "Expected NonChangeable caught.\n"));
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_writer - "
+                        "Caught NonChangeable exception.\n"));
+          }
+      }
+  }
+
+  void
+  Sender_exec_i::start_event_test (void)
   {
     // Set the topic name on the connector first. Therefor we need to
     // get to the connector first.
     ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::start_event_test - "
                 "Set topic name.\n"));
-    ::WU_LateBinding::WU_LateBindingTestConnector:: Writer_var writer =
-      this->ciao_context_->get_connection_info_write_data ();
-    if (::CORBA::is_nil (writer.in ()))
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::start_event_test - "
-                              "Unable to get writer interface\n"));
-        throw ::CORBA::INTERNAL ();
-      }
-    ::CORBA::Object_var cmp = writer->_get_component ();
-    if (::CORBA::is_nil (cmp.in ()))
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::start_event_test - "
-                              "Unable to get component interface\n"));
-        throw ::CORBA::INTERNAL ();
-      }
-    ::WU_LateBinding::WU_LateBindingTestConnector::CCM_DDS_Event_var conn =
-      ::WU_LateBinding::WU_LateBindingTestConnector::CCM_DDS_Event::_narrow (cmp.in ());
-    if (::CORBA::is_nil (conn.in ()))
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::start_event_test - "
-                              "Unable to narrow connector interface\n"));
-        throw ::CORBA::INTERNAL ();
-      }
     try
       {
-        conn->topic_name ("LateBindingTopic");
+        this->set_topic_name_writer ();
         ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::start_event_test - "
                     "Topic name set, start writing.\n"));
 
+        ::WU_LateBinding::WU_LateBindingTestConnector:: Writer_var writer =
+          this->ciao_context_->get_connection_info_write_data ();
         for (::CORBA::UShort key = 1; key < this->keys_ + 1; ++key)
           {
             WU_LateBindingTest sample;
@@ -186,11 +221,6 @@ namespace CIAO_WU_LateBinding_Sender_Impl
               }
           }
       }
-    catch (const ::CCM_DDS::NonChangeable &)
-      {
-        ACE_ERROR ((LM_ERROR, "Sender_exec_i::start_event_test - "
-                              "ERROR: Caught NonChangeable exception.\n"));
-      }
     catch (...)
       {
         ACE_ERROR ((LM_ERROR, "Sender_exec_i::start_event_test - "
@@ -199,39 +229,71 @@ namespace CIAO_WU_LateBinding_Sender_Impl
   }
 
   void
+  Sender_exec_i::set_topic_name_updater(bool test_non_changeable)
+  {
+    try
+      {
+        ::WU_LateBinding::WU_LateBindingTestConnector:: Updater_var updater =
+          this->ciao_context_->get_connection_info_update_data ();
+        if (::CORBA::is_nil (updater.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_updater - "
+                                  "Unable to get updater interface\n"));
+            throw ::CORBA::INTERNAL ();
+          }
+        ::CORBA::Object_var cmp = updater->_get_component ();
+        if (::CORBA::is_nil (cmp.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_updater - "
+                                  "Unable to get component interface\n"));
+            throw ::CORBA::INTERNAL ();
+          }
+        ::WU_LateBinding::WU_LateBindingTestConnector::CCM_DDS_State_var conn =
+          ::WU_LateBinding::WU_LateBindingTestConnector::CCM_DDS_State::_narrow (cmp.in ());
+        if (::CORBA::is_nil (conn.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_updater - "
+                                  "Unable to narrow connector interface\n"));
+            throw ::CORBA::INTERNAL ();
+          }
+        if (test_non_changeable)
+          {
+            conn->topic_name ("LateBindingTopicSecondTime");
+            ACE_ERROR ((LM_ERROR, "Sender_exec_i::set_topic_name_updater - "
+                        "ERROR: No NonChangeable exception thrown.\n"));
+          }
+        else
+          {
+            conn->topic_name ("LateBindingTopic");
+          }
+      }
+    catch (const ::CCM_DDS::NonChangeable &)
+      {
+        if (test_non_changeable)
+          {
+            ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::set_topic_name_updater - "
+                        "Expected NonChangeable caught.\n"));
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_updater - "
+                        "Caught NonChangeable exception.\n"));
+          }
+      }
+  }
+
+  void
   Sender_exec_i::start_state_test (void)
   {
     ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::start_state_test - "
                           "Start\n"));
-    ::WU_LateBinding::WU_LateBindingTestConnector:: Updater_var updater =
-      this->ciao_context_->get_connection_info_update_data ();
-    if (::CORBA::is_nil (updater.in ()))
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::start_state_test - "
-                              "Unable to get updater interface\n"));
-        throw ::CORBA::INTERNAL ();
-      }
-    ::CORBA::Object_var cmp = updater->_get_component ();
-    if (::CORBA::is_nil (cmp.in ()))
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::start_state_test - "
-                              "Unable to get component interface\n"));
-        throw ::CORBA::INTERNAL ();
-      }
-    ::WU_LateBinding::WU_LateBindingTestConnector::CCM_DDS_State_var conn =
-      ::WU_LateBinding::WU_LateBindingTestConnector::CCM_DDS_State::_narrow (cmp.in ());
-    if (::CORBA::is_nil (conn.in ()))
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::start_state_test - "
-                              "Unable to narrow connector interface\n"));
-        throw ::CORBA::INTERNAL ();
-      }
     try
       {
-        conn->topic_name ("LateBindingTopic");
-
+        this->set_topic_name_updater ();
         ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::start_state_test - "
                     "Topic name set, start updating.\n"));
+        ::WU_LateBinding::WU_LateBindingTestConnector:: Updater_var updater =
+          this->ciao_context_->get_connection_info_update_data ();
         for (::CORBA::UShort key = this->keys_ + 1;
              key < (2 * this->keys_) + 1;
              ++key)
@@ -256,11 +318,6 @@ namespace CIAO_WU_LateBinding_Sender_Impl
                 ACE_OS::sleep (tv);
               }
           }
-      }
-    catch (const ::CCM_DDS::NonChangeable &)
-      {
-        ACE_ERROR ((LM_ERROR, "Sender_exec_i::start_state_test - "
-                              "ERROR: Caught NonChangeable exception.\n"));
       }
     catch (...)
       {
