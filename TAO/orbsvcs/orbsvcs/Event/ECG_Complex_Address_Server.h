@@ -58,7 +58,7 @@ public:
    * <is_source_mapping> flag indicates whether this
    * server maps based on event header source or event header type.
    */
-  static TAO_EC_Servant_Var<TAO_ECG_Complex_Address_Server>
+  static PortableServer::Servant_var<TAO_ECG_Complex_Address_Server>
          create (int is_source_mapping = 1);
 
   /// Destructor

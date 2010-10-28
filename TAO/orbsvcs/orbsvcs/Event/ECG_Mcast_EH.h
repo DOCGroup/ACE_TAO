@@ -267,7 +267,7 @@ private:
   /// Event Channel Observer.  Detects changes in EC consumer subscriptions.
   /// ORDER DEPENDENCY: this member should be declared before
   /// <auto_observer_disconnect_>.
-  TAO_EC_Servant_Var<Observer> observer_;
+  PortableServer::Servant_var<Observer> observer_;
 
   /// Manages connection of our observer to the Event Channel.
   /// ORDER DEPENDENCY: this member should be declared AFTER <observer_>.

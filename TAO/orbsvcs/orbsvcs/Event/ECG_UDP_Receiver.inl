@@ -66,10 +66,10 @@ TAO_ECG_UDP_Receiver::TAO_ECG_UDP_Receiver (CORBA::Boolean perform_crc)
 {
 }
 
-ACE_INLINE TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver>
+ACE_INLINE PortableServer::Servant_var<TAO_ECG_UDP_Receiver>
 TAO_ECG_UDP_Receiver::create (CORBA::Boolean perform_crc)
 {
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> r;
+  PortableServer::Servant_var<TAO_ECG_UDP_Receiver> r;
   ACE_NEW_RETURN (r,
                   TAO_ECG_UDP_Receiver (perform_crc),
                   r);

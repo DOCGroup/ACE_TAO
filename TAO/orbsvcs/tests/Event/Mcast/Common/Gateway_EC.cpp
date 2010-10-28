@@ -105,7 +105,7 @@ Gateway_EC::run (int argc, ACE_TCHAR ** argv)
       manager->activate ();
 
       // Set up EC.
-      TAO_EC_Servant_Var<EC_Wrapper> ec_wrapper (EC_Wrapper::create ());
+      PortableServer::Servant_var<EC_Wrapper> ec_wrapper (EC_Wrapper::create ());
       if (!ec_wrapper.in ())
         return -1;
 

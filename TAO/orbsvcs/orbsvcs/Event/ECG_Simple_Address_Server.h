@@ -35,7 +35,7 @@ public:
   /// Create a new TAO_ECG_Simple_Address_Server object.
   /// (Constructor access is restricted to insure that all
   /// TAO_ECG_Simple_Address_Server objects are heap-allocated.)
-  static TAO_EC_Servant_Var<TAO_ECG_Simple_Address_Server> create (void);
+  static PortableServer::Servant_var<TAO_ECG_Simple_Address_Server> create (void);
 
   /// Destructor
   virtual ~TAO_ECG_Simple_Address_Server (void);

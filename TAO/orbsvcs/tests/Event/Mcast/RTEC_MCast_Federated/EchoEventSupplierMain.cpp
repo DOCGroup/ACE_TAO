@@ -150,7 +150,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       RtecUDPAdmin::AddrServer::_narrow(tmpobj.in());
 
     // Create and initialize the sender object
-    TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender =
+    PortableServer::Servant_var<TAO_ECG_UDP_Sender> sender =
                                 TAO_ECG_UDP_Sender::create();
     TAO_ECG_UDP_Out_Endpoint endpoint;
     // need to be explicit about the address type when built with
@@ -179,7 +179,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     sender->connect (sub);
 
     // Create and initialize the receiver
-    TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver =
+    PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver =
                                       TAO_ECG_UDP_Receiver::create();
 
     // TAO_ECG_UDP_Receiver::init() takes a TAO_ECG_Refcounted_Endpoint.
