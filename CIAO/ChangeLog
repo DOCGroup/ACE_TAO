@@ -1,3 +1,93 @@
+Thu Oct 28 07:00:47 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+          Enabled DDS4CCM_TRACE_ENABLED enviroment variable.
+
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Get_T.h:
+        * connectors/dds4ccm/impl/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.h:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.h:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.cpp:
+          Implemented 'LateBinding'. This means that the DDS entities will NOT
+          be created and initialized when the topic name is empty at
+          deployment time (e.g. the topic_name is empty in the deployment plan).
+          The DDS entities will be created and initilized once the topic name is
+          set at run time.
+
+        * connectors/dds4ccm/tests/LateBinding:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Base:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Base/RG_LateBinding_Base.idl:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Base/RG_LateBinding_Base.mpc:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Connector:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Connector/RG_LateBinding_Connector.idl:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Connector/RG_LateBinding_Connector.mpc:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver.idl:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver.mpc:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_exec.h:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_impl.h:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_impl.cpp:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Sender:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender.idl:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender.mpc:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender_exec.h:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/descriptors:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Base:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Base/WU_LateBinding_Base.idl:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Base/WU_LateBinding_Base.mpc:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Connector:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Connector/WU_LateBinding_Connector.idl:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Connector/WU_LateBinding_Connector.mpc:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Receiver:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Receiver/WU_LateBinding_Receiver.idl:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Receiver/WU_LateBinding_Receiver.mpc:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Receiver/WU_LateBinding_Receiver_exec.h:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Receiver/WU_LateBinding_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Receiver/WU_LateBinding_Receiver_impl.h:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Receiver/WU_LateBinding_Receiver_impl.cpp:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Sender:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Sender/WU_LateBinding_Sender.idl:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Sender/WU_LateBinding_Sender.mpc:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Sender/WU_LateBinding_Sender_exec.h:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Sender/WU_LateBinding_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/descriptors:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/descriptors/run_test.pl:
+          Added tests which tests the latebinding implementation. Both event and state
+          connectors are tested.
+
+        * bin/ciao_tests.lst:
+          Added previous mentioned tests.
+
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender_exec.cpp:
+          Fixed typos.
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp.mpc:
+          Disabled projects.
+
 Wed Oct 27 17:43:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Sender/CFTLS_Test_Sender_exec.h:

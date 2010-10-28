@@ -20,22 +20,9 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::~DDS_StateListen_T (v
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
 void
-DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete (
-  typename CCM_TYPE::base_type::_ptr_type component,
-  ::DDS::Topic_ptr topic,
-  ::DDS::Subscriber_ptr subscriber,
-  const char* library_name,
-  const char* profile_name)
+DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::set_component (
+    typename CCM_TYPE::base_type::_ptr_type component)
 {
-  DDS4CCM_TRACE ("DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete");
-
-  DDSSubscriberBase_type::configuration_complete (
-            component,
-            topic,
-            subscriber,
-            library_name,
-            profile_name);
-
   this->data_control_->_set_component (component);
 }
 

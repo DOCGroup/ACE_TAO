@@ -137,7 +137,7 @@ namespace CIAO_Updater_Sender_Impl
     try
     {
       this->updater_->update_one(i, DDS::HANDLE_NIL);
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: update_one with not registerd instance, key <%C>\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: update_one with unregistered instance, key <%C>\n"),
                     i.key.in()));
     }
     catch (const CCM_DDS::NonExistent &)
@@ -157,12 +157,12 @@ namespace CIAO_Updater_Sender_Impl
   CORBA::Boolean
   Sender_exec_i::delete_one()
   {
-    //delete registerd instance with DDS::HANDLE_NIL
+    //delete registered instance with DDS::HANDLE_NIL
     CORBA::Boolean result = true;
     TestTopic i = this->topic_seq_one_[0];
     try
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: delete_one with registerd instance with DDS::HANDLE_NIL, key <%C>\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: delete_one with registered instance with DDS::HANDLE_NIL, key <%C>\n"),
                     i.key.in()));
       this->updater_->delete_one(i, DDS::HANDLE_NIL);
     }
@@ -189,7 +189,7 @@ namespace CIAO_Updater_Sender_Impl
     TestTopic i = this->topic_seq_one_[1];
     try
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: delete_one with not registerd instance, key <%C>\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: delete_one with not registered instance, key <%C>\n"),
                    i.key.in()));
       this->updater_->delete_one(i, DDS::HANDLE_NIL);
     }
@@ -409,11 +409,11 @@ namespace CIAO_Updater_Sender_Impl
         catch (const CCM_DDS::InternalError& )
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
-                      ACE_TEXT ("test update_many with not registerd instances\n")));
+                      ACE_TEXT ("test update_many with not registered instances\n")));
         }
         catch (const CCM_DDS::AlreadyCreated & )
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: AlreadyCreated with test update_many with not registerd instances.\n")));
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: AlreadyCreated with test update_many with not registered instances.\n")));
           result = false;
         }
       }
@@ -452,7 +452,7 @@ namespace CIAO_Updater_Sender_Impl
     catch (const CCM_DDS::InternalError& ex)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
-                  ACE_TEXT ("test updater delete_many with inregisterd instances, info: index <%d> - retval <%d>\n"),
+                  ACE_TEXT ("test updater delete_many with inregistered instances, info: index <%d> - retval <%d>\n"),
                   ex.index, ex.error_code));
       result = false;
     }

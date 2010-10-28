@@ -115,8 +115,9 @@ public:
   push_state_observer_filter (const ::CCM_DDS::QueryFilter & filter);
   //@}
 
-  virtual void configuration_complete (void);
+  void topic_name (const char * topic_name);
 
+  virtual void configuration_complete (void);
   virtual void ccm_activate (void);
   virtual void ccm_passivate (void);
   virtual void ccm_remove (void);
@@ -163,7 +164,10 @@ private:
   DDS_StateListen_T <DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE> push_state_observer_;
   //@}
 
-typedef DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> TopicBaseConnector;
+  void do_configuration_complete (void);
+  void do_ccm_activate (void);
+
+  typedef DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> TopicBaseConnector;
 };
 
 #include "dds4ccm/impl/DDS_State_Connector_T.cpp"
