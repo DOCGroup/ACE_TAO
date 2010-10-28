@@ -376,15 +376,15 @@ ACE_INET_Addr::set (u_short port_number,
       ::freeaddrinfo (res);
       return 0;
     }
-#else /* ACE_HAS_IPV6 */
+#endif /* ACE_HAS_IPV6 */
 
   // IPv6 not supported... insure the family is set to IPv4
   address_family = AF_INET;
   this->set_type (address_family);
   this->inet_addr_.in4_.sin_family = static_cast<short> (address_family);
-#  ifdef ACE_HAS_SOCKADDR_IN_SIN_LEN
+#ifdef ACE_HAS_SOCKADDR_IN_SIN_LEN
   this->inet_addr_.in4_.sin_len = sizeof (this->inet_addr_.in4_);
-#  endif
+#endif
   struct in_addr addrv4;
   if (ACE_OS::inet_aton (host_name,
                          &addrv4) == 1)
@@ -393,9 +393,9 @@ ACE_INET_Addr::set (u_short port_number,
                       encode);
   else
     {
-#  if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)
       hostent *hp = ACE_OS::gethostbyname (host_name);
-#  else
+#else
       hostent hentry;
       ACE_HOSTENT_DATA buf;
       int h_error = 0;  // Not the same as errno!
@@ -404,7 +404,7 @@ ACE_INET_Addr::set (u_short port_number,
                                              buf, &h_error);
       if (hp == 0)
         errno = h_error;
-#  endif /* ACE_VXWORKS */
+#endif /* ACE_VXWORKS */
 
       if (hp == 0)
         {
@@ -420,7 +420,6 @@ ACE_INET_Addr::set (u_short port_number,
                             encode);
         }
     }
-#endif /* ACE_HAS_IPV6 */
 }
 
 // Helper function to get a port number from a port name.
