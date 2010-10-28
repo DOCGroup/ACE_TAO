@@ -55,7 +55,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
       // create an instance of the servant object and give it a
       // chance at the arguments.
       SERVANT servant;
-      result = servant.parse_args (argc, asciiArgv);
+      result = servant.parse_args (argc, argv);
       if (result == 0)
       {
         //////////////////////////////////
