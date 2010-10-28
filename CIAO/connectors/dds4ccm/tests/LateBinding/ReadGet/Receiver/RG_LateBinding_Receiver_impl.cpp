@@ -35,9 +35,11 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
    * RG_LateBinding_Receiver_impl
    */
   RG_LateBinding_Receiver_impl::RG_LateBinding_Receiver_impl (
-      ::RG_LateBinding::CCM_Receiver_Context_ptr ctx)
+      ::RG_LateBinding::CCM_Receiver_Context_ptr ctx,
+      ::CORBA::UShort expected)
     : ciao_context_ (
         ::RG_LateBinding::CCM_Receiver_Context::_duplicate (ctx))
+    , expected_ (expected)
   {
     ACE_NEW_THROW_EX (this->to_handler_,
                       Timeout_Handler (*this),
@@ -50,19 +52,32 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
   }
 
   void
-  RG_LateBinding_Receiver_impl::list_samples (
+  RG_LateBinding_Receiver_impl::check_samples (
     const char * test,
-    const RG_LateBindingTestSeq& samples)
+    const RG_LateBindingTestSeq& samples,
+    const ::CORBA::UShort& expected)
   {
-    ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::list_samples - "
-                "%C Samples found: <%u>\n",
-                test,
-                samples.length ()));
+    if (samples.length () != expected)
+      {
+        ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::check_samples - "
+                    "ERROR: Unexpected number of %C samples received: "
+                    "expected <%d> - received <%u>\n",
+                    test,
+                    expected,
+                    samples.length ()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::check_samples - "
+                    "%C Samples found: <%u>\n",
+                    test,
+                    samples.length ()));
+      }
     for (::CORBA::ULong i = 0;
          i < samples.length ();
          ++i)
       {
-        ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::list_samples - "
+        ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::check_samples - "
                     "Sample %C: sample <%d> - key <%C> - iteration <%d>\n",
                     test,
                     i,
@@ -123,7 +138,7 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
         RG_LateBindingTestSeq samples;
         ::CCM_DDS::ReadInfoSeq readinfo_seq;
         reader->read_all (samples, readinfo_seq);
-        this->list_samples ("read", samples);
+        this->check_samples ("read", samples, this->expected_);
       }
     catch (const CORBA::Exception &e)
       {
@@ -159,7 +174,7 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
         RG_LateBindingTestSeq samples;
         ::CCM_DDS::ReadInfoSeq readinfos;
         getter->get_many (samples, readinfos);
-        this->list_samples ("get", samples);
+        this->check_samples ("get", samples, 1);
       }
     catch (const CORBA::Exception &e)
       {

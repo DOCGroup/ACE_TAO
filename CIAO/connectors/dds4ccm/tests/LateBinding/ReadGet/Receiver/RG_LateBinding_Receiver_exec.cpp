@@ -212,7 +212,8 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
   {
     ACE_NEW_THROW_EX (this->impl_,
                       RG_LateBinding_Receiver_impl (
-                        this->ciao_context_.in ()),
+                        this->ciao_context_.in (),
+                        this->iterations ()),
                       ::CORBA::INTERNAL ());
     this->impl_->start (this->reactor ());
   }

@@ -30,7 +30,8 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
   {
   public:
     RG_LateBinding_Receiver_impl (
-      ::RG_LateBinding::CCM_Receiver_Context_ptr ctx);
+      ::RG_LateBinding::CCM_Receiver_Context_ptr ctx,
+      ::CORBA::UShort expected);
     ~RG_LateBinding_Receiver_impl (void);
 
     void start (
@@ -44,11 +45,14 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
     void test_exception (void);
   private:
     ::RG_LateBinding::CCM_Receiver_Context_var ciao_context_;
+    CORBA::UShort expected_;
+
     Timeout_Handler *to_handler_;
 
-    void list_samples (
+    void check_samples (
       const char * test,
-      const RG_LateBindingTestSeq& samples);
+      const RG_LateBindingTestSeq& samples,
+      const ::CORBA::UShort& expected);
   };
 };
 
