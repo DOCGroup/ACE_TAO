@@ -1,3 +1,18 @@
+Thu Oct 28 07:38:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Array_Map.h:
+        * ace/Array_Map.cpp:
+        * ace/Auto_Functor.h:
+        * ace/Auto_Functor.inl:
+        * ace/Value_Ptr.h:
+        * ace/config-g++-common.h:
+        * ace/config-win32-msvc-8.h:
+        * performance-tests/Misc/test_singleton.cpp:
+          Cleanup because GCC < 3 isn't supported anymore
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+          aCC 3.31 isn't supported anymore for a long time
+
 Thu Oct 28 07:08:00 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Logging/Trace_Return.cpp:

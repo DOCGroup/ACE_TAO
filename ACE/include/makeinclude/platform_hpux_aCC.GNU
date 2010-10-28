@@ -51,10 +51,6 @@ ifeq (1,$(stdcpplib))
     # Warning 930 is spurious when new(std::nothrow) is used. Reported to HP
     # as support call 3201224717. (Steve Huston, 23-Nov-2002)
     CCFLAGS += +W930
-    # aCC 3.31 has poor member template support.
-    ifeq (31,$(CXXMINORVERS))
-      CCFLAGS += -DACE_LACKS_MEMBER_TEMPLATES
-    endif
   endif
 # Compile errors using -AA and +noeh together - HP problem report
 # JAGad12608, fix slated for Dec 2001 Release -- Steve Huston, April 10, 2001.
