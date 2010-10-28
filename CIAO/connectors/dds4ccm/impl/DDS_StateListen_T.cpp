@@ -23,6 +23,7 @@ void
 DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::set_component (
     typename CCM_TYPE::base_type::_ptr_type component)
 {
+  DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::set_component (component);
   this->data_control_->_set_component (component);
 }
 

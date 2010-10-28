@@ -27,6 +27,8 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
       {
         this->callback_.set_topic_name_getter ();
         this->callback_.start_getting ();
+        this->callback_.set_topic_name_reader (true);
+        this->callback_.set_topic_name_getter (true);
       }
     return 0;
   }
@@ -190,61 +192,107 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
   }
 
   void
-  RG_LateBinding_Receiver_impl::set_topic_name_reader ()
+  RG_LateBinding_Receiver_impl::set_topic_name_reader (bool test_non_changeable)
   {
-    ::RG_LateBinding::RG_LateBindingTestConnector::Reader_var reader =
-      this->ciao_context_->get_connection_info_read_data ();
-    if (::CORBA::is_nil (reader.in ()))
-        {
-          ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::start - "
-                                "Unable to get reader interface\n"));
-          throw ::CORBA::INTERNAL ();
-        }
-    ::CORBA::Object_var cmp = reader->_get_component ();
-    if (::CORBA::is_nil (cmp.in ()))
+    try
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::start - "
-                              "Unable to get component interface\n"));
-        throw ::CORBA::INTERNAL ();
+        ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::set_topic_name_reader - "
+                    "Setting topic name\n"));
+        ::RG_LateBinding::RG_LateBindingTestConnector::Reader_var reader =
+          this->ciao_context_->get_connection_info_read_data ();
+        if (::CORBA::is_nil (reader.in ()))
+            {
+              ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::set_topic_name_reader - "
+                                    "Unable to get reader interface\n"));
+              throw ::CORBA::INTERNAL ();
+            }
+        ::CORBA::Object_var cmp = reader->_get_component ();
+        if (::CORBA::is_nil (cmp.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::set_topic_name_reader - "
+                                  "Unable to get component interface\n"));
+            throw ::CORBA::INTERNAL ();
+          }
+        ::RG_LateBinding::RG_LateBindingTestConnector::CCM_DDS_State_var conn =
+          ::RG_LateBinding::RG_LateBindingTestConnector::CCM_DDS_State::_narrow (cmp.in ());
+        if (::CORBA::is_nil (conn.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::set_topic_name_reader - "
+                                  "Unable to narrow connector interface\n"));
+            throw ::CORBA::INTERNAL ();
+          }
+        conn->topic_name ("LateBindingTopic");
+        if (test_non_changeable)
+          {
+            ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::set_topic_name_reader - "
+                        "ERROR: No NonChangeable exception thrown.\n"));
+          }
       }
-    ::RG_LateBinding::RG_LateBindingTestConnector::CCM_DDS_State_var conn =
-      ::RG_LateBinding::RG_LateBindingTestConnector::CCM_DDS_State::_narrow (cmp.in ());
-    if (::CORBA::is_nil (conn.in ()))
+    catch (const ::CCM_DDS::NonChangeable &)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::start - "
-                              "Unable to narrow connector interface\n"));
-        throw ::CORBA::INTERNAL ();
+        if (test_non_changeable)
+          {
+            ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::set_topic_name_reader - "
+                        "Expected NonChangeable caught.\n"));
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::set_topic_name_reader - "
+                        "Caught NonChangeable exception.\n"));
+          }
       }
-    conn->topic_name ("LateBindingTopic");
   }
 
   void
-  RG_LateBinding_Receiver_impl::set_topic_name_getter ()
+  RG_LateBinding_Receiver_impl::set_topic_name_getter (bool test_non_changeable)
   {
-    ::RG_LateBinding::RG_LateBindingTestConnector::Getter_var getter =
-      this->ciao_context_->get_connection_info_get_fresh_data ();
-    if (::CORBA::is_nil (getter.in ()))
-        {
-          ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::start - "
-                                "Unable to get getter interface\n"));
-          throw ::CORBA::INTERNAL ();
-        }
-      ::CORBA::Object_var cmp = getter->_get_component ();
-      if (::CORBA::is_nil (cmp.in ()))
-        {
-          ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::start - "
-                                "Unable to get component interface\n"));
-          throw ::CORBA::INTERNAL ();
-        }
-    ::RG_LateBinding::RG_LateBindingTestConnector::CCM_DDS_Event_var conn =
-      ::RG_LateBinding::RG_LateBindingTestConnector::CCM_DDS_Event::_narrow (cmp.in ());
-    if (::CORBA::is_nil (conn.in ()))
+    try
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::start - "
-                              "Unable to narrow connector interface\n"));
-        throw ::CORBA::INTERNAL ();
+        ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::set_topic_name_getter - "
+                    "Setting topic name\n"));
+        ::RG_LateBinding::RG_LateBindingTestConnector::Getter_var getter =
+          this->ciao_context_->get_connection_info_get_fresh_data ();
+        if (::CORBA::is_nil (getter.in ()))
+            {
+              ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::set_topic_name_getter - "
+                                    "Unable to get getter interface\n"));
+              throw ::CORBA::INTERNAL ();
+            }
+          ::CORBA::Object_var cmp = getter->_get_component ();
+          if (::CORBA::is_nil (cmp.in ()))
+            {
+              ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::set_topic_name_getter - "
+                                    "Unable to get component interface\n"));
+              throw ::CORBA::INTERNAL ();
+            }
+        ::RG_LateBinding::RG_LateBindingTestConnector::CCM_DDS_Event_var conn =
+          ::RG_LateBinding::RG_LateBindingTestConnector::CCM_DDS_Event::_narrow (cmp.in ());
+        if (::CORBA::is_nil (conn.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::set_topic_name_getter - "
+                                  "Unable to narrow connector interface\n"));
+            throw ::CORBA::INTERNAL ();
+          }
+        conn->topic_name ("LateBindingTopic");
+        if (test_non_changeable)
+          {
+            ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::set_topic_name_getter - "
+                        "ERROR: No NonChangeable exception thrown.\n"));
+          }
       }
-    conn->topic_name ("LateBindingTopic");
+    catch (const ::CCM_DDS::NonChangeable &)
+      {
+        if (test_non_changeable)
+          {
+            ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::set_topic_name_getter - "
+                        "Expected NonChangeable caught.\n"));
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::set_topic_name_getter - "
+                        "ERROR: Caught NonChangeable exception.\n"));
+          }
+      }
   }
 
   void
