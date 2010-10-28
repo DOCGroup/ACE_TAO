@@ -1,3 +1,8 @@
+Thu Oct 28 11:40:01 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/make_release.py:
+          Fixed incorrect spelling of DANCE.
+
 Thu Oct 28 11:18:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release.py:
