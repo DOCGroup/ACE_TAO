@@ -171,6 +171,10 @@ TAO/tests/Bug_3746_Regression/run_test.pl:
 TAO/tests/Bug_3748_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS
 TAO/tests/Bug_3755_Regression/run_test.pl: !STATIC !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/Bug_3755_Ext_Regression/run_test.pl : !STATIC !MINIMUM !LynxOS
+TAO/tests/Bug_3755_Ext_Regression/run_test.pl -rt: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LynxOS
+TAO/tests/Bug_3755_Ext_Regression/run_test.pl -rtsched: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !LynxOS
+TAO/tests/Bug_3755_Ext_Regression/run_test.pl -endpoint: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LynxOS
+TAO/tests/Bug_3755_Ext_Regression/run_test.pl -diffserv: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LynxOS
 TAO/tests/Bug_3755_Ext_Regression/run_test.pl -bidir: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !GIOP10 !DISABLE_BIDIR !LynxOS
 TAO/tests/Bug_3755_Ext_Regression/run_test.pl -messaging: !STATIC !NO_MESSAGING !CORBA_E_MICRO !LynxOS
 TAO/tests/Bug_3755_Ext_Regression/run_test.pl -csd: !STATIC !ST !CORBA_E_MICRO !LynxOS
