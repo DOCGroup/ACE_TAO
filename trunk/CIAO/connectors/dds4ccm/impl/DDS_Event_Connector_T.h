@@ -71,8 +71,9 @@ public:
   virtual void push_consumer_filter (const ::CCM_DDS::QueryFilter & filter);
   //@}
 
-  virtual void configuration_complete (void);
+  virtual void topic_name (const char * topic_name);
 
+  virtual void configuration_complete (void);
   virtual void ccm_activate (void);
   virtual void ccm_passivate (void);
   virtual void ccm_remove (void);
@@ -103,7 +104,10 @@ private:
   DDS_Get_T <DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE> pull_consumer_;
   //@}
 
- typedef DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> TopicBaseConnector;
+  void do_configuration_complete (void);
+  void do_ccm_activate (void);
+
+  typedef DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> TopicBaseConnector;
 };
 
 #include "dds4ccm/impl/DDS_Event_Connector_T.cpp"

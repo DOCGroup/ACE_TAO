@@ -19,7 +19,7 @@ project(Shapes_Receiver_idl_gen) : componentidldefaults, dds4ccm {
 }
 
 project(Shapes_Receiver_executor_gen) : componentidldefaults, dds4ccm {
-  requires += dummy_label
+//   requires += dummy_label
   custom_only = 1
   idlflags += -Gex -SS -Sci -Ssi \
               -I../../ports \

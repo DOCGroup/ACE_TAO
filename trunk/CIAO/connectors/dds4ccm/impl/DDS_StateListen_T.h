@@ -28,12 +28,8 @@ public:
   ::CCM_DDS::CCM_StateListenerControl_ptr get_data_control (void);
   //@}
 
-  void configuration_complete (
-    typename CCM_TYPE::base_type::_ptr_type component,
-    ::DDS::Topic_ptr topic,
-    ::DDS::Subscriber_ptr subscriber,
-    const char* library_name,
-    const char* profile_name);
+  void set_component (
+    typename CCM_TYPE::base_type::_ptr_type component);
 
   void activate (
     typename CCM_TYPE::statelistener_type::_ptr_type listener,

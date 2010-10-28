@@ -2,10 +2,12 @@
 // $Id$
 
 #include "dds4ccm/impl/Log_Macros.h"
+#include "ace/Reactor.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_TopicBase_Connector_T (void) :
     BaseConnector ()
+  , late_binding_ (false)
 {
 }
 
@@ -15,10 +17,27 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~DDS_TopicBase_Conne
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+bool
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::late_binding (void)
+{
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::late_binding");
+  return this->late_binding_;
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+void
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::late_binding (bool late_binding)
+{
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::late_binding");
+  this->late_binding_ |= late_binding;
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete");
+
   BaseConnector::configuration_complete ();
   this->init_default_topic ();
   this->init_subscriber ();
@@ -72,15 +91,9 @@ void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::topic_name (
   const char * topic_name)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::topic_name");
-  if (this->configuration_complete_)
-    {
-      throw ::CCM_DDS::NonChangeable ();
-    }
-  else
-    {
-      this->topic_name_ = topic_name;
-    }
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::topic_name");
+
+  this->topic_name_ = topic_name;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>

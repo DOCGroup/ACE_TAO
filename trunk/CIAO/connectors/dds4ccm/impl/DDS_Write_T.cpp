@@ -17,17 +17,24 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~DDS_Write_T (void)
 {
 }
 
+
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+void
+DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_component (
+  typename CCM_TYPE::base_type::_ptr_type component)
+{
+  this->writer_t_->_set_component (component);
+}
+
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
 DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
-  typename CCM_TYPE::base_type::_ptr_type component,
   ::DDS::Topic_ptr topic,
   ::DDS::Publisher_ptr publisher,
   const char* library_name,
   const char* profile_name)
 {
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete");
-
   if (!this->ccm_dds_writer_->get_impl ())
     {
       ::DDS::DataWriter_var dwv_tmp;
@@ -67,7 +74,6 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
         }
       this->ccm_dds_writer_->set_impl (rw->get_impl ());
       this->writer_t_->set_impl (this->ccm_dds_writer_);
-      this->writer_t_->_set_component (component);
     }
 }
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
