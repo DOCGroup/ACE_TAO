@@ -64,6 +64,7 @@ class DAnCE_ExecutionManager_Module
         bool ignore_failure_;
         const ACE_TCHAR *node_map_;
         const ACE_TCHAR *domain_nc_;
+        const ACE_TCHAR *cdd_;
 
         SOptions()
             : exec_mgr_file_ (0),
@@ -75,7 +76,8 @@ class DAnCE_ExecutionManager_Module
               rebind_plan_ns_ior_ (0),
               ignore_failure_ (false),
               node_map_(0),
-              domain_nc_ (0)
+              domain_nc_ (0),
+              cdd_ (0)
         {
         }
     };
