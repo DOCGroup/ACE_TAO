@@ -2,7 +2,6 @@
 
 #include "Echo_Caller.h"
 #include "tao/ORB_Core.h"
-#include "tao/Utils/Servant_Var.h"
 #include "ace/Get_Opt.h"
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
@@ -59,7 +58,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      TAO::Utils::Servant_Var<Echo_Caller> impl;
+      PortableServer::Servant_var<Echo_Caller> impl;
       {
         Echo_Caller * tmp;
         // ACE_NEW_RETURN is the worst possible way to handle

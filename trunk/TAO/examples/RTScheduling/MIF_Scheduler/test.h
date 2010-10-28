@@ -9,7 +9,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/Synch.h"
 #include "ace/Task.h"
-#include "tao/Utils/Servant_Var.h"
 
 class Task_Stats;
 
@@ -45,7 +44,7 @@ class DT_Test //:public ACE_Task <ACE_SYNCH>
   int min_priority_;
   RTScheduling::Current_var current_;
   MIF_DT_Creator* dt_creator_;
-  TAO::Utils::Servant_Var<MIF_Scheduler> scheduler_;
+  PortableServer::Servant_var<MIF_Scheduler> scheduler_;
 };
 
 typedef ACE_Singleton <DT_Test, TAO_SYNCH_MUTEX> DT_TEST;

@@ -4,7 +4,6 @@
 #include "Middle_Impl.h"
 
 #include "tao/Utils/PolicyList_Destroyer.h"
-#include "tao/Utils/Servant_Var.h"
 #include "tao/Utils/RIR_Narrow.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/Messaging/Messaging.h"
@@ -169,7 +168,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       using namespace Bug_3647_Regression;
-      TAO::Utils::Servant_Var<Middle_Impl> impl(
+      PortableServer::ServantBase_var impl(
           new Middle_Impl(backend.in(), orb.in(), verbose,
                           timeout));
 

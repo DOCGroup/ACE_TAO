@@ -4,12 +4,9 @@
 #include "ORB_Task.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
-#include "tao/Utils/Servant_Var.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
-
-
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
@@ -73,7 +70,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      TAO::Utils::Servant_Var<Echo> impl;
+      PortableServer::Servant_var<Echo> impl;
       {
         Echo * tmp = 0;
         // ACE_NEW_RETURN is the worst possible way to handle
