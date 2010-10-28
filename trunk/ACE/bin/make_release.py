@@ -426,7 +426,7 @@ def update_debianbuild ():
     files.append (doc_root + "/ACE/debian/debian.control")
 
     # rewrite debian/dsc
-    dsc_lines = """# Format: 1.0
+    dsc_lines = """Format: 1.0
 Source: ACE+TAO+CIAO-src-%s
 Version: %s
 Binary: ace
