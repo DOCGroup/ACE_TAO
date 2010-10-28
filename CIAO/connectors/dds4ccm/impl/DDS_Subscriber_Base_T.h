@@ -40,8 +40,10 @@ public:
   void filter (const ::CCM_DDS::QueryFilter & filter);
   //@}
 
+  void set_component (
+    typename CCM_TYPE::base_type::_ptr_type component);
+
   void configuration_complete (
-    typename CCM_TYPE::base_type::_ptr_type component,
     ::DDS::Topic_ptr topic,
     ::DDS::Subscriber_ptr subscriber,
     const char* library_name,

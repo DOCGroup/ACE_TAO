@@ -23,11 +23,11 @@ public:
   DDS_TopicBase_Connector_T (void);
   virtual ~DDS_TopicBase_Connector_T (void);
 
-  virtual char *topic_name (void);
+  virtual ::DDS::StringSeq *key_fields (void);
 
   virtual void topic_name (const char * topic_name);
 
-  virtual ::DDS::StringSeq *key_fields (void);
+  virtual char *topic_name (void);
 
   virtual void key_fields (const ::DDS::StringSeq & key_fields);
 
@@ -53,6 +53,9 @@ protected:
   void remove_publisher (void);
   void remove_subscriber (void);
 
+  bool late_binding (void);
+  void late_binding (bool late_binding);
+
   CORBA::String_var topic_name_;
   DDS::StringSeq key_fields_;
 
@@ -68,6 +71,8 @@ protected:
   typedef ::CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, VENDOR_TYPE> SubscriberListener;
   typedef ::CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, VENDOR_TYPE> PublisherListener;
   typedef DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> BaseConnector;
+private:
+  bool late_binding_;
 };
 
 #include "dds4ccm/impl/DDS_TopicBase_Connector_T.cpp"

@@ -37,6 +37,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_observable_da
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_observable_data");
 
   this->observable_obtained_ = true;
+  this->observable_.set_component (this);
   return this->observable_.get_data ();
 }
 
@@ -47,6 +48,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_observable_dd
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_observable_dds_entity");
 
   this->observable_obtained_ = true;
+  this->observable_.set_component (this);
   return this->observable_.get_dds_entity ();
 }
 
@@ -57,6 +59,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_passive_obser
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_passive_observer_data");
 
   this->passive_observer_obtained_ = true;
+  this->passive_observer_.set_component (this);
   return this->passive_observer_.get_data ();
 }
 
@@ -67,6 +70,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_passive_obser
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_passive_observer_dds_entity");
 
   this->passive_observer_obtained_ = true;
+  this->passive_observer_.set_component (this);
   return this->passive_observer_.get_dds_entity ();
 }
 
@@ -77,6 +81,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_passive_obser
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_passive_observer_filter_config");
 
   this->passive_observer_obtained_ = true;
+  this->passive_observer_.set_component (this);
   return this->passive_observer_.get_filter_config ();
 }
 
@@ -106,6 +111,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_pull_observer
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_pull_observer_data");
 
   this->pull_observer_obtained_ = true;
+  this->pull_observer_.set_component (this);
   return this->pull_observer_.get_data ();
 }
 
@@ -116,6 +122,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_pull_observer
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_pull_observer_fresh_data");
 
   this->pull_observer_obtained_ = true;
+  this->pull_observer_.set_component (this);
   return this->pull_observer_.get_fresh_data ();
 }
 
@@ -126,6 +133,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_pull_observer
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_pull_observer_dds_entity");
 
   this->pull_observer_obtained_ = true;
+  this->pull_observer_.set_component (this);
   return this->pull_observer_.get_dds_entity ();
 }
 
@@ -136,6 +144,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_pull_observer
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_pull_observer_filter_config");
 
   this->pull_observer_obtained_ = true;
+  this->pull_observer_.set_component (this);
   return this->pull_observer_.get_filter_config ();
 }
 
@@ -165,6 +174,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_push_observer
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_push_observer_data");
 
   this->push_observer_obtained_ = true;
+  this->push_observer_.set_component (this);
   return this->push_observer_.get_data ();
 }
 
@@ -175,6 +185,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_push_observer
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_push_observer_data_control");
 
   this->push_observer_obtained_ = true;
+  this->push_observer_.set_component (this);
   return this->push_observer_.get_data_control ();
 }
 
@@ -185,6 +196,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_push_observer
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_push_observer_dds_entity");
 
   this->push_observer_obtained_ = true;
+  this->push_observer_.set_component (this);
   return this->push_observer_.get_dds_entity ();
 }
 
@@ -195,6 +207,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_push_observer
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_push_observer_filter_config");
 
   this->push_observer_obtained_ = true;
+  this->push_observer_.set_component (this);
   return this->push_observer_.get_filter_config ();
 }
 
@@ -224,6 +237,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_push_state_ob
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_push_state_observer_data");
 
   this->push_state_observer_obtained_ = true;
+  this->push_state_observer_.set_component (this);
   return this->push_state_observer_.get_data ();
 }
 
@@ -234,6 +248,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_push_state_ob
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_push_state_observer_data_control");
 
   this->push_state_observer_obtained_ = true;
+  this->push_state_observer_.set_component (this);
   return this->push_state_observer_.get_data_control ();
 }
 
@@ -244,6 +259,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_push_state_ob
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_push_state_observer_dds_entity");
 
   this->push_state_observer_obtained_ = true;
+  this->push_state_observer_.set_component (this);
   return this->push_state_observer_.get_dds_entity ();
 }
 
@@ -254,6 +270,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_push_state_ob
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_push_state_observer_filter_config");
 
   this->push_state_observer_obtained_ = true;
+  this->push_state_observer_.set_component (this);
   return this->push_state_observer_.get_filter_config ();
 }
 
@@ -278,84 +295,116 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::push_state_observ
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
 void
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::topic_name (
+  const char * topic_name)
+{
+  DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::topic_name");
+
+  this->late_binding (ACE_OS::strlen (topic_name) == 0);
+
+  if (this->late_binding () && ACE_OS::strlen (topic_name) > 0)
+    {
+      TopicBaseConnector::topic_name (topic_name);
+      this->do_configuration_complete ();
+      this->do_ccm_activate ();
+    }
+  else if (this->configuration_complete_)
+    {
+      throw ::CCM_DDS::NonChangeable ();
+    }
+  else
+    {
+      TopicBaseConnector::topic_name (topic_name);
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+void
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::do_configuration_complete (void)
+{
+  DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::do_configuration_complete");
+
+  TopicBaseConnector::configuration_complete ();
+
+  ::CCM_DDS::PortStatusListener_var push_observer_psl =
+    this->context_->get_connection_push_observer_status ();
+  typename CCM_TYPE::listener_type::_var_type push_observer_dl =
+    this->context_->get_connection_push_observer_data_listener ();
+  this->push_observer_obtained_ |= ! ::CORBA::is_nil (push_observer_psl.in ());
+  this->push_observer_obtained_ |= ! ::CORBA::is_nil (push_observer_dl.in ());
+
+  ::CCM_DDS::PortStatusListener_var push_state_observer_psl =
+    this->context_->get_connection_push_state_observer_status ();
+  typename CCM_TYPE::statelistener_type::_var_type push_state_observer_dl =
+    this->context_->get_connection_push_state_observer_data_listener ();
+  this->push_state_observer_obtained_ |= ! ::CORBA::is_nil (push_state_observer_psl.in ());
+  this->push_state_observer_obtained_ |= ! ::CORBA::is_nil (push_state_observer_dl.in ());
+
+  ::CCM_DDS::PortStatusListener_var pull_observer_psl =
+    this->context_->get_connection_pull_observer_status ();
+  this->pull_observer_obtained_ |= ! ::CORBA::is_nil (pull_observer_psl.in ());
+
+  ::CCM_DDS::PortStatusListener_var passive_observer_psl =
+    this->context_->get_connection_passive_observer_status ();
+  this->passive_observer_obtained_ |= ! ::CORBA::is_nil (passive_observer_psl.in ());
+
+  if (this->observable_obtained_)
+    {
+      this->observable_.configuration_complete (
+        this->topic_.in (),
+        this->publisher_.in (),
+        this->library_name_,
+        this->profile_name_);
+    }
+
+  if (this->push_observer_obtained_)
+    {
+      this->push_observer_.configuration_complete (
+        this->topic_.in (),
+        this->subscriber_.in (),
+        this->library_name_,
+        this->profile_name_);
+    }
+
+  if (this->push_state_observer_obtained_)
+    {
+      this->push_state_observer_.configuration_complete (
+        this->topic_.in (),
+        this->subscriber_.in (),
+        this->library_name_,
+        this->profile_name_);
+    }
+
+  if (this->pull_observer_obtained_)
+    {
+      this->pull_observer_.configuration_complete (
+        this->topic_.in (),
+        this->subscriber_.in (),
+        this->library_name_,
+        this->profile_name_);
+    }
+
+  if (this->passive_observer_obtained_)
+    {
+      this->passive_observer_.configuration_complete (
+        this->topic_.in (),
+        this->subscriber_.in (),
+        this->library_name_,
+        this->profile_name_);
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete");
 
   try
     {
-      TopicBaseConnector::configuration_complete ();
-
-      ::CCM_DDS::PortStatusListener_var push_observer_psl =
-        this->context_->get_connection_push_observer_status ();
-      typename CCM_TYPE::listener_type::_var_type push_observer_dl =
-        this->context_->get_connection_push_observer_data_listener ();
-      this->push_observer_obtained_ |= ! ::CORBA::is_nil (push_observer_psl.in ());
-      this->push_observer_obtained_ |= ! ::CORBA::is_nil (push_observer_dl.in ());
-
-      ::CCM_DDS::PortStatusListener_var push_state_observer_psl =
-        this->context_->get_connection_push_state_observer_status ();
-      typename CCM_TYPE::statelistener_type::_var_type push_state_observer_dl =
-        this->context_->get_connection_push_state_observer_data_listener ();
-      this->push_state_observer_obtained_ |= ! ::CORBA::is_nil (push_state_observer_psl.in ());
-      this->push_state_observer_obtained_ |= ! ::CORBA::is_nil (push_state_observer_dl.in ());
-
-      ::CCM_DDS::PortStatusListener_var pull_observer_psl =
-        this->context_->get_connection_pull_observer_status ();
-      this->pull_observer_obtained_ |= ! ::CORBA::is_nil (pull_observer_psl.in ());
-
-      ::CCM_DDS::PortStatusListener_var passive_observer_psl =
-        this->context_->get_connection_passive_observer_status ();
-      this->passive_observer_obtained_ |= ! ::CORBA::is_nil (passive_observer_psl.in ());
-
-      if (this->observable_obtained_)
+      if (!this->late_binding ())
         {
-          this->observable_.configuration_complete (
-            this,
-            this->topic_.in (),
-            this->publisher_.in (),
-            this->library_name_,
-            this->profile_name_);
-        }
-
-      if (this->push_observer_obtained_)
-        {
-          this->push_observer_.configuration_complete (
-            this,
-            this->topic_.in (),
-            this->subscriber_.in (),
-            this->library_name_,
-            this->profile_name_);
-        }
-
-      if (this->push_state_observer_obtained_)
-        {
-          this->push_state_observer_.configuration_complete (
-            this,
-            this->topic_.in (),
-            this->subscriber_.in (),
-            this->library_name_,
-            this->profile_name_);
-        }
-
-      if (this->pull_observer_obtained_)
-        {
-          this->pull_observer_.configuration_complete (
-            this,
-            this->topic_.in (),
-            this->subscriber_.in (),
-            this->library_name_,
-            this->profile_name_);
-        }
-
-      if (this->passive_observer_obtained_)
-        {
-          this->passive_observer_.configuration_complete (
-            this,
-            this->topic_.in (),
-            this->subscriber_.in (),
-            this->library_name_,
-            this->profile_name_);
+          this->do_configuration_complete ();
         }
     }
   catch (const ::CCM_DDS::InternalError &ex)
@@ -385,78 +434,90 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
 void
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::do_ccm_activate (void)
+{
+  DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::do_ccm_activate");
+
+  ACE_Reactor* reactor = 0;
+
+#if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
+  reactor = this->reactor ();
+
+  if (!reactor)
+    {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                    "DDS_State_Connector_T::ccm_activate - "
+                    "No reactor to perform required context switch.\n"));
+      throw ::CORBA::INTERNAL ();
+    }
+#endif
+
+  TopicBaseConnector::ccm_activate (reactor);
+
+  if (this->observable_obtained_)
+    {
+      this->observable_.activate ();
+    }
+
+  if (this->push_observer_obtained_)
+    {
+      typename CCM_TYPE::listener_type::_var_type push_observer_dl =
+        this->context_->get_connection_push_observer_data_listener ();
+      ::CCM_DDS::PortStatusListener_var push_observer_psl =
+        this->context_->get_connection_push_observer_status ();
+
+      this->push_observer_.activate (
+        push_observer_dl.in (),
+        push_observer_psl.in (),
+        reactor);
+    }
+
+  if (this->push_state_observer_obtained_)
+    {
+      typename CCM_TYPE::statelistener_type::_var_type push_state_observer_dl =
+        this->context_->get_connection_push_state_observer_data_listener ();
+
+      ::CCM_DDS::PortStatusListener_var push_state_observer_psl =
+        this->context_->get_connection_push_state_observer_status ();
+
+      this->push_state_observer_.activate (
+        push_state_observer_dl.in (),
+        push_state_observer_psl.in (),
+        reactor);
+    }
+
+  if (this->pull_observer_obtained_)
+    {
+      ::CCM_DDS::PortStatusListener_var pull_observer_psl =
+        this->context_->get_connection_pull_observer_status ();
+
+      this->pull_observer_.activate (
+        pull_observer_psl.in (),
+        reactor);
+    }
+
+  if (this->passive_observer_obtained_)
+    {
+      ::CCM_DDS::PortStatusListener_var passive_observer_psl =
+        this->context_->get_connection_passive_observer_status ();
+
+      this->passive_observer_.activate (
+        passive_observer_psl.in (),
+        reactor);
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_activate (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_activate");
 
   try
     {
-      ACE_Reactor* reactor = 0;
-
-#if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-      reactor = this->reactor ();
-
-      if (!reactor)
+      if (!this->late_binding ())
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_State_Connector_T::ccm_activate - "
-                        "No reactor to perform required context switch.\n"));
-          throw ::CORBA::INTERNAL ();
-        }
-#endif
-
-      TopicBaseConnector::ccm_activate (reactor);
-
-      if (this->observable_obtained_)
-        {
-          this->observable_.activate ();
-        }
-
-      if (this->push_observer_obtained_)
-        {
-          typename CCM_TYPE::listener_type::_var_type push_observer_dl =
-            this->context_->get_connection_push_observer_data_listener ();
-          ::CCM_DDS::PortStatusListener_var push_observer_psl =
-            this->context_->get_connection_push_observer_status ();
-
-          this->push_observer_.activate (
-            push_observer_dl.in (),
-            push_observer_psl.in (),
-            reactor);
-        }
-
-      if (this->push_state_observer_obtained_)
-        {
-          typename CCM_TYPE::statelistener_type::_var_type push_state_observer_dl =
-            this->context_->get_connection_push_state_observer_data_listener ();
-
-          ::CCM_DDS::PortStatusListener_var push_state_observer_psl =
-            this->context_->get_connection_push_state_observer_status ();
-
-          this->push_state_observer_.activate (
-            push_state_observer_dl.in (),
-            push_state_observer_psl.in (),
-            reactor);
-        }
-
-      if (this->pull_observer_obtained_)
-        {
-          ::CCM_DDS::PortStatusListener_var pull_observer_psl =
-            this->context_->get_connection_pull_observer_status ();
-
-          this->pull_observer_.activate (
-            pull_observer_psl.in (),
-            reactor);
-        }
-
-      if (this->passive_observer_obtained_)
-        {
-          ::CCM_DDS::PortStatusListener_var passive_observer_psl =
-            this->context_->get_connection_passive_observer_status ();
-
-          this->passive_observer_.activate (
-            passive_observer_psl.in (),
-            reactor);
+          this->do_ccm_activate ();
         }
     }
   catch (const ::CCM_DDS::InternalError &ex)

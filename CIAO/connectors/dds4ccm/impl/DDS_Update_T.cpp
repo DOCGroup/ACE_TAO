@@ -20,8 +20,15 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~DDS_Update_T (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
+DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_component (
+    typename CCM_TYPE::base_type::_ptr_type component)
+{
+  this->dds_update_->_set_component (component);
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+void
 DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
-  typename CCM_TYPE::base_type::_ptr_type component,
   ::DDS::Topic_ptr topic,
   ::DDS::Publisher_ptr publisher,
   const char* library_name,
@@ -69,7 +76,6 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
         }
       this->ccm_dds_writer_->set_impl (rw->get_impl ());
       this->dds_update_->set_impl (this->ccm_dds_writer_);
-      this->dds_update_->_set_component (component);
     }
 }
 

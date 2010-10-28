@@ -22,6 +22,18 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_Base_Connector_T (voi
 
   ACE_Env_Value<int> log_level (ACE_TEXT("DDS4CCM_LOG_LEVEL"), DDS4CCM_debug_level);
   DDS4CCM_debug_level = log_level;
+
+  ACE_Env_Value<int> trace (ACE_TEXT("DDS4CCM_TRACE_ENABLE"), 0);
+
+  if (trace != 0)
+    {
+      DDS4CCM_ENABLE_TRACE ();
+    }
+  else
+    {
+      DDS4CCM_DISABLE_TRACE ();
+    }
+
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
