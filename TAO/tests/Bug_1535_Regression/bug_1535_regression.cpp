@@ -4,7 +4,6 @@
 #include "tao/Utils/ORB_Destroyer.h"
 #include "tao/Utils/RIR_Narrow.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
-#include "tao/Utils/Servant_Var.h"
 
 PortableServer::POA_ptr
 create_persistent_POA (PortableServer::POA_ptr parent,

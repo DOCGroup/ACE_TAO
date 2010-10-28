@@ -117,7 +117,6 @@ public:
   //! Assignment operator.  Assumes ownership of \c p.
   TAO_EC_Servant_Var<T> & operator=(T * p);
 
-# if !defined(ACE_LACKS_MEMBER_TEMPLATES)
   //! Template member constructor from a pointer that will implicitly
   //! cast to type T.  Assumes ownership of \c p.
   //! This constructor allows constructs such as:
@@ -139,7 +138,6 @@ public:
   //! can be implicitly cast to type T.
   template <class Y>
   TAO_EC_Servant_Var<T> & operator=(Y * p);
-# endif /* ACE_LACKS_MEMBER_TEMPLATES */
 
   //! Smart pointer operator-> provides access to the underlying object.
   T const * operator->() const;

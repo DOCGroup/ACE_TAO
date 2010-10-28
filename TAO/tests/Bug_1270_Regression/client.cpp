@@ -3,7 +3,6 @@
 #include "Echo.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
-#include "tao/Utils/Servant_Var.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
@@ -61,7 +60,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      TAO::Utils::Servant_Var<Echo> impl;
+      PortableServer::ServantBase_var impl;
       {
         Echo * tmp;
         // ACE_NEW_RETURN is the worst possible way to handle

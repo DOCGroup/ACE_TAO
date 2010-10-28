@@ -1,7 +1,6 @@
 // $Id$
 
 #include "Echo_Caller.h"
-#include "tao/Utils/Servant_Var.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 #include "Server_Thread_Pool.h"
@@ -40,9 +39,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_Thread_Manager mymanager;
       Thread_Pool callback_pool (orb.in (), &mymanager, 10);
 
-      TAO::Utils::Servant_Var<Echo_Caller> impl;
+      PortableServer::ServantBase_var impl;
       {
-        Echo_Caller * tmp;
+        Echo_Caller * tmp = 0;
         // ACE_NEW_RETURN is the worst possible way to handle
         // exceptions (think: what if the constructor allocates memory
         // and fails?), but I'm not in the mood to fight for a more

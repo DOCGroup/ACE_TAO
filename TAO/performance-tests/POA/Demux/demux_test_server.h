@@ -66,7 +66,7 @@ private:
   // the ORB
 
   PortableServer::POA_var root_poa_;
-  // the root POA (we will not have any objects registerd with this)
+  // the root POA (we will not have any objects registered with this)
 
   PortableServer::POAManager_var poa_mgr_;
   // The POA manager
