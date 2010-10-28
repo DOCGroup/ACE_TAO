@@ -326,7 +326,7 @@ def update_spec_file ():
             if line.find ("define CIAOVER ") is not -1:
                 line = "%define CIAOVER " + comp_versions["CIAO_version"] + "\n"
             if line.find ("define DANCEVER ") is not -1:
-                line = "%define DANCEVER " + comp_versions["DAnCE_version"] + "\n"
+                line = "%define DANCEVER " + comp_versions["DANCE_version"] + "\n"
             if line.find ("define is_major_ver") is not -1:
                 if opts.release_type == "beta":
                     line = "%define is_major_ver 0\n"
