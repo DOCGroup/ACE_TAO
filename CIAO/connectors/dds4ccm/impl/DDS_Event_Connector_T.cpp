@@ -184,23 +184,10 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::topic_name (
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::topic_name");
 
-  this->late_binding (ACE_OS::strlen (topic_name) == 0);
-
-  if (this->late_binding () &&
-      ACE_OS::strlen (topic_name) > 0 &&
-      ACE_OS::strlen (this->topic_name_.in ()) == 0)
+  if (this->late_binded (topic_name))
     {
-      TopicBaseConnector::topic_name (topic_name);
       this->do_configuration_complete ();
       this->do_ccm_activate ();
-    }
-  else if (this->configuration_complete_)
-    {
-      throw ::CCM_DDS::NonChangeable ();
-    }
-  else
-    {
-      TopicBaseConnector::topic_name (topic_name);
     }
 }
 
