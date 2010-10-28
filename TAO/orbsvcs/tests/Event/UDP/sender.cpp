@@ -139,7 +139,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Now we setup the sender:
-      TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender = TAO_ECG_UDP_Sender::create();
+      PortableServer::Servant_var<TAO_ECG_UDP_Sender> sender =
+        TAO_ECG_UDP_Sender::create();
       sender->init (event_channel.in (),
                     address_server.in (),
                     endpoint);

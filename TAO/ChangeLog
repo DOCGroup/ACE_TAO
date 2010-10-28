@@ -1,3 +1,34 @@
+Thu Oct 28 07:51:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * orbsvcs/examples/ImR/Advanced/TestServer.h:
+        * orbsvcs/examples/RtEC/MCast/MCast.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.h:
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.inl:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Address_Server.h:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Address_Server.inl:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.inl:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.inl:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.h:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.inl:
+        * orbsvcs/tests/EC_MT_Mcast/MCast.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.h:
+        * orbsvcs/tests/Event/Mcast/Common/EC_Wrapper.h:
+        * orbsvcs/tests/Event/Mcast/Common/EC_Wrapper.cpp:
+        * orbsvcs/tests/Event/Mcast/Common/Gateway_EC.cpp:
+        * orbsvcs/tests/Event/Mcast/Complex/consumer.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * orbsvcs/tests/Event/Mcast/Simple/consumer.cpp:
+        * orbsvcs/tests/Event/Mcast/Two_Way/application.cpp:
+        * orbsvcs/tests/Event/UDP/receiver.cpp:
+        * orbsvcs/tests/Event/UDP/sender.cpp:
+          Removed TAO_EC_Servant_Var, use PortableServer::Servant_var instead
+
 Thu Oct 28 07:41:02 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/RTScheduling/DT_Creator.h:

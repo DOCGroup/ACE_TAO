@@ -141,7 +141,7 @@ private:
   char** consumer_names_;
   CORBA::ULong* consumer_ipaddr_;
 
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender_;
+  PortableServer::Servant_var<TAO_ECG_UDP_Sender> sender_;
   // The sender
 
   TAO_EC_Simple_AddrServer addr_server_;
@@ -345,7 +345,7 @@ private:
   // The last time we changed our publication, so we don't change too
   // often.
 
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver_;
+  PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver_;
   // This object reads the events and pushes them into the EC. Notice
   // that it can receive events from multiple Event Handlers.
 

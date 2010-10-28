@@ -141,7 +141,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Now we setup the sender:
-      TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender = TAO_ECG_UDP_Sender::create();
+      PortableServer::Servant_var<TAO_ECG_UDP_Sender> sender =
+        TAO_ECG_UDP_Sender::create();
       sender->init (event_channel.in (),
                     address_server.in (),
                     endpoint);
@@ -161,7 +162,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       sender->connect (sub);
 
       // To receive events we need to setup an event handler:
-      TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver = TAO_ECG_UDP_Receiver::create();
+      PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver =
+        TAO_ECG_UDP_Receiver::create();
       TAO_ECG_Mcast_EH mcast_eh (&(*receiver));
 
       // The event handler uses the ORB reactor to wait for multicast

@@ -43,7 +43,7 @@ private:
   std::string baseDir_;
   std::string expectedDir_;
   std::vector<std::pair<std::string, std::string> > expectedEnv_;
-  TAO::Utils::Servant_Var<Messenger_i> servant_;
+  PortableServer::Servant_var<Messenger_i> servant_;
 
   CORBA::ORB_var                  orb_;
   IORTable::Table_var             iorTable_;

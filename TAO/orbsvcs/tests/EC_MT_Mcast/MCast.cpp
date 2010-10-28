@@ -172,7 +172,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Now we setup the sender:
-      TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender;
+      PortableServer::Servant_var<TAO_ECG_UDP_Sender> sender;
       sender = TAO_ECG_UDP_Sender::create();
 
       sender->init (event_channel.in (),
@@ -194,7 +194,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       sender->connect (sub);
 
       // To receive events we need to setup an event handler:
-      TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver;
+      PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver;
       receiver = TAO_ECG_UDP_Receiver::create();
 
       TAO_ECG_Mcast_EH mcast_eh (&*receiver);
