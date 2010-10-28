@@ -102,8 +102,8 @@ namespace CIAO_WU_LateBinding_Sender_Impl
           this->ciao_context_->get_connection_info_write_data ();
         if (::CORBA::is_nil (writer.in ()))
           {
-            ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::test_exception - "
-                        "OK: Unable to get writer interface from the "
+            ACE_ERROR ((LM_ERROR, "Sender_exec_i::test_exception - "
+                        "ERROR: Unable to get writer interface from the "
                         "CIAO context\n"));
             return;
           }
@@ -111,14 +111,18 @@ namespace CIAO_WU_LateBinding_Sender_Impl
         sample.key = ::CORBA::string_dup ("KEY_1");
         sample.iteration = 1;
         writer->write_one (sample, ::DDS::HANDLE_NIL);
+        ACE_ERROR ((LM_ERROR, "Sender_exec_i::test_exception - "
+                    "ERROR: No exception thrown while calling write_one "
+                    "on a late binded connector (port).\n"));
       }
     catch (const ::CORBA::BAD_INV_ORDER &e)
       {
-        e._tao_print_exception("Expected");
+        ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::test_exception - "
+                    "Expected BAD_INV_ORDER thrown.\n"));
       }
     catch (const CORBA::Exception &e)
       {
-        e._tao_print_exception("Unexpected");
+        e._tao_print_exception("ERROR: Unexpected exception");
       }
     catch (...)
       {
@@ -317,7 +321,7 @@ namespace CIAO_WU_LateBinding_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-//      this->test_exception ();
+     this->test_exception ();
      ACE_NEW_THROW_EX (this->to_handler_,
                        Timeout_Handler (*this),
                        ::CORBA::INTERNAL ());

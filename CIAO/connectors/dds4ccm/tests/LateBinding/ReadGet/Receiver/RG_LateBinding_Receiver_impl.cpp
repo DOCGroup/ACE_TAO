@@ -95,7 +95,7 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
           this->ciao_context_->get_connection_info_read_data ();
         if (::CORBA::is_nil (reader.in ()))
           {
-            ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::test_exception - "
+            ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::test_exception - "
                         "ERROR: Unable to get writer interface from the "
                         "CIAO context\n"));
             return;
@@ -112,7 +112,8 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
       }
     catch (const ::CORBA::BAD_INV_ORDER &e)
       {
-        e._tao_print_exception("Expected");
+        ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::test_exception - "
+                    "Expected BAD_INV_ORDER thrown.\n"));
       }
     catch (const CORBA::Exception &e)
       {
