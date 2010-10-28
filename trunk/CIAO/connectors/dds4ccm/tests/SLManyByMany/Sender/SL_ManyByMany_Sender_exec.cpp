@@ -104,12 +104,12 @@ namespace CIAO_SL_ManyByMany_Sender_Impl
   CORBA::Boolean
   Sender_exec_i::delete_one()
   {
-    //delete registerd instance with DDS::HANDLE_NIL
+    //delete registered instance with DDS::HANDLE_NIL
     CORBA::Boolean result = true;
     TestTopic i = this->topic_seq_one_[0];
     try
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: delete_one with registerd instance with DDS::HANDLE_NIL, key <%C>\n"),
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: delete_one with registered instance with DDS::HANDLE_NIL, key <%C>\n"),
                       i.key.in()));
         this->updater_->delete_one(i, DDS::HANDLE_NIL);
       }
