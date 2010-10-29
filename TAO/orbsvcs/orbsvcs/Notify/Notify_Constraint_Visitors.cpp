@@ -1045,18 +1045,15 @@ TAO_Notify_Constraint_Visitor::visit_binary_op (ETCL_Binary_Expr *binary,
             this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
             break;
           case ETCL_LE:
-            // result = left_operand <= right_operand; // Compile error on LynxOS
-            result = left_operand.operator<= (right_operand);
+            result = left_operand <= right_operand;
             this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
             break;
           case ETCL_GT:
-            // result = left_operand > right_operand; // Compile error on LynxOS
-            result = left_operand.operator> (right_operand);
+            result = left_operand > right_operand;
             this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
             break;
           case ETCL_GE:
-            //result = left_operand >= right_operand; // Compile error on LynxOS
-            result = left_operand.operator>= (right_operand);
+            result = left_operand >= right_operand;
             this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
             break;
           case ETCL_EQ:
@@ -1064,8 +1061,7 @@ TAO_Notify_Constraint_Visitor::visit_binary_op (ETCL_Binary_Expr *binary,
             this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
             break;
           case ETCL_NE:
-            //result = left_operand != right_operand; // Compile error on LynxOS
-            result = left_operand.operator!= (right_operand);
+            result = left_operand != right_operand;
             this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
             break;
           case ETCL_PLUS:
