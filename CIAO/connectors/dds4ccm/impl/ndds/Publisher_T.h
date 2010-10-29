@@ -28,7 +28,7 @@ namespace CIAO
     class CCM_DDS_DataWriterListener_T;
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class CCM_DDS_PublisherListener_T;
+    class DDS_PublisherListener_T;
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class DDS_DomainParticipant_T;
@@ -43,7 +43,7 @@ namespace CIAO
     typedef DDS_DataWriter_T<DDS_TYPE, VENDOR_TYPE> DataWriter_type;
     typedef CCM_DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE> DataWriterListener_type;
 
-    typedef CCM_DDS_PublisherListener_T<DDS_TYPE, VENDOR_TYPE> PublisherListener_type;
+    typedef DDS_PublisherListener_T<DDS_TYPE, VENDOR_TYPE> PublisherListener_type;
     typedef DDS_DomainParticipant_T<DDS_TYPE, VENDOR_TYPE> DomainParticipant_type;
     public:
       /// Constructor

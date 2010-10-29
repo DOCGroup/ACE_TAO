@@ -1,18 +1,18 @@
 // $Id$
 
-#include "Subscriber_T.h"
-#include "Publisher_T.h"
-#include "ContentFilteredTopic_T.h"
-#include "TopicDescription_T.h"
-#include "dds4ccm/impl/Utils.h"
-#include "dds4ccm/impl/DDSPublisherListener_T.h"
-#include "dds4ccm/impl/DDSSubscriberListener_T.h"
-#include "dds4ccm/impl/TopicListener_T.h"
-#include "dds4ccm/impl/DomainParticipantManager.h"
-
+#include "dds4ccm/impl/ndds/Subscriber_T.h"
+#include "dds4ccm/impl/ndds/Publisher_T.h"
+#include "dds4ccm/impl/ndds/ContentFilteredTopic_T.h"
+#include "dds4ccm/impl/ndds/TopicDescription_T.h"
 #include "dds4ccm/impl/ndds/Topic_T.h"
 #include "dds4ccm/impl/ndds/DDSDomainParticipantListener.h"
+#include "dds4ccm/impl/ndds/DDSPublisherListener_T.h"
+#include "dds4ccm/impl/ndds/DDSSubscriberListener_T.h"
 #include "dds4ccm/impl/ndds/StatusCondition.h"
+
+#include "dds4ccm/impl/Utils.h"
+#include "dds4ccm/impl/TopicListener_T.h"
+#include "dds4ccm/impl/DomainParticipantManager.h"
 
 #include "dds4ccm/impl/ndds/convertors/PublisherQos.h"
 #include "dds4ccm/impl/ndds/convertors/SubscriberQos.h"
@@ -62,7 +62,7 @@ namespace CIAO
                     "DDS_DomainParticipant_T<DDS_TYPE, "
                     "VENDOR_TYPE>::create_publisher_with_profile - "
                     "Start creating Publisher\n"));
-      CCM_DDS_PublisherListener_T<DDS_TYPE, VENDOR_TYPE> *ccm_dds_pl = 0;
+      DDS_PublisherListener_T<DDS_TYPE, VENDOR_TYPE> *ccm_dds_pl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_pl,
@@ -116,7 +116,7 @@ namespace CIAO
 
       DDS_PublisherQos ccm_dds_qos = DDS_PUBLISHER_QOS_DEFAULT;
 
-      CCM_DDS_PublisherListener_T<DDS_TYPE, VENDOR_TYPE> *ccm_dds_pl = 0;
+      DDS_PublisherListener_T<DDS_TYPE, VENDOR_TYPE> *ccm_dds_pl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_pl,

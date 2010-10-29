@@ -23,13 +23,13 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_DDS_NDDS_Export CCM_DDS_DataWriter_Base
+    class DDS4CCM_DDS_NDDS_Export DDS_DataWriter_Base
       : public virtual ::DDS::DataWriter,
         public virtual ::CORBA::LocalObject
     {
     public:
       /// Constructor
-      explicit CCM_DDS_DataWriter_Base (DDSDataWriter * dw);
+      explicit DDS_DataWriter_Base (DDSDataWriter * dw);
 
       DDSDataWriter * get_impl (void);
 

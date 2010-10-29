@@ -35,7 +35,7 @@ namespace CIAO
     class DDS_Subscriber_T;
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class CCM_DDS_TopicListener_T;
+    class DDS_TopicListener_T;
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class DDS_Topic_T;
@@ -44,7 +44,7 @@ namespace CIAO
     class DDS_ContentFilteredTopic_T;
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class CCM_DDS_PublisherListener_T;
+    class DDS_PublisherListener_T;
 
     // Class declaration
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -55,8 +55,8 @@ namespace CIAO
     typedef DDS_Subscriber_T<DDS_TYPE, VENDOR_TYPE> Subscriber_type;
     typedef CCM_DDS_SubscriberListener_T<DDS_TYPE, VENDOR_TYPE> SubscriberListener_type;
     typedef DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE> Publisher_type;
-    typedef CCM_DDS_PublisherListener_T<DDS_TYPE, VENDOR_TYPE> PublisherListener_type;
-    typedef CCM_DDS_TopicListener_T<DDS_TYPE, VENDOR_TYPE> TopicListener_type;
+    typedef DDS_PublisherListener_T<DDS_TYPE, VENDOR_TYPE> PublisherListener_type;
+    typedef DDS_TopicListener_T<DDS_TYPE, VENDOR_TYPE> TopicListener_type;
     typedef DDS_Topic_T<DDS_TYPE, VENDOR_TYPE> Topic_type;
     typedef DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE> ContentFilteredTopic_type;
 

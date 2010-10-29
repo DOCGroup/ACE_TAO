@@ -34,7 +34,7 @@ namespace CIAO
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class DDS_DataWriter_T
-      : public virtual CCM_DDS_DataWriter_Base
+      : public virtual DDS_DataWriter_Base
     {
     typedef CCM_DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE> DataWriterListener_type;
     typedef DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE> Publisher_type;

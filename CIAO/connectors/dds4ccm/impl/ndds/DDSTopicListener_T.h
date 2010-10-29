@@ -21,16 +21,16 @@ namespace CIAO
   namespace DDS4CCM
   {
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class CCM_DDS_TopicListener_T :
+    class DDS_TopicListener_T :
       public virtual ::DDSTopicListener
     {
     typedef DDS_Topic_T<DDS_TYPE, VENDOR_TYPE> Topic_type;
     public:
       /// Constructor
-      CCM_DDS_TopicListener_T (::DDS::TopicListener_ptr p);
+      DDS_TopicListener_T (::DDS::TopicListener_ptr p);
 
       /// Destructor
-      virtual ~CCM_DDS_TopicListener_T (void);
+      virtual ~DDS_TopicListener_T (void);
 
       virtual void on_inconsistent_topic(
         ::DDSTopic* topic,
