@@ -26,7 +26,7 @@ namespace CIAO
     class DDS_Topic_T;
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class CCM_DDS_SubscriberListener_T;
+    class DDS_SubscriberListener_T;
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class DDS_Publisher_T;
@@ -53,7 +53,7 @@ namespace CIAO
       public virtual ::CORBA::LocalObject
     {
     typedef DDS_Subscriber_T<DDS_TYPE, VENDOR_TYPE> Subscriber_type;
-    typedef CCM_DDS_SubscriberListener_T<DDS_TYPE, VENDOR_TYPE> SubscriberListener_type;
+    typedef DDS_SubscriberListener_T<DDS_TYPE, VENDOR_TYPE> SubscriberListener_type;
     typedef DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE> Publisher_type;
     typedef DDS_PublisherListener_T<DDS_TYPE, VENDOR_TYPE> PublisherListener_type;
     typedef DDS_TopicListener_T<DDS_TYPE, VENDOR_TYPE> TopicListener_type;
