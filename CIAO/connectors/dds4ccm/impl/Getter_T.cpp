@@ -1,8 +1,8 @@
 // $Id$
 #include "dds4ccm/impl/Utils.h"
 
-#include "dds4ccm/impl/ndds/Duration_t.h"
-#include "dds4ccm/impl/ndds/SampleInfo.h"
+#include "dds4ccm/impl/ndds/convertors/Duration_t.h"
+#include "dds4ccm/impl/ndds/convertors/SampleInfo.h"
 
 #include "dds4ccm/impl/Log_Macros.h"
 
@@ -22,7 +22,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~Getter_
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, VENDOR_TYPE> *
 CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::impl (void)
 {
   if (this->reader_)

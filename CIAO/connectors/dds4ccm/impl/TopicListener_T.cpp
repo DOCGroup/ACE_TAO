@@ -1,7 +1,7 @@
 // $Id$
 #include "dds4ccm/impl/Utils.h"
 
-#include "dds4ccm/impl/Topic_T.h"
+#include "dds4ccm/impl/ndds/Topic_T.h"
 #include "dds4ccm/impl/DDSCallbackStatusHandler.h"
 #include "dds4ccm/impl/Log_Macros.h"
 

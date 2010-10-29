@@ -17,11 +17,6 @@
 # include "ndds/ndds_cpp.h"
 #endif
 
-#if (CIAO_DDS4CCM_OPENDDS==1)
-# include "dds/DdsDcpsC.h"
-typedef ::DDS::Publisher DDSPublisher;
-#endif
-
 namespace CIAO
 {
   namespace DDS4CCM
