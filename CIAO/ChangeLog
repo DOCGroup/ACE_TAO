@@ -1,3 +1,15 @@
+Fri Oct 29 12:34:14 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dds4ccm_impl.mpb:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/SubscriberListener_T.h:
+        * connectors/dds4ccm/impl/SubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber_T.cpp:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.h:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener_T.cpp:
+          Continued rename and move actions.
+
 Fri Oct 29 12:14:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipant_T.h:
