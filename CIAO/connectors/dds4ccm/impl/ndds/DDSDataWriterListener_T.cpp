@@ -15,7 +15,7 @@ namespace CIAO
   namespace DDS4CCM
   {
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    CCM_DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::CCM_DDS_DataWriterListener_T (
+    DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::DDS_DataWriterListener_T (
       ::DDS::DataWriterListener_ptr s,
       DataWriter_type * typed_dw)
       : impl_ (::DDS::DataWriterListener::_duplicate (s)),
@@ -24,17 +24,17 @@ namespace CIAO
     }
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    CCM_DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::~CCM_DDS_DataWriterListener_T (void)
+    DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::~DDS_DataWriterListener_T (void)
     {
     }
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     void
-    CCM_DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::on_offered_deadline_missed (
+    DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::on_offered_deadline_missed (
       ::DDSDataWriter *,
       const ::DDS_OfferedDeadlineMissedStatus & status)
     {
-      DDS4CCM_TRACE ("CCM_DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::on_offered_deadline_missed");
+      DDS4CCM_TRACE ("DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::on_offered_deadline_missed");
       ::DDS::OfferedDeadlineMissedStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_offered_deadline_missed (
@@ -44,11 +44,11 @@ namespace CIAO
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     void
-    CCM_DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::on_offered_incompatible_qos (
+    DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::on_offered_incompatible_qos (
       ::DDSDataWriter *,
       const ::DDS_OfferedIncompatibleQosStatus & status)
     {
-      DDS4CCM_TRACE ("CCM_DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::on_offered_incompatible_qos");
+      DDS4CCM_TRACE ("DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::on_offered_incompatible_qos");
       ::DDS::OfferedIncompatibleQosStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_offered_incompatible_qos (
@@ -58,11 +58,11 @@ namespace CIAO
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     void
-    CCM_DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::on_liveliness_lost (
+    DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::on_liveliness_lost (
       ::DDSDataWriter *,
       const ::DDS_LivelinessLostStatus & status)
     {
-      DDS4CCM_TRACE ("CCM_DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::on_liveliness_lost");
+      DDS4CCM_TRACE ("DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::on_liveliness_lost");
       ::DDS::LivelinessLostStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_liveliness_lost (
@@ -72,11 +72,11 @@ namespace CIAO
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     void
-    CCM_DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::on_publication_matched (
+    DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::on_publication_matched (
       ::DDSDataWriter *,
       const ::DDS_PublicationMatchedStatus & status)
     {
-      DDS4CCM_TRACE ("CCM_DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::on_publication_matched");
+      DDS4CCM_TRACE ("DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::on_publication_matched");
       ::DDS::PublicationMatchedStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_publication_matched (this->typed_dw_, ddsstatus);
@@ -84,7 +84,7 @@ namespace CIAO
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::DataWriterListener_ptr
-    CCM_DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::get_datawriterlistener (void)
+    DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE>::get_datawriterlistener (void)
     {
       return ::DDS::DataWriterListener::_duplicate (this->impl_.in ());
     }

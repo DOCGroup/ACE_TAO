@@ -35,7 +35,7 @@ namespace CIAO
     class DDS_ContentFilteredTopic_T;
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class CCM_DDS_SubscriberListener_T;
+    class DDS_SubscriberListener_T;
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class DDS_DomainParticipant_T;
@@ -50,7 +50,7 @@ namespace CIAO
     typedef DDS_Topic_T<DDS_TYPE, VENDOR_TYPE> Topic_type;
     typedef DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE> ContentFilteredTopic_type;
     typedef DataReader_T<DDS_TYPE, VENDOR_TYPE> DataReader_type;
-    typedef CCM_DDS_SubscriberListener_T<DDS_TYPE, VENDOR_TYPE> SubscriberListener_type;
+    typedef DDS_SubscriberListener_T<DDS_TYPE, VENDOR_TYPE> SubscriberListener_type;
     typedef DDS_DomainParticipant_T<DDS_TYPE, VENDOR_TYPE> DomainParticipant_type;
 
     public:
