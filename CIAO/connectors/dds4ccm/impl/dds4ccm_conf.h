@@ -29,7 +29,8 @@
 
 enum DDS4CCM_Vendor
 {
-  DDS4CCM_NDDS
+  DDS4CCM_NDDS,
+  DDS4CCM_OPENDDS
 };
 
 #endif /* DDS4CCM_CONF_H_ */
