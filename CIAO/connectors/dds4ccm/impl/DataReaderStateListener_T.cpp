@@ -70,8 +70,8 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
       return;
     }
 
-  ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, VENDOR_TYPE> * reader =
-    dynamic_cast < ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, VENDOR_TYPE> *> (rdr);
+  ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * reader =
+    dynamic_cast < ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *> (rdr);
 
   if (!reader)
     {

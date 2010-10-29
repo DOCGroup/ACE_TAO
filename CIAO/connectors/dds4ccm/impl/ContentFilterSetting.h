@@ -11,7 +11,7 @@
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 #include "dds4ccm/idl/dds4ccm_BaseEC.h"
-#include "dds4ccm/impl/ndds/ContentFilteredTopic_T.h"
+#include "dds4ccm/impl/ContentFilteredTopic_T.h"
 
 #include "tao/LocalObject.h"
 
