@@ -27,16 +27,16 @@ namespace CIAO
     class DDS_DataWriter_T;
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class CCM_DDS_PublisherListener_T :
+    class DDS_PublisherListener_T :
       public virtual ::DDSPublisherListener
     {
     typedef DDS_DataWriter_T<DDS_TYPE, VENDOR_TYPE> DataWriter_type;
     public:
       /// Constructor
-      CCM_DDS_PublisherListener_T (::DDS::PublisherListener_ptr p);
+      DDS_PublisherListener_T (::DDS::PublisherListener_ptr p);
 
       /// Destructor
-      virtual ~CCM_DDS_PublisherListener_T (void);
+      virtual ~DDS_PublisherListener_T (void);
 
       virtual void
       on_offered_deadline_missed (
@@ -80,6 +80,6 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/DDSPublisherListener_T.cpp"
+#include "dds4ccm/impl/ndds/DDSPublisherListener_T.cpp"
 
 #endif /* DDSPUBLISHERLISTENER_T_H_ */

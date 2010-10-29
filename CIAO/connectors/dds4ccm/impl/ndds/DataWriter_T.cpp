@@ -4,7 +4,7 @@
 #include "dds4ccm/impl/ndds/DataWriter.h"
 #include "dds4ccm/impl/ndds/StatusCondition.h"
 #include "dds4ccm/impl/ndds/Publisher_T.h"
-#include "dds4ccm/impl/DDSDataWriterListener_T.h"
+#include "dds4ccm/impl/ndds/DDSDataWriterListener_T.h"
 #include "dds4ccm/impl/ndds/Topic_T.h"
 
 #include "dds4ccm/impl/ndds/convertors/Duration_t.h"
@@ -25,7 +25,7 @@ namespace CIAO
   {
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     DDS_DataWriter_T<DDS_TYPE, VENDOR_TYPE>::DDS_DataWriter_T (DDSDataWriter * dw)
-      : CCM_DDS_DataWriter_Base (dw)
+      : DDS_DataWriter_Base (dw)
     {
     }
 

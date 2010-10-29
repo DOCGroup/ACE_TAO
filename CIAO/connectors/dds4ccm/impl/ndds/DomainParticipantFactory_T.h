@@ -26,7 +26,7 @@ namespace CIAO
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class DDS_DomainParticipantFactory_T :
-      public virtual ::DDS::CCM_DomainParticipantFactory,
+      public virtual ::DDS::DomainParticipantFactory,
       public virtual ::CORBA::LocalObject
     {
 

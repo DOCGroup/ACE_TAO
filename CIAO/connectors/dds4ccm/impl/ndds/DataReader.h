@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_DATAREADER_H
-#define DDS4CCM_DATAREADER_H
+#ifndef DATAREADER_H
+#define DATAREADER_H
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"

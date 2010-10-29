@@ -26,7 +26,7 @@ namespace CIAO
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class DDS_ReadCondition_T :
-      public virtual ::DDS::CCM_ReadCondition,
+      public virtual ::DDS::ReadCondition,
       public virtual ::CORBA::LocalObject
     {
     typedef DataReader_T<DDS_TYPE, VENDOR_TYPE> DataReader_type;

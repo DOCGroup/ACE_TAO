@@ -8,26 +8,26 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    CCM_DDS_DataWriter_Base::CCM_DDS_DataWriter_Base (DDSDataWriter * dw)
+    DDS_DataWriter_Base::DDS_DataWriter_Base (DDSDataWriter * dw)
       : impl_ (dw)
     {
     }
 
     DDSDataWriter *
-    CCM_DDS_DataWriter_Base::get_impl (void)
+    DDS_DataWriter_Base::get_impl (void)
     {
       return this->impl_;
     }
 
     void
-    CCM_DDS_DataWriter_Base::set_impl (DDSDataWriter * dw)
+    DDS_DataWriter_Base::set_impl (DDSDataWriter * dw)
     {
       // Set a pointer to this class for the listener to use.
       this->impl_ = dw;
     }
 
     DDSDataWriter *
-    CCM_DDS_DataWriter_Base::impl (void)
+    DDS_DataWriter_Base::impl (void)
     {
       if (!this->impl_)
         {
