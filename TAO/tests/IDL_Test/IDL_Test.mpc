@@ -346,8 +346,8 @@ project(*NDDS_Lib): taolib, messaging, gen_ostream, nddslib {
     Bug_3243_Regression.cxx
     Bug_3243_RegressionPlugin.cxx
     Bug_3243_RegressionSupport.cxx
-    Bug_3312_RegressionPlugin.cxx
-    Bug_3312_RegressionSupport.cxx
+//    Bug_3312_RegressionPlugin.cxx
+//    Bug_3312_RegressionSupport.cxx
     Bug_3819_Regression.cxx
     Bug_3819_RegressionPlugin.cxx
     Bug_3819_RegressionSupport.cxx
