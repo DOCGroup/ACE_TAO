@@ -1,3 +1,8 @@
+Fri Oct 29 14:33:33 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Removed GCC 2.x support.
+
 Thu Oct 28 17:45:10 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/INET_Addr.cpp (set): Corrected ACE_HAS_IPV6 checks made in
