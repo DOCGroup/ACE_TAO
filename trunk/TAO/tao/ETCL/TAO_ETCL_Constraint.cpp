@@ -384,7 +384,7 @@ TAO_ETCL_Literal_Constraint::operator/ (const TAO_ETCL_Literal_Constraint & rhs)
     {
     case ACE_ETCL_DOUBLE:
       {
-        if ((ACE_CDR::Double) rhs == 0.0)
+        if (ACE::is_equal ((ACE_CDR::Double) rhs, 0.0))
           return TAO_ETCL_Literal_Constraint ((ACE_CDR::Double) 0.0);
 
         CORBA::Double result = (CORBA::Double) *this / (CORBA::Double) rhs;
