@@ -11,10 +11,10 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 #include "dds4ccm/impl/Reader_T.h"
-#include "dds4ccm/impl/ndds/DataReader_T.h"
+#include "dds4ccm/impl/DataReader_T.h"
 #include "dds4ccm/impl/PortStatusListener_T.h"
 #include "dds4ccm/impl/ContentFilterSetting.h"
-#include "dds4ccm/impl/ndds/ContentFilteredTopic_T.h"
+#include "dds4ccm/impl/ContentFilteredTopic_T.h"
 #include "dds4ccm/impl/ConditionManager_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
@@ -64,7 +64,7 @@ protected:
     PortStatusListener_type;
   typedef ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
     Reader_type;
-  typedef ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, VENDOR_TYPE>
+  typedef ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
     DataReader_type;
   typedef ::CIAO::DDS4CCM::CCM_DDS_ContentFilterSetting_i
     ContentFilterSetting_type;
