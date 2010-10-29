@@ -23,17 +23,17 @@ namespace CIAO
     class DDS_DataWriter_T;
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class CCM_DDS_DataWriterListener_T :
+    class DDS_DataWriterListener_T :
       public virtual ::DDSDataWriterListener
     {
     typedef DDS_DataWriter_T<DDS_TYPE, VENDOR_TYPE> DataWriter_type;
     public:
       /// Constructor
-      CCM_DDS_DataWriterListener_T (::DDS::DataWriterListener_ptr p,
+      DDS_DataWriterListener_T (::DDS::DataWriterListener_ptr p,
                                     DataWriter_type * typed_dw);
 
       /// Destructor
-      virtual ~CCM_DDS_DataWriterListener_T (void);
+      virtual ~DDS_DataWriterListener_T (void);
 
       virtual void on_offered_deadline_missed (
         ::DDSDataWriter *the_writer,
