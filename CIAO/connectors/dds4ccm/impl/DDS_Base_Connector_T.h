@@ -9,7 +9,7 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
 #include "dds4ccm/impl/DomainParticipantListener_T.h"
-#include "dds4ccm/impl/DomainParticipantFactory_T.h"
+#include "dds4ccm/impl/ndds/DomainParticipantFactory_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 class DDS_Base_Connector_T
@@ -19,7 +19,7 @@ class DDS_Base_Connector_T
 {
 typedef ::CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, VENDOR_TYPE>
   DomainParticipantListener;
-typedef ::CIAO::DDS4CCM::CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+typedef ::CIAO::DDS4CCM::DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>
   DomainParticipantFactory;
 
 public:
