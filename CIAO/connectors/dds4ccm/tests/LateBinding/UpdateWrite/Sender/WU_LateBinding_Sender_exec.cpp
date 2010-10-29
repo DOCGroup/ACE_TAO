@@ -66,11 +66,16 @@ namespace CIAO_WU_LateBinding_Sender_Impl
   Sender_exec_i::Sender_exec_i (void)
     : iterations_ (0)
       , keys_ (0)
+      , to_handler_ (0)
   {
+     ACE_NEW_THROW_EX (this->to_handler_,
+                       Timeout_Handler (*this),
+                       ::CORBA::INTERNAL ());
   }
 
   Sender_exec_i::~Sender_exec_i (void)
   {
+    delete this->to_handler_;
   }
 
   // Supported operations and attributes.
@@ -379,9 +384,6 @@ namespace CIAO_WU_LateBinding_Sender_Impl
   Sender_exec_i::ccm_activate (void)
   {
      this->test_exception ();
-     ACE_NEW_THROW_EX (this->to_handler_,
-                       Timeout_Handler (*this),
-                       ::CORBA::INTERNAL ());
      if (this->reactor ()->schedule_timer (
                  this->to_handler_,
                  reinterpret_cast<const void *> (0),
@@ -403,7 +405,6 @@ namespace CIAO_WU_LateBinding_Sender_Impl
   void
   Sender_exec_i::ccm_passivate (void)
   {
-    delete this->to_handler_;
   }
 
   void
