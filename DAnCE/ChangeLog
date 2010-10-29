@@ -1,3 +1,8 @@
+Thu Oct 29 11:08:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * dance/DomainApplicationManager/DomainApplicationManager.mpc:
+        Add missing dance_config_handlers.
+
 Thu Oct 28 12:33:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * MPC/config/dance_domainapplicationmanager.mpb:
