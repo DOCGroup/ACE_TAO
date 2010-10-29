@@ -1,6 +1,6 @@
 // $Id$
 
-#include "dds4ccm/impl/DDSDataReaderListener_T.h"
+#include "dds4ccm/impl/ndds/DDSDataReaderListener_T.h"
 #include "dds4ccm/impl/ndds/StatusCondition.h"
 #include "dds4ccm/impl/ndds/ReadCondition_T.h"
 #include "dds4ccm/impl/ndds/QueryCondition_T.h"
@@ -585,8 +585,8 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, VENDOR_TYPE>::get_listener (void)
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T<DDS_TYPE, VENDOR_TYPE>::get_listener");
 
   DDSDataReaderListener *drl = this->impl ()->get_listener ();
-  CCM_DDS_DataReaderListener_T<DDS_TYPE, VENDOR_TYPE> *ccm_dds_drl =
-    dynamic_cast <CCM_DDS_DataReaderListener_T<DDS_TYPE, VENDOR_TYPE> *> (drl);
+  DDS_DataReaderListener_T<DDS_TYPE, VENDOR_TYPE> *ccm_dds_drl =
+    dynamic_cast <DDS_DataReaderListener_T<DDS_TYPE, VENDOR_TYPE> *> (drl);
   if (!ccm_dds_drl)
     {
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, "DataReader_T"

@@ -90,7 +90,7 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/DDSSubscriberListener_T.cpp"
+#include "dds4ccm/impl/ndds/DDSSubscriberListener_T.cpp"
 
 #endif /* DDSSUBSCRIBERLISTENER_T_H_ */
 

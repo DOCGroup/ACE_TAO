@@ -59,6 +59,6 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/DDSDataWriterListener_T.cpp"
+#include "dds4ccm/impl/ndds/DDSDataWriterListener_T.cpp"
 
 #endif /* DDSDATAWRITERLISTENER_T_H_ */

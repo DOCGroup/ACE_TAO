@@ -1,6 +1,6 @@
 // $Id$
 
-#include "dds4ccm/impl/DDSSubscriberListener_T.h"
+#include "dds4ccm/impl/ndds/DDSSubscriberListener_T.h"
 #include "dds4ccm/impl/ndds/Subscriber_T.h"
 
 #include "dds4ccm/impl/ndds/convertors/SampleLostStatus.h"

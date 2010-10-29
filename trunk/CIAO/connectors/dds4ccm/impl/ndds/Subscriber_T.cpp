@@ -4,7 +4,7 @@
 #include "dds4ccm/impl/ndds/Topic_T.h"
 #include "dds4ccm/impl/ndds/ContentFilteredTopic_T.h"
 #include "dds4ccm/impl/ndds/DataReader_T.h"
-#include "dds4ccm/impl/DDSDataReaderListener_T.h"
+#include "dds4ccm/impl/ndds/DDSDataReaderListener_T.h"
 #include "dds4ccm/impl/ndds/StatusCondition.h"
 
 #include "dds4ccm/impl/Utils.h"

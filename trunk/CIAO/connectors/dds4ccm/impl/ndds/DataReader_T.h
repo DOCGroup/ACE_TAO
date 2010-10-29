@@ -37,14 +37,13 @@ namespace CIAO
     class DDS_ContentFilteredTopic_T;
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class CCM_DDS_DataReaderListener_T;
+    class DDS_DataReaderListener_T;
 
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class DataReader_T
       : public virtual DDS_DataReader_Base
     {
-    typedef ::CIAO::DDS4CCM::CCM_DDS_DataReaderListener_T<DDS_TYPE, VENDOR_TYPE>
-      DataReaderListener_type;
+    typedef DDS_DataReaderListener_T<DDS_TYPE, VENDOR_TYPE> DataReaderListener_type;
     typedef DDS_Topic_T<DDS_TYPE, VENDOR_TYPE> Topic_type;
     typedef DDS_ReadCondition_T<DDS_TYPE, VENDOR_TYPE> ReadCondition_type;
     typedef DDS_QueryCondition_T<DDS_TYPE, VENDOR_TYPE> QueryCondition_type;

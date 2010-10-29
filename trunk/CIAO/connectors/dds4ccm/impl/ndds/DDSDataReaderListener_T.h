@@ -10,30 +10,30 @@
 #define DDSDATAREADERLISTENER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "dds4ccm_dds_impl_export.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
 
-#if (CIAO_DDS4CCM_NDDS==1)
+#include "dds4ccm/impl/ndds/dds4ccm_dds_ndds_export.h"
+
+
 # include "ndds/ndds_cpp.h"
-#endif
 
 namespace CIAO
 {
   namespace DDS4CCM
   {
     template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class CCM_DDS_DataReaderListener_T :
+    class DDS_DataReaderListener_T :
       public virtual ::DDSDataReaderListener
     {
     typedef DataReader_T<DDS_TYPE, VENDOR_TYPE> DataReader_type;
     public:
       /// Constructor
-      CCM_DDS_DataReaderListener_T (::DDS::DataReaderListener_ptr p,
+      DDS_DataReaderListener_T (::DDS::DataReaderListener_ptr p,
                                     DataReader_type *typed_dr);
 
       /// Destructor
-      virtual ~CCM_DDS_DataReaderListener_T (void);
+      virtual ~DDS_DataReaderListener_T (void);
 
       virtual void on_requested_deadline_missed(::DDSDataReader* reader,
         const ::DDS_RequestedDeadlineMissedStatus& status);
@@ -63,6 +63,6 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/DDSDataReaderListener_T.cpp"
+#include "dds4ccm/impl/ndds/DDSDataReaderListener_T.cpp"
 
 #endif /* DDSDATAREADERLISTENER_T_H_ */

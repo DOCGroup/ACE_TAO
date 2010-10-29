@@ -24,7 +24,7 @@ namespace CIAO
       public virtual ::DDS::Topic,
       public virtual ::CORBA::LocalObject
     {
-    typedef CCM_DDS_TopicListener_T<DDS_TYPE, VENDOR_TYPE> TopicListener_type;
+    typedef DDS_TopicListener_T<DDS_TYPE, VENDOR_TYPE> TopicListener_type;
     typedef DDS_DomainParticipant_T<DDS_TYPE, VENDOR_TYPE> DomainParticipant_type;
 
     public:

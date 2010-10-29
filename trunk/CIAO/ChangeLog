@@ -1,7 +1,45 @@
+Fri Oct 29 13:28:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDSDataReaderListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDSDataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSDataWriterListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDSDataWriterListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSPublisherListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDSPublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSSubscriberListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDSSubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSTopicListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDSTopicListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReader.h:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriter.h:
+        * connectors/dds4ccm/impl/ndds/DataWriter.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriter_T.h:
+        * connectors/dds4ccm/impl/ndds/DataWriter_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory_T.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant_T.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher_T.h:
+        * connectors/dds4ccm/impl/ndds/Publisher_T.cpp:
+        * connectors/dds4ccm/impl/ndds/ReadCondition_T.h:
+        * connectors/dds4ccm/impl/ndds/Subscriber_T.h:
+        * connectors/dds4ccm/impl/ndds/Subscriber_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Topic_T.h:
+        * connectors/dds4ccm/impl/DDSDataReaderListener_T.h:
+        * connectors/dds4ccm/impl/DDSDataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DDSDataWriterListener_T.h:
+        * connectors/dds4ccm/impl/DDSDataWriterListener_T.cpp:
+        * connectors/dds4ccm/impl/DDSPublisherListener_T.h:
+        * connectors/dds4ccm/impl/DDSPublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/DDSSubscriberListener_T.h:
+        * connectors/dds4ccm/impl/DDSSubscriberListener_T.cpp:
+          Continued with rename and move actions.
+
 Fri Oct 29 13:18:59 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst:
-	Add script to run Thread test with cdd file.
+        Add script to run Thread test with cdd file.
 
 Fri Oct 29 12:55:59 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 

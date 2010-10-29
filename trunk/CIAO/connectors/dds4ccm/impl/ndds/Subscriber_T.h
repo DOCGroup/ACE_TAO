@@ -46,7 +46,7 @@ namespace CIAO
       public virtual ::CORBA::LocalObject
     {
 
-    typedef CCM_DDS_DataReaderListener_T<DDS_TYPE, VENDOR_TYPE> DataReaderListener_type;
+    typedef DDS_DataReaderListener_T<DDS_TYPE, VENDOR_TYPE> DataReaderListener_type;
     typedef DDS_Topic_T<DDS_TYPE, VENDOR_TYPE> Topic_type;
     typedef DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE> ContentFilteredTopic_type;
     typedef DataReader_T<DDS_TYPE, VENDOR_TYPE> DataReader_type;
