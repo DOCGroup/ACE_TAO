@@ -3,8 +3,7 @@
 #include "dds4ccm/impl/ndds/DomainParticipantFactory_T.h"
 #include "dds4ccm/impl/ndds/DomainParticipant_T.h"
 
-#include "dds4ccm/impl/DDSDomainParticipantListener.h"
-
+#include "dds4ccm/impl/ndds/DDSDomainParticipantListener.h"
 #include "dds4ccm/impl/ndds/convertors/DomainParticipantFactoryQos.h"
 #include "dds4ccm/impl/ndds/convertors/DomainParticipantQos.h"
 
@@ -50,11 +49,11 @@ namespace CIAO
                     "Start creating domain participant for domain <%d>\n",
                     domain_id));
 
-      CCM_DDS_DomainParticipantListener_i *ccm_dds_dpl = 0;
+      DDS_DomainParticipantListener_i *ccm_dds_dpl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_dpl,
-                            CCM_DDS_DomainParticipantListener_i (a_listener),
+                            DDS_DomainParticipantListener_i (a_listener),
                             ::CORBA::NO_MEMORY ());
         }
 
@@ -125,11 +124,11 @@ namespace CIAO
                     "Start creating domain participant: "
                     "profile <%C#%C> - domain <%d>\n",
                     library_name, profile_name, domain_id));
-      CCM_DDS_DomainParticipantListener_i *ccm_dds_dpl = 0;
+      DDS_DomainParticipantListener_i *ccm_dds_dpl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_dpl,
-                            CCM_DDS_DomainParticipantListener_i (a_listener),
+                            DDS_DomainParticipantListener_i (a_listener),
                             ::CORBA::NO_MEMORY ());
         }
 

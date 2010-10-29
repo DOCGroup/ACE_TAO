@@ -12,10 +12,6 @@
 #include "EntityFactoryQosPolicy.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
-#if (CIAO_DDS4CCM_OPENDDS==1)
-typedef ::DDS::DomainParticipantFactoryQos DDS_DomainParticipantFactoryQos;
-#endif
-
 inline void
 operator<<= (::DDS::DomainParticipantFactoryQos &ddsqos, const ::DDS_DomainParticipantFactoryQos & qos)
 {

@@ -1,3 +1,27 @@
+Fri Oct 29 12:55:59 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDSDataReaderListener_T.h:
+        * connectors/dds4ccm/impl/DDSPublisherListener_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/Getter_T.h:
+        * connectors/dds4ccm/impl/Reader_T.h:
+        * connectors/dds4ccm/impl/dds4ccm_impl.mpc:
+        * connectors/dds4ccm/impl/ndds/DDSDomainParticipantListener.h:
+        * connectors/dds4ccm/impl/ndds/DDSDomainParticipantListener.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSTopicListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDSTopicListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Topic_T.h:
+        * connectors/dds4ccm/impl/ndds/Topic_T.cpp:
+        * connectors/dds4ccm/impl/ndds/convertors/DomainParticipantFactoryQos.h:
+        * connectors/dds4ccm/impl/ndds/dds4ccm_ndds.mpc:
+        * connectors/dds4ccm/impl/DDSDomainParticipantListener.h:
+        * connectors/dds4ccm/impl/DDSDomainParticipantListener.cpp:
+        * connectors/dds4ccm/impl/DDSTopicListener_T.h:
+        * connectors/dds4ccm/impl/DDSTopicListener_T.cpp:
+          Continued with rename and move actions.
+
 Fri Oct 29 12:34:14 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/dds4ccm_impl.mpb:
