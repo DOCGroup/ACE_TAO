@@ -1,3 +1,14 @@
+Thu Oct 29 13:12:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * dance/DomainApplicationManager/Node_Locator.cpp
+        * dance/DomainApplicationManager/Node_Locator.h
+        * dance/DAnCE_Properties.idl
+        Add check on property name and resourceType for Node address in cdd file.
+
+        * dance/DAnCE_Utility.h
+        * dance/DAnCE_Utility.cpp
+        Add get_satisfierproperty_value   
+
 Thu Oct 29 11:08:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * dance/DomainApplicationManager/DomainApplicationManager.mpc:

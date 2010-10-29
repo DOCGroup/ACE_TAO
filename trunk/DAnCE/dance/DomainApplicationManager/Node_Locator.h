@@ -42,6 +42,11 @@ namespace DAnCE
 
     ::Deployment::NodeManager_ptr ns_lookup (const char *name);
 
+    bool get_resource_value (const char *type,
+                             const ::Deployment::Resources &resources,
+                             ::Deployment::Resource &val);
+
+
     typedef ACE_Map_Manager<ACE_CString,
                             ACE_CString,
                             ACE_Null_Mutex> NODEMAP;
