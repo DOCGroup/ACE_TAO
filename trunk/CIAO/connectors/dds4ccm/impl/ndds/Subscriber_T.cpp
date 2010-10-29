@@ -1,13 +1,14 @@
 // $Id$
 
 #include "dds4ccm/impl/ndds/Subscriber_T.h"
-#include "dds4ccm/impl/ndds/SubscriberListener_T.h"
 #include "dds4ccm/impl/ndds/Topic_T.h"
 #include "dds4ccm/impl/ndds/ContentFilteredTopic_T.h"
 #include "dds4ccm/impl/ndds/DataReader_T.h"
 #include "dds4ccm/impl/DDSDataReaderListener_T.h"
 #include "dds4ccm/impl/ndds/StatusCondition.h"
+
 #include "dds4ccm/impl/Utils.h"
+#include "dds4ccm/impl/SubscriberListener_T.h"
 
 #include "convertors/InstanceHandle_t.h"
 #include "convertors/DataReaderQos.h"
