@@ -1,3 +1,54 @@
+Fri Oct 29 14:01:35 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager_T.h:
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/DDS_Write_T.h:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.h:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.h:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.h:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic_T.h:
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSDataReaderListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDSDataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSDataWriterListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDSDataWriterListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSPublisherListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDSPublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSSubscriberListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDSSubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSTopicListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDSTopicListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriter_T.h:
+        * connectors/dds4ccm/impl/ndds/DataWriter_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory_T.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant_T.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher_T.h:
+        * connectors/dds4ccm/impl/ndds/Publisher_T.cpp:
+        * connectors/dds4ccm/impl/ndds/QueryCondition_T.h:
+        * connectors/dds4ccm/impl/ndds/QueryCondition_T.cpp:
+        * connectors/dds4ccm/impl/ndds/ReadCondition_T.h:
+        * connectors/dds4ccm/impl/ndds/ReadCondition_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber_T.h:
+        * connectors/dds4ccm/impl/ndds/Subscriber_T.cpp:
+        * connectors/dds4ccm/impl/ndds/TopicDescription_T.h:
+        * connectors/dds4ccm/impl/ndds/TopicDescription_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Topic_T.h:
+        * connectors/dds4ccm/impl/ndds/Topic_T.cpp:
+          Next action in a chain of remove and rename actions. 
+
 Fri Oct 29 13:42:02 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDSDataWriterListener_T.h:

@@ -28,7 +28,7 @@ namespace CIAO
           public virtual LocalObject_T<CCM_TYPE>,
           private virtual ACE_Copy_Disabled
       {
-      typedef DataReader_T<DDS_TYPE, VENDOR_TYPE> DataReader_type;
+      typedef DataReader_T<DDS_TYPE> DataReader_type;
       typedef ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
         ConditionManager_type;
 

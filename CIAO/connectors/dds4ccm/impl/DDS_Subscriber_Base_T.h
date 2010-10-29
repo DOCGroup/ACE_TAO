@@ -64,7 +64,7 @@ protected:
     PortStatusListener_type;
   typedef ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
     Reader_type;
-  typedef ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, VENDOR_TYPE>
+  typedef ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE>
     DataReader_type;
   typedef ::CIAO::DDS4CCM::CCM_DDS_ContentFilterSetting_i
     ContentFilterSetting_type;

@@ -475,14 +475,14 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_impl (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, VENDOR_TYPE> *
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE> *
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_impl ()
 {
   return this->impl_;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, VENDOR_TYPE> *
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE> *
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::impl (void)
 {
   if (this->impl_)

@@ -56,7 +56,7 @@ CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYP
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
 CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYPE>::set_impl (
-  DDS_DataWriter_T<DDS_TYPE, VENDOR_TYPE> *writer)
+  DDS_DataWriter_T<DDS_TYPE> *writer)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::InstanceHandleManager_T::set_impl");
 

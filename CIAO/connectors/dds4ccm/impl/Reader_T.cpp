@@ -297,7 +297,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::set_im
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, VENDOR_TYPE> *
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE> *
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::impl (void)
 {
   if (this->reader_)

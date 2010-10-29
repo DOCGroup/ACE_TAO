@@ -21,18 +21,18 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_DomainParticipant_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_DomainParticipantFactory_T :
       public virtual ::DDS::DomainParticipantFactory,
       public virtual ::CORBA::LocalObject
     {
 
     public:
-      typedef DDS_DomainParticipant_T<DDS_TYPE, VENDOR_TYPE> DomainParticipant_type;
-      typedef DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE> DomainParticipantFactory_type;
+      typedef DDS_DomainParticipant_T<DDS_TYPE> DomainParticipant_type;
+      typedef DDS_DomainParticipantFactory_T<DDS_TYPE> DomainParticipantFactory_type;
       friend class ACE_Singleton<DomainParticipantFactory_type, TAO_SYNCH_MUTEX>;
 
       // Construtor

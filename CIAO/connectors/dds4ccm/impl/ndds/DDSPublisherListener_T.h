@@ -23,14 +23,14 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_DataWriter_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_PublisherListener_T :
       public virtual ::DDSPublisherListener
     {
-    typedef DDS_DataWriter_T<DDS_TYPE, VENDOR_TYPE> DataWriter_type;
+    typedef DDS_DataWriter_T<DDS_TYPE> DataWriter_type;
     public:
       /// Constructor
       DDS_PublisherListener_T (::DDS::PublisherListener_ptr p);

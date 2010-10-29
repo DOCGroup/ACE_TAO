@@ -12,32 +12,32 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE>::DDS_ContentFilteredTopic_T (
+    template <typename DDS_TYPE>
+    DDS_ContentFilteredTopic_T<DDS_TYPE>::DDS_ContentFilteredTopic_T (
         DDSContentFilteredTopic * dw)
       : impl_ (dw)
     {
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE>::~DDS_ContentFilteredTopic_T (void)
+    template <typename DDS_TYPE>
+    DDS_ContentFilteredTopic_T<DDS_TYPE>::~DDS_ContentFilteredTopic_T (void)
     {
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     char *
-    DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE>::get_filter_expression (void)
+    DDS_ContentFilteredTopic_T<DDS_TYPE>::get_filter_expression (void)
     {
-      DDS4CCM_TRACE ("DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE>::get_filter_expression");
+      DDS4CCM_TRACE ("DDS_ContentFilteredTopic_T<DDS_TYPE>::get_filter_expression");
       return CORBA::string_dup (this->impl ()->get_filter_expression ());
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE>::get_expression_parameters (
+    DDS_ContentFilteredTopic_T<DDS_TYPE>::get_expression_parameters (
       ::DDS::StringSeq & expression_parameters)
     {
-      DDS4CCM_TRACE ("DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE>::get_expression_parameters");
+      DDS4CCM_TRACE ("DDS_ContentFilteredTopic_T<DDS_TYPE>::get_expression_parameters");
       DDS_StringSeq parameters;
       ::DDS::ReturnCode_t retval =
         this->impl ()->get_expression_parameters (parameters);
@@ -45,23 +45,23 @@ namespace CIAO
       return retval;
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE>::set_expression_parameters (
+    DDS_ContentFilteredTopic_T<DDS_TYPE>::set_expression_parameters (
       const ::DDS::StringSeq & expression_parameters)
     {
-      DDS4CCM_TRACE ("DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE>::set_expression_parameters");
+      DDS4CCM_TRACE ("DDS_ContentFilteredTopic_T<DDS_TYPE>::set_expression_parameters");
 
       DDS_StringSeq parameters;
       parameters <<= expression_parameters;
       return this->impl ()->set_expression_parameters (parameters);
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::Topic_ptr
-    DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE>::get_related_topic (void)
+    DDS_ContentFilteredTopic_T<DDS_TYPE>::get_related_topic (void)
     {
-      DDS4CCM_TRACE ("DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE>::get_related_topic");
+      DDS4CCM_TRACE ("DDS_ContentFilteredTopic_T<DDS_TYPE>::get_related_topic");
 
       ::DDS::Topic_var retval;
       DDSTopic *topic = this->impl ()->get_related_topic ();
@@ -71,23 +71,23 @@ namespace CIAO
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     char *
-    DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE>::get_type_name (void)
+    DDS_ContentFilteredTopic_T<DDS_TYPE>::get_type_name (void)
     {
       return CORBA::string_dup (this->impl ()->get_type_name ());
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     char *
-    DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE>::get_name (void)
+    DDS_ContentFilteredTopic_T<DDS_TYPE>::get_name (void)
     {
       return CORBA::string_dup (this->impl ()->get_name ());
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::DomainParticipant_ptr
-    DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE>::get_participant (void)
+    DDS_ContentFilteredTopic_T<DDS_TYPE>::get_participant (void)
     {
       ::DDS::DomainParticipant_var retval;
       DDSDomainParticipant * p = this->impl ()->get_participant ();
@@ -97,23 +97,23 @@ namespace CIAO
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     DDSContentFilteredTopic *
-    DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE>::get_impl (void)
+    DDS_ContentFilteredTopic_T<DDS_TYPE>::get_impl (void)
     {
       return this->impl_;
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     void
-    DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE>::set_impl (DDSContentFilteredTopic * dw)
+    DDS_ContentFilteredTopic_T<DDS_TYPE>::set_impl (DDSContentFilteredTopic * dw)
     {
       this->impl_ = dw;
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     DDSContentFilteredTopic *
-    DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE>::impl (void)
+    DDS_ContentFilteredTopic_T<DDS_TYPE>::impl (void)
     {
       if (!this->impl_)
         {
