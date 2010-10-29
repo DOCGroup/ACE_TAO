@@ -6,11 +6,11 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class CCM_DDS_ReadCondition_T;
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class CCM_DDS_QueryCondition_T;
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    class DDS_ReadCondition_T;
+    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    class DDS_QueryCondition_T;
+    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class DataReader_T;
 
     //============================================================
@@ -19,11 +19,11 @@ namespace CIAO
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class ConditionManager_T
     {
-    typedef CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+    typedef DDS_ReadCondition_T<DDS_TYPE, VENDOR_TYPE>
       ReadCondition_type;
-    typedef CCM_DDS_QueryCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+    typedef DDS_QueryCondition_T<DDS_TYPE, VENDOR_TYPE>
       QueryCondition_type;
-    typedef DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+    typedef DataReader_T<DDS_TYPE, VENDOR_TYPE>
       DataReader_type;
 
     public:
