@@ -13,25 +13,25 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    DDS_TopicListener_T<DDS_TYPE, VENDOR_TYPE>::DDS_TopicListener_T (
+    template <typename DDS_TYPE>
+    DDS_TopicListener_T<DDS_TYPE>::DDS_TopicListener_T (
         ::DDS::TopicListener_ptr p)
       : impl_ (::DDS::TopicListener::_duplicate (p))
     {
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    DDS_TopicListener_T<DDS_TYPE, VENDOR_TYPE>::~DDS_TopicListener_T (void)
+    template <typename DDS_TYPE>
+    DDS_TopicListener_T<DDS_TYPE>::~DDS_TopicListener_T (void)
     {
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     void
-    DDS_TopicListener_T<DDS_TYPE, VENDOR_TYPE>::on_inconsistent_topic (
+    DDS_TopicListener_T<DDS_TYPE>::on_inconsistent_topic (
       ::DDSTopic* the_topic,
       const ::DDS_InconsistentTopicStatus & status)
     {
-      DDS4CCM_TRACE ("DDS_TopicListener_T<DDS_TYPE, VENDOR_TYPE>::on_inconsistent_topic");
+      DDS4CCM_TRACE ("DDS_TopicListener_T<DDS_TYPE>::on_inconsistent_topic");
 
       ::DDS::Topic_var dds_topic;
       ACE_NEW (dds_topic,
@@ -41,9 +41,9 @@ namespace CIAO
       this->impl_->on_inconsistent_topic (dds_topic.in (), ddsstatus);
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::TopicListener_ptr
-    DDS_TopicListener_T<DDS_TYPE, VENDOR_TYPE>::get_topiclistener (void)
+    DDS_TopicListener_T<DDS_TYPE>::get_topiclistener (void)
     {
       return ::DDS::TopicListener::_duplicate (this->impl_.in ());
     }

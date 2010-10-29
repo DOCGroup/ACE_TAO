@@ -22,28 +22,28 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::DDS_Publisher_T (DDSPublisher * dw)
+    template <typename DDS_TYPE>
+    DDS_Publisher_T<DDS_TYPE>::DDS_Publisher_T (DDSPublisher * dw)
       : impl_ (dw)
     {
-      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::DDS_Publisher_T");
+      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE>::DDS_Publisher_T");
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::~DDS_Publisher_T (void)
+    template <typename DDS_TYPE>
+    DDS_Publisher_T<DDS_TYPE>::~DDS_Publisher_T (void)
     {
-      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::~DDS_Publisher_T");
+      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE>::~DDS_Publisher_T");
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::DataWriter_ptr
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::create_datawriter (
+    DDS_Publisher_T<DDS_TYPE>::create_datawriter (
       ::DDS::Topic_ptr a_topic,
       const ::DDS::DataWriterQos &,
       ::DDS::DataWriterListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::create_datawriter");
+      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE>::create_datawriter");
 
       Topic_type * topic = dynamic_cast < Topic_type * > (a_topic);
 
@@ -89,15 +89,15 @@ namespace CIAO
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::DataWriter_ptr
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::create_datawriter_with_profile (::DDS::Topic_ptr a_topic,
+    DDS_Publisher_T<DDS_TYPE>::create_datawriter_with_profile (::DDS::Topic_ptr a_topic,
                                         const char* library_name,
                                         const char *profile_name,
                                         ::DDS::DataWriterListener_ptr a_listener,
                                         ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::create_datawriter_with_profile");
+      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE>::create_datawriter_with_profile");
 
       Topic_type * topic = dynamic_cast < Topic_type * > (a_topic);
 
@@ -152,11 +152,11 @@ namespace CIAO
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::delete_datawriter (::DDS::DataWriter_ptr a_datawriter)
+    DDS_Publisher_T<DDS_TYPE>::delete_datawriter (::DDS::DataWriter_ptr a_datawriter)
     {
-      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::delete_datawriter");
+      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE>::delete_datawriter");
 
       DataWriter_type *top = dynamic_cast< DataWriter_type * > (a_datawriter);
 
@@ -195,9 +195,9 @@ namespace CIAO
       return retval;
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::DataWriter_ptr
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::lookup_datawriter (const char * impl_name)
+    DDS_Publisher_T<DDS_TYPE>::lookup_datawriter (const char * impl_name)
     {
       ::DDS::DataWriter_var retval;
       DDSDataWriter* dw = this->impl ()->lookup_datawriter (impl_name);
@@ -207,28 +207,28 @@ namespace CIAO
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::delete_contained_entities (void)
+    DDS_Publisher_T<DDS_TYPE>::delete_contained_entities (void)
     {
       return this->impl ()->delete_contained_entities ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::set_qos (const ::DDS::PublisherQos & qos)
+    DDS_Publisher_T<DDS_TYPE>::set_qos (const ::DDS::PublisherQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::set_qos");
+      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE>::set_qos");
       ::DDS_PublisherQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return this->impl ()->set_qos (ccm_dds_qos);
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::get_qos (::DDS::PublisherQos & qos)
+    DDS_Publisher_T<DDS_TYPE>::get_qos (::DDS::PublisherQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::get_qos");
+      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE>::get_qos");
       ::DDS_PublisherQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       ::DDS::ReturnCode_t retcode = this->impl()->
@@ -237,13 +237,13 @@ namespace CIAO
       return retcode;
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::set_listener (
+    DDS_Publisher_T<DDS_TYPE>::set_listener (
       ::DDS::PublisherListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::set_listener");
+      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE>::set_listener");
 
       // Delete the previously set listener
       DDSPublisherListener *listener = this->impl ()->get_listener ();
@@ -259,11 +259,11 @@ namespace CIAO
       return this->impl ()->set_listener (ccm_dds_impl_list, mask);
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::PublisherListener_ptr
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::get_listener (void)
+    DDS_Publisher_T<DDS_TYPE>::get_listener (void)
     {
-      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::get_listener");
+      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE>::get_listener");
 
       DDSPublisherListener *ccm_dds_pub_list = this->impl ()->get_listener ();
       PublisherListener_type * list_proxy =
@@ -279,37 +279,37 @@ namespace CIAO
       return list_proxy->get_publisher_listener ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::suspend_publications (void)
+    DDS_Publisher_T<DDS_TYPE>::suspend_publications (void)
     {
       return this->impl ()->suspend_publications ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::resume_publications (void)
+    DDS_Publisher_T<DDS_TYPE>::resume_publications (void)
     {
       return this->impl ()->resume_publications ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::begin_coherent_changes (void)
+    DDS_Publisher_T<DDS_TYPE>::begin_coherent_changes (void)
     {
       return this->impl ()->begin_coherent_changes ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::end_coherent_changes (void)
+    DDS_Publisher_T<DDS_TYPE>::end_coherent_changes (void)
     {
       return this->impl ()->end_coherent_changes ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::wait_for_acknowledgments (
+    DDS_Publisher_T<DDS_TYPE>::wait_for_acknowledgments (
       const ::DDS::Duration_t & max_wait)
     {
       DDS_Duration_t ccm_dds_dds_duration;
@@ -317,11 +317,11 @@ namespace CIAO
       return this->impl ()->wait_for_acknowledgments (ccm_dds_dds_duration);
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::DomainParticipant_ptr
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::get_participant (void)
+    DDS_Publisher_T<DDS_TYPE>::get_participant (void)
     {
-      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::get_participant");
+      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE>::get_participant");
       ::DDS::DomainParticipant_var retval;
       DDSDomainParticipant* p = this->impl ()->get_participant ();
       ACE_NEW_THROW_EX (retval,
@@ -330,21 +330,21 @@ namespace CIAO
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::set_default_datawriter_qos (const ::DDS::DataWriterQos & qos)
+    DDS_Publisher_T<DDS_TYPE>::set_default_datawriter_qos (const ::DDS::DataWriterQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::set_default_datawriter_qos");
+      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE>::set_default_datawriter_qos");
       ::DDS_DataWriterQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return this->impl()->set_default_datawriter_qos (ccm_dds_qos);
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::get_default_datawriter_qos (::DDS::DataWriterQos & qos)
+    DDS_Publisher_T<DDS_TYPE>::get_default_datawriter_qos (::DDS::DataWriterQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::get_default_datawriter_qos");
+      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE>::get_default_datawriter_qos");
       ::DDS_DataWriterQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode =
             this->impl()->get_default_datawriter_qos (ccm_dds_qos);
@@ -352,12 +352,12 @@ namespace CIAO
       return retcode;
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::copy_from_topic_qos (::DDS::DataWriterQos & a_dataimpl_qos,
+    DDS_Publisher_T<DDS_TYPE>::copy_from_topic_qos (::DDS::DataWriterQos & a_dataimpl_qos,
                                               const ::DDS::TopicQos & a_impl_qos)
     {
-      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::copy_from_topic_qos");
+      DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE>::copy_from_topic_qos");
       ::DDS_DataWriterQos ccm_dds_qos;
       ::DDS_TopicQos ccm_dds_topic_qos;
 
@@ -369,16 +369,16 @@ namespace CIAO
       return retcode;
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::enable (void)
+    DDS_Publisher_T<DDS_TYPE>::enable (void)
     {
       return this->impl ()->enable ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::StatusCondition_ptr
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::get_statuscondition (void)
+    DDS_Publisher_T<DDS_TYPE>::get_statuscondition (void)
     {
       ::DDS::StatusCondition_var retval;
       DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
@@ -388,16 +388,16 @@ namespace CIAO
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::StatusMask
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::get_status_changes (void)
+    DDS_Publisher_T<DDS_TYPE>::get_status_changes (void)
     {
       return this->impl ()->get_status_changes ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::InstanceHandle_t
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::get_instance_handle (void)
+    DDS_Publisher_T<DDS_TYPE>::get_instance_handle (void)
     {
       ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
       ::DDS::InstanceHandle_t handle;
@@ -405,23 +405,23 @@ namespace CIAO
       return handle;
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     DDSPublisher *
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::get_impl (void)
+    DDS_Publisher_T<DDS_TYPE>::get_impl (void)
     {
       return this->impl_;
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     void
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::set_impl (DDSPublisher * dw)
+    DDS_Publisher_T<DDS_TYPE>::set_impl (DDSPublisher * dw)
     {
       this->impl_ = dw;
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     DDSPublisher *
-    DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE>::impl (void)
+    DDS_Publisher_T<DDS_TYPE>::impl (void)
     {
       if (!this->impl_)
         {

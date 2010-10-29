@@ -20,11 +20,11 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_TopicListener_T :
       public virtual ::DDSTopicListener
     {
-    typedef DDS_Topic_T<DDS_TYPE, VENDOR_TYPE> Topic_type;
+    typedef DDS_Topic_T<DDS_TYPE> Topic_type;
     public:
       /// Constructor
       DDS_TopicListener_T (::DDS::TopicListener_ptr p);

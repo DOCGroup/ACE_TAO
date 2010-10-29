@@ -20,14 +20,14 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_ContentFilteredTopic_T :
       public virtual ::DDS::ContentFilteredTopic,
       public virtual ::CORBA::LocalObject,
       private ACE_Copy_Disabled
     {
-    typedef DDS_Topic_T<DDS_TYPE, VENDOR_TYPE> Topic_type;
-    typedef DDS_DomainParticipant_T<DDS_TYPE, VENDOR_TYPE> DomainParticipant_type;
+    typedef DDS_Topic_T<DDS_TYPE> Topic_type;
+    typedef DDS_DomainParticipant_T<DDS_TYPE> DomainParticipant_type;
     public:
       /// Constructor
       explicit DDS_ContentFilteredTopic_T (DDSContentFilteredTopic * dw = 0);

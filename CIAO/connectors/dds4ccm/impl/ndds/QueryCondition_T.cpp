@@ -9,58 +9,58 @@
 
 #include "dds4ccm/impl/Log_Macros.h"
 
-template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE, VENDOR_TYPE>::DDS_QueryCondition_T (DDSQueryCondition * qc)
+template <typename DDS_TYPE>
+CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE>::DDS_QueryCondition_T (DDSQueryCondition * qc)
   : impl_ (qc)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_QueryCondition_T::DDS_QueryCondition_T");
 }
 
-template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE, VENDOR_TYPE>::~DDS_QueryCondition_T (void)
+template <typename DDS_TYPE>
+CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE>::~DDS_QueryCondition_T (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_QueryCondition_T::~DDS_QueryCondition_T");
 }
 
-template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 ::CORBA::Boolean
-CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE, VENDOR_TYPE>::get_trigger_value (void)
+CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE>::get_trigger_value (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_QueryCondition_T::get_trigger_value");
 
   return this->impl ()->get_trigger_value ();
 }
 
-template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 ::DDS::SampleStateMask
-CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE, VENDOR_TYPE>::get_sample_state_mask (void)
+CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE>::get_sample_state_mask (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_QueryCondition_T::get_sample_state_mask");
 
   return this->impl ()->get_sample_state_mask ();
 }
 
-template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 ::DDS::ViewStateMask
-CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE, VENDOR_TYPE>::get_view_state_mask (void)
+CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE>::get_view_state_mask (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_QueryCondition_T::get_view_state_mask");
 
   return this->impl ()->get_view_state_mask ();
 }
 
-template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 ::DDS::InstanceStateMask
-CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE, VENDOR_TYPE>::get_instance_state_mask (void)
+CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE>::get_instance_state_mask (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_QueryCondition_T::get_instance_state_mask");
 
   return this->impl ()->get_instance_state_mask ();
 }
 
-template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 ::DDS::DataReader_ptr
-CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE, VENDOR_TYPE>::get_datareader (void)
+CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE>::get_datareader (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_QueryCondition_T::get_datareader");
 
@@ -75,18 +75,18 @@ CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE, VENDOR_TYPE>::get_datareader (void
   return dds_reader._retn ();
 }
 
-template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 char *
-CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE, VENDOR_TYPE>::get_query_expression (void)
+CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE>::get_query_expression (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_QueryCondition_T::get_query_expression");
 
   return ::CORBA::string_dup (this->impl ()->get_query_expression ());
 }
 
-template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 ::DDS::ReturnCode_t
-CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE, VENDOR_TYPE>::get_query_parameters (
+CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE>::get_query_parameters (
   ::DDS::StringSeq & query_parameters)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_QueryCondition_T::get_query_parameters");
@@ -98,9 +98,9 @@ CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE, VENDOR_TYPE>::get_query_parameters
   return retval;
 }
 
-template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 ::DDS::ReturnCode_t
-CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE, VENDOR_TYPE>::set_query_parameters (
+CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE>::set_query_parameters (
   const ::DDS::StringSeq & query_parameters)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_QueryCondition_T::set_query_parameters");
@@ -111,23 +111,23 @@ CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE, VENDOR_TYPE>::set_query_parameters
   return this->impl ()->set_query_parameters (parameters);
 }
 
-template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 DDSQueryCondition *
-CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE, VENDOR_TYPE>::get_impl (void)
+CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE>::get_impl (void)
 {
   return this->impl_;
 }
 
-template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 void
-CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE, VENDOR_TYPE>::set_impl (DDSQueryCondition * dw)
+CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE>::set_impl (DDSQueryCondition * dw)
 {
   this->impl_ = dw;
 }
 
-template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 DDSQueryCondition *
-CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE, VENDOR_TYPE>::impl (void)
+CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE>::impl (void)
 {
   if (!this->impl_)
     {

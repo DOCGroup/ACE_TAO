@@ -22,43 +22,43 @@ namespace CIAO
   namespace DDS4CCM
   {
     // Forward declarations
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_Topic_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_SubscriberListener_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_Publisher_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_Subscriber_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_TopicListener_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_Topic_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_ContentFilteredTopic_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_PublisherListener_T;
 
     // Class declaration
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_DomainParticipant_T :
       public virtual ::DDS::DomainParticipant,
       public virtual ::CORBA::LocalObject
     {
-    typedef DDS_Subscriber_T<DDS_TYPE, VENDOR_TYPE> Subscriber_type;
-    typedef DDS_SubscriberListener_T<DDS_TYPE, VENDOR_TYPE> SubscriberListener_type;
-    typedef DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE> Publisher_type;
-    typedef DDS_PublisherListener_T<DDS_TYPE, VENDOR_TYPE> PublisherListener_type;
-    typedef DDS_TopicListener_T<DDS_TYPE, VENDOR_TYPE> TopicListener_type;
-    typedef DDS_Topic_T<DDS_TYPE, VENDOR_TYPE> Topic_type;
-    typedef DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE> ContentFilteredTopic_type;
+    typedef DDS_Subscriber_T<DDS_TYPE> Subscriber_type;
+    typedef DDS_SubscriberListener_T<DDS_TYPE> SubscriberListener_type;
+    typedef DDS_Publisher_T<DDS_TYPE> Publisher_type;
+    typedef DDS_PublisherListener_T<DDS_TYPE> PublisherListener_type;
+    typedef DDS_TopicListener_T<DDS_TYPE> TopicListener_type;
+    typedef DDS_Topic_T<DDS_TYPE> Topic_type;
+    typedef DDS_ContentFilteredTopic_T<DDS_TYPE> ContentFilteredTopic_type;
 
     public:
       /// Constructor

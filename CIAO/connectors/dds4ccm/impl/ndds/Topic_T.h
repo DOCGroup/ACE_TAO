@@ -19,13 +19,13 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_Topic_T :
       public virtual ::DDS::Topic,
       public virtual ::CORBA::LocalObject
     {
-    typedef DDS_TopicListener_T<DDS_TYPE, VENDOR_TYPE> TopicListener_type;
-    typedef DDS_DomainParticipant_T<DDS_TYPE, VENDOR_TYPE> DomainParticipant_type;
+    typedef DDS_TopicListener_T<DDS_TYPE> TopicListener_type;
+    typedef DDS_DomainParticipant_T<DDS_TYPE> DomainParticipant_type;
 
     public:
       /// Constructor

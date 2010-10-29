@@ -23,22 +23,22 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_DataWriterListener_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_Publisher_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_Topic_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_DataWriter_T
       : public virtual DDS_DataWriter_Base
     {
-    typedef DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE> DataWriterListener_type;
-    typedef DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE> Publisher_type;
-    typedef DDS_Topic_T<DDS_TYPE, VENDOR_TYPE> Topic_type;
+    typedef DDS_DataWriterListener_T<DDS_TYPE> DataWriterListener_type;
+    typedef DDS_Publisher_T<DDS_TYPE> Publisher_type;
+    typedef DDS_Topic_T<DDS_TYPE> Topic_type;
 
     public:
       explicit DDS_DataWriter_T (DDSDataWriter * dw = 0);

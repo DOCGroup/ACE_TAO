@@ -20,26 +20,26 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::DDS_DomainParticipantFactory_T (void)
+    template <typename DDS_TYPE>
+    DDS_DomainParticipantFactory_T<DDS_TYPE>::DDS_DomainParticipantFactory_T (void)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::DDS_DomainParticipantFactory_T");
+      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE>::DDS_DomainParticipantFactory_T");
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::~DDS_DomainParticipantFactory_T (void)
+    template <typename DDS_TYPE>
+    DDS_DomainParticipantFactory_T<DDS_TYPE>::~DDS_DomainParticipantFactory_T (void)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::~DDS_DomainParticipantFactory_T");
+      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE>::~DDS_DomainParticipantFactory_T");
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::DomainParticipant_ptr
-    DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::create_participant (::DDS::DomainId_t domain_id,
+    DDS_DomainParticipantFactory_T<DDS_TYPE>::create_participant (::DDS::DomainId_t domain_id,
                                                         const ::DDS::DomainParticipantQos & qos,
                                                         ::DDS::DomainParticipantListener_ptr a_listener,
                                                         ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::create_participant");
+      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE>::create_participant");
 
       ACE_UNUSED_ARG (qos);
 
@@ -74,7 +74,7 @@ namespace CIAO
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                           "DDS_DomainParticipantFactory_T"
-                          "<DDS_TYPE, VENDOR_TYPE>::create_participant - "
+                          "<DDS_TYPE>::create_participant - "
                           "Error: Unable to create DomainParticipant for domain <%d>\n",
                           domain_id));
               throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
@@ -106,16 +106,16 @@ namespace CIAO
         }
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::DomainParticipant_ptr
-    DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::create_participant_with_profile (
+    DDS_DomainParticipantFactory_T<DDS_TYPE>::create_participant_with_profile (
       ::DDS::DomainId_t domain_id,
       const char * library_name,
       const char * profile_name,
       ::DDS::DomainParticipantListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::"
+      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE>::"
                      "create_participant_with_profile");
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
@@ -194,12 +194,12 @@ namespace CIAO
     }
 
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::delete_participant (
+    DDS_DomainParticipantFactory_T<DDS_TYPE>::delete_participant (
       ::DDS::DomainParticipant_ptr a_participant)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::delete_participant");
+      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE>::delete_participant");
 
       DomainParticipant_type *part =
         dynamic_cast< DomainParticipant_type * > (a_participant);
@@ -208,7 +208,7 @@ namespace CIAO
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "DDS_DomainParticipantFactory_T"
-                        "<DDS_TYPE, VENDOR_TYPE>::delete_participant - "
+                        "<DDS_TYPE>::delete_participant - "
                         "Unable to cast provided object reference to servant "
                         "type, bailing.\n"));
           return DDS::RETCODE_ERROR;
@@ -216,7 +216,7 @@ namespace CIAO
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, DDS4CCM_INFO
                     "DDS_DomainParticipantFactory_T"
-                    "<DDS_TYPE, VENDOR_TYPE>::delete_participant - "
+                    "<DDS_TYPE>::delete_participant - "
                     "Successfully casted provided object reference to servant type.\n"));
 
       ::DDS::ReturnCode_t retval = DDS::RETCODE_OK;
@@ -225,7 +225,7 @@ namespace CIAO
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
                     "DDS_DomainParticipantFactory_T"
-                    "<DDS_TYPE, VENDOR_TYPE>::delete_participant - "
+                    "<DDS_TYPE>::delete_participant - "
                     "Going to delete participant.\n"));
 
           retval = DDSDomainParticipantFactory::get_instance ()->
@@ -235,7 +235,7 @@ namespace CIAO
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                             "DDS_DomainParticipantFactory_T"
-                            "<DDS_TYPE, VENDOR_TYPE>::delete_participant - "
+                            "<DDS_TYPE>::delete_participant - "
                             "RTI delete_participant returned non-ok error code %C\n",
                             translate_retcode (retval)));
             }
@@ -243,16 +243,16 @@ namespace CIAO
             {
               DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                              "DDS_DomainParticipantFactory_T"
-                             "<DDS_TYPE, VENDOR_TYPE>::delete_participant - "
+                             "<DDS_TYPE>::delete_participant - "
                              "Successfully deleted provided participant.\n"));
             }
         }
       return retval;
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::DomainParticipant_ptr
-    DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::lookup_participant (
+    DDS_DomainParticipantFactory_T<DDS_TYPE>::lookup_participant (
       ::DDS::DomainId_t domain_id)
     {
       ::DDS::DomainParticipant_var retval;
@@ -264,12 +264,12 @@ namespace CIAO
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::set_default_participant_qos (
+    DDS_DomainParticipantFactory_T<DDS_TYPE>::set_default_participant_qos (
       const ::DDS::DomainParticipantQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::"
+      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE>::"
         "set_default_participant_qos");
       DDS_DomainParticipantQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
@@ -277,12 +277,12 @@ namespace CIAO
         set_default_participant_qos (ccm_dds_qos);
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::get_default_participant_qos (
+    DDS_DomainParticipantFactory_T<DDS_TYPE>::get_default_participant_qos (
       ::DDS::DomainParticipantQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::"
+      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE>::"
         "get_default_participant_qos");
       DDS_DomainParticipantQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode =
@@ -292,23 +292,23 @@ namespace CIAO
       return retcode;
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::set_qos (
+    DDS_DomainParticipantFactory_T<DDS_TYPE>::set_qos (
       const ::DDS::DomainParticipantFactoryQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::set_qos");
+      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE>::set_qos");
       DDS_DomainParticipantFactoryQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return DDSDomainParticipantFactory::get_instance ()->set_qos (ccm_dds_qos);
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::get_qos (
+    DDS_DomainParticipantFactory_T<DDS_TYPE>::get_qos (
       ::DDS::DomainParticipantFactoryQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::get_qos");
+      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE>::get_qos");
       DDS_DomainParticipantFactoryQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode =
         DDSDomainParticipantFactory::get_instance ()->get_qos (ccm_dds_qos);
@@ -316,13 +316,13 @@ namespace CIAO
       return retcode;
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::set_default_participant_qos_with_profile (
+    DDS_DomainParticipantFactory_T<DDS_TYPE>::set_default_participant_qos_with_profile (
                                                         const char * library_name,
                                                         const char * profile_name)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>::"
+      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_T<DDS_TYPE>::"
                      "set_default_participant_qos_with_profile");
 
       return DDSDomainParticipantFactory::get_instance ()->

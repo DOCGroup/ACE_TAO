@@ -183,8 +183,8 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_topic (
 
   if (::CORBA::is_nil (this->topic_.in ()))
     {
-      ::CIAO::DDS4CCM::DDS_DomainParticipant_T<DDS_TYPE, VENDOR_TYPE> *part =
-        dynamic_cast< CIAO::DDS4CCM::DDS_DomainParticipant_T<DDS_TYPE, VENDOR_TYPE> * > (
+      ::CIAO::DDS4CCM::DDS_DomainParticipant_T<DDS_TYPE> *part =
+        dynamic_cast< CIAO::DDS4CCM::DDS_DomainParticipant_T<DDS_TYPE> * > (
           this->domain_participant_.in ());
       if (!part)
         {
