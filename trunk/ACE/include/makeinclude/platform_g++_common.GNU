@@ -162,13 +162,7 @@ else
   endif # GXX_4_OR_BETTER == 1
 endif # shared_libs
 
-# GCC 2.x needs this to compile TAO correctly 
-ifeq ($(CXX_MAJOR_VERSION), 2)
-  CCFLAGS += -ftemplate-depth-23
-endif
-
 minimaltoc ?= 0
-
 ifeq ($(minimaltoc),1)
   FLAGS_C_CC += -mminimal-toc
 endif
