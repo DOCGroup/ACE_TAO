@@ -5,6 +5,8 @@
 #include "dance/Logger/Log_Macros.h"
 #include "Config_Handlers/XML_File_Intf.h"
 #include "Config_Handlers/Common.h"
+#include "dance/DAnCE_Utility.h"
+#include "dance/DAnCE_PropertiesC.h"
 
 
 namespace DAnCE
@@ -105,15 +107,32 @@ namespace DAnCE
         }
 
       // install nodes
-      for (CORBA::ULong i=0;
-               i < plan->node.length ();
-               ++i)
-      {
-        ::Deployment::SatisfierProperties properties =  plan->node[i].resource[0].property;
-        ::Deployment::SatisfierProperty property = properties[0];
-          CORBA::Any any = property.value;
-          const char *val = 0;
-          any >>= CORBA::Any::to_string(val, 0);
+      for (CORBA::ULong i=0; i < plan->node.length (); ++i)
+        {
+          ::Deployment::Resource resource;
+
+           if (!get_resource_value (DAnCE::NODE_RESOURCE_TYPE,
+                                    plan->node[i].resource,
+                                    resource))
+             {
+               DANCE_ERROR (1, (LM_ERROR,
+                                DLINFO ACE_TEXT("Node_Locator::process_cdd - ")
+                                ACE_TEXT("Error: Resource <%C> not found.\n"),
+                                DAnCE::NODE_RESOURCE_TYPE));
+               return false;
+             }
+          const ACE_TCHAR *val = 0;
+          if (!::DAnCE::Utility::get_satisfierproperty_value (DAnCE::NODE_IOR,
+                                                              resource.property,
+                                                              val))
+            {
+              DANCE_ERROR (1, (LM_ERROR,
+                               DLINFO ACE_TEXT("Node_Locator::process_cdd - ")
+                              ACE_TEXT("Error: Property <%C> not found.\n"),
+                              DAnCE::NODE_IOR));
+              return false;
+
+            }
           ACE_CString ior(val);
           ior += "/";
           ior += plan->node[i].name;
@@ -212,5 +231,43 @@ namespace DAnCE
 
     return ::Deployment::NodeManager::_nil ();
   }
+
+  bool
+  Node_Locator::get_resource_value (const char *type,
+                                      const ::Deployment::Resources &resources,
+                                     ::Deployment::Resource  &val)
+  {
+    DANCE_TRACE ("Node_Locator::get_resource_value<const char *>");
+
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                     ACE_TEXT("Node_Locator::get_resource_value - ")
+                     ACE_TEXT("Finding resource for type '%C'\n"),
+                     type));
+
+    for (CORBA::ULong i = 0; i < resources.length (); ++i)
+      {
+        // search for the resource with resourceType
+        for (CORBA::ULong k = 0;k < resources[i].resourceType.length ();k++)
+          {
+            if (ACE_OS::strcmp (type,
+                                 resources[i].resourceType[k]) == 0)
+              {
+                DANCE_DEBUG (9, (LM_TRACE, DLINFO,
+                             ACE_TEXT("Node_Locator::get_resource_value - ")
+                             ACE_TEXT("Found resource for type '%C'\n"),
+                             type));
+
+                val = resources[i];
+                return true;
+              }
+          }
+        }
+      DANCE_ERROR (1, (LM_WARNING, DLINFO
+                       ACE_TEXT("Node_Locator::get_resource_value - ")
+                       ACE_TEXT("Failed to extract resource for %C\n"),
+                       type));
+      return false;
+    }
+
 }
 

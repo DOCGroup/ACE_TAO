@@ -37,6 +37,10 @@ module DAnCE
   /// Indicates the naming context used for instance objects.
   const string INSTANCE_NC = "edu.vanderbilt.dre.DAnCE.InstanceNC";
 
+  /// Indicates node address used in Node_Locator.
+  const string NODE_RESOURCE_TYPE = "edu.vanderbilt.dre.DAnCE.NodeAddress";
+  const string NODE_IOR = "edu.vanderbilt.dre.DAnCE.StringIOR";
+
   /// Indicates the POA in use for this entity.
   const string ENTITY_POA = "edu.dre.vanderbilt.DAnCE.POA";
 
@@ -93,7 +97,6 @@ module DAnCE
   const string DANCE_PLUGIN_ENTRYPT = "edu.vanderbilt.dre.DAnCE.InstanceHandler.EntryPoint";
   const string DANCE_PLUGIN_ARTIFACT = "edu.vanderbilt.dre.DAnCE.InstanceHandler.Artifact";
   const string DANCE_IDH_DEPENDSON = "edu.vanderbilt.dre.DAnCE.InstanceHandler.DependsOn";
-
 
 };
 

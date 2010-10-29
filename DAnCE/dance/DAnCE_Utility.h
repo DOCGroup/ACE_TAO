@@ -54,6 +54,12 @@ namespace DAnCE
                         T &val);
 
     template<class T>
+    bool
+    get_satisfierproperty_value (const char *name,
+                         const ::Deployment::SatisfierProperties &properties,
+                         T &val);
+
+    template<class T>
     void
     update_property_value (const char *name,
                            ::Deployment::Properties &properties,
