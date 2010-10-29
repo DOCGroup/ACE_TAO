@@ -1,3 +1,12 @@
+Fri Oct 29 12:14:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipant_T.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipant_T.h:
+        * connectors/dds4ccm/impl/DomainParticipant_T.cpp:
+          Rename and move action in order to provide re-useable code.
+          Missed these during the last commit.
+
 Fri Oct 29 11:57:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/Coherent_Changes_Guard.h:

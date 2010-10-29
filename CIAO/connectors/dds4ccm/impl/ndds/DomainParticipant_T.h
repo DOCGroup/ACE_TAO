@@ -12,77 +12,71 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
-#include "dds4ccm/impl/ndds/InstanceHandle_t.h"
+#include "convertors/InstanceHandle_t.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
 #include "tao/LocalObject.h"
-
-#if (CIAO_DDS4CCM_NDDS==1)
-#include "ndds/ndds_cpp.h"
-#endif
 
 namespace CIAO
 {
   namespace DDS4CCM
   {
     // Forward declarations
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class CCM_DDS_Topic_T;
+    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    class DDS_Topic_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_SubscriberListener_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class CCM_DDS_Publisher_T;
+    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    class DDS_Publisher_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class CCM_DDS_Subscriber_T;
+    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    class DDS_Subscriber_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_TopicListener_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class CCM_DDS_Topic_T;
+    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    class DDS_Topic_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class CCM_DDS_ContentFilteredTopic_T;
+    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    class DDS_ContentFilteredTopic_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_PublisherListener_T;
 
     // Class declaration
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class CCM_DDS_DomainParticipant_T :
-      public virtual ::DDS::CCM_DomainParticipant,
+    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    class DDS_DomainParticipant_T :
+      public virtual ::DDS::DomainParticipant,
       public virtual ::CORBA::LocalObject
     {
-    typedef CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> Subscriber_type;
-    typedef CCM_DDS_SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> SubscriberListener_type;
-    typedef CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> Publisher_type;
-    typedef CCM_DDS_PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> PublisherListener_type;
-    typedef CCM_DDS_TopicListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> TopicListener_type;
-    typedef CCM_DDS_Topic_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> Topic_type;
-    typedef CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> ContentFilteredTopic_type;
+    typedef DDS_Subscriber_T<DDS_TYPE, VENDOR_TYPE> Subscriber_type;
+    typedef CCM_DDS_SubscriberListener_T<DDS_TYPE, VENDOR_TYPE> SubscriberListener_type;
+    typedef DDS_Publisher_T<DDS_TYPE, VENDOR_TYPE> Publisher_type;
+    typedef CCM_DDS_PublisherListener_T<DDS_TYPE, VENDOR_TYPE> PublisherListener_type;
+    typedef CCM_DDS_TopicListener_T<DDS_TYPE, VENDOR_TYPE> TopicListener_type;
+    typedef DDS_Topic_T<DDS_TYPE, VENDOR_TYPE> Topic_type;
+    typedef DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE> ContentFilteredTopic_type;
 
     public:
       /// Constructor
-      CCM_DDS_DomainParticipant_T (DDSDomainParticipant * dp);
+      DDS_DomainParticipant_T (DDSDomainParticipant * dp);
 
       /// Destructor
-      virtual ~CCM_DDS_DomainParticipant_T (void);
+      virtual ~DDS_DomainParticipant_T (void);
 
       virtual ::DDS::Publisher_ptr create_publisher (
         const ::DDS::PublisherQos & qos,
         ::DDS::PublisherListener_ptr a_listener,
         ::DDS::StatusMask mask);
 
-#if (CIAO_DDS4CCM_NDDS==1)
       virtual ::DDS::Publisher_ptr create_publisher_with_profile (
         const char* library_name,
         const char *profile_name,
         ::DDS::PublisherListener_ptr a_listener,
         ::DDS::StatusMask mask);
-#endif
 
       virtual ::DDS::ReturnCode_t delete_publisher (::DDS::Publisher_ptr p);
 
@@ -91,13 +85,11 @@ namespace CIAO
         ::DDS::SubscriberListener_ptr a_listener,
         ::DDS::StatusMask mask);
 
-#if (CIAO_DDS4CCM_NDDS==1)
       virtual ::DDS::Subscriber_ptr create_subscriber_with_profile(
         const char* library_name,
         const char *profile_name,
         ::DDS::SubscriberListener_ptr a_listener,
         ::DDS::StatusMask mask);
-#endif
 
       virtual ::DDS::ReturnCode_t delete_subscriber (::DDS::Subscriber_ptr s);
 
@@ -110,7 +102,6 @@ namespace CIAO
         ::DDS::TopicListener_ptr a_listener,
         ::DDS::StatusMask mask);
 
-#if (CIAO_DDS4CCM_NDDS==1)
       virtual ::DDS::Topic_ptr create_topic_with_profile (
         const char * impl_name,
         const char * type_name,
@@ -118,7 +109,6 @@ namespace CIAO
         const char *profile_name,
         ::DDS::TopicListener_ptr a_listener,
         ::DDS::StatusMask mask);
-#endif
 
       virtual ::DDS::ReturnCode_t delete_topic (::DDS::Topic_ptr a_topic);
 
@@ -235,6 +225,6 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/DomainParticipant_T.cpp"
+#include "dds4ccm/impl/ndds/DomainParticipant_T.cpp"
 
 #endif /* DOMAINPARTICIPANT_T_H_ */
