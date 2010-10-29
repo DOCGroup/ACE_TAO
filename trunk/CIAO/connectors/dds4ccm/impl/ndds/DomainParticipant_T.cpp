@@ -5,13 +5,14 @@
 #include "ContentFilteredTopic_T.h"
 #include "TopicDescription_T.h"
 #include "dds4ccm/impl/Utils.h"
-#include "dds4ccm/impl/ndds/StatusCondition.h"
 #include "dds4ccm/impl/DDSPublisherListener_T.h"
 #include "dds4ccm/impl/DDSSubscriberListener_T.h"
-#include "dds4ccm/impl/ndds/Topic_T.h"
 #include "dds4ccm/impl/TopicListener_T.h"
-#include "dds4ccm/impl/DDSDomainParticipantListener.h"
 #include "dds4ccm/impl/DomainParticipantManager.h"
+
+#include "dds4ccm/impl/ndds/Topic_T.h"
+#include "dds4ccm/impl/ndds/DDSDomainParticipantListener.h"
+#include "dds4ccm/impl/ndds/StatusCondition.h"
 
 #include "dds4ccm/impl/ndds/convertors/PublisherQos.h"
 #include "dds4ccm/impl/ndds/convertors/SubscriberQos.h"
@@ -814,11 +815,11 @@ namespace CIAO
       DDSDomainParticipantListener *listener = this->impl ()->get_listener ();
       delete listener;
 
-      CCM_DDS_DomainParticipantListener_i * ccm_dds_impl_list = 0;
+      DDS_DomainParticipantListener_i * ccm_dds_impl_list = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_impl_list,
-                            CCM_DDS_DomainParticipantListener_i (a_listener),
+                            DDS_DomainParticipantListener_i (a_listener),
                             ::CORBA::NO_MEMORY ());
         }
       return this->impl_->set_listener (ccm_dds_impl_list, mask);
@@ -831,8 +832,8 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_DomainParticipant_T::get_listener");
 
       DDSDomainParticipantListener *ccm_dds_dp_list = this->impl ()->get_listener ();
-      CCM_DDS_DomainParticipantListener_i * list_proxy =
-        dynamic_cast <CCM_DDS_DomainParticipantListener_i *> (ccm_dds_dp_list);
+      DDS_DomainParticipantListener_i * list_proxy =
+        dynamic_cast <DDS_DomainParticipantListener_i *> (ccm_dds_dp_list);
       if (!list_proxy)
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO

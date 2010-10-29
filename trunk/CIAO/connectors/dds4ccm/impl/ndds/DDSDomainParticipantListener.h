@@ -11,30 +11,25 @@
 #define DOMAINPARTICIPANTLISTENER_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "dds4ccm_dds_impl_export.h"
+
+#include "dds4ccm/impl/ndds/dds4ccm_dds_ndds_export.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
-#if (CIAO_DDS4CCM_NDDS==1)
 # include "ndds/ndds_cpp.h"
-#endif
-
-#if (CIAO_DDS4CCM_OPENDDS==1)
-typedef ::DDS::DomainParticipantListener DDSDomainParticipantListener;
-#endif
 
 namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_DDS_IMPL_Export CCM_DDS_DomainParticipantListener_i :
+    class DDS4CCM_DDS_IMPL_Export DDS_DomainParticipantListener_i :
       public virtual ::DDSDomainParticipantListener
     {
     public:
       /// Constructor
-      CCM_DDS_DomainParticipantListener_i (::DDS::DomainParticipantListener_ptr p);
+      DDS_DomainParticipantListener_i (::DDS::DomainParticipantListener_ptr p);
 
       /// Destructor
-      virtual ~CCM_DDS_DomainParticipantListener_i (void);
+      virtual ~DDS_DomainParticipantListener_i (void);
 
       ::DDS::DomainParticipantListener_ptr get_domainparticipantlistener (void);
 
