@@ -25,33 +25,33 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_DataReaderListener_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_Topic_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_ContentFilteredTopic_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_SubscriberListener_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_DomainParticipant_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_Subscriber_T :
       public virtual ::DDS::Subscriber,
       public virtual ::CORBA::LocalObject
     {
 
-    typedef DDS_DataReaderListener_T<DDS_TYPE, VENDOR_TYPE> DataReaderListener_type;
-    typedef DDS_Topic_T<DDS_TYPE, VENDOR_TYPE> Topic_type;
-    typedef DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE> ContentFilteredTopic_type;
-    typedef DataReader_T<DDS_TYPE, VENDOR_TYPE> DataReader_type;
-    typedef DDS_SubscriberListener_T<DDS_TYPE, VENDOR_TYPE> SubscriberListener_type;
-    typedef DDS_DomainParticipant_T<DDS_TYPE, VENDOR_TYPE> DomainParticipant_type;
+    typedef DDS_DataReaderListener_T<DDS_TYPE> DataReaderListener_type;
+    typedef DDS_Topic_T<DDS_TYPE> Topic_type;
+    typedef DDS_ContentFilteredTopic_T<DDS_TYPE> ContentFilteredTopic_type;
+    typedef DataReader_T<DDS_TYPE> DataReader_type;
+    typedef DDS_SubscriberListener_T<DDS_TYPE> SubscriberListener_type;
+    typedef DDS_DomainParticipant_T<DDS_TYPE> DomainParticipant_type;
 
     public:
       /// Constructor

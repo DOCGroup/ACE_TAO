@@ -22,11 +22,11 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_DataReaderListener_T :
       public virtual ::DDSDataReaderListener
     {
-    typedef DataReader_T<DDS_TYPE, VENDOR_TYPE> DataReader_type;
+    typedef DataReader_T<DDS_TYPE> DataReader_type;
     public:
       /// Constructor
       DDS_DataReaderListener_T (::DDS::DataReaderListener_ptr p,

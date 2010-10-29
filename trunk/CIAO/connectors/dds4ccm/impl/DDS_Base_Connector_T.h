@@ -19,7 +19,7 @@ class DDS_Base_Connector_T
 {
 typedef ::CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, VENDOR_TYPE>
   DomainParticipantListener;
-typedef ::CIAO::DDS4CCM::DDS_DomainParticipantFactory_T<DDS_TYPE, VENDOR_TYPE>
+typedef ::CIAO::DDS4CCM::DDS_DomainParticipantFactory_T<DDS_TYPE>
   DomainParticipantFactory;
 
 public:

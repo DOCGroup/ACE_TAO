@@ -21,35 +21,35 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_Topic_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_Subscriber_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_ReadCondition_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_QueryCondition_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_ContentFilteredTopic_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_DataReaderListener_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DataReader_T
       : public virtual DDS_DataReader_Base
     {
-    typedef DDS_DataReaderListener_T<DDS_TYPE, VENDOR_TYPE> DataReaderListener_type;
-    typedef DDS_Topic_T<DDS_TYPE, VENDOR_TYPE> Topic_type;
-    typedef DDS_ReadCondition_T<DDS_TYPE, VENDOR_TYPE> ReadCondition_type;
-    typedef DDS_QueryCondition_T<DDS_TYPE, VENDOR_TYPE> QueryCondition_type;
-    typedef DDS_ContentFilteredTopic_T<DDS_TYPE, VENDOR_TYPE> ContentFilteredTopic_type;
-    typedef DDS_Subscriber_T<DDS_TYPE, VENDOR_TYPE> Subscriber_type;
-    typedef DataReader_T<DDS_TYPE, VENDOR_TYPE> DataReader_type;
+    typedef DDS_DataReaderListener_T<DDS_TYPE> DataReaderListener_type;
+    typedef DDS_Topic_T<DDS_TYPE> Topic_type;
+    typedef DDS_ReadCondition_T<DDS_TYPE> ReadCondition_type;
+    typedef DDS_QueryCondition_T<DDS_TYPE> QueryCondition_type;
+    typedef DDS_ContentFilteredTopic_T<DDS_TYPE> ContentFilteredTopic_type;
+    typedef DDS_Subscriber_T<DDS_TYPE> Subscriber_type;
+    typedef DataReader_T<DDS_TYPE> DataReader_type;
     public:
       /// Constructor
       explicit DataReader_T (DDSDataReader * dr = 0);

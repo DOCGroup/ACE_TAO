@@ -21,30 +21,30 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_DataWriter_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_DataWriterListener_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_PublisherListener_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_DomainParticipant_T;
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DDS_Publisher_T :
       public virtual ::DDS::Publisher,
       public virtual ::CORBA::LocalObject
     {
-    typedef DDS_Topic_T<DDS_TYPE, VENDOR_TYPE> Topic_type;
+    typedef DDS_Topic_T<DDS_TYPE> Topic_type;
 
-    typedef DDS_DataWriter_T<DDS_TYPE, VENDOR_TYPE> DataWriter_type;
-    typedef DDS_DataWriterListener_T<DDS_TYPE, VENDOR_TYPE> DataWriterListener_type;
+    typedef DDS_DataWriter_T<DDS_TYPE> DataWriter_type;
+    typedef DDS_DataWriterListener_T<DDS_TYPE> DataWriterListener_type;
 
-    typedef DDS_PublisherListener_T<DDS_TYPE, VENDOR_TYPE> PublisherListener_type;
-    typedef DDS_DomainParticipant_T<DDS_TYPE, VENDOR_TYPE> DomainParticipant_type;
+    typedef DDS_PublisherListener_T<DDS_TYPE> PublisherListener_type;
+    typedef DDS_DomainParticipant_T<DDS_TYPE> DomainParticipant_type;
     public:
       /// Constructor
       DDS_Publisher_T (DDSPublisher * dw);

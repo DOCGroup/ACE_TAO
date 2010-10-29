@@ -16,29 +16,29 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::DDS_Topic_T (DDSTopic* topic)
+    template <typename DDS_TYPE>
+    DDS_Topic_T<DDS_TYPE>::DDS_Topic_T (DDSTopic* topic)
       : impl_ (topic)
     {
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::~DDS_Topic_T (void)
+    template <typename DDS_TYPE>
+    DDS_Topic_T<DDS_TYPE>::~DDS_Topic_T (void)
     {
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::set_qos (const ::DDS::TopicQos &qos)
+    DDS_Topic_T<DDS_TYPE>::set_qos (const ::DDS::TopicQos &qos)
     {
       ::DDS_TopicQos ddsqos;
       ddsqos <<= qos;
       return this->impl ()->set_qos (ddsqos);
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::get_qos (::DDS::TopicQos &qos)
+    DDS_Topic_T<DDS_TYPE>::get_qos (::DDS::TopicQos &qos)
     {
       ::DDS_TopicQos ddsqos;
       ::DDS_ReturnCode_t const retval = this->impl ()->get_qos (ddsqos);
@@ -46,13 +46,13 @@ namespace CIAO
       return retval;
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::set_listener (
+    DDS_Topic_T<DDS_TYPE>::set_listener (
       ::DDS::TopicListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::set_listener");
+      DDS4CCM_TRACE ("DDS_Topic_T<DDS_TYPE>::set_listener");
 
       // Delete the previously set listener
       DDSTopicListener *listener = this->impl ()->get_listener ();
@@ -68,11 +68,11 @@ namespace CIAO
       return this->impl ()->set_listener (ccm_dds_impl_list, mask);
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::TopicListener_ptr
-    DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::get_listener (void)
+    DDS_Topic_T<DDS_TYPE>::get_listener (void)
     {
-      DDS4CCM_TRACE ("DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::get_listener");
+      DDS4CCM_TRACE ("DDS_Topic_T<DDS_TYPE>::get_listener");
 
       DDSTopicListener *ccm_dds_topic_list = this->impl ()->get_listener ();
       TopicListener_type * list_proxy =
@@ -80,16 +80,16 @@ namespace CIAO
       if (!list_proxy)
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                        "DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::"
+                        "DDS_Topic_T<DDS_TYPE>::"
                         "get_listener - DDS returned a NIL listener.\n"));
           return ::DDS::TopicListener::_nil ();
         }
       return list_proxy->get_topiclistener ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::get_inconsistent_topic_status (
+    DDS_Topic_T<DDS_TYPE>::get_inconsistent_topic_status (
       ::DDS::InconsistentTopicStatus & a_status)
     {
       DDS_InconsistentTopicStatus ddsstatus;
@@ -99,16 +99,16 @@ namespace CIAO
       return retval;
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::enable (void)
+    DDS_Topic_T<DDS_TYPE>::enable (void)
     {
       return this->impl ()->enable ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::StatusCondition_ptr
-    DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::get_statuscondition (void)
+    DDS_Topic_T<DDS_TYPE>::get_statuscondition (void)
     {
       ::DDS::StatusCondition_var retval;
       DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
@@ -118,16 +118,16 @@ namespace CIAO
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::StatusMask
-    DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::get_status_changes (void)
+    DDS_Topic_T<DDS_TYPE>::get_status_changes (void)
     {
       return this->impl ()->get_status_changes ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::InstanceHandle_t
-    DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::get_instance_handle (void)
+    DDS_Topic_T<DDS_TYPE>::get_instance_handle (void)
     {
       ::DDS_InstanceHandle_t const rtihandle =
         this->impl ()->get_instance_handle ();
@@ -136,23 +136,23 @@ namespace CIAO
       return handle;
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     char *
-    DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::get_type_name (void)
+    DDS_Topic_T<DDS_TYPE>::get_type_name (void)
     {
       return CORBA::string_dup (this->impl ()->get_type_name ());
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     char *
-    DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::get_name (void)
+    DDS_Topic_T<DDS_TYPE>::get_name (void)
     {
       return CORBA::string_dup (this->impl ()->get_name ());
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     ::DDS::DomainParticipant_ptr
-    DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::get_participant (void)
+    DDS_Topic_T<DDS_TYPE>::get_participant (void)
     {
       ::DDS::DomainParticipant_var retval;
       DDSDomainParticipant * p = this->impl ()->get_participant ();
@@ -165,23 +165,23 @@ namespace CIAO
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     DDSTopic *
-    DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::get_impl (void)
+    DDS_Topic_T<DDS_TYPE>::get_impl (void)
     {
       return this->impl_;
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     void
-    DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::set_impl (DDSTopic * topic)
+    DDS_Topic_T<DDS_TYPE>::set_impl (DDSTopic * topic)
     {
       this->impl_ = topic;
     }
 
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     DDSTopic *
-    DDS_Topic_T<DDS_TYPE, VENDOR_TYPE>::impl (void)
+    DDS_Topic_T<DDS_TYPE>::impl (void)
     {
       if (!this->impl_)
         {
