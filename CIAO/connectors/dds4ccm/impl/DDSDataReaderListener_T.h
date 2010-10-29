@@ -18,17 +18,6 @@
 # include "ndds/ndds_cpp.h"
 #endif
 
-#if (CIAO_DDS4CCM_OPENDDS==1)
-typedef ::DDS::DataReaderListener DDSDataReaderListener;
-typedef ::DDS::DataReader DDSDataReader;
-typedef ::DDS::RequestedDeadlineMissedStatus DDS_RequestedDeadlineMissedStatus;
-typedef ::DDS::LivelinessChangedStatus DDS_LivelinessChangedStatus;
-typedef ::DDS::RequestedIncompatibleQosStatus DDS_RequestedIncompatibleQosStatus;
-typedef ::DDS::SampleRejectedStatus DDS_SampleRejectedStatus;
-typedef ::DDS::SubscriptionMatchedStatus DDS_SubscriptionMatchedStatus;
-typedef ::DDS::SampleLostStatus DDS_SampleLostStatus;
-#endif
-
 namespace CIAO
 {
   namespace DDS4CCM

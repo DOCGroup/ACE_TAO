@@ -1,6 +1,6 @@
 // $Id$
 
-#include "dds4ccm/impl/DDSTopicListener_T.h"
+#include "dds4ccm/impl/ndds/DDSTopicListener_T.h"
 #include "dds4ccm/impl/ndds/Topic_T.h"
 
 #include "dds4ccm/impl/ndds/convertors/InconsistentTopicStatus.h"

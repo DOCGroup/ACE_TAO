@@ -16,10 +16,6 @@
 
 #include "dds4ccm/impl/ConditionManager_T.h"
 
-#if (CIAO_DDS4CCM_OPENDDS==1)
-typedef ::DDS::InstanceHandle_t DDS_InstanceHandle_t;
-#endif
-
 namespace CIAO
 {
   namespace DDS4CCM

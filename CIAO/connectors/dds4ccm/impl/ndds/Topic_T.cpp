@@ -3,7 +3,7 @@
 #include "dds4ccm/impl/ndds/Topic_T.h"
 #include "dds4ccm/impl/ndds/ContentFilteredTopic_T.h"
 #include "dds4ccm/impl/ndds/StatusCondition.h"
-#include "dds4ccm/impl/DDSTopicListener_T.h"
+#include "dds4ccm/impl/ndds/DDSTopicListener_T.h"
 
 #include "convertors/InstanceHandle_t.h"
 #include "convertors/InconsistentTopicStatus.h"

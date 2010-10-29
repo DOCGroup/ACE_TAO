@@ -12,11 +12,9 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
-#include "dds4ccm_dds_impl_export.h"
+#include "dds4ccm/impl/ndds/dds4ccm_dds_ndds_export.h"
 
-#if (CIAO_DDS4CCM_NDDS==1)
 # include "ndds/ndds_cpp.h"
-#endif
 
 namespace CIAO
 {
@@ -45,6 +43,6 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/DDSTopicListener_T.cpp"
+#include "dds4ccm/impl/ndds/DDSTopicListener_T.cpp"
 
 #endif /* TOPICLISTENER_T_H_ */
