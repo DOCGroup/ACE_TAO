@@ -588,7 +588,7 @@ operator== (const TAO_Literal_Constraint& left,
       return_value = (ACE_OS::strcmp ((const char*) left, (const char*) right) == 0);
       break;
     case TAO_DOUBLE:
-      return_value = (CORBA::Double) left == (CORBA::Double) right;
+      return_value = ACE::is_equal ((CORBA::Double) left, (CORBA::Double) right);
       break;
     case TAO_SIGNED:
       return_value = static_cast<CORBA::LongLong> (left) ==
@@ -672,7 +672,7 @@ operator> (const TAO_Literal_Constraint& left,
 bool
 operator== (CORBA::Double left, const TAO_Literal_Constraint& right)
 {
-  return (left == (CORBA::Double) right);
+  return ACE::is_equal (left, (CORBA::Double) right);
 }
 
 bool
@@ -792,7 +792,7 @@ operator/ (const TAO_Literal_Constraint& left,
     {
     case TAO_DOUBLE:
       {
-        if ((CORBA::Double) right == 0.0)
+        if (ACE::is_equal ((CORBA::Double) right, 0.0))
           return TAO_Literal_Constraint ((CORBA::Double) 0.0);
 
         CORBA::Double result = (CORBA::Double) left / (CORBA::Double) right;
