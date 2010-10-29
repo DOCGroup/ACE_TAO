@@ -35,7 +35,7 @@ namespace CIAO
       typedef DDS_DomainParticipantFactory_T<DDS_TYPE> DomainParticipantFactory_type;
       friend class ACE_Singleton<DomainParticipantFactory_type, TAO_SYNCH_MUTEX>;
 
-      // Construtor
+      /// Constructor
       DDS_DomainParticipantFactory_T (void);
 
       /// Destructor
