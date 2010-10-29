@@ -1,3 +1,9 @@
+Fri Oct 29 11:33:06 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dds4ccm_impl.mpb:
+        * connectors/dds4ccm/impl/*:
+          Reverted previous commit.
+
 Fri Oct 29 10:33:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/dds4ccm_impl.mpb:

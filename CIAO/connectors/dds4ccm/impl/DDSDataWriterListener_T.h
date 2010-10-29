@@ -15,18 +15,28 @@
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
+#if (CIAO_DDS4CCM_NDDS==1)
+# include "ndds/ndds_cpp.h"
+#endif
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
+typedef ::DDS::DataWriterListener DDSDataWriterListener;
+typedef ::DDS::DataWriter DDSDataWriter;
+typedef ::DDS::OfferedDeadlineMissedStatus DDS_OfferedDeadlineMissedStatus;
+typedef ::DDS::OfferedIncompatibleQosStatus DDS_OfferedIncompatibleQosStatus;
+typedef ::DDS::LivelinessLostStatus DDS_LivelinessLostStatus;
+typedef ::DDS::PublicationMatchedStatus DDS_PublicationMatchedStatus;
+#endif
+
 namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class DDS_DataWriter_T;
-
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_DataWriterListener_T :
       public virtual ::DDSDataWriterListener
     {
-    typedef DDS_DataWriter_T<DDS_TYPE, VENDOR_TYPE> DataWriter_type;
+    typedef CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> DataWriter_type;
     public:
       /// Constructor
       CCM_DDS_DataWriterListener_T (::DDS::DataWriterListener_ptr p,

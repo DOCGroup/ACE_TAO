@@ -11,7 +11,6 @@
 #define PUBLISHERLISTENER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "dds4ccm/idl/ccm_ddsC.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 #include "ace/Copy_Disabled.h"
 

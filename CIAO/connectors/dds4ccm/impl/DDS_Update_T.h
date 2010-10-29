@@ -39,7 +39,7 @@ public:
 private:
   typedef ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
     DataWriterListener_type;
-  typedef ::CIAO::DDS4CCM::DDS_DataWriter_T<DDS_TYPE, VENDOR_TYPE>
+  typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
     DataWriter_type;
   typedef ::CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
     Updater_type;

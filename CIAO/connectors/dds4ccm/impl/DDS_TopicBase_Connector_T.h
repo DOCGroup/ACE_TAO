@@ -10,10 +10,10 @@
 
 #include "ace/Copy_Disabled.h"
 #include "dds4ccm/impl/DDS_Base_Connector_T.h"
-#include "dds4ccm/impl/ndds/DomainParticipant_T.h"
+#include "dds4ccm/impl/DomainParticipant_T.h"
 #include "dds4ccm/impl/DDSTopicListener_T.h"
 #include "dds4ccm/impl/PublisherListener_T.h"
-#include "dds4ccm/impl/ndds/SubscriberListener_T.h"
+#include "dds4ccm/impl/SubscriberListener_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 class DDS_TopicBase_Connector_T

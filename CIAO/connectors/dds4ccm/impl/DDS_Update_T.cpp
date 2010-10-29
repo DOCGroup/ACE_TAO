@@ -4,7 +4,7 @@
 #include "dds4ccm/impl/DataReaderStateListener_T.h"
 #include "dds4ccm/impl/DataWriterListener_T.h"
 #include "dds4ccm/impl/Updater_T.h"
-#include "dds4ccm/impl/ndds/DataWriter_T.h"
+#include "dds4ccm/impl/DataWriter_T.h"
 
 #include "dds4ccm/impl/Log_Macros.h"
 
@@ -141,7 +141,6 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove (
   ::DDS::Publisher_ptr publisher)
 {
   DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove");
-
   ::DDS::ReturnCode_t const retval =
     publisher->delete_datawriter (this->ccm_dds_writer_);
   if (retval != ::DDS::RETCODE_OK)
@@ -161,8 +160,6 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 typename CCM_TYPE::updater_type::_ptr_type
 DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_data (void)
 {
-  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_data");
-
   return CCM_TYPE::updater_type::_duplicate (this->dds_update_);
 }
 
@@ -170,10 +167,6 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::CCM_DataWriter_ptr
 DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_dds_entity (void)
 {
-  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_dds_entity");
-
-  CORBA::NO_IMPLEMENT ();
-  return ::DDS::CCM_DataWriter::_nil ();
-//   return ::DDS::CCM_DataWriter::_duplicate (this->ccm_dds_writer_);
+  return ::DDS::CCM_DataWriter::_duplicate (this->ccm_dds_writer_);
 }
 

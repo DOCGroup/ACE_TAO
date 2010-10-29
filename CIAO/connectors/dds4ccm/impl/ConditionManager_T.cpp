@@ -1,7 +1,7 @@
 // $Id$
-#include "dds4ccm/impl/ndds/DataReader_T.h"
-#include "dds4ccm/impl/ndds/ReadCondition_T.h"
-#include "dds4ccm/impl/ndds/QueryCondition_T.h"
+#include "dds4ccm/impl/DataReader_T.h"
+#include "dds4ccm/impl/ReadCondition_T.h"
+#include "dds4ccm/impl/QueryCondition_T.h"
 
 #include "ace/OS_NS_sys_time.h"
 
@@ -475,14 +475,14 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_impl (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, VENDOR_TYPE> *
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_impl ()
 {
   return this->impl_;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, VENDOR_TYPE> *
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::impl (void)
 {
   if (this->impl_)
