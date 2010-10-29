@@ -1,3 +1,9 @@
+Fri Oct 29 17:21:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataWriter.h:
+        * connectors/dds4ccm/impl/ndds/dds4ccm_ndds.mpc:
+          Fuzz.
+
 Fri Oct 29 14:01:35 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager_T.h:
@@ -47,7 +53,7 @@ Fri Oct 29 14:01:35 UTC 2010  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/impl/ndds/TopicDescription_T.cpp:
         * connectors/dds4ccm/impl/ndds/Topic_T.h:
         * connectors/dds4ccm/impl/ndds/Topic_T.cpp:
-          Next action in a chain of remove and rename actions. 
+          Next action in a chain of remove and rename actions.
 
 Fri Oct 29 13:42:02 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
