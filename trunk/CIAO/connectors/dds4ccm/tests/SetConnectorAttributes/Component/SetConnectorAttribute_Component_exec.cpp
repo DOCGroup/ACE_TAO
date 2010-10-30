@@ -139,7 +139,7 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
     DDS::DataWriter_var dds_dw =
       this->context_->get_connection_info_write_dds_entity ();
 
-    typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_Base DataWriter_type;
+    typedef ::CIAO::DDS4CCM::DDS_DataWriter_Base DataWriter_type;
     DataWriter_type * ccm_dds_dw = dynamic_cast <DataWriter_type*> (dds_dw.in ());
     if (!ccm_dds_dw)
       {

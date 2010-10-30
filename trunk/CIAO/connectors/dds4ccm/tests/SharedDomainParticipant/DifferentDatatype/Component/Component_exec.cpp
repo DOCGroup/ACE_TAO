@@ -9,7 +9,7 @@
 #include "Connector2/Connector2_conn.h"
 #include "Connector3/Connector3_conn.h"
 
-#include "dds4ccm/impl/DataWriter_T.h"
+#include "dds4ccm/impl/ndds/DataWriter_T.h"
 
 namespace CIAO_SharedDP_SharedDPComponent_Impl
 {
@@ -88,7 +88,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             throw ::CORBA::INTERNAL ();
           }
 
-        typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_Base DataWriter_type;
+        typedef ::CIAO::DDS4CCM::DDS_DataWriter_Base DataWriter_type;
         DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw2.in ());
         if (typed_ccm_dw)
           {
@@ -120,7 +120,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             throw ::CORBA::INTERNAL ();
           }
 
-        typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_Base DataWriter_type;
+        typedef ::CIAO::DDS4CCM::DDS_DataWriter_Base DataWriter_type;
         DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw3.in ());
         if (typed_ccm_dw)
           {
