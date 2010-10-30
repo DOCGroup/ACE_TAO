@@ -128,6 +128,12 @@ namespace DAnCE
 
     template<>
     DANCE_STUB_Export bool
+    get_satisfierproperty_value (const char *name,
+                        const ::Deployment::SatisfierProperties &properties,
+                        const char * &val);
+
+    template<>
+    DANCE_STUB_Export bool
     get_property_value (const char *name,
                         const ::Deployment::Properties &properties,
                         bool &val);

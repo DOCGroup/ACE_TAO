@@ -1,4 +1,9 @@
-Thu Oct 29 13:12:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+Sat Oct 30 12:22:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * dance/DAnCE_Utility.h:
+        Export new function get_satisfierproperty_value
+
+Fri Oct 29 13:12:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * dance/DomainApplicationManager/Node_Locator.cpp
         * dance/DomainApplicationManager/Node_Locator.h
@@ -9,7 +14,7 @@ Thu Oct 29 13:12:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * dance/DAnCE_Utility.cpp
         Add get_satisfierproperty_value   
 
-Thu Oct 29 11:08:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+Fri Oct 29 11:08:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * dance/DomainApplicationManager/DomainApplicationManager.mpc:
         Add missing dance_config_handlers.
