@@ -1,3 +1,8 @@
+Sat Oct 30 09:17:36 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+          Use ACE::is_equal() to compare floating point values.
+
 Fri Oct 29 14:40:48 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
