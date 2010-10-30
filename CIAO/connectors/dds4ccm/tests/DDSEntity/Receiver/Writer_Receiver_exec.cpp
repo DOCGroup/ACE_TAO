@@ -102,7 +102,7 @@ namespace CIAO_Writer_Receiver_Impl
         throw ::CORBA::INTERNAL ();
       }
 
-    typedef ::CIAO::DDS4CCM::CCM_DDS_DataReader_Base DataReader_type;
+    typedef ::CIAO::DDS4CCM::DDS_DataReader_Base DataReader_type;
 
     DataReader_type * typed_ccm_dr = dynamic_cast <DataReader_type*> (dds_dr.in ());
     if (typed_ccm_dr)
