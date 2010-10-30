@@ -98,34 +98,11 @@
   // its timeout argument, use ::poll () instead.
 # define ACE_HAS_POLL
 
-// Don't define _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED in ACE to make
-// getpgid() prototype visible.  ACE shouldn't depend on feature test
-// macros to make prototypes visible.
-# define ACE_LACKS_GETPGID_PROTOTYPE
+# define ACE_HAS_SIGINFO_T
+# define ACE_LACKS_SIGINFO_H
+# define ACE_HAS_UCONTEXT_T
+# define ACE_HAS_SIGTIMEDWAIT
 
-// @note  the following defines are necessary with glibc 2.0 (0.961212-5)
-//        on Alpha.  I assume that they're necessary on Intel as well,
-//        but that may depend on the version of glibc that is used.
-//# define ACE_HAS_DLFCN_H_BROKEN_EXTERN_C
-# define ACE_HAS_VOIDPTR_SOCKOPT
-
-// Don't define _POSIX_SOURCE in ACE to make strtok() prototype
-// visible.  ACE shouldn't depend on feature test macros to make
-// prototypes visible.
-# define ACE_LACKS_STRTOK_R_PROTOTYPE
-// @note  end of glibc 2.0 (0.961212-5)-specific configuration.
-
-# if __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1
-    // These were suggested by Robert Hanzlik <robi@codalan.cz> to get
-    // ACE to compile on Linux using glibc 2.1 and libg++/gcc 2.8.
-#   undef ACE_HAS_BYTESEX_H
-#   define ACE_HAS_SIGINFO_T
-#   define ACE_LACKS_SIGINFO_H
-#   define ACE_HAS_UCONTEXT_T
-
-    // Pre-glibc (RedHat 5.2) doesn't have sigtimedwait.
-#   define ACE_HAS_SIGTIMEDWAIT
-# endif /* __GLIBC__ 2.1+ */
 #else  /* ! __GLIBC__ */
     // Fixes a problem with some non-glibc versions of Linux...
 #   define ACE_LACKS_MADVISE
