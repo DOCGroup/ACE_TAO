@@ -14,7 +14,7 @@
 
 #include "tao/LocalObject.h"
 
-#include "dds4ccm/impl/DataWriter_T.h"
+#include "dds4ccm/impl/ndds/DataWriter_T.h"
 
 namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
 {

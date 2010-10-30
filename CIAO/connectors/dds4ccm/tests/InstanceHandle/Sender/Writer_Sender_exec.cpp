@@ -8,9 +8,9 @@
 #include "Base/Writer_BaseSupport.h"
 #include "Connector/Writer_Connector_conn.h"
 #include "dds4ccm/impl/Utils.h"
-#include "dds4ccm/impl/ndds/InstanceHandle_t.h"
+#include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"
 
-#include "dds4ccm/impl/DataWriter_T.h"
+#include "dds4ccm/impl/ndds/DataWriter_T.h"
 
 #include "ace/Log_Msg.h"
 
@@ -230,7 +230,7 @@ namespace CIAO_Writer_Sender_Impl
     ::DDS::DataWriter_var dds_dw =
       this->context_->get_connection_info_write_dds_entity ();
 
-    typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_Base DataWriter_type;
+    typedef ::CIAO::DDS4CCM::DDS_DataWriter_Base DataWriter_type;
     DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type*> (dds_dw.in ());
     if (typed_ccm_dw)
       {
