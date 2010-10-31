@@ -1,3 +1,8 @@
+Sun Oct 31 08:49:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component_exec.cpp:
+          Fixed compile errors due to rename and move actions.
+
 Sat Oct 30 07:13:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/DDSEntity/Receiver/Writer_Receiver_exec.cpp:
