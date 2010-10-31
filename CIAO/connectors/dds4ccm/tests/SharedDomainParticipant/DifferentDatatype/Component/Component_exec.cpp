@@ -56,7 +56,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
                         "Datawriter 1 connection is NIL.\n"));
             throw ::CORBA::INTERNAL ();
           }
-        typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_Base DataWriter_type;
+        typedef ::CIAO::DDS4CCM::DDS_DataWriter_Base DataWriter_type;
         DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw1.in ());
         if (typed_ccm_dw)
           {
