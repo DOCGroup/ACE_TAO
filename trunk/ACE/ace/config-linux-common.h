@@ -122,12 +122,10 @@
 #  endif
 #endif /* __GLIBC__ > 1 */
 
-#if __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1
-# define ACE_HAS_P_READ_WRITE
+#define ACE_HAS_P_READ_WRITE
 // Use ACE's alternate cuserid() implementation since the use of the
 // system cuserid() is discouraged.
-# define ACE_HAS_ALT_CUSERID
-#endif /* __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0 */
+#define ACE_HAS_ALT_CUSERID
 
 #if (__GLIBC__  > 2)  || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3)
 # define ACE_HAS_ISASTREAM_PROTOTYPE
@@ -179,36 +177,23 @@
 
 #define ACE_HAS_STRSIGNAL
 
-#if __GLIBC__ >= 2
 #ifndef ACE_HAS_POSIX_REALTIME_SIGNALS
-#define ACE_HAS_POSIX_REALTIME_SIGNALS
+# define ACE_HAS_POSIX_REALTIME_SIGNALS
 #endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
 
 #ifndef ACE_HAS_AIO_CALLS
-#define ACE_HAS_AIO_CALLS
+# define ACE_HAS_AIO_CALLS
 #endif /* ACE_HAS_AIO_CALLS */
-#endif
 
-#if __GLIBC__ >= 2
-// glibc 2 and higher has wchar support
-# define ACE_HAS_XPG4_MULTIBYTE_CHAR
-# define ACE_HAS_VFWPRINTF
-#endif
-
-#if __GLIBC__ < 2
-// These are present in glibc 2 and higher
-# define ACE_LACKS_WCSTOK
-# define ACE_LACKS_WCSDUP_PROTOTYPE
-#endif /* __GLIBC__ < 2 */
+#define ACE_HAS_XPG4_MULTIBYTE_CHAR
+#define ACE_HAS_VFWPRINTF
 
 #define ACE_LACKS_ITOW
 #define ACE_LACKS_WCSICMP
 #define ACE_LACKS_WCSNICMP
 #define ACE_LACKS_ISWASCII
 
-#if __GLIBC__ >= 2
-# define ACE_HAS_3_PARAM_WCSTOK
-#endif
+#define ACE_HAS_3_PARAM_WCSTOK
 
 #define ACE_HAS_3_PARAM_READDIR_R
 
@@ -271,19 +256,6 @@
 
 #define ACE_HAS_GETPAGESIZE 1
 
-#if (__GLIBC__  < 2)  ||  (__GLIBC__ == 2 && __GLIBC_MINOR__ < 2)
-// glibc supports wchar, but lacks fgetwc and ungetwc
-# define ACE_LACKS_FGETWC
-# define ACE_HAS_NONCONST_MSGSND
-# define ACE_LACKS_STRNLEN_PROTOTYPE
-#endif
-
-// glibc requires _XOPEN_SOURCE_EXTENDED to make this prototype
-// visible, so force ACE to declare one.  Yuk!
-#ifndef _XOPEN_SOURCE_EXTENDED
-# define ACE_LACKS_MKSTEMP_PROTOTYPE
-#endif  /* !_XOPEN_SOURCE_EXTENDED */
-
 // Platform defines struct timespec but not timespec_t
 #define ACE_LACKS_TIMESPEC_T
 
@@ -309,11 +281,6 @@
 #define ACE_HAS_TIMEZONE
 
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
-
-// Don't define _XOPEN_SOURCE in ACE to make strptime() prototype
-// visible.  ACE shouldn't depend on feature test macros to make
-// prototypes visible.
-#define ACE_LACKS_STRPTIME_PROTOTYPE
 
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T
@@ -356,8 +323,8 @@
 # define ACE_SIZEOF_LONG_DOUBLE 16
 #endif
 
-#define ACE_LACKS_GETIPNODEBYADDR
-#define ACE_LACKS_GETIPNODEBYNAME
+//#define ACE_LACKS_GETIPNODEBYADDR
+//#define ACE_LACKS_GETIPNODEBYNAME
 
 // Platform has POSIX terminal interface.
 #define ACE_HAS_TERMIOS
