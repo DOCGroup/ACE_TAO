@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Deployment:domain xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
 
-  <UUID>AD80D377-9AD2-488F-87CD-C490858EA393</UUID>
+  <UUID>83D02FE2-A0BD-11DF-A038-005056C00008</UUID>
 
- <node>
-    <name>Broker</name>
+  <label/>
+
+  <node>
+    <name>AirFrameDevice</name>
     <label/>
     <resource>
       <name>Node Address</name>
@@ -18,14 +19,14 @@
             <kind>tk_string</kind>
           </type>
           <value>
-            <string>corbaloc:iiop:localhost:60001</string>
+            <string>corbaloc:iiop:localhost:10001</string>
           </value>
         </value>
       </property>
     </resource>
   </node>
-   <node>
-    <name>Distributor</name>
+  <node>
+    <name>TimerDevice</name>
     <label/>
     <resource>
       <name>Node Address</name>
@@ -39,7 +40,7 @@
             <kind>tk_string</kind>
           </type>
           <value>
-            <string>corbaloc:iiop:localhost:60002</string>
+            <string>corbaloc:iiop:localhost:20001</string>
           </value>
         </value>
       </property>

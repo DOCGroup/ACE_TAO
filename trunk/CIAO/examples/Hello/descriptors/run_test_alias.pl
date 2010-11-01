@@ -23,7 +23,7 @@ $daemons = 1;
 @nodenames = ( "Alias" );
 
 $status = 0;
-$dat_file = "Aliased_Map.dat";
+$dat_file = "Aliased_Map.cdd";
 $cdp_file = "DeploymentPlan.cdp";
 
 $controller_exec = "$CIAO_ROOT/examples/Hello/Sender/starter";
@@ -181,7 +181,7 @@ $daemons_running = 1;
 # Invoke execution manager.
 print "Invoking execution manager (dance_execution_manager.exe) with -e$ior_emfile\n";
 $EM = $tg_exe_man->CreateProcess ("$DANCE_ROOT/bin/dance_execution_manager",
-                                    "-e$ior_emfile --node-map $dat_file");
+                                    "-e$ior_emfile --cdd $dat_file");
 $EM->Spawn ();
 
 if ($tg_exe_man->WaitForFileTimed ($ior_embase,

@@ -59,7 +59,7 @@ if($Ret4 == -1) {
 }
 
 #Start an Execution Manager
-$EM = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_execution_manager", "-e$emior --node-map ApplicationNodeMap.dat");
+$EM = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_execution_manager", "-e$emior --cdd ApplicationNodeMap.cdd");
 
 $Ret5 = $EM->Spawn ();
 if($Ret5 == -1) {

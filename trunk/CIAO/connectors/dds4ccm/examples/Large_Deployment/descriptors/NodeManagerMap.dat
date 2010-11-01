@@ -1,2 +1,0 @@
-SenderNode      corbaloc:iiop:localhost:60001/Sender.NodeManager
-ReceiverNode    corbaloc:iiop:localhost:60002/Receiver.NodeManager

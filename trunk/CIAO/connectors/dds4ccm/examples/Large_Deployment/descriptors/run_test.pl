@@ -23,7 +23,6 @@ $nr_daemon = 10;
 @nodenames = ( "Node_0", "Node_1", "Node_2", "Node_3", "Node_4", "Node_5", "Node_6", "Node_7", "Node_8", "Node_9", "Node_10");
 
 $status = 0;
-$dat_file = "NodeManagerMap.dat";
 $cdp_file = "LargePlan.cdp";
 
 $controller_exec = "$CIAO_ROOT/examples/Hello/Sender/starter";
