@@ -960,12 +960,8 @@ namespace
       {
         TAO_debug_level = ACE_Env_Value<u_int> ("TAO_ORB_DEBUG", 0);
 
-        char * const value = ACE_OS::getenv ("TAO_ORB_DEBUG");
-
-        if (value != 0)
+        if (TAO_debug_level != 0)
           {
-            TAO_debug_level = ACE_OS::atoi (value);
-
             if (TAO_debug_level <= 0)
               {
                 TAO_debug_level = 1;
