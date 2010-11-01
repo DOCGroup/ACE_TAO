@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Deployment:domain xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
 
-  <UUID>AD80D377-9AD2-488F-87CD-C490858EA393</UUID>
+  <UUID>83D02FE2-A0BD-11DF-A038-005056C00008</UUID>
 
- <node>
-    <name>Broker</name>
+  <label/>
+
+  <node>
+    <name>NodeOne</name>
     <label/>
     <resource>
       <name>Node Address</name>
@@ -24,26 +25,7 @@
       </property>
     </resource>
   </node>
-   <node>
-    <name>Distributor</name>
-    <label/>
-    <resource>
-      <name>Node Address</name>
-      <resourceType>edu.vanderbilt.dre.DAnCE.NodeAddress</resourceType>
-      <property>
-        <name>edu.vanderbilt.dre.DAnCE.StringIOR</name>
-        <kind>Attribute</kind>
-        <dynamic>false</dynamic>
-        <value>
-          <type>
-            <kind>tk_string</kind>
-          </type>
-          <value>
-            <string>corbaloc:iiop:localhost:60002</string>
-          </value>
-        </value>
-      </property>
-    </resource>
-  </node>
+
 
 </Deployment:domain>
+

@@ -18,10 +18,10 @@ $daemons = 2;
 @ports = ( 60001, 60002 );
 @iorbases = ( "NodeApp1.ior", "NodeApp2.ior" );
 @iorfiles = 0;
-@nodenames = ( "Sender", "Receiver" );
+@nodenames = ( "SenderNode", "ReceiverNode" );
 
 $status = 0;
-$dat_file = "NodeManagerMap.dat";
+$dat_file = "NodeManagerMap.cdd";
 $cdp_file = "DeploymentPlan_without_ns.cdp";
 
 $controller_exec = "$CIAO_ROOT/examples/Hello/Sender/starter";
@@ -141,7 +141,7 @@ $daemons_running = 1;
 # Invoke execution manager.
 print "Invoking execution manager (dance_execution_manager.exe) with -e$ior_emfile\n";
 $EM = $tg_exe_man->CreateProcess ("$DANCE_ROOT/bin/dance_execution_manager",
-                                    "-e$ior_emfile --node-map $dat_file");
+                                    "-e$ior_emfile --cdd $dat_file");
 $EM->Spawn ();
 
 if ($tg_exe_man->WaitForFileTimed ($ior_embase,
