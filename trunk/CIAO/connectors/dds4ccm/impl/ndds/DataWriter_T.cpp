@@ -17,7 +17,7 @@
 #include "dds4ccm/impl/ndds/convertors/DataWriterQos.h"
 #include "dds4ccm/impl/ndds/convertors/SubscriptionBuiltinTopicData.h"
 
-#include "dds4ccm/impl/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 namespace CIAO
 {

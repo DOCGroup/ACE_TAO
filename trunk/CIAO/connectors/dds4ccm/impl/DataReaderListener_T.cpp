@@ -1,7 +1,7 @@
 // $Id$
 #include "dds4ccm/impl/Utils.h"
 
-#include "dds4ccm/impl/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 #include "ace/Reactor.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>

@@ -6,7 +6,7 @@
 #include "ace/Env_Value_T.h"
 
 #include "dds4ccm/impl/Utils.h"
-#include "dds4ccm/impl/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_Base_Connector_T (void)
@@ -19,20 +19,8 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_Base_Connector_T (voi
 
   ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), this->domain_id_);
   this->domain_id_ = id;
-
-  ACE_Env_Value<int> log_level (ACE_TEXT("DDS4CCM_LOG_LEVEL"), DDS4CCM_debug_level);
-  DDS4CCM_debug_level = log_level;
-
-  ACE_Env_Value<int> trace (ACE_TEXT("DDS4CCM_TRACE_ENABLE"), 0);
-
-  if (trace != 0)
-    {
-      DDS4CCM_ENABLE_TRACE ();
-    }
-  else
-    {
-      DDS4CCM_DISABLE_TRACE ();
-    }
+  this->dlf_ = ACE_Dynamic_Service<CIAO::DDS4CCM::Logger_Service>::instance ("DDS4CCM_Logger");
+  this->dlf_->init ();
 
 }
 

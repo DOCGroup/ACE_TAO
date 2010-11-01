@@ -6,7 +6,7 @@
 #include "dds4ccm/impl/ndds/convertors/SampleInfo.h"
 #include "dds4ccm/impl/ndds/convertors/StringSeq.h"
 
-#include "dds4ccm/impl/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::Reader_T (void)

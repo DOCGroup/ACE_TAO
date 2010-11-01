@@ -11,7 +11,7 @@
 #include "dds4ccm/impl/StateListenerControl_T.h"
 #include "dds4ccm/impl/PortStatusListener_T.h"
 
-#include "dds4ccm/impl/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>

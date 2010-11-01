@@ -1,3 +1,69 @@
+Mon Nov  1 13:11:54 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dds4ccm_logger.mpb:
+
+        * connectors/dds4ccm/impl/ContentFilterSetting.cpp:
+        * connectors/dds4ccm/impl/DDSCallbackStatusHandler.cpp:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Read_T.cpp:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderHandler_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/DataWriterListener_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipantListener_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.cpp:
+        * connectors/dds4ccm/impl/PortStatusListener_T.cpp:
+        * connectors/dds4ccm/impl/PublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+        * connectors/dds4ccm/impl/SubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/TopicListener_T.cpp:
+        * connectors/dds4ccm/impl/Updater_T.cpp:
+        * connectors/dds4ccm/impl/Writer_T.cpp:
+        * connectors/dds4ccm/impl/dds4ccm_impl.mpc:
+
+        * connectors/dds4ccm/impl/logger/DDS4CCM_Logger_Export.h:
+        * connectors/dds4ccm/impl/logger/Log_Macros.h:
+        * connectors/dds4ccm/impl/logger/Log_Macros.cpp:
+        * connectors/dds4ccm/impl/logger/Logger_Service.h:
+        * connectors/dds4ccm/impl/logger/Logger_Service.cpp:
+        * connectors/dds4ccm/impl/logger/dds4ccm_logger.mpc:
+
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSDataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSDataWriterListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSDomainParticipantListener.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSPublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSSubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSTopicListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriter.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriter_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantManager.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher_T.cpp:
+        * connectors/dds4ccm/impl/ndds/QueryCondition_T.cpp:
+        * connectors/dds4ccm/impl/ndds/StatusCondition.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber_T.cpp:
+        * connectors/dds4ccm/impl/ndds/TopicDescription_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Topic_T.cpp:
+        * connectors/dds4ccm/impl/ndds/ndds.mpc:
+
+        * connectors/dds4ccm/impl/Log_Macros.h:
+        * connectors/dds4ccm/impl/Log_Macros.cpp:
+          Added a logger library for the DDS4CCM connector.
+
 Mon Nov  1 11:58:16 UTC 2010  Marijke Hengstmengel  <mhengstmengelt@remedy.nl>
 
         * tests/Bug_2130_Regression/descriptors/TestNodeManagerMap.cdd:

@@ -10,9 +10,8 @@
 #define DDS4CCM_LOG_MACROS_H_
 
 // default information printed with CIAO logging messages.
-
+#include "DDS4CCM_Logger_Export.h"
 #include "ace/Log_Msg.h"
-#include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
 
 #if !defined (DDS4CCM_INFO)
 #  define DDS4CCM_INFO "(%P|%t) [%M] - %T - "
@@ -30,7 +29,7 @@
 #define DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL 9
 #define DDS4CCM_LOG_LEVEL_DDS_STATUS     10
 
-extern DDS4CCM_DDS_IMPL_Export unsigned int DDS4CCM_debug_level;
+extern DDS4CCM_Logger_Export unsigned int DDS4CCM_debug_level;
 
 // By default tracing is turned off.
 #if !defined (DDS4CCM_NTRACE)
@@ -40,15 +39,15 @@ extern DDS4CCM_DDS_IMPL_Export unsigned int DDS4CCM_debug_level;
 #if (DDS4CCM_NTRACE == 1)
 #  if !defined (ACE_NTRACE)
 #    define DDS4CCM_TRACE(X) do {} while (0)
-#    define DDS4CCM_ENABLE_TRACE(X) do {} while (0)
-#    define DDS4CCM_DISABLE_TRACE(X) do {} while (0)
+#    define DDS4CCM_ENABLE_TRACE() do {} while (0)
+#    define DDS4CCM_DISABLE_TRACE() do {} while (0)
 #  else
 #    if (ACE_NTRACE == 0)
 #      error DDS4CCM_TRACE cannot be disabled if ACE_TRACE is enabled
 #    else
 #      define DDS4CCM_TRACE(X) do {} while (0)
-#      define DDS4CCM_ENABLE_TRACE(X) do {} while (0)
-#      define DDS4CCM_DISABLE_TRACE(X) do {} while (0)
+#      define DDS4CCM_ENABLE_TRACE() do {} while (0)
+#      define DDS4CCM_DISABLE_TRACE() do {} while (0)
 #    endif
 #  endif
 #else
