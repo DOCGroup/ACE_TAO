@@ -1,3 +1,12 @@
+Mon Nov  1 14:57:11 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/OS_NS_sys_mman.inl:
+
+          For 64-bit Windows, pass the high 32 bits of ACE_OS::mmap()'s "len"
+          parameter as the 3rd parameter to CreateFileMapping(), which was
+          previously hard-coded to zero.  This both avoids a warning and also
+          enables the user to pass a value > MAX_INT as the maximum size.
+
 Mon Nov  1 07:18:43 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ace/config-linux-common.h:
