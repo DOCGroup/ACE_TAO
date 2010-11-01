@@ -35,7 +35,7 @@ $tg_exe_man = 0;
 $tg_executor = 0;
 
 $status = 0;
-$dat_file = "TestNodeManagerMap.dat";
+$dat_file = "TestNodeManagerMap.cdd";
 $cdp_file = "DeploymentPlan.cdp";
 
 sub create_targets {
@@ -135,7 +135,7 @@ if ($status != 0) {
 # Invoke execution manager.
 print "Invoking execution manager\n";
 $EM = $tg_exe_man->CreateProcess ("$CIAO_ROOT/bin/Execution_Manager",
-                            "-o $ior_emfile -i $dat_file");
+                            "-o $ior_emfile -i -cdd $dat_file");
 $EM->Spawn ();
 
 if ($tg_exe_man->WaitForFileTimed ($ior_embase,

@@ -20,10 +20,9 @@ $nr_daemon = 2;
 @ports = ( 60001, 60002 );
 @iorbases = ( "NodeApp1.ior", "NodeApp2.ior" );
 @iorfiles = 0;
-@nodenames = ( "Sender", "Receiver" );
+@nodenames = ( "SenderNode", "ReceiverNode" );
 
 $status = 0;
-$dat_file = "NodeManagerMap.dat";
 $cdp_file = "DeploymentPlan.cdp";
 
 $controller_exec = "$CIAO_ROOT/examples/Hello/Sender/starter";
@@ -118,7 +117,7 @@ sub run_node_daemons {
         $node_app = $tg_daemons[$i]->GetArchDir("$DANCE_ROOT/bin/") . "dance_locality_manager";
 
         $d_cmd = "$DANCE_ROOT/bin/dance_node_manager";
-        $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --instance-nc corbaloc:rir:/NameService";
+        $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --domain-nc corbaloc:rir:/NameService";
 
         print "Run dance_node_manager with $d_param\n";
 
@@ -181,7 +180,7 @@ $daemons_running = 1;
 # Invoke execution manager.
 print "Invoking execution manager (dance_execution_manager.exe) with -e$ior_emfile\n";
 $EM = $tg_exe_man->CreateProcess ("$DANCE_ROOT/bin/dance_execution_manager",
-                                    "-e$ior_emfile --node-map $dat_file");
+                                    "-e$ior_emfile --domain-nc corbaloc:rir:/NameService");
 $EM->Spawn ();
 
 if ($tg_exe_man->WaitForFileTimed ($ior_embase,

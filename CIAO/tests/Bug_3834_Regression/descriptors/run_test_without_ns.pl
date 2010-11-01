@@ -22,7 +22,7 @@ $nr_daemon = 1;
 @iorfiles = 0;
 @nodenames = ( "NodeOne" );
 
-$dat_file = "NodeMap.dat";
+$dat_file = "NodeMap.cdd";
 
 # ior files other than daemon
 $ior_embase = "EM.ior";
@@ -154,7 +154,7 @@ foreach $file (@files) {
     # Invoke execution manager.
     print "Invoking execution manager\n";
     $EM = $tg_exe_man->CreateProcess ("$DANCE_ROOT/bin/dance_execution_manager",
-                                    "-e$ior_emfile  --node-map $dat_file");
+                                    "-e$ior_emfile  --cdd $dat_file");
     $EM->Spawn ();
 
     if ($tg_exe_man->WaitForFileTimed ($ior_embase,

@@ -17,7 +17,7 @@ $daemons = 2;
 @iorbases = ( "NodeApp1.ior", "NodeApp2.ior" );
 @iorfiles = 0;
 $status = 0;
-$dat_file = "NodeManagerMap.dat";
+$dat_file = "NodeManagerMap.cdd";
 $controller_exec = "$CIAO_ROOT/examples/Display/RateGen/controller";
 
 $E = 0;
@@ -117,7 +117,7 @@ if ($status != 0) {
 # Invoke execution manager.
 print "Invoking execution manager\n";
 $EM = $tg->CreateProcess ("$CIAO_ROOT/bin/dance_execution_manager",
-                            "-o $ior_emfile -i $dat_file");
+                            "-o $ior_emfile -i -cdd $dat_file");
 $EM->Spawn ();
 
 if ($tg->WaitForFileTimed($ior_embase,
