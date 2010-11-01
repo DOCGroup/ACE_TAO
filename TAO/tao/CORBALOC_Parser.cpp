@@ -162,8 +162,8 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
       {
         if (TAO_debug_level)
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT("(%P|%t) TAO_CORBALOC_Parser::parse_string ")
-                      ACE_TEXT("could not parse from %C"),
+                      ACE_TEXT("TAO (%P|%t) - TAO_CORBALOC_Parser::parse_string ")
+                      ACE_TEXT("could not parse from %C\n"),
                       ior));
         throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 10, CORBA::COMPLETED_NO);
       }
@@ -192,8 +192,8 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
     // anything else is a violation.
     if (TAO_debug_level)
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT("(%P|%t) TAO_CORBALOC_Parser::parse_string ")
-                  ACE_TEXT("could not parse from %C"),
+                  ACE_TEXT("TAO (%P|%t) - TAO_CORBALOC_Parser::parse_string ")
+                  ACE_TEXT("could not parse from %C\n"),
                   ior));
     throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 10, CORBA::COMPLETED_NO);
   } // end of while
@@ -224,7 +224,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
           // mprofile's size is 0, and give_profile fails.
           if (TAO_debug_level)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT("(%P|%t) TAO_CORBALOC_Parser::parse_string ")
+                        ACE_TEXT("TAO (%P|%t) - TAO_CORBALOC_Parser::parse_string ")
                         ACE_TEXT("mprofile.give_profile failed for i = %d\n"),
                         i));
           throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 10, CORBA::COMPLETED_NO);
@@ -280,7 +280,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
           if (TAO_debug_level > 0)
             {
               ACE_ERROR ((LM_ERROR,
-                         ACE_TEXT ("\nTAO (%P|%t) TAO_CORBALOC_Parser: ")
+                         ACE_TEXT ("TAO (%P|%t) - TAO_CORBALOC_Parser: ")
                          ACE_TEXT ("Invalid IPv6 decimal address specified.\n")));
             }
           separator = 0;
@@ -325,8 +325,8 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
 
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) ")
-                        ACE_TEXT ("cannot determine hostname.\n")));
+                        ACE_TEXT ("TAO (%P|%t) - ")
+                        ACE_TEXT ("Cannot determine hostname.\n")));
 
           throw ::CORBA::INV_OBJREF
                      (CORBA::SystemException::_tao_minor_code

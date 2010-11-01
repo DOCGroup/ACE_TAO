@@ -164,13 +164,14 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
   // If this factory has already been disabled then
   // print a warning and exit because any options
   // are useless
-  if (this->factory_disabled_) {
-    ACE_DEBUG ((LM_WARNING,
-                ACE_TEXT ("TAO (%P|%t) - Warning: Resource_Factory options ")
-                ACE_TEXT ("ignored\n")
-                ACE_TEXT ("Default Resource Factory is disabled\n")));
-    return 0;
-  }
+  if (this->factory_disabled_)
+    {
+      ACE_DEBUG ((LM_WARNING,
+                  ACE_TEXT ("TAO (%P|%t) - Warning: Resource_Factory options ")
+                  ACE_TEXT ("ignored. ")
+                  ACE_TEXT ("Default Resource Factory is disabled\n")));
+      return 0;
+    }
   this->options_processed_ = 1;
 
   this->parser_names_count_ = 0;
