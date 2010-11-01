@@ -1,3 +1,9 @@
+Mon Nov  1 07:18:43 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux-common.h:
+          Reverted some of changes in previous commit which
+          were accidentally cheked in.
+
 Sun Oct 31 10:14:10 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ace/config-linux-common.h:
