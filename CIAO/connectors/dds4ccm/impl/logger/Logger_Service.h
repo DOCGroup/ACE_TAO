@@ -16,7 +16,7 @@ namespace CIAO
           Logger_Service (void);
           virtual int init (int ARGC, ACE_TCHAR * ARGV[]);
 
-          int init ();
+          void init ();
 
           static int Initializer (void);
         private:
