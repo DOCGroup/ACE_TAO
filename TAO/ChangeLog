@@ -1,3 +1,10 @@
+Mon Nov  1 15:09:04 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/PortableServer/POA_Current_Impl.inl:
+
+          Use CORBA::ULong as the local variable type for a sequence length.
+          Avoids warnings on vc10 64-bit.
+
 Mon Nov  1 14:15:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TAO_Internal.cpp:

@@ -30,7 +30,7 @@ namespace TAO
         {
           // Resize the current object_id_.  If it is less than the
           // length of the current buffer, no allocation will take place.
-          size_t id_size = id.length ();
+          CORBA::ULong id_size = id.length ();
           this->object_id_.length (id_size);
 
           // Get the buffer and copy the new object id in it's place.
