@@ -10,7 +10,7 @@
 #ifndef DOMAINPARTICIPANTMANAGER_H_
 #define DOMAINPARTICIPANTMANAGER_H_
 
-#include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
+#include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
 
 #include "ace/Singleton.h"
 #include "ace/SString.h"

@@ -11,7 +11,7 @@
 #define _CIAO_COHERENT_CHANGES_GUARD
 
 #include "ace/Copy_Disabled.h"
-#include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
+#include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
 
 #include "ndds/ndds_cpp.h"
 
