@@ -1,3 +1,8 @@
+Mon Nov  1 15:03:05 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Reactor.h: Clarified some behavior descriptions related to
+          timer expiry behavior and return value from handle_timeout().
+
 Mon Nov  1 14:57:11 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * ace/OS_NS_sys_mman.inl:
