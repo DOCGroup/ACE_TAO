@@ -21,7 +21,7 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_DDS_IMPL_Export DDS_DomainParticipantListener_i :
+    class DDS4CCM_NDDS_Export DDS_DomainParticipantListener_i :
       public virtual ::DDSDomainParticipantListener
     {
     public:

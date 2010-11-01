@@ -19,7 +19,7 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_DDS_IMPL_Export Coherent_Changes_Guard :
+    class DDS4CCM_NDDS_Export Coherent_Changes_Guard :
       private ACE_Copy_Disabled
     {
       public:

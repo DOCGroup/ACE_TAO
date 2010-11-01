@@ -24,7 +24,7 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_DDS_IMPL_Export DomainParticipantManager
+    class DDS4CCM_NDDS_Export DomainParticipantManager
     {
     friend class ACE_Singleton<DomainParticipantManager, TAO_SYNCH_MUTEX>;
 
@@ -95,7 +95,7 @@ namespace CIAO
 #define DPMANAGER ::CIAO::DDS4CCM::Domain_Participant_Factory::instance ()
 
 /// Declare a process wide singleton
-DDS4CCM_DDS_IMPL_SINGLETON_DECLARE (ACE_Singleton,
+DDS4CCM_DDS_NDDS_SINGLETON_DECLARE (ACE_Singleton,
                                     ::CIAO::DDS4CCM::DomainParticipantManager,
                                     TAO_SYNCH_MUTEX)
 
