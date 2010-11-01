@@ -102,11 +102,18 @@ ACE_OS::mmap (void *addr,
                                                      &sa_buffer,
                                                      &sd_buffer);
 
+#  ifdef ACE_WIN64
+      const DWORD len_low = static_cast<DWORD>(len),
+        len_high = static_cast<DWORD>(len >> 32);
+#  else
+      const DWORD len_low = len, len_high = 0;
+#  endif
+
       *file_mapping = ACE_TEXT_CreateFileMapping (file_handle,
                                                   attr,
                                                   prot,
-                                                  0,
-                                                  (file_handle == ACE_INVALID_HANDLE) ? len : 0,
+                                                  (file_handle == ACE_INVALID_HANDLE) ? len_high : 0,
+                                                  (file_handle == ACE_INVALID_HANDLE) ? len_low : 0,
                                                   file_mapping_name);
     }
 
