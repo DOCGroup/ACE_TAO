@@ -1,3 +1,36 @@
+Mon Nov  1 11:15:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/Updater_T.cpp:
+        * connectors/dds4ccm/impl/Writer_T.cpp:
+        * connectors/dds4ccm/impl/dds4ccm_impl.mpc:
+        * connectors/dds4ccm/impl/ndds/Coherent_Changes_Guard.h:
+        * connectors/dds4ccm/impl/ndds/Coherent_Changes_Guard.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSDataReaderListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDSDomainParticipantListener.h:
+        * connectors/dds4ccm/impl/ndds/DDSTopicListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReader.h:
+        * connectors/dds4ccm/impl/ndds/DataWriter.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantManager.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantManager.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant_T.cpp:
+        * connectors/dds4ccm/impl/ndds/StatusCondition.h:
+        * connectors/dds4ccm/impl/ndds/dds4ccm_ndds_export.h:
+        * connectors/dds4ccm/impl/ndds/ndds.mpc:
+        * connectors/dds4ccm/impl/Coherent_Changes_Guard.h:
+        * connectors/dds4ccm/impl/Coherent_Changes_Guard.cpp:
+        * connectors/dds4ccm/impl/DomainParticipantManager.h:
+        * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+        * connectors/dds4ccm/impl/ndds/dds4ccm_dds_ndds_export.h:
+        * connectors/dds4ccm/impl/ndds/dds4ccm_ndds.mpc:
+          Continued with the rename and move actions.
+
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_impl.h:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_impl.cpp:
+          Create two handlers in order to handle read and get separately.
+
 Sun Oct 31 08:49:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component_exec.cpp:

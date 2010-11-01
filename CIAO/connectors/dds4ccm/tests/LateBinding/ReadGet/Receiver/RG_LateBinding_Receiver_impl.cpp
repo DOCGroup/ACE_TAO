@@ -43,14 +43,18 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
         ::RG_LateBinding::CCM_Receiver_Context::_duplicate (ctx))
     , expected_ (expected)
   {
-    ACE_NEW_THROW_EX (this->to_handler_,
+    ACE_NEW_THROW_EX (this->to_handler_read_,
+                      Timeout_Handler (*this),
+                      ::CORBA::INTERNAL ());
+    ACE_NEW_THROW_EX (this->to_handler_get_,
                       Timeout_Handler (*this),
                       ::CORBA::INTERNAL ());
   }
 
   RG_LateBinding_Receiver_impl::~RG_LateBinding_Receiver_impl ()
   {
-    delete this->to_handler_;
+    delete this->to_handler_read_;
+    delete this->to_handler_get_;
   }
 
   void
@@ -308,7 +312,7 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
     ACE_Reactor *reactor)
   {
     if (reactor->schedule_timer (
-               this->to_handler_,
+               this->to_handler_read_,
                reinterpret_cast<const void *> (0),
                ACE_Time_Value (8, 0)) == -1)
       {
@@ -316,7 +320,7 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
                               "Error scheduling timer"));
       }
     if (reactor->schedule_timer (
-               this->to_handler_,
+               this->to_handler_get_,
                reinterpret_cast<const void *> (1),
                ACE_Time_Value (10, 0)) == -1)
       {

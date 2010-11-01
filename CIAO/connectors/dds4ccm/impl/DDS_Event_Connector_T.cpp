@@ -406,21 +406,24 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_passivate (vo
 
   try
     {
-      if (this->push_consumer_obtained_)
+      if (ACE_OS::strlen (this->topic_name_) != 0)
         {
-          this->push_consumer_.passivate ();
-        }
+          if (this->push_consumer_obtained_)
+            {
+              this->push_consumer_.passivate ();
+            }
 
-      if (this->supplier_obtained_)
-        {
-          this->supplier_.passivate ();
-        }
+          if (this->supplier_obtained_)
+            {
+              this->supplier_.passivate ();
+            }
 
-      if (this->pull_consumer_obtained_)
-        {
-          this->pull_consumer_.passivate ();
+          if (this->pull_consumer_obtained_)
+            {
+              this->pull_consumer_.passivate ();
+            }
+          TopicBaseConnector::ccm_passivate ();
         }
-      TopicBaseConnector::ccm_passivate ();
     }
   catch (const ::CCM_DDS::InternalError &ex)
     {
@@ -455,21 +458,24 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_remove (void)
 
   try
     {
-      if (this->push_consumer_obtained_)
+      if (ACE_OS::strlen (this->topic_name_) != 0)
         {
-          this->push_consumer_.remove (this->subscriber_.in ());
-        }
+          if (this->push_consumer_obtained_)
+            {
+              this->push_consumer_.remove (this->subscriber_.in ());
+            }
 
-      if (this->supplier_obtained_)
-        {
-          this->supplier_.remove (this->publisher_.in ());
-        }
+          if (this->supplier_obtained_)
+            {
+              this->supplier_.remove (this->publisher_.in ());
+            }
 
-      if (this->pull_consumer_obtained_)
-        {
-          this->pull_consumer_.remove (this->subscriber_.in ());
+          if (this->pull_consumer_obtained_)
+            {
+              this->pull_consumer_.remove (this->subscriber_.in ());
+            }
+          TopicBaseConnector::ccm_remove ();
         }
-      TopicBaseConnector::ccm_remove ();
     }
   catch (const ::CCM_DDS::InternalError &ex)
     {

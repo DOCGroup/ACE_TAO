@@ -13,7 +13,7 @@
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
-#include "dds4ccm/impl/DomainParticipantManager.h"
+#include "dds4ccm/impl/ndds/DomainParticipantManager.h"
 
 
 namespace CIAO
