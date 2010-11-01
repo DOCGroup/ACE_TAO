@@ -1,3 +1,14 @@
+Mon Nov 01 13:21:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * dance/DomainApplicationManager/Node_Locator.cpp:
+        * dance/DomainApplicationManager/Node_Locator.h:
+        * dance/ExecutionManager/ExecutionManager_Impl.cpp:
+        * dance/ExecutionManager/ExecutionManager_Module.cpp:
+        * dance/ExecutionManager/ExecutionManager_Impl.h:
+        * dance/ExecutionManager/ExecutionManager_Module.h:
+        Removed functionality to use *.dat file containing node manager map,
+        so also removed option node-map.          
+
 Sat Oct 30 12:22:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * dance/DAnCE_Utility.h:

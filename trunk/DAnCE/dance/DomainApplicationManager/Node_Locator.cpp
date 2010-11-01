@@ -34,57 +34,7 @@ namespace DAnCE
   }
 
   bool
-  Node_Locator::process_node_map (const ACE_TCHAR *filename)
-  {
-    DANCE_TRACE ("Node_Locator::process_node_map");
-
-    if (!filename)
-      {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Node_Locator::process_node_map - ")
-                      ACE_TEXT("Error: Provided with nil filename\n")));
-        return false;
-      }
-
-    FILE *inf = ACE_OS::fopen (filename, ACE_TEXT("r"));
-
-    if (!inf)
-      {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Node_Locator::process_node_map - ")
-                      ACE_TEXT("Fail to open node manager map data file: <%s>\n"),
-                      filename));
-        return false;
-      }
-
-    ACE_Read_Buffer reader (inf, true);
-
-    char * string = 0;
-    // Read from the file line by line
-    while ((string = reader.read ('\n')) != 0)
-      {
-        if (ACE_OS::strlen (string) == 0) continue;
-
-        // Search from the right to the first space
-        const char* ior_start = ACE_OS::strrchr (string, ' ');
-        // Search from the left to the first space
-        const char* dest_end = ACE_OS::strchr (string, ' ');
-
-        // The destination is first followed by some spaces
-        ACE_CString destination (string, dest_end - string);
-        // And then the IOR
-        ACE_CString ior (ior_start + 1,  ACE_OS::strlen (ior_start + 1));
-        reader.alloc ()->free (string);
-
-        DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT("Node_Locator::process_node_map - ")
-                      ACE_TEXT("Storing IOR %C for destination %C\n"),
-                      ior.c_str (), destination.c_str ()));
-        this->nodes_.bind (destination, ior);
-      }
-
-    return true;
-  }
-
-   bool
-    Node_Locator::process_cdd (const ACE_TCHAR *filename)
+  Node_Locator::process_cdd (const ACE_TCHAR *filename)
     {
       DANCE_TRACE ("Node_Locator::process_cdd");
 
