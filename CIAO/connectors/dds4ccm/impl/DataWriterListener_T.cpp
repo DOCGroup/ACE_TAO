@@ -2,7 +2,7 @@
 #include "dds4ccm/impl/Utils.h"
 
 #include "dds4ccm/impl/ndds/DataWriter_T.h"
-#include "dds4ccm/impl/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DataWriterListener_T (void)

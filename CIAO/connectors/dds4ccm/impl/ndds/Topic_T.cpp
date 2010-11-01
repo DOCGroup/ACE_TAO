@@ -9,7 +9,7 @@
 #include "convertors/InconsistentTopicStatus.h"
 #include "convertors/TopicQos.h"
 
-#include "dds4ccm/impl/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
 namespace CIAO

@@ -9,7 +9,7 @@
 
 #include "dds4ccm/impl/Utils.h"
 
-#include "dds4ccm/impl/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 

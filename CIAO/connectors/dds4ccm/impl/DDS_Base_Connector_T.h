@@ -10,6 +10,7 @@
 #include "ace/Copy_Disabled.h"
 #include "dds4ccm/impl/DomainParticipantListener_T.h"
 #include "dds4ccm/impl/ndds/DomainParticipantFactory_T.h"
+#include "dds4ccm/impl/logger/Logger_Service.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 class DDS_Base_Connector_T
@@ -64,6 +65,9 @@ protected:
   bool configuration_complete_;
   char* library_name_;
   char* profile_name_;
+
+  ::CIAO::DDS4CCM::Logger_Service * dlf_;
+
 
   ::DDS::DomainParticipant_var domain_participant_;
   ::DDS::DomainParticipantListener_var domainparticipantlistener_;
