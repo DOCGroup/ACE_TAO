@@ -1,3 +1,14 @@
+Mon Nov  1 14:15:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TAO_Internal.cpp:
+          Not needed to get TAO_ORB_DEBUG twice
+
+        * tao/CORBALOC_Parser.cpp:
+        * tao/PI/DLL_Resident_ORB_Initializer.cpp:
+        * tao/default_resource.cpp:
+          Layout changes to debug messages to make them consistent with the
+          other messages in TAO
+
 Sat Oct 30 09:17:36 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:

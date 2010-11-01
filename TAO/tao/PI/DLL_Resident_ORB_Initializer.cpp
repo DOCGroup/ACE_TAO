@@ -22,7 +22,7 @@ PortableInterceptor::DLL_Resident_ORB_Initializer::DLL_Resident_ORB_Initializer 
   if (TAO_debug_level > 8)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("construct DLL_Resident_ORB_Initializer for @%@\n"),
+        ACE_TEXT ("TAO (%P|%t) - Construct DLL_Resident_ORB_Initializer for @%@\n"),
         initializer_.operator->()
         ));
     }
@@ -33,7 +33,7 @@ PortableInterceptor::DLL_Resident_ORB_Initializer::~DLL_Resident_ORB_Initializer
   if (TAO_debug_level > 8)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("Destruct DLL_Resident_ORB_Initializer for @%@\n"),
+        ACE_TEXT ("TAO (%P|%t) - Destruct DLL_Resident_ORB_Initializer for @%@\n"),
         initializer_.operator->()
         ));
     }
@@ -45,16 +45,14 @@ PortableInterceptor::DLL_Resident_ORB_Initializer::~DLL_Resident_ORB_Initializer
 
 void
 PortableInterceptor::DLL_Resident_ORB_Initializer::pre_init (
-    ::PortableInterceptor::ORBInitInfo_ptr info
-  )
+    ::PortableInterceptor::ORBInitInfo_ptr info)
 {
   initializer_->pre_init (info);
 }
 
 void
 PortableInterceptor::DLL_Resident_ORB_Initializer::post_init (
-    ::PortableInterceptor::ORBInitInfo_ptr info
-  )
+    ::PortableInterceptor::ORBInitInfo_ptr info)
 {
   initializer_->post_init (info);
 }
