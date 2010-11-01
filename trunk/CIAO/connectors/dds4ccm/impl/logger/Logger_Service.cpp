@@ -20,7 +20,7 @@ CIAO::DDS4CCM::Logger_Service::Logger_Service (void)
 {
 }
 
-int
+void
 CIAO::DDS4CCM::Logger_Service::init ()
 {
   // Get prospective values from the environment first, those given on
