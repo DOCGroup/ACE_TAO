@@ -323,8 +323,8 @@
 # define ACE_SIZEOF_LONG_DOUBLE 16
 #endif
 
-//#define ACE_LACKS_GETIPNODEBYADDR
-//#define ACE_LACKS_GETIPNODEBYNAME
+#define ACE_LACKS_GETIPNODEBYADDR
+#define ACE_LACKS_GETIPNODEBYNAME
 
 // Platform has POSIX terminal interface.
 #define ACE_HAS_TERMIOS
