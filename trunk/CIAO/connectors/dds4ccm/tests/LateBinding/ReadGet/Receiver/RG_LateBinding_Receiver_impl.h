@@ -47,7 +47,8 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
     ::RG_LateBinding::CCM_Receiver_Context_var ciao_context_;
     CORBA::UShort expected_;
 
-    Timeout_Handler *to_handler_;
+    Timeout_Handler *to_handler_read_;
+    Timeout_Handler *to_handler_get_;
 
     void check_samples (
       const char * test,

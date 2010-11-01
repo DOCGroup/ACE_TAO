@@ -14,11 +14,9 @@ project(CIAO_DDS4CCM_DDS_Impl) : install, dds4ccm_skel, dds4ccm_lem_stub, taolib
   }
 
   Source_Files {
-    Coherent_Changes_Guard.cpp
     ContentFilterSetting.cpp
     Utils.cpp
     DDSCallbackStatusHandler.cpp
-    DomainParticipantManager.cpp
     Log_Macros.cpp
   }
 }

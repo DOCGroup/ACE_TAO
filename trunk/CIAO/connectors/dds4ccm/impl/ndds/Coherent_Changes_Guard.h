@@ -13,9 +13,7 @@
 #include "ace/Copy_Disabled.h"
 #include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
 
-#if (CIAO_DDS4CCM_NDDS==1)
-# include "ndds/ndds_cpp.h"
-#endif
+#include "ndds/ndds_cpp.h"
 
 namespace CIAO
 {

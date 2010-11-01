@@ -12,7 +12,7 @@
 
 #include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/TopicListener_T.h"
-#include "dds4ccm/impl/DomainParticipantManager.h"
+#include "dds4ccm/impl/ndds/DomainParticipantManager.h"
 
 #include "dds4ccm/impl/ndds/convertors/PublisherQos.h"
 #include "dds4ccm/impl/ndds/convertors/SubscriberQos.h"

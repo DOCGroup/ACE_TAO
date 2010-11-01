@@ -1,5 +1,5 @@
 // $Id$
-#include "dds4ccm/impl/Coherent_Changes_Guard.h"
+#include "dds4ccm/impl/ndds/Coherent_Changes_Guard.h"
 
 CIAO::DDS4CCM::Coherent_Changes_Guard::Coherent_Changes_Guard (
   DDSPublisher* p,

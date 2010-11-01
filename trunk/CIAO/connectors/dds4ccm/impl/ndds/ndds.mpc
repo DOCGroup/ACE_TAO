@@ -18,5 +18,7 @@ project(CIAO_DDS4CCM_DDS_NDDS) : install, dds4ccm_skel, dds4ccm_lem_stub, taolib
     DataWriter.cpp
     StatusCondition.cpp
     DDSDomainParticipantListener.cpp
+    DomainParticipantManager.cpp
+    Coherent_Changes_Guard.cpp
   }
 }

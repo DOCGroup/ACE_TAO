@@ -542,32 +542,35 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_passivate (vo
 
   try
     {
-      if (this->observable_obtained_)
+      if (ACE_OS::strlen (this->topic_name_) != 0)
         {
-          this->observable_.passivate ();
-        }
+          if (this->observable_obtained_)
+            {
+              this->observable_.passivate ();
+            }
 
-      if (this->push_observer_obtained_)
-        {
-          this->push_observer_.passivate ();
-        }
+          if (this->push_observer_obtained_)
+            {
+              this->push_observer_.passivate ();
+            }
 
-      if (this->push_state_observer_obtained_)
-        {
-          this->push_state_observer_.passivate ();
-        }
+          if (this->push_state_observer_obtained_)
+            {
+              this->push_state_observer_.passivate ();
+            }
 
-      if (this->pull_observer_obtained_)
-        {
-          this->pull_observer_.passivate ();
-        }
+          if (this->pull_observer_obtained_)
+            {
+              this->pull_observer_.passivate ();
+            }
 
-      if (this->passive_observer_obtained_)
-        {
-          this->passive_observer_.passivate ();
-        }
+          if (this->passive_observer_obtained_)
+            {
+              this->passive_observer_.passivate ();
+            }
 
-      TopicBaseConnector::ccm_passivate ();
+          TopicBaseConnector::ccm_passivate ();
+        }
     }
   catch (const ::CCM_DDS::InternalError &ex)
     {
@@ -602,31 +605,34 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_remove (void)
 
   try
     {
-      if (this->observable_obtained_)
+      if (ACE_OS::strlen (this->topic_name_) != 0)
         {
-          this->observable_.remove (this->publisher_.in ());
-        }
+          if (this->observable_obtained_)
+            {
+              this->observable_.remove (this->publisher_.in ());
+            }
 
-      if (this->push_observer_obtained_)
-        {
-          this->push_observer_.remove (this->subscriber_.in ());
-        }
+          if (this->push_observer_obtained_)
+            {
+              this->push_observer_.remove (this->subscriber_.in ());
+            }
 
-      if (this->push_state_observer_obtained_)
-        {
-          this->push_state_observer_.remove (this->subscriber_.in ());
-        }
+          if (this->push_state_observer_obtained_)
+            {
+              this->push_state_observer_.remove (this->subscriber_.in ());
+            }
 
-      if (this->pull_observer_obtained_)
-        {
-          this->pull_observer_.remove (this->subscriber_.in ());
-        }
+          if (this->pull_observer_obtained_)
+            {
+              this->pull_observer_.remove (this->subscriber_.in ());
+            }
 
-      if (this->passive_observer_obtained_)
-        {
-          this->passive_observer_.remove (this->subscriber_.in ());
+          if (this->passive_observer_obtained_)
+            {
+              this->passive_observer_.remove (this->subscriber_.in ());
+            }
+          TopicBaseConnector::ccm_remove ();
         }
-      TopicBaseConnector::ccm_remove ();
     }
   catch (const ::CCM_DDS::InternalError &ex)
     {
