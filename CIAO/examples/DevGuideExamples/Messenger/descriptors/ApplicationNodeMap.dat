@@ -1,5 +1,0 @@
-Administrator_Node   corbaloc:iiop:localhost:11000/Administrator_Node.NodeManager
-First_Receiver_Node  corbaloc:iiop:localhost:22000/First_Receiver_Node.NodeManager
-Second_Receiver_Node corbaloc:iiop:localhost:33000/Second_Receiver_Node.NodeManager
-Messenger_Node       corbaloc:iiop:localhost:44000/Messenger_Node.NodeManager
-

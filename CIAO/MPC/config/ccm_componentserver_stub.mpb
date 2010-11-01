@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ccm_stub {
-   after += CCM_ComponentServer_stub
-   libs += CCM_ComponentServer_stub
-}

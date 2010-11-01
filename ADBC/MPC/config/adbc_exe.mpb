@@ -1,5 +1,0 @@
-// $Id$
-
-project : aceexe, adbclib {
-  install = $(ADBC_ROOT)/bin
-}
