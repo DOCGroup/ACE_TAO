@@ -239,13 +239,6 @@ ExecutionManager_Impl::add_node_manager (const char *name, const char *ior)
 }
 
 void
-ExecutionManager_Impl::load_node_map (const ACE_TCHAR *filename)
-{
-  DANCE_TRACE ("ExecutionManager_Impl::add_node_manager");
-  this->locator_.process_node_map (filename);
-}
-
-void
 ExecutionManager_Impl::load_cdd (const ACE_TCHAR *filename)
 {
   DANCE_TRACE ("ExecutionManager_Impl::load_cdd");

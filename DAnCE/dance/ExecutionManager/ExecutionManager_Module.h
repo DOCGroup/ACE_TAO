@@ -62,7 +62,6 @@ class DAnCE_ExecutionManager_Module
         bool port_indirection_;
         ACE_Vector<ACE_TString> node_managers_;
         bool ignore_failure_;
-        const ACE_TCHAR *node_map_;
         const ACE_TCHAR *domain_nc_;
         const ACE_TCHAR *cdd_;
 
@@ -75,7 +74,6 @@ class DAnCE_ExecutionManager_Module
               rebind_plan_ns_ (false),
               rebind_plan_ns_ior_ (0),
               ignore_failure_ (false),
-              node_map_(0),
               domain_nc_ (0),
               cdd_ (0)
         {

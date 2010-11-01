@@ -74,7 +74,6 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, ACE_TCHAR *argv[])
   get_opts.long_option (ACE_TEXT("port-indirection"), 'i', ACE_Get_Opt::NO_ARG);
   get_opts.long_option (ACE_TEXT("ignore-failure"), 'f', ACE_Get_Opt::NO_ARG);
   get_opts.long_option (ACE_TEXT("help"), 'h', ACE_Get_Opt::NO_ARG);
-  get_opts.long_option (ACE_TEXT("node-map"), ACE_Get_Opt::ARG_REQUIRED);
   get_opts.long_option (ACE_TEXT("domain-nc"), ACE_Get_Opt::ARG_REQUIRED);
   get_opts.long_option (ACE_TEXT("cdd"), ACE_Get_Opt::ARG_REQUIRED);
 
@@ -133,17 +132,7 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, ACE_TCHAR *argv[])
           break;
 
         case 0:
-          if (ACE_OS::strcmp (get_opts.long_option (),
-                              ACE_TEXT("node-map")) == 0)
-            {
-              DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
-                            ACE_TEXT("Found Node map filename %s.\n"),
-                            get_opts.opt_arg ()));
-              this->options_.node_map_ = get_opts.opt_arg ();
-              break;
-
-            }
-          else if (ACE_OS::strcmp (get_opts.long_option (),
+           if (ACE_OS::strcmp (get_opts.long_option (),
                                    ACE_TEXT("domain-nc")) == 0)
             {
               DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
@@ -167,7 +156,6 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, ACE_TCHAR *argv[])
                                "usage: %s\n"
                                "\t--exec-mgr,-e [execution manager ior file name]\n"
                                "\t--node-mgr,-n <node name>[=node manager ior file name]\n"
-                               "\t--node-map <file name> \t\tFile containing a node manager map\n"
                                "\t--domain-nc <nc ior> \t\tIOR for the Domain Naming Context\n"
                                //"-p|--process-ns [file name] \t\tcreate process name service and store its ior to file name\n"
                                //"-c|--create-plan-ns [NC] \t\tcreate plan objects (components and ports) representation in name context with ior NC\n"
@@ -336,20 +324,13 @@ DAnCE_ExecutionManager_Module::init (CORBA::ORB_ptr orb,
           this->em_impl_->add_node_manager (ACE_TEXT_ALWAYS_CHAR(node_name.c_str()), ACE_TEXT_ALWAYS_CHAR(nm_ior.c_str ()));
         }
 
-      if (this->options_.node_map_ != 0)
-        {
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::init - ")
-                        ACE_TEXT("Parsing node map %C\n"),
-                        this->options_.node_map_));
-          this->em_impl_->load_node_map (this->options_.node_map_);
-        }
-      else if (this->options_.cdd_ != 0)
-        {
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::init - ")
+        if (this->options_.cdd_ != 0)
+          {
+            DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::init - ")
                         ACE_TEXT("Parsing cdd file %C\n"),
                         this->options_.cdd_));
-          this->em_impl_->load_cdd (this->options_.cdd_);
-        }
+           this->em_impl_->load_cdd (this->options_.cdd_);
+          }
 
       mgr->activate ();
 

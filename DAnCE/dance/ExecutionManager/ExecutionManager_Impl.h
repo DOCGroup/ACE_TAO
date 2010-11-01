@@ -55,7 +55,6 @@ namespace DAnCE
 
       void add_node_manager (const char *name, const char *ior);
 
-      void load_node_map (const ACE_TCHAR *filename);
       void load_cdd (const ACE_TCHAR *filename);
 
       class PreparePlanCompletionHandler
