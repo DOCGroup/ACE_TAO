@@ -7,7 +7,7 @@
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
-#include "dds4ccm/impl/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE>
 CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE>::DDS_QueryCondition_T (DDSQueryCondition * qc)

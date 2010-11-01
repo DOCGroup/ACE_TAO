@@ -1,7 +1,7 @@
 // $Id$
 
 #include "DomainParticipantManager.h"
-#include "dds4ccm/impl/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/Utils.h"
 
 namespace CIAO

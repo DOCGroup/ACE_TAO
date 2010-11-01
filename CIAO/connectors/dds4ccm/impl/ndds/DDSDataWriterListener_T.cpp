@@ -8,7 +8,7 @@
 #include "dds4ccm/impl/ndds/convertors/OfferedDeadlineMissedStatus.h"
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
-#include "dds4ccm/impl/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 namespace CIAO
 {

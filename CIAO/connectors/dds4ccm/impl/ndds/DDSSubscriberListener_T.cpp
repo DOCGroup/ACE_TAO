@@ -10,7 +10,7 @@
 #include "dds4ccm/impl/ndds/convertors/LivelinessChangedStatus.h"
 #include "dds4ccm/impl/ndds/convertors/RequestedIncompatibleQosStatus.h"
 
-#include "dds4ccm/impl/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 namespace CIAO
 {

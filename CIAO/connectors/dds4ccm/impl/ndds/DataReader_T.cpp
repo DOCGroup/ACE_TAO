@@ -22,7 +22,7 @@
 #include "dds4ccm/impl/ndds/convertors/DataReaderQos.h"
 #include "dds4ccm/impl/ndds/convertors/StringSeq.h"
 
-#include "dds4ccm/impl/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
 template <typename DDS_TYPE>

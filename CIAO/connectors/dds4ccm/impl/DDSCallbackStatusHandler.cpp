@@ -2,7 +2,7 @@
 
 #include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/DDSCallbackStatusHandler.h"
-#include "dds4ccm/impl/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 //============================================================
 // On_Unexpected_Status_Handler

@@ -4,7 +4,7 @@
 #include "dds4ccm/impl/ndds/convertors/Duration_t.h"
 #include "dds4ccm/impl/ndds/convertors/SampleInfo.h"
 
-#include "dds4ccm/impl/Log_Macros.h"
+#include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::Getter_Base_T (void)
