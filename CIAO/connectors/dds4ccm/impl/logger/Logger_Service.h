@@ -9,23 +9,23 @@
 namespace CIAO
 {
   namespace DDS4CCM
-    {
-      class DDS4CCM_Logger_Export Logger_Service : public ACE_Service_Object
-        {
-        public:
-          Logger_Service (void);
-          virtual int init (int ARGC, ACE_TCHAR * ARGV[]);
+  {
+    class DDS4CCM_Logger_Export Logger_Service : public ACE_Service_Object
+      {
+      public:
+        Logger_Service (void);
+        virtual int init (int ARGC, ACE_TCHAR * ARGV[]);
 
-          void init ();
+        void init ();
 
-          static int Initializer (void);
-        private:
-          void parse_args (int argc, ACE_TCHAR **argv);
+        static int Initializer (void);
+      private:
+        void parse_args (int argc, ACE_TCHAR **argv);
 
-          ACE_TString filename_;
-          bool trace_;
-        };
-    }
+        ACE_TString filename_;
+        bool trace_;
+      };
+  }
 }
 
 static int TAO_Requires_DDS4CCM_Logger_Service_Initializer =
