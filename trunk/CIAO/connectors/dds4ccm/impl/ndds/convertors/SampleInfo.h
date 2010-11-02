@@ -31,17 +31,9 @@ operator<<= (::CCM_DDS::AccessStatus & access_status, const ::DDS_SampleStateKin
 inline void
 operator<<= (::CCM_DDS::ReadInfo& ccm_dds_readinfo, const ::DDS_SampleInfo& sample_info)
 {
-#if (CIAO_DDS4CCM_NDDS==1)
   ccm_dds_readinfo.source_timestamp <<= sample_info.source_timestamp;
-#else
-  ccm_dds_readinfo.source_timestamp = sample_info.source_timestamp;
-#endif
   ccm_dds_readinfo.access_status <<= sample_info.sample_state;
-#if (CIAO_DDS4CCM_NDDS==1)
   ccm_dds_readinfo.instance_handle <<= sample_info.instance_handle;
-#else
-  ccm_dds_readinfo.instance_handle = sample_info.instance_handle;
-#endif
 
   if (sample_info.instance_state == ::DDS::ALIVE_INSTANCE_STATE &&
       sample_info.view_state == ::DDS::NEW_VIEW_STATE)

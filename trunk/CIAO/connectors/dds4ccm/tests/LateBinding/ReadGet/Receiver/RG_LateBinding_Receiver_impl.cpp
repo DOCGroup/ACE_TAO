@@ -97,26 +97,34 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
   {
     try
       {
-        ::RG_LateBinding::RG_LateBindingTestConnector::Reader_var reader =
-          this->ciao_context_->get_connection_info_read_data ();
-        if (::CORBA::is_nil (reader.in ()))
+        if (! ::CORBA::is_nil (this->ciao_context_.in ()))
+          {
+            ::RG_LateBinding::RG_LateBindingTestConnector::Reader_var reader =
+              this->ciao_context_->get_connection_info_read_data ();
+            if (::CORBA::is_nil (reader.in ()))
+              {
+                ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::test_exception - "
+                            "ERROR: Unable to get writer interface from the "
+                            "CIAO context\n"));
+                return;
+              }
+
+            RG_LateBindingTest sample;
+            ::CCM_DDS::ReadInfo readinfo;
+            sample.key = CORBA::string_dup ("KEY_1");
+            reader->read_one_last (sample,
+                                   readinfo,
+                                   ::DDS::HANDLE_NIL);
+            ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::test_exception - "
+                        "ERROR: No exception caught before topic name has been set\n"));
+          }
+        else
           {
             ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::test_exception - "
-                        "ERROR: Unable to get writer interface from the "
-                        "CIAO context\n"));
-            return;
+                        "ERROR: CIAO context seems to be NIL\n"));
           }
-
-        RG_LateBindingTest sample;
-        ::CCM_DDS::ReadInfo readinfo;
-        sample.key = CORBA::string_dup ("KEY_1");
-        reader->read_one_last (sample,
-                               readinfo,
-                               ::DDS::HANDLE_NIL);
-        ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::test_exception - "
-                    "ERROR: No exception caught before topic name has been set\n"));
       }
-    catch (const ::CORBA::BAD_INV_ORDER &e)
+    catch (const ::CORBA::BAD_INV_ORDER &)
       {
         ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::test_exception - "
                     "Expected BAD_INV_ORDER thrown.\n"));
