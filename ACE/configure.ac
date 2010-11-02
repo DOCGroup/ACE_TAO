@@ -221,6 +221,7 @@ dnl Check for gethostbyname in -lnsl since some platforms (e.g. Solaris)
 dnl put it there.
 AC_SEARCH_LIBS([gethostbyname],[nsl],,)
 
+ACE_CHECK_HAS_FUNCS(gethostbyname2)
 
 dnl Add --{enable,disable,with,without}-feature options.
 ACE_CONFIGURATION_OPTIONS
