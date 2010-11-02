@@ -74,6 +74,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
         }
       this->ccm_dds_writer_->set_impl (rw->get_impl ());
       this->writer_t_->set_impl (this->ccm_dds_writer_);
+      this->ccm_data_writer_->set_impl (this->ccm_dds_writer_);
     }
 }
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -169,8 +170,6 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_dds_entity (void)
 {
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_dds_entity");
-  throw CORBA::NO_IMPLEMENT ();
-  ::DDS::CCM_DataWriter::_nil ();
-//   return ::DDS::CCM_DataWriter::_duplicate (this->ccm_dds_writer_);
+  return ::DDS::CCM_DataWriter::_duplicate (this->ccm_data_writer_);
 }
 
