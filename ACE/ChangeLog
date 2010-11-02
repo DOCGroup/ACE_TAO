@@ -1,3 +1,13 @@
+Tue Nov  2 01:25:05 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Log_Msg.cpp (ACE_Log_Msg::log): Added
+        
+          ACE_OS::memset(format,'\0',128);
+          
+          to ensure the format string has known values.  Thanks to Chad
+          Beaulac <chad dot beaulac at objectivesolutions dot com> for
+          this suggestion.  This fixes bugid 3923.
+
 Tue Nov  2 00:18:34 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/INET_Addr.cpp (set): For platforms that have the GNU-extended

@@ -1106,6 +1106,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
           const ACE_TCHAR *abort_str = ACE_TEXT ("Aborting...");
           const ACE_TCHAR *start_format = format_str;
           ACE_TCHAR format[128]; // Converted format string
+          ACE_OS::memset (format, '\0', 128); // Set this string to known values.
           ACE_TCHAR *fp;         // Current format pointer
           int       wp = 0;      // Width/precision extracted from args
           bool      done = false;
