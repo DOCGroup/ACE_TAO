@@ -1,5 +1,7 @@
 USER VISIBLE CHANGES BETWEEN DAnCE-0.8.3 and DAnCE-1.0.0
 =======================================================
+. The option --node-map to use a *.dat file for the node manager map
+  has been replaced by the --cdd option with as argument a  *.cdd xml file.
 
 USER VISIBLE CHANGES BETWEEN DAnCE-0.8.2 and DAnCE-0.8.3
 =======================================================
