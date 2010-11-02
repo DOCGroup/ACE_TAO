@@ -103,11 +103,6 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
     : impl_ (0)
     , iterations_ (0)
   {
-    ACE_NEW_THROW_EX (this->impl_,
-                      RG_LateBinding_Receiver_impl (
-                        this->ciao_context_.in (),
-                        this->iterations ()),
-                      ::CORBA::INTERNAL ());
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)
@@ -216,6 +211,11 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
+    ACE_NEW_THROW_EX (this->impl_,
+                      RG_LateBinding_Receiver_impl (
+                        this->ciao_context_.in (),
+                        this->iterations ()),
+                      ::CORBA::INTERNAL ());
     this->impl_->start (this->reactor ());
   }
 

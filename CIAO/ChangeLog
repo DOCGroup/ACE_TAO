@@ -1,3 +1,20 @@
+Tue Nov  2 07:46:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dds4ccm_logger.mpb:
+          Added base projects
+
+        * connectors/dds4ccm/impl/logger/Logger_Service.h:
+          Layout changes
+
+        * connectors/dds4ccm/impl/ndds/DDSPublisherListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDSSubscriberListener_T.h:
+        * connectors/dds4ccm/impl/ndds/convertors/SampleInfo.h:
+          Removed unnecessary defines.
+
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_impl.cpp:
+          Resolved runtime issues.
+
 Mon Nov  1 14:09:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Hello/descriptors/Aliased_Map.cdd:
