@@ -344,37 +344,46 @@ ACE_INET_Addr::set (u_short port_number,
 #  endif /* ACE_USES_IPV4_IPV6_MIGRATION */
   if (address_family != AF_INET)
     {
+#  if defined (ACE_HAS_GETHOSTBYNAME2)
+      hostent hentry;
+      ACE_HOSTENT_DATA buf;
+      int h_error = 0;  // Not the same as errno!
+
+      hostent *hp = ::gethostbyname2_r (host_name, AF_INET6, &hentry,
+                                        buf, &h_error);
+      if (hp != 0)
+        {
+          this->set_type (hp->h_addrtype);
+          this->set_addr (hp->h_addr, hp->h_length);
+          this->set_port_number (port_number, encode);
+          return 0;
+        }
+        errno = h_error;
+        if (address_family == AF_INET6)
+          return -1;
+#  else
       struct addrinfo hints;
       struct addrinfo *res = 0;
       int error = 0;
       ACE_OS::memset (&hints, 0, sizeof (hints));
       hints.ai_family = AF_INET6;
-      error = ::getaddrinfo (host_name, 0, &hints, &res);
-      if (error)
+      if ((error = ::getaddrinfo (host_name, 0, &hints, &res)) == 0)
         {
-          if (address_family == AF_INET6)
-            {
-              if (res)
-                ::freeaddrinfo(res);
-              errno = error;
-              return -1;
-            }
-          // Let AF_UNSPEC try again w/ IPv4.
-          hints.ai_family = AF_INET;
-          error = ::getaddrinfo (host_name, 0, &hints, &res);
-          if (error)
-            {
-              if (res)
-                ::freeaddrinfo(res);
-              errno = error;
-              return -1;
-            }
+          this->set_type (res->ai_family);
+          this->set_addr (res->ai_addr, res->ai_addrlen);
+          this->set_port_number (port_number, encode);
+          ::freeaddrinfo (res);
+          return 0;
         }
-      this->set_type (res->ai_family);
-      this->set_addr (res->ai_addr, res->ai_addrlen);
-      this->set_port_number (port_number, encode);
-      ::freeaddrinfo (res);
-      return 0;
+      if (address_family == AF_INET6)
+        {
+          if (res)
+            ::freeaddrinfo(res);
+          errno = error;
+          return -1;
+        }
+#  endif /* ACE_HAS_GETHOSTBYNAME2 */
+      // Let AF_UNSPEC try again w/ IPv4.
     }
 #endif /* ACE_HAS_IPV6 */
 

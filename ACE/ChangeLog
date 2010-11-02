@@ -1,3 +1,13 @@
+Tue Nov  2 00:18:34 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/INET_Addr.cpp (set): For platforms that have the GNU-extended
+          gethostbyname2_r() function, use it instead of getaddrinfo() for
+          a IPv6 hostname lookup. Customer reports that it getaddrinfo() is
+          hugely slower than gethostbyname2 on large vlans. The alternate
+          code is used if ACE_HAS_GETHOSTBYNAME2 is set in config.h.
+
+        * configure.ac: Check for ACE_HAS_GETHOSTBYNAME2.
+
 Mon Nov  1 15:03:05 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/Reactor.h: Clarified some behavior descriptions related to
