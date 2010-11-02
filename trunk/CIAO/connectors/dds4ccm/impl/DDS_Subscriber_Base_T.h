@@ -16,6 +16,7 @@
 #include "dds4ccm/impl/ContentFilterSetting.h"
 #include "dds4ccm/impl/ndds/ContentFilteredTopic_T.h"
 #include "dds4ccm/impl/ConditionManager_T.h"
+#include "dds4ccm/impl/CCM_DataReader.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
 class DDS_Subscriber_Base_T
@@ -77,6 +78,7 @@ protected:
   ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<ContentFilterSetting_type> cft_setting_;
   ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<Reader_type> dds_read_;
   ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<DataReader_type> data_reader_;
+  ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T< ::CIAO::DDS4CCM::CCM_DataReader > ccm_data_reader_;
   bool configuration_complete_;
   //@}
   ConditionManager_type condition_manager_;
