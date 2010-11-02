@@ -27,7 +27,7 @@ CORBA::Boolean both_read_write_ = false;
 void
 split_qos (const char * qos)
 {
-  char* buf = const_cast <char *> (qos);
+  char* buf = ACE_OS::strdup (name);
   ACE_Tokenizer_T<char> tok (buf);
   tok.delimiter_replace ('#', 0);
   for (char *p = tok.next (); p; p = tok.next ())
@@ -41,6 +41,7 @@ split_qos (const char * qos)
           prof_name_ = p;
         }
     }
+  ACE_OS::free (buf);
   ACE_DEBUG ((LM_DEBUG, "Receiver : Found QoS profile %C %C\n",
     lib_name_,
     prof_name_));
