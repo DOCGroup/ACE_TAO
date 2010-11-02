@@ -76,6 +76,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
         }
       this->ccm_dds_writer_->set_impl (rw->get_impl ());
       this->dds_update_->set_impl (this->ccm_dds_writer_);
+      this->ccm_data_writer_->set_impl (this->ccm_dds_writer_);
     }
 }
 
@@ -172,8 +173,6 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_dds_entity (void)
 {
   DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_dds_entity");
 
-  CORBA::NO_IMPLEMENT ();
-  return ::DDS::CCM_DataWriter::_nil ();
-//   return ::DDS::CCM_DataWriter::_duplicate (this->ccm_dds_writer_);
+  return ::DDS::CCM_DataWriter::_duplicate (this->ccm_data_writer_);
 }
 

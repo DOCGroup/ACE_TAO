@@ -9,6 +9,7 @@
 #define DDS_UPDATE_T_H_
 
 #include "dds4ccm/impl/Updater_T.h"
+#include "dds4ccm/impl/CCM_DataWriter.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 class DDS_Update_T
@@ -49,8 +50,9 @@ private:
    */
   //@{
   ::DDS::DataWriterListener_var data_listener_;
-  ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<Updater_type> dds_update_;
-  ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<DataWriter_type> ccm_dds_writer_;
+  ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T< Updater_type > dds_update_;
+  ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T< DataWriter_type > ccm_dds_writer_;
+  ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T< ::CIAO::DDS4CCM::CCM_DataWriter > ccm_data_writer_;
   //@}
 };
 

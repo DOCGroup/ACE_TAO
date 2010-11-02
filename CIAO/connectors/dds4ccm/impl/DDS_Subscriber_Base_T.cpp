@@ -70,6 +70,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
 
       this->dds_read_->set_impl (this->data_reader_,
                                 &this->condition_manager_);
+      this->ccm_data_reader_->set_impl (this->data_reader_);
     }
 }
 
@@ -159,9 +160,8 @@ template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDO
 DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_dds_entity (void)
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_dds_entity");
-  throw CORBA::NO_IMPLEMENT ();
-//   return ::DDS::DataReader::_nil ();
-//   return ::DDS::DataReader::_duplicate (this->data_reader_);
+
+  return ::DDS::CCM_DataReader::_duplicate (this->ccm_data_reader_);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
