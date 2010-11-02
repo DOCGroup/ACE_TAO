@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #if defined (ACE_HAS_INTRINSIC_INTERLOCKED)

@@ -15,10 +15,5 @@
  * they should define $ACE_ROOT and $TAO_ROOT if they're not
  * some makefile are not regenerated (e.g. JAWS). Seems like a bug.
 
-= autoconf support =
- * some macros are missing (see rules)
-
 = CIAO =
  * to restore
- * autoconf support
- * cidlc
