@@ -69,15 +69,15 @@ COLOR:black'>%CIAO_ROOT%/docs/tutorials/Quoter/Simple/descriptors</span></code><
 </UL>
 <P style="COLOR: black;    ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   &nbsp;&nbsp;&nbsp; <code> <span style='FONT-SIZE:10pt'>
-  %DANCE_ROOT%/bin/dance_execution_manager -eEM.ior --node-map NodeMap.dat</span></code>&nbsp; </P>
+  %DANCE_ROOT%/bin/dance_execution_manager -eEM.ior --cdd NodeMap.cdd</span></code>&nbsp; </P>
 <p><span style='COLOR:black'>The </span><code><span style='FONT-SIZE:10pt;
-COLOR:black'>NodeMap.dat</span></code><span style='COLOR:black'> file describes
+COLOR:black'>NodeMap.cdd</span></code><span style='COLOR:black'> file describes
   the deployment daemons CIAO's Execution_Manager will contact to instantiate
-  ComponentServer's, home's, and component instances. Each line specify the name
-  of a installation "destination" and the corresponding IOR for the
-  CIAO_Daemon.</span></p>
+  ComponentServer's, home's, and component instances. In xml the name
+  of an installation "destination" and the corresponding IOR for the
+  CIAO_Daemon are described.</span></p>
 <ul type="square">
-  <li style='COLOR:black;'> <em>NOTE</em>: As one can see, we use the "NodeMap.dat" file to instruct the
+  <li style='COLOR:black;'> <em>NOTE</em>: As one can see, we use the "NodeMap.cdd" file to instruct the
     Execution Manager how to find the endpoint of each individual NodeManager
     (i.e., Node Daemon) where component(s) will be deployed, so this is
     non-standard. We plan to use Naming Service to do this in the future.</li>

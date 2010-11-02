@@ -1,3 +1,10 @@
+Tue Nov  2 09:24:16 UTC 2010  Marijke Hengstmengel  <mhengstmengelt@remedy.nl>
+
+        * tutorials/Quoter/Simple/03.html:
+        * tutorials/Quoter/Simple/04.html:
+        * examples/Hello/step-by-step.html:
+        Changed documentation about NodeManager.dat files into NodeManager.cdd files.        
+ 
 Tue Nov  2 07:46:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/dds4ccm_logger.mpb:
