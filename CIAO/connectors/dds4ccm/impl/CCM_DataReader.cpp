@@ -13,6 +13,191 @@ CIAO::DDS4CCM::CCM_DataReader::~CCM_DataReader (void)
   DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DataReader::~CCM_DataReader");
 }
 
+::DDS::ReturnCode_t
+CIAO::DDS4CCM::CCM_DataReader::enable (void)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::RETCODE_OK;
+}
+
+::DDS::StatusCondition_ptr
+CIAO::DDS4CCM::CCM_DataReader::get_statuscondition (void)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::StatusCondition::_nil ();
+}
+
+::DDS::StatusMask
+CIAO::DDS4CCM::CCM_DataReader::get_status_changes (void)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return 0;
+}
+
+::DDS::InstanceHandle_t
+CIAO::DDS4CCM::CCM_DataReader::get_instance_handle (void)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::HANDLE_NIL;
+}
+
+::DDS::ReadCondition_ptr
+CIAO::DDS4CCM::CCM_DataReader::create_readcondition (
+  ::DDS::SampleStateMask /*sample_states*/,
+  ::DDS::ViewStateMask /*view_states*/,
+  ::DDS::InstanceStateMask /*instance_states*/)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::ReadCondition::_nil ();
+}
+
+::DDS::QueryCondition_ptr
+CIAO::DDS4CCM::CCM_DataReader::create_querycondition (
+  ::DDS::SampleStateMask /*sample_states*/,
+  ::DDS::ViewStateMask /*view_states*/,
+  ::DDS::InstanceStateMask /*instance_states*/,
+  const char * /*query_expression*/,
+  const ::DDS::StringSeq & /*query_parameters*/)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::QueryCondition::_nil ();
+}
+
+::DDS::ReturnCode_t
+CIAO::DDS4CCM::CCM_DataReader::delete_readcondition (
+  ::DDS::ReadCondition_ptr /*a_condition*/)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::RETCODE_OK;
+}
+
+::DDS::ReturnCode_t
+CIAO::DDS4CCM::CCM_DataReader::delete_contained_entities (void)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::RETCODE_OK;
+}
+
+::DDS::ReturnCode_t
+CIAO::DDS4CCM::CCM_DataReader::set_qos (
+  const ::DDS::DataReaderQos & /*qos*/)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::RETCODE_OK;
+}
+
+::DDS::ReturnCode_t
+CIAO::DDS4CCM::CCM_DataReader::get_qos (
+  ::DDS::DataReaderQos & /*qos*/)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::RETCODE_OK;
+}
+
+::DDS::ReturnCode_t
+CIAO::DDS4CCM::CCM_DataReader::set_listener (
+  ::DDS::DataReaderListener_ptr /*a_listener*/,
+  ::DDS::StatusMask /*mask*/)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::RETCODE_OK;
+}
+
+::DDS::DataReaderListener_ptr
+CIAO::DDS4CCM::CCM_DataReader::get_listener (void)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::DataReaderListener::_nil ();
+}
+
+::DDS::TopicDescription_ptr
+CIAO::DDS4CCM::CCM_DataReader::get_topicdescription (void)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::TopicDescription::_nil ();
+}
+
+::DDS::Subscriber_ptr
+CIAO::DDS4CCM::CCM_DataReader::get_subscriber (void)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::Subscriber::_nil ();
+}
+
+::DDS::ReturnCode_t
+CIAO::DDS4CCM::CCM_DataReader::get_sample_rejected_status (
+  ::DDS::SampleRejectedStatus & /*status*/)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::RETCODE_OK;
+}
+
+::DDS::ReturnCode_t
+CIAO::DDS4CCM::CCM_DataReader::get_liveliness_changed_status (
+  ::DDS::LivelinessChangedStatus & /*status*/)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::RETCODE_OK;
+}
+
+::DDS::ReturnCode_t
+CIAO::DDS4CCM::CCM_DataReader::get_requested_deadline_missed_status (
+  ::DDS::RequestedDeadlineMissedStatus & /*status*/)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::RETCODE_OK;
+}
+
+::DDS::ReturnCode_t
+CIAO::DDS4CCM::CCM_DataReader::get_requested_incompatible_qos_status (
+  ::DDS::RequestedIncompatibleQosStatus & /*status*/)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::RETCODE_OK;
+}
+
+::DDS::ReturnCode_t
+CIAO::DDS4CCM::CCM_DataReader::get_subscription_matched_status (
+  ::DDS::SubscriptionMatchedStatus & /*status*/)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::RETCODE_OK;
+}
+
+::DDS::ReturnCode_t
+CIAO::DDS4CCM::CCM_DataReader::get_sample_lost_status (
+  ::DDS::SampleLostStatus & /*status*/)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::RETCODE_OK;
+}
+
+::DDS::ReturnCode_t
+CIAO::DDS4CCM::CCM_DataReader::wait_for_historical_data (
+  const ::DDS::Duration_t & /*max_wait*/)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::RETCODE_OK;
+}
+
+::DDS::ReturnCode_t
+CIAO::DDS4CCM::CCM_DataReader::get_matched_publications (
+  ::DDS::InstanceHandleSeq & /*publication_handles*/)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::RETCODE_OK;
+}
+
+::DDS::ReturnCode_t
+CIAO::DDS4CCM::CCM_DataReader::get_matched_publication_data (
+  ::DDS::PublicationBuiltinTopicData & /*publication_data*/,
+  const ::DDS::InstanceHandle_t & /*publication_handle*/)
+{
+  throw ::CORBA::NO_IMPLEMENT ();
+  return ::DDS::RETCODE_OK;
+}
+
+
 void
 CIAO::DDS4CCM::CCM_DataReader::set_impl (::DDS::DataReader_ptr dr)
 {

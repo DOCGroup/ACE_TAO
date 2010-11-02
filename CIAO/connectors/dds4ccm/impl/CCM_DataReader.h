@@ -27,37 +27,78 @@ namespace CIAO
       /// Destructor
       virtual ~CCM_DataReader (void);
 
-      virtual ::DDS::ReturnCode_t enable (void) {return 0;}
-      virtual ::DDS::StatusCondition_ptr get_statuscondition (void) {return 0;}
-      virtual ::DDS::StatusMask get_status_changes (void) {return 0;}
-      virtual ::DDS::InstanceHandle_t get_instance_handle (void) {return ::DDS::HANDLE_NIL;}
-      virtual ::DDS::ReadCondition_ptr create_readcondition (::DDS::SampleStateMask /*sample_states*/,
-      ::DDS::ViewStateMask /*view_states*/,
-      ::DDS::InstanceStateMask /*instance_states*/)  {return 0;}
-      virtual ::DDS::QueryCondition_ptr create_querycondition (::DDS::SampleStateMask /*sample_states*/,
-      ::DDS::ViewStateMask /*view_states*/,
-      ::DDS::InstanceStateMask /*instance_states*/,
-      const char * /*query_expression*/,
-      const ::DDS::StringSeq & /*query_parameters*/)  {return 0;}
-      virtual ::DDS::ReturnCode_t delete_readcondition (::DDS::ReadCondition_ptr /*a_condition*/)  {return 0;}
-      virtual ::DDS::ReturnCode_t delete_contained_entities (void)  {return 0;}
-      virtual ::DDS::ReturnCode_t set_qos (const ::DDS::DataReaderQos & /*qos*/)  {return 0;}
-      virtual ::DDS::ReturnCode_t get_qos (::DDS::DataReaderQos & /*qos*/)  {return 0;}
-      virtual ::DDS::ReturnCode_t set_listener (::DDS::DataReaderListener_ptr /*a_listener*/,
-      ::DDS::StatusMask /*mask*/)  {return 0;}
-      virtual ::DDS::DataReaderListener_ptr get_listener (void)  {return 0;}
-      virtual ::DDS::TopicDescription_ptr get_topicdescription (void)  {return 0;}
-      virtual ::DDS::Subscriber_ptr get_subscriber (void)  {return 0;}
-      virtual ::DDS::ReturnCode_t get_sample_rejected_status (::DDS::SampleRejectedStatus & /*status*/)  {return 0;}
-      virtual ::DDS::ReturnCode_t get_liveliness_changed_status (::DDS::LivelinessChangedStatus & /*status*/)  {return 0;}
-      virtual ::DDS::ReturnCode_t get_requested_deadline_missed_status (::DDS::RequestedDeadlineMissedStatus & /*status*/)  {return 0;}
-      virtual ::DDS::ReturnCode_t get_requested_incompatible_qos_status (::DDS::RequestedIncompatibleQosStatus & /*status*/)  {return 0;}
-      virtual ::DDS::ReturnCode_t get_subscription_matched_status (::DDS::SubscriptionMatchedStatus & /*status*/)  {return 0;}
-      virtual ::DDS::ReturnCode_t get_sample_lost_status (::DDS::SampleLostStatus & /*status*/)  {return 0;}
-      virtual ::DDS::ReturnCode_t wait_for_historical_data (const ::DDS::Duration_t & /*max_wait*/)  {return 0;}
-      virtual ::DDS::ReturnCode_t get_matched_publications (::DDS::InstanceHandleSeq & /*publication_handles*/)  {return 0;}
-      virtual ::DDS::ReturnCode_t get_matched_publication_data (::DDS::PublicationBuiltinTopicData & /*publication_data*/,
-      const ::DDS::InstanceHandle_t & /*publication_handle*/)  {return 0;}
+      virtual ::DDS::ReturnCode_t
+      enable (void);
+
+      virtual ::DDS::StatusCondition_ptr
+      get_statuscondition (void);
+
+      virtual ::DDS::StatusMask
+      get_status_changes (void);
+
+      virtual ::DDS::InstanceHandle_t
+      get_instance_handle (void);
+
+      virtual ::DDS::ReadCondition_ptr
+      create_readcondition (::DDS::SampleStateMask ,
+                            ::DDS::ViewStateMask ,
+                            ::DDS::InstanceStateMask);
+      virtual ::DDS::QueryCondition_ptr
+      create_querycondition (::DDS::SampleStateMask ,
+                             ::DDS::ViewStateMask ,
+                             ::DDS::InstanceStateMask ,
+                             const char * ,
+                             const ::DDS::StringSeq & );
+
+      virtual ::DDS::ReturnCode_t
+      delete_readcondition (::DDS::ReadCondition_ptr );
+
+      virtual ::DDS::ReturnCode_t delete_contained_entities (void);
+
+      virtual ::DDS::ReturnCode_t set_qos (const ::DDS::DataReaderQos & );
+
+      virtual ::DDS::ReturnCode_t get_qos (::DDS::DataReaderQos & );
+
+      virtual ::DDS::ReturnCode_t
+      set_listener (::DDS::DataReaderListener_ptr,
+                    ::DDS::StatusMask );
+
+      virtual ::DDS::DataReaderListener_ptr
+      get_listener (void);
+
+      virtual ::DDS::TopicDescription_ptr
+      get_topicdescription (void);
+
+      virtual ::DDS::Subscriber_ptr
+      get_subscriber (void);
+
+      virtual ::DDS::ReturnCode_t
+      get_sample_rejected_status (::DDS::SampleRejectedStatus & );
+
+      virtual ::DDS::ReturnCode_t
+      get_liveliness_changed_status (::DDS::LivelinessChangedStatus & );
+
+      virtual ::DDS::ReturnCode_t
+      get_requested_deadline_missed_status (::DDS::RequestedDeadlineMissedStatus & );
+
+      virtual ::DDS::ReturnCode_t
+      get_requested_incompatible_qos_status (::DDS::RequestedIncompatibleQosStatus &  );
+
+      virtual ::DDS::ReturnCode_t
+      get_subscription_matched_status (::DDS::SubscriptionMatchedStatus & );
+
+      virtual ::DDS::ReturnCode_t
+      get_sample_lost_status (::DDS::SampleLostStatus & );
+
+      virtual ::DDS::ReturnCode_t
+      wait_for_historical_data (const ::DDS::Duration_t & );
+
+      virtual ::DDS::ReturnCode_t
+      get_matched_publications (::DDS::InstanceHandleSeq & );
+
+      virtual ::DDS::ReturnCode_t
+      get_matched_publication_data (::DDS::PublicationBuiltinTopicData & ,
+                                    const ::DDS::InstanceHandle_t & );
 
 
       void set_impl (::DDS::DataReader_ptr dr);
