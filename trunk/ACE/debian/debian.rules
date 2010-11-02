@@ -130,7 +130,7 @@ install: build
 	cd $(TAO_ROOT) && $(MPC_ROOT)/prj_install.pl -k -s man_files,exe_output,lib_output  -b exe_output=usr/bin -b man_files=usr/share/man -b lib_output=usr/lib  $(CURDIR)/$(DT) TAO_IDL
 	cd $(TAO_ROOT) && $(MPC_ROOT)/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) utils
 
-#	Move libraries and excutable to lib and bin, then remove subdirectories
+#	Move libraries and executable to lib and bin, then remove subdirectories
 	cd $(CURDIR)/$(DT)/usr/bin &&  find . -executable -a -type f -exec mv {} . ';' && find . -type d -delete
 	cd $(CURDIR)/$(DT)/usr/lib &&  find . -type f -exec mv {} . ';' && find . -type d -delete
 

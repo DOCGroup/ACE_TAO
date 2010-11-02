@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #if defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
