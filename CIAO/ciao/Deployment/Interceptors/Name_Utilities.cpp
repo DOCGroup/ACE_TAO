@@ -155,16 +155,14 @@ namespace CIAO
     {
       DANCE_TRACE ("Name_Utilities::build_name");
 
-      /*ACE_Auto_Basic_Array_Ptr<ACE_TCHAR>*/  char *safe_array (new char[ACE_OS::strlen (name) + 1]);
+      char* buf = ACE_OS::strdup (name);
 
-      ACE_Tokenizer_T<char> parser (ACE_OS::strcpy (safe_array/*.get ()*/, name));
+      ACE_Tokenizer_T<char> parser (buf);
       parser.delimiter ('/');
 
-      char *next (0);
-
-      while ((next = parser.next ()) != 0)
+      for (char *next = parser.next (); next; next = parser.next ())
         {
-          CORBA::ULong i = nm.length ();
+          CORBA::ULong const i = nm.length ();
           nm.length (i + 1);
 
           DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Name_Utilities::build_name - ")
@@ -173,6 +171,7 @@ namespace CIAO
 
           nm[i].id = CORBA::string_dup (next);
         }
+      ACE_OS::free (buf);
     }
   }
 }

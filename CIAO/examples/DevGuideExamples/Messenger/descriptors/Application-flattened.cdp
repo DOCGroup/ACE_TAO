@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <!-- $Id$ -->
-<Deployment:deploymentPlan
+<Deployment:DeploymentPlan
  xmlns:Deployment="http://www.omg.org/Deployment"
  xmlns:xmi="http://www.omg.org/XMI"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -12,56 +12,56 @@
 
   <!-- implementation* -->
 
-  <implementation id="MessengerImpl"> <!-- from Messenger.cpd -->
+  <implementation xmi:id="MessengerImpl"> <!-- from Messenger.cpd -->
     <name>MessengerImpl</name>
     <source></source>
     <!-- from Messenger.cid -->
-    <artifact>Messenger_Stub</artifact>
-    <artifact>Messenger_Svnt</artifact>
-    <artifact>Messenger_Exec</artifact>
+    <artifact xmi:idref="Messenger_Stub" />
+    <artifact xmi:idref="Messenger_Svnt" />
+    <artifact xmi:idref="Messenger_Exec" />
   </implementation>
 
-  <implementation id="ReceiverImpl"> <!-- from Receiver.cpd -->
+  <implementation xmi:id="ReceiverImpl"> <!-- from Receiver.cpd -->
     <name>ReceiverImpl</name>
     <source></source>
-    <artifact>Receiver_Stub</artifact>
-    <artifact>Receiver_Svnt</artifact>
-    <artifact>Receiver_Exec</artifact>
+    <artifact xmi:idref="Receiver_Stub" />
+    <artifact xmi:idref="Receiver_Svnt" />
+    <artifact xmi:idref="Receiver_Exec" />
   </implementation>
 
-  <implementation id="AdministratorImpl"> <!-- from Administrator.cpd -->
+  <implementation xmi:id="AdministratorImpl"> <!-- from Administrator.cpd -->
     <name>AdministratorImpl</name>
     <source></source>
-    <artifact>Administrator_Stub</artifact>
-    <artifact>Administrator_Svnt</artifact>
-    <artifact>Administrator_Exec</artifact>
+    <artifact xmi:idref="Administrator_Stub" />
+    <artifact xmi:idref="Administrator_Svnt" />
+    <artifact xmi:idref="Administrator_Exec" />
   </implementation>
 
   <!-- instance* -->
 
-  <instance id="Messenger_Instance_ID">
+  <instance xmi:id="Messenger_Instance_ID">
     <name>Messenger_Instance</name>
     <node>Messenger_Node</node>
     <source></source>
-    <implementation>MessengerImpl</implementation>
+    <implementation xmi:idref="MessengerImpl" />
   </instance>
-  <instance id="First_Receiver_Instance_ID">
+  <instance xmi:id="First_Receiver_Instance_ID">
     <name>First_Receiver_Instance</name>
     <node>First_Receiver_Node</node>
     <source></source>
-    <implementation>ReceiverImpl</implementation>
+    <implementation xmi:idref="ReceiverImpl" />
   </instance>
-  <instance id="Second_Receiver_Instance_ID">
+  <instance xmi:id="Second_Receiver_Instance_ID">
     <name>Second_Receiver_Instance</name>
     <node>Second_Receiver_Node</node>
     <source></source>
-    <implementation>ReceiverImpl</implementation>
+    <implementation xmi:idref="ReceiverImpl" />
   </instance>
-  <instance id="Administrator_Instance_ID">
+  <instance xmi:id="Administrator_Instance_ID">
     <name>Administrator_Instance</name>
     <node>Administrator_Node</node>
     <source></source>
-    <implementation>AdministratorImpl</implementation>
+    <implementation xmi:idref="AdministratorImpl" />
   </instance>
 
   <!-- connection* -->
@@ -71,12 +71,12 @@
     <internalEndpoint>
       <portName>message_publisher</portName>
       <kind>EventPublisher</kind>
-      <instance>Messenger_Instance_ID</instance>
+      <instance xmi:idref="Messenger_Instance_ID" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>message_consumer</portName>
       <kind>EventConsumer</kind>
-      <instance>First_Receiver_Instance_ID</instance>
+      <instance xmi:idref="First_Receiver_Instance_ID" />
     </internalEndpoint>
   </connection>
 
@@ -85,12 +85,12 @@
     <internalEndpoint>
       <portName>message_history</portName>
       <kind>Facet</kind>
-      <instance>Messenger_Instance_ID</instance>
+      <instance xmi:idref="Messenger_Instance_ID" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>message_history</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>First_Receiver_Instance_ID</instance>
+      <instance xmi:idref="First_Receiver_Instance_ID" />
     </internalEndpoint>
   </connection>
 
@@ -99,12 +99,12 @@
     <internalEndpoint>
       <portName>message_publisher</portName>
       <kind>EventPublisher</kind>
-      <instance>Messenger_Instance_ID</instance>
+      <instance xmi:idref="Messenger_Instance_ID" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>message_consumer</portName>
       <kind>EventConsumer</kind>
-      <instance>Second_Receiver_Instance_ID</instance>
+      <instance xmi:idref="Second_Receiver_Instance_ID" />
     </internalEndpoint>
   </connection>
 
@@ -113,12 +113,12 @@
     <internalEndpoint>
       <portName>message_history</portName>
       <kind>Facet</kind>
-      <instance>Messenger_Instance_ID</instance>
+      <instance xmi:idref="Messenger_Instance_ID" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>message_history</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>Second_Receiver_Instance_ID</instance>
+      <instance xmi:idref="Second_Receiver_Instance_ID" />
     </internalEndpoint>
   </connection>
 
@@ -127,12 +127,12 @@
     <internalEndpoint>
       <portName>control</portName>
       <kind>Facet</kind>
-      <instance>Messenger_Instance_ID</instance>
+      <instance xmi:idref="Messenger_Instance_ID" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>runnables</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>Administrator_Instance_ID</instance>
+      <instance xmi:idref="Administrator_Instance_ID" />
     </internalEndpoint>
   </connection>
 
@@ -141,12 +141,12 @@
     <internalEndpoint>
       <portName>content</portName>
       <kind>Facet</kind>
-      <instance>Messenger_Instance_ID</instance>
+      <instance xmi:idref="Messenger_Instance_ID" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>content</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>Administrator_Instance_ID</instance>
+      <instance xmi:idref="Administrator_Instance_ID" />
     </internalEndpoint>
   </connection>
 
