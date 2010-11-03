@@ -72,7 +72,7 @@ class WriteTicker :public ACE_Event_Handler
 void
 split_qos (const char * qos)
 {
-  char* buf = ACE_OS::strdup (name);
+  char* buf = ACE_OS::strdup (qos);
   ACE_Tokenizer_T<char> tok (buf);
   tok.delimiter_replace ('#', 0);
   for (char *p = tok.next (); p; p = tok.next ())
