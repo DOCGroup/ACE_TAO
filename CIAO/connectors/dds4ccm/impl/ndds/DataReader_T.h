@@ -10,8 +10,6 @@
 #ifndef DATAREADER_T_H_
 #define DATAREADER_T_H_
 
-#include "dds4ccm/impl/dds4ccm_conf.h"
-
 #include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/ndds/DataReader.h"
 #include "dds4ccm/idl/dds4ccm_BaseC.h"

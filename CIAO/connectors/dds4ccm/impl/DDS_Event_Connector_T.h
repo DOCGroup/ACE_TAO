@@ -28,7 +28,7 @@ public:
   //@{
   virtual typename CCM_TYPE::writer_type::_ptr_type get_supplier_data (void);
 
-  virtual ::DDS::CCM_DataWriter_ptr get_supplier_dds_entity (void);
+  virtual typename CCM_TYPE::datawriter_type::_ptr_type get_supplier_dds_entity (void);
   //@}
 
   /**

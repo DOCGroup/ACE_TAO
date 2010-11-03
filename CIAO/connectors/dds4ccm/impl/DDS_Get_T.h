@@ -40,8 +40,6 @@ public:
     ::DDS::Subscriber_ptr subscriber);
 
 private:
-  typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
-    ConditionManager_type;
   typedef DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
     DDSSubscriberBase_type;
   typedef ::CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
