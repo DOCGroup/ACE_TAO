@@ -986,38 +986,6 @@ module DDS {
     };
 
     local interface DataWriter : Entity {
-    //  InstanceHandle_t register_instance(
-    //      in Data instance_data);
-    //  InstanceHandle_t register_instance_w_timestamp(
-    //      in Data instance_data,
-    //      in Time_t source_timestamp);
-    //  ReturnCode_t unregister_instance(
-    //      in Data instance_data,
-    //      in InstanceHandle_t  handle);
-    //  ReturnCode_t unregister_instance_w_timestamp(
-    //      in Data instance_data,
-    //      in InstanceHandle_t  handle,
-    //      in Time_t source_timestamp);
-    //  ReturnCode_t write(
-    //      in Data instance_data,
-    //      in InstanceHandle_t handle);
-    //  ReturnCode_t write_w_timestamp(
-    //      in Data instance_data,
-    //      in InstanceHandle_t handle,
-    //      in Time_t source_timestamp);
-    //  ReturnCode_t dispose(
-    //      in Data instance_data,
-    //      in InstanceHandle_t instance_handle);
-    //  ReturnCode_t dispose_w_timestamp(
-    //      in Data instance_data,
-    //      in InstanceHandle_t instance_handle,
-    //      in Time_t source_timestamp);
-    //  ReturnCode_t get_key_value(
-    //      inout Data key_holder,
-    //      in InstanceHandle_t handle);
-    //  InstanceHandle_t lookup_instance(
-    //      in Data instance_data);
-
         ReturnCode_t set_qos(
             in DataWriterQos qos);
         ReturnCode_t get_qos(
@@ -1104,103 +1072,6 @@ module DDS {
     };
 
     local interface DataReader : Entity {
-    //  ReturnCode_t read(
-    //      inout DataSeq data_values,
-    //      inout SampleInfoSeq sample_infos,
-    //      in long max_samples,
-    //      in SampleStateMask sample_states,
-    //      in ViewStateMask view_states,
-    //      in InstanceStateMask instance_states);
-
-    //  ReturnCode_t take(
-    //      inout DataSeq data_values,
-    //      inout SampleInfoSeq sample_infos,
-    //      in long max_samples,
-    //      in SampleStateMask sample_states,
-    //      in ViewStateMask view_states,
-    //      in InstanceStateMask instance_states);
-
-    //  ReturnCode_t read_w_condition(
-    //      inout DataSeq data_values,
-    //      inout SampleInfoSeq sample_infos,
-    //      in long max_samples,
-    //      in ReadCondition a_condition);
-
-    //  ReturnCode_t take_w_condition(
-    //      inout DataSeq data_values,
-    //      inout SampleInfoSeq sample_infos,
-    //      in long max_samples,
-    //      in ReadCondition a_condition);
-
-    //  ReturnCode_t read_next_sample(
-    //      inout Data data_values,
-    //      inout SampleInfo sample_info);
-
-    //  ReturnCode_t take_next_sample(
-    //      inout Data data_values,
-    //      inout SampleInfo sample_info);
-
-    //  ReturnCode_t read_instance(
-    //      inout DataSeq data_values,
-    //      inout SampleInfoSeq sample_infos,
-    //      in long max_samples,
-    //      in InstanceHandle_t a_handle,
-    //      in SampleStateMask sample_states,
-    //      in ViewStateMask view_states,
-    //      in InstanceStateMask instance_states);
-
-    //  ReturnCode_t take_instance(
-    //      inout DataSeq data_values,
-    //      inout SampleInfoSeq sample_infos,
-    //      in long max_samples,
-    //      in InstanceHandle_t a_handle,
-    //      in SampleStateMask sample_states,
-    //      in ViewStateMask view_states,
-    //      in InstanceStateMask instance_states);
-
-    //  ReturnCode_t read_next_instance(
-    //      inout DataSeq data_values,
-    //      inout SampleInfoSeq sample_infos,
-    //      in long max_samples,
-    //      in InstanceHandle_t previous_handle,
-    //      in SampleStateMask sample_states,
-    //      in ViewStateMask view_states,
-    //      in InstanceStateMask instance_states);
-
-    //  ReturnCode_t take_next_instance(
-    //      inout DataSeq data_values,
-    //      inout SampleInfoSeq sample_infos,
-    //      in long max_samples,
-    //      in InstanceHandle_t previous_handle,
-    //      in SampleStateMask sample_states,
-    //      in ViewStateMask view_states,
-    //      in InstanceStateMask instance_states);
-
-    //  ReturnCode_t read_next_instance_w_condition(
-    //      inout DataSeq data_values,
-    //      inout SampleInfoSeq sample_infos,
-    //      in long max_samples,
-    //      in InstanceHandle_t previous_handle,
-    //      in ReadCondition a_condition);
-
-    //  ReturnCode_t take_next_instance_w_condition(
-    //      inout DataSeq data_values,
-    //      inout SampleInfoSeq sample_infos,
-    //      in long max_samples,
-    //      in InstanceHandle_t previous_handle,
-    //      in ReadCondition a_condition);
-
-    //  ReturnCode_t return_loan (
-    //      inout DataSeq data_values,
-    //      inout SampleInfoSeq sample_infos);
-
-    //  ReturnCode_t get_key_value(
-    //      inout Data key_holder,
-    //      in InstanceHandle_t handle);
-
-    //  InstanceHandle_t lookup_instance(
-    //      in Data instance_data);
-
         ReadCondition create_readcondition(
             in SampleStateMask sample_states,
             in ViewStateMask view_states,
@@ -1254,7 +1125,6 @@ module DDS {
             in InstanceHandle_t publication_handle);
     };
 
-
     struct SampleInfo {
         SampleStateKind      sample_state;
         ViewStateKind        view_state;
@@ -1271,6 +1141,144 @@ module DDS {
     };
 
     typedef sequence<SampleInfo> SampleInfoSeq;
+
+    /**
+     * Typed DDS apis defined in IDL, CIAO specific extension
+     */
+    module Typed <typename T, sequence<T> TSeq> {
+      local interface DataWriter : ::DDS::DataWriter {
+        InstanceHandle_t register_instance(
+            in T instance_data);
+        InstanceHandle_t register_instance_w_timestamp(
+            in T instance_data,
+            in Time_t source_timestamp);
+        ReturnCode_t unregister_instance(
+            in T instance_data,
+            in InstanceHandle_t  handle);
+        ReturnCode_t unregister_instance_w_timestamp(
+            in T instance_data,
+            in InstanceHandle_t  handle,
+            in Time_t source_timestamp);
+        ReturnCode_t write(
+            in T instance_data,
+            in InstanceHandle_t handle);
+        ReturnCode_t write_w_timestamp(
+            in T instance_data,
+            in InstanceHandle_t handle,
+            in Time_t source_timestamp);
+        ReturnCode_t dispose(
+            in T instance_data,
+            in InstanceHandle_t instance_handle);
+        ReturnCode_t dispose_w_timestamp(
+            in T instance_data,
+            in InstanceHandle_t instance_handle,
+            in Time_t source_timestamp);
+        ReturnCode_t get_key_value(
+            inout T key_holder,
+            in InstanceHandle_t handle);
+        InstanceHandle_t lookup_instance(
+            in T instance_data);
+      };
+
+      local interface DataReader : ::DDS::DataReader {
+        ReturnCode_t read(
+            inout TSeq data_values,
+            inout SampleInfoSeq sample_infos,
+            in long max_samples,
+            in SampleStateMask sample_states,
+            in ViewStateMask view_states,
+            in InstanceStateMask instance_states);
+
+        ReturnCode_t take(
+            inout TSeq data_values,
+            inout SampleInfoSeq sample_infos,
+            in long max_samples,
+            in SampleStateMask sample_states,
+            in ViewStateMask view_states,
+            in InstanceStateMask instance_states);
+
+        ReturnCode_t read_w_condition(
+            inout TSeq data_values,
+            inout SampleInfoSeq sample_infos,
+            in long max_samples,
+            in ReadCondition a_condition);
+
+        ReturnCode_t take_w_condition(
+            inout TSeq data_values,
+            inout SampleInfoSeq sample_infos,
+            in long max_samples,
+            in ReadCondition a_condition);
+
+        ReturnCode_t read_next_sample(
+            inout T data_values,
+            inout SampleInfo sample_info);
+
+        ReturnCode_t take_next_sample(
+            inout T data_values,
+            inout SampleInfo sample_info);
+
+        ReturnCode_t read_instance(
+            inout TSeq data_values,
+            inout SampleInfoSeq sample_infos,
+            in long max_samples,
+            in InstanceHandle_t a_handle,
+            in SampleStateMask sample_states,
+            in ViewStateMask view_states,
+            in InstanceStateMask instance_states);
+
+        ReturnCode_t take_instance(
+            inout TSeq data_values,
+            inout SampleInfoSeq sample_infos,
+            in long max_samples,
+            in InstanceHandle_t a_handle,
+            in SampleStateMask sample_states,
+            in ViewStateMask view_states,
+            in InstanceStateMask instance_states);
+
+        ReturnCode_t read_next_instance(
+            inout TSeq data_values,
+            inout SampleInfoSeq sample_infos,
+            in long max_samples,
+            in InstanceHandle_t previous_handle,
+            in SampleStateMask sample_states,
+            in ViewStateMask view_states,
+            in InstanceStateMask instance_states);
+
+        ReturnCode_t take_next_instance(
+            inout TSeq data_values,
+            inout SampleInfoSeq sample_infos,
+            in long max_samples,
+            in InstanceHandle_t previous_handle,
+            in SampleStateMask sample_states,
+            in ViewStateMask view_states,
+            in InstanceStateMask instance_states);
+
+        ReturnCode_t read_next_instance_w_condition(
+            inout TSeq data_values,
+            inout SampleInfoSeq sample_infos,
+            in long max_samples,
+            in InstanceHandle_t previous_handle,
+            in ReadCondition a_condition);
+
+        ReturnCode_t take_next_instance_w_condition(
+            inout TSeq data_values,
+            inout SampleInfoSeq sample_infos,
+            in long max_samples,
+            in InstanceHandle_t previous_handle,
+            in ReadCondition a_condition);
+
+        ReturnCode_t return_loan (
+            inout TSeq data_values,
+            inout SampleInfoSeq sample_infos);
+
+        ReturnCode_t get_key_value(
+            inout T key_holder,
+            in InstanceHandle_t handle);
+
+        InstanceHandle_t lookup_instance(
+            in T instance_data);
+      };
+  };
 };
 
 #endif
