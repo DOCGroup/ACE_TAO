@@ -16,29 +16,25 @@ CIAO::DDS4CCM::CCM_DataReader::~CCM_DataReader (void)
 ::DDS::ReturnCode_t
 CIAO::DDS4CCM::CCM_DataReader::enable (void)
 {
-  throw ::CORBA::NO_IMPLEMENT ();
-  return ::DDS::RETCODE_OK;
+  return this->impl ()->enable ();
 }
 
 ::DDS::StatusCondition_ptr
 CIAO::DDS4CCM::CCM_DataReader::get_statuscondition (void)
 {
-  throw ::CORBA::NO_IMPLEMENT ();
-  return ::DDS::StatusCondition::_nil ();
+  return this->impl ()->get_statuscondition ();
 }
 
 ::DDS::StatusMask
 CIAO::DDS4CCM::CCM_DataReader::get_status_changes (void)
 {
-  throw ::CORBA::NO_IMPLEMENT ();
-  return 0;
+  return this->impl ()->get_status_changes ();
 }
 
 ::DDS::InstanceHandle_t
 CIAO::DDS4CCM::CCM_DataReader::get_instance_handle (void)
 {
-  throw ::CORBA::NO_IMPLEMENT ();
-  return ::DDS::HANDLE_NIL;
+  return this->impl ()->get_instance_handle ();
 }
 
 ::DDS::ReadCondition_ptr
