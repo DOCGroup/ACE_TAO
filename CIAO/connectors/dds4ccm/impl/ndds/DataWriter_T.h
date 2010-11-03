@@ -11,10 +11,7 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 
-#include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
-
 #include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"
-#include "dds4ccm/impl/dds4ccm_conf.h"
 #include "dds4ccm/impl/ndds/DataWriter.h"
 
 #include "ndds/ndds_cpp.h"

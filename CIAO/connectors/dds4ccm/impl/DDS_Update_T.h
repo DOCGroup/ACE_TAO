@@ -20,7 +20,7 @@ public:
 
   typename CCM_TYPE::updater_type::_ptr_type get_data (void);
 
-  ::DDS::CCM_DataWriter_ptr  get_dds_entity (void);
+  typename CCM_TYPE::datawriter_type::_ptr_type get_dds_entity (void);
 
   void set_component (
     typename CCM_TYPE::base_type::_ptr_type component);

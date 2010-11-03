@@ -10,10 +10,7 @@
 #ifndef DDSPUBLISHERLISTENER_T_H_
 #define DDSPUBLISHERLISTENER_T_H_
 
-#include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
-
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "dds4ccm/impl/dds4ccm_conf.h"
 
 #include "ndds/ndds_cpp.h"
 

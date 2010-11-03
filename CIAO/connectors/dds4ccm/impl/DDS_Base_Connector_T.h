@@ -68,7 +68,6 @@ protected:
 
   ::CIAO::DDS4CCM::Logger_Service * dlf_;
 
-
   ::DDS::DomainParticipant_var domain_participant_;
   ::DDS::DomainParticipantListener_var domainparticipantlistener_;
 

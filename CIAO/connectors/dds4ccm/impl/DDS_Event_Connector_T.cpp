@@ -41,7 +41,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_supplier_data
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
-::DDS::CCM_DataWriter_ptr
+typename CCM_TYPE::datawriter_type::_ptr_type
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_supplier_dds_entity (void)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_supplier_dds_entity");
