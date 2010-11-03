@@ -146,7 +146,7 @@ CIAO::DDS4CCM::CCM_DataWriter::get_matched_subscription_data (
 void
 CIAO::DDS4CCM::CCM_DataWriter::set_impl (::DDS::DataWriter_ptr dr)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DataWriter::get_impl");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DataWriter::set_impl");
   this->impl_ = ::DDS::DataWriter::_duplicate (dr);
 }
 

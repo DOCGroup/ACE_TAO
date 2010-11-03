@@ -201,7 +201,7 @@ CIAO::DDS4CCM::CCM_DataReader::get_matched_publication_data (
 void
 CIAO::DDS4CCM::CCM_DataReader::set_impl (::DDS::DataReader_ptr dr)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DataReader::get_impl");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DataReader::set_impl");
   this->impl_ = ::DDS::DataReader::_duplicate (dr);
 }
 
