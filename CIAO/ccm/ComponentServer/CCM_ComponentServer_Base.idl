@@ -1,17 +1,15 @@
 /**
  * @file CCM_ComponentServer_Base.idl
  * $Id$
- * Contains base types for all componenent server interfaces.
+ * Contains base types for all component server interfaces.
  * These interfaces are not part of the CCM standard.
  */
 
 #ifndef COMPONENTSERVER_BASE_IDL_
 #define COMPONENTSERVER_BASE_IDL_
 
-#include "ccm/CCM_Home.idl"
-#include "ccm/CCM_KeylessCCMHome.idl"
+#include "ccm/CCM_Exceptions.idl"
 #include "ccm/CCM_Navigation.idl"
-#include "ccm/CCM_StandardConfigurator.idl"
 
 module Components
 {

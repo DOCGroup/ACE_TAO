@@ -2,10 +2,8 @@
 // $Id$
 
 project(CCM_ComponentServer_IDL) : install, ciaoidldefaults, anytypecode {
-  idlflags     += -Wb,stub_export_macro=DANCE_COMPONENTSERVER_STUB_Export \
-                  -Wb,stub_export_include=DAnCE_ComponentServer_stub_export.h \
-                  -Wb,skel_export_macro=DANCE_COMPONENTSERVER_SVNT_Export \
-                  -Wb,skel_export_include=DAnCE_ComponentServer_svnt_export.h
+  idlflags     += -Wb,stub_export_macro=CCM_COMPONENTSERVER_STUB_Export \
+                  -Wb,stub_export_include=CCM_ComponentServer_stub_export.h
 
   custom_only = 1
 
@@ -14,43 +12,24 @@ project(CCM_ComponentServer_IDL) : install, ciaoidldefaults, anytypecode {
     CCM_ComponentServer_Base.idl
   }
 
-  IDL_Files {
-    idlflags += -Ssi
-    CCM_ComponentServer_Client.idl
-  }
-
-  IDL_Files {
-    idlflags += -Ssi
-    CCM_ComponentServer.idl
-  }
-
   specific {
     install_dir = ccm/ComponentServer
   }
 }
 
 project(CCM_ComponentServer_stub) : install, ciaolib_with_idl, ciao_output, messaging, ccm_stub, anytypecode, ciao_lib  {
-  dynamicflags += DANCE_COMPONENTSERVER_STUB_BUILD_DLL
+  dynamicflags += CCM_COMPONENTSERVER_STUB_BUILD_DLL
   after += CCM_ComponentServer_IDL
 
   Header_Files {
-    DAnCE_ComponentServer_stub_export.h
-    CCM_ComponentServerC.h
-    CCM_ComponentServer_ClientC.h
+    CCM_ComponentServer_stub_export.h
     CCM_ComponentServer_BaseC.h
   }
 
   Source_Files {
-    CCM_ComponentServerC.cpp
-    CCM_ComponentServer_ClientC.cpp
     CCM_ComponentServer_BaseC.cpp
   }
 
-  Inline_Files {
-    CCM_ComponentServer_ClientC.inl
-    CCM_ComponentServerC.inl
-  }
-
   IDL_Files {
   }
 
@@ -58,26 +37,3 @@ project(CCM_ComponentServer_stub) : install, ciaolib_with_idl, ciao_output, mess
     install_dir = ccm/ComponentServer
   }
 }
-
-project(CCM_ComponentServer_svnt) : install, ciaolib_with_idl, ciao_output, messaging, ccm_componentserver_stub,  anytypecode, ciao_lib  {
-  dynamicflags += DANCE_COMPONENTSERVER_SVNT_BUILD_DLL
-
-  Header_Files {
-    DAnCE_ComponentServer_svnt_export.h
-    CCM_ComponentServerS.h
-    CCM_ComponentServer_ClientS.h
-    CCM_ComponentServer_BaseS.h
-  }
-
-  Source_Files {
-    CCM_ComponentServerS.cpp
-    CCM_ComponentServer_ClientS.cpp
-  }
-  IDL_Files {
-  }
-
-  specific {
-    install_dir = ccm/ComponentServer
-  }
-}
-
