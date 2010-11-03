@@ -1,3 +1,8 @@
+Wed Nov  3 13:26:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+          Added type specific datareader/datawriter interfaces using IDL3+
+
 Wed Nov  3 12:52:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/ComponentServer/CCM_ComponentServer.mpc:
