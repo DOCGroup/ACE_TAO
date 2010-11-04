@@ -2,10 +2,7 @@
 
 #include "dds4ccm/impl/ndds/DataWriter_T.h"
 #include "dds4ccm/impl/Utils.h"
-#include "dds4ccm/impl/ndds/Coherent_Changes_Guard.h"
-
-#include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"
-
+#include "dds4ccm/impl/Coherent_Changes_Guard.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -31,11 +28,9 @@ CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::write_i (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Writer_T::write_i");
 
-  ::DDS_InstanceHandle_t handle = ::DDS_HANDLE_NIL;
-  handle <<= instance_handle;
-  DDS_ReturnCode_t const retval = this->impl ()->write (datum, handle);
+  ::DDS::ReturnCode_t const retval = this->impl ()->write (datum, instance_handle);
 
-  if (retval != DDS_RETCODE_OK)
+  if (retval != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                     "Writer_T::write_i - "

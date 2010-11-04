@@ -1,3 +1,21 @@
+Thu Nov  4 15:30:03 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/Coherent_Changes_Guard.h:
+        * connectors/dds4ccm/impl/Coherent_Changes_Guard.cpp:
+        * connectors/dds4ccm/impl/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.h:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.cpp:
+        * connectors/dds4ccm/impl/Updater_T.cpp:
+        * connectors/dds4ccm/impl/Writer_T.cpp:
+        * connectors/dds4ccm/impl/dds4ccm_impl.mpc:
+        * connectors/dds4ccm/impl/ndds/DataWriter.h:
+        * connectors/dds4ccm/impl/ndds/DataWriter_T.h:
+        * connectors/dds4ccm/impl/ndds/DataWriter_T.cpp:
+        * connectors/dds4ccm/impl/ndds/ndds.mpc:
+        * connectors/dds4ccm/impl/ndds/Coherent_Changes_Guard.h:
+        * connectors/dds4ccm/impl/ndds/Coherent_Changes_Guard.cpp:
+          Refactoring of dds4ccm writer/updater
+
 Wed Nov  3 19:07:32 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:

@@ -18,7 +18,7 @@ CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYP
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-typename DDS_TYPE::datawriter_type *
+CIAO::DDS4CCM::DDS_DataWriter_T <DDS_TYPE> *
 CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYPE>::impl (void)
 {
   if (this->writer_)
@@ -36,10 +36,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE, DDS4CCM_Vend
 CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYPE>::
   register_instance (const typename DDS_TYPE::value_type & datum)
 {
-  ::DDS::InstanceHandle_t dds_handle;
-  ::DDS_InstanceHandle_t const handle = this->impl ()->register_instance (datum);
-  dds_handle <<= handle;
-  return dds_handle;
+  return this->impl ()->register_instance (datum);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -48,9 +45,7 @@ CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYP
   const typename DDS_TYPE::value_type & datum,
   const ::DDS::InstanceHandle_t & instance_handle)
 {
-  ::DDS_InstanceHandle_t handle = ::DDS_HANDLE_NIL;
-  handle <<= instance_handle;
-  this->impl ()->unregister_instance (datum, handle);
+  this->impl ()->unregister_instance (datum, instance_handle);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -60,13 +55,6 @@ CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYP
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::InstanceHandleManager_T::set_impl");
 
-  if (!writer)
-    {
-      this->writer_ = 0;
-    }
-  else
-    {
-      this->writer_ = DDS_TYPE::datawriter_type::narrow (writer->get_impl ());
-    }
+ this->writer_ = writer;
 }
 
