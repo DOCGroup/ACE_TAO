@@ -319,16 +319,17 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::do_ccm_activate (
   ACE_Reactor* reactor = 0;
 
 #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-      reactor = this->reactor ();
+  reactor = this->reactor ();
 
-      if (!reactor)
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_Event_Connector_T::ccm_activate - "
-                        "No reactor to perform required context switch.\n"));
-          throw ::CORBA::INTERNAL ();
-        }
+  if (!reactor)
+    {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                    "DDS_Event_Connector_T::ccm_activate - "
+                    "No reactor to perform required context switch.\n"));
+      throw ::CORBA::INTERNAL ();
+    }
 #endif
+
   TopicBaseConnector::ccm_activate (reactor);
 
   if (this->push_consumer_obtained_)
