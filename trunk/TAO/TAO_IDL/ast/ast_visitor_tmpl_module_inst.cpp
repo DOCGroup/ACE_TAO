@@ -1020,6 +1020,15 @@ ast_visitor_tmpl_module_inst::visit_argument (AST_Argument *node)
     AST_Type::narrow_from_decl (
       this->reify_type (node->field_type ()));
 
+  if (t == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ast_visitor_tmpl_module_inst::")
+                         ACE_TEXT ("visit_argument - ")
+                         ACE_TEXT ("reify_type failed\n")),
+                        -1);
+    }
+
   AST_Argument *added_arg =
     idl_global->gen ()->create_argument (node->direction (),
                                          t,
@@ -1224,7 +1233,6 @@ ast_visitor_tmpl_module_inst::reify_type (AST_Decl *d)
       // owns param holders.
       if (d->node_type () == AST_Decl::NT_param_holder)
         {
-          //const char *s = d->full_name ();
           return
             idl_global->scopes ().top ()->lookup_by_name (
               d->name (),
