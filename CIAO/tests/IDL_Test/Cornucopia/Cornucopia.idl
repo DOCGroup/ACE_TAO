@@ -206,3 +206,30 @@ module HomeMod
   };
 };
 
+module X
+{
+  module Typed <typename Data, sequence<Data> DataSeq>
+  {
+    local interface XXXX
+    {
+      void y (in Data ab);
+    };
+  };
+};
+
+module Y
+{
+  module Typed <typename T, sequence<T> TSeq>
+  {
+    alias ::X::Typed<T, TSeq> X_Typed;
+  };
+};
+
+struct Hello
+{
+  long a;
+};
+
+typedef sequence<Hello> HelloSeq;
+module ::Y::Typed < ::Hello, ::HelloSeq> HelloSpace;
+

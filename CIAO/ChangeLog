@@ -1,3 +1,9 @@
+Thu Nov  4 16:14:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/Cornucopia/Cornucopia.idl:
+
+          Added IDL from [BUGID:3924], now fixed.
+
 Thu Nov  4 15:43:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Receiver/Latency_Receiver.cpp:
