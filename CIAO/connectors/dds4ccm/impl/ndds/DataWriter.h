@@ -31,7 +31,8 @@ namespace CIAO
 
       DDSDataWriter * get_impl (void);
 
-      void set_impl (DDSDataWriter * dw);
+      // @todo, this should be private to my idea
+      virtual void set_impl (DDSDataWriter * dw);
 
     protected:
       DDSDataWriter * impl (void);

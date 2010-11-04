@@ -2,7 +2,7 @@
 
 #include "dds4ccm/impl/ndds/DataWriter_T.h"
 #include "dds4ccm/impl/Utils.h"
-#include "dds4ccm/impl/ndds/Coherent_Changes_Guard.h"
+#include "dds4ccm/impl/Coherent_Changes_Guard.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -51,16 +51,17 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_i (
   ::CCM_DDS::DataNumber_t index)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::create_i");
-  DDS_InstanceHandle_t const hnd = this->impl ()->register_instance (an_instance);
-  if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
+  ::DDS::InstanceHandle_t const hnd =
+    this->impl ()->register_instance (an_instance);
+  if (hnd == ::DDS::HANDLE_NIL)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                   ACE_TEXT ("Updater_T::create_i: ")
                   ACE_TEXT ("Unable to unregister instance, nil handle.\n")));
       throw ::CCM_DDS::InternalError (::DDS_RETCODE_ERROR, index);
     }
-  ::DDS_ReturnCode_t const result  = this->impl ()->write (an_instance, hnd);
-  if (result != DDS_RETCODE_OK)
+  ::DDS::ReturnCode_t const result  = this->impl ()->write (an_instance, hnd);
+  if (result != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                   ACE_TEXT ("Updater_T::create_i: ")
@@ -76,8 +77,8 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_one (
   const typename DDS_TYPE::value_type & an_instance)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::create_one");
-  DDS_InstanceHandle_t const hnd = this->impl ()->lookup_instance (an_instance);
-  if (!DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
+  ::DDS::InstanceHandle_t const hnd = this->impl ()->lookup_instance (an_instance);
+  if (hnd != ::DDS::HANDLE_NIL)
     {
       throw CCM_DDS::AlreadyCreated (0);
     }
@@ -93,10 +94,9 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::update_i (
   ::CCM_DDS::DataNumber_t index)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::update_i");
-  DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
-  hnd <<= instance_handle;
-  ::DDS_ReturnCode_t const result  = this->impl ()->write (an_instance, hnd);
-  if (result != DDS_RETCODE_OK)
+  ::DDS::ReturnCode_t const result  =
+    this->impl ()->write (an_instance, instance_handle);
+  if (result != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                   ACE_TEXT ("Updater_T::update_i: ")
@@ -113,9 +113,8 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::update_one (
   const ::DDS::InstanceHandle_t & instance_handle)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::update_one");
-  DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
-  hnd <<= instance_handle;
-  if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
+  ::DDS::InstanceHandle_t hnd = instance_handle;
+  if (hnd == ::DDS::HANDLE_NIL)
     {
       hnd = this->impl ()->lookup_instance (an_instance);
     }
@@ -123,15 +122,15 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::update_one (
     {
       // Check explicitly if the instance handle matches the instance, this
       // is not checked by RTI DDS
-      DDS_InstanceHandle_t const instance_handle =
+      ::DDS::InstanceHandle_t const instance_handle =
         this->impl ()->lookup_instance (an_instance);
 
-      if (!DDS_InstanceHandle_equals (&hnd, &instance_handle))
+      if (hnd != instance_handle)
         {
           throw ::CCM_DDS::InternalError (::DDS_RETCODE_BAD_PARAMETER, 0);
         }
     }
-  if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
+  if (hnd == ::DDS_HANDLE_NIL)
     {
       throw CCM_DDS::NonExistent (0);
     }
@@ -146,10 +145,9 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_i (
   ::CCM_DDS::DataNumber_t index)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::delete_i");
-  DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
-  hnd <<= instance_handle;
-  ::DDS_ReturnCode_t result = this->impl ()->dispose (an_instance, hnd);
-  if (result != DDS_RETCODE_OK)
+  ::DDS::ReturnCode_t result =
+    this->impl ()->dispose (an_instance, instance_handle);
+  if (result != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                   ACE_TEXT ("Updater_T::delete_i: ")
@@ -157,8 +155,8 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_i (
                   translate_retcode (result)));
       throw ::CCM_DDS::InternalError (result, index);
     }
-  result = this->impl ()->unregister_instance (an_instance, hnd);
-  if (result != DDS_RETCODE_OK)
+  result = this->impl ()->unregister_instance (an_instance, instance_handle);
+  if (result != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                   ACE_TEXT ("Updater_T::delete_i: ")
@@ -175,9 +173,8 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_one (
   const ::DDS::InstanceHandle_t & instance_handle)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::delete_one");
-  DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
-  hnd <<= instance_handle;
-  if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
+  ::DDS::InstanceHandle_t hnd = instance_handle;
+  if (instance_handle == ::DDS::HANDLE_NIL)
     {
       hnd = this->impl ()->lookup_instance (an_instance);
     }
@@ -185,15 +182,15 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_one (
     {
       // Check explicitly if the instance handle matches the instance, this
       // is not checked by RTI DDS
-      DDS_InstanceHandle_t const instance_handle =
+      ::DDS::InstanceHandle_t const instance_handle =
         this->impl ()->lookup_instance (an_instance);
 
-      if (!DDS_InstanceHandle_equals (&hnd, &instance_handle))
+      if (hnd != instance_handle)
         {
           throw ::CCM_DDS::InternalError (::DDS_RETCODE_BAD_PARAMETER, 0);
         }
     }
-  if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
+  if (hnd == ::DDS_HANDLE_NIL)
     {
       throw CCM_DDS::NonExistent (0);
     }
@@ -227,9 +224,9 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::check_existent (
   ::CCM_DDS::NonExistent exception;
   for (typename CCM_TYPE::seq_type::size_type index = 0; index < data.length (); index++)
     {
-      DDS_InstanceHandle_t const hnd =
+      ::DDS::InstanceHandle_t const hnd =
         this->impl ()->lookup_instance (data[index]);
-      if (::DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
+      if (hnd == ::DDS_HANDLE_NIL)
         {
           CORBA::ULong const length = exception.indexes.length ();
           exception.indexes.length (length + 1);
@@ -251,9 +248,9 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::check_already_created
   ::CCM_DDS::AlreadyCreated exception;
   for (typename CCM_TYPE::seq_type::size_type index = 0; index < data.length (); index++)
     {
-      DDS_InstanceHandle_t const hnd =
+      ::DDS::InstanceHandle_t const hnd =
         this->impl ()->lookup_instance (data[index]);
-      if (!::DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
+      if (hnd != ::DDS_HANDLE_NIL)
         {
           CORBA::ULong const length = exception.indexes.length ();
           exception.indexes.length (length + 1);

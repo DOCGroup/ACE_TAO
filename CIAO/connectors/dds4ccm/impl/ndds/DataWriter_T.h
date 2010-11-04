@@ -40,6 +40,8 @@ namespace CIAO
     public:
       explicit DDS_DataWriter_T (DDSDataWriter * dw = 0);
 
+      virtual void set_impl (DDSDataWriter * dw);
+
       virtual ::DDS::ReturnCode_t set_qos (const ::DDS::DataWriterQos & qos);
 
       virtual ::DDS::ReturnCode_t get_qos (::DDS::DataWriterQos & qos);
@@ -85,6 +87,51 @@ namespace CIAO
       virtual ::DDS::StatusMask get_status_changes (void);
 
       virtual DDS_INSTANCE_HANDLE_T_RETN get_instance_handle (void);
+
+      virtual ::DDS::InstanceHandle_t register_instance (
+        const typename DDS_TYPE::value_type& instance_data);
+
+      virtual ::DDS::InstanceHandle_t register_instance_w_timestamp (
+        const typename  DDS_TYPE::value_type & instance_data,
+        const ::DDS::Time_t & source_timestamp);
+
+      virtual ::DDS::ReturnCode_t unregister_instance (
+        const typename  DDS_TYPE::value_type & instance_data,
+        const ::DDS::InstanceHandle_t & handle);
+
+      virtual ::DDS::ReturnCode_t unregister_instance_w_timestamp (
+        const typename  DDS_TYPE::value_type & instance_data,
+        const ::DDS::InstanceHandle_t & handle,
+        const ::DDS::Time_t & source_timestamp);
+
+      virtual ::DDS::ReturnCode_t write (
+        const typename DDS_TYPE::value_type & instance_data,
+        const ::DDS::InstanceHandle_t & handle);
+
+      virtual ::DDS::ReturnCode_t write_w_timestamp (
+        const typename DDS_TYPE::value_type & instance_data,
+        const ::DDS::InstanceHandle_t & handle,
+        const ::DDS::Time_t & source_timestamp);
+
+      virtual ::DDS::ReturnCode_t dispose (
+        const typename DDS_TYPE::value_type& instance_data,
+        const ::DDS::InstanceHandle_t & instance_handle);
+
+      virtual ::DDS::ReturnCode_t dispose_w_timestamp (
+        const typename DDS_TYPE::value_type& instance_data,
+        const ::DDS::InstanceHandle_t & instance_handle,
+        const ::DDS::Time_t & source_timestamp);
+
+      virtual ::DDS::ReturnCode_t get_key_value (
+        typename DDS_TYPE::value_type & key_holder,
+        const ::DDS::InstanceHandle_t & handle);
+
+      virtual ::DDS::InstanceHandle_t lookup_instance (
+        const typename DDS_TYPE::value_type& instance_data);
+    private:
+      typename DDS_TYPE::datawriter_type * typed_impl (void);
+
+      typename DDS_TYPE::datawriter_type * writer_;
     };
   }
 }
