@@ -79,11 +79,11 @@ split_qos (const char * qos)
     {
       if (!lib_name_)
         {
-          lib_name_ = p;
+          lib_name_ = ACE_OS::strdup (p);
         }
       else if (!prof_name_)
         {
-          prof_name_ = p;
+          prof_name_ = ACE_OS::strdup (p);
         }
     }
   ACE_OS::free (buf);

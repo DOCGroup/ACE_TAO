@@ -16,7 +16,7 @@ namespace CIAO
     class DataReader_T;
 
     //============================================================
-    // QueryConditionManager
+    // ConditionManager_T
     //============================================================
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class ConditionManager_T
