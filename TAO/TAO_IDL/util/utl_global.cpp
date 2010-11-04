@@ -150,6 +150,7 @@ IDL_GlobalData::IDL_GlobalData (void)
     multi_file_input_ (false),
     big_file_name_ ("PICML_IDL_file_bag"),
     current_params_ (0),
+    alias_params_ (0),
     included_ami_receps_done_ (false),
     corba_module_ (0),
     anon_type_diagnostic_ (ANON_TYPE_ERROR),
@@ -1618,9 +1619,23 @@ IDL_GlobalData::current_params (void) const
 }
 
 void
-IDL_GlobalData::current_params (FE_Utils::T_PARAMLIST_INFO *params)
+IDL_GlobalData::current_params (
+FE_Utils::T_PARAMLIST_INFO *params)
 {
   this->current_params_ = params;
+}
+
+FE_Utils::T_PARAMLIST_INFO const *
+IDL_GlobalData::alias_params (void) const
+{
+  return this->alias_params_;
+}
+
+void
+IDL_GlobalData::alias_params (
+FE_Utils::T_PARAMLIST_INFO *params)
+{
+  this->alias_params_ = params;
 }
 
 void

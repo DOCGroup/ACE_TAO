@@ -1874,24 +1874,53 @@ UTL_Scope::match_param (UTL_ScopedName *e)
   // of a template module.
   FE_Utils::T_PARAMLIST_INFO const *params =
     idl_global->current_params ();
-  if (!params)
+
+  if (params == 0)
     {
       return 0;
     }
 
+  AST_Param_Holder *retval = 0;
   const char *name = e->first_component ()->get_string ();
   FE_Utils::T_Param_Info *param = 0;
+  unsigned long index = 0;
+
   for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (*params);
        i.next (param);
-       i.advance ())
+       i.advance (), ++index)
     {
       if (param->name_ == name)
         {
-          return idl_global->gen ()->create_param_holder (e, param);
+          FE_Utils::T_PARAMLIST_INFO const *alias_params =
+            idl_global->alias_params ();
+
+          /// If we are parsing this template module as a
+          /// reference, the param holder we create must have
+          /// the name of the corresponding aliased param.
+          if (alias_params != 0)
+            {
+              FE_Utils::T_Param_Info *alias_param = 0;
+              alias_params->get (alias_param, index);
+              Identifier id (alias_param->name_.c_str ());
+              UTL_ScopedName sn (&id, 0);
+
+              retval =
+                idl_global->gen ()->create_param_holder (
+                  &sn,
+                  alias_param);
+            }
+          else
+            {
+              retval =
+                idl_global->gen ()->create_param_holder (e,
+                                                         param);
+            }
+
+          break;
         }
     }
 
-  return 0;
+  return retval;
 }
 
 bool
