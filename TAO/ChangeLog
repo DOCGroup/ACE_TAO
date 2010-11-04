@@ -1,3 +1,18 @@
+Thu Nov  4 16:06:56 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_ref.cpp:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Fixed bug in parsing template module aliases. To create the
+          necessary implied IDL, we must traverse the referenced template
+          module, using the original template module parameter names
+          for lookups, but, when a match is found, create implied IDL
+          param holders using the aliased parameter name. This fix
+          closes [BUGID:3924].
+
 Mon Nov  1 15:09:04 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * tao/PortableServer/POA_Current_Impl.inl:

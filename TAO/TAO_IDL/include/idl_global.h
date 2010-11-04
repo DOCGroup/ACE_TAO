@@ -685,6 +685,13 @@ public:
   // referenced template parameter of the eclosing template
   // module.
 
+  FE_Utils::T_PARAMLIST_INFO const *alias_params (void) const;
+  void alias_params (FE_Utils::T_PARAMLIST_INFO *params);
+  // Accessors for the member. If we are parsing a template
+  // module reference, we traverse the scope of the referenced
+  // template module, but create param holders with the
+  // alias names.
+
 #if defined (ACE_OPENVMS)
   static char* translateName (const char* name, char *name_buf);
 #endif
@@ -848,6 +855,12 @@ private:
   FE_Utils::T_PARAMLIST_INFO *current_params_;
   // Stored if we are parsing the scope of a template module,
   // 0 otherwise.
+
+  FE_Utils::T_PARAMLIST_INFO *alias_params_;
+  // Stored if we are parsing a template module reference. The
+  // scope traversed will be that of the referenced template
+  // module, but the param holder(s) created will use the
+  // aliased names.
 
   ACE_Unbounded_Queue<char *> ciao_lem_file_names_;
   // Files parsed with ciao lem pragma
