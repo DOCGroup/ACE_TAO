@@ -14,8 +14,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-
-
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
 class DDS_Listen_T
   : public DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>

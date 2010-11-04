@@ -39,10 +39,11 @@ namespace CIAO
 
       void set_impl (DDS_DataWriter_T<DDS_TYPE> *writer);
 
-      typename DDS_TYPE::datawriter_type * impl (void);
+    protected:
+      DDS_DataWriter_T <DDS_TYPE> * impl (void);
 
     private:
-      typename DDS_TYPE::datawriter_type * writer_;
+      DDS_DataWriter_T <DDS_TYPE> * writer_;
     };
   }
 }

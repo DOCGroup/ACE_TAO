@@ -25,8 +25,35 @@ namespace CIAO
   {
     template <typename DDS_TYPE>
     DDS_DataWriter_T<DDS_TYPE>::DDS_DataWriter_T (DDSDataWriter * dw)
-      : DDS_DataWriter_Base (dw)
+      : DDS_DataWriter_Base (dw),
+        writer_ (0)
     {
+      if (dw)
+        {
+          this->writer_ = DDS_TYPE::datawriter_type::narrow (dw);
+        }
+    }
+
+    template <typename DDS_TYPE>
+    void
+    DDS_DataWriter_T<DDS_TYPE>::set_impl (DDSDataWriter * dw)
+    {
+      if (dw)
+        {
+          this->writer_ = DDS_TYPE::datawriter_type::narrow (dw);
+        }
+      DDS_DataWriter_Base::set_impl (dw);
+    }
+
+    template <typename DDS_TYPE>
+    typename DDS_TYPE::datawriter_type*
+    DDS_DataWriter_T<DDS_TYPE>::typed_impl (void)
+    {
+      if (!this->writer_)
+        {
+          throw ::CORBA::BAD_INV_ORDER ();
+        }
+      return this->writer_;
     }
 
     template <typename DDS_TYPE>
@@ -36,7 +63,7 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_DataWriter_T<DDS_TYPE>::set_qos");
       ::DDS_DataWriterQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
-      return this->impl()->set_qos (ccm_dds_qos);
+      return this->typed_impl()->set_qos (ccm_dds_qos);
     }
 
     template <typename DDS_TYPE>
@@ -46,7 +73,7 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_DataWriter_T<DDS_TYPE>::get_qos");
       ::DDS_DataWriterQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
-      ::DDS::ReturnCode_t retcode = this->impl()->get_qos (ccm_dds_qos);
+      ::DDS::ReturnCode_t retcode = this->typed_impl ()->get_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
     }
@@ -58,7 +85,7 @@ namespace CIAO
       ::DDS::StatusMask mask)
     {
       // Delete the previously set listener
-      DDSDataWriterListener *listener = this->impl ()->get_listener ();
+      DDSDataWriterListener *listener = this->typed_impl ()->get_listener ();
       delete listener;
 
       DataWriterListener_type * ccm_dds_impl_list = 0;
@@ -68,14 +95,14 @@ namespace CIAO
                             DataWriterListener_type (a_listener, this),
                             ::CORBA::NO_MEMORY ());
         }
-      return this->impl ()->set_listener (ccm_dds_impl_list, mask);
+      return this->typed_impl ()->set_listener (ccm_dds_impl_list, mask);
     }
 
     template <typename DDS_TYPE>
     ::DDS::DataWriterListener_ptr
     DDS_DataWriter_T<DDS_TYPE>::get_listener (void)
     {
-      DDSDataWriterListener *wr = this->impl ()->get_listener ();
+      DDSDataWriterListener *wr = this->typed_impl ()->get_listener ();
       DataWriterListener_type * list_proxy =
         dynamic_cast <DataWriterListener_type *> (wr);
       if (!list_proxy)
@@ -93,7 +120,7 @@ namespace CIAO
     DDS_DataWriter_T<DDS_TYPE>::get_topic (void)
     {
       ::DDS::Topic_var retval;
-      DDSTopic* t = this->impl ()->get_topic ();
+      DDSTopic* t = this->typed_impl ()->get_topic ();
       ACE_NEW_THROW_EX (retval,
                         Topic_type (t),
                         ::CORBA::NO_MEMORY ());
@@ -105,7 +132,7 @@ namespace CIAO
     DDS_DataWriter_T<DDS_TYPE>::get_publisher (void)
     {
       ::DDS::Publisher_var retval;
-      DDSPublisher* p = this->impl ()->get_publisher ();
+      DDSPublisher* p = this->typed_impl ()->get_publisher ();
       ACE_NEW_THROW_EX (retval,
                         Publisher_type (p),
                         ::CORBA::NO_MEMORY ());
@@ -118,7 +145,7 @@ namespace CIAO
     {
      ::DDS_Duration_t rtiduration;
      rtiduration <<= max_wait;
-     return this->impl ()->wait_for_acknowledgments (rtiduration);
+     return this->typed_impl ()->wait_for_acknowledgments (rtiduration);
     }
 
     template <typename DDS_TYPE>
@@ -127,7 +154,8 @@ namespace CIAO
     {
       ::DDS_LivelinessLostStatus ddsstatus;
       ddsstatus <<= status;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_liveliness_lost_status (ddsstatus);
+      ::DDS::ReturnCode_t const retval =
+        this->typed_impl ()->get_liveliness_lost_status (ddsstatus);
       status <<= ddsstatus;
       return retval;
     }
@@ -140,7 +168,7 @@ namespace CIAO
       ::DDS_OfferedDeadlineMissedStatus ddsstatus;
       ddsstatus <<= status;
       ::DDS::ReturnCode_t const retval =
-        this->impl ()->get_offered_deadline_missed_status (ddsstatus);
+        this->typed_impl ()->get_offered_deadline_missed_status (ddsstatus);
       status <<= ddsstatus;
       return retval;
     }
@@ -153,7 +181,7 @@ namespace CIAO
       ::DDS_OfferedIncompatibleQosStatus ddsstatus;
       ddsstatus <<= status;
       ::DDS::ReturnCode_t const retval =
-        this->impl ()->get_offered_incompatible_qos_status (ddsstatus);
+        this->typed_impl ()->get_offered_incompatible_qos_status (ddsstatus);
       status <<= ddsstatus;
       return retval;
     }
@@ -166,7 +194,7 @@ namespace CIAO
       ::DDS_PublicationMatchedStatus ddsstatus;
       ddsstatus <<= status;
       ::DDS::ReturnCode_t const retval =
-        this->impl ()->get_publication_matched_status (ddsstatus);
+        this->typed_impl ()->get_publication_matched_status (ddsstatus);
       status <<= ddsstatus;
       return retval;
     }
@@ -175,7 +203,7 @@ namespace CIAO
     ::DDS::ReturnCode_t
     DDS_DataWriter_T<DDS_TYPE>::assert_liveliness (void)
     {
-      return this->impl ()->assert_liveliness ();
+      return this->typed_impl ()->assert_liveliness ();
     }
 
     template <typename DDS_TYPE>
@@ -185,7 +213,8 @@ namespace CIAO
     {
       ::DDS_InstanceHandleSeq rtiseq;
       rtiseq <<= subscription_handles;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_matched_subscriptions (rtiseq);
+      ::DDS::ReturnCode_t const retval =
+        this->typed_impl ()->get_matched_subscriptions (rtiseq);
       subscription_handles <<= rtiseq;
       return retval;
     }
@@ -201,7 +230,7 @@ namespace CIAO
       ::DDS_InstanceHandle_t ccm_dds_sub_handle;
       ccm_dds_sub_handle <<= subscription_handle;
       ::DDS::ReturnCode_t const retval =
-        this->impl ()->get_matched_subscription_data (ccm_dds_sub_data, ccm_dds_sub_handle);
+        this->typed_impl ()->get_matched_subscription_data (ccm_dds_sub_data, ccm_dds_sub_handle);
       subscription_data <<= ccm_dds_sub_data;
       return retval;
     }
@@ -210,7 +239,7 @@ namespace CIAO
     ::DDS::ReturnCode_t
     DDS_DataWriter_T<DDS_TYPE>::enable (void)
     {
-      return this->impl ()->enable ();
+      return this->typed_impl ()->enable ();
     }
 
     template <typename DDS_TYPE>
@@ -218,7 +247,7 @@ namespace CIAO
     DDS_DataWriter_T<DDS_TYPE>::get_statuscondition (void)
     {
       ::DDS::StatusCondition_var retval;
-      DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
+      DDSStatusCondition* sc = this->typed_impl ()->get_statuscondition ();
       ACE_NEW_THROW_EX (retval,
                         DDS_StatusCondition_i (sc),
                         ::CORBA::NO_MEMORY ());
@@ -229,7 +258,7 @@ namespace CIAO
     ::DDS::StatusMask
     DDS_DataWriter_T<DDS_TYPE>::get_status_changes (void)
     {
-      return this->impl ()->get_status_changes ();
+      return this->typed_impl ()->get_status_changes ();
     }
 
     template <typename DDS_TYPE>
@@ -237,7 +266,131 @@ namespace CIAO
     DDS_DataWriter_T<DDS_TYPE>::get_instance_handle (void)
     {
       ::DDS_InstanceHandle_t const rtihandle =
-        this->impl ()->get_instance_handle ();
+        this->typed_impl ()->get_instance_handle ();
+      ::DDS::InstanceHandle_t handle;
+      handle <<= rtihandle;
+      return handle;
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::InstanceHandle_t
+    DDS_DataWriter_T<DDS_TYPE>::register_instance (
+        const typename DDS_TYPE::value_type& instance_data)
+    {
+      ::DDS::InstanceHandle_t dds_handle;
+      ::DDS_InstanceHandle_t const handle = this->typed_impl ()->register_instance (instance_data);
+      dds_handle <<= handle;
+      return dds_handle;
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::InstanceHandle_t
+    DDS_DataWriter_T<DDS_TYPE>::register_instance_w_timestamp (
+        const typename  DDS_TYPE::value_type & instance_data,
+        const ::DDS::Time_t & source_timestamp)
+    {
+      ::DDS_Time_t time;
+      time <<= source_timestamp;
+      ::DDS_InstanceHandle_t const rtihandle =
+        this->typed_impl ()->register_instance_w_timestamp (instance_data, time);
+      ::DDS::InstanceHandle_t handle;
+      handle <<= rtihandle;
+      return handle;
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DDS_DataWriter_T<DDS_TYPE>::unregister_instance (
+        const typename  DDS_TYPE::value_type & instance_data,
+        const ::DDS::InstanceHandle_t & handle)
+    {
+      ::DDS_InstanceHandle_t instance_handle = ::DDS_HANDLE_NIL;
+      instance_handle <<= handle;
+      return this->typed_impl ()->unregister_instance (instance_data, instance_handle);
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DDS_DataWriter_T<DDS_TYPE>::unregister_instance_w_timestamp (
+        const typename  DDS_TYPE::value_type & instance_data,
+        const ::DDS::InstanceHandle_t & handle,
+        const ::DDS::Time_t & source_timestamp)
+    {
+      ::DDS_InstanceHandle_t instance_handle = ::DDS_HANDLE_NIL;
+      instance_handle <<= handle;
+      ::DDS_Time_t time;
+      time <<= source_timestamp;
+      return this->typed_impl ()->unregister_instance_w_timestamp (instance_data, instance_handle, time);
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DDS_DataWriter_T<DDS_TYPE>::write (
+        const typename DDS_TYPE::value_type & instance_data,
+        const ::DDS::InstanceHandle_t & handle)
+    {
+      ::DDS_InstanceHandle_t instance_handle = ::DDS_HANDLE_NIL;
+      instance_handle <<= handle;
+      return this->typed_impl ()->write (instance_data, instance_handle);
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DDS_DataWriter_T<DDS_TYPE>::write_w_timestamp (
+        const typename DDS_TYPE::value_type & instance_data,
+        const ::DDS::InstanceHandle_t & handle,
+        const ::DDS::Time_t & source_timestamp)
+    {
+      ::DDS_InstanceHandle_t instance_handle = ::DDS_HANDLE_NIL;
+      instance_handle <<= handle;
+      ::DDS_Time_t time;
+      time <<= source_timestamp;
+      return this->typed_impl ()->write_w_timestamp (instance_data, instance_handle, time);
+    }
+
+    template <typename DDS_TYPE>
+     ::DDS::ReturnCode_t
+     DDS_DataWriter_T<DDS_TYPE>::dispose (
+        const typename DDS_TYPE::value_type& instance_data,
+        const ::DDS::InstanceHandle_t & handle)
+    {
+      ::DDS_InstanceHandle_t instance_handle = ::DDS_HANDLE_NIL;
+      instance_handle <<= handle;
+      return this->typed_impl ()->dispose (instance_data, instance_handle);
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DDS_DataWriter_T<DDS_TYPE>::dispose_w_timestamp (
+        const typename DDS_TYPE::value_type& instance_data,
+        const ::DDS::InstanceHandle_t & handle,
+        const ::DDS::Time_t & source_timestamp)
+    {
+      ::DDS_InstanceHandle_t instance_handle = ::DDS_HANDLE_NIL;
+      instance_handle <<= handle;
+      ::DDS_Time_t time;
+      time <<= source_timestamp;
+      return this->typed_impl ()->dispose_w_timestamp (instance_data, instance_handle, time);
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DDS_DataWriter_T<DDS_TYPE>::get_key_value (
+        typename DDS_TYPE::value_type & key_holder,
+        const ::DDS::InstanceHandle_t & handle)
+    {
+      ::DDS_InstanceHandle_t instance_handle = ::DDS_HANDLE_NIL;
+      instance_handle <<= handle;
+      return this->typed_impl ()->get_key_value (key_holder, instance_handle);
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::InstanceHandle_t
+    DDS_DataWriter_T<DDS_TYPE>::lookup_instance (
+        const typename DDS_TYPE::value_type& instance_data)
+    {
+      ::DDS_InstanceHandle_t const rtihandle =
+        this->typed_impl ()->lookup_instance (instance_data);
       ::DDS::InstanceHandle_t handle;
       handle <<= rtihandle;
       return handle;

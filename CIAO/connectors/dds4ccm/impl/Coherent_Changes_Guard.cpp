@@ -1,10 +1,11 @@
 // $Id$
-#include "dds4ccm/impl/ndds/Coherent_Changes_Guard.h"
+
+#include "dds4ccm/impl/Coherent_Changes_Guard.h"
 
 CIAO::DDS4CCM::Coherent_Changes_Guard::Coherent_Changes_Guard (
-  DDSPublisher* p,
+  ::DDS::Publisher_ptr p,
   bool coherent_write) :
-    p_ (p),
+    p_ (::DDS::Publisher::_duplicate (p)),
     coherent_write_ (coherent_write)
 {
   if (this->coherent_write_)
