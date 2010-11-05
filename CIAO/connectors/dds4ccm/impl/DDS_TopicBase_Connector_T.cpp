@@ -195,6 +195,11 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_topic (
           throw ::CORBA::INTERNAL ();
         }
 
+      TypeFactory * factory = new DDSTypeFactory <DDS_TYPE> ();
+
+      part->register_type (
+        DDS_TYPE::type_support::get_type_name (), factory);
+
       DDS_ReturnCode_t const retcode = DDS_TYPE::type_support::register_type(
         part->get_impl (), DDS_TYPE::type_support::get_type_name ());
 

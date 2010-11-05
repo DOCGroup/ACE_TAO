@@ -38,7 +38,7 @@ namespace CIAO
 
       ::DDS::Subscriber_var sub;
       ACE_NEW (sub,
-               Subscriber_type (the_subscriber));
+               Subscriber_type (the_subscriber, 0)); //@todo
       this->impl_->on_data_on_readers (sub.in ());
       the_subscriber->notify_datareaders ();
     }

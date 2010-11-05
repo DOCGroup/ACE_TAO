@@ -24,7 +24,7 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_NDDS_Export DomainParticipantManager
+    class DDS4CCM_NDDS_Export DomainParticipantManager : private ACE_Copy_Disabled
     {
     friend class ACE_Singleton<DomainParticipantManager, TAO_SYNCH_MUTEX>;
 
@@ -81,10 +81,6 @@ namespace CIAO
 
       DomainParticipants_iterator
       get_participanttopic_by_participant (DDSDomainParticipant * dp);
-
-    private:
-      ACE_UNIMPLEMENTED_FUNC (void operator= (const DomainParticipantManager &))
-      ACE_UNIMPLEMENTED_FUNC (DomainParticipantManager (const DomainParticipantManager &))
     };
 
     typedef ACE_Singleton<DomainParticipantManager,

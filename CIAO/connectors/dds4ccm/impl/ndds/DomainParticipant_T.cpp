@@ -49,6 +49,27 @@ namespace CIAO
     }
 
     template <typename DDS_TYPE>
+    void
+    DDS_DomainParticipant_T<DDS_TYPE>::register_type (const char* type, TypeFactory*f)
+    {
+      this->type_factories [type] = f;
+      this->factory_ = f;
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::DataWriter_ptr
+    DDS_DomainParticipant_T<DDS_TYPE>::create_datawriter (DDSDataWriter* dw)
+    {
+      return this->factory_->create_datawriter (dw);
+    }
+    template <typename DDS_TYPE>
+    ::DDS::DataReader_ptr
+    DDS_DomainParticipant_T<DDS_TYPE>::create_datareader (DDSDataReader* dr)
+    {
+      return this->factory_->create_datareader (dr);
+    }
+
+    template <typename DDS_TYPE>
     ::DDS::Publisher_ptr
     DDS_DomainParticipant_T<DDS_TYPE>::create_publisher_with_profile (
       const char* library_name,
@@ -87,7 +108,7 @@ namespace CIAO
 
       ::DDS::Publisher_var retval;
       ACE_NEW_THROW_EX (retval,
-                        Publisher_type (ccm_dds_pub),
+                        Publisher_type (ccm_dds_pub, this),
                         ::CORBA::NO_MEMORY ());
 
 
@@ -141,7 +162,7 @@ namespace CIAO
 
       ::DDS::Publisher_var retval;
       ACE_NEW_THROW_EX (retval,
-                        Publisher_type (ccm_dds_pub),
+                        Publisher_type (ccm_dds_pub, this),
                         ::CORBA::NO_MEMORY ());
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
@@ -238,7 +259,7 @@ namespace CIAO
 
       ::DDS::Subscriber_var retval;
       ACE_NEW_THROW_EX (retval,
-                        Subscriber_type (ccm_dds_sub),
+                        Subscriber_type (ccm_dds_sub, this),
                         ::CORBA::NO_MEMORY ());
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
@@ -292,7 +313,7 @@ namespace CIAO
 
       ::DDS::Subscriber_var retval;
       ACE_NEW_THROW_EX (retval,
-                        Subscriber_type (ccm_dds_sub),
+                        Subscriber_type (ccm_dds_sub, this),
                         ::CORBA::NO_MEMORY ());
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
@@ -355,7 +376,7 @@ namespace CIAO
       if (sub)
         {
           ACE_NEW_THROW_EX (retval,
-                            Subscriber_type (sub),
+                            Subscriber_type (sub, this),
                             ::CORBA::NO_MEMORY ());
         }
       return retval._retn ();

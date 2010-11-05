@@ -44,7 +44,8 @@ namespace CIAO
     typedef DDS_DomainParticipant_T<DDS_TYPE> DomainParticipant_type;
     public:
       /// Constructor
-      DDS_Publisher_T (DDSPublisher * dw);
+      DDS_Publisher_T (DDSPublisher * dw,
+                       DDS_DomainParticipant_T<DDS_TYPE>* dp);
 
       /// Destructor
       virtual ~DDS_Publisher_T (void);
@@ -130,6 +131,7 @@ namespace CIAO
 
     private:
       DDSPublisher *impl_;
+      DDS_DomainParticipant_T<DDS_TYPE>* dp_;
 
       DDSPublisher *impl (void);
     };

@@ -1,3 +1,23 @@
+Fri Nov  5 11:25:35 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ccm_dds.idl:
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+        * connectors/dds4ccm/impl/CCM_DataReader.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSDataWriterListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDSSubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriter_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantManager.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant_T.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher_T.h:
+        * connectors/dds4ccm/impl/ndds/Publisher_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber_T.h:
+        * connectors/dds4ccm/impl/ndds/Subscriber_T.cpp:
+          First step in adding a type factory with methods for creating the
+          type specific reader/writer
+
 Thu Nov  4 16:14:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/Cornucopia/Cornucopia.idl:
