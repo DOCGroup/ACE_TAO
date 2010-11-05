@@ -502,3 +502,10 @@ svnignore.local:
 	  svn propset svn:ignore -F SvNiGnOrE .; \
 	  rm SvNiGnOrE; \
 	fi
+
+#----------------------------------------------------------------------------
+#       Optional private, site-specific rules
+#----------------------------------------------------------------------------
+
+private_rules_file ?= rules.private.GNU
+-include $(private_rules_file)
