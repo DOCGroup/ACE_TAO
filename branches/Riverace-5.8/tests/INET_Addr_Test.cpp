@@ -217,8 +217,31 @@ int run_main (int, ACE_TCHAR *[])
               status = 1;
             }
         }
-    }
 
+      const char *ipv6_names[] = {
+        "naboo.dre.vanderbilt.edu",
+        "v6.ipv6-test.com",
+        0
+      };
+      for (int i=0; ipv6_names[i] != 0; i++)
+        {
+          ACE_INET_Addr addr (80, ipv6_names[i]);
+          status |= check_type_consistency (addr);
+
+          if (0 != ACE_OS::strcmp (addr.get_host_name (), ipv6_names[i]))
+            {
+              ACE_ERROR ((LM_WARNING,
+                          ACE_TEXT ("IPv6 name mismatch: %s (%s) != %s\n"),
+                          addr.get_host_name (),
+                          addr.get_host_addr (),
+                          ipv6_names[i]));
+              status = 1;
+            }
+        }
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("IPv6 tests done\n")));
+#else
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_HAS_IPV6 not set; no IPv6 tests run\n")));
 #endif
 
   struct Address loopback_addresses[] =
