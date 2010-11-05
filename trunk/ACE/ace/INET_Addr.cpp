@@ -346,17 +346,26 @@ ACE_INET_Addr::set (u_short port_number,
     {
 #  if defined (ACE_HAS_GETHOSTBYNAME2)
       hostent hentry;
+      hostent *hp;
       ACE_HOSTENT_DATA buf;
       int h_error = 0;  // Not the same as errno!
 
-      hostent *hp = ::gethostbyname2_r (host_name, AF_INET6, &hentry,
-                                        buf, &h_error);
-      if (hp != 0)
+      if (0 == ::gethostbyname2_r (host_name, AF_INET6, &hentry,
+                                   buf, sizeof(buf), &hp, &h_error))
         {
-          this->set_type (hp->h_addrtype);
-          this->set_addr (hp->h_addr, hp->h_length);
-          this->set_port_number (port_number, encode);
-          return 0;
+          if (hp != 0)
+            {
+              struct sockaddr_in6 v6;
+              ACE_OS::memset (&v6, 0, sizeof (v6));
+              v6.sin6_family = AF_INET6;
+              (void) ACE_OS::memcpy ((void *) &v6.sin6_addr,
+                                     hp->h_addr,
+                                     hp->h_length);
+              this->set_type (hp->h_addrtype);
+              this->set_addr (&v6, hp->h_length);
+              this->set_port_number (port_number, encode);
+              return 0;
+            }
         }
         errno = h_error;
         if (address_family == AF_INET6)
