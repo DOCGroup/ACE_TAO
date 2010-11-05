@@ -1,3 +1,9 @@
+Fri Nov  5 00:29:08  2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process_Manager.h: Removed remaining references to reap().
+          Noted that terminate() doesn't remove the process entry, and the
+          caller is advised to also call wait() or remove().
+
 Tue Nov  2 13:26:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ATM_Stream.inl:
