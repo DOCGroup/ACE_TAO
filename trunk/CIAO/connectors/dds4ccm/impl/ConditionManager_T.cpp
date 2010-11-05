@@ -1,20 +1,21 @@
 // $Id$
+
 #include "dds4ccm/impl/ndds/DataReader_T.h"
 #include "dds4ccm/impl/ndds/ReadCondition_T.h"
 #include "dds4ccm/impl/ndds/QueryCondition_T.h"
 
 #include "ace/OS_NS_sys_time.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ConditionManager_T ()
+template <typename DDS_TYPE>
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::ConditionManager_T ()
   : impl_ (0),
     ws_ (0)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::ConditionManager_T");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~ConditionManager_T ()
+template <typename DDS_TYPE>
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::~ConditionManager_T ()
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::~ConditionManager_T");
 
@@ -22,9 +23,9 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~ConditionMa
   this->ws_ = 0;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-DDSReadCondition *
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_readcondition (void)
+template <typename DDS_TYPE>
+typename CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::ReadCondition_type *
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_readcondition (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::get_readcondition");
 
@@ -40,14 +41,14 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_readcond
                         ACE_TEXT ("representation.\n")));
           return 0;
         }
-      return rc->get_impl ();
+      return rc;
     }
   return 0;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-DDSQueryCondition *
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_querycondition (
+template <typename DDS_TYPE>
+typename CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::QueryCondition_type *
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_querycondition (
   ::DDS::QueryCondition_ptr dds_qc)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::get_querycondition");
@@ -61,13 +62,13 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_querycon
                     ACE_TEXT ("representation.\n")));
       return 0;
     }
-  return qc->get_impl ();
+  return qc;
 }
 
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-DDSQueryCondition *
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_querycondition_getter (void)
+template <typename DDS_TYPE>
+typename CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::QueryCondition_type *
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_querycondition_getter (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::get_querycondition_getter");
 
@@ -78,9 +79,9 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_querycon
   return 0;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-DDSQueryCondition *
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_querycondition_listener (void)
+template <typename DDS_TYPE>
+typename CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::QueryCondition_type *
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_querycondition_listener (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::get_querycondition_listener");
 
@@ -91,9 +92,9 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_querycon
   return 0;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-DDSQueryCondition *
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_querycondition_reader (void)
+template <typename DDS_TYPE>
+typename CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::QueryCondition_type *
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_querycondition_reader (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::get_querycondition_reader");
 
@@ -104,9 +105,9 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_querycon
   return 0;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 void
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_readcondition (void)
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::init_readcondition (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::init_readcondition");
 
@@ -133,10 +134,15 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_readcon
           return;
         }
     }
-  DDS_ReturnCode_t const retcode = this->ws_->attach_condition (
-    this->get_readcondition ());
 
-  if (retcode != DDS_RETCODE_OK)
+  ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_ERROR;
+  ReadCondition_type * rc = this->get_readcondition ();
+  if (rc)
+    {
+      retcode = this->ws_->attach_condition (rc->get_impl ());
+    }
+
+  if (retcode != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                     ACE_TEXT ("ConditionManager_T::init_readcondition - ")
@@ -149,9 +155,9 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_readcon
                 ACE_TEXT ("Read condition created and attached to Waitset.\n")));
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 ::CCM_DDS::QueryFilter *
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::query (void)
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::query (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::query");
 
@@ -172,9 +178,9 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::query (void)
   return filter._retn ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 void
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::query (
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::query (
   const ::CCM_DDS::QueryFilter & filter)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::query");
@@ -255,9 +261,9 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::query (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 void
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_parameters (
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::set_parameters (
   const ::CCM_DDS::QueryFilter & filter,
   ::DDS::QueryCondition_ptr qc)
 {
@@ -275,9 +281,9 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_paramete
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 void
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::attach_querycondition (void)
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::attach_querycondition (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::attach_querycondition");
 
@@ -287,10 +293,14 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::attach_query
                         DDSWaitSet (),
                         ::CORBA::NO_MEMORY ());
     }
-  DDS_ReturnCode_t const retcode =
-    this->ws_->attach_condition (this->get_querycondition_getter ());
 
-  if (retcode != DDS_RETCODE_OK)
+  QueryCondition_type * qc = this->get_querycondition_getter ();
+  ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_ERROR;
+  if (qc)
+    {
+      retcode = this->ws_->attach_condition (qc->get_impl ());
+    }
+  if (retcode != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                     "ConditionManager_T::attach_querycondition - "
@@ -305,9 +315,9 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::attach_query
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 bool
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::wait (
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::wait (
     DDSConditionSeq & active_conditions,
     DDS_Duration_t & time_out)
 {
@@ -317,7 +327,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::wait (
   ACE_Time_Value const start = ACE_OS::gettimeofday ();
 #endif
 
-  DDS_ReturnCode_t const retcode =
+  ::DDS::ReturnCode_t const retcode =
      this->ws_->wait (active_conditions, time_out);
 
 #if !defined (DDS4CCM_NLOGGING)
@@ -328,7 +338,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::wait (
                 &waited));
 #endif
 
-  if (retcode == DDS_RETCODE_TIMEOUT)
+  if (retcode == ::DDS::RETCODE_TIMEOUT)
     {
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     ACE_TEXT ("ConditionManager_T::wait - ")
@@ -338,9 +348,9 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::wait (
   return true;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 void
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_condition (
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::remove_condition (
   ::DDS::QueryCondition_ptr dds_qc,
   const char * type)
 {
@@ -372,9 +382,9 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_condi
 }
 
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 void
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_conditions ()
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::remove_conditions ()
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::remove_conditions");
 
@@ -394,7 +404,9 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_condi
     {
       if (! ::CORBA::is_nil (this->qc_getter_.in ()))
         {
-          if (this->ws_->detach_condition (this->get_querycondition_getter ()) == DDS_RETCODE_OK)
+          QueryCondition_type * q_condition = this->get_querycondition_getter ();
+          if (q_condition &&
+              this->ws_->detach_condition (q_condition->get_impl ()) == ::DDS::RETCODE_OK)
             {
               DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                             ACE_TEXT ("ConditionManager_T::remove_conditions - ")
@@ -411,8 +423,16 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_condi
         }
       else
         {
-          retcode = this->ws_->detach_condition (this->get_readcondition ());
-          if (retcode != DDS_RETCODE_OK)
+          QueryCondition_type * r_condition = this->get_querycondition_getter ();
+          if (!r_condition)
+            {
+              retcode = ::DDS::RETCODE_ERROR;
+            }
+          else
+            {
+              retcode = this->ws_->detach_condition (r_condition->get_impl ());
+            }
+          if (retcode != ::DDS::RETCODE_OK)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                             ACE_TEXT ("ConditionManager_T::remove_conditions - ")
@@ -431,7 +451,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_condi
   if (! ::CORBA::is_nil (this->rd_condition_.in ()))
     {
       retcode = this->impl ()->delete_readcondition (this->rd_condition_.in ());
-      if (retcode != DDS_RETCODE_OK)
+      if (retcode != ::DDS::RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         ACE_TEXT ("ConditionManager_T::remove_conditions - ")
@@ -455,18 +475,18 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_condi
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 void
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate ()
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::passivate ()
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::passivate");
 
   this->remove_conditions ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 void
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_impl (
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::set_impl (
   DataReader_type * impl)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::set_impl");
@@ -474,16 +494,16 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_impl (
   this->impl_ = impl;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE> *
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_impl ()
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_impl ()
 {
   return this->impl_;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE>
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE> *
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::impl (void)
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::impl (void)
 {
   if (this->impl_)
     {

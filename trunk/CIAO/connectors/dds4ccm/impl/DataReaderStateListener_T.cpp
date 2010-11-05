@@ -94,11 +94,21 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
           ? max_samples = DDS_LENGTH_UNLIMITED
           : max_samples = this->control_->max_delivered_data ();
 
+      QueryCondition_type * qc =
+        this->condition_manager_.get_querycondition_listener ();
+      if (!qc)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        ACE_TEXT ("DataReaderStateListener_T::on_data_available_i - ")
+                        ACE_TEXT ("Unable to retrieve query condition")
+                        ACE_TEXT ("from condition manager.\n")));
+          return;
+        }
       ::DDS::ReturnCode_t const result = reader->take (
                   data,
                   sample_info,
                   max_samples,
-                  this->condition_manager_.get_querycondition_listener ());
+                  qc->get_impl ());
       if (result == ::DDS::RETCODE_NO_DATA)
         {
           return;
