@@ -473,7 +473,7 @@ namespace CIAO
         CIAO_ERROR (1,
                     (LM_ERROR,
                      CLINFO
-                     "Session_Container_i::install_home "
+                     "Session_Container_i::install_component "
                      "- Error: Entry point [%C] "
                      "invalid in dll [%C]\n",
                      entry_point,
@@ -487,7 +487,7 @@ namespace CIAO
         CIAO_ERROR (1,
                     (LM_ERROR,
                      CLINFO
-                     "Session_Container_i::install_home "
+                     "Session_Container_i::install_component "
                      "- Error: Entry point [%C] "
                      "invalid in dll [%C]\n",
                      servant_entrypoint,

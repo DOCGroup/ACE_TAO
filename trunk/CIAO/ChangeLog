@@ -1,3 +1,8 @@
+Fri Nov  5 19:09:06 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * ciao/Containers/Session/Session_Container.cpp:
+          Fixed some incorrect logging messages.
+
 Fri Nov  5 15:42:06 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/Getter_T.cpp:
