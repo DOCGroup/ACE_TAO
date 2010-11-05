@@ -24,8 +24,10 @@ namespace CIAO
   namespace DDS4CCM
   {
     template <typename DDS_TYPE>
-    DDS_Subscriber_T<DDS_TYPE>::DDS_Subscriber_T (DDSSubscriber * sub)
-      : impl_ (sub)
+    DDS_Subscriber_T<DDS_TYPE>::DDS_Subscriber_T (DDSSubscriber * sub,
+                                                  DDS_DomainParticipant_T<DDS_TYPE>* dp)
+      : impl_ (sub),
+        dp_ (dp)
     {
       DDS4CCM_TRACE ("DDS_Subscriber_T<DDS_TYPE>::DDS_Subscriber_T");
     }
@@ -280,10 +282,7 @@ namespace CIAO
                         profile_name));
         }
 
-      ::DDS::DataReader_var retval;
-      ACE_NEW_THROW_EX (retval,
-                        DataReader_type (ccm_dds_dr),
-                        ::CORBA::NO_MEMORY ());
+     ::DDS::DataReader_var retval = this->dp_->create_datareader (ccm_dds_dr);
 
       ccm_dds_dr->enable ();
 

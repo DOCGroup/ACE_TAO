@@ -66,7 +66,6 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE>::log_query_condition (
                         ACE_TEXT ("\t\tparameter %d <%C>\n"),
                         i + 1,
                         dds_qp[i]));
-
         }
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, DDS4CCM_INFO
                     "\t\tinstance state mask <%d>\n",
@@ -637,12 +636,13 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE>::get_subscriber (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::get_subscriber");
 
-  ::DDS::Subscriber_var dds_td;
+/*  ::DDS::Subscriber_var dds_td;
   ::DDSSubscriber* subscriber = this->impl ()->get_subscriber ();
   ACE_NEW_THROW_EX (dds_td,
                     Subscriber_type (subscriber),
                     ::CORBA::NO_MEMORY ());
-  return dds_td._retn ();
+  return dds_td._retn ();*/
+  return 0;
 }
 
 template <typename DDS_TYPE>
