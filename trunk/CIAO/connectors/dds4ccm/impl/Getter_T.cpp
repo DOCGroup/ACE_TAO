@@ -57,9 +57,10 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get (
       QueryCondition_type * qc = this->condition_manager_->get_querycondition_getter ();
       if (!qc)
         {
-          ACE_ERROR ((LM_ERROR, "Getter_Base_T::get - "
-                                "Unable to retrieve QueryCondition from "
-                                "Condition manager\n"));
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "Getter_Base_T::get - "
+                        "Unable to retrieve QueryCondition from "
+                        "Condition manager\n"));
           return ::DDS::RETCODE_ERROR;
         }
       return this->impl ()->get (data,
