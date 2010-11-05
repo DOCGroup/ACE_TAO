@@ -4,6 +4,17 @@ Fri Nov  5 00:29:08  2010  Steve Huston  <shuston@riverace.com>
           Noted that terminate() doesn't remove the process entry, and the
           caller is advised to also call wait() or remove().
 
+Thu Nov  4 15:17:51 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/INET_Addr.cpp (set): For platforms that have the GNU-extended
+          gethostbyname2_r() function, use it instead of getaddrinfo() for
+          a IPv6 hostname lookup. Customer reports that it getaddrinfo() is
+          hugely slower than gethostbyname2 on large vlans. The alternate
+          code is used if ACE_HAS_GETHOSTBYNAME2 is set in config.h.
+          (This is a revised fix from Tue Nov  2 00:18:34 UTC 2010)
+
+        * tests/INET_Addr_Test.cpp: Add some IPv6 address and name lookups.
+
 Tue Nov  2 13:26:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ATM_Stream.inl:
