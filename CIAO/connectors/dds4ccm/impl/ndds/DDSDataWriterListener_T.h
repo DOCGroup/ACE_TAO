@@ -27,7 +27,7 @@ namespace CIAO
     public:
       /// Constructor
       DDS_DataWriterListener_T (::DDS::DataWriterListener_ptr p,
-                                    DataWriter_type * typed_dw);
+                                DataWriter_type * typed_dw);
 
       /// Destructor
       virtual ~DDS_DataWriterListener_T (void);

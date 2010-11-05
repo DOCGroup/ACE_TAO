@@ -100,7 +100,6 @@ namespace CIAO
       get_matched_publication_data (::DDS::PublicationBuiltinTopicData & ,
                                     const ::DDS::InstanceHandle_t & );
 
-
       void set_impl (::DDS::DataReader_ptr dr);
 
       ::DDS::DataReader_ptr

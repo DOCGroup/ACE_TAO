@@ -14,6 +14,33 @@
 #include "convertors/InstanceHandle_t.h"
 
 #include "tao/LocalObject.h"
+#include "dds4ccm/impl/ndds/DataWriter_T.h"
+#include "dds4ccm/impl/ndds/DataReader_T.h"
+
+#include <map>
+
+class TypeFactory
+{
+  public:
+    virtual DDS::DataWriter_ptr create_datawriter (DDSDataWriter* dw) = 0;
+    virtual DDS::DataReader_ptr create_datareader (DDSDataReader* dr) = 0;
+};
+
+template <typename DDS_TYPE>
+class DDSTypeFactory : public TypeFactory
+{
+  public:
+    DDS::DataWriter_ptr create_datawriter (DDSDataWriter* dw)
+    {
+      typedef CIAO::DDS4CCM::DDS_DataWriter_T<DDS_TYPE> DataWriter_type;
+      return new DataWriter_type (dw);
+    }
+    DDS::DataReader_ptr create_datareader (DDSDataReader* dr)
+    {
+      typedef CIAO::DDS4CCM::DataReader_T<DDS_TYPE> DataReader_type;
+      return new DataReader_type (dr);
+    }
+};
 
 namespace CIAO
 {
@@ -59,6 +86,11 @@ namespace CIAO
     typedef DDS_ContentFilteredTopic_T<DDS_TYPE> ContentFilteredTopic_type;
 
     public:
+      /* @todo, cleanup this */
+      void register_type (const char* type, TypeFactory*);
+      ::DDS::DataWriter_ptr create_datawriter (DDSDataWriter* dw);
+      ::DDS::DataReader_ptr create_datareader (DDSDataReader* dr);
+
       /// Constructor
       DDS_DomainParticipant_T (DDSDomainParticipant * dp);
 
@@ -216,8 +248,10 @@ namespace CIAO
       void set_impl (DDSDomainParticipant * dp);
 
     protected:
+      typedef std::map <ACE_CString, TypeFactory*> typefactories;
+      typefactories type_factories;
+      TypeFactory* factory_;
       DDSDomainParticipant *impl_;
-
       DDSDomainParticipant * impl (void);
     };
   }

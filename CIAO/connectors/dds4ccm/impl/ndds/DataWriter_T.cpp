@@ -131,12 +131,13 @@ namespace CIAO
     ::DDS::Publisher_ptr
     DDS_DataWriter_T<DDS_TYPE>::get_publisher (void)
     {
-      ::DDS::Publisher_var retval;
+/*      ::DDS::Publisher_var retval;
       DDSPublisher* p = this->typed_impl ()->get_publisher ();
       ACE_NEW_THROW_EX (retval,
                         Publisher_type (p),
-                        ::CORBA::NO_MEMORY ());
-      return retval._retn ();
+                        ::CORBA::NO_MEMORY ());*/
+/*      return retval._retn ();*/
+return 0;
     }
 
     template <typename DDS_TYPE>

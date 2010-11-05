@@ -52,7 +52,8 @@ namespace CIAO
 
     public:
       /// Constructor
-      DDS_Subscriber_T (DDSSubscriber * sub);
+      DDS_Subscriber_T (DDSSubscriber * sub,
+                        DDS_DomainParticipant_T<DDS_TYPE>* dp);
 
       /// Destructor
       virtual ~DDS_Subscriber_T (void);
@@ -131,6 +132,7 @@ namespace CIAO
 
     private:
       DDSSubscriber *impl_;
+      DDS_DomainParticipant_T<DDS_TYPE>* dp_;
 
       DDSSubscriber *impl (void);
 

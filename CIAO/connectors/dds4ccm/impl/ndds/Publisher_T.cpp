@@ -23,8 +23,10 @@ namespace CIAO
   namespace DDS4CCM
   {
     template <typename DDS_TYPE>
-    DDS_Publisher_T<DDS_TYPE>::DDS_Publisher_T (DDSPublisher * dw)
-      : impl_ (dw)
+    DDS_Publisher_T<DDS_TYPE>::DDS_Publisher_T (DDSPublisher * dw,
+                                                DDS_DomainParticipant_T<DDS_TYPE>* dp)
+      : impl_ (dw),
+        dp_ (dp)
     {
       DDS4CCM_TRACE ("DDS_Publisher_T<DDS_TYPE>::DDS_Publisher_T");
     }
@@ -80,11 +82,7 @@ namespace CIAO
           return ::DDS::DataWriter::_nil ();
         }
 
-      ::DDS::DataWriter_var retval;
-      ACE_NEW_THROW_EX (retval,
-                        DataWriter_type (ccm_dds_dw),
-                        ::CORBA::NO_MEMORY ());
-
+     ::DDS::DataWriter_var retval = this->dp_->create_datawriter (ccm_dds_dw);
       ccm_dds_dw->enable ();
       return retval._retn ();
     }
@@ -143,10 +141,7 @@ namespace CIAO
                         profile_name));
         }
 
-      ::DDS::DataWriter_var retval;
-      ACE_NEW_THROW_EX (retval,
-                        DataWriter_type (ccm_dds_dw),
-                        ::CORBA::NO_MEMORY ());
+     ::DDS::DataWriter_var retval = this->dp_->create_datawriter (ccm_dds_dw);
       ccm_dds_dw->enable ();
 
       return retval._retn ();
