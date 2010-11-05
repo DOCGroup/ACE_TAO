@@ -40,10 +40,12 @@ namespace CIAO
          public virtual LocalObject_T<CCM_TYPE>,
          private virtual ACE_Copy_Disabled
       {
-      typedef CIAO::DDS4CCM::DDS_ReadCondition_T<DDS_TYPE> ReadCondition_type;
-      typedef CIAO::DDS4CCM::DataReader_T<DDS_TYPE> DataReader_type;
-      typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
-        ConditionManager_type;
+      protected:
+        typedef CIAO::DDS4CCM::DDS_ReadCondition_T<DDS_TYPE> ReadCondition_type;
+        typedef CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE> QueryCondition_type;
+        typedef CIAO::DDS4CCM::DataReader_T<DDS_TYPE> DataReader_type;
+        typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>
+          ConditionManager_type;
 
       public:
         /// Constructor

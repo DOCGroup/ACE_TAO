@@ -39,7 +39,7 @@ public:
   void remove (::DDS::Subscriber_ptr subscriber);
 
 private:
-  typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+  typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>
     ConditionManager_type;
   typedef ::CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
     DataReaderStateListener_type;

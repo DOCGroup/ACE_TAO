@@ -18,7 +18,7 @@ namespace CIAO
     //============================================================
     // ConditionManager_T
     //============================================================
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class ConditionManager_T
     {
     typedef DDS_ReadCondition_T<DDS_TYPE>  ReadCondition_type;
@@ -29,11 +29,11 @@ namespace CIAO
       ConditionManager_T (void);
       ~ConditionManager_T (void);
 
-      DDSReadCondition * get_readcondition (void);
+      ReadCondition_type  * get_readcondition (void);
 
-      DDSQueryCondition * get_querycondition_getter (void);
-      DDSQueryCondition * get_querycondition_reader (void);
-      DDSQueryCondition * get_querycondition_listener (void);
+      QueryCondition_type * get_querycondition_getter (void);
+      QueryCondition_type * get_querycondition_reader (void);
+      QueryCondition_type * get_querycondition_listener (void);
 
       void init_readcondition (void);
 
@@ -65,7 +65,7 @@ namespace CIAO
 
       DataReader_type * impl (void);
 
-      DDSQueryCondition * get_querycondition (
+      QueryCondition_type * get_querycondition (
         ::DDS::QueryCondition_ptr dds_qc);
 
       void remove_condition (::DDS::QueryCondition_ptr qc,
