@@ -58,9 +58,20 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_l
   typename DDS_TYPE::sampleinfo_seq_type sample_info;
   typename DDS_TYPE::dds_seq_type data;
 
-  this->impl ()->read_wo_instance (data,
-                                   sample_info,
-                                   this->condition_manager_->get_querycondition_reader ());
+  QueryCondition_type * qc =
+    this->condition_manager_->get_querycondition_reader ();
+  if (qc)
+    {
+      this->impl ()->read_wo_instance (data,
+                                       sample_info,
+                                       qc->get_impl ());
+    }
+  else
+    {
+      this->impl ()->read_wo_instance (data,
+                                       sample_info,
+                                       0);
+    }
 
   CORBA::ULong const nr_of_last_samples =
     this->get_nr_valid_samples (sample_info, true);
@@ -108,9 +119,19 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_a
   typename DDS_TYPE::sampleinfo_seq_type sample_info;
   typename DDS_TYPE::dds_seq_type data;
 
-  this->impl ()->read_wo_instance (data,
-                                   sample_info,
-                                   this->condition_manager_->get_querycondition_reader ());
+  QueryCondition_type * qc = this->condition_manager_->get_querycondition_reader ();
+  if (qc)
+    {
+      this->impl ()->read_wo_instance (data,
+                                       sample_info,
+                                       qc->get_impl ());
+    }
+   else
+    {
+      this->impl ()->read_wo_instance (data,
+                                       sample_info,
+                                       0);
+    }
 
   CORBA::ULong const nr_of_valid_samples = this->get_nr_valid_samples (sample_info);
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO

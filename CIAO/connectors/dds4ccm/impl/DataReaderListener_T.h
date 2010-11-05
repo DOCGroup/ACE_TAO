@@ -29,8 +29,10 @@ namespace CIAO
       DataReaderHandler_type;
     typedef ::CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, VENDOR_TYPE>
       PortStatusListener_type;
-    typedef ::CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+    typedef ::CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>
       ConditionManager_type;
+    typedef ::CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE>
+      QueryCondition_type;
 
     public:
       /// Constructor

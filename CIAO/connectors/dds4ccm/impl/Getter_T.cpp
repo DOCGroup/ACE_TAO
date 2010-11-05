@@ -44,19 +44,28 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::get");
 
-  if (this->condition_manager_->get_readcondition ())
+  ReadCondition_type * rc = this->condition_manager_->get_readcondition ();
+  if (rc)
     {
       return this->impl ()->get (data,
                                  sample_info,
                                  max_samples,
-                                 this->condition_manager_->get_readcondition ());
+                                 rc->get_impl ());
     }
   else
     {
+      QueryCondition_type * qc = this->condition_manager_->get_querycondition_getter ();
+      if (!qc)
+        {
+          ACE_ERROR ((LM_ERROR, "Getter_Base_T::get - "
+                                "Unable to retrieve QueryCondition from "
+                                "Condition manager\n"));
+          return ::DDS::RETCODE_ERROR;
+        }
       return this->impl ()->get (data,
                                  sample_info,
                                  max_samples,
-                                 this->condition_manager_->get_querycondition_getter ());
+                                 qc->get_impl ());
     }
 }
 
@@ -84,8 +93,12 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_many
   typename DDS_TYPE::dds_seq_type data;
   for (::DDS_Long i = 0; i < active_conditions.length(); i++)
     {
-      if (active_conditions[i] == this->condition_manager_->get_readcondition () ||
-          active_conditions[i] == this->condition_manager_->get_querycondition_getter ())
+      ReadCondition_type * rc =
+        this->condition_manager_->get_readcondition ();
+      QueryCondition_type * qc =
+        this->condition_manager_->get_querycondition_getter ();
+      if ((rc && active_conditions[i] == rc->get_impl ()) ||
+          (qc && active_conditions[i] == rc->get_impl ()) )
         {
           // Check trigger
           active_conditions[i]->get_trigger_value ();
@@ -223,8 +236,12 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true, VENDOR_TYPE>::get_one
 
   for (::DDS_Long i = 0; i < active_conditions.length(); i++)
     {
-      if (active_conditions[i] == this->condition_manager_->get_readcondition () ||
-          active_conditions[i] == this->condition_manager_->get_querycondition_getter ())
+      typename Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ReadCondition_type * rc =
+        this->condition_manager_->get_readcondition ();
+      typename Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::QueryCondition_type * qc =
+        this->condition_manager_->get_querycondition_getter ();
+      if ((rc && active_conditions[i] == rc->get_impl ()) ||
+          (qc && active_conditions[i] == qc->get_impl ()) )
         {
           bool valid_data_read = false;
 
@@ -314,8 +331,12 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_on
   typename DDS_TYPE::dds_seq_type data;
   for (::DDS_Long i = 0; i < active_conditions.length(); i++)
     {
-      if (active_conditions[i] == this->condition_manager_->get_readcondition () ||
-          active_conditions[i] == this->condition_manager_->get_querycondition_getter ())
+      typename Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ReadCondition_type * rc =
+        this->condition_manager_->get_readcondition ();
+      typename Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::QueryCondition_type * qc =
+        this->condition_manager_->get_querycondition_getter ();
+      if ((rc && active_conditions[i] == rc->get_impl ()) ||
+          (qc && active_conditions[i] == qc->get_impl ()) )
         {
           bool valid_data_read = false;
 

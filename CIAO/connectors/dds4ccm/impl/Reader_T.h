@@ -29,8 +29,8 @@ namespace CIAO
           private virtual ACE_Copy_Disabled
       {
       typedef DataReader_T<DDS_TYPE> DataReader_type;
-      typedef ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
-        ConditionManager_type;
+      typedef ConditionManager_T<DDS_TYPE> ConditionManager_type;
+      typedef DDS_QueryCondition_T<DDS_TYPE> QueryCondition_type;
 
       public:
         /// Constructor
