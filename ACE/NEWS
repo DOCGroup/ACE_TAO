@@ -3,6 +3,15 @@ USER VISIBLE CHANGES BETWEEN ACE-5.8.3 and ACE-6.0.0
 
 . Removed GCC < 3 support
 
+. A new build system hook was added for users to include site-private rules
+  in a build. If a file named "rules.private.GNU" in located in any build
+  directory it will get included from
+  $ACE_ROOT/include/makeinclude/rules.local.GNU. The "private_rules_file"
+  make variable can be set to override the name and/or location of the file.
+  If no such rules file exists, its absence is silently ignored. This
+  facility can be used, for example, to integrate a specialized code checker
+  into the build process.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.8.2 and ACE-5.8.3
 ====================================================
 

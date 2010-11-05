@@ -1,3 +1,16 @@
+Fri Nov  5 14:23:26 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/rules.local.GNU: Added a hook for users to
+          include site-private rules in a build. If the user places a
+          "rules.private.GNU" in any build directory it will get included
+          from rules.local.GNU. The "private_rules_file" make variable
+          can be set to override the name and/or location of the file.
+          If no such rules file exists, its absence is silently ignored.
+          This facility can be used, for example, to integrate a specialized
+          code checker into the build process.
+
+        * NEWS: Describe this new hook.
+
 Fri Nov  5 00:29:08  2010  Steve Huston  <shuston@riverace.com>
 
         * ace/Process_Manager.h: Removed remaining references to reap().
