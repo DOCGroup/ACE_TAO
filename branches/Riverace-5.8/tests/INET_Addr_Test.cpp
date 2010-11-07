@@ -235,7 +235,6 @@ int run_main (int, ACE_TCHAR *[])
                           addr.get_host_name (),
                           addr.get_host_addr (),
                           ipv6_names[i]));
-              status = 1;
             }
         }
     }
