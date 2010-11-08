@@ -24,6 +24,8 @@ void Record::reset (void)
                                      SQL_FETCH_FIRST,
                                      0);
 
+  this->advance ();
+
   if (this->state_ == SQL_ERROR || this->state_ == SQL_INVALID_HANDLE)
     throw Exception (this->query_.handle (), SQL_HANDLE_STMT);
 }
