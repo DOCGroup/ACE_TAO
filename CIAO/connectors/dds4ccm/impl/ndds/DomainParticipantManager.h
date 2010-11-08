@@ -22,7 +22,7 @@
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
     class DDS4CCM_NDDS_Export DomainParticipantManager : private ACE_Copy_Disabled
     {
@@ -88,11 +88,11 @@ namespace CIAO
   }
 }
 
-#define DPMANAGER ::CIAO::DDS4CCM::Domain_Participant_Factory::instance ()
+#define DPMANAGER ::CIAO::NDDS::Domain_Participant_Factory::instance ()
 
 /// Declare a process wide singleton
 DDS4CCM_DDS_NDDS_SINGLETON_DECLARE (ACE_Singleton,
-                                    ::CIAO::DDS4CCM::DomainParticipantManager,
+                                    ::CIAO::NDDS::DomainParticipantManager,
                                     TAO_SYNCH_MUTEX)
 
 #endif

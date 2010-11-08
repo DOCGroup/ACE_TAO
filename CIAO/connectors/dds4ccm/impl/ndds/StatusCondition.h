@@ -10,17 +10,15 @@
 #ifndef DDS4CCM_STATUSCONDITION_H
 #define DDS4CCM_STATUSCONDITION_H
 
-#include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
-
+#include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "tao/LocalObject.h"
 
-#include "ndds/ndds_cpp.h"
+class DDSStatusCondition;
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
     class DDS4CCM_NDDS_Export DDS_StatusCondition_i :
       public virtual ::DDS::StatusCondition,
@@ -28,7 +26,8 @@ namespace CIAO
     {
     public:
       /// Constructor
-      DDS_StatusCondition_i (DDSStatusCondition *sc);
+      DDS_StatusCondition_i (::DDSStatusCondition *sc,
+                           ::DDS::Entity_ptr entity);
 
       /// Destructor
       virtual ~DDS_StatusCondition_i (void);
@@ -41,13 +40,12 @@ namespace CIAO
 
       virtual ::DDS::Entity_ptr get_entity (void);
 
-      DDSStatusCondition * get_impl (void);
-
-      void set_impl (DDSStatusCondition * sc);
+      ::DDSStatusCondition * get_rti_entity (void);
 
     private:
-      DDSStatusCondition * impl_;
-      DDSStatusCondition * impl (void);
+      ::DDSStatusCondition * rti_entity_;
+      ::DDS::Entity_var entity_;
+      ::DDSStatusCondition * rti_entity (void);
     };
   }
 }

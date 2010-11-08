@@ -216,6 +216,9 @@ CIAO::DDS4CCM::CCM_DataReader::impl (void)
 
   if (::CORBA::is_nil (this->impl_.in ()))
     {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
+                    "CIAO::DDS4CCM::CCM_DataReader::impl - "
+                    "Throwing BAD_INV_ORDER.\n"));
       throw ::CORBA::BAD_INV_ORDER ();
     }
   else

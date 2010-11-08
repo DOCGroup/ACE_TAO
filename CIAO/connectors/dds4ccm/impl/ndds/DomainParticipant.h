@@ -11,80 +11,45 @@
 #define DOMAINPARTICIPANT_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "convertors/InstanceHandle_t.h"
-
-#include "tao/LocalObject.h"
+#include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"
+#include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
 #include "dds4ccm/impl/ndds/DataWriter_T.h"
 #include "dds4ccm/impl/ndds/DataReader_T.h"
+#include "tao/LocalObject.h"
 
 #include <map>
 
 class TypeFactory
 {
   public:
-    virtual DDS::DataWriter_ptr create_datawriter (DDSDataWriter* dw) = 0;
-    virtual DDS::DataReader_ptr create_datareader (DDSDataReader* dr) = 0;
+    virtual DDS::DataWriter_ptr create_datawriter (DDSDataWriter* dw, ::DDS::DomainParticipant_ptr dp) = 0;
+    virtual DDS::DataReader_ptr create_datareader (DDSDataReader* dr, ::DDS::DomainParticipant_ptr dp) = 0;
 };
 
 template <typename DDS_TYPE>
 class DDSTypeFactory : public TypeFactory
 {
   public:
-    DDS::DataWriter_ptr create_datawriter (DDSDataWriter* dw)
+    DDS::DataWriter_ptr create_datawriter (DDSDataWriter* dw, ::DDS::DomainParticipant_ptr dp)
     {
-      typedef CIAO::DDS4CCM::DDS_DataWriter_T<DDS_TYPE> DataWriter_type;
-      return new DataWriter_type (dw);
+      typedef CIAO::NDDS::DataWriter_T<DDS_TYPE> DataWriter_type;
+      return new DataWriter_type (dw, dp);
     }
-    DDS::DataReader_ptr create_datareader (DDSDataReader* dr)
+    DDS::DataReader_ptr create_datareader (DDSDataReader* dr, ::DDS::DomainParticipant_ptr dp)
     {
-      typedef CIAO::DDS4CCM::DataReader_T<DDS_TYPE> DataReader_type;
-      return new DataReader_type (dr);
+      typedef CIAO::NDDS::DataReader_T<DDS_TYPE> DataReader_type;
+      return new DataReader_type (dr, dp);
     }
 };
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
-    // Forward declarations
-    template <typename DDS_TYPE>
-    class DDS_Topic_T;
-
-    template <typename DDS_TYPE>
-    class DDS_SubscriberListener_T;
-
-    template <typename DDS_TYPE>
-    class DDS_Publisher_T;
-
-    template <typename DDS_TYPE>
-    class DDS_Subscriber_T;
-
-    template <typename DDS_TYPE>
-    class DDS_TopicListener_T;
-
-    template <typename DDS_TYPE>
-    class DDS_Topic_T;
-
-    template <typename DDS_TYPE>
-    class DDS_ContentFilteredTopic_T;
-
-    template <typename DDS_TYPE>
-    class DDS_PublisherListener_T;
-
-    // Class declaration
-    template <typename DDS_TYPE>
-    class DDS_DomainParticipant_T :
+    class DDS4CCM_NDDS_Export DDS_DomainParticipant_i :
       public virtual ::DDS::DomainParticipant,
       public virtual ::CORBA::LocalObject
     {
-    typedef DDS_Subscriber_T<DDS_TYPE> Subscriber_type;
-    typedef DDS_SubscriberListener_T<DDS_TYPE> SubscriberListener_type;
-    typedef DDS_Publisher_T<DDS_TYPE> Publisher_type;
-    typedef DDS_PublisherListener_T<DDS_TYPE> PublisherListener_type;
-    typedef DDS_TopicListener_T<DDS_TYPE> TopicListener_type;
-    typedef DDS_Topic_T<DDS_TYPE> Topic_type;
-    typedef DDS_ContentFilteredTopic_T<DDS_TYPE> ContentFilteredTopic_type;
-
     public:
       /* @todo, cleanup this */
       void register_type (const char* type, TypeFactory*);
@@ -92,10 +57,10 @@ namespace CIAO
       ::DDS::DataReader_ptr create_datareader (DDSDataReader* dr);
 
       /// Constructor
-      DDS_DomainParticipant_T (DDSDomainParticipant * dp);
+      DDS_DomainParticipant_i (DDSDomainParticipant * dp);
 
       /// Destructor
-      virtual ~DDS_DomainParticipant_T (void);
+      virtual ~DDS_DomainParticipant_i (void);
 
       virtual ::DDS::Publisher_ptr create_publisher (
         const ::DDS::PublisherQos & qos,
@@ -243,20 +208,18 @@ namespace CIAO
 
       virtual DDS_INSTANCE_HANDLE_T_RETN get_instance_handle (void);
 
-      DDSDomainParticipant * get_impl (void);
+      ::DDSDomainParticipant * get_rti_entity (void);
 
-      void set_impl (DDSDomainParticipant * dp);
+      void set_rti_entity (::DDSDomainParticipant * dp);
 
     protected:
       typedef std::map <ACE_CString, TypeFactory*> typefactories;
       typefactories type_factories;
       TypeFactory* factory_;
-      DDSDomainParticipant *impl_;
-      DDSDomainParticipant * impl (void);
+      ::DDSDomainParticipant *rti_entity_;
+      ::DDSDomainParticipant * rti_entity (void);
     };
   }
 }
-
-#include "dds4ccm/impl/ndds/DomainParticipant_T.cpp"
 
 #endif /* DOMAINPARTICIPANT_T_H_ */

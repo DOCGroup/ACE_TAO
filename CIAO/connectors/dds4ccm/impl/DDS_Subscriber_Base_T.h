@@ -14,7 +14,7 @@
 #include "dds4ccm/impl/ndds/DataReader_T.h"
 #include "dds4ccm/impl/PortStatusListener_T.h"
 #include "dds4ccm/impl/ContentFilterSetting.h"
-#include "dds4ccm/impl/ndds/ContentFilteredTopic_T.h"
+#include "dds4ccm/impl/ndds/ContentFilteredTopic.h"
 #include "dds4ccm/impl/ConditionManager_T.h"
 #include "dds4ccm/impl/CCM_DataReader.h"
 
@@ -65,7 +65,7 @@ protected:
     PortStatusListener_type;
   typedef ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
     Reader_type;
-  typedef ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE>
+  typedef ::CIAO::NDDS::DataReader_T<DDS_TYPE>
     DataReader_type;
   typedef ::CIAO::DDS4CCM::CCM_DDS_ContentFilterSetting_i
     ContentFilterSetting_type;

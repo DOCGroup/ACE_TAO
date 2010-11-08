@@ -11,32 +11,28 @@
 #define DOMAINPARTICIPANTFACTORY_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "tao/LocalObject.h"
+#include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
 
 #include <map>
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
-    template <typename DDS_TYPE>
-    class DDS_DomainParticipant_T;
-
-    template <typename DDS_TYPE>
-    class DDS_DomainParticipantFactory_T :
+    class DDS4CCM_NDDS_Export DDS_DomainParticipantFactory_i :
       public virtual ::DDS::DomainParticipantFactory,
       public virtual ::CORBA::LocalObject
     {
 
     public:
-      typedef DDS_DomainParticipant_T<DDS_TYPE> DomainParticipant_type;
-      typedef DDS_DomainParticipantFactory_T<DDS_TYPE> DomainParticipantFactory_type;
-      friend class ACE_Singleton<DomainParticipantFactory_type, TAO_SYNCH_MUTEX>;
+      friend class ACE_Singleton<DDS_DomainParticipantFactory_i, TAO_SYNCH_MUTEX>;
 
       /// Constructor
-      DDS_DomainParticipantFactory_T (void);
+      DDS_DomainParticipantFactory_i (void);
 
       /// Destructor
-      virtual ~DDS_DomainParticipantFactory_T (void);
+      virtual ~DDS_DomainParticipantFactory_i (void);
 
       virtual ::DDS::DomainParticipant_ptr create_participant (
           ::DDS::DomainId_t domain_id,
@@ -75,7 +71,5 @@ namespace CIAO
     };
   }
 }
-
-#include "dds4ccm/impl/ndds/DomainParticipantFactory_T.cpp"
 
 #endif /* DOMAINPARTICIPANTFACTORY_T_H_ */

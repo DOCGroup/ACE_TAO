@@ -22,7 +22,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~Getter_
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE> *
+CIAO::NDDS::DataReader_T<DDS_TYPE> *
 CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::impl (void)
 {
   if (this->reader_)
@@ -31,6 +31,9 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::impl (vo
     }
   else
     {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
+                    "CIAO::DDS4CCM::Getter_Base_T::impl - "
+                    "Throwing BAD_INV_ORDER.\n"));
       throw ::CORBA::BAD_INV_ORDER ();
     }
 }
@@ -50,7 +53,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get (
       return this->impl ()->get (data,
                                  sample_info,
                                  max_samples,
-                                 rc->get_impl ());
+                                 rc->get_rti_entity ());
     }
   else
     {
@@ -66,7 +69,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get (
       return this->impl ()->get (data,
                                  sample_info,
                                  max_samples,
-                                 qc->get_impl ());
+                                 qc->get_rti_entity ());
     }
 }
 
@@ -98,8 +101,8 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_many
         this->condition_manager_->get_readcondition ();
       QueryCondition_type * qc =
         this->condition_manager_->get_querycondition_getter ();
-      if ((rc && active_conditions[i] == rc->get_impl ()) ||
-          (qc && active_conditions[i] == rc->get_impl ()) )
+      if ((rc && active_conditions[i] == rc->get_rti_entity ()) ||
+          (qc && active_conditions[i] == rc->get_rti_entity ()) )
         {
           // Check trigger
           active_conditions[i]->get_trigger_value ();
@@ -336,8 +339,8 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_on
         this->condition_manager_->get_readcondition ();
       typename Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::QueryCondition_type * qc =
         this->condition_manager_->get_querycondition_getter ();
-      if ((rc && active_conditions[i] == rc->get_impl ()) ||
-          (qc && active_conditions[i] == qc->get_impl ()) )
+      if ((rc && active_conditions[i] == rc->get_rti_entity ()) ||
+          (qc && active_conditions[i] == qc->get_rti_entity ()) )
         {
           bool valid_data_read = false;
 

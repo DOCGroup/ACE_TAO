@@ -10,27 +10,24 @@
 #ifndef DDSDATAWRITERLISTENER_T_H_
 #define DDSDATAWRITERLISTENER_T_H_
 
+#include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "ndds/ndds_cpp.h"
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
-    template <typename DDS_TYPE>
-    class DDS_DataWriter_T;
-
-    template <typename DDS_TYPE>
-    class DDS_DataWriterListener_T :
-      public virtual ::DDSDataWriterListener
+    class DDS4CCM_NDDS_Export DDS_DataWriterListener_i :
+      public ::DDSDataWriterListener
     {
-    typedef DDS_DataWriter_T<DDS_TYPE> DataWriter_type;
     public:
       /// Constructor
-      DDS_DataWriterListener_T (::DDS::DataWriterListener_ptr p,
-                                DataWriter_type * typed_dw);
+      DDS_DataWriterListener_i (::DDS::DataWriterListener_ptr p,
+                                ::DDS::DataWriter_ptr dw);
 
       /// Destructor
-      virtual ~DDS_DataWriterListener_T (void);
+      virtual ~DDS_DataWriterListener_i (void);
 
       virtual void on_offered_deadline_missed (
         ::DDSDataWriter *the_writer,
@@ -49,13 +46,14 @@ namespace CIAO
         const ::DDS_PublicationMatchedStatus & status);
 
       ::DDS::DataWriterListener_ptr get_datawriterlistener (void);
+
+      void set_dds_entity (::DDS::DataWriter_ptr dw);
+
     private:
       ::DDS::DataWriterListener_var impl_;
-      DataWriter_type * typed_dw_;
+      ::DDS::DataWriter_var dw_;
     };
   }
 }
-
-#include "dds4ccm/impl/ndds/DDSDataWriterListener_T.cpp"
 
 #endif /* DDSDATAWRITERLISTENER_T_H_ */

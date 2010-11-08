@@ -35,7 +35,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
   const char* profile_name)
 {
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete");
-  if (!this->ccm_dds_writer_->get_impl ())
+  if (!this->ccm_dds_writer_->get_rti_entity ())
     {
       ::DDS::DataWriter_var dwv_tmp;
       if (library_name && profile_name)
@@ -72,7 +72,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
                         "internal represenation.\n"));
           throw ::CORBA::INTERNAL ();
         }
-      this->ccm_dds_writer_->set_impl (rw->get_impl ());
+      this->ccm_dds_writer_->set_rti_entity (rw->get_rti_entity ());
       this->writer_t_->set_impl (this->ccm_dds_writer_);
       this->ccm_data_writer_->set_impl (this->ccm_dds_writer_);
     }
@@ -145,7 +145,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove (
 
   if (retcode == ::DDS::RETCODE_OK)
     {
-      this->ccm_dds_writer_->set_impl (0);
+      this->ccm_dds_writer_->set_rti_entity (0);
       this->writer_t_->_set_component (CCM_TYPE::base_type::_nil ());
       this->writer_t_->set_impl (0);
     }

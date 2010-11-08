@@ -11,52 +11,26 @@
 #define SUBSCRIBER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-
 #include "dds4ccm/impl/ndds/DataReader_T.h"
-
 #include "tao/LocalObject.h"
 
-#include "ndds/ndds_cpp.h"
+class DDSSubscriber;
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
-    template <typename DDS_TYPE>
-    class DDS_DataReaderListener_T;
-
-    template <typename DDS_TYPE>
-    class DDS_Topic_T;
-
-    template <typename DDS_TYPE>
-    class DDS_ContentFilteredTopic_T;
-
-    template <typename DDS_TYPE>
-    class DDS_SubscriberListener_T;
-
-    template <typename DDS_TYPE>
-    class DDS_DomainParticipant_T;
-
-    template <typename DDS_TYPE>
-    class DDS_Subscriber_T :
+    class DDS4CCM_NDDS_Export DDS_Subscriber_i :
       public virtual ::DDS::Subscriber,
       public virtual ::CORBA::LocalObject
     {
-
-    typedef DDS_DataReaderListener_T<DDS_TYPE> DataReaderListener_type;
-    typedef DDS_Topic_T<DDS_TYPE> Topic_type;
-    typedef DDS_ContentFilteredTopic_T<DDS_TYPE> ContentFilteredTopic_type;
-    typedef DataReader_T<DDS_TYPE> DataReader_type;
-    typedef DDS_SubscriberListener_T<DDS_TYPE> SubscriberListener_type;
-    typedef DDS_DomainParticipant_T<DDS_TYPE> DomainParticipant_type;
-
     public:
       /// Constructor
-      DDS_Subscriber_T (DDSSubscriber * sub,
-                        DDS_DomainParticipant_T<DDS_TYPE>* dp);
+      DDS_Subscriber_i (::DDSSubscriber * sub,
+                      ::DDS::DomainParticipant_ptr dp);
 
       /// Destructor
-      virtual ~DDS_Subscriber_T (void);
+      virtual ~DDS_Subscriber_i (void);
 
       virtual ::DDS::ReturnCode_t enable (void);
 
@@ -126,15 +100,15 @@ namespace CIAO
         ::DDS::DataReaderQos & a_datareader_qos,
         const ::DDS::TopicQos & a_impl_qos);
 
-      DDSSubscriber * get_impl (void);
+      ::DDSSubscriber * get_rti_entity (void);
 
-      void set_impl (DDSSubscriber * sub);
+      void set_rti_entity (::DDSSubscriber * sub);
 
     private:
-      DDSSubscriber *impl_;
-      DDS_DomainParticipant_T<DDS_TYPE>* dp_;
+      DDSSubscriber *rti_entity_;
+      ::DDS::DomainParticipant_var dp_;
 
-      DDSSubscriber *impl (void);
+      DDSSubscriber *rti_entity (void);
 
       DDSDataReader *
       create_datareader (
@@ -168,7 +142,5 @@ namespace CIAO
     };
   }
 }
-
-#include "dds4ccm/impl/ndds/Subscriber_T.cpp"
 
 #endif /* SUBSCRIBER_T_H_ */

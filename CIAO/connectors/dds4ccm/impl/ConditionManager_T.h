@@ -1,39 +1,35 @@
 // $Id$
+
 #ifndef CONDITIONMANAGER_T_H_
 #define CONDITIONMANAGER_T_H_
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
     template <typename DDS_TYPE>
-    class DDS_ReadCondition_T;
-
-    template <typename DDS_TYPE>
-    class DDS_QueryCondition_T;
-
-    template <typename DDS_TYPE>
     class DataReader_T;
+  }
 
+  namespace DDS4CCM
+  {
     //============================================================
     // ConditionManager_T
     //============================================================
     template <typename DDS_TYPE>
     class ConditionManager_T
     {
-    typedef DDS_ReadCondition_T<DDS_TYPE>  ReadCondition_type;
-    typedef DDS_QueryCondition_T<DDS_TYPE> QueryCondition_type;
-    typedef DataReader_T<DDS_TYPE> DataReader_type;
+    typedef ::CIAO::NDDS::DataReader_T<DDS_TYPE> DataReader_type;
 
     public:
       ConditionManager_T (void);
       ~ConditionManager_T (void);
 
-      ReadCondition_type  * get_readcondition (void);
+      ::CIAO::NDDS::DDS_ReadCondition_i  * get_readcondition (void);
 
-      QueryCondition_type * get_querycondition_getter (void);
-      QueryCondition_type * get_querycondition_reader (void);
-      QueryCondition_type * get_querycondition_listener (void);
+      ::CIAO::NDDS::DDS_QueryCondition_i * get_querycondition_getter (void);
+      ::CIAO::NDDS::DDS_QueryCondition_i * get_querycondition_reader (void);
+      ::CIAO::NDDS::DDS_QueryCondition_i * get_querycondition_listener (void);
 
       void init_readcondition (void);
 
@@ -65,7 +61,7 @@ namespace CIAO
 
       DataReader_type * impl (void);
 
-      QueryCondition_type * get_querycondition (
+      ::CIAO::NDDS::DDS_QueryCondition_i * get_querycondition (
         ::DDS::QueryCondition_ptr dds_qc);
 
       void remove_condition (::DDS::QueryCondition_ptr qc,

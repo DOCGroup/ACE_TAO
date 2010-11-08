@@ -11,27 +11,24 @@
 #define DDSPUBLISHERLISTENER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-
+#include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
 #include "ndds/ndds_cpp.h"
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
-    template <typename DDS_TYPE>
-    class DDS_DataWriter_T;
-
-    template <typename DDS_TYPE>
-    class DDS_PublisherListener_T :
-      public virtual ::DDSPublisherListener
+    class DDS4CCM_NDDS_Export DDS_PublisherListener_i :
+      public ::DDSPublisherListener
     {
-    typedef DDS_DataWriter_T<DDS_TYPE> DataWriter_type;
     public:
       /// Constructor
-      DDS_PublisherListener_T (::DDS::PublisherListener_ptr p);
+      DDS_PublisherListener_i (
+        ::DDS::PublisherListener_ptr p,
+        ::DDS::DomainParticipant_ptr dp);
 
       /// Destructor
-      virtual ~DDS_PublisherListener_T (void);
+      virtual ~DDS_PublisherListener_i (void);
 
       virtual void
       on_offered_deadline_missed (
@@ -66,13 +63,12 @@ namespace CIAO
       ::DDS::PublisherListener_ptr get_publisher_listener (void);
     private:
       ::DDS::PublisherListener_var impl_;
+      ::DDS::DomainParticipant_var dp_;
 
       ::DDS::DataWriter_ptr
       get_datawriter_proxy (::DDSDataWriter * the_writer);
     };
   }
 }
-
-#include "dds4ccm/impl/ndds/DDSPublisherListener_T.cpp"
 
 #endif /* DDSPUBLISHERLISTENER_T_H_ */

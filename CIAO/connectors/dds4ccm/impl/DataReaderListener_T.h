@@ -31,7 +31,7 @@ namespace CIAO
       PortStatusListener_type;
     typedef ::CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>
       ConditionManager_type;
-    typedef ::CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE>
+    typedef ::CIAO::NDDS::DDS_QueryCondition_i
       QueryCondition_type;
 
     public:

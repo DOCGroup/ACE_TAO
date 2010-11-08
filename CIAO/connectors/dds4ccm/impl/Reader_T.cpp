@@ -64,7 +64,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_l
     {
       this->impl ()->read_wo_instance (data,
                                        sample_info,
-                                       qc->get_impl ());
+                                       qc->get_rti_entity ());
     }
   else
     {
@@ -124,7 +124,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_a
     {
       this->impl ()->read_wo_instance (data,
                                        sample_info,
-                                       qc->get_impl ());
+                                       qc->get_rti_entity ());
     }
    else
     {
@@ -318,7 +318,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::set_im
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE> *
+CIAO::NDDS::DataReader_T<DDS_TYPE> *
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::impl (void)
 {
   if (this->reader_)
@@ -327,6 +327,9 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::impl (
     }
   else
     {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
+                    "CIAO::NDDS::DataReader_T - "
+                    "Throwing BAD_INV_ORDER.\n"));
       throw ::CORBA::BAD_INV_ORDER ();
     }
 }

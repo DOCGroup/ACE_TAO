@@ -1,5 +1,4 @@
 /**
- * @author William R. Otte <wotte@dre.vanderbilt.edu>
  * @author Johnny Willemsen <jwillemsen@remedy.nl>
  *
  * $Id$
@@ -10,29 +9,27 @@
 #ifndef NDDS_TOPIC_H
 #define NDDS_TOPIC_H
 
-#include "dds4ccm/impl/ndds/DomainParticipant_T.h"
-#include "dds4ccm/impl/ndds/DDSTopicListener_T.h"
-
+#include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
+#include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "tao/LocalObject.h"
+
+class DDSTopic;
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
-    template <typename DDS_TYPE>
-    class DDS_Topic_T :
+    class DDS4CCM_NDDS_Export DDS_Topic_i :
       public virtual ::DDS::Topic,
       public virtual ::CORBA::LocalObject
     {
-    typedef DDS_TopicListener_T<DDS_TYPE> TopicListener_type;
-    typedef DDS_DomainParticipant_T<DDS_TYPE> DomainParticipant_type;
-
     public:
       /// Constructor
-      DDS_Topic_T (DDSTopic* topic);
+      DDS_Topic_i (::DDSTopic* topic,
+                 ::DDS::DomainParticipant_ptr dp);
 
       /// Destructor
-      virtual ~DDS_Topic_T (void);
+      virtual ~DDS_Topic_i (void);
 
       virtual ::DDS::ReturnCode_t set_qos (const ::DDS::TopicQos & qos);
 
@@ -61,18 +58,18 @@ namespace CIAO
 
       virtual ::DDS::DomainParticipant_ptr get_participant (void);
 
-      DDSTopic * get_impl (void);
+      ::DDSTopic * get_rti_entity (void);
 
-      void set_impl (DDSTopic* topic);
+      void get_rti_entity (::DDSTopic* topic);
 
     private:
-      DDSTopic * impl_;
+      ::DDSTopic * rti_entity_;
+      ::DDS::DomainParticipant_var dp_;
+      ::DDS::TopicListener_var topic_listener_;
 
-      DDSTopic * impl (void);
+      DDSTopic * rti_entity (void);
     };
   }
 }
-
-#include "dds4ccm/impl/ndds/Topic_T.cpp"
 
 #endif

@@ -9,31 +9,27 @@
 #ifndef CONTENFILTEREDTOPIC_T_H_
 #define CONTENFILTEREDTOPIC_T_H_
 
-#include "DomainParticipant_T.h"
-
-#include "ndds/ndds_cpp.h"
-
+#include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "ace/Copy_Disabled.h"
+#include "tao/LocalObject.h"
+
+class DDSContentFilteredTopic;
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
-    template <typename DDS_TYPE>
-    class DDS_ContentFilteredTopic_T :
+    class DDS4CCM_NDDS_Export DDS_ContentFilteredTopic_i :
       public virtual ::DDS::ContentFilteredTopic,
-      public virtual ::CORBA::LocalObject,
-      private ACE_Copy_Disabled
+      public virtual ::CORBA::LocalObject
     {
-    typedef DDS_Topic_T<DDS_TYPE> Topic_type;
-    typedef DDS_DomainParticipant_T<DDS_TYPE> DomainParticipant_type;
     public:
       /// Constructor
-      explicit DDS_ContentFilteredTopic_T (DDSContentFilteredTopic * dw = 0);
+      explicit DDS_ContentFilteredTopic_i (::DDSContentFilteredTopic * cft,
+                                         ::DDS::DomainParticipant_ptr dp);
 
       /// Destructor
-      virtual ~DDS_ContentFilteredTopic_T (void);
+      virtual ~DDS_ContentFilteredTopic_i (void);
 
       virtual char * get_filter_expression (void);
 
@@ -51,18 +47,17 @@ namespace CIAO
 
       virtual ::DDS::DomainParticipant_ptr get_participant (void);
 
-      DDSContentFilteredTopic * get_impl (void);
+      ::DDSContentFilteredTopic * get_rti_entity (void);
 
-      void set_impl (DDSContentFilteredTopic * dw);
+      void set_rti_entity (::DDSContentFilteredTopic * cft);
 
     private:
-      DDSContentFilteredTopic * impl_;
+      ::DDSContentFilteredTopic * rti_entity_;
+      ::DDS::DomainParticipant_var dp_;
 
-      DDSContentFilteredTopic * impl (void);
+      DDSContentFilteredTopic * rti_entity (void);
     };
   }
 }
-
-#include "dds4ccm/impl/ndds/ContentFilteredTopic_T.cpp"
 
 #endif /* CONTENFILTEREDTOPIC_T_H_ */
