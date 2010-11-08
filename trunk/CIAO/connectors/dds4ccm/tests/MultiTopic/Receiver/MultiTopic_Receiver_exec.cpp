@@ -324,9 +324,9 @@ namespace CIAO_Shapes_Receiver_Impl
   Receiver_exec_i::reactor (void)
   {
     ACE_Reactor* reactor = 0;
-    ::CORBA::Object_var ccm_object = 
+    ::CORBA::Object_var ccm_object =
       this->ciao_context_->get_CCM_object();
-    if (! ::CORBA::is_nil (ccm_object.in ())) 
+    if (! ::CORBA::is_nil (ccm_object.in ()))
       {
         ::CORBA::ORB_var orb = ccm_object->_get_orb ();
         if (! ::CORBA::is_nil (orb.in ()))
