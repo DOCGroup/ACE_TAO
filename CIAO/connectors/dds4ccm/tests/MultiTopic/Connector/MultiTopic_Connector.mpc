@@ -1,3 +1,4 @@
+// $Id$
 project(DDS_MultiTopic_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   after += DDS4CCM_idl_gen
   custom_only = 1

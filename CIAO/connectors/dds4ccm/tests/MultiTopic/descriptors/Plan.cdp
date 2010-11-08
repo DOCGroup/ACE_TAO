@@ -465,7 +465,6 @@
       <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-  
   <connection>
     <name>info_out_tr_data</name>
     <deployRequirement>
@@ -542,9 +541,6 @@
       <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-
-
-
   <connection>
     <name>writer_sq_connection</name>
     <deployRequirement>
@@ -564,7 +560,6 @@
       <instance xmi:idref="Shapes_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-  
   <connection>
     <name>writer_tr_connection</name>
     <deployRequirement>
