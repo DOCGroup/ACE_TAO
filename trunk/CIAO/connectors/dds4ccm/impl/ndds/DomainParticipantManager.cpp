@@ -6,7 +6,7 @@
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
     //============================================================
     // DomainParticipantManager::DDSParticipantTopic::DDSParticipantTopic

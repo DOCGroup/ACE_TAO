@@ -1,19 +1,18 @@
 // $Id$
 
-#include "StatusCondition.h"
-#include "Subscriber_T.h"
-
-#include "dds4ccm/idl/dds4ccm_BaseC.h"
-
+#include "dds4ccm/impl/ndds/StatusCondition.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
+#include "ndds/ndds_cpp.h"
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
     DDS_StatusCondition_i::DDS_StatusCondition_i (
-      DDSStatusCondition * sc) :
-      impl_ (sc)
+      ::DDSStatusCondition * sc,
+      ::DDS::Entity_ptr entity) :
+      rti_entity_ (sc),
+      entity_ (::DDS::Entity::_duplicate (entity))
     {
     }
 
@@ -24,48 +23,45 @@ namespace CIAO
     ::CORBA::Boolean
     DDS_StatusCondition_i::get_trigger_value (void)
     {
-      return this->impl ()->get_trigger_value ();
+      return this->rti_entity ()->get_trigger_value ();
     }
 
     ::DDS::StatusMask
     DDS_StatusCondition_i::get_enabled_statuses (void)
     {
-      return this->impl ()->get_enabled_statuses ();
+      return this->rti_entity ()->get_enabled_statuses ();
     }
 
     ::DDS::ReturnCode_t
     DDS_StatusCondition_i::set_enabled_statuses (
       ::DDS::StatusMask mask)
     {
-      return this->impl ()->set_enabled_statuses (mask);
+      return this->rti_entity ()->set_enabled_statuses (mask);
     }
 
     ::DDS::Entity_ptr
     DDS_StatusCondition_i::get_entity (void)
     {
-      throw ::CORBA::NO_IMPLEMENT ();
+      return ::DDS::Entity::_duplicate (this->entity_.in ());
     }
 
-    DDSStatusCondition *
-    DDS_StatusCondition_i::get_impl (void)
+    ::DDSStatusCondition *
+    DDS_StatusCondition_i::get_rti_entity (void)
     {
-      return this->impl_;
+      return this->rti_entity_;
     }
 
-    void
-    DDS_StatusCondition_i::set_impl (DDSStatusCondition * sc)
+    ::DDSStatusCondition *
+    DDS_StatusCondition_i::rti_entity (void)
     {
-      this->impl_ = sc;
-    }
-
-    DDSStatusCondition *
-    DDS_StatusCondition_i::impl (void)
-    {
-      if (!this->impl_)
+      if (!this->rti_entity_)
         {
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
+                        "DDS_StatusCondition_i::rti_entity - "
+                        "Throwing BAD_INV_ORDER.\n"));
           throw ::CORBA::BAD_INV_ORDER ();
         }
-      return this->impl_;
+      return this->rti_entity_;
     }
   }
 }

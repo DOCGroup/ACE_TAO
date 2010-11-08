@@ -34,7 +34,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
 
   this->configuration_complete_ = true;
 
-  if (!this->data_reader_->get_impl ())
+  if (!this->data_reader_->get_rti_entity ())
     {
       ::CCM_DDS::QueryFilter_var filter = this->cft_setting_->filter ();
       if (ACE_OS::strlen (filter->expression.in ()) > 0)
@@ -60,7 +60,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
                                                  library_name,
                                                  profile_name);
         }
-      if (!this->data_reader_->get_impl ())
+      if (!this->data_reader_->get_rti_entity ())
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
                       "CCM_DDS_Subscriber_Base_T::create_datareader - "

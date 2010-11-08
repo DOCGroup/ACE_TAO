@@ -1,8 +1,8 @@
 // $Id$
 
 #include "dds4ccm/impl/ndds/DataReader_T.h"
-#include "dds4ccm/impl/ndds/ReadCondition_T.h"
-#include "dds4ccm/impl/ndds/QueryCondition_T.h"
+#include "dds4ccm/impl/ndds/ReadCondition.h"
+#include "dds4ccm/impl/ndds/QueryCondition.h"
 
 #include "ace/OS_NS_sys_time.h"
 
@@ -24,14 +24,14 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::~ConditionManager_T ()
 }
 
 template <typename DDS_TYPE>
-typename CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::ReadCondition_type *
+::CIAO::NDDS::DDS_ReadCondition_i *
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_readcondition (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::get_readcondition");
 
   if (! ::CORBA::is_nil (this->rd_condition_.in ()))
     {
-      ReadCondition_type * rc = dynamic_cast <ReadCondition_type *>
+      ::CIAO::NDDS::DDS_ReadCondition_i * rc = dynamic_cast < ::CIAO::NDDS::DDS_ReadCondition_i *>
         (this->rd_condition_.in ());
       if (!rc)
         {
@@ -47,13 +47,13 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_readcondition (void)
 }
 
 template <typename DDS_TYPE>
-typename CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::QueryCondition_type *
+::CIAO::NDDS::DDS_QueryCondition_i *
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_querycondition (
   ::DDS::QueryCondition_ptr dds_qc)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::get_querycondition");
 
-  QueryCondition_type * qc = dynamic_cast <QueryCondition_type *> (dds_qc);
+  ::CIAO::NDDS::DDS_QueryCondition_i * qc = dynamic_cast < ::CIAO::NDDS::DDS_QueryCondition_i *> (dds_qc);
   if (!qc)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -67,7 +67,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_querycondition (
 
 
 template <typename DDS_TYPE>
-typename CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::QueryCondition_type *
+::CIAO::NDDS::DDS_QueryCondition_i *
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_querycondition_getter (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::get_querycondition_getter");
@@ -80,7 +80,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_querycondition_getter (void)
 }
 
 template <typename DDS_TYPE>
-typename CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::QueryCondition_type *
+::CIAO::NDDS::DDS_QueryCondition_i *
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_querycondition_listener (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::get_querycondition_listener");
@@ -93,7 +93,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_querycondition_listener (void)
 }
 
 template <typename DDS_TYPE>
-typename CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::QueryCondition_type *
+::CIAO::NDDS::DDS_QueryCondition_i *
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_querycondition_reader (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::get_querycondition_reader");
@@ -136,10 +136,10 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::init_readcondition (void)
     }
 
   ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_ERROR;
-  ReadCondition_type * rc = this->get_readcondition ();
+  ::CIAO::NDDS::DDS_ReadCondition_i * rc = this->get_readcondition ();
   if (rc)
     {
-      retcode = this->ws_->attach_condition (rc->get_impl ());
+      retcode = this->ws_->attach_condition (rc->get_rti_entity ());
     }
 
   if (retcode != ::DDS::RETCODE_OK)
@@ -294,11 +294,11 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::attach_querycondition (void)
                         ::CORBA::NO_MEMORY ());
     }
 
-  QueryCondition_type * qc = this->get_querycondition_getter ();
+  ::CIAO::NDDS::DDS_QueryCondition_i * qc = this->get_querycondition_getter ();
   ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_ERROR;
   if (qc)
     {
-      retcode = this->ws_->attach_condition (qc->get_impl ());
+      retcode = this->ws_->attach_condition (qc->get_rti_entity ());
     }
   if (retcode != ::DDS::RETCODE_OK)
     {
@@ -357,13 +357,13 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::remove_condition (
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::remove_condition");
   if (! ::CORBA::is_nil (dds_qc))
     {
-      QueryCondition_type * qc = dynamic_cast <QueryCondition_type *>(dds_qc);
+      ::CIAO::NDDS::DDS_QueryCondition_i * qc = dynamic_cast < ::CIAO::NDDS::DDS_QueryCondition_i *>(dds_qc);
       if (qc)
         {
           ::DDS::ReturnCode_t retcode = this->impl ()->delete_readcondition (qc);
           if (retcode == ::DDS::RETCODE_OK)
             {
-              qc->set_impl (0);
+              qc->set_rti_entity (0);
               DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_DEBUG, DDS4CCM_INFO
                             ACE_TEXT ("ConditionManager_T::remove_condition - ")
                             ACE_TEXT ("Succesfully removed query condition for <%C>.\n"),
@@ -404,9 +404,9 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::remove_conditions ()
     {
       if (! ::CORBA::is_nil (this->qc_getter_.in ()))
         {
-          QueryCondition_type * q_condition = this->get_querycondition_getter ();
+          ::CIAO::NDDS::DDS_QueryCondition_i * q_condition = this->get_querycondition_getter ();
           if (q_condition &&
-              this->ws_->detach_condition (q_condition->get_impl ()) == ::DDS::RETCODE_OK)
+              this->ws_->detach_condition (q_condition->get_rti_entity ()) == ::DDS::RETCODE_OK)
             {
               DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                             ACE_TEXT ("ConditionManager_T::remove_conditions - ")
@@ -423,14 +423,14 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::remove_conditions ()
         }
       else
         {
-          QueryCondition_type * r_condition = this->get_querycondition_getter ();
+          ::CIAO::NDDS::DDS_QueryCondition_i * r_condition = this->get_querycondition_getter ();
           if (!r_condition)
             {
               retcode = ::DDS::RETCODE_ERROR;
             }
           else
             {
-              retcode = this->ws_->detach_condition (r_condition->get_impl ());
+              retcode = this->ws_->detach_condition (r_condition->get_rti_entity ());
             }
           if (retcode != ::DDS::RETCODE_OK)
             {
@@ -465,11 +465,11 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::remove_conditions ()
                         ACE_TEXT ("ConditionManager_T::remove_conditions - ")
                         ACE_TEXT ("Read condition successfully deleted from DDSDataReader.\n")));
         }
-      ReadCondition_type * rc =
-        dynamic_cast <ReadCondition_type *>(this->rd_condition_.in ());
+      ::CIAO::NDDS::DDS_ReadCondition_i * rc =
+        dynamic_cast < ::CIAO::NDDS::DDS_ReadCondition_i *>(this->rd_condition_.in ());
       if (rc)
         {
-          rc->set_impl (0);
+          rc->set_rti_entity (0);
         }
       this->rd_condition_ = ::DDS::CCM_ReadCondition::_nil ();
     }
@@ -495,14 +495,14 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::set_impl (
 }
 
 template <typename DDS_TYPE>
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE> *
+CIAO::NDDS::DataReader_T<DDS_TYPE> *
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_impl ()
 {
   return this->impl_;
 }
 
 template <typename DDS_TYPE>
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE> *
+CIAO::NDDS::DataReader_T<DDS_TYPE> *
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::impl (void)
 {
   if (this->impl_)
@@ -511,6 +511,9 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::impl (void)
     }
   else
     {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
+                    "CIAO::NDDS::DataReader_T<DDS_TYPE>::impl - "
+                    "Throwing BAD_INV_ORDER.\n"));
       throw ::CORBA::BAD_INV_ORDER ();
     }
 }

@@ -10,30 +10,27 @@
 #ifndef TOPICDESCRIPTION_T_H_
 #define TOPICDESCRIPTION_T_H_
 
+#include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "tao/LocalObject.h"
 
-#include "ndds/ndds_cpp.h"
+class DDSTopicDescription;
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
-    template <typename DDS_TYPE>
-    class DDS_DomainParticipant;
-
-    template <typename DDS_TYPE>
-    class DDS_TopicDescription_T :
+    class DDS4CCM_NDDS_Export DDS_TopicDescription_i :
       public virtual ::DDS::TopicDescription,
       public virtual ::CORBA::LocalObject
     {
-    typedef DDS_DomainParticipant<DDS_TYPE> DomainParticipant_type;
-
     public:
       /// Constructor
-      DDS_TopicDescription_T (DDSTopicDescription * rc);
+      DDS_TopicDescription_i (::DDSTopicDescription * rc,
+                            ::DDS::DomainParticipant_ptr dp);
 
       /// Destructor
-      virtual ~DDS_TopicDescription_T (void);
+      virtual ~DDS_TopicDescription_i (void);
 
       virtual char * get_type_name (void);
 
@@ -41,18 +38,15 @@ namespace CIAO
 
       virtual ::DDS::DomainParticipant_ptr get_participant (void);
 
-      DDSTopicDescription * get_impl (void);
-
-      void set_impl (DDSTopicDescription * rc);
+      ::DDSTopicDescription * get_rti_entity (void);
 
     private:
-      DDSTopicDescription * impl_;
+      ::DDSTopicDescription * rti_entity_;
+      ::DDS::DomainParticipant_var dp_;
 
-      DDSTopicDescription * impl (void);
+      ::DDSTopicDescription * rti_entity (void);
     };
   }
 }
-
-#include "dds4ccm/impl/ndds/TopicDescription_T.cpp"
 
 #endif /* TOPICDESCRIPTION_T_H_ */

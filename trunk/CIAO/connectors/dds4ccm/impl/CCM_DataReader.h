@@ -10,8 +10,7 @@
 #define CCM_DATAREADER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
-
-#include "dds4ccm/impl/ndds/ContentFilteredTopic_T.h"
+#include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
 
 namespace CIAO
 {

@@ -15,11 +15,11 @@
 
 #include "tao/LocalObject.h"
 
-#include "ndds/ndds_cpp.h"
+class DDSDataWriter;
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
     class DDS4CCM_NDDS_Export DDS_DataWriter_Base
       : public virtual ::DDS::DataWriter,
@@ -27,18 +27,12 @@ namespace CIAO
     {
     public:
       /// Constructor
-      explicit DDS_DataWriter_Base (DDSDataWriter * dw);
+      explicit DDS_DataWriter_Base (void);
 
-      DDSDataWriter * get_impl (void);
+      virtual ::DDSDataWriter * get_rti_entity (void) = 0;
 
       // @todo, this should be private to my idea
-      virtual void set_impl (DDSDataWriter * dw);
-
-    protected:
-      DDSDataWriter * impl (void);
-
-    private:
-      DDSDataWriter * impl_;
+      virtual void set_rti_entity (::DDSDataWriter * dw) = 0;
     };
   }
 }

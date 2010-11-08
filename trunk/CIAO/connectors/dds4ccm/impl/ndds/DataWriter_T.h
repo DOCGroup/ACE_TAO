@@ -18,29 +18,19 @@
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
     template <typename DDS_TYPE>
     class DDS_DataWriterListener_T;
 
     template <typename DDS_TYPE>
-    class DDS_Publisher_T;
-
-    template <typename DDS_TYPE>
-    class DDS_Topic_T;
-
-    template <typename DDS_TYPE>
-    class DDS_DataWriter_T
+    class DataWriter_T
       : public virtual DDS_DataWriter_Base
     {
     typedef DDS_DataWriterListener_T<DDS_TYPE> DataWriterListener_type;
-    typedef DDS_Publisher_T<DDS_TYPE> Publisher_type;
-    typedef DDS_Topic_T<DDS_TYPE> Topic_type;
-
     public:
-      explicit DDS_DataWriter_T (DDSDataWriter * dw = 0);
-
-      virtual void set_impl (DDSDataWriter * dw);
+      explicit DataWriter_T (::DDSDataWriter * dw = 0,
+      ::DDS::DomainParticipant_ptr dp = ::DDS::DomainParticipant::_nil ()); // @todo);
 
       virtual ::DDS::ReturnCode_t set_qos (const ::DDS::DataWriterQos & qos);
 
@@ -128,10 +118,17 @@ namespace CIAO
 
       virtual ::DDS::InstanceHandle_t lookup_instance (
         const typename DDS_TYPE::value_type& instance_data);
-    private:
-      typename DDS_TYPE::datawriter_type * typed_impl (void);
 
-      typename DDS_TYPE::datawriter_type * writer_;
+      virtual ::DDSDataWriter * get_rti_entity (void);
+
+      // @todo, this should be private to my idea
+      virtual void set_rti_entity (::DDSDataWriter * dw);
+
+    private:
+      typename DDS_TYPE::datawriter_type * rti_entity_;
+      ::DDS::DomainParticipant_var dp_;
+
+      typename DDS_TYPE::datawriter_type * rti_entity (void);
     };
   }
 }

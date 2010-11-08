@@ -1,8 +1,9 @@
 // $Id$
 
-#include "dds4ccm/impl/ndds/DDSPublisherListener_T.h"
-#include "dds4ccm/impl/ndds/Publisher_T.h"
+#include "dds4ccm/impl/ndds/PublisherListener.h"
+#include "dds4ccm/impl/ndds/Publisher.h"
 #include "dds4ccm/impl/ndds/DataWriter_T.h"
+#include "dds4ccm/impl/ndds/DomainParticipant.h"
 
 #include "dds4ccm/impl/ndds/convertors/PublicationMatchedStatus.h"
 #include "dds4ccm/impl/ndds/convertors/LivelinessLostStatus.h"
@@ -11,45 +12,51 @@
 #include "dds4ccm/impl/ndds/convertors/ReliableReaderActivityChangedStatus.h"
 #include "dds4ccm/impl/ndds/convertors/ReliableWriterCacheChangedStatus.h"
 
-#include "dds4ccm/idl/dds4ccm_BaseC.h"
-
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
-    template <typename DDS_TYPE>
-    DDS_PublisherListener_T<DDS_TYPE>::DDS_PublisherListener_T ( ::DDS::PublisherListener_ptr p)
-      : impl_ (::DDS::PublisherListener::_duplicate (p))
+    DDS_PublisherListener_i::DDS_PublisherListener_i (
+      ::DDS::PublisherListener_ptr p,
+      ::DDS::DomainParticipant_ptr dp)
+      : impl_ (::DDS::PublisherListener::_duplicate (p)),
+        dp_ (::DDS::DomainParticipant::_duplicate (dp))
     {
-      DDS4CCM_TRACE ("DDS_PublisherListener_T<DDS_TYPE>::DDS_PublisherListener_T");
+      DDS4CCM_TRACE ("DDS_PublisherListener_i::DDS_PublisherListener_i");
     }
 
-    template <typename DDS_TYPE>
-    DDS_PublisherListener_T<DDS_TYPE>::~DDS_PublisherListener_T (void)
+    DDS_PublisherListener_i::~DDS_PublisherListener_i (void)
     {
-      DDS4CCM_TRACE ("DDS_PublisherListener_T<DDS_TYPE>::~DDS_PublisherListener_T");
+      DDS4CCM_TRACE ("DDS_PublisherListener_i::~DDS_PublisherListener_i");
     }
 
-    template <typename DDS_TYPE>
     ::DDS::DataWriter_ptr
-    DDS_PublisherListener_T<DDS_TYPE>::get_datawriter_proxy (::DDSDataWriter * the_writer)
+    DDS_PublisherListener_i::get_datawriter_proxy (::DDSDataWriter * the_writer)
     {
-      DDS4CCM_TRACE ("DDS_PublisherListener_T<DDS_TYPE>::get_datawriter_proxy");
+      DDS4CCM_TRACE ("DDS_PublisherListener_i::get_datawriter_proxy");
+      ::CIAO::NDDS::DDS_DomainParticipant_i* p = dynamic_cast < ::CIAO::NDDS::DDS_DomainParticipant_i*> (this->dp_.in ());
       ::DDS::DataWriter_var dds_writer;
-      ACE_NEW_NORETURN (dds_writer,
-                        DataWriter_type (the_writer));
+      if (p)
+        {
+          dds_writer = p->create_datawriter (the_writer);
+        }
+      else
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR,
+                        "DDS_PublisherListener_i::get_datawriter_proxy - "
+                        "No dp_.\n"));
+        }
       return dds_writer._retn ();
     }
 
-    template <typename DDS_TYPE>
     void
-    DDS_PublisherListener_T<DDS_TYPE>::on_offered_deadline_missed (
+    DDS_PublisherListener_i::on_offered_deadline_missed (
       ::DDSDataWriter* the_writer,
       const ::DDS_OfferedDeadlineMissedStatus & status)
     {
-      DDS4CCM_TRACE ("DDS_PublisherListener_T<DDS_TYPE>::on_offered_deadline_missed");
+      DDS4CCM_TRACE ("DDS_PublisherListener_i::on_offered_deadline_missed");
 
       ::DDS::OfferedDeadlineMissedStatus ddsstatus;
       ::DDS::DataWriter_var proxy = this->get_datawriter_proxy (the_writer);
@@ -57,13 +64,12 @@ namespace CIAO
       this->impl_->on_offered_deadline_missed (proxy.in (), ddsstatus);
     }
 
-    template <typename DDS_TYPE>
     void
-    DDS_PublisherListener_T<DDS_TYPE>::on_offered_incompatible_qos (
+    DDS_PublisherListener_i::on_offered_incompatible_qos (
       ::DDSDataWriter* the_writer,
       const ::DDS_OfferedIncompatibleQosStatus & status)
     {
-      DDS4CCM_TRACE ("DDS_PublisherListener_T<DDS_TYPE>::on_offered_incompatible_qos");
+      DDS4CCM_TRACE ("DDS_PublisherListener_i::on_offered_incompatible_qos");
 
       ::DDS::OfferedIncompatibleQosStatus ddsstatus;
       ::DDS::DataWriter_var proxy = this->get_datawriter_proxy (the_writer);
@@ -71,13 +77,12 @@ namespace CIAO
       this->impl_->on_offered_incompatible_qos (proxy.in (), ddsstatus);
     }
 
-    template <typename DDS_TYPE>
     void
-    DDS_PublisherListener_T<DDS_TYPE>::on_liveliness_lost (
+    DDS_PublisherListener_i::on_liveliness_lost (
       ::DDSDataWriter* the_writer,
       const ::DDS_LivelinessLostStatus & status)
     {
-      DDS4CCM_TRACE ("DDS_PublisherListener_T<DDS_TYPE>::on_liveliness_lost");
+      DDS4CCM_TRACE ("DDS_PublisherListener_i::on_liveliness_lost");
 
       ::DDS::LivelinessLostStatus ddsstatus;
       ::DDS::DataWriter_var proxy = this->get_datawriter_proxy (the_writer);
@@ -85,13 +90,12 @@ namespace CIAO
       this->impl_->on_liveliness_lost (proxy.in (), ddsstatus);
     }
 
-    template <typename DDS_TYPE>
     void
-    DDS_PublisherListener_T<DDS_TYPE>::on_publication_matched (
+    DDS_PublisherListener_i::on_publication_matched (
       ::DDSDataWriter* the_writer,
       const ::DDS_PublicationMatchedStatus & status)
     {
-      DDS4CCM_TRACE ("DDS_PublisherListener_T<DDS_TYPE>::on_publication_matched");
+      DDS4CCM_TRACE ("DDS_PublisherListener_i::on_publication_matched");
 
       ::DDS::PublicationMatchedStatus ddsstatus;
       ::DDS::DataWriter_var proxy = this->get_datawriter_proxy (the_writer);
@@ -99,13 +103,12 @@ namespace CIAO
       this->impl_->on_publication_matched (proxy.in (), ddsstatus);
     }
 
-    template <typename DDS_TYPE>
     void
-    DDS_PublisherListener_T<DDS_TYPE>::on_reliable_reader_activity_changed (
+    DDS_PublisherListener_i::on_reliable_reader_activity_changed (
       ::DDSDataWriter *the_writer,
       const ::DDS_ReliableReaderActivityChangedStatus & status)
     {
-      DDS4CCM_TRACE ("DDS_PublisherListener_T<DDS_TYPE>::on_reliable_reader_activity_changed");
+      DDS4CCM_TRACE ("DDS_PublisherListener_i::on_reliable_reader_activity_changed");
 
       ::DDS::ReliableReaderActivityChangedStatus ddsstatus;
       ::DDS::DataWriter_var proxy = this->get_datawriter_proxy (the_writer);
@@ -113,13 +116,12 @@ namespace CIAO
       this->impl_->on_reliable_reader_activity_changed (proxy.in (), ddsstatus);
     }
 
-    template <typename DDS_TYPE>
     void
-    DDS_PublisherListener_T<DDS_TYPE>::on_reliable_writer_cache_changed (
+    DDS_PublisherListener_i::on_reliable_writer_cache_changed (
       ::DDSDataWriter* the_writer,
       const ::DDS_ReliableWriterCacheChangedStatus & status)
     {
-      DDS4CCM_TRACE ("DDS_PublisherListener_T<DDS_TYPE>::on_reliable_writer_cache_changed");
+      DDS4CCM_TRACE ("DDS_PublisherListener_i::on_reliable_writer_cache_changed");
 
       ::DDS::ReliableWriterCacheChangedStatus ddsstatus;
       ::DDS::DataWriter_var proxy = this->get_datawriter_proxy (the_writer);
@@ -127,9 +129,8 @@ namespace CIAO
       this->impl_->on_reliable_writer_cache_changed (proxy.in (), ddsstatus);
     }
 
-    template <typename DDS_TYPE>
     ::DDS::PublisherListener_ptr
-    DDS_PublisherListener_T<DDS_TYPE>::get_publisher_listener (void)
+    DDS_PublisherListener_i::get_publisher_listener (void)
     {
       return ::DDS::PublisherListener::_duplicate (this->impl_.in ());
     }

@@ -15,10 +15,24 @@ project(CIAO_DDS4CCM_DDS_NDDS) : install, dds4ccm_skel, dds4ccm_lem_stub, taolib
   }
 
   Source_Files {
+    ContentFilteredTopic.cpp
     DataReader.cpp
+    DataReaderListener.cpp
     DataWriter.cpp
-    StatusCondition.cpp
-    DDSDomainParticipantListener.cpp
+    DataWriterListener.cpp
+    DomainParticipant.cpp
+    DomainParticipantFactory.cpp
+    DomainParticipantListener.cpp
     DomainParticipantManager.cpp
+    Publisher.cpp
+    PublisherListener.cpp
+    QueryCondition.cpp
+    ReadCondition.cpp
+    StatusCondition.cpp
+    Subscriber.cpp
+    SubscriberListener.cpp
+    Topic.cpp
+    TopicDescription.cpp
+    TopicListener.cpp
   }
 }

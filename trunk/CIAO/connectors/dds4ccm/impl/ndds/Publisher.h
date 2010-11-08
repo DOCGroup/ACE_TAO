@@ -10,45 +10,27 @@
 #ifndef PUBLISHER_T_H_
 #define PUBLISHER_T_H_
 
+#include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "tao/LocalObject.h"
 
-# include "ndds/ndds_cpp.h"
+class DDSPublisher;
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
-    template <typename DDS_TYPE>
-    class DDS_DataWriter_T;
-
-    template <typename DDS_TYPE>
-    class DDS_DataWriterListener_T;
-
-    template <typename DDS_TYPE>
-    class DDS_PublisherListener_T;
-
-    template <typename DDS_TYPE>
-    class DDS_DomainParticipant_T;
-
-    template <typename DDS_TYPE>
-    class DDS_Publisher_T :
+    class DDS4CCM_NDDS_Export DDS_Publisher_i :
       public virtual ::DDS::Publisher,
       public virtual ::CORBA::LocalObject
     {
-    typedef DDS_Topic_T<DDS_TYPE> Topic_type;
-
-    typedef DDS_DataWriter_T<DDS_TYPE> DataWriter_type;
-    typedef DDS_DataWriterListener_T<DDS_TYPE> DataWriterListener_type;
-
-    typedef DDS_PublisherListener_T<DDS_TYPE> PublisherListener_type;
-    typedef DDS_DomainParticipant_T<DDS_TYPE> DomainParticipant_type;
     public:
       /// Constructor
-      DDS_Publisher_T (DDSPublisher * dw,
-                       DDS_DomainParticipant_T<DDS_TYPE>* dp);
+      DDS_Publisher_i (DDSPublisher * p,
+                     ::DDS::DomainParticipant_ptr dp);
 
       /// Destructor
-      virtual ~DDS_Publisher_T (void);
+      virtual ~DDS_Publisher_i (void);
 
       virtual
         ::DDS::DataWriter_ptr create_datawriter (::DDS::Topic_ptr a_topic,
@@ -125,19 +107,15 @@ namespace CIAO
       virtual
         ::DDS::InstanceHandle_t get_instance_handle (void);
 
-      DDSPublisher * get_impl (void);
-
-      void set_impl (DDSPublisher *p);
+      DDSPublisher * get_rti_entity (void);
 
     private:
-      DDSPublisher *impl_;
-      DDS_DomainParticipant_T<DDS_TYPE>* dp_;
+      DDSPublisher *rti_entity_;
+      ::DDS::DomainParticipant_var dp_;
 
-      DDSPublisher *impl (void);
+      DDSPublisher *rti_entity (void);
     };
   }
 }
-
-#include "dds4ccm/impl/ndds/Publisher_T.cpp"
 
 #endif /* PUBLISHER_T_H_ */

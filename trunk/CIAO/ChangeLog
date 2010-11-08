@@ -1,3 +1,114 @@
+Mon Nov  8 19:25:53 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Major refactoring of the dds4ccm library and the rti wrapping code
+
+        * connectors/dds4ccm/idl/ccm_dds.idl:
+
+        * connectors/dds4ccm/impl/CCM_DataReader.h:
+        * connectors/dds4ccm/impl/CCM_DataReader.cpp:
+        * connectors/dds4ccm/impl/CCM_DataWriter.h:
+        * connectors/dds4ccm/impl/CCM_DataWriter.cpp:
+        * connectors/dds4ccm/impl/ConditionManager_T.h:
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+        * connectors/dds4ccm/impl/ContentFilterSetting.h:
+        * connectors/dds4ccm/impl/ContentFilterSetting.cpp:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.h:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.h:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.h:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.h:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+        * connectors/dds4ccm/impl/TopicListener_T.cpp:
+
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.h:
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReader.h:
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.h:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriter.h:
+        * connectors/dds4ccm/impl/ndds/DataWriter.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriterListener.h:
+        * connectors/dds4ccm/impl/ndds/DataWriterListener.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriter_T.h:
+        * connectors/dds4ccm/impl/ndds/DataWriter_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantManager.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantManager.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher.h:
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+        * connectors/dds4ccm/impl/ndds/PublisherListener.h:
+        * connectors/dds4ccm/impl/ndds/PublisherListener.cpp:
+        * connectors/dds4ccm/impl/ndds/QueryCondition.h:
+        * connectors/dds4ccm/impl/ndds/QueryCondition.cpp:
+        * connectors/dds4ccm/impl/ndds/ReadCondition.h:
+        * connectors/dds4ccm/impl/ndds/ReadCondition.cpp:
+        * connectors/dds4ccm/impl/ndds/StatusCondition.h:
+        * connectors/dds4ccm/impl/ndds/StatusCondition.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber.h:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.h:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.cpp:
+        * connectors/dds4ccm/impl/ndds/Topic.h:
+        * connectors/dds4ccm/impl/ndds/Topic.cpp:
+        * connectors/dds4ccm/impl/ndds/TopicDescription.h:
+        * connectors/dds4ccm/impl/ndds/TopicDescription.cpp:
+        * connectors/dds4ccm/impl/ndds/TopicListener.h:
+        * connectors/dds4ccm/impl/ndds/TopicListener.cpp:
+        * connectors/dds4ccm/impl/ndds/ndds.mpc:
+
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic_T.h:
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSDataReaderListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDSDataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSDataWriterListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDSDataWriterListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSDomainParticipantListener.h:
+        * connectors/dds4ccm/impl/ndds/DDSDomainParticipantListener.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSPublisherListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDSPublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSSubscriberListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDSSubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDSTopicListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DDSTopicListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory_T.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant_T.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher_T.h:
+        * connectors/dds4ccm/impl/ndds/Publisher_T.cpp:
+        * connectors/dds4ccm/impl/ndds/QueryCondition_T.h:
+        * connectors/dds4ccm/impl/ndds/QueryCondition_T.cpp:
+        * connectors/dds4ccm/impl/ndds/ReadCondition_T.h:
+        * connectors/dds4ccm/impl/ndds/ReadCondition_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber_T.h:
+        * connectors/dds4ccm/impl/ndds/Subscriber_T.cpp:
+        * connectors/dds4ccm/impl/ndds/TopicDescription_T.h:
+        * connectors/dds4ccm/impl/ndds/TopicDescription_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Topic_T.h:
+        * connectors/dds4ccm/impl/ndds/Topic_T.cpp:
+
 Mon Nov  8 16:11:06 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/MultiTopic/Sender/MultiTopic_Sender_exec.cpp:

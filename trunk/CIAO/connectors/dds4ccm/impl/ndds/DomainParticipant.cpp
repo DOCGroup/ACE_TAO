@@ -1,17 +1,18 @@
 // $Id$
 
-#include "dds4ccm/impl/ndds/Subscriber_T.h"
-#include "dds4ccm/impl/ndds/Publisher_T.h"
-#include "dds4ccm/impl/ndds/ContentFilteredTopic_T.h"
-#include "dds4ccm/impl/ndds/TopicDescription_T.h"
-#include "dds4ccm/impl/ndds/Topic_T.h"
-#include "dds4ccm/impl/ndds/DDSDomainParticipantListener.h"
-#include "dds4ccm/impl/ndds/DDSPublisherListener_T.h"
-#include "dds4ccm/impl/ndds/DDSSubscriberListener_T.h"
+#include "dds4ccm/impl/ndds/DomainParticipant.h"
+#include "dds4ccm/impl/ndds/Subscriber.h"
+#include "dds4ccm/impl/ndds/Publisher.h"
+#include "dds4ccm/impl/ndds/ContentFilteredTopic.h"
+#include "dds4ccm/impl/ndds/TopicDescription.h"
+#include "dds4ccm/impl/ndds/Topic.h"
+#include "dds4ccm/impl/ndds/DomainParticipantListener.h"
+#include "dds4ccm/impl/ndds/PublisherListener.h"
+#include "dds4ccm/impl/ndds/SubscriberListener.h"
 #include "dds4ccm/impl/ndds/StatusCondition.h"
 
 #include "dds4ccm/impl/Utils.h"
-#include "dds4ccm/impl/TopicListener_T.h"
+#include "dds4ccm/impl/ndds/TopicListener.h"
 #include "dds4ccm/impl/ndds/DomainParticipantManager.h"
 
 #include "dds4ccm/impl/ndds/convertors/PublisherQos.h"
@@ -25,73 +26,67 @@
 #include "dds4ccm/impl/ndds/convertors/TopicBuiltinTopicData.h"
 #include "dds4ccm/impl/ndds/convertors/ParticipantBuiltinTopicData.h"
 
-#include "dds4ccm/idl/dds4ccm_BaseC.h"
-
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 #include "ace/CORBA_macros.h"
 
+#include "ndds/ndds_cpp.h"
+
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
-    template <typename DDS_TYPE>
-    DDS_DomainParticipant_T<DDS_TYPE>::DDS_DomainParticipant_T (
-      DDSDomainParticipant * dp) : impl_ (dp)
+    DDS_DomainParticipant_i::DDS_DomainParticipant_i (
+      ::DDSDomainParticipant * dp) : rti_entity_ (dp)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T<DDS_TYPE>::DDS_DomainParticipant_T");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::DDS_DomainParticipant_i");
     }
 
-    template <typename DDS_TYPE>
-    DDS_DomainParticipant_T<DDS_TYPE>::~DDS_DomainParticipant_T (void)
+    DDS_DomainParticipant_i::~DDS_DomainParticipant_i (void)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T<DDS_TYPE>::~DDS_DomainParticipant_T");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::~DDS_DomainParticipant_i");
     }
 
-    template <typename DDS_TYPE>
     void
-    DDS_DomainParticipant_T<DDS_TYPE>::register_type (const char* type, TypeFactory*f)
+    DDS_DomainParticipant_i::register_type (const char* type, TypeFactory*f)
     {
       this->type_factories [type] = f;
       this->factory_ = f;
     }
 
-    template <typename DDS_TYPE>
     ::DDS::DataWriter_ptr
-    DDS_DomainParticipant_T<DDS_TYPE>::create_datawriter (DDSDataWriter* dw)
+    DDS_DomainParticipant_i::create_datawriter (DDSDataWriter* dw)
     {
-      return this->factory_->create_datawriter (dw);
-    }
-    template <typename DDS_TYPE>
-    ::DDS::DataReader_ptr
-    DDS_DomainParticipant_T<DDS_TYPE>::create_datareader (DDSDataReader* dr)
-    {
-      return this->factory_->create_datareader (dr);
+      return this->factory_->create_datawriter (dw, this);
     }
 
-    template <typename DDS_TYPE>
+    ::DDS::DataReader_ptr
+    DDS_DomainParticipant_i::create_datareader (DDSDataReader* dr)
+    {
+      return this->factory_->create_datareader (dr, this);
+    }
+
     ::DDS::Publisher_ptr
-    DDS_DomainParticipant_T<DDS_TYPE>::create_publisher_with_profile (
+    DDS_DomainParticipant_i::create_publisher_with_profile (
       const char* library_name,
       const char *profile_name,
       ::DDS::PublisherListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::create_publisher_with_profile");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_publisher_with_profile");
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
-                    "DDS_DomainParticipant_T<DDS_TYPE, "
-                    "VENDOR_TYPE>::create_publisher_with_profile - "
+                    "DDS_DomainParticipant_i::create_publisher_with_profile - "
                     "Start creating Publisher\n"));
-      DDS_PublisherListener_T<DDS_TYPE> *ccm_dds_pl = 0;
+      DDS_PublisherListener_i *ccm_dds_pl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_pl,
-                            PublisherListener_type (a_listener),
+                            DDS_PublisherListener_i (a_listener, this),
                             ::CORBA::NO_MEMORY ());
         }
       DDSPublisher * ccm_dds_pub =
-        this->impl ()->create_publisher_with_profile (library_name,
+        this->rti_entity ()->create_publisher_with_profile (library_name,
                                                       profile_name,
                                                       ccm_dds_pl,
                                                       mask);
@@ -99,8 +94,7 @@ namespace CIAO
       if (!ccm_dds_pub)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T<DDS_TYPE, "
-                        "VENDOR_TYPE>::create_publisher_with_profile - "
+                        "DDS_DomainParticipant_i::create_publisher_with_profile - "
                         "Error: Unable to create Publisher\n"));
           delete ccm_dds_pl;
           return ::DDS::Publisher::_nil ();
@@ -108,53 +102,51 @@ namespace CIAO
 
       ::DDS::Publisher_var retval;
       ACE_NEW_THROW_EX (retval,
-                        Publisher_type (ccm_dds_pub, this),
+                        DDS_Publisher_i (ccm_dds_pub, this),
                         ::CORBA::NO_MEMORY ());
 
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
-                    "DDS_DomainParticipant_T<DDS_TYPE, "
-                    "VENDOR_TYPE>::create_publisher_with_profile - "
+                    "DDS_DomainParticipant_i::create_publisher_with_profile - "
                     "Successfully created a DDSPublisher\n"));
 
       ccm_dds_pub->enable ();
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::Publisher_ptr
-    DDS_DomainParticipant_T<DDS_TYPE>::create_publisher (
+    DDS_DomainParticipant_i::create_publisher (
       const ::DDS::PublisherQos & qos,
       ::DDS::PublisherListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::create_publisher");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_publisher");
       ACE_UNUSED_ARG (qos);
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
-                    "DDS_DomainParticipant_T<DDS_TYPE, "
-                    "VENDOR_TYPE>::create_publisher - "
+                    "DDS_DomainParticipant_i::create_publisher - "
                     "Start creating Publisher\n"));
 
       DDS_PublisherQos ccm_dds_qos = DDS_PUBLISHER_QOS_DEFAULT;
 
-      DDS_PublisherListener_T<DDS_TYPE> *ccm_dds_pl = 0;
+      DDS_PublisherListener_i *ccm_dds_pl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_pl,
-                            PublisherListener_type (a_listener),
+                            DDS_PublisherListener_i (a_listener, this),
                             ::CORBA::NO_MEMORY ());
         }
 
       DDSPublisher * ccm_dds_pub =
-        this->impl ()->create_publisher (ccm_dds_qos,
+        this->rti_entity ()->create_publisher (ccm_dds_qos,
                                          ccm_dds_pl,
                                          mask);
 
       if (!ccm_dds_pub)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                       "DDS_DomainParticipant_T"
-                       "<DDS_TYPE>::create_publisher - "
+                       "DDS_DomainParticipant_i"
+                       "::create_publisher - "
                        "Error: Unable to create Publisher\n"));
           delete ccm_dds_pl;
           return ::DDS::Publisher::_nil ();
@@ -162,86 +154,84 @@ namespace CIAO
 
       ::DDS::Publisher_var retval;
       ACE_NEW_THROW_EX (retval,
-                        Publisher_type (ccm_dds_pub, this),
+                        DDS_Publisher_i (ccm_dds_pub, this),
                         ::CORBA::NO_MEMORY ());
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
-                    "DDS_DomainParticipant_T<DDS_TYPE, "
-                    "VENDOR_TYPE>::create_publisher - "
+                    "DDS_DomainParticipant_i::create_publisher - "
                     "Successfully created a DDSPublisher\n"));
 
       ccm_dds_pub->enable ();
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::delete_publisher (
+    DDS_DomainParticipant_i::delete_publisher (
       ::DDS::Publisher_ptr p)
     {
-      Publisher_type *ccm_dds_pub =
-        dynamic_cast < Publisher_type * > (p);
+      DDS_Publisher_i *ccm_dds_pub =
+        dynamic_cast < DDS_Publisher_i * > (p);
 
       if (!ccm_dds_pub)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T"
-                        "<DDS_TYPE>::delete_publisher - "
+                        "DDS_DomainParticipant_i"
+                        "::delete_publisher - "
                         "Unable to cast provided object reference to servant pointer.\n"));
           return ::DDS::RETCODE_ERROR;
         }
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, DDS4CCM_INFO
-                   "DDS_DomainParticipant_T"
-                   "<DDS_TYPE>::delete_publisher - "
+                   "DDS_DomainParticipant_i"
+                   "::delete_publisher - "
                    "Successfully casted provided object reference to "
-                   "DDS_Publisher_T\n"));
+                   "DDS_Publisher_i\n"));
 
-      DDS_ReturnCode_t const retval = this->impl ()->delete_publisher (ccm_dds_pub->get_impl ());
+      DDS_ReturnCode_t const retval = this->rti_entity ()->delete_publisher (ccm_dds_pub->get_rti_entity ());
 
       if (retval != DDS_RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T"
-                        "<DDS_TYPE>::delete_publisher - "
+                        "DDS_DomainParticipant_i"
+                        "::delete_publisher - "
                         "Error: RTI delete_publisher returned non-ok error code %C\n",
-                        translate_retcode (retval)));
+                        ::CIAO::DDS4CCM::translate_retcode (retval)));
         }
       else
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T<DDS_TYPE, "
-                        "VENDOR_TYPE>::delete_publisher - "
+                        "DDS_DomainParticipant_i::delete_publisher - "
                         "Provided publisher successfully deleted\n"));
         }
 
       return retval;
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::Subscriber_ptr
-    DDS_DomainParticipant_T<DDS_TYPE>::create_subscriber_with_profile (
+    DDS_DomainParticipant_i::create_subscriber_with_profile (
       const char* library_name,
       const char *profile_name,
       ::DDS::SubscriberListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::create_subscriber_with_profile");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_subscriber_with_profile");
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
-                   "DDS_DomainParticipant_T"
-                   "<DDS_TYPE>::create_subscriber_with_profile - "
+                   "DDS_DomainParticipant_i"
+                   "::create_subscriber_with_profile - "
                    "Creating Subscriber\n"));
 
-      SubscriberListener_type *ccm_dds_sl = 0;
+      DDS_SubscriberListener_i *ccm_dds_sl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_sl,
-                            SubscriberListener_type (a_listener),
+                            DDS_SubscriberListener_i (a_listener, this),
                             ::CORBA::NO_MEMORY ());
         }
       DDSSubscriber * ccm_dds_sub =
-        this->impl ()->create_subscriber_with_profile (
+        this->rti_entity ()->create_subscriber_with_profile (
           library_name,
           profile_name,
           ccm_dds_sl,
@@ -250,7 +240,7 @@ namespace CIAO
       if (!ccm_dds_sub)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T::"
+                        "DDS_DomainParticipant_i::"
                         "create_subscriber_with_profile - "
                         "Error: RTI DDS returned a nil subscriber.\n"));
           delete ccm_dds_sl;
@@ -259,52 +249,50 @@ namespace CIAO
 
       ::DDS::Subscriber_var retval;
       ACE_NEW_THROW_EX (retval,
-                        Subscriber_type (ccm_dds_sub, this),
+                        DDS_Subscriber_i (ccm_dds_sub, this),
                         ::CORBA::NO_MEMORY ());
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
-                    "DDS_DomainParticipant_T<DDS_TYPE, "
-                    "VENDOR_TYPE>::create_subscriber_with_profile - "
+                    "DDS_DomainParticipant_i::create_subscriber_with_profile - "
                     "Successfully created a DDSSubscriber\n"));
 
       ccm_dds_sub->enable ();
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::Subscriber_ptr
-    DDS_DomainParticipant_T<DDS_TYPE>::create_subscriber (
+    DDS_DomainParticipant_i::create_subscriber (
                                        const ::DDS::SubscriberQos & qos,
                                        ::DDS::SubscriberListener_ptr a_listener,
                                        ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::create_subscriber");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_subscriber");
 
       ACE_UNUSED_ARG (qos);
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
-                    "DDS_DomainParticipant_T<DDS_TYPE, "
-                    "VENDOR_TYPE>::create_subscriber - "
+                    "DDS_DomainParticipant_i::create_subscriber - "
                     "Creating Subscriber\n"));
 
-      SubscriberListener_type *ccm_dds_sl = 0;
+      DDS_SubscriberListener_i *ccm_dds_sl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_sl,
-                            SubscriberListener_type (a_listener),
+                            DDS_SubscriberListener_i (a_listener, this),
                             ::CORBA::NO_MEMORY ());
         }
 
       DDS_SubscriberQos ccm_dds_qos = DDS_SUBSCRIBER_QOS_DEFAULT;
       DDSSubscriber * ccm_dds_sub =
-      this->impl ()->create_subscriber (ccm_dds_qos,
+      this->rti_entity ()->create_subscriber (ccm_dds_qos,
                                         ccm_dds_sl,
                                         mask);
 
       if (!ccm_dds_sub)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T::"
+                        "DDS_DomainParticipant_i::"
                         "create_subscriber_with_profile - "
                         "Error: RTI DDS returned a nil subscriber.\n"));
           delete ccm_dds_sl;
@@ -313,105 +301,100 @@ namespace CIAO
 
       ::DDS::Subscriber_var retval;
       ACE_NEW_THROW_EX (retval,
-                        Subscriber_type (ccm_dds_sub, this),
+                        DDS_Subscriber_i (ccm_dds_sub, this),
                         ::CORBA::NO_MEMORY ());
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
-                    "DDS_DomainParticipant_T<DDS_TYPE, "
-                    "VENDOR_TYPE>::create_subscriber - "
+                    "DDS_DomainParticipant_i::create_subscriber - "
                     "Successfully created a DDSSubscriber\n"));
 
       ccm_dds_sub->enable ();
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::delete_subscriber (
+    DDS_DomainParticipant_i::delete_subscriber (
       ::DDS::Subscriber_ptr s)
     {
-      Subscriber_type *ccm_dds_sub = dynamic_cast < Subscriber_type * > (s);
+      DDS_Subscriber_i *ccm_dds_sub = dynamic_cast < DDS_Subscriber_i * > (s);
 
       if (!ccm_dds_sub)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T<DDS_TYPE, "
-                        "VENDOR_TYPE>::delete_subscriber - Unable to cast "
+                        "DDS_DomainParticipant_i::delete_subscriber - Unable to cast "
                         "provided object reference to servant pointer.\n"));
           return ::DDS::RETCODE_ERROR;
         }
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, DDS4CCM_INFO
-                    "DDS_DomainParticipant_T<DDS_TYPE, "
-                    "VENDOR_TYPE>::delete_subscriber - Successfully casted "
+                    "DDS_DomainParticipant_i::delete_subscriber - Successfully casted "
                     "provided object reference to Subscriber_type\n"));
 
-      DDS_ReturnCode_t const retval = this->impl ()->delete_subscriber (ccm_dds_sub->get_impl ());
+      DDS_ReturnCode_t const retval = this->rti_entity ()->delete_subscriber (ccm_dds_sub->get_rti_entity ());
 
       if (retval != DDS_RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T<DDS_TYPE, "
-                        "VENDOR_TYPE>::delete_subscriber - Error: RTI "
+                        "DDS_DomainParticipant_i::delete_subscriber - Error: RTI "
                         "delete_subscriber returned non-ok error code %C\n",
-                        translate_retcode (retval)));
+                        ::CIAO::DDS4CCM::translate_retcode (retval)));
         }
       else
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T<DDS_TYPE, "
-                        "VENDOR_TYPE>::delete_subscriber - "
+                        "DDS_DomainParticipant_i::delete_subscriber - "
                         "Provided subscriber successfully deleted\n"));
         }
 
       return retval;
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::Subscriber_ptr
-    DDS_DomainParticipant_T<DDS_TYPE>::get_builtin_subscriber (void)
+    DDS_DomainParticipant_i::get_builtin_subscriber (void)
     {
       ::DDS::Subscriber_var retval;
-      DDSSubscriber* sub = this->impl ()->get_builtin_subscriber ();
+      DDSSubscriber* sub = this->rti_entity ()->get_builtin_subscriber ();
       if (sub)
         {
           ACE_NEW_THROW_EX (retval,
-                            Subscriber_type (sub, this),
+                            DDS_Subscriber_i (sub, this),
                             ::CORBA::NO_MEMORY ());
         }
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::Topic_ptr
-    DDS_DomainParticipant_T<DDS_TYPE>::create_topic (
+    DDS_DomainParticipant_i::create_topic (
                                             const char * impl_name,
                                             const char * type_name,
                                             const ::DDS::TopicQos & qos,
                                             ::DDS::TopicListener_ptr a_listener,
                                             ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::create_topic");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_topic");
 
       ACE_UNUSED_ARG (qos);
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_DEBUG, DDS4CCM_INFO
-                    "DDS_DomainParticipant_T::create_topic - "
+                    "DDS_DomainParticipant_i::create_topic - "
                     "Attempting to create topic with name %C and type %C\n",
                     impl_name, type_name));
 
-      TopicListener_type *ccm_dds_tl = 0;
+      DDS_TopicListener_i *ccm_dds_tl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_tl,
-                            TopicListener_type (a_listener),
+                            DDS_TopicListener_i (::DDS::Topic::_nil (), a_listener), // @todo, no nill
                             ::CORBA::NO_MEMORY ());
         }
 
       DDS_TopicQos ccm_dds_qos = DDS_TOPIC_QOS_DEFAULT;
 
       DDSTopicDescription * dds_td =
-        this->impl ()->lookup_topicdescription (impl_name);
+        this->rti_entity ()->lookup_topicdescription (impl_name);
       DDSTopic * dds_tp = 0;
       if (dds_td)
         {
@@ -420,7 +403,7 @@ namespace CIAO
 
       if (!dds_tp)
         {
-          dds_tp = this->impl ()->create_topic (impl_name,
+          dds_tp = this->rti_entity ()->create_topic (impl_name,
                                                 type_name,
                                                 ccm_dds_qos,
                                                 ccm_dds_tl,
@@ -429,7 +412,7 @@ namespace CIAO
           if (!dds_tp)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
-                            "DDS_DomainParticipant_T::create_topic - "
+                            "DDS_DomainParticipant_i::create_topic - "
                             "Error: RTI DDS returned a nil topic\n"));
               delete ccm_dds_tl;
               return ::DDS::Topic::_nil ();
@@ -437,43 +420,39 @@ namespace CIAO
 
           ::DDS::Topic_var retval;
           ACE_NEW_THROW_EX (retval,
-                            Topic_type (dds_tp),
+                            DDS_Topic_i (dds_tp, this),
                             ::CORBA::NO_MEMORY ());
 
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T::create_topic - "
+                        "DDS_DomainParticipant_i::create_topic - "
                         "Successfully created topic with name %C and type %C\n",
                         impl_name, type_name));
 
-          Topic_type * ccm_dds_tp =
-            dynamic_cast < Topic_type *> (retval.in ());
-          ccm_dds_tp->set_impl (dds_tp);
-
-          DPMANAGER->add_topic (this->impl (), dds_tp);
+          DPMANAGER->add_topic (this->rti_entity (), dds_tp);
 
           return retval._retn ();
         }
       else
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T::create_topic - "
+                        "DDS_DomainParticipant_i::create_topic - "
                         "Re-using topic with name %C and type %C.\n",
                         impl_name, type_name));
 
-          DPMANAGER->_inc_ref (this->impl (), dds_tp);
+          DPMANAGER->_inc_ref (this->rti_entity (), dds_tp);
 
           ::DDS::Topic_var retval;
           ACE_NEW_THROW_EX (retval,
-                            Topic_type (dds_tp),
+                            DDS_Topic_i (dds_tp, this),
                             ::CORBA::NO_MEMORY ());
 
           return retval._retn ();
         }
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::Topic_ptr
-    DDS_DomainParticipant_T<DDS_TYPE>::create_topic_with_profile (
+    DDS_DomainParticipant_i::create_topic_with_profile (
         const char *impl_name,
         const char *type_name,
         const char *library_name,
@@ -481,12 +460,12 @@ namespace CIAO
         ::DDS::TopicListener_ptr a_listener,
         ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::create_topic_with_profile");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_topic_with_profile");
 
       if (impl_name == 0)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T::create_topic_with_profile - "
+                        "DDS_DomainParticipant_i::create_topic_with_profile - "
                         "Error: provided nil topic name\n"));
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
         }
@@ -494,26 +473,26 @@ namespace CIAO
       if (type_name == 0)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T::create_topic_with_profile - "
+                        "DDS_DomainParticipant_i::create_topic_with_profile - "
                         "Error: provided nil type name\n"));
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
         }
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_DEBUG, DDS4CCM_INFO
-                    "DDS_DomainParticipant_T::create_topic_with_profile - "
+                    "DDS_DomainParticipant_i::create_topic_with_profile - "
                     "Attempting to create topic with name %C and type %C\n",
                     impl_name, type_name));
 
-      TopicListener_type *ccm_dds_tl = 0;
+      DDS_TopicListener_i *ccm_dds_tl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_tl,
-                            TopicListener_type (a_listener),
+                            DDS_TopicListener_i (::DDS::Topic::_nil (), a_listener), // @todo, no nill
                             ::CORBA::NO_MEMORY ());
         }
 
       DDSTopicDescription * dds_td =
-        this->impl ()->lookup_topicdescription (impl_name);
+        this->rti_entity ()->lookup_topicdescription (impl_name);
       DDSTopic * dds_tp = 0;
       if (dds_td)
         {
@@ -522,7 +501,7 @@ namespace CIAO
 
       if (!dds_tp)
         {
-          dds_tp = this->impl ()->create_topic_with_profile (
+          dds_tp = this->rti_entity ()->create_topic_with_profile (
                                                         impl_name,
                                                         type_name,
                                                         library_name,
@@ -533,7 +512,7 @@ namespace CIAO
           if (!dds_tp)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
-                            "DDS_DomainParticipant_T::create_topic_with_profile - "
+                            "DDS_DomainParticipant_i::create_topic_with_profile - "
                             "Error: RTI DDS returned a nil topic\n"));
               delete ccm_dds_tl;
               return ::DDS::Topic::_nil ();
@@ -541,46 +520,50 @@ namespace CIAO
 
           ::DDS::Topic_var retval;
           ACE_NEW_THROW_EX (retval,
-                            Topic_type (dds_tp),
+                            DDS_Topic_i (dds_tp, this),
                             ::CORBA::NO_MEMORY ());
 
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T::create_topic_with_profile - "
+                        "DDS_DomainParticipant_i::create_topic_with_profile - "
                         "Successfully created topic with name %C and type %C\n",
                         impl_name, type_name));
 
-          Topic_type * ccm_dds_tp =
-            dynamic_cast < Topic_type *> (retval.in ());
-          ccm_dds_tp->set_impl (dds_tp);
-
-          DPMANAGER->add_topic (this->impl (), dds_tp);
+          if (ccm_dds_tl)
+            {
+              ccm_dds_tl->set_dds_topic (retval.in ());
+            }
+          DPMANAGER->add_topic (this->rti_entity (), dds_tp);
 
           return retval._retn ();
         }
       else
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T::create_topic_with_profile - "
+                        "DDS_DomainParticipant_i::create_topic_with_profile - "
                         "Re-using topic with name %C and type %C.\n",
                         impl_name, type_name));
-          DPMANAGER->_inc_ref (this->impl (), dds_tp);
+          DPMANAGER->_inc_ref (this->rti_entity (), dds_tp);
 
           ::DDS::Topic_var retval;
           ACE_NEW_THROW_EX (retval,
-                            Topic_type (dds_tp),
+                            DDS_Topic_i (dds_tp, this),
                             ::CORBA::NO_MEMORY ());
+          if (ccm_dds_tl)
+            {
+              ccm_dds_tl->set_dds_topic (retval.in ());
+            }
           return retval._retn ();
         }
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::delete_topic (::DDS::Topic_ptr a_topic)
+    DDS_DomainParticipant_i::delete_topic (::DDS::Topic_ptr a_topic)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::delete_topic");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::delete_topic");
       CORBA::String_var topic_name = a_topic->get_name ();
       DDSTopicDescription * dds_td =
-        this->impl ()->lookup_topicdescription (topic_name.in ());
+        this->rti_entity ()->lookup_topicdescription (topic_name.in ());
       DDSTopic * tp = 0;
       if (dds_td)
         {
@@ -590,38 +573,34 @@ namespace CIAO
       if (!tp)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T<DDS_TYPE, "
-                        "VENDOR_TYPE>::delete_topic <%C> - Unable to cast "
+                        "DDS_DomainParticipant_i::delete_topic <%C> - Unable to cast "
                         "provided object reference to servant.\n",
                         topic_name.in ()));
           return ::DDS::RETCODE_BAD_PARAMETER;
         }
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, DDS4CCM_INFO
-                    "DDS_DomainParticipant_T<DDS_TYPE, "
-                    "VENDOR_TYPE>::delete_topic <%C> - "
+                    "DDS_DomainParticipant_i::delete_topic <%C> - "
                     "Successfully casted provided object reference to servant.\n",
                     topic_name.in ()));
 
       ::DDS::ReturnCode_t retval = DDS::RETCODE_OK;
-      if (DPMANAGER->remove_topic (this->impl (), tp))
+      if (DPMANAGER->remove_topic (this->rti_entity (), tp))
         {
-          retval = this->impl ()->delete_topic (tp);
+          retval = this->rti_entity ()->delete_topic (tp);
 
           if (retval != DDS_RETCODE_OK)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                            "DDS_DomainParticipant_T<DDS_TYPE, "
-                            "VENDOR_TYPE>::delete_topic <%C> - "
+                            "DDS_DomainParticipant_i::delete_topic <%C> - "
                             "Error: RTI delete_topic returned non-ok error code %C\n",
                             topic_name.in (),
-                            translate_retcode (retval)));
+                            ::CIAO::DDS4CCM::translate_retcode (retval)));
             }
           else
             {
               DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
-                            "DDS_DomainParticipant_T<DDS_TYPE, "
-                            "VENDOR_TYPE>::delete_topic <%C> - "
+                            "DDS_DomainParticipant_i::delete_topic <%C> - "
                             "Provided topic successfully deleted\n",
                             topic_name.in ()));
             }
@@ -629,38 +608,37 @@ namespace CIAO
       return retval;
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::Topic_ptr
-    DDS_DomainParticipant_T<DDS_TYPE>::find_topic (const char * impl_name,
+    DDS_DomainParticipant_i::find_topic (const char * impl_name,
                                          const ::DDS::Duration_t & timeout)
     {
       ::DDS::Topic_var retval;
       ::DDS_Duration_t ddstimeout;
       ddstimeout <<= timeout;
-      ::DDSTopic* topic = this->impl ()->find_topic (impl_name, ddstimeout);
+      ::DDSTopic* topic = this->rti_entity ()->find_topic (impl_name, ddstimeout);
       if (topic)
         {
           ACE_NEW_RETURN (retval,
-                          Topic_type (topic),
+                          DDS_Topic_i (topic, this),
                           ::DDS::Topic::_nil ());
         }
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::TopicDescription_ptr
-    DDS_DomainParticipant_T<DDS_TYPE>::lookup_topicdescription (const char * name)
+    DDS_DomainParticipant_i::lookup_topicdescription (const char * name)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T<DDS_TYPE>::lookup_topicdescription");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::lookup_topicdescription");
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_UNIMP_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                    "DDS_DomainParticipant_T<DDS_TYPE, "
-                    "VENDOR_TYPE>::lookup_topicdescription - "
+                    "DDS_DomainParticipant_i::lookup_topicdescription - "
                     "Looking up topic: name <%C>\n",
                     name));
 
       ::DDS::TopicDescription_var retval;
-      ::DDSTopicDescription* topic = this->impl ()->lookup_topicdescription (name);
+      ::DDSTopicDescription* topic = this->rti_entity ()->lookup_topicdescription (name);
       if (topic)
         {
           // Check the entity: is it a Topic or a ContentFilteredTopic
@@ -668,7 +646,7 @@ namespace CIAO
           if (tp)
             {
               ACE_NEW_THROW_EX (retval,
-                                Topic_type (tp),
+                                DDS_Topic_i (tp, this),
                                 ::CORBA::NO_MEMORY ());
             }
           else
@@ -678,7 +656,7 @@ namespace CIAO
               if (cftp)
                 {
                   ACE_NEW_THROW_EX (retval,
-                                    ContentFilteredTopic_type (cftp),
+                                    DDS_ContentFilteredTopic_i (cftp, this),
                                     ::CORBA::NO_MEMORY ());
                 }
             }
@@ -686,21 +664,20 @@ namespace CIAO
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ContentFilteredTopic_ptr
-    DDS_DomainParticipant_T<DDS_TYPE>::create_contentfilteredtopic (const char * name,
+    DDS_DomainParticipant_i::create_contentfilteredtopic (const char * name,
                                                           ::DDS::Topic_ptr related_topic,
                                                           const char * filter_expression,
                                                           const ::DDS::StringSeq & expression_parameters)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::create_contentfilteredtopic");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_contentfilteredtopic");
 
-      Topic_type *top = dynamic_cast< Topic_type *> (related_topic);
+      DDS_Topic_i *top = dynamic_cast< DDS_Topic_i *> (related_topic);
       if (!top)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T<DDS_TYPE, "
-                        "VENDOR_TYPE>::create_contentfilteredtopic - "
+                        "DDS_DomainParticipant_i::create_contentfilteredtopic - "
                         "Unable to cast provided topic.\n"));
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
@@ -717,17 +694,16 @@ namespace CIAO
       DDS_StringSeq parameters (expression_parameters.length ());
       parameters.from_array (parameterlist, expression_parameters.length ());
 
-      DDSContentFilteredTopic * ccm_dds_cft = this->impl ()->create_contentfilteredtopic (
+      DDSContentFilteredTopic * ccm_dds_cft = this->rti_entity ()->create_contentfilteredtopic (
                                                                   name,
-                                                                  top->get_impl (),
+                                                                  top->get_rti_entity (),
                                                                   filter_expression,
                                                                   parameters);
       delete [] parameterlist;
       if (!ccm_dds_cft)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T<DDS_TYPE, "
-                        "VENDOR_TYPE>::create_contentfilteredtopic - "
+                        "DDS_DomainParticipant_i::create_contentfilteredtopic - "
                         "RTI DDS returned a nil ContentFilteredTopic for "
                         "name <%C> and filter expression <%C>.\n",
                        name, filter_expression));
@@ -736,11 +712,11 @@ namespace CIAO
 
       ::DDS::ContentFilteredTopic_var retval;
       ACE_NEW_THROW_EX (retval,
-                        ContentFilteredTopic_type (ccm_dds_cft),
+                        DDS_ContentFilteredTopic_i (ccm_dds_cft, this),
                         ::CORBA::NO_MEMORY ());
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
-                    "DDS_DomainParticipant_T::create_contentfilteredtopic - "
+                    "DDS_DomainParticipant_i::create_contentfilteredtopic - "
                     "Successfully created contentfilteredtopic with name <%C> and "
                     "filter expression <%C>\n",
                     name, filter_expression));
@@ -748,34 +724,33 @@ namespace CIAO
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::delete_contentfilteredtopic (
+    DDS_DomainParticipant_i::delete_contentfilteredtopic (
       ::DDS::ContentFilteredTopic_ptr a_contentfilteredtopic)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::delete_contentfilteredtopic");
-      ContentFilteredTopic_type *ccm_dds_cft =
-          dynamic_cast < ContentFilteredTopic_type *> (a_contentfilteredtopic);
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::delete_contentfilteredtopic");
+      DDS_ContentFilteredTopic_i *ccm_dds_cft =
+          dynamic_cast < DDS_ContentFilteredTopic_i *> (a_contentfilteredtopic);
       if (!ccm_dds_cft)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T<DDS_TYPE, "
-                        "VENDOR_TYPE>::delete_contentfilteredtopic - "
+                        "DDS_DomainParticipant_i::delete_contentfilteredtopic - "
                         "Unable to cast provided ContentFilteredTopic.\n"));
           return ::DDS::RETCODE_BAD_PARAMETER;
         }
-      return this->impl ()->delete_contentfilteredtopic (ccm_dds_cft->get_impl ());
+      return this->rti_entity ()->delete_contentfilteredtopic (ccm_dds_cft->get_rti_entity ());
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::MultiTopic_ptr
-    DDS_DomainParticipant_T<DDS_TYPE>::create_multitopic (
+    DDS_DomainParticipant_i::create_multitopic (
       const char * name,
       const char * type_name,
       const char * subscription_expression,
       const ::DDS::StringSeq & expression_parameters)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::create_multitopic");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_multitopic");
       ACE_UNUSED_ARG (name);
       ACE_UNUSED_ARG (type_name);
       ACE_UNUSED_ARG (subscription_expression);
@@ -784,355 +759,356 @@ namespace CIAO
       throw ::CORBA::NO_IMPLEMENT ();
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::delete_multitopic (
+    DDS_DomainParticipant_i::delete_multitopic (
       ::DDS::MultiTopic_ptr a_multitopic)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::delete_multitopic");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::delete_multitopic");
       ACE_UNUSED_ARG (a_multitopic);
       //Not implemented in version ndds.4.5b.rev01 of RTI DDS.
       throw ::CORBA::NO_IMPLEMENT ();
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::delete_contained_entities (void)
+    DDS_DomainParticipant_i::delete_contained_entities (void)
     {
-      return this->impl ()->delete_contained_entities ();
+      return this->rti_entity ()->delete_contained_entities ();
 
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::set_qos (
+    DDS_DomainParticipant_i::set_qos (
       const ::DDS::DomainParticipantQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::set_qos");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_qos");
       ::DDS_DomainParticipantQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
-      return this->impl()->set_qos (ccm_dds_qos);
+      return this->rti_entity ()->set_qos (ccm_dds_qos);
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::get_qos (
+    DDS_DomainParticipant_i::get_qos (
       ::DDS::DomainParticipantQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::get_qos");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_qos");
       ::DDS_DomainParticipantQos ccm_dds_qos;
-      ::DDS::ReturnCode_t retcode = this->impl()-> get_qos (ccm_dds_qos);
+      ::DDS::ReturnCode_t retcode = this->rti_entity ()-> get_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::set_listener (
+    DDS_DomainParticipant_i::set_listener (
                 ::DDS::DomainParticipantListener_ptr a_listener,
                 ::DDS::StatusMask mask)
     {
       // Delete the previously set listener
-      DDSDomainParticipantListener *listener = this->impl ()->get_listener ();
+      DDSDomainParticipantListener *listener = this->rti_entity ()->get_listener ();
       delete listener;
 
-      DDS_DomainParticipantListener_i * ccm_dds_impl_list = 0;
+      ::DDSDomainParticipantListener * ccm_dds_impl_list = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_impl_list,
                             DDS_DomainParticipantListener_i (a_listener),
                             ::CORBA::NO_MEMORY ());
         }
-      return this->impl_->set_listener (ccm_dds_impl_list, mask);
+      return this->rti_entity ()->set_listener (ccm_dds_impl_list, mask);
     }
 
-    template <typename DDS_TYPE>
-    ::DDS::DomainParticipantListener_ptr
-    DDS_DomainParticipant_T<DDS_TYPE>::get_listener (void)
-    {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::get_listener");
 
-      DDSDomainParticipantListener *ccm_dds_dp_list = this->impl ()->get_listener ();
+    ::DDS::DomainParticipantListener_ptr
+    DDS_DomainParticipant_i::get_listener (void)
+    {
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_listener");
+
+      DDSDomainParticipantListener *ccm_dds_dp_list = this->rti_entity ()->get_listener ();
       DDS_DomainParticipantListener_i * list_proxy =
         dynamic_cast <DDS_DomainParticipantListener_i *> (ccm_dds_dp_list);
       if (!list_proxy)
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                        "DDS_DomainParticipant_T<DDS_TYPE, "
-                        "VENDOR_TYPE>::get_listener - "
+                        "DDS_DomainParticipant_i::get_listener - "
                         "DDS returned a NIL listener.\n"));
           return ::DDS::DomainParticipantListener::_nil ();
         }
       return list_proxy->get_domainparticipantlistener ();
     }
 
-    template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::ignore_participant (
+    DDS_DomainParticipant_i::ignore_participant (
       DDS_INSTANCE_HANDLE_T_IN handle)
     {
       ::DDS_InstanceHandle_t ccm_dds_handle;
       ccm_dds_handle <<= handle;
-      return this->impl ()->ignore_participant (ccm_dds_handle);
+      return this->rti_entity ()->ignore_participant (ccm_dds_handle);
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::ignore_topic (
+    DDS_DomainParticipant_i::ignore_topic (
       DDS_INSTANCE_HANDLE_T_IN handle)
     {
       ::DDS_InstanceHandle_t ccm_dds_handle;
       ccm_dds_handle <<= handle;
-      return this->impl ()->ignore_topic (ccm_dds_handle);
+      return this->rti_entity ()->ignore_topic (ccm_dds_handle);
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::ignore_publication (
+    DDS_DomainParticipant_i::ignore_publication (
       DDS_INSTANCE_HANDLE_T_IN handle)
     {
       ::DDS_InstanceHandle_t ccm_dds_handle;
       ccm_dds_handle <<= handle;
-      return this->impl ()->ignore_publication (ccm_dds_handle);
+      return this->rti_entity ()->ignore_publication (ccm_dds_handle);
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::ignore_subscription (
+    DDS_DomainParticipant_i::ignore_subscription (
       DDS_INSTANCE_HANDLE_T_IN handle)
     {
       ::DDS_InstanceHandle_t ccm_dds_handle;
       ccm_dds_handle <<= handle;
-      return this->impl ()->ignore_subscription (ccm_dds_handle);
+      return this->rti_entity ()->ignore_subscription (ccm_dds_handle);
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::DomainId_t
-    DDS_DomainParticipant_T<DDS_TYPE>::get_domain_id (void)
+    DDS_DomainParticipant_i::get_domain_id (void)
     {
-      return this->impl ()->get_domain_id ();
+      return this->rti_entity ()->get_domain_id ();
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::assert_liveliness (void)
+    DDS_DomainParticipant_i::assert_liveliness (void)
     {
-      return this->impl ()->assert_liveliness ();
+      return this->rti_entity ()->assert_liveliness ();
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::set_default_publisher_qos (
+    DDS_DomainParticipant_i::set_default_publisher_qos (
       const ::DDS::PublisherQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::set_default_publisher_qos");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_default_publisher_qos");
       ::DDS_PublisherQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
-      return this->impl()->set_default_publisher_qos (ccm_dds_qos);
+      return this->rti_entity ()->set_default_publisher_qos (ccm_dds_qos);
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::get_default_publisher_qos (
+    DDS_DomainParticipant_i::get_default_publisher_qos (
       ::DDS::PublisherQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::get_default_publisher_qos");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_publisher_qos");
       ::DDS_PublisherQos ccm_dds_qos;
-      ::DDS::ReturnCode_t retcode = this->impl()-> get_default_publisher_qos (ccm_dds_qos);
+      ::DDS::ReturnCode_t retcode = this->rti_entity ()-> get_default_publisher_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::set_default_subscriber_qos (
+    DDS_DomainParticipant_i::set_default_subscriber_qos (
       const ::DDS::SubscriberQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::set_default_subscriber_qos");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_default_subscriber_qos");
       ::DDS_SubscriberQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
-      return this->impl()->set_default_subscriber_qos (ccm_dds_qos);
+      return this->rti_entity ()->set_default_subscriber_qos (ccm_dds_qos);
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::get_default_subscriber_qos (
+    DDS_DomainParticipant_i::get_default_subscriber_qos (
       ::DDS::SubscriberQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::get_default_subscriber_qos");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_subscriber_qos");
       ::DDS_SubscriberQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode =
-            this->impl()-> get_default_subscriber_qos (ccm_dds_qos);
+            this->rti_entity ()-> get_default_subscriber_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::set_default_topic_qos (
+    DDS_DomainParticipant_i::set_default_topic_qos (
       const ::DDS::TopicQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::set_default_topic_qos");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_default_topic_qos");
       ::DDS_TopicQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
-      return this->impl()->set_default_topic_qos (ccm_dds_qos);
+      return this->rti_entity ()->set_default_topic_qos (ccm_dds_qos);
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::get_default_topic_qos (
+    DDS_DomainParticipant_i::get_default_topic_qos (
       ::DDS::TopicQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::get_default_topic_qos");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_topic_qos");
       ::DDS_TopicQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode =
-            this->impl()-> get_default_topic_qos (ccm_dds_qos);
+            this->rti_entity ()-> get_default_topic_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::get_discovered_participants (
+    DDS_DomainParticipant_i::get_discovered_participants (
       ::DDS::InstanceHandleSeq & impl_handles)
     {
       ::DDS_InstanceHandleSeq rtiseq;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_discovered_participants (rtiseq);
+      ::DDS::ReturnCode_t const retval = this->rti_entity ()->get_discovered_participants (rtiseq);
       impl_handles <<= rtiseq;
       return retval;
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::get_discovered_participant_data (
+    DDS_DomainParticipant_i::get_discovered_participant_data (
       ::DDS::ParticipantBuiltinTopicData & impl_data,
       DDS_INSTANCE_HANDLE_T_IN impl_handle)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::get_discovered_participant_data");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_discovered_participant_data");
       DDS_ParticipantBuiltinTopicData dds_part_data;
       dds_part_data <<= impl_data;
       ::DDS_InstanceHandle_t dds_hnd;
       dds_hnd <<= impl_handle;
       ::DDS_ReturnCode_t retcode =
-        this->impl ()->get_discovered_participant_data (dds_part_data,
+        this->rti_entity ()->get_discovered_participant_data (dds_part_data,
                                                         dds_hnd);
       impl_data <<= dds_part_data;
       return retcode;
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::get_discovered_topics (
+    DDS_DomainParticipant_i::get_discovered_topics (
       ::DDS::InstanceHandleSeq & impl_handles)
     {
       ::DDS_InstanceHandleSeq rtiseq;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_discovered_topics (rtiseq);
+      ::DDS::ReturnCode_t const retval = this->rti_entity ()->get_discovered_topics (rtiseq);
       impl_handles <<= rtiseq;
       return retval;
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::get_discovered_topic_data (
+    DDS_DomainParticipant_i::get_discovered_topic_data (
       ::DDS::TopicBuiltinTopicData & impl_data,
       DDS_INSTANCE_HANDLE_T_IN impl_handle)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_T::get_discovered_topic_data");
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_discovered_topic_data");
       DDS_TopicBuiltinTopicData dds_tp_data;
       dds_tp_data <<= impl_data;
       ::DDS_InstanceHandle_t dds_hnd;
       dds_hnd <<= impl_handle;
       ::DDS_ReturnCode_t retcode =
-        this->impl ()->get_discovered_topic_data (dds_tp_data,
+        this->rti_entity ()->get_discovered_topic_data (dds_tp_data,
                                                   dds_hnd);
       impl_data <<= dds_tp_data;
       return retcode;
     }
 
-    template <typename DDS_TYPE>
+
     ::CORBA::Boolean
-    DDS_DomainParticipant_T<DDS_TYPE>::contains_entity (
+    DDS_DomainParticipant_i::contains_entity (
       DDS_INSTANCE_HANDLE_T_IN a_handle)
     {
       ::DDS_InstanceHandle_t ccm_dds_handle;
       ccm_dds_handle <<= a_handle;
-      return this->impl ()->contains_entity (ccm_dds_handle);
+      return this->rti_entity ()->contains_entity (ccm_dds_handle);
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::get_current_time (
+    DDS_DomainParticipant_i::get_current_time (
       ::DDS::Time_t & current_time)
     {
       DDS_Time_t ccm_dds_time;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_current_time (ccm_dds_time);
+      ::DDS::ReturnCode_t const retval = this->rti_entity ()->get_current_time (ccm_dds_time);
       current_time <<= ccm_dds_time;
       return retval;
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::ReturnCode_t
-    DDS_DomainParticipant_T<DDS_TYPE>::enable (void)
+    DDS_DomainParticipant_i::enable (void)
     {
-      return this->impl ()->enable ();
+      return this->rti_entity ()->enable ();
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::StatusCondition_ptr
-    DDS_DomainParticipant_T<DDS_TYPE>::get_statuscondition (void)
+    DDS_DomainParticipant_i::get_statuscondition (void)
     {
       ::DDS::StatusCondition_var retval;
-      DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
+      DDSStatusCondition* sc = this->rti_entity ()->get_statuscondition ();
       if (sc)
         {
           ACE_NEW_THROW_EX (retval,
-                            DDS_StatusCondition_i (sc),
+                            DDS_StatusCondition_i (sc, this),
                             ::CORBA::NO_MEMORY ());
         }
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE>
+
     ::DDS::StatusMask
-    DDS_DomainParticipant_T<DDS_TYPE>::get_status_changes (void)
+    DDS_DomainParticipant_i::get_status_changes (void)
     {
-      return this->impl ()->get_status_changes ();
+      return this->rti_entity ()->get_status_changes ();
     }
 
-    template <typename DDS_TYPE>
+
     DDS_INSTANCE_HANDLE_T_RETN
-    DDS_DomainParticipant_T<DDS_TYPE>::get_instance_handle (void)
+    DDS_DomainParticipant_i::get_instance_handle (void)
     {
-      ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
+      ::DDS_InstanceHandle_t const rtihandle = this->rti_entity ()->get_instance_handle ();
       ::DDS::InstanceHandle_t handle;
       handle <<= rtihandle;
       return handle;
     }
 
-    template <typename DDS_TYPE>
+
     DDSDomainParticipant *
-    DDS_DomainParticipant_T<DDS_TYPE>::get_impl (void)
+    DDS_DomainParticipant_i::get_rti_entity (void)
     {
-      return this->impl_;
+      return this->rti_entity_;
     }
 
-    template <typename DDS_TYPE>
+
     void
-    DDS_DomainParticipant_T<DDS_TYPE>::set_impl (
+    DDS_DomainParticipant_i::set_rti_entity (
       DDSDomainParticipant * dp)
     {
-      this->impl_ = dp;
+      this->rti_entity_ = dp;
     }
 
-    template <typename DDS_TYPE>
+
     DDSDomainParticipant *
-    DDS_DomainParticipant_T<DDS_TYPE>::impl (void)
+    DDS_DomainParticipant_i::rti_entity (void)
     {
-      if (!this->impl_)
+      if (!this->rti_entity_)
         {
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
+                        "DDS_DomainParticipant_i::rti_entity - "
+                        "Throwing BAD_INV_ORDER.\n"));
           throw ::CORBA::BAD_INV_ORDER ();
         }
-      return this->impl_;
+      return this->rti_entity_;
     }
   }
 }

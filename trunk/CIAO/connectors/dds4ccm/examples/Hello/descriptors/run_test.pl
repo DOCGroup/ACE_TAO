@@ -11,6 +11,7 @@ use PerlACE::TestTarget;
 $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
 $TAO_ROOT = "$ENV{'TAO_ROOT'}";
 $DANCE_ROOT = "$ENV{'DANCE_ROOT'}";
+$DDS4CCM_TRACE_ENABLE = "$ENV{'DDS4CCM_TRACE_ENABLE'}";
 
 $daemons_running = 0;
 $em_running = 0;

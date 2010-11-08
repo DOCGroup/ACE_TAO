@@ -183,8 +183,8 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_topic (
 
   if (::CORBA::is_nil (this->topic_.in ()))
     {
-      ::CIAO::DDS4CCM::DDS_DomainParticipant_T<DDS_TYPE> *part =
-        dynamic_cast< CIAO::DDS4CCM::DDS_DomainParticipant_T<DDS_TYPE> * > (
+      ::CIAO::NDDS::DDS_DomainParticipant_i *part =
+        dynamic_cast< CIAO::NDDS::DDS_DomainParticipant_i * > (
           this->domain_participant_.in ());
       if (!part)
         {
@@ -201,7 +201,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_topic (
         DDS_TYPE::type_support::get_type_name (), factory);
 
       DDS_ReturnCode_t const retcode = DDS_TYPE::type_support::register_type(
-        part->get_impl (), DDS_TYPE::type_support::get_type_name ());
+        part->get_rti_entity (), DDS_TYPE::type_support::get_type_name ());
 
       if (retcode == DDS_RETCODE_OK)
         {
