@@ -16,6 +16,9 @@
 module CCM_DDS
 {
   module Typed <typename T, sequence<T> TSeq> {
+
+    alias ::DDS::Typed<T, TSeq> DDS_Typed;
+
     // Gathers all the constructs that are dependent on the data type (T),
     // either directly -- interfaces making use of T or TSeq,
     // or indirectly -- porttypes using or providing those intefaces.
@@ -204,7 +207,7 @@ module CCM_DDS
 
         porttype DDS_Write {
                 uses Writer                     data;
-                uses DDS::DataWriter            dds_entity;
+                uses DDS::DataWriter     dds_entity;
                 };
 
         porttype DDS_Update {

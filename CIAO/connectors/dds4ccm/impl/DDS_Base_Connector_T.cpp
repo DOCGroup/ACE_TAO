@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-#include "dds4ccm/impl/ndds/DomainParticipant_T.h"
+#include "dds4ccm/impl/ndds/DomainParticipant.h"
 #include "ace/Tokenizer_T.h"
 #include "ace/Env_Value_T.h"
 

@@ -10,30 +10,27 @@
 #ifndef QUERYCONDITION_T_H_
 #define QUERYCONDITION_T_H_
 
+#include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "tao/LocalObject.h"
 
-#include "ndds/ndds_cpp.h"
+class DDSQueryCondition;
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
-    template <typename DDS_TYPE>
-    class DataReader_T;
-
-    template <typename DDS_TYPE>
-    class DDS_QueryCondition_T :
+    class DDS4CCM_NDDS_Export DDS_QueryCondition_i :
       public virtual ::DDS::QueryCondition,
       public virtual ::CORBA::LocalObject
     {
-    typedef DataReader_T<DDS_TYPE> DataReader_type;
-
     public:
       /// Constructor
-      DDS_QueryCondition_T (DDSQueryCondition * qc);
+      DDS_QueryCondition_i (::DDSQueryCondition * qc,
+                          ::DDS::DataReader_ptr dr);
 
       /// Destructor
-      virtual ~DDS_QueryCondition_T (void);
+      virtual ~DDS_QueryCondition_i (void);
 
       virtual ::CORBA::Boolean get_trigger_value (void);
 
@@ -53,18 +50,17 @@ namespace CIAO
       virtual ::DDS::ReturnCode_t
       set_query_parameters (const ::DDS::StringSeq & query_parameters);
 
-      DDSQueryCondition * get_impl (void);
+      ::DDSQueryCondition * get_rti_entity (void);
 
-      void set_impl (DDSQueryCondition * qc);
+      void set_rti_entity (::DDSQueryCondition *entity);
 
     private:
-      DDSQueryCondition * impl_;
+      ::DDSQueryCondition * rti_entity_;
+      ::DDS::DataReader_var dr_;
 
-      DDSQueryCondition * impl ();
+      ::DDSQueryCondition * rti_entity ();
     };
   }
 }
-
-#include "dds4ccm/impl/ndds/QueryCondition_T.cpp"
 
 #endif /* QUERYCONDITION_T_H_ */

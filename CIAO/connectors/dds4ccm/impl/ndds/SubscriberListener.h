@@ -11,31 +11,24 @@
 #define DDSSUBSCRIBERLISTENER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-
+#include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
 #include "ndds/ndds_cpp.h"
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
-    template <typename DDS_TYPE>
-    class DataReader_T;
-
-    template <typename DDS_TYPE>
-    class DDS_Subscriber_T;
-
-    template <typename DDS_TYPE>
-    class DDS_SubscriberListener_T :
-      public virtual ::DDSSubscriberListener
+    class DDS4CCM_NDDS_Export DDS_SubscriberListener_i :
+      public ::DDSSubscriberListener
     {
-    typedef DDS_Subscriber_T<DDS_TYPE> Subscriber_type;
-    typedef DataReader_T<DDS_TYPE> DataReader_type;
     public:
       /// Constructor
-      DDS_SubscriberListener_T ( ::DDS::SubscriberListener_ptr s);
+      DDS_SubscriberListener_i (
+        ::DDS::SubscriberListener_ptr s,
+        ::DDS::DomainParticipant_ptr dp);
 
       /// Destructor
-      virtual ~DDS_SubscriberListener_T (void);
+      virtual ~DDS_SubscriberListener_i (void);
 
       virtual void
       on_requested_deadline_missed (
@@ -78,14 +71,13 @@ namespace CIAO
       ::DDS::SubscriberListener_ptr get_subscriber_listener (void);
     private:
       ::DDS::SubscriberListener_var impl_;
+      ::DDS::DomainParticipant_var dp_;
 
       ::DDS::DataReader_ptr
       get_datareader_proxy (::DDSDataReader * the_reader);
     };
   }
 }
-
-#include "dds4ccm/impl/ndds/DDSSubscriberListener_T.cpp"
 
 #endif /* DDSSUBSCRIBERLISTENER_T_H_ */
 

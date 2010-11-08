@@ -4,7 +4,7 @@
 
 namespace CIAO
 {
-  namespace DDS4CCM
+  namespace NDDS
   {
     DDS_DataReader_Base::~DDS_DataReader_Base (void)
     {

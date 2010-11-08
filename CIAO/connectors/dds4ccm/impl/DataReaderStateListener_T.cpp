@@ -70,8 +70,8 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
       return;
     }
 
-  ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE> * reader =
-    dynamic_cast < ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE> *> (rdr);
+  ::CIAO::NDDS::DataReader_T<DDS_TYPE> * reader =
+    dynamic_cast < ::CIAO::NDDS::DataReader_T<DDS_TYPE> *> (rdr);
 
   if (!reader)
     {
@@ -108,7 +108,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
                   data,
                   sample_info,
                   max_samples,
-                  qc->get_impl ());
+                  qc->get_rti_entity ());
       if (result == ::DDS::RETCODE_NO_DATA)
         {
           return;

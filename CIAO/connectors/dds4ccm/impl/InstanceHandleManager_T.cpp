@@ -17,7 +17,7 @@ CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYP
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-CIAO::DDS4CCM::DDS_DataWriter_T <DDS_TYPE> *
+CIAO::NDDS::DataWriter_T <DDS_TYPE> *
 CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYPE>::impl (void)
 {
   if (this->writer_)
@@ -26,6 +26,9 @@ CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYP
     }
   else
     {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
+                    "CIAO::NDDS::DataWriter_T <DDS_TYPE>::impl - "
+                    "Throwing BAD_INV_ORDER.\n"));
       throw ::CORBA::BAD_INV_ORDER ();
     }
 }
@@ -50,7 +53,7 @@ CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYP
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
 CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYPE>::set_impl (
-  DDS_DataWriter_T<DDS_TYPE> *writer)
+  ::CIAO::NDDS::DataWriter_T<DDS_TYPE> *writer)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::InstanceHandleManager_T::set_impl");
 

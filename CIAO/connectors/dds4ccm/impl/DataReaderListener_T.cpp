@@ -62,14 +62,21 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::on_data_available_i");
 
-  if (::CORBA::is_nil (rdr) ||
-      this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
+  if (::CORBA::is_nil (rdr))
+    {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                         ACE_TEXT ("DataReaderListener_T::on_data_available_i - ")
+                         ACE_TEXT ("No datareader received.\n")));
+      return;
+    }
+
+  if (this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
     {
       return;
     }
 
-  ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE> * reader =
-    dynamic_cast < ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE> *> (rdr);
+  ::CIAO::NDDS::DataReader_T<DDS_TYPE> * reader =
+    dynamic_cast < ::CIAO::NDDS::DataReader_T<DDS_TYPE> *> (rdr);
 
   if (!reader)
     {
@@ -97,7 +104,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
       reader->take (data,
                     sample_info,
                     DDS_LENGTH_UNLIMITED,
-                    qc->get_impl ());
+                    qc->get_rti_entity ());
 
   if (result == ::DDS::RETCODE_NO_DATA)
     {

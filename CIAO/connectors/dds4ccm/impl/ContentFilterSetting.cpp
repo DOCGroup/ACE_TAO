@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ContentFilterSetting.h"
+#include "dds4ccm/impl/ContentFilterSetting.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/Utils.h"
 
@@ -124,7 +124,7 @@ namespace CIAO
         }
 
       ::DDS::ReturnCode_t retcode = this->cft_->set_expression_parameters (parameters);
-      if (retcode == DDS_RETCODE_OK)
+      if (retcode == ::DDS::RETCODE_OK)
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "CCM_DDS_ContentFilterSetting_i::set_filter_parameters: "

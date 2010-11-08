@@ -41,10 +41,10 @@ namespace CIAO
          private virtual ACE_Copy_Disabled
       {
       protected:
-        typedef CIAO::DDS4CCM::DDS_ReadCondition_T<DDS_TYPE> ReadCondition_type;
-        typedef CIAO::DDS4CCM::DDS_QueryCondition_T<DDS_TYPE> QueryCondition_type;
-        typedef CIAO::DDS4CCM::DataReader_T<DDS_TYPE> DataReader_type;
-        typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>
+      typedef CIAO::NDDS::DDS_ReadCondition_i ReadCondition_type;
+      typedef CIAO::NDDS::DDS_QueryCondition_i QueryCondition_type;
+      typedef CIAO::NDDS::DataReader_T<DDS_TYPE> DataReader_type;
+      typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>
           ConditionManager_type;
 
       public:
