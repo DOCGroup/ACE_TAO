@@ -1,0 +1,31 @@
+// $Id$
+
+/**
+ * @file
+ * @author
+ */
+
+#ifndef RECEIVER_IDL
+#define RECEIVER_IDL
+
+#include "Connector/MultiTopic_Connector.idl"
+
+module Shapes
+{
+  component Receiver
+  {
+    port DDS_Typed::DDS_Listen info_out_sq;
+    port DDS_Typed::DDS_Get info_get_sq;
+    port DDS_Typed::DDS_Listen info_out_tr;
+    port DDS_Typed::DDS_Get info_get_tr;
+    port DDS_Typed::DDS_Listen info_out_cq;
+    port DDS_Typed::DDS_Get info_get_cq;
+
+    attribute unsigned long rate;
+    attribute boolean get_data; //if true, get_one and get_all are invoked
+    attribute boolean read_data;//if true, read_one and read_all are invoked.
+    attribute boolean raw_listen; //if true, raw listen port is enabled.
+  };
+};
+
+#endif
