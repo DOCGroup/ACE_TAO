@@ -205,7 +205,6 @@ return 0;
       ::DDS::SubscriptionBuiltinTopicData & subscription_data,
       DDS_INSTANCE_HANDLE_T_IN subscription_handle)
     {
-      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::get_matched_subscription_data");
       ::DDS_SubscriptionBuiltinTopicData ccm_dds_sub_data;
       ::DDS_InstanceHandle_t ccm_dds_sub_handle;
       ccm_dds_sub_handle <<= subscription_handle;
