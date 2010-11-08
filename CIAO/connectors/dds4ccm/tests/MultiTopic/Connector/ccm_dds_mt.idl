@@ -1,0 +1,50 @@
+// $Id$
+
+#ifndef CCM_DDS_MT_IDL
+#define CCM_DDS_MT_IDL
+
+#include <Components.idl>
+
+#include "connectors/dds4ccm/idl/dds4ccm_DataListenerControl.idl"
+#include "connectors/dds4ccm/idl/dds4ccm_StateListenerControl.idl"
+#include "connectors/dds4ccm/idl/dds4ccm_PortStatusListener.idl"
+#include "connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl"
+
+#pragma dds4ccm impl "MultiTopic_Connector_T.h"
+
+#if defined (__TAO_IDL)
+#include <ccm_dds.idl>
+#endif
+
+/**
+ * @namespace CCM_DDS_MT
+ *
+ * Module containing all @ref MT related entities. Non-typed constructs are
+ * directly defined in this module, while typed constructs are in a templated
+ * sub-module.
+ */
+module CCM_DDS_MT
+{
+  module Typed_MT<typename T, sequence<T> TSeq>
+   {
+     alias CCM_DDS::Typed<T, TSeq> DDS_Typed;
+
+      // DDS MT Connector
+      // ------------------
+     connector DDS_MT_Event : CCM_DDS::DDS_TopicBase{
+           mirrorport DDS_Typed::DDS_Write            supplier_sq;
+           mirrorport DDS_Typed::DDS_Get              pull_consumer_sq;
+           mirrorport DDS_Typed::DDS_Listen           push_consumer_sq;
+           mirrorport DDS_Typed::DDS_Write            supplier_tr;
+           mirrorport DDS_Typed::DDS_Get              pull_consumer_tr;
+           mirrorport DDS_Typed::DDS_Listen           push_consumer_tr;
+           mirrorport DDS_Typed::DDS_Write            supplier_cq;
+           mirrorport DDS_Typed::DDS_Get              pull_consumer_cq;
+           mirrorport DDS_Typed::DDS_Listen           push_consumer_cq;
+
+       };
+   };
+};
+
+#endif // CCM_DDS_MT_IDL
+
