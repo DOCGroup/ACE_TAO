@@ -19,7 +19,9 @@ namespace ODBC
 void Connection::init (void)
 {
   // Allocate the connection handle.
-  SQL_ENV_VERIFY (::SQLAllocHandle (SQL_HANDLE_DBC, this->env_, &this->handle_),
+  SQL_ENV_VERIFY (::SQLAllocHandle (SQL_HANDLE_DBC, 
+                                    this->env_->handle (), 
+                                    &this->handle_),
                   this->env_->handle ());
 }
 
