@@ -1970,6 +1970,15 @@ BE_GlobalData::destroy (void)
   ACE::strdelete (this->ciao_ami_conn_idl_ending_);
   this->ciao_ami_conn_idl_ending_ = 0;
 
+  ACE::strdelete (this->ciao_ami_conn_impl_hdr_ending_);
+  this->ciao_ami_conn_impl_hdr_ending_ = 0;
+
+  ACE::strdelete (this->ciao_ami_conn_impl_src_ending_);
+  this->ciao_ami_conn_impl_src_ending_ = 0;
+
+  ACE::strdelete (this->ciao_container_type_);
+  this->ciao_container_type_ = 0;
+
   ACE::strdelete (this->output_dir_);
   this->output_dir_ = 0;
 

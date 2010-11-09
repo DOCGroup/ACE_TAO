@@ -138,7 +138,15 @@ typedef unsigned int flex_uint32_t;
 
 /* Size of default input buffer. */
 #ifndef TAO_YY_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k.
+ * Moreover, TAO_YY_BUF_SIZE is 2*TAO_YY_READ_BUF_SIZE in the general case.
+ * Ditto for the __ia64__ case accordingly.
+ */
+#define TAO_YY_BUF_SIZE 32768
+#else
 #define TAO_YY_BUF_SIZE 16384
+#endif /* __ia64__ */
 #endif
 
 /* The state buf must be large enough to hold one state per character in the main buffer.
@@ -1108,7 +1116,12 @@ static int input (void );
 
 /* Amount of stuff to slurp up with each read. */
 #ifndef TAO_YY_READ_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k */
+#define TAO_YY_READ_BUF_SIZE 16384
+#else
 #define TAO_YY_READ_BUF_SIZE 8192
+#endif /* __ia64__ */
 #endif
 
 /* Copy whatever the last rule matched to the standard output. */
@@ -1727,7 +1740,7 @@ case 86:
 TAO_YY_RULE_SETUP
 {
                   // octal character constant
-                  tao_yylval.cval = idl_escape_reader(ace_tao_yytext + 1);
+                  tao_yylval.cval = idl_escape_reader (ace_tao_yytext + 1);
                   return IDL_CHARACTER_LITERAL;
                 }
         TAO_YY_BREAK
@@ -1735,14 +1748,14 @@ case 87:
 TAO_YY_RULE_SETUP
 {
                   // hexadecimal character constant
-                  tao_yylval.cval = idl_escape_reader(ace_tao_yytext + 1);
+                  tao_yylval.cval = idl_escape_reader (ace_tao_yytext + 1);
                   return IDL_CHARACTER_LITERAL;
                 }
         TAO_YY_BREAK
 case 88:
 TAO_YY_RULE_SETUP
 {
-                  tao_yylval.cval = idl_escape_reader(ace_tao_yytext + 1);
+                  tao_yylval.cval = idl_escape_reader (ace_tao_yytext + 1);
                   return IDL_CHARACTER_LITERAL;
                 }
         TAO_YY_BREAK
@@ -3106,13 +3119,13 @@ idl_store_pragma (char *buf)
           // We replace the prefix only if there is a prefix already
           // associated with this file, otherwise we add the prefix.
           char *ext_id = idl_global->filename ()->get_string ();
-          char *int_id = 0;
+          ACE_Hash_Map_Entry<char *, char *> *entry = 0;
           int const status =
-            idl_global->file_prefixes ().find (ext_id, int_id);
+            idl_global->file_prefixes ().find (ext_id, entry);
 
           if (status == 0)
             {
-              if (ACE_OS::strcmp (int_id, "") != 0)
+              if (ACE_OS::strcmp (entry->int_id_, "") != 0)
                 {
                   char *trash = 0;
                   idl_global->pragma_prefixes ().pop (trash);
@@ -3121,11 +3134,11 @@ idl_store_pragma (char *buf)
               else if (depth == 1)
                 {
                   // Remove the default "" and bind the new prefix.
-                  (void) idl_global->file_prefixes ().unbind (ext_id);
-                  ext_id = ACE::strnew (ext_id);
-                  int_id = ACE::strnew (new_prefix);
-                  (void) idl_global->file_prefixes ().bind (ext_id,
-                                                            int_id);
+                  ACE::strdelete (entry->ext_id_);
+                  ACE::strdelete (entry->int_id_);
+                  (void) idl_global->file_prefixes ().unbind (entry);
+                  (void) idl_global->file_prefixes ().bind (ACE::strnew (ext_id),
+                                                            ACE::strnew (new_prefix));
                 }
             }
 
@@ -3152,10 +3165,8 @@ idl_store_pragma (char *buf)
 
           if (status != 0)
             {
-              ext_id = ACE::strnew (ext_id);
-              int_id = ACE::strnew (new_prefix);
-              (void) idl_global->file_prefixes ().bind (ext_id,
-                                                        int_id);
+              (void) idl_global->file_prefixes ().bind (ACE::strnew (ext_id),
+                                                        ACE::strnew (new_prefix));
             }
         }
     }
@@ -3412,7 +3423,7 @@ idl_atoi (char *s, long b)
  * idl_atoui - Convert a string of digits into an unsigned integer according to base b
  */
 static ACE_CDR::ULongLong
-idl_atoui (char *s, long b)
+idl_atoui(char *s, long b)
 {
   ACE_CDR::ULongLong r = 0;
 

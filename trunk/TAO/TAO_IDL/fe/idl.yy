@@ -641,7 +641,7 @@ template_module
            */
           idl_global->scopes ().push (tm);
 
-          // Store these for reference as we parse the scope 
+          // Store these for reference as we parse the scope
           // of the template module.
           idl_global->current_params ($3);
         }
@@ -661,7 +661,7 @@ template_module
            * Finished with this module - pop it from the scope stack.
            */
           idl_global->scopes ().pop ();
-          
+
           // Clear the pointer so scoped name lookup will know
           // that we are no longer in a template module scope.
           idl_global->current_params (0);
@@ -754,7 +754,7 @@ template_module_ref
           // instantiation of the enclosing template module, the
           // visitor copies this implied IDL to the instantiated
           // module scope. The extra copy is less than ideal, but
-          // otherwise we have ugly lookup issues when the 
+          // otherwise we have ugly lookup issues when the
           // referenced template module's contents are referenced
           // using the aliased scoped name.
           if (v.visit_template_module_ref (tmr) != 0)
@@ -1094,7 +1094,7 @@ value_concrete_decl :
                   false,
                   $1->truncatable (),
                   false);
-                  
+
               i = AST_Interface::narrow_from_decl (v);
               AST_Interface::fwd_redefinition_helper (i,
                                                       s);
@@ -1181,6 +1181,11 @@ value_abs_decl :
                */
               v = AST_ValueType::narrow_from_decl (i);
               (void) s->fe_add_valuetype (v);
+
+              // FE_OBVHeader is not automatically destroyed in the AST
+              $2->destroy ();
+              delete $2;
+              $2 = 0;
             }
 
           /*
@@ -1931,7 +1936,7 @@ const_type
             {
               idl_global->err ()->lookup_error (sn);
             }
- 
+
           sn->destroy ();
           delete sn;
           sn = 0;
@@ -2937,7 +2942,38 @@ union_type
         '('
         {
 //      '('
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          UTL_ScopedName n ($1,
+                            0);
+          AST_Union *u = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_SwitchOpenParSeen);
+
+          /*
+           * Create a node representing an empty union. Add it to its enclosing
+           * scope.
+           */
+          if (s != 0)
+            {
+              u = idl_global->gen ()->create_union (0,
+                                                    &n,
+                                                    s->is_local (),
+                                                    s->is_abstract ());
+
+              AST_Structure *st = AST_Structure::narrow_from_decl (u);
+              AST_Structure::fwd_redefinition_helper (st,
+                                                      s);
+              u = AST_Union::narrow_from_decl (st);
+              (void) s->fe_add_union (u);
+            }
+
+          /*
+           * Push the scope of the union on the scopes stack
+           */
+          idl_global->scopes ().push (u);
+
+          /*
+           * Don't delete $1 yet; we'll need it a bit later.
+           */
         }
         switch_type_spec
         {
@@ -2947,15 +2983,26 @@ union_type
         ')'
         {
 //      ')'
+          /*
+           * The top of the scopes must an empty union we added after we
+           * encountered 'union <id> switch ('. Now we are ready to add a
+           * correct one. Temporarily remove the top so that we setup the
+           * correct union in a right scope. But first save pragma prefix
+           * since UTL_ScopeStack::pop() removes it.
+           */
+          char *prefix = 0;
+          idl_global->pragma_prefixes ().top (prefix);
+          prefix = ACE::strnew (prefix);
+          UTL_Scope *top = idl_global->scopes ().top_non_null ();
+          idl_global->scopes ().pop ();
+
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($1,
                             0);
-          AST_Union *u = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_SwitchCloseParSeen);
 
           /*
-           * Create a node representing a union. Add it to its enclosing
-           * scope.
+           * Create a node representing a union.
            */
           if ($6 != 0
               && s != 0)
@@ -2969,23 +3016,27 @@ union_type
                 }
               else
                 {
+                  /* Create a union with a correct discriminator. */
+                  AST_Union *u = 0;
                   u = idl_global->gen ()->create_union (tp,
                                                         &n,
                                                         s->is_local (),
                                                         s->is_abstract ());
-                }
+                  /* Narrow the enclosing scope. */
+                  AST_Union *e = AST_Union::narrow_from_scope (top);
 
-              AST_Structure *st = AST_Structure::narrow_from_decl (u);
-              AST_Structure::fwd_redefinition_helper (st,
-                                                      s);
-              u = AST_Union::narrow_from_decl (st);
-              (void) s->fe_add_union (u);
+                  e->redefine (u);
+
+                  u->destroy ();
+                  delete u;
+                }
             }
 
           /*
-           * Push the scope of the union on the scopes stack
+           * Restore the top.
            */
-          idl_global->scopes ().push (u);
+          idl_global->scopes ().push (top);
+          idl_global->pragma_prefixes ().push (prefix);
 
           $1->destroy ();
           delete $1;
@@ -3564,7 +3615,7 @@ sequence_type_spec
             {
               param_holder =
                 $4->param_holder ();
-                
+
               ev = $4->coerce (AST_Expression::EV_ulong);
             }
 
@@ -3604,7 +3655,7 @@ sequence_type_spec
                                             s->is_local (),
                                             s->is_abstract ()
                                           );
-                      
+
                   if (!idl_global->in_typedef ()
                       && !idl_global->anon_silent ())
                     {
@@ -3664,7 +3715,7 @@ sequence_type_spec
                         s->is_local (),
                         s->is_abstract ()
                       );
-                      
+
                   if (!idl_global->in_typedef ()
                       && !idl_global->anon_silent ())
                     {
@@ -3756,7 +3807,7 @@ string_type_spec
            * Create a node representing a string.
            */
           ACE_CDR::ULong bound = 0UL;
-          
+
           $$ =
             idl_global->gen ()->create_string (
                 idl_global->gen ()->create_expr (bound,
@@ -3770,7 +3821,7 @@ string_type_spec
                                               $$
                                             )
                                         );
-                      
+
           if (!idl_global->in_typedef ()
               && !idl_global->anon_silent ())
             {
@@ -3834,7 +3885,7 @@ wstring_type_spec
            * Create a node representing a wstring.
            */
           ACE_CDR::ULong bound = 0UL;
-          
+
           $$ =
             idl_global->gen ()->create_wstring (
                 idl_global->gen ()->create_expr (bound,
@@ -3889,7 +3940,7 @@ array_declarator :
               $3 = 0;
 
               sn.destroy ();
-              
+
               if (!idl_global->in_typedef ()
                   && !idl_global->anon_silent ())
                 {
@@ -3982,15 +4033,15 @@ array_dim :
                 {
                   AST_Expression::ExprType et =
                     param_holder->info ()->const_type_;
-                    
+
                   // If the bound expression represents a
                   // template parameter, it must be a const
-                  // and of type unsigned long.  
+                  // and of type unsigned long.
                   if (et != AST_Expression::EV_ulong)
                     {
                       idl_global->err ()->mismatched_template_param (
                         param_holder->info ()->name_.c_str ());
-                        
+
                       delete ev;
                       ev = 0;
                       return 1;
@@ -5303,7 +5354,7 @@ provides_decl : IDL_PROVIDES interface_type id
 
               (void) s->fe_add_provides (p);
             }
- 
+
           $2->destroy ();
           delete $2;
           $2 = 0;
@@ -5358,7 +5409,7 @@ uses_decl : uses_opt_multiple interface_type id
 
           AST_Decl *d =
             s->lookup_by_name ($2, true, false);
-            
+
           if (d == 0)
             {
               idl_global->err ()->lookup_error ($2);
@@ -5376,7 +5427,7 @@ uses_decl : uses_opt_multiple interface_type id
                   case AST_Decl::NT_param_holder:
                     ph = AST_Param_Holder::narrow_from_decl (d);
                     nt = ph->info ()->type_;
- 
+
                     if (nt != AST_Decl::NT_type
                        && nt != AST_Decl::NT_interface)
                       {
@@ -5427,7 +5478,7 @@ uses_decl : uses_opt_multiple interface_type id
                                                  $1);
 
               (void) s->fe_add_uses (u);
- 
+
               AST_Component *c =
                 AST_Component::narrow_from_scope (s);
 
@@ -6450,8 +6501,8 @@ formal_parameter
               $<pival>$->const_type_ = t_param_const_type;
               $<pival>$->enum_const_type_decl_ =
                 tao_enum_constant_decl;
- 
-              // Reset these values.  
+
+              // Reset these values.
               t_param_const_type = AST_Expression::EV_none;
               tao_enum_constant_decl = 0;
             }
@@ -6837,7 +6888,7 @@ connector_decl
 connector_header
         : IDL_CONNECTOR
         {
-// connector_header : IDL_CONNECTOR 
+// connector_header : IDL_CONNECTOR
           idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorSeen);
         }
         IDENTIFIER

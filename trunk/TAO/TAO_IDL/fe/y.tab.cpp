@@ -357,8 +357,8 @@ typedef union TAO_YYSTYPE
   AST_Operation::Flags          ofval;          /* Operation flags      */
   FE_Declarator                 *deval;         /* Declarator value     */
   ACE_CDR::Boolean              bval;           /* Boolean value        */
-  ACE_CDR::LongLong             ival;           /* Long value           */
-  ACE_CDR::ULongLong            uival;          /* Unsigned long value  */
+  ACE_CDR::LongLong             ival;           /* Long Long value      */
+  ACE_CDR::ULongLong            uival;          /* Unsigned long long   */
   ACE_CDR::Double               dval;           /* Double value         */
   ACE_CDR::Float                fval;           /* Float value          */
   ACE_CDR::Char                 cval;           /* Char value           */
@@ -3539,6 +3539,11 @@ tao_yyreduce:
                */
               v = AST_ValueType::narrow_from_decl (i);
               (void) s->fe_add_valuetype (v);
+
+              // FE_OBVHeader is not automatically destroyed in the AST
+              (tao_yyvsp[(2) - (2)].vhval)->destroy ();
+              delete (tao_yyvsp[(2) - (2)].vhval);
+              (tao_yyvsp[(2) - (2)].vhval) = 0;
             }
 
           /*
@@ -5452,7 +5457,38 @@ tao_yyreduce:
 
     {
 //      '('
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          UTL_ScopedName n ((tao_yyvsp[(1) - (4)].idval),
+                            0);
+          AST_Union *u = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_SwitchOpenParSeen);
+
+          /*
+           * Create a node representing an empty union. Add it to its enclosing
+           * scope.
+           */
+          if (s != 0)
+            {
+              u = idl_global->gen ()->create_union (0,
+                                                    &n,
+                                                    s->is_local (),
+                                                    s->is_abstract ());
+
+              AST_Structure *st = AST_Structure::narrow_from_decl (u);
+              AST_Structure::fwd_redefinition_helper (st,
+                                                      s);
+              u = AST_Union::narrow_from_decl (st);
+              (void) s->fe_add_union (u);
+            }
+
+          /*
+           * Push the scope of the union on the scopes stack
+           */
+          idl_global->scopes ().push (u);
+
+          /*
+           * Don't delete $1 yet; we'll need it a bit later.
+           */
         }
     break;
 
@@ -5468,15 +5504,26 @@ tao_yyreduce:
 
     {
 //      ')'
+          /*
+           * The top of the scopes must an empty union we added after we
+           * encountered 'union <id> switch ('. Now we are ready to add a
+           * correct one. Temporarily remove the top so that we setup the
+           * correct union in a right scope. But first save pragma prefix
+           * since UTL_ScopeStack::pop() removes it.
+           */
+          char *prefix = 0;
+          idl_global->pragma_prefixes ().top (prefix);
+          prefix = ACE::strnew (prefix);
+          UTL_Scope *top = idl_global->scopes ().top_non_null ();
+          idl_global->scopes ().pop ();
+
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((tao_yyvsp[(1) - (8)].idval),
                             0);
-          AST_Union *u = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_SwitchCloseParSeen);
 
           /*
-           * Create a node representing a union. Add it to its enclosing
-           * scope.
+           * Create a node representing a union.
            */
           if ((tao_yyvsp[(6) - (8)].dcval) != 0
               && s != 0)
@@ -5490,23 +5537,27 @@ tao_yyreduce:
                 }
               else
                 {
+                  /* Create a union with a correct discriminator. */
+                  AST_Union *u = 0;
                   u = idl_global->gen ()->create_union (tp,
                                                         &n,
                                                         s->is_local (),
                                                         s->is_abstract ());
-                }
+                  /* Narrow the enclosing scope. */
+                  AST_Union *e = AST_Union::narrow_from_scope (top);
 
-              AST_Structure *st = AST_Structure::narrow_from_decl (u);
-              AST_Structure::fwd_redefinition_helper (st,
-                                                      s);
-              u = AST_Union::narrow_from_decl (st);
-              (void) s->fe_add_union (u);
+                  e->redefine (u);
+
+                  u->destroy ();
+                  delete u;
+                }
             }
 
           /*
-           * Push the scope of the union on the scopes stack
+           * Restore the top.
            */
-          idl_global->scopes ().push (u);
+          idl_global->scopes ().push (top);
+          idl_global->pragma_prefixes ().push (prefix);
 
           (tao_yyvsp[(1) - (8)].idval)->destroy ();
           delete (tao_yyvsp[(1) - (8)].idval);
@@ -6332,12 +6383,6 @@ tao_yyreduce:
                                                   (tao_yyval.dcval)
                                                 )
                                             );
-
-              if (!idl_global->in_typedef ()
-                  && !idl_global->anon_silent ())
-                {
-                  idl_global->err ()->anonymous_type_diagnostic ();
-                }
             }
 
           delete ev;
@@ -6368,6 +6413,12 @@ tao_yyreduce:
                                               (tao_yyval.dcval)
                                             )
                                         );
+
+          if (!idl_global->in_typedef ()
+              && !idl_global->anon_silent ())
+            {
+              idl_global->err ()->anonymous_type_diagnostic ();
+            }
         }
     break;
 

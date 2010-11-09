@@ -260,6 +260,30 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       *os << "\n\n#endif";
     }
 
+  be_visitor_context ctx (*this->ctx_);
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_localtypes);
+       !si.is_done ();
+       si.next ())
+    {
+      AST_Decl *d = si.item ();
+
+      be_enum *e = be_enum::narrow_from_decl (d);
+      if (e != 0)
+        {
+          be_visitor_enum_any_op_cs visitor (&ctx);
+
+          if (e->accept (&visitor) == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "(%N:%l) be_visitor_union_any_op_cs::visit_union"
+                          " - codegen for enum failed\n"));
+            }
+
+          // Restore the union node in the enum visitor's context.
+          ctx.node (this->ctx_->node ());
+        }
+    }
+
   // All we have to do is to visit the scope and generate code.
   if (this->visit_scope (node) == -1)
     {
