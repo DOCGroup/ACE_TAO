@@ -15,7 +15,6 @@
 #include "tao/LocalObject.h"
 
 class DDSQueryCondition;
-#include "tao/LocalObject.h"
 
 namespace CIAO
 {

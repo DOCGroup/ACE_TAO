@@ -107,7 +107,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::init_readcondition (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::init_readcondition");
 
-  if (!this->ws_.get_impl ())
+  if (!this->ws_.get_rti_entity ())
     {
       // Waitset is created when a query condition is attached.
       // when this is the case, no need to create a read condition
@@ -277,7 +277,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::attach_querycondition (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::attach_querycondition");
 
-  if (!this->ws_.get_impl ())
+  if (!this->ws_.get_rti_entity ())
     {
       this->ws_.init ();
     }
@@ -386,7 +386,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::remove_conditions ()
       this->qc_listener_ = ::DDS::CCM_QueryCondition::_nil ();
     }
 
-  if (this->ws_.get_impl ())
+  if (this->ws_.get_rti_entity ())
     {
       if (! ::CORBA::is_nil (this->qc_getter_.in ()))
         {
