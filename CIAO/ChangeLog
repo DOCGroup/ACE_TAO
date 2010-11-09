@@ -1,3 +1,9 @@
+Tue Nov  9 13:33:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+          Fixed runtime problem with the datareader listener
+
 Tue Nov  9 12:49:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/Getter_T.cpp:
