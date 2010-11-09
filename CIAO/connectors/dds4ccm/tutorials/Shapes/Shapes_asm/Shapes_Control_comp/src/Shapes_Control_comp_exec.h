@@ -74,7 +74,8 @@ namespace CIAO_Shapes_Control_comp_Impl
 
     virtual ::CORBA::Boolean resize_shape (void);
 
-    virtual void resize_shape (::CORBA::Boolean resize_shape);//@}
+    virtual void resize_shape (::CORBA::Boolean resize_shape);
+    //@}
 
     //@{
     /** Operations from Components::SessionComponent. */

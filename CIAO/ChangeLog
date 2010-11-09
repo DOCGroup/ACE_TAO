@@ -1,3 +1,15 @@
+Tue Nov  9 12:49:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/tests/DDSEntity/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/DDSEntity/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Component/SetConnectorAttribute_Component_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp_exec.h:
+          Fixed compile errors due to rename actions
+
 Tue Nov  9 09:12:28 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/ccm_dds.idl:

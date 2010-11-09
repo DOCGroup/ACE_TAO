@@ -139,7 +139,7 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
     DDS::DataWriter_var dds_dw =
       this->context_->get_connection_info_write_dds_entity ();
 
-    typedef ::CIAO::DDS4CCM::DDS_DataWriter_Base DataWriter_type;
+    typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
     DataWriter_type * ccm_dds_dw = dynamic_cast <DataWriter_type*> (dds_dw.in ());
     if (!ccm_dds_dw)
       {
@@ -147,7 +147,7 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
                               "Unable to cast\n"));
         return;
       }
-    DDSDataWriter * dw = ccm_dds_dw->get_impl ();
+    DDSDataWriter * dw = ccm_dds_dw->get_rti_entity ();
     if (dw)
       {
         this->check_attributes (dw);
