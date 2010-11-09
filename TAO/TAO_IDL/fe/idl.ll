@@ -280,7 +280,7 @@ oneway          return IDL_ONEWAY;
                   }
                   tmp[ACE_OS::strlen (tmp) - 1] = '\0';
                   ACE_NEW_RETURN (yylval.sval,
-                                  UTL_String (tmp + 1),
+                                  UTL_String (tmp + 1, true),
                                   IDL_STRING_LITERAL);
                   return IDL_STRING_LITERAL;
                 }
@@ -493,7 +493,7 @@ idl_parse_line_and_file (char *buf)
       if (temp_h) h = temp_h;
 #endif
       ACE_NEW (tmp,
-               UTL_String (h));
+               UTL_String (h, true));
       idl_global->update_prefix (tmp->get_string ());
       idl_global->set_filename (tmp);
     }
@@ -541,7 +541,7 @@ idl_parse_line_and_file (char *buf)
       ACE_NEW (nm,
                UTL_String (
                  FE_Utils::stripped_preproc_include (
-                   fname->get_string ())));
+                   fname->get_string ()), true));
 
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);
@@ -620,13 +620,13 @@ idl_store_pragma (char *buf)
           // We replace the prefix only if there is a prefix already
           // associated with this file, otherwise we add the prefix.
           char *ext_id = idl_global->filename ()->get_string ();
-          char *int_id = 0;
+          ACE_Hash_Map_Entry<char *, char *> *entry = 0;
           int const status =
-            idl_global->file_prefixes ().find (ext_id, int_id);
+            idl_global->file_prefixes ().find (ext_id, entry);
 
           if (status == 0)
             {
-              if (ACE_OS::strcmp (int_id, "") != 0)
+              if (ACE_OS::strcmp (entry->int_id_, "") != 0)
                 {
                   char *trash = 0;
                   idl_global->pragma_prefixes ().pop (trash);
@@ -635,11 +635,11 @@ idl_store_pragma (char *buf)
               else if (depth == 1)
                 {
                   // Remove the default "" and bind the new prefix.
-                  (void) idl_global->file_prefixes ().unbind (ext_id);
-                  ext_id = ACE::strnew (ext_id);
-                  int_id = ACE::strnew (new_prefix);
-                  (void) idl_global->file_prefixes ().bind (ext_id,
-                                                            int_id);
+                  ACE::strdelete (entry->ext_id_);
+                  ACE::strdelete (entry->int_id_);
+                  (void) idl_global->file_prefixes ().unbind (entry);
+                  (void) idl_global->file_prefixes ().bind (ACE::strnew (ext_id),
+                                                            ACE::strnew (new_prefix));
                 }
             }
 
@@ -666,10 +666,8 @@ idl_store_pragma (char *buf)
 
           if (status != 0)
             {
-              ext_id = ACE::strnew (ext_id);
-              int_id = ACE::strnew (new_prefix);
-              (void) idl_global->file_prefixes ().bind (ext_id,
-                                                        int_id);
+              (void) idl_global->file_prefixes ().bind (ACE::strnew (ext_id),
+                                                        ACE::strnew (new_prefix));
             }
         }
     }
@@ -815,17 +813,17 @@ idl_store_pragma (char *buf)
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_lem_file_names (tmp);
     }
-  else if (ACE_OS::strncmp (buf + 8, "ndds typesupport", 15) == 0)
+  else if (ACE_OS::strncmp (buf + 8, "ndds typesupport", 16) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_rti_ts_file_names (tmp);
     }
-  else if (ACE_OS::strncmp (buf + 8, "opendds typesupport", 18) == 0)
+  else if (ACE_OS::strncmp (buf + 8, "opendds typesupport", 19) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_oci_ts_file_names (tmp);
     }
-  else if (ACE_OS::strncmp (buf + 8, "splice typesupport", 17) == 0)
+  else if (ACE_OS::strncmp (buf + 8, "splice typesupport", 18) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_spl_ts_file_names (tmp);

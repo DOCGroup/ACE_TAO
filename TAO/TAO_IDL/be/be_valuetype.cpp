@@ -606,6 +606,9 @@ be_valuetype::accept (be_visitor *visitor)
 void
 be_valuetype::destroy (void)
 {
+  delete [] this->full_obv_skel_name_;
+  this->full_obv_skel_name_ = 0;
+
   this->be_interface::destroy ();
   this->AST_ValueType::destroy ();
 }

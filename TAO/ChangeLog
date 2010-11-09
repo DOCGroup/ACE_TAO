@@ -1,3 +1,36 @@
+Tue Nov  9 12:35:22 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/Wait_On_Read.cpp:
+        * tao/Transport_Cache_Manager_T.cpp:
+          Corrected a bit logged messages.
+
+        * tests/IDL_Test/Bug_3312_Regression.idl:
+          Enabled a problematic part of the test and extended it.
+
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_field.cpp:
+        * TAO_IDL/be/be_global.cpp:
+          Fixed memory leaks in tao_idl.
+
+        * TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+          Fixed only bug#3312.
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+          Fixed bug#3312. Fixed a leak of FE_OBVHeader. Made formatting
+          in generated cpp file consistent with YACC source. Removed
+          unnecessary white spaces.
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+          Fixed a leak of a file prefix which was happening in certain
+          conditions. Ported changes made at different times to generated
+          cpp file but was not added to the lexer source.
+
 Thu Nov  4 16:06:56 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_global.h:
