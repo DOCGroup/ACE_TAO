@@ -90,21 +90,27 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
   typename DDS_TYPE::dds_seq_type data;
   typename DDS_TYPE::sampleinfo_seq_type sample_info;
 
+
+  ::DDS::ReturnCode_t result = ::DDS::RETCODE_OK;
+
   QueryCondition_type * qc =
     this->condition_manager_.get_querycondition_listener ();
+
+
   if (!qc)
     {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                          ACE_TEXT ("DataReaderListener_T::on_data_available_i - ")
-                          ACE_TEXT ("Unable to retrieve query condition ")
-                          ACE_TEXT ("from condition manager.\n")));
-      return;
+      result = reader->take (data,
+                             sample_info,
+                             DDS_LENGTH_UNLIMITED,
+                             0);
     }
-  ::DDS::ReturnCode_t const result =
-      reader->take (data,
-                    sample_info,
-                    DDS_LENGTH_UNLIMITED,
-                    qc->get_rti_entity ());
+  else
+    {
+      result = reader->take (data,
+                             sample_info,
+                             DDS_LENGTH_UNLIMITED,
+                             qc->get_rti_entity ());
+    }
 
   if (result == ::DDS::RETCODE_NO_DATA)
     {
