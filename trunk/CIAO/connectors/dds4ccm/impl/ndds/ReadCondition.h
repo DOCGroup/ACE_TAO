@@ -15,6 +15,7 @@
 #include "tao/LocalObject.h"
 
 class DDSReadCondition;
+#include "tao/LocalObject.h"
 
 namespace CIAO
 {
