@@ -244,8 +244,8 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true, VENDOR_TYPE>::get_one
         this->condition_manager_->get_readcondition ();
       typename Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::QueryCondition_type * qc =
         this->condition_manager_->get_querycondition_getter ();
-      if ((rc && active_conditions[i] == rc->get_impl ()) ||
-          (qc && active_conditions[i] == qc->get_impl ()) )
+      if ((rc && active_conditions[i] == rc->get_rti_entity ()) ||
+          (qc && active_conditions[i] == qc->get_rti_entity ()) )
         {
           bool valid_data_read = false;
 

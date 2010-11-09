@@ -228,12 +228,12 @@ namespace CIAO_Writer_Sender_Impl
         throw ::CORBA::INTERNAL ();
       }
 
-    typedef ::CIAO::DDS4CCM::DDS_DataWriter_Base DataWriter_type;
+    typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
 
     DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type*> (dds_dw.in ());
     if (typed_ccm_dw)
       {
-        DDSDataWriter* dds_datawriter = typed_ccm_dw->get_impl ();
+        DDSDataWriter* dds_datawriter = typed_ccm_dw->get_rti_entity ();
         if (dds_datawriter)
           {
             this->writer_ = ::CIAO_WriterTestConnector_DDS_Event_Impl::WriterTest_DDS_Traits::datawriter_type::narrow (dds_datawriter);
