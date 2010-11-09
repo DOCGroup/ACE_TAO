@@ -31,6 +31,16 @@ CIAO::DDS4CCM::Logger_Service::init ()
   ACE_Env_Value<int> trace (ACE_TEXT("DDS4CCM_TRACE_ENABLE"), 0);
   this->trace_ = (trace != 0);
 
+  if (this->trace_)
+    {
+      DDS4CCM_ENABLE_TRACE ();
+    }
+  else
+    {
+      DDS4CCM_DISABLE_TRACE ();
+    }
+
+
   ACE_Env_Value<const ACE_TCHAR *> filename (ACE_TEXT("DDS4CCM_LOG_FILE"), this->filename_.c_str ());
   this->filename_ = filename;
 }
@@ -40,15 +50,6 @@ CIAO::DDS4CCM::Logger_Service::init (int argc, ACE_TCHAR * argv[])
 {
   this->init ();
   this->parse_args (argc, argv);
-
-  if (this->trace_)
-    {
-      DDS4CCM_ENABLE_TRACE ();
-    }
-  else
-    {
-      DDS4CCM_DISABLE_TRACE ();
-    }
 
   if (this->filename_.length () > 0)
     {
