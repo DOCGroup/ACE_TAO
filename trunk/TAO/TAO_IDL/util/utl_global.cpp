@@ -153,7 +153,7 @@ IDL_GlobalData::IDL_GlobalData (void)
     alias_params_ (0),
     included_ami_receps_done_ (false),
     corba_module_ (0),
-    anon_type_diagnostic_ (ANON_TYPE_ERROR),
+    anon_type_diagnostic_ (ANON_TYPE_SILENT),
     in_typedef_ (false)
 {
   // Path for the perfect hash generator(gperf) program.
