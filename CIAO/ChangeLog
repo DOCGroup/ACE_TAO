@@ -1,3 +1,14 @@
+Tue Nov  9 15:07:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Condition.h:
+        * connectors/dds4ccm/impl/ndds/Condition.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriter_T.h:
+        * connectors/dds4ccm/impl/ndds/QueryCondition.h:
+        * connectors/dds4ccm/impl/ndds/WaitSet.h:
+        * connectors/dds4ccm/impl/ndds/WaitSet.cpp:
+          Layout changes.
+
 Tue Nov  9 14:16:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager_T.h:
