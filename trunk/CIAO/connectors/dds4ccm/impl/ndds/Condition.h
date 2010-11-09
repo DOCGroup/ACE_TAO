@@ -13,7 +13,8 @@
 #include "tao/LocalObject.h"
 
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
-#include "ndds/ndds_cpp.h"
+
+class DDSCondition;
 
 namespace CIAO
 {
@@ -39,9 +40,9 @@ namespace CIAO
       void set_rti_entity (DDSCondition * cond);
 
     private:
-      DDSCondition * impl_;
+      DDSCondition * rti_entity_;
 
-      DDSCondition * impl ();
+      DDSCondition * rti_entity ();
     };
   }
 }

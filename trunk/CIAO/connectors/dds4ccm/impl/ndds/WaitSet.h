@@ -6,15 +6,16 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDSWAITSET_H_
-#define DDSWAITSET_H_
+#ifndef WAITSET_H_
+#define WAITSET_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "tao/LocalObject.h"
 
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
 
-#include "ndds/ndds_cpp.h"
+class DDSWaitSet;
+class DDSConditionSeq;
 
 namespace CIAO
 {
@@ -45,14 +46,14 @@ namespace CIAO
       virtual ::DDS::ReturnCode_t
       get_conditions (::DDS::ConditionSeq & attached_conditions);
 
-      DDSWaitSet * get_impl (void);
+      DDSWaitSet * get_rti_entity (void);
 
       void init (void);
 
     private:
-      DDSWaitSet * impl_;
+      DDSWaitSet * rti_entity_;
 
-      DDSWaitSet * impl ();
+      DDSWaitSet * rti_entity ();
 
       void
       convert_conditions (const DDSConditionSeq& dds_conditions,
@@ -61,4 +62,4 @@ namespace CIAO
   }
 }
 
-#endif /* DDSWAITSET_H_ */
+#endif /* WAITSET_H_ */
