@@ -189,13 +189,13 @@ namespace CIAO
                         "Successfully created datareader.\n"));
         }
 
+      ccm_dds_dr->enable ();
       ::CIAO::NDDS::DDS_DomainParticipant_i* p = dynamic_cast < ::CIAO::NDDS::DDS_DomainParticipant_i*> (this->dp_.in ());
       ::DDS::DataReader_var reader = p->create_datareader (ccm_dds_dr);
       if (ccm_dds_drl)
         {
           ccm_dds_drl->set_dds_entity (reader.in ());
         }
-      ccm_dds_dr->enable ();
       return reader._retn ();
     }
 

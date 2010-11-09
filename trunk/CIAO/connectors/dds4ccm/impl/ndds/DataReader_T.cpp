@@ -583,7 +583,7 @@ namespace CIAO
       delete listener;
       listener = 0;
 
-      if (! ::CORBA::is_nil (listener))
+      if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (listener,
                             DDS_DataReaderListener_i (
