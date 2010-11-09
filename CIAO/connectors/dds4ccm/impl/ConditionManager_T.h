@@ -3,6 +3,7 @@
 #ifndef CONDITIONMANAGER_T_H_
 #define CONDITIONMANAGER_T_H_
 
+#include "dds4ccm/impl/ndds/WaitSet.h"
 namespace CIAO
 {
   namespace NDDS
@@ -33,8 +34,8 @@ namespace CIAO
 
       void init_readcondition (void);
 
-      bool wait (DDSConditionSeq & active_conditions,
-                 DDS_Duration_t & time_out);
+      bool wait (::DDS::ConditionSeq  & active_conditions,
+                 ::DDS::Duration_t & time_out);
 
       ::CCM_DDS::QueryFilter * query (void);
 
@@ -49,7 +50,7 @@ namespace CIAO
     private:
       DataReader_type * impl_;
 
-      DDSWaitSet * ws_;
+      ::CIAO::NDDS::DDS_WaitSet_i ws_;
 
       // Different QueryConditions since the sample mask
       // differs for all entities.

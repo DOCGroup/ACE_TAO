@@ -12,6 +12,10 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
 
+#include "dds4ccm/impl/ndds/Condition.h"
+#include "dds4ccm/impl/ndds/ReadCondition.h"
+#include "dds4ccm/impl/ndds/QueryCondition.h"
+
 namespace CIAO
 {
   namespace DDS4CCM
@@ -40,11 +44,11 @@ namespace CIAO
          public virtual LocalObject_T<CCM_TYPE>,
          private virtual ACE_Copy_Disabled
       {
-      protected:
-      typedef CIAO::NDDS::DDS_ReadCondition_i ReadCondition_type;
-      typedef CIAO::NDDS::DDS_QueryCondition_i QueryCondition_type;
-      typedef CIAO::NDDS::DataReader_T<DDS_TYPE> DataReader_type;
-      typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>
+      typedef ::CIAO::NDDS::DDS_ReadCondition_i ReadCondition_type;
+      typedef ::CIAO::NDDS::DDS_QueryCondition_i QueryCondition_type;
+      typedef ::CIAO::NDDS::DataReader_T<DDS_TYPE> DataReader_type;
+
+      typedef ::CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>
           ConditionManager_type;
 
       public:
@@ -94,7 +98,7 @@ namespace CIAO
         ConditionManager_type * condition_manager_;
 
 
-        ::DDS_Duration_t time_out_;
+        ::DDS::Duration_t time_out_;
         ::CCM_DDS::DataNumber_t max_delivered_data_;
 
         DataReader_type * impl (void);
@@ -102,6 +106,7 @@ namespace CIAO
         ::DDS::ReturnCode_t get (typename DDS_TYPE::dds_seq_type & data,
                                  typename DDS_TYPE::sampleinfo_seq_type & sample_info,
                                  const DDS_Long & max_samples);
+        bool check_condition (::DDS::Condition_ptr condition);
       };
 
       template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>

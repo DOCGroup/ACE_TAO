@@ -8,8 +8,7 @@
 
 template <typename DDS_TYPE>
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::ConditionManager_T ()
-  : impl_ (0),
-    ws_ (0)
+  : impl_ (0)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::ConditionManager_T");
 }
@@ -18,9 +17,6 @@ template <typename DDS_TYPE>
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::~ConditionManager_T ()
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::~ConditionManager_T");
-
-  delete this->ws_;
-  this->ws_ = 0;
 }
 
 template <typename DDS_TYPE>
@@ -111,14 +107,12 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::init_readcondition (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::init_readcondition");
 
-  if (!this->ws_)
+  if (!this->ws_.get_impl ())
     {
       // Waitset is created when a query condition is attached.
       // when this is the case, no need to create a read condition
       // (including its proxy).
-      ACE_NEW_THROW_EX (this->ws_,
-                        DDSWaitSet (),
-                        ::CORBA::NO_MEMORY ());
+      this->ws_.init ();
     }
   if ( ::CORBA::is_nil (this->rd_condition_.in ()))
     {
@@ -135,12 +129,8 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::init_readcondition (void)
         }
     }
 
-  ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_ERROR;
-  ::CIAO::NDDS::DDS_ReadCondition_i * rc = this->get_readcondition ();
-  if (rc)
-    {
-      retcode = this->ws_->attach_condition (rc->get_rti_entity ());
-    }
+  ::DDS::ReturnCode_t retcode =
+    this->ws_.attach_condition (this->rd_condition_.in ());
 
   if (retcode != ::DDS::RETCODE_OK)
     {
@@ -287,24 +277,20 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::attach_querycondition (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::attach_querycondition");
 
-  if (!this->ws_)
+  if (!this->ws_.get_impl ())
     {
-      ACE_NEW_THROW_EX (this->ws_,
-                        DDSWaitSet (),
-                        ::CORBA::NO_MEMORY ());
+      this->ws_.init ();
     }
 
-  ::CIAO::NDDS::DDS_QueryCondition_i * qc = this->get_querycondition_getter ();
-  ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_ERROR;
-  if (qc)
-    {
-      retcode = this->ws_->attach_condition (qc->get_rti_entity ());
-    }
+  ::DDS::ReturnCode_t retcode =
+    this->ws_.attach_condition (this->qc_getter_.in ());
   if (retcode != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                     "ConditionManager_T::attach_querycondition - "
-                    "Unable to attach query condition to waitset.\n"));
+                    "Unable to attach query condition to waitset. "
+                    "Error <%C>\n",
+                    translate_retcode (retcode)));
       throw ::CCM_DDS::InternalError (retcode, 1);
     }
   else
@@ -318,8 +304,8 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::attach_querycondition (void)
 template <typename DDS_TYPE>
 bool
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::wait (
-    DDSConditionSeq & active_conditions,
-    DDS_Duration_t & time_out)
+    ::DDS::ConditionSeq & active_conditions,
+    ::DDS::Duration_t & time_out)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::wait");
 
@@ -328,7 +314,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::wait (
 #endif
 
   ::DDS::ReturnCode_t const retcode =
-     this->ws_->wait (active_conditions, time_out);
+     this->ws_.wait (active_conditions, time_out);
 
 #if !defined (DDS4CCM_NLOGGING)
   ACE_Time_Value const waited = ACE_OS::gettimeofday () - start;
@@ -400,13 +386,11 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::remove_conditions ()
       this->qc_listener_ = ::DDS::CCM_QueryCondition::_nil ();
     }
 
-  if (this->ws_)
+  if (this->ws_.get_impl ())
     {
       if (! ::CORBA::is_nil (this->qc_getter_.in ()))
         {
-          ::CIAO::NDDS::DDS_QueryCondition_i * q_condition = this->get_querycondition_getter ();
-          if (q_condition &&
-              this->ws_->detach_condition (q_condition->get_rti_entity ()) == ::DDS::RETCODE_OK)
+          if (this->ws_.detach_condition (this->qc_getter_.in ()) == ::DDS::RETCODE_OK)
             {
               DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                             ACE_TEXT ("ConditionManager_T::remove_conditions - ")
@@ -426,25 +410,21 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::remove_conditions ()
           ::CIAO::NDDS::DDS_QueryCondition_i * r_condition = this->get_querycondition_getter ();
           if (!r_condition)
             {
-              retcode = ::DDS::RETCODE_ERROR;
-            }
-          else
-            {
-              retcode = this->ws_->detach_condition (r_condition->get_rti_entity ());
-            }
-          if (retcode != ::DDS::RETCODE_OK)
-            {
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                            ACE_TEXT ("ConditionManager_T::remove_conditions - ")
-                            ACE_TEXT ("Unable to detach read condition ")
-                            ACE_TEXT ("from waitset. Error <%C>\n"),
-                            translate_retcode (retcode)));
-            }
-          else
-            {
-              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
-                            ACE_TEXT ("ConditionManager_T::remove_conditions - ")
-                            ACE_TEXT ("Read condition successfully detached from waitset.\n")));
+              retcode = this->ws_.detach_condition (this->rd_condition_.in ());
+              if (retcode != ::DDS::RETCODE_OK)
+                {
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                                ACE_TEXT ("ConditionManager_T::remove_conditions - ")
+                                ACE_TEXT ("Unable to detach read condition ")
+                                ACE_TEXT ("from waitset. Error <%C>\n"),
+                                translate_retcode (retcode)));
+                }
+              else
+                {
+                  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
+                                ACE_TEXT ("ConditionManager_T::remove_conditions - ")
+                                ACE_TEXT ("Read condition successfully detached from waitset.\n")));
+                }
             }
         }
     }

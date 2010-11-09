@@ -1,3 +1,20 @@
+Tue Nov  9 14:16:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager_T.h:
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.h:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/dds4ccm_impl.mpc:
+        * connectors/dds4ccm/impl/ndds/Condition.h:
+        * connectors/dds4ccm/impl/ndds/Condition.cpp:
+        * connectors/dds4ccm/impl/ndds/QueryCondition.h:
+        * connectors/dds4ccm/impl/ndds/ReadCondition.h:
+        * connectors/dds4ccm/impl/ndds/WaitSet.h:
+        * connectors/dds4ccm/impl/ndds/WaitSet.cpp:
+        * connectors/dds4ccm/impl/ndds/ndds.mpc:
+          Created Waitset and Condition proxies. The underlying code
+          (ConditionManager_T and Getter_T) was therefor changed.
+
 Tue Nov  9 13:33:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:

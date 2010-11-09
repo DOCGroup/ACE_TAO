@@ -7,7 +7,6 @@ project(CIAO_DDS4CCM_DDS_Impl) : install, dds4ccm_skel, dds4ccm_lem_stub, taolib
   macros += BUILDING_DDS_LIB
   Header_Files {
     *.h
-    ndds/*.h
   }
 
   Template_Files {
