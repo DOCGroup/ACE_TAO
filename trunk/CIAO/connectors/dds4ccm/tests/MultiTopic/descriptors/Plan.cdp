@@ -579,7 +579,6 @@
       <instance xmi:idref="Shapes_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-  
   <connection>
     <name>writer_cq_connection</name>
     <deployRequirement>
