@@ -102,12 +102,12 @@ namespace CIAO_Writer_Receiver_Impl
         throw ::CORBA::INTERNAL ();
       }
 
-    typedef ::CIAO::DDS4CCM::DDS_DataReader_Base DataReader_type;
+    typedef ::CIAO::NDDS::DDS_DataReader_Base DataReader_type;
 
     DataReader_type * typed_ccm_dr = dynamic_cast <DataReader_type*> (ccm_dr_proxy.in ());
     if (typed_ccm_dr)
       {
-        DDSDataReader* dds_reader = typed_ccm_dr->get_impl ();
+        DDSDataReader* dds_reader = typed_ccm_dr->get_rti_entity ();
         if (dds_reader)
           {
             this->reader_ = ::CIAO_WriterTestConnector_DDS_Event_Impl::WriterTest_DDS_Traits::datareader_type::narrow (dds_reader);

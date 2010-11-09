@@ -76,11 +76,11 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
                         "Datawriter 1 connection is NIL.\n"));
             throw ::CORBA::INTERNAL ();
           }
-        typedef ::CIAO::DDS4CCM::DDS_DataWriter_Base DataWriter_type;
+        typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
         DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw1.in ());
         if (typed_ccm_dw)
           {
-            DDSDataWriter * dds_dw1 = typed_ccm_dw->get_impl ();
+            DDSDataWriter * dds_dw1 = typed_ccm_dw->get_rti_entity ();
             DDSPublisher * dds_p1 = dds_dw1->get_publisher ();
             this->dds_dp1_ = dds_p1->get_participant ();
 
@@ -112,11 +112,11 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             throw ::CORBA::INTERNAL ();
           }
 
-        typedef ::CIAO::DDS4CCM::DDS_DataWriter_Base DataWriter_type;
+        typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
         DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw2.in ());
         if (typed_ccm_dw)
           {
-            DDSDataWriter * dds_dw2 = typed_ccm_dw->get_impl ();
+            DDSDataWriter * dds_dw2 = typed_ccm_dw->get_rti_entity ();
             DDSPublisher * dds_p2 = dds_dw2->get_publisher ();
             this->dds_dp2_ = dds_p2->get_participant ();
 
@@ -148,11 +148,11 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             throw ::CORBA::INTERNAL ();
           }
 
-        typedef ::CIAO::DDS4CCM::DDS_DataWriter_Base DataWriter_type;
+        typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
         DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw3.in ());
         if (typed_ccm_dw)
           {
-            DDSDataWriter * dds_dw3 = typed_ccm_dw->get_impl ();
+            DDSDataWriter * dds_dw3 = typed_ccm_dw->get_rti_entity ();
             DDSPublisher * dds_p3 = dds_dw3->get_publisher ();
             this->dds_dp3_ = dds_p3->get_participant ();
 
@@ -183,11 +183,11 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             throw ::CORBA::INTERNAL ();
           }
 
-        typedef ::CIAO::DDS4CCM::DDS_DataWriter_Base DataWriter_type;
+        typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
         DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw4.in ());
         if (typed_ccm_dw)
           {
-            DDSDataWriter * dds_dw4 = typed_ccm_dw->get_impl ();
+            DDSDataWriter * dds_dw4 = typed_ccm_dw->get_rti_entity ();
             DDSPublisher * dds_p4 = dds_dw4->get_publisher ();
             this->dds_dp4_ = dds_p4->get_participant ();
 

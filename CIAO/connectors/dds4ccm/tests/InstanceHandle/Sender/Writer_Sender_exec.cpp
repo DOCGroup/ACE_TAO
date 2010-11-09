@@ -230,11 +230,11 @@ namespace CIAO_Writer_Sender_Impl
     ::DDS::DataWriter_var dds_dw =
       this->context_->get_connection_info_write_dds_entity ();
 
-    typedef ::CIAO::DDS4CCM::DDS_DataWriter_Base DataWriter_type;
+    typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
     DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type*> (dds_dw.in ());
     if (typed_ccm_dw)
       {
-        this->dds_writer_ = WriterTestDataWriter::narrow (typed_ccm_dw->get_impl ());
+        this->dds_writer_ = WriterTestDataWriter::narrow (typed_ccm_dw->get_rti_entity ());
         if (!this->dds_writer_)
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::configuration_complete - "
