@@ -2182,10 +2182,7 @@ TAO_CodeGen::end_ciao_ami_rh_impl_source (void)
 void
 TAO_CodeGen::gperf_input_stream (TAO_OutStream *os)
 {
-#if !defined (linux) && !defined (__QNX__) && !defined (__GLIBC__)
-  // This causes a seg fault on Linux RH 5.1.  Let it leak . . .
   delete this->gperf_input_stream_;
-#endif /* ! linux */
   this->gperf_input_stream_ = os;
 }
 

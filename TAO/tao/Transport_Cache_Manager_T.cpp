@@ -482,7 +482,7 @@ namespace TAO
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
-                    ACE_TEXT ("is_entry_available_i[%d], %C state is %C\n"),
+                    ACE_TEXT ("is_entry_available_i[%d], %C, state is %C\n"),
                     entry.int_id_.transport () ? entry.int_id_.transport ()->id () : 0,
                     (result ? "true" : "false"),
                     Cache_IntId::state_name (entry_state)));
@@ -505,7 +505,7 @@ namespace TAO
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
-                    ACE_TEXT ("is_entry_purgable_i[%d], %C state is %C\n"),
+                    ACE_TEXT ("is_entry_purgable_i[%d], %C, state is %C\n"),
                     entry.int_id_.transport ()->id (),
                     (result ? "true" : "false"),
                     Cache_IntId::state_name (entry_state)));
