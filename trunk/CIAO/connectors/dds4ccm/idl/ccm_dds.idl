@@ -154,7 +154,7 @@ module CCM_DDS
   };
   module Typed <typename T, sequence<T> TSeq> {
 
-    alias DDS_Entity<T, TSeq> DDS_Typed;
+    alias DDS_Entity<T, TSeq> DDS_Typed_Entity;
 
     // Gathers all the constructs that are dependent on the data type (T),
     // either directly -- interfaces making use of T or TSeq,
