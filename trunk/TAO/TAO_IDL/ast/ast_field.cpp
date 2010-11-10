@@ -188,7 +188,7 @@ AST_Field::ast_accept (ast_visitor *visitor)
 void
 AST_Field::destroy (void)
 {
-  if (this->owns_base_type_)
+  if (this->owns_base_type_ && this->ref_type_)
     {
       this->ref_type_->destroy ();
       delete this->ref_type_;
