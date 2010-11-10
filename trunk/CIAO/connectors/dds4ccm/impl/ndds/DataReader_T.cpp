@@ -241,6 +241,32 @@ namespace CIAO
 
     template <typename DDS_TYPE>
     ::DDS::InstanceHandle_t
+    DataReader_T<DDS_TYPE>::check_handle (
+      const typename DDS_TYPE::value_type& an_instance,
+      const ::DDS::InstanceHandle_t & instance_handle)
+    {
+      ::DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
+      hnd <<= instance_handle;
+
+      ::DDS_InstanceHandle_t const lookup_hnd =
+          this->rti_entity ()->lookup_instance (an_instance);
+
+      if (!DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL) &&
+          !DDS_InstanceHandle_equals (&hnd, &lookup_hnd))
+        {
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+        }
+      if (DDS_InstanceHandle_equals (&lookup_hnd, &::DDS_HANDLE_NIL))
+        {
+          throw ::CCM_DDS::NonExistent ();
+        }
+      ::DDS::InstanceHandle_t ret = ::DDS::HANDLE_NIL;
+      ret <<= lookup_hnd;
+      return ret;
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::InstanceHandle_t
     DataReader_T<DDS_TYPE>::lookup_instance (
       const typename DDS_TYPE::value_type& an_instance)
     {

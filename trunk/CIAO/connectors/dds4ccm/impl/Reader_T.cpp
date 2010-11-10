@@ -168,34 +168,6 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_a
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
-::DDS::InstanceHandle_t
-CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::check_handle (
-  const typename DDS_TYPE::value_type& an_instance,
-  const ::DDS::InstanceHandle_t & instance_handle)
-{
-  ::DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
-  hnd <<= instance_handle;
-
-  ::DDS::InstanceHandle_t const tmp =
-      this->impl ()->lookup_instance (an_instance);
-  ::DDS_InstanceHandle_t lookup_hnd = ::DDS_HANDLE_NIL;
-  lookup_hnd <<= tmp;
-
-  if (!DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL) &&
-      !DDS_InstanceHandle_equals (&hnd, &lookup_hnd))
-    {
-      throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
-    }
-  if (DDS_InstanceHandle_equals (&lookup_hnd, &::DDS_HANDLE_NIL))
-    {
-      throw ::CCM_DDS::NonExistent ();
-    }
-  ::DDS::InstanceHandle_t ret = ::DDS::HANDLE_NIL;
-  ret <<= lookup_hnd;
-  return ret;
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
 void
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_one_last (
   typename DDS_TYPE::value_type& an_instance,
@@ -203,7 +175,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_o
   const ::DDS::InstanceHandle_t & instance_handle)
 {
   ::DDS::InstanceHandle_t const lookup_hnd =
-    this->check_handle (an_instance, instance_handle);
+    this->impl ()->check_handle (an_instance, instance_handle);
 
   typename DDS_TYPE::sampleinfo_seq_type sample_info;
   typename DDS_TYPE::dds_seq_type data;
@@ -248,7 +220,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_o
   const ::DDS::InstanceHandle_t & instance_handle)
 {
   ::DDS::InstanceHandle_t const lookup_hnd =
-    this->check_handle (an_instance, instance_handle);
+    this->impl ()->check_handle (an_instance, instance_handle);
 
   typename DDS_TYPE::sampleinfo_seq_type sample_info;
   typename DDS_TYPE::dds_seq_type data;

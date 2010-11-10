@@ -71,10 +71,6 @@ namespace CIAO
 
         DataReader_type * impl (void);
 
-        ::DDS::InstanceHandle_t check_handle (
-          const typename DDS_TYPE::value_type& an_instance,
-          const ::DDS::InstanceHandle_t & instance_handle);
-
         CORBA::ULong get_nr_valid_samples (
           const typename DDS_TYPE::sampleinfo_seq_type & sample_info,
           bool determine_last = false);

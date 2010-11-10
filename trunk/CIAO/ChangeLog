@@ -1,3 +1,11 @@
+Wed Nov 10 09:57:24 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/Reader_T.h:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+          Moved check_handle method to DataReader_T.cpp/h.
+
 Wed Nov 10 09:49:51 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
