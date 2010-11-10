@@ -1,3 +1,32 @@
+Wed Nov 10 10:26:40 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * rules.ciao.GNU:
+        * MPC/config/taoidl3toxmidefaults.mpb:
+          Added a base project that will make it easier to use tao_idl3_to_xmi
+          tool in MPC.
+
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+          tao_idl3_to_xmi has nothing to do with DAnCE. So corrected its MPC
+          to output binary to $CIAO_ROOT/bin and renamed other things to make
+          it part of CIAO.
+
+        * tests/IDL3_to_XMI/Forward_Declared/c_nok.idl:
+        * tests/IDL3_to_XMI/Forward_Declared/Forward_Declared.mpc:
+        * tests/IDL3_to_XMI/Forward_Declared/c_ok.idl:
+        * tests/IDL3_to_XMI/Forward_Declared/a.idl:
+        * tests/IDL3_to_XMI/Forward_Declared/b.idl:
+        * tests/IDL3_to_XMI/Forward_Declared/README:
+          Added a new test.
+
+        * tests/IDL3_to_XMI/XMI_For_Module_Reopen/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Array/run_test.pl:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Included_File/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Native/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Sequence/run_test.pl:
+        * tests/IDL3_to_XMI/Bug_3607_Regression/run_test.pl:
+          Corrected path to tao_idl3_to_xmi binary.
+
 Wed Nov 10 09:57:24 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/Reader_T.h:
