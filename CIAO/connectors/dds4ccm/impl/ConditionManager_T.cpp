@@ -20,85 +20,52 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::~ConditionManager_T ()
 }
 
 template <typename DDS_TYPE>
-::CIAO::NDDS::DDS_ReadCondition_i *
+::DDS::ReadCondition_ptr
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_readcondition (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::get_readcondition");
 
-  if (! ::CORBA::is_nil (this->rd_condition_.in ()))
-    {
-      ::CIAO::NDDS::DDS_ReadCondition_i * rc = dynamic_cast < ::CIAO::NDDS::DDS_ReadCondition_i *>
-        (this->rd_condition_.in ());
-      if (!rc)
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        ACE_TEXT ("ConditionManager_T::get_readcondition - ")
-                        ACE_TEXT ("Unable to cast ::DDS::ReadCondition to its internal ")
-                        ACE_TEXT ("representation.\n")));
-          return 0;
-        }
-      return rc;
-    }
-  return 0;
+  return ::DDS::ReadCondition::_duplicate (this->rd_condition_.in ());
 }
 
 template <typename DDS_TYPE>
-::CIAO::NDDS::DDS_QueryCondition_i *
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_querycondition (
-  ::DDS::QueryCondition_ptr dds_qc)
-{
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::get_querycondition");
-
-  ::CIAO::NDDS::DDS_QueryCondition_i * qc = dynamic_cast < ::CIAO::NDDS::DDS_QueryCondition_i *> (dds_qc);
-  if (!qc)
-    {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                    ACE_TEXT ("ConditionManager_T::get_querycondition - ")
-                    ACE_TEXT ("Unable to cast ::DDS::QueryCondition to its internal ")
-                    ACE_TEXT ("representation.\n")));
-      return 0;
-    }
-  return qc;
-}
-
-
-template <typename DDS_TYPE>
-::CIAO::NDDS::DDS_QueryCondition_i *
+::DDS::QueryCondition_ptr
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_querycondition_getter (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::get_querycondition_getter");
 
-  if (! ::CORBA::is_nil (this->qc_getter_.in ()))
-    {
-      return this->get_querycondition (this->qc_getter_.in ());
-    }
-  return 0;
+  return ::DDS::QueryCondition::_duplicate (this->qc_getter_.in ());
 }
 
 template <typename DDS_TYPE>
-::CIAO::NDDS::DDS_QueryCondition_i *
+::DDS::QueryCondition_ptr
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_querycondition_listener (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::get_querycondition_listener");
 
-  if (! ::CORBA::is_nil (this->qc_listener_.in ()))
-    {
-      return this->get_querycondition (this->qc_listener_.in ());
-    }
-  return 0;
+  return ::DDS::QueryCondition::_duplicate (this->qc_listener_.in ());
 }
 
 template <typename DDS_TYPE>
-::CIAO::NDDS::DDS_QueryCondition_i *
+::DDS::QueryCondition_ptr
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_querycondition_reader (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::get_querycondition_reader");
 
-  if (! ::CORBA::is_nil (this->qc_reader_.in ()))
-    {
-      return this->get_querycondition (this->qc_reader_.in ());
-    }
-  return 0;
+  return ::DDS::QueryCondition::_duplicate (this->qc_reader_.in ());
+}
+
+template <typename DDS_TYPE>
+bool
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::check_condition (
+  ::DDS::Condition_ptr condition)
+{
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::check_condition");
+
+  ::DDS::ReadCondition_var rc = this->get_readcondition ();
+  ::DDS::QueryCondition_var qc = this->get_querycondition_getter ();
+
+  return this->ws_.check_condition (rc.in (), qc.in (), condition);
 }
 
 template <typename DDS_TYPE>
@@ -410,8 +377,8 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::remove_conditions ()
         }
       else
         {
-          ::CIAO::NDDS::DDS_QueryCondition_i * q_condition = this->get_querycondition_getter ();
-          if (!q_condition)
+          ::DDS::QueryCondition_var q_condition = this->get_querycondition_getter ();
+          if (::CORBA::is_nil (q_condition.in ()))
             {
               retcode = this->ws_.detach_condition (this->rd_condition_.in ());
               if (retcode != ::DDS::RETCODE_OK)

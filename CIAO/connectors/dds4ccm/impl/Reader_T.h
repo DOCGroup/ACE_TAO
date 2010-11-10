@@ -30,7 +30,6 @@ namespace CIAO
       {
       typedef ::CIAO::NDDS::DataReader_T<DDS_TYPE> DataReader_type;
       typedef ConditionManager_T<DDS_TYPE> ConditionManager_type;
-      typedef ::CIAO::NDDS::DDS_QueryCondition_i QueryCondition_type;
 
       public:
         /// Constructor

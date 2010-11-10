@@ -34,7 +34,7 @@ namespace CIAO
       void read_wo_instance (
         typename DDS_TYPE::dds_seq_type & data,
         typename DDS_TYPE::sampleinfo_seq_type & sample_info,
-        DDSQueryCondition * qc);
+        ::DDS::QueryCondition_ptr qc);
 
       void read_w_instance (
         typename DDS_TYPE::dds_seq_type & data,
@@ -45,19 +45,19 @@ namespace CIAO
         typename DDS_TYPE::dds_seq_type & data,
         typename DDS_TYPE::sampleinfo_seq_type & sample_info,
         const DDS_Long & max_samples,
-        DDSQueryCondition * qc);
+        ::DDS::QueryCondition_ptr qc);
 
       ::DDS::ReturnCode_t get (
         typename DDS_TYPE::dds_seq_type & data,
         typename DDS_TYPE::sampleinfo_seq_type & sample_info,
         const DDS_Long & max_samples,
-        DDSReadCondition * rd);
+        ::DDS::ReadCondition_ptr rd);
 
       ::DDS::ReturnCode_t take (
         typename DDS_TYPE::dds_seq_type & data,
         typename DDS_TYPE::sampleinfo_seq_type & sample_info,
         const DDS_Long & max_samples,
-        DDSQueryCondition * qc);
+        ::DDS::QueryCondition_ptr qc);
 
       ::DDS::InstanceHandle_t check_handle (
         const typename DDS_TYPE::value_type& an_instance,

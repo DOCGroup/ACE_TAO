@@ -90,17 +90,21 @@ namespace CIAO
     DataReader_T<DDS_TYPE>::read_wo_instance (
       typename DDS_TYPE::dds_seq_type & data,
       typename DDS_TYPE::sampleinfo_seq_type & sample_info,
-      DDSQueryCondition * qc)
+      ::DDS::QueryCondition_ptr qc)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::read_wo_instance");
+
       DDS_ReturnCode_t retval = DDS_RETCODE_ERROR;
-      if (qc)
+
+      if (! ::CORBA::is_nil (qc))
         {
-          this->log_query_condition (qc);
+          DDS_QueryCondition_i * dds_qc =
+            dynamic_cast <DDS_QueryCondition_i *>(qc);
+          this->log_query_condition (dds_qc->get_rti_entity ());
           retval = this->rti_entity ()->read_w_condition (data,
                                                     sample_info,
                                                     DDS_LENGTH_UNLIMITED,
-                                                    qc);
+                                                    dds_qc->get_rti_entity ());
         }
       else
         {
@@ -175,17 +179,19 @@ namespace CIAO
       typename DDS_TYPE::dds_seq_type & data,
       typename DDS_TYPE::sampleinfo_seq_type & sample_info,
       const DDS_Long & max_samples,
-      DDSQueryCondition * qc)
+      ::DDS::QueryCondition_ptr qc)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::get");
 
-      if (qc)
+      if (! ::CORBA::is_nil (qc))
         {
-          this->log_query_condition (qc);
+          DDS_QueryCondition_i * dds_qc =
+            dynamic_cast <DDS_QueryCondition_i *>(qc);
+          this->log_query_condition (dds_qc->get_rti_entity ());
           return this->rti_entity ()->read_w_condition (data,
                                                   sample_info,
                                                   max_samples,
-                                                  qc);
+                                                  dds_qc->get_rti_entity ());
       }
       return DDS_RETCODE_ERROR;
     }
@@ -196,16 +202,18 @@ namespace CIAO
       typename DDS_TYPE::dds_seq_type & data,
       typename DDS_TYPE::sampleinfo_seq_type & sample_info,
       const DDS_Long & max_samples,
-      DDSReadCondition * rd)
+      ::DDS::ReadCondition_ptr rd)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::get");
 
-      if (rd)
+      if (! ::CORBA::is_nil (rd))
         {
+          DDS_ReadCondition_i * dds_rd =
+            dynamic_cast <DDS_ReadCondition_i *> (rd);
           return this->rti_entity ()->read_w_condition (data,
                                                   sample_info,
                                                   max_samples,
-                                                  rd);
+                                                  dds_rd->get_rti_entity ());
         }
       return DDS_RETCODE_ERROR;
     }
@@ -216,17 +224,19 @@ namespace CIAO
       typename DDS_TYPE::dds_seq_type & data,
       typename DDS_TYPE::sampleinfo_seq_type & sample_info,
       const DDS_Long & max_samples,
-      DDSQueryCondition * qc)
+      ::DDS::QueryCondition_ptr qc)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::take");
 
-      if (qc)
+      if (! ::CORBA::is_nil (qc))
         {
-          this->log_query_condition (qc);
+          DDS_QueryCondition_i * dds_qc =
+            dynamic_cast <DDS_QueryCondition_i *>(qc);
+          this->log_query_condition (dds_qc->get_rti_entity ());
           return this->rti_entity ()->take_w_condition (data,
                                                   sample_info,
                                                   max_samples,
-                                                  qc);
+                                                  dds_qc->get_rti_entity ());
         }
       else
         {

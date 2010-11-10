@@ -1,3 +1,24 @@
+Wed Nov 10 11:07:18 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager_T.h:
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+          Changed interfaces of get_readcondition and get_querycondition_xxx.
+          Now a ::DDS::Read/QueryCondition is returned.
+
+        * connectors/dds4ccm/impl/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.h:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.h:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/WaitSet.h:
+        * connectors/dds4ccm/impl/ndds/WaitSet.cpp:
+          Because of interface changes in ConditionManager.
+
 Wed Nov 10 10:26:40 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * rules.ciao.GNU:
