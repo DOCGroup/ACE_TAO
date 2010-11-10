@@ -1,3 +1,8 @@
+Wed Nov 10 14:45:14 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * MPC/config/taoidl3toxmidefaults.mpb:
+          Fixed MPC problem from my previos commit.
+
 Wed Nov 10 14:17:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/ccm_dds.idl:
