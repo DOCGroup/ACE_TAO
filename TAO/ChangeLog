@@ -1,3 +1,8 @@
+Wed Nov 10 19:07:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+          Updated some dds trait typedefs
+
 Wed Nov 10 14:16:40 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
