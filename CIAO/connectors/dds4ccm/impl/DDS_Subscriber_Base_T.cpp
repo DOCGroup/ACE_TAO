@@ -70,7 +70,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
 
       this->dds_read_->set_impl (this->data_reader_,
                                 &this->condition_manager_);
-      this->ccm_data_reader_->set_impl (this->data_reader_);
+      this->ccm_data_reader_->set_dds_entity (this->data_reader_);
     }
 }
 

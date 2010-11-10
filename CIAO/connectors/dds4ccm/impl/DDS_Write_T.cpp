@@ -74,7 +74,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
         }
       this->ccm_dds_writer_->set_rti_entity (rw->get_rti_entity ());
       this->writer_t_->set_rti_entity (this->ccm_dds_writer_);
-      this->ccm_data_writer_->set_impl (this->ccm_dds_writer_);
+      this->ccm_data_writer_->set_dds_entity (this->ccm_dds_writer_);
     }
 }
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>

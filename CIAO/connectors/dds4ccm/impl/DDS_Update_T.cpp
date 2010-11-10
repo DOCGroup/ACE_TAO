@@ -79,7 +79,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
         }
       this->ccm_dds_writer_->set_rti_entity (rw->get_rti_entity ());
       this->dds_update_->set_rti_entity (this->ccm_dds_writer_);
-      this->ccm_data_writer_->set_impl (this->ccm_dds_writer_);
+      this->ccm_data_writer_->set_dds_entity (this->ccm_dds_writer_);
     }
 }
 

@@ -82,10 +82,10 @@ namespace CIAO
       get_matched_subscription_data (::DDS::SubscriptionBuiltinTopicData & ,
                                      const ::DDS::InstanceHandle_t & );
 
-      void set_impl (::DDS::DataWriter_ptr dr);
+      void set_dds_entity (::DDS::DataWriter_ptr dr);
 
       ::DDS::DataWriter_ptr
-      get_impl (void);
+      get_dds_entity (void);
 
     private:
       ::DDS::DataWriter_var impl_;
