@@ -18,13 +18,10 @@ namespace CIAO
   namespace NDDS
   {
     template <typename DDS_TYPE>
-    class DDS_DataWriterListener_T;
-
-    template <typename DDS_TYPE>
     class DataWriter_T
-      : public virtual DDS_DataWriter_Base
+      : public virtual DDS_DataWriter_Base,
+        public virtual DDS_TYPE::typed_writer_type
     {
-    typedef DDS_DataWriterListener_T<DDS_TYPE> DataWriterListener_type;
     public:
       explicit DataWriter_T (::DDSDataWriter * dw = 0,
       ::DDS::DomainParticipant_ptr dp = ::DDS::DomainParticipant::_nil ()); // @todo);

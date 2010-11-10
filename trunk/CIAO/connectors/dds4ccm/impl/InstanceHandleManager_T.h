@@ -37,13 +37,15 @@ namespace CIAO
         const typename DDS_TYPE::value_type & datum,
         const ::DDS::InstanceHandle_t & instance_handle);
 
-      void set_rti_entity (::CIAO::NDDS::DataWriter_T<DDS_TYPE> *rti_entity);
+      void set_dds_writer (::DDS::DataWriter_ptr dds_writer);
 
     protected:
-      ::CIAO::NDDS::DataWriter_T <DDS_TYPE> * rti_entity (void);
+      /// This method doesn't increment the refcount, only for internal
+      /// usage
+      typename DDS_TYPE::typed_writer_type::_ptr_type dds_writer (void);
 
     private:
-      ::CIAO::NDDS::DataWriter_T <DDS_TYPE> * rti_entity_;
+      typename DDS_TYPE::typed_writer_type::_var_type dds_writer_;
     };
   }
 }

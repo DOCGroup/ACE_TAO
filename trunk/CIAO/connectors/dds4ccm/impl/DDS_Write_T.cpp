@@ -73,7 +73,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
           throw ::CORBA::INTERNAL ();
         }
       this->ccm_dds_writer_->set_rti_entity (rw->get_rti_entity ());
-      this->writer_t_->set_rti_entity (this->ccm_dds_writer_);
+      this->writer_t_->set_dds_writer (dwv_tmp.in ());
       this->ccm_data_writer_->set_dds_entity (this->ccm_dds_writer_);
     }
 }
@@ -147,7 +147,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove (
     {
       this->ccm_dds_writer_->set_rti_entity (0);
       this->writer_t_->_set_component (CCM_TYPE::base_type::_nil ());
-      this->writer_t_->set_rti_entity (0);
+      this->writer_t_->set_dds_writer (::DDS::DataWriter::_nil ());
     }
   else
     {

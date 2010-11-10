@@ -50,6 +50,170 @@ namespace CIAO
     }
 
     template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DataReader_T<DDS_TYPE>::read (
+        typename DDS_TYPE::seq_type & /*data_values*/,
+        ::DDS::SampleInfoSeq & /*sample_infos*/,
+        ::CORBA::Long /*max_samples*/,
+        ::DDS::SampleStateMask /*sample_states*/,
+        ::DDS::ViewStateMask /*view_states*/,
+        ::DDS::InstanceStateMask /*instance_states*/)
+    {
+      throw ::CORBA::NO_IMPLEMENT ();
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DataReader_T<DDS_TYPE>::take (
+      typename DDS_TYPE::seq_type & /*data_values*/,
+      ::DDS::SampleInfoSeq & /*sample_infos*/,
+      ::CORBA::Long /*max_samples*/,
+      ::DDS::SampleStateMask /*sample_states*/,
+      ::DDS::ViewStateMask /*view_states*/,
+      ::DDS::InstanceStateMask /*instance_states*/)
+    {
+      throw ::CORBA::NO_IMPLEMENT ();
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DataReader_T<DDS_TYPE>::read_w_condition (
+      typename DDS_TYPE::seq_type & /*data_values*/,
+      ::DDS::SampleInfoSeq & /*sample_infos*/,
+      ::CORBA::Long /*max_samples*/,
+      ::DDS::ReadCondition_ptr /*a_condition*/)
+    {
+      throw ::CORBA::NO_IMPLEMENT ();
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DataReader_T<DDS_TYPE>::take_w_condition (
+      typename DDS_TYPE::seq_type & /*data_values*/,
+      ::DDS::SampleInfoSeq & /*sample_infos*/,
+      ::CORBA::Long /*max_samples*/,
+      ::DDS::ReadCondition_ptr /*a_condition*/)
+    {
+      throw ::CORBA::NO_IMPLEMENT ();
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DataReader_T<DDS_TYPE>::read_next_sample (
+      typename DDS_TYPE::value_type & /*data_values*/,
+      ::DDS::SampleInfo & /*sample_info*/)
+    {
+      throw ::CORBA::NO_IMPLEMENT ();
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DataReader_T<DDS_TYPE>::take_next_sample (
+      typename DDS_TYPE::value_type & /*data_values*/,
+      ::DDS::SampleInfo & /*sample_info*/)
+    {
+      throw ::CORBA::NO_IMPLEMENT ();
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DataReader_T<DDS_TYPE>::read_instance (
+      typename DDS_TYPE::seq_type & /*data_values*/,
+      ::DDS::SampleInfoSeq & /*sample_infos*/,
+      ::CORBA::Long /*max_samples*/,
+      const ::DDS::InstanceHandle_t & /*a_handle*/,
+      ::DDS::SampleStateMask /*sample_states*/,
+      ::DDS::ViewStateMask /*view_states*/,
+      ::DDS::InstanceStateMask /*instance_states*/)
+    {
+      throw ::CORBA::NO_IMPLEMENT ();
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DataReader_T<DDS_TYPE>::take_instance (
+      typename DDS_TYPE::seq_type & /*data_values*/,
+      ::DDS::SampleInfoSeq & /*sample_infos*/,
+      ::CORBA::Long /*max_samples*/,
+      const ::DDS::InstanceHandle_t & /*a_handle*/,
+      ::DDS::SampleStateMask /*sample_states*/,
+      ::DDS::ViewStateMask /*view_states*/,
+      ::DDS::InstanceStateMask /*instance_states*/)
+    {
+      throw ::CORBA::NO_IMPLEMENT ();
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DataReader_T<DDS_TYPE>::read_next_instance (
+      typename DDS_TYPE::seq_type & /*data_values*/,
+      ::DDS::SampleInfoSeq & /*sample_infos*/,
+      ::CORBA::Long /*max_samples*/,
+      const ::DDS::InstanceHandle_t & /*previous_handle*/,
+      ::DDS::SampleStateMask /*sample_states*/,
+      ::DDS::ViewStateMask /*view_states*/,
+      ::DDS::InstanceStateMask /*instance_states*/)
+    {
+      throw ::CORBA::NO_IMPLEMENT ();
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DataReader_T<DDS_TYPE>::take_next_instance (
+      typename DDS_TYPE::seq_type & /*data_values*/,
+      ::DDS::SampleInfoSeq & /*sample_infos*/,
+      ::CORBA::Long /*max_samples*/,
+      const ::DDS::InstanceHandle_t & /*previous_handle*/,
+      ::DDS::SampleStateMask /*sample_states*/,
+      ::DDS::ViewStateMask /*view_states*/,
+      ::DDS::InstanceStateMask /*instance_states*/)
+    {
+      throw ::CORBA::NO_IMPLEMENT ();
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DataReader_T<DDS_TYPE>::read_next_instance_w_condition (
+      typename DDS_TYPE::seq_type & /*data_values*/,
+      ::DDS::SampleInfoSeq & /*sample_infos*/,
+      ::CORBA::Long /*max_samples*/,
+      const ::DDS::InstanceHandle_t & /*previous_handle*/,
+      ::DDS::ReadCondition_ptr /*a_condition*/)
+    {
+      throw ::CORBA::NO_IMPLEMENT ();
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DataReader_T<DDS_TYPE>::take_next_instance_w_condition (
+      typename DDS_TYPE::seq_type & /*data_values*/,
+      ::DDS::SampleInfoSeq & /*sample_infos*/,
+      ::CORBA::Long /*max_samples*/,
+      const ::DDS::InstanceHandle_t & /*previous_handle*/,
+      ::DDS::ReadCondition_ptr /*a_condition*/)
+    {
+      throw ::CORBA::NO_IMPLEMENT ();
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DataReader_T<DDS_TYPE>::return_loan (
+      typename DDS_TYPE::seq_type & /*data_values*/,
+      ::DDS::SampleInfoSeq & /*sample_infos*/)
+    {
+      throw ::CORBA::NO_IMPLEMENT ();
+    }
+
+    template <typename DDS_TYPE>
+    ::DDS::ReturnCode_t
+    DataReader_T<DDS_TYPE>::get_key_value (
+      typename DDS_TYPE::value_type & /*key_holder*/,
+      const ::DDS::InstanceHandle_t & /*handle*/)
+    {
+      throw ::CORBA::NO_IMPLEMENT ();
+    }
+
+    template <typename DDS_TYPE>
     void
     DataReader_T<DDS_TYPE>::log_query_condition (
       DDSQueryCondition * qc)
