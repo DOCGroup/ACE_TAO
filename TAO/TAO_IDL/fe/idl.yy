@@ -3794,6 +3794,12 @@ string_type_spec
                                                   $$
                                                 )
                                             );
+
+              if (!idl_global->in_typedef ()
+                  && !idl_global->anon_silent ())
+                {
+                  idl_global->err ()->anonymous_type_diagnostic ();
+                }
             }
 
           delete ev;
@@ -3821,12 +3827,6 @@ string_type_spec
                                               $$
                                             )
                                         );
-
-          if (!idl_global->in_typedef ()
-              && !idl_global->anon_silent ())
-            {
-              idl_global->err ()->anonymous_type_diagnostic ();
-            }
         }
         ;
 
@@ -3874,6 +3874,12 @@ wstring_type_spec
               (void) idl_global->root ()->fe_add_string (
                                               AST_String::narrow_from_decl ($$)
                                             );
+
+              if (!idl_global->in_typedef ()
+                  && !idl_global->anon_silent ())
+                {
+                  idl_global->err ()->anonymous_type_diagnostic ();
+                }
             }
         }
         | wstring_head
