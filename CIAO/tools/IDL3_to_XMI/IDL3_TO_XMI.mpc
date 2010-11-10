@@ -1,8 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(DAnCE_IDL3_TO_XMI_BE) : acelib, install_lib, dance_output, dance_xml_utils, tao_idl_fe {
-  sharedname   = DAnCE_IDL3_TO_XMI_BE
+project(CIAO_IDL3_TO_XMI_BE) : acelib, install_lib, ciao_output, dance_xml_utils, tao_idl_fe {
+  sharedname   = CIAO_IDL3_TO_XMI_BE
   dynamicflags += CIAO_IDL3_TO_XMI_BUILD_DLL
 
   Source_Files {
@@ -25,23 +25,23 @@ project(DAnCE_IDL3_TO_XMI_BE) : acelib, install_lib, dance_output, dance_xml_uti
     be_sunsoft.h
     be_util.h
     IDL3_to_XMI_visitor.h
-    DAnCE_IDL3_TO_XMI_Export.h
+    CIAO_IDL3_TO_XMI_Export.h
   }
 }
 
-project(DAnCE_IDL3_TO_XMI_EXE) : aceexe, install, dance_output, dance_xml_utils, xerces, tao_idl_fe {
-  after          += DAnCE_IDL3_TO_XMI_BE
+project(CIAO_IDL3_TO_XMI_EXE) : aceexe, install, ciao_output, dance_xml_utils, xerces, tao_idl_fe {
+  after          += CIAO_IDL3_TO_XMI_BE
   exename         = tao_idl3_to_xmi
-  libs           += DAnCE_IDL3_TO_XMI_BE
+  libs           += CIAO_IDL3_TO_XMI_BE
   includes       += $(TAO_ROOT) .
-  exeout          = $(DANCE_ROOT)/bin
+  exeout          = $(CIAO_ROOT)/bin
 
   // Adding a strict ordering dependency with TAO_IDL_EXE. It appears on some systems, there
   // can be a race between these two projects for tao_idl.cpp, causing some errors.
   after          += TAO_IDL_EXE
 
   // This is necessary for MPC to pull in rules.ciao.GNU
-  includes       += $(DANCE_ROOT)
+  includes       += $(CIAO_ROOT)
 
   verbatim(gnuace, local) {
     ifeq ($(TAO_IDL_PREPROCESSOR),)
