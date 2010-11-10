@@ -109,11 +109,16 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
                                (this->run_ + 1) * this->iterations_ - 1));
         return coherentwrite_info.iteration >= (this->run_ + 1) * this->iterations_ - 1;
       }
+    catch (const ::CCM_DDS::InternalError &)
+      {
+      }
+    catch (const ::CCM_DDS::NonExistent &)
+      {
+      }
     catch (...)
       {
-        // No need to catch. An error is given
-        // when this example didn't run at all.
-        ACE_DEBUG ((LM_INFO, "CRASH !\n"));
+        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::check_last: "
+                              "ERROR: Unexpected exception caught\n"));
       }
     return false;
   }

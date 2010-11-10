@@ -81,10 +81,16 @@ namespace CIAO_Different_Test_Receiver_Impl
                                this->iterations ()));
         return queryfiltertest_info.iteration == this->iterations ();
       }
+    catch (const ::CCM_DDS::InternalError &)
+      {
+      }
+    catch (const ::CCM_DDS::NonExistent &)
+      {
+      }
     catch (...)
       {
-        // no need to catch. An error is given
-        // when this example didn't run at all.
+        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::check_last: "
+                              "ERROR: Unexpected exception caught\n"));
       }
     return false;
   }
