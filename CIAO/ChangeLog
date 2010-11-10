@@ -1,3 +1,18 @@
+Wed Nov 10 14:14:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/CCM_DataReader.h:
+        * connectors/dds4ccm/impl/CCM_DataReader.cpp:
+        * connectors/dds4ccm/impl/CCM_DataWriter.h:
+        * connectors/dds4ccm/impl/CCM_DataWriter.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+          Renamed get_impl to get_dds_entity and set_impl to set_dds_entity.
+
+        * connectors/dds4ccm/tests/DDSEntity/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/DDSEntity/Sender/Writer_Sender_exec.cpp:
+          Resolved test issues
+
 Wed Nov 10 12:40:32 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:

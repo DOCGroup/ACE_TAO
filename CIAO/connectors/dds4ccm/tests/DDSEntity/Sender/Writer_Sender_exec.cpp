@@ -228,34 +228,48 @@ namespace CIAO_Writer_Sender_Impl
         throw ::CORBA::INTERNAL ();
       }
 
-    typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
+    ::CIAO::DDS4CCM::CCM_DataWriter * ccm_dw =
+      dynamic_cast < ::CIAO::DDS4CCM::CCM_DataWriter * > (dds_dw.in ());
 
-    DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type*> (dds_dw.in ());
-    if (typed_ccm_dw)
+    if (ccm_dw)
       {
-        DDSDataWriter* dds_datawriter = typed_ccm_dw->get_rti_entity ();
-        if (dds_datawriter)
+        typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
+
+        DataWriter_type * typed_ccm_dw =
+          dynamic_cast <DataWriter_type *> (ccm_dw->get_dds_entity ());
+        if (typed_ccm_dw)
           {
-            this->writer_ = ::CIAO_WriterTestConnector_DDS_Event_Impl::WriterTest_DDS_Traits::datawriter_type::narrow (dds_datawriter);
-            if (!this->writer_)
+            DDSDataWriter* dds_datawriter = typed_ccm_dw->get_rti_entity ();
+            if (dds_datawriter)
+              {
+                this->writer_ =
+                  ::CIAO_WriterTestConnector_DDS_Event_Impl::WriterTest_DDS_Traits::datawriter_type::narrow (dds_datawriter);
+                if (!this->writer_)
+                  {
+                    ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::ccm_activate - "
+                                "Error narrowing to a typed "
+                                "DDS DataWriter.\n"));
+                    throw ::CORBA::INTERNAL ();
+                  }
+              }
+            else
               {
                 ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::ccm_activate - "
-                            "Error narrowing to a typed "
-                            "DDS DataWriter.\n"));
+                            "Error getting DDS DataWriter.\n"));
                 throw ::CORBA::INTERNAL ();
               }
           }
         else
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::ccm_activate - "
-                        "Error getting DDS DataWriter.\n"));
+                        "Error casting DataWriter to typed DataWriter\n"));
             throw ::CORBA::INTERNAL ();
           }
       }
     else
       {
         ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::ccm_activate - "
-                    "Error casting DataWriter to typed DataWriter\n"));
+                    "Error casting DataWriter to CCM_DataWriter\n"));
         throw ::CORBA::INTERNAL ();
       }
 
