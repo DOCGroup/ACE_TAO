@@ -1,7 +1,13 @@
+Wed Nov 10 09:01:37 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * TAO_IDL/ast/ast_field.cpp:
+          Fixed segmentation fault in tao_idl that exhibited in CIAO code
+          and that was triggered by my memory leak fixes from yesterday.
+
 Tue Nov  9 17:12:36 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * TAO_IDL/util/utl_global.cpp:
-          Explicintly silenced reports about deprecated anonymous IDL types.
+          Explicitly silenced reports about deprecated anonymous IDL types.
           It looks my previous change enabled those reports. Until I
           investigate what was wrong this the simplest I can do.
 
