@@ -99,10 +99,10 @@ namespace CIAO
       get_matched_publication_data (::DDS::PublicationBuiltinTopicData & ,
                                     const ::DDS::InstanceHandle_t & );
 
-      void set_impl (::DDS::DataReader_ptr dr);
+      void set_dds_entity (::DDS::DataReader_ptr dr);
 
       ::DDS::DataReader_ptr
-      get_impl (void);
+      get_dds_entity (void);
 
     private:
       ::DDS::DataReader_var impl_;

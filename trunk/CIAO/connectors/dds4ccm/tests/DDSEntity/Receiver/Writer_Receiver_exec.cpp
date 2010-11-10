@@ -92,44 +92,58 @@ namespace CIAO_Writer_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    ::DDS::DataReader_var ccm_dr_proxy =
+    ::DDS::DataReader_var dds_dr =
       this->context_->get_connection_info_out_dds_entity ();
 
-    if (::CORBA::is_nil (ccm_dr_proxy.in ()))
+    if (::CORBA::is_nil (dds_dr.in ()))
       {
         ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
                     "Datareader connection is NIL.\n"));
         throw ::CORBA::INTERNAL ();
       }
 
-    typedef ::CIAO::NDDS::DDS_DataReader_Base DataReader_type;
+    ::CIAO::DDS4CCM::CCM_DataReader * ccm_dr =
+      dynamic_cast < ::CIAO::DDS4CCM::CCM_DataReader *  > (dds_dr.in ());
 
-    DataReader_type * typed_ccm_dr = dynamic_cast <DataReader_type*> (ccm_dr_proxy.in ());
-    if (typed_ccm_dr)
+    if (ccm_dr)
       {
-        DDSDataReader* dds_reader = typed_ccm_dr->get_rti_entity ();
-        if (dds_reader)
+        typedef ::CIAO::NDDS::DDS_DataReader_Base DataReader_type;
+
+        DataReader_type * typed_ccm_dr =
+          dynamic_cast <DataReader_type*> (ccm_dr->get_dds_entity ());
+        if (typed_ccm_dr)
           {
-            this->reader_ = ::CIAO_WriterTestConnector_DDS_Event_Impl::WriterTest_DDS_Traits::datareader_type::narrow (dds_reader);
-            if (!this->reader_)
+            DDSDataReader* dds_reader = typed_ccm_dr->get_rti_entity ();
+            if (dds_reader)
+              {
+                this->reader_ =
+                  ::CIAO_WriterTestConnector_DDS_Event_Impl::WriterTest_DDS_Traits::datareader_type::narrow (dds_reader);
+                if (!this->reader_)
+                  {
+                    ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                "Error narrowing to a typed "
+                                "DDS DataReader.\n"));
+                    throw ::CORBA::INTERNAL ();
+                  }
+              }
+            else
               {
                 ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
-                            "Error narrowing to a typed "
-                            "DDS DataReader.\n"));
+                            "Error getting DDS Datareader.\n"));
                 throw ::CORBA::INTERNAL ();
               }
           }
         else
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
-                        "Error getting DDS Datareader.\n"));
+                        "Error casting DataReader to typed DataReader\n"));
             throw ::CORBA::INTERNAL ();
           }
       }
     else
       {
         ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
-                    "Error casting DataReader to typed DataReader\n"));
+                    "Error casting DDS::DataReader to CCM_DataReader\n"));
         throw ::CORBA::INTERNAL ();
       }
 
