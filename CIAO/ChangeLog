@@ -1,3 +1,23 @@
+Wed Nov 10 09:49:51 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.h:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+          Changed interfaces of several methods to use ::DDS::xxx instead of
+          DDS_xxx.
+
+        * connectors/dds4ccm/tests/CoherentUpdater/Receiver/CoherentUpdate_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/Different/Receiver/Different_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp:
+          Improved exception handling during "check_last".
+
 Wed Nov 10 08:28:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager_T.cpp:

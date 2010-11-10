@@ -38,31 +38,31 @@ namespace CIAO
 
       void read_w_instance (
         typename DDS_TYPE::dds_seq_type & data,
-        const ::DDS_InstanceHandle_t & lookup_hnd,
+        const ::DDS::InstanceHandle_t & lookup_hnd,
         typename DDS_TYPE::sampleinfo_seq_type & sample_info);
 
-      DDS_ReturnCode_t get (
+      ::DDS::ReturnCode_t get (
         typename DDS_TYPE::dds_seq_type & data,
         typename DDS_TYPE::sampleinfo_seq_type & sample_info,
         const DDS_Long & max_samples,
         DDSQueryCondition * qc);
 
-      DDS_ReturnCode_t get (
+      ::DDS::ReturnCode_t get (
         typename DDS_TYPE::dds_seq_type & data,
         typename DDS_TYPE::sampleinfo_seq_type & sample_info,
         const DDS_Long & max_samples,
         DDSReadCondition * rd);
 
-      DDS_ReturnCode_t take (
+      ::DDS::ReturnCode_t take (
         typename DDS_TYPE::dds_seq_type & data,
         typename DDS_TYPE::sampleinfo_seq_type & sample_info,
         const DDS_Long & max_samples,
         DDSQueryCondition * qc);
 
-      DDS_InstanceHandle_t
+      ::DDS::InstanceHandle_t
       lookup_instance (const typename DDS_TYPE::value_type& an_instance);
 
-      DDS_ReturnCode_t
+      ::DDS::ReturnCode_t
       return_loan (
         typename DDS_TYPE::dds_seq_type & data,
         typename DDS_TYPE::sampleinfo_seq_type & sample_info);
