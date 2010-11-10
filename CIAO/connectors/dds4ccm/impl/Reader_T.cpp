@@ -1,10 +1,12 @@
 // $Id$
 
 #include "dds4ccm/impl/Utils.h"
-#include "dds4ccm/impl/ndds/DataReader_T.h"
 
+#if (CIAO_DDS4CCM_NDDS==1)
+#include "dds4ccm/impl/ndds/DataReader_T.h"
 #include "dds4ccm/impl/ndds/convertors/SampleInfo.h"
 #include "dds4ccm/impl/ndds/convertors/StringSeq.h"
+#endif
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
 

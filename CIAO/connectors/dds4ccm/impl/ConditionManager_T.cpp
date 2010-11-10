@@ -1,6 +1,5 @@
 // $Id$
 
-#include "dds4ccm/impl/ndds/DataReader_T.h"
 #include "dds4ccm/impl/ndds/ReadCondition.h"
 #include "dds4ccm/impl/ndds/QueryCondition.h"
 

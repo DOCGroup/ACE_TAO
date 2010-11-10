@@ -1,7 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-#include "dds4ccm/impl/ndds/DomainParticipant.h"
 #include "ace/Tokenizer_T.h"
 #include "ace/Env_Value_T.h"
 
@@ -203,7 +202,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ccm_activate (void)
       ::DDS::ReturnCode_t const retcode = this->domain_participant_->set_listener (
                                   this->domainparticipantlistener_.in (), mask);
 
-      if (retcode != DDS_RETCODE_OK)
+      if (retcode != ::DDS::RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Base_Connector_T::ccm_activate - "
@@ -226,7 +225,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ccm_passivate (void)
         this->domain_participant_->set_listener (
           ::DDS::DomainParticipantListener::_nil (), 0);
 
-      if (retcode != DDS_RETCODE_OK)
+      if (retcode != ::DDS::RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Base_Connector_T::ccm_passivate - "

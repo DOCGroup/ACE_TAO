@@ -33,4 +33,7 @@ enum DDS4CCM_Vendor
   DDS4CCM_OPENDDS
 };
 
+#define DDS_INSTANCE_HANDLE_T_IN const ::DDS::InstanceHandle_t &
+#define DDS_INSTANCE_HANDLE_T_RETN ::DDS::InstanceHandle_t
+
 #endif /* DDS4CCM_CONF_H_ */

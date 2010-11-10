@@ -14,7 +14,6 @@
 # define HANDLE_TYPE_NATIVE      long
 # define HANDLE_NIL_NATIVE       0
 # define BUILTIN_TOPIC_KEY_TYPE_NATIVE     long
-#endif
 
 #define TheParticipantFactory
 #define PARTICIPANT_QOS_DEFAULT
@@ -1280,5 +1279,7 @@ module DDS {
       };
   };
 };
+
+#endif
 
 #endif

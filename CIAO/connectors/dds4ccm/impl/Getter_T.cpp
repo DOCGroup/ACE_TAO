@@ -104,7 +104,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_many
                                                          sample_info,
                                                          1);
 
-          if (retcode == DDS_RETCODE_OK && data.length () >= 1)
+          if (retcode == ::DDS::RETCODE_OK && data.length () >= 1)
             {
               ::CORBA::ULong number_read = 0;
               for (::DDS_Long index = 0; index < sample_info.length (); index ++)
@@ -284,7 +284,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true, VENDOR_TYPE>::get_one
               // Return the loan of each read.
               DDS_ReturnCode_t const retval =
                 this->impl ()->return_loan (data, sample_info);
-              if (retval != DDS_RETCODE_OK)
+              if (retval != ::DDS::RETCODE_OK)
                 {
                   DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                     "Getter_T::get_one - "
@@ -339,7 +339,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_on
                         translate_retcode (retcode)));
                   return false;
                 }
-              else if (retcode != DDS_RETCODE_OK)
+              else if (retcode != ::DDS::RETCODE_OK)
                 {
                   DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "Getter_T::get_one - "
@@ -370,7 +370,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_on
                 }
               // Return the loan of each read.
               ::DDS::ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
-              if (retval != DDS_RETCODE_OK)
+              if (retval != ::DDS::RETCODE_OK)
                 {
                   DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                     "Getter_T::get_one - "

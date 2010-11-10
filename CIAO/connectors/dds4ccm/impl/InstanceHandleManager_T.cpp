@@ -1,12 +1,14 @@
 // $Id$
 
-#include "dds4ccm/impl/ndds/DataWriter_T.h"
+#if (CIAO_DDS4CCM_NDDS==1)
+# include "dds4ccm/impl/ndds/DataWriter_T.h"
+#endif
 #include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYPE>::InstanceHandleManager_T (void)
-  : writer_ (0)
+  : rti_entity_ (0)
 {
 }
 
@@ -18,11 +20,11 @@ CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYP
 
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 CIAO::NDDS::DataWriter_T <DDS_TYPE> *
-CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYPE>::impl (void)
+CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYPE>::rti_entity (void)
 {
-  if (this->writer_)
+  if (this->rti_entity_)
     {
-      return this->writer_;
+      return this->rti_entity_;
     }
   else
     {
@@ -38,7 +40,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE, DDS4CCM_Vend
 CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYPE>::
   register_instance (const typename DDS_TYPE::value_type & datum)
 {
-  return this->impl ()->register_instance (datum);
+  return this->rti_entity ()->register_instance (datum);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -47,16 +49,16 @@ CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYP
   const typename DDS_TYPE::value_type & datum,
   const ::DDS::InstanceHandle_t & instance_handle)
 {
-  this->impl ()->unregister_instance (datum, instance_handle);
+  this->rti_entity ()->unregister_instance (datum, instance_handle);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYPE>::set_impl (
-  ::CIAO::NDDS::DataWriter_T<DDS_TYPE> *writer)
+CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYPE>::set_rti_entity (
+  ::CIAO::NDDS::DataWriter_T<DDS_TYPE> *rti_entity)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::InstanceHandleManager_T::set_impl");
 
- this->writer_ = writer;
+ this->rti_entity_ = rti_entity;
 }
 
