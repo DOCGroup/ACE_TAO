@@ -20,25 +20,3 @@ project {
 
   after += CIAO_IDL3_TO_XMI_EXE
 }
-// -*- MPC -*-
-// $Id$
-
-project {
-  // Set the idl3_to_xmi compiler and flags as template values
-  specific {
-    tao_idl3_to_xmi       = <%quote%>$(CIAO_ROOT)/bin/tao_idl3_to_xmi<%quote%>
-    tao_idl3_to_xmi_dep   = <%quote%>$(CIAO_ROOT)/bin/tao_idl3_to_xmi<%quote%>
-  }
-
-  Define_Custom(IDL3TOXMI) {
-    automatic                   = 1
-    dependent                   = $(TAO_IDL3_TO_XMI_DEP)
-    command                     = $(TAO_IDL3_TO_XMI)
-    libpath                     = $(ACE_ROOT)/lib
-    inputext                    = .idl
-    generic_outputext           = .xmi
-    keyword idl3toxmiflags      = commandflags
-  }
-
-  after += CIAO_IDL3_TO_XMI_EXE
-}
