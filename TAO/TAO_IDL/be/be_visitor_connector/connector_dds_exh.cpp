@@ -12,6 +12,8 @@
  */
 //=============================================================================
 
+#include "nr_extern.h"
+
 be_visitor_connector_dds_exh::be_visitor_connector_dds_exh (
       be_visitor_context *ctx)
   : be_visitor_connector_dds_ex_base (ctx)
@@ -151,6 +153,9 @@ be_visitor_connector_dds_exh::gen_dds_traits (void)
       return;
     }
 
+  AST_Decl *comp_scope =
+    ScopeAsDecl (this->node_->defined_in ());
+
   UTL_ScopedName *dt_name = (*datatype)->name ();
   BE_GlobalData::DDS_IMPL the_dds_impl = be_global->dds_impl ();
 
@@ -168,6 +173,7 @@ be_visitor_connector_dds_exh::gen_dds_traits (void)
         }
 
       os_ << "Seq dds_seq_type;" << be_nl
+          << "typedef ::" << dt_name << "Seq seq_type;" << be_nl
           << "typedef ::" << dt_name
           << "TypeSupport type_support;" << be_nl
           << "typedef ::DDS_SampleInfoSeq sampleinfo_seq_type;" << be_nl
@@ -175,7 +181,11 @@ be_visitor_connector_dds_exh::gen_dds_traits (void)
           << "typedef ::" << dt_name
           << "DataWriter datawriter_type;" << be_nl
           << "typedef ::" << dt_name
-          << "DataReader datareader_type;" << be_uidt_nl
+          << "DataReader datareader_type;" << be_nl
+          << "typedef ::" << comp_scope->full_name ()
+          << "::DDS_Typed::DataWriter typed_writer_type;" << be_nl
+          << "typedef ::" << comp_scope->full_name ()
+          << "::DDS_Typed::DataReader typed_reader_type;" << be_uidt_nl
           << "};";
     }
 }
@@ -225,7 +235,7 @@ be_visitor_connector_dds_exh::gen_connector_traits (void)
       << "typedef ::" << (*dt_seq)->name () << " seq_type;" << be_nl
       << "typedef " << (global_comp ? "" : "::")
       << comp_scope->name () << "::CCM_"
-      << this->node_->local_name () << "_Context context_type;";
+      << this->node_->local_name () << "_Context context_type;" << be_nl;
 
   if (this->visit_component_scope (this->node_) == -1)
     {
