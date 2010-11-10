@@ -1,3 +1,19 @@
+Wed Nov 10 11:23:06 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+          Fixed a check for anonymous type. YACC file contained that check for
+          plain strings while in CPP file it was done for bounded strings. As
+          I thought that YACC is a primary source I wrongly moved this check to
+          a wrong place just to make YACC and CPP files consistent. Now I moved
+          it back to bounded strings.
+          Plus added a check for anonymous bounded wide strings which are also
+          deprecated by CORBA spec now.
+
+        * TAO_IDL/util/utl_global.cpp:
+          Restored back to error reporting when anonymous IDL type is
+          encountered.
+
 Wed Nov 10 09:01:37 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * TAO_IDL/ast/ast_field.cpp:

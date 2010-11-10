@@ -6383,6 +6383,12 @@ tao_yyreduce:
                                                   (tao_yyval.dcval)
                                                 )
                                             );
+
+              if (!idl_global->in_typedef ()
+                  && !idl_global->anon_silent ())
+                {
+                  idl_global->err ()->anonymous_type_diagnostic ();
+                }
             }
 
           delete ev;
@@ -6413,12 +6419,6 @@ tao_yyreduce:
                                               (tao_yyval.dcval)
                                             )
                                         );
-
-          if (!idl_global->in_typedef ()
-              && !idl_global->anon_silent ())
-            {
-              idl_global->err ()->anonymous_type_diagnostic ();
-            }
         }
     break;
 
@@ -6471,6 +6471,12 @@ tao_yyreduce:
               (void) idl_global->root ()->fe_add_string (
                                               AST_String::narrow_from_decl ((tao_yyval.dcval))
                                             );
+
+              if (!idl_global->in_typedef ()
+                  && !idl_global->anon_silent ())
+                {
+                  idl_global->err ()->anonymous_type_diagnostic ();
+                }
             }
         }
     break;
