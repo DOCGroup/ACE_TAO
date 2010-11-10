@@ -31,7 +31,7 @@ CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::write_i (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Writer_T::write_i");
 
-  ::DDS::ReturnCode_t const retval = this->rti_entity ()->write (datum, instance_handle);
+  ::DDS::ReturnCode_t const retval = this->dds_writer ()->write (datum, instance_handle);
 
   if (retval != ::DDS::RETCODE_OK)
     {
@@ -65,7 +65,7 @@ CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::write_many (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Writer_T::write_many");
 
-  Coherent_Changes_Guard guard (this->rti_entity ()->get_publisher(),
+  Coherent_Changes_Guard guard (this->dds_writer ()->get_publisher(),
                                 this->is_coherent_write_);
 
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
