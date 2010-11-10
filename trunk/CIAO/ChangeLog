@@ -1,3 +1,28 @@
+Wed Nov 10 12:40:32 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/DataWriterListener_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.h:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+        * connectors/dds4ccm/impl/TopicListener_T.h:
+        * connectors/dds4ccm/impl/Updater_T.cpp:
+        * connectors/dds4ccm/impl/Utils.h:
+        * connectors/dds4ccm/impl/Writer_T.cpp:
+        * connectors/dds4ccm/impl/dds4ccm_conf.h:
+        * connectors/dds4ccm/impl/ndds/DataWriter_T.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.h:
+        * connectors/dds4ccm/impl/ndds/convertors/InstanceHandle_t.h:
+          Portability changes
+
 Wed Nov 10 11:46:39 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/IDL3/ImpliedIDL/All/raw_include.idl:

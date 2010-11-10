@@ -11,7 +11,6 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 #include "dds4ccm/impl/Reader_T.h"
-#include "dds4ccm/impl/ndds/DataReader_T.h"
 #include "dds4ccm/impl/PortStatusListener_T.h"
 #include "dds4ccm/impl/ContentFilterSetting.h"
 #include "dds4ccm/impl/ndds/ContentFilteredTopic.h"

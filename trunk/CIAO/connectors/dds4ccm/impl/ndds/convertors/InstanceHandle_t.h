@@ -11,10 +11,7 @@
 #define DDS4CCM_INSTANCEHANDLE_T_H_
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
-
 #include "ndds/ndds_cpp.h"
-#define DDS_INSTANCE_HANDLE_T_IN const ::DDS::InstanceHandle_t &
-#define DDS_INSTANCE_HANDLE_T_RETN ::DDS::InstanceHandle_t
 
 inline void
 operator<<= (::DDS::InstanceHandle_t &ddsinstancehandle, const ::DDS_InstanceHandle_t & instancehandle)
