@@ -3986,7 +3986,7 @@ dnl name.
   dnl tested function name.
   AC_CHECK_FUNC([pthread_condattr_setpshared],
     [],
-    [AC_DEFINE([ACE_LACKS_CONDATTR_PSHARED], 1, 
+    [AC_DEFINE([ACE_LACKS_CONDATTR_PSHARED], 1,
                [Define to 1 if system lacks pthread_condattr_setpshared()])])
 
   dnl ACE_CHECK_LACKS_FUNCS(pthread_attr_setstack)
@@ -7487,11 +7487,6 @@ if test -d $srcdir/protocols; then
     ])
   fi
   AC_SUBST([protocols],[protocols])
-fi
-
-if test -d $srcdir/TAO -a X$ace_user_with_tao = Xyes; then
-  AC_CONFIG_SUBDIRS([TAO])
-  AC_SUBST([TAO],[TAO])
 fi
 
 dnl Note that the "ACE_VERSION" in the message below is an M4 macro
