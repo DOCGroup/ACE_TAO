@@ -15,12 +15,13 @@
 module carnsarn
 {
   typedef boolean t_or_f;
+  typedef wstring<3> three_char_wstring;
 
   struct one
   {
     short shortshort;
     string along;
-    wstring<3> trinity;
+    three_char_wstring trinity;
   };
 };
 
