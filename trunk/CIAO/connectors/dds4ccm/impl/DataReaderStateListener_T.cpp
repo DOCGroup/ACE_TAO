@@ -228,8 +228,8 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
             }
         }
       // Return the loan
-      DDS_ReturnCode_t const retval = reader->return_loan (data, sample_info);
-      if (retval != DDS_RETCODE_OK)
+      ::DDS::ReturnCode_t const retval = reader->return_loan (data, sample_info);
+      if (retval != ::DDS::RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         ACE_TEXT ("DataReaderStateListener_T::on_data_available_i - ")

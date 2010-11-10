@@ -105,10 +105,16 @@ namespace CIAO_Reader_Test_Receiver_Impl
             return readertest_info.iteration == this->iterations_;
           }
       }
+    catch (const ::CCM_DDS::InternalError &)
+      {
+      }
+    catch (const ::CCM_DDS::NonExistent &)
+      {
+      }
     catch (...)
       {
         ACE_ERROR ((LM_ERROR, "Receiver_exec_i::check_last: "
-                              "Unexpected exception caught\n"));
+                              "ERROR: Unexpected exception caught\n"));
       }
     return false;
   }

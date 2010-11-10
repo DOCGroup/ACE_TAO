@@ -71,7 +71,7 @@ namespace CIAO
 
         DataReader_type * impl (void);
 
-        DDS_InstanceHandle_t check_handle (
+        ::DDS::InstanceHandle_t check_handle (
           const typename DDS_TYPE::value_type& an_instance,
           const ::DDS::InstanceHandle_t & instance_handle);
 

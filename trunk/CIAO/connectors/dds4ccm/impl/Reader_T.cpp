@@ -99,8 +99,8 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_l
     }
 
   // Return the loan
-  DDS_ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
-  if (retval != DDS_RETCODE_OK)
+  ::DDS::ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
+  if (retval != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                     "Reader_T::read_last - "
@@ -157,8 +157,8 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_a
     }
 
   // Return the loan
-  DDS_ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
-  if (retval != DDS_RETCODE_OK)
+  ::DDS::ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
+  if (retval != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                     "Reader_T::read_all - "
@@ -168,7 +168,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_a
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
-DDS_InstanceHandle_t
+::DDS::InstanceHandle_t
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::check_handle (
   const typename DDS_TYPE::value_type& an_instance,
   const ::DDS::InstanceHandle_t & instance_handle)
@@ -176,8 +176,11 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::check_
   ::DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
   hnd <<= instance_handle;
 
-  ::DDS_InstanceHandle_t const lookup_hnd =
+  ::DDS::InstanceHandle_t const tmp =
       this->impl ()->lookup_instance (an_instance);
+  ::DDS_InstanceHandle_t lookup_hnd = ::DDS_HANDLE_NIL;
+  lookup_hnd <<= tmp;
+
   if (!DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL) &&
       !DDS_InstanceHandle_equals (&hnd, &lookup_hnd))
     {
@@ -187,7 +190,9 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::check_
     {
       throw ::CCM_DDS::NonExistent ();
     }
-  return lookup_hnd;
+  ::DDS::InstanceHandle_t ret = ::DDS::HANDLE_NIL;
+  ret <<= lookup_hnd;
+  return ret;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
@@ -197,16 +202,15 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_o
   ::CCM_DDS::ReadInfo_out info,
   const ::DDS::InstanceHandle_t & instance_handle)
 {
-  ::DDS_InstanceHandle_t const lookup_hnd =
+  ::DDS::InstanceHandle_t const lookup_hnd =
     this->check_handle (an_instance, instance_handle);
 
   typename DDS_TYPE::sampleinfo_seq_type sample_info;
   typename DDS_TYPE::dds_seq_type data;
 
-  // For now, only read with instance
   this->impl ()->read_w_instance (data, lookup_hnd, sample_info);
 
-  ::DDS_Long sample = data.length();
+  ::CORBA::Long sample = data.length();
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                 ACE_TEXT ("Reader_T::read_one_last - ")
                 ACE_TEXT ("total number of samples <%u>\n"),
@@ -224,7 +228,8 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_o
         }
     }
   // Return the loan
-  DDS_ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
+  ::DDS::ReturnCode_t const retval = this->impl ()->return_loan (data,
+                                                                 sample_info);
   if (retval != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -242,7 +247,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_o
   ::CCM_DDS::ReadInfoSeq& infos,
   const ::DDS::InstanceHandle_t & instance_handle)
 {
-  ::DDS_InstanceHandle_t const lookup_hnd =
+  ::DDS::InstanceHandle_t const lookup_hnd =
     this->check_handle (an_instance, instance_handle);
 
   typename DDS_TYPE::sampleinfo_seq_type sample_info;
@@ -276,7 +281,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_o
     }
 
   // Return the loan
-  DDS_ReturnCode_t const retval =
+  ::DDS::ReturnCode_t const retval =
     this->impl ()->return_loan (data, sample_info);
   if (retval != DDS_RETCODE_OK)
     {

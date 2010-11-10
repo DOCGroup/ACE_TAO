@@ -113,8 +113,8 @@ namespace CIAO
         }
       if (retval != DDS_RETCODE_OK && retval != DDS_RETCODE_NO_DATA)
         {
-          DDS_ReturnCode_t const retval = this->return_loan (data, sample_info);
-          if (retval != DDS_RETCODE_OK)
+          ::DDS::ReturnCode_t const retval = this->return_loan (data, sample_info);
+          if (retval != ::DDS::RETCODE_OK)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                             ACE_TEXT ("DataReader_T::read_wo_instance - ")
@@ -133,11 +133,13 @@ namespace CIAO
     void
     DataReader_T<DDS_TYPE>::read_w_instance (
       typename DDS_TYPE::dds_seq_type & data,
-      const ::DDS_InstanceHandle_t & lookup_hnd,
+      const ::DDS::InstanceHandle_t & lookup_hnd,
       typename DDS_TYPE::sampleinfo_seq_type & sample_info)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::read_w_instance");
 
+      ::DDS_InstanceHandle_t hnd = DDS_HANDLE_NIL;
+      hnd <<= lookup_hnd;
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_INFO, DDS4CCM_INFO
                     ACE_TEXT ("DataReader_T::read_w_instance - ")
                     ACE_TEXT ("Start reading with instance.\n")));
@@ -145,14 +147,14 @@ namespace CIAO
                                             data,
                                             sample_info,
                                             DDS_LENGTH_UNLIMITED,
-                                            lookup_hnd,
+                                            hnd,
                                             DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
                                             DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
                                             DDS_ALIVE_INSTANCE_STATE);
       if (retval != DDS_RETCODE_OK && retval != DDS_RETCODE_NO_DATA)
         {
-          DDS_ReturnCode_t const retval = this->return_loan (data, sample_info);
-          if (retval != DDS_RETCODE_OK)
+          ::DDS::ReturnCode_t const retval = this->return_loan (data, sample_info);
+          if (retval != ::DDS::RETCODE_OK)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                             ACE_TEXT ("DataReader_T::read_w_instance - ")
@@ -168,7 +170,7 @@ namespace CIAO
     }
 
     template <typename DDS_TYPE>
-    DDS_ReturnCode_t
+    ::DDS::ReturnCode_t
     DataReader_T<DDS_TYPE>::get (
       typename DDS_TYPE::dds_seq_type & data,
       typename DDS_TYPE::sampleinfo_seq_type & sample_info,
@@ -189,7 +191,7 @@ namespace CIAO
     }
 
     template <typename DDS_TYPE>
-    DDS_ReturnCode_t
+    ::DDS::ReturnCode_t
     DataReader_T<DDS_TYPE>::get (
       typename DDS_TYPE::dds_seq_type & data,
       typename DDS_TYPE::sampleinfo_seq_type & sample_info,
@@ -209,7 +211,7 @@ namespace CIAO
     }
 
     template <typename DDS_TYPE>
-    DDS_ReturnCode_t
+    ::DDS::ReturnCode_t
     DataReader_T<DDS_TYPE>::take (
       typename DDS_TYPE::dds_seq_type & data,
       typename DDS_TYPE::sampleinfo_seq_type & sample_info,
@@ -238,15 +240,19 @@ namespace CIAO
     }
 
     template <typename DDS_TYPE>
-    ::DDS_InstanceHandle_t
+    ::DDS::InstanceHandle_t
     DataReader_T<DDS_TYPE>::lookup_instance (
       const typename DDS_TYPE::value_type& an_instance)
     {
-      return this->rti_entity ()->lookup_instance (an_instance);
+      ::DDS_InstanceHandle_t hnd =
+        this->rti_entity ()->lookup_instance (an_instance);
+      ::DDS::InstanceHandle_t ret = ::DDS::HANDLE_NIL;
+      ret <<= hnd;
+      return ret;
     }
 
     template <typename DDS_TYPE>
-    ::DDS_ReturnCode_t
+    ::DDS::ReturnCode_t
     DataReader_T<DDS_TYPE>::return_loan (
       typename DDS_TYPE::dds_seq_type & data,
       typename DDS_TYPE::sampleinfo_seq_type & sample_info)

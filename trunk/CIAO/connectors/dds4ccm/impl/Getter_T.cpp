@@ -158,9 +158,9 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_many
                     "Getter_Base_T::get_many - "
                     "Error while reading from DDS: <%C>\n",
                     translate_retcode (retcode)));
-              DDS_ReturnCode_t const retval =
+              ::DDS::ReturnCode_t const retval =
                 this->impl ()->return_loan (data, sample_info);
-              if (retval != DDS_RETCODE_OK)
+              if (retval != ::DDS::RETCODE_OK)
                 {
                   DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                     "Getter_Base_T::get_many - "
@@ -170,9 +170,9 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_many
               throw ::CCM_DDS::InternalError (retcode, 1);
             }
 
-          DDS_ReturnCode_t const retval =
+          ::DDS::ReturnCode_t const retval =
             this->impl ()->return_loan (data, sample_info);
-          if (retval != DDS_RETCODE_OK)
+          if (retval != ::DDS::RETCODE_OK)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                 "Getter_Base_T::get_many - "
@@ -362,9 +362,9 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_on
                         "Getter_T::get_one - "
                         "Error while reading from DDS: <%C>\n",
                         translate_retcode (retcode)));
-                  DDS_ReturnCode_t const retval =
+                  ::DDS::ReturnCode_t const retval =
                     this->impl ()->return_loan (data, sample_info);
-                  if (retval != DDS_RETCODE_OK)
+                  if (retval != ::DDS::RETCODE_OK)
                     {
                       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "Getter_T::get_one - "
