@@ -44,8 +44,6 @@ namespace CIAO
          public virtual LocalObject_T<CCM_TYPE>,
          private virtual ACE_Copy_Disabled
       {
-      typedef ::CIAO::NDDS::DDS_ReadCondition_i ReadCondition_type;
-      typedef ::CIAO::NDDS::DDS_QueryCondition_i QueryCondition_type;
       typedef ::CIAO::NDDS::DataReader_T<DDS_TYPE> DataReader_type;
 
       typedef ::CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>
@@ -106,7 +104,6 @@ namespace CIAO
         ::DDS::ReturnCode_t get (typename DDS_TYPE::dds_seq_type & data,
                                  typename DDS_TYPE::sampleinfo_seq_type & sample_info,
                                  const DDS_Long & max_samples);
-        bool check_condition (::DDS::Condition_ptr condition);
       };
 
       template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>

@@ -94,23 +94,11 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
           ? max_samples = DDS_LENGTH_UNLIMITED
           : max_samples = this->control_->max_delivered_data ();
 
-      ::DDS::ReturnCode_t result = ::DDS::RETCODE_OK;
-      QueryCondition_type * qc =
-        this->condition_manager_.get_querycondition_listener ();
-      if (!qc)
-        {
-          result = reader->take (data,
-                                 sample_info,
-                                 max_samples,
-                                 0);
-        }
-      else
-        {
-          result = reader->take (data,
-                                 sample_info,
-                                 max_samples,
-                                 qc->get_rti_entity ());
-        }
+      ::DDS::ReturnCode_t result =
+        reader->take (data,
+                      sample_info,
+                      max_samples,
+                      this->condition_manager_.get_querycondition_listener ());
       if (result == ::DDS::RETCODE_NO_DATA)
         {
           return;

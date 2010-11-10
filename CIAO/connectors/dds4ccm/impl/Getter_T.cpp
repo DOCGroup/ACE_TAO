@@ -1,4 +1,4 @@
-// $Id$
+// // $Id$
 #include "dds4ccm/impl/Utils.h"
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
@@ -44,18 +44,18 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::get");
 
-  ReadCondition_type * rc = this->condition_manager_->get_readcondition ();
-  if (rc)
+  ::DDS::ReadCondition_var rc = this->condition_manager_->get_readcondition ();
+  if (! ::CORBA::is_nil (rc.in ()))
     {
       return this->impl ()->get (data,
                                  sample_info,
                                  max_samples,
-                                 rc->get_rti_entity ());
+                                 rc.in ());
     }
   else
     {
-      QueryCondition_type * qc = this->condition_manager_->get_querycondition_getter ();
-      if (!qc)
+      ::DDS::QueryCondition_var qc = this->condition_manager_->get_querycondition_getter ();
+      if (::CORBA::is_nil (qc.in ()))
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "Getter_Base_T::get - "
@@ -66,25 +66,8 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get (
       return this->impl ()->get (data,
                                  sample_info,
                                  max_samples,
-                                 qc->get_rti_entity ());
+                                 qc.in ());
     }
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-bool
-CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::check_condition (
-  ::DDS::Condition_ptr condition)
-{
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::check_condition");
-
-  ReadCondition_type * rc = this->condition_manager_->get_readcondition ();
-  QueryCondition_type * qc = this->condition_manager_->get_querycondition_getter ();
-
-  ReadCondition_type * rc_cond = dynamic_cast <ReadCondition_type *> (condition);
-  QueryCondition_type * qc_cond = dynamic_cast <QueryCondition_type *> (condition);
-
-  return ((rc_cond && rc_cond->get_rti_entity () == rc->get_rti_entity ()) ||
-          (qc_cond && qc_cond->get_rti_entity () == qc->get_rti_entity ()) );
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -112,7 +95,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_many
 
   for (::CORBA::ULong i = 0; i < active_conditions.length(); i++)
     {
-      if (this->check_condition (active_conditions[i].in ()))
+      if (this->condition_manager_->check_condition (active_conditions[i].in ()))
         {
           // Check trigger
           active_conditions[i]->get_trigger_value ();
@@ -247,7 +230,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true, VENDOR_TYPE>::get_one
 
   for (::CORBA::ULong i = 0; i < active_conditions.length(); i++)
     {
-      if (this->check_condition (active_conditions[i].in ()))
+      if (this->condition_manager_->check_condition (active_conditions[i].in ()))
         {
           bool valid_data_read = false;
 
@@ -337,7 +320,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_on
   typename DDS_TYPE::dds_seq_type data;
   for (::CORBA::ULong i = 0; i < active_conditions.length(); i++)
     {
-      if (this->check_condition (active_conditions[i].in ()))
+      if (this->condition_manager_->check_condition (active_conditions[i].in ()))
         {
           bool valid_data_read = false;
 
