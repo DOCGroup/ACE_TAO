@@ -4,6 +4,10 @@
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "ace/Reactor.h"
 
+#if (CIAO_DDS4CCM_NDDS==1)
+# include "dds4ccm/impl/ndds/DomainParticipant.h"
+#endif
+
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_TopicBase_Connector_T (void) :
     BaseConnector ()
@@ -181,6 +185,8 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_topic (
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::init_default_topic");
 
+#if (CIAO_DDS4CCM_NDDS==1)
+
   if (::CORBA::is_nil (this->topic_.in ()))
     {
       ::CIAO::NDDS::DDS_DomainParticipant_i *part =
@@ -240,6 +246,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_topic (
           throw ::CCM_DDS::InternalError (retcode, 0);
         }
     }
+#endif
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>

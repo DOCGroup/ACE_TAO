@@ -4,7 +4,10 @@
 #include "dds4ccm/impl/DataReaderStateListener_T.h"
 #include "dds4ccm/impl/DataWriterListener_T.h"
 #include "dds4ccm/impl/Updater_T.h"
+
+#if (CIAO_DDS4CCM_NDDS==1)
 #include "dds4ccm/impl/ndds/DataWriter_T.h"
+#endif
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
@@ -75,7 +78,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
           throw ::CORBA::INTERNAL ();
         }
       this->ccm_dds_writer_->set_rti_entity (rw->get_rti_entity ());
-      this->dds_update_->set_impl (this->ccm_dds_writer_);
+      this->dds_update_->set_rti_entity (this->ccm_dds_writer_);
       this->ccm_data_writer_->set_impl (this->ccm_dds_writer_);
     }
 }
@@ -155,7 +158,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove (
     }
   this->ccm_dds_writer_->set_rti_entity (0);
   this->dds_update_->_set_component (CCM_TYPE::base_type::_nil ());
-  this->dds_update_->set_impl (0);
+  this->dds_update_->set_rti_entity (0);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>

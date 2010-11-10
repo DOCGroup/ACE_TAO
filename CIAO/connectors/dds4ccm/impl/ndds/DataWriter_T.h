@@ -10,8 +10,7 @@
 #define DATAWRITER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-
-#include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 #include "dds4ccm/impl/ndds/DataWriter.h"
 
 namespace CIAO

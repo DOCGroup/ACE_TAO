@@ -11,7 +11,6 @@
 #define DOMAINPARTICIPANT_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
 #include "dds4ccm/impl/ndds/DataWriter_T.h"
 #include "dds4ccm/impl/ndds/DataReader_T.h"
