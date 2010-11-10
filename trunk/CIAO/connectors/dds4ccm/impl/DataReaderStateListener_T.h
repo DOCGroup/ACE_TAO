@@ -25,8 +25,6 @@ namespace CIAO
       ConditionManager_type;
     typedef ::CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
       DataReaderStateHandler_type;
-    typedef ::CIAO::NDDS::DDS_QueryCondition_i
-      QueryCondition_type;
 
     public:
       /// Constructor

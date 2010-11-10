@@ -48,6 +48,11 @@ namespace CIAO
 
       DDSWaitSet * get_rti_entity (void);
 
+      bool check_condition (::DDS::ReadCondition_ptr rc,
+                            ::DDS::QueryCondition_ptr qc,
+                            ::DDS::Condition_ptr condition);
+
+
       void init (void);
 
     private:

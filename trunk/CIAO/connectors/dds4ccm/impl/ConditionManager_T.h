@@ -26,12 +26,13 @@ namespace CIAO
       ConditionManager_T (void);
       ~ConditionManager_T (void);
 
-      ::CIAO::NDDS::DDS_ReadCondition_i  * get_readcondition (void);
+      ::DDS::ReadCondition_ptr get_readcondition (void);
 
-      ::CIAO::NDDS::DDS_QueryCondition_i * get_querycondition_getter (void);
-      ::CIAO::NDDS::DDS_QueryCondition_i * get_querycondition_reader (void);
-      ::CIAO::NDDS::DDS_QueryCondition_i * get_querycondition_listener (void);
+      ::DDS::QueryCondition_ptr get_querycondition_getter (void);
+      ::DDS::QueryCondition_ptr get_querycondition_reader (void);
+      ::DDS::QueryCondition_ptr get_querycondition_listener (void);
 
+      bool check_condition (::DDS::Condition_ptr condition);
       void init_readcondition (void);
 
       bool wait (::DDS::ConditionSeq  & active_conditions,
@@ -61,9 +62,6 @@ namespace CIAO
       ::DDS::ReadCondition_var rd_condition_;
 
       DataReader_type * impl (void);
-
-      ::CIAO::NDDS::DDS_QueryCondition_i * get_querycondition (
-        ::DDS::QueryCondition_ptr dds_qc);
 
       void remove_condition (::DDS::QueryCondition_ptr qc,
                              const char * type);

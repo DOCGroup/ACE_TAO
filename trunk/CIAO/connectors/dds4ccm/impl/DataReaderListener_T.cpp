@@ -91,26 +91,11 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
   typename DDS_TYPE::sampleinfo_seq_type sample_info;
 
 
-  ::DDS::ReturnCode_t result = ::DDS::RETCODE_OK;
-
-  QueryCondition_type * qc =
-    this->condition_manager_.get_querycondition_listener ();
-
-
-  if (!qc)
-    {
-      result = reader->take (data,
-                             sample_info,
-                             DDS_LENGTH_UNLIMITED,
-                             0);
-    }
-  else
-    {
-      result = reader->take (data,
-                             sample_info,
-                             DDS_LENGTH_UNLIMITED,
-                             qc->get_rti_entity ());
-    }
+  ::DDS::ReturnCode_t const result =
+    reader->take (data,
+                  sample_info,
+                  DDS_LENGTH_UNLIMITED,
+                  this->condition_manager_.get_querycondition_listener ());
 
   if (result == ::DDS::RETCODE_NO_DATA)
     {
