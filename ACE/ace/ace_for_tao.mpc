@@ -333,7 +333,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Select_Reactor.h
     SStringfwd.h
     Static_Object_Lock.h
-    Strategies.h
     String_Base_Const.h
     Svc_Conf.h
     Svc_Conf_Tokens.h
