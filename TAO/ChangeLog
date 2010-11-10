@@ -1,3 +1,11 @@
+Wed Nov 10 19:51:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+          Updated some dds trait typedefs
+
+        * tao/orbconf.h:
+          Doxygen changes
+
 Wed Nov 10 19:07:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
