@@ -1,3 +1,11 @@
+Wed Nov 10 08:28:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+          Improved logging.
+
+        * connectors/dds4ccm/impl/ndds/WaitSet.cpp:
+          Resolved issue regarding detach_condition.
+
 Tue Nov  9 19:40:21 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
