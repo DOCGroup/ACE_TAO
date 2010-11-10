@@ -430,7 +430,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     SStringfwd.h
     Stack_Trace.h
     Static_Object_Lock.h
-    Strategies.h
     String_Base_Const.h
     Svc_Conf.h
     Svc_Conf_Param.h
