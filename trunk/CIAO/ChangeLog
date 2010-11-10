@@ -1,3 +1,20 @@
+Wed Nov 10 11:21:03 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/AsynchT/Receiver/AsynchT_Receiver_exec.h:
+        * connectors/ami4ccm/tests/AsynchT/Receiver/AsynchT_Receiver_exec.cpp:
+
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchTA_conn_i.h:
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchTA_conn_i.cpp:
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender.mpc:
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender_exec.h:
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender_exec.cpp:
+
+        * connectors/ami4ccm/tests/AsynchT/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/AsynchT/descriptors/run_test.pl:
+        Updated test by using -Gex option and _conn_i.h/cpp file for ReplyHandler.
+        Solved valgrind errors.
+        
+
 Wed Nov 10 11:07:18 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager_T.h:
