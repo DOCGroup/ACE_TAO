@@ -1,3 +1,8 @@
+Wed Nov 10 11:46:39 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/IDL3/ImpliedIDL/All/raw_include.idl:
+          Corrected use of deprecated bounded wide string.
+
 Wed Nov 10 11:21:03 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/AsynchT/Receiver/AsynchT_Receiver_exec.h:
@@ -13,7 +18,6 @@ Wed Nov 10 11:21:03 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/ami4ccm/tests/AsynchT/descriptors/run_test.pl:
         Updated test by using -Gex option and _conn_i.h/cpp file for ReplyHandler.
         Solved valgrind errors.
-        
 
 Wed Nov 10 11:07:18 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
