@@ -1,0 +1,12 @@
+// $Id$
+
+project (*IDL): taoidl3toxmidefaults {
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
+  IDL3TOXMI_Files {
+    c_ok.idl
+    c_nok.idl
+  }
+  custom_only = 1
+}

@@ -27,6 +27,15 @@ ifndef TAO_IDL3_TO_IDL2_DEP
 endif
 endif
 
+ifndef TAO_IDL3_TO_XMI
+  TAO_IDL3_TO_XMI = $(CIAO_ROOT)/tools/IDL3_to_XMI/tao_idl3_to_xmi
+  TAO_IDL3_TO_XMI_DEP = $(TAO_IDL3_TO_XMI)$(EXEEXT)
+else
+ifndef TAO_IDL3_TO_XMI_DEP
+  TAO_IDL3_TO_XMI_DEP = $(TAO_IDL3_TO_XMI)
+endif
+endif
+
 ifeq (,$(findstring -L$(CIAO_ROOT)/ciao,$(LDFLAGS)))
   LDFLAGS += -L$(CIAO_ROOT)/ciao
 endif
