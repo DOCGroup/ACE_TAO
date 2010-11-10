@@ -183,9 +183,9 @@ be_visitor_connector_dds_exh::gen_dds_traits (void)
           << "typedef ::" << dt_name
           << "DataReader datareader_type;" << be_nl
           << "typedef ::" << comp_scope->full_name ()
-          << "::DDS_Typed_Entity::DataWriter typed_writer_type;" << be_nl
+          << "::DataWriter typed_writer_type;" << be_nl
           << "typedef ::" << comp_scope->full_name ()
-          << "::DDS_Typed_Entity::DataReader typed_reader_type;" << be_uidt_nl
+          << "::DataReader typed_reader_type;" << be_uidt_nl
           << "};";
     }
 }
