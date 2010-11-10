@@ -59,11 +59,14 @@ namespace CIAO
         const DDS_Long & max_samples,
         DDSQueryCondition * qc);
 
-      ::DDS::InstanceHandle_t
-      lookup_instance (const typename DDS_TYPE::value_type& an_instance);
+      ::DDS::InstanceHandle_t check_handle (
+        const typename DDS_TYPE::value_type& an_instance,
+        const ::DDS::InstanceHandle_t & instance_handle);
 
-      ::DDS::ReturnCode_t
-      return_loan (
+      ::DDS::InstanceHandle_t lookup_instance (
+        const typename DDS_TYPE::value_type& an_instance);
+
+      ::DDS::ReturnCode_t return_loan (
         typename DDS_TYPE::dds_seq_type & data,
         typename DDS_TYPE::sampleinfo_seq_type & sample_info);
 
