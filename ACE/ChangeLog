@@ -1,3 +1,8 @@
+Wed Nov 10 10:17:27 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Added support for tao_idl3_to_xmi in makefiles.
+
 Sun Nov  7 00:13:13 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * tests/INET_Addr_Test.cpp: Mismatching the addr->name test is not
