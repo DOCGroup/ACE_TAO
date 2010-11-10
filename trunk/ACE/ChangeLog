@@ -1,3 +1,14 @@
+Wed Nov 10 14:49:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SOCK_Dgram_Mcast.h:
+          Doxygen changes
+
+        * configure.ac:
+        * m4/ace.m4:
+        * m4/tao.m4:
+          Removed support for TAO, thanks to Mark <markg85 at gmail dot com>
+          for reporting this
+
 Wed Nov 10 10:17:27 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:

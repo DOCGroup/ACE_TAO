@@ -24,8 +24,6 @@ dnl Macros that add ACE configuration options to a `configure' script.
 dnl ACE_CONFIGURATION_OPTIONS
 AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
 [
- AM_CONDITIONAL([BUILD_ACE_FOR_TAO], false)
-
  AC_ARG_ENABLE([ace-codecs],
   AS_HELP_STRING(--enable-ace-codecs,build ACE with codecs support [[[yes]]]),
   [
@@ -580,25 +578,6 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
  ACE_ENABLE_QOS
  ACE_ENABLE_SSL
  ACE_ENABLE_ACEXML
-
- AC_ARG_WITH([tao],
-  AS_HELP_STRING(--with-tao,build TAO (the ACE ORB) [[[yes]]]),
-  [
-   case "${withval}" in
-    yes)
-      ace_user_with_tao=yes
-      ;;
-    no)
-      ace_user_with_tao=no
-      ;;
-    *)
-      AC_MSG_ERROR([bad value ${withval} for --with-tao])
-      ;;
-   esac
-  ],
-  [
-   ace_user_with_tao=yes
-  ])
 
  AC_ARG_WITH([tli-device],
   AS_HELP_STRING(--with-tli-device(=DEV),device for TCP on TLI [[/dev/tcp]]),
@@ -1608,8 +1587,6 @@ AM_CONDITIONAL([BUILD_GL], [test X$ace_user_enable_fl_reactor = Xyes])
 AM_CONDITIONAL([BUILD_FL], [test X$ace_user_enable_fl_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_FLREACTOR],
                [test X$ace_user_enable_fl_reactor = Xyes])
-AM_CONDITIONAL([BUILD_TAO_FLRESOURCE],
-               [test X$ace_user_enable_fl_reactor = Xyes])
 ])
 
 
@@ -1638,8 +1615,6 @@ AC_ARG_ENABLE([qt-reactor],
                 ])
 AM_CONDITIONAL([BUILD_QT], [test X$ace_user_enable_qt_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_QTREACTOR],
-               [test X$ace_user_enable_qt_reactor = Xyes])
-AM_CONDITIONAL([BUILD_TAO_QTRESOURCE],
                [test X$ace_user_enable_qt_reactor = Xyes])
 ])
 
@@ -1671,8 +1646,6 @@ AC_ARG_ENABLE([tk-reactor],
                 ])
 AM_CONDITIONAL([BUILD_TK], [test X$ace_user_enable_tk_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_TKREACTOR],
-               [test X$ace_user_enable_tk_reactor = Xyes])
-AM_CONDITIONAL([BUILD_TAO_TKRESOURCE],
                [test X$ace_user_enable_tk_reactor = Xyes])
 ])
 
@@ -1709,8 +1682,6 @@ dnl line, then "no_x" is set to "yes."
 		])
 AM_CONDITIONAL([BUILD_XT], [test X$ace_user_enable_xt_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_XTREACTOR],
-               [test X$ace_user_enable_xt_reactor = Xyes])
-AM_CONDITIONAL([BUILD_TAO_XTRESOURCE],
                [test X$ace_user_enable_xt_reactor = Xyes])
 ])
 
@@ -1765,7 +1736,5 @@ AC_ARG_ENABLE([fox-reactor],
                ])
 AM_CONDITIONAL([BUILD_FOX], [test X$ace_user_enable_fox_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_FOXREACTOR],
-               [test X$ace_user_enable_fox_reactor = Xyes])
-AM_CONDITIONAL([BUILD_TAO_FOXRESOURCE],
                [test X$ace_user_enable_fox_reactor = Xyes])
 ])
