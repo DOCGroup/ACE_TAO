@@ -985,7 +985,6 @@ nobase_include_HEADERS += \
   Static_Object_Lock.h \
   Stats.h \
   Stats.inl \
-  Strategies.h \
   Strategies_T.cpp \
   Strategies_T.h \
   Strategies_T.inl \

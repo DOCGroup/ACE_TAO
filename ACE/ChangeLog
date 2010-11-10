@@ -1,3 +1,14 @@
+Wed Nov 10 18:12:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Makefile.am:
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+          Updated for removed file
+
+        * ace/Strategies.h:
+          Removed this file, was for backwards compatibility but had an invalid
+          include in it. Thanks to Helmut Böing for reporting this
+
 Wed Nov 10 14:49:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SOCK_Dgram_Mcast.h:
