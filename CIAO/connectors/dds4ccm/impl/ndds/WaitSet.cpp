@@ -87,22 +87,22 @@ namespace CIAO
       ::DDS::ReadCondition_var rc_cond = ::DDS::ReadCondition::_narrow (cond);
       ::DDS::QueryCondition_var qc_cond = ::DDS::QueryCondition::_narrow (cond);
 
-      if (! ::CORBA::is_nil (rc_cond.in ()))
-        {
-          DDS_ReadCondition_i * rc_proxy =
-            dynamic_cast <DDS_ReadCondition_i *> (rc_cond.in ());
-          if (rc_proxy)
-            {
-              return this->rti_entity ()->detach_condition (rc_proxy->get_rti_entity ());
-            }
-        }
-      else if (! ::CORBA::is_nil (qc_cond.in ()))
+       if (! ::CORBA::is_nil (qc_cond.in ()))
         {
           DDS_QueryCondition_i * qc_proxy =
             dynamic_cast <DDS_QueryCondition_i *> (qc_cond.in ());
           if (qc_proxy)
             {
               return this->rti_entity ()->detach_condition (qc_proxy->get_rti_entity ());
+            }
+        }
+      else if (! ::CORBA::is_nil (rc_cond.in ()))
+        {
+          DDS_ReadCondition_i * rc_proxy =
+            dynamic_cast <DDS_ReadCondition_i *> (rc_cond.in ());
+          if (rc_proxy)
+            {
+              return this->rti_entity ()->detach_condition (rc_proxy->get_rti_entity ());
             }
         }
       return ::DDS::RETCODE_BAD_PARAMETER;

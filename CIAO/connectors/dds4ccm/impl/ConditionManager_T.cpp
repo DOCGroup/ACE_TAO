@@ -390,7 +390,8 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::remove_conditions ()
     {
       if (! ::CORBA::is_nil (this->qc_getter_.in ()))
         {
-          if (this->ws_.detach_condition (this->qc_getter_.in ()) == ::DDS::RETCODE_OK)
+          retcode = this->ws_.detach_condition (this->qc_getter_.in ());
+          if (retcode == ::DDS::RETCODE_OK)
             {
               DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                             ACE_TEXT ("ConditionManager_T::remove_conditions - ")
@@ -402,13 +403,15 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::remove_conditions ()
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                             ACE_TEXT ("ConditionManager_T::remove_conditions - ")
-                            ACE_TEXT ("Unable to detach query condition from waitset.\n")));
+                            ACE_TEXT ("Unable to detach query condition from waitset: ")
+                            ACE_TEXT ("Error: <%C>\n"),
+                            translate_retcode (retcode) ));
             }
         }
       else
         {
-          ::CIAO::NDDS::DDS_QueryCondition_i * r_condition = this->get_querycondition_getter ();
-          if (!r_condition)
+          ::CIAO::NDDS::DDS_QueryCondition_i * q_condition = this->get_querycondition_getter ();
+          if (!q_condition)
             {
               retcode = this->ws_.detach_condition (this->rd_condition_.in ());
               if (retcode != ::DDS::RETCODE_OK)
