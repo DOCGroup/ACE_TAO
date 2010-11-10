@@ -1,3 +1,9 @@
+Wed Nov 10 19:52:53 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ccm_dds.idl:
+          Use some typedefs to hide the internal templated module for our
+          users
+
 Wed Nov 10 19:10:59 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/ccm_dds.idl:
