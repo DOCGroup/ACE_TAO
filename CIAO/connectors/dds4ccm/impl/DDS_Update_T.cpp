@@ -78,7 +78,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
           throw ::CORBA::INTERNAL ();
         }
       this->ccm_dds_writer_->set_rti_entity (rw->get_rti_entity ());
-      this->dds_update_->set_rti_entity (this->ccm_dds_writer_);
+      this->dds_update_->set_dds_writer (dwv_tmp.in ());
       this->ccm_data_writer_->set_dds_entity (this->ccm_dds_writer_);
     }
 }
@@ -158,7 +158,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove (
     }
   this->ccm_dds_writer_->set_rti_entity (0);
   this->dds_update_->_set_component (CCM_TYPE::base_type::_nil ());
-  this->dds_update_->set_rti_entity (0);
+  this->dds_update_->set_dds_writer (::DDS::DataWriter::_nil ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>

@@ -1,3 +1,21 @@
+Wed Nov 10 14:17:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ccm_dds.idl:
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.h:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.cpp:
+        * connectors/dds4ccm/impl/Updater_T.cpp:
+        * connectors/dds4ccm/impl/Writer_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriter_T.h:
+          Introduced a dds4ccm type specific datareader/datawriter. This will
+          be used within dds4ccm instead of the vendor specific type specific
+          reader/writer. The writer works, but the reader has to be finished,
+          several no_implement methods are added.
+
 Wed Nov 10 14:14:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/CCM_DataReader.h:
