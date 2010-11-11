@@ -214,9 +214,8 @@ namespace CIAO
       virtual ::DDS::ReturnCode_t get_qos (::DDS::DataReaderQos & qos);
 
       virtual ::DDS::ReturnCode_t
-      set_listener (
-        ::DDS::DataReaderListener_ptr a_listener,
-        ::DDS::StatusMask mask);
+      set_listener (::DDS::DataReaderListener_ptr a_listener,
+                    ::DDS::StatusMask mask);
 
       virtual ::DDS::DataReaderListener_ptr get_listener (void);
 
@@ -272,6 +271,17 @@ namespace CIAO
       typename DDS_TYPE::datareader_type * rti_entity (void);
 
       void log_query_condition (DDSQueryCondition * qc);
+
+      ::CORBA::ULong get_nr_valid_samples (
+        const typename DDS_TYPE::sampleinfo_seq_type& sample_infos);
+
+      void complete_read (
+        typename DDS_TYPE::dds_seq_type & dds_data_values,
+        typename DDS_TYPE::seq_type & data_values,
+        DDS_SampleInfoSeq & dds_sample_infos,
+        ::DDS::SampleInfoSeq & sample_infos,
+        const ::DDS::ReturnCode_t & retcode,
+        const char * method_name);
     };
   }
 }

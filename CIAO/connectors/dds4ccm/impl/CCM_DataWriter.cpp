@@ -128,14 +128,14 @@ CIAO::DDS4CCM::CCM_DataWriter::get_matched_subscription_data (
 void
 CIAO::DDS4CCM::CCM_DataWriter::set_dds_entity (::DDS::DataWriter_ptr dr)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DataWriter::set_impl");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DataWriter::set_dds_entity");
   this->impl_ = ::DDS::DataWriter::_duplicate (dr);
 }
 
 ::DDS::DataWriter_ptr
 CIAO::DDS4CCM::CCM_DataWriter::get_dds_entity (void)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DataWriter::get_impl");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DataWriter::get_dds_entity");
 
   return ::DDS::DataWriter::_duplicate (this->impl ());
 }
