@@ -257,7 +257,7 @@ namespace CIAO
                         "DDS_Subscriber_i::create_datareader_with_profile - "
                         "Error: RTI Topic returned a nil datareader.\n"));
           delete ccm_dds_drl;
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          return ::DDS::DataReader::_nil ();
         }
       else
         {
