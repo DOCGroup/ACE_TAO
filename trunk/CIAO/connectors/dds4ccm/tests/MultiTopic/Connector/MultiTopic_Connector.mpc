@@ -1,6 +1,27 @@
 // $Id$
+project (DDS_CCM_Example_MT_idl_gen) : taoidldefaults, anytypecode, dds4ccm_ts_default {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=CCM_DDS_MT_STUB_Export \
+              -Wb,stub_export_include=ccm_dds_mt_stub_export.h \
+              -Wb,skel_export_macro=CCM_DDS_MT_SKEL_Export \
+              -Wb,skel_export_include=ccm_dds_mt_skel_export.h \
+              -SS -Gxhst \
+              -I $(CIAO_ROOT)/connectors/dds4ccm/idl
+
+  IDL_Files {
+    ccm_dds_mt.idl
+  }
+
+  opendds_ts_flags += --export=CCM_DDS_MT_STUB_Export
+  ndds_ts_flags += -I $(CIAO_ROOT)/connectors/dds4ccm/idl
+  
+  DDSGenerator_Files {
+    ccm_dds_mt.idl
+  }
+}
+
 project(DDS_MultiTopic_Connector_idl_gen) : connectoridldefaults, dds4ccm {
-  after += DDS4CCM_idl_gen
+  after += DDS4CCM_idl_gen DDS_CCM_Example_MT_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=MULTITOPIC_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=MultiTopic_Connector_stub_export.h \
