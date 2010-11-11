@@ -197,14 +197,14 @@ CIAO::DDS4CCM::CCM_DataReader::get_matched_publication_data (
 void
 CIAO::DDS4CCM::CCM_DataReader::set_dds_entity (::DDS::DataReader_ptr dr)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DataReader::set_impl");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DataReader::set_dds_entity");
   this->impl_ = ::DDS::DataReader::_duplicate (dr);
 }
 
 ::DDS::DataReader_ptr
 CIAO::DDS4CCM::CCM_DataReader::get_dds_entity (void)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DataReader::get_impl");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DataReader::get_dds_entity");
 
   return ::DDS::DataReader::_duplicate (this->impl ());
 }

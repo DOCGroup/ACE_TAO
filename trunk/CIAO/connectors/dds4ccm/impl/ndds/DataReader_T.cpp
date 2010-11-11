@@ -9,6 +9,8 @@
 #include "dds4ccm/impl/ndds/Topic.h"
 #include "dds4ccm/impl/ndds/ContentFilteredTopic.h"
 
+#include "dds4ccm/impl/ndds/convertors/SampleInfoSeq.h"
+#include "dds4ccm/impl/ndds/convertors/SampleInfo.h"
 #include "dds4ccm/impl/ndds/convertors/SampleLostStatus.h"
 #include "dds4ccm/impl/ndds/convertors/SubscriptionMatchedStatus.h"
 #include "dds4ccm/impl/ndds/convertors/RequestedDeadlineMissedStatus.h"
@@ -49,150 +51,510 @@ namespace CIAO
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::~DataReader_T");
     }
 
+    /// For the requirement : 'samples ordered by instances' the following settings
+    /// are necessary: ordered_access -> true and
+    /// DDS_INSTANCE_PRESENTATION_QOS (default)
+    template <typename DDS_TYPE>
+    CORBA::ULong
+    DataReader_T<DDS_TYPE>::get_nr_valid_samples (
+      const typename DDS_TYPE::sampleinfo_seq_type& sample_infos)
+    {
+      CORBA::ULong nr_of_samples = 0;
+      for (::DDS_Long i = 0 ; i < sample_infos.length(); ++i)
+        {
+          if (sample_infos[i].valid_data)
+            {
+              ++nr_of_samples;
+            }
+        }
+      return nr_of_samples;
+    }
+
+    template <typename DDS_TYPE>
+    void
+    DataReader_T<DDS_TYPE>::complete_read (
+        typename DDS_TYPE::dds_seq_type & dds_data_values,
+        typename DDS_TYPE::seq_type & data_values,
+        DDS_SampleInfoSeq & dds_sample_infos,
+        ::DDS::SampleInfoSeq & sample_infos,
+        const ::DDS::ReturnCode_t & retcode,
+        const char * method_name)
+    {
+      if (retcode == ::DDS::RETCODE_OK)
+        {
+          ::CORBA::ULong const nr_of_valid_samples =
+            this->get_nr_valid_samples (dds_sample_infos);
+
+          data_values.length (nr_of_valid_samples);
+          sample_infos.length (nr_of_valid_samples);
+
+          // Copy the valid samples
+          CORBA::ULong ix = 0;
+          for (::DDS_Long i = 0 ; i < dds_sample_infos.length(); ++i)
+            {
+              if (dds_sample_infos[i].valid_data)
+                {
+                  (sample_infos)[ix] <<= dds_sample_infos[i];
+                  (data_values)[ix] = dds_data_values[i];
+                  ++ix;
+                }
+            }
+        }
+      else
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        ACE_TEXT ("datareader_t::%C - ")
+                        ACE_TEXT ("error while reading samples from dds - <%c>\n"),
+                        method_name,
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+        }
+      ::DDS::ReturnCode_t const retcode_return_loan =
+        this->rti_entity ()->return_loan (dds_data_values, dds_sample_infos);
+      if (retcode_return_loan != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        ACE_TEXT ("DataReader_T::%C - ")
+                        ACE_TEXT ("Error returning loan to DDS - <%C>\n"),
+                        method_name,
+                        ::CIAO::DDS4CCM::translate_retcode (retcode_return_loan)));
+        }
+    }
+
     template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
     DataReader_T<DDS_TYPE>::read (
-        typename DDS_TYPE::seq_type & /*data_values*/,
-        ::DDS::SampleInfoSeq & /*sample_infos*/,
-        ::CORBA::Long /*max_samples*/,
-        ::DDS::SampleStateMask /*sample_states*/,
-        ::DDS::ViewStateMask /*view_states*/,
-        ::DDS::InstanceStateMask /*instance_states*/)
+        typename DDS_TYPE::seq_type & data_values,
+        ::DDS::SampleInfoSeq & sample_infos,
+        ::CORBA::Long max_samples,
+        ::DDS::SampleStateMask sample_states,
+        ::DDS::ViewStateMask view_states,
+        ::DDS::InstanceStateMask instance_states)
     {
-      throw ::CORBA::NO_IMPLEMENT ();
+      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::read");
+
+      DDS_SampleInfoSeq dds_sample_infos;
+      dds_sample_infos <<= sample_infos;
+
+      ::DDS_SampleStateMask dds_sample_states = DDS_ANY_SAMPLE_STATE;
+      dds_sample_states <<= sample_states;
+
+      ::DDS_ViewStateMask dds_view_states = DDS_ANY_VIEW_STATE;
+      dds_view_states <<= view_states;
+
+      ::DDS_InstanceStateMask dds_instance_states = DDS_ANY_INSTANCE_STATE;
+      dds_instance_states <<= instance_states;
+
+      typename DDS_TYPE::dds_seq_type dds_data_values;
+
+      ::DDS::ReturnCode_t const retcode_read =
+        this->rti_entity ()->read (dds_data_values,
+                                   dds_sample_infos,
+                                   max_samples,
+                                   dds_sample_states,
+                                   dds_view_states,
+                                   dds_instance_states);
+      this->complete_read (dds_data_values, data_values,
+                           dds_sample_infos, sample_infos,
+                           retcode_read, "read");
+      return retcode_read;
     }
 
     template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
     DataReader_T<DDS_TYPE>::take (
-      typename DDS_TYPE::seq_type & /*data_values*/,
-      ::DDS::SampleInfoSeq & /*sample_infos*/,
-      ::CORBA::Long /*max_samples*/,
-      ::DDS::SampleStateMask /*sample_states*/,
-      ::DDS::ViewStateMask /*view_states*/,
-      ::DDS::InstanceStateMask /*instance_states*/)
+      typename DDS_TYPE::seq_type & data_values,
+      ::DDS::SampleInfoSeq & sample_infos,
+      ::CORBA::Long max_samples,
+      ::DDS::SampleStateMask sample_states,
+      ::DDS::ViewStateMask view_states,
+      ::DDS::InstanceStateMask instance_states)
     {
-      throw ::CORBA::NO_IMPLEMENT ();
+      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::take");
+
+      DDS_SampleInfoSeq dds_sample_infos;
+      dds_sample_infos <<= sample_infos;
+
+      ::DDS_SampleStateMask dds_sample_states = DDS_ANY_SAMPLE_STATE;
+      dds_sample_states <<= sample_states;
+
+      ::DDS_ViewStateMask dds_view_states = DDS_ANY_VIEW_STATE;
+      dds_view_states <<= view_states;
+
+      ::DDS_InstanceStateMask dds_instance_states = DDS_ANY_INSTANCE_STATE;
+      dds_instance_states <<= instance_states;
+
+      typename DDS_TYPE::dds_seq_type dds_data_values;
+
+      ::DDS::ReturnCode_t const retcode_take =
+        this->rti_entity ()->take (dds_data_values,
+                                   dds_sample_infos,
+                                   max_samples,
+                                   dds_sample_states,
+                                   dds_view_states,
+                                   dds_instance_states);
+      this->complete_read (dds_data_values, data_values,
+                           dds_sample_infos, sample_infos,
+                           retcode_take, "take");
+      return retcode_take;
     }
 
     template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
     DataReader_T<DDS_TYPE>::read_w_condition (
-      typename DDS_TYPE::seq_type & /*data_values*/,
-      ::DDS::SampleInfoSeq & /*sample_infos*/,
-      ::CORBA::Long /*max_samples*/,
-      ::DDS::ReadCondition_ptr /*a_condition*/)
+      typename DDS_TYPE::seq_type & data_values,
+      ::DDS::SampleInfoSeq & sample_infos,
+      ::CORBA::Long max_samples,
+      ::DDS::ReadCondition_ptr a_condition)
     {
-      throw ::CORBA::NO_IMPLEMENT ();
+      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::read_w_condition");
+
+      DDS_SampleInfoSeq dds_sample_infos;
+      dds_sample_infos <<= sample_infos;
+
+      DDS_ReadCondition_i * dds_condition_proxy =
+        dynamic_cast <DDS_ReadCondition_i *>(a_condition);
+      DDSReadCondition * dds_condition = 0;
+      if (dds_condition_proxy)
+        {
+          dds_condition = dds_condition_proxy->get_rti_entity ();
+        }
+      typename DDS_TYPE::dds_seq_type dds_data_values;
+
+      ::DDS::ReturnCode_t const retcode_read_w_condition =
+        this->rti_entity ()->read_w_condition (dds_data_values,
+                                               dds_sample_infos,
+                                               max_samples,
+                                               dds_condition);
+      this->complete_read (dds_data_values, data_values,
+                           dds_sample_infos, sample_infos,
+                           retcode_read_w_condition, "read_w_condition");
+      return retcode_read_w_condition;
     }
 
     template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
     DataReader_T<DDS_TYPE>::take_w_condition (
-      typename DDS_TYPE::seq_type & /*data_values*/,
-      ::DDS::SampleInfoSeq & /*sample_infos*/,
-      ::CORBA::Long /*max_samples*/,
-      ::DDS::ReadCondition_ptr /*a_condition*/)
+      typename DDS_TYPE::seq_type & data_values,
+      ::DDS::SampleInfoSeq & sample_infos,
+      ::CORBA::Long max_samples,
+      ::DDS::ReadCondition_ptr a_condition)
     {
-      throw ::CORBA::NO_IMPLEMENT ();
+      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::take_w_condition");
+
+      DDS_SampleInfoSeq dds_sample_infos;
+      dds_sample_infos <<= sample_infos;
+
+      DDS_ReadCondition_i * dds_condition_proxy =
+        dynamic_cast <DDS_ReadCondition_i *>(a_condition);
+      DDSReadCondition * dds_condition = 0;
+      if (dds_condition_proxy)
+        {
+          dds_condition = dds_condition_proxy->get_rti_entity ();
+        }
+      typename DDS_TYPE::dds_seq_type dds_data_values;
+
+      ::DDS::ReturnCode_t const retcode_take_w_condition =
+        this->rti_entity ()->take_w_condition (dds_data_values,
+                                               dds_sample_infos,
+                                               max_samples,
+                                               dds_condition);
+      this->complete_read (dds_data_values, data_values,
+                           dds_sample_infos, sample_infos,
+                           retcode_take_w_condition, "read_w_condition");
+      return retcode_take_w_condition;
     }
 
     template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
     DataReader_T<DDS_TYPE>::read_next_sample (
-      typename DDS_TYPE::value_type & /*data_values*/,
-      ::DDS::SampleInfo & /*sample_info*/)
+      typename DDS_TYPE::value_type & data_values,
+      ::DDS::SampleInfo & sample_info)
     {
-      throw ::CORBA::NO_IMPLEMENT ();
+      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::read_next_sample");
+
+      DDS_SampleInfo dds_sample_info;
+      dds_sample_info <<= sample_info;
+
+      ::DDS::ReturnCode_t const retcode_read_next_sample =
+        this->rti_entity ()->read_next_sample (data_values,
+                                               dds_sample_info);
+      sample_info <<= dds_sample_info;
+      return retcode_read_next_sample;
     }
 
     template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
     DataReader_T<DDS_TYPE>::take_next_sample (
-      typename DDS_TYPE::value_type & /*data_values*/,
-      ::DDS::SampleInfo & /*sample_info*/)
+      typename DDS_TYPE::value_type & data_values,
+      ::DDS::SampleInfo & sample_info)
     {
-      throw ::CORBA::NO_IMPLEMENT ();
+      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::take_next_sample");
+
+      DDS_SampleInfo dds_sample_info;
+      dds_sample_info <<= sample_info;
+
+      ::DDS::ReturnCode_t const retcode_take_next_sample =
+        this->rti_entity ()->take_next_sample (data_values,
+                                               dds_sample_info);
+      sample_info <<= dds_sample_info;
+      return retcode_take_next_sample ;
     }
 
     template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
     DataReader_T<DDS_TYPE>::read_instance (
-      typename DDS_TYPE::seq_type & /*data_values*/,
-      ::DDS::SampleInfoSeq & /*sample_infos*/,
-      ::CORBA::Long /*max_samples*/,
-      const ::DDS::InstanceHandle_t & /*a_handle*/,
-      ::DDS::SampleStateMask /*sample_states*/,
-      ::DDS::ViewStateMask /*view_states*/,
-      ::DDS::InstanceStateMask /*instance_states*/)
+      typename DDS_TYPE::seq_type & data_values,
+      ::DDS::SampleInfoSeq & sample_infos,
+      ::CORBA::Long max_samples,
+      const ::DDS::InstanceHandle_t & a_handle,
+      ::DDS::SampleStateMask sample_states,
+      ::DDS::ViewStateMask view_states,
+      ::DDS::InstanceStateMask instance_states)
     {
-      throw ::CORBA::NO_IMPLEMENT ();
+      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::read_instance");
+
+      DDS_SampleInfoSeq dds_sample_infos;
+      dds_sample_infos <<= sample_infos;
+
+      ::DDS_SampleStateMask dds_sample_states = DDS_ANY_SAMPLE_STATE;
+      dds_sample_states <<= sample_states;
+
+      ::DDS_ViewStateMask dds_view_states = DDS_ANY_VIEW_STATE;
+      dds_view_states <<= view_states;
+
+      ::DDS_InstanceStateMask dds_instance_states = DDS_ANY_INSTANCE_STATE;
+      dds_instance_states <<= instance_states;
+
+      ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
+      dds_handle <<= a_handle;
+
+      typename DDS_TYPE::dds_seq_type dds_data_values;
+
+      ::DDS::ReturnCode_t const retcode_read_instance =
+        this->rti_entity ()->read_instance (dds_data_values,
+                                            dds_sample_infos,
+                                            max_samples,
+                                            dds_handle,
+                                            dds_sample_states,
+                                            dds_view_states,
+                                            dds_instance_states);
+      this->complete_read (dds_data_values, data_values,
+                           dds_sample_infos, sample_infos,
+                           retcode_read_instance, "read_instance");
+
+      return retcode_read_instance;
     }
 
     template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
     DataReader_T<DDS_TYPE>::take_instance (
-      typename DDS_TYPE::seq_type & /*data_values*/,
-      ::DDS::SampleInfoSeq & /*sample_infos*/,
-      ::CORBA::Long /*max_samples*/,
-      const ::DDS::InstanceHandle_t & /*a_handle*/,
-      ::DDS::SampleStateMask /*sample_states*/,
-      ::DDS::ViewStateMask /*view_states*/,
-      ::DDS::InstanceStateMask /*instance_states*/)
+      typename DDS_TYPE::seq_type & data_values,
+      ::DDS::SampleInfoSeq & sample_infos,
+      ::CORBA::Long max_samples,
+      const ::DDS::InstanceHandle_t & a_handle,
+      ::DDS::SampleStateMask sample_states,
+      ::DDS::ViewStateMask view_states,
+      ::DDS::InstanceStateMask instance_states)
     {
-      throw ::CORBA::NO_IMPLEMENT ();
+      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::take_instance");
+
+      DDS_SampleInfoSeq dds_sample_infos;
+      dds_sample_infos <<= sample_infos;
+
+      ::DDS_SampleStateMask dds_sample_states = DDS_ANY_SAMPLE_STATE;
+      dds_sample_states <<= sample_states;
+
+      ::DDS_ViewStateMask dds_view_states = DDS_ANY_VIEW_STATE;
+      dds_view_states <<= view_states;
+
+      ::DDS_InstanceStateMask dds_instance_states = DDS_ANY_INSTANCE_STATE;
+      dds_instance_states <<= instance_states;
+
+      ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
+      dds_handle <<= a_handle;
+
+      typename DDS_TYPE::dds_seq_type dds_data_values;
+
+      ::DDS::ReturnCode_t const retcode_take_instance =
+        this->rti_entity ()->take_instance (dds_data_values,
+                                            dds_sample_infos,
+                                            max_samples,
+                                            dds_handle,
+                                            dds_sample_states,
+                                            dds_view_states,
+                                            dds_instance_states);
+      this->complete_read (dds_data_values, data_values,
+                           dds_sample_infos, sample_infos,
+                           retcode_take_instance, "take_instance");
+      return retcode_take_instance;
     }
 
     template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
     DataReader_T<DDS_TYPE>::read_next_instance (
-      typename DDS_TYPE::seq_type & /*data_values*/,
-      ::DDS::SampleInfoSeq & /*sample_infos*/,
-      ::CORBA::Long /*max_samples*/,
-      const ::DDS::InstanceHandle_t & /*previous_handle*/,
-      ::DDS::SampleStateMask /*sample_states*/,
-      ::DDS::ViewStateMask /*view_states*/,
-      ::DDS::InstanceStateMask /*instance_states*/)
+      typename DDS_TYPE::seq_type & data_values,
+      ::DDS::SampleInfoSeq & sample_infos,
+      ::CORBA::Long max_samples,
+      const ::DDS::InstanceHandle_t & a_handle,
+      ::DDS::SampleStateMask sample_states,
+      ::DDS::ViewStateMask view_states,
+      ::DDS::InstanceStateMask instance_states)
     {
-      throw ::CORBA::NO_IMPLEMENT ();
+      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::read_next_instance");
+
+      DDS_SampleInfoSeq dds_sample_infos;
+      dds_sample_infos <<= sample_infos;
+
+      ::DDS_SampleStateMask dds_sample_states = DDS_ANY_SAMPLE_STATE;
+      dds_sample_states <<= sample_states;
+
+      ::DDS_ViewStateMask dds_view_states = DDS_ANY_VIEW_STATE;
+      dds_view_states <<= view_states;
+
+      ::DDS_InstanceStateMask dds_instance_states = DDS_ANY_INSTANCE_STATE;
+      dds_instance_states <<= instance_states;
+
+      ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
+      dds_handle <<= a_handle;
+
+      typename DDS_TYPE::dds_seq_type dds_data_values;
+
+      ::DDS::ReturnCode_t const retcode_read_next_instance =
+        this->rti_entity ()->read_next_instance (dds_data_values,
+                                                 dds_sample_infos,
+                                                 max_samples,
+                                                 dds_handle,
+                                                 dds_sample_states,
+                                                 dds_view_states,
+                                                 dds_instance_states);
+      this->complete_read (dds_data_values, data_values,
+                           dds_sample_infos, sample_infos,
+                           retcode_read_next_instance, "read_next_instance");
+      return retcode_read_next_instance;
     }
 
     template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
     DataReader_T<DDS_TYPE>::take_next_instance (
-      typename DDS_TYPE::seq_type & /*data_values*/,
-      ::DDS::SampleInfoSeq & /*sample_infos*/,
-      ::CORBA::Long /*max_samples*/,
-      const ::DDS::InstanceHandle_t & /*previous_handle*/,
-      ::DDS::SampleStateMask /*sample_states*/,
-      ::DDS::ViewStateMask /*view_states*/,
-      ::DDS::InstanceStateMask /*instance_states*/)
+      typename DDS_TYPE::seq_type & data_values,
+      ::DDS::SampleInfoSeq & sample_infos,
+      ::CORBA::Long max_samples,
+      const ::DDS::InstanceHandle_t & a_handle,
+      ::DDS::SampleStateMask sample_states,
+      ::DDS::ViewStateMask view_states,
+      ::DDS::InstanceStateMask instance_states)
     {
-      throw ::CORBA::NO_IMPLEMENT ();
+      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::take_next_instance");
+
+      DDS_SampleInfoSeq dds_sample_infos;
+      dds_sample_infos <<= sample_infos;
+
+      ::DDS_SampleStateMask dds_sample_states = DDS_ANY_SAMPLE_STATE;
+      dds_sample_states <<= sample_states;
+
+      ::DDS_ViewStateMask dds_view_states = DDS_ANY_VIEW_STATE;
+      dds_view_states <<= view_states;
+
+      ::DDS_InstanceStateMask dds_instance_states = DDS_ANY_INSTANCE_STATE;
+      dds_instance_states <<= instance_states;
+
+      ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
+      dds_handle <<= a_handle;
+
+      typename DDS_TYPE::dds_seq_type dds_data_values;
+
+      ::DDS::ReturnCode_t const retcode_take_next_instance =
+        this->rti_entity ()->take_next_instance (dds_data_values,
+                                                 dds_sample_infos,
+                                                 max_samples,
+                                                 dds_handle,
+                                                 dds_sample_states,
+                                                 dds_view_states,
+                                                 dds_instance_states);
+      this->complete_read (dds_data_values, data_values,
+                           dds_sample_infos, sample_infos,
+                           retcode_take_next_instance, "take_next_instance");
+      return retcode_take_next_instance;
     }
 
     template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
     DataReader_T<DDS_TYPE>::read_next_instance_w_condition (
-      typename DDS_TYPE::seq_type & /*data_values*/,
-      ::DDS::SampleInfoSeq & /*sample_infos*/,
-      ::CORBA::Long /*max_samples*/,
-      const ::DDS::InstanceHandle_t & /*previous_handle*/,
-      ::DDS::ReadCondition_ptr /*a_condition*/)
+      typename DDS_TYPE::seq_type & data_values,
+      ::DDS::SampleInfoSeq & sample_infos,
+      ::CORBA::Long max_samples,
+      const ::DDS::InstanceHandle_t & previous_handle,
+      ::DDS::ReadCondition_ptr a_condition)
     {
-      throw ::CORBA::NO_IMPLEMENT ();
+      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::read_next_instance_w_condition");
+
+      DDS_SampleInfoSeq dds_sample_infos;
+      dds_sample_infos <<= sample_infos;
+
+      ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
+      dds_handle <<= previous_handle;
+
+      DDS_ReadCondition_i * dds_condition_proxy =
+        dynamic_cast <DDS_ReadCondition_i *>(a_condition);
+      DDSReadCondition * dds_condition = 0;
+      if (dds_condition_proxy)
+        {
+          dds_condition = dds_condition_proxy->get_rti_entity ();
+        }
+
+      typename DDS_TYPE::dds_seq_type dds_data_values;
+
+      ::DDS::ReturnCode_t const retcode_read_next_instance_w_condition =
+        this->rti_entity ()->read_next_instance_w_condition (dds_data_values,
+                                                             dds_sample_infos,
+                                                             max_samples,
+                                                             dds_handle,
+                                                             dds_condition);
+      this->complete_read (dds_data_values, data_values,
+                           dds_sample_infos, sample_infos,
+                           retcode_read_next_instance_w_condition,
+                           "read_next_instance_w_condition");
+      return retcode_read_next_instance_w_condition;
     }
 
     template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
     DataReader_T<DDS_TYPE>::take_next_instance_w_condition (
-      typename DDS_TYPE::seq_type & /*data_values*/,
-      ::DDS::SampleInfoSeq & /*sample_infos*/,
-      ::CORBA::Long /*max_samples*/,
-      const ::DDS::InstanceHandle_t & /*previous_handle*/,
-      ::DDS::ReadCondition_ptr /*a_condition*/)
+      typename DDS_TYPE::seq_type & data_values,
+      ::DDS::SampleInfoSeq & sample_infos,
+      ::CORBA::Long max_samples,
+      const ::DDS::InstanceHandle_t & previous_handle,
+      ::DDS::ReadCondition_ptr a_condition)
     {
-      throw ::CORBA::NO_IMPLEMENT ();
+      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::take_next_instance_w_condition");
+
+      DDS_SampleInfoSeq dds_sample_infos;
+      dds_sample_infos <<= sample_infos;
+
+      ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
+      dds_handle <<= previous_handle;
+
+      DDS_ReadCondition_i * dds_condition_proxy =
+        dynamic_cast <DDS_ReadCondition_i *>(a_condition);
+      DDSReadCondition * dds_condition = 0;
+      if (dds_condition_proxy)
+        {
+          dds_condition = dds_condition_proxy->get_rti_entity ();
+        }
+
+      typename DDS_TYPE::dds_seq_type dds_data_values;
+
+      ::DDS::ReturnCode_t const retcode_take_next_instance_w_condition =
+        this->rti_entity ()->take_next_instance_w_condition (dds_data_values,
+                                                             dds_sample_infos,
+                                                             max_samples,
+                                                             dds_handle,
+                                                             dds_condition);
+      this->complete_read (dds_data_values, data_values,
+                           dds_sample_infos, sample_infos,
+                           retcode_take_next_instance_w_condition,
+                           "take_next_instance_w_condition");
+      return retcode_take_next_instance_w_condition;
     }
 
     template <typename DDS_TYPE>
@@ -207,10 +569,14 @@ namespace CIAO
     template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
     DataReader_T<DDS_TYPE>::get_key_value (
-      typename DDS_TYPE::value_type & /*key_holder*/,
-      const ::DDS::InstanceHandle_t & /*handle*/)
+      typename DDS_TYPE::value_type & key_holder,
+      const ::DDS::InstanceHandle_t & handle)
     {
-      throw ::CORBA::NO_IMPLEMENT ();
+      ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
+      dds_handle <<= handle;
+
+      return this->rti_entity ()->get_key_value (key_holder,
+                                                 dds_handle);
     }
 
     template <typename DDS_TYPE>

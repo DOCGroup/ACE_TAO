@@ -55,4 +55,38 @@ operator<<= (::CCM_DDS::ReadInfo& ccm_dds_readinfo, const ::DDS_SampleInfo& samp
     }
 }
 
+inline void
+operator<<= (::DDS::SampleInfo& sample_info, const ::DDS_SampleInfo& dds_sample_info)
+{
+  sample_info.sample_state = dds_sample_info.sample_state;
+  sample_info.view_state = dds_sample_info.view_state;
+  sample_info.instance_state = dds_sample_info.instance_state;
+  sample_info.source_timestamp <<= dds_sample_info.source_timestamp;
+  sample_info.instance_handle <<= dds_sample_info.instance_handle;
+  sample_info.publication_handle <<= dds_sample_info.publication_handle;
+  sample_info.disposed_generation_count = dds_sample_info.disposed_generation_count;
+  sample_info.no_writers_generation_count = dds_sample_info.no_writers_generation_count;
+  sample_info.sample_rank = dds_sample_info.sample_rank;
+  sample_info.generation_rank = dds_sample_info.generation_rank;
+  sample_info.absolute_generation_rank = dds_sample_info.absolute_generation_rank;
+  sample_info.valid_data = dds_sample_info.valid_data;
+}
+
+inline void
+operator<<= (::DDS_SampleInfo& sample_info, const ::DDS::SampleInfo& dds_sample_info)
+{
+  sample_info.sample_state = static_cast< ::DDS_SampleStateKind >(dds_sample_info.sample_state);
+  sample_info.view_state = static_cast< ::DDS_ViewStateKind >(dds_sample_info.view_state);
+  sample_info.instance_state = static_cast< ::DDS_InstanceStateKind >(dds_sample_info.instance_state);
+  sample_info.source_timestamp <<= dds_sample_info.source_timestamp;
+  sample_info.instance_handle <<= dds_sample_info.instance_handle;
+  sample_info.publication_handle <<= dds_sample_info.publication_handle;
+  sample_info.disposed_generation_count = dds_sample_info.disposed_generation_count;
+  sample_info.no_writers_generation_count = dds_sample_info.no_writers_generation_count;
+  sample_info.sample_rank = dds_sample_info.sample_rank;
+  sample_info.generation_rank = dds_sample_info.generation_rank;
+  sample_info.absolute_generation_rank = dds_sample_info.absolute_generation_rank;
+  sample_info.valid_data = dds_sample_info.valid_data;
+}
+
 #endif
