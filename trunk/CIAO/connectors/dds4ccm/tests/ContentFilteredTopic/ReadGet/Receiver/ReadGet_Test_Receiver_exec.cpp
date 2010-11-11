@@ -280,6 +280,12 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     QueryConditionTest_var qf_info;;
     ::CCM_DDS::ReadInfo readinfo;
     CORBA::Boolean result = get_getter->get_one (qf_info.out (), readinfo);
+    if (ACE_OS::strlen (qf_info->symbol.in ()) == 0)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::get_all - ")
+                              ACE_TEXT ("Name of key seems to be empty-> bailing out\n")));
+        return;
+      }
     if (result)
       {
         this->check_iter_on_getter_port (*qf_info, "GET");
