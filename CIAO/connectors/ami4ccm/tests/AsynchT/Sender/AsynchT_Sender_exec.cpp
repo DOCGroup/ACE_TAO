@@ -27,6 +27,7 @@
 
 #include "AsynchT_Sender_exec.h"
 #include "AsynchTA_conn_i.h"
+#include "ace/OS_NS_unistd.h"
 
 namespace CIAO_AsynchT_Sender_Impl
 {
