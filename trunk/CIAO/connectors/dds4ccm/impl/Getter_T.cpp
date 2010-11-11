@@ -257,7 +257,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true, VENDOR_TYPE>::get_one
                         "Getter_T::get_one - "
                         "Error while reading from DDS: <%C>\n",
                         translate_retcode (retcode)));
-                  DDS_ReturnCode_t const retval =
+                  ::DDS::ReturnCode_t const retval =
                     this->impl ()->return_loan (data, sample_info);
                   if (retval != ::DDS::RETCODE_OK)
                     {
@@ -282,7 +282,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true, VENDOR_TYPE>::get_one
                         "No valid available in DDS.\n"));
                 }
               // Return the loan of each read.
-              DDS_ReturnCode_t const retval =
+              ::DDS::ReturnCode_t const retval =
                 this->impl ()->return_loan (data, sample_info);
               if (retval != ::DDS::RETCODE_OK)
                 {
