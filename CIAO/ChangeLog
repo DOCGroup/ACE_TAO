@@ -1,3 +1,14 @@
+Thu Nov 11 09:54:07 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * MPC/config/taoidl3toxmidefaults.mpb:
+          Make this base project to inherit from xerces. So that projects
+          that need tao_idl3_to_xmi will not build if xerces is not present
+          since tao_idl3_to_xmi is dependent on xerces.
+
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+        * tests/IDL3_to_XMI/Forward_Declared/Forward_Declared.mpc:
+          Cleaned a bit these files.
+
 Thu Nov 11 09:52:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/CCM_DataReader.cpp:
