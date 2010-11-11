@@ -1,3 +1,19 @@
+Thu Nov 11 09:52:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/CCM_DataReader.cpp:
+        * connectors/dds4ccm/impl/CCM_DataWriter.cpp:
+          Fuzz.
+
+        * connectors/dds4ccm/impl/ndds/DataReader_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+          Implemented the IDL representation of the ::DDS::DataReader.
+          First step in cleaning this DataReader.
+
+        * connectors/dds4ccm/impl/ndds/convertors/SampleInfo.h:
+        * connectors/dds4ccm/impl/ndds/convertors/SampleInfoSeq.h:
+          Converting DDS::SampleInfoSeq to DDS_SampleInfoSeq and
+          DDS::SampleInfo to DDS_SampleInfo.
+
 Wed Nov 10 19:52:53 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/ccm_dds.idl:
