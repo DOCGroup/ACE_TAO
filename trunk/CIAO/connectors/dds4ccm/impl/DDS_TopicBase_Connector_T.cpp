@@ -5,6 +5,7 @@
 #include "ace/Reactor.h"
 
 #if (CIAO_DDS4CCM_NDDS==1)
+# include "dds4ccm/impl/ndds/TypeSupport.h"
 # include "dds4ccm/impl/ndds/DomainParticipant.h"
 #endif
 
@@ -185,10 +186,11 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_topic (
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::init_default_topic");
 
-#if (CIAO_DDS4CCM_NDDS==1)
-
   if (::CORBA::is_nil (this->topic_.in ()))
     {
+      const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
+      ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_OK;
+#if (CIAO_DDS4CCM_NDDS==1)
       ::CIAO::NDDS::DDS_DomainParticipant_i *part =
         dynamic_cast< CIAO::NDDS::DDS_DomainParticipant_i * > (
           this->domain_participant_.in ());
@@ -201,22 +203,23 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_topic (
           throw ::CORBA::INTERNAL ();
         }
 
-      TypeFactory * factory = new DDSTypeFactory <DDS_TYPE> ();
+      ::CIAO::NDDS::DDS_TypeFactory_i * factory = new ::CIAO::NDDS::DDS_TypeFactory_T <DDS_TYPE> ();
 
-      part->register_type (
-        DDS_TYPE::type_support::get_type_name (), factory);
+      ::CIAO::NDDS::DDS_TypeSupport_i::register_type (
+          typesupport_name, factory, this->domain_participant_.in ());
 
-      DDS_ReturnCode_t const retcode = DDS_TYPE::type_support::register_type(
-        part->get_rti_entity (), DDS_TYPE::type_support::get_type_name ());
+      retcode = DDS_TYPE::type_support::register_type(
+        part->get_rti_entity (), typesupport_name);
+#endif
 
-      if (retcode == DDS_RETCODE_OK)
+      if (retcode == ::DDS::RETCODE_OK)
         {
           if (this->library_name_ && this->profile_name_)
             {
               this->topic_ =
                 this->domain_participant_->create_topic_with_profile (
                   this->topic_name_.in (),
-                  DDS_TYPE::type_support::get_type_name (),
+                  typesupport_name,
                   this->library_name_,
                   this->profile_name_,
                   ::DDS::TopicListener::_nil (),
@@ -228,7 +231,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_topic (
               this->topic_ =
                 this->domain_participant_->create_topic (
                   this->topic_name_.in (),
-                  DDS_TYPE::type_support::get_type_name (),
+                  typesupport_name,
                   tqos,
                   ::DDS::TopicListener::_nil (),
                   0);
@@ -246,7 +249,6 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_topic (
           throw ::CCM_DDS::InternalError (retcode, 0);
         }
     }
-#endif
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>

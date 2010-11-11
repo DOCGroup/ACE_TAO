@@ -11,35 +11,11 @@
 #define DOMAINPARTICIPANT_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
-#include "dds4ccm/impl/ndds/DataWriter_T.h"
-#include "dds4ccm/impl/ndds/DataReader_T.h"
 #include "tao/LocalObject.h"
 
-#include <map>
-
-class TypeFactory
-{
-  public:
-    virtual DDS::DataWriter_ptr create_datawriter (DDSDataWriter* dw, ::DDS::DomainParticipant_ptr dp) = 0;
-    virtual DDS::DataReader_ptr create_datareader (DDSDataReader* dr, ::DDS::DomainParticipant_ptr dp) = 0;
-};
-
-template <typename DDS_TYPE>
-class DDSTypeFactory : public TypeFactory
-{
-  public:
-    DDS::DataWriter_ptr create_datawriter (DDSDataWriter* dw, ::DDS::DomainParticipant_ptr dp)
-    {
-      typedef CIAO::NDDS::DataWriter_T<DDS_TYPE> DataWriter_type;
-      return new DataWriter_type (dw, dp);
-    }
-    DDS::DataReader_ptr create_datareader (DDSDataReader* dr, ::DDS::DomainParticipant_ptr dp)
-    {
-      typedef CIAO::NDDS::DataReader_T<DDS_TYPE> DataReader_type;
-      return new DataReader_type (dr, dp);
-    }
-};
+class DDSDomainParticipant;
 
 namespace CIAO
 {
@@ -50,11 +26,6 @@ namespace CIAO
       public virtual ::CORBA::LocalObject
     {
     public:
-      /* @todo, cleanup this */
-      void register_type (const char* type, TypeFactory*);
-      ::DDS::DataWriter_ptr create_datawriter (DDSDataWriter* dw);
-      ::DDS::DataReader_ptr create_datareader (DDSDataReader* dr);
-
       /// Constructor
       DDS_DomainParticipant_i (DDSDomainParticipant * dp);
 
@@ -212,9 +183,6 @@ namespace CIAO
       void set_rti_entity (::DDSDomainParticipant * dp);
 
     protected:
-      typedef std::map <ACE_CString, TypeFactory*> typefactories;
-      typefactories type_factories;
-      TypeFactory* factory_;
       ::DDSDomainParticipant *rti_entity_;
       ::DDSDomainParticipant * rti_entity (void);
     };

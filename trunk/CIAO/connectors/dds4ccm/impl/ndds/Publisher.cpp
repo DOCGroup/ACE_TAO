@@ -9,6 +9,8 @@
 #include "dds4ccm/impl/ndds/DataWriter_T.h"
 #include "dds4ccm/impl/ndds/StatusCondition.h"
 #include "dds4ccm/impl/ndds/DataWriterListener.h"
+#include "dds4ccm/impl/ndds/TypeSupport.h"
+
 #include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"
 #include "dds4ccm/impl/ndds/convertors/Duration_t.h"
 #include "dds4ccm/impl/ndds/convertors/DataWriterQos.h"
@@ -76,9 +78,8 @@ namespace CIAO
           delete ccm_dds_drl;
           return ::DDS::DataWriter::_nil ();
         }
-      ::CIAO::NDDS::DDS_DomainParticipant_i* p = dynamic_cast < ::CIAO::NDDS::DDS_DomainParticipant_i*> (this->dp_.in ());
 
-     ::DDS::DataWriter_var retval = p->create_datawriter (ccm_dds_dw);
+     ::DDS::DataWriter_var retval = DDS_TypeSupport_i::create_datawriter (ccm_dds_dw, this->dp_.in ());
      if (ccm_dds_drl)
        {
          ccm_dds_drl->set_dds_entity (retval.in ());
@@ -138,9 +139,7 @@ namespace CIAO
                         profile_name));
         }
 
-      ::CIAO::NDDS::DDS_DomainParticipant_i* p = dynamic_cast < ::CIAO::NDDS::DDS_DomainParticipant_i*> (this->dp_.in ());
-
-     ::DDS::DataWriter_var retval = p->create_datawriter (ccm_dds_dw);
+     ::DDS::DataWriter_var retval = DDS_TypeSupport_i::create_datawriter (ccm_dds_dw, this->dp_.in ());
      if (ccm_dds_drl)
        {
          ccm_dds_drl->set_dds_entity (retval.in ());
@@ -193,8 +192,7 @@ namespace CIAO
     DDS_Publisher_i::lookup_datawriter (const char * impl_name)
     {
       DDSDataWriter* dw = this->rti_entity ()->lookup_datawriter (impl_name);
-      ::CIAO::NDDS::DDS_DomainParticipant_i* p = dynamic_cast < ::CIAO::NDDS::DDS_DomainParticipant_i*> (this->dp_.in ());
-     ::DDS::DataWriter_var retval = p->create_datawriter (dw);
+     ::DDS::DataWriter_var retval = DDS_TypeSupport_i::create_datawriter (dw, this->dp_.in ());
       return retval._retn ();
     }
 

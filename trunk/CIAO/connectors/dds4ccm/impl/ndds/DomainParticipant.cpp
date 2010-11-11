@@ -47,25 +47,6 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::~DDS_DomainParticipant_i");
     }
 
-    void
-    DDS_DomainParticipant_i::register_type (const char* type, TypeFactory*f)
-    {
-      this->type_factories [type] = f;
-      this->factory_ = f;
-    }
-
-    ::DDS::DataWriter_ptr
-    DDS_DomainParticipant_i::create_datawriter (DDSDataWriter* dw)
-    {
-      return this->factory_->create_datawriter (dw, this);
-    }
-
-    ::DDS::DataReader_ptr
-    DDS_DomainParticipant_i::create_datareader (DDSDataReader* dr)
-    {
-      return this->factory_->create_datareader (dr, this);
-    }
-
     ::DDS::Publisher_ptr
     DDS_DomainParticipant_i::create_publisher_with_profile (
       const char* library_name,
@@ -104,7 +85,6 @@ namespace CIAO
       ACE_NEW_THROW_EX (retval,
                         DDS_Publisher_i (ccm_dds_pub, this),
                         ::CORBA::NO_MEMORY ());
-
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                     "DDS_DomainParticipant_i::create_publisher_with_profile - "

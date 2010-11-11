@@ -18,7 +18,7 @@
  * If this is defined to 1 DDS4CCM will pass the DDS callback to the
  * ORB Core Reactor thread which means a thread context switch
  *
- * If this isdefined to 0 no context switch takes place and the DDS
+ * If this is defined to 0 no context switch takes place and the DDS
  * callback is delivered to the user code on the DDS thread
  *
  * If the user doesn't explicitly choose a value we will default to 1

@@ -7,6 +7,7 @@
 #include "dds4ccm/impl/ndds/DataReaderListener.h"
 #include "dds4ccm/impl/ndds/StatusCondition.h"
 #include "dds4ccm/impl/ndds/DomainParticipant.h"
+#include "dds4ccm/impl/ndds/TypeSupport.h"
 
 #include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/ndds/SubscriberListener.h"
@@ -190,8 +191,7 @@ namespace CIAO
         }
 
       ccm_dds_dr->enable ();
-      ::CIAO::NDDS::DDS_DomainParticipant_i* p = dynamic_cast < ::CIAO::NDDS::DDS_DomainParticipant_i*> (this->dp_.in ());
-      ::DDS::DataReader_var reader = p->create_datareader (ccm_dds_dr);
+      ::DDS::DataReader_var reader = DDS_TypeSupport_i::create_datareader (ccm_dds_dr, this->dp_.in ());
       if (ccm_dds_drl)
         {
           ccm_dds_drl->set_dds_entity (reader.in ());
@@ -268,8 +268,7 @@ namespace CIAO
                         profile_name));
         }
 
-      ::CIAO::NDDS::DDS_DomainParticipant_i* p = dynamic_cast < ::CIAO::NDDS::DDS_DomainParticipant_i*> (this->dp_.in ());
-      ::DDS::DataReader_var reader = p->create_datareader (ccm_dds_dr);
+      ::DDS::DataReader_var reader = DDS_TypeSupport_i::create_datareader (ccm_dds_dr, this->dp_.in ());
       if (ccm_dds_drl)
         {
           ccm_dds_drl->set_dds_entity (reader.in ());
@@ -329,8 +328,7 @@ namespace CIAO
       DDSDataReader* dr = this->rti_entity ()->lookup_datareader (impl_name);
       if (dr)
         {
-        ::CIAO::NDDS::DDS_DomainParticipant_i* p = dynamic_cast < ::CIAO::NDDS::DDS_DomainParticipant_i*> (this->dp_.in ());
-        retval = p->create_datareader (dr);
+          retval = DDS_TypeSupport_i::create_datareader (dr, this->dp_.in ());
         }
       return retval._retn();
     }
@@ -353,11 +351,10 @@ namespace CIAO
                                         instance_states);
       if (retcode == DDS_RETCODE_OK)
         {
-          ::CIAO::NDDS::DDS_DomainParticipant_i* p = dynamic_cast < ::CIAO::NDDS::DDS_DomainParticipant_i*> (this->dp_.in ());
           readers.length (dds_readers.length ());
           for (::DDS_Long i = 0; i < dds_readers.length (); ++i)
             {
-              ::DDS::DataReader_var rdr = p->create_datareader (dds_readers[i]);
+              ::DDS::DataReader_var rdr = DDS_TypeSupport_i::create_datareader (dds_readers[i], this->dp_.in ());
               readers [i] = rdr._retn ();
             }
         }
