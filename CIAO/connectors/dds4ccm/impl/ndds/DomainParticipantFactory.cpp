@@ -8,7 +8,7 @@
 #include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/ndds/DomainParticipantManager.h"
-#include "dds4ccm/idl/dds4ccm_BaseC.h" // @todo, this should not be here
+
 namespace CIAO
 {
   namespace NDDS
@@ -66,7 +66,7 @@ namespace CIAO
                           "::create_participant - "
                           "Error: Unable to create DomainParticipant for domain <%d>\n",
                           domain_id));
-              throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+              return ::DDS::DomainParticipant::_nil ();
             }
 
           ::DDS::DomainParticipant_var retval;
@@ -145,7 +145,7 @@ namespace CIAO
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                             "DDS_DomainParticipantFactory_i::create_participant_with_profile - "
                             "Error: Unable to create DomainParticipant\n"));
-              throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+              return ::DDS::DomainParticipant::_nil ();
             }
           ::DDS::DomainParticipant_var retval;
           ACE_NEW_THROW_EX (retval,
