@@ -34,7 +34,7 @@ namespace CIAO
 
     ::DDS::ReturnCode_t
     DDS_WaitSet_i::wait (::DDS::ConditionSeq & active_conditions,
-          const ::DDS::Duration_t & timeout)
+                         const ::DDS::Duration_t & timeout)
     {
       DDS4CCM_TRACE ("DDS_WaitSet_i::wait");
 
@@ -137,9 +137,8 @@ namespace CIAO
       DDS_ReadCondition_i * dds_rc = dynamic_cast <DDS_ReadCondition_i *> (rc);
       DDS_QueryCondition_i * dds_qc = dynamic_cast <DDS_QueryCondition_i *> (qc);
 
-      DDS_Condition_i * dds_cond = dynamic_cast <DDS_Condition_i *> (condition);
-      DDS_ReadCondition_i * rc_cond = dynamic_cast <DDS_ReadCondition_i *> (dds_cond);
-      DDS_QueryCondition_i * qc_cond = dynamic_cast <DDS_QueryCondition_i *> (dds_cond);
+      DDS_ReadCondition_i * rc_cond = dynamic_cast <DDS_ReadCondition_i *> (condition);
+      DDS_QueryCondition_i * qc_cond = dynamic_cast <DDS_QueryCondition_i *> (condition);
 
       return ((rc_cond && rc_cond->get_rti_entity () == dds_rc->get_rti_entity ()) ||
               (qc_cond && qc_cond->get_rti_entity () == dds_qc->get_rti_entity ()) );
@@ -179,13 +178,13 @@ namespace CIAO
             dynamic_cast <DDSQueryCondition *> (dds_conditions[i]);
           if (dds_qc)
             {
-              DDS_QueryCondition_i * cond = 0;
+              ::DDS::QueryCondition_var cond;
               //TODO : Which DataReader ??
               ACE_NEW_THROW_EX (cond,
                                 DDS_QueryCondition_i (dds_qc,
                                                       ::DDS::DataReader::_nil ()),
                                 ::CORBA::NO_MEMORY ());
-              conditions[i] = cond;
+              conditions[i] = ::DDS::QueryCondition::_duplicate (cond.in ());
             }
           else
             {
@@ -193,13 +192,13 @@ namespace CIAO
                 dynamic_cast <DDSReadCondition *> (dds_conditions[i]);
               if (dds_rc)
                 {
-                  DDS_ReadCondition_i * cond = 0;
+                  ::DDS::ReadCondition_var cond;
                   //TODO : Which DataReader ??
                   ACE_NEW_THROW_EX (cond,
                                     DDS_ReadCondition_i (dds_rc,
                                                          ::DDS::DataReader::_nil ()),
                                     ::CORBA::NO_MEMORY ());
-                  conditions[i] = cond;
+                  conditions[i] = ::DDS::ReadCondition::_duplicate (cond.in ());
                 }
             }
         }
