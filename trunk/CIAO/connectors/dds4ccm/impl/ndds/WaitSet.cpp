@@ -165,7 +165,7 @@ namespace CIAO
 
     void
     DDS_WaitSet_i::convert_conditions (const DDSConditionSeq& dds_conditions,
-                                                   ::DDS::ConditionSeq & conditions)
+                                       ::DDS::ConditionSeq & conditions)
     {
       DDS4CCM_TRACE ("DDS_WaitSet_i::convert_conditions");
 
@@ -179,7 +179,7 @@ namespace CIAO
             dynamic_cast <DDSQueryCondition *> (dds_conditions[i]);
           if (dds_qc)
             {
-              DDS_QueryCondition_i * cond;
+              DDS_QueryCondition_i * cond = 0;
               //TODO : Which DataReader ??
               ACE_NEW_THROW_EX (cond,
                                 DDS_QueryCondition_i (dds_qc,
@@ -193,7 +193,7 @@ namespace CIAO
                 dynamic_cast <DDSReadCondition *> (dds_conditions[i]);
               if (dds_rc)
                 {
-                  DDS_ReadCondition_i * cond;
+                  DDS_ReadCondition_i * cond = 0;
                   //TODO : Which DataReader ??
                   ACE_NEW_THROW_EX (cond,
                                     DDS_ReadCondition_i (dds_rc,
@@ -210,6 +210,9 @@ namespace CIAO
     {
       if (!this->rti_entity_)
         {
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
+                        "DDS_WaitSet_i::rti_entity - "
+                        "Throwing BAD_INV_ORDER.\n"));
           throw ::CORBA::BAD_INV_ORDER ();
         }
       return this->rti_entity_;

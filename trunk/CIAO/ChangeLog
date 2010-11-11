@@ -1,3 +1,12 @@
+Thu Nov 11 10:28:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/WaitSet.cpp:
+          Initialize pointer to nil. Added log message when
+          BAD_INV_ORDER is thrown.
+
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+          Bailing out when key name is empty
+
 Thu Nov 11 10:23:06 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector.mpc:
