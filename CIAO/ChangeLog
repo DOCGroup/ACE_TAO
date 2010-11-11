@@ -1,3 +1,8 @@
+Thu Nov 11 10:22:29 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+          Bailing out rather sooner than later. Output of this test was very large.
+
 Thu Nov 11 09:54:07 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * MPC/config/taoidl3toxmidefaults.mpb:
