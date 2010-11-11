@@ -149,6 +149,16 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_domain (void
           ::DDS::DomainParticipantListener::_nil (),
           0);
     }
+
+  if (::CORBA::is_nil (this_domain_participant_.in ()))
+    {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                  "DDS_Base_Connector_T::init_default_domain - "
+                  "Error: Unable to create DomainParticipant for domain <%d>\n",
+                  this->domain_id_));
+      throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+    }
+
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>

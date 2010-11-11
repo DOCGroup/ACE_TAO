@@ -53,7 +53,7 @@ namespace CIAO
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Publisher_i::create_datawriter - "
                         "Error: Unable to cast provided topic to its servant.\n"));
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+          return ::DDS::DataWriter::_nil ();
         }
 
       DDS_DataWriterListener_i *ccm_dds_drl = 0;
@@ -105,7 +105,7 @@ namespace CIAO
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Publisher_i::create_datawriter_with_profile - "
                         "Error: Unable to cast provided topic to its servant.\n"));
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+          return ::DDS::DataWriter::_nil ();
         }
 
       DDS_DataWriterListener_i *ccm_dds_drl = 0;

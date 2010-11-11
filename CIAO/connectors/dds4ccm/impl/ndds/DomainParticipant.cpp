@@ -447,7 +447,7 @@ namespace CIAO
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "DDS_DomainParticipant_i::create_topic_with_profile - "
                         "Error: provided nil topic name\n"));
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+          return ::DDS::Topic::_nil ();
         }
 
       if (type_name == 0)
@@ -455,7 +455,7 @@ namespace CIAO
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "DDS_DomainParticipant_i::create_topic_with_profile - "
                         "Error: provided nil type name\n"));
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+          return ::DDS::Topic::_nil ();
         }
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_DEBUG, DDS4CCM_INFO
@@ -659,7 +659,7 @@ namespace CIAO
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "DDS_DomainParticipant_i::create_contentfilteredtopic - "
                         "Unable to cast provided topic.\n"));
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          return ::DDS::ContentFilteredTopic::_nil ();
         }
 
       const char** parameterlist = 0;
@@ -687,7 +687,7 @@ namespace CIAO
                         "RTI DDS returned a nil ContentFilteredTopic for "
                         "name <%C> and filter expression <%C>.\n",
                        name, filter_expression));
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          return ::DDS::ContentFilteredTopic::_nil ();
         }
 
       ::DDS::ContentFilteredTopic_var retval;

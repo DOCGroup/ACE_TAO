@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ndds/ndds_cpp.h"
-#include "DataWriter.h"
+#include "dds4ccm/impl/ndds/DataWriter.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 namespace CIAO
