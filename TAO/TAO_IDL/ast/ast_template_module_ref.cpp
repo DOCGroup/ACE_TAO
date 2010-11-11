@@ -20,7 +20,8 @@ AST_Template_Module_Ref::AST_Template_Module_Ref (
     AST_Field (AST_Decl::NT_module,
                ref,
                n),
-    param_refs_ (param_refs)
+    param_refs_ (param_refs),
+    processed_ (false)
 {
 }
 
@@ -75,6 +76,18 @@ AST_Template_Module_Ref::adjust_found (
   bool /*full_def_only*/)
 {
   return ignore_fwd ? 0 : this;
+}
+
+bool
+AST_Template_Module_Ref::processed (void) const
+{
+  return this->processed_;
+}
+
+void
+AST_Template_Module_Ref::processed (bool val)
+{
+  this->processed_ = val;
 }
 
 IMPL_NARROW_FROM_DECL (AST_Template_Module_Ref)
