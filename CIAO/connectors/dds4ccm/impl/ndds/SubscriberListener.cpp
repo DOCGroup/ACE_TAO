@@ -3,6 +3,7 @@
 #include "dds4ccm/impl/ndds/SubscriberListener.h"
 #include "dds4ccm/impl/ndds/Subscriber.h"
 #include "dds4ccm/impl/ndds/DomainParticipant.h"
+#include "dds4ccm/impl/ndds/TypeSupport.h"
 
 #include "dds4ccm/impl/ndds/convertors/SampleLostStatus.h"
 #include "dds4ccm/impl/ndds/convertors/SubscriptionMatchedStatus.h"
@@ -44,16 +45,6 @@ namespace CIAO
       the_subscriber->notify_datareaders ();
     }
 
-    ::DDS::DataReader_ptr
-    DDS_SubscriberListener_i::get_datareader_proxy (
-      ::DDSDataReader * the_reader)
-    {
-      DDS4CCM_TRACE ("DDS_SubscriberListener_i::get_datareader_proxy");
-      ::CIAO::NDDS::DDS_DomainParticipant_i* p = dynamic_cast < ::CIAO::NDDS::DDS_DomainParticipant_i*> (this->dp_.in ());
-      ::DDS::DataReader_var dds_reader = p->create_datareader (the_reader);
-      return dds_reader._retn ();
-    }
-
     void
     DDS_SubscriberListener_i::on_requested_deadline_missed (
       ::DDSDataReader* the_reader,
@@ -62,7 +53,7 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_SubscriberListener_i::on_requested_deadline_missed");
 
       ::DDS::RequestedDeadlineMissedStatus ddsstatus;
-      ::DDS::DataReader_var proxy = this->get_datareader_proxy (the_reader);
+      ::DDS::DataReader_var proxy = DDS_TypeSupport_i::create_datareader (the_reader, this->dp_.in ());
       ddsstatus <<= status;
       this->impl_->on_requested_deadline_missed (proxy.in (), ddsstatus);
     }
@@ -75,7 +66,7 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_SubscriberListener_i::on_requested_incompatible_qos");
 
       ::DDS::RequestedIncompatibleQosStatus ddsstatus;
-      ::DDS::DataReader_var proxy = this->get_datareader_proxy (the_reader);
+      ::DDS::DataReader_var proxy = DDS_TypeSupport_i::create_datareader (the_reader, this->dp_.in ());
       ddsstatus <<= status;
       this->impl_->on_requested_incompatible_qos (proxy.in (), ddsstatus);
     }
@@ -88,7 +79,7 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_SubscriberListener_i::on_sample_rejected");
 
       ::DDS::SampleRejectedStatus ddsstatus;
-      ::DDS::DataReader_var proxy = this->get_datareader_proxy (the_reader);
+      ::DDS::DataReader_var proxy = DDS_TypeSupport_i::create_datareader (the_reader, this->dp_.in ());
       ddsstatus <<= status;
       this->impl_->on_sample_rejected (proxy.in (), ddsstatus);
     }
@@ -101,7 +92,7 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_SubscriberListener_i::on_liveliness_changed");
 
       ::DDS::LivelinessChangedStatus ddsstatus;
-      ::DDS::DataReader_var proxy = this->get_datareader_proxy (the_reader);
+      ::DDS::DataReader_var proxy = DDS_TypeSupport_i::create_datareader (the_reader, this->dp_.in ());
       ddsstatus <<= status;
       this->impl_->on_liveliness_changed (proxy.in (), ddsstatus);
     }
@@ -112,7 +103,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_SubscriberListener_i::on_data_available");
 
-      ::DDS::DataReader_var proxy = this->get_datareader_proxy (the_reader);
+      ::DDS::DataReader_var proxy = DDS_TypeSupport_i::create_datareader (the_reader, this->dp_.in ());
       this->impl_->on_data_available (proxy.in ());
     }
 
@@ -124,7 +115,7 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_SubscriberListener_i::on_subscription_matched");
 
       ::DDS::SubscriptionMatchedStatus ddsstatus;
-      ::DDS::DataReader_var proxy = this->get_datareader_proxy (the_reader);
+      ::DDS::DataReader_var proxy = DDS_TypeSupport_i::create_datareader (the_reader, this->dp_.in ());
       ddsstatus <<= status;
       this->impl_->on_subscription_matched (proxy.in (), ddsstatus);
     }
@@ -137,7 +128,7 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_SubscriberListener_i::on_sample_lost");
 
       ::DDS::SampleLostStatus ddsstatus;
-      ::DDS::DataReader_var proxy = this->get_datareader_proxy (the_reader);
+      ::DDS::DataReader_var proxy = DDS_TypeSupport_i::create_datareader (the_reader, this->dp_.in ());
       ddsstatus <<= status;
       this->impl_->on_sample_lost (proxy.in (), ddsstatus);
     }
