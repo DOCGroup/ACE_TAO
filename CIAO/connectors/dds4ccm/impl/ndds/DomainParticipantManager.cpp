@@ -1,6 +1,7 @@
 // $Id$
 
-#include "DomainParticipantManager.h"
+#include "dds4ccm/impl/ndds/DomainParticipantManager.h"
+#include "dds4ccm/impl/ndds/TypeSupport.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/Utils.h"
 
@@ -125,6 +126,7 @@ namespace CIAO
                     "DomainParticipantManager::~DomainParticipantManager - "
                     "Finalizing DDS\n"));
 
+      DDS_TypeSupport_i::close ();
       DDSDomainParticipantFactory::finalize_instance ();
     }
 

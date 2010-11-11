@@ -1,7 +1,27 @@
+Thu Nov 11 15:58:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/dds4ccm_conf.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantManager.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+        * connectors/dds4ccm/impl/ndds/PublisherListener.h:
+        * connectors/dds4ccm/impl/ndds/PublisherListener.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.h:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.cpp:
+        * connectors/dds4ccm/impl/ndds/TypeSupport.h:
+        * connectors/dds4ccm/impl/ndds/TypeSupport.cpp:
+        * connectors/dds4ccm/impl/ndds/ndds.mpc:
+          Added own typesupport and use that through the code
+
 Thu Nov 11 14:42:03 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/AsynchT/Receiver/AsynchT_Receiver_exec.cpp:
-	Add include for sleep function .
+        Add include for sleep function .
 
 Thu Nov 11 10:56:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 

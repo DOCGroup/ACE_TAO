@@ -72,9 +72,6 @@ namespace CIAO
     private:
       ::DDS::SubscriberListener_var impl_;
       ::DDS::DomainParticipant_var dp_;
-
-      ::DDS::DataReader_ptr
-      get_datareader_proxy (::DDSDataReader * the_reader);
     };
   }
 }

@@ -4,6 +4,7 @@
 #define CONDITIONMANAGER_T_H_
 
 #include "dds4ccm/impl/ndds/WaitSet.h"
+
 namespace CIAO
 {
   namespace NDDS
@@ -36,7 +37,7 @@ namespace CIAO
       void init_readcondition (void);
 
       bool wait (::DDS::ConditionSeq  & active_conditions,
-                 ::DDS::Duration_t & time_out);
+                  ::DDS::Duration_t & time_out);
 
       ::CCM_DDS::QueryFilter * query (void);
 

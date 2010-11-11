@@ -8,8 +8,7 @@
 #include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/ndds/DomainParticipantManager.h"
-
-
+#include "dds4ccm/idl/dds4ccm_BaseC.h" // @todo, this should not be here
 namespace CIAO
 {
   namespace NDDS
