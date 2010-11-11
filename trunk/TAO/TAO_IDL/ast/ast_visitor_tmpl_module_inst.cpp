@@ -1054,8 +1054,6 @@ ast_visitor_tmpl_module_inst::visit_typedef (AST_Typedef *node)
                                         false,
                                         false);
 
-  //AST_Decl *d = ScopeAsDecl (idl_global->scopes ().top ());
-
   idl_global->scopes ().top ()->add_to_scope (added_td);
 
   return 0;
