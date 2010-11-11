@@ -105,8 +105,8 @@ namespace CIAO
       get_dds_entity (void);
 
     private:
-      ::DDS::DataReader_var impl_;
-      ::DDS::DataReader_ptr impl (void);
+      ::DDS::DataReader_var dds_entity_;
+      ::DDS::DataReader_ptr dds_entity (void);
     };
   }
 }
