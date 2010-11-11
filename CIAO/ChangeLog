@@ -1,3 +1,8 @@
+Thu Nov 11 19:25:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/Coherent_Changes_Guard.h:
+          Fixed export macro
+
 Thu Nov 11 19:17:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/CCM_DataReader.h:
