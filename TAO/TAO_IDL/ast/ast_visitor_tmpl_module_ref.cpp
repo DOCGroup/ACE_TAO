@@ -32,7 +32,15 @@ int
 ast_visitor_tmpl_module_ref::visit_template_module_ref (
   AST_Template_Module_Ref *node)
 {
-  // This mehod is an override of the base class, and creates
+  /// This traversal should be done only once. If the template
+  /// module this ref is contain in is itself aliased later,
+  /// we don't want to execute the steps below again.
+  if (node->processed ())
+    {
+      return 0;
+    }
+
+  // This method is an override of the base class, and creates
   // the necessary implied IDL in the template module.
   // Later, the base class visitor then skips the alias and
   // processes the implied IDL. It's a bit inefficient to have
@@ -87,6 +95,7 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
 
   idl_global->scopes ().pop ();
 
+  node->processed (true);
   return 0;
 }
 

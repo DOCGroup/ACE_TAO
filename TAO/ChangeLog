@@ -1,3 +1,21 @@
+Thu Nov 11 21:43:07 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:
+
+          Removed commented-out code.
+
+        * TAO_IDL/include/ast_template_module_ref.h:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_ref.cpp:
+        * TAO_IDL/ast/ast_template_module_ref.cpp:
+
+          Added flag in node, and use in visitor, to prevent
+          multiple traversals of a template module reference in
+          this visitor. Its only action is to create an equivalent
+          regular module in the same scope (a template module)
+          and this action mustn't be taken more than once. This
+          flag comes into play when the IDL has a 'chain' of
+          aliases.
+
 Wed Nov 10 19:51:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
