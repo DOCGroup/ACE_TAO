@@ -26,6 +26,7 @@
  **/
 
 #include "AsynchT_Receiver_exec.h"
+#include "ace/OS_NS_unistd.h"
 
 namespace CIAO_AsynchT_Receiver_Impl
 {
@@ -50,21 +51,21 @@ namespace CIAO_AsynchT_Receiver_Impl
   ::CORBA::Long
   do_my_foo_exec_i::foo  (const char * /*in_str*/, ::CORBA::Long cmd,
       ::CORBA::String_out answer)
-{
-if (cmd == 1)
-{
-ACE_OS::sleep(2);
-}
-answer = CORBA::string_dup ("Hi from receiver.");
-return cmd;
+  {
+    if (cmd == 1)
+    {
+    ACE_OS::sleep(2);
+    }
+    answer = CORBA::string_dup ("Hi from receiver.");
+    return cmd;
   }
 
   void
   do_my_foo_exec_i::bar (::CORBA::Long cmd,
       ::CORBA::Long_out l_cmd)
-{
-ACE_OS::sleep(2);
-l_cmd = cmd;
+  {
+    ACE_OS::sleep(2);
+    l_cmd = cmd;
   }
 
   ::CORBA::Short
