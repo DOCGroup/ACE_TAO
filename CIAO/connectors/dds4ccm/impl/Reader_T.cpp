@@ -18,6 +18,7 @@ namespace CIAO
     {
       template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
       Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::Reader_T (void)
+        : condition_manager_ (0)
       {
         DDS4CCM_TRACE ("Reader_T::Reader_T");
       }
@@ -207,9 +208,9 @@ namespace CIAO
       {
         // This function has to return all samples of all instances
         ::DDS::SampleInfoSeq sample_info;
-          this->read_wo_instance (instances,
-                                  sample_info,
-                                  this->condition_manager_->get_querycondition_reader ());
+        this->read_wo_instance (instances,
+                                sample_info,
+                                this->condition_manager_->get_querycondition_reader ());
         this->convert_sample_infos (infos, sample_info);
         this->return_loan (instances, sample_info);
       }
@@ -262,9 +263,9 @@ namespace CIAO
           this->check_handle (an_instance, instance_handle);
 
         ::DDS::SampleInfoSeq sample_info;
-          this->read_w_instance (instances,
-                                 sample_info,
-                                 lookup_hnd);
+        this->read_w_instance (instances,
+                               sample_info,
+                               lookup_hnd);
         this->convert_sample_infos (infos, sample_info);
         this->return_loan (instances, sample_info);
       }
