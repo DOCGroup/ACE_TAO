@@ -71,7 +71,6 @@ protected:
   ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<ContentFilterSetting_type> cft_setting_;
   ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<Reader_type> dds_read_;
   ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T< ::CIAO::DDS4CCM::CCM_DataReader > ccm_data_reader_;
-  ::DDS::DataReader_var dr_;
 
   bool configuration_complete_;
   //@}

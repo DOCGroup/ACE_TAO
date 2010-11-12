@@ -25,7 +25,7 @@ namespace CIAO
 
       template <typename DDS_TYPE, typename CCM_TYPE>
       typename DDS_TYPE::typed_reader_type::_ptr_type
-      Getter_Base_T<DDS_TYPE, CCM_TYPE>::dds_entity (void)
+      Getter_Base_T<DDS_TYPE, CCM_TYPE>::dds_reader (void)
       {
         if (this->dds_reader_)
           {
@@ -87,7 +87,7 @@ namespace CIAO
 
         if (! ::CORBA::is_nil (qc))
           {
-            return this->dds_entity ()->read_w_condition (data,
+            return this->dds_reader ()->read_w_condition (data,
                                                     sample_info,
                                                     max_samples,
                                                     qc);
@@ -107,7 +107,7 @@ namespace CIAO
 
         if (! ::CORBA::is_nil (rd))
           {
-            return this->dds_entity ()->read_w_condition (data,
+            return this->dds_reader ()->read_w_condition (data,
                                                     sample_info,
                                                     max_samples,
                                                     rd);
@@ -188,7 +188,7 @@ namespace CIAO
                           translate_retcode (retcode)));
 
       //               ::DDS::ReturnCode_t const retval =
-      //                 this->dds_entity ()->return_loan (data, sample_info);
+      //                 this->dds_reader ()->return_loan (data, sample_info);
       //               if (retval != ::DDS::RETCODE_OK)
       //                 {
       //                   DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -200,7 +200,7 @@ namespace CIAO
                   }
 
       //           ::DDS::ReturnCode_t const retval =
-      //             this->dds_entity ()->return_loan (data, sample_info);
+      //             this->dds_reader ()->return_loan (data, sample_info);
       //           if (retval != ::DDS::RETCODE_OK)
       //             {
       //               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -247,7 +247,7 @@ namespace CIAO
 
       template <typename DDS_TYPE, typename CCM_TYPE>
       void
-      Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_dds_entity (
+      Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_dds_reader (
         ::DDS::DataReader_ptr dr,
         ::CIAO::DDS4CCM::ConditionManager * condition_manager)
       {
@@ -259,6 +259,12 @@ namespace CIAO
         this->condition_manager_->init_readcondition ();
       }
 
+      template <typename DDS_TYPE, typename CCM_TYPE>
+      ::DDS::DataReader_ptr
+      Getter_Base_T<DDS_TYPE, CCM_TYPE>::get_dds_reader (void)
+      {
+        return ::DDS::DataReader::_duplicate (this->dds_reader_.in ());
+      }
 
       template <typename DDS_TYPE, typename CCM_TYPE>
       bool
@@ -305,7 +311,7 @@ namespace CIAO
                               translate_retcode (retcode)));
 
       //                   ::DDS::ReturnCode_t const retval =
-      //                     this->dds_entity ()->return_loan (data, sample_info);
+      //                     this->dds_reader ()->return_loan (data, sample_info);
       //                   if (retval != ::DDS::RETCODE_OK)
       //                     {
       //                       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -330,7 +336,7 @@ namespace CIAO
                       }
                     // Return the loan of each read.
       //               ::DDS::ReturnCode_t const retval =
-      //                 this->dds_entity ()->return_loan (data, sample_info);
+      //                 this->dds_reader ()->return_loan (data, sample_info);
       //               if (retval != ::DDS::RETCODE_OK)
       //                 {
       //                   DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -394,7 +400,7 @@ namespace CIAO
                               translate_retcode (retcode)));
 
       //                   ::DDS::ReturnCode_t const retval =
-      //                     this->dds_entity ()->return_loan (data, sample_info);
+      //                     this->dds_reader ()->return_loan (data, sample_info);
       //                   if (retval != ::DDS::RETCODE_OK)
       //                     {
       //                       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -417,7 +423,7 @@ namespace CIAO
                               "No valid available in DDS.\n"));
                       }
                     // Return the loan of each read.
-      //               ::DDS::ReturnCode_t const retval = this->dds_entity ()->return_loan (data, sample_info);
+      //               ::DDS::ReturnCode_t const retval = this->dds_reader ()->return_loan (data, sample_info);
       //               if (retval != ::DDS::RETCODE_OK)
       //                 {
       //                   DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO

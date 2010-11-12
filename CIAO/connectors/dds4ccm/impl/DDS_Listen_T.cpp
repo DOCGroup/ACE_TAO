@@ -49,16 +49,26 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::activate (
                               this->condition_manager_),
                             ::CORBA::NO_MEMORY ());
         }
+      ::DDS::DataReader_var dr = this->dds_read_->get_dds_reader ();
+      if (!::CORBA::is_nil (dr.in ()))
+        {
+          ::DDS::ReturnCode_t const retcode = dr->set_listener (
+            this->listener_.in (), mask);
 
-      ::DDS::ReturnCode_t const retcode = this->dr_->set_listener (
-        this->listener_.in (), mask);
-
-      if (retcode != ::DDS::RETCODE_OK)
+          if (retcode != ::DDS::RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                            "DDS_Listen_T::activate - "
+                            "Error while setting the listener on the listen - <%C>\n",
+                            ::CIAO::DDS4CCM::translate_retcode (retcode)));
+              throw ::CORBA::INTERNAL ();
+            }
+        }
+      else
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Listen_T::activate - "
-                        "Error while setting the listener on the listen - <%C>\n",
-                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+                        "Error while retrieving the DataReader\n"));
           throw ::CORBA::INTERNAL ();
         }
     }
