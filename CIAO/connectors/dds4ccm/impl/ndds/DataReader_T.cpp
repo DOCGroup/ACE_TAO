@@ -70,11 +70,6 @@ namespace CIAO
             {
               sample_infos[i] <<= dds_sample_infos[i];
               data_values[i] = dds_data_values[i];
-              ACE_DEBUG ((LM_DEBUG, "####################### %C %d %C %d\n",
-                            dds_data_values[i].key.in (),
-                            dds_data_values[i].iteration,
-                            data_values[i].key.in (),
-                            data_values[i].iteration));
             }
         }
       else if (retcode != ::DDS::RETCODE_NO_DATA)
