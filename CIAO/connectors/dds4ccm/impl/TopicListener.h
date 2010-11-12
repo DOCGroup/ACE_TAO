@@ -8,9 +8,8 @@
 #ifndef TOPICLISTENER_T_H_
 #define TOPICLISTENER_T_H_
 
-#include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "dds4ccm/impl/dds4ccm_conf.h"
-#include "ace/Copy_Disabled.h"
+#include "dds4ccm/idl/dds4ccm_ConnectorStatusListenerC.h"
+#include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;
@@ -20,18 +19,16 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE>
-    class TopicListener_T :
-      public ::DDS::TopicListener,
-      private ACE_Copy_Disabled
+    class DDS4CCM_DDS_IMPL_Export TopicListener :
+      public ::DDS::TopicListener
     {
     public:
       /// Constructor
-      TopicListener_T (::CCM_DDS::ConnectorStatusListener_ptr error_listener,
+      TopicListener (::CCM_DDS::ConnectorStatusListener_ptr error_listener,
                        ::ACE_Reactor* reactor);
 
       /// Destructor
-      virtual ~TopicListener_T (void);
+      virtual ~TopicListener (void);
 
       virtual void on_inconsistent_topic (
         ::DDS::Topic_ptr the_topic,
@@ -46,7 +43,5 @@ namespace CIAO
     };
   }
 }
-
-#include "dds4ccm/impl/TopicListener_T.cpp"
 
 #endif /* TOPICLISTENER_T_H_ */

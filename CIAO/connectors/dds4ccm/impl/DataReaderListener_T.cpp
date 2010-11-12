@@ -15,7 +15,7 @@ namespace CIAO
       ::CCM_DDS::DataListenerControl_ptr control,
       ACE_Reactor * reactor,
       ConditionManager& condition_manager)
-      : PortStatusListener_T <DDS_TYPE> (port_status_listener, reactor) ,
+      : PortStatusListener (port_status_listener, reactor) ,
         listener_ (CCM_TYPE::listener_type::_duplicate (listener)),
         control_ (::CCM_DDS::DataListenerControl::_duplicate (control)),
         condition_manager_ (condition_manager)
@@ -200,7 +200,7 @@ namespace CIAO
       if (! ::CORBA::is_nil (listener) ||
           DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
         {
-          mask |= PortStatusListener_type::get_mask (listener);
+          mask |= ::CIAO::DDS4CCM::PortStatusListener::get_mask (listener);
         }
 
       if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)

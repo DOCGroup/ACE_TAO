@@ -11,7 +11,7 @@
 #define DATAREADERSTATELISTENER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "ace/Copy_Disabled.h"
+#include "dds4ccm/impl/PortStatusListener.h"
 
 namespace CIAO
 {
@@ -19,7 +19,7 @@ namespace CIAO
   {
     template <typename DDS_TYPE, typename CCM_TYPE>
     class DataReaderStateListener_T :
-      public PortStatusListener_T <DDS_TYPE>
+      public PortStatusListener
     {
     typedef ::CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE>
       DataReaderStateHandler_type;

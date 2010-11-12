@@ -27,7 +27,7 @@ namespace CIAO
     {
     public:
       /// Constructor
-      explicit DDS_DataWriter_Base (void);
+      DDS_DataWriter_Base (void);
 
       virtual ::DDSDataWriter * get_rti_entity (void) = 0;
 
