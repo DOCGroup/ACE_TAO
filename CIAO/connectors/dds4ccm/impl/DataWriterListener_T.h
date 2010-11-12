@@ -18,7 +18,7 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE>
     class DataWriterListener_T :
       public ::DDS::DataWriterListener,
       private ACE_Copy_Disabled

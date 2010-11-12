@@ -9,14 +9,14 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DataReaderListener_T (
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    DataReaderListener_T<DDS_TYPE, CCM_TYPE>::DataReaderListener_T (
       typename CCM_TYPE::listener_type::_ptr_type listener,
       ::CCM_DDS::PortStatusListener_ptr port_status_listener,
       ::CCM_DDS::DataListenerControl_ptr control,
       ACE_Reactor * reactor,
       ConditionManager_type& condition_manager)
-      : PortStatusListener_T <DDS_TYPE, VENDOR_TYPE> (port_status_listener, reactor) ,
+      : PortStatusListener_T <DDS_TYPE> (port_status_listener, reactor) ,
         listener_ (CCM_TYPE::listener_type::_duplicate (listener)),
         control_ (::CCM_DDS::DataListenerControl::_duplicate (control)),
         condition_manager_ (condition_manager)
@@ -24,15 +24,15 @@ namespace CIAO
       DDS4CCM_TRACE ("DataReaderListener_T::DataReaderListener_T");
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~DataReaderListener_T (void)
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    DataReaderListener_T<DDS_TYPE, CCM_TYPE>::~DataReaderListener_T (void)
     {
       DDS4CCM_TRACE ("DataReaderListener_T::~DataReaderListener_T");
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE>
     void
-    DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_available (
+    DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available (
       ::DDS::DataReader_ptr rdr)
     {
       DDS4CCM_TRACE ("DataReaderListener_T::on_data_available");
@@ -60,9 +60,9 @@ namespace CIAO
         }
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE>
     void
-    DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_available_i (
+    DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (
       ::DDS::DataReader_ptr rdr)
     {
       DDS4CCM_TRACE ("DataReaderListener_T::on_data_available_i");
@@ -196,9 +196,9 @@ namespace CIAO
         }
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::StatusMask
-    DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
+    DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
       ::CCM_DDS::PortStatusListener_ptr listener)
     {
       DDS4CCM_TRACE ("DataReaderListener_T::get_mask");

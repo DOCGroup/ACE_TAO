@@ -18,41 +18,41 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE>
     class DataReaderListener_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE>
     class DataReaderHandler_T :
       public ACE_Event_Handler
     {
       public:
         DataReaderHandler_T (
-            typename CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>* drl,
+            typename CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>* drl,
             ::DDS::DataReader_ptr dr);
         virtual ~DataReaderHandler_T ();
 
         virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
       private:
-        typename CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>* drl_;
+        typename CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>* drl_;
         ::DDS::DataReader_var dr_;
     };
 
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE>
     class DataReaderStateListener_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE>
     class DataReaderStateHandler_T :
       public ACE_Event_Handler
     {
       public:
         DataReaderStateHandler_T (
-            typename CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>* drl,
+            typename CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>* drl,
             ::DDS::DataReader_ptr dr);
         virtual ~DataReaderStateHandler_T ();
 
         virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
       private:
-        typename CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>* drl_;
+        typename CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>* drl_;
         ::DDS::DataReader_var dr_;
     };
   }

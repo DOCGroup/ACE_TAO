@@ -13,7 +13,7 @@
 #include "dds4ccm/impl/Writer_T.h"
 #include "dds4ccm/impl/CCM_DataWriter.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_Write_T
 {
 public:
@@ -46,9 +46,9 @@ public:
   void remove (::DDS::Publisher_ptr publisher);
 
 private:
-  typedef ::CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+  typedef ::CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE>
     Writer_type;
-  typedef ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+  typedef ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>
     DataWriterListener_type;
   typedef ::CIAO::NDDS::DataWriter_T<DDS_TYPE>
     DataWriter_type;

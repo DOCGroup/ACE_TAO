@@ -9,8 +9,8 @@ namespace CIAO
   {
     namespace DDS_CCM
     {
-      template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-      Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::Getter_Base_T (void)
+      template <typename DDS_TYPE, typename CCM_TYPE>
+      Getter_Base_T<DDS_TYPE, CCM_TYPE>::Getter_Base_T (void)
         : reader_ (0),
           time_out_ (),
           max_delivered_data_ (0)
@@ -18,15 +18,15 @@ namespace CIAO
         DDS4CCM_TRACE ("Getter_Base_T::Getter_Base_T");
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-      Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~Getter_Base_T (void)
+      template <typename DDS_TYPE, typename CCM_TYPE>
+      Getter_Base_T<DDS_TYPE, CCM_TYPE>::~Getter_Base_T (void)
       {
         DDS4CCM_TRACE ("Getter_Base_T::~Getter_Base_T");
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE>
       CIAO::NDDS::DataReader_T<DDS_TYPE> *
-      Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::dds_entity (void)
+      Getter_Base_T<DDS_TYPE, CCM_TYPE>::dds_entity (void)
       {
         if (this->reader_)
           {
@@ -41,9 +41,9 @@ namespace CIAO
           }
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE>
       ::DDS::ReturnCode_t
-      Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get (
+      Getter_Base_T<DDS_TYPE, CCM_TYPE>::get (
         typename DDS_TYPE::seq_type & data,
         ::DDS::SampleInfoSeq & sample_info,
         const ::CORBA::Long & max_samples)
@@ -76,9 +76,9 @@ namespace CIAO
           }
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE>
       ::DDS::ReturnCode_t
-      Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get (
+      Getter_Base_T<DDS_TYPE, CCM_TYPE>::get (
         typename DDS_TYPE::seq_type & data,
         ::DDS::SampleInfoSeq & sample_info,
         const ::CORBA::Long & max_samples,
@@ -96,9 +96,9 @@ namespace CIAO
         return ::DDS::RETCODE_ERROR;
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE>
       ::DDS::ReturnCode_t
-      Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get (
+      Getter_Base_T<DDS_TYPE, CCM_TYPE>::get (
         typename DDS_TYPE::seq_type & data,
         ::DDS::SampleInfoSeq & sample_info,
         const ::CORBA::Long & max_samples,
@@ -116,9 +116,9 @@ namespace CIAO
         return DDS_RETCODE_ERROR;
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE>
       bool
-      Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_many (
+      Getter_Base_T<DDS_TYPE, CCM_TYPE>::get_many (
         typename CCM_TYPE::seq_type& instances,
         ::CCM_DDS::ReadInfoSeq& infos)
       {
@@ -214,41 +214,41 @@ namespace CIAO
         return true;
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE>
       ::DDS::Duration_t
-      Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::time_out (void)
+      Getter_Base_T<DDS_TYPE, CCM_TYPE>::time_out (void)
       {
         DDS4CCM_TRACE ("Getter_Base_T::time_out");
 
         return this->time_out_;
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE>
       void
-      Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::time_out (
+      Getter_Base_T<DDS_TYPE, CCM_TYPE>::time_out (
         const ::DDS::Duration_t & time_out)
       {
         this->time_out_ = time_out;
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE>
       ::CCM_DDS::DataNumber_t
-      Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::max_delivered_data (void)
+      Getter_Base_T<DDS_TYPE, CCM_TYPE>::max_delivered_data (void)
       {
         return this->max_delivered_data_;
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE>
       void
-      Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::max_delivered_data (
+      Getter_Base_T<DDS_TYPE, CCM_TYPE>::max_delivered_data (
         ::CCM_DDS::DataNumber_t max_delivered_data)
       {
         this->max_delivered_data_ = max_delivered_data;
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE>
       void
-      Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_dds_entity (
+      Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_dds_entity (
         ::DDS::DataReader_ptr dr,
         ConditionManager_type * condition_manager)
       {
@@ -263,9 +263,9 @@ namespace CIAO
       }
 
 
-      template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE>
       bool
-      Getter_T<DDS_TYPE, CCM_TYPE, true, VENDOR_TYPE>::get_one (
+      Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one (
         typename DDS_TYPE::value_type::_out_type an_instance,
         ::CCM_DDS::ReadInfo_out info)
       {
@@ -348,9 +348,9 @@ namespace CIAO
         return true;
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE>
       bool
-      Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_one (
+      Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one (
         typename DDS_TYPE::value_type::_out_type an_instance,
         ::CCM_DDS::ReadInfo_out info)
       {

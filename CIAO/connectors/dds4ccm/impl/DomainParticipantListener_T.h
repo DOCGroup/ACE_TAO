@@ -22,7 +22,7 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE>
     class DomainParticipantListener_T :
       public virtual ::DDS::CCM_DomainParticipantListener,
       public virtual ::CORBA::LocalObject,

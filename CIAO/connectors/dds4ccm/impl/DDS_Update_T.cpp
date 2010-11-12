@@ -11,33 +11,33 @@
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_Update_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE>
+DDS_Update_T<DDS_TYPE, CCM_TYPE>::DDS_Update_T (void)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~DDS_Update_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE>
+DDS_Update_T<DDS_TYPE, CCM_TYPE>::~DDS_Update_T (void)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_component (
+DDS_Update_T<DDS_TYPE, CCM_TYPE>::set_component (
     typename CCM_TYPE::base_type::_ptr_type component)
 {
   this->dds_update_->_set_component (component);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
+DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
   ::DDS::Topic_ptr topic,
   ::DDS::Publisher_ptr publisher,
   const char* library_name,
   const char* profile_name)
 {
-  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete");
+  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
   if (!this->ccm_dds_writer_->get_rti_entity ())
     {
       ::DDS::DataWriter_var dwv_tmp;
@@ -83,11 +83,11 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate ()
+DDS_Update_T<DDS_TYPE, CCM_TYPE>::activate ()
 {
-  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate");
+  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::activate");
 
   ::DDS::StatusMask const mask =
     DataWriterListener_type::get_mask ();
@@ -115,11 +115,11 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate ()
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate ()
+DDS_Update_T<DDS_TYPE, CCM_TYPE>::passivate ()
 {
-  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate");
+  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::passivate");
 
   if (!::CORBA::is_nil (this->data_listener_.in ()))
     {
@@ -139,12 +139,12 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate ()
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove (
+DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove (
   ::DDS::Publisher_ptr publisher)
 {
-  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove");
+  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove");
 
   ::DDS::ReturnCode_t const retval =
     publisher->delete_datawriter (this->ccm_dds_writer_);
@@ -161,20 +161,20 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove (
   this->dds_update_->set_dds_writer (::DDS::DataWriter::_nil ());
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::updater_type::_ptr_type
-DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_data (void)
+DDS_Update_T<DDS_TYPE, CCM_TYPE>::get_data (void)
 {
-  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_data");
+  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::get_data");
 
   return CCM_TYPE::updater_type::_duplicate (this->dds_update_);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::datawriter_type::_ptr_type
-DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_dds_entity (void)
+DDS_Update_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
 {
-  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_dds_entity");
+  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::get_dds_entity");
 
   return ::DDS::CCM_DataWriter::_duplicate (this->ccm_data_writer_);
 }

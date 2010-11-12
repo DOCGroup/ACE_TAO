@@ -22,7 +22,7 @@ namespace CIAO
   {
     namespace DDS_CCM
     {
-      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
       class Reader_T :
           public virtual CCM_TYPE::reader_type,
           public virtual LocalObject_T<CCM_TYPE>,

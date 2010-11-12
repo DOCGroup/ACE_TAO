@@ -17,13 +17,13 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE>
     class DataReaderStateListener_T :
-      public PortStatusListener_T <DDS_TYPE, VENDOR_TYPE>
+      public PortStatusListener_T <DDS_TYPE>
     {
     typedef ::CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>
       ConditionManager_type;
-    typedef ::CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+    typedef ::CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE>
       DataReaderStateHandler_type;
 
     public:
