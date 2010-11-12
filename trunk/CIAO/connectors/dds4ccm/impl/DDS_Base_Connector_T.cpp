@@ -3,7 +3,7 @@
 
 #include "ace/Tokenizer_T.h"
 #include "ace/Env_Value_T.h"
-
+#include "tao/ORB_Core.h"
 #include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
@@ -193,34 +193,6 @@ void
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate");
-
-  ::DDS::StatusMask const mask =
-    DomainParticipantListener::get_mask ();
-
-  if (mask != 0)
-    {
-      if (::CORBA::is_nil (this->domainparticipantlistener_.in ()))
-        {
-          ::CCM_DDS::ConnectorStatusListener_var error_listener =
-            this->context_->get_connection_error_listener ();
-
-          ACE_NEW_THROW_EX (this->domainparticipantlistener_,
-                            DomainParticipantListener(
-                              error_listener.in ()),
-                            ::CORBA::NO_MEMORY ());
-        }
-      ::DDS::ReturnCode_t const retcode = this->domain_participant_->set_listener (
-                                  this->domainparticipantlistener_.in (), mask);
-
-      if (retcode != ::DDS::RETCODE_OK)
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_Base_Connector_T::ccm_activate - "
-                        "Error setting the listener on the domain participant - <%C>\n",
-                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
-          throw ::CORBA::INTERNAL ();
-        }
-    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -228,25 +200,6 @@ void
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate");
-
-  if (!::CORBA::is_nil (this->domainparticipantlistener_.in ()))
-    {
-      ::DDS::ReturnCode_t const retcode =
-        this->domain_participant_->set_listener (
-          ::DDS::DomainParticipantListener::_nil (), 0);
-
-      if (retcode != ::DDS::RETCODE_OK)
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_Base_Connector_T::ccm_passivate - "
-                        "Error while setting the listener on the "
-                        "domain participant - <%C>\n",
-                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
-          throw ::CORBA::INTERNAL ();
-        }
-
-      this->domainparticipantlistener_ = ::DDS::DomainParticipantListener::_nil ();
-    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
