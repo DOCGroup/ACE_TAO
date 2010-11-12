@@ -39,7 +39,7 @@ namespace CIAO
         hnd <<= instance_handle;
 
         ::DDS::InstanceHandle_t const tmp =
-            this->dds_entity ()->lookup_instance (an_instance);
+            this->dds_reader ()->lookup_instance (an_instance);
 
         ::DDS_InstanceHandle_t lookup_hnd = ::DDS_HANDLE_NIL;
         lookup_hnd <<= tmp;
@@ -60,18 +60,58 @@ namespace CIAO
       }
 
       template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-      void
-      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::convert_sample_infos (
-        ::CCM_DDS::ReadInfoSeq& infos,
-        ::DDS::SampleInfoSeq sample_info)
+      CORBA::ULong
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::get_nr_valid_samples (
+        const ::DDS::SampleInfoSeq& sample_infos,
+        const bool determine_last)
       {
-        infos.length (sample_info.length ());
+        CORBA::ULong nr_of_samples = 0;
+        if (determine_last)
+          {
+            for (::CORBA::ULong i = 0 ; i < sample_infos.length(); ++i)
+              {
+                if (sample_infos[i].valid_data &&
+                    sample_infos[i].sample_rank == 0)
+                  {
+                    ++nr_of_samples;
+                  }
+              }
+          }
+        else
+          {
+            for (::CORBA::ULong i = 0 ; i < sample_infos.length(); ++i)
+              {
+                if (sample_infos[i].valid_data)
+                  {
+                    ++nr_of_samples;
+                  }
+              }
+          }
+        return nr_of_samples;
+      }
+
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+      void
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::convert_data (
+        const typename DDS_TYPE::seq_type & all_data,
+        typename DDS_TYPE::seq_type & data_to_return,
+        ::CCM_DDS::ReadInfoSeq& infos,
+        const ::DDS::SampleInfoSeq & sample_info)
+      {
+        CORBA::ULong samples_to_return = this->get_nr_valid_samples (sample_info,
+                                                                     false);
+        infos.length (samples_to_return);
+        data_to_return.length (samples_to_return);
 
         CORBA::ULong ix = 0;
         for (::CORBA::ULong i = 0 ; i < sample_info.length(); ++i)
           {
-            (infos)[ix] <<= sample_info[i];
-            ++ix;
+            if (sample_info[i].valid_data)
+              {
+                infos[ix] <<= sample_info[i];
+                data_to_return[ix] = all_data[i];
+                ++ix;
+              }
           }
       }
 
@@ -87,7 +127,7 @@ namespace CIAO
         DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_INFO, DDS4CCM_INFO
                       ACE_TEXT ("Reader_T::read_w_instance - ")
                       ACE_TEXT ("Start reading with instance.\n")));
-        ::DDS::ReturnCode_t const retval = this->dds_entity ()->read_instance (
+        ::DDS::ReturnCode_t const retval = this->dds_reader ()->read_instance (
                                               data,
                                               sample_info,
                                               ::DDS::LENGTH_UNLIMITED,
@@ -118,7 +158,7 @@ namespace CIAO
 
         if (! ::CORBA::is_nil (qc))
           {
-            retval = this->dds_entity ()->read_w_condition (
+            retval = this->dds_reader ()->read_w_condition (
                                                       data,
                                                       sample_info,
                                                       ::DDS::LENGTH_UNLIMITED,
@@ -126,7 +166,7 @@ namespace CIAO
           }
         else
           {
-            retval = this->dds_entity ()->read (
+            retval = this->dds_reader ()->read (
                         data,
                         sample_info,
                         ::DDS::LENGTH_UNLIMITED,
@@ -153,7 +193,7 @@ namespace CIAO
       {
         // Return the loan
         ::DDS::ReturnCode_t const retval =
-          this->dds_entity ()->return_loan (data, sample_info);
+          this->dds_reader ()->return_loan (data, sample_info);
         if (retval != ::DDS::RETCODE_OK)
           {
             DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -170,28 +210,22 @@ namespace CIAO
         ::CCM_DDS::ReadInfoSeq& infos)
       {
         // This function has to return the last sample of all instances
+        ::DDS::SampleInfoSeq sample_info;
         typename CCM_TYPE::seq_type data;
 
-        ::DDS::SampleInfoSeq sample_info;
         this->read_wo_instance (data,
                                 sample_info,
                                 this->condition_manager_->get_querycondition_reader ());
-        // Determine how many samples to return
-        CORBA::ULong samples_to_return = 0;
-        for (::CORBA::ULong i = 0; i < sample_info.length(); ++i)
-          {
-            if (sample_info[i].sample_rank == 0)
-              {
-                ++samples_to_return;
-              }
-          }
 
+        // Determine how many samples to return
+        CORBA::ULong samples_to_return = this->get_nr_valid_samples (sample_info,
+                                                                     true);
         infos.length (samples_to_return);
         instances.length (samples_to_return);
         ::CORBA::ULong ix = 0;
         for (::CORBA::ULong i = 0 ; i < sample_info.length(); ++i)
           {
-            if (sample_info[i].sample_rank == 0)
+            if (sample_info[i].valid_data && sample_info[i].sample_rank == 0)
               {
                 infos[ix] <<= sample_info[i];
                 instances[ix] = data[i];
@@ -208,10 +242,13 @@ namespace CIAO
       {
         // This function has to return all samples of all instances
         ::DDS::SampleInfoSeq sample_info;
-        this->read_wo_instance (instances,
+        typename CCM_TYPE::seq_type data;
+
+        this->read_wo_instance (data,
                                 sample_info,
                                 this->condition_manager_->get_querycondition_reader ());
-        this->convert_sample_infos (infos, sample_info);
+
+        this->convert_data (data, instances, infos, sample_info);
         this->return_loan (instances, sample_info);
       }
 
@@ -225,9 +262,9 @@ namespace CIAO
         ::DDS::InstanceHandle_t const lookup_hnd =
           this->check_handle (an_instance, instance_handle);
 
+        ::DDS::SampleInfoSeq sample_info;
         typename DDS_TYPE::seq_type data;
 
-        ::DDS::SampleInfoSeq sample_info;
         this->read_w_instance (data,
                                sample_info,
                                lookup_hnd);
@@ -263,10 +300,12 @@ namespace CIAO
           this->check_handle (an_instance, instance_handle);
 
         ::DDS::SampleInfoSeq sample_info;
-        this->read_w_instance (instances,
+        typename CCM_TYPE::seq_type data;
+
+        this->read_w_instance (data,
                                sample_info,
                                lookup_hnd);
-        this->convert_sample_infos (infos, sample_info);
+        this->convert_data (data, instances, infos, sample_info);
         this->return_loan (instances, sample_info);
       }
 
@@ -289,11 +328,11 @@ namespace CIAO
 
       template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
       void
-      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::set_dds_entity (
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::set_dds_reader (
         ::DDS::DataReader_ptr dr,
         ConditionManager * condition_manager)
       {
-        DDS4CCM_TRACE ("Reader_T::set_dds_entity");
+        DDS4CCM_TRACE ("Reader_T::set_dds_writer");
 
         this->dds_reader_ = DDS_TYPE::typed_reader_type::_narrow (dr);
         this->condition_manager_ = condition_manager;
@@ -301,8 +340,17 @@ namespace CIAO
       }
 
       template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+      ::DDS::DataReader_ptr
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::get_dds_reader (void)
+      {
+        DDS4CCM_TRACE ("Reader_T::get_dds_reader");
+
+        return ::DDS::DataReader::_duplicate (this->dds_reader_.in ());
+      }
+
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
       typename DDS_TYPE::typed_reader_type::_ptr_type
-      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::dds_entity (void)
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::dds_reader (void)
       {
         if (! ::CORBA::is_nil (this->dds_reader_))
           {

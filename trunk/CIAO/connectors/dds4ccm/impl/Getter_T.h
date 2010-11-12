@@ -84,8 +84,9 @@ namespace CIAO
         /**
          * Set the actual pointer to DDS Datareader
          */
-        void set_dds_entity (::DDS::DataReader_ptr reader,
+        void set_dds_reader (::DDS::DataReader_ptr reader,
                              ::CIAO::DDS4CCM::ConditionManager * condition_manager);
+        ::DDS::DataReader_ptr get_dds_reader (void);
       protected:
           typename DDS_TYPE::typed_reader_type::_var_type dds_reader_;
         ::CIAO::DDS4CCM::ConditionManager * condition_manager_;
@@ -94,7 +95,7 @@ namespace CIAO
         ::CCM_DDS::DataNumber_t max_delivered_data_;
 
         typename DDS_TYPE::typed_reader_type::_ptr_type
-        dds_entity (void);
+        dds_reader (void);
 
         ::DDS::ReturnCode_t get (typename DDS_TYPE::seq_type & data,
                                  ::DDS::SampleInfoSeq & sample_info,

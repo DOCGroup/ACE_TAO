@@ -51,25 +51,6 @@ namespace CIAO
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::~DataReader_T");
     }
 
-    /// For the requirement : 'samples ordered by instances' the following settings
-    /// are necessary: ordered_access -> true and
-    /// DDS_INSTANCE_PRESENTATION_QOS (default)
-    template <typename DDS_TYPE>
-    CORBA::ULong
-    DataReader_T<DDS_TYPE>::get_nr_valid_samples (
-      const typename DDS_TYPE::sampleinfo_seq_type& sample_infos)
-    {
-      CORBA::ULong nr_of_samples = 0;
-      for (::DDS_Long i = 0 ; i < sample_infos.length(); ++i)
-        {
-          if (sample_infos[i].valid_data)
-            {
-              ++nr_of_samples;
-            }
-        }
-      return nr_of_samples;
-    }
-
     template <typename DDS_TYPE>
     void
     DataReader_T<DDS_TYPE>::complete_read (
@@ -82,22 +63,18 @@ namespace CIAO
     {
       if (retcode == ::DDS::RETCODE_OK)
         {
-          ::CORBA::ULong const nr_of_valid_samples =
-            this->get_nr_valid_samples (dds_sample_infos);
+          data_values.length (dds_data_values.length ());
+          sample_infos.length (dds_sample_infos.length ());
 
-          data_values.length (nr_of_valid_samples);
-          sample_infos.length (nr_of_valid_samples);
-
-          // Copy the valid samples
-          CORBA::ULong ix = 0;
           for (::DDS_Long i = 0 ; i < dds_sample_infos.length(); ++i)
             {
-              if (dds_sample_infos[i].valid_data)
-                {
-                  (sample_infos)[ix] <<= dds_sample_infos[i];
-                  (data_values)[ix] = dds_data_values[i];
-                  ++ix;
-                }
+              sample_infos[i] <<= dds_sample_infos[i];
+              data_values[i] = dds_data_values[i];
+              ACE_DEBUG ((LM_DEBUG, "####################### %C %d %C %d\n",
+                            dds_data_values[i].key.in (),
+                            dds_data_values[i].iteration,
+                            data_values[i].key.in (),
+                            data_values[i].iteration));
             }
         }
       else if (retcode != ::DDS::RETCODE_NO_DATA)
