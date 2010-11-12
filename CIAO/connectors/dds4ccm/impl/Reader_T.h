@@ -12,7 +12,7 @@
 #include "dds4ccm/idl/ccm_ddsC.h"
 #include "ace/Copy_Disabled.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
-#include "dds4ccm/impl/LocalObject_T.h"
+#include "dds4ccm/impl/LocalObject.h"
 
 #include "dds4ccm/impl/ConditionManager_T.h"
 
@@ -25,7 +25,7 @@ namespace CIAO
       template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
       class Reader_T :
           public virtual CCM_TYPE::reader_type,
-          public virtual LocalObject_T<CCM_TYPE>,
+          public virtual LocalObject,
           private virtual ACE_Copy_Disabled
       {
       typedef ConditionManager_T<DDS_TYPE> ConditionManager_type;

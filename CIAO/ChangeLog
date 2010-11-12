@@ -1,3 +1,26 @@
+Fri Nov 12 12:22:40 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDSCallbackStatusHandler.h:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/DDS_Write_T.h:
+        * connectors/dds4ccm/impl/DataListenerControl_T.h:
+        * connectors/dds4ccm/impl/Getter_T.h:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.h:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.cpp:
+        * connectors/dds4ccm/impl/LocalObject.h:
+        * connectors/dds4ccm/impl/LocalObject.cpp:
+        * connectors/dds4ccm/impl/LocalObject_T.h:
+        * connectors/dds4ccm/impl/LocalObject_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.h:
+        * connectors/dds4ccm/impl/Updater_T.h:
+        * connectors/dds4ccm/impl/Updater_T.cpp:
+        * connectors/dds4ccm/impl/Writer_T.h:
+        * connectors/dds4ccm/impl/Writer_T.cpp:
+        * connectors/dds4ccm/impl/dds4ccm_impl.mpc:
+          Simplified dds4ccm localobject and give updater/writer templates on
+          the things they need, not the full dds/ccm traits
+
 Fri Nov 12 11:47:00 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:

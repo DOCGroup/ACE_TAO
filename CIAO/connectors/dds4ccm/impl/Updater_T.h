@@ -17,9 +17,9 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename UPDATER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     class Updater_T
-      : public InstanceHandleManager_T <DDS_TYPE, CCM_TYPE, typename CCM_TYPE::updater_type>
+      : public InstanceHandleManager_T <UPDATER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE>
     {
     public:
       /// Constructor
@@ -29,21 +29,21 @@ namespace CIAO
       virtual ~Updater_T (void);
 
       virtual void create_one (
-        const typename DDS_TYPE::value_type& an_instance);
+        const VALUE_TYPE& an_instance);
 
       virtual void update_one (
-        const typename DDS_TYPE::value_type& an_instance,
+        const VALUE_TYPE& an_instance,
         const ::DDS::InstanceHandle_t & instance_handle);
 
       virtual void delete_one (
-        const typename DDS_TYPE::value_type& an_instance,
+        const VALUE_TYPE& an_instance,
         const ::DDS::InstanceHandle_t & instance_handle);
 
-      virtual void create_many (const typename CCM_TYPE::seq_type& data);
+      virtual void create_many (const SEQ_VALUE_TYPE& data);
 
-      virtual void update_many (const typename CCM_TYPE::seq_type& data);
+      virtual void update_many (const SEQ_VALUE_TYPE& data);
 
-      virtual void delete_many (const typename CCM_TYPE::seq_type& data);
+      virtual void delete_many (const SEQ_VALUE_TYPE& data);
 
       virtual bool is_global_scope ();
 
@@ -59,22 +59,22 @@ namespace CIAO
 
     private:
       void create_i (
-        const typename DDS_TYPE::value_type& an_instance,
+        const VALUE_TYPE& an_instance,
         ::CCM_DDS::DataNumber_t index);
 
       void update_i (
-        const typename DDS_TYPE::value_type& an_instance,
+        const VALUE_TYPE& an_instance,
         const ::DDS::InstanceHandle_t & instance_handle,
         ::CCM_DDS::DataNumber_t index);
 
       void delete_i (
-        const typename DDS_TYPE::value_type& an_instance,
+        const VALUE_TYPE& an_instance,
         const ::DDS::InstanceHandle_t & instance_handle,
         ::CCM_DDS::DataNumber_t index);
 
-      void check_existent (const typename CCM_TYPE::seq_type& data);
+      void check_existent (const SEQ_VALUE_TYPE& data);
 
-      void check_already_created (const typename CCM_TYPE::seq_type& data);
+      void check_already_created (const SEQ_VALUE_TYPE& data);
 
       bool is_global_scope_;
       bool is_coherent_write_;
