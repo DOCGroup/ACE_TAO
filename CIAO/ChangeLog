@@ -1,3 +1,11 @@
+Fri Nov 12 11:47:00 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+          Fixed missing xerces dependency.
+
+        * tools/IDL3_to_XMI/identifier_helper.cpp:
+          Fixed formatting.
+
 Fri Nov 12 10:58:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
