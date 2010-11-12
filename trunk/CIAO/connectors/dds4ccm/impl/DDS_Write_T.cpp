@@ -4,7 +4,6 @@
 #include "dds4ccm/impl/DataReaderListener_T.h"
 #include "dds4ccm/impl/DataListenerControl_T.h"
 #include "dds4ccm/impl/PortStatusListener_T.h"
-
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -23,7 +22,7 @@ void
 DDS_Write_T<DDS_TYPE, CCM_TYPE>::set_component (
   ::CORBA::Object_ptr component)
 {
-  this->writer_t_->_set_component (component);
+  this->dds_write_->_set_component (component);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -35,7 +34,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
   const char* profile_name)
 {
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
-  if (!this->ccm_dds_writer_->get_rti_entity ())
+  if (::CORBA::is_nil (this->dds_write_->get_dds_writer ()))
     {
       ::DDS::DataWriter_var dwv_tmp;
       if (library_name && profile_name)
@@ -63,18 +62,8 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
                         "Error: Proxy returned a nil datawriter.\n"));
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
-      DataWriter_type * rw = dynamic_cast < DataWriter_type *> (dwv_tmp.in ());
-      if (!rw)
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_Write_T::configuration_complete - "
-                        "Unable to cast created DataWriter proxy to its "
-                        "internal represenation.\n"));
-          throw ::CORBA::INTERNAL ();
-        }
-      this->ccm_dds_writer_->set_rti_entity (rw->get_rti_entity ());
-      this->writer_t_->set_dds_writer (dwv_tmp.in ());
-      this->ccm_data_writer_->set_dds_entity (this->ccm_dds_writer_);
+      this->dds_write_->set_dds_writer (dwv_tmp.in ());
+      this->ccm_data_writer_->set_dds_entity (dwv_tmp.in ());
     }
 }
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -88,23 +77,27 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::activate ()
 
   if (mask != 0)
     {
-      if (::CORBA::is_nil (this->data_listener_.in ()))
+      ::DDS::DataWriter_var writer = this->dds_write_->get_dds_writer ();
+      if (!::CORBA::is_nil (writer.in()))
         {
-          ACE_NEW_THROW_EX (this->data_listener_,
-                            DataWriterListener_type (),
-                            ::CORBA::NO_MEMORY ());
-        }
+          if (::CORBA::is_nil (this->data_listener_.in ()))
+            {
+              ACE_NEW_THROW_EX (this->data_listener_,
+                  DataWriterListener_type (),
+                  ::CORBA::NO_MEMORY ());
+            }
 
-      ::DDS::ReturnCode_t const retcode =
-        this->ccm_dds_writer_->set_listener (this->data_listener_.in (), mask);
+          ::DDS::ReturnCode_t const retcode =
+              writer->set_listener (this->data_listener_.in (), mask);
 
-      if (retcode != DDS::RETCODE_OK)
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_Write_T::activate - "
-                        "Error setting the listener on the writer - <%C>\n",
-                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
-          throw ::CORBA::INTERNAL ();
+          if (retcode != DDS::RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                  "DDS_Write_T::activate - "
+                  "Error setting the listener on the writer - <%C>\n",
+                  ::CIAO::DDS4CCM::translate_retcode (retcode)));
+              throw ::CORBA::INTERNAL ();
+            }
         }
     }
 }
@@ -117,19 +110,23 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::passivate ()
 
   if (!::CORBA::is_nil (this->data_listener_.in ()))
     {
-      ::DDS::ReturnCode_t const retcode =
-        this->ccm_dds_writer_->set_listener (::DDS::DataWriterListener::_nil (), 0);
-
-      if (retcode != ::DDS::RETCODE_OK)
+      ::DDS::DataWriter_var writer = this->dds_write_->get_dds_writer ();
+      if (!::CORBA::is_nil (writer.in ()))
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_Write_T::passivate - "
-                        "Error while setting the listener on the writer - <%C>\n",
-                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
-          throw ::CORBA::INTERNAL ();
-        }
+          ::DDS::ReturnCode_t const retcode =
+              writer->set_listener (::DDS::DataWriterListener::_nil (), 0);
 
-      this->data_listener_ = ::DDS::DataWriterListener::_nil ();
+          if (retcode != ::DDS::RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                  "DDS_Write_T::passivate - "
+                  "Error while setting the listener on the writer - <%C>\n",
+                  ::CIAO::DDS4CCM::translate_retcode (retcode)));
+              throw ::CORBA::INTERNAL ();
+            }
+
+          this->data_listener_ = ::DDS::DataWriterListener::_nil ();
+        }
     }
 }
 
@@ -140,18 +137,22 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::remove (
 {
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE>::remove");
 
-  DDS::ReturnCode_t const retcode =
-    publisher->delete_datawriter (this->ccm_dds_writer_);
+  ::DDS::DataWriter_var writer = this->dds_write_->get_dds_writer ();
+  if (!::CORBA::is_nil (writer.in ()))
+    {
+      DDS::ReturnCode_t const retcode =
+          publisher->delete_datawriter (writer.in ());
 
-  if (retcode == ::DDS::RETCODE_OK)
-    {
-      this->ccm_dds_writer_->set_rti_entity (0);
-      this->writer_t_->_set_component (::CORBA::Object::_nil ());
-      this->writer_t_->set_dds_writer (::DDS::DataWriter::_nil ());
-    }
-  else
-    {
-      throw ::CCM_DDS::InternalError (retcode, 0);
+      if (retcode == ::DDS::RETCODE_OK)
+        {
+          this->dds_write_->_set_component (::CORBA::Object::_nil ());
+          this->dds_write_->set_dds_writer (::DDS::DataWriter::_nil ());
+          this->ccm_data_writer_->set_dds_entity (::DDS::DataWriter::_nil ());
+        }
+      else
+        {
+          throw ::CCM_DDS::InternalError (retcode, 0);
+        }
     }
 }
 
@@ -162,7 +163,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::get_data (void)
 {
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE>::get_data");
 
-  return CCM_TYPE::writer_type::_duplicate (this->writer_t_);
+  return CCM_TYPE::writer_type::_duplicate (this->dds_write_);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

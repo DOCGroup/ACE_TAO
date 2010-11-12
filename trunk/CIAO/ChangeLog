@@ -1,3 +1,13 @@
+Fri Nov 12 13:11:32 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.h:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.h:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.cpp:
+          Replaced rti specific checks
+
 Fri Nov 12 12:55:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager.cpp:
