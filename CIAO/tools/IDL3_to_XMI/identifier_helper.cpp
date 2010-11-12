@@ -12,9 +12,8 @@ IdentifierHelper::original_local_name (Identifier * local_name)
   Identifier * id = 0;
 
   // Remove _cxx_ if it is present.
-  if (ACE_OS::strstr (local_name->get_string (),
-                       "_cxx_")
-        == local_name->get_string ())
+  if (ACE_OS::strstr (local_name->get_string (), "_cxx_") ==
+      local_name->get_string ())
     {
       // CString class is good to do this stuff.
       ACE_CString name_str (local_name->get_string ());
@@ -77,7 +76,7 @@ IdentifierHelper::orig_sn (UTL_IdList * sn, bool appended_to)
             }
         }
 
-     id->destroy ();
+      id->destroy ();
       delete id;
       id = 0;
     }
