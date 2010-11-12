@@ -8,20 +8,20 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
-    InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::InstanceHandleManager_T (void)
+    template <typename BASE_TYPE, typename WRITER_TYPE, typename VALUE_TYPE>
+    InstanceHandleManager_T<BASE_TYPE, WRITER_TYPE, VALUE_TYPE>::InstanceHandleManager_T (void)
     {
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
-    InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::~InstanceHandleManager_T (void)
+    template <typename BASE_TYPE, typename WRITER_TYPE, typename VALUE_TYPE>
+    InstanceHandleManager_T<BASE_TYPE, WRITER_TYPE, VALUE_TYPE>::~InstanceHandleManager_T (void)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::InstanceHandleManager_T::~InstanceHandleManager_T");
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
-    typename DDS_TYPE::typed_writer_type::_ptr_type
-    InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::dds_writer (void)
+    template <typename BASE_TYPE, typename WRITER_TYPE, typename VALUE_TYPE>
+    typename WRITER_TYPE::_ptr_type
+    InstanceHandleManager_T<BASE_TYPE, WRITER_TYPE, VALUE_TYPE>::dds_writer (void)
     {
       if (!::CORBA::is_nil (this->dds_writer_.in ()))
         {
@@ -36,31 +36,30 @@ namespace CIAO
         }
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
+    template <typename BASE_TYPE, typename WRITER_TYPE, typename VALUE_TYPE>
     ::DDS::InstanceHandle_t
-    InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::
-      register_instance (const typename DDS_TYPE::value_type & datum)
+    InstanceHandleManager_T<BASE_TYPE, WRITER_TYPE, VALUE_TYPE>::register_instance (const VALUE_TYPE& datum)
     {
       return this->dds_writer ()->register_instance (datum);
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
+    template <typename BASE_TYPE, typename WRITER_TYPE, typename VALUE_TYPE>
     void
-    InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::unregister_instance (
-      const typename DDS_TYPE::value_type & datum,
+    InstanceHandleManager_T<BASE_TYPE, WRITER_TYPE, VALUE_TYPE>::unregister_instance (
+      const VALUE_TYPE& datum,
       const ::DDS::InstanceHandle_t & instance_handle)
     {
       this->dds_writer ()->unregister_instance (datum, instance_handle);
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
+    template <typename BASE_TYPE, typename WRITER_TYPE, typename VALUE_TYPE>
     void
-    InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::set_dds_writer (
+    InstanceHandleManager_T<BASE_TYPE, WRITER_TYPE, VALUE_TYPE>::set_dds_writer (
       ::DDS::DataWriter_ptr dds_writer)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::InstanceHandleManager_T::set_dds_writer");
 
-      this->dds_writer_ = DDS_TYPE::typed_writer_type::_narrow (dds_writer);
+      this->dds_writer_ = WRITER_TYPE::_narrow (dds_writer);
     }
   }
 }

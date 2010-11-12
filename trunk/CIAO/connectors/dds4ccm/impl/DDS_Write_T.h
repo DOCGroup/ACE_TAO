@@ -46,8 +46,12 @@ public:
   void remove (::DDS::Publisher_ptr publisher);
 
 private:
-  typedef ::CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE>
-    Writer_type;
+  typedef ::CIAO::DDS4CCM::Writer_T<
+    typename CCM_TYPE::writer_type,
+    typename DDS_TYPE::typed_writer_type,
+    typename CCM_TYPE::value_type,
+    typename CCM_TYPE::seq_type>
+      Writer_type;
   typedef ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>
     DataWriterListener_type;
   typedef ::CIAO::NDDS::DataWriter_T<DDS_TYPE>

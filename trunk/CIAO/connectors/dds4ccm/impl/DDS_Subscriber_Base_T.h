@@ -16,6 +16,7 @@
 #include "dds4ccm/impl/ndds/ContentFilteredTopic.h"
 #include "dds4ccm/impl/ConditionManager_T.h"
 #include "dds4ccm/impl/CCM_DataReader.h"
+#include "dds4ccm/impl/LocalObject_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 class DDS_Subscriber_Base_T

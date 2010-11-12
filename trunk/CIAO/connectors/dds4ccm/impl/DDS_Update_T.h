@@ -42,8 +42,12 @@ private:
     DataWriterListener_type;
   typedef ::CIAO::NDDS::DataWriter_T<DDS_TYPE>
     DataWriter_type;
-  typedef ::CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>
-    Updater_type;
+  typedef ::CIAO::DDS4CCM::Updater_T<
+    typename CCM_TYPE::updater_type,
+    typename DDS_TYPE::typed_writer_type,
+    typename CCM_TYPE::value_type,
+    typename CCM_TYPE::seq_type>
+      Updater_type;
 
     /**
    * DDS_Update
