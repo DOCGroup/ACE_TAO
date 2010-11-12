@@ -41,8 +41,7 @@ public:
   void filter (const ::CCM_DDS::QueryFilter & filter);
   //@}
 
-  void set_component (
-    typename CCM_TYPE::base_type::_ptr_type component);
+  void set_component (::CORBA::Object_ptr component);
 
   void configuration_complete (
     ::DDS::Topic_ptr topic,
