@@ -126,60 +126,8 @@ namespace CIAO
         typename DDS_TYPE::value_type & key_holder,
         const ::DDS::InstanceHandle_t & handle);
 
-      void read_wo_instance (
-        typename DDS_TYPE::dds_seq_type & data,
-        typename DDS_TYPE::sampleinfo_seq_type & sample_info,
-        ::DDS::QueryCondition_ptr qc);
-
-      void read_w_instance (
-        typename DDS_TYPE::dds_seq_type & data,
-        const ::DDS::InstanceHandle_t & lookup_hnd,
-        typename DDS_TYPE::sampleinfo_seq_type & sample_info);
-
-      ::DDS::ReturnCode_t get (
-        typename DDS_TYPE::dds_seq_type & data,
-        typename DDS_TYPE::sampleinfo_seq_type & sample_info,
-        const DDS_Long & max_samples,
-        ::DDS::QueryCondition_ptr qc);
-
-      ::DDS::ReturnCode_t get (
-        typename DDS_TYPE::dds_seq_type & data,
-        typename DDS_TYPE::sampleinfo_seq_type & sample_info,
-        const DDS_Long & max_samples,
-        ::DDS::ReadCondition_ptr rd);
-
-      ::DDS::ReturnCode_t take (
-        typename DDS_TYPE::dds_seq_type & data,
-        typename DDS_TYPE::sampleinfo_seq_type & sample_info,
-        const DDS_Long & max_samples,
-        ::DDS::QueryCondition_ptr qc);
-
-      ::DDS::InstanceHandle_t check_handle (
-        const typename DDS_TYPE::value_type& an_instance,
-        const ::DDS::InstanceHandle_t & instance_handle);
-
-      ::DDS::InstanceHandle_t lookup_instance (
+      virtual ::DDS::InstanceHandle_t lookup_instance (
         const typename DDS_TYPE::value_type& an_instance);
-
-      ::DDS::ReturnCode_t return_loan (
-        typename DDS_TYPE::dds_seq_type & data,
-        typename DDS_TYPE::sampleinfo_seq_type & sample_info);
-
-      void delete_datareader (::DDS::Subscriber_ptr subscriber);
-
-      void passivate (void);
-
-      void
-      create_datareader (::DDS::ContentFilteredTopic_ptr topic,
-                         ::DDS::Subscriber_ptr subscriber,
-                         const char * library_name,
-                         const char * profile_name);
-
-      void
-      create_datareader (::DDS::Topic_ptr topic,
-                         ::DDS::Subscriber_ptr subscriber,
-                         const char * library_name,
-                         const char * profile_name);
 
       virtual ::DDS::ReturnCode_t enable (void);
 
@@ -269,8 +217,6 @@ namespace CIAO
       ::DDS::StatusMask lst_mask_;
 
       typename DDS_TYPE::datareader_type * rti_entity (void);
-
-      void log_query_condition (DDSQueryCondition * qc);
 
       ::CORBA::ULong get_nr_valid_samples (
         const typename DDS_TYPE::sampleinfo_seq_type& sample_infos);

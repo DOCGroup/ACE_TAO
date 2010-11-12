@@ -150,7 +150,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_domain (void
           0);
     }
 
-  if (::CORBA::is_nil (this_domain_participant_.in ()))
+  if (::CORBA::is_nil (this->domain_participant_.in ()))
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                   "DDS_Base_Connector_T::init_default_domain - "

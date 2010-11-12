@@ -54,7 +54,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
         }
 
       ::DDS::ReturnCode_t const retcode =
-        this->data_reader_->set_listener (this->listener_.in (), mask);
+        this->dr_->set_listener (this->listener_.in (), mask);
 
       if (retcode != ::DDS::RETCODE_OK)
         {

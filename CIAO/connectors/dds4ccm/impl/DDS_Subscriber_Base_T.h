@@ -64,8 +64,6 @@ protected:
     PortStatusListener_type;
   typedef ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
     Reader_type;
-  typedef ::CIAO::NDDS::DataReader_T<DDS_TYPE>
-    DataReader_type;
   typedef ::CIAO::DDS4CCM::CCM_DDS_ContentFilterSetting_i
     ContentFilterSetting_type;
 
@@ -76,8 +74,9 @@ protected:
   ::DDS::DataReaderListener_var listener_;
   ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<ContentFilterSetting_type> cft_setting_;
   ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<Reader_type> dds_read_;
-  ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<DataReader_type> data_reader_;
   ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T< ::CIAO::DDS4CCM::CCM_DataReader > ccm_data_reader_;
+  ::DDS::DataReader_var dr_;
+
   bool configuration_complete_;
   //@}
   ConditionManager_type condition_manager_;

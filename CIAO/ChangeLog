@@ -1,3 +1,30 @@
+Fri Nov 12 09:41:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager_T.h:
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.h:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.h:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+          Got rid of (almost) all usage of DDS_xxx. Using
+          ::DDS::xx instead.
+
+        * connectors/dds4ccm/impl/ndds/DataReader_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+          Removed all non-idl methods and moved them to the appropriate
+          classes.
+
+        * connectors/dds4ccm/impl/ndds/convertors/SampleInfo.h:
+          Converting ::DDS::SampleInfo instead of DDS_SampleInfo.
+
 Fri Nov 12 08:29:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IDL_Test/Cornucopia/Cornucopia.idl:
