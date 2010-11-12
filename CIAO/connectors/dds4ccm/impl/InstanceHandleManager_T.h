@@ -39,6 +39,8 @@ namespace CIAO
 
       void set_dds_writer (::DDS::DataWriter_ptr dds_writer);
 
+      ::DDS::DataWriter_ptr get_dds_writer (void);
+
     protected:
       /// This method doesn't increment the refcount, only for internal
       /// usage
