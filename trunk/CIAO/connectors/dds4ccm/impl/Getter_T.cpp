@@ -250,7 +250,7 @@ namespace CIAO
       void
       Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_dds_entity (
         ::DDS::DataReader_ptr dr,
-        ConditionManager_type * condition_manager)
+        ::CIAO::DDS4CCM::ConditionManager * condition_manager)
       {
         DDS4CCM_TRACE ("Getter_Base_T::set_impl");
 

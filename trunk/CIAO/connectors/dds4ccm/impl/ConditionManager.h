@@ -1,9 +1,17 @@
 // $Id$
 
-#ifndef CONDITIONMANAGER_T_H_
-#define CONDITIONMANAGER_T_H_
+#ifndef CONDITIONMANAGER_H_
+#define CONDITIONMANAGER_H_
 
 #include "dds4ccm/impl/ndds/WaitSet.h"
+#include <dds4ccm/idl/dds4ccm_BaseC.h>
+
+#include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
+
+namespace CCM_DDS
+{
+  class QueryFilter;
+}
 
 namespace CIAO
 {
@@ -12,12 +20,11 @@ namespace CIAO
     //============================================================
     // ConditionManager_T
     //============================================================
-    template <typename DDS_TYPE>
-    class ConditionManager_T
+    class DDS4CCM_DDS_IMPL_Export ConditionManager
     {
     public:
-      ConditionManager_T (void);
-      ~ConditionManager_T (void);
+      ConditionManager (void);
+      ~ConditionManager (void);
 
       ::DDS::ReadCondition_ptr get_readcondition (void);
 
@@ -70,6 +77,4 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/ConditionManager_T.cpp"
-
-#endif /* CONDITIONMANAGER_T_H_ */
+#endif /* CONDITIONMANAGER_H_ */

@@ -290,7 +290,7 @@ namespace CIAO
       void
       Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::set_dds_entity (
         ::DDS::DataReader_ptr dr,
-        ConditionManager_type * condition_manager)
+        ConditionManager * condition_manager)
       {
         DDS4CCM_TRACE ("Reader_T::set_dds_entity");
 

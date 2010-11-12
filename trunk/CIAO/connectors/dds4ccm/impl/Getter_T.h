@@ -46,9 +46,6 @@ namespace CIAO
       {
       typedef ::CIAO::NDDS::DataReader_T<DDS_TYPE> DataReader_type;
 
-      typedef ::CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>
-          ConditionManager_type;
-
       public:
         /// Constructor
         Getter_Base_T (void);
@@ -90,11 +87,10 @@ namespace CIAO
          * Set the actual pointer to DDS Datareader
          */
         void set_dds_entity (::DDS::DataReader_ptr reader,
-                             ConditionManager_type * condition_manager);
+                             ::CIAO::DDS4CCM::ConditionManager * condition_manager);
       protected:
         DataReader_type * reader_;
-        ConditionManager_type * condition_manager_;
-
+        ::CIAO::DDS4CCM::ConditionManager * condition_manager_;
 
         ::DDS::Duration_t time_out_;
         ::CCM_DDS::DataNumber_t max_delivered_data_;
