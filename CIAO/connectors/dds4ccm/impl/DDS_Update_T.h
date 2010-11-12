@@ -37,8 +37,6 @@ public:
   void remove (::DDS::Publisher_ptr publisher);
 
 private:
-  typedef ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>
-    DataWriterListener_type;
   typedef ::CIAO::DDS4CCM::Updater_T<
     typename CCM_TYPE::updater_type,
     typename DDS_TYPE::typed_writer_type,
@@ -50,7 +48,6 @@ private:
    * DDS_Update
    */
   //@{
-  ::DDS::DataWriterListener_var data_listener_;
   ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T< Updater_type > dds_update_;
   ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T< ::CIAO::DDS4CCM::CCM_DataWriter > ccm_data_writer_;
   //@}

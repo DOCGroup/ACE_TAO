@@ -1,3 +1,25 @@
+Fri Nov 12 13:28:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.h:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+          Removed DataWriterListener and DomainParticipantListener, they
+          where not doing anything, but where initially added in case we really
+          needed them
+
+        * connectors/dds4ccm/impl/DataWriterListener_T.h:
+        * connectors/dds4ccm/impl/DataWriterListener_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipantListener_T.h:
+        * connectors/dds4ccm/impl/DomainParticipantListener_T.cpp:
+          Removed these files.
+
 Fri Nov 12 13:11:32 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Update_T.h:

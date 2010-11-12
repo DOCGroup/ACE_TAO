@@ -8,7 +8,6 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
-#include "dds4ccm/impl/DomainParticipantListener_T.h"
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 #include "dds4ccm/impl/logger/Logger_Service.h"
 
@@ -18,8 +17,6 @@ class DDS_Base_Connector_T
     public virtual ::CORBA::LocalObject,
     private virtual ACE_Copy_Disabled
 {
-typedef ::CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE>
-  DomainParticipantListener;
 typedef ::CIAO::NDDS::DDS_DomainParticipantFactory_i
   DomainParticipantFactory;
 
@@ -69,7 +66,6 @@ protected:
   ::CIAO::DDS4CCM::Logger_Service * dlf_;
 
   ::DDS::DomainParticipant_var domain_participant_;
-  ::DDS::DomainParticipantListener_var domainparticipantlistener_;
 
   typename CCM_TYPE::context_type::_var_type context_;
 

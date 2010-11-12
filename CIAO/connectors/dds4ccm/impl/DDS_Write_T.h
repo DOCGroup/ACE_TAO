@@ -9,7 +9,6 @@
 #define DDS_WRITE_T_H_
 
 #include "dds4ccm/impl/DDS_TopicBase_Connector_T.h"
-#include "dds4ccm/impl/DataWriterListener_T.h"
 #include "dds4ccm/impl/Writer_T.h"
 #include "dds4ccm/impl/CCM_DataWriter.h"
 
@@ -51,14 +50,11 @@ private:
     typename CCM_TYPE::value_type,
     typename CCM_TYPE::seq_type>
       Writer_type;
-  typedef ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>
-    DataWriterListener_type;
 
   /**
    * DDS_Write
    */
   //@{
-  ::DDS::DataWriterListener_var data_listener_;
   ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T < Writer_type > dds_write_;
   ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T < ::CIAO::DDS4CCM::CCM_DataWriter > ccm_data_writer_;
   //@}
