@@ -11,9 +11,9 @@
 #include "dds4ccm/impl/DDS_Subscriber_Base_T.h"
 #include "dds4ccm/impl/Getter_T.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 class DDS_Get_T
-  : public DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
+  : public DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>
 {
 public:
   DDS_Get_T (void);
@@ -40,9 +40,9 @@ public:
     ::DDS::Subscriber_ptr subscriber);
 
 private:
-  typedef DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
+  typedef DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>
     DDSSubscriberBase_type;
-  typedef ::CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
+  typedef ::CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, FIXED>
     Getter_type;
 
   /**

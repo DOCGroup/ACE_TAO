@@ -100,7 +100,7 @@ namespace CIAO
                 }
             }
         }
-      else
+      else if (retcode != ::DDS::RETCODE_NO_DATA)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         ACE_TEXT ("DataReader_T::%C - ")

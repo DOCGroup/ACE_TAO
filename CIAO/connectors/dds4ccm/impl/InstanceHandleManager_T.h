@@ -17,7 +17,7 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
     class InstanceHandleManager_T :
       public virtual BASE_TYPE,
       public virtual LocalObject_T<CCM_TYPE>,
