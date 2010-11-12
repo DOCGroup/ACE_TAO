@@ -35,7 +35,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
                                                   library_name,
                                                   profile_name);
 
-  ::DDS::DataReader_var dr = this->dds_get_->get_dds_reader ();
+  ::DDS::DataReader_var dr = this->dds_read_->get_dds_reader ();
   this->dds_get_->set_dds_reader (dr.in (),
                                   &this->condition_manager_);
 }

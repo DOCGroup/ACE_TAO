@@ -1,3 +1,8 @@
+Fri Nov 12 19:47:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Get_T.cpp:
+          Resolved BAD_INV_ORDER problem.
+
 Fri Nov 12 19:28:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
