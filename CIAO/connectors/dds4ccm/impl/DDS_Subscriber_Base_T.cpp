@@ -34,9 +34,11 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
 
   this->configuration_complete_ = true;
 
-  if (::CORBA::is_nil (this->dr_.in ()))
+  ::DDS::DataReader_var dr = this->dds_read_->get_dds_reader ();
+  if (::CORBA::is_nil (dr.in ()))
     {
       ::DDS::TopicDescription_var td;
+
       ::CCM_DDS::QueryFilter_var filter = this->cft_setting_->filter ();
       if (ACE_OS::strlen (filter->expression.in ()) > 0)
         {
@@ -57,7 +59,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
         }
       if (library_name && profile_name)
         {
-          this->dr_ = subscriber->create_datareader_with_profile (
+          dr = subscriber->create_datareader_with_profile (
                                           td.in (),
                                           library_name,
                                           profile_name,
@@ -66,16 +68,17 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
         }
       else
         {
+          ACE_DEBUG ((LM_DEBUG, "BBBBBBBBBBBBBBBBBBBB withOUT profile\n"));
           ::DDS::DataReaderQos_var drqos;
-          this->dr_ = subscriber->create_datareader (
+          dr = subscriber->create_datareader (
                                           td.in (),
                                           drqos.in (),
                                           ::DDS::DataReaderListener::_nil (),
                                           0);
         }
-      this->dds_read_->set_dds_entity (this->dr_.in (),
+      this->dds_read_->set_dds_reader (dr.in (),
                                        &this->condition_manager_);
-      this->ccm_data_reader_->set_dds_entity (this->dr_.in ());
+      this->ccm_data_reader_->set_dds_entity (dr.in ());
     }
 }
 
@@ -99,15 +102,26 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::activate (
                             ::CORBA::NO_MEMORY ());
         }
 
-      ::DDS::ReturnCode_t const retcode = this->dr_->set_listener (
-          this->listener_.in (), mask);
+      ::DDS::DataReader_var dr = this->dds_read_->get_dds_reader ();
+      if (!::CORBA::is_nil (dr.in ()))
+        {
+          ::DDS::ReturnCode_t const retcode = dr->set_listener (
+              this->listener_.in (), mask);
 
-      if (retcode != ::DDS::RETCODE_OK)
+          if (retcode != ::DDS::RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                            "DDS_Subscriber_Base_T::activate - "
+                            "Error while setting the listener on the subscriber - <%C>\n",
+                            ::CIAO::DDS4CCM::translate_retcode (retcode)));
+              throw ::CORBA::INTERNAL ();
+            }
+        }
+      else
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Subscriber_Base_T::activate - "
-                        "Error while setting the listener on the subscriber - <%C>\n",
-                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+                        "Error while retrieving the DataReader\n"));
           throw ::CORBA::INTERNAL ();
         }
     }
@@ -120,11 +134,12 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate ()
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate");
 
   this->condition_manager_.passivate ();
-
-  if (!::CORBA::is_nil (this->listener_.in ()))
+  ::DDS::DataReader_var reader = this->dds_read_->get_dds_reader ();
+  if (!::CORBA::is_nil (this->listener_.in ()) &&
+      !::CORBA::is_nil (reader.in ()) )
     {
       ::DDS::ReturnCode_t const retcode =
-        this->dr_->set_listener (::DDS::DataReaderListener::_nil (), 0);
+        reader->set_listener (::DDS::DataReaderListener::_nil (), 0);
       if (retcode != ::DDS::RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -145,8 +160,16 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::remove (
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::remove");
 
-  //TODO: reimplement this
-//   this->data_reader_->delete_datareader (subscriber);
+  ::DDS::ReturnCode_t const retval =
+    subscriber->delete_datareader (this->dds_read_->get_dds_reader ());
+  if (retval != ::DDS::RETCODE_OK)
+    {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                    ACE_TEXT ("DDS_Subscriber_Base_T::remove - ")
+                    ACE_TEXT ("Unable to delete DataReader: <%C>\n"),
+                    ::CIAO::DDS4CCM::translate_retcode (retval)));
+      throw ::CORBA::INTERNAL ();
+    }
   this->cft_setting_->delete_contentfilteredtopic (subscriber);
   this->dds_read_->_set_component (::CORBA::Object::_nil ());
 }

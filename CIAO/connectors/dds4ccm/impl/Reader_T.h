@@ -58,24 +58,32 @@ namespace CIAO
 
         virtual void query (const ::CCM_DDS::QueryFilter & filter);
 
-        void set_dds_entity (::DDS::DataReader_ptr dr,
+        void set_dds_reader (::DDS::DataReader_ptr dr,
                              ::CIAO::DDS4CCM::ConditionManager * condition_manager);
+
+        ::DDS::DataReader_ptr get_dds_reader (void);
 
       private:
         typename DDS_TYPE::typed_reader_type::_var_type dds_reader_;
         ::CIAO::DDS4CCM::ConditionManager * condition_manager_;
 
         typename DDS_TYPE::typed_reader_type::_ptr_type
-        dds_entity (void);
+        dds_reader (void);
 
         // Helper methods
+        ::CORBA::ULong get_nr_valid_samples (
+          const ::DDS::SampleInfoSeq& sample_infos,
+          const bool determine_last);
+
         ::DDS::InstanceHandle_t check_handle (
           const typename DDS_TYPE::value_type& an_instance,
           const ::DDS::InstanceHandle_t & instance_handle);
 
-        void convert_sample_infos (
+        void convert_data (
+          const typename DDS_TYPE::seq_type & all_data,
+          typename DDS_TYPE::seq_type & data_to_return,
           ::CCM_DDS::ReadInfoSeq& infos,
-          ::DDS::SampleInfoSeq sample_info);
+          const ::DDS::SampleInfoSeq & sample_info);
 
         void read_wo_instance (
           typename DDS_TYPE::seq_type & data,

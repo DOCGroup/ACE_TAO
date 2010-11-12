@@ -34,7 +34,9 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
                                                   subscriber,
                                                   library_name,
                                                   profile_name);
-  this->dds_get_->set_dds_entity (this->dr_,
+
+  ::DDS::DataReader_var dr = this->dds_get_->get_dds_reader ();
+  this->dds_get_->set_dds_reader (dr.in (),
                                   &this->condition_manager_);
 }
 
