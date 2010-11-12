@@ -1,3 +1,13 @@
+Fri Nov 12 12:55:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager.cpp:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+          Typos.
+
+        * connectors/dds4ccm/impl/Getter_T.h:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+          Using the typed IDL datareader as entity
+
 Fri Nov 12 12:46:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager.h:

@@ -44,8 +44,6 @@ namespace CIAO
          public virtual LocalObject,
          private virtual ACE_Copy_Disabled
       {
-      typedef ::CIAO::NDDS::DataReader_T<DDS_TYPE> DataReader_type;
-
       public:
         /// Constructor
         Getter_Base_T (void);
@@ -89,13 +87,14 @@ namespace CIAO
         void set_dds_entity (::DDS::DataReader_ptr reader,
                              ::CIAO::DDS4CCM::ConditionManager * condition_manager);
       protected:
-        DataReader_type * reader_;
+          typename DDS_TYPE::typed_reader_type::_var_type dds_reader_;
         ::CIAO::DDS4CCM::ConditionManager * condition_manager_;
 
         ::DDS::Duration_t time_out_;
         ::CCM_DDS::DataNumber_t max_delivered_data_;
 
-        DataReader_type * dds_entity (void);
+        typename DDS_TYPE::typed_reader_type::_ptr_type
+        dds_entity (void);
 
         ::DDS::ReturnCode_t get (typename DDS_TYPE::seq_type & data,
                                  ::DDS::SampleInfoSeq & sample_info,
