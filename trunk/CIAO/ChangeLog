@@ -1,3 +1,17 @@
+Fri Nov 12 14:42:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+          Fixed topy
+
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+          Log return value of take and only have one exit point
+
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.cpp:
+          Fixed logging
+
+        * connectors/dds4ccm/impl/StateListenerControl_T.cpp:
+          Just set the bool
+
 Fri Nov 12 13:46:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/Reader_T.cpp:

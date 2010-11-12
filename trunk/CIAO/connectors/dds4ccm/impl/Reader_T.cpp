@@ -243,7 +243,7 @@ namespace CIAO
           }
         if (sample > 0)
           {
-            if(sample_info[sample-1].valid_data)
+            if (sample_info[sample-1].valid_data)
               {
                 an_instance = data[sample-1];
                 info <<= sample_info[sample-1];

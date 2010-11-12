@@ -96,9 +96,9 @@ namespace CIAO
       ::CORBA::Long max_samples = 0;
 
       this->control_->mode () == ::CCM_DDS::ONE_BY_ONE
-        ? max_samples = DDS_LENGTH_UNLIMITED
+        ? max_samples = ::DDS::LENGTH_UNLIMITED
         : this->control_->max_delivered_data() == 0
-          ? max_samples = DDS_LENGTH_UNLIMITED
+          ? max_samples = ::DDS::LENGTH_UNLIMITED
           : max_samples = this->control_->max_delivered_data ();
 
       ::DDS::QueryCondition_var qc =
@@ -124,63 +124,57 @@ namespace CIAO
                                  DDS_ANY_INSTANCE_STATE);
         }
 
-      if (result == ::DDS::RETCODE_NO_DATA)
-        {
-          return;
-        }
-      else if (result != ::DDS::RETCODE_OK)
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                              ACE_TEXT ("DataReaderListener_T::on_data_available_i - ")
-                              ACE_TEXT ("Unable to take data from data reader, ")
-                              ACE_TEXT ("error %C.\n"),
-                              translate_retcode (result)));
-          return;
-        }
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_INFO, DDS4CCM_INFO
+                          ACE_TEXT ("DataReaderListener_T::on_data_available_i - ")
+                          ACE_TEXT ("Take data returned %C.\n"),
+                          translate_retcode (result)));
 
-      if (this->control_->mode () == ::CCM_DDS::ONE_BY_ONE)
+      if (result == ::DDS::RETCODE_OK)
         {
-          for (::CORBA::ULong i = 0; i < data.length (); ++i)
+          if (this->control_->mode () == ::CCM_DDS::ONE_BY_ONE)
             {
-              if (sample_info[i].valid_data)
+              for (::CORBA::ULong i = 0; i < data.length (); ++i)
                 {
-                  ::CCM_DDS::ReadInfo info;
-                  info <<= sample_info[i];
-                  this->listener_->on_one_data (data[i], info);
-                }
-            }
-        }
-      else
-        {
-          CORBA::ULong nr_of_samples = 0;
-          for (::CORBA::ULong i = 0 ; i < sample_info.length(); i++)
-            {
-              if (sample_info[i].valid_data)
-                {
-                  ++nr_of_samples;
-                }
-            }
-
-          if (nr_of_samples > 0)
-            {
-              typename CCM_TYPE::seq_type inst_seq (nr_of_samples);
-              ::CCM_DDS::ReadInfoSeq infoseq (nr_of_samples);
-
-              infoseq.length (nr_of_samples);
-              inst_seq.length (nr_of_samples);
-
-              // Copy the valid samples
-              CORBA::ULong ix = 0;
-              for (::CORBA::ULong i = 0 ; i < sample_info.length(); i++)
-                {
-                  if(sample_info[i].valid_data)
+                  if (sample_info[i].valid_data)
                     {
-                      infoseq[ix] <<= sample_info[i];
-                      inst_seq[ix] = data[i];
-                      ++ix;
+                      ::CCM_DDS::ReadInfo info;
+                      info <<= sample_info[i];
+                      this->listener_->on_one_data (data[i], info);
                     }
                 }
-              this->listener_->on_many_data (inst_seq, infoseq);
+            }
+          else
+            {
+              CORBA::ULong nr_of_samples = 0;
+              for (::CORBA::ULong i = 0 ; i < sample_info.length(); i++)
+                {
+                  if (sample_info[i].valid_data)
+                    {
+                      ++nr_of_samples;
+                    }
+                }
+
+              if (nr_of_samples > 0)
+                {
+                  typename CCM_TYPE::seq_type inst_seq (nr_of_samples);
+                  ::CCM_DDS::ReadInfoSeq infoseq (nr_of_samples);
+
+                  infoseq.length (nr_of_samples);
+                  inst_seq.length (nr_of_samples);
+
+                  // Copy the valid samples
+                  CORBA::ULong ix = 0;
+                  for (::CORBA::ULong i = 0 ; i < sample_info.length(); i++)
+                    {
+                      if(sample_info[i].valid_data)
+                        {
+                          infoseq[ix] <<= sample_info[i];
+                          inst_seq[ix] = data[i];
+                          ++ix;
+                        }
+                    }
+                  this->listener_->on_many_data (inst_seq, infoseq);
+                }
             }
         }
 
