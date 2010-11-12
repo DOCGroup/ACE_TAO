@@ -310,7 +310,7 @@ namespace CIAO
         else
           {
             DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
-                          "CIAO::NDDS::DataReader_T - "
+                          "CIAO::DDS4CCM::Reader_T - "
                           "Throwing BAD_INV_ORDER.\n"));
             throw ::CORBA::BAD_INV_ORDER ();
           }

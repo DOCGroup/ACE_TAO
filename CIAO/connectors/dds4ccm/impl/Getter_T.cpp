@@ -11,8 +11,7 @@ namespace CIAO
     {
       template <typename DDS_TYPE, typename CCM_TYPE>
       Getter_Base_T<DDS_TYPE, CCM_TYPE>::Getter_Base_T (void)
-        : reader_ (0),
-          time_out_ (),
+        : time_out_ (),
           max_delivered_data_ (0)
       {
         DDS4CCM_TRACE ("Getter_Base_T::Getter_Base_T");
@@ -25,12 +24,12 @@ namespace CIAO
       }
 
       template <typename DDS_TYPE, typename CCM_TYPE>
-      CIAO::NDDS::DataReader_T<DDS_TYPE> *
+      typename DDS_TYPE::typed_reader_type::_ptr_type
       Getter_Base_T<DDS_TYPE, CCM_TYPE>::dds_entity (void)
       {
-        if (this->reader_)
+        if (this->dds_reader_)
           {
-            return this->reader_;
+            return this->dds_reader_;
           }
         else
           {
@@ -254,9 +253,7 @@ namespace CIAO
       {
         DDS4CCM_TRACE ("Getter_Base_T::set_impl");
 
-        //TODO : No DataReader_type but ::DDS::DataReader_ptr
-        DataReader_type * dr_type = dynamic_cast <DataReader_type *> (dr);
-        this->reader_ = dr_type;
+        this->dds_reader_ = DDS_TYPE::typed_reader_type::_narrow (dr);
         this->condition_manager_ = condition_manager;
         this->condition_manager_->set_dds_entity (dr);
         this->condition_manager_->init_readcondition ();
