@@ -16,7 +16,7 @@
 template <typename BASE_TYPE, typename CCM_TYPE>
 class CCM_DDS_DataListenerControl_T
   : public virtual BASE_TYPE,
-    public virtual ::CIAO::DDS4CCM::LocalObject_T<CCM_TYPE>,
+    public virtual ::CIAO::DDS4CCM::LocalObject,
     private ACE_Copy_Disabled
 {
 public:

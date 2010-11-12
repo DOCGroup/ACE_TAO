@@ -41,7 +41,7 @@ namespace CIAO
       template <typename DDS_TYPE, typename CCM_TYPE>
       class Getter_Base_T :
          public virtual CCM_TYPE::getter_type,
-         public virtual LocalObject_T<CCM_TYPE>,
+         public virtual LocalObject,
          private virtual ACE_Copy_Disabled
       {
       typedef ::CIAO::NDDS::DataReader_T<DDS_TYPE> DataReader_type;

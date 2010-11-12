@@ -24,14 +24,17 @@ interface fooB
   void send (in long value);
 };
 
-connector MyEvent : DerivedTypeConnector::DDS_Event
-{
-  provides fooA my_foo;
-};
+// @todo, module here should go away again
+module DerivedTypeConnector {
+  connector MyEvent : DerivedTypeConnector::DDS_Event
+  {
+    provides fooA my_foo;
+  };
 
-connector MyState : DerivedTypeConnector::DDS_State
-{
-  provides fooB my_foo;
+  connector MyState : DerivedTypeConnector::DDS_State
+  {
+    provides fooB my_foo;
+  };
 };
 
 #endif

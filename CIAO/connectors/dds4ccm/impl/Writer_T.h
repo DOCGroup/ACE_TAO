@@ -17,11 +17,9 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename WRITER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     class Writer_T
-      : public InstanceHandleManager_T <DDS_TYPE,
-                                        CCM_TYPE,
-                                        typename CCM_TYPE::writer_type>
+      : public InstanceHandleManager_T <WRITER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE>
     {
     public:
       /// Constructor
@@ -31,10 +29,10 @@ namespace CIAO
       virtual ~Writer_T (void);
 
       virtual void write_one (
-        const typename DDS_TYPE::value_type& an_instance,
+        const VALUE_TYPE& an_instance,
         const ::DDS::InstanceHandle_t & instance_handle);
 
-      virtual void write_many (const typename CCM_TYPE::seq_type& instances);
+      virtual void write_many (const SEQ_VALUE_TYPE& instances);
 
       /**
        * @name is_coherent_write
@@ -47,9 +45,9 @@ namespace CIAO
       //@}
 
     private:
-      void write_i (const typename DDS_TYPE::value_type& datum,
-                    const ::DDS::InstanceHandle_t& instance_handle,
-                    ::CCM_DDS::DataNumber_t index);
+      void write_i (const VALUE_TYPE& datum,
+                     const ::DDS::InstanceHandle_t& instance_handle,
+                     ::CCM_DDS::DataNumber_t index);
 
       bool is_coherent_write_;
     };

@@ -17,10 +17,10 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
+    template <typename BASE_TYPE, typename WRITER_TYPE, typename VALUE_TYPE>
     class InstanceHandleManager_T :
       public virtual BASE_TYPE,
-      public virtual LocalObject_T<CCM_TYPE>,
+      public virtual LocalObject,
       private virtual ACE_Copy_Disabled
     {
     public:
@@ -31,10 +31,10 @@ namespace CIAO
       virtual ~InstanceHandleManager_T (void);
 
       virtual ::DDS::InstanceHandle_t register_instance (
-        const typename DDS_TYPE::value_type & datum);
+        const VALUE_TYPE& datum);
 
       virtual void unregister_instance (
-        const typename DDS_TYPE::value_type & datum,
+        const VALUE_TYPE& datum,
         const ::DDS::InstanceHandle_t & instance_handle);
 
       void set_dds_writer (::DDS::DataWriter_ptr dds_writer);
@@ -42,10 +42,10 @@ namespace CIAO
     protected:
       /// This method doesn't increment the refcount, only for internal
       /// usage
-      typename DDS_TYPE::typed_writer_type::_ptr_type dds_writer (void);
+      typename WRITER_TYPE::_ptr_type dds_writer (void);
 
     private:
-      typename DDS_TYPE::typed_writer_type::_var_type dds_writer_;
+      typename WRITER_TYPE::_var_type dds_writer_;
     };
   }
 }

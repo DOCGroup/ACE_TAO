@@ -4,27 +4,12 @@
 #ifndef DDS4CCM_LOCALOBJECT_T_H_
 #define DDS4CCM_LOCALOBJECT_T_H_
 
-#include "tao/LocalObject.h"
+#include "ace/Copy_Disabled.h"
 
 namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename CCM_TYPE>
-    class LocalObject_T
-      : public virtual ::CORBA::LocalObject
-    {
-    public:
-      LocalObject_T (void);
-      virtual ~LocalObject_T (void);
-
-      void _set_component (typename CCM_TYPE::base_type::_ptr_type component);
-      virtual ::CORBA::Object_ptr _get_component (void);
-
-    private:
-      typename CCM_TYPE::base_type::_var_type component_;
-    };
-
     /**
      * Helper template that allocates a new LOCAL_OBJECT from the heap and that
      * makes sure we call ::CORBA::release() at destruction
