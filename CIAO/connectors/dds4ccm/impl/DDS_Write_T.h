@@ -53,16 +53,13 @@ private:
       Writer_type;
   typedef ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>
     DataWriterListener_type;
-  typedef ::CIAO::NDDS::DataWriter_T<DDS_TYPE>
-    DataWriter_type;
 
   /**
    * DDS_Write
    */
   //@{
   ::DDS::DataWriterListener_var data_listener_;
-  ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T < Writer_type > writer_t_;
-  ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T < DataWriter_type > ccm_dds_writer_;
+  ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T < Writer_type > dds_write_;
   ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T < ::CIAO::DDS4CCM::CCM_DataWriter > ccm_data_writer_;
   //@}
 

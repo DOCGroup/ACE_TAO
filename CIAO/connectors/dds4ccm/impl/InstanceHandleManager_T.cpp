@@ -61,5 +61,12 @@ namespace CIAO
 
       this->dds_writer_ = WRITER_TYPE::_narrow (dds_writer);
     }
+
+    template <typename BASE_TYPE, typename WRITER_TYPE, typename VALUE_TYPE>
+    ::DDS::DataWriter_ptr
+     InstanceHandleManager_T<BASE_TYPE, WRITER_TYPE, VALUE_TYPE>::get_dds_writer (void)
+     {
+      return ::DDS::DataWriter::_duplicate (this->dds_writer_.in ());
+     }
   }
 }
