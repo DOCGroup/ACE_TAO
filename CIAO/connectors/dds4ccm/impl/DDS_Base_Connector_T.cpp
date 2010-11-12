@@ -107,7 +107,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_domain (void)
   NDDSConfigLogger::get_instance()->set_verbosity (n_verbosity);
 #endif /* CIAO_DDS4CCM_NDDS==1 */
 
-  // Generic parsing code, library and profile should be seperated by a #
+  // Generic parsing code, library and profile should be separated by a #
   if (this->qos_profile_.in ())
     {
       char* buf = ACE_OS::strdup (this->qos_profile_.in ());

@@ -26,14 +26,9 @@ CCM_DDS_StateListenerControl_T<BASE_TYPE, CCM_TYPE>::is_filter_interpreted (void
 template <typename BASE_TYPE, typename CCM_TYPE>
 void
 CCM_DDS_StateListenerControl_T<BASE_TYPE, CCM_TYPE>::is_filter_interpreted (
-  ::CORBA::Boolean /*is_filter_interpreted*/)
+  ::CORBA::Boolean is_filter_interpreted)
 {
   DDS4CCM_TRACE ("CCM_DDS_StateListenerControl_T::is_filter_interpreted");
 
-#if (CIAO_DDS4CCM_NDDS==1)
-  // Currently RTI DDS doesn't support this
-  throw ::CORBA::NO_IMPLEMENT ();
-#else
   this->is_filter_interpreted_ = is_filter_interpreted;
-#endif
 }
