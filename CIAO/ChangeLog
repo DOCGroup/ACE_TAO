@@ -1,3 +1,8 @@
+Fri Nov 12 13:46:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+          Layout changes and member initialization.
+
 Fri Nov 12 13:28:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
