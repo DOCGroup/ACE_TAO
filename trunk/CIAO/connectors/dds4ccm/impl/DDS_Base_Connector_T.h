@@ -12,13 +12,13 @@
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 #include "dds4ccm/impl/logger/Logger_Service.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_Base_Connector_T
   : public virtual CCM_TYPE::base_type,
     public virtual ::CORBA::LocalObject,
     private virtual ACE_Copy_Disabled
 {
-typedef ::CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, VENDOR_TYPE>
+typedef ::CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE>
   DomainParticipantListener;
 typedef ::CIAO::NDDS::DDS_DomainParticipantFactory_i
   DomainParticipantFactory;

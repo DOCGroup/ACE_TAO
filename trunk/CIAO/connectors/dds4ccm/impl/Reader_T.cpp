@@ -1,4 +1,4 @@
-// $Id$
+// // $Id$
 
 #include "dds4ccm/impl/Utils.h"
 
@@ -16,21 +16,21 @@ namespace CIAO
   {
     namespace DDS_CCM
     {
-      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
-      Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::Reader_T (void)
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::Reader_T (void)
       {
         DDS4CCM_TRACE ("Reader_T::Reader_T");
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
-      Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::~Reader_T (void)
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::~Reader_T (void)
       {
         DDS4CCM_TRACE ("Reader_T::~Reader_T");
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
       ::DDS::InstanceHandle_t
-      Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::check_handle (
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::check_handle (
         const typename DDS_TYPE::value_type& an_instance,
         const ::DDS::InstanceHandle_t & instance_handle)
       {
@@ -43,6 +43,7 @@ namespace CIAO
         ::DDS_InstanceHandle_t lookup_hnd = ::DDS_HANDLE_NIL;
         lookup_hnd <<= tmp;
 
+        //TODO: don't use these...
         if (!DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL) &&
             !DDS_InstanceHandle_equals (&hnd, &lookup_hnd))
           {
@@ -57,9 +58,9 @@ namespace CIAO
         return ret;
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
       void
-      Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::convert_sample_infos (
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::convert_sample_infos (
         ::CCM_DDS::ReadInfoSeq& infos,
         ::DDS::SampleInfoSeq sample_info)
       {
@@ -73,9 +74,9 @@ namespace CIAO
           }
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
       void
-      Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_w_instance (
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_w_instance (
         typename DDS_TYPE::seq_type & data,
         ::DDS::SampleInfoSeq & sample_info,
         const ::DDS::InstanceHandle_t & lookup_hnd)
@@ -104,9 +105,9 @@ namespace CIAO
           }
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
       void
-      Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_wo_instance (
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_wo_instance (
         typename DDS_TYPE::seq_type & data,
         ::DDS::SampleInfoSeq & sample_info,
         ::DDS::QueryCondition_ptr qc)
@@ -143,9 +144,9 @@ namespace CIAO
           }
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
       void
-      Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::return_loan (
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::return_loan (
         typename DDS_TYPE::seq_type & data,
         ::DDS::SampleInfoSeq  sample_info)
       {
@@ -161,9 +162,9 @@ namespace CIAO
           }
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
       void
-      Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_last (
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_last (
         typename CCM_TYPE::seq_type& instances,
         ::CCM_DDS::ReadInfoSeq& infos)
       {
@@ -198,9 +199,9 @@ namespace CIAO
           }
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
       void
-      Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_all (
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_all (
                 typename CCM_TYPE::seq_type& instances,
                 ::CCM_DDS::ReadInfoSeq& infos)
       {
@@ -213,9 +214,9 @@ namespace CIAO
         this->return_loan (instances, sample_info);
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
       void
-      Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_one_last (
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_one_last (
         typename DDS_TYPE::value_type& an_instance,
         ::CCM_DDS::ReadInfo_out info,
         const ::DDS::InstanceHandle_t & instance_handle)
@@ -249,9 +250,9 @@ namespace CIAO
           }
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
       void
-      Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_one_all (
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_one_all (
         const typename DDS_TYPE::value_type& an_instance,
         typename CCM_TYPE::seq_type& instances,
         ::CCM_DDS::ReadInfoSeq& infos,
@@ -268,26 +269,26 @@ namespace CIAO
         this->return_loan (instances, sample_info);
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
       ::CCM_DDS::QueryFilter *
-      Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::query (void)
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::query (void)
       {
         DDS4CCM_TRACE ("Reader_T::query");
         return this->condition_manager_->query ();
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
       void
-      Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::query (
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::query (
         const ::CCM_DDS::QueryFilter & query)
       {
         DDS4CCM_TRACE ("Reader_T::query");
         return this->condition_manager_->query (query);
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
       void
-      Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::set_dds_entity (
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::set_dds_entity (
         ::DDS::DataReader_ptr dr,
         ConditionManager_type * condition_manager)
       {
@@ -298,9 +299,9 @@ namespace CIAO
         this->condition_manager_->set_dds_entity (dr);
       }
 
-      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
       typename DDS_TYPE::typed_reader_type::_ptr_type
-      Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::dds_entity (void)
+      Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::dds_entity (void)
       {
         if (! ::CORBA::is_nil (this->dds_reader_))
           {

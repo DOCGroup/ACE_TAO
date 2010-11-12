@@ -3,9 +3,9 @@
 #include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-CIAO::DDS4CCM::DataReaderHandler_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DataReaderHandler_T (
-            typename CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>* drl,
+template <typename DDS_TYPE, typename CCM_TYPE>
+CIAO::DDS4CCM::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::DataReaderHandler_T (
+            typename CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>* drl,
             ::DDS::DataReader_ptr dr)
       : drl_ (drl),
         dr_ (::DDS::DataReader::_duplicate (dr))
@@ -14,14 +14,14 @@ CIAO::DDS4CCM::DataReaderHandler_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DataReaderH
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-CIAO::DDS4CCM::DataReaderHandler_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~DataReaderHandler_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE>
+CIAO::DDS4CCM::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::~DataReaderHandler_T (void)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 int
-CIAO::DDS4CCM::DataReaderHandler_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::handle_exception (ACE_HANDLE)
+CIAO::DDS4CCM::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::handle_exception (ACE_HANDLE)
 {
   try
     {
@@ -43,9 +43,9 @@ CIAO::DDS4CCM::DataReaderHandler_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::handle_exce
   return 0;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DataReaderStateHandler_T (
-            typename CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>* drl,
+template <typename DDS_TYPE, typename CCM_TYPE>
+CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE>::DataReaderStateHandler_T (
+            typename CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>* drl,
             ::DDS::DataReader_ptr dr)
       : drl_ (drl),
         dr_ (::DDS::DataReader::_duplicate (dr))
@@ -54,14 +54,14 @@ CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DataRe
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~DataReaderStateHandler_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE>
+CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE>::~DataReaderStateHandler_T (void)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 int
-CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::handle_exception (ACE_HANDLE)
+CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE>::handle_exception (ACE_HANDLE)
 {
   try
     {

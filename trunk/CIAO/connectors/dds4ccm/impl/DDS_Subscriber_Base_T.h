@@ -17,7 +17,7 @@
 #include "dds4ccm/impl/ConditionManager_T.h"
 #include "dds4ccm/impl/CCM_DataReader.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 class DDS_Subscriber_Base_T
 {
 public:
@@ -60,9 +60,9 @@ public:
 protected:
   typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>
     ConditionManager_type;
-  typedef ::CIAO::DDS4CCM::PortStatusListener_T <DDS_TYPE, VENDOR_TYPE>
+  typedef ::CIAO::DDS4CCM::PortStatusListener_T <DDS_TYPE>
     PortStatusListener_type;
-  typedef ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
+  typedef ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>
     Reader_type;
   typedef ::CIAO::DDS4CCM::CCM_DDS_ContentFilterSetting_i
     ContentFilterSetting_type;
