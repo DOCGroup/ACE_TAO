@@ -88,14 +88,12 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
 
   if (ut->size_type () == AST_Type::FIXED)
     {
-      os_ << "true, ";
+      os_ << "true>";
     }
   else
     {
-      os_ << "false, ";
+      os_ << "false>";
     }
-
-  os_ << be_nl << "DDS4CCM_NDDS" << ">";
 
   os_ << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
