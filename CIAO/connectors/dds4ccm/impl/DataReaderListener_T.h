@@ -11,7 +11,7 @@
 #define DATAREADERLISTENER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "dds4ccm/impl/PortStatusListener_T.h"
+#include "dds4ccm/impl/PortStatusListener.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;
@@ -23,12 +23,10 @@ namespace CIAO
   {
     template <typename DDS_TYPE, typename CCM_TYPE>
     class DataReaderListener_T :
-      public PortStatusListener_T <DDS_TYPE>
+      public PortStatusListener
     {
     typedef ::CIAO::DDS4CCM::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>
       DataReaderHandler_type;
-    typedef ::CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE>
-      PortStatusListener_type;
 
     public:
       /// Constructor

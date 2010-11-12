@@ -11,7 +11,7 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 #include "dds4ccm/impl/Reader_T.h"
-#include "dds4ccm/impl/PortStatusListener_T.h"
+#include "dds4ccm/impl/PortStatusListener.h"
 #include "dds4ccm/impl/ContentFilterSetting.h"
 #include "dds4ccm/impl/ndds/ContentFilteredTopic.h"
 #include "dds4ccm/impl/ConditionManager.h"
@@ -58,8 +58,6 @@ public:
   void remove (::DDS::Subscriber_ptr subscriber);
 
 protected:
-  typedef ::CIAO::DDS4CCM::PortStatusListener_T <DDS_TYPE>
-    PortStatusListener_type;
   typedef ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>
     Reader_type;
   typedef ::CIAO::DDS4CCM::CCM_DDS_ContentFilterSetting_i

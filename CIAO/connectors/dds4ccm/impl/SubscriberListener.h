@@ -10,9 +10,8 @@
 #ifndef SUBSCRIBERLISTENER_T_H_
 #define SUBSCRIBERLISTENER_T_H_
 
-#include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/idl/dds4ccm_ConnectorStatusListenerC.h"
-#include "ace/Copy_Disabled.h"
+#include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;
@@ -22,19 +21,17 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE>
-    class SubscriberListener_T :
-      public ::DDS::SubscriberListener,
-      private ACE_Copy_Disabled
+    class DDS4CCM_DDS_IMPL_Export SubscriberListener :
+      public ::DDS::SubscriberListener
     {
     public:
       /// Constructor
-      SubscriberListener_T (
+      SubscriberListener (
         ::CCM_DDS::ConnectorStatusListener_ptr error_listener,
         ACE_Reactor* reactor);
 
       /// Destructor
-      virtual ~SubscriberListener_T (void);
+      virtual ~SubscriberListener (void);
 
       virtual void on_requested_incompatible_qos (
         ::DDS::DataReader_ptr reader,
@@ -80,7 +77,5 @@ namespace CIAO
     };
   }
 }
-
-#include "dds4ccm/impl/SubscriberListener_T.cpp"
 
 #endif /* SUBSCRIBERLISTENER_T_H_ */

@@ -11,9 +11,9 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-template <typename BASE_TYPE, typename CCM_TYPE>
+template <typename BASE_TYPE>
 class CCM_DDS_StateListenerControl_T
-  : public virtual CCM_DDS_DataListenerControl_T<BASE_TYPE, CCM_TYPE>
+  : public virtual CCM_DDS_DataListenerControl_T<BASE_TYPE>
 {
 public:
   /// Constructor

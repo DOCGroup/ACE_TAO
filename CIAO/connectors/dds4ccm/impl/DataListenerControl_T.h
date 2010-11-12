@@ -5,7 +5,7 @@
 #define DATALISTENERCONTROL_T_H_
 
 #include "dds4ccm/idl/dds4ccm_DataListenerControlEC.h"
-#include "dds4ccm/impl/LocalObject_T.h"
+#include "dds4ccm/impl/LocalObject.h"
 
 #include "ace/Copy_Disabled.h"
 
@@ -13,7 +13,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-template <typename BASE_TYPE, typename CCM_TYPE>
+template <typename BASE_TYPE>
 class CCM_DDS_DataListenerControl_T
   : public virtual BASE_TYPE,
     public virtual ::CIAO::DDS4CCM::LocalObject,

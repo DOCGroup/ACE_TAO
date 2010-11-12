@@ -3,8 +3,6 @@
 
 #include "dds4ccm/impl/DataReaderStateListener_T.h"
 #include "dds4ccm/impl/StateListenerControl_T.h"
-#include "dds4ccm/impl/PortStatusListener_T.h"
-
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>

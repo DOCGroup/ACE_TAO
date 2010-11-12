@@ -5,10 +5,9 @@
 #include "dds4ccm/impl/Updater_T.h"
 #include "dds4ccm/impl/Reader_T.h"
 #include "dds4ccm/impl/PublisherListener_T.h"
-#include "dds4ccm/impl/SubscriberListener_T.h"
+#include "dds4ccm/impl/SubscriberListener.h"
 #include "dds4ccm/impl/DataListenerControl_T.h"
 #include "dds4ccm/impl/StateListenerControl_T.h"
-#include "dds4ccm/impl/PortStatusListener_T.h"
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
