@@ -14,7 +14,7 @@
 #include "dds4ccm/impl/PortStatusListener_T.h"
 #include "dds4ccm/impl/ContentFilterSetting.h"
 #include "dds4ccm/impl/ndds/ContentFilteredTopic.h"
-#include "dds4ccm/impl/ConditionManager_T.h"
+#include "dds4ccm/impl/ConditionManager.h"
 #include "dds4ccm/impl/CCM_DataReader.h"
 #include "dds4ccm/impl/LocalObject_T.h"
 
@@ -58,8 +58,6 @@ public:
   void remove (::DDS::Subscriber_ptr subscriber);
 
 protected:
-  typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>
-    ConditionManager_type;
   typedef ::CIAO::DDS4CCM::PortStatusListener_T <DDS_TYPE>
     PortStatusListener_type;
   typedef ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>
@@ -79,7 +77,7 @@ protected:
 
   bool configuration_complete_;
   //@}
-  ConditionManager_type condition_manager_;
+  ::CIAO::DDS4CCM::ConditionManager condition_manager_;
 };
 
 #include "dds4ccm/impl/DDS_Subscriber_Base_T.cpp"

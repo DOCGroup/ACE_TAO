@@ -54,6 +54,12 @@ namespace CIAO_Keyed_Test_Receiver_Impl
          ++iter)
       {
         all_received = iter->second == this->iterations_;
+        if (iter->second > this->iterations_)
+          {
+            all_received = true;
+            ACE_ERROR ((LM_ERROR, "Receiver_exec_i::check_received_samples - "
+                       "ERROR: Unexpected iteration received-> Bailing out\n"));
+          }
       }
     if (all_received)
       {

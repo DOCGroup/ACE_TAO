@@ -1,3 +1,28 @@
+Fri Nov 12 12:46:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager.h:
+        * connectors/dds4ccm/impl/ConditionManager.cpp:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.h:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.h:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.h:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+        * connectors/dds4ccm/impl/dds4ccm_impl.mpc:
+          Removed unused template from ConditionManager.
+
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/Plan.cdp:
+          Bailing out when unexpected samples were received.
+
+        * connectors/dds4ccm/impl/ConditionManager_T.h:
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+          Removed these files.
+
 Fri Nov 12 12:37:02 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Get_T.h:
