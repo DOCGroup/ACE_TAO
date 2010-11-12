@@ -15,7 +15,7 @@ namespace CIAO
       ::CCM_DDS::PortStatusListener_ptr port_status_listener,
       ::CCM_DDS::DataListenerControl_ptr control,
       ACE_Reactor * reactor,
-      ConditionManager_type& condition_manager)
+      ConditionManager& condition_manager)
       : PortStatusListener_T <DDS_TYPE> (port_status_listener, reactor) ,
         listener_ (CCM_TYPE::listener_type::_duplicate (listener)),
         control_ (::CCM_DDS::DataListenerControl::_duplicate (control)),
@@ -80,10 +80,10 @@ namespace CIAO
           return;
         }
 
-      ::CIAO::NDDS::DataReader_T<DDS_TYPE> * reader =
-        dynamic_cast < ::CIAO::NDDS::DataReader_T<DDS_TYPE> *> (rdr);
+      typename DDS_TYPE::typed_reader_type::_var_type reader;
+      reader = DDS_TYPE::typed_reader_type::_narrow (rdr);
 
-      if (!reader)
+      if (::CORBA::is_nil (reader.in ()))
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                              ACE_TEXT ("DataReaderListener_T::on_data_available_i - ")

@@ -174,7 +174,7 @@
           <kind>tk_ulong</kind>
         </type>
         <value>
-          <ulong>10</ulong>
+          <ulong>1</ulong>
         </value>
       </value>
     </configProperty>

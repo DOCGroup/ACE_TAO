@@ -14,12 +14,12 @@
 #include "dds4ccm/impl/dds4ccm_conf.h"
 #include "dds4ccm/impl/LocalObject.h"
 
-#include "dds4ccm/impl/ConditionManager_T.h"
-
 namespace CIAO
 {
   namespace DDS4CCM
   {
+    class ConditionManager;
+
     namespace DDS_CCM
     {
       template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
@@ -28,8 +28,6 @@ namespace CIAO
           public virtual LocalObject,
           private virtual ACE_Copy_Disabled
       {
-      typedef ConditionManager_T<DDS_TYPE> ConditionManager_type;
-
       public:
         /// Constructor
         Reader_T (void);
@@ -61,11 +59,11 @@ namespace CIAO
         virtual void query (const ::CCM_DDS::QueryFilter & filter);
 
         void set_dds_entity (::DDS::DataReader_ptr dr,
-                             ConditionManager_type * condition_manager);
+                             ::CIAO::DDS4CCM::ConditionManager * condition_manager);
 
       private:
         typename DDS_TYPE::typed_reader_type::_var_type dds_reader_;
-        ConditionManager_type * condition_manager_;
+        ::CIAO::DDS4CCM::ConditionManager * condition_manager_;
 
         typename DDS_TYPE::typed_reader_type::_ptr_type
         dds_entity (void);

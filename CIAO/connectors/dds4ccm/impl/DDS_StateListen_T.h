@@ -10,7 +10,6 @@
 
 #include "dds4ccm/impl/DDS_Subscriber_Base_T.h"
 #include "dds4ccm/impl/StateListenerControl_T.h"
-#include "dds4ccm/impl/ConditionManager_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 class DDS_StateListen_T
@@ -38,8 +37,6 @@ public:
   void remove (::DDS::Subscriber_ptr subscriber);
 
 private:
-  typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>
-    ConditionManager_type;
   typedef ::CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>
     DataReaderStateListener_type;
   typedef CCM_DDS_StateListenerControl_T< ::CCM_DDS::CCM_StateListenerControl, CCM_TYPE>
