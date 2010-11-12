@@ -233,3 +233,27 @@ struct Hello
 typedef sequence<Hello> HelloSeq;
 module ::Y::Typed < ::Hello, ::HelloSeq> HelloSpace;
 
+module ZZ
+{
+  module DDSE <typename T, sequence<T> TSeq> {
+    local interface Read
+    {
+      void op ();
+    };
+  };
+  module DDSX <typename T, sequence<T> TSeq> {
+    alias DDSE <T, TSeq> EX;
+    typedef EX::Read Read;
+  };
+};
+
+module YY
+{
+  module DDSY <typename T, sequence<T> TSeq> {
+    alias ZZ::DDSX <T, TSeq> EX2;
+  };
+};
+
+module ZZ::DDSX < ::Hello, ::HelloSeq> ZZDDSX;
+
+module YY::DDSY < ::Hello, ::HelloSeq> ZZDDSY;

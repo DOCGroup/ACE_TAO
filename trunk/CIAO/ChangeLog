@@ -1,3 +1,10 @@
+Fri Nov 12 08:29:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/Cornucopia/Cornucopia.idl:
+          Added new test case with multiple templated modules with alias and
+          typedefs. Jeff Parsons fixed a problem in the idl compiler when using
+          this kind of constructs yesterday, added now an explicit test
+
 Thu Nov 11 19:25:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/Coherent_Changes_Guard.h:
