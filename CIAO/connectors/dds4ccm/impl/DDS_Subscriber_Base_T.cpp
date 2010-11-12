@@ -68,7 +68,6 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "BBBBBBBBBBBBBBBBBBBB withOUT profile\n"));
           ::DDS::DataReaderQos_var drqos;
           dr = subscriber->create_datareader (
                                           td.in (),

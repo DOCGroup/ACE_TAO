@@ -1,3 +1,8 @@
+Fri Nov 12 19:06:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+          Removed ACE_DEBUG statement.
+
 Fri Nov 12 18:45:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager.cpp:
