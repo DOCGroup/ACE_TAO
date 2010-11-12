@@ -3,6 +3,8 @@
 #include "dds4ccm/impl/ndds/DomainParticipantListener.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
+// @todo This must be fully implemented
+
 namespace CIAO
 {
   namespace NDDS
