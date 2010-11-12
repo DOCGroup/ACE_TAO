@@ -1,3 +1,38 @@
+Fri Nov 12 15:39:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.h:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/DataListenerControl_T.h:
+        * connectors/dds4ccm/impl/DataListenerControl_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/PortStatusListener.h:
+        * connectors/dds4ccm/impl/PortStatusListener.cpp:
+        * connectors/dds4ccm/impl/StateListenerControl_T.h:
+        * connectors/dds4ccm/impl/StateListenerControl_T.cpp:
+        * connectors/dds4ccm/impl/SubscriberListener.h:
+        * connectors/dds4ccm/impl/SubscriberListener.cpp:
+        * connectors/dds4ccm/impl/TopicListener.h:
+        * connectors/dds4ccm/impl/TopicListener.cpp:
+        * connectors/dds4ccm/impl/dds4ccm_impl.mpc:
+        * connectors/dds4ccm/impl/PortStatusListener_T.h:
+        * connectors/dds4ccm/impl/PortStatusListener_T.cpp:
+        * connectors/dds4ccm/impl/SubscriberListener_T.h:
+        * connectors/dds4ccm/impl/SubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/TopicListener_T.h:
+        * connectors/dds4ccm/impl/TopicListener_T.cpp:
+          Converted several C++ templates to regular classes
+
 Fri Nov 12 14:42:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:

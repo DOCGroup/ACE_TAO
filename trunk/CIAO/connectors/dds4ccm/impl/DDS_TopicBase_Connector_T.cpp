@@ -333,14 +333,14 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_default_topic (ACE_React
     this->context_->get_connection_error_listener ();
 
   ::DDS::StatusMask const mask =
-    TopicListener::get_mask (error_listener.in ());
+    ::CIAO::DDS4CCM::TopicListener::get_mask (error_listener.in ());
 
   if (mask != 0)
     {
       if (::CORBA::is_nil (this->topiclistener_.in ()))
         {
           ACE_NEW_THROW_EX (this->topiclistener_,
-                            TopicListener (
+                            ::CIAO::DDS4CCM::TopicListener (
                               error_listener.in (),
                               reactor),
                             ::CORBA::NO_MEMORY ());
@@ -370,14 +370,14 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_subscriber (ACE_Reactor*
     this->context_->get_connection_error_listener ();
 
   ::DDS::StatusMask const mask =
-    SubscriberListener::get_mask (error_listener.in ());
+    ::CIAO::DDS4CCM::SubscriberListener::get_mask (error_listener.in ());
 
   if (mask != 0)
     {
       if (::CORBA::is_nil (this->subscriber_listener_.in ()))
         {
           ACE_NEW_THROW_EX (this->subscriber_listener_,
-                            SubscriberListener (
+                            ::CIAO::DDS4CCM::SubscriberListener (
                               error_listener.in (),
                               reactor),
                             ::CORBA::NO_MEMORY ());

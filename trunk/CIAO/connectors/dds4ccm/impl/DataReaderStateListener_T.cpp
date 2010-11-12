@@ -18,7 +18,7 @@ namespace CIAO
       ::CCM_DDS::StateListenerControl_ptr control,
       ACE_Reactor* reactor,
       ConditionManager& condition_manager)
-      : PortStatusListener_T <DDS_TYPE> (port_status_listener, reactor) ,
+      : PortStatusListener (port_status_listener, reactor) ,
         listener_ (CCM_TYPE::statelistener_type::_duplicate (listener)),
         control_ (::CCM_DDS::StateListenerControl::_duplicate (control)),
         condition_manager_ (condition_manager)

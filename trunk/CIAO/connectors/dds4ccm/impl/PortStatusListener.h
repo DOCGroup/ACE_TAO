@@ -10,8 +10,8 @@
 #ifndef PORTSTATUSLISTENER_T_H_
 #define PORTSTATUSLISTENER_T_H_
 
-#include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "ace/Copy_Disabled.h"
+#include "dds4ccm/idl/dds4ccm_PortStatusListenerC.h"
+#include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;
@@ -21,19 +21,17 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE>
-    class PortStatusListener_T :
-      public ::DDS::DataReaderListener,
-      private ACE_Copy_Disabled
+    class DDS4CCM_DDS_IMPL_Export PortStatusListener :
+      public ::DDS::DataReaderListener
     {
     public:
       /// Constructor
-      PortStatusListener_T (
+      PortStatusListener (
         ::CCM_DDS::PortStatusListener_ptr port_status_listener,
         ACE_Reactor* reactor);
 
       /// Destructor
-      virtual ~PortStatusListener_T (void);
+      virtual ~PortStatusListener (void);
 
       virtual void on_requested_deadline_missed (
         ::DDS::DataReader_ptr the_reader,
@@ -74,11 +72,8 @@ namespace CIAO
       ::CCM_DDS::PortStatusListener_var port_status_listener_;
     protected:
       ACE_Reactor* reactor_;
-
     };
   }
 }
-
-#include "dds4ccm/impl/PortStatusListener_T.cpp"
 
 #endif /* PORTSTATUSLISTENER_T_H_ */

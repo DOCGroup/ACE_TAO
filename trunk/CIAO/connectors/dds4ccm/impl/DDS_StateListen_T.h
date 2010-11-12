@@ -39,7 +39,7 @@ public:
 private:
   typedef ::CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>
     DataReaderStateListener_type;
-  typedef CCM_DDS_StateListenerControl_T< ::CCM_DDS::CCM_StateListenerControl, CCM_TYPE>
+  typedef CCM_DDS_StateListenerControl_T< ::CCM_DDS::CCM_StateListenerControl>
     StateListenerControl_type;
   typedef DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>
     DDSSubscriberBase_type;

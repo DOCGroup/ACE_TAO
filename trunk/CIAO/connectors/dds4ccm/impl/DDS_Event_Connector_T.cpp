@@ -6,7 +6,6 @@
 #include "dds4ccm/impl/Getter_T.h"
 #include "dds4ccm/impl/Reader_T.h"
 #include "dds4ccm/impl/DataListenerControl_T.h"
-#include "dds4ccm/impl/PortStatusListener_T.h"
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"

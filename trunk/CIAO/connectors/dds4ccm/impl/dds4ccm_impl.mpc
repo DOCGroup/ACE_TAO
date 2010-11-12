@@ -14,13 +14,16 @@ project(CIAO_DDS4CCM_DDS_Impl) : install, dds4ccm_skel, dds4ccm_lem_stub, taolib
   }
 
   Source_Files {
+    ConditionManager.cpp
     Coherent_Changes_Guard.cpp
     ContentFilterSetting.cpp
     CCM_DataReader.cpp
     CCM_DataWriter.cpp
     DDSCallbackStatusHandler.cpp
     LocalObject.cpp
+    PortStatusListener.cpp
+    SubscriberListener.cpp
+    TopicListener.cpp
     Utils.cpp
-    ConditionManager.cpp
   }
 }

@@ -88,14 +88,14 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::activate (
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::activate");
 
   ::DDS::StatusMask const mask =
-    PortStatusListener_type::get_mask (status);
+      ::CIAO::DDS4CCM::PortStatusListener::get_mask (status);
 
   if (mask != 0)
     {
       if (::CORBA::is_nil (this->listener_.in ()))
         {
           ACE_NEW_THROW_EX (this->listener_,
-                            PortStatusListener_type (status, reactor),
+                            ::CIAO::DDS4CCM::PortStatusListener (status, reactor),
                             ::CORBA::NO_MEMORY ());
         }
 
