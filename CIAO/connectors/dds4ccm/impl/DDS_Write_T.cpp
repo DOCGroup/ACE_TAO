@@ -21,7 +21,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::~DDS_Write_T (void)
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Write_T<DDS_TYPE, CCM_TYPE>::set_component (
-  typename CCM_TYPE::base_type::_ptr_type component)
+  ::CORBA::Object_ptr component)
 {
   this->writer_t_->_set_component (component);
 }
@@ -146,7 +146,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::remove (
   if (retcode == ::DDS::RETCODE_OK)
     {
       this->ccm_dds_writer_->set_rti_entity (0);
-      this->writer_t_->_set_component (CCM_TYPE::base_type::_nil ());
+      this->writer_t_->_set_component (::CORBA::Object::_nil ());
       this->writer_t_->set_dds_writer (::DDS::DataWriter::_nil ());
     }
   else

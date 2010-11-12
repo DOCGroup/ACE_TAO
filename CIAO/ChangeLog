@@ -1,3 +1,19 @@
+Fri Nov 12 12:37:02 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Get_T.h:
+        * connectors/dds4ccm/impl/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.h:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.h:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+          Simplified set_component
+
 Fri Nov 12 12:22:40 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDSCallbackStatusHandler.h:

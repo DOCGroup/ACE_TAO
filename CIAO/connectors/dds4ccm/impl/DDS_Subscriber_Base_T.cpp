@@ -17,7 +17,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::~DDS_Subscriber_Base_T (void)
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
 DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::set_component (
-    typename CCM_TYPE::base_type::_ptr_type component)
+    ::CORBA::Object_ptr component)
 {
   this->dds_read_->_set_component (component);
 }
@@ -148,7 +148,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::remove (
   //TODO: reimplement this
 //   this->data_reader_->delete_datareader (subscriber);
   this->cft_setting_->delete_contentfilteredtopic (subscriber);
-  this->dds_read_->_set_component (CCM_TYPE::base_type::_nil ());
+  this->dds_read_->_set_component (::CORBA::Object::_nil ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
