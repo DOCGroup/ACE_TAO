@@ -7,7 +7,6 @@
 
 template <typename DDS_TYPE>
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::ConditionManager_T ()
-  : impl_ (0)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::ConditionManager_T");
 }
@@ -82,7 +81,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::init_readcondition (void)
     }
   if ( ::CORBA::is_nil (this->rd_condition_.in ()))
     {
-      this->rd_condition_ = this->impl ()->create_readcondition (
+      this->rd_condition_ = this->dds_entity ()->create_readcondition (
                               ::DDS::NOT_READ_SAMPLE_STATE,
                               ::DDS::NEW_VIEW_STATE | ::DDS::NOT_NEW_VIEW_STATE,
                               ::DDS::ALIVE_INSTANCE_STATE | ::DDS::NOT_ALIVE_INSTANCE_STATE);
@@ -155,7 +154,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::query (
   if ( ::CORBA::is_nil (this->qc_reader_.in ()))
     {
       // We're sure the query is not set yet.
-      this->qc_reader_ = this->impl ()->create_querycondition (
+      this->qc_reader_ = this->dds_entity ()->create_querycondition (
                             ::DDS::READ_SAMPLE_STATE | ::DDS::NOT_READ_SAMPLE_STATE,
                             ::DDS::NEW_VIEW_STATE | ::DDS::NOT_NEW_VIEW_STATE,
                             ::DDS::ALIVE_INSTANCE_STATE,
@@ -163,7 +162,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::query (
                             filter.parameters);
       if ( ::CORBA::is_nil (this->qc_getter_.in ()))
         {
-          this->qc_getter_ = this->impl ()->create_querycondition (
+          this->qc_getter_ = this->dds_entity ()->create_querycondition (
                                 ::DDS::NOT_READ_SAMPLE_STATE,
                                 ::DDS::NEW_VIEW_STATE | ::DDS::NOT_NEW_VIEW_STATE,
                                 ::DDS::ALIVE_INSTANCE_STATE | ::DDS::NOT_ALIVE_INSTANCE_STATE,
@@ -175,7 +174,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::query (
         }
       if ( ::CORBA::is_nil (this->qc_listener_.in ()))
         {
-          this->qc_listener_ = this->impl ()->create_querycondition (
+          this->qc_listener_ = this->dds_entity ()->create_querycondition (
                                       ::DDS::NOT_READ_SAMPLE_STATE,
                                       ::DDS::NEW_VIEW_STATE | ::DDS::NOT_NEW_VIEW_STATE,
                                       ::DDS::ANY_INSTANCE_STATE,
@@ -312,7 +311,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::remove_condition (
       ::CIAO::NDDS::DDS_QueryCondition_i * qc = dynamic_cast < ::CIAO::NDDS::DDS_QueryCondition_i *>(dds_qc);
       if (qc)
         {
-          ::DDS::ReturnCode_t retcode = this->impl ()->delete_readcondition (qc);
+          ::DDS::ReturnCode_t retcode = this->dds_entity ()->delete_readcondition (qc);
           if (retcode == ::DDS::RETCODE_OK)
             {
               qc->set_rti_entity (0);
@@ -399,7 +398,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::remove_conditions ()
     }
   if (! ::CORBA::is_nil (this->rd_condition_.in ()))
     {
-      retcode = this->impl ()->delete_readcondition (this->rd_condition_.in ());
+      retcode = this->dds_entity ()->delete_readcondition (this->rd_condition_.in ());
       if (retcode != ::DDS::RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -435,28 +434,28 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::passivate ()
 
 template <typename DDS_TYPE>
 void
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::set_impl (
-  DataReader_type * impl)
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::set_dds_entity (
+  ::DDS::DataReader_ptr dr)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::set_impl");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::set_dds_entity");
 
-  this->impl_ = impl;
+  this->dr_ = ::DDS::DataReader::_duplicate (dr);
 }
 
 template <typename DDS_TYPE>
-CIAO::NDDS::DataReader_T<DDS_TYPE> *
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_impl ()
+::DDS::DataReader_ptr
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::get_dds_entity (void)
 {
-  return this->impl_;
+  return ::DDS::DataReader::_duplicate (this->dr_.in ());
 }
 
 template <typename DDS_TYPE>
-CIAO::NDDS::DataReader_T<DDS_TYPE> *
-CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::impl (void)
+::DDS::DataReader_ptr
+CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE>::dds_entity (void)
 {
-  if (this->impl_)
+  if (! ::CORBA::is_nil (this->dr_.in ()))
     {
-      return this->impl_;
+      return this->dr_.in ();
     }
   else
     {

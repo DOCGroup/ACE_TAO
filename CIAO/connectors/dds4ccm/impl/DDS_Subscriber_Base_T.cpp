@@ -34,8 +34,9 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
 
   this->configuration_complete_ = true;
 
-  if (!this->data_reader_->get_rti_entity ())
+  if (::CORBA::is_nil (this->dr_.in ()))
     {
+      ::DDS::TopicDescription_var td;
       ::CCM_DDS::QueryFilter_var filter = this->cft_setting_->filter ();
       if (ACE_OS::strlen (filter->expression.in ()) > 0)
         {
@@ -48,29 +49,33 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
                             "Error creating ContentFilteredTopic.\n"));
               throw ::CORBA::INTERNAL ();
             }
-          this->data_reader_->create_datareader (cft,
-                                                 subscriber,
-                                                 library_name,
-                                                 profile_name);
+          td = ::DDS::TopicDescription::_narrow (cft.in ());
         }
       else
         {
-          this->data_reader_->create_datareader (topic,
-                                                 subscriber,
-                                                 library_name,
-                                                 profile_name);
+          td = ::DDS::TopicDescription::_narrow (topic);
         }
-      if (!this->data_reader_->get_rti_entity ())
+      if (library_name && profile_name)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
-                      "CCM_DDS_Subscriber_Base_T::create_datareader - "
-                      "Error: Proxy returned a nil DataReader.\n"));
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          this->dr_ = subscriber->create_datareader_with_profile (
+                                          td.in (),
+                                          library_name,
+                                          profile_name,
+                                          ::DDS::DataReaderListener::_nil (),
+                                          0);
         }
-
-      this->dds_read_->set_impl (this->data_reader_,
-                                &this->condition_manager_);
-      this->ccm_data_reader_->set_dds_entity (this->data_reader_);
+      else
+        {
+          ::DDS::DataReaderQos_var drqos;
+          this->dr_ = subscriber->create_datareader (
+                                          td.in (),
+                                          drqos.in (),
+                                          ::DDS::DataReaderListener::_nil (),
+                                          0);
+        }
+      this->dds_read_->set_dds_entity (this->dr_,
+                                       &this->condition_manager_);
+      this->ccm_data_reader_->set_dds_entity (this->dr_);
     }
 }
 
@@ -94,7 +99,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
                             ::CORBA::NO_MEMORY ());
         }
 
-      ::DDS::ReturnCode_t const retcode = this->data_reader_->set_listener (
+      ::DDS::ReturnCode_t const retcode = this->dr_->set_listener (
           this->listener_.in (), mask);
 
       if (retcode != ::DDS::RETCODE_OK)
@@ -115,12 +120,11 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::passivate ()
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::passivate");
 
   this->condition_manager_.passivate ();
-  this->data_reader_->passivate ();
 
   if (!::CORBA::is_nil (this->listener_.in ()))
     {
       ::DDS::ReturnCode_t const retcode =
-        this->data_reader_->set_listener (::DDS::DataReaderListener::_nil (), 0);
+        this->dr_->set_listener (::DDS::DataReaderListener::_nil (), 0);
       if (retcode != ::DDS::RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -141,7 +145,8 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove (
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove");
 
-  this->data_reader_->delete_datareader (subscriber);
+  //TODO: reimplement this
+//   this->data_reader_->delete_datareader (subscriber);
   this->cft_setting_->delete_contentfilteredtopic (subscriber);
   this->dds_read_->_set_component (CCM_TYPE::base_type::_nil ());
 }

@@ -89,8 +89,8 @@ namespace CIAO
         /**
          * Set the actual pointer to DDS Datareader
          */
-        void set_impl (DataReader_type * reader,
-                       ConditionManager_type * condition_manager);
+        void set_dds_entity (::DDS::DataReader_ptr reader,
+                             ConditionManager_type * condition_manager);
       protected:
         DataReader_type * reader_;
         ConditionManager_type * condition_manager_;
@@ -99,11 +99,22 @@ namespace CIAO
         ::DDS::Duration_t time_out_;
         ::CCM_DDS::DataNumber_t max_delivered_data_;
 
-        DataReader_type * impl (void);
+        DataReader_type * dds_entity (void);
 
-        ::DDS::ReturnCode_t get (typename DDS_TYPE::dds_seq_type & data,
-                                 typename DDS_TYPE::sampleinfo_seq_type & sample_info,
-                                 const DDS_Long & max_samples);
+        ::DDS::ReturnCode_t get (typename DDS_TYPE::seq_type & data,
+                                 ::DDS::SampleInfoSeq & sample_info,
+                                 const ::CORBA::Long & max_samples);
+        ::DDS::ReturnCode_t get (
+          typename DDS_TYPE::seq_type & data,
+          ::DDS::SampleInfoSeq & sample_info,
+          const ::CORBA::Long & max_samples,
+          ::DDS::QueryCondition_ptr qc);
+
+        ::DDS::ReturnCode_t get (
+          typename DDS_TYPE::seq_type & data,
+          ::DDS::SampleInfoSeq & sample_info,
+          const ::CORBA::Long & max_samples,
+          ::DDS::ReadCondition_ptr rd);
       };
 
       template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>

@@ -35,7 +35,8 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete (
                                                   subscriber,
                                                   library_name,
                                                   profile_name);
-  this->dds_get_->set_impl (this->data_reader_, &this->condition_manager_);
+  this->dds_get_->set_dds_entity (this->dr_,
+                                  &this->condition_manager_);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
