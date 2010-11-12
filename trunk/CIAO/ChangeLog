@@ -1,3 +1,8 @@
+Fri Nov 12 19:28:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+          Removed debug statement.
+
 Fri Nov 12 19:06:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
