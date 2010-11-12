@@ -27,8 +27,7 @@ public:
   typename CCM_TYPE::getter_type::_ptr_type get_fresh_data (void);
   //@}
 
-  void set_component (
-    typename CCM_TYPE::base_type::_ptr_type component);
+  void set_component (::CORBA::Object_ptr component);
 
   void configuration_complete (
     ::DDS::Topic_ptr topic,

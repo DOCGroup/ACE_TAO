@@ -30,8 +30,7 @@ public:
   ::CCM_DDS::CCM_DataListenerControl_ptr get_data_control (void);
   //@}
 
-  void set_component (
-    typename CCM_TYPE::base_type::_ptr_type component);
+  void set_component (::CORBA::Object_ptr component);
 
   void activate (
     typename CCM_TYPE::listener_type::_ptr_type listener,

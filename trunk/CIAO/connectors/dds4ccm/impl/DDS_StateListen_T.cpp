@@ -21,7 +21,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED>::~DDS_StateListen_T (void)
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
 DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED>::set_component (
-    typename CCM_TYPE::base_type::_ptr_type component)
+    ::CORBA::Object_ptr component)
 {
   DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::set_component (component);
   this->data_control_->_set_component (component);
@@ -74,7 +74,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED>::remove (
 {
   DDS4CCM_TRACE ("DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED>::remove");
 
-  this->data_control_->_set_component (CCM_TYPE::base_type::_nil ());
+  this->data_control_->_set_component (::CORBA::Object::_nil ());
   DDSSubscriberBase_type::remove (subscriber);
 }
 

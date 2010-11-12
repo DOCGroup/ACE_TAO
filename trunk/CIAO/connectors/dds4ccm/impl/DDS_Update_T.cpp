@@ -23,8 +23,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::~DDS_Update_T (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_Update_T<DDS_TYPE, CCM_TYPE>::set_component (
-    typename CCM_TYPE::base_type::_ptr_type component)
+DDS_Update_T<DDS_TYPE, CCM_TYPE>::set_component (::CORBA::Object_ptr component)
 {
   this->dds_update_->_set_component (component);
 }
@@ -157,7 +156,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove (
       throw ::CORBA::INTERNAL ();
     }
   this->ccm_dds_writer_->set_rti_entity (0);
-  this->dds_update_->_set_component (CCM_TYPE::base_type::_nil ());
+  this->dds_update_->_set_component (::CORBA::Object::_nil ());
   this->dds_update_->set_dds_writer (::DDS::DataWriter::_nil ());
 }
 

@@ -28,8 +28,7 @@ public:
   ::CCM_DDS::CCM_StateListenerControl_ptr get_data_control (void);
   //@}
 
-  void set_component (
-    typename CCM_TYPE::base_type::_ptr_type component);
+  void set_component (::CORBA::Object_ptr component);
 
   void activate (
     typename CCM_TYPE::statelistener_type::_ptr_type listener,
