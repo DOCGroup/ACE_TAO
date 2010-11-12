@@ -2,7 +2,6 @@
 // $Id$
 
 #include "dds4ccm/impl/DataReaderStateListener_T.h"
-#include "dds4ccm/impl/DataWriterListener_T.h"
 #include "dds4ccm/impl/StateListenerControl_T.h"
 #include "dds4ccm/impl/PortStatusListener_T.h"
 

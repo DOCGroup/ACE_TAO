@@ -2,7 +2,6 @@
 // $Id$
 
 #include "dds4ccm/impl/DataReaderStateListener_T.h"
-#include "dds4ccm/impl/DataWriterListener_T.h"
 #include "dds4ccm/impl/Updater_T.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
@@ -71,35 +70,6 @@ void
 DDS_Update_T<DDS_TYPE, CCM_TYPE>::activate ()
 {
   DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::activate");
-
-  ::DDS::StatusMask const mask =
-    DataWriterListener_type::get_mask ();
-
-  if (mask != 0)
-    {
-      ::DDS::DataWriter_var writer = this->dds_update_->get_dds_writer ();
-      if (!::CORBA::is_nil (writer.in()))
-        {
-          if (::CORBA::is_nil (this->data_listener_.in ()))
-            {
-              ACE_NEW_THROW_EX (this->data_listener_,
-                  DataWriterListener_type (),
-                  ::CORBA::NO_MEMORY ());
-            }
-
-          ::DDS::ReturnCode_t const retcode = writer->set_listener (
-              this->data_listener_.in (), mask);
-
-          if (retcode != ::DDS::RETCODE_OK)
-            {
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                  "DDS_Update_T::activate - "
-                  "Error while setting the listener on the updater - <%C>\n",
-                  ::CIAO::DDS4CCM::translate_retcode (retcode)));
-              throw ::CORBA::INTERNAL ();
-            }
-        }
-    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -107,26 +77,6 @@ void
 DDS_Update_T<DDS_TYPE, CCM_TYPE>::passivate ()
 {
   DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::passivate");
-
-  if (!::CORBA::is_nil (this->data_listener_.in ()))
-    {
-      ::DDS::DataWriter_var writer = this->dds_update_->get_dds_writer ();
-      if (!::CORBA::is_nil (writer.in ()))
-        {
-          ::DDS::ReturnCode_t const retcode =
-              writer->set_listener (::DDS::DataWriterListener::_nil (), 0);
-
-          if (retcode != ::DDS::RETCODE_OK)
-            {
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                  "DDS_Update_T::passivate - "
-                  "Error while setting the listener on the writer - <%C>\n",
-                  ::CIAO::DDS4CCM::translate_retcode (retcode)));
-              throw ::CORBA::INTERNAL ();
-            }
-        }
-      this->data_listener_ = ::DDS::DataWriterListener::_nil ();
-    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

@@ -2,7 +2,6 @@
 // $Id$
 
 #include "dds4ccm/impl/DataReaderListener_T.h"
-#include "dds4ccm/impl/DataWriterListener_T.h"
 #include "dds4ccm/impl/Writer_T.h"
 #include "dds4ccm/impl/Getter_T.h"
 #include "dds4ccm/impl/Reader_T.h"
