@@ -16,24 +16,19 @@
 #include "InstanceHandle_t.h"
 
 inline void
-operator<<= (::CCM_DDS::AccessStatus & access_status, const ::DDS_SampleStateKind & sample_state)
+operator<<= (::CCM_DDS::ReadInfo& ccm_dds_readinfo, const ::DDS::SampleInfo& sample_info)
 {
-  if (sample_state == ::DDS::NOT_READ_SAMPLE_STATE)
+  ccm_dds_readinfo.source_timestamp = sample_info.source_timestamp;
+  if (sample_info.sample_state == ::DDS::NOT_READ_SAMPLE_STATE)
     {
-      access_status = ::CCM_DDS::FRESH_INFO;
+      ccm_dds_readinfo.access_status = ::CCM_DDS::FRESH_INFO;
     }
-  else if (sample_state == ::DDS::READ_SAMPLE_STATE)
+  else if (sample_info.sample_state == ::DDS::READ_SAMPLE_STATE)
     {
-      access_status = ::CCM_DDS::ALREADY_SEEN;
+      ccm_dds_readinfo.access_status = ::CCM_DDS::ALREADY_SEEN;
     }
-}
 
-inline void
-operator<<= (::CCM_DDS::ReadInfo& ccm_dds_readinfo, const ::DDS_SampleInfo& sample_info)
-{
-  ccm_dds_readinfo.source_timestamp <<= sample_info.source_timestamp;
-  ccm_dds_readinfo.access_status <<= sample_info.sample_state;
-  ccm_dds_readinfo.instance_handle <<= sample_info.instance_handle;
+  ccm_dds_readinfo.instance_handle = sample_info.instance_handle;
 
   if (sample_info.instance_state == ::DDS::ALIVE_INSTANCE_STATE &&
       sample_info.view_state == ::DDS::NEW_VIEW_STATE)

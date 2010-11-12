@@ -7,12 +7,6 @@
 
 namespace CIAO
 {
-  namespace NDDS
-  {
-    template <typename DDS_TYPE>
-    class DataReader_T;
-  }
-
   namespace DDS4CCM
   {
     //============================================================
@@ -21,8 +15,6 @@ namespace CIAO
     template <typename DDS_TYPE>
     class ConditionManager_T
     {
-    typedef ::CIAO::NDDS::DataReader_T<DDS_TYPE> DataReader_type;
-
     public:
       ConditionManager_T (void);
       ~ConditionManager_T (void);
@@ -37,21 +29,22 @@ namespace CIAO
       void init_readcondition (void);
 
       bool wait (::DDS::ConditionSeq  & active_conditions,
-                  ::DDS::Duration_t & time_out);
+                 ::DDS::Duration_t & time_out);
 
       ::CCM_DDS::QueryFilter * query (void);
 
       void query (const ::CCM_DDS::QueryFilter & filter);
 
-      void set_impl (DataReader_type * impl);
+      void set_dds_entity (::DDS::DataReader_ptr dr);
 
-      DataReader_type * get_impl (void);
+      ::DDS::DataReader_ptr get_dds_entity (void);
 
       void passivate (void);
 
     private:
-      DataReader_type * impl_;
+      ::DDS::DataReader_var dr_;
 
+      //TODO: Not allowed
       ::CIAO::NDDS::DDS_WaitSet_i ws_;
 
       // Different QueryConditions since the sample mask
@@ -62,7 +55,7 @@ namespace CIAO
 
       ::DDS::ReadCondition_var rd_condition_;
 
-      DataReader_type * impl (void);
+      ::DDS::DataReader_ptr dds_entity (void);
 
       void remove_condition (::DDS::QueryCondition_ptr qc,
                              const char * type);

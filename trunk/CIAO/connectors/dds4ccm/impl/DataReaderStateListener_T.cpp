@@ -84,9 +84,9 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
 
   try
     {
-      typename DDS_TYPE::dds_seq_type data;
-      typename DDS_TYPE::sampleinfo_seq_type sample_info;
-      ::DDS_Long max_samples = 0;
+      typename DDS_TYPE::seq_type data;
+      ::DDS::SampleInfoSeq sample_info;
+      ::CORBA::Long max_samples = 0;
 
       this->control_->mode () == ::CCM_DDS::ONE_BY_ONE
         ? max_samples = DDS_LENGTH_UNLIMITED
@@ -94,11 +94,29 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
           ? max_samples = DDS_LENGTH_UNLIMITED
           : max_samples = this->control_->max_delivered_data ();
 
-      ::DDS::ReturnCode_t result =
-        reader->take (data,
-                      sample_info,
-                      max_samples,
-                      this->condition_manager_.get_querycondition_listener ());
+      ::DDS::QueryCondition_var qc =
+        this->condition_manager_.get_querycondition_listener ();
+
+      ::DDS::ReturnCode_t result = ::DDS::RETCODE_OK;
+
+      if (! ::CORBA::is_nil (qc.in ()))
+        {
+          ::DDS::ReadCondition_var rd = ::DDS::ReadCondition::_narrow (qc.in ());
+          result = reader->take_w_condition (data,
+                                             sample_info,
+                                             max_samples,
+                                             rd.in ());
+        }
+      else
+        {
+          result = reader->take (data,
+                                 sample_info,
+                                 max_samples,
+                                 DDS_NOT_READ_SAMPLE_STATE,
+                                 DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+                                 DDS_ANY_INSTANCE_STATE);
+        }
+
       if (result == ::DDS::RETCODE_NO_DATA)
         {
           return;
@@ -112,7 +130,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
         }
       if (this->control_->mode () == ::CCM_DDS::ONE_BY_ONE)
         {
-          for (::DDS_Long i = 0; i < data.length (); ++i)
+          for (::CORBA::ULong i = 0; i < data.length (); ++i)
             {
               // Sample data may not be valid anymore when
               // deleted so don't check the valid_data flag
@@ -143,10 +161,10 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
         }
       else if (this->control_->mode () == ::CCM_DDS::MANY_BY_MANY)
         {
-          typedef std::vector<DDS_Long> Updates;
+          typedef std::vector< ::CORBA::Long > Updates;
           Updates updates;
 
-          for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
+          for (::CORBA::ULong i = 0 ; i < sample_info.length(); i++)
             {
               if ((sample_info[i].valid_data &&
                    sample_info[i].view_state == ::DDS_NEW_VIEW_STATE) ||
