@@ -10,45 +10,45 @@ class DDS_PSAT_Event_Connector_T
   : public virtual DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>
 {
   virtual
-  typename CCM_TYPE::psat_writer_type::_ptr_type
+  typename CCM_TYPE::supplier_traits::data_type::_ptr_type
   get_supplier_data (void)
   {
-    return CCM_TYPE::psat_writer_type::_nil ();
+    return CCM_TYPE::supplier_traits::data_type::_nil ();
   }
 
   virtual
-  typename CCM_TYPE::datawriter_type::_ptr_type
+  typename CCM_TYPE::supplier_traits::dds_entity_type::_ptr_type
   get_supplier_dds_entity (void)
   {
-    return CCM_TYPE::datawriter_type::_nil ();
+    return CCM_TYPE::supplier_traits::dds_entity_type::_nil ();
   }
 
   virtual
-  typename CCM_TYPE::reader_type::_ptr_type
+  typename CCM_TYPE::consumer_traits::data_type::_ptr_type
   get_consumer_data (void)
   {
-    return CCM_TYPE::reader_type::_nil ();
+    return CCM_TYPE::consumer_traits::data_type::_nil ();
   }
 
   virtual
-  typename CCM_TYPE::datalistenercontrol_type::_ptr_type
+  typename CCM_TYPE::consumer_traits::data_control_type::_ptr_type
   get_consumer_data_control (void)
   {
-    return CCM_TYPE::datalistenercontrol_type::_nil ();
+    return CCM_TYPE::consumer_traits::data_control_type::_nil ();
   }
 
   virtual
-  typename CCM_TYPE::datareader_type::_ptr_type
+  typename CCM_TYPE::consumer_traits::dds_entity_type::_ptr_type
   get_consumer_dds_entity (void)
   {
-    return CCM_TYPE::datareader_type::_nil ();
+    return CCM_TYPE::consumer_traits::dds_entity_type::_nil ();
   }
 
   virtual
-  typename CCM_TYPE::psat_buffercontrol_type::_ptr_type
+  typename CCM_TYPE::consumer_traits::buffer_control_type::_ptr_type
   get_consumer_buffer_control (void)
   {
-    return CCM_TYPE::psat_buffercontrol_type::_nil ();
+    return CCM_TYPE::consumer_traits::buffer_control_type::_nil ();
   }
 
   virtual
