@@ -94,9 +94,9 @@ namespace CIAO
           ::CORBA::Long max_samples = 0;
 
           this->control_->mode () == ::CCM_DDS::ONE_BY_ONE
-            ? max_samples = DDS_LENGTH_UNLIMITED
+            ? max_samples = ::DDS::LENGTH_UNLIMITED
             : this->control_->max_delivered_data() == 0
-              ? max_samples = DDS_LENGTH_UNLIMITED
+              ? max_samples = ::DDS::LENGTH_UNLIMITED
               : max_samples = this->control_->max_delivered_data ();
 
           ::DDS::QueryCondition_var qc =

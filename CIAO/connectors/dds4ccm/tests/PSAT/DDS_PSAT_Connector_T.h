@@ -5,9 +5,9 @@
 
 #include "connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 class DDS_PSAT_Event_Connector_T
-  : public virtual DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+  : public virtual DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>
 {
   virtual
   typename CCM_TYPE::psat_writer_type::_ptr_type
