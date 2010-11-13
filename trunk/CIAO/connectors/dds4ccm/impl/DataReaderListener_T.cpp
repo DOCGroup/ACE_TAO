@@ -10,13 +10,13 @@ namespace CIAO
   {
     template <typename DDS_TYPE, typename CCM_TYPE>
     DataReaderListener_T<DDS_TYPE, CCM_TYPE>::DataReaderListener_T (
-      typename CCM_TYPE::listener_type::_ptr_type listener,
+      typename CCM_TYPE::data_listener_type::_ptr_type listener,
       ::CCM_DDS::PortStatusListener_ptr port_status_listener,
       ::CCM_DDS::DataListenerControl_ptr control,
       ACE_Reactor * reactor,
       ConditionManager& condition_manager)
       : PortStatusListener (port_status_listener, reactor) ,
-        listener_ (CCM_TYPE::listener_type::_duplicate (listener)),
+        listener_ (CCM_TYPE::data_listener_type::_duplicate (listener)),
         control_ (::CCM_DDS::DataListenerControl::_duplicate (control)),
         condition_manager_ (condition_manager)
     {
@@ -74,7 +74,8 @@ namespace CIAO
           return;
         }
 
-      if (this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
+      ::CCM_DDS::ListenerMode const mode = this->control_->mode ();
+      if (mode == ::CCM_DDS::NOT_ENABLED)
         {
           return;
         }
@@ -95,7 +96,7 @@ namespace CIAO
       ::DDS::SampleInfoSeq sample_info;
       ::CORBA::Long max_samples = 0;
 
-      this->control_->mode () == ::CCM_DDS::ONE_BY_ONE
+      mode == ::CCM_DDS::ONE_BY_ONE
         ? max_samples = ::DDS::LENGTH_UNLIMITED
         : this->control_->max_delivered_data() == 0
           ? max_samples = ::DDS::LENGTH_UNLIMITED
@@ -131,7 +132,7 @@ namespace CIAO
 
       if (result == ::DDS::RETCODE_OK)
         {
-          if (this->control_->mode () == ::CCM_DDS::ONE_BY_ONE)
+          if (mode == ::CCM_DDS::ONE_BY_ONE)
             {
               for (::CORBA::ULong i = 0; i < data.length (); ++i)
                 {
@@ -156,7 +157,7 @@ namespace CIAO
 
               if (nr_of_samples > 0)
                 {
-                  typename CCM_TYPE::seq_type inst_seq (nr_of_samples);
+                  typename DDS_TYPE::seq_type inst_seq (nr_of_samples);
                   ::CCM_DDS::ReadInfoSeq infoseq (nr_of_samples);
 
                   infoseq.length (nr_of_samples);

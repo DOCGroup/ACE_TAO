@@ -5,32 +5,32 @@
 #include "dds4ccm/impl/Updater_T.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-DDS_Update_T<DDS_TYPE, CCM_TYPE>::DDS_Update_T (void)
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::DDS_Update_T (void)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-DDS_Update_T<DDS_TYPE, CCM_TYPE>::~DDS_Update_T (void)
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::~DDS_Update_T (void)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 void
-DDS_Update_T<DDS_TYPE, CCM_TYPE>::set_component (::CORBA::Object_ptr component)
+DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::set_component (::CORBA::Object_ptr component)
 {
   this->dds_update_->_set_component (component);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 void
-DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
+DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_complete (
   ::DDS::Topic_ptr topic,
   ::DDS::Publisher_ptr publisher,
   const char* library_name,
   const char* profile_name)
 {
-  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
+  DDS4CCM_TRACE ("DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_complete");
   if (::CORBA::is_nil (this->dds_update_->get_dds_writer ()))
     {
       ::DDS::DataWriter_var dwv_tmp;
@@ -65,26 +65,26 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 void
-DDS_Update_T<DDS_TYPE, CCM_TYPE>::activate ()
+DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::activate ()
 {
-  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::activate");
+  DDS4CCM_TRACE ("DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::activate");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 void
-DDS_Update_T<DDS_TYPE, CCM_TYPE>::passivate ()
+DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::passivate ()
 {
-  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::passivate");
+  DDS4CCM_TRACE ("DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::passivate");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 void
-DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove (
+DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove (
   ::DDS::Publisher_ptr publisher)
 {
-  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove");
+  DDS4CCM_TRACE ("DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove");
 
   ::DDS::DataWriter_var writer = this->dds_update_->get_dds_writer ();
   if (!::CORBA::is_nil (writer.in ()))
@@ -105,20 +105,20 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-typename CCM_TYPE::updater_type::_ptr_type
-DDS_Update_T<DDS_TYPE, CCM_TYPE>::get_data (void)
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+typename CCM_TYPE::data_type::_ptr_type
+DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::get_data (void)
 {
-  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::get_data");
+  DDS4CCM_TRACE ("DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::get_data");
 
-  return CCM_TYPE::updater_type::_duplicate (this->dds_update_);
+  return CCM_TYPE::data_type::_duplicate (this->dds_update_);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-typename CCM_TYPE::datawriter_type::_ptr_type
-DDS_Update_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+typename CCM_TYPE::dds_entity_type::_ptr_type
+DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::get_dds_entity (void)
 {
-  DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::get_dds_entity");
+  DDS4CCM_TRACE ("DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::get_dds_entity");
 
   return ::DDS::CCM_DataWriter::_duplicate (this->ccm_data_writer_);
 }

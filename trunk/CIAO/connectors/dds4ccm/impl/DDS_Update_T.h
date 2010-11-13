@@ -11,16 +11,16 @@
 #include "dds4ccm/impl/Updater_T.h"
 #include "dds4ccm/impl/CCM_DataWriter.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 class DDS_Update_T
 {
 public:
   DDS_Update_T (void);
   ~DDS_Update_T (void);
 
-  typename CCM_TYPE::updater_type::_ptr_type get_data (void);
+  typename CCM_TYPE::data_type::_ptr_type get_data (void);
 
-  typename CCM_TYPE::datawriter_type::_ptr_type get_dds_entity (void);
+  typename CCM_TYPE::dds_entity_type::_ptr_type get_dds_entity (void);
 
   void set_component (::CORBA::Object_ptr component);
 
@@ -38,10 +38,10 @@ public:
 
 private:
   typedef ::CIAO::DDS4CCM::Updater_T<
-    typename CCM_TYPE::updater_type,
-    typename DDS_TYPE::typed_writer_type,
-    typename CCM_TYPE::value_type,
-    typename CCM_TYPE::seq_type>
+    typename CCM_TYPE::data_type,
+    TYPED_WRITER,
+    VALUE_TYPE,
+    SEQ_VALUE_TYPE>
       Updater_type;
 
     /**

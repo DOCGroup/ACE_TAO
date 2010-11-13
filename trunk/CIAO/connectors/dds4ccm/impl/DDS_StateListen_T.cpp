@@ -5,33 +5,33 @@
 #include "dds4ccm/impl/StateListenerControl_T.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_StateListen_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE>
+DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::DDS_StateListen_T (void)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED>::~DDS_StateListen_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE>
+DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::~DDS_StateListen_T (void)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED>::set_component (
+DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::set_component (
     ::CORBA::Object_ptr component)
 {
-  DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::set_component (component);
+  DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE>::set_component (component);
   this->data_control_->_set_component (component);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED>::activate (
-  typename CCM_TYPE::statelistener_type::_ptr_type listener,
+DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::activate (
+  typename CCM_TYPE::data_listener_type::_ptr_type listener,
   ::CCM_DDS::PortStatusListener_ptr status,
   ACE_Reactor* reactor)
 {
-  DDS4CCM_TRACE ("DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED>::activate");
+  DDS4CCM_TRACE ("DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::activate");
 
   ::DDS::StatusMask const mask =
     DataReaderStateListener_type::get_mask (listener);
@@ -75,22 +75,22 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED>::activate (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED>::remove (
+DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::remove (
   ::DDS::Subscriber_ptr subscriber)
 {
-  DDS4CCM_TRACE ("DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED>::remove");
+  DDS4CCM_TRACE ("DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::remove");
 
   this->data_control_->_set_component (::CORBA::Object::_nil ());
   DDSSubscriberBase_type::remove (subscriber);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+template <typename DDS_TYPE, typename CCM_TYPE>
 ::CCM_DDS::CCM_StateListenerControl_ptr
-DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED>::get_data_control (void)
+DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::get_data_control (void)
 {
-  DDS4CCM_TRACE ("DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED>::get_data_control");
+  DDS4CCM_TRACE ("DDS_StateListen_T<DDS_TYPE, CCM_TYPE>::get_data_control");
 
   return ::CCM_DDS::CCM_StateListenerControl::_duplicate (this->data_control_);
 }

@@ -13,13 +13,13 @@ namespace CIAO
   {
     template <typename DDS_TYPE, typename CCM_TYPE>
     DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::DataReaderStateListener_T (
-      typename CCM_TYPE::statelistener_type::_ptr_type listener,
+      typename CCM_TYPE::data_listener_type::_ptr_type listener,
       ::CCM_DDS::PortStatusListener_ptr port_status_listener,
       ::CCM_DDS::StateListenerControl_ptr control,
       ACE_Reactor* reactor,
       ConditionManager& condition_manager)
       : PortStatusListener (port_status_listener, reactor) ,
-        listener_ (CCM_TYPE::statelistener_type::_duplicate (listener)),
+        listener_ (CCM_TYPE::data_listener_type::_duplicate (listener)),
         control_ (::CCM_DDS::StateListenerControl::_duplicate (control)),
         condition_manager_ (condition_manager)
     {
@@ -69,8 +69,9 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DataReaderStateListener_T::on_data_available_i");
 
+      ::CCM_DDS::ListenerMode const mode = this->control_->mode ();
       if (::CORBA::is_nil (rdr) ||
-          this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
+          mode == ::CCM_DDS::NOT_ENABLED)
         {
           return;
         }
@@ -93,7 +94,7 @@ namespace CIAO
           ::DDS::SampleInfoSeq sample_info;
           ::CORBA::Long max_samples = 0;
 
-          this->control_->mode () == ::CCM_DDS::ONE_BY_ONE
+          mode == ::CCM_DDS::ONE_BY_ONE
             ? max_samples = ::DDS::LENGTH_UNLIMITED
             : this->control_->max_delivered_data() == 0
               ? max_samples = ::DDS::LENGTH_UNLIMITED
@@ -133,7 +134,7 @@ namespace CIAO
                             ACE_TEXT ("Unable to take data from data reader, ")
                             ACE_TEXT ("error %C.\n"), translate_retcode (result)));
             }
-          if (this->control_->mode () == ::CCM_DDS::ONE_BY_ONE)
+          if (mode == ::CCM_DDS::ONE_BY_ONE)
             {
               for (::CORBA::ULong i = 0; i < data.length (); ++i)
                 {
@@ -164,7 +165,7 @@ namespace CIAO
                     }
                 }
             }
-          else if (this->control_->mode () == ::CCM_DDS::MANY_BY_MANY)
+          else if (mode == ::CCM_DDS::MANY_BY_MANY)
             {
               typedef std::vector< ::CORBA::Long > Updates;
               Updates updates;
@@ -179,7 +180,7 @@ namespace CIAO
                         {
                           // Sample_new or sample_delete found -> first send out the
                           // updated samples in one go
-                          typename CCM_TYPE::seq_type inst_seq (updates.size ());
+                          typename DDS_TYPE::seq_type inst_seq (updates.size ());
                           ::CCM_DDS::ReadInfoSeq infoseq (updates.size ());
 
                           infoseq.length (updates.size ());
@@ -221,7 +222,7 @@ namespace CIAO
               // Send the latest updates.
               if (updates.size () > 0)
                 {
-                  typename CCM_TYPE::seq_type inst_seq (updates.size ());
+                  typename DDS_TYPE::seq_type inst_seq (updates.size ());
                   ::CCM_DDS::ReadInfoSeq infoseq (updates.size ());
 
                   infoseq.length (updates.size ());
@@ -266,7 +267,7 @@ namespace CIAO
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::StatusMask
     DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
-      typename CCM_TYPE::statelistener_type::_ptr_type listener)
+      typename CCM_TYPE::data_listener_type::_ptr_type listener)
     {
       ::DDS::StatusMask mask = 0;
 

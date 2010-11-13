@@ -28,7 +28,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::~DDS_Event_Connector_T (void)
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-typename CCM_TYPE::writer_type::_ptr_type
+typename CCM_TYPE::supplier_traits::data_type::_ptr_type
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_supplier_data (void)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_supplier_data");
@@ -39,7 +39,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_supplier_data (void)
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-typename CCM_TYPE::datawriter_type::_ptr_type
+typename CCM_TYPE::supplier_traits::dds_entity_type::_ptr_type
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_supplier_dds_entity (void)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_supplier_dds_entity");
@@ -50,7 +50,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_supplier_dds_entity (void)
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-typename CCM_TYPE::getter_type::_ptr_type
+typename CCM_TYPE::pull_consumer_traits::fresh_data_type::_ptr_type
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_consumer_fresh_data (void)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_consumer_fresh_data");
@@ -61,7 +61,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_consumer_fresh_data (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-typename CCM_TYPE::reader_type::_ptr_type
+typename CCM_TYPE::push_consumer_traits::data_type::_ptr_type
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_consumer_data (void)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_consumer_data");
@@ -72,7 +72,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_consumer_data (void)
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-typename CCM_TYPE::reader_type::_ptr_type
+typename CCM_TYPE::pull_consumer_traits::data_type::_ptr_type
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_consumer_data (void)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_consumer_data");
@@ -197,7 +197,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::do_configuration_complete (voi
 
   TopicBaseConnector::configuration_complete ();
 
-  typename CCM_TYPE::listener_type::_var_type push_consumer_data_listener =
+  typename CCM_TYPE::push_consumer_traits::data_listener_type::_var_type push_consumer_data_listener =
     this->context_->get_connection_push_consumer_data_listener ();
   this->push_consumer_obtained_ |=
     ! ::CORBA::is_nil (push_consumer_data_listener.in ());
@@ -332,7 +332,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::do_ccm_activate (void)
 
   if (this->push_consumer_obtained_)
     {
-      typename CCM_TYPE::listener_type::_var_type push_consumer_data_listener =
+      typename CCM_TYPE::push_consumer_traits::data_listener_type::_var_type push_consumer_data_listener =
         this->context_->get_connection_push_consumer_data_listener ();
       ::CCM_DDS::PortStatusListener_var push_consumer_psl =
         this->context_->get_connection_push_consumer_status ();

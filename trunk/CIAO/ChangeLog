@@ -1,3 +1,33 @@
+Sat Nov 13 14:04:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Get_T.h:
+        * connectors/dds4ccm/impl/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Read_T.h:
+        * connectors/dds4ccm/impl/DDS_Read_T.cpp:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.h:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.h:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.h:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.h:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+          Updated for ccm trait changes
+
 Sat Nov 13 09:18:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
