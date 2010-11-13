@@ -17,7 +17,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
 DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::set_component (::CORBA::Object_ptr component)
 {
-  DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::set_component (component);
+  DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE>::set_component (component);
   this->dds_get_->_set_component (component);
 }
 
@@ -51,10 +51,10 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::remove (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-typename CCM_TYPE::getter_type::_ptr_type
+typename CCM_TYPE::fresh_data_type::_ptr_type
 DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_fresh_data (void)
 {
   DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_fresh_data");
 
-  return CCM_TYPE::getter_type::_duplicate (this->dds_get_);
+  return CCM_TYPE::fresh_data_type::_duplicate (this->dds_get_);
 }

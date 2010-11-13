@@ -18,7 +18,7 @@
 #include "dds4ccm/impl/CCM_DataReader.h"
 #include "dds4ccm/impl/LocalObject_T.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_Subscriber_Base_T
 {
 public:
@@ -30,11 +30,11 @@ public:
    * DDS_Subscriber_Base_T operations
    */
   //@{
-  typename CCM_TYPE::reader_type::_ptr_type get_data (void);
+  typename CCM_TYPE::data_type::_ptr_type get_data (void);
 
-  ::DDS::CCM_DataReader_ptr get_dds_entity (void);
+  typename CCM_TYPE::dds_entity_type::_ptr_type get_dds_entity (void);
 
-  ::CCM_DDS::CCM_ContentFilterSetting_ptr get_filter_config (void);
+  typename CCM_TYPE::filter_config_type::_ptr_type get_filter_config (void);
 
   ::CCM_DDS::QueryFilter *filter (void);
 
@@ -58,7 +58,11 @@ public:
   void remove (::DDS::Subscriber_ptr subscriber);
 
 protected:
-  typedef ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>
+  typedef ::CIAO::DDS4CCM::Reader_T<
+      typename CCM_TYPE::data_type,
+      typename DDS_TYPE::typed_reader_type,
+      typename DDS_TYPE::value_type,
+      typename DDS_TYPE::seq_type>
     Reader_type;
   typedef ::CIAO::DDS4CCM::CCM_DDS_ContentFilterSetting_i
     ContentFilterSetting_type;

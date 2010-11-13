@@ -31,7 +31,7 @@ namespace CIAO
     public:
       /// Constructor
       DataReaderListener_T (
-        typename CCM_TYPE::listener_type::_ptr_type listener,
+        typename CCM_TYPE::data_listener_type::_ptr_type listener,
         ::CCM_DDS::PortStatusListener_ptr port_status_listener,
         ::CCM_DDS::DataListenerControl_ptr control,
         ACE_Reactor * reactor,
@@ -48,7 +48,7 @@ namespace CIAO
       void on_data_available_i (::DDS::DataReader_ptr rdr);
 
     private:
-      typename CCM_TYPE::listener_type::_var_type listener_;
+      typename CCM_TYPE::data_listener_type::_var_type listener_;
       ::CCM_DDS::DataListenerControl_var control_;
       ConditionManager& condition_manager_;
     };

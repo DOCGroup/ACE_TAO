@@ -15,7 +15,6 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::~DDS_Write_T (void)
 {
 }
 
-
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Write_T<DDS_TYPE, CCM_TYPE>::set_component (
@@ -105,18 +104,17 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::remove (
     }
 }
 
-
 template <typename DDS_TYPE, typename CCM_TYPE>
-typename CCM_TYPE::writer_type::_ptr_type
+typename CCM_TYPE::data_type::_ptr_type
 DDS_Write_T<DDS_TYPE, CCM_TYPE>::get_data (void)
 {
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE>::get_data");
 
-  return CCM_TYPE::writer_type::_duplicate (this->dds_write_);
+  return CCM_TYPE::data_type::_duplicate (this->dds_write_);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-typename CCM_TYPE::datawriter_type::_ptr_type
+typename CCM_TYPE::dds_entity_type::_ptr_type
 DDS_Write_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
 {
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE>::get_dds_entity");
