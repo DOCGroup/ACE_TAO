@@ -38,6 +38,9 @@ public:
 
   virtual int visit_connector (be_connector *node);
 
+  /// Override which also calls the base class version.
+  virtual int visit_mirror_port (be_mirror_port *node);
+
   /// Used to generate the traits structures.
   virtual int visit_provides (be_provides *node);
   virtual int visit_uses (be_uses *node);
@@ -50,6 +53,7 @@ private:
 
   /// Common code triggered by provides and uses ports.
   void gen_interface_connector_trait (be_interface *iface,
+                                      be_field *port_elem,
                                       bool for_facet);
 
   /// Have to keep a list of port interfaces so their

@@ -45,19 +45,6 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
   this->gen_dds_traits ();
   this->gen_connector_traits ();
 
-  /// Unset the flags in the port interfaces list so
-  /// they can be used again in another connector.
-  for (ACE_Unbounded_Queue<be_interface *>::ITERATOR iter (
-         this->port_ifaces_);
-       !iter.done ();
-       iter.advance ())
-    {
-      be_interface **item = 0;
-      iter.next (item);
-
-      (*item)->dds_connector_traits_done (false);
-    }
-
   /// Assumes parent connector exists and is either DDS_State
   /// or DDS_Event, so we generate inheritance from the
   /// corresponding template. May have to generalize this logic.
@@ -71,12 +58,11 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
 
   if (status != 0)
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("be_visitor_connector_dds_exh::")
-                  ACE_TEXT ("gen_dds_traits - ")
-                  ACE_TEXT ("template arg not found\n ")));
-
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_connector_dds_exh::")
+                         ACE_TEXT ("gen_dds_traits - ")
+                         ACE_TEXT ("template arg not found\n ")),
+                        -1);
     }
 
   AST_Type *ut = AST_Type::narrow_from_decl (*datatype);
@@ -108,16 +94,75 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
   os_ << be_uidt_nl
       << "}";
 
+  /// Unset the flags in the port interfaces list. This is
+  /// also done in visit_mirror_port(), but we must also do
+  /// it here to catch a port interface that didn't come to
+  /// us from an extended port or mirror port.
+  for (ACE_Unbounded_Queue<be_interface *>::ITERATOR iter (
+         this->port_ifaces_);
+       !iter.done ();
+       iter.advance ())
+    {
+      be_interface **item = 0;
+      iter.next (item);
+
+      (*item)->dds_connector_traits_done (false);
+    }
+
+  return 0;
+}
+
+int
+be_visitor_connector_dds_exh::visit_mirror_port (
+  be_mirror_port *node)
+{
+  os_ << be_nl
+      << "struct " << node->local_name ()->get_string ()
+      << "_traits" << be_nl
+      << "{" << be_idt;
+
+  /// Reuse the code in the base class to flip the
+  /// facet/receptacle elements in the scope. We will end up
+  /// in visit_provides() and visit_uses() below.
+  int status =
+    this->be_visitor_component_scope::visit_mirror_port (node);
+
+  if (status != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_connector_dds_exh::")
+                         ACE_TEXT ("visit_mirror_port - ")
+                         ACE_TEXT ("base class traversal failed\n ")),
+                        -1);
+    }
+
+  os_ << be_uidt_nl
+      << "};" << be_nl;
+
+  /// Unset the flags in the port interfaces list so
+  /// they can be used again in another port.
+  for (ACE_Unbounded_Queue<be_interface *>::ITERATOR iter (
+         this->port_ifaces_);
+       !iter.done ();
+       iter.advance ())
+    {
+      be_interface **item = 0;
+      iter.next (item);
+
+      (*item)->dds_connector_traits_done (false);
+    }
+
   return 0;
 }
 
 int
 be_visitor_connector_dds_exh::visit_provides (be_provides *node)
 {
+
   be_interface *iface =
     be_interface::narrow_from_decl (node->provides_type ());
 
-  this->gen_interface_connector_trait (iface, true);
+  this->gen_interface_connector_trait (iface, node, true);
 
   return 0;
 }
@@ -125,10 +170,11 @@ be_visitor_connector_dds_exh::visit_provides (be_provides *node)
 int
 be_visitor_connector_dds_exh::visit_uses (be_uses *node)
 {
+
   be_interface *iface =
     be_interface::narrow_from_decl (node->uses_type ());
 
-  this->gen_interface_connector_trait (iface, false);
+  this->gen_interface_connector_trait (iface, node, false);
 
   return 0;
 }
@@ -236,7 +282,8 @@ be_visitor_connector_dds_exh::gen_connector_traits (void)
       << "typedef ::" << (*dt_seq)->name () << " seq_type;" << be_nl
       << "typedef " << (global_comp ? "" : "::")
       << comp_scope->name () << "::CCM_"
-      << this->node_->local_name () << "_Context context_type;" << be_nl;
+      << this->node_->local_name () << "_Context context_type;"
+      << be_nl;
 
   if (this->visit_component_scope (this->node_) == -1)
     {
@@ -255,6 +302,7 @@ be_visitor_connector_dds_exh::gen_connector_traits (void)
 void
 be_visitor_connector_dds_exh::gen_interface_connector_trait (
   be_interface *iface,
+  be_field *port_elem,
   bool for_facet)
 {
   if (!iface->dds_connector_traits_done ())
@@ -266,8 +314,9 @@ be_visitor_connector_dds_exh::gen_interface_connector_trait (
 
       os_ << be_nl
           << "typedef ::" << scope->name () << smart_scope
-          << (for_facet ? "CCM_" : "") << lname
-          << " " << tao_cg->downcase (lname) << "_type;";
+          << (!for_facet ? "" : "CCM_") << lname
+          << " " << port_elem->local_name ()->get_string ()
+          << "_type;";
 
       iface->dds_connector_traits_done (true);
       this->port_ifaces_.enqueue_tail (iface);

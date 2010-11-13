@@ -22,6 +22,7 @@
 #include "nr_extern.h"
 
 #include "be_connector.h"
+#include "be_mirror_port.h"
 #include "be_provides.h"
 #include "be_uses.h"
 #include "be_operation.h"

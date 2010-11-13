@@ -1,3 +1,11 @@
+Sat Nov 13 14:01:03 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+        * TAO_IDL/be_include/be_visitor_connector/connector_dds_exh.h:
+          Committed changes from Jeff Parsons which change the layout of the
+          ccm traits for the dds connectors
+
 Fri Nov 12 13:10:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
