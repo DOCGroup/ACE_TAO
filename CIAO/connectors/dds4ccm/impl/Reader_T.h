@@ -20,86 +20,82 @@ namespace CIAO
   {
     class ConditionManager;
 
-    namespace DDS_CCM
+    template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    class Reader_T :
+        public virtual READER_TYPE,
+        public virtual LocalObject,
+        private virtual ACE_Copy_Disabled
     {
-      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-      class Reader_T :
-          public virtual CCM_TYPE::reader_type,
-          public virtual LocalObject,
-          private virtual ACE_Copy_Disabled
-      {
-      public:
-        /// Constructor
-        Reader_T (void);
+    public:
+      /// Constructor
+      Reader_T (void);
 
-        /// Destructor
-        virtual ~Reader_T (void);
+      /// Destructor
+      virtual ~Reader_T (void);
 
-        virtual void read_last (
-          typename CCM_TYPE::seq_type& instances,
-          ::CCM_DDS::ReadInfoSeq& infos);
+      virtual void read_last (
+        SEQ_VALUE_TYPE& instances,
+        ::CCM_DDS::ReadInfoSeq& infos);
 
-        virtual void read_all (
-          typename CCM_TYPE::seq_type& instances,
-          ::CCM_DDS::ReadInfoSeq& infos);
+      virtual void read_all (
+        SEQ_VALUE_TYPE& instances,
+        ::CCM_DDS::ReadInfoSeq& infos);
 
-        virtual void read_one_last (
-          typename DDS_TYPE::value_type& an_instance,
-          ::CCM_DDS::ReadInfo_out info,
-          const ::DDS::InstanceHandle_t & instance_handle);
+      virtual void read_one_last (
+        VALUE_TYPE& an_instance,
+        ::CCM_DDS::ReadInfo_out info,
+        const ::DDS::InstanceHandle_t & instance_handle);
 
-        virtual void read_one_all (
-          const typename DDS_TYPE::value_type& an_instance,
-          typename CCM_TYPE::seq_type& instances,
-          ::CCM_DDS::ReadInfoSeq& infos,
-          const ::DDS::InstanceHandle_t & instance_handle);
+      virtual void read_one_all (
+        const VALUE_TYPE& an_instance,
+        SEQ_VALUE_TYPE& instances,
+        ::CCM_DDS::ReadInfoSeq& infos,
+        const ::DDS::InstanceHandle_t & instance_handle);
 
-        virtual ::CCM_DDS::QueryFilter *query (void);
+      virtual ::CCM_DDS::QueryFilter *query (void);
 
-        virtual void query (const ::CCM_DDS::QueryFilter & filter);
+      virtual void query (const ::CCM_DDS::QueryFilter & filter);
 
-        void set_dds_reader (::DDS::DataReader_ptr dr,
-                             ::CIAO::DDS4CCM::ConditionManager * condition_manager);
+      void set_dds_reader (::DDS::DataReader_ptr dr,
+                              ::CIAO::DDS4CCM::ConditionManager * condition_manager);
 
-        ::DDS::DataReader_ptr get_dds_reader (void);
+      ::DDS::DataReader_ptr get_dds_reader (void);
 
-      private:
-        typename DDS_TYPE::typed_reader_type::_var_type dds_reader_;
-        ::CIAO::DDS4CCM::ConditionManager * condition_manager_;
+    private:
+      typename DDS_READER_TYPE::_var_type dds_reader_;
+      ::CIAO::DDS4CCM::ConditionManager * condition_manager_;
 
-        typename DDS_TYPE::typed_reader_type::_ptr_type
-        dds_reader (void);
+      typename DDS_READER_TYPE::_ptr_type dds_reader (void);
 
-        // Helper methods
-        ::CORBA::ULong get_nr_valid_samples (
-          const ::DDS::SampleInfoSeq& sample_infos,
-          const bool determine_last);
+      // Helper methods
+      ::CORBA::ULong get_nr_valid_samples (
+        const ::DDS::SampleInfoSeq& sample_infos,
+        const bool determine_last);
 
-        ::DDS::InstanceHandle_t check_handle (
-          const typename DDS_TYPE::value_type& an_instance,
-          const ::DDS::InstanceHandle_t & instance_handle);
+      ::DDS::InstanceHandle_t check_handle (
+        const VALUE_TYPE& an_instance,
+        const ::DDS::InstanceHandle_t & instance_handle);
 
-        void convert_data (
-          const typename DDS_TYPE::seq_type & all_data,
-          typename DDS_TYPE::seq_type & data_to_return,
-          ::CCM_DDS::ReadInfoSeq& infos,
-          const ::DDS::SampleInfoSeq & sample_info);
+      void convert_data (
+        const SEQ_VALUE_TYPE& all_data,
+        SEQ_VALUE_TYPE& data_to_return,
+        ::CCM_DDS::ReadInfoSeq& infos,
+        const ::DDS::SampleInfoSeq & sample_info);
 
-        void read_wo_instance (
-          typename DDS_TYPE::seq_type & data,
-          ::DDS::SampleInfoSeq & sample_info,
-          ::DDS::QueryCondition_ptr qc);
+      void read_wo_instance (
+        SEQ_VALUE_TYPE& data,
+        ::DDS::SampleInfoSeq & sample_info,
+        ::DDS::QueryCondition_ptr qc);
 
-        void read_w_instance (
-          typename DDS_TYPE::seq_type & data,
-          ::DDS::SampleInfoSeq & sample_info,
-          const ::DDS::InstanceHandle_t & lookup_hnd);
+      void read_w_instance (
+        SEQ_VALUE_TYPE& data,
+        ::DDS::SampleInfoSeq & sample_info,
+        const ::DDS::InstanceHandle_t & lookup_hnd);
 
-        void return_loan (
-          typename DDS_TYPE::seq_type & data,
-          ::DDS::SampleInfoSeq sample_info);
-      };
-    }
+      void return_loan (
+        SEQ_VALUE_TYPE& data,
+        ::DDS::SampleInfoSeq sample_info);
+    };
   }
 }
 

@@ -29,7 +29,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::~DDS_State_Connector_T (void)
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-typename CCM_TYPE::updater_type::_ptr_type
+typename CCM_TYPE::observable_traits::data_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_observable_data (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_observable_data");
@@ -40,7 +40,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_observable_data (void)
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-::DDS::CCM_DataWriter_ptr
+typename CCM_TYPE::observable_traits::dds_entity_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_observable_dds_entity (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_observable_dds_entity");
@@ -51,7 +51,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_observable_dds_entity (voi
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-typename CCM_TYPE::reader_type::_ptr_type
+typename CCM_TYPE::passive_observer_traits::data_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_passive_observer_data (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_passive_observer_data");
@@ -62,7 +62,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_passive_observer_data (voi
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-::DDS::CCM_DataReader_ptr
+typename CCM_TYPE::passive_observer_traits::dds_entity_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_passive_observer_dds_entity (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_passive_observer_dds_entity");
@@ -73,7 +73,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_passive_observer_dds_entit
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-::CCM_DDS::CCM_ContentFilterSetting_ptr
+typename CCM_TYPE::passive_observer_traits::filter_config_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_passive_observer_filter_config (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_passive_observer_filter_config");
@@ -103,7 +103,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::passive_observer_filter (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-typename CCM_TYPE::reader_type::_ptr_type
+typename CCM_TYPE::pull_observer_traits::data_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_data (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_data");
@@ -114,7 +114,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_data (void)
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-typename CCM_TYPE::getter_type::_ptr_type
+typename CCM_TYPE::pull_observer_traits::fresh_data_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_fresh_data (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_fresh_data");
@@ -125,7 +125,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_fresh_data (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-::DDS::CCM_DataReader_ptr
+typename CCM_TYPE::pull_observer_traits::dds_entity_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_dds_entity (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_dds_entity");
@@ -136,7 +136,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_dds_entity (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-::CCM_DDS::CCM_ContentFilterSetting_ptr
+typename CCM_TYPE::pull_observer_traits::filter_config_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_filter_config (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_filter_config");
@@ -166,7 +166,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::pull_observer_filter (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-typename CCM_TYPE::reader_type::_ptr_type
+typename CCM_TYPE::push_observer_traits::data_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_observer_data (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_observer_data");
@@ -177,7 +177,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_observer_data (void)
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-::CCM_DDS::CCM_DataListenerControl_ptr
+typename CCM_TYPE::push_observer_traits::data_control_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_observer_data_control (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_observer_data_control");
@@ -188,7 +188,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_observer_data_control
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-::DDS::CCM_DataReader_ptr
+typename CCM_TYPE::push_observer_traits::dds_entity_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_observer_dds_entity (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_observer_dds_entity");
@@ -199,7 +199,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_observer_dds_entity (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-::CCM_DDS::CCM_ContentFilterSetting_ptr
+typename CCM_TYPE::push_observer_traits::filter_config_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_observer_filter_config (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_observer_filter_config");
@@ -229,7 +229,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_observer_filter (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-typename CCM_TYPE::reader_type::_ptr_type
+typename CCM_TYPE::push_state_observer_traits::data_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_data (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_data");
@@ -240,7 +240,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_data (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-::CCM_DDS::CCM_StateListenerControl_ptr
+typename CCM_TYPE::push_state_observer_traits::data_control_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_data_control (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_data_control");
@@ -251,7 +251,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_data_c
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-::DDS::CCM_DataReader_ptr
+typename CCM_TYPE::push_state_observer_traits::dds_entity_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_dds_entity (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_dds_entity");
@@ -262,7 +262,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_dds_en
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-::CCM_DDS::CCM_ContentFilterSetting_ptr
+typename CCM_TYPE::push_state_observer_traits::filter_config_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_filter_config (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_filter_config");
@@ -315,14 +315,14 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::do_configuration_complete (voi
 
   ::CCM_DDS::PortStatusListener_var push_observer_psl =
     this->context_->get_connection_push_observer_status ();
-  typename CCM_TYPE::listener_type::_var_type push_observer_dl =
+  typename CCM_TYPE::push_observer_traits::data_listener_type::_var_type push_observer_dl =
     this->context_->get_connection_push_observer_data_listener ();
   this->push_observer_obtained_ |= ! ::CORBA::is_nil (push_observer_psl.in ());
   this->push_observer_obtained_ |= ! ::CORBA::is_nil (push_observer_dl.in ());
 
   ::CCM_DDS::PortStatusListener_var push_state_observer_psl =
     this->context_->get_connection_push_state_observer_status ();
-  typename CCM_TYPE::statelistener_type::_var_type push_state_observer_dl =
+  typename CCM_TYPE::push_state_observer_traits::data_listener_type::_var_type push_state_observer_dl =
     this->context_->get_connection_push_state_observer_data_listener ();
   this->push_state_observer_obtained_ |= ! ::CORBA::is_nil (push_state_observer_psl.in ());
   this->push_state_observer_obtained_ |= ! ::CORBA::is_nil (push_state_observer_dl.in ());
@@ -448,7 +448,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::do_ccm_activate (void)
 
   if (this->push_observer_obtained_)
     {
-      typename CCM_TYPE::listener_type::_var_type push_observer_dl =
+      typename CCM_TYPE::push_observer_traits::data_listener_type::_var_type push_observer_dl =
         this->context_->get_connection_push_observer_data_listener ();
       ::CCM_DDS::PortStatusListener_var push_observer_psl =
         this->context_->get_connection_push_observer_status ();
@@ -461,7 +461,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::do_ccm_activate (void)
 
   if (this->push_state_observer_obtained_)
     {
-      typename CCM_TYPE::statelistener_type::_var_type push_state_observer_dl =
+      typename CCM_TYPE::push_state_observer_traits::data_listener_type::_var_type push_state_observer_dl =
         this->context_->get_connection_push_state_observer_data_listener ();
 
       ::CCM_DDS::PortStatusListener_var push_state_observer_psl =

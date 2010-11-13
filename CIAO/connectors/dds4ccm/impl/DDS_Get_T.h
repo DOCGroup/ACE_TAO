@@ -13,7 +13,7 @@
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 class DDS_Get_T
-  : public DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>
+  : public DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE>
 {
 public:
   DDS_Get_T (void);
@@ -24,7 +24,7 @@ public:
    * DDS_Get operations
    */
   //@{
-  typename CCM_TYPE::getter_type::_ptr_type get_fresh_data (void);
+  typename CCM_TYPE::fresh_data_type::_ptr_type get_fresh_data (void);
   //@}
 
   void set_component (::CORBA::Object_ptr component);
@@ -39,9 +39,14 @@ public:
     ::DDS::Subscriber_ptr subscriber);
 
 private:
-  typedef DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>
+  typedef DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE>
     DDSSubscriberBase_type;
-  typedef ::CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, FIXED>
+  typedef ::CIAO::DDS4CCM::Getter_T<
+      typename CCM_TYPE::fresh_data_type,
+      typename DDS_TYPE::typed_reader_type,
+      typename DDS_TYPE::value_type,
+      typename DDS_TYPE::seq_type,
+      FIXED>
     Getter_type;
 
   /**

@@ -28,9 +28,11 @@ public:
    * DDS_Update operations
    */
   //@{
-  virtual typename CCM_TYPE::updater_type::_ptr_type get_observable_data (void);
+  virtual typename CCM_TYPE::observable_traits::data_type::_ptr_type
+  get_observable_data (void);
 
-  virtual ::DDS::CCM_DataWriter_ptr get_observable_dds_entity (void);
+  virtual typename CCM_TYPE::observable_traits::dds_entity_type::_ptr_type
+  get_observable_dds_entity (void);
   //@}
 
   /**
@@ -38,12 +40,13 @@ public:
    * DDS_Read operations
    */
   //@{
-  virtual typename CCM_TYPE::reader_type::_ptr_type
+  virtual typename CCM_TYPE::passive_observer_traits::data_type::_ptr_type
   get_passive_observer_data (void);
 
-  virtual ::DDS::CCM_DataReader_ptr get_passive_observer_dds_entity (void);
+  virtual typename CCM_TYPE::passive_observer_traits::dds_entity_type::_ptr_type
+  get_passive_observer_dds_entity (void);
 
-  virtual ::CCM_DDS::CCM_ContentFilterSetting_ptr
+  virtual typename CCM_TYPE::passive_observer_traits::filter_config_type::_ptr_type
   get_passive_observer_filter_config (void);
 
   virtual ::CCM_DDS::QueryFilter *passive_observer_filter (void);
@@ -56,15 +59,16 @@ public:
    * DDS_Get operations
    */
   //@{
-  virtual typename CCM_TYPE::reader_type::_ptr_type
+  virtual typename CCM_TYPE::pull_observer_traits::data_type::_ptr_type
   get_pull_observer_data (void);
 
-  virtual typename CCM_TYPE::getter_type::_ptr_type
+  virtual typename CCM_TYPE::pull_observer_traits::fresh_data_type::_ptr_type
   get_pull_observer_fresh_data (void);
 
-  virtual ::DDS::CCM_DataReader_ptr get_pull_observer_dds_entity (void);
+  virtual typename CCM_TYPE::pull_observer_traits::dds_entity_type::_ptr_type
+  get_pull_observer_dds_entity (void);
 
-  virtual ::CCM_DDS::CCM_ContentFilterSetting_ptr
+  virtual typename CCM_TYPE::pull_observer_traits::filter_config_type::_ptr_type
   get_pull_observer_filter_config (void);
 
   virtual ::CCM_DDS::QueryFilter *pull_observer_filter (void);
@@ -77,15 +81,16 @@ public:
    * DDS_Listen operations
    */
   //@{
-  virtual typename CCM_TYPE::reader_type::_ptr_type
+  virtual typename CCM_TYPE::push_observer_traits::data_type::_ptr_type
   get_push_observer_data (void);
 
-  virtual ::CCM_DDS::CCM_DataListenerControl_ptr
+  virtual typename CCM_TYPE::push_observer_traits::data_control_type::_ptr_type
   get_push_observer_data_control (void);
 
-  virtual ::DDS::CCM_DataReader_ptr get_push_observer_dds_entity (void);
+  virtual typename CCM_TYPE::push_observer_traits::dds_entity_type::_ptr_type
+  get_push_observer_dds_entity (void);
 
-  virtual ::CCM_DDS::CCM_ContentFilterSetting_ptr
+  virtual typename CCM_TYPE::push_observer_traits::filter_config_type::_ptr_type
   get_push_observer_filter_config (void);
 
   virtual ::CCM_DDS::QueryFilter *push_observer_filter (void);
@@ -98,15 +103,16 @@ public:
    * DDS_StateListen operations
    */
   //@{
-  virtual typename CCM_TYPE::reader_type::_ptr_type
+  virtual typename CCM_TYPE::push_state_observer_traits::data_type::_ptr_type
   get_push_state_observer_data (void);
 
-  virtual ::CCM_DDS::CCM_StateListenerControl_ptr
+  virtual typename CCM_TYPE::push_state_observer_traits::data_control_type::_ptr_type
   get_push_state_observer_data_control (void);
 
-  virtual ::DDS::CCM_DataReader_ptr get_push_state_observer_dds_entity (void);
+  virtual typename CCM_TYPE::push_state_observer_traits::dds_entity_type::_ptr_type
+  get_push_state_observer_dds_entity (void);
 
-  virtual ::CCM_DDS::CCM_ContentFilterSetting_ptr
+  virtual typename CCM_TYPE::push_state_observer_traits::filter_config_type::_ptr_type
   get_push_state_observer_filter_config (void);
 
   virtual ::CCM_DDS::QueryFilter *push_state_observer_filter (void);
@@ -133,35 +139,39 @@ private:
    * DDS_Update observable
    */
   //@{
-  DDS_Update_T <DDS_TYPE, CCM_TYPE> observable_;
+  DDS_Update_T <
+    typename CCM_TYPE::observable_traits,
+    typename DDS_TYPE::typed_writer_type,
+    typename DDS_TYPE::value_type,
+    typename DDS_TYPE::seq_type> observable_;
   //@}
 
   /**
    * DDS_Read passive_observer
    */
   //@{
-  DDS_Read_T <DDS_TYPE, CCM_TYPE, FIXED> passive_observer_;
+  DDS_Read_T <DDS_TYPE, typename CCM_TYPE::passive_observer_traits> passive_observer_;
   //@}
 
   /**
    * DDS_Get pull_observer
    */
   //@{
-  DDS_Get_T <DDS_TYPE, CCM_TYPE, FIXED> pull_observer_;
+  DDS_Get_T <DDS_TYPE, typename CCM_TYPE::pull_observer_traits, FIXED> pull_observer_;
   //@}
 
   /**
    * DDS_Listen push_observer
    */
   //@{
-  DDS_Listen_T <DDS_TYPE, CCM_TYPE, FIXED> push_observer_;
+  DDS_Listen_T <DDS_TYPE, typename CCM_TYPE::push_observer_traits> push_observer_;
   //@}
 
   /**
    * DDS_StateListen push_state_observer
    */
   //@{
-  DDS_StateListen_T <DDS_TYPE, CCM_TYPE, FIXED> push_state_observer_;
+  DDS_StateListen_T <DDS_TYPE, typename CCM_TYPE::push_state_observer_traits> push_state_observer_;
   //@}
 
   void do_configuration_complete (void);

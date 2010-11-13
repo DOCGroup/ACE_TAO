@@ -27,7 +27,7 @@ namespace CIAO
     public:
       /// Constructor
       DataReaderStateListener_T (
-                    typename CCM_TYPE::statelistener_type::_ptr_type listener,
+                    typename CCM_TYPE::data_listener_type::_ptr_type listener,
                     ::CCM_DDS::PortStatusListener_ptr port_status_listener,
                     ::CCM_DDS::StateListenerControl_ptr control,
                     ACE_Reactor* reactor,
@@ -39,12 +39,12 @@ namespace CIAO
       virtual void on_data_available (::DDS::DataReader_ptr rdr);
 
       static ::DDS::StatusMask get_mask (
-        typename CCM_TYPE::statelistener_type::_ptr_type listener);
+        typename CCM_TYPE::data_listener_type::_ptr_type listener);
 
       void on_data_available_i (::DDS::DataReader_ptr rdr);
 
     private:
-      typename CCM_TYPE::statelistener_type::_var_type listener_;
+      typename CCM_TYPE::data_listener_type::_var_type listener_;
       ::CCM_DDS::StateListenerControl_var control_;
       ConditionManager& condition_manager_;
     };

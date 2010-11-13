@@ -11,9 +11,9 @@
 #include "dds4ccm/impl/DDS_Subscriber_Base_T.h"
 #include "dds4ccm/impl/StateListenerControl_T.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_StateListen_T
-  : public DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>
+  : public DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE>
 {
 public:
   DDS_StateListen_T (void);
@@ -30,7 +30,7 @@ public:
   void set_component (::CORBA::Object_ptr component);
 
   void activate (
-    typename CCM_TYPE::statelistener_type::_ptr_type listener,
+    typename CCM_TYPE::data_listener_type::_ptr_type listener,
     ::CCM_DDS::PortStatusListener_ptr status,
     ACE_Reactor* reactor);
 
@@ -41,7 +41,7 @@ private:
     DataReaderStateListener_type;
   typedef CCM_DDS_StateListenerControl_T< ::CCM_DDS::CCM_StateListenerControl>
     StateListenerControl_type;
-  typedef DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>
+  typedef DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE>
     DDSSubscriberBase_type;
 
   /**

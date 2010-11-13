@@ -24,9 +24,9 @@ public:
    * DDS_Write operations
    */
   //@{
-  typename CCM_TYPE::writer_type::_ptr_type get_data (void);
+  typename CCM_TYPE::data_type::_ptr_type get_data (void);
 
-  typename CCM_TYPE::datawriter_type::_ptr_type get_dds_entity (void);
+  typename CCM_TYPE::dds_entity_type::_ptr_type get_dds_entity (void);
   //@}
 
   void set_component (::CORBA::Object_ptr component);
@@ -45,10 +45,10 @@ public:
 
 private:
   typedef ::CIAO::DDS4CCM::Writer_T<
-    typename CCM_TYPE::writer_type,
+    typename CCM_TYPE::data_type,
     typename DDS_TYPE::typed_writer_type,
-    typename CCM_TYPE::value_type,
-    typename CCM_TYPE::seq_type>
+    typename DDS_TYPE::value_type,
+    typename DDS_TYPE::seq_type>
       Writer_type;
 
   /**

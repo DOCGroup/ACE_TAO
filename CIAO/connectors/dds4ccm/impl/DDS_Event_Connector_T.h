@@ -26,9 +26,9 @@ public:
    * DDS_Write operations
    */
   //@{
-  virtual typename CCM_TYPE::writer_type::_ptr_type get_supplier_data (void);
+  virtual typename CCM_TYPE::supplier_traits::data_type::_ptr_type get_supplier_data (void);
 
-  virtual typename CCM_TYPE::datawriter_type::_ptr_type get_supplier_dds_entity (void);
+  virtual typename CCM_TYPE::supplier_traits::dds_entity_type::_ptr_type get_supplier_dds_entity (void);
   //@}
 
   /**
@@ -36,10 +36,10 @@ public:
    * DDS_Get operations
    */
   //@{
-  virtual typename CCM_TYPE::reader_type::_ptr_type
+  virtual typename CCM_TYPE::pull_consumer_traits::data_type::_ptr_type
   get_pull_consumer_data (void);
 
-  virtual typename CCM_TYPE::getter_type::_ptr_type
+  virtual typename CCM_TYPE::pull_consumer_traits::fresh_data_type::_ptr_type
   get_pull_consumer_fresh_data (void);
 
   virtual ::DDS::CCM_DataReader_ptr get_pull_consumer_dds_entity (void);
@@ -57,7 +57,7 @@ public:
    * DDS_Listen operations
    */
   //@{
-  virtual typename CCM_TYPE::reader_type::_ptr_type get_push_consumer_data (void);
+  virtual typename CCM_TYPE::push_consumer_traits::data_type::_ptr_type get_push_consumer_data (void);
 
   virtual ::CCM_DDS::CCM_DataListenerControl_ptr get_push_consumer_data_control (void);
 
@@ -87,21 +87,21 @@ private:
    * DDS_Write supplier
    */
   //@{
-  DDS_Write_T <DDS_TYPE, CCM_TYPE> supplier_;
+  DDS_Write_T <DDS_TYPE, typename CCM_TYPE::supplier_traits> supplier_;
   //@}
 
   /**
    * DDS_Listen push_consumer
    */
   //@{
-  DDS_Listen_T <DDS_TYPE, CCM_TYPE, FIXED> push_consumer_;
+  DDS_Listen_T <DDS_TYPE, typename CCM_TYPE::push_consumer_traits> push_consumer_;
   //@}
 
   /**
    * DDS_Get pull_consumer
    */
   //@{
-  DDS_Get_T <DDS_TYPE, CCM_TYPE, FIXED> pull_consumer_;
+  DDS_Get_T <DDS_TYPE, typename CCM_TYPE::pull_consumer_traits, FIXED> pull_consumer_;
   //@}
 
   void do_configuration_complete (void);
