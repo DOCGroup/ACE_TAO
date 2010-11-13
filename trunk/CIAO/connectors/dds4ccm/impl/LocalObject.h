@@ -22,7 +22,7 @@ namespace CIAO
       virtual ::CORBA::Object_ptr _get_component (void);
 
     private:
-      typename ::CORBA::Object_var component_;
+      ::CORBA::Object_var component_;
     };
   }
 }
