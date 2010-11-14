@@ -1660,6 +1660,9 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
   header.destroy ();
   parent_list.destroy ();
 
+  // So we can generate the proper typecode.
+  i->home_equiv (true);
+
   i->set_name (implicit_name);
   i->set_defined_in (node->defined_in ());
   i->set_imported (node->imported ());
@@ -1712,7 +1715,7 @@ be_visitor_ccm_pre_proc::create_equivalent (be_home *node,
   // Back to reality.
   idl_global->scopes ().pop ();
 
-  // So we can skip typecode generation.
+  // So we can generate the proper typecode.
   retval->home_equiv (true);
 
   retval->set_name (equiv_name);

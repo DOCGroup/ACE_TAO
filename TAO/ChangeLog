@@ -1,3 +1,20 @@
+Sun Nov 14 22:43:56 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_typecode/objref_typecode.cpp:
+
+          Changed check for CCM home type from dynamic_cast<>,
+          which doesn't work since we process the equivalent
+          interface node(s) for the typecode, to a call to
+          home_equiv() on the interface node.
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_xplicit_pre_proc.cpp:
+
+          Added calls to set the 'home_equiv_' flag on both
+          the explicit and implicit home interfaces. It was
+          already set for the equivalent interface. This fix
+          closes [BUGID:3925].
+
 Sat Nov 13 14:01:03 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector.cpp:
