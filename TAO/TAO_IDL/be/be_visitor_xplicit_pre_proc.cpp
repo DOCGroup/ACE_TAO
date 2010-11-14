@@ -97,6 +97,9 @@ be_visitor_xplicit_pre_proc::visit_home (be_home *node)
   i->original_interface (node);
   i->set_imported (node->imported ());
 
+  // So we can generate the proper typecode.
+  i->home_equiv (true);
+
   idl_global->scopes ().push (i);
 
   if (this->visit_scope (node) != 0)
