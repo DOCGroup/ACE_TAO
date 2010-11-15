@@ -10,7 +10,6 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-
     ConditionManager::ConditionManager ()
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager::ConditionManager");
@@ -21,7 +20,6 @@ namespace CIAO
       DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager::~ConditionManager");
     }
 
-
     ::DDS::ReadCondition_ptr
     ConditionManager::get_readcondition (void)
     {
@@ -29,7 +27,6 @@ namespace CIAO
 
       return ::DDS::ReadCondition::_duplicate (this->rd_condition_.in ());
     }
-
 
     ::DDS::QueryCondition_ptr
     ConditionManager::get_querycondition_getter (void)
@@ -39,7 +36,6 @@ namespace CIAO
       return ::DDS::QueryCondition::_duplicate (this->qc_getter_.in ());
     }
 
-
     ::DDS::QueryCondition_ptr
     ConditionManager::get_querycondition_listener (void)
     {
@@ -48,7 +44,6 @@ namespace CIAO
       return ::DDS::QueryCondition::_duplicate (this->qc_listener_.in ());
     }
 
-
     ::DDS::QueryCondition_ptr
     ConditionManager::get_querycondition_reader (void)
     {
@@ -56,7 +51,6 @@ namespace CIAO
 
       return ::DDS::QueryCondition::_duplicate (this->qc_reader_.in ());
     }
-
 
     bool
     ConditionManager::check_condition (
@@ -69,7 +63,6 @@ namespace CIAO
 
       return this->ws_.check_condition (rc.in (), qc.in (), condition);
     }
-
 
     void
     ConditionManager::init_readcondition (void)
@@ -114,7 +107,6 @@ namespace CIAO
                     ACE_TEXT ("Read condition created and attached to Waitset.\n")));
     }
 
-
     ::CCM_DDS::QueryFilter *
     ConditionManager::query (void)
     {
@@ -136,7 +128,6 @@ namespace CIAO
       this->qc_reader_->get_query_parameters (filter->parameters);
       return filter._retn ();
     }
-
 
     void
     ConditionManager::query (
@@ -220,7 +211,6 @@ namespace CIAO
         }
     }
 
-
     void
     ConditionManager::set_parameters (
       const ::CCM_DDS::QueryFilter & filter,
@@ -239,7 +229,6 @@ namespace CIAO
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, retval);
         }
     }
-
 
     void
     ConditionManager::attach_querycondition (void)
@@ -269,7 +258,6 @@ namespace CIAO
                         "Query condition created and attached to Waitset.\n"));
         }
     }
-
 
     bool
     ConditionManager::wait (
@@ -303,7 +291,6 @@ namespace CIAO
       return true;
     }
 
-
     void
     ConditionManager::remove_condition (
       ::DDS::QueryCondition_ptr dds_qc,
@@ -330,8 +317,6 @@ namespace CIAO
             }
         }
     }
-
-
 
     void
     ConditionManager::remove_conditions ()
@@ -416,7 +401,6 @@ namespace CIAO
         }
     }
 
-
     void
     ConditionManager::passivate ()
     {
@@ -424,7 +408,6 @@ namespace CIAO
 
       this->remove_conditions ();
     }
-
 
     void
     ConditionManager::set_dds_entity (
@@ -435,13 +418,11 @@ namespace CIAO
       this->dr_ = dr;
     }
 
-
     ::DDS::DataReader_ptr
     ConditionManager::get_dds_entity (void)
     {
       return ::DDS::DataReader::_duplicate (this->dr_.in ());
     }
-
 
     ::DDS::DataReader_ptr
     ConditionManager::dds_entity (void)
