@@ -156,7 +156,7 @@ void TAO_FTEC_Group_Manager::add_member (
         publisher->setup_info(new_impl->info_list,
                               new_impl->my_position,
                               object_group_ref_version));
-      ACE_AUTO_PTR_RESET(group_info, group_info1.release(), GroupInfoPublisherBase::Info);
+      ACE_auto_ptr_reset(group_info, group_info1.release());
 
       last_one = true;
     }

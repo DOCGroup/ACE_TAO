@@ -28,11 +28,9 @@ RTServer_Setup::RTServer_Setup (int use_rt_corba,
 
   if (use_rt_corba)
     {
-      ACE_AUTO_PTR_RESET (this->rtpoa_setup_,
+      ACE_auto_ptr_reset (this->rtpoa_setup_,
                           new RTPOA_Setup (orb,
-                                           *this->rtcorba_setup ()),
-                          RTPOA_Setup
-                         );
+                                           *this->rtcorba_setup ()));
 
       this->poa_ =
         this->rtpoa_setup_->poa ();

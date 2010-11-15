@@ -26,19 +26,15 @@ RTClient_Setup::RTClient_Setup (int use_rt_corba,
 
   if (use_rt_corba)
     {
-      ACE_AUTO_PTR_RESET (this->rtcorba_setup_,
+      ACE_auto_ptr_reset (this->rtcorba_setup_,
                           new RTCORBA_Setup (orb,
                                              rt_class,
-                                             nthreads),
-                          RTCORBA_Setup
-                         );
+                                             nthreads));
 
 #if 0
-      ACE_AUTO_PTR_RESET (this->priorityband_setup_,
+      ACE_auto_ptr_reset (this->priorityband_setup_,
                           new PriorityBand_Setup (orb,
-                                                  *this->rtcorba_setup_),
-                          PriorityBand_Setup
-                         );
+                                                  *this->rtcorba_setup_));
 
 #endif /* 0 */
     }

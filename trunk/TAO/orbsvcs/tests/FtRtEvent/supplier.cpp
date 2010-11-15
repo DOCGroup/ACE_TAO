@@ -73,7 +73,7 @@ get_event_channel(int argc, ACE_TCHAR** argv)
     if (use_gateway)
     {
       // use local gateway to communicate with FTRTEC
-      ACE_AUTO_PTR_RESET (gateway, new TAO_FTRTEC::FTEC_Gateway (orb.in (), channel.in ()), TAO_FTRTEC::FTEC_Gateway);
+      ACE_auto_ptr_reset (gateway, new TAO_FTRTEC::FTEC_Gateway (orb.in (), channel.in ()));
       return gateway->_this ();
     }
     else
