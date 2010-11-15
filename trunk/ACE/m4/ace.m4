@@ -24,7 +24,17 @@ dnl Macros that add ACE configuration options to a `configure' script.
 dnl ACE_CONFIGURATION_OPTIONS
 AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
 [
- AC_ARG_ENABLE([ace-codecs],
+  dnl There's no TAO support anywhere here, but these conditionals need
+  dnl to be here to satisfy MPC's generated conditionals.
+  AM_CONDITIONAL([BUILD_ACE_FOR_TAO], false)
+  AM_CONDITIONAL([BUILD_CORBA_E_COMPACT], false)
+
+  dnl This one is just wrong... this is a feature test and should not be
+  dnl an MPC 'avoids' but I don't have time to go fix all that, so just
+  dnl squash it here.
+  AM_CONDITIONAL([BUILD_OLD_STDSTREAM], false)
+
+  AC_ARG_ENABLE([ace-codecs],
   AS_HELP_STRING(--enable-ace-codecs,build ACE with codecs support [[[yes]]]),
   [
    case "${enableval}" in
@@ -65,6 +75,28 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
    ace_user_enable_ace_filecache=yes
   ])
  AM_CONDITIONAL([BUILD_ACE_FILECACHE], [test X$ace_user_enable_ace_filecache = Xyes])
+
+  dnl This is odd, yes, but the MPC switch is backwards from what's
+  dnl usually intended.
+  AC_ARG_ENABLE([ace-inet],
+  AS_HELP_STRING(--enable-ace-inet,build ACE with protocols/INet component [[[yes]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ace_user_disable_ace_inet=no
+      ;;
+    no)
+      ace_user_disable_ace_inet=yes
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-ace-inet])
+      ;;
+   esac
+  ],
+  [
+   ace_user_disable_ace_inet=no
+  ])
+ AM_CONDITIONAL([BUILD_EXCLUDE_INET], [test X$ace_user_disable_ace_inet = Xyes])
 
  AC_ARG_ENABLE([ace-other],
   AS_HELP_STRING(--enable-ace-other,build ACE with all misc pieces [[[yes]]]),

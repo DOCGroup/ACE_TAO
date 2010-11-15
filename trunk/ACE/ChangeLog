@@ -1,3 +1,10 @@
+Mon Nov 15 12:29:51 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * m4/ace.m4: Restored TAO-related conditionals; there's no way to set
+          them to true, but they're referred to in many Makefile.ams so
+          the conditional needs to be there.
+          Also added enable/disable for protocols/ace/INet.
+
 Mon Nov 15 09:40:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Makefile.am:
