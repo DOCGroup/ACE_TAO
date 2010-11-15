@@ -1,3 +1,18 @@
+Mon Nov 15 11:11:58 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/PublisherListener.h:
+        * connectors/dds4ccm/impl/PublisherListener.cpp:
+        * connectors/dds4ccm/impl/dds4ccm_impl.mpc:
+          PublisherListener is now a C++ class instead of a template
+
+        * connectors/dds4ccm/impl/PublisherListener_T.h:
+        * connectors/dds4ccm/impl/PublisherListener_T.cpp:
+          Removed these files.
+
 Mon Nov 15 11:12:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DataReaderListener_T.cpp:

@@ -12,6 +12,7 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/impl/PortStatusListener.h"
+#include "dds4ccm/impl/DataReaderHandler_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;

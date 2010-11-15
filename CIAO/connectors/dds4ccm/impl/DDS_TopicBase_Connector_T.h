@@ -12,7 +12,7 @@
 
 #include "dds4ccm/impl/TopicListener.h"
 #include "dds4ccm/impl/DDS_Base_Connector_T.h"
-#include "dds4ccm/impl/PublisherListener_T.h"
+#include "dds4ccm/impl/PublisherListener.h"
 #include "dds4ccm/impl/SubscriberListener.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -68,7 +68,6 @@ protected:
   ::DDS::Subscriber_var subscriber_;
   ::DDS::SubscriberListener_var subscriber_listener_;
 
-  typedef ::CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE> PublisherListener;
   typedef DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE> BaseConnector;
 private:
   bool late_binding_;
