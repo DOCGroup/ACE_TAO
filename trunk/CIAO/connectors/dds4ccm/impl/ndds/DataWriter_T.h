@@ -80,7 +80,7 @@ namespace CIAO
         const ::DDS::Time_t & source_timestamp);
 
       virtual ::DDS::ReturnCode_t unregister_instance (
-        const typename  DDS_TYPE::value_type & instance_data,
+        const typename DDS_TYPE::value_type & instance_data,
         const ::DDS::InstanceHandle_t & handle);
 
       virtual ::DDS::ReturnCode_t unregister_instance_w_timestamp (
