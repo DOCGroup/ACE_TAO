@@ -133,7 +133,7 @@ namespace CIAO
               throw ::CCM_DDS::InternalError (::DDS_RETCODE_BAD_PARAMETER, 0);
             }
         }
-      if (hnd == ::DDS_HANDLE_NIL)
+      if (hnd == ::DDS::HANDLE_NIL)
         {
           throw CCM_DDS::NonExistent (0);
         }
@@ -193,7 +193,7 @@ namespace CIAO
               throw ::CCM_DDS::InternalError (::DDS_RETCODE_BAD_PARAMETER, 0);
             }
         }
-      if (hnd == ::DDS_HANDLE_NIL)
+      if (hnd == ::DDS::HANDLE_NIL)
         {
           throw CCM_DDS::NonExistent (0);
         }
@@ -253,7 +253,7 @@ namespace CIAO
         {
           ::DDS::InstanceHandle_t const hnd =
               this->dds_writer ()->lookup_instance (data[index]);
-          if (hnd != ::DDS_HANDLE_NIL)
+          if (hnd != ::DDS::HANDLE_NIL)
             {
               ::CORBA::ULong const length = exception.indexes.length ();
               exception.indexes.length (length + 1);
