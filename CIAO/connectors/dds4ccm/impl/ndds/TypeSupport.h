@@ -20,7 +20,7 @@ namespace CIAO
 {
   namespace NDDS
   {
-    class DDS_TypeFactory_i
+    class DDS4CCM_NDDS_Export DDS_TypeFactory_i
     {
     public:
       virtual ~DDS_TypeFactory_i (void);
