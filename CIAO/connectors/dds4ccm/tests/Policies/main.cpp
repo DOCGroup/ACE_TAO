@@ -9,6 +9,7 @@
 #include "dr_qos_test.h"
 #include "tp_qos_test.h"
 #include "dp_qos_test.h"
+#include "states_test.h"
 
 int handle_result (const int & result,
                    const char * test)
@@ -45,6 +46,7 @@ ACE_TMAIN (int , ACE_TCHAR **)
   DatawriterPolicyTest datawriter;
   DatareaderPolicyTest datareader;
   TopicPolicyTest topic;
+  StatesTest states;
   DomainParticipantPolicyTest domainparticipant;
 
   int ret = 0;
@@ -63,6 +65,8 @@ ACE_TMAIN (int , ACE_TCHAR **)
       ret += handle_result (test, "Topic");
       test = domainparticipant.run ();
       ret += handle_result (test, "DomainParticipant");
+      test = states.run ();
+      ret += handle_result (test, "States");
     }
   catch (...)
     {
