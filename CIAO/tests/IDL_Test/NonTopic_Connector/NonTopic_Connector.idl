@@ -1,0 +1,24 @@
+// $Id$
+
+/**
+ * @file NonTopic_Connector.idl
+ * @author
+ */
+
+#ifndef NT_CONNECTOR_IDL_
+#define NT_CONNECTOR_IDL_
+
+#include <Components.idl>
+
+#include "NonTopic_Base.idl"
+#include "nontopic_test.idl"
+
+#pragma ciao lem "NonTopic_ConnectorE.idl"
+
+module Typed_NonTopic_Test_1< ::X,::Y,::Z, ::XSeq,::YSeq, ZSeq> Xtest_1;
+module Typed_NonTopic_Test_2< ::testUnion,::Z, ::testUnionSeq,::ZSeq> Xtest_2;
+module Typed_NonTopic_Test_2< ::testSeq,::testArray, ::testSeq,::testArraySeq> Xtest_3;
+
+#endif /* NONTOPIC_CONNECTOR_IDL_ */
+
+
