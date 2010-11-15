@@ -8,6 +8,10 @@ namespace CIAO
 {
   namespace NDDS
   {
+    DDS_TypeFactory_i::~DDS_TypeFactory_i (void)
+    {
+    }
+
     void
     DDS_TypeSupport_i::register_type (const char* type, DDS_TypeFactory_i* f, ::DDS::DomainParticipant_ptr)
     {
