@@ -70,7 +70,7 @@ namespace FTRTEC
       TAO_FTRTEC::Log(3, ACE_TEXT("Basic replication strategy\n"));
     }
 
-     ACE_AUTO_PTR_RESET (replication_strategy, strategy, Replication_Strategy);
+     ACE_auto_ptr_reset (replication_strategy, strategy);
 
       try
       {
@@ -106,7 +106,7 @@ namespace FTRTEC
     ACE_ASSERT(strategy);
 
     if (replication_strategy.get() != strategy) {
-      ACE_AUTO_PTR_RESET(replication_strategy, strategy, Replication_Strategy);
+      ACE_auto_ptr_reset(replication_strategy, strategy);
     }
   }
 
