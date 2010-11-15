@@ -1,3 +1,11 @@
+Mon Nov 15 08:45:15 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+          Use ::DDS::xxx instead of DDS_xxx for the states.
+
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+          Don't use the convertors when converting states. Just use '='.
+
 Sat Nov 13 14:24:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.h:
