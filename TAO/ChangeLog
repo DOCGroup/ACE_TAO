@@ -1,3 +1,24 @@
+Mon Nov 15 12:59:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/performance-tests/RTEvent/lib/Control.cpp:
+        * orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.cpp:
+        * orbsvcs/performance-tests/RTEvent/lib/RTClient_Setup.cpp:
+        * orbsvcs/performance-tests/RTEvent/lib/RTServer_Setup.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * orbsvcs/tests/FtRtEvent/consumer.cpp:
+        * orbsvcs/tests/FtRtEvent/supplier.cpp:
+        * tao/IORManipulation/IORManipulation.cpp:
+        * tao/Load_Protocol_Factory_T.h:
+        * tao/default_resource.cpp:
+          Use ACE_auto_ptr_reset
+
 Sun Nov 14 22:43:56 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_typecode/objref_typecode.cpp:

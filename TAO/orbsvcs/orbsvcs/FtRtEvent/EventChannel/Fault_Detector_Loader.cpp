@@ -45,7 +45,7 @@ namespace FTRTEC {
     if (argc > 0 && ACE_OS::strcasecmp (argv[0], ACE_TEXT("sctp")) == 0)
     {
 #if (TAO_HAS_SCIOP == 1)
-      ACE_AUTO_PTR_RESET(detector_, detector, Fault_Detector);
+      ACE_auto_ptr_reset(detector_, detector);
 #else
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) SCTP not enabled. ",
@@ -55,7 +55,7 @@ namespace FTRTEC {
     }
     else {
       ACE_NEW_RETURN(detector, TCP_Fault_Detector, -1);
-      ACE_AUTO_PTR_RESET(detector_, detector, Fault_Detector);
+      ACE_auto_ptr_reset(detector_, detector);
     }
     return detector_->init(argc, argv);
   }

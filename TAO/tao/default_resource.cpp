@@ -1215,9 +1215,7 @@ TAO_Default_Resource_Factory::create_fragmentation_strategy (
         }
     }
 
-  ACE_AUTO_PTR_RESET (strategy,
-                      tmp,
-                      TAO_GIOP_Fragmentation_Strategy);
+  ACE_auto_ptr_reset (strategy, tmp);
 
   return strategy;
 }

@@ -209,7 +209,7 @@ init (int config_count,
                         CORBA::NO_MEMORY ());
 
       // Make sure the new config info is cleaned up if we exit abruptly.
-      ACE_AUTO_PTR_RESET (new_config_info_ptr, new_config_info, RtecScheduler::Config_Info);
+      ACE_auto_ptr_reset (new_config_info_ptr, new_config_info);
 
       result = config_info_map_.bind (config_info [i].preemption_priority,
                                       new_config_info);
@@ -2533,7 +2533,7 @@ assign_priorities_i (void)
                             CORBA::NO_MEMORY ());
 
           // Make sure the new config info is cleaned up if we exit abruptly.
-          ACE_AUTO_PTR_RESET (new_config_info_ptr, new_config_info, RtecScheduler::Config_Info);
+          ACE_auto_ptr_reset (new_config_info_ptr, new_config_info);
 
           // Have the strategy fill in the new config info for that
           // priority level, using the representative scheduling entry.

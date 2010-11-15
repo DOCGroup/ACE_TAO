@@ -60,9 +60,8 @@ namespace TAO
                           T,
                           -1);
 
-          ACE_AUTO_PTR_RESET (safe_protocol_factory,
-                              protocol_factory,
-                              TAO_Protocol_Factory);
+          ACE_auto_ptr_reset (safe_protocol_factory,
+                              protocol_factory);
 
           transfer_ownership = true;
         }
