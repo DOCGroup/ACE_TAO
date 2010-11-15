@@ -3873,9 +3873,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   auto_ptr <ACE_Base_Thread_Adapter> auto_thread_args;
 
   if (thread_adapter == 0)
-    ACE_AUTO_PTR_RESET (auto_thread_args,
-                        thread_args,
-                        ACE_Base_Thread_Adapter);
+    ACE_auto_ptr_reset (auto_thread_args,
+                        thread_args);
 
 #if defined (ACE_HAS_THREADS)
 

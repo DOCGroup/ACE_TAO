@@ -25,7 +25,6 @@
  *    - ACE_SIZEOF_LONG_DOUBLE
  *
  *  Wrappers for built-in types of specific sizes:
- *    - ACE_USHORT16 (For backward compatibility.  Use ACE_UINT16 instead.)
  *    - ACE_INT8
  *    - ACE_UINT8
  *    - ACE_INT16
@@ -327,10 +326,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #  endif /* defined (ACE_UINT64_TYPE) */
 #endif /* !(ACE_LACKS_LONGLONG_T || ACE_LACKS_UNSIGNEDLONGLONG_T) */
 
-
-typedef ACE_UINT16 ACE_USHORT16;  // @@ Backward compatibility.
-
-// Define a generic byte for use in codecs
+/// Define a generic byte for use in codecs
 typedef unsigned char ACE_Byte;
 
 // Define a pseudo wide character type when wchar is not supported so we
