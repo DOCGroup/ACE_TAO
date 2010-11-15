@@ -83,7 +83,7 @@ project(HTTP_Simple_exec) : aceexe, inet {
 // This project will only be generated with the ssl=1 feature
 // and will only build when the ssl macro = 1 (i.e. ssl on)
 project(HTTPS_Simple_exec) : aceexe, inet, inetssl {
-  exename = http_simple_wget
+  exename = https_simple_wget
   Source_Files {
     HTTP_Simple_exec.cpp
   }
