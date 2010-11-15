@@ -153,14 +153,14 @@ namespace CIAO
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, DDS4CCM_INFO
                     ACE_TEXT ("PublisherListener::on_offered_incompatible_qos: ")
                     ACE_TEXT ("total count <%d> - total change <%d> - ")
-                    ACE_TEXT ("last policy id <%d> - policies "),
+                    ACE_TEXT ("last policy id <%C> - policies:\n"),
                     status.total_count, status.total_count_change,
-                    status.last_policy_id));
+                    translate_qospolicyid_t (status.last_policy_id)));
       for (CORBA::ULong i = 0; i < status.policies.length (); ++i)
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG,
-                      ACE_TEXT ("\t\tid <%d> - count <%d>\n"),
-                      status.policies[i].policy_id,
+                      ACE_TEXT ("\t\tid <%C> - count <%d>\n"),
+                      translate_qospolicyid_t (status.policies[i].policy_id),
                       status.policies[i].count));
         }
 

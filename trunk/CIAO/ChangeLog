@@ -1,3 +1,10 @@
+Mon Nov 15 12:08:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/PublisherListener.cpp:
+        * connectors/dds4ccm/impl/SubscriberListener.cpp:
+        * connectors/dds4ccm/impl/Utils.h:
+          Print QoSPolicyId_t as readable string
+
 Mon Nov 15 11:36:18 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
