@@ -519,6 +519,15 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::remove_default_topic (void)
       throw ::CCM_DDS::InternalError (retcode, 0);
     }
   this->topic_ = ::DDS::Topic::_nil ();
+
+#if (CIAO_DDS4CCM_NDDS==1)
+  const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
+  ::CIAO::NDDS::DDS_TypeFactory_i * factory =
+    ::CIAO::NDDS::DDS_TypeSupport_i::unregister_type (
+      typesupport_name, this->domain_participant_.in ());
+
+  delete factory;
+#endif
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

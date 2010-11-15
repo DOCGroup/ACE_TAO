@@ -22,6 +22,18 @@ namespace CIAO
       type_factories [type] = f;
     }
 
+    DDS_TypeFactory_i*
+    DDS_TypeSupport_i::unregister_type (const char* type, ::DDS::DomainParticipant_ptr)
+    {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
+                    "DDS_TypeSupport_i::unregister_type - "
+                    "Unregistered factory for type %C\n", type));
+
+      DDS_TypeFactory_i* f = type_factories [type];
+      type_factories [type] = 0;
+      return f;
+    }
+
     ::DDS::DataWriter_ptr
      DDS_TypeSupport_i::create_datawriter (DDSDataWriter* dw, ::DDS::DomainParticipant_ptr dp)
     {

@@ -49,6 +49,7 @@ namespace CIAO
     public:
       static void close (void);
       static void register_type (const char* type, DDS_TypeFactory_i* factory, ::DDS::DomainParticipant_ptr dp);
+      static DDS_TypeFactory_i* unregister_type (const char* type, ::DDS::DomainParticipant_ptr dp);
       static ::DDS::DataWriter_ptr create_datawriter (DDSDataWriter* dw, ::DDS::DomainParticipant_ptr dp);
       static ::DDS::DataReader_ptr create_datareader (DDSDataReader* dr, ::DDS::DomainParticipant_ptr dp);
     private:
