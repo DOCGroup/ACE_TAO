@@ -1,3 +1,12 @@
+Mon Nov 15 11:36:18 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+          Removed ndds include
+
+        * connectors/dds4ccm/impl/ndds/TypeSupport.h:
+        * connectors/dds4ccm/impl/ndds/TypeSupport.cpp:
+          Added missing virtual destructor
+
 Mon Nov 15 11:33:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
