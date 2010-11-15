@@ -1,3 +1,8 @@
+Mon Nov 15 14:59:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+          Typo.
+
 Mon Nov 15 14:09:24 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp:

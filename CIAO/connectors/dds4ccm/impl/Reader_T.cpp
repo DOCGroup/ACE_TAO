@@ -30,8 +30,8 @@ namespace CIAO
       ::DDS::InstanceHandle_t const lookup_hnd =
           this->dds_reader ()->lookup_instance (an_instance);
 
-      return this->condition_manager_->check_handle (lookup_hnd,
-                                                    instance_handle);
+      return this->condition_manager_->check_handle (instance_handle,
+                                                     lookup_hnd);
     }
 
     template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
