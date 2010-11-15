@@ -11,7 +11,7 @@
 
   //Variable length structure
   struct X {
-    string color; 
+    string color;
     long a;
     long b;
   };
