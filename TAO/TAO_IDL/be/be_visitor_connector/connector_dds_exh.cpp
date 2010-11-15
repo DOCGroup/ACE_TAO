@@ -12,8 +12,6 @@
  */
 //=============================================================================
 
-#include "nr_extern.h"
-
 be_visitor_connector_dds_exh::be_visitor_connector_dds_exh (
       be_visitor_context *ctx)
   : be_visitor_connector_dds_ex_base (ctx)
@@ -175,6 +173,28 @@ be_visitor_connector_dds_exh::visit_uses (be_uses *node)
     be_interface::narrow_from_decl (node->uses_type ());
 
   this->gen_interface_connector_trait (iface, node, false);
+
+  return 0;
+}
+
+int
+be_visitor_connector_dds_exh::visit_attribute (
+  be_attribute *node)
+{
+  AST_Decl::NodeType nt =
+    ScopeAsDecl (node->defined_in ())->node_type ();
+
+  /// We are interested in attributes in extended ports
+  /// and connectors, skip all others.
+  if (nt == AST_Decl::NT_component)
+    {
+      return 0;
+    }
+
+  os_ << be_nl
+      << "typedef "
+      << node->field_type ()->full_name () << " "
+      << node->local_name ()->get_string () << "_type;";
 
   return 0;
 }

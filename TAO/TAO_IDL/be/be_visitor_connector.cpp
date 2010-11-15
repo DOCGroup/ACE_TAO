@@ -27,6 +27,7 @@
 #include "be_uses.h"
 #include "be_operation.h"
 #include "be_argument.h"
+#include "be_attribute.h"
 
 #include "be_visitor_connector.h"
 #include "be_visitor_operation.h"
