@@ -27,12 +27,6 @@
 #  define CIAO_DDS4CCM_CONTEXT_SWITCH 1
 #endif /* CIAO_DDS4CCM_CONTEXT_SWITCH */
 
-enum DDS4CCM_Vendor
-{
-  DDS4CCM_NDDS,
-  DDS4CCM_OPENDDS
-};
-
 #define DDS_INSTANCE_HANDLE_T_IN const ::DDS::InstanceHandle_t &
 #define DDS_INSTANCE_HANDLE_T_RETN ::DDS::InstanceHandle_t
 

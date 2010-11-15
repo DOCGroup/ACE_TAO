@@ -1,3 +1,16 @@
+Mon Nov 15 10:41:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/PortStatusListener.cpp:
+        * connectors/dds4ccm/impl/PublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/SubscriberListener.cpp:
+        * connectors/dds4ccm/impl/TopicListener.cpp:
+        * connectors/dds4ccm/impl/dds4ccm_conf.h:
+        * connectors/dds4ccm/impl/ndds/DataWriter_T.h:
+          No need to initialize a cstring
+
 Mon Nov 15 08:45:15 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DataReaderListener_T.cpp:

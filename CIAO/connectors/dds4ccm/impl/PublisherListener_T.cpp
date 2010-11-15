@@ -322,7 +322,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE>::get_mask (
 
   if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
     {
-      ACE_CString msk = "";
+      ACE_CString msk;
       translate_statusmask (msk, mask);
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, DDS4CCM_INFO
                     "PublisherListener_T::get_mask - "
