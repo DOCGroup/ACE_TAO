@@ -1,8 +1,13 @@
+Mon Nov 15 12:58:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Malloc_Test.cpp:
+          Use ACE_auto_ptr_reset
+
 Mon Nov 15 12:41:22 UTC 2010  Steve Huston  <shuston@riverace.com>
 
-	* protocols/ace/INet/inet.mpc: Renamed 2nd instance of http_simple_wget
-	  to be slightly different in ssl case - prevents name clash when
-	  regenerating automake files.
+        * protocols/ace/INet/inet.mpc: Renamed 2nd instance of http_simple_wget
+          to be slightly different in ssl case - prevents name clash when
+          regenerating automake files.
 
 Mon Nov 15 12:29:51 UTC 2010  Steve Huston  <shuston@riverace.com>
 
