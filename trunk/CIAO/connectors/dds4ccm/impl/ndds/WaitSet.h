@@ -48,6 +48,10 @@ namespace CIAO
 
       DDSWaitSet * get_rti_entity (void);
 
+      ::DDS::InstanceHandle_t
+      check_handle (const ::DDS::InstanceHandle_t & instance_handle,
+                    const ::DDS::InstanceHandle_t & lookup_handle);
+
       bool check_condition (::DDS::ReadCondition_ptr rc,
                             ::DDS::QueryCondition_ptr qc,
                             ::DDS::Condition_ptr condition);

@@ -2,12 +2,6 @@
 
 #include "dds4ccm/impl/Utils.h"
 
-#if (CIAO_DDS4CCM_NDDS==1)
-#include "dds4ccm/impl/ndds/DataReader_T.h"
-#include "dds4ccm/impl/ndds/convertors/SampleInfo.h"
-#include "dds4ccm/impl/ndds/convertors/StringSeq.h"
-#endif
-
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 namespace CIAO
@@ -33,28 +27,11 @@ namespace CIAO
       const VALUE_TYPE& an_instance,
       const ::DDS::InstanceHandle_t & instance_handle)
     {
-      ::DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
-      hnd <<= instance_handle;
-
-      ::DDS::InstanceHandle_t const tmp =
+      ::DDS::InstanceHandle_t const lookup_hnd =
           this->dds_reader ()->lookup_instance (an_instance);
 
-      ::DDS_InstanceHandle_t lookup_hnd = ::DDS_HANDLE_NIL;
-      lookup_hnd <<= tmp;
-
-      // @todo: don't use these...
-      if (!DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL) &&
-          !DDS_InstanceHandle_equals (&hnd, &lookup_hnd))
-        {
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
-        }
-      if (DDS_InstanceHandle_equals (&lookup_hnd, &::DDS_HANDLE_NIL))
-        {
-          throw ::CCM_DDS::NonExistent ();
-        }
-      ::DDS::InstanceHandle_t ret = ::DDS::HANDLE_NIL;
-      ret <<= lookup_hnd;
-      return ret;
+      return this->condition_manager_->check_handle (lookup_hnd,
+                                                    instance_handle);
     }
 
     template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>

@@ -10,6 +10,7 @@
 #include "dds4ccm/impl/ndds/QueryCondition.h"
 #include "dds4ccm/impl/ndds/ReadCondition.h"
 #include "dds4ccm/impl/ndds/convertors/Duration_t.h"
+#include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"
 #include "dds4ccm/impl/Utils.h"
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
@@ -126,6 +127,31 @@ namespace CIAO
         }
       this->convert_conditions (dds_seq, attached_conditions);
       return retcode;
+    }
+
+    ::DDS::InstanceHandle_t
+    DDS_WaitSet_i::check_handle (
+      const ::DDS::InstanceHandle_t & instance_handle,
+      const ::DDS::InstanceHandle_t & lookup_handle)
+    {
+      ::DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
+      hnd <<= instance_handle;
+
+      ::DDS_InstanceHandle_t lookup_hnd = ::DDS_HANDLE_NIL;
+      lookup_hnd <<= lookup_handle;
+
+      if (!DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL) &&
+          !DDS_InstanceHandle_equals (&hnd, &lookup_hnd))
+        {
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+        }
+      if (DDS_InstanceHandle_equals (&lookup_hnd, &::DDS_HANDLE_NIL))
+        {
+          throw ::CCM_DDS::NonExistent ();
+        }
+      ::DDS::InstanceHandle_t ret = ::DDS::HANDLE_NIL;
+      ret <<= lookup_hnd;
+      return ret;
     }
 
     bool

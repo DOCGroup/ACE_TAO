@@ -32,6 +32,10 @@ namespace CIAO
       ::DDS::QueryCondition_ptr get_querycondition_reader (void);
       ::DDS::QueryCondition_ptr get_querycondition_listener (void);
 
+      ::DDS::InstanceHandle_t check_handle (
+        const ::DDS::InstanceHandle_t & instance_handle,
+        const ::DDS::InstanceHandle_t & lookup_handle);
+
       bool check_condition (::DDS::Condition_ptr condition);
       void init_readcondition (void);
 
