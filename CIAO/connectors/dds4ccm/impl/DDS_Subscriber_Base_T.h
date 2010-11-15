@@ -13,7 +13,6 @@
 #include "dds4ccm/impl/Reader_T.h"
 #include "dds4ccm/impl/PortStatusListener.h"
 #include "dds4ccm/impl/ContentFilterSetting.h"
-#include "dds4ccm/impl/ndds/ContentFilteredTopic.h"
 #include "dds4ccm/impl/ConditionManager.h"
 #include "dds4ccm/impl/CCM_DataReader.h"
 #include "dds4ccm/impl/LocalObject_T.h"

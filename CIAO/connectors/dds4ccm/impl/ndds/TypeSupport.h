@@ -23,6 +23,7 @@ namespace CIAO
     class DDS_TypeFactory_i
     {
     public:
+      virtual ~DDS_TypeFactory_i (void);
       virtual DDS::DataWriter_ptr create_datawriter (DDSDataWriter* dw, ::DDS::DomainParticipant_ptr dp) = 0;
       virtual DDS::DataReader_ptr create_datareader (DDSDataReader* dr, ::DDS::DomainParticipant_ptr dp) = 0;
     };
