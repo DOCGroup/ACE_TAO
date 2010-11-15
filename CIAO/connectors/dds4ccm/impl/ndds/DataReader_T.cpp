@@ -108,13 +108,13 @@ namespace CIAO
       dds_sample_infos <<= sample_infos;
 
       ::DDS_SampleStateMask dds_sample_states = DDS_ANY_SAMPLE_STATE;
-      dds_sample_states <<= sample_states;
+      dds_sample_states = sample_states;
 
       ::DDS_ViewStateMask dds_view_states = DDS_ANY_VIEW_STATE;
-      dds_view_states <<= view_states;
+      dds_view_states = view_states;
 
       ::DDS_InstanceStateMask dds_instance_states = DDS_ANY_INSTANCE_STATE;
-      dds_instance_states <<= instance_states;
+      dds_instance_states = instance_states;
 
       typename DDS_TYPE::dds_seq_type dds_data_values;
 
@@ -147,13 +147,13 @@ namespace CIAO
       dds_sample_infos <<= sample_infos;
 
       ::DDS_SampleStateMask dds_sample_states = DDS_ANY_SAMPLE_STATE;
-      dds_sample_states <<= sample_states;
+      dds_sample_states = sample_states;
 
       ::DDS_ViewStateMask dds_view_states = DDS_ANY_VIEW_STATE;
-      dds_view_states <<= view_states;
+      dds_view_states = view_states;
 
       ::DDS_InstanceStateMask dds_instance_states = DDS_ANY_INSTANCE_STATE;
-      dds_instance_states <<= instance_states;
+      dds_instance_states = instance_states;
 
       typename DDS_TYPE::dds_seq_type dds_data_values;
 
@@ -164,9 +164,10 @@ namespace CIAO
                                    dds_sample_states,
                                    dds_view_states,
                                    dds_instance_states);
+
       this->complete_read (dds_data_values, data_values,
-                           dds_sample_infos, sample_infos,
-                           retcode_take, "take");
+             dds_sample_infos, sample_infos,
+             retcode_take, "take");
       return retcode_take;
     }
 
@@ -289,13 +290,13 @@ namespace CIAO
       dds_sample_infos <<= sample_infos;
 
       ::DDS_SampleStateMask dds_sample_states = DDS_ANY_SAMPLE_STATE;
-      dds_sample_states <<= sample_states;
+      dds_sample_states = sample_states;
 
       ::DDS_ViewStateMask dds_view_states = DDS_ANY_VIEW_STATE;
-      dds_view_states <<= view_states;
+      dds_view_states = view_states;
 
       ::DDS_InstanceStateMask dds_instance_states = DDS_ANY_INSTANCE_STATE;
-      dds_instance_states <<= instance_states;
+      dds_instance_states = instance_states;
 
       ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
       dds_handle <<= a_handle;
@@ -334,13 +335,13 @@ namespace CIAO
       dds_sample_infos <<= sample_infos;
 
       ::DDS_SampleStateMask dds_sample_states = DDS_ANY_SAMPLE_STATE;
-      dds_sample_states <<= sample_states;
+      dds_sample_states = sample_states;
 
       ::DDS_ViewStateMask dds_view_states = DDS_ANY_VIEW_STATE;
-      dds_view_states <<= view_states;
+      dds_view_states = view_states;
 
       ::DDS_InstanceStateMask dds_instance_states = DDS_ANY_INSTANCE_STATE;
-      dds_instance_states <<= instance_states;
+      dds_instance_states = instance_states;
 
       ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
       dds_handle <<= a_handle;
@@ -378,13 +379,13 @@ namespace CIAO
       dds_sample_infos <<= sample_infos;
 
       ::DDS_SampleStateMask dds_sample_states = DDS_ANY_SAMPLE_STATE;
-      dds_sample_states <<= sample_states;
+      dds_sample_states = sample_states;
 
       ::DDS_ViewStateMask dds_view_states = DDS_ANY_VIEW_STATE;
-      dds_view_states <<= view_states;
+      dds_view_states = view_states;
 
       ::DDS_InstanceStateMask dds_instance_states = DDS_ANY_INSTANCE_STATE;
-      dds_instance_states <<= instance_states;
+      dds_instance_states = instance_states;
 
       ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
       dds_handle <<= a_handle;
@@ -422,13 +423,13 @@ namespace CIAO
       dds_sample_infos <<= sample_infos;
 
       ::DDS_SampleStateMask dds_sample_states = DDS_ANY_SAMPLE_STATE;
-      dds_sample_states <<= sample_states;
+      dds_sample_states = sample_states;
 
       ::DDS_ViewStateMask dds_view_states = DDS_ANY_VIEW_STATE;
-      dds_view_states <<= view_states;
+      dds_view_states = view_states;
 
       ::DDS_InstanceStateMask dds_instance_states = DDS_ANY_INSTANCE_STATE;
-      dds_instance_states <<= instance_states;
+      dds_instance_states = instance_states;
 
       ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
       dds_handle <<= a_handle;
@@ -535,6 +536,8 @@ namespace CIAO
       typename DDS_TYPE::seq_type & /*data_values*/,
       ::DDS::SampleInfoSeq & /*sample_infos*/)
     {
+      // No need to implement this since a return_loan is
+      // done every read/take operation in this proxy
       return ::DDS::RETCODE_OK;
     }
 

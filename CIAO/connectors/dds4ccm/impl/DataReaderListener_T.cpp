@@ -120,9 +120,9 @@ namespace CIAO
           result = reader->take (data,
                                  sample_info,
                                  max_samples,
-                                 DDS_NOT_READ_SAMPLE_STATE,
-                                 DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                                 DDS_ANY_INSTANCE_STATE);
+                                 ::DDS::NOT_READ_SAMPLE_STATE,
+                                 ::DDS::NEW_VIEW_STATE | ::DDS::NOT_NEW_VIEW_STATE,
+                                 ::DDS::ANY_INSTANCE_STATE);
         }
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_INFO, DDS4CCM_INFO
