@@ -1,3 +1,12 @@
+Mon Nov 15 13:12:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager.h:
+        * connectors/dds4ccm/impl/ConditionManager.cpp:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/WaitSet.h:
+        * connectors/dds4ccm/impl/ndds/WaitSet.cpp:
+          Moved implementation of check_handle.
+
 Mon Nov 15 12:45:07 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
