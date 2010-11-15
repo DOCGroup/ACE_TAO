@@ -38,6 +38,7 @@ project(DDS_Policies_Test) : taoexe, typecode, dds4ccm_base {
     wr_lifecycle_qos_test.cpp
     duration.cpp
     octet_seq.cpp
+    states_test.cpp
   }
 
   Header_Files {

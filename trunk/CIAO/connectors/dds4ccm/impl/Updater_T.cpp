@@ -229,7 +229,7 @@ namespace CIAO
         {
           ::DDS::InstanceHandle_t const hnd =
               this->dds_writer ()->lookup_instance (data[index]);
-          if (hnd == ::DDS_HANDLE_NIL)
+          if (hnd == ::DDS::HANDLE_NIL)
             {
               CORBA::ULong const length = exception.indexes.length ();
               exception.indexes.length (length + 1);
