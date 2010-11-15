@@ -1,3 +1,12 @@
+Mon Nov 15 18:54:27 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_connector.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+        * TAO_IDL/be_include/be_visitor_connector/connector_dds_exh.h:
+
+          Added generation of traits typedefs for attributes, if they
+          appear in a connector or an extended port.
+
 Mon Nov 15 12:59:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:

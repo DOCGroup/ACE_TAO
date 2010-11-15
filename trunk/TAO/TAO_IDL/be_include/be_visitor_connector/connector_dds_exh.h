@@ -44,6 +44,7 @@ public:
   /// Used to generate the traits structures.
   virtual int visit_provides (be_provides *node);
   virtual int visit_uses (be_uses *node);
+  virtual int visit_attribute (be_attribute *node);
 
 private:
   /// Generate application-specific instantiations of
