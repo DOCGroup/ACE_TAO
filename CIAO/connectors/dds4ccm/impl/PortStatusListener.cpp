@@ -35,7 +35,7 @@ namespace CIAO
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, DDS4CCM_INFO
           ACE_TEXT ("PortStatusListener::on_requested_deadline_missed: ")
       ACE_TEXT ("total count <%d> - total change <%d> - ")
-      ACE_TEXT ("last instance handle <length <%l> - isValid <%l>\n"),
+      ACE_TEXT ("last instance handle <length <%d> - isValid <%d>\n"),
       status.total_count, status.total_count_change,
       status.last_instance_handle.length, status.last_instance_handle.isValid));
 
