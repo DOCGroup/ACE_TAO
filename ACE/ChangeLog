@@ -1,3 +1,9 @@
+Mon Nov 15 12:41:22 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+	* protocols/ace/INet/inet.mpc: Renamed 2nd instance of http_simple_wget
+	  to be slightly different in ssl case - prevents name clash when
+	  regenerating automake files.
+
 Mon Nov 15 12:29:51 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * m4/ace.m4: Restored TAO-related conditionals; there's no way to set
