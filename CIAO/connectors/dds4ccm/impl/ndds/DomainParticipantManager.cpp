@@ -126,7 +126,6 @@ namespace CIAO
                     "DomainParticipantManager::~DomainParticipantManager - "
                     "Finalizing DDS\n"));
 
-      //DDS_TypeSupport_i::close ();
       DDSDomainParticipantFactory::finalize_instance ();
     }
 
