@@ -1,3 +1,15 @@
+Mon Nov 15 15:39:45 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/Updater_T.cpp:
+          Use ::DDS:: instead of DDS_.
+
+        * connectors/dds4ccm/tests/Policies/main.cpp:
+        * connectors/dds4ccm/tests/Policies/policies.mpc:
+        * connectors/dds4ccm/tests/Policies/states_test.h:
+        * connectors/dds4ccm/tests/Policies/states_test.cpp:
+          Added test which explicitely tests whether all DDS4CCM states
+          (view, sample, and, instance states) are equal to the RTI states.
+
 Mon Nov 15 14:59:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/Reader_T.cpp:
