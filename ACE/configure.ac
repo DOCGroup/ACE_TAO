@@ -14,7 +14,7 @@ dnl particularly with M4, do not modify this macro definition.
 define([ACE_VERSION], patsubst(esyscmd(grep ACE_VERSION ace/Version.h | sed 's/.*\" *\(.*\)\".*/\1/'), [
 ]))dnl remove newline ending every `esyscmd' answer
 
-AC_INIT([ACE],[ACE_VERSION],[ace-bugs@cs.wustl.edu],[ace])
+AC_INIT([ACE],[ACE_VERSION],[ace-bugs@list.isis.vanderbilt.edu],[ace])
 
 AC_REVISION([$Id$])
 

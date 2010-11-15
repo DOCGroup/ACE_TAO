@@ -27,12 +27,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// Empty ACE_OS namespace to help identify compiler errors more
-// easily.      -- @@ Do we really need this?
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-namespace ACE_OS {}
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 // ============================================================================
 // UNICODE macros (to be added later)
 // ============================================================================

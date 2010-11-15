@@ -45,7 +45,7 @@ public:
 
   static size_t decode (void *buf);
   // This function doesn't relate to ACE_WString directly.
-  // It converts an ACE_USHORT16 string from network
+  // It converts an ACE_UINT16 string from network
   // byte order to host byte order.  Returns size of the string.
 };
 
@@ -64,8 +64,8 @@ public:
                     const char *value=0);
   // Create a new property.
 
-  ACE_URL_Property (const ACE_USHORT16 *name,
-                    const ACE_USHORT16 *value);
+  ACE_URL_Property (const ACE_UINT16 *name,
+                    const ACE_UINT16 *value);
   // Create a new property using wchar strings.  This is mostly used
   // to support DBCS or UNICODE.
 
@@ -89,7 +89,7 @@ public:
   const ACE_WString &name (void) const;
 
   // = Set property name.
-  void name (const ACE_USHORT16 *n);
+  void name (const ACE_UINT16 *n);
   void name (const char *n);
 
   // = Query property value.
@@ -97,7 +97,7 @@ public:
   const ACE_WString &value (void) const;
 
   // = Set property value.
-  void value (const ACE_USHORT16 *v);
+  void value (const ACE_UINT16 *v);
   void value (const char *v);
 
   // = Helper functions for encoding and decoding.
@@ -160,7 +160,7 @@ public:
 
   // = Set URL.
   void url (const char *url);
-  void url (const ACE_USHORT16 *url);
+  void url (const ACE_UINT16 *url);
 
   ACE_URL_Property_Seq &url_properties (void);
   // Get properties of this offer.

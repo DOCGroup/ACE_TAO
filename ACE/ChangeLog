@@ -1,3 +1,34 @@
+Mon Nov 15 09:40:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Makefile.am:
+          Zap TAO as directory
+
+        * ACEXML/common/XML_Types.h:
+        * ace/Auto_Ptr.h:
+        * ace/Basic_Types.h:
+        * ace/OS_NS_Thread.cpp:
+        * ace/Obchunk.cpp:
+        * ace/Object_Manager.cpp:
+        * ace/Object_Manager_Base.cpp:
+        * ace/Proactor.h:
+        * ace/SOCK_Dgram.h:
+        * ace/SOCK_Dgram.inl:
+        * ace/SOCK_Dgram_Mcast.h:
+        * ace/SOCK_Dgram_Mcast.cpp:
+        * ace/SString.h:
+        * ace/SString.cpp:
+        * ace/Thread_Exit.cpp:
+        * ace/Timer_List.h:
+        * ace/config-lite.h:
+        * apps/JAWS/clients/Caching/Locator_Request_Reply.cpp:
+        * apps/JAWS/clients/Caching/URL_Properties.h:
+        * apps/JAWS/clients/Caching/URL_Properties.inl:
+        * apps/JAWS/clients/Caching/URL_Properties.cpp:
+          Clean of deprecated define ACE_USHORT16 and ACE_AUTO_PTR_RESET
+
+        * configure.ac:
+          Updated support address
+
 Wed Nov 10 18:12:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Makefile.am:

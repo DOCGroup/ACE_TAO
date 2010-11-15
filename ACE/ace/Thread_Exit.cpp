@@ -5,8 +5,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Guard_T.h"
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool ACE_Thread_Exit::is_constructed_ = false;

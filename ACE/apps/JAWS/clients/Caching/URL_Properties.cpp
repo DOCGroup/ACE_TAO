@@ -15,25 +15,25 @@
 size_t
 ACE_WString_Helper::encode (void *buf, const ACE_WString &wstr)
 {
-  ACE_USHORT16 *wptr = (ACE_USHORT16 *) buf;
+  ACE_UINT16 *wptr = (ACE_UINT16 *) buf;
   size_t i;
 
   for (i= 0; i <= wstr.length (); i++)
     wptr[i] = htons (wstr[i]);
 
-  return i * sizeof (ACE_USHORT16);
+  return i * sizeof (ACE_UINT16);
 }
 
 size_t
 ACE_WString_Helper::decode (void *buf)
 {
-  ACE_USHORT16 *wptr = (ACE_USHORT16 *) buf;
+  ACE_UINT16 *wptr = (ACE_UINT16 *) buf;
   size_t i;
 
   for (i = 0; wptr[i] != 0; i++)
     wptr[i] = ntohs (wptr[i]);
 
-  return (i + 1) * sizeof (ACE_USHORT16);
+  return (i + 1) * sizeof (ACE_UINT16);
 }
 
 size_t
@@ -50,11 +50,11 @@ ACE_URL_Property::decode (void *buf)
 {
   char *cbuf = (char *) buf;
   size_t len = ACE_WString_Helper::decode(buf);
-  this->name ((ACE_USHORT16 *) cbuf);
+  this->name ((ACE_UINT16 *) cbuf);
 
   cbuf += len;
   len += ACE_WString_Helper::decode ((void *) cbuf);
-  this->value ((ACE_USHORT16 *) cbuf);
+  this->value ((ACE_UINT16 *) cbuf);
   return len;
 }
 
@@ -81,7 +81,7 @@ ACE_URL_Property::dump (void) const
 size_t
 ACE_URL_Offer::size (void) const
 {
-  size_t sum = (this->url_.length () + 1) * sizeof (ACE_USHORT16);
+  size_t sum = (this->url_.length () + 1) * sizeof (ACE_UINT16);
   sum += ::ace_array_size (this->prop_);
   return sum;
 }
@@ -107,7 +107,7 @@ ACE_URL_Offer::decode (void *buf)
   size_t len = sizeof (ACE_UINT32);
   size_t a_size = (size_t) ntohl (*(ACE_UINT32 *) buf);
   len += ACE_WString_Helper::decode ((void *) ((char *) buf + len));
-  this->url ((ACE_USHORT16 *) ((char *) buf + len));
+  this->url ((ACE_UINT16 *) ((char *) buf + len));
 
   ACE_URL_Property_Seq prop_seq (a_size);
   this->url_properties (prop_seq);
