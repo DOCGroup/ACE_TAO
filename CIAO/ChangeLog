@@ -1,3 +1,8 @@
+Mon Nov 15 18:13:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/Updater_T.cpp:
+          Use ::DDS:: instead of DDS_.
+
 Mon Nov 15 15:39:45 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/Updater_T.cpp:
