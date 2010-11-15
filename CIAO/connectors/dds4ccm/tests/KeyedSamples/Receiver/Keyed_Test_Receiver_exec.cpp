@@ -7,6 +7,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/Reactor.h"
 #include "dds4ccm/impl/TimeUtilities.h"
+#include "dds4ccm/impl/Utils.h"
 
 namespace CIAO_Keyed_Test_Receiver_Impl
 {
@@ -103,10 +104,11 @@ namespace CIAO_Keyed_Test_Receiver_Impl
             check_received_samples ();
           }
       }
-    catch(const CCM_DDS::InternalError& )
+    catch(const CCM_DDS::InternalError& ex)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: KeyedTest_Read: ")
-                  ACE_TEXT ("Unexpected InternalError exception received\n")));
+                  ACE_TEXT ("Unexpected InternalError exception received <%C>\n"),
+                  ::CIAO::DDS4CCM::translate_retcode (ex.error_code)));
       }
     catch(const CCM_DDS::NonExistent& )
       {
