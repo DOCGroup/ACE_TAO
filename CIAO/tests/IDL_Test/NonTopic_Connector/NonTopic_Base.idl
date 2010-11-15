@@ -1,0 +1,64 @@
+// $Id$
+
+/**
+ * @file NonTopic_Base.idl
+ * @author
+ */
+
+#ifndef NONTOPIC_IDL
+#define NONTOPIC_IDL
+
+
+  //Variable length structure
+  struct X {
+    string color; 
+    long a;
+    long b;
+  };
+  typedef sequence<X> XSeq;
+
+  //Fixed length structure
+  struct Y {
+    double c;
+    long d;
+  };
+  typedef sequence<Y> YSeq;
+
+  //string, always variable length type
+   typedef string Z;
+   typedef sequence<Z> ZSeq;
+
+  // Sequence, always variable length type
+   struct test {
+     short x_test;
+     string x_teststr;
+   };
+   typedef sequence<test> testSeq;
+   typedef sequence<testSeq> testSeqSeq;
+
+   // Enum, always fixed length type
+   enum test_enum
+   {
+     ZERO,
+     ONE,
+     TWO
+   };
+   typedef test_enum testEnum;
+   typedef sequence<testEnum> testEnumSeq;
+
+    //array, here fixed length type
+    typedef short short_array[5];
+    typedef short_array testArray;
+    typedef sequence<testArray> testArraySeq;
+
+    // Union,  here variable length type
+     union X_Union switch (short) {
+       case 0:
+         string x_test;
+       case 1:
+         long   x_long;
+     };
+     typedef X_Union testUnion;
+     typedef sequence<testUnion> testUnionSeq;
+
+#endif

@@ -1,0 +1,29 @@
+// $Id$
+
+/**
+ * @file
+ * @author
+ */
+
+#ifndef NONTOPIC_TEST_IDL
+#define NONTOPIC_TEST_IDL
+
+module Typed_NonTopic_Test_1<typename T,typename U,typename V,
+                           sequence<T> TSeq, sequence<U> USeq, sequence<V> VSeq>
+   {
+     local interface TestControl
+       {
+         void create(out T dat_T, out U dat_u, out V dat_v);
+       };
+    };
+
+module Typed_NonTopic_Test_2<typename T,typename U,
+                           sequence<T> TSeq, sequence<U> USeq>
+   {
+     local interface TestControl
+       {
+         void create(out T dat_T, out U dat_u);
+       };
+    };
+
+#endif

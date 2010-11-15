@@ -1,0 +1,102 @@
+// $Id$
+project(NT_Base_idl_gen) : taoidldefaults, anytypecode {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=NONTOPIC_BASE_STUB_Export \
+              -Wb,stub_export_include=NonTopic_base_stub_export.h \
+               -I ..
+
+  IDL_Files {
+    idlflags += -Gxhst
+    NonTopic_Base.idl
+  }
+
+}
+project(NT_test_idl_gen) : taoidldefaults, anytypecode {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=NONTOPIC_TEST_STUB_Export \
+              -Wb,stub_export_include=NonTopic_test_stub_export.h \
+              -SS -Gxhst -Gxhsk \
+              -I ..
+
+  IDL_Files {
+    nontopic_test.idl
+  }
+
+}
+project(NT_Connector_idl_gen) : connectoridldefaults, anytypecode {
+  custom_only = 1
+  after+=NT_Base_idl_gen NT_test_idl_gen
+  idlflags += -Wb,stub_export_macro=NONTOPIC_CONNECTOR_STUB_Export \
+              -Wb,stub_export_include=NonTopic_Connector_stub_export.h \
+              -Wb,skel_export_macro=NONTOPIC_CONNECTOR_SKEL_Export \
+              -Wb,skel_export_include=NonTopic_Connector_skel_export.h \
+              -I ..
+
+  IDL_Files {
+    NonTopic_Connector.idl
+  }
+
+}
+
+project(NT_Connector_lem_gen) : ciaoidldefaults, anytypecode {
+  custom_only = 1
+  after += NT_Connector_idl_gen
+  idlflags += -Wb,stub_export_macro=NONTOPIC_CONNECTOR_STUB_Export \
+              -Wb,stub_export_include=NonTopic_Connector_stub_export.h \
+              -Wb,skel_export_macro=NONTOPIC_CONNECTOR_SKEL_Export \
+              -Wb,skel_export_include=NonTopic_Connector_skel_export.h \
+              -SS -Gxhst \
+              -I ..
+
+  IDL_Files {
+    NonTopic_ConnectorE.idl
+  }
+}
+
+project(NT_Connector_stub) : ccm_stub {
+  after += NT_Connector_lem_gen
+  libs  += 
+  includes += ..
+  sharedname = NonTopic_Connector_stub
+  dynamicflags += NONTOPIC_CONNECTOR_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    NonTopic_ConnectorC.cpp
+  }
+
+  Header_Files {
+    NonTopic_ConnectorC.h
+    NonTopic_Connector_stub_export.h
+  }
+
+  Inline_Files {
+    NonTopic_ConnectorC.inl
+  }
+}
+
+project(NT_Connector_skel) : ciao_executor {
+  after += NT_Connector_stub
+  libs  += NonTopic_Connector_stub
+ 
+  sharedname = NonTopic_Connector_skel
+  dynamicflags += NONTOPIC_CONNECTOR_SKEL_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    NonTopic_ConnectorS.cpp
+  }
+
+  Header_Files {
+    NonTopic_ConnectorS.h
+    NonTopic_Connector_skel_export.h
+  }
+
+  Inline_Files {
+    NonTopic_ConnectorS.inl
+  }
+}
