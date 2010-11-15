@@ -258,7 +258,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
         {
           size_t nr_subscribed = 0;
 # if defined(__linux__)
-          struct if_nameindex *intf;
+          struct if_nameindex *intf = 0;
 
           intf = ACE_OS::if_nameindex ();
 

@@ -183,9 +183,9 @@ ACE_URL_Locator_Request::decode (void *buffer)
       total_length += this->offer_->decode (cbuffer + total_length);
     }
 
-  this->id_ = ACE_WString ((ACE_USHORT16 *) (cbuffer + total_length));
+  this->id_ = ACE_WString ((ACE_UINT16 *) (cbuffer + total_length));
   total_length += ACE_WString_Helper::decode (cbuffer + total_length);
-  this->url_ = ACE_WString ((ACE_USHORT16 *) (cbuffer + total_length));
+  this->url_ = ACE_WString ((ACE_UINT16 *) (cbuffer + total_length));
   total_length += ACE_WString_Helper::decode (cbuffer + total_length);
 
   ACE_ASSERT (total_length == buf_size);
