@@ -34,7 +34,8 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE>::activate (
   DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE>::activate");
 
   ::DDS::StatusMask const mask =
-    DataReaderListener_type::get_mask (status);
+    DataReaderListener_type::get_mask (listener,
+                                       status);
 
   if (mask != 0)
     {
