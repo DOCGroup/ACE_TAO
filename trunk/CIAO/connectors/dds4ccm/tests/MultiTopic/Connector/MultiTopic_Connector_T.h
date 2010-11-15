@@ -11,17 +11,17 @@ class DDS_MT_Event_Connector_T
 {
     //square
     virtual
-    typename CCM_TYPE::suppier_sq_traits::data_type::_ptr_type
+    typename CCM_TYPE::supplier_sq_traits::data_type::_ptr_type
     get_supplier_sq_data (void)
     {
-      return CCM_TYPE::suppier_sq_traits::data_type::_nil ();
+      return CCM_TYPE::supplier_sq_traits::data_type::_nil ();
     }
 
     virtual
-    typename CCM_TYPE::suppier_sq_traits::dds_entity_type::_ptr_type
+    typename CCM_TYPE::supplier_sq_traits::dds_entity_type::_ptr_type
     get_supplier_sq_dds_entity (void)
     {
-      return CCM_TYPE::suppier_sq_traits::dds_entity_type::_nil ();
+      return CCM_TYPE::supplier_sq_traits::dds_entity_type::_nil ();
     }
 
     virtual
@@ -187,10 +187,10 @@ class DDS_MT_Event_Connector_T
       return CCM_TYPE::push_consumer_tr_traits::data_control_type::_nil ();
     }
     virtual
-    typename CCM_TYPE::push_consumer_tr_traits::dds_entith_type::_ptr_type
+    typename CCM_TYPE::push_consumer_tr_traits::dds_entity_type::_ptr_type
     get_push_consumer_tr_dds_entity (void)
     {
-      return CCM_TYPE::push_consumer_tr_traits::dds_entith_type::_nil ();
+      return CCM_TYPE::push_consumer_tr_traits::dds_entity_type::_nil ();
     }
 
   //circle
@@ -268,24 +268,24 @@ class DDS_MT_Event_Connector_T
     }
 
     virtual
-    typename CCM_TYPE::push_consumer_cq::data_type::_ptr_type
+    typename CCM_TYPE::push_consumer_cq_traits::data_type::_ptr_type
     get_push_consumer_cq_data (void)
     {
-      return CCM_TYPE::push_consumer_cq::data_type::_nil ();
+      return CCM_TYPE::push_consumer_cq_traits::data_type::_nil ();
     }
 
     virtual
-    typename CCM_TYPE::push_consumer_cq::data_control_type::_ptr_type
+    typename CCM_TYPE::push_consumer_cq_traits::data_control_type::_ptr_type
     get_push_consumer_cq_data_control (void)
     {
-      return CCM_TYPE::push_consumer_cq::data_control_type::_nil ();
+      return CCM_TYPE::push_consumer_cq_traits::data_control_type::_nil ();
     }
 
     virtual
-    typename CCM_TYPE::push_consumer_cq::dds_entity_type::_ptr_type
+    typename CCM_TYPE::push_consumer_cq_traits::dds_entity_type::_ptr_type
     get_push_consumer_cq_dds_entity (void)
     {
-      return CCM_TYPE::push_consumer_cq::dds_entity_type::_nil ();
+      return CCM_TYPE::push_consumer_cq_traits::dds_entity_type::_nil ();
     }
 };
 

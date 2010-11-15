@@ -155,7 +155,7 @@ module CCM_DDS_PSAT
    module Typed_PSAT<typename T, sequence<T> TSeq>
    {
       alias CCM_DDS::Typed<T, TSeq> DDS_Typed;
-      alias CCM_DDS::DDS_Entity<T, TSeq> DDS_Typed_Entity; // @todo, remove again
+      alias DDS_Entity<T, TSeq> DDS_Typed_Entity; // @todo, remove again
 
       local interface PSAT_BufferControl
       {
