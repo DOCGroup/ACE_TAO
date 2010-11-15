@@ -408,14 +408,14 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_publisher (
     this->context_->get_connection_error_listener ();
 
   ::DDS::StatusMask const mask =
-    PublisherListener::get_mask (error_listener.in ());
+      ::CIAO::DDS4CCM::PublisherListener::get_mask (error_listener.in ());
 
   if (mask != 0)
     {
       if (::CORBA::is_nil (this->publisher_listener_.in ()))
         {
           ACE_NEW_THROW_EX (this->publisher_listener_,
-                            PublisherListener (
+                            ::CIAO::DDS4CCM::PublisherListener (
                               error_listener.in (),
                               reactor),
                             ::CORBA::NO_MEMORY ());
