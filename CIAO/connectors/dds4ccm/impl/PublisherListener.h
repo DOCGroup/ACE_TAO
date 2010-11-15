@@ -10,10 +10,9 @@
 #ifndef PUBLISHERLISTENER_T_H_
 #define PUBLISHERLISTENER_T_H_
 
-#include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "dds4ccm/idl/ccm_ddsC.h"
+#include "dds4ccm/idl/dds4ccm_ConnectorStatusListenerC.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
-#include "ace/Copy_Disabled.h"
+#include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;
@@ -23,16 +22,17 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE>
-    class PublisherListener_T :
-      public ::DDS::PublisherListener,
-      private ACE_Copy_Disabled
+    class DDS4CCM_DDS_IMPL_Export PublisherListener :
+      public ::DDS::PublisherListener
     {
     public:
       /// Constructor
-      PublisherListener_T (
+      PublisherListener (
         ::CCM_DDS::ConnectorStatusListener_ptr error_listener,
         ACE_Reactor* reactor);
+
+      /// Destructor
+      virtual ~PublisherListener (void);
 
       virtual void on_offered_deadline_missed (
         ::DDS::DataWriter_ptr the_Writer,
@@ -60,9 +60,6 @@ namespace CIAO
         const ::DDS::ReliableReaderActivityChangedStatus & status);
 #endif
 
-      /// Destructor
-      virtual ~PublisherListener_T (void);
-
       static ::DDS::StatusMask get_mask (
         ::CCM_DDS::ConnectorStatusListener_ptr error_listener);
 
@@ -77,8 +74,6 @@ namespace CIAO
     };
   }
 }
-
-#include "dds4ccm/impl/PublisherListener_T.cpp"
 
 #endif /* PUBLISHERLISTENER_T_H_ */
 
