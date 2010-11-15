@@ -106,7 +106,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
     catch(const CCM_DDS::InternalError& )
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: KeyedTest_Read: ")
-                  ACE_TEXT ("Unexpected NonExistent exception received\n")));
+                  ACE_TEXT ("Unexpected InternalError exception received\n")));
       }
     catch(const CCM_DDS::NonExistent& )
       {
