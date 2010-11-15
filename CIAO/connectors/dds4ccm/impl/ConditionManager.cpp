@@ -52,6 +52,14 @@ namespace CIAO
       return ::DDS::QueryCondition::_duplicate (this->qc_reader_.in ());
     }
 
+    ::DDS::InstanceHandle_t
+    ConditionManager::check_handle (const ::DDS::InstanceHandle_t & instance_handle,
+                                    const ::DDS::InstanceHandle_t & lookup_handle)
+    {
+      return this->ws_.check_handle (instance_handle,
+                                     lookup_handle);
+    }
+
     bool
     ConditionManager::check_condition (
       ::DDS::Condition_ptr condition)
