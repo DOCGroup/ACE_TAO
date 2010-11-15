@@ -197,10 +197,12 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DataReaderListener_T::get_mask");
 
-      ::DDS::StatusMask mask = ::DDS::DATA_AVAILABLE_STATUS;
+      ::DDS::StatusMask mask = 0;
+
       if (! ::CORBA::is_nil (listener) ||
           DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
         {
+          mask = ::DDS::DATA_AVAILABLE_STATUS;
           mask |= ::CIAO::DDS4CCM::PortStatusListener::get_mask (listener);
         }
 
