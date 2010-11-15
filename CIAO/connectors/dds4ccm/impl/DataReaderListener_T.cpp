@@ -193,7 +193,8 @@ namespace CIAO
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::StatusMask
     DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
-      ::CCM_DDS::PortStatusListener_ptr listener)
+      typename CCM_TYPE::data_listener_type::_ptr_type listener,
+      ::CCM_DDS::PortStatusListener_ptr status)
     {
       DDS4CCM_TRACE ("DataReaderListener_T::get_mask");
 
@@ -203,7 +204,7 @@ namespace CIAO
           DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
         {
           mask = ::DDS::DATA_AVAILABLE_STATUS;
-          mask |= ::CIAO::DDS4CCM::PortStatusListener::get_mask (listener);
+          mask |= ::CIAO::DDS4CCM::PortStatusListener::get_mask (status);
         }
 
       if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
