@@ -75,6 +75,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
                                           ::DDS::DataReaderListener::_nil (),
                                           0);
         }
+      this->condition_manager_.set_dds_entity (dr.in ());
       this->dds_read_->set_dds_reader (dr.in (),
                                        &this->condition_manager_);
       this->ccm_data_reader_->set_dds_entity (dr.in ());
@@ -171,6 +172,9 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE>::remove (
     }
   this->cft_setting_->delete_contentfilteredtopic (subscriber);
   this->dds_read_->_set_component (::CORBA::Object::_nil ());
+  this->dds_read_->set_dds_reader (::DDS::DataReader::_nil (),
+                                   0);
+  this->condition_manager_.set_dds_entity (::DDS::DataReader::_nil ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
