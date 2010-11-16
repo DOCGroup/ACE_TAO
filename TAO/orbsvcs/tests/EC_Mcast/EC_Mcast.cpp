@@ -201,8 +201,7 @@ ECM_Driver::open_federations (RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
-      this->local_federations_[i]->open (this->event_count_,
-                                         ec);
+      this->local_federations_[i]->open (this->event_count_, ec);
     }
 }
 
@@ -214,8 +213,7 @@ ECM_Driver::activate_federations (RtecEventChannelAdmin::EventChannel_ptr ec)
   interval *= 10;
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
-      this->local_federations_[i]->activate (ec,
-                                             interval);
+      this->local_federations_[i]->activate (ec, interval);
     }
 }
 
@@ -252,8 +250,7 @@ ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec)
       ACE_NEW (clone,
                TAO_ECG_UDP_Out_Endpoint (this->endpoint_));
 
-      this->all_federations_[i]->open (clone,
-                                       ec);
+      this->all_federations_[i]->open (clone, ec);
     }
 }
 
