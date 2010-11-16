@@ -20,6 +20,7 @@ namespace CIAO_AmiDds_Sender_Impl
   MyFoo_callback_exec_i::~MyFoo_callback_exec_i (void)
   {
   }
+
   void
   MyFoo_callback_exec_i::hello (
     ::CORBA::Long answer)
@@ -33,7 +34,7 @@ namespace CIAO_AmiDds_Sender_Impl
   MyFoo_callback_exec_i::hello_excep (
       ::CCM_AMI::ExceptionHolder * excep_holder)
   {
-        excep_holder->raise_exception ();
+    excep_holder->raise_exception ();
   }
 
   //============================================================
@@ -74,31 +75,32 @@ namespace CIAO_AmiDds_Sender_Impl
     TestTopic i = this->topic_seq_one_[nr];
     i.x = nr + 1;
     try
-    {
-      if (! ::CORBA::is_nil (this->updater_) ) {
-        this->updater_->create_one(i);
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender (DDS4CCM)) :\t")
-                              ACE_TEXT ("create_one with instance key <%C>\n"),
-                              i.key.in()));
-      }
-      else
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: updater_ is nil")));
+        if (! ::CORBA::is_nil (this->updater_) )
+          {
+            this->updater_->create_one(i);
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender (DDS4CCM)) :\t")
+                                  ACE_TEXT ("create_one with instance key <%C>\n"),
+                                  i.key.in()));
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: updater_ is nil")));
+            result= false;
+          }
+      }
+    catch(const CCM_DDS::AlreadyCreated &)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: AlreadyCreated ")
+                              ACE_TEXT ("with test updater create_one <%C>.\n"),
+                              i.key.in()));
         result= false;
       }
-    }
-    catch(const CCM_DDS::AlreadyCreated &)
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: AlreadyCreated ")
-                            ACE_TEXT ("with test updater create_one <%C>.\n"),
-                            i.key.in()));
-      result= false;
-    }
     catch (const CCM_DDS::InternalError& )
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while create_one.\n")));
-      result = false;;
-    }
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while create_one.\n")));
+        result = false;;
+      }
     return result;
   }
 
@@ -110,24 +112,24 @@ namespace CIAO_AmiDds_Sender_Impl
     TestTopic i = this->topic_seq_one_[nr];
     i.x = nr + 1;
     try
-    {
-      this->updater_->update_one(i, DDS::HANDLE_NIL);
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender (DDS4CCM)) :\t")
-                            ACE_TEXT ("update_one with key <%C>\n"),
-                            i.key.in()));
-    }
+      {
+        this->updater_->update_one(i, DDS::HANDLE_NIL);
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender (DDS4CCM)) :\t")
+                              ACE_TEXT ("update_one with key <%C>\n"),
+                              i.key.in()));
+      }
     catch(const CCM_DDS::NonExistent &)
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with")
-                            ACE_TEXT (" test updater update_one <%C>.\n"),
-                            i.key.in()));
-      result = false;
-    }
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent with")
+                              ACE_TEXT (" test updater update_one <%C>.\n"),
+                              i.key.in()));
+        result = false;
+      }
     catch (const CCM_DDS::InternalError& )
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while update_one.\n")));
-      result = false;
-    }
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while update_one.\n")));
+        result = false;
+      }
     return result;
   }
 
@@ -154,12 +156,12 @@ namespace CIAO_AmiDds_Sender_Impl
   {
     //ami4ccm send asynch call
     CORBA::Boolean result = true;
-    ::AmiDds::AMI4CCM_MyFoo_var my_foo_ami_  =
-       context_->get_connection_sendc_run_my_foo();
+    ::AmiDds::AMI4CCM_MyFoo_var my_foo_ami  =
+      this->context_->get_connection_sendc_run_my_foo();
 
     for (int i = 0; i < 2; ++i)
       {
-        if (CORBA::is_nil (my_foo_ami_))
+        if (CORBA::is_nil (my_foo_ami))
           {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT("ERROR Sender (ASYNCH) :")
@@ -171,7 +173,7 @@ namespace CIAO_AmiDds_Sender_Impl
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT("Sender (AMI4CCM)) :\t")
                         ACE_TEXT("Invoke Asynchronous call nr %u\n"),(i + 1)));
-            my_foo_ami_->sendc_hello (new MyFoo_callback_exec_i ());
+            my_foo_ami->sendc_hello (new MyFoo_callback_exec_i ());
           }
       }
     return result;
@@ -183,11 +185,11 @@ namespace CIAO_AmiDds_Sender_Impl
   {
     //send synch call
     CORBA::Boolean result = true;
-    ::AmiDds::MyFoo_var my_foo_ami_  =
-    context_->get_connection_run_my_foo();
+    ::AmiDds::MyFoo_var my_foo_ami =
+      this->context_->get_connection_run_my_foo();
     for (CORBA::Short i = 0; i < 2; ++i)
       {
-        if (CORBA::is_nil (my_foo_ami_))
+        if (CORBA::is_nil (my_foo_ami))
           {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT("ERROR Sender (SYNCH) :")
@@ -200,7 +202,7 @@ namespace CIAO_AmiDds_Sender_Impl
                         ACE_TEXT("Sender (AMI4CCM)) :\t")
                         ACE_TEXT("Invoke SYNCHRONOUS call nr %u\n"),(i + 1)));
             CORBA::Long answer;
-            my_foo_ami_->hello (answer);
+            my_foo_ami->hello (answer);
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT("Sender (AMI4CCM)) :\treceived SYNCHRONOUS")
                         ACE_TEXT(" answer from Receiver <%u>\n"),
@@ -214,58 +216,58 @@ namespace CIAO_AmiDds_Sender_Impl
   Sender_exec_i::tick ()
   {
     if(this->test_ok_.value())
-    {
-      switch (this->test_nr_)
       {
-        case UPDATE_ONE:
-          this->test_ok_ = this->create_one(0);
-          if(this->test_ok_.value())
-            {
-              this->test_ok_ = this->update_one(0);
-            }
-          if(this->test_ok_.value())
-            {
-              this->test_nr_ = SEND_ASYNCH;
-            }
-          else
-            {
+        switch (this->test_nr_)
+          {
+            case UPDATE_ONE:
+              this->test_ok_ = this->create_one(0);
+              if(this->test_ok_.value())
+                {
+                  this->test_ok_ = this->update_one(0);
+                }
+              if(this->test_ok_.value())
+                {
+                  this->test_nr_ = SEND_ASYNCH;
+                }
+              else
+                {
+                  this->test_nr_ = END_TEST;
+                }
+              break;
+            case SEND_ASYNCH:
+              this->test_ok_ = this->send_asynch_call();
+              if(this->test_ok_.value())
+                {
+                  this->test_nr_ = UPDATE_TWO;
+                }
+              else
+                {
+                  this->test_nr_ = END_TEST;
+                }
+              break;
+            case UPDATE_TWO:
+              this->test_ok_ = this->create_one(1);
+              if(this->test_ok_.value())
+                {
+                  this->test_ok_ = this->update_one(1);
+                }
+              if(this->test_ok_.value())
+                {
+                  this->test_nr_ = SEND_SYNCH;
+                }
+              else
+                {
+                  this->test_nr_ = END_TEST;
+                }
+              break;
+            case SEND_SYNCH:
+              this->test_ok_ = this->send_synch_call();
               this->test_nr_ = END_TEST;
-            }
-          break;
-        case SEND_ASYNCH:
-          this->test_ok_ = this->send_asynch_call();
-          if(this->test_ok_.value())
-            {
-              this->test_nr_ = UPDATE_TWO;
-            }
-          else
-            {
-              this->test_nr_ = END_TEST;
-            }
-          break;
-        case UPDATE_TWO:
-          this->test_ok_ = this->create_one(1);
-          if(this->test_ok_.value())
-            {
-              this->test_ok_ = this->update_one(1);
-            }
-          if(this->test_ok_.value())
-            {
-              this->test_nr_ = SEND_SYNCH;
-            }
-          else
-            {
-              this->test_nr_ = END_TEST;
-            }
-          break;
-        case SEND_SYNCH:
-          this->test_ok_ = this->send_synch_call();
-          this->test_nr_ = END_TEST;
-          break;
-        default:
-          break;
+              break;
+            default:
+              break;
+          }
       }
-    }
   }
 
   void
