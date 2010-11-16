@@ -178,10 +178,7 @@ namespace CIAO_Getter_Test_Sender_Impl
         GetterTest *new_key = new GetterTest;
         new_key->key = CORBA::string_dup("KEY_1");
         fixed_key.key = 1;
-        invoker->start_get_one (
-                        CORBA::string_dup("KEY_1"),
-                        1,
-                        last_iter_);
+        invoker->start_get_one ("KEY_1", 1, last_iter_);
         new_key->iteration = last_iter_;
         fixed_key.iteration = last_iter_;
 

@@ -126,10 +126,11 @@ CIAO::DDS4CCM::CCM_DataWriter::get_matched_subscription_data (
 }
 
 void
-CIAO::DDS4CCM::CCM_DataWriter::set_dds_entity (::DDS::DataWriter_ptr dr)
+CIAO::DDS4CCM::CCM_DataWriter::set_dds_entity (::DDS::DataWriter_ptr dw)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DataWriter::set_dds_entity");
-  this->impl_ = ::DDS::DataWriter::_duplicate (dr);
+
+  this->impl_ = ::DDS::DataWriter::_duplicate (dw);
 }
 
 ::DDS::DataWriter_ptr
