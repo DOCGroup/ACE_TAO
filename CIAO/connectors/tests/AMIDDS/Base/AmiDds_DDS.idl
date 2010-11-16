@@ -15,10 +15,10 @@
 
 //topic definition used by dds4ccm functionality
 struct TestTopic {
-    string key; //@key
-    long x;
-  };
+  string key; //@key
+  long x;
+};
 
-  typedef sequence<TestTopic> TestTopicSeq;
+typedef sequence<TestTopic> TestTopicSeq;
 
 #endif

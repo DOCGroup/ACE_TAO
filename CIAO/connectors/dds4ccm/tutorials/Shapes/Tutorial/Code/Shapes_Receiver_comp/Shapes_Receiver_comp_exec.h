@@ -60,7 +60,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
     const ::CCM_DDS::ReadInfo & info);
 
     virtual
-    void on_many_data (const ::Shapes::ShapeTypeSeq & data,
+    void on_many_data (const ::ShapeTypeSeq & data,
     const ::CCM_DDS::ReadInfoSeq & infos);
 
   private:

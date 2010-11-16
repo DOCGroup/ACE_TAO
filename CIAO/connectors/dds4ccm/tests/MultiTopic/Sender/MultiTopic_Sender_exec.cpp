@@ -32,23 +32,23 @@
 namespace CIAO_Shapes_Sender_Impl
 {
   //============================================================
-    // pulse_Generator
-    //============================================================
-    pulse_Generator::pulse_Generator (Sender_exec_i &callback)
-      : pulse_callback_ (callback)
-    {
-    }
+  // pulse_Generator
+  //============================================================
+  pulse_Generator::pulse_Generator (Sender_exec_i &callback)
+    : pulse_callback_ (callback)
+  {
+  }
 
-    pulse_Generator::~pulse_Generator ()
-    {
-    }
+  pulse_Generator::~pulse_Generator ()
+  {
+  }
 
-    int
-    pulse_Generator::handle_timeout (const ACE_Time_Value &, const void *)
-    {
-      this->pulse_callback_.tick ();
-      return 0;
-    }
+  int
+  pulse_Generator::handle_timeout (const ACE_Time_Value &, const void *)
+  {
+    this->pulse_callback_.tick ();
+    return 0;
+  }
 
 
    /**
@@ -63,9 +63,9 @@ namespace CIAO_Shapes_Sender_Impl
       ShapeNr (0)
   {
     this->ticker_ = new pulse_Generator (*this);
-    square_ = new ShapeType;
-    triangle_ = new ShapeType;
-    cirque_ = new ShapeType;
+    this->square_ = new ShapeType;
+    this->triangle_ = new ShapeType;
+    this->cirque_ = new ShapeType;
   }
 
   Sender_exec_i::~Sender_exec_i (void)
@@ -106,10 +106,10 @@ namespace CIAO_Shapes_Sender_Impl
                                            this->instance_handle_sq_);
               ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("UPDATED Shape_info Square for <%C> %u:%u:%u\n"),
-                  square_->color.in (),
-                  square_->x,
-                  square_->y,
-                  square_->shapesize));
+                  this->square_->color.in (),
+                  this->square_->x,
+                  this->square_->y,
+                  this->square_->shapesize));
             }
           else if (this->ShapeNr == 1)
             {
@@ -118,10 +118,10 @@ namespace CIAO_Shapes_Sender_Impl
                                             this->instance_handle_tr_);
               ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("UPDATED Shape_info Triangle for <%C> %u:%u:%u\n"),
-                  triangle_->color.in (),
-                  triangle_->x,
-                  triangle_->y,
-                  triangle_->shapesize));
+                  this->triangle_->color.in (),
+                  this->triangle_->x,
+                  this->triangle_->y,
+                  this->triangle_->shapesize));
             }
           else if (this->ShapeNr == 2)
             {
@@ -130,23 +130,25 @@ namespace CIAO_Shapes_Sender_Impl
                                            this->instance_handle_cq_);
               ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("UPDATED Shape_info Circle for <%C> %u:%u:%u\n"),
-                  cirque_->color.in (),
-                  cirque_->x,
-                  cirque_->y,
-                  cirque_->shapesize));
+                  this->cirque_->color.in (),
+                  this->cirque_->x,
+                  this->cirque_->y,
+                  this->cirque_->shapesize));
              }
         }
       catch (const CCM_DDS::NonExistent& )
         {
+          //TODO: mentioning the correct shape in log message
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Shape_info for <%C> not updated: <%C> didn't exist.\n"),
-                      square_->color.in (), square_->color.in ()));
+                      this->square_->color.in (), this->square_->color.in ()));
         }
       catch (const CCM_DDS::InternalError& )
         {
+          //TODO: mentioning the correct shape in log message
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Internal Error while updating Shape_info for <%C>.\n"),
-                      square_->color.in ()));
+                      this->square_->color.in ()));
         }
     }
 
@@ -252,12 +254,14 @@ namespace CIAO_Shapes_Sender_Impl
       }
     catch (const CCM_DDS::NonExistent& )
       {
+        //TODO: mentioning the correct shape in log message
         ACE_ERROR ((LM_ERROR,
             ACE_TEXT ("Shape_info for <%C> not deleted: <%C> didn't exist.\n"),
             square_->color.in (), square_->color.in ()));
       }
     catch (const CCM_DDS::InternalError& )
       {
+        //TODO: mentioning the correct shape in log message
         ACE_ERROR ((LM_ERROR,
             ACE_TEXT ("Internal Error while deleting Shape_info for <%C>.\n"),
             square_->color.in ()));
@@ -300,22 +304,22 @@ namespace CIAO_Shapes_Sender_Impl
   Sender_exec_i::ccm_activate (void)
   {
     ACE_DEBUG ((LM_DEBUG,
-       ACE_TEXT ("    444Sender_exec_i::ccm_activate\n")));
+      ACE_TEXT ("   444Sender_exec_i::ccm_activate\n")));
 
-    square_->x = ACE_OS::rand () % this->max_x_;
-    square_->y = ACE_OS::rand () % this->max_y_;
-    square_->shapesize = max_size_;
-    square_->color = CORBA::string_dup("GREEN");
+    this->square_->x = ACE_OS::rand () % this->max_x_;
+    this->square_->y = ACE_OS::rand () % this->max_y_;
+    this->square_->shapesize = max_size_;
+    this->square_->color = CORBA::string_dup("GREEN");
 
-    triangle_->x = ACE_OS::rand () % this->max_x_;
-    triangle_->y = ACE_OS::rand () % this->max_y_;
-    triangle_->shapesize = max_size_;
-    triangle_->color = CORBA::string_dup("GREEN");
+    this->triangle_->x = ACE_OS::rand () % this->max_x_;
+    this->triangle_->y = ACE_OS::rand () % this->max_y_;
+    this->triangle_->shapesize = max_size_;
+    this->triangle_->color = CORBA::string_dup("GREEN");
 
-    cirque_->x = ACE_OS::rand () % this->max_x_;
-    cirque_->y = ACE_OS::rand () % this->max_y_;
-    cirque_->shapesize = max_size_;
-    cirque_->color = CORBA::string_dup("GREEN");
+    this->cirque_->x = ACE_OS::rand () % this->max_x_;
+    this->cirque_->y = ACE_OS::rand () % this->max_y_;
+    this->cirque_->shapesize = max_size_;
+    this->cirque_->color = CORBA::string_dup("GREEN");
 
 
 
@@ -327,19 +331,21 @@ namespace CIAO_Shapes_Sender_Impl
                   square_->shapesize));
 /*    try
       {
-        this->instance_handle_sq_ = this->writer_sq_->register_instance (*square_);
-        this->instance_handle_tr_ = this->writer_tr_->register_instance (*triangle_);
-        this->instance_handle_cq_ = this->writer_cq_->register_instance (*cirque_);
+        this->instance_handle_sq_ = this->writer_sq_->register_instance (*this->square_);
+        this->instance_handle_tr_ = this->writer_tr_->register_instance (*this->triangle_);
+        this->instance_handle_cq_ = this->writer_cq_->register_instance (*this->cirque_);
       }
     catch (const CCM_DDS::AlreadyCreated& )
       {
+        //TODO: mentioning the correct shape in log message
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Shape_info for <%C> already created.\n"),
-                    square_->color.in ()));
+                    this->square_->color.in ()));
       }
     catch (const CCM_DDS::InternalError& )
       {
+        //TODO: mentioning the correct shape in log message
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating Shape_info for <%C>.\n"),
-                      square_->color.in ()));
+                      this->square_->color.in ()));
       }
     this->start ();
 */
