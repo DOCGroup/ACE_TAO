@@ -121,7 +121,7 @@ namespace CIAO_AmiDds_Receiver_Impl
   Receiver_exec_i::ccm_activate (void)
   {
     ::CCM_DDS::DataListenerControl_var dlc =
-        this->context_->get_connection_info_out_data_control ();
+      this->context_->get_connection_info_out_data_control ();
     dlc->mode (::CCM_DDS::ONE_BY_ONE);
   }
 

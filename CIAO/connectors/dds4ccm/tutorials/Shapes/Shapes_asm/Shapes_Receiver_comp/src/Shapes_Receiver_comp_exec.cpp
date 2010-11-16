@@ -36,7 +36,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   }
 
   void
-  info_out_data_listener_exec_i::on_many_data (const ::Shapes::ShapeTypeSeq & /* data */,
+  info_out_data_listener_exec_i::on_many_data (const ::ShapeTypeSeq & /* data */,
   const ::CCM_DDS::ReadInfoSeq & /* infos */)
   {
     /* Your code here. */

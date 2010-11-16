@@ -1,3 +1,18 @@
+Tue Nov 16 11:21:24 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/MultiTopic/Connector/ccm_dds_mt.idl:
+        * connectors/dds4ccm/tests/MultiTopic/Receiver/MultiTopic_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/MultiTopic/Sender/MultiTopic_Sender_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.cpp:
+        * connectors/tests/AMIDDS/Base/AmiDds_DDS.idl:
+        * connectors/tests/AMIDDS/Receiver/AmiDds_Receiver_exec.cpp:
+        * connectors/tests/AMIDDS/Sender/AmiDds_Sender_exec.cpp:
+          Layout changes.
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Receiver_comp/Shapes_Receiver_comp_exec.h:
+          Resolved compile error.
+
 Mon Nov 15 18:27:05 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.h:

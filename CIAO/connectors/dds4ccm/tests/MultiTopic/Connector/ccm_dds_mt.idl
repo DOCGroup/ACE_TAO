@@ -26,12 +26,12 @@
 module CCM_DDS_MT
 {
   module Typed_MT<typename T, sequence<T> TSeq>
-   {
-     alias CCM_DDS::Typed<T, TSeq> DDS_Typed;
-     alias DDS_Entity<T, TSeq> DDS_Typed_Entity; // @todo to be removed
+    {
+      alias CCM_DDS::Typed<T, TSeq> DDS_Typed;
+      alias DDS_Entity<T, TSeq> DDS_Typed_Entity; // @todo to be removed
       // DDS MT Connector
       // ------------------
-     connector DDS_MT_Event : CCM_DDS::DDS_TopicBase{
+      connector DDS_MT_Event : CCM_DDS::DDS_TopicBase {
            mirrorport DDS_Typed::DDS_Write            supplier_sq;
            mirrorport DDS_Typed::DDS_Get              pull_consumer_sq;
            mirrorport DDS_Typed::DDS_Listen           push_consumer_sq;
@@ -42,7 +42,7 @@ module CCM_DDS_MT
            mirrorport DDS_Typed::DDS_Get              pull_consumer_cq;
            mirrorport DDS_Typed::DDS_Listen           push_consumer_cq;
 
-       };
+      };
    };
 };
 

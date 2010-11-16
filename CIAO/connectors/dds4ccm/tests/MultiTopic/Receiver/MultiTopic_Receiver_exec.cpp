@@ -239,86 +239,87 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   void
-   Receiver_exec_i::get_one (void)
-   {
-     ShapeType_var shape_info;
-     ::CCM_DDS::ReadInfo_var readinfo;
+  Receiver_exec_i::get_one (void)
+  {
+    ShapeType_var shape_info;
+    ::CCM_DDS::ReadInfo_var readinfo;
 
-     try
-       {
-         if (this->getter_sq_->get_one (shape_info.out (), readinfo.out ()))
-           {
-             time_t tim = readinfo->source_timestamp.sec;
-             tm* time = ACE_OS::localtime(&tim);
-             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ReadInfo square-> ")
-                                    ACE_TEXT ("date = %02d:%02d:%02d.%d\n"),
-                                 time->tm_hour,
-                                 time->tm_min,
-                                 time->tm_sec,
-                                 readinfo->source_timestamp.nanosec));
-             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ShapeType square : ")
-                                    ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
-                 shape_info->color.in (),
-                 shape_info->x,
-                 shape_info->y,
-                 shape_info->shapesize));
-           }
-         else
-           {
-             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE square No data available for <%C>\n"),
+    try
+      {
+        if (this->getter_sq_->get_one (shape_info.out (), readinfo.out ()))
+          {
+            time_t tim = readinfo->source_timestamp.sec;
+            tm* time = ACE_OS::localtime(&tim);
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ReadInfo square-> ")
+                                  ACE_TEXT ("date = %02d:%02d:%02d.%d\n"),
+                                  time->tm_hour,
+                                  time->tm_min,
+                                  time->tm_sec,
+                                  readinfo->source_timestamp.nanosec));
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ShapeType square : ")
+                                  ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
+                                  shape_info->color.in (),
+                                  shape_info->x,
+                                  shape_info->y,
+                                  shape_info->shapesize));
+          }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE square No data available for <%C>\n"),
                      shape_info->color.in ()));
-           }
-         if (this->getter_tr_->get_one (shape_info.out (), readinfo.out ()))
-             {
-               time_t tim = readinfo->source_timestamp.sec;
-               tm* time = ACE_OS::localtime(&tim);
-               ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ReadInfo triangle-> ")
-                                      ACE_TEXT ("date = %02d:%02d:%02d.%d\n"),
-                                   time->tm_hour,
-                                   time->tm_min,
-                                   time->tm_sec,
-                                   readinfo->source_timestamp.nanosec));
-               ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ShapeType triangle: ")
-                                      ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
-                   shape_info->color.in (),
-                   shape_info->x,
-                   shape_info->y,
-                   shape_info->shapesize));
-             }
-           else
-             {
-               ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE triangle No data available for <%C>\n"),
-                       shape_info->color.in ()));
-             }
+          }
+        if (this->getter_tr_->get_one (shape_info.out (), readinfo.out ()))
+          {
+            time_t tim = readinfo->source_timestamp.sec;
+            tm* time = ACE_OS::localtime(&tim);
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ReadInfo triangle-> ")
+                                  ACE_TEXT ("date = %02d:%02d:%02d.%d\n"),
+                                  time->tm_hour,
+                                  time->tm_min,
+                                  time->tm_sec,
+                                  readinfo->source_timestamp.nanosec));
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ShapeType triangle: ")
+                                  ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
+                                  shape_info->color.in (),
+                                  shape_info->x,
+                                  shape_info->y,
+                                  shape_info->shapesize));
+          }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE triangle No data available for <%C>\n"),
+                        shape_info->color.in ()));
+          }
 
-         if (this->getter_cq_->get_one (shape_info.out (), readinfo.out ()))
-             {
-               time_t tim = readinfo->source_timestamp.sec;
-               tm* time = ACE_OS::localtime(&tim);
-               ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE circle ReadInfo -> ")
-                                      ACE_TEXT ("date = %02d:%02d:%02d.%d\n"),
-                                   time->tm_hour,
-                                   time->tm_min,
-                                   time->tm_sec,
-                                   readinfo->source_timestamp.nanosec));
-               ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ShapeType  circle: ")
-                                      ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
-                   shape_info->color.in (),
-                   shape_info->x,
-                   shape_info->y,
-                   shape_info->shapesize));
-             }
-           else
-             {
-               ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE  circle No data available for <%C>\n"),
+        if (this->getter_cq_->get_one (shape_info.out (), readinfo.out ()))
+          {
+            time_t tim = readinfo->source_timestamp.sec;
+            tm* time = ACE_OS::localtime(&tim);
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE circle ReadInfo -> ")
+                                  ACE_TEXT ("date = %02d:%02d:%02d.%d\n"),
+                                  time->tm_hour,
+                                  time->tm_min,
+                                  time->tm_sec,
+                                  readinfo->source_timestamp.nanosec));
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ShapeType  circle: ")
+                                  ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
+                                  shape_info->color.in (),
+                                  shape_info->x,
+                                  shape_info->y,
+                                  shape_info->shapesize));
+          }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE  circle No data available for <%C>\n"),
                        shape_info->color.in ()));
-             }
-       }
-     catch(const CCM_DDS::NonExistent& )
+          }
+      }
+    catch(const CCM_DDS::NonExistent& )
        {
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ShapeType_Read_One: no shape_info receieved\n")));
        }
-   }
+  }
+
   // Supported operations and attributes.
   ACE_Reactor*
   Receiver_exec_i::reactor (void)
@@ -340,6 +341,7 @@ namespace CIAO_Shapes_Receiver_Impl
       }
     return reactor;
   }
+
   void
   Receiver_exec_i::start (void)
   {
@@ -351,18 +353,18 @@ namespace CIAO_Shapes_Receiver_Impl
                 0,
                 ACE_Time_Value (0, usec),
                 ACE_Time_Value (0, usec)) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
-                             ACE_TEXT ("Error scheduling timer")));
-    }
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
+                              ACE_TEXT ("Error scheduling timer")));
+      }
   }
 
-    void
-    Receiver_exec_i::stop (void)
-    {
-      this->reactor ()->cancel_timer (this->ticker_);
-      delete this->ticker_;
-     }
+  void
+  Receiver_exec_i::stop (void)
+  {
+    this->reactor ()->cancel_timer (this->ticker_);
+    delete this->ticker_;
+  }
   // Component attributes and port operations.
 
   ::Shapes::DDS_Typed::CCM_Listener_ptr
@@ -386,23 +388,23 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   ::Shapes::DDS_Typed::CCM_Listener_ptr
-   Receiver_exec_i::get_info_out_tr_data_listener (void)
-   {
-     if ( ::CORBA::is_nil (this->ciao_info_out_data_listener_.in ()))
-       {
-         info_out_data_listener_exec_i *tmp = 0;
-         ACE_NEW_RETURN (
-           tmp,
-           info_out_data_listener_exec_i (
-             this->ciao_context_.in ()),
-             ::Shapes::DDS_Typed::CCM_Listener::_nil ());
+  Receiver_exec_i::get_info_out_tr_data_listener (void)
+  {
+    if ( ::CORBA::is_nil (this->ciao_info_out_data_listener_.in ()))
+      {
+        info_out_data_listener_exec_i *tmp = 0;
+        ACE_NEW_RETURN (
+          tmp,
+          info_out_data_listener_exec_i (
+            this->ciao_context_.in ()),
+            ::Shapes::DDS_Typed::CCM_Listener::_nil ());
 
-           this->ciao_info_out_data_listener_ = tmp;
-       }
+        this->ciao_info_out_data_listener_ = tmp;
+      }
 
-     return
-       ::Shapes::DDS_Typed::CCM_Listener::_duplicate (
-         this->ciao_info_out_data_listener_.in ());
+    return
+      ::Shapes::DDS_Typed::CCM_Listener::_duplicate (
+        this->ciao_info_out_data_listener_.in ());
    }
 
   ::Shapes::DDS_Typed::CCM_Listener_ptr
@@ -446,44 +448,44 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
-    Receiver_exec_i::get_info_out_tr_status (void)
-    {
-      if ( ::CORBA::is_nil (this->ciao_info_out_status_.in ()))
-        {
-          info_out_status_exec_i *tmp = 0;
-          ACE_NEW_RETURN (
-            tmp,
-            info_out_status_exec_i (
-              this->ciao_context_.in ()),
-              ::CCM_DDS::CCM_PortStatusListener::_nil ());
+  Receiver_exec_i::get_info_out_tr_status (void)
+  {
+    if ( ::CORBA::is_nil (this->ciao_info_out_status_.in ()))
+      {
+        info_out_status_exec_i *tmp = 0;
+        ACE_NEW_RETURN (
+          tmp,
+          info_out_status_exec_i (
+            this->ciao_context_.in ()),
+            ::CCM_DDS::CCM_PortStatusListener::_nil ());
 
-            this->ciao_info_out_status_ = tmp;
-        }
+        this->ciao_info_out_status_ = tmp;
+      }
 
-      return
-        ::CCM_DDS::CCM_PortStatusListener::_duplicate (
-          this->ciao_info_out_status_.in ());
-    }
+    return
+      ::CCM_DDS::CCM_PortStatusListener::_duplicate (
+        this->ciao_info_out_status_.in ());
+  }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
-    Receiver_exec_i::get_info_out_cq_status (void)
-    {
-      if ( ::CORBA::is_nil (this->ciao_info_out_status_.in ()))
-        {
-          info_out_status_exec_i *tmp = 0;
-          ACE_NEW_RETURN (
-            tmp,
-            info_out_status_exec_i (
-              this->ciao_context_.in ()),
-              ::CCM_DDS::CCM_PortStatusListener::_nil ());
+  Receiver_exec_i::get_info_out_cq_status (void)
+  {
+    if ( ::CORBA::is_nil (this->ciao_info_out_status_.in ()))
+      {
+        info_out_status_exec_i *tmp = 0;
+        ACE_NEW_RETURN (
+          tmp,
+          info_out_status_exec_i (
+            this->ciao_context_.in ()),
+            ::CCM_DDS::CCM_PortStatusListener::_nil ());
 
-            this->ciao_info_out_status_ = tmp;
-        }
+          this->ciao_info_out_status_ = tmp;
+      }
 
-      return
-        ::CCM_DDS::CCM_PortStatusListener::_duplicate (
-          this->ciao_info_out_status_.in ());
-    }
+    return
+      ::CCM_DDS::CCM_PortStatusListener::_duplicate (
+        this->ciao_info_out_status_.in ());
+  }
 
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -507,44 +509,44 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
-    Receiver_exec_i::get_info_get_tr_status (void)
-    {
-      if ( ::CORBA::is_nil (this->ciao_info_get_status_.in ()))
-        {
-          info_get_status_exec_i *tmp = 0;
-          ACE_NEW_RETURN (
-            tmp,
-            info_get_status_exec_i (
-              this->ciao_context_.in ()),
-              ::CCM_DDS::CCM_PortStatusListener::_nil ());
+  Receiver_exec_i::get_info_get_tr_status (void)
+  {
+    if ( ::CORBA::is_nil (this->ciao_info_get_status_.in ()))
+      {
+        info_get_status_exec_i *tmp = 0;
+        ACE_NEW_RETURN (
+          tmp,
+          info_get_status_exec_i (
+            this->ciao_context_.in ()),
+            ::CCM_DDS::CCM_PortStatusListener::_nil ());
 
-            this->ciao_info_get_status_ = tmp;
-        }
+          this->ciao_info_get_status_ = tmp;
+      }
 
-      return
-        ::CCM_DDS::CCM_PortStatusListener::_duplicate (
-          this->ciao_info_get_status_.in ());
-    }
+    return
+      ::CCM_DDS::CCM_PortStatusListener::_duplicate (
+        this->ciao_info_get_status_.in ());
+  }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
-    Receiver_exec_i::get_info_get_cq_status (void)
-    {
-      if ( ::CORBA::is_nil (this->ciao_info_get_status_.in ()))
-        {
-          info_get_status_exec_i *tmp = 0;
-          ACE_NEW_RETURN (
-            tmp,
-            info_get_status_exec_i (
-              this->ciao_context_.in ()),
-              ::CCM_DDS::CCM_PortStatusListener::_nil ());
+  Receiver_exec_i::get_info_get_cq_status (void)
+  {
+    if ( ::CORBA::is_nil (this->ciao_info_get_status_.in ()))
+      {
+        info_get_status_exec_i *tmp = 0;
+        ACE_NEW_RETURN (
+          tmp,
+          info_get_status_exec_i (
+            this->ciao_context_.in ()),
+            ::CCM_DDS::CCM_PortStatusListener::_nil ());
 
-            this->ciao_info_get_status_ = tmp;
-        }
+          this->ciao_info_get_status_ = tmp;
+      }
 
-      return
-        ::CCM_DDS::CCM_PortStatusListener::_duplicate (
-          this->ciao_info_get_status_.in ());
-    }
+    return
+      ::CCM_DDS::CCM_PortStatusListener::_duplicate (
+        this->ciao_info_get_status_.in ());
+  }
 
   ::CORBA::ULong
   Receiver_exec_i::rate (void)
@@ -623,24 +625,23 @@ namespace CIAO_Shapes_Receiver_Impl
            ACE_TEXT (" 333 Receiver_exec_i::configuration_complete\n")));
 
     if (this->read_data ())
-       {
-         this->reader_sq_ = this->ciao_context_->get_connection_info_out_sq_data ();
-         if (::CORBA::is_nil (this->reader_sq_.in ()))
-            {
-              ACE_ERROR ((LM_INFO,
+      {
+        this->reader_sq_ = this->ciao_context_->get_connection_info_out_sq_data ();
+        if (::CORBA::is_nil (this->reader_sq_.in ()))
+          {
+            ACE_ERROR ((LM_INFO,
                       ACE_TEXT ("Error:  get_connection_info_out_sq_data is null!\n")));
-              throw ::CORBA::INTERNAL ();
-            }
+            throw ::CORBA::INTERNAL ();
+          }
          this->reader_tr_ = this->ciao_context_->get_connection_info_out_tr_data ();
          this->reader_cq_ = this->ciao_context_->get_connection_info_out_cq_data ();
-
-       }
-     if (this->get_data ())
-       {
-         this->getter_sq_ = this->ciao_context_->get_connection_info_get_sq_fresh_data ();
-         this->getter_tr_ = this->ciao_context_->get_connection_info_get_tr_fresh_data ();
-         this->getter_cq_ = this->ciao_context_->get_connection_info_get_cq_fresh_data ();
-       }
+      }
+    if (this->get_data ())
+      {
+        this->getter_sq_ = this->ciao_context_->get_connection_info_get_sq_fresh_data ();
+        this->getter_tr_ = this->ciao_context_->get_connection_info_get_tr_fresh_data ();
+        this->getter_cq_ = this->ciao_context_->get_connection_info_get_cq_fresh_data ();
+      }
   }
 
   void
@@ -649,7 +650,7 @@ namespace CIAO_Shapes_Receiver_Impl
     ACE_DEBUG ((LM_DEBUG,
            ACE_TEXT ("    444Receiver_exec_i::ccm_activate\n")));
     ::CCM_DDS::DataListenerControl_var lc_sq =
-    this->ciao_context_->get_connection_info_out_sq_data_control ();
+      this->ciao_context_->get_connection_info_out_sq_data_control ();
     if (::CORBA::is_nil (lc_sq.in ()))
       {
         ACE_ERROR ((LM_INFO,
@@ -665,7 +666,7 @@ namespace CIAO_Shapes_Receiver_Impl
       {
         ACE_ERROR ((LM_INFO,
             ACE_TEXT ("Error:  Listener control receptacle tr is null!\n")));
-          throw ::CORBA::INTERNAL ();
+        throw ::CORBA::INTERNAL ();
       }
     lc_tr->mode (::CCM_DDS::ONE_BY_ONE);
 
@@ -675,7 +676,7 @@ namespace CIAO_Shapes_Receiver_Impl
       {
         ACE_ERROR ((LM_INFO,
             ACE_TEXT ("Error:  Listener control receptacle cq is null!\n")));
-           throw ::CORBA::INTERNAL ();
+        throw ::CORBA::INTERNAL ();
       }
 
     lc_cq->mode (::CCM_DDS::ONE_BY_ONE);
