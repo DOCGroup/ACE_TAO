@@ -123,7 +123,7 @@ Control::join (Federated_Test::Peer_ptr peer)
                 this->peers_[j]->setup_loopback (experiment_id,
                                                  base_event_type + 2);
 
-              ACE_AUTO_PTR_RESET (disconnects[lcount],
+              ACE_auto_ptr_reset (disconnects[lcount],
                                   new Loopback_Disconnect (
                                         loopbacks[lcount].in ()));
               lcount++;
