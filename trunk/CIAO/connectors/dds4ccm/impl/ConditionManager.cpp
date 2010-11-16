@@ -423,7 +423,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager::set_dds_entity");
 
-      this->dr_ = dr;
+      this->dr_ = ::DDS::DataReader::_duplicate (dr);
     }
 
     ::DDS::DataReader_ptr

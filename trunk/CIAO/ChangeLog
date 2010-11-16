@@ -1,3 +1,15 @@
+Tue Nov 16 14:26:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/CCM_DataWriter.h:
+        * connectors/dds4ccm/impl/CCM_DataWriter.cpp:
+        * connectors/dds4ccm/impl/ConditionManager.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+          Resolved shutdown issues in some of the tests.
+
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+          Resolved memory leak.
+
 Tue Nov 16 11:21:24 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/MultiTopic/Connector/ccm_dds_mt.idl:

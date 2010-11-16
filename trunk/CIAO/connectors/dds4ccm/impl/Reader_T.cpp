@@ -307,11 +307,9 @@ namespace CIAO
       ::DDS::DataReader_ptr dr,
       ConditionManager * condition_manager)
     {
-      DDS4CCM_TRACE ("Reader_T::set_dds_writer");
-
+      DDS4CCM_TRACE ("Reader_T::set_dds_reader");
       this->dds_reader_ = DDS_READER_TYPE::_narrow (dr);
       this->condition_manager_ = condition_manager;
-      this->condition_manager_->set_dds_entity (dr);
     }
 
     template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
