@@ -30,6 +30,12 @@ module ThreeComp
       long bar (in long cmd, out string answer)
         raises (InternalError);
     };
+  // test with no ciao ami4ccm interface, no pragma, see above
+  interface MyBar
+    {
+      long testbar (in long cmd, out string answer)
+        raises (InternalError);
+    };
 };
 
 #endif
