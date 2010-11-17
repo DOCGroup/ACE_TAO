@@ -1472,6 +1472,9 @@ Key_List::output_lookup_array (void)
                   // Since we've already generated the keyword table
                   // we need to use it!
                   this->output_switch (1);
+
+                  delete [] duplicates;
+                  delete [] lookup_array;
                   return 1; // 1 indicates that we've changed our mind...
                 }
             }
