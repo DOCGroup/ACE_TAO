@@ -59,7 +59,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
 
   private:
     Receiver_exec_i &callback_;
-    const char * key_;
+    CORBA::String_var key_;
     CORBA::Long fixed_key_;
     CORBA::Long iteration_;
   };
