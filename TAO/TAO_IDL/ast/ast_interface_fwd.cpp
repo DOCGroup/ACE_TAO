@@ -203,6 +203,7 @@ AST_InterfaceFwd::full_definition (void)
 void
 AST_InterfaceFwd::set_full_definition (AST_Interface *nfd)
 {
+  this->pd_full_definition->destroy ();
   delete this->pd_full_definition;
   this->pd_full_definition = nfd;
 }

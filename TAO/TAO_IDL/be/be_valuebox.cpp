@@ -58,7 +58,8 @@ void
 be_valuebox::destroy (void)
 {
   // Call the destroy methods of our base classes.
-  this->AST_Type::destroy ();
+  this->AST_ValueBox::destroy ();
+  this->be_type::destroy ();
 }
 
 

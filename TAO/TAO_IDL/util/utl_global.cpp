@@ -1663,7 +1663,7 @@ IDL_GlobalData::add_dcps_data_type (const char* id)
       newinfo->name_ = target;
 
       // Add the newly formed entry to the map.
-      if (this->dcps_type_info_map_.bind (id, newinfo) != 0)
+      if (this->dcps_type_info_map_.bind (foo_type, newinfo) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Unable to insert type into ")
