@@ -28,6 +28,7 @@
 #include "Getter_Test_Receiver_exec.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
+#include "ace/OS_NS_sys_time.h"
 
 namespace CIAO_Getter_Test_Receiver_Impl
 {
@@ -396,9 +397,9 @@ namespace CIAO_Getter_Test_Receiver_Impl
     getter->time_out (to);
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::get_one_variable: "
                           "Start getting data from DDS: "
-                          "key <%C> - iteration <%ld> "
+                          "key <%C> - iteration <%d> "
                           " with timeout: "
-                          "sec <%ld> - nanosec <%u>\n",
+                          "sec <%d> - nanosec <%u>\n",
                           key, iteration,
                           getter->time_out ().sec,
                           getter->time_out ().nanosec));
