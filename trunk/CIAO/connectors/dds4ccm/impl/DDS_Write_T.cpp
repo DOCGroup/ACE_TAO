@@ -32,7 +32,8 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
   const char* profile_name)
 {
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
-  if (::CORBA::is_nil (this->dds_write_->get_dds_writer ()))
+  ::DDS::DataWriter_var dw = this->dds_write_->get_dds_writer ();
+  if (::CORBA::is_nil (dw.in ()))
     {
       ::DDS::DataWriter_var dwv_tmp;
       if (library_name && profile_name)
