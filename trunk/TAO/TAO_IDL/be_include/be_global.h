@@ -825,6 +825,9 @@ public:
   bool gen_ciao_conn_impl (void) const;
   void gen_ciao_conn_impl (bool val);
 
+  bool gen_dds_typesupport_idl (void) const;
+  void gen_dds_typesupport_idl (bool val);
+
   bool gen_ciao_valuefactory_reg (void) const;
   void gen_ciao_valuefactory_reg (bool val);
 
@@ -1180,10 +1183,12 @@ private:
   bool gen_ciao_exec_impl_;
   bool gen_ciao_exec_reactor_impl_;
 
-
   /// False by default, this flag triggers code generation
   /// for CCM connector implementations.
   bool gen_ciao_conn_impl_;
+
+  /// Used for DDS implementations other than OpenDDS.
+  bool gen_dds_typesupport_idl_;
 
   /// Generate automatic valuetype factory registration in
   /// CIAO servants.
