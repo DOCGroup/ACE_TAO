@@ -154,9 +154,13 @@ namespace CIAO
           this->remove_conditions ();
         }
 
-      if ( ::CORBA::is_nil (this->qc_reader_.in ()))
+      if (::CORBA::is_nil (this->qc_reader_.in ()))
         {
           // We're sure the query is not set yet.
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                        ACE_TEXT ("Creating query condition for the reader: ")
+                        ACE_TEXT ("expression <%C>\n"),
+                        filter.expression.in ()));
           this->qc_reader_ = this->dds_entity ()->create_querycondition (
                                 ::DDS::READ_SAMPLE_STATE | ::DDS::NOT_READ_SAMPLE_STATE,
                                 ::DDS::NEW_VIEW_STATE | ::DDS::NOT_NEW_VIEW_STATE,
@@ -165,6 +169,10 @@ namespace CIAO
                                 filter.parameters);
           if ( ::CORBA::is_nil (this->qc_getter_.in ()))
             {
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                            ACE_TEXT ("Creating query condition for the getter: ")
+                            ACE_TEXT ("expression <%C>\n"),
+                            filter.expression.in ()));
               this->qc_getter_ = this->dds_entity ()->create_querycondition (
                                     ::DDS::NOT_READ_SAMPLE_STATE,
                                     ::DDS::NEW_VIEW_STATE | ::DDS::NOT_NEW_VIEW_STATE,
@@ -177,6 +185,10 @@ namespace CIAO
             }
           if ( ::CORBA::is_nil (this->qc_listener_.in ()))
             {
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                            ACE_TEXT ("Creating query condition for the listener: ")
+                            ACE_TEXT ("expression <%C>\n"),
+                            filter.expression.in ()));
               this->qc_listener_ = this->dds_entity ()->create_querycondition (
                                           ::DDS::NOT_READ_SAMPLE_STATE,
                                           ::DDS::NEW_VIEW_STATE | ::DDS::NOT_NEW_VIEW_STATE,
@@ -202,7 +214,9 @@ namespace CIAO
             {
               DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                             ACE_TEXT ("ConditionManager::query - ")
-                            ACE_TEXT ("All query conditions created successfully\n")));
+                            ACE_TEXT ("All query conditions created successfully: ")
+                            ACE_TEXT ("expression <%C>\n"),
+                            filter.expression.in ()));
             }
         }
       else if (ACE_OS::strlen (filter.expression.in ()) > 0)
