@@ -63,6 +63,8 @@ namespace CIAO
       ::DDS::DataWriterListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::set_listener");
+
       // Delete the previously set listener
       DDSDataWriterListener *listener = this->rti_entity ()->get_listener ();
       delete listener;
@@ -81,6 +83,8 @@ namespace CIAO
     ::DDS::DataWriterListener_ptr
     DataWriter_T<DDS_TYPE>::get_listener (void)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::get_listener");
+
       DDSDataWriterListener *wr = this->rti_entity ()->get_listener ();
       DDS_DataWriterListener_i * list_proxy =
         dynamic_cast <DDS_DataWriterListener_i *> (wr);
@@ -98,6 +102,8 @@ namespace CIAO
     ::DDS::Topic_ptr
     DataWriter_T<DDS_TYPE>::get_topic (void)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::get_topic");
+
       ::DDS::Topic_var retval;
       DDSTopic* t = this->rti_entity ()->get_topic ();
       ACE_NEW_THROW_EX (retval,
@@ -110,20 +116,24 @@ namespace CIAO
     ::DDS::Publisher_ptr
     DataWriter_T<DDS_TYPE>::get_publisher (void)
     {
-/*      ::DDS::Publisher_var retval;
-      DDSPublisher* p = this->rti_entity ()->get_publisher ();
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::get_publisher");
+
+      ::DDS::Publisher_var retval;
+      DDSPublisher * p = this->rti_entity ()->get_publisher ();
       ACE_NEW_THROW_EX (retval,
-                        Publisher_type (p),
-                        ::CORBA::NO_MEMORY ());*/
-/*      return retval._retn ();*/
-return 0;
+                        DDS_Publisher_i (p,
+                                         ::DDS::DomainParticipant::_nil ()),
+                        ::CORBA::NO_MEMORY ());
+      return retval._retn ();
     }
 
     template <typename DDS_TYPE>
     ::DDS::ReturnCode_t
     DataWriter_T<DDS_TYPE>::wait_for_acknowledgments (const ::DDS::Duration_t & max_wait)
     {
-     ::DDS_Duration_t rtiduration;
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::wait_for_acknowledgments");
+
+      ::DDS_Duration_t rtiduration;
      rtiduration <<= max_wait;
      return this->rti_entity ()->wait_for_acknowledgments (rtiduration);
     }
@@ -132,6 +142,8 @@ return 0;
     ::DDS::ReturnCode_t
     DataWriter_T<DDS_TYPE>::get_liveliness_lost_status (::DDS::LivelinessLostStatus & status)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::get_liveliness_lost_status");
+
       ::DDS_LivelinessLostStatus ddsstatus;
       ddsstatus <<= status;
       ::DDS::ReturnCode_t const retval =
@@ -145,6 +157,8 @@ return 0;
     DataWriter_T<DDS_TYPE>::get_offered_deadline_missed_status (
       ::DDS::OfferedDeadlineMissedStatus & status)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::get_offered_deadline_missed_status");
+
       ::DDS_OfferedDeadlineMissedStatus ddsstatus;
       ddsstatus <<= status;
       ::DDS::ReturnCode_t const retval =
@@ -158,6 +172,8 @@ return 0;
     DataWriter_T<DDS_TYPE>::get_offered_incompatible_qos_status (
       ::DDS::OfferedIncompatibleQosStatus & status)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::get_offered_incompatible_qos_status");
+
       ::DDS_OfferedIncompatibleQosStatus ddsstatus;
       ddsstatus <<= status;
       ::DDS::ReturnCode_t const retval =
@@ -171,6 +187,8 @@ return 0;
     DataWriter_T<DDS_TYPE>::get_publication_matched_status (
       ::DDS::PublicationMatchedStatus & status)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::get_publication_matched_status");
+
       ::DDS_PublicationMatchedStatus ddsstatus;
       ddsstatus <<= status;
       ::DDS::ReturnCode_t const retval =
@@ -183,6 +201,8 @@ return 0;
     ::DDS::ReturnCode_t
     DataWriter_T<DDS_TYPE>::assert_liveliness (void)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::assert_liveliness");
+
       return this->rti_entity ()->assert_liveliness ();
     }
 
@@ -191,6 +211,8 @@ return 0;
     DataWriter_T<DDS_TYPE>::get_matched_subscriptions (
       ::DDS::InstanceHandleSeq & subscription_handles)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::get_matched_subscription");
+
       ::DDS_InstanceHandleSeq rtiseq;
       rtiseq <<= subscription_handles;
       ::DDS::ReturnCode_t const retval =
@@ -205,11 +227,14 @@ return 0;
       ::DDS::SubscriptionBuiltinTopicData & subscription_data,
       DDS_INSTANCE_HANDLE_T_IN subscription_handle)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::get_matched_subscription_data");
+
       ::DDS_SubscriptionBuiltinTopicData ccm_dds_sub_data;
       ::DDS_InstanceHandle_t ccm_dds_sub_handle;
       ccm_dds_sub_handle <<= subscription_handle;
       ::DDS::ReturnCode_t const retval =
-        this->rti_entity ()->get_matched_subscription_data (ccm_dds_sub_data, ccm_dds_sub_handle);
+        this->rti_entity ()->get_matched_subscription_data (ccm_dds_sub_data,
+                                                            ccm_dds_sub_handle);
       subscription_data <<= ccm_dds_sub_data;
       return retval;
     }
@@ -218,6 +243,8 @@ return 0;
     ::DDS::ReturnCode_t
     DataWriter_T<DDS_TYPE>::enable (void)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::enable");
+
       return this->rti_entity ()->enable ();
     }
 
@@ -225,6 +252,8 @@ return 0;
     ::DDS::StatusCondition_ptr
     DataWriter_T<DDS_TYPE>::get_statuscondition (void)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::get_statuscondition");
+
       ::DDS::StatusCondition_var retval;
       DDSStatusCondition* sc = this->rti_entity ()->get_statuscondition ();
       ACE_NEW_THROW_EX (retval,
@@ -237,6 +266,8 @@ return 0;
     ::DDS::StatusMask
     DataWriter_T<DDS_TYPE>::get_status_changes (void)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::get_status_changes");
+
       return this->rti_entity ()->get_status_changes ();
     }
 
@@ -244,6 +275,8 @@ return 0;
     DDS_INSTANCE_HANDLE_T_RETN
     DataWriter_T<DDS_TYPE>::get_instance_handle (void)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::get_instance_handle");
+
       ::DDS_InstanceHandle_t const rtihandle =
         this->rti_entity ()->get_instance_handle ();
       ::DDS::InstanceHandle_t handle;
@@ -256,6 +289,8 @@ return 0;
     DataWriter_T<DDS_TYPE>::register_instance (
         const typename DDS_TYPE::value_type& instance_data)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::register_instance");
+
       ::DDS::InstanceHandle_t dds_handle;
       ::DDS_InstanceHandle_t const handle = this->rti_entity ()->register_instance (instance_data);
       dds_handle <<= handle;
@@ -268,6 +303,8 @@ return 0;
         const typename  DDS_TYPE::value_type & instance_data,
         const ::DDS::Time_t & source_timestamp)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::register_instance_w_timestamp");
+
       ::DDS_Time_t time;
       time <<= source_timestamp;
       ::DDS_InstanceHandle_t const rtihandle =
@@ -283,6 +320,8 @@ return 0;
         const typename  DDS_TYPE::value_type & instance_data,
         const ::DDS::InstanceHandle_t & handle)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::unregister_instance");
+
       ::DDS_InstanceHandle_t instance_handle = ::DDS_HANDLE_NIL;
       instance_handle <<= handle;
       return this->rti_entity ()->unregister_instance (instance_data, instance_handle);
@@ -295,11 +334,15 @@ return 0;
         const ::DDS::InstanceHandle_t & handle,
         const ::DDS::Time_t & source_timestamp)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::unregister_instance_w_timestamp");
+
       ::DDS_InstanceHandle_t instance_handle = ::DDS_HANDLE_NIL;
       instance_handle <<= handle;
       ::DDS_Time_t time;
       time <<= source_timestamp;
-      return this->rti_entity ()->unregister_instance_w_timestamp (instance_data, instance_handle, time);
+      return this->rti_entity ()->unregister_instance_w_timestamp (instance_data,
+                                                                   instance_handle,
+                                                                   time);
     }
 
     template <typename DDS_TYPE>
@@ -308,6 +351,8 @@ return 0;
         const typename DDS_TYPE::value_type & instance_data,
         const ::DDS::InstanceHandle_t & handle)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::write");
+
       ::DDS_InstanceHandle_t instance_handle = ::DDS_HANDLE_NIL;
       instance_handle <<= handle;
       return this->rti_entity ()->write (instance_data, instance_handle);
@@ -320,11 +365,15 @@ return 0;
         const ::DDS::InstanceHandle_t & handle,
         const ::DDS::Time_t & source_timestamp)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::write_w_timestamp");
+
       ::DDS_InstanceHandle_t instance_handle = ::DDS_HANDLE_NIL;
       instance_handle <<= handle;
       ::DDS_Time_t time;
       time <<= source_timestamp;
-      return this->rti_entity ()->write_w_timestamp (instance_data, instance_handle, time);
+      return this->rti_entity ()->write_w_timestamp (instance_data,
+                                                     instance_handle,
+                                                     time);
     }
 
     template <typename DDS_TYPE>
@@ -333,6 +382,8 @@ return 0;
         const typename DDS_TYPE::value_type& instance_data,
         const ::DDS::InstanceHandle_t & handle)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::dispose");
+
       ::DDS_InstanceHandle_t instance_handle = ::DDS_HANDLE_NIL;
       instance_handle <<= handle;
       return this->rti_entity ()->dispose (instance_data, instance_handle);
@@ -345,11 +396,15 @@ return 0;
         const ::DDS::InstanceHandle_t & handle,
         const ::DDS::Time_t & source_timestamp)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::dispose_w_timestamp");
+
       ::DDS_InstanceHandle_t instance_handle = ::DDS_HANDLE_NIL;
       instance_handle <<= handle;
       ::DDS_Time_t time;
       time <<= source_timestamp;
-      return this->rti_entity ()->dispose_w_timestamp (instance_data, instance_handle, time);
+      return this->rti_entity ()->dispose_w_timestamp (instance_data,
+                                                       instance_handle,
+                                                       time);
     }
 
     template <typename DDS_TYPE>
@@ -358,6 +413,8 @@ return 0;
         typename DDS_TYPE::value_type & key_holder,
         const ::DDS::InstanceHandle_t & handle)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::get_key_value");
+
       ::DDS_InstanceHandle_t instance_handle = ::DDS_HANDLE_NIL;
       instance_handle <<= handle;
       return this->rti_entity ()->get_key_value (key_holder, instance_handle);
@@ -368,6 +425,8 @@ return 0;
     DataWriter_T<DDS_TYPE>::lookup_instance (
         const typename DDS_TYPE::value_type& instance_data)
     {
+      DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::lookup_instance");
+
       ::DDS_InstanceHandle_t const rtihandle =
         this->rti_entity ()->lookup_instance (instance_data);
       ::DDS::InstanceHandle_t handle;
