@@ -45,6 +45,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
   void
   Component_exec_i::ccm_activate (void)
   {
+    typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
     try
       {
         ::DDS::DataWriter_var dw1 =
@@ -56,18 +57,31 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
                         "Datawriter 1 connection is NIL.\n"));
             throw ::CORBA::INTERNAL ();
           }
-        typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
-        DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw1.in ());
-        if (typed_ccm_dw)
+
+        ::CIAO::DDS4CCM::CCM_DataWriter * ccm_dw1 =
+          dynamic_cast < ::CIAO::DDS4CCM::CCM_DataWriter * > (dw1.in ());
+
+        if (ccm_dw1)
           {
-            DDSDataWriter * dds_dw1 = typed_ccm_dw->get_rti_entity ();
-            DDSPublisher * dds_p1 = dds_dw1->get_publisher ();
-            this->dds_dp1_ = dds_p1->get_participant ();
+            DataWriter_type * typed_ccm_dw =
+              dynamic_cast <DataWriter_type *> (ccm_dw1->get_dds_entity ());
+            if (typed_ccm_dw)
+              {
+                DDSDataWriter * dds_dw1 = typed_ccm_dw->get_rti_entity ();
+                DDSPublisher * dds_p1 = dds_dw1->get_publisher ();
+                this->dds_dp1_ = dds_p1->get_participant ();
+              }
+            else
+              {
+                ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
+                            "Error casting DataWriter 1 to typed DataWriter 1\n"));
+                throw ::CORBA::INTERNAL ();
+              }
           }
         else
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
-                        "Error casting DataWriter 1 to typed DataWriter 1\n"));
+                        "Error casting DataWriter 1 to CCM DataWriter 1\n"));
             throw ::CORBA::INTERNAL ();
           }
       }
@@ -88,18 +102,30 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             throw ::CORBA::INTERNAL ();
           }
 
-        typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
-        DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw2.in ());
-        if (typed_ccm_dw)
+        ::CIAO::DDS4CCM::CCM_DataWriter * ccm_dw2 =
+          dynamic_cast < ::CIAO::DDS4CCM::CCM_DataWriter * > (dw2.in ());
+
+        if (ccm_dw2)
           {
-            DDSDataWriter * dds_dw2 = typed_ccm_dw->get_rti_entity ();
-            DDSPublisher * dds_p2 = dds_dw2->get_publisher ();
-            this->dds_dp2_ = dds_p2->get_participant ();
+            DataWriter_type * typed_ccm_dw =
+              dynamic_cast <DataWriter_type *> (ccm_dw2->get_dds_entity ());
+            if (typed_ccm_dw)
+              {
+                DDSDataWriter * dds_dw2 = typed_ccm_dw->get_rti_entity ();
+                DDSPublisher * dds_p2 = dds_dw2->get_publisher ();
+                this->dds_dp2_ = dds_p2->get_participant ();
+              }
+            else
+              {
+                ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
+                            "Error casting DataWriter 2 to typed DataWriter 2\n"));
+                throw ::CORBA::INTERNAL ();
+              }
           }
         else
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
-                        "Error casting DataWriter 2 to typed DataWriter 2\n"));
+                        "Error casting DataWriter 2 to CCM DataWriter 2\n"));
             throw ::CORBA::INTERNAL ();
           }
       }
@@ -120,18 +146,30 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             throw ::CORBA::INTERNAL ();
           }
 
-        typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
-        DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw3.in ());
-        if (typed_ccm_dw)
+        ::CIAO::DDS4CCM::CCM_DataWriter * ccm_dw3 =
+          dynamic_cast < ::CIAO::DDS4CCM::CCM_DataWriter * > (dw3.in ());
+
+        if (ccm_dw3)
           {
-            DDSDataWriter * dds_dw3 = typed_ccm_dw->get_rti_entity ();
-            DDSPublisher * dds_p3 = dds_dw3->get_publisher ();
-            this->dds_dp3_ = dds_p3->get_participant ();
+            DataWriter_type * typed_ccm_dw =
+              dynamic_cast <DataWriter_type *> (ccm_dw3->get_dds_entity ());
+            if (typed_ccm_dw)
+              {
+                DDSDataWriter * dds_dw3 = typed_ccm_dw->get_rti_entity ();
+                DDSPublisher * dds_p3 = dds_dw3->get_publisher ();
+                this->dds_dp3_ = dds_p3->get_participant ();
+              }
+            else
+              {
+                ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
+                            "Error casting DataWriter 3 to typed DataWriter 3\n"));
+                throw ::CORBA::INTERNAL ();
+              }
           }
         else
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
-                        "Error casting DataWriter 3 to typed DataWriter 3\n"));
+                        "Error casting DataWriter 3 to CCM DataWriter 3\n"));
             throw ::CORBA::INTERNAL ();
           }
       }
