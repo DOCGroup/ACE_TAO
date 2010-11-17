@@ -159,8 +159,9 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE>::remove (
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE>::remove");
 
+  ::DDS::DataReader_var dr = this->dds_read_->get_dds_reader ();
   ::DDS::ReturnCode_t const retval =
-    subscriber->delete_datareader (this->dds_read_->get_dds_reader ());
+    subscriber->delete_datareader (dr.in ());
   if (retval != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
