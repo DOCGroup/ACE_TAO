@@ -63,7 +63,12 @@ be_type::compute_tc_name (void)
   static char namebuf [NAMEBUFSIZE];
   UTL_ScopedName *n = this->name ();
 
-  this->tc_name_ = 0;
+  if (this->tc_name_ != 0)
+    {
+      this->tc_name_->destroy ();
+      delete this->tc_name_;
+      this->tc_name_ = 0;
+    }
 
   ACE_OS::memset (namebuf,
                   '\0',

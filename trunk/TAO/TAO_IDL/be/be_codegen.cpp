@@ -3865,10 +3865,12 @@ TAO_CodeGen::destroy (void)
   delete this->ciao_svnt_source_;
   delete this->ciao_exec_header_;
   delete this->ciao_exec_source_;
+  delete this->ciao_exec_idl_;
   delete this->ciao_conn_header_;
   delete this->ciao_conn_source_;
-  delete this->ciao_exec_idl_;
   delete this->ciao_ami_conn_idl_;
+  delete this->ciao_ami_rh_impl_header_;
+  delete this->ciao_ami_rh_impl_source_;
   delete this->gperf_input_stream_;
   delete [] this->gperf_input_filename_;
 }
