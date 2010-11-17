@@ -49,7 +49,7 @@ private:
   void gen_datareader (be_type *node);
 
   /// Manage streams and files.
-  int init_file (be_decl *node);
+  int init_file (void);
   void fini_file (void);
 
 private:
