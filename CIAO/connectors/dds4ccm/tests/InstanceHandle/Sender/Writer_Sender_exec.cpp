@@ -227,26 +227,39 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
+    typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
+
     ::DDS::DataWriter_var dds_dw =
       this->context_->get_connection_info_write_dds_entity ();
 
-    typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
-    DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type*> (dds_dw.in ());
-    if (typed_ccm_dw)
+    ::CIAO::DDS4CCM::CCM_DataWriter * ccm_dw =
+      dynamic_cast < ::CIAO::DDS4CCM::CCM_DataWriter * > (dds_dw.in ());
+
+    if (ccm_dw)
       {
-        this->dds_writer_ = WriterTestDataWriter::narrow (typed_ccm_dw->get_rti_entity ());
-        if (!this->dds_writer_)
+        DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type*> (ccm_dw->get_dds_entity ());
+        if (typed_ccm_dw)
+          {
+            this->dds_writer_ = WriterTestDataWriter::narrow (typed_ccm_dw->get_rti_entity ());
+            if (!this->dds_writer_)
+              {
+                ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::configuration_complete - "
+                            "Error casting the typed CCM DataWriter to a typed "
+                            "DDS DataWriter.\n"));
+                throw ::CORBA::INTERNAL ();
+              }
+          }
+        else
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::configuration_complete - "
-                        "Error casting the typed CCM DataWriter to a typed "
-                        "DDS DataWriter.\n"));
+                        "Error casting DataWriter_var to typed DataWriter\n"));
             throw ::CORBA::INTERNAL ();
           }
       }
     else
       {
         ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::configuration_complete - "
-                    "Error casting DataWriter_var to typed DataWriter\n"));
+                    "Error casting DataWriter to CCM DataWriter\n"));
         throw ::CORBA::INTERNAL ();
       }
   }

@@ -1,3 +1,8 @@
+Wed Nov 17 11:15:15 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.cpp:
+          Resolved runtime casting errors.
+
 Wed Nov 17 11:04:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/tests/AMIDDS/Base/AmiDds_Base.idl:
