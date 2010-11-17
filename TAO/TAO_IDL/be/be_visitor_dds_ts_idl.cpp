@@ -42,6 +42,15 @@ be_visitor_dds_ts_idl::~be_visitor_dds_ts_idl (void)
 int
 be_visitor_dds_ts_idl::visit_root (be_root *node)
 {
+  if (this->init_file () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_dds_ts_idl")
+                         ACE_TEXT ("::visit_root - ")
+                         ACE_TEXT ("failed to initialize\n")),
+                        -1);
+    }
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -50,6 +59,8 @@ be_visitor_dds_ts_idl::visit_root (be_root *node)
                          ACE_TEXT ("codegen for scope failed\n")),
                         -1);
     }
+
+  this->fini_file ();
 
   return 0;
 }
@@ -90,23 +101,12 @@ be_visitor_dds_ts_idl::visit_valuetype (be_valuetype *node)
 int
 be_visitor_dds_ts_idl::process_node (be_type *node)
 {
-  if (this->init_file (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_dds_ts_idl")
-                         ACE_TEXT ("::process_node - ")
-                         ACE_TEXT ("failed to initialize\n")),
-                        -1);
-    }
-
   be_util::gen_nesting_open (*this->os_ptr_, node);
 
   this->gen_datawriter (node);
   this->gen_datareader (node);
 
   be_util::gen_nesting_close (*this->os_ptr_, node);
-
-  this->fini_file ();
 
   return 0;
 }
@@ -320,10 +320,13 @@ be_visitor_dds_ts_idl::gen_datareader (be_type *node)
 }
 
 int
-be_visitor_dds_ts_idl::init_file (be_decl *node)
+be_visitor_dds_ts_idl::init_file (void)
 {
-  /// Open a uniquely-named IDL file for writing.
-  ACE_CString fname_noext (node->flat_name ());
+  /// Open an IDL file for writing.
+  ACE_CString orig (
+    idl_global->stripped_filename ()->get_string ());
+
+  ACE_CString fname_noext (orig.substr (0, orig.rfind ('.')));
   fname_noext += "TypeSupport";
 
   ACE_CString fname (fname_noext);
