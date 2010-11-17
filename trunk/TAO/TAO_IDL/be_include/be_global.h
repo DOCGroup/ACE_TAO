@@ -852,6 +852,9 @@ public:
   bool alt_mapping (void) const;
   void alt_mapping (bool val);
 
+  bool in_facet_servant (void) const;
+  void in_facet_servant (bool val);
+
   unsigned long tab_size (void) const;
   void tab_size (unsigned long val);
 
@@ -1208,8 +1211,11 @@ private:
   /// 2 spaces by default, can be set from the command line.
   unsigned int tab_size_;
 
+  /// Are we generating STL types?
   bool alt_mapping_;
-  // Are we generating STL types?
+
+  /// Are we generating a facet servant?
+  bool in_facet_servant_;
 };
 
 #endif /* _BE_GLOBAL_H */

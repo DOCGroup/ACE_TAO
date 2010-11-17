@@ -105,16 +105,21 @@ be_provides::gen_facet_svnt_decl (TAO_OutStream &os)
       be_interface *intf =
         be_interface::narrow_from_decl (impl);
 
+      be_global->in_facet_servant (true);
+
       int status =
         intf->traverse_inheritance_graph (
           be_interface::op_attr_decl_helper,
           &os);
 
+      be_global->in_facet_servant (false);
+
       if (status == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_provides::gen_facet - ")
-                             ACE_TEXT ("traverse_inheritance_graph() failed\n")),
+                             ACE_TEXT ("traverse_inheritance_graph()")
+                             ACE_TEXT (" failed\n")),
                             -1);
         }
     }
@@ -314,6 +319,14 @@ be_facet_op_attr_defn_helper::emit (be_interface * /* derived_interface */,
             {
               be_operation *op =
                 be_operation::narrow_from_decl (d);
+
+              /// If AMI implied IDL was generated for the
+              /// original interface, we don't want those
+              /// extra operations in the facet servant.
+              if (op->is_sendc_ami ())
+                {
+                  continue;
+                }
 
               be_visitor_operation_svs v (&ctx);
               v.scope (op_scope_);

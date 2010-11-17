@@ -2667,23 +2667,45 @@ be_interface::op_attr_decl_helper (be_interface * /*derived */,
     {
       // Get the next AST decl node
       AST_Decl *d = si.item ();
+      AST_Decl::NodeType nt = d->node_type ();
 
-      if (d->node_type () == AST_Decl::NT_op)
+      if (nt == AST_Decl::NT_op)
         {
           be_operation *op = be_operation::narrow_from_decl (d);
+
+          /// No sendc_* operations in facet servants. If the
+          /// original interface had these generated as AMI
+          /// implied IDL, we want to skip them.
+          if (be_global->in_facet_servant () && op->is_sendc_ami ())
+            {
+              continue;
+            }
+
           be_visitor_operation_ch v (&ctx);
 
           if (v.visit_operation (op) == -1)
             {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_interface::")
+                                 ACE_TEXT ("op_attr_decl_helper - ")
+                                 ACE_TEXT ("visit_operation()")
+                                 ACE_TEXT (" failed\n")),
+                                -1);
             }
         }
-      else if (d->node_type () == AST_Decl::NT_attr)
+      else if (nt == AST_Decl::NT_attr)
         {
           be_attribute *attr = be_attribute::narrow_from_decl (d);
           be_visitor_attribute v (&ctx);
 
           if (v.visit_attribute (attr) == -1)
             {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_interface::")
+                                 ACE_TEXT ("op_attr_decl_helper - ")
+                                 ACE_TEXT ("visit_attribute()")
+                                 ACE_TEXT (" failed\n")),
+                                -1);
             }
         }
     }
