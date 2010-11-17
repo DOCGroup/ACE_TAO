@@ -16,7 +16,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_InterInOutT_AMI_Receiver_Impl</string>
+          <string>create_InterInOutT_Receiver_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -67,7 +67,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_InterInOutT_AMI_Sender_Impl</string>
+          <string>create_InterInOutT_Sender_Impl</string>
         </value>
       </value>
     </execParameter>

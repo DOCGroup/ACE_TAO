@@ -185,7 +185,7 @@ if ($em_status != 0) {
 }
 
 if ($tg_exe_man->WaitForFileTimed ($ior_embase,
-                                $tg_exe_man->ProcessStartWaitInterval ()) == -1) {
+                                  $tg_exe_man->ProcessStartWaitInterval ()) == -1) {
     print STDERR
       "ERROR: The ior file of execution manager could not be found\n";
     kill_open_processes ();

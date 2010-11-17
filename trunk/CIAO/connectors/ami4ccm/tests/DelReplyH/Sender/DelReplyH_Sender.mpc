@@ -92,11 +92,13 @@ project(AMI_DelReplyH_Base_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
 
   Source_Files {
     DelReplyH_Sender_exec.cpp
+    DelReplyHA_conn_i.cpp
   }
 
   Header_Files {
     DelReplyH_Sender_exec.h
     DelReplyH_Sender_exec_export.h
+    DelReplyHA_conn_i.h
   }
 
   Inline_Files {
