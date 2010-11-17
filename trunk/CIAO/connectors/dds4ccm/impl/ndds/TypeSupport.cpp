@@ -35,7 +35,9 @@ namespace CIAO
     }
 
     ::DDS::DataWriter_ptr
-     DDS_TypeSupport_i::create_datawriter (DDSDataWriter* dw, ::DDS::DomainParticipant_ptr dp)
+     DDS_TypeSupport_i::create_datawriter (DDSDataWriter* dw,
+                                           ::DDS::DomainParticipant_ptr dp,
+                                           ::DDS::Publisher_ptr pub)
     {
       const char* type = dw->get_topic ()->get_type_name();
       DDS_TypeFactory_i *f = type_factories [type];
@@ -45,7 +47,7 @@ namespace CIAO
                         "DDS_TypeSupport_i::create_datawriter - "
                         "Created DDSDataWriter for type %C\n", type));
 
-          return f->create_datawriter (dw, dp);
+          return f->create_datawriter (dw, dp, pub);
         }
 
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -56,7 +58,9 @@ namespace CIAO
     }
 
     ::DDS::DataReader_ptr
-     DDS_TypeSupport_i::create_datareader (DDSDataReader* dr, ::DDS::DomainParticipant_ptr dp)
+     DDS_TypeSupport_i::create_datareader (DDSDataReader* dr,
+                                           ::DDS::DomainParticipant_ptr dp,
+                                           ::DDS::Subscriber_ptr sub)
     {
       const char* type = dr->get_topicdescription ()->get_type_name();
       DDS_TypeFactory_i *f = type_factories [type];
@@ -66,7 +70,7 @@ namespace CIAO
                         "DDS_TypeSupport_i::create_datareader - "
                         "Created DDSDataReader for type %C\n", type));
 
-          return f->create_datareader (dr, dp);
+          return f->create_datareader (dr, dp, sub);
         }
 
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO

@@ -25,9 +25,11 @@ namespace CIAO
     template <typename DDS_TYPE>
     DataWriter_T<DDS_TYPE>::DataWriter_T (
       ::DDSDataWriter * dw,
-      ::DDS::DomainParticipant_ptr dp)
-      : rti_entity_ (0),
-        dp_ (::DDS::DomainParticipant::_duplicate (dp))
+      ::DDS::DomainParticipant_ptr dp,
+      ::DDS::Publisher_ptr pub)
+      : rti_entity_ (0)
+        , dp_ (::DDS::DomainParticipant::_duplicate (dp))
+        , pub_ (::DDS::Publisher::_duplicate (pub))
     {
       if (dw)
         {
@@ -118,13 +120,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DataWriter_T<DDS_TYPE>::get_publisher");
 
-      ::DDS::Publisher_var retval;
-      DDSPublisher * p = this->rti_entity ()->get_publisher ();
-      ACE_NEW_THROW_EX (retval,
-                        DDS_Publisher_i (p,
-                                         ::DDS::DomainParticipant::_nil ()),
-                        ::CORBA::NO_MEMORY ());
-      return retval._retn ();
+      return ::DDS::Publisher::_duplicate (this->pub_.in ());
     }
 
     template <typename DDS_TYPE>

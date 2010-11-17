@@ -144,7 +144,8 @@ namespace CIAO
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_drl,
-                            DDS_DataReaderListener_i (a_listener, ::DDS::DataReader::_nil ()),
+                            DDS_DataReaderListener_i (a_listener,
+                                                      ::DDS::DataReader::_nil ()),
                             ::CORBA::NO_MEMORY ());
         }
 
@@ -191,7 +192,10 @@ namespace CIAO
         }
 
       ccm_dds_dr->enable ();
-      ::DDS::DataReader_var reader = DDS_TypeSupport_i::create_datareader (ccm_dds_dr, this->dp_.in ());
+      ::DDS::DataReader_var reader = DDS_TypeSupport_i::create_datareader (
+                                                                ccm_dds_dr,
+                                                                this->dp_.in (),
+                                                                this);
       if (ccm_dds_drl)
         {
           ccm_dds_drl->set_dds_entity (reader.in ());
@@ -268,7 +272,9 @@ namespace CIAO
                         profile_name));
         }
 
-      ::DDS::DataReader_var reader = DDS_TypeSupport_i::create_datareader (ccm_dds_dr, this->dp_.in ());
+      ::DDS::DataReader_var reader = DDS_TypeSupport_i::create_datareader (ccm_dds_dr,
+                                                                           this->dp_.in (),
+                                                                           this);
       if (ccm_dds_drl)
         {
           ccm_dds_drl->set_dds_entity (reader.in ());
@@ -328,7 +334,9 @@ namespace CIAO
       DDSDataReader* dr = this->rti_entity ()->lookup_datareader (impl_name);
       if (dr)
         {
-          retval = DDS_TypeSupport_i::create_datareader (dr, this->dp_.in ());
+          retval = DDS_TypeSupport_i::create_datareader (dr,
+                                                         this->dp_.in (),
+                                                         this);
         }
       return retval._retn();
     }
@@ -354,7 +362,10 @@ namespace CIAO
           readers.length (dds_readers.length ());
           for (::DDS_Long i = 0; i < dds_readers.length (); ++i)
             {
-              ::DDS::DataReader_var rdr = DDS_TypeSupport_i::create_datareader (dds_readers[i], this->dp_.in ());
+              ::DDS::DataReader_var rdr = DDS_TypeSupport_i::create_datareader (
+                                                                dds_readers[i],
+                                                                this->dp_.in (),
+                                                                this);
               readers [i] = rdr._retn ();
             }
         }
