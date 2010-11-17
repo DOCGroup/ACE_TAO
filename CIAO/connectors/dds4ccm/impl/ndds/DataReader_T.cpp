@@ -198,21 +198,47 @@ namespace CIAO
 
       DDS_SampleInfoSeq dds_sample_infos;
       dds_sample_infos <<= sample_infos;
-
-      DDS_ReadCondition_i * dds_condition_proxy =
-        dynamic_cast <DDS_ReadCondition_i *>(a_condition);
-      DDSReadCondition * dds_condition = 0;
-      if (dds_condition_proxy)
-        {
-          dds_condition = dds_condition_proxy->get_rti_entity ();
-        }
       typename DDS_TYPE::dds_seq_type dds_data_values;
 
-      ::DDS::ReturnCode_t const retcode_take_w_condition =
-        this->rti_entity ()->take_w_condition (dds_data_values,
-                                               dds_sample_infos,
-                                               max_samples,
-                                               dds_condition);
+      ::DDS::ReturnCode_t retcode_take_w_condition = ::DDS::RETCODE_ERROR;
+
+      DDS_ReadCondition_i * dds_rc_proxy =
+        dynamic_cast <DDS_ReadCondition_i *>(a_condition);
+
+      if (dds_rc_proxy)
+        {
+          DDSReadCondition * dds_rc =
+            dds_rc_proxy->get_rti_entity ();
+          retcode_take_w_condition = this->rti_entity ()->take_w_condition (
+                                                                dds_data_values,
+                                                                dds_sample_infos,
+                                                                max_samples,
+                                                                dds_rc);
+        }
+      else
+        {
+          DDS_QueryCondition_i * dds_qc_proxy =
+            dynamic_cast <DDS_QueryCondition_i *>(a_condition);
+          if (dds_qc_proxy)
+            {
+              DDSQueryCondition * dds_qc =
+                dds_qc_proxy->get_rti_entity ();
+              retcode_take_w_condition = this->rti_entity ()->take_w_condition (
+                                                                dds_data_values,
+                                                                dds_sample_infos,
+                                                                max_samples,
+                                                                dds_qc);
+            }
+          else
+            {
+              retcode_take_w_condition = this->rti_entity ()->take_w_condition (
+                                                                dds_data_values,
+                                                                dds_sample_infos,
+                                                                max_samples,
+                                                                0);
+            }
+        }
+
       this->complete_read (dds_data_values, data_values,
                            dds_sample_infos, sample_infos,
                            retcode_take_w_condition, "read_w_condition");

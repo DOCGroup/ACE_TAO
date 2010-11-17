@@ -1,3 +1,14 @@
+Wed Nov 17 09:12:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager.cpp:
+          Improved logging
+
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+          Layout change.
+
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+          Resolved test errors regarding take_w_condition.
+
 Wed Nov 17 08:23:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component_exec.cpp:
