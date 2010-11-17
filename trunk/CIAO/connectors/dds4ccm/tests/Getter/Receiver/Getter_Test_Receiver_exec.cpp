@@ -149,7 +149,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
                                 CORBA::Long fixed_key,
                                 CORBA::Long iteration)
     : callback_ (callback)
-      , key_ (key)
+      , key_ (CORBA::string_dup (key))
       , fixed_key_ (fixed_key)
       , iteration_ (iteration)
   {
@@ -165,7 +165,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
   int
   GetOneHandler::handle_exception (ACE_HANDLE)
   {
-    this->callback_.get_one (this->key_, this->fixed_key_, this->iteration_);
+    this->callback_.get_one (this->key_.in (), this->fixed_key_, this->iteration_);
     return 0;
   }
 

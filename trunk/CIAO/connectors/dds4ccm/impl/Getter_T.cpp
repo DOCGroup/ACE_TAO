@@ -185,27 +185,27 @@ namespace CIAO
                         "Error while reading from DDS: <%C>\n",
                         translate_retcode (retcode)));
 
-    //               ::DDS::ReturnCode_t const retval =
-    //                 this->dds_reader ()->return_loan (data, sample_info);
-    //               if (retval != ::DDS::RETCODE_OK)
-    //                 {
-    //                   DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-    //                     "Getter_Base_T::get_many - "
-    //                     "Error returning loan to DDS - <%C>\n",
-    //                     translate_retcode (retval)));
-    //                 }
+                  ::DDS::ReturnCode_t const retval =
+                    this->dds_reader ()->return_loan (data, sample_info);
+                  if (retval != ::DDS::RETCODE_OK)
+                    {
+                      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "Getter_Base_T::get_many - "
+                        "Error returning loan to DDS - <%C>\n",
+                        translate_retcode (retval)));
+                    }
                   throw ::CCM_DDS::InternalError (retcode, 1);
                 }
 
-    //           ::DDS::ReturnCode_t const retval =
-    //             this->dds_reader ()->return_loan (data, sample_info);
-    //           if (retval != ::DDS::RETCODE_OK)
-    //             {
-    //               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-    //                 "Getter_Base_T::get_many - "
-    //                 "Error returning loan to DDS - <%C>\n",
-    //                 translate_retcode (retval)));
-    //             }
+              ::DDS::ReturnCode_t const retval =
+                this->dds_reader ()->return_loan (data, sample_info);
+              if (retval != ::DDS::RETCODE_OK)
+                {
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                    "Getter_Base_T::get_many - "
+                    "Error returning loan to DDS - <%C>\n",
+                    translate_retcode (retval)));
+                }
             }
         }
       return true;
@@ -308,15 +308,15 @@ namespace CIAO
                             "Error while reading from DDS: <%C>\n",
                             translate_retcode (retcode)));
 
-    //                   ::DDS::ReturnCode_t const retval =
-    //                     this->dds_reader ()->return_loan (data, sample_info);
-    //                   if (retval != ::DDS::RETCODE_OK)
-    //                     {
-    //                       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-    //                         "Getter_Base_T::get_one - "
-    //                         "Error returning loan to DDS - <%C>\n",
-    //                         translate_retcode (retval)));
-    //                     }
+                      ::DDS::ReturnCode_t const retval =
+                        this->dds_reader ()->return_loan (data, sample_info);
+                      if (retval != ::DDS::RETCODE_OK)
+                        {
+                          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                            "Getter_Base_T::get_one - "
+                            "Error returning loan to DDS - <%C>\n",
+                            translate_retcode (retval)));
+                        }
 
                       throw ::CCM_DDS::InternalError (retcode, 1);
                     }
@@ -333,15 +333,15 @@ namespace CIAO
                             "No valid available in DDS.\n"));
                     }
                   // Return the loan of each read.
-    //               ::DDS::ReturnCode_t const retval =
-    //                 this->dds_reader ()->return_loan (data, sample_info);
-    //               if (retval != ::DDS::RETCODE_OK)
-    //                 {
-    //                   DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-    //                     "Getter_T::get_one - "
-    //                     "Error returning loan to DDS - <%C>\n",
-    //                     translate_retcode (retval)));
-    //                 }
+                  ::DDS::ReturnCode_t const retval =
+                    this->dds_reader ()->return_loan (data, sample_info);
+                  if (retval != ::DDS::RETCODE_OK)
+                    {
+                      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "Getter_T::get_one - "
+                        "Error returning loan to DDS - <%C>\n",
+                        translate_retcode (retval)));
+                    }
                 }
             }
         }
@@ -380,8 +380,8 @@ namespace CIAO
                   ::DDS::SampleInfoSeq sample_info;
                   SEQ_VALUE_TYPE data;
                   ::DDS::ReturnCode_t const retcode = this->get (data,
-                                                              sample_info,
-                                                              1);
+                                                                 sample_info,
+                                                                 1);
                   if (retcode == ::DDS::RETCODE_NO_DATA)
                     {
                       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
@@ -397,15 +397,15 @@ namespace CIAO
                             "Error while reading from DDS: <%C>\n",
                             translate_retcode (retcode)));
 
-    //                   ::DDS::ReturnCode_t const retval =
-    //                     this->dds_reader ()->return_loan (data, sample_info);
-    //                   if (retval != ::DDS::RETCODE_OK)
-    //                     {
-    //                       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-    //                         "Getter_T::get_one - "
-    //                         "Error returning loan to DDS - <%C>\n",
-    //                         translate_retcode (retval)));
-    //                     }
+                      ::DDS::ReturnCode_t const retval =
+                        this->dds_reader ()->return_loan (data, sample_info);
+                      if (retval != ::DDS::RETCODE_OK)
+                        {
+                          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                            "Getter_T::get_one - "
+                            "Error returning loan to DDS - <%C>\n",
+                            translate_retcode (retval)));
+                        }
                       throw ::CCM_DDS::InternalError (retcode, 1);
                     }
                   else if (data.length () == 1 && sample_info[0].valid_data)
@@ -421,14 +421,14 @@ namespace CIAO
                             "No valid available in DDS.\n"));
                     }
                   // Return the loan of each read.
-    //               ::DDS::ReturnCode_t const retval = this->dds_reader ()->return_loan (data, sample_info);
-    //               if (retval != ::DDS::RETCODE_OK)
-    //                 {
-    //                   DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-    //                     "Getter_T::get_one - "
-    //                     "Error returning loan to DDS - <%C>\n",
-    //                     translate_retcode (retval)));
-    //                 }
+                  ::DDS::ReturnCode_t const retval = this->dds_reader ()->return_loan (data, sample_info);
+                  if (retval != ::DDS::RETCODE_OK)
+                    {
+                      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "Getter_T::get_one - "
+                        "Error returning loan to DDS - <%C>\n",
+                        translate_retcode (retval)));
+                    }
                 }
             }
         }
