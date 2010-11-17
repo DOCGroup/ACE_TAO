@@ -396,9 +396,9 @@ namespace CIAO_Getter_Test_Receiver_Impl
     getter->time_out (to);
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::get_one_variable: "
                           "Start getting data from DDS: "
-                          "key <%C> - iteration <%d> "
+                          "key <%C> - iteration <%ld> "
                           " with timeout: "
-                          "sec <%d> - nanosec <%u>\n",
+                          "sec <%ld> - nanosec <%u>\n",
                           key, iteration,
                           getter->time_out ().sec,
                           getter->time_out ().nanosec));

@@ -65,6 +65,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
   void
   Component_exec_i::ccm_activate (void)
   {
+    typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
     try
       {
         ::DDS::DataWriter_var dw1 =
@@ -76,22 +77,34 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
                         "Datawriter 1 connection is NIL.\n"));
             throw ::CORBA::INTERNAL ();
           }
-        typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
-        DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw1.in ());
-        if (typed_ccm_dw)
-          {
-            DDSDataWriter * dds_dw1 = typed_ccm_dw->get_rti_entity ();
-            DDSPublisher * dds_p1 = dds_dw1->get_publisher ();
-            this->dds_dp1_ = dds_p1->get_participant ();
+        ::CIAO::DDS4CCM::CCM_DataWriter * ccm_dw1 =
+          dynamic_cast < ::CIAO::DDS4CCM::CCM_DataWriter * > (dw1.in ());
 
-            DDSTopicDescription * td1 =
-              this->dds_dp1_->lookup_topicdescription (tp_name_conn_1_);
-            this->dds_tp1_ = DDSTopic::narrow (td1);
+        if (ccm_dw1)
+          {
+            DataWriter_type * typed_ccm_dw =
+              dynamic_cast <DataWriter_type *> (ccm_dw1->get_dds_entity ());
+            if (typed_ccm_dw)
+              {
+                DDSDataWriter * dds_dw1 = typed_ccm_dw->get_rti_entity ();
+                DDSPublisher * dds_p1 = dds_dw1->get_publisher ();
+                this->dds_dp1_ = dds_p1->get_participant ();
+
+                DDSTopicDescription * td1 =
+                  this->dds_dp1_->lookup_topicdescription (tp_name_conn_1_);
+                this->dds_tp1_ = DDSTopic::narrow (td1);
+              }
+            else
+              {
+                ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
+                            "Error casting DataWriter 1 to typed DataWriter 1\n"));
+                throw ::CORBA::INTERNAL ();
+              }
           }
         else
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
-                        "Error casting DataWriter 1 to typed DataWriter 1\n"));
+                        "Error casting DataWriter 1 to CCM DataWriter 1\n"));
             throw ::CORBA::INTERNAL ();
           }
       }
@@ -111,29 +124,40 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
                         "Datawriter 2 connection is NIL.\n"));
             throw ::CORBA::INTERNAL ();
           }
+        ::CIAO::DDS4CCM::CCM_DataWriter * ccm_dw2 =
+          dynamic_cast < ::CIAO::DDS4CCM::CCM_DataWriter * > (dw2.in ());
 
-        typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
-        DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw2.in ());
-        if (typed_ccm_dw)
+        if (ccm_dw2)
           {
-            DDSDataWriter * dds_dw2 = typed_ccm_dw->get_rti_entity ();
-            DDSPublisher * dds_p2 = dds_dw2->get_publisher ();
-            this->dds_dp2_ = dds_p2->get_participant ();
+            DataWriter_type * typed_ccm_dw =
+              dynamic_cast <DataWriter_type *> (ccm_dw2->get_dds_entity ());
+            if (typed_ccm_dw)
+              {
+                DDSDataWriter * dds_dw2 = typed_ccm_dw->get_rti_entity ();
+                DDSPublisher * dds_p2 = dds_dw2->get_publisher ();
+                this->dds_dp2_ = dds_p2->get_participant ();
 
-            DDSTopicDescription * td2 =
-              this->dds_dp2_->lookup_topicdescription (tp_name_conn_2_);
-            this->dds_tp2_ = DDSTopic::narrow (td2);
+                DDSTopicDescription * td2 =
+                  this->dds_dp2_->lookup_topicdescription (tp_name_conn_2_);
+                this->dds_tp2_ = DDSTopic::narrow (td2);
+              }
+            else
+              {
+                ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
+                            "Error casting DataWriter 2 to typed DataWriter 2\n"));
+                throw ::CORBA::INTERNAL ();
+              }
           }
         else
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
-                        "Error casting DataWriter 2 to typed DataWriter 2\n"));
+                        "Error casting DataWriter 2 to CCM DataWriter 2\n"));
             throw ::CORBA::INTERNAL ();
           }
       }
     catch (...)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Unable to create dds_entity for writer1\n"));
+        ACE_ERROR ((LM_ERROR, "ERROR: Unable to create dds_entity for writer2\n"));
       }
 
     try
@@ -148,28 +172,40 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             throw ::CORBA::INTERNAL ();
           }
 
-        typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
-        DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw3.in ());
-        if (typed_ccm_dw)
-          {
-            DDSDataWriter * dds_dw3 = typed_ccm_dw->get_rti_entity ();
-            DDSPublisher * dds_p3 = dds_dw3->get_publisher ();
-            this->dds_dp3_ = dds_p3->get_participant ();
+        ::CIAO::DDS4CCM::CCM_DataWriter * ccm_dw3 =
+          dynamic_cast < ::CIAO::DDS4CCM::CCM_DataWriter * > (dw3.in ());
 
-            DDSTopicDescription * td3 =
-              this->dds_dp3_->lookup_topicdescription (tp_name_conn_3_);
-            this->dds_tp3_ = DDSTopic::narrow (td3);
+        if (ccm_dw3)
+          {
+            DataWriter_type * typed_ccm_dw =
+              dynamic_cast <DataWriter_type *> (ccm_dw3->get_dds_entity ());
+            if (typed_ccm_dw)
+              {
+                DDSDataWriter * dds_dw3 = typed_ccm_dw->get_rti_entity ();
+                DDSPublisher * dds_p3 = dds_dw3->get_publisher ();
+                this->dds_dp3_ = dds_p3->get_participant ();
+
+                DDSTopicDescription * td3 =
+                  this->dds_dp3_->lookup_topicdescription (tp_name_conn_3_);
+                this->dds_tp3_ = DDSTopic::narrow (td3);
+              }
+            else
+              {
+                ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
+                            "Error casting DataWriter 3 to typed DataWriter 3\n"));
+                throw ::CORBA::INTERNAL ();
+              }
           }
         else
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
-                        "Error casting DataWriter 3 to typed DataWriter 3\n"));
+                        "Error casting DataWriter 3 to CCM DataWriter 3\n"));
             throw ::CORBA::INTERNAL ();
           }
       }
     catch (...)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Unable to create dds_entity for writer1\n"));
+        ACE_ERROR ((LM_ERROR, "ERROR: Unable to create dds_entity for writer3\n"));
       }
     try
       {
@@ -183,28 +219,40 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             throw ::CORBA::INTERNAL ();
           }
 
-        typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
-        DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw4.in ());
-        if (typed_ccm_dw)
-          {
-            DDSDataWriter * dds_dw4 = typed_ccm_dw->get_rti_entity ();
-            DDSPublisher * dds_p4 = dds_dw4->get_publisher ();
-            this->dds_dp4_ = dds_p4->get_participant ();
+        ::CIAO::DDS4CCM::CCM_DataWriter * ccm_dw4 =
+          dynamic_cast < ::CIAO::DDS4CCM::CCM_DataWriter * > (dw4.in ());
 
-            DDSTopicDescription * td4 =
-              this->dds_dp4_->lookup_topicdescription (tp_name_conn_4_);
-            this->dds_tp4_ = DDSTopic::narrow (td4);
+        if (ccm_dw4)
+          {
+            DataWriter_type * typed_ccm_dw =
+              dynamic_cast <DataWriter_type *> (ccm_dw4->get_dds_entity ());
+            if (typed_ccm_dw)
+              {
+                DDSDataWriter * dds_dw4 = typed_ccm_dw->get_rti_entity ();
+                DDSPublisher * dds_p4 = dds_dw4->get_publisher ();
+                this->dds_dp4_ = dds_p4->get_participant ();
+
+                DDSTopicDescription * td4 =
+                  this->dds_dp4_->lookup_topicdescription (tp_name_conn_4_);
+                this->dds_tp4_ = DDSTopic::narrow (td4);
+              }
+            else
+              {
+                ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
+                            "Error casting DataWriter 4 to typed DataWriter 4\n"));
+                throw ::CORBA::INTERNAL ();
+              }
           }
         else
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
-                        "Error casting DataWriter 4 to typed DataWriter 4\n"));
+                        "Error casting DataWriter 3 to CCM DataWriter 3\n"));
             throw ::CORBA::INTERNAL ();
           }
       }
     catch (...)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Unable to create dds_entity for writer1\n"));
+        ACE_ERROR ((LM_ERROR, "ERROR: Unable to create dds_entity for writer4\n"));
       }
   }
 
