@@ -249,7 +249,7 @@ namespace CIAO
       ::DDS::DataReader_ptr dr,
       ::CIAO::DDS4CCM::ConditionManager * condition_manager)
     {
-      DDS4CCM_TRACE ("Getter_Base_T::set_impl");
+      DDS4CCM_TRACE ("Getter_Base_T::set_dds_reader");
 
       this->dds_reader_ = DDS_READER_TYPE::_narrow (dr);
       this->condition_manager_ = condition_manager;
