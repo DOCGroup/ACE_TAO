@@ -298,6 +298,7 @@ namespace CIAO
       const ::CCM_DDS::QueryFilter & query)
     {
       DDS4CCM_TRACE ("Reader_T::query");
+
       return this->condition_manager_->query (query);
     }
 
