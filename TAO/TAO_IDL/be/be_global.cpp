@@ -138,6 +138,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_ciao_exec_impl_ (false),
     gen_ciao_exec_reactor_impl_ (false),
     gen_ciao_conn_impl_ (false),
+    gen_dds_typesupport_idl_ (false),
     gen_ciao_valuefactory_reg_ (true),
     gen_stub_export_hdr_file_ (false),
     gen_skel_export_hdr_file_ (false),
@@ -2395,6 +2396,18 @@ BE_GlobalData::gen_ciao_conn_impl (bool val)
 }
 
 bool
+BE_GlobalData::gen_dds_typesupport_idl (void) const
+{
+  return this->gen_dds_typesupport_idl_;
+}
+
+void
+BE_GlobalData::gen_dds_typesupport_idl (bool val)
+{
+  this->gen_dds_typesupport_idl_ = val;
+}
+
+bool
 BE_GlobalData::gen_ciao_valuefactory_reg (void) const
 {
   return this->gen_ciao_valuefactory_reg_;
@@ -2923,6 +2936,13 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             // CIAO connector impl code generation.
             be_global->gen_ciao_conn_impl (true);
+
+            break;
+          }
+        else if (av[i][2] == 't' && av[i][3] == 's')
+          {
+            // DDS type support IDL generation.
+            be_global->gen_dds_typesupport_idl (true);
 
             break;
           }

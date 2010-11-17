@@ -1,3 +1,24 @@
+Wed Nov 17 15:07:20 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_visitor_dds_ts_idl.h:
+        * TAO_IDL/be/be_visitor_dds_ts_idl.cpp:
+
+          New files, defining a new visitor that generates DDS
+          type support classes, triggered by the option -Gts.
+          At present, only the data writer and data reader
+          classes are generated, and no check is made that
+          the datatype is used by DDS (all structs, unions
+          and valuetypes are processed). Such a check will be
+          added at a later time.
+
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * docs/compiler.html:
+
+          Support code for the new visitor and command line option.
+
 Wed Nov 17 09:31:45 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * TAO_IDL/be/be_codegen.cpp:
