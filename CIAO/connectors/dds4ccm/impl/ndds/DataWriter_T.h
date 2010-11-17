@@ -23,8 +23,9 @@ namespace CIAO
         public virtual DDS_TYPE::typed_writer_type
     {
     public:
-      explicit DataWriter_T (::DDSDataWriter * dw = 0,
-      ::DDS::DomainParticipant_ptr dp = ::DDS::DomainParticipant::_nil ()); // @todo);
+      explicit DataWriter_T (::DDSDataWriter * dw,
+                             ::DDS::DomainParticipant_ptr dp,
+                             ::DDS::Publisher_ptr pub);
 
       virtual ::DDS::ReturnCode_t set_qos (const ::DDS::DataWriterQos & qos);
 
@@ -121,6 +122,7 @@ namespace CIAO
     private:
       typename DDS_TYPE::datawriter_type * rti_entity_;
       ::DDS::DomainParticipant_var dp_;
+      ::DDS::Publisher_var pub_;
 
       typename DDS_TYPE::datawriter_type * rti_entity (void);
     };

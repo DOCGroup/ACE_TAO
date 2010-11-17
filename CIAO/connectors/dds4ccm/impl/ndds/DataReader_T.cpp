@@ -33,10 +33,12 @@ namespace CIAO
     template <typename DDS_TYPE>
     DataReader_T<DDS_TYPE>::DataReader_T (
       DDSDataReader * dr,
-      ::DDS::DomainParticipant_ptr dp)
-      : rti_entity_ (0),
-        dp_ (::DDS::DomainParticipant::_duplicate (dp)),
-        lst_mask_ (0)
+      ::DDS::DomainParticipant_ptr dp,
+      ::DDS::Subscriber_ptr sub)
+      : rti_entity_ (0)
+        , dp_ (::DDS::DomainParticipant::_duplicate (dp))
+        , sub_ (::DDS::Subscriber::_duplicate (sub))
+        , lst_mask_ (0)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::DataReader_T");
       if (dr)
@@ -847,13 +849,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::get_subscriber");
 
-    /*  ::DDS::Subscriber_var dds_td;
-      ::DDSSubscriber* subscriber = this->rti_entity ()->get_subscriber ();
-      ACE_NEW_THROW_EX (dds_td,
-                        Subscriber_type (subscriber),
-                        ::CORBA::NO_MEMORY ());
-      return dds_td._retn ();*/
-      return 0;
+      return ::DDS::Subscriber::_duplicate (this->sub_.in ());
     }
 
     template <typename DDS_TYPE>
