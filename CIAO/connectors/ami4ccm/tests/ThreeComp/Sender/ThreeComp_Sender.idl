@@ -16,6 +16,9 @@ module ThreeComp
     /// For synchronous invocation
     uses multiple MyFoo run_my_foo;
     provides State  do_my_state;
+
+    // test for no ami4ccm interface
+    provides MyBar  do_my_bar;
   };
 };
 
