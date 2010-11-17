@@ -147,7 +147,8 @@ BE_GlobalData::BE_GlobalData (void)
     gen_conn_export_hdr_file_ (false),
     gen_lem_force_all_ (false),
     tab_size_ (2),
-    alt_mapping_ (false)
+    alt_mapping_ (false),
+    in_facet_servant_ (false)
 {
 }
 
@@ -2501,6 +2502,18 @@ void
 BE_GlobalData::alt_mapping (bool val)
 {
   this->alt_mapping_ = val;
+}
+
+bool
+BE_GlobalData::in_facet_servant (void) const
+{
+  return this->in_facet_servant_;
+}
+
+void
+BE_GlobalData::in_facet_servant (bool val)
+{
+  this->in_facet_servant_ = val;
 }
 
 unsigned long

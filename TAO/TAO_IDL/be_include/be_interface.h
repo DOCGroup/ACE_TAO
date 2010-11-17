@@ -488,7 +488,7 @@ protected:
   /// Used to suppress generation of some CCM servant methods/
   bool has_rw_attributes_;
 
-  /// Flags to ensure that DDS connector impl traits members
+  /// Flag to ensure that DDS connector impl traits members
   /// are generated only once per port interface.
   bool dds_connector_traits_done_;
 };

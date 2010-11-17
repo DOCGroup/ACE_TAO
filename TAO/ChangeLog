@@ -1,3 +1,20 @@
+Wed Nov 17 17:07:20 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/facet_svh.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+
+          Cosmetic changes, comment typo fixed.
+
+        * TAO_IDL/be/be_provides.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_global.h:
+
+          Added checks to prevent AMI implied IDL sendc_*
+          operations from being generated in a facet servant,
+          in cases where we are using CORBA AMI on the
+          facet interface.
+
 Wed Nov 17 15:07:20 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_visitor_dds_ts_idl.h:
