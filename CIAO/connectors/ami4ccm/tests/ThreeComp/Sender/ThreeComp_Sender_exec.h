@@ -73,6 +73,8 @@ namespace CIAO_ThreeComp_Sender_Impl
     Sender_exec_i (void);
     virtual ~Sender_exec_i (void);
     virtual ::ThreeComp::CCM_State_ptr get_do_my_state (void);
+    virtual ::ThreeComp::CCM_MyBar_ptr get_do_my_bar (void);
+
 
     virtual void
     set_session_context (

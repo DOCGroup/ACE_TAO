@@ -164,9 +164,16 @@ namespace CIAO_ThreeComp_Sender_Impl
   //for connection with Master component
   ::ThreeComp::CCM_State_ptr
   Sender_exec_i::get_do_my_state (void)
-    {
-      return new State_exec_i ();
-    }
+  {
+    return new State_exec_i ();
+  }
+
+  //for test connection with no ami interface
+  ::ThreeComp::CCM_MyBar_ptr
+  Sender_exec_i::get_do_my_bar (void)
+  {
+    return 0;
+  }
 
   void
   Sender_exec_i::set_session_context (
