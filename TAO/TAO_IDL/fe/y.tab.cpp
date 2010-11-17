@@ -9374,6 +9374,8 @@ tao_yyreduce:
 
           (tao_yyval.pival)->type_ = nt;
           (tao_yyval.pival)->name_ = (tao_yyvsp[(2) - (2)].strval);
+          ACE::strdelete ((tao_yyvsp[(2) - (2)].strval));
+          (tao_yyvsp[(2) - (2)].strval) = 0;
 
           if (nt == AST_Decl::NT_const)
             {

@@ -1865,8 +1865,17 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
       if (d == 0)
         {
           idl_global->err ()->lookup_error (sn);
+
+          sn->destroy ();
+          delete sn;
+          sn = 0;
+
           continue;
         }
+
+      sn->destroy ();
+      delete sn;
+      sn = 0;
 
       be_uses *u = be_uses::narrow_from_decl (d);
 

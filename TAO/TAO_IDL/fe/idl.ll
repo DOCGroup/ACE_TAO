@@ -773,6 +773,9 @@ idl_store_pragma (char *buf)
     {
       char *sample_type = idl_get_pragma_string (buf);
       idl_global->add_dcps_data_type (sample_type);
+
+      // Delete sample_type since add_dcps_data_type() doesn't take its ownership.
+      delete [] sample_type;
     }
   else if (ACE_OS::strncmp (buf + 8, "DCPS_DATA_KEY", 13) == 0)
     {
@@ -799,6 +802,9 @@ idl_store_pragma (char *buf)
           ACE_ERROR((LM_ERROR, "DCPS_DATA_TYPE \"%C\" not found for key \"%C\"\n",
             sample_type, key));
         }
+
+      // Delete sample_type since add_dcps_data_key() doesn't take its ownership.
+      delete [] sample_type;
     }
   else if (ACE_OS::strncmp (buf + 8, "DCPS_SUPPORT_ZERO_COPY_READ", 27) == 0)
     {
@@ -812,21 +818,33 @@ idl_store_pragma (char *buf)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_lem_file_names (tmp);
+
+      // Delete tmp since add_ciao_lem_file_names() doesn't take its ownership.
+      delete [] tmp;
     }
   else if (ACE_OS::strncmp (buf + 8, "ndds typesupport", 16) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_rti_ts_file_names (tmp);
+
+      // Delete tmp since add_ciao_rti_ts_file_names() doesn't take its ownership.
+      delete [] tmp;
     }
   else if (ACE_OS::strncmp (buf + 8, "opendds typesupport", 19) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_oci_ts_file_names (tmp);
+
+      // Delete tmp since add_ciao_oci_ts_file_names() doesn't take its ownership.
+      delete [] tmp;
     }
   else if (ACE_OS::strncmp (buf + 8, "splice typesupport", 18) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_spl_ts_file_names (tmp);
+
+      // Delete tmp since add_ciao_spl_ts_file_names() doesn't take its ownership.
+      delete [] tmp;
     }
   else if (ACE_OS::strncmp (buf + 8, "ciao ami4ccm interface", 22) == 0)
     {
@@ -834,6 +852,9 @@ idl_store_pragma (char *buf)
         {
           char *tmp = idl_get_pragma_string (buf);
           idl_global->add_ciao_ami_iface_names (tmp);
+
+          // Delete tmp since add_ciao_ami_iface_names() doesn't take its ownership.
+          delete [] tmp;
         }
     }
   else if (ACE_OS::strncmp (buf + 8, "ciao ami4ccm receptacle", 23) == 0)
@@ -851,6 +872,9 @@ idl_store_pragma (char *buf)
           /// it will do no harm in other cases.
           idl_global->add_included_ami_recep_names (tmp);
         }
+
+      // Delete tmp since add_ciao_spl_ts_file_names() doesn't take its ownership.
+      delete [] tmp;
     }
   else if (ACE_OS::strncmp (buf + 8, "ciao ami4ccm idl", 16) == 0)
     {
@@ -865,12 +889,18 @@ idl_store_pragma (char *buf)
         {
           idl_global->add_ciao_ami_idl_fnames (tmp);
         }
+
+      // Delete tmp since add_ciao_ami_idl_fnames() doesn't take its ownership.
+      delete [] tmp;
     }
   else if (ACE_OS::strncmp (buf + 8, "dds4ccm impl", 12) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
 
       idl_global->add_dds4ccm_impl_fnames (tmp);
+
+      // Delete tmp since add_dds4ccm_impl_fnames() doesn't take its ownership.
+      delete [] tmp;
     }
 }
 

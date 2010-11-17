@@ -1120,8 +1120,17 @@ be_visitor_ami_pre_proc::generate_ami4ccm_idl (void)
       if (d == 0)
         {
           idl_global->err ()->lookup_error (sn);
+
+          sn->destroy ();
+          delete sn;
+          sn = 0;
+
           continue;
         }
+
+      sn->destroy ();
+      delete sn;
+      sn = 0;
 
       be_interface *iface =
         be_interface::narrow_from_decl (d);

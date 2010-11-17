@@ -1982,6 +1982,12 @@ BE_GlobalData::destroy (void)
   ACE::strdelete (this->output_dir_);
   this->output_dir_ = 0;
 
+  ACE::strdelete (this->stub_include_dir_);
+  this->stub_include_dir_ = 0;
+
+  ACE::strdelete (this->skel_output_dir_);
+  this->skel_output_dir_ = 0;
+
   ACE::strdelete (this->anyop_output_dir_);
   this->anyop_output_dir_ = 0;
 

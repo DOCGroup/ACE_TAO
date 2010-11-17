@@ -6501,6 +6501,8 @@ formal_parameter
 
           $<pival>$->type_ = nt;
           $<pival>$->name_ = $2;
+          ACE::strdelete ($2);
+          $2 = 0;
 
           if (nt == AST_Decl::NT_const)
             {
