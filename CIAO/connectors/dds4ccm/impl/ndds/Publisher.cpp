@@ -79,7 +79,9 @@ namespace CIAO
           return ::DDS::DataWriter::_nil ();
         }
 
-     ::DDS::DataWriter_var retval = DDS_TypeSupport_i::create_datawriter (ccm_dds_dw, this->dp_.in ());
+     ::DDS::DataWriter_var retval = DDS_TypeSupport_i::create_datawriter (ccm_dds_dw,
+                                                                          this->dp_.in (),
+                                                                          this);
      if (ccm_dds_drl)
        {
          ccm_dds_drl->set_dds_entity (retval.in ());
@@ -139,11 +141,14 @@ namespace CIAO
                         profile_name));
         }
 
-     ::DDS::DataWriter_var retval = DDS_TypeSupport_i::create_datawriter (ccm_dds_dw, this->dp_.in ());
-     if (ccm_dds_drl)
-       {
-         ccm_dds_drl->set_dds_entity (retval.in ());
-       }
+      ::DDS::DataWriter_var retval =
+        DDS_TypeSupport_i::create_datawriter (ccm_dds_dw,
+                                              this->dp_.in (),
+                                              this);
+      if (ccm_dds_drl)
+        {
+          ccm_dds_drl->set_dds_entity (retval.in ());
+        }
       ccm_dds_dw->enable ();
       return retval._retn ();
     }
@@ -192,7 +197,10 @@ namespace CIAO
     DDS_Publisher_i::lookup_datawriter (const char * impl_name)
     {
       DDSDataWriter* dw = this->rti_entity ()->lookup_datawriter (impl_name);
-     ::DDS::DataWriter_var retval = DDS_TypeSupport_i::create_datawriter (dw, this->dp_.in ());
+      ::DDS::DataWriter_var retval =
+        DDS_TypeSupport_i::create_datawriter (dw,
+                                              this->dp_.in (),
+                                              this);
       return retval._retn ();
     }
 

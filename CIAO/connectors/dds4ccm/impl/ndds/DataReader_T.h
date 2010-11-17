@@ -26,8 +26,9 @@ namespace CIAO
     {
     public:
       /// Constructor
-      explicit DataReader_T (::DDSDataReader * dr = 0,
-                             ::DDS::DomainParticipant_ptr dp = ::DDS::DomainParticipant::_nil ()); // @todo
+      explicit DataReader_T (::DDSDataReader * dr,
+                             ::DDS::DomainParticipant_ptr dp,
+                             ::DDS::Subscriber_ptr sub);
 
       /// Destructor
       virtual ~DataReader_T (void);
@@ -214,6 +215,7 @@ namespace CIAO
     private:
       typename DDS_TYPE::datareader_type * rti_entity_;
       ::DDS::DomainParticipant_var dp_;
+      ::DDS::Subscriber_var sub_;
       ::DDS::StatusMask lst_mask_;
 
       typename DDS_TYPE::datareader_type * rti_entity (void);

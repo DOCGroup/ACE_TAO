@@ -24,23 +24,31 @@ namespace CIAO
     {
     public:
       virtual ~DDS_TypeFactory_i (void);
-      virtual DDS::DataWriter_ptr create_datawriter (DDSDataWriter* dw, ::DDS::DomainParticipant_ptr dp) = 0;
-      virtual DDS::DataReader_ptr create_datareader (DDSDataReader* dr, ::DDS::DomainParticipant_ptr dp) = 0;
+      virtual DDS::DataWriter_ptr create_datawriter (DDSDataWriter* dw,
+                                                     ::DDS::DomainParticipant_ptr dp,
+                                                     ::DDS::Publisher_ptr pub) = 0;
+      virtual DDS::DataReader_ptr create_datareader (DDSDataReader* dr,
+                                                     ::DDS::DomainParticipant_ptr dp,
+                                                     ::DDS::Subscriber_ptr sub) = 0;
     };
 
     template <typename DDS_TYPE>
     class DDS_TypeFactory_T : public DDS_TypeFactory_i
     {
     public:
-      DDS::DataWriter_ptr create_datawriter (DDSDataWriter* dw, ::DDS::DomainParticipant_ptr dp)
+      DDS::DataWriter_ptr create_datawriter (DDSDataWriter* dw,
+                                             ::DDS::DomainParticipant_ptr dp,
+                                             ::DDS::Publisher_ptr pub)
       {
         typedef CIAO::NDDS::DataWriter_T<DDS_TYPE> DataWriter_type;
-        return new DataWriter_type (dw, dp);
+        return new DataWriter_type (dw, dp, pub);
       }
-      DDS::DataReader_ptr create_datareader (DDSDataReader* dr, ::DDS::DomainParticipant_ptr dp)
+      DDS::DataReader_ptr create_datareader (DDSDataReader* dr,
+                                             ::DDS::DomainParticipant_ptr dp,
+                                             ::DDS::Subscriber_ptr sub)
       {
         typedef CIAO::NDDS::DataReader_T<DDS_TYPE> DataReader_type;
-        return new DataReader_type (dr, dp);
+        return new DataReader_type (dr, dp, sub);
       }
     };
 
@@ -50,8 +58,12 @@ namespace CIAO
       static void close (void);
       static void register_type (const char* type, DDS_TypeFactory_i* factory, ::DDS::DomainParticipant_ptr dp);
       static DDS_TypeFactory_i* unregister_type (const char* type, ::DDS::DomainParticipant_ptr dp);
-      static ::DDS::DataWriter_ptr create_datawriter (DDSDataWriter* dw, ::DDS::DomainParticipant_ptr dp);
-      static ::DDS::DataReader_ptr create_datareader (DDSDataReader* dr, ::DDS::DomainParticipant_ptr dp);
+      static ::DDS::DataWriter_ptr create_datawriter (DDSDataWriter* dw,
+                                                      ::DDS::DomainParticipant_ptr dp,
+                                                      ::DDS::Publisher_ptr pub);
+      static ::DDS::DataReader_ptr create_datareader (DDSDataReader* dr,
+                                                      ::DDS::DomainParticipant_ptr dp,
+                                                      ::DDS::Subscriber_ptr sub);
     private:
       DDS_TypeSupport_i (void);
       ~DDS_TypeSupport_i (void);

@@ -148,7 +148,6 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE>::passivate ()
                         ::CIAO::DDS4CCM::translate_retcode (retcode)));
           throw ::CORBA::INTERNAL ();
         }
-
       this->listener_ = ::DDS::DataReaderListener::_nil ();
     }
 }
