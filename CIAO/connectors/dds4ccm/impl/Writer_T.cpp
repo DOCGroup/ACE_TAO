@@ -65,6 +65,14 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Writer_T::write_many");
 
+      ::DDS::Publisher_var pub = this->dds_writer ()->get_publisher ();
+      if (CORBA::is_nil (pub.in ()))
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        ACE_TEXT ("Writer_T::write_many - ")
+                        ACE_TEXT ("Publisher on DataWriter seems to be NIL\n")));
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+        }
       Coherent_Changes_Guard guard (
         this->dds_writer ()->get_publisher(),
         this->is_coherent_write_);
