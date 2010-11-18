@@ -1,3 +1,9 @@
+Thu Nov 18 14:32:51 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.mpc:
+        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.mpc:
+          Removed unnecessary IDL command line options.
+
 Thu Nov 18 14:22:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.mpc:
