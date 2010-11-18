@@ -83,7 +83,7 @@ void read (DDSDataReader * dr,
   else
     {
       //wait a moment to allow DDS to write all samples we need here...
-      QueryConditionTestRTISeq data;
+      QueryConditionTestSeq data;
       DDS_SampleInfoSeq     info_seq;
       sleep_now (3);
       for (DDS_Long i = 0; i < cond.length (); ++i)
@@ -131,7 +131,7 @@ void read (DDSDataReader * dr,
   //check if all samples are still available.
   if (run == 3)
     {
-      QueryConditionTestRTISeq data;
+      QueryConditionTestSeq data;
       DDS_SampleInfoSeq     info_seq;
       sleep_now (3);
       typed_dr->read (data,

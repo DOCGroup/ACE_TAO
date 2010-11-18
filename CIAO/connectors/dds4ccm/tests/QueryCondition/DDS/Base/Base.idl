@@ -13,6 +13,4 @@ struct QueryConditionTest {
   long iteration;
 };
 
-typedef sequence<QueryConditionTest> QueryConditionTestSeq;
-
 #endif
