@@ -114,86 +114,86 @@ be_visitor_dds_ts_idl::process_node (be_type *node)
 void
 be_visitor_dds_ts_idl::gen_datawriter (be_type *node)
 {
-  TAO_OutStream &os_ (*this->os_ptr_);
+  TAO_OutStream &los (*this->os_ptr_);
   const char *lname = node->local_name ()->get_string ();
 
-  os_ << be_nl
+  los << be_nl
       << "local interface " << lname
       << "IDLDataWriter : ::DDS::DataWriter" << be_nl
       << "{" << be_idt;
 
-  os_ << be_nl
+  los << be_nl
       << "DDS::InstanceHandle_t register_instance (" << be_idt_nl
       << "in " << lname << " instance_data);" << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::InstanceHandle_t register_instance_w_timestamp ("
       << be_idt_nl
       << "in " << lname << " instance_data," << be_nl
       << "in DDS::Time_t source_timestamp);" << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t unregister_instance (" << be_idt_nl
       << "in " << lname << " instance_data," << be_nl
       << "in DDS::InstanceHandle_t handle);" << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t unregister_instance_w_timestamp ("
       << be_idt_nl
       << "in " << lname << " instance_data," << be_nl
       << "in DDS::InstanceHandle_t handle," << be_nl
       << "in DDS::Time_t source_timestamp);" << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t write (" << be_idt_nl
       << "in " << lname << " instance_data," << be_nl
       << "in DDS::InstanceHandle_t handle);" << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t write_w_timestamp (" << be_idt_nl
       << "in " << lname << " instance_data," << be_nl
       << "in DDS::InstanceHandle_t handle," << be_nl
       << "in DDS::Time_t source_timestamp);" << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t dispose (" << be_idt_nl
       << "in " << lname << " instance_data," << be_nl
       << "in DDS::InstanceHandle_t instance_handle);"
       << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t dispose_w_timestamp ("
       << be_idt_nl
       << "in " << lname << " instance_data," << be_nl
       << "in DDS::InstanceHandle_t instance_handle," << be_nl
       << "in DDS::Time_t source_timestamp);" << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t get_key_value (" << be_idt_nl
       << "inout " << lname << " key_holder," << be_nl
       << "in DDS::InstanceHandle_t handle);" << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::InstanceHandle_t lookup_instance ("
       << be_idt_nl
       << "in " << lname << " instance_data);" << be_uidt;
 
-  os_ << be_uidt_nl
+  los << be_uidt_nl
       << "};";
 }
 
 void
 be_visitor_dds_ts_idl::gen_datareader (be_type *node)
 {
-  TAO_OutStream &os_ (*this->os_ptr_);
+  TAO_OutStream &los (*this->os_ptr_);
   const char *lname = node->local_name ()->get_string ();
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "local interface " << lname
       << "IDLDataReader : ::DDS::DataReader" << be_nl
       << "{" << be_idt;
 
-  os_ << be_nl
+  los << be_nl
       << "DDS::ReturnCode_t read (" << be_idt_nl
       << "inout " << lname << "Seq data_values," << be_nl
       << "inout DDS::SampleInfoSeq sample_infos," << be_nl
@@ -203,7 +203,7 @@ be_visitor_dds_ts_idl::gen_datareader (be_type *node)
       << "in DDS::InstanceStateMask instance_states);"
       << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t take (" << be_idt_nl
       << "inout " << lname << "Seq data_values," << be_nl
       << "inout DDS::SampleInfoSeq sample_infos," << be_nl
@@ -213,31 +213,31 @@ be_visitor_dds_ts_idl::gen_datareader (be_type *node)
       << "in DDS::InstanceStateMask instance_states);"
       << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t read_w_condition (" << be_idt_nl
       << "inout " << lname << "Seq data_values," << be_nl
       << "inout DDS::SampleInfoSeq sample_infos," << be_nl
       << "in long max_samples," << be_nl
       << "in DDS::ReadCondition a_condition);" << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t take_w_condition (" << be_idt_nl
       << "inout " << lname << "Seq data_values," << be_nl
       << "inout DDS::SampleInfoSeq sample_infos," << be_nl
       << "in long max_samples," << be_nl
       << "in DDS::ReadCondition a_condition);" << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t read_next_sample (" << be_idt_nl
       << "inout " << lname << " data_values," << be_nl
       << "inout DDS::SampleInfo sample_info);" << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t take_next_sample (" << be_idt_nl
       << "inout " << lname << " data_values," << be_nl
       << "inout DDS::SampleInfo sample_info);" << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t read_instance (" << be_idt_nl
       << "inout " << lname << "Seq data_values," << be_nl
       << "inout DDS::SampleInfoSeq sample_infos," << be_nl
@@ -248,7 +248,7 @@ be_visitor_dds_ts_idl::gen_datareader (be_type *node)
       << "in DDS::InstanceStateMask instance_states);"
       << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t take_instance (" << be_idt_nl
       << "inout " << lname << "Seq data_values," << be_nl
       << "inout DDS::SampleInfoSeq sample_infos," << be_nl
@@ -259,7 +259,7 @@ be_visitor_dds_ts_idl::gen_datareader (be_type *node)
       << "in DDS::InstanceStateMask instance_states);"
       << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t read_next_instance (" << be_idt_nl
       << "inout " << lname << "Seq data_values," << be_nl
       << "inout DDS::SampleInfoSeq sample_infos," << be_nl
@@ -270,7 +270,7 @@ be_visitor_dds_ts_idl::gen_datareader (be_type *node)
       << "in DDS::InstanceStateMask instance_states);"
       << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t take_next_instance (" << be_idt_nl
       << "inout " << lname << "Seq data_values," << be_nl
       << "inout DDS::SampleInfoSeq sample_infos," << be_nl
@@ -281,7 +281,7 @@ be_visitor_dds_ts_idl::gen_datareader (be_type *node)
       << "in DDS::InstanceStateMask instance_states);"
       << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t read_next_instance_w_condition ("
       << be_idt_nl
       << "inout " << lname << "Seq data_values," << be_nl
@@ -290,7 +290,7 @@ be_visitor_dds_ts_idl::gen_datareader (be_type *node)
       << "in DDS::InstanceHandle_t previous_handle," << be_nl
       << "in DDS::ReadCondition a_condition);" << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t take_next_instance_w_condition ("
       << be_idt_nl
       << "inout " << lname << "Seq data_values," << be_nl
@@ -299,23 +299,23 @@ be_visitor_dds_ts_idl::gen_datareader (be_type *node)
       << "in DDS::InstanceHandle_t previous_handle," << be_nl
       << "in DDS::ReadCondition a_condition);" << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t return_loan (" << be_idt_nl
       << "inout " << lname << "Seq data_values," << be_nl
       << "inout DDS::SampleInfoSeq sample_infos);"
       << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::ReturnCode_t get_key_value (" << be_idt_nl
       << "inout " << lname << " key_holder," << be_nl
       << "in DDS::InstanceHandle_t handle);" << be_uidt;
 
-  os_ << be_nl_2
+  los << be_nl_2
       << "DDS::InstanceHandle_t lookup_instance ("
       << be_idt_nl
       << "in " << lname << " instance_data);" << be_uidt;
 
-  os_ << be_uidt_nl
+  los << be_uidt_nl
       << "};";
 }
 
