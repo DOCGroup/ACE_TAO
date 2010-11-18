@@ -246,7 +246,7 @@ namespace CIAO_InterInArgsT_Sender_Impl
                               " Received: %u.\n",
                               this->nr_of_received_.value()));
       }
-    if ((this->nr_of_received_value() == 6) && (nr_of_excep_received == 2))
+    if ((this->nr_of_received_.value() == 6) && (nr_of_excep_received == 2))
       {
         ACE_DEBUG ((LM_DEBUG, "OK: Sender received the expected number of"
                               " callbacks and exceptions for syn- and "
