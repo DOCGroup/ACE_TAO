@@ -119,7 +119,7 @@ be_visitor_dds_ts_idl::gen_datawriter (be_type *node)
 
   os_ << be_nl
       << "local interface " << lname
-      << "DataWriter : ::DDS::DataWriter" << be_nl
+      << "IDLDataWriter : ::DDS::DataWriter" << be_nl
       << "{" << be_idt;
 
   os_ << be_nl
@@ -190,7 +190,7 @@ be_visitor_dds_ts_idl::gen_datareader (be_type *node)
 
   os_ << be_nl_2
       << "local interface " << lname
-      << "DataReader : ::DDS::DataReader" << be_nl
+      << "IDLDataReader : ::DDS::DataReader" << be_nl
       << "{" << be_idt;
 
   os_ << be_nl
