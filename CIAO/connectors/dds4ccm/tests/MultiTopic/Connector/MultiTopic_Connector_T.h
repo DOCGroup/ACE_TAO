@@ -5,9 +5,9 @@
 
 #include "connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
 class DDS_MT_Event_Connector_T
-  : public virtual DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>
+  : public virtual DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>
 {
     //square
     virtual
