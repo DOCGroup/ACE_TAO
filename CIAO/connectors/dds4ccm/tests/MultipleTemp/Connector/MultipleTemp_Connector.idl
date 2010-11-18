@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file MultipleTemp_Connector.idl
+ * @author Marijke Hengstmengel
+ */
+
+#ifndef MULTIPLE_TEMP_CONNECTOR_IDL_
+#define MULTIPLE_TEMP_CONNECTOR_IDL_
+
+#include <Components.idl>
+#include <ccm_dds.idl>
+
+#include "Base/MultipleTemp_Base.idl"
+
+#pragma ciao lem "Connector/MultipleTemp_ConnectorE.idl"
+
+module MultipleTemp
+{
+  module ::CCM_DDS::Typed < ::TestTopicOne, ::TestTopicTwo, ::TestTopicOneSeq, ::TestTopicTwoSeq> MultipleTempConnector;
+};
+
+#endif /* MULTIPLE_TEMP_CONNECTOR_IDL_ */

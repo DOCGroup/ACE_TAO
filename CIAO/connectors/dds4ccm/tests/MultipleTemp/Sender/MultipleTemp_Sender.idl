@@ -1,0 +1,24 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ *
+ * by-hand idl3 translation of sender components.
+ */
+
+#ifndef DDS_MULTIPLE_TEMP_SENDER_IDL
+#define DDS_MULTIPLE_TEMP_SENDER_IDL
+
+#include "Connector/MultipleTemp_Connector.idl"
+
+module MultipleTemp
+{
+  component Sender
+  {
+     port MultipleTempConnector::DDS_Update test_topic_one_update;
+     port MultipleTempConnector::DDS_Update test_topic_two_update;
+  };
+};
+
+#endif
