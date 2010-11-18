@@ -1,3 +1,10 @@
+Thu Nov 18 14:11:00 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_dds_ts_idl.cpp:
+
+          Changed the name of the local file output stream to avoid
+          a warning saying it hides the base class member.
+
 Thu Nov 18 12:54:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/taobaseidldefaults.mpb:
