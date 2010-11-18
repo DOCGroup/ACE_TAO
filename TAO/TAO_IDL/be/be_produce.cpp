@@ -117,10 +117,12 @@ BE_produce (void)
 {
   be_visitor_context ctx;
 
+  // Only generate the TypeSupport and directly bail out
   if (be_global->gen_dds_typesupport_idl ())
     {
       be_visitor_dds_ts_idl root_dds_idl_visitor (&ctx);
       BE_visit_root (root_dds_idl_visitor, "DDS type support IDL");
+      return;
     }
 
   if (!idl_global->ignore_idl3 ())
