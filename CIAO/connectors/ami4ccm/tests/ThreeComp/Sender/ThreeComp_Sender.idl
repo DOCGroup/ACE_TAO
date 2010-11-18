@@ -6,6 +6,7 @@
 #include <Components.idl>
 
 #include "Base/ThreeComp.idl"
+#include "Base/ThreeComp_no_ami.idl"
 
 #pragma ciao ami4ccm receptacle "ThreeComp::Sender::run_my_foo"
 
