@@ -15,9 +15,9 @@
 #include "dds4ccm/impl/DDS_Update_T.h"
 #include "dds4ccm/impl/DDS_Read_T.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
 class DDS_State_Connector_T
-  : public virtual DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>
+  : public virtual DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>
 {
 public:
   DDS_State_Connector_T (void);
@@ -150,34 +150,34 @@ private:
    * DDS_Read passive_observer
    */
   //@{
-  DDS_Read_T <DDS_TYPE, typename CCM_TYPE::passive_observer_traits> passive_observer_;
+  DDS_Read_T <typename CCM_TYPE::passive_observer_traits, DDS_TYPE> passive_observer_;
   //@}
 
   /**
    * DDS_Get pull_observer
    */
   //@{
-  DDS_Get_T <DDS_TYPE, typename CCM_TYPE::pull_observer_traits, FIXED> pull_observer_;
+  DDS_Get_T <typename CCM_TYPE::pull_observer_traits, DDS_TYPE, FIXED> pull_observer_;
   //@}
 
   /**
    * DDS_Listen push_observer
    */
   //@{
-  DDS_Listen_T <DDS_TYPE, typename CCM_TYPE::push_observer_traits> push_observer_;
+  DDS_Listen_T <typename CCM_TYPE::push_observer_traits, DDS_TYPE> push_observer_;
   //@}
 
   /**
    * DDS_StateListen push_state_observer
    */
   //@{
-  DDS_StateListen_T <DDS_TYPE, typename CCM_TYPE::push_state_observer_traits> push_state_observer_;
+  DDS_StateListen_T <typename CCM_TYPE::push_state_observer_traits, DDS_TYPE> push_state_observer_;
   //@}
 
   void do_configuration_complete (void);
   void do_ccm_activate (void);
 
-  typedef DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE> TopicBaseConnector;
+  typedef DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE> TopicBaseConnector;
 };
 
 #include "dds4ccm/impl/DDS_State_Connector_T.cpp"

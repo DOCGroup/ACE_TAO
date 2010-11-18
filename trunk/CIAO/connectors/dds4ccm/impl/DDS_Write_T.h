@@ -12,7 +12,7 @@
 #include "dds4ccm/impl/Writer_T.h"
 #include "dds4ccm/impl/CCM_DataWriter.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 class DDS_Write_T
 {
 public:

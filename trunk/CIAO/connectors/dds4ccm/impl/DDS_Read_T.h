@@ -10,9 +10,9 @@
 
 #include "dds4ccm/impl/DDS_Subscriber_Base_T.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 class DDS_Read_T
-  : public DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE>
+  : public DDS_Subscriber_Base_T<CCM_TYPE, DDS_TYPE>
 {
 public:
   DDS_Read_T (void);

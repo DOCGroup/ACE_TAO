@@ -8,8 +8,8 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE>
-    DataReaderListener_T<DDS_TYPE, CCM_TYPE>::DataReaderListener_T (
+    template <typename CCM_TYPE, typename DDS_TYPE>
+    DataReaderListener_T<CCM_TYPE, DDS_TYPE>::DataReaderListener_T (
       typename CCM_TYPE::data_listener_type::_ptr_type listener,
       ::CCM_DDS::PortStatusListener_ptr port_status_listener,
       ::CCM_DDS::DataListenerControl_ptr control,
@@ -23,15 +23,15 @@ namespace CIAO
       DDS4CCM_TRACE ("DataReaderListener_T::DataReaderListener_T");
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
-    DataReaderListener_T<DDS_TYPE, CCM_TYPE>::~DataReaderListener_T (void)
+    template <typename CCM_TYPE, typename DDS_TYPE>
+    DataReaderListener_T<CCM_TYPE, DDS_TYPE>::~DataReaderListener_T (void)
     {
       DDS4CCM_TRACE ("DataReaderListener_T::~DataReaderListener_T");
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename CCM_TYPE, typename DDS_TYPE>
     void
-    DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available (
+    DataReaderListener_T<CCM_TYPE, DDS_TYPE>::on_data_available (
       ::DDS::DataReader_ptr rdr)
     {
       DDS4CCM_TRACE ("DataReaderListener_T::on_data_available");
@@ -59,9 +59,9 @@ namespace CIAO
         }
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename CCM_TYPE, typename DDS_TYPE>
     void
-    DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (
+    DataReaderListener_T<CCM_TYPE, DDS_TYPE>::on_data_available_i (
       ::DDS::DataReader_ptr rdr)
     {
       DDS4CCM_TRACE ("DataReaderListener_T::on_data_available_i");
@@ -190,9 +190,9 @@ namespace CIAO
         }
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename CCM_TYPE, typename DDS_TYPE>
     ::DDS::StatusMask
-    DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
+    DataReaderListener_T<CCM_TYPE, DDS_TYPE>::get_mask (
       typename CCM_TYPE::data_listener_type::_ptr_type listener,
       ::CCM_DDS::PortStatusListener_ptr status)
     {

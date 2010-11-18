@@ -11,9 +11,9 @@
 #include "dds4ccm/impl/DDS_Subscriber_Base_T.h"
 #include "dds4ccm/impl/StateListenerControl_T.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 class DDS_StateListen_T
-  : public DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE>
+  : public DDS_Subscriber_Base_T<CCM_TYPE, DDS_TYPE>
 {
 public:
   DDS_StateListen_T (void);
@@ -37,11 +37,11 @@ public:
   void remove (::DDS::Subscriber_ptr subscriber);
 
 private:
-  typedef ::CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>
+  typedef ::CIAO::DDS4CCM::DataReaderStateListener_T<CCM_TYPE, DDS_TYPE>
     DataReaderStateListener_type;
   typedef CCM_DDS_StateListenerControl_T< ::CCM_DDS::CCM_StateListenerControl>
     StateListenerControl_type;
-  typedef DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE>
+  typedef DDS_Subscriber_Base_T<CCM_TYPE, DDS_TYPE>
     DDSSubscriberBase_type;
 
   /**

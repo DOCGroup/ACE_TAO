@@ -22,11 +22,11 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename CCM_TYPE, typename DDS_TYPE>
     class DataReaderListener_T :
       public PortStatusListener
     {
-    typedef ::CIAO::DDS4CCM::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>
+    typedef ::CIAO::DDS4CCM::DataReaderHandler_T<CCM_TYPE, DDS_TYPE>
       DataReaderHandler_type;
 
     public:
