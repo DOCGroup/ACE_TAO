@@ -1,3 +1,12 @@
+Thu Nov 18 12:54:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidldefaults.mpb:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+        * TAO_IDL/be/be_visitor_dds_ts_idl.cpp:
+          With -Gts only generate TypeSupport.idl and than bail out
+
 Thu Nov 18 07:41:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
