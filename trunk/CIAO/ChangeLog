@@ -1,3 +1,14 @@
+Thu Nov 18 19:44:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Base/VTopic_Base.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Base/VTopics_Base.idl:
+        * connectors/tests/AMIDDS/Base/AmiDds_Base.mpc:
+          Fixed compile errors
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_msg.idl:
+          ShapesSeq must be with the Shapes struct
+
 Thu Nov 18 19:30:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dds4ccm_ts_default.mpb:

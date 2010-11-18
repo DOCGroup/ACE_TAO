@@ -49,11 +49,11 @@ struct test {
   short x_test;
   string x_teststr;
 };
-typedef sequence<test> test_seq;
+typedef sequence<test> testSeq;
 
 struct TopicSeq {
   string key; //@key
-  test_seq x_seq;
+  testSeq x_seq;
   };
 
  // ValueType
