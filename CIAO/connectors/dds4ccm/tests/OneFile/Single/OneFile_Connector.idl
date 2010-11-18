@@ -9,18 +9,13 @@
 #define ONEFILE_CONNECTOR_IDL_
 
 #if defined __TAO_IDL
-
 #include <ccm_dds.idl>
 #endif
 
-#pragma ndds typesupport "OneFile_ConnectorSupport.h"
-#pragma ciao lem "OneFile_ConnectorE.idl"
+#include "OneFile_Base.idl"
 
-struct OneFileTopic {
-  string hello; //@key
-  long iteration;
-};
-typedef sequence<OneFileTopic> OneFileTopicSeq;
+#pragma ndds typesupport "OneFile_BaseSupport.h"
+#pragma ciao lem "OneFile_ConnectorE.idl"
 
 module OneFile_Connector
 {

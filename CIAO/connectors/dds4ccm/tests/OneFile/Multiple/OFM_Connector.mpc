@@ -1,49 +1,45 @@
 // $Id$
 
-project(OFM_Base_idl_gen) : connectoridldefaults, taoidldefaults, \
-                                 dds4ccm, dds4ccm_ts_default {
-  custom_only = 1
-  idlflags += -Wb,stub_export_macro=OFM_CONNECTOR_STUB_Export \
-              -Wb,stub_export_include=OFM_Connector_stub_export.h \
-              -Wb,skel_export_macro=OFM_CONNECTOR_SVNT_Export \
-              -Wb,skel_export_include=OFM_Connector_svnt_export.h \
-              -Wb,conn_export_macro=OFM_CONNECTOR_CONN_Export \
-              -Wb,conn_export_include=OFM_Connector_conn_export.h \
-              -Gxhex -Gxhsk -Gxhst
+project (OFM_Base_stub) : taoidldefaults, dds4ccm_ts_default {
+  sharedname = OFM_Base_stub
+  dynamicflags += OFM_CONNECTOR_BASE_STUB_BUILD_DLL
+
+  idlflags += -SS -Sci \
+              -Wb,stub_export_macro=OFM_CONNECTOR_BASE_STUB_Export \
+              -Wb,stub_export_include=OFM_Connector_Base_stub_export.h
 
   IDL_Files {
-    OFM_Connector.idl
+    idlflags += -Gxhst
+    OFM_Base.idl
   }
 
+  opendds_ts_flags += --export=OFM_CONNECTOR_BASE_STUB_Export
+
   DDS4CCMGenerator_Files {
-    OFM_Connector.idl
+    OFM_Base.idl
   }
 
   DDSGenerator_Files {
-    OFM_Connector.idl
+    OFM_Base.idl
+  }
+
+  Source_Files {
   }
 }
 
-project(OFM_Connector_idl_gen) : connectoridldefaults, taoidldefaults, \
-                                 dds4ccm, dds4ccm_ts_default {
+
+project(OFM_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=OFM_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=OFM_Connector_stub_export.h \
+              -Wb,skel_export_macro=OFM_CONNECTOR_SKEL_Export \
+              -Wb,skel_export_include=OFM_Connector_skel_export.h \
               -Wb,skel_export_macro=OFM_CONNECTOR_SVNT_Export \
               -Wb,skel_export_include=OFM_Connector_svnt_export.h \
               -Wb,conn_export_macro=OFM_CONNECTOR_CONN_Export \
               -Wb,conn_export_include=OFM_Connector_conn_export.h \
-              -Gxhex -Gxhsk -Gxhst
 
   IDL_Files {
-    OFM_Connector.idl
-  }
-
-  DDS4CCMGenerator_Files {
-    OFM_Connector.idl
-  }
-
-  DDSGenerator_Files {
     OFM_Connector.idl
   }
 }
@@ -61,8 +57,8 @@ project(OFM_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project(OFM_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub  {
-  after    += OFM_Connector_lem_gen OFM_Connector_stub
-  libs     += OFM_Connector_stub
+  after    += OFM_Connector_lem_gen OFM_Connector_stub OFM_Base_stub
+  libs     += OFM_Connector_stub OFM_Base_stub
 
   sharedname = OFM_Connector_lem_stub
   dynamicflags += OFM_CONNECTOR_LEM_STUB_BUILD_DLL
@@ -85,7 +81,7 @@ project(OFM_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub  {
 }
 
 project(OFM_Connector_stub) : ccm_stub, dds4ccm_base, dds4ccm_ts_default {
-  after    += OFM_Connector_idl_gen
+  after    += OFM_Connector_idl_gen OFM_Base_stub
   sharedname = OFM_Connector_stub
   dynamicflags += OFM_CONNECTOR_STUB_BUILD_DLL
 
@@ -94,9 +90,6 @@ project(OFM_Connector_stub) : ccm_stub, dds4ccm_base, dds4ccm_ts_default {
 
   Source_Files {
     OFM_ConnectorC.cpp
-    OFM_Connector.cxx
-    OFM_ConnectorSupport.cxx
-    OFM_ConnectorPlugin.cxx
   }
 
   Header_Files {
@@ -110,9 +103,9 @@ project(OFM_Connector_stub) : ccm_stub, dds4ccm_base, dds4ccm_ts_default {
 }
 
 project(OFM_Connector_exec) : ciao_executor, dds4ccm_impl {
-  after    += OFM_Connector_lem_stub OFM_Connector_stub
+  after += OFM_Connector_lem_stub OFM_Connector_stub OFM_Base_stub
+  libs  += OFM_Connector_stub OFM_Connector_lem_stub OFM_Base_stub
   sharedname = OFM_Connector_exec
-  libs     += OFM_Connector_stub OFM_Connector_lem_stub
 
   dynamicflags += OFM_CONNECTOR_CONN_BUILD_DLL
 
@@ -134,9 +127,9 @@ project(OFM_Connector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(OFM_Connector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += OFM_Connector_lem_stub
+  after += OFM_Connector_lem_stub
+  libs  += OFM_Connector_stub OFM_Connector_lem_stub OFM_Base_stub
   sharedname  = OFM_Connector_svnt
-  libs       += OFM_Connector_stub OFM_Connector_lem_stub
 
   dynamicflags += OFM_CONNECTOR_SVNT_BUILD_DLL
 

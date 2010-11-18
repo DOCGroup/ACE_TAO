@@ -1,7 +1,33 @@
 // $Id$
 
-project(OneFile_Connector_idl_gen) : connectoridldefaults, taoidldefaults, \
-                                     dds4ccm, dds4ccm_ts_default {
+project (OneFile_Base_stub) : taoidldefaults, dds4ccm_ts_default {
+  sharedname = OneFile_Base_stub
+  dynamicflags += ONEFILE_CONNECTOR_BASE_STUB_BUILD_DLL
+
+  idlflags += -SS -Sci \
+              -Wb,stub_export_macro=ONEFILE_CONNECTOR_BASE_STUB_Export \
+              -Wb,stub_export_include=ONEFILE_Connector_Base_stub_export.h
+
+  IDL_Files {
+    idlflags += -Gxhst
+    OneFile_Base.idl
+  }
+
+  opendds_ts_flags += --export=ONEFILE_CONNECTOR_BASE_STUB_Export
+
+  DDS4CCMGenerator_Files {
+    OneFile_Base.idl
+  }
+
+  DDSGenerator_Files {
+    OneFile_Base.idl
+  }
+
+  Source_Files {
+  }
+}
+
+project(OneFile_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=ONEFILE_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=OneFile_Connector_stub_export.h \
@@ -9,17 +35,8 @@ project(OneFile_Connector_idl_gen) : connectoridldefaults, taoidldefaults, \
               -Wb,skel_export_include=OneFile_Connector_svnt_export.h \
               -Wb,conn_export_macro=ONEFILE_CONNECTOR_CONN_Export \
               -Wb,conn_export_include=OneFile_Connector_conn_export.h \
-              -Gxhex -Gxhsk -Gxhst
 
   IDL_Files {
-    OneFile_Connector.idl
-  }
-
-  DDSGenerator_Files {
-    OneFile_Connector.idl
-  }
-
-  DDS4CCMGenerator_Files {
     OneFile_Connector.idl
   }
 }
@@ -61,7 +78,7 @@ project(OneFile_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub  {
 }
 
 project(OneFile_Connector_stub) : ccm_stub, dds4ccm_base, dds4ccm_ts_default {
-  after    += OneFile_Connector_idl_gen
+  after    += OneFile_Connector_idl_gen OneFile_Base_stub
   sharedname = OneFile_Connector_stub
   dynamicflags += ONEFILE_CONNECTOR_STUB_BUILD_DLL
 
@@ -70,9 +87,6 @@ project(OneFile_Connector_stub) : ccm_stub, dds4ccm_base, dds4ccm_ts_default {
 
   Source_Files {
     OneFile_ConnectorC.cpp
-    OneFile_Connector.cxx
-    OneFile_ConnectorSupport.cxx
-    OneFile_ConnectorPlugin.cxx
   }
 
   Header_Files {
