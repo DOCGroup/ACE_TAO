@@ -3,33 +3,33 @@
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_Get_T (void)
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+DDS_Get_T<CCM_TYPE, DDS_TYPE, FIXED>::DDS_Get_T (void)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::~DDS_Get_T (void)
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+DDS_Get_T<CCM_TYPE, DDS_TYPE, FIXED>::~DDS_Get_T (void)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
 void
-DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::set_component (::CORBA::Object_ptr component)
+DDS_Get_T<CCM_TYPE, DDS_TYPE, FIXED>::set_component (::CORBA::Object_ptr component)
 {
-  DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE>::set_component (component);
+  DDS_Subscriber_Base_T<CCM_TYPE, DDS_TYPE>::set_component (component);
   this->dds_get_->_set_component (component);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
 void
-DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
+DDS_Get_T<CCM_TYPE, DDS_TYPE, FIXED>::configuration_complete (
   ::DDS::Topic_ptr topic,
   ::DDS::Subscriber_ptr subscriber,
   const char* library_name,
   const char* profile_name)
 {
-  DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete");
+  DDS4CCM_TRACE ("DDS_Get_T<CCM_TYPE, DDS_TYPE, FIXED>::configuration_complete");
   DDSSubscriberBase_type::configuration_complete (topic,
                                                   subscriber,
                                                   library_name,
@@ -40,21 +40,21 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
                                   &this->condition_manager_);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
 void
-DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::remove (
+DDS_Get_T<CCM_TYPE, DDS_TYPE, FIXED>::remove (
   ::DDS::Subscriber_ptr subscriber)
 {
-  DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::remove");
+  DDS4CCM_TRACE ("DDS_Get_T<CCM_TYPE, DDS_TYPE, FIXED>::remove");
   DDSSubscriberBase_type::remove (subscriber);
   this->dds_get_->_set_component (::CORBA::Object::_nil ());
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
 typename CCM_TYPE::fresh_data_type::_ptr_type
-DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_fresh_data (void)
+DDS_Get_T<CCM_TYPE, DDS_TYPE, FIXED>::get_fresh_data (void)
 {
-  DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_fresh_data");
+  DDS4CCM_TRACE ("DDS_Get_T<CCM_TYPE, DDS_TYPE, FIXED>::get_fresh_data");
 
   return CCM_TYPE::fresh_data_type::_duplicate (this->dds_get_);
 }

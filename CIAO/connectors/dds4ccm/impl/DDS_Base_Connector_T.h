@@ -11,7 +11,7 @@
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 #include "dds4ccm/impl/logger/Logger_Service.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 class DDS_Base_Connector_T
   : public virtual CCM_TYPE::base_type,
     public virtual ::CORBA::LocalObject,
