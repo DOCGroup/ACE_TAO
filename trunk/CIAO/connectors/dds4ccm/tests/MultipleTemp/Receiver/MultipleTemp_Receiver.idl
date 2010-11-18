@@ -1,0 +1,22 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef RECEIVER_IDL
+#define RECEIVER_IDL
+
+#include "Connector/MultipleTemp_Connector.idl"
+
+module MultipleTemp
+{
+  component Receiver
+  {
+    port MultipleTempConnector::DDS_Listen info_one_out;
+    port MultipleTempConnector::DDS_Listen info_two_out;
+  };
+};
+
+#endif
