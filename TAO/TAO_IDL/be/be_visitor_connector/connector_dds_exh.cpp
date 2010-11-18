@@ -65,10 +65,11 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
 
   AST_Type *ut = AST_Type::narrow_from_decl (*datatype);
 
+
   os_ << " <" << be_idt << be_idt_nl
-      << this->dds_traits_name_.c_str () << "," << be_nl
       << "DDS_" << this->node_->local_name ()
-      << "_Traits," << be_nl;
+      << "_Traits," << be_nl
+      << this->dds_traits_name_.c_str () << "," << be_nl;
 
   if (ut->size_type () == AST_Type::FIXED)
     {
