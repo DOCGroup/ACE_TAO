@@ -16,6 +16,10 @@ project (DDS_CFTLE_Test_Base_stub) : taoidldefaults, dds4ccm_ts_default {
 
   opendds_ts_flags += --export=CONTENTFILTEREDTOPIC_LISTEN_EVENT_TEST_BASE_STUB_Export
 
+  DDS4CCMGenerator_Files {
+    CFTLE_Test_Base.idl
+  }
+
   DDSGenerator_Files {
     CFTLE_Test_Base.idl
   }

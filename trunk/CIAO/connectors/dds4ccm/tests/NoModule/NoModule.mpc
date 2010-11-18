@@ -6,7 +6,7 @@ project (NoModule_stub) : taoidldefaults, dds4ccm_ts_default {
 
   idlflags += -SS -Sci \
               -Wb,stub_export_macro=NOMODULE_COMMON_STUB_Export \
-              -Wb,stub_export_include=NoModule_Common_stub_export.h 
+              -Wb,stub_export_include=NoModule_Common_stub_export.h
 
   IDL_Files {
     idlflags += -Gxhst
@@ -14,6 +14,10 @@ project (NoModule_stub) : taoidldefaults, dds4ccm_ts_default {
   }
 
   opendds_ts_flags += --export=NOMODULE_COMMON_STUB_Export
+
+  DDS4CCMGenerator_Files {
+    NoModule.idl
+  }
 
   DDSGenerator_Files {
     NoModule.idl

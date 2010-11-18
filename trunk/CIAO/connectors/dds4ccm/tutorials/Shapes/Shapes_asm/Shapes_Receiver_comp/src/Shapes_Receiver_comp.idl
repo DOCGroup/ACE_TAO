@@ -5,12 +5,9 @@
 
 #include "Shapes_ShapeType_conn.idl"
 
-module Shapes
+component Receiver_comp
 {
-  component Receiver_comp
-  {
-    port ShapeType_conn::DDS_Listen info_out;
-  };
+  port ShapeType_conn::DDS_Listen info_out;
 };
 
 #endif /* SHAPES_RECEIVER_COMP_IDL_ */

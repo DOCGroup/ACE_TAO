@@ -16,7 +16,7 @@
 
 #include "tao/LocalObject.h"
 
-namespace CIAO_Shapes_Control_comp_Impl
+namespace CIAO_Control_comp_Impl
 {
   class Control_comp_exec_i;
 
@@ -96,7 +96,7 @@ namespace CIAO_Shapes_Control_comp_Impl
     //@}
 
   private:
-    ::Shapes::CCM_Control_comp_Context_var ciao_context_;
+    ::CCM_Control_comp_Context_var ciao_context_;
 
     ::CORBA::ULong rate_;
 

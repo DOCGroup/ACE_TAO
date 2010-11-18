@@ -15,12 +15,14 @@ feature(dds4ccm_splice) : dds4ccm, splice_ts_defaults {
   }
 }
 
-feature(dds4ccm_ndds) : dds4ccm, ndds_ts_defaults, nddslib, typecode {
+feature(dds4ccm_ndds) : dds4ccm, ndds_ts_defaults, dds4ccm_ndds_ts_defaults, nddslib, typecode {
   Define_Custom(DDSGenerator) : NDDSTypeSupport {
-    commandflags += -typeSequenceSuffix RTISeq -enableEscapeChar -verbosity 1 -I $(CIAO_ROOT)/connectors/dds4ccm/idl -I $(CIAO_ROOT)/ccm -I $(CIAO_ROOT)
+    commandflags -= -corba <%input_noext%>C.h
+    commandflags += -typeSequenceSuffix RTISeq -enableEscapeChar -verbosity 1 -I $(CIAO_ROOT)/connectors/dds4ccm/idl -I $(CIAO_ROOT)/ccm -I $(CIAO_ROOT) -corba <%input_noext%>TypeSupportC.h
     keyword dds_ts_flags = commandflags
   }
-
+  Define_Custom(DDS4CCMGenerator) : DDS4CCMTypeSupport {
+  }
   dynamicflags += NDDS_USER_DLL_EXPORT
 
   verbatim(gnuace, macros) {
