@@ -1,3 +1,11 @@
+Thu Nov 18 19:58:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
+          Fixed compile errors, this test is plain rti dds, no need for dds4ccm
+          typesupport
+
 Thu Nov 18 19:44:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/VariousTopicsEvent/Base/VTopic_Base.idl:
