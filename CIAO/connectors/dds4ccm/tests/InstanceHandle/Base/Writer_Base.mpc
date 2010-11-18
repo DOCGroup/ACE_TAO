@@ -20,6 +20,10 @@ project (DDS_DDSInstanceHandleBase_stub) : taoidldefaults, dds4ccm_ts_default {
     Writer_Base.idl
   }
 
+  DDS4CCMGenerator_Files {
+    Writer_Base.idl
+  }
+
   Source_Files {
   }
 }

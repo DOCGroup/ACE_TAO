@@ -16,6 +16,10 @@ project (PortUsage_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_def
 
   opendds_ts_flags += --export=PORTUSAGE_EVENT_TEST_BASE_STUB_Export
 
+  DDS4CCMGenerator_Files {
+    PortUsage_Test_Base.idl
+  }
+
   DDSGenerator_Files {
     PortUsage_Test_Base.idl
   }

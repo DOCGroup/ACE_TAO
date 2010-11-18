@@ -16,6 +16,10 @@ project (DDS_PSL_DeadlineTest_Base_stub) : taoidldefaults, dds4ccm_ts_default {
 
   opendds_ts_flags += --export=PSL_DEADLINETEST_BASE_STUB_Export
 
+  DDS4CCMGenerator_Files {
+    PSL_DeadlineTest_Base.idl
+  }
+
   DDSGenerator_Files {
     PSL_DeadlineTest_Base.idl
   }

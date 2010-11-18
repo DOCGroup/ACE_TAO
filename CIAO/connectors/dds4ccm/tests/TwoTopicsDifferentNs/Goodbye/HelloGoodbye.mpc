@@ -16,6 +16,10 @@ project (DDS_Goodbye_Namespace_Base_stub) : taoidldefaults, dds4ccm_ts_default {
 
   opendds_ts_flags += --export=GOODBYE_NAMESPACE_STUB_Export
 
+  DDS4CCMGenerator_Files {
+    HelloGoodbye.idl
+  }
+
   DDSGenerator_Files {
     HelloGoodbye.idl
   }

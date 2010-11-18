@@ -16,7 +16,7 @@
 
 #include "tao/LocalObject.h"
 
-namespace CIAO_Shapes_Receiver_comp_Impl
+namespace CIAO_Receiver_comp_Impl
 {
 
   /**
@@ -27,15 +27,15 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   //============================================================
 
   class SHAPES_RECEIVER_COMP_EXEC_Export info_out_data_listener_exec_i
-    : public virtual ::Shapes::ShapeType_conn::CCM_Listener,
+    : public virtual ::ShapeType_conn::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
     info_out_data_listener_exec_i (
-      ::Shapes::CCM_Receiver_comp_Context_ptr ctx);
+      ::CCM_Receiver_comp_Context_ptr ctx);
     virtual ~info_out_data_listener_exec_i (void);
 
-    // Operations and attributes from ::Shapes::ShapeType_conn::Listener
+    // Operations and attributes from ::ShapeType_conn::Listener
 
     virtual
     void on_one_data (const ::ShapeType & datum,
@@ -46,7 +46,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
     const ::CCM_DDS::ReadInfoSeq & infos);
 
   private:
-    ::Shapes::CCM_Receiver_comp_Context_var ciao_context_;
+    ::CCM_Receiver_comp_Context_var ciao_context_;
   };
 
   //============================================================
@@ -59,7 +59,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   {
   public:
     info_out_status_exec_i (
-      ::Shapes::CCM_Receiver_comp_Context_ptr ctx);
+      ::CCM_Receiver_comp_Context_ptr ctx);
     virtual ~info_out_status_exec_i (void);
 
     // Operations and attributes from ::CCM_DDS::PortStatusListener
@@ -73,7 +73,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
     const ::DDS::SampleLostStatus & status);
 
   private:
-    ::Shapes::CCM_Receiver_comp_Context_var ciao_context_;
+    ::CCM_Receiver_comp_Context_var ciao_context_;
   };
 
   //============================================================
@@ -96,7 +96,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
     //@{
     /** Component attributes and port operations. */
 
-    virtual ::Shapes::ShapeType_conn::CCM_Listener_ptr
+    virtual ::ShapeType_conn::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -120,8 +120,8 @@ namespace CIAO_Shapes_Receiver_comp_Impl
     //@}
 
   private:
-    ::Shapes::CCM_Receiver_comp_Context_var ciao_context_;
-    ::Shapes::ShapeType_conn::CCM_Listener_var ciao_info_out_data_listener_;
+    ::CCM_Receiver_comp_Context_var ciao_context_;
+    ::ShapeType_conn::CCM_Listener_var ciao_info_out_data_listener_;
     ::CCM_DDS::CCM_PortStatusListener_var ciao_info_out_status_;
   };
 

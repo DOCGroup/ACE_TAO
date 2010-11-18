@@ -3,7 +3,7 @@
 
 #include "Shapes_Receiver_comp_exec.h"
 
-namespace CIAO_Shapes_Receiver_comp_Impl
+namespace CIAO_Receiver_comp_Impl
 {
 
   //============================================================
@@ -11,9 +11,9 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   //============================================================
 
   info_out_data_listener_exec_i::info_out_data_listener_exec_i (
-        ::Shapes::CCM_Receiver_comp_Context_ptr ctx)
+        ::CCM_Receiver_comp_Context_ptr ctx)
     : ciao_context_ (
-        ::Shapes::CCM_Receiver_comp_Context::_duplicate (ctx))
+        ::CCM_Receiver_comp_Context::_duplicate (ctx))
   {
   }
 
@@ -21,7 +21,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   {
   }
 
-  // Operations from ::Shapes::ShapeType_conn::Listener
+  // Operations from ::ShapeType_conn::Listener
 
   void
   info_out_data_listener_exec_i::on_one_data (const ::ShapeType & datum,
@@ -47,9 +47,9 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   //============================================================
 
   info_out_status_exec_i::info_out_status_exec_i (
-        ::Shapes::CCM_Receiver_comp_Context_ptr ctx)
+        ::CCM_Receiver_comp_Context_ptr ctx)
     : ciao_context_ (
-        ::Shapes::CCM_Receiver_comp_Context::_duplicate (ctx))
+        ::CCM_Receiver_comp_Context::_duplicate (ctx))
   {
   }
 
@@ -88,7 +88,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
 
   // Component attributes and port operations.
 
-  ::Shapes::ShapeType_conn::CCM_Listener_ptr
+  ::ShapeType_conn::CCM_Listener_ptr
   Receiver_comp_exec_i::get_info_out_data_listener (void)
   {
     if ( ::CORBA::is_nil (this->ciao_info_out_data_listener_.in ()))
@@ -98,13 +98,13 @@ namespace CIAO_Shapes_Receiver_comp_Impl
           tmp,
           info_out_data_listener_exec_i (
             this->ciao_context_.in ()),
-            ::Shapes::ShapeType_conn::CCM_Listener::_nil ());
+            ::ShapeType_conn::CCM_Listener::_nil ());
 
           this->ciao_info_out_data_listener_ = tmp;
       }
 
     return
-      ::Shapes::ShapeType_conn::CCM_Listener::_duplicate (
+      ::ShapeType_conn::CCM_Listener::_duplicate (
         this->ciao_info_out_data_listener_.in ());
   }
 
@@ -135,7 +135,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
     ::Components::SessionContext_ptr ctx)
   {
     this->ciao_context_ =
-      ::Shapes::CCM_Receiver_comp_Context::_narrow (ctx);
+      ::CCM_Receiver_comp_Context::_narrow (ctx);
 
     if ( ::CORBA::is_nil (this->ciao_context_.in ()))
       {

@@ -7,14 +7,11 @@
 
 #pragma ciao lem "Shapes_Control_objE.idl"
 
-module Shapes
+interface Control_obj
 {
-  interface Control_obj
-  {
-    ReturnStatus setSize (in unsigned short size);
-    ReturnStatus setLocation (in unsigned short x,
-                              in unsigned short y);
-  };
+  ReturnStatus setSize (in unsigned short size);
+  ReturnStatus setLocation (in unsigned short x,
+                            in unsigned short y);
 };
 
 #endif /* SHAPES_CONTROL_IDL_ */

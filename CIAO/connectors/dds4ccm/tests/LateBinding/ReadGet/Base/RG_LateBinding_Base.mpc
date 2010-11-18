@@ -16,6 +16,10 @@ project (RG_LateBindingBase_stub) : taoidldefaults, dds4ccm_ts_default {
 
   opendds_ts_flags += --export=RG_LATEBINDING_BASE_STUB_Export
 
+  DDS4CCMGenerator_Files {
+    RG_LateBinding_Base.idl
+  }
+
   DDSGenerator_Files {
     RG_LateBinding_Base.idl
   }

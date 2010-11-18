@@ -16,6 +16,10 @@ project (DDS_Updater_Base_stub) : taoidldefaults, dds4ccm_ts_default {
 
   opendds_ts_flags += --export=UPDATER_BASE_STUB_Export
 
+  DDS4CCMGenerator_Files {
+    Updater_Base.idl
+  }
+
   DDSGenerator_Files {
     Updater_Base.idl
   }
