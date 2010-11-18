@@ -65,8 +65,8 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
   /// or DDS_Event, so we generate inheritance from the
   /// corresponding template. May have to generalize this logic.
   os_ << " <" << be_idt << be_idt_nl
-      << this->dds_traits_name_.c_str () << "," << be_nl
-      << "DDS_" << this->node_->local_name () << "_Traits," << be_nl;
+      << "DDS_" << this->node_->local_name () << "_Traits," << be_nl
+      << this->dds_traits_name_.c_str () << "," << be_nl;
 
   if (ut->size_type () == AST_Type::FIXED)
     {
