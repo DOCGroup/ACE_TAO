@@ -3,31 +3,13 @@
 #ifndef OFM_CONNECTOR_IDL
 #define OFM_CONNECTOR_IDL
 
+#include "OFM_Base.idl"
 #if defined __TAO_IDL
 #include <ccm_dds.idl>
 #endif
 
-#pragma ndds typesupport "OFM_ConnectorSupport.h"
+#pragma ndds typesupport "OFM_BaseSupport.h"
 #pragma ciao lem "OFM_ConnectorE.idl"
-
-struct Topic1 {
-  string key_value_topic1; //@key
-  long long_value;
-};
-typedef sequence<Topic1> Topic1Seq;
-
-
-struct Topic2 {
-  string key_value_topic2; //@key
-  float float_value;
-};
-typedef sequence<Topic2> Topic2Seq;
-
-struct Topic3 {
-  string key_value_topic3; //@key
-  short short_value;
-};
-typedef sequence<Topic3> Topic3Seq;
 
 module ::CCM_DDS::Typed < ::Topic1, ::Topic1Seq> Topic1Connector;
 module ::CCM_DDS::Typed < ::Topic2, ::Topic2Seq> Topic2Connector;

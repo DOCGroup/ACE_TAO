@@ -1,3 +1,13 @@
+Thu Nov 18 14:17:44 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Base.idl:
+        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.idl:
+        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.mpc:
+        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Base.idl:
+        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.idl:
+        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.mpc:
+          Splitted type and connector declaration into to separate files.
+
 Thu Nov 18 13:17:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/MultipleTemp:
@@ -20,7 +30,7 @@ Thu Nov 18 13:17:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/dds4ccm/tests/MultipleTemp/Base:
         * connectors/dds4ccm/tests/MultipleTemp/Base/MultipleTemp_Base.idl:
         * connectors/dds4ccm/tests/MultipleTemp/Base/MultipleTemp_Base.mpc:
-       Test for multiple templates. 
+       Test for multiple templates.
 
 Thu Nov 18 12:55:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 

@@ -1,0 +1,24 @@
+// $Id$
+
+#ifndef OFM_BASE_IDL
+#define OFM_BASE_IDL
+
+struct Topic1 {
+  string key_value_topic1; //@key
+  long long_value;
+};
+typedef sequence<Topic1> Topic1Seq;
+
+struct Topic2 {
+  string key_value_topic2; //@key
+  float float_value;
+};
+typedef sequence<Topic2> Topic2Seq;
+
+struct Topic3 {
+  string key_value_topic3; //@key
+  short short_value;
+};
+typedef sequence<Topic3> Topic3Seq;
+
+#endif

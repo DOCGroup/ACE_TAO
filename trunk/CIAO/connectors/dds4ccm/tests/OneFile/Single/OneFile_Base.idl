@@ -1,0 +1,17 @@
+// $Id$
+
+/**
+ * @file OneFile_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef ONEFILE_BASE_IDL_
+#define ONEFILE_BASE_IDL_
+
+struct OneFileTopic {
+  string hello; //@key
+  long iteration;
+};
+typedef sequence<OneFileTopic> OneFileTopicSeq;
+
+#endif /* ONEFILE_BASE_IDL_ */
