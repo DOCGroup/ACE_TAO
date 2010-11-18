@@ -4,7 +4,6 @@
 #define OFM_CONNECTOR_IDL
 
 #if defined __TAO_IDL
-
 #include <ccm_dds.idl>
 #endif
 

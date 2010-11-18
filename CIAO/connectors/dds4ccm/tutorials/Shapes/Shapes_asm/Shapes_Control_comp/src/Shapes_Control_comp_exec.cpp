@@ -10,7 +10,7 @@
 
 #define MIN_SIZE 5
 
-namespace CIAO_Shapes_Control_comp_Impl
+namespace CIAO_Control_comp_Impl
 {
   //============================================================
   // pulse_Generator
@@ -121,11 +121,11 @@ namespace CIAO_Shapes_Control_comp_Impl
               }
           }
       }
-    ::Shapes::Control_obj_var control =
+    ::Control_obj_var control =
       this->ciao_context_->get_connection_control ();
     if (! ::CORBA::is_nil (control))
       {
-        if (control->setSize (this->current_size_) == ::Shapes::RETURN_ERROR)
+        if (control->setSize (this->current_size_) == ::RETURN_ERROR)
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("Control_comp_exec_i::tick : ")
                                   ACE_TEXT ("Setting shapes size\n")));
@@ -137,7 +137,7 @@ namespace CIAO_Shapes_Control_comp_Impl
                                   this->current_size_));
           }
         if (control->setLocation (this->current_x_,
-                                  this->current_y_) == ::Shapes::RETURN_ERROR)
+                                  this->current_y_) == ::RETURN_ERROR)
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("Control_comp_exec_i::tick : ")
                                   ACE_TEXT ("Setting shapes location\n")));
@@ -252,7 +252,7 @@ namespace CIAO_Shapes_Control_comp_Impl
     ::Components::SessionContext_ptr ctx)
   {
     this->ciao_context_ =
-      ::Shapes::CCM_Control_comp_Context::_narrow (ctx);
+      ::CCM_Control_comp_Context::_narrow (ctx);
 
     if ( ::CORBA::is_nil (this->ciao_context_.in ()))
       {

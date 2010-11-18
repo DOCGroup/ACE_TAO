@@ -11,13 +11,6 @@ project (DDS_CCM_Example_MT_idl_gen) : taoidldefaults, anytypecode, dds4ccm_ts_d
   IDL_Files {
     ccm_dds_mt.idl
   }
-
-  opendds_ts_flags += --export=CCM_DDS_MT_STUB_Export
-  ndds_ts_flags += -I $(CIAO_ROOT)/connectors/dds4ccm/idl
-  
-  DDSGenerator_Files {
-    ccm_dds_mt.idl
-  }
 }
 
 project(DDS_MultiTopic_Connector_idl_gen) : connectoridldefaults, dds4ccm {
@@ -53,8 +46,8 @@ project(DDS_MultiTopic_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project(DDS_MultiTopic_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
-  after += DDS_MultiTopic_Connector_lem_gen DDS_MultiTopic_Connector_stub DDS_MultiTopic_Base_stub 
-  libs  += DDS_MultiTopic_Base_stub DDS_MultiTopic_Connector_stub 
+  after += DDS_MultiTopic_Connector_lem_gen DDS_MultiTopic_Connector_stub DDS_MultiTopic_Base_stub
+  libs  += DDS_MultiTopic_Base_stub DDS_MultiTopic_Connector_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -105,9 +98,9 @@ project(DDS_MultiTopic_Connector_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(DDS_MultiTopic_Connector_exec) : ciao_executor, dds4ccm_impl {
-  after   += DDS_MultiTopic_Connector_lem_stub DDS_MultiTopic_Connector_stub 
+  after   += DDS_MultiTopic_Connector_lem_stub DDS_MultiTopic_Connector_stub
   sharedname = DDS_MultiTopic_Connector_exec
-  libs += DDS_MultiTopic_Connector_stub DDS_MultiTopic_Connector_lem_stub DDS_MultiTopic_Base_stub 
+  libs += DDS_MultiTopic_Connector_stub DDS_MultiTopic_Connector_lem_stub DDS_MultiTopic_Base_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -131,12 +124,12 @@ project(DDS_MultiTopic_Connector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(DDS_MultiTopic_Connector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += DDS_MultiTopic_Connector_lem_stub DDS_MultiTopic_Connector_exec DDS_MultiTopic_Connector_stub 
+  after      += DDS_MultiTopic_Connector_lem_stub DDS_MultiTopic_Connector_exec DDS_MultiTopic_Connector_stub
   sharedname  = DDS_MultiTopic_Connector_svnt
   libs       += DDS_MultiTopic_Connector_stub \
                 DDS_MultiTopic_Connector_lem_stub  \
                 DDS_MultiTopic_Base_stub \
-                DDS_MultiTopic_Connector_exec 
+                DDS_MultiTopic_Connector_exec
   libpaths += ../lib
   libout = ../lib
   includes += ..

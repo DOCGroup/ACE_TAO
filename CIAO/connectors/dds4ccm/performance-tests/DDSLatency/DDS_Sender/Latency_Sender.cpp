@@ -614,7 +614,7 @@ void HelloListener::on_data_available(DDSDataReader *reader)
   for(;;)
     {
       ::DDS::SampleInfoSeq info;
-      ::LatencyTestRTISeq sample_req;
+      ::LatencyTestSeq sample_req;
       ::DDS::ReturnCode_t const retcode = test_reader->take(sample_req, info);
       if (retcode == DDS_RETCODE_NO_DATA)
         {

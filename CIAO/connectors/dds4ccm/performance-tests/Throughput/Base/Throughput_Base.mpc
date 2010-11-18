@@ -16,6 +16,10 @@ project (DDS_Throughput_Base_stub) : taoidldefaults, dds4ccm_ts_default {
 
   opendds_ts_flags += --export=THROUGHPUT_BASE_STUB_Export
 
+  DDS4CCMGenerator_Files {
+    Throughput_Base.idl
+  }
+
   DDSGenerator_Files {
     Throughput_Base.idl
   }

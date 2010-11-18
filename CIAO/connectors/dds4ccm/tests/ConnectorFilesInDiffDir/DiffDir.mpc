@@ -18,6 +18,11 @@ project (DiffDir_stub) : taoidldefaults, \
 
   opendds_ts_flags += --export=DIFFDIR_COMMON_STUB_Export
 
+  DDS4CCMGenerator_Files {
+    DiffDir.idl
+    gendir = Connector
+  }
+
   DDSGenerator_Files {
     DiffDir.idl
     gendir = Connector

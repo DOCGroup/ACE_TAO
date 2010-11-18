@@ -10,13 +10,9 @@
 
 #pragma ciao lem "Shapes_ShapeType_connE.idl"
 
-// @todo, moved outside of Shapes, needed if we are 100% dds compliant
 typedef sequence<ShapeType> ShapeTypeSeq;
 
-module Shapes
-{
-  module ::CCM_DDS::Typed < ::ShapeType, ::ShapeTypeSeq> ShapeType_conn;
-};
+module ::CCM_DDS::Typed < ::ShapeType, ::ShapeTypeSeq> ShapeType_conn;
 
 #endif /* SHAPES_SHAPETYPE_CONN_IDL_ */
 

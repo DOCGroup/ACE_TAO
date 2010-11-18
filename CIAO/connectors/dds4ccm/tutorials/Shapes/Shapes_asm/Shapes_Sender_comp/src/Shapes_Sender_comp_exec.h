@@ -16,7 +16,7 @@
 
 #include "tao/LocalObject.h"
 
-namespace CIAO_Shapes_Sender_comp_Impl
+namespace CIAO_Sender_comp_Impl
 {
   class Sender_comp_exec_i;
   //============================================================
@@ -24,26 +24,26 @@ namespace CIAO_Shapes_Sender_comp_Impl
   //============================================================
 
   class SHAPES_SENDER_COMP_EXEC_Export control_exec_i
-    : public virtual ::Shapes::CCM_Control_obj,
+    : public virtual ::CCM_Control_obj,
       public virtual ::CORBA::LocalObject
   {
   public:
     control_exec_i (
-      ::Shapes::CCM_Sender_comp_Context_ptr ctx,
+      ::CCM_Sender_comp_Context_ptr ctx,
       Sender_comp_exec_i &callback);
     virtual ~control_exec_i (void);
 
-    // Operations and attributes from ::Shapes::Control_obj
+    // Operations and attributes from ::Control_obj
 
     virtual
-    ::Shapes::ReturnStatus setSize (::CORBA::UShort size);
+    ::ReturnStatus setSize (::CORBA::UShort size);
 
     virtual
-    ::Shapes::ReturnStatus setLocation (::CORBA::UShort x,
+    ::ReturnStatus setLocation (::CORBA::UShort x,
     ::CORBA::UShort y);
 
   private:
-    ::Shapes::CCM_Sender_comp_Context_var ciao_context_;
+    ::CCM_Sender_comp_Context_var ciao_context_;
     Sender_comp_exec_i &callback_;
   };
 
@@ -67,7 +67,7 @@ namespace CIAO_Shapes_Sender_comp_Impl
     //@{
     /** Component attributes and port operations. */
 
-    virtual ::Shapes::CCM_Control_obj_ptr
+    virtual ::CCM_Control_obj_ptr
     get_control (void);
     //@}
 
@@ -85,21 +85,21 @@ namespace CIAO_Shapes_Sender_comp_Impl
 
     //@{
     /** User defined operations */
-    ::Shapes::ReturnStatus setSize (::CORBA::UShort size);
+    ::ReturnStatus setSize (::CORBA::UShort size);
 
-    ::Shapes::ReturnStatus setLocation (::CORBA::UShort x,
-                                        ::CORBA::UShort y);
+    ::ReturnStatus setLocation (::CORBA::UShort x,
+                                ::CORBA::UShort y);
 
     //@}
 
   private:
-    ::Shapes::CCM_Sender_comp_Context_var ciao_context_;
-    ::Shapes::CCM_Control_obj_var ciao_control_;
+    ::CCM_Sender_comp_Context_var ciao_context_;
+    ::CCM_Control_obj_var ciao_control_;
 
     ::DDS::InstanceHandle_t instance_handle_;
     ShapeType square_;
 
-    ::Shapes::ReturnStatus update_square (void);
+    ::ReturnStatus update_square (void);
   };
 
   extern "C" SHAPES_SENDER_COMP_EXEC_Export ::Components::EnterpriseComponent_ptr
