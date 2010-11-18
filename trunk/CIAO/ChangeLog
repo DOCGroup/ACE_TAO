@@ -1,3 +1,8 @@
+Thu Nov 18 19:30:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm_ts_default.mpb:
+          Fix problems when dds4ccm_ndds is disabled
+
 Thu Nov 18 15:53:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.cpp:
@@ -9,8 +14,6 @@ Thu Nov 18 15:53:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/ami4ccm/tests/InterMulti/Sender/InterMultiA_conn_i.cpp:
         * connectors/ami4ccm/tests/InterMulti/Sender/InterMultiA_conn_i.h:
         Updated test by using -Gex option and _conn_i.h/cpp file for ReplyHandler.
-
-
 
 Thu Nov 18 14:32:51 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
