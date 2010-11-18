@@ -17,7 +17,7 @@
 #include "dds4ccm/impl/CCM_DataReader.h"
 #include "dds4ccm/impl/LocalObject_T.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 class DDS_Subscriber_Base_T
 {
 public:

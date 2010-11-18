@@ -13,9 +13,9 @@
 #include "dds4ccm/impl/DDS_Write_T.h"
 #include "dds4ccm/impl/DDS_Listen_T.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
 class DDS_Event_Connector_T
-  : public virtual DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>
+  : public virtual DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>
 {
 public:
   DDS_Event_Connector_T (void);
@@ -87,27 +87,27 @@ private:
    * DDS_Write supplier
    */
   //@{
-  DDS_Write_T <DDS_TYPE, typename CCM_TYPE::supplier_traits> supplier_;
+  DDS_Write_T <typename CCM_TYPE::supplier_traits, DDS_TYPE> supplier_;
   //@}
 
   /**
    * DDS_Listen push_consumer
    */
   //@{
-  DDS_Listen_T <DDS_TYPE, typename CCM_TYPE::push_consumer_traits> push_consumer_;
+  DDS_Listen_T <typename CCM_TYPE::push_consumer_traits, DDS_TYPE> push_consumer_;
   //@}
 
   /**
    * DDS_Get pull_consumer
    */
   //@{
-  DDS_Get_T <DDS_TYPE, typename CCM_TYPE::pull_consumer_traits, FIXED> pull_consumer_;
+  DDS_Get_T <typename CCM_TYPE::pull_consumer_traits, DDS_TYPE, FIXED> pull_consumer_;
   //@}
 
   void do_configuration_complete (void);
   void do_ccm_activate (void);
 
-  typedef DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE> TopicBaseConnector;
+  typedef DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE> TopicBaseConnector;
 };
 
 #include "dds4ccm/impl/DDS_Event_Connector_T.cpp"

@@ -7,14 +7,14 @@
 #include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_Base_Connector_T (void)
+template <typename CCM_TYPE, typename DDS_TYPE>
+DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::DDS_Base_Connector_T (void)
   : domain_id_ (0)
   , configuration_complete_ (false)
   , library_name_ (0)
   , profile_name_ (0)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_Base_Connector_T");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::DDS_Base_Connector_T");
 
   ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), this->domain_id_);
   this->domain_id_ = id;
@@ -23,10 +23,11 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_Base_Connector_T (void)
 
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::~DDS_Base_Connector_T (void)
+template <typename CCM_TYPE, typename DDS_TYPE>
+
+DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::~DDS_Base_Connector_T (void)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::~DDS_Base_Connector_T");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::~DDS_Base_Connector_T");
 
   ACE_OS::free (library_name_);
   ACE_OS::free (profile_name_);
@@ -36,21 +37,23 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::~DDS_Base_Connector_T (void)
                 "Connector has been destructed\n"));
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
+
 ::DDS::DomainId_t
-DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::domain_id (void)
+DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::domain_id (void)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::domain_id");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::domain_id");
 
   return this->domain_id_;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
+
 void
-DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::domain_id (
+DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::domain_id (
   ::DDS::DomainId_t domain_id)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::domain_id");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::domain_id");
 
   if (this->configuration_complete_)
     {
@@ -62,21 +65,23 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::domain_id (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
+
 char *
-DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (void)
+DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::qos_profile (void)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::qos_profile");
 
   return CORBA::string_dup (this->qos_profile_.in ());
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
+
 void
-DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (
+DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::qos_profile (
   const char * qos_profile)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::qos_profile");
 
   if (this->configuration_complete_)
     {
@@ -88,11 +93,12 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
+
 void
-DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_domain (void)
+DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_default_domain (void)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_domain");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_default_domain");
 
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                 "DDS_Base_Connector_T::init_default_domain - "
@@ -161,12 +167,13 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_domain (void)
 
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
+
 void
-DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::set_session_context (
+DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::set_session_context (
   ::Components::SessionContext_ptr ctx)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::set_session_context");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::set_session_context");
 
   typename CCM_TYPE::context_type::_var_type lctx =
     CCM_TYPE::context_type::_narrow (ctx);
@@ -179,34 +186,38 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::set_session_context (
   this->context_ = lctx;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
+
 void
-DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
+DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::configuration_complete (void)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::configuration_complete");
   this->init_default_domain ();
   this->configuration_complete_ = true;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
+
 void
-DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
+DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_activate (void)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_activate");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
+
 void
-DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
+DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_passivate (void)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_passivate");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
+
 void
-DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
+DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove (void)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove");
 
   ::DDS::ReturnCode_t const retcode = this->dp_factory_.delete_participant (
                                                 this->domain_participant_.in ());
@@ -218,11 +229,12 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
   this->domain_participant_ = ::DDS::DomainParticipant::_nil ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
+
 ACE_Reactor*
-DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::reactor (void)
+DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::reactor (void)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::reactor");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::reactor");
 
   ACE_Reactor* reactor = 0;
 

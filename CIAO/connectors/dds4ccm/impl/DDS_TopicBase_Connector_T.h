@@ -15,9 +15,9 @@
 #include "dds4ccm/impl/PublisherListener.h"
 #include "dds4ccm/impl/SubscriberListener.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 class DDS_TopicBase_Connector_T
-  : public virtual DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>
+  : public virtual DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>
 {
 public:
   DDS_TopicBase_Connector_T (void);
@@ -68,7 +68,7 @@ protected:
   ::DDS::Subscriber_var subscriber_;
   ::DDS::SubscriberListener_var subscriber_listener_;
 
-  typedef DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE> BaseConnector;
+  typedef DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE> BaseConnector;
 private:
   bool late_binding_;
 };

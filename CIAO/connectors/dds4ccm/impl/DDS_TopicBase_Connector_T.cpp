@@ -9,40 +9,40 @@
 # include "dds4ccm/impl/ndds/DomainParticipant.h"
 #endif
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_TopicBase_Connector_T (void) :
+template <typename CCM_TYPE, typename DDS_TYPE>
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::DDS_TopicBase_Connector_T (void) :
     BaseConnector ()
   , late_binding_ (false)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::~DDS_TopicBase_Connector_T (void)
+template <typename CCM_TYPE, typename DDS_TYPE>
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::~DDS_TopicBase_Connector_T (void)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 bool
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::late_binding (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::late_binding (void)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::late_binding");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::late_binding");
   return this->late_binding_;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::late_binding (bool late_binding)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::late_binding (bool late_binding)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::late_binding");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::late_binding");
   this->late_binding_ |= late_binding;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 bool
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::late_binded (
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::late_binded (
   const char * topic_name)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::late_binded");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::late_binded");
 
   this->late_binding (ACE_OS::strlen (topic_name) == 0);
 
@@ -64,11 +64,11 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::late_binded (
   return false;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::configuration_complete (void)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::configuration_complete");
 
   BaseConnector::configuration_complete ();
   this->init_default_topic ();
@@ -76,64 +76,64 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
   this->init_publisher ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (ACE_Reactor* reactor)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_activate (ACE_Reactor* reactor)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_activate");
   BaseConnector::ccm_activate ();
   this->activate_default_topic (reactor);
   this->activate_subscriber (reactor);
   this->activate_publisher (reactor);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_passivate (void)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_passivate");
   this->passivate_default_topic ();
   this->passivate_subscriber ();
   this->passivate_publisher ();
   BaseConnector::ccm_passivate ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove (void)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove");
   this->remove_default_topic ();
   this->remove_subscriber ();
   this->remove_publisher ();
   BaseConnector::ccm_remove ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 char *
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::topic_name (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::topic_name (void)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::topic_name");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::topic_name");
 
   return CORBA::string_dup (this->topic_name_.in ());
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::topic_name (
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::topic_name (
   const char * topic_name)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::topic_name");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::topic_name");
 
   this->topic_name_ = topic_name;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::key_fields (
   const ::DDS::StringSeq & key_fields)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::key_fields");
   if (this->configuration_complete_)
     {
       throw ::CCM_DDS::NonChangeable ();
@@ -148,11 +148,11 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 ::DDS::StringSeq *
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::key_fields (void)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::key_fields");
 /*
     For future use, DDS_TYPE doesn't have get_typecode yet
     ::DDS_TypeCode* ptr = ::DDS_TYPE::type_support::get_typecode ();
@@ -180,9 +180,9 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (void)
   return retval._retn ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_topic (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::init_default_topic (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::init_default_topic");
 
@@ -251,9 +251,9 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_topic (void)
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_subscriber (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::init_subscriber (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::init_subscriber");
 
@@ -287,9 +287,9 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_subscriber (void)
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_publisher (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::init_publisher (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::init_publisher");
 
@@ -323,9 +323,9 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_publisher (void)
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_default_topic (ACE_Reactor* reactor)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::activate_default_topic (ACE_Reactor* reactor)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::activate_default_topic");
 
@@ -360,9 +360,9 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_default_topic (ACE_React
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_subscriber (ACE_Reactor* reactor)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::activate_subscriber (ACE_Reactor* reactor)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::activate_subscriber");
 
@@ -397,9 +397,9 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_subscriber (ACE_Reactor*
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_publisher (
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::activate_publisher (
   ACE_Reactor* reactor)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::activate_publisher");
@@ -435,9 +435,9 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_publisher (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_default_topic (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::passivate_default_topic (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::passivate_default_topic");
 
@@ -458,9 +458,9 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_default_topic (void)
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_subscriber (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::passivate_subscriber (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::passivate_subscriber");
 
@@ -482,9 +482,9 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_subscriber (void)
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_publisher (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::passivate_publisher (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::passivate_publisher");
 
@@ -506,9 +506,9 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::passivate_publisher (void)
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::remove_default_topic (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::remove_default_topic (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::remove_default_topic");
 
@@ -530,9 +530,9 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::remove_default_topic (void)
 #endif
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::remove_subscriber (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::remove_subscriber (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::remove_subscriber");
 
@@ -540,9 +540,9 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::remove_subscriber (void)
   this->subscriber_ = ::DDS::Subscriber::_nil ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::remove_publisher (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::remove_publisher (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::remove_publisher");
 
