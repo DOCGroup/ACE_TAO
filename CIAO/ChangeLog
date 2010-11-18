@@ -1,3 +1,11 @@
+Thu Nov 18 08:50:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/ThreeComp/Sender/ThreeComp_Sender.idl:
+        * connectors/ami4ccm/tests/ThreeComp/Base/ThreeComp.mpc:
+        * connectors/ami4ccm/tests/ThreeComp/Base/ThreeComp.idl:
+        * connectors/ami4ccm/tests/ThreeComp/Base/ThreeComp_no_ami.idl:
+        Add no ami4ccm interface in separate idl file.
+
 Thu Nov 18 08:15:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.cpp:
