@@ -10,8 +10,6 @@
 
 #pragma ciao lem "Shapes_ShapeType_connE.idl"
 
-typedef sequence<ShapeType> ShapeTypeSeq;
-
 module ::CCM_DDS::Typed < ::ShapeType, ::ShapeTypeSeq> ShapeType_conn;
 
 #endif /* SHAPES_SHAPETYPE_CONN_IDL_ */

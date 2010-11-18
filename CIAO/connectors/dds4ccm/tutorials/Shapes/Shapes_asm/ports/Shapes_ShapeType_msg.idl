@@ -16,6 +16,7 @@ struct ShapeType {
   long y;
   long shapesize;
 };
+typedef sequence<ShapeType> ShapeTypeSeq;
 
 #pragma keylist ShapeType_msg color
 
