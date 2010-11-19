@@ -14,10 +14,6 @@ project (DDS_Shapes_Base_stub) : taoidldefaults, dds4ccm_ts_default {
     Shapes_Base.idl
   }
 
-  DDS4CCMGenerator_Files {
-    Shapes_Base.idl
-  }
-
   opendds_ts_flags += --export=SHAPES_BASE_STUB_Export
 
   DDSGenerator_Files {

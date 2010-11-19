@@ -28,6 +28,7 @@ module CCM_DDS_MT
   module Typed_MT<typename T, sequence<T> TSeq>
     {
       alias CCM_DDS::Typed<T, TSeq> DDS_Typed;
+      alias DDS_Entity<T, TSeq> DDS_Typed_Entity; // @todo to be removed
       // DDS MT Connector
       // ------------------
       connector DDS_MT_Event : CCM_DDS::DDS_TopicBase {

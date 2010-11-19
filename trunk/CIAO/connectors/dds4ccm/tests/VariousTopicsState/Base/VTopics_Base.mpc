@@ -17,10 +17,6 @@ project (DDS_VTopics_Base_stub) : taoidldefaults, \
 
   opendds_ts_flags += --export=VTOPICS_BASE_STUB_Export
 
-  DDS4CCMGenerator_Files {
-    VTopics_Base.idl
-  }
-
   DDSGenerator_Files {
     VTopics_Base.idl
   }

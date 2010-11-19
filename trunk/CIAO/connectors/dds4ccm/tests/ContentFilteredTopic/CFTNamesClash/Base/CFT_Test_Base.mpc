@@ -16,10 +16,6 @@ project (CFT_Test_Base_stub) : taoidldefaults, dds4ccm_ts_default {
 
   opendds_ts_flags += --export=CONTENTFILTEREDTOPIC_TEST_BASE_STUB_Export
 
-  DDS4CCMGenerator_Files {
-    CFT_Test_Base.idl
-  }
-
   DDSGenerator_Files {
     CFT_Test_Base.idl
   }
