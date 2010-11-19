@@ -1,3 +1,8 @@
+Fri Nov 19 19:59:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/MultipleTemp/Base/MultipleTemp_Base.mpc:
+        Changed for new dds4ccm development.
+
 Fri Nov 19 19:47:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/InterMulti/Sender/InterMultiA_conn_i.cpp:
