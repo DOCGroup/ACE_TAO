@@ -129,8 +129,8 @@ namespace CIAO_InterMulti_AMI4CCM_Three_Connector_AMI4CCM_Connector_Impl
  }
 
   void
-  AMI4CCM_ThreeReplyHandler_i::bar_excep (:
-      :CCM_AMI::ExceptionHolder_ptr excep_holder)
+  AMI4CCM_ThreeReplyHandler_i::bar_excep (
+  ::CCM_AMI::ExceptionHolder_ptr excep_holder)
   {
     excep_holder->raise_exception ();
   }

@@ -1,3 +1,8 @@
+Fri Nov 19 19:47:42 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/InterMulti/Sender/InterMultiA_conn_i.cpp:
+        Fixed typo. 
+
 Fri Nov 19 09:54:59 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/Getter_T.cpp:
