@@ -153,7 +153,7 @@ namespace CIAO
         {
           this->return_loan (data, sample_info);
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        ACE_TEXT ("DataReader_T::read_wo_instance - ")
+                        ACE_TEXT ("Reader_T::read_wo_instance - ")
                         ACE_TEXT ("retval is %C\n"),
                         ::CIAO::DDS4CCM::translate_retcode(retval)));
           throw ::CCM_DDS::InternalError (retval, 0);
