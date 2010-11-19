@@ -1,6 +1,6 @@
 // $Id$
 
-project (DDS_Latency_Base_plain_stub) : taoidldefaults, ndds_ts_defaults, typecode, nddslib {
+project (DDS_Latency_Base_plain_stub) : taoidldefaults, dds4ccm_ts_default {
   sharedname = DDS_Latency_Base_plain_stub
   dynamicflags += LATENCY_BASE_STUB_BUILD_DLL
   libout = ../lib
@@ -14,7 +14,9 @@ project (DDS_Latency_Base_plain_stub) : taoidldefaults, ndds_ts_defaults, typeco
     Latency_Base.idl
   }
 
-  NDDSTypeSupport_Files {
+  opendds_ts_flags += --export=LATENCY_BASE_STUB_Export
+
+  DDSGenerator_Files {
     Latency_Base.idl
   }
 

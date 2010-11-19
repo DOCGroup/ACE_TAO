@@ -16,10 +16,6 @@ project (OIT_Test_Base_stub) : taoidldefaults, dds4ccm_ts_default {
 
   opendds_ts_flags += --export=ON_INCONSISTENT_TOPIC_TEST_BASE_STUB_Export
 
-  DDS4CCMGenerator_Files {
-    OIT_Test_Base.idl
-  }
-
   DDSGenerator_Files {
     OIT_Test_Base.idl
   }

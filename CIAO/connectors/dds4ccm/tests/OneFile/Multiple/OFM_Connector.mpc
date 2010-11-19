@@ -15,10 +15,6 @@ project (OFM_Base_stub) : taoidldefaults, dds4ccm_ts_default {
 
   opendds_ts_flags += --export=OFM_CONNECTOR_BASE_STUB_Export
 
-  DDS4CCMGenerator_Files {
-    OFM_Base.idl
-  }
-
   DDSGenerator_Files {
     OFM_Base.idl
   }

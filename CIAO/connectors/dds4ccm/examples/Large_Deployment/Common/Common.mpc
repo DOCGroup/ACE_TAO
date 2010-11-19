@@ -8,18 +8,14 @@ project (Large_Deployment_stub) : ciaoidldefaults, \
 
   idlflags += -Gxhst \
               -Wb,export_macro=LARGE_DEPLOYMENT_COMMON_STUB_Export \
-              -Wb,export_include=Large_Deployment_Common_stub_export.h
-
+              -Wb,export_include=Large_Deployment_Common_stub_export.h 
+              
 
   IDL_Files {
     Common.idl
   }
 
   opendds_ts_flags += --export=LARGE_DEPLOYMENT_COMMON_STUB_Export
-
-  DDS4CCMGenerator_Files {
-    Common.idl
-  }
 
   DDSGenerator_Files {
     Common.idl

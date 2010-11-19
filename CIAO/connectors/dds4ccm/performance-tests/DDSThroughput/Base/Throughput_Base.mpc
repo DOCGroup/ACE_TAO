@@ -1,6 +1,6 @@
 // $Id$
 
-project (DDS_Throughput_Base_stub_plain) : taoidldefaults, ndds_ts_defaults, typecode, nddslib {
+project (DDS_Throughput_Base_stub_plain) : taoidldefaults, dds4ccm_ts_default {
   sharedname = DDS_Throughput_Base_stub
   dynamicflags += THROUGHPUT_BASE_STUB_BUILD_DLL
   libout = ../lib
@@ -14,7 +14,9 @@ project (DDS_Throughput_Base_stub_plain) : taoidldefaults, ndds_ts_defaults, typ
     Throughput_Base.idl
   }
 
-  NDDSTypeSupport_Files {
+  opendds_ts_flags += --export=THROUGHPUT_BASE_STUB_Export
+
+  DDSGenerator_Files {
     Throughput_Base.idl
   }
 

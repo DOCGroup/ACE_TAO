@@ -16,10 +16,6 @@ project (WU_LateBindingBase_stub) : taoidldefaults, dds4ccm_ts_default {
 
   opendds_ts_flags += --export=WU_LATEBINDING_BASE_STUB_Export
 
-  DDS4CCMGenerator_Files {
-    WU_LateBinding_Base.idl
-  }
-
   DDSGenerator_Files {
     WU_LateBinding_Base.idl
   }

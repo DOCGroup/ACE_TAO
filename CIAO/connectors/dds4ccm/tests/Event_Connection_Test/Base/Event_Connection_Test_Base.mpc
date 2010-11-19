@@ -16,10 +16,6 @@ project (DDS_ECT_Base_stub) : taoidldefaults, dds4ccm_ts_default {
 
   opendds_ts_flags += --export=EVENT_CONNECTION_TEST_BASE_STUB_Export
 
-  DDS4CCMGenerator_Files {
-    Event_Connection_Test_Base.idl
-  }
-
   DDSGenerator_Files {
     Event_Connection_Test_Base.idl
   }

@@ -15,10 +15,6 @@ project (OneFile_Base_stub) : taoidldefaults, dds4ccm_ts_default {
 
   opendds_ts_flags += --export=ONEFILE_CONNECTOR_BASE_STUB_Export
 
-  DDS4CCMGenerator_Files {
-    OneFile_Base.idl
-  }
-
   DDSGenerator_Files {
     OneFile_Base.idl
   }

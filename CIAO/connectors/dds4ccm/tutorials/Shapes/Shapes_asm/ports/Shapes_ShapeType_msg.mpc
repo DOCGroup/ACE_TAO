@@ -19,11 +19,6 @@ project (Shapes_ShapeType_msg_stub) : taoidldefaults, dds4ccm_ts_default, Shapes
 
   opendds_ts_flags += --export=SHAPES_BASE_MSG_Export
 
-  DDS4CCMGenerator_Files {
-    Shapes_ShapeType_msg.idl
-    gendir = GeneratedCode
-  }
-
   DDSGenerator_Files {
     Shapes_ShapeType_msg.idl
     gendir = GeneratedCode

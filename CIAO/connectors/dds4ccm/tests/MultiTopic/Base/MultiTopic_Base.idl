@@ -21,7 +21,6 @@ struct ShapeType {
   long y;
   long shapesize;
 };
-typedef sequence<ShapeType> ShapeTypeSeq;
 #pragma keylist ShapeType color
 
 #pragma DCPS_DATA_TYPE "Attributes"
@@ -33,7 +32,7 @@ struct Attributes {
   string color; //@key
   float speed;
 };
-typedef sequence<Attributes> AttributesSeq;
+typedef sequence<ShapeType> ShapeTypeSeq;
 
 #pragma keylist Attributes shape color
 

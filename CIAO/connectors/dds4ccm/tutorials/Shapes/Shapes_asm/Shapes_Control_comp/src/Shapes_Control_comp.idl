@@ -7,15 +7,18 @@
 
 #include <Components.idl>
 
-component Control_comp
+module Shapes
 {
-  uses Control_obj control;
+  component Control_comp
+  {
+    uses Shapes::Control_obj control;
 
-  attribute unsigned long rate;
-  attribute unsigned short max_x;
-  attribute unsigned short max_y;
-  attribute unsigned short max_size;
-  attribute boolean resize_shape;
+    attribute unsigned long rate;
+    attribute unsigned short max_x;
+    attribute unsigned short max_y;
+    attribute unsigned short max_size;
+    attribute boolean resize_shape;
+  };
 };
 
 #endif /* SHAPES_CONTROL_COMP_IDL_ */
