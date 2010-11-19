@@ -373,9 +373,12 @@ namespace CIAO
     {
       ::DDS::StatusCondition_var retval;
       DDSStatusCondition* sc = this->rti_entity ()->get_statuscondition ();
-      ACE_NEW_THROW_EX (retval,
-                        DDS_StatusCondition_i (sc, 0), // @todo
-                        ::CORBA::NO_MEMORY ());
+      if (sc)
+        {
+          ACE_NEW_THROW_EX (retval,
+                            DDS_StatusCondition_i (sc, this->dp_.in ()),
+                            ::CORBA::NO_MEMORY ());
+        }
       return retval._retn ();
     }
 

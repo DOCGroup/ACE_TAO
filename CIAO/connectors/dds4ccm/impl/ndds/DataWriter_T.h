@@ -116,8 +116,6 @@ namespace CIAO
 
       virtual ::DDSDataWriter * get_rti_entity (void);
 
-      // @todo, this should be private to my idea
-      virtual void set_rti_entity (::DDSDataWriter * dw);
 
     private:
       typename DDS_TYPE::datawriter_type * rti_entity_;
@@ -125,6 +123,8 @@ namespace CIAO
       ::DDS::Publisher_var pub_;
 
       typename DDS_TYPE::datawriter_type * rti_entity (void);
+
+      virtual void set_rti_entity (::DDSDataWriter * dw);
     };
   }
 }

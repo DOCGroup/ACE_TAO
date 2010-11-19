@@ -75,6 +75,11 @@ namespace CIAO
                             ::CORBA::NO_MEMORY ());
           dds_dp->enable ();
 
+          if (ccm_dds_dpl)
+            {
+              ccm_dds_dpl->set_dds_dp (retval.in ());
+            }
+
           DPMANAGER->add_participant (qos_profile.c_str (), dds_dp);
 
           return retval._retn ();
@@ -154,6 +159,10 @@ namespace CIAO
 
           dds_dp->enable ();
 
+          if (ccm_dds_dpl)
+            {
+              ccm_dds_dpl->set_dds_dp (retval.in ());
+            }
           DDS_DomainParticipant_i * typed_dp =
             dynamic_cast < DDS_DomainParticipant_i *>
             (retval.in ());

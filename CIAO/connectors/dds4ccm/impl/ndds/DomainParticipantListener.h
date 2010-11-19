@@ -93,8 +93,18 @@ namespace CIAO
       on_data_on_readers (
         ::DDSSubscriber* );
 
+
+      void set_dds_dp (::DDS::DomainParticipant_ptr dp);
     private:
       ::DDS::DomainParticipantListener_var impl_;
+      ::DDS::DomainParticipant_var dp_;
+
+      ::DDS::DataReader_ptr
+      create_datareader (DDSDataReader * reader);
+
+      ::DDS::DataWriter_ptr
+      create_datawriter (DDSDataWriter * writer);
+
     };
   }
 }

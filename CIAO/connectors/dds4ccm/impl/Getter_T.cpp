@@ -81,7 +81,7 @@ namespace CIAO
       const ::CORBA::Long & max_samples,
       ::DDS::QueryCondition_ptr qc)
     {
-      DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::get");
+      DDS4CCM_TRACE ("CIAO::DDS4CCM::Getter_Base_T::get");
 
       if (! ::CORBA::is_nil (qc))
         {
@@ -101,7 +101,7 @@ namespace CIAO
       const ::CORBA::Long & max_samples,
       ::DDS::ReadCondition_ptr rd)
     {
-      DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::get");
+      DDS4CCM_TRACE ("CIAO::DDS4CCM::Getter_Base_T::get");
 
       if (! ::CORBA::is_nil (rd))
         {
