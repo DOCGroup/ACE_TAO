@@ -1027,7 +1027,7 @@ static void                 idl_parse_line_and_file (char *);
 static void                 idl_store_pragma (char *);
 static char *               idl_get_pragma_string (char *);
 static bool                 idl_valid_version (char *);
-static AST_Decl *           idl_find_node (char *);
+static AST_Decl *           idl_find_node (const char *);
 
 #define ace_tao_yytext tao_yytext
 
@@ -3246,7 +3246,10 @@ idl_store_pragma (char *buf)
           ++tmp;
         }
 
-      AST_Decl *d = idl_find_node (tmp);
+      ACE_CString work (tmp);
+      work = work.substr (0, work.find (' '));
+
+      AST_Decl *d = idl_find_node (work.c_str ());
 
       if (d == 0)
         {
@@ -3780,7 +3783,7 @@ idl_valid_version (char *s)
 }
 
 static AST_Decl *
-idl_find_node (char *s)
+idl_find_node (const char *s)
 {
   UTL_ScopedName * node = FE_Utils::string_to_scoped_name (s);
   AST_Decl * d = 0;
