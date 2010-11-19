@@ -189,7 +189,7 @@ namespace CIAO
     }
 
     void
-    DDS_WaitSet_i::convert_conditions (const DDSConditionSeq& dds_conditions,
+    DDS_WaitSet_i::convert_conditions (const DDSConditionSeq & dds_conditions,
                                        ::DDS::ConditionSeq & conditions)
     {
       DDS4CCM_TRACE ("DDS_WaitSet_i::convert_conditions");
@@ -205,7 +205,6 @@ namespace CIAO
           if (dds_qc)
             {
               ::DDS::QueryCondition_var cond;
-              //TODO : Which DataReader ??
               ACE_NEW_THROW_EX (cond,
                                 DDS_QueryCondition_i (dds_qc,
                                                       ::DDS::DataReader::_nil ()),
@@ -219,7 +218,6 @@ namespace CIAO
               if (dds_rc)
                 {
                   ::DDS::ReadCondition_var cond;
-                  //TODO : Which DataReader ??
                   ACE_NEW_THROW_EX (cond,
                                     DDS_ReadCondition_i (dds_rc,
                                                          ::DDS::DataReader::_nil ()),

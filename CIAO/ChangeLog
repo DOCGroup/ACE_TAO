@@ -1,3 +1,27 @@
+Fri Nov 19 09:54:59 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+          Typos in logging.
+
+        * connectors/dds4ccm/impl/ndds/DataWriter.h:
+        * connectors/dds4ccm/impl/ndds/DataWriter_T.h:
+          Made set_dds_entity private.
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+          Properly set dds entity on the listener.
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener.cpp:
+          Fully implemented DomainParticipantListener.
+
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+          Passed domain pariticipant to StatusCondition.
+
+        * connectors/dds4ccm/impl/ndds/WaitSet.cpp:
+          Passing nil as a datareader should be fine.
+
 Thu Nov 18 19:58:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.idl:

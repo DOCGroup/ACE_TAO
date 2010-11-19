@@ -366,8 +366,9 @@ namespace CIAO
       DDS_TopicListener_i *ccm_dds_tl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
+          // Topic will be set later (using set_dds_topic)
           ACE_NEW_THROW_EX (ccm_dds_tl,
-                            DDS_TopicListener_i (::DDS::Topic::_nil (), a_listener), // @todo, no nill
+                            DDS_TopicListener_i (::DDS::Topic::_nil (), a_listener),
                             ::CORBA::NO_MEMORY ());
         }
 
@@ -409,6 +410,11 @@ namespace CIAO
                         impl_name, type_name));
 
           DPMANAGER->add_topic (this->rti_entity (), dds_tp);
+
+          if (ccm_dds_tl)
+            {
+              ccm_dds_tl->set_dds_topic (retval.in ());
+            }
 
           return retval._retn ();
         }
@@ -466,8 +472,9 @@ namespace CIAO
       DDS_TopicListener_i *ccm_dds_tl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
+          // Topic will be set later (using set_dds_topic)
           ACE_NEW_THROW_EX (ccm_dds_tl,
-                            DDS_TopicListener_i (::DDS::Topic::_nil (), a_listener), // @todo, no nill
+                            DDS_TopicListener_i (::DDS::Topic::_nil (), a_listener),
                             ::CORBA::NO_MEMORY ());
         }
 
