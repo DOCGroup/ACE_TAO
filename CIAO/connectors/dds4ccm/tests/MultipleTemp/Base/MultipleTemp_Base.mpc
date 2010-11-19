@@ -15,6 +15,10 @@ project (DDS_MultipleTemp_Base_stub) : taoidldefaults, dds4ccm_ts_default {
   }
 
   opendds_ts_flags += --export=MULTIPLE_TEMP_BASE_STUB_Export
+  
+   DDS4CCMGenerator_Files {
+    CoherentWrite_Test_Base.idl
+  }
 
   DDSGenerator_Files {
     MultipleTemp_Base.idl
