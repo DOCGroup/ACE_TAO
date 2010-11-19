@@ -1,3 +1,20 @@
+Fri Nov 19 13:29:57 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3926_Regression/client.cpp:
+        * tests/Bug_3926_Regression/Client_ORBInitializer.cpp:
+        * tests/Bug_3926_Regression/Client_Request_Interceptor.cpp:
+        * tests/Bug_3926_Regression/test.idl:
+        * tests/Bug_3926_Regression/server.cpp:
+        * tests/Bug_3926_Regression/test_i.cpp:
+        * tests/Bug_3926_Regression/Client_ORBInitializer.h:
+        * tests/Bug_3926_Regression/Client_Request_Interceptor.h:
+        * tests/Bug_3926_Regression/README:
+        * tests/Bug_3926_Regression/run_test.pl:
+        * tests/Bug_3926_Regression/test_i.h:
+        * tests/Bug_3926_Regression/Bug_3926_Regression.mpc:
+        * bin/tao_orb_tests.lst:
+          Added a test and marked it as non-fixed.
+
 Thu Nov 18 14:11:00 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_dds_ts_idl.cpp:
