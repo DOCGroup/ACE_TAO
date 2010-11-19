@@ -218,6 +218,12 @@ be_visitor_connector_dds_exh::gen_dds_traits (void)
       return;
     }
 
+  AST_Decl *comp_scope =
+    ScopeAsDecl (this->node_->defined_in ());
+
+  bool global_comp =
+    (comp_scope->node_type () == AST_Decl::NT_root);
+
   UTL_ScopedName *dt_name = (*datatype)->name ();
   BE_GlobalData::DDS_IMPL the_dds_impl = be_global->dds_impl ();
 
@@ -244,10 +250,10 @@ be_visitor_connector_dds_exh::gen_dds_traits (void)
           << "DataWriter datawriter_type;" << be_nl
           << "typedef ::" << dt_name
           << "DataReader datareader_type;" << be_nl
-          << "typedef ::" << dt_name
-          << "IDLDataWriter typed_writer_type;" << be_nl
-          << "typedef ::" << dt_name
-          << "IDLDataReader typed_reader_type;" << be_uidt_nl
+          << "typedef " << (global_comp ? "" : "::") << comp_scope->full_name ()
+          << "::DDS_Typed_Entity::DataWriter typed_writer_type;" << be_nl
+          << "typedef " << (global_comp ? "" : "::") << comp_scope->full_name ()
+          << "::DDS_Typed_Entity::DataReader typed_reader_type;" << be_uidt_nl
           << "};";
     }
 }
