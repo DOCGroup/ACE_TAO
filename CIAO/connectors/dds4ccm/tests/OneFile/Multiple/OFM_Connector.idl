@@ -5,6 +5,7 @@
 
 #include "OFM_Base.idl"
 #if defined __TAO_IDL
+
 #include <ccm_dds.idl>
 #endif
 

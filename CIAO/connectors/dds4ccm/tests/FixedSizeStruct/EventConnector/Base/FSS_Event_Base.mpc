@@ -16,10 +16,6 @@ project (DDS_FSS_Event_Base_stub) : taoidldefaults, dds4ccm_ts_default {
 
   opendds_ts_flags += --export=FIXED_SIZE_STRUCT_EVENT_BASE_STUB_Export
 
-  DDS4CCMGenerator_Files {
-    FSS_Event_Base.idl
-  }
-
   DDSGenerator_Files {
     FSS_Event_Base.idl
   }

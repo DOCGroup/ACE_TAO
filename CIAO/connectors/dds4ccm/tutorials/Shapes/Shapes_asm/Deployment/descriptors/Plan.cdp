@@ -124,7 +124,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_ShapeType_conn_DDS_Event_Impl</string>
+          <string>create_Shapes_ShapeType_conn_DDS_Event_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -135,7 +135,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_ShapeType_conn_DDS_Event_Servant</string>
+          <string>create_Shapes_ShapeType_conn_DDS_Event_Servant</string>
         </value>
       </value>
     </execParameter>

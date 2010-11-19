@@ -6,11 +6,14 @@
 #include "Shapes_ShapeType_conn.idl"
 #include "Shapes_Control_obj.idl"
 
-component Sender_comp
+module Shapes
 {
-  port ShapeType_conn::DDS_Write info_write;
+  component Sender_comp
+  {
+    port ShapeType_conn::DDS_Write info_write;
 
-  provides Control_obj control;
+    provides Shapes::Control_obj control;
+  };
 };
 
 #endif /* SHAPES_SENDER_COMP_IDL_ */

@@ -3,7 +3,7 @@
 
 #include "Shapes_Sender_comp_exec.h"
 
-namespace CIAO_Sender_comp_Impl
+namespace CIAO_Shapes_Sender_comp_Impl
 {
 
   //============================================================
@@ -11,10 +11,10 @@ namespace CIAO_Sender_comp_Impl
   //============================================================
 
   control_exec_i::control_exec_i (
-        ::CCM_Sender_comp_Context_ptr ctx,
+        ::Shapes::CCM_Sender_comp_Context_ptr ctx,
         Sender_comp_exec_i &callback)
     : ciao_context_ (
-        ::CCM_Sender_comp_Context::_duplicate (ctx)),
+        ::Shapes::CCM_Sender_comp_Context::_duplicate (ctx)),
       callback_ (callback)
   {
   }
@@ -23,15 +23,15 @@ namespace CIAO_Sender_comp_Impl
   {
   }
 
-  // Operations from ::Control_obj
+  // Operations from ::Shapes::Control_obj
 
-  ::ReturnStatus
+  ::Shapes::ReturnStatus
   control_exec_i::setSize (::CORBA::UShort size)
   {
     return this->callback_.setSize (size);
   }
 
-  ::ReturnStatus
+  ::Shapes::ReturnStatus
   control_exec_i::setLocation (::CORBA::UShort x,
   ::CORBA::UShort y)
   {
@@ -56,14 +56,14 @@ namespace CIAO_Sender_comp_Impl
   }
 
   // Supported operations and attributes.
-  ::ReturnStatus
+  ::Shapes::ReturnStatus
   Sender_comp_exec_i::setSize (::CORBA::UShort size)
   {
     this->square_.shapesize = size;
     return this->update_square ();
   }
 
-  ::ReturnStatus
+  ::Shapes::ReturnStatus
   Sender_comp_exec_i::setLocation (::CORBA::UShort x,
                               ::CORBA::UShort y)
    {
@@ -72,16 +72,16 @@ namespace CIAO_Sender_comp_Impl
     return this->update_square ();
   }
 
-  ::ReturnStatus
+  ::Shapes::ReturnStatus
   Sender_comp_exec_i::update_square ()
   {
-    ::ShapeType_conn::Writer_var writer =
+    ::Shapes::ShapeType_conn::Writer_var writer =
       this->ciao_context_->get_connection_info_write_data ();
     if (::CORBA::is_nil (writer.in ()))
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::update_square - ")
                               ACE_TEXT ("Unable to write: write_data is nil.\n")));
-        return ::RETURN_ERROR;
+        return ::Shapes::RETURN_ERROR;
       }
 
     try
@@ -105,12 +105,12 @@ namespace CIAO_Sender_comp_Impl
                     ACE_TEXT ("Internal Error while updating Shape_info for <%C>.\n"),
                     this->square_.color.in ()));
       }
-    return ::RETURN_OK;
+    return ::Shapes::RETURN_OK;
   }
 
   // Component attributes and port operations.
 
-  ::CCM_Control_obj_ptr
+  ::Shapes::CCM_Control_obj_ptr
   Sender_comp_exec_i::get_control (void)
   {
     if ( ::CORBA::is_nil (this->ciao_control_.in ()))
@@ -121,13 +121,13 @@ namespace CIAO_Sender_comp_Impl
           control_exec_i (
             this->ciao_context_.in (),
             *this),
-            ::CCM_Control_obj::_nil ());
+            ::Shapes::CCM_Control_obj::_nil ());
 
           this->ciao_control_ = tmp;
       }
 
     return
-      ::CCM_Control_obj::_duplicate (
+      ::Shapes::CCM_Control_obj::_duplicate (
         this->ciao_control_.in ());
   }
 
@@ -138,7 +138,7 @@ namespace CIAO_Sender_comp_Impl
     ::Components::SessionContext_ptr ctx)
   {
     this->ciao_context_ =
-      ::CCM_Sender_comp_Context::_narrow (ctx);
+      ::Shapes::CCM_Sender_comp_Context::_narrow (ctx);
 
     if ( ::CORBA::is_nil (this->ciao_context_.in ()))
       {
@@ -155,7 +155,7 @@ namespace CIAO_Sender_comp_Impl
   void
   Sender_comp_exec_i::ccm_activate (void)
   {
-    ::ShapeType_conn::Writer_var writer =
+    ::Shapes::ShapeType_conn::Writer_var writer =
       this->ciao_context_->get_connection_info_write_data ();
     if (::CORBA::is_nil (writer.in ()))
       {
@@ -189,7 +189,7 @@ namespace CIAO_Sender_comp_Impl
   void
   Sender_comp_exec_i::ccm_passivate (void)
   {
-    ::ShapeType_conn::Writer_var writer =
+    ::Shapes::ShapeType_conn::Writer_var writer =
       this->ciao_context_->get_connection_info_write_data ();
     if (::CORBA::is_nil (writer.in ()))
       {
