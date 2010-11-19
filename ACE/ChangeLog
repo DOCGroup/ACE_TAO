@@ -1,3 +1,9 @@
+Fri Nov 19 15:46:07 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Attempted to fix compile problems with using tao_idl3_to_xmi
+          in cross builds.
+
 Wed Nov 17 09:29:42 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * apps/gperf/src/Key_List.cpp:
