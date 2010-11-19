@@ -19,6 +19,8 @@ else
       TAO_IDL_DEP = $(TAO_IDL)
       TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/TAO/CIAO/bin/tao_idl3_to_idl2
       TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
+      TAO_IDL3_TO_XMI = $(HOST_ROOT)/TAO/CIAO/bin/tao_idl3_to_xmi
+      TAO_IDL3_TO_XMI_DEP = $(TAO_IDL3_TO_XMI)
       # make sure to use the target compiler, not the cross-compiler
       # as preprocessor for the cross-compiled idl tools
       TAO_IDL_PREPROCESSOR = gcc
