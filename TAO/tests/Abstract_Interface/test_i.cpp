@@ -96,3 +96,9 @@ passer_i::pass_state (base_out outarg)
 
   outarg = tc._retn ();
 }
+
+void
+passer_i::pass_nil (base_out outarg)
+{
+  outarg = foo::_nil ();
+}
