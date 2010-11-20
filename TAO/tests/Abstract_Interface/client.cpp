@@ -281,6 +281,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           test_exception (package.in ());
         }
 
+      if (which_test == TEST_ALL)
+        {
+          objref->pass_nil (package.out ());
+
+          if (!CORBA::is_nil (package.in ()))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "pass_nil() did NOT return null OUT arg\n"),
+                                -1);
+            }
+        }
+
       objref->shutdown ();
 
       orb->destroy ();
