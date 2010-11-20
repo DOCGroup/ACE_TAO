@@ -1,3 +1,9 @@
+Sat Nov 20 15:34:50 UTC 2010  Martin Corino  <corino_m@remedy.nl>
+
+        * tao/Valuetype/AbstractBase.cpp:
+          Fixed missing support for extraction of null object ref for
+          abstract interface.
+
 Fri Nov 19 19:12:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
