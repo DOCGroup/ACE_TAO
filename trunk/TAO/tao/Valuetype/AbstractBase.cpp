@@ -338,28 +338,33 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
 
           if (strm >> generic_objref.inout ())
             {
-              TAO_Stub *concrete_stubobj = generic_objref->_stubobj ();
-
-              CORBA::Boolean const stores_orb =
-                ! CORBA::is_nil (concrete_stubobj->servant_orb_var ().in ());
-
-              if (stores_orb)
+              // nil object reference or not
+              if (!CORBA::is_nil (generic_objref.in ()))
                 {
-                  orb_core =
-                    concrete_stubobj->servant_orb_var ()->orb_core ();
+                  // not nil
+                  TAO_Stub *concrete_stubobj = generic_objref->_stubobj ();
+
+                  CORBA::Boolean const stores_orb =
+                    ! CORBA::is_nil (concrete_stubobj->servant_orb_var ().in ());
+
+                  if (stores_orb)
+                    {
+                      orb_core =
+                        concrete_stubobj->servant_orb_var ()->orb_core ();
+                    }
+
+                  CORBA::Boolean const collocated =
+                    orb_core != 0
+                    && orb_core->optimize_collocation_objects ()
+                    && generic_objref->_is_collocated ();
+
+                  ACE_NEW_RETURN (abs,
+                                  CORBA::AbstractBase (
+                                    concrete_stubobj,
+                                    collocated,
+                                    generic_objref->_servant ()),
+                                  false);
                 }
-
-              CORBA::Boolean const collocated =
-                orb_core != 0
-                && orb_core->optimize_collocation_objects ()
-                && generic_objref->_is_collocated ();
-
-              ACE_NEW_RETURN (abs,
-                              CORBA::AbstractBase (
-                                concrete_stubobj,
-                                collocated,
-                                generic_objref->_servant ()),
-                              false);
               return true;
             }
         }
