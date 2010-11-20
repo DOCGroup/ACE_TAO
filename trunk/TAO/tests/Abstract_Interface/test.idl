@@ -21,6 +21,7 @@ interface passer
 {
   void pass_ops (out base outarg);
   void pass_state (out base outarg);
+  void pass_nil (out base outarg);
   oneway void shutdown ();
 };
 

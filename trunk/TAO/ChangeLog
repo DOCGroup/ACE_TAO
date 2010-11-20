@@ -1,3 +1,11 @@
+Sat Nov 20 17:26:21 UTC 2010  Martin Corino  <corino_m@remedy.nl>
+
+        * tests/Abstract_Interface/client.cpp:
+        * tests/Abstract_Interface/test.idl:
+        * tests/Abstract_Interface/test_i.h:
+        * tests/Abstract_Interface/test_i.cpp:
+          Added test for extraction of null abstract interface.
+
 Sat Nov 20 15:34:50 UTC 2010  Martin Corino  <corino_m@remedy.nl>
 
         * tao/Valuetype/AbstractBase.cpp:

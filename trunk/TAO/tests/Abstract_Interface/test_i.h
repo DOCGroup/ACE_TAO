@@ -22,6 +22,8 @@ public:
 
   virtual void pass_state (base_out outarg);
 
+  virtual void pass_nil (base_out outarg);
+
   virtual void shutdown (void);
 private:
   CORBA::ORB_var orb_;
