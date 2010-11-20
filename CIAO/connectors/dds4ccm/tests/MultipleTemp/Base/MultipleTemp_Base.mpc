@@ -1,7 +1,6 @@
 // $Id$
 
 project (DDS_MultipleTemp_Base_stub) : taoidldefaults, dds4ccm_ts_default {
-  requires += dummy_label
   sharedname = DDS_MultipleTemp_Base_stub
   dynamicflags += MULTIPLE_TEMP_BASE_STUB_BUILD_DLL
   libout = ../lib
@@ -16,10 +15,6 @@ project (DDS_MultipleTemp_Base_stub) : taoidldefaults, dds4ccm_ts_default {
   }
 
   opendds_ts_flags += --export=MULTIPLE_TEMP_BASE_STUB_Export
-  
-   DDS4CCMGenerator_Files {
-    MultipleTemp_Base.idl
-  }
 
   DDSGenerator_Files {
     MultipleTemp_Base.idl
