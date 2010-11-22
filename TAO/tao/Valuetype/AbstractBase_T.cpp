@@ -22,13 +22,7 @@ namespace TAO
         return T::_nil ();
       }
 
-    CORBA::Boolean const is_it =
-      obj->_is_a (
-          repo_id
-
-        );
-
-    if (is_it == false)
+    if (obj->_is_a (repo_id) == false)
       {
         return T::_nil ();
       }
@@ -48,7 +42,6 @@ namespace TAO
       {
         proxy =
           AbstractBase_Narrow_Utils<T>::unchecked_narrow (obj, 0, pbf);
-
       }
     catch (const ::CORBA::Exception&)
       {
@@ -82,7 +75,7 @@ namespace TAO
 
         ACE_NEW_THROW_EX (proxy,
                           T (obj->_stubobj (),
-                             collocated ? 1 : 0,
+                             collocated,
                              obj->_servant ()),
                           CORBA::NO_MEMORY ());
       }

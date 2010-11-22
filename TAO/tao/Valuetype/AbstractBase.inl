@@ -8,6 +8,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 CORBA::AbstractBase_ptr
+CORBA::AbstractBase::_duplicate (CORBA::AbstractBase_ptr obj)
+{
+  if (obj)
+    {
+      obj->_add_ref ();
+    }
+
+  return obj;
+}
+
+ACE_INLINE
+CORBA::AbstractBase_ptr
 CORBA::AbstractBase::_nil (void)
 {
   return static_cast <CORBA::AbstractBase_ptr> (0);
@@ -30,7 +42,14 @@ ACE_INLINE
 TAO_Stub *
 CORBA::AbstractBase::_stubobj (void) const
 {
-  return this->concrete_stubobj_;
+  if (this->is_objref_)
+    {
+      if (!CORBA::is_nil (this->equivalent_obj_.in ()))
+        {
+          return this->equivalent_obj_->_stubobj ();
+        }
+    }
+  return 0;
 }
 
 ACE_INLINE
@@ -48,10 +67,10 @@ CORBA::AbstractBase::_servant (void) const
 }
 
 ACE_INLINE
-CORBA::Boolean
-CORBA::AbstractBase::_is_local (void) const
+CORBA::Object_ptr
+CORBA::AbstractBase::equivalent_objref (void)
 {
-  return this->is_local_;
+  return this->equivalent_obj_.in ();
 }
 
 ACE_INLINE void

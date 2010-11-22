@@ -62,14 +62,14 @@ dump_node (BaseNode* bn, int indent)
       return;
     }
 
-  // This is ugly I know
-  int i = indent;
-  for (; i != 0; --i) ACE_DEBUG ((LM_DEBUG, "  "));
-
   StringNode* sn = StringNode::_downcast (bn);
 
   if (debug)
     {
+      // This is ugly I know
+      int i = indent;
+      for (; i != 0; --i) ACE_DEBUG ((LM_DEBUG, "  "));
+
       if (sn != 0)
         {
           ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %C\n",
