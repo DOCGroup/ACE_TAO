@@ -214,7 +214,7 @@ namespace CIAO_Shapes_Receiver_Impl
              shape_info.y,
              shape_info.shapesize));
 
-         this->reader_cq_->read_one_last (shape_info, readinfo,
+         this->reader_cl_->read_one_last (shape_info, readinfo,
                                           ::DDS::HANDLE_NIL);
          tim = readinfo.source_timestamp.sec;
          time = ACE_OS::localtime(&tim);
@@ -408,7 +408,7 @@ namespace CIAO_Shapes_Receiver_Impl
    }
 
   ::Shapes::DDS_Typed::CCM_Listener_ptr
-   Receiver_exec_i::get_info_out_cq_data_listener (void)
+   Receiver_exec_i::get_info_out_cl_data_listener (void)
    {
      if ( ::CORBA::is_nil (this->ciao_info_out_data_listener_.in ()))
        {
@@ -468,7 +468,7 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
-  Receiver_exec_i::get_info_out_cq_status (void)
+  Receiver_exec_i::get_info_out_cl_status (void)
   {
     if ( ::CORBA::is_nil (this->ciao_info_out_status_.in ()))
       {
@@ -529,7 +529,7 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
-  Receiver_exec_i::get_info_get_cq_status (void)
+  Receiver_exec_i::get_info_get_cl_status (void)
   {
     if ( ::CORBA::is_nil (this->ciao_info_get_status_.in ()))
       {
@@ -634,13 +634,13 @@ namespace CIAO_Shapes_Receiver_Impl
             throw ::CORBA::INTERNAL ();
           }
          this->reader_tr_ = this->ciao_context_->get_connection_info_out_tr_data ();
-         this->reader_cq_ = this->ciao_context_->get_connection_info_out_cq_data ();
+         this->reader_cl_ = this->ciao_context_->get_connection_info_out_cl_data ();
       }
     if (this->get_data ())
       {
         this->getter_sq_ = this->ciao_context_->get_connection_info_get_sq_fresh_data ();
         this->getter_tr_ = this->ciao_context_->get_connection_info_get_tr_fresh_data ();
-        this->getter_cq_ = this->ciao_context_->get_connection_info_get_cq_fresh_data ();
+        this->getter_cq_ = this->ciao_context_->get_connection_info_get_cl_fresh_data ();
       }
   }
 
@@ -671,7 +671,7 @@ namespace CIAO_Shapes_Receiver_Impl
     lc_tr->mode (::CCM_DDS::ONE_BY_ONE);
 
     ::CCM_DDS::DataListenerControl_var lc_cq =
-    this->ciao_context_->get_connection_info_out_cq_data_control ();
+    this->ciao_context_->get_connection_info_out_cl_data_control ();
     if (::CORBA::is_nil (lc_cq.in ()))
       {
         ACE_ERROR ((LM_INFO,

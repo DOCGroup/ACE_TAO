@@ -33,6 +33,7 @@ struct Attributes {
   float speed;
 };
 typedef sequence<ShapeType> ShapeTypeSeq;
+typedef sequence<Attributes> AttributesSeq;
 
 #pragma keylist Attributes shape color
 

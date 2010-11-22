@@ -29,6 +29,8 @@
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
+#include "Connector/MultiTopic_Connector_T.h"
+
 namespace CIAO_Shapes_Sender_Impl
 {
   //============================================================
@@ -65,7 +67,7 @@ namespace CIAO_Shapes_Sender_Impl
     this->ticker_ = new pulse_Generator (*this);
     this->square_ = new ShapeType;
     this->triangle_ = new ShapeType;
-    this->cirque_ = new ShapeType;
+    this->circle_ = new ShapeType;
   }
 
   Sender_exec_i::~Sender_exec_i (void)
@@ -126,14 +128,14 @@ namespace CIAO_Shapes_Sender_Impl
           else if (this->ShapeNr == 2)
             {
               this->ShapeNr = 0;
-              this->writer_cq_->write_one (*cirque_,
+              this->writer_cl_->write_one (*circle_,
                                            this->instance_handle_cq_);
               ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("UPDATED Shape_info Circle for <%C> %u:%u:%u\n"),
-                  this->cirque_->color.in (),
-                  this->cirque_->x,
-                  this->cirque_->y,
-                  this->cirque_->shapesize));
+                  this->circle_->color.in (),
+                  this->circle_->x,
+                  this->circle_->y,
+                  this->circle_->shapesize));
              }
         }
       catch (const CCM_DDS::NonExistent& )
@@ -249,7 +251,7 @@ namespace CIAO_Shapes_Sender_Impl
                                                this->instance_handle_sq_);
         this->writer_tr_->unregister_instance (*this->triangle_,
                                                this->instance_handle_tr_);
-        this->writer_cq_->unregister_instance (*this->cirque_,
+        this->writer_cl_->unregister_instance (*this->circle_,
                                                this->instance_handle_cq_);
       }
     catch (const CCM_DDS::NonExistent& )
@@ -269,7 +271,7 @@ namespace CIAO_Shapes_Sender_Impl
     delete this->ticker_;
     delete this->square_;
     delete this->triangle_;
-    delete this->cirque_;
+    delete this->circle_;
   }
 
   // Operations from Components::SessionComponent.
@@ -277,9 +279,6 @@ namespace CIAO_Shapes_Sender_Impl
   Sender_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT (" 222  Sender_exec_i::set_session_context\n")));
-
     this->ciao_context_ =
       ::Shapes::CCM_Sender_Context::_narrow (ctx);
 
@@ -292,20 +291,28 @@ namespace CIAO_Shapes_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-     ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("  333 Sender_exec_i::configuration_complete\n")));
-
     this->writer_sq_ = this->ciao_context_->get_connection_info_write_sq_data ();
     this->writer_tr_ = this->ciao_context_->get_connection_info_write_tr_data ();
-    this->writer_cq_ = this->ciao_context_->get_connection_info_write_cq_data ();
+    this->writer_cl_ = this->ciao_context_->get_connection_info_write_cl_data ();
+
+    if (::CORBA::is_nil (this->writer_sq_.in ()) ||
+        ::CORBA::is_nil (this->writer_tr_.in ()) ||
+        ::CORBA::is_nil (this->writer_cl_.in ()) )
+      {
+        ACE_ERROR ((LM_ERROR, "Sender_exec_i::configuration_complete - "
+                  "Unable to get connections to data writers.\n"));
+        throw ::CORBA::INTERNAL ();
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::configuration_complete - "
+                  "Retrieved data writers\n"));
+      }
  }
 
   void
   Sender_exec_i::ccm_activate (void)
   {
-    ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("   444Sender_exec_i::ccm_activate\n")));
-
     this->square_->x = ACE_OS::rand () % this->max_x_;
     this->square_->y = ACE_OS::rand () % this->max_y_;
     this->square_->shapesize = max_size_;
@@ -316,12 +323,10 @@ namespace CIAO_Shapes_Sender_Impl
     this->triangle_->shapesize = max_size_;
     this->triangle_->color = CORBA::string_dup("GREEN");
 
-    this->cirque_->x = ACE_OS::rand () % this->max_x_;
-    this->cirque_->y = ACE_OS::rand () % this->max_y_;
-    this->cirque_->shapesize = max_size_;
-    this->cirque_->color = CORBA::string_dup("GREEN");
-
-
+    this->circle_->x = ACE_OS::rand () % this->max_x_;
+    this->circle_->y = ACE_OS::rand () % this->max_y_;
+    this->circle_->shapesize = max_size_;
+    this->circle_->color = CORBA::string_dup("GREEN");
 
     //Register shape with dds.
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("REGISTER Shape_info for <%C> %u:%u:%u\n"),
@@ -329,11 +334,11 @@ namespace CIAO_Shapes_Sender_Impl
                   square_->x,
                   square_->y,
                   square_->shapesize));
-/*    try
+    try
       {
         this->instance_handle_sq_ = this->writer_sq_->register_instance (*this->square_);
         this->instance_handle_tr_ = this->writer_tr_->register_instance (*this->triangle_);
-        this->instance_handle_cq_ = this->writer_cq_->register_instance (*this->cirque_);
+        this->instance_handle_cq_ = this->writer_cl_->register_instance (*this->circle_);
       }
     catch (const CCM_DDS::AlreadyCreated& )
       {
@@ -348,7 +353,6 @@ namespace CIAO_Shapes_Sender_Impl
                       this->square_->color.in ()));
       }
     this->start ();
-*/
   }
 
   void
@@ -367,8 +371,6 @@ namespace CIAO_Shapes_Sender_Impl
   create_Shape_Sender_Impl (void)
   {
 
-    ACE_DEBUG ((LM_DEBUG,
-       ACE_TEXT ("111   Sender_exec_i::create_Shape_Sender_Impl\n")));
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
 

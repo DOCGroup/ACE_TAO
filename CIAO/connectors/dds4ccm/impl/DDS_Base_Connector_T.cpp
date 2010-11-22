@@ -104,14 +104,6 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_default_domain (void)
                 "DDS_Base_Connector_T::init_default_domain - "
                 "Start configuring default domain <%d>\n",
                 this->domain_id_));
-#if (CIAO_DDS4CCM_NDDS==1)
-  ACE_Env_Value<int> verbosity (ACE_TEXT("DDS4CCM_NDDS_LOG_VERBOSITY"),
-    NDDS_CONFIG_LOG_VERBOSITY_SILENT);
-
-  NDDS_Config_LogVerbosity n_verbosity =
-    static_cast <NDDS_Config_LogVerbosity> (verbosity.operator int());
-  NDDSConfigLogger::get_instance()->set_verbosity (n_verbosity);
-#endif /* CIAO_DDS4CCM_NDDS==1 */
 
   // Generic parsing code, library and profile should be separated by a #
   if (this->qos_profile_.in ())
