@@ -1,3 +1,15 @@
+Mon Nov 22 10:10:50 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+          Layout changes
+
+        * connectors/dds4ccm/tests/MultiTopic/Connector/ccm_dds_mt.idl:
+        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.idl:
+          Added typedefs for DataReader/DataWriter
+
+        * tests/DAnCE/LocalityManager/CommandlinePassage/CommandlinePassage_exec.cpp:
+          Const change
+
 Fri Nov 19 19:13:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted introduction of TypeSupport.idl, it breaks the current modeling
