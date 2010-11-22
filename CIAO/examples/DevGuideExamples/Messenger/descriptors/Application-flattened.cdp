@@ -164,10 +164,14 @@
     <node></node>
     <location>Messenger_svnt</location>
     <execParameter>
-      <name>entryPoint</name>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
       <value>
-        <type><kind>tk_string</kind></type>
-        <value><string>create_MessengerHome_Servant</string></value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_MessengerHome_Servant</string>
+        </value>
       </value>
     </execParameter>
   </artifact>
@@ -177,10 +181,14 @@
     <node></node>
     <location>Messenger_exec</location>
     <execParameter>
-      <name>entryPoint</name>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
       <value>
-        <type><kind>tk_string</kind></type>
-        <value><string>create_MessengerHome_Impl</string></value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_MessengerHome_Impl</string>
+        </value>
       </value>
     </execParameter>
   </artifact>
@@ -197,10 +205,14 @@
     <node></node>
     <location>Receiver_svnt</location>
     <execParameter>
-      <name>entryPoint</name>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
       <value>
-        <type><kind>tk_string</kind></type>
-        <value><string>create_ReceiverHome_Servant</string></value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ReceiverHome_Servant</string>
+        </value>
       </value>
     </execParameter>
   </artifact>
@@ -210,10 +222,14 @@
     <node></node>
     <location>Receiver_exec</location>
     <execParameter>
-      <name>entryPoint</name>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
       <value>
-        <type><kind>tk_string</kind></type>
-        <value><string>create_ReceiverHome_Impl</string></value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ReceiverHome_Impl</string>
+        </value>
       </value>
     </execParameter>
   </artifact>
@@ -230,10 +246,14 @@
     <node></node>
     <location>Administrator_svnt</location>
     <execParameter>
-      <name>entryPoint</name>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
       <value>
-        <type><kind>tk_string</kind></type>
-        <value><string>create_AdministratorHome_Servant</string></value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_AdministratorHome_Servant</string>
+        </value>
       </value>
     </execParameter>
   </artifact>
@@ -243,10 +263,14 @@
     <node></node>
     <location>Administrator_exec</location>
     <execParameter>
-      <name>entryPoint</name>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
       <value>
-        <type><kind>tk_string</kind></type>
-        <value><string>create_AdministratorHome_Impl</string></value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_AdministratorHome_Impl</string>
+        </value>
       </value>
     </execParameter>
   </artifact>
