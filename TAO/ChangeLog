@@ -1,3 +1,19 @@
+Mon Nov 22 11:31:10 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/Valuetype/AbstractBase.h:
+        * tao/Valuetype/AbstractBase.cpp:
+        * tao/Valuetype/AbstractBase.inl:
+        * tao/Valuetype/AbstractBase_T.cpp:
+          Fixed a leak described in bug#3879. Also refactored the AbstractBase
+          code so that it become simpler and more standard compliant.
+
+        * tao/Synch_Invocation.cpp:
+        * bin/tao_orb_tests.lst:
+          Fixed the bug#3926 and marked the test as fixed.
+
+        * tests/Abstract_Interface/client.cpp:
+          Fixed in this test output to screen.
+
 Mon Nov 22 10:09:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:

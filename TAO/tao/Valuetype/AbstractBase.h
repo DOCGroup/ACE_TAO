@@ -61,19 +61,18 @@ namespace CORBA
     /// Constructor.
     /**
      * This constructor is only meant to be called by the
-     * corresponding CDR stream extraction operator.
+     * corresponding CDR stream extraction operator or during
+     * narrowing. Refcount of stub p is increased here.
      */
     AbstractBase (TAO_Stub *p,
-                  CORBA::Boolean collocated,
-                  TAO_Abstract_ServantBase *servant);
+                  CORBA::Boolean,
+                  TAO_Abstract_ServantBase *);
 
     typedef CORBA::AbstractBase_ptr _ptr_type;
     typedef CORBA::AbstractBase_var _var_type;
     typedef CORBA::AbstractBase_out _out_type;
 
-    static CORBA::AbstractBase_ptr _narrow (CORBA::AbstractBase_ptr obj
-                                            );
-
+    static CORBA::AbstractBase_ptr _narrow (CORBA::AbstractBase_ptr obj);
     static CORBA::AbstractBase_ptr _duplicate (CORBA::AbstractBase_ptr obj);
     static CORBA::AbstractBase_ptr _nil (void);
 
@@ -90,8 +89,8 @@ namespace CORBA
     /// TAO specific operations
 
     virtual const char* _tao_obv_repository_id (void) const;
-    virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &strm) const;
-    virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &strm);
+    virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
+    virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual CORBA::Boolean _tao_match_formal_type (ptrdiff_t) const;
 
 #if defined (GEN_OSTREAM_OPS)
@@ -104,7 +103,7 @@ namespace CORBA
 
 #endif /* GEN_OSTREAM_OPS */
 
-    /// Memmory management operations
+    /// Memory management operations
     virtual void _add_ref (void);
     virtual void _remove_ref (void);
 
@@ -116,7 +115,6 @@ namespace CORBA
     /// Acessors
     CORBA::Boolean _is_collocated (void) const;
     TAO_Abstract_ServantBase *_servant (void) const;
-    CORBA::Boolean _is_local (void) const;
 
     /// Return the equivalent object reference.
     /**
@@ -147,12 +145,15 @@ namespace CORBA
 
     virtual CORBA::ValueBase *_tao_to_value (void);
 
+    CORBA::Object_ptr create_object (TAO_Stub *stub);
+
   private:
 
-    TAO_Stub *concrete_stubobj_;
+    /// Number of outstanding references to this object.
+    TAO_Configurable_Refcount refcount_;
+
     CORBA::Boolean is_collocated_;
     TAO_Abstract_ServantBase *servant_;
-    CORBA::Boolean is_local_;
 
     /// Our equivalent CORBA::Object version
     /// @todo We may at some point of time should probably cache a
