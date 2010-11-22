@@ -4,7 +4,7 @@
 #define SINGLE_SERVICE_IDL
 
 #include <Components.idl>
-#include "Common/Common.idl"
+#include "Common/Single_Service_Common.idl"
 
 component Single_Service
 {

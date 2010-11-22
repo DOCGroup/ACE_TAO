@@ -70,6 +70,11 @@ namespace CIAO_Shapes_Sender_Impl
 
     //@{
     /** Supported operations and attributes. */
+    enum TYPE_OF_SHAPE {
+      SHAPE_TYPE_SQUARE,
+      SHAPE_TYPE_TRIANGLE,
+      SHAPE_TYPE_CIRCLE
+    };
 
     //@}
 
@@ -115,20 +120,11 @@ namespace CIAO_Shapes_Sender_Impl
 
   private:
     ::Shapes::CCM_Sender_Context_var ciao_context_;
-    ::Shapes::DDS_Typed::Writer_var writer_sq_;
-    ::Shapes::DDS_Typed::Writer_var writer_tr_;
-    ::Shapes::DDS_Typed::Writer_var writer_cl_;
 
     ShapeType* square_;
     ShapeType* triangle_;
     ShapeType* circle_;
     pulse_Generator * ticker_;
-
-    ::DDS::InstanceHandle_t instance_handle_sq_;
-    ::DDS::InstanceHandle_t instance_handle_tr_;
-    ::DDS::InstanceHandle_t instance_handle_cq_;
-
-
 
     //@{
     /** Component attributes. */
@@ -146,7 +142,7 @@ namespace CIAO_Shapes_Sender_Impl
 
     //@{
     /** User defined members. */
-    CORBA::UShort ShapeNr;
+    TYPE_OF_SHAPE TypeOfShape;
     //@}
 
     //@{

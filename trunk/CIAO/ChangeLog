@@ -1,3 +1,18 @@
+Mon Nov 22 14:38:52 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Large_Deployment/Common/Common.idl:
+        * connectors/dds4ccm/examples/Large_Deployment/Common/Common.mpc:
+        * connectors/dds4ccm/examples/Large_Deployment/Common/Single_Service_Common.idl:
+        * connectors/dds4ccm/examples/Large_Deployment/Common/Single_Service_Common.mpc:
+        * connectors/dds4ccm/examples/Large_Deployment/DDS_Pub/DDS_Pub.idl:
+        * connectors/dds4ccm/examples/Large_Deployment/DDS_Sub/DDS_Sub.idl:
+        * connectors/dds4ccm/examples/Large_Deployment/Single_Service/Single_Service.idl:
+        * connectors/dds4ccm/examples/Large_Deployment/Single_Service/Single_Service.mpc:
+        * connectors/dds4ccm/tests/MultiTopic/Sender/MultiTopic_Sender_exec.h:
+        * connectors/dds4ccm/tests/MultiTopic/Sender/MultiTopic_Sender_exec.cpp:
+          Split common.idl into two pieces: One which contains the type declaration,
+          the other one contains the interface definition.
+
 Mon Nov 22 12:52:02 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/DevGuideExamples/Messenger/descriptors/*:

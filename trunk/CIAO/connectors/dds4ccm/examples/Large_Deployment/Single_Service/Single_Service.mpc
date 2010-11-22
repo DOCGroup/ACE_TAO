@@ -17,7 +17,7 @@ project(Single_Service_idl_gen) : componentidldefaults   {
 }
 
 project(Single_Service_lem_gen) : ciaoidldefaults   {
-  after += Single_Service_idl_gen 
+  after += Single_Service_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SINGLE_SERVICE_LEM_STUB_Export \
               -Wb,stub_export_include=Single_Service_lem_stub_export.h \
@@ -29,8 +29,8 @@ project(Single_Service_lem_gen) : ciaoidldefaults   {
 }
 
 project(Single_Service_lem_stub) : ccm_svnt   {
-  after += Single_Service_lem_gen Single_Service_stub Large_Deployment_stub 
-  libs  +=  Single_Service_stub Large_Deployment_stub
+  after += Single_Service_lem_gen Single_Service_stub Single_Service_Common_stub
+  libs  +=  Single_Service_stub Single_Service_Common_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -55,8 +55,8 @@ project(Single_Service_lem_stub) : ccm_svnt   {
 }
 
 project(Single_Service_stub) : ccm_stub   {
-  after += Single_Service_idl_gen Large_Deployment_stub
-  libs  += Large_Deployment_stub
+  after += Single_Service_idl_gen Single_Service_Common_stub
+  libs  += Single_Service_Common_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -83,7 +83,7 @@ project(Single_Service_stub) : ccm_stub   {
 project(Single_Service_exec) : ciao_executor   {
   after   += Single_Service_lem_stub Single_Service_stub
   sharedname = Single_Service_exec
-  libs += Single_Service_stub Single_Service_lem_stub Large_Deployment_stub
+  libs += Single_Service_stub Single_Service_lem_stub Single_Service_Common_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -106,16 +106,16 @@ project(Single_Service_exec) : ciao_executor   {
 }
 
 
-project(Single_Service_svnt) : ciao_servant   {
-  after      +=   Single_Service_lem_stub
+project(Single_Service_svnt) : ciao_servant {
+  after      += Single_Service_lem_stub Single_Service_Common_svnt
   sharedname  = Single_Service_svnt
   libs       += Single_Service_stub Single_Service_lem_stub \
-     Large_Deployment_stub
+                Single_Service_Common_svnt
   libpaths += ../lib
   libout = ../lib
   includes += ..
   dynamicflags += SINGLE_SERVICE_SVNT_BUILD_DLL
-  
+
   IDL_Files {
   }
 

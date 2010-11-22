@@ -62,7 +62,7 @@ namespace CIAO_Shapes_Sender_Impl
       max_y_ (0),
       max_size_ (0),
       resize_shape_ (false),
-      ShapeNr (0)
+      TypeOfShape (SHAPE_TYPE_SQUARE)
   {
     this->ticker_ = new pulse_Generator (*this);
     this->square_ = new ShapeType;
@@ -101,42 +101,59 @@ namespace CIAO_Shapes_Sender_Impl
     {
       try
         {
-          if (this->ShapeNr == 0)
+          ::Shapes::DDS_Typed::Writer_var writer;
+          if (this->TypeOfShape == SHAPE_TYPE_CIRCLE)
             {
-              this->ShapeNr = 1;
-              this->writer_sq_->write_one (*square_,
-                                           this->instance_handle_sq_);
-              ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("UPDATED Shape_info Square for <%C> %u:%u:%u\n"),
-                  this->square_->color.in (),
-                  this->square_->x,
-                  this->square_->y,
-                  this->square_->shapesize));
+              writer = this->ciao_context_->get_connection_info_write_sq_data ();
             }
-          else if (this->ShapeNr == 1)
+          else if (this->TypeOfShape == SHAPE_TYPE_TRIANGLE)
             {
-              this->ShapeNr = 2;
-              this->writer_tr_->write_one (*triangle_,
-                                            this->instance_handle_tr_);
-              ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("UPDATED Shape_info Triangle for <%C> %u:%u:%u\n"),
-                  this->triangle_->color.in (),
-                  this->triangle_->x,
-                  this->triangle_->y,
-                  this->triangle_->shapesize));
+              writer = this->ciao_context_->get_connection_info_write_tr_data ();
             }
-          else if (this->ShapeNr == 2)
+          else if (this->TypeOfShape == SHAPE_TYPE_CIRCLE)
             {
-              this->ShapeNr = 0;
-              this->writer_cl_->write_one (*circle_,
-                                           this->instance_handle_cq_);
-              ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("UPDATED Shape_info Circle for <%C> %u:%u:%u\n"),
-                  this->circle_->color.in (),
-                  this->circle_->x,
-                  this->circle_->y,
-                  this->circle_->shapesize));
-             }
+              writer = this->ciao_context_->get_connection_info_write_cl_data ();
+            }
+          if (::CORBA::is_nil (writer.in ()))
+            {
+              ACE_ERROR ((LM_ERROR, "Sender_exec_i::tick () - "
+                        "ERROR: Unable to get connection to writer\n"));
+              return;
+            }
+
+         if (this->TypeOfShape == SHAPE_TYPE_CIRCLE)
+          {
+            this->TypeOfShape = SHAPE_TYPE_TRIANGLE;
+            writer->write_one (*square_, ::DDS::HANDLE_NIL);
+            ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("UPDATED Shape_info Square for <%C> %u:%u:%u\n"),
+                this->square_->color.in (),
+                this->square_->x,
+                this->square_->y,
+                this->square_->shapesize));
+          }
+        else if (this->TypeOfShape == SHAPE_TYPE_TRIANGLE)
+          {
+            this->TypeOfShape = SHAPE_TYPE_CIRCLE;
+            writer->write_one (*triangle_, ::DDS::HANDLE_NIL);
+            ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("UPDATED Shape_info Triangle for <%C> %u:%u:%u\n"),
+                this->triangle_->color.in (),
+                this->triangle_->x,
+                this->triangle_->y,
+                this->triangle_->shapesize));
+          }
+        else if (this->TypeOfShape == SHAPE_TYPE_CIRCLE)
+          {
+            this->TypeOfShape = SHAPE_TYPE_SQUARE;
+            writer->write_one (*circle_, ::DDS::HANDLE_NIL);
+            ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("UPDATED Shape_info Circle for <%C> %u:%u:%u\n"),
+                this->circle_->color.in (),
+                this->circle_->x,
+                this->circle_->y,
+                this->circle_->shapesize));
+           }
         }
       catch (const CCM_DDS::NonExistent& )
         {
@@ -245,29 +262,6 @@ namespace CIAO_Shapes_Sender_Impl
     this->reactor ()->cancel_timer (this->ticker_);
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
-    try
-      {
-        this->writer_sq_->unregister_instance (*this->square_,
-                                               this->instance_handle_sq_);
-        this->writer_tr_->unregister_instance (*this->triangle_,
-                                               this->instance_handle_tr_);
-        this->writer_cl_->unregister_instance (*this->circle_,
-                                               this->instance_handle_cq_);
-      }
-    catch (const CCM_DDS::NonExistent& )
-      {
-        //TODO: mentioning the correct shape in log message
-        ACE_ERROR ((LM_ERROR,
-            ACE_TEXT ("Shape_info for <%C> not deleted: <%C> didn't exist.\n"),
-            square_->color.in (), square_->color.in ()));
-      }
-    catch (const CCM_DDS::InternalError& )
-      {
-        //TODO: mentioning the correct shape in log message
-        ACE_ERROR ((LM_ERROR,
-            ACE_TEXT ("Internal Error while deleting Shape_info for <%C>.\n"),
-            square_->color.in ()));
-      }
     delete this->ticker_;
     delete this->square_;
     delete this->triangle_;
@@ -291,24 +285,7 @@ namespace CIAO_Shapes_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    this->writer_sq_ = this->ciao_context_->get_connection_info_write_sq_data ();
-    this->writer_tr_ = this->ciao_context_->get_connection_info_write_tr_data ();
-    this->writer_cl_ = this->ciao_context_->get_connection_info_write_cl_data ();
-
-    if (::CORBA::is_nil (this->writer_sq_.in ()) ||
-        ::CORBA::is_nil (this->writer_tr_.in ()) ||
-        ::CORBA::is_nil (this->writer_cl_.in ()) )
-      {
-        ACE_ERROR ((LM_ERROR, "Sender_exec_i::configuration_complete - "
-                  "Unable to get connections to data writers.\n"));
-        throw ::CORBA::INTERNAL ();
-      }
-    else
-      {
-        ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::configuration_complete - "
-                  "Retrieved data writers\n"));
-      }
- }
+  }
 
   void
   Sender_exec_i::ccm_activate (void)
@@ -334,24 +311,6 @@ namespace CIAO_Shapes_Sender_Impl
                   square_->x,
                   square_->y,
                   square_->shapesize));
-    try
-      {
-        this->instance_handle_sq_ = this->writer_sq_->register_instance (*this->square_);
-        this->instance_handle_tr_ = this->writer_tr_->register_instance (*this->triangle_);
-        this->instance_handle_cq_ = this->writer_cl_->register_instance (*this->circle_);
-      }
-    catch (const CCM_DDS::AlreadyCreated& )
-      {
-        //TODO: mentioning the correct shape in log message
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Shape_info for <%C> already created.\n"),
-                    this->square_->color.in ()));
-      }
-    catch (const CCM_DDS::InternalError& )
-      {
-        //TODO: mentioning the correct shape in log message
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating Shape_info for <%C>.\n"),
-                      this->square_->color.in ()));
-      }
     this->start ();
   }
 

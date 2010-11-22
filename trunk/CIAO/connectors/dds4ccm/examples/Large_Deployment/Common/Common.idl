@@ -8,12 +8,6 @@
 struct LargeType {
   string value; //@key
 };
-
 typedef sequence<LargeType> LargeTypeSeq;
-
-interface Simple_Service
-{
-  oneway void ping ();
-};
 
 #endif
