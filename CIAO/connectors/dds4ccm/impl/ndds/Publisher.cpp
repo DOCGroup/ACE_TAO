@@ -360,13 +360,11 @@ namespace CIAO
       return retcode;
     }
 
-
     ::DDS::ReturnCode_t
     DDS_Publisher_i::enable (void)
     {
       return this->rti_entity ()->enable ();
     }
-
 
     ::DDS::StatusCondition_ptr
     DDS_Publisher_i::get_statuscondition (void)
@@ -382,13 +380,11 @@ namespace CIAO
       return retval._retn ();
     }
 
-
     ::DDS::StatusMask
     DDS_Publisher_i::get_status_changes (void)
     {
       return this->rti_entity ()->get_status_changes ();
     }
-
 
     ::DDS::InstanceHandle_t
     DDS_Publisher_i::get_instance_handle (void)
@@ -398,7 +394,6 @@ namespace CIAO
       handle <<= rtihandle;
       return handle;
     }
-
 
     DDSPublisher *
     DDS_Publisher_i::get_rti_entity (void)

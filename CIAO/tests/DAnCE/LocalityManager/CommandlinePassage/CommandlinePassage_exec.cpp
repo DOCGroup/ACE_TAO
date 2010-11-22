@@ -74,7 +74,7 @@ namespace CIAO_command_line_test_A_Impl
 
     try
       {
-        long tc =
+        long const tc =
           orb->orb_core ()->lane_resources ().transport_cache ().total_size ();
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Transport cache : set <%d>, current_size <%d>\n"),
               this->tc_max_, tc));
