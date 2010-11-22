@@ -564,6 +564,9 @@ namespace TAO
                         && (ACE_OS_String::strcmp (type_id.in (),
                                 "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0))))))
       {
+        // If we are here then possibly we'll need a restart.
+        mon.set_status (TAO_INVOKE_RESTART);
+
         if (do_forward)
           this->stub ()->forwarded_on_exception (true);
 
@@ -597,6 +600,7 @@ namespace TAO
           }
 
         // Fall through and raise an exception.
+        mon.set_status (TAO_INVOKE_FAILURE);
       }
 
     CORBA::SystemException *ex = TAO::create_system_exception (type_id.in ());
