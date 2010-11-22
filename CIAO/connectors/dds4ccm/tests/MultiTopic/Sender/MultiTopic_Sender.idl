@@ -18,7 +18,7 @@ module Shapes
   {
     port DDS_Typed::DDS_Write info_write_sq;
     port DDS_Typed::DDS_Write info_write_tr;
-    port DDS_Typed::DDS_Write info_write_cq;
+    port DDS_Typed::DDS_Write info_write_cl;
 
     attribute unsigned long rate;
     attribute unsigned short max_x;

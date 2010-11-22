@@ -117,11 +117,11 @@ namespace CIAO_Shapes_Sender_Impl
     ::Shapes::CCM_Sender_Context_var ciao_context_;
     ::Shapes::DDS_Typed::Writer_var writer_sq_;
     ::Shapes::DDS_Typed::Writer_var writer_tr_;
-    ::Shapes::DDS_Typed::Writer_var writer_cq_;
+    ::Shapes::DDS_Typed::Writer_var writer_cl_;
 
     ShapeType* square_;
     ShapeType* triangle_;
-    ShapeType* cirque_;
+    ShapeType* circle_;
     pulse_Generator * ticker_;
 
     ::DDS::InstanceHandle_t instance_handle_sq_;
