@@ -65,7 +65,6 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
 
   AST_Type *ut = AST_Type::narrow_from_decl (*datatype);
 
-
   os_ << " <" << be_idt << be_idt_nl
       << "DDS_" << this->node_->local_name ()
       << "_Traits," << be_nl
@@ -157,7 +156,6 @@ be_visitor_connector_dds_exh::visit_mirror_port (
 int
 be_visitor_connector_dds_exh::visit_provides (be_provides *node)
 {
-
   be_interface *iface =
     be_interface::narrow_from_decl (node->provides_type ());
 
@@ -169,7 +167,6 @@ be_visitor_connector_dds_exh::visit_provides (be_provides *node)
 int
 be_visitor_connector_dds_exh::visit_uses (be_uses *node)
 {
-
   be_interface *iface =
     be_interface::narrow_from_decl (node->uses_type ());
 
@@ -251,9 +248,9 @@ be_visitor_connector_dds_exh::gen_dds_traits (void)
           << "typedef ::" << dt_name
           << "DataReader datareader_type;" << be_nl
           << "typedef " << (global_comp ? "" : "::") << comp_scope->full_name ()
-          << "::DDS_Typed_Entity::DataWriter typed_writer_type;" << be_nl
+          << "::DataWriter typed_writer_type;" << be_nl
           << "typedef " << (global_comp ? "" : "::") << comp_scope->full_name ()
-          << "::DDS_Typed_Entity::DataReader typed_reader_type;" << be_uidt_nl
+          << "::DataReader typed_reader_type;" << be_uidt_nl
           << "};";
     }
 }
@@ -299,8 +296,6 @@ be_visitor_connector_dds_exh::gen_connector_traits (void)
       << "{" << be_idt_nl
       << "typedef ::CIAO_" << this->node_->flat_name () << "_Impl::"
       << this->node_->local_name () << "_Exec base_type;" << be_nl
-      << "typedef ::" << (*dt)->name () << " value_type;" << be_nl
-      << "typedef ::" << (*dt_seq)->name () << " seq_type;" << be_nl
       << "typedef " << (global_comp ? "" : "::")
       << comp_scope->name () << "::CCM_"
       << this->node_->local_name () << "_Context context_type;"

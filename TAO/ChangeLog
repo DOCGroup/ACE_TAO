@@ -1,3 +1,8 @@
+Mon Nov 22 10:09:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+          Small cleanup and tweaks to traits
+
 Sat Nov 20 17:26:21 UTC 2010  Martin Corino  <corino_m@remedy.nl>
 
         * tests/Abstract_Interface/client.cpp:
