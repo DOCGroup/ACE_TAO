@@ -8,8 +8,8 @@
 #include "ace/Get_Opt.h"
 #include "Utils/XML_Typedefs.h"
 #include "tao/ORB.h"
-static const char *input_file = "BasicSP.cdp";
 
+static const char *input_file = "BasicSP.cdp";
 
 static int
 parse_args (int argc, char *argv[])

@@ -73,9 +73,9 @@ namespace DAnCE
     DANCE_TRACE ("Install_Instance::invoke_post_interceptor");
 
     (*i)->post_install (this->plan_,
-                                 this->instanceRef_,
-                                 this->instance_.in (),
-                                 this->instance_excep_.in ());
+                        this->instanceRef_,
+                        this->instance_.in (),
+                        this->instance_excep_.in ());
   }
 
 

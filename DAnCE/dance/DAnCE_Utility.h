@@ -69,7 +69,6 @@ namespace DAnCE
     void test_and_set_exception (bool &flag, EXCEPTION &exception,
                                  const char *name, const char *reason);
 
-
     DANCE_STUB_Export const char *
     get_instance_type (const ::Deployment::Properties& prop);
 
@@ -145,7 +144,6 @@ namespace DAnCE
                            const char * &val);
   }
 }
-
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "dance/DAnCE_Utility.tpp"

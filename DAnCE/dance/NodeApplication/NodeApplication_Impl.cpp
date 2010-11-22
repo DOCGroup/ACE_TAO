@@ -100,7 +100,6 @@ NodeApplication_Impl::prepare_instances (const LocalitySplitter::TSubPlans& plan
       const ::Deployment::InstanceDeploymentDescription &lm_idd
         = sub_plan.instance[loc_manager_instance];
 
-
       DANCE_DEBUG (4, (LM_DEBUG, DLINFO
                        ACE_TEXT ("NodeApplication_Impl::prepare_instances - ")
                        ACE_TEXT ("Found Locality Manager instance %u:%C, deploying\n"),
@@ -206,8 +205,7 @@ NodeApplication_Impl::prepare_instance (const char *name,
 
   try
     {
-      app = this->localities_[name]->preparePlan (plan,
-                                                  0);
+      app = this->localities_[name]->preparePlan (plan, 0);
       DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                        ACE_TEXT ("NodeApplication_Impl::prepare_instance - ")
                        ACE_TEXT ("Locality <%C> successfully prepared.\n"),

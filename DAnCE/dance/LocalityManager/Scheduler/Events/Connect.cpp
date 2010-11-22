@@ -70,8 +70,8 @@ namespace DAnCE
     DANCE_TRACE ("Connect_Instance::invoke_post_interceptor");
 
     (*i)->post_connect (this->plan_,
-                                 this->connectionRef_,
-                                 this->instance_excep_.in ());
+                        this->connectionRef_,
+                        this->instance_excep_.in ());
   }
 
 
