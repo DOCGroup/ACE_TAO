@@ -4,6 +4,7 @@
 #include "dds4ccm/impl/ndds/TypeSupport.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/Utils.h"
+#include "ace/Env_Value_T.h"
 
 namespace CIAO
 {
@@ -116,6 +117,13 @@ namespace CIAO
     DomainParticipantManager::DomainParticipantManager (void)
     {
       DDS4CCM_TRACE ("DomainParticipantManager::DomainParticipantManager");
+
+      ACE_Env_Value<int> verbosity (ACE_TEXT("DDS4CCM_NDDS_LOG_VERBOSITY"),
+        NDDS_CONFIG_LOG_VERBOSITY_SILENT);
+
+      NDDS_Config_LogVerbosity n_verbosity =
+        static_cast <NDDS_Config_LogVerbosity> (verbosity.operator int());
+      NDDSConfigLogger::get_instance()->set_verbosity (n_verbosity);
     }
 
     DomainParticipantManager::~DomainParticipantManager (void)

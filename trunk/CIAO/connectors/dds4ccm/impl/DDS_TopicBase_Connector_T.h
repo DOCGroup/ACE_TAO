@@ -32,9 +32,9 @@ public:
   virtual void key_fields (const ::DDS::StringSeq & key_fields);
 
   virtual void configuration_complete (void);
-  virtual void ccm_remove (void);
   virtual void ccm_activate (ACE_Reactor* reactor);
   virtual void ccm_passivate (void);
+  virtual void ccm_remove (void);
 
 protected:
   void init_default_topic (void);

@@ -312,19 +312,19 @@
   </instance>
 
   <connection>
-    <name>info_out_cq_data</name>
+    <name>info_out_cl_data</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_out_cq_data</portName>
+      <portName>info_out_cl_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>push_consumer_cq_data</portName>
+      <portName>push_consumer_cl_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
@@ -337,13 +337,13 @@
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_out_cq_data_control</portName>
+      <portName>info_out_cl_data_control</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>push_consumer_cq_data_control</portName>
+      <portName>push_consumer_cl_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
@@ -356,13 +356,13 @@
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_out_cq_status</portName>
+      <portName>info_out_cl_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>push_consumer_cq_status</portName>
+      <portName>push_consumer_cl_status</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
@@ -375,13 +375,13 @@
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_out_cq_data_listener</portName>
+      <portName>info_out_cl_data_listener</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>push_consumer_cq_data_listener</portName>
+      <portName>push_consumer_cl_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
@@ -580,19 +580,19 @@
     </internalEndpoint>
   </connection>
   <connection>
-    <name>writer_cq_connection</name>
+    <name>writer_cl_connection</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_write_cq_data</portName>
+      <portName>info_write_cl_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="SenderComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>supplier_cq_data</portName>
+      <portName>supplier_cl_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Shapes_ConnectorComponentInstance" />

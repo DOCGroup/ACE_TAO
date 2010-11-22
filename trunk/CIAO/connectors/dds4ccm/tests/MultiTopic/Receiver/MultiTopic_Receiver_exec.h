@@ -177,7 +177,7 @@ namespace CIAO_Shapes_Receiver_Impl
     get_info_out_tr_data_listener (void);
 
     virtual ::Shapes::DDS_Typed::CCM_Listener_ptr
-    get_info_out_cq_data_listener (void);
+    get_info_out_cl_data_listener (void);
 
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -187,7 +187,7 @@ namespace CIAO_Shapes_Receiver_Impl
     get_info_out_tr_status (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
-    get_info_out_cq_status (void);
+    get_info_out_cl_status (void);
 
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -197,7 +197,7 @@ namespace CIAO_Shapes_Receiver_Impl
     get_info_get_tr_status (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
-    get_info_get_cq_status (void);
+    get_info_get_cl_status (void);
 
 
     virtual ::CORBA::ULong rate (void);
@@ -248,7 +248,7 @@ namespace CIAO_Shapes_Receiver_Impl
     ::Shapes::DDS_Typed::Getter_var getter_sq_;
     ::Shapes::DDS_Typed::Reader_var reader_tr_;
     ::Shapes::DDS_Typed::Getter_var getter_tr_;
-    ::Shapes::DDS_Typed::Reader_var reader_cq_;
+    ::Shapes::DDS_Typed::Reader_var reader_cl_;
     ::Shapes::DDS_Typed::Getter_var getter_cq_;
 
 

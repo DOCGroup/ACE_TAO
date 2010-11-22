@@ -1,3 +1,32 @@
+Mon Nov 22 11:04:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/ccm_dds.idl:
+          Layout changes
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantManager.cpp:
+          Moved the reading of the DDS verbose logging environment variable to
+          the DomainParticipantManager.
+
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+          Layout changes
+
+        * connectors/dds4ccm/impl/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.h:
+          Added includes. 
+
+        * connectors/dds4ccm/tests/MultiTopic/Base/MultiTopic_Base.idl:
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.h:
+        * connectors/dds4ccm/tests/MultiTopic/Connector/ccm_dds_mt.idl:
+        * connectors/dds4ccm/tests/MultiTopic/Receiver/MultiTopic_Receiver.idl:
+        * connectors/dds4ccm/tests/MultiTopic/Receiver/MultiTopic_Receiver_exec.h:
+        * connectors/dds4ccm/tests/MultiTopic/Receiver/MultiTopic_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/MultiTopic/Sender/MultiTopic_Sender.idl:
+        * connectors/dds4ccm/tests/MultiTopic/Sender/MultiTopic_Sender_exec.h:
+        * connectors/dds4ccm/tests/MultiTopic/Sender/MultiTopic_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/MultiTopic/descriptors/Plan.cdp:
+          Implemented the writer part of the Connector. 
+
 Mon Nov 22 10:10:50 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Publisher.cpp:

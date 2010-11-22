@@ -345,7 +345,7 @@ module CCM_DDS
         // ---------
 
         porttype DDS_Write {
-                uses Writer                     data;
+                uses Writer              data;
                 uses DDS::DataWriter     dds_entity;
                 };
 

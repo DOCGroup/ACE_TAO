@@ -40,9 +40,9 @@ module CCM_DDS_MT
            mirrorport DDS_Typed::DDS_Write            supplier_tr;
            mirrorport DDS_Typed::DDS_Get              pull_consumer_tr;
            mirrorport DDS_Typed::DDS_Listen           push_consumer_tr;
-           mirrorport DDS_Typed::DDS_Write            supplier_cq;
-           mirrorport DDS_Typed::DDS_Get              pull_consumer_cq;
-           mirrorport DDS_Typed::DDS_Listen           push_consumer_cq;
+           mirrorport DDS_Typed::DDS_Write            supplier_cl;
+           mirrorport DDS_Typed::DDS_Get              pull_consumer_cl;
+           mirrorport DDS_Typed::DDS_Listen           push_consumer_cl;
 
       };
    };
