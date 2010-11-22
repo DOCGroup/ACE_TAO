@@ -152,13 +152,13 @@
 
   <!-- artifact* (exec, svnt) -->
 
-  <artifact id="Messenger_Stub">
+  <artifact xmi:id="Messenger_Stub">
     <name>Messenger_Stub</name>
     <source></source>
     <node></node>
     <location>Messenger_stub</location>
   </artifact>
-  <artifact id="Messenger_Svnt">
+  <artifact xmi:id="Messenger_Svnt">
     <name>Messenger_Svnt</name>
     <source></source>
     <node></node>
@@ -171,7 +171,7 @@
       </value>
     </execParameter>
   </artifact>
-  <artifact id="Messenger_Exec">
+  <artifact xmi:id="Messenger_Exec">
     <name>Messenger_Exec</name>
     <source></source>
     <node></node>
@@ -185,13 +185,13 @@
     </execParameter>
   </artifact>
 
-  <artifact id="Receiver_Stub">
+  <artifact xmi:id="Receiver_Stub">
     <name>Receiver_Stub</name>
     <source></source>
     <node></node>
     <location>Receiver_stub</location>
   </artifact>
-  <artifact id="Receiver_Svnt">
+  <artifact xmi:id="Receiver_Svnt">
     <name>Receiver_Svnt</name>
     <source></source>
     <node></node>
@@ -204,7 +204,7 @@
       </value>
     </execParameter>
   </artifact>
-  <artifact id="Receiver_Exec">
+  <artifact xmi:id="Receiver_Exec">
     <name>Receiver_Exec</name>
     <source></source>
     <node></node>
@@ -218,13 +218,13 @@
     </execParameter>
   </artifact>
 
-  <artifact id="Administrator_Stub">
+  <artifact xmi:id="Administrator_Stub">
     <name>Administrator_Stub</name>
     <source></source>
     <node></node>
     <location>Administrator_stub</location>
   </artifact>
-  <artifact id="Administrator_Svnt">
+  <artifact xmi:id="Administrator_Svnt">
     <name>Administrator_Svnt</name>
     <source></source>
     <node></node>
@@ -237,7 +237,7 @@
       </value>
     </execParameter>
   </artifact>
-  <artifact id="Administrator_Exec">
+  <artifact xmi:id="Administrator_Exec">
     <name>Administrator_Exec</name>
     <source></source>
     <node></node>
@@ -250,7 +250,5 @@
       </value>
     </execParameter>
   </artifact>
-
-
-</Deployment:deploymentPlan>
+</Deployment:DeploymentPlan>
 

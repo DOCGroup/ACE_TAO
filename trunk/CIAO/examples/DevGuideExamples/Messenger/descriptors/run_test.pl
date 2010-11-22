@@ -21,8 +21,7 @@ $tg->DeleteFile ($plior);
 $CIAO_ROOT = $ENV{'CIAO_ROOT'};
 $DANCE_ROOT = $ENV{'DANCE_ROOT'};
 
-$NA = $tg->CreateProcess ("$CIAO_ROOT/bin/ciao_componentserver");
-$NA_cmd = $NA->Executable ();
+$NA_cmd = $tg->GetArchDir("$DANCE_ROOT/bin/") . "dance_locality_manager";
 
 $NA1 = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_node_manager",
                              "-ORBEndpoint iiop://localhost:11000 -s $NA_cmd -n Administrator_Node");

@@ -1,3 +1,8 @@
+Mon Nov 22 12:52:02 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/DevGuideExamples/Messenger/descriptors/*:
+          Some more work to get this example running again
+
 Mon Nov 22 11:04:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/idl/ccm_dds.idl:
@@ -13,7 +18,7 @@ Mon Nov 22 11:04:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DataReaderListener_T.h:
         * connectors/dds4ccm/impl/InstanceHandleManager_T.h:
-          Added includes. 
+          Added includes.
 
         * connectors/dds4ccm/tests/MultiTopic/Base/MultiTopic_Base.idl:
         * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.h:
@@ -25,7 +30,7 @@ Mon Nov 22 11:04:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/tests/MultiTopic/Sender/MultiTopic_Sender_exec.h:
         * connectors/dds4ccm/tests/MultiTopic/Sender/MultiTopic_Sender_exec.cpp:
         * connectors/dds4ccm/tests/MultiTopic/descriptors/Plan.cdp:
-          Implemented the writer part of the Connector. 
+          Implemented the writer part of the Connector.
 
 Mon Nov 22 10:10:50 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
