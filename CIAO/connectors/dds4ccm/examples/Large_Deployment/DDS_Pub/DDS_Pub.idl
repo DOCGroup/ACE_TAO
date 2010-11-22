@@ -3,7 +3,7 @@
 #ifndef DDS_PUB_IDL
 #define DDS_PUB_IDL
 
-#include "Common/Common.idl"
+#include "Common/Single_Service_Common.idl"
 #include "Connector/Large_Connector.idl"
 
 component DDS_Pub
