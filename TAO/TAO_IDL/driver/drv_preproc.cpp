@@ -1049,6 +1049,18 @@ DRV_pre_proc (const char *myfile)
   // by the preprocessor.
 
   FILE * const file = ACE_OS::fopen (myfile, "r");
+
+  if (file == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%C: Unable to open temporary ")
+                  ACE_TEXT ("file \"%C\": %p\n"),
+                  idl_global->prog_name (),
+                  tmp_file));
+
+      throw Bailout ();
+    }
+
   DRV_copy_input (file,
                   ACE_OS::fdopen (ti_fd, ACE_TEXT("w")),
                   tmp_ifile,
@@ -1064,6 +1076,15 @@ DRV_pre_proc (const char *myfile)
     char *main_fullpath =
       ACE_OS::realpath (IDL_GlobalData::translateName (myfile, trans_path),
                         main_abspath);
+
+    if (main_fullpath == 0)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Unable to construct full file pathname\n")));
+
+        throw Bailout ();
+      }
+
     ACE_NEW (utl_string,
              UTL_String (main_fullpath, true));
     idl_global->set_main_filename (utl_string);
@@ -1105,7 +1126,7 @@ DRV_pre_proc (const char *myfile)
   if (cpp_options.command_line (DRV_arglist) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%C: command line processing \"%s\" failed\n",
+                  ACE_TEXT ("%C: command line processing \"%s\" failed\n"),
                   idl_global->prog_name (),
                   DRV_arglist[0]));
       throw Bailout ();

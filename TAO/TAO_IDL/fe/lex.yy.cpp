@@ -2989,7 +2989,18 @@ idl_parse_line_and_file (char *buf)
       // possibly produced VMS-style paths here.
       char trans_path[MAXPATHLEN] = "";
       char *temp_h = IDL_GlobalData::translateName (h, trans_path);
-      if (temp_h) h = temp_h;
+
+      if (temp_h)
+        {
+          h = temp_h;
+        }
+      else
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Unable to construct full file pathname\n")));
+
+          throw Bailout ();
+        }
 #endif
       ACE_NEW (tmp,
                UTL_String (h, true));

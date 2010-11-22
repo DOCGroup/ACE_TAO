@@ -1,3 +1,12 @@
+Mon Nov 22 19:57:23 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+          Added checks for failure to open a file or to create
+          an absolute file pathname. Most of these checks are
+          in code that is specific to VMS.
+
 Mon Nov 22 11:31:10 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/Valuetype/AbstractBase.h:
