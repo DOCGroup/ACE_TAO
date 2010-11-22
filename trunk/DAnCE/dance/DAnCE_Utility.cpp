@@ -150,7 +150,7 @@ namespace DAnCE
       CORBA::Any any;
 
       DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                       ACE_TEXT("DAnCE::Utility::get_property_value<bool> - ")
+                       ACE_TEXT("DAnCE::Utility::get_property_value<const char *> - ")
                        ACE_TEXT("Finding property value for name '%C'\n"),
                        name));
 
@@ -170,7 +170,7 @@ namespace DAnCE
         }
 
       DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                       ACE_TEXT("DAnCE::Utility::get_property_value<bool> - ")
+                       ACE_TEXT("DAnCE::Utility::get_property_value<const char *> - ")
                        ACE_TEXT("Property value for name '%C' has no value\n"), name));
 
       return false;
@@ -184,7 +184,7 @@ namespace DAnCE
       DANCE_TRACE ("DAnCE::Utility::get_property_value<const char *>");
 
       DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                       ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
+                       ACE_TEXT("DAnCE::Utility::get_property_value<const char *> - ")
                        ACE_TEXT("Finding property value for name '%C'\n"),
                        name));
 
@@ -193,19 +193,19 @@ namespace DAnCE
           if (ACE_OS::strcmp (properties[i].name.in (), name) == 0)
             {
               DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                               ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
+                               ACE_TEXT("DAnCE::Utility::get_property_value<const char *> - ")
                                ACE_TEXT("Found property '%C'\n"), name));
               if (properties[i].value >>= CORBA::Any::to_string (val, 0))
                 {
                   DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                                   ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
+                                   ACE_TEXT("DAnCE::Utility::get_property_value<const char *> - ")
                                    ACE_TEXT("Value is %C\n"), val));
                   return true;
                 }
               else
                 {
                   DANCE_ERROR (1, (LM_WARNING, DLINFO
-                                   ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
+                                   ACE_TEXT("DAnCE::Utility::get_property_value<const char *> - ")
                                    ACE_TEXT("Failed to extract property value for %C\n"),
                                    name));
                   return false;
@@ -215,7 +215,7 @@ namespace DAnCE
 
 
       DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                       ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
+                       ACE_TEXT("DAnCE::Utility::get_property_value<const char *> - ")
                        ACE_TEXT("Unable to find property named %C\n"), name));
 
       return false;
@@ -226,10 +226,10 @@ namespace DAnCE
                             const ::Deployment::SatisfierProperties &properties,
                             const char * &val)
     {
-      DANCE_TRACE ("DAnCE::Utility::get_property_value<const char *>");
+      DANCE_TRACE ("DAnCE::Utility::get_satisfierproperty_value<const char *>");
 
       DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                       ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
+                       ACE_TEXT("DAnCE::Utility::get_satisfierproperty_value<const char *> - ")
                        ACE_TEXT("Finding property value for name '%C'\n"),
                        name));
 
@@ -239,13 +239,13 @@ namespace DAnCE
             {
               DANCE_DEBUG (9,
                           (LM_TRACE, DLINFO
-                          ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
+                          ACE_TEXT("DAnCE::Utility::get_satisfierproperty_value<const char *> - ")
                           ACE_TEXT("Found property '%C'\n"), name));
               if (properties[i].value >>= CORBA::Any::to_string (val, 0))
                 {
                   DANCE_DEBUG (9,
                               (LM_TRACE, DLINFO
-                               ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
+                               ACE_TEXT("DAnCE::Utility::get_satisfierproperty_value<const char *> - ")
                                ACE_TEXT("Value is %C\n"), val));
                   return true;
                 }
@@ -253,7 +253,7 @@ namespace DAnCE
                 {
                   DANCE_ERROR (1,
                               (LM_WARNING, DLINFO
-                              ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
+                              ACE_TEXT("DAnCE::Utility::get_satisfierproperty_value<const char *> - ")
                               ACE_TEXT("Failed to extract property value for %C\n"),
                               name));
                   return false;
@@ -262,7 +262,7 @@ namespace DAnCE
         }
 
       DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                       ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
+                       ACE_TEXT("DAnCE::Utility::get_satisfierproperty_value<const char *> - ")
                        ACE_TEXT("Unable to find property named %C\n"), name));
 
       return false;
@@ -273,10 +273,10 @@ namespace DAnCE
                              const ::Deployment::Properties &properties,
                              bool &val)
     {
-      DANCE_TRACE ("DAnCE::Utility::get_property_value<const char *>");
+      DANCE_TRACE ("DAnCE::Utility::get_property_value<bool>");
 
       DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                       ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
+                       ACE_TEXT("DAnCE::Utility::get_property_value<bool> - ")
                        ACE_TEXT("Finding property value for name '%C'\n"),
                        name));
 
@@ -285,19 +285,19 @@ namespace DAnCE
           if (ACE_OS::strcmp (properties[i].name.in (), name) == 0)
             {
               DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                               ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
+                               ACE_TEXT("DAnCE::Utility::get_property_value<bool> - ")
                                ACE_TEXT("Found property '%C'\n"), name));
               if (properties[i].value >>= CORBA::Any::to_boolean (val))
                 {
                   DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                                   ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
+                                   ACE_TEXT("DAnCE::Utility::get_property_value<bool> - ")
                                    ACE_TEXT("Value is %C\n"), val));
                   return true;
                 }
               else
                 {
                   DANCE_ERROR (1, (LM_WARNING, DLINFO
-                                   ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
+                                   ACE_TEXT("DAnCE::Utility::get_property_value<bool> - ")
                                    ACE_TEXT("Failed to extract property value for %C\n"),
                                    name));
                   return false;
@@ -307,7 +307,7 @@ namespace DAnCE
 
 
       DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                       ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
+                       ACE_TEXT("DAnCE::Utility::get_property_value<bool> - ")
                        ACE_TEXT("Unable to find property named %C\n"), name));
 
       return false;
