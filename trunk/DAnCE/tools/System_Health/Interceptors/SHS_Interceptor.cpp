@@ -87,8 +87,7 @@ namespace DAnCE
     if (exception.type() != ::CORBA::_tc_null)
       {
         std::string result;
-        DAnCE::Utility::stringify_exception_from_any (exception,
-                                                      result);
+        DAnCE::Utility::stringify_exception_from_any (exception, result);
 
         update.new_status = DAnCE::SHS::INST_ERROR;
         update.instance_info.length (info_idx + 1);

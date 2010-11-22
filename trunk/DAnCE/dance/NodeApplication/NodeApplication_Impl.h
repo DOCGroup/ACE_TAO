@@ -70,7 +70,6 @@ namespace DAnCE
     typedef std::map <std::string, ::DAnCE::LocalityManager_var>
       LOCALITY_MAP;
 
-
     typedef std::pair <CORBA::ULong, ::Deployment::DeploymentPlan> SUB_PLAN;
     typedef std::map <std::string, SUB_PLAN> PLAN_MAP;
 
