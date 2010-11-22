@@ -1,3 +1,17 @@
+Mon Nov 22 10:18:24 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/DAnCE_Utility.h:
+        * dance/LocalityManager/Handler/Locality_Manager_Handler_Impl.cpp:
+        * dance/LocalityManager/Scheduler/Events/Connect.cpp:
+        * dance/LocalityManager/Scheduler/Events/Install.cpp:
+        * dance/NodeApplication/NodeApplication_Impl.h:
+        * dance/NodeApplication/NodeApplication_Impl.cpp:
+        * dance/NodeManager/Node_Manager_Module.cpp:
+        * tests/Config_Handlers/Package_Handlers/test.cpp:
+        * tests/Config_Handlers/test.cpp:
+        * tools/System_Health/Interceptors/SHS_Interceptor.cpp:
+          Various layout, logging improvements
+
 Tue Nov  2 11:30:24 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * NEWS:
@@ -20,13 +34,13 @@ Sat Oct 30 12:22:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
 Fri Oct 29 13:12:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
-        * dance/DomainApplicationManager/Node_Locator.cpp
-        * dance/DomainApplicationManager/Node_Locator.h
-        * dance/DAnCE_Properties.idl
+        * dance/DomainApplicationManager/Node_Locator.cpp:
+        * dance/DomainApplicationManager/Node_Locator.h:
+        * dance/DAnCE_Properties.idl:
         Add check on property name and resourceType for Node address in cdd file.
 
-        * dance/DAnCE_Utility.h
-        * dance/DAnCE_Utility.cpp
+        * dance/DAnCE_Utility.h:
+        * dance/DAnCE_Utility.cpp:
         Add get_satisfierproperty_value
 
 Fri Oct 29 11:08:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>

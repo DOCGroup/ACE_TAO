@@ -79,7 +79,6 @@ DAnCE_NodeManager_Module::usage (void)
   return "Node Manager Options:\n"
     "\t-e|--exec-mgr\t\t [execution manager ior file name]\n"
     "\t-n|--node-mgr\t\t <node name> [=node manager ior file name]\n"
-    //    "\t-p|--process-ns\t\t\t [file name] create process name service and store its ior to file name\n"
     "\t-c|--create-plan-ns [NC] create plan objects (components and ports) representation in name context with ior NC\n"
     "\t-r|--rebind-plan-ns [NC] bind plan representation name context to NC\n"
     "\t-i|--port-indirection\t enable plan objects indirection via servant locator\n"
@@ -117,8 +116,6 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
   get_opts.long_option (ACE_TEXT("best-effort"), ACE_Get_Opt::NO_ARG);
   get_opts.long_option (ACE_TEXT("help"), 'h', ACE_Get_Opt::NO_ARG);
   get_opts.long_option (ACE_TEXT("instance-nc"), ACE_Get_Opt::ARG_REQUIRED);
-
-  //get_opts.long_option ("help", '?');
 
   int c;
   while ( (c = get_opts ()) != -1)
@@ -180,12 +177,8 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
           break;
 
         case 'h':
-          //case '?': // Display help for use of the server.
-          //default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                                this->usage (),
-                                argv [0], c),
-                               false);
+                                this->usage (), argv [0], c), false);
           break;
 
         case 0:
@@ -246,7 +239,7 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
           break;
 
         default:
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ignoring unknown option %i\n"),
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ignoring unknown option %c\n"),
                         c));
         }
     }
@@ -255,8 +248,8 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
 
 CORBA::Object_ptr
 DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
-                                         int argc,
-                                         ACE_TCHAR *argv[])
+                                int argc,
+                                ACE_TCHAR *argv[])
 {
   try
     {
@@ -283,6 +276,8 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
 
       if (!this->parse_args (argc, argv))
         {
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::init - ")
+                       ACE_TEXT("Unable to parse the commandline arguments.\n")));
           return CORBA::Object::_nil ();
         }
 

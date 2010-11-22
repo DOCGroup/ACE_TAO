@@ -13,7 +13,6 @@
 
 static const char *input_file = "BasicSP.cdp";
 
-
 static int
 parse_args (int argc, char *argv[])
 {
@@ -50,7 +49,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-
       if (parse_args (argc, argv) != 0)
         return 1;
 

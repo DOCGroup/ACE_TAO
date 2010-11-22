@@ -182,8 +182,7 @@ namespace DAnCE
   {
     ::DAnCE::Utility::PROPERTY_MAP pmap (prop.length ());
 
-    ::DAnCE::Utility::build_property_map (pmap,
-                                          prop);
+    ::DAnCE::Utility::build_property_map (pmap, prop);
 
     CORBA::ULong spawn = 0;
     const char *cs_path = 0;
