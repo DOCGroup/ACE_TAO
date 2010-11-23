@@ -212,7 +212,7 @@
       </value>
     </configProperty>
   </instance>
-  <instance xmi:id="Shapes_ConnectorComponentInstance">
+  <instance xmi:id="Shapes_ConnectorSenderInstance">
     <name>Shapes_ConnectorComponent</name>
     <node>SenderNode</node>
     <!-- hostname -->
@@ -230,8 +230,8 @@
       </value>
     </configProperty>
   </instance>
-  <instance xmi:id="Shapes_ConnectorComponentInstance2">
-    <name>Shapes_ConnectorComponent2</name>
+  <instance xmi:id="Shapes_ConnectorReceiverInstance">
+    <name>Shapes_ConnectorReceiverInstance</name>
     <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
@@ -330,10 +330,9 @@
       <portName>supplier_sq_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance" />
+      <instance xmi:idref="Shapes_ConnectorSenderInstance" />
     </internalEndpoint>
   </connection>
-
   <!-- TRIANGLE -->
   <connection>
     <name>writer_tr_connection</name>
@@ -351,7 +350,7 @@
       <portName>supplier_tr_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance" />
+      <instance xmi:idref="Shapes_ConnectorSenderInstance" />
     </internalEndpoint>
   </connection>
   <!-- CIRCLE -->
@@ -371,7 +370,7 @@
       <portName>supplier_cl_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance" />
+      <instance xmi:idref="Shapes_ConnectorSenderInstance" />
     </internalEndpoint>
   </connection>
 
@@ -395,10 +394,9 @@
       <portName>pull_consumer_sq_fresh_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
+      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
     </internalEndpoint>
   </connection>
-
   <!-- TRIANGLE -->
   <connection>
     <name>info_get_tr_fresh_data</name>
@@ -416,7 +414,7 @@
       <portName>pull_consumer_tr_fresh_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
+      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
     </internalEndpoint>
   </connection>
 
@@ -437,7 +435,7 @@
       <portName>pull_consumer_cl_fresh_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
+      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
     </internalEndpoint>
   </connection>
 
@@ -459,7 +457,7 @@
       <portName>push_consumer_cl_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
+      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
     </internalEndpoint>
   </connection>
   <connection>
@@ -478,7 +476,7 @@
       <portName>push_consumer_cl_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
+      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
     </internalEndpoint>
   </connection>
   <connection>
@@ -497,7 +495,7 @@
       <portName>push_consumer_cl_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
+      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
     </internalEndpoint>
   </connection-->
 
@@ -518,7 +516,7 @@
       <portName>push_consumer_sq_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
+      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
     </internalEndpoint>
   </connection>
   <connection>
@@ -537,7 +535,7 @@
       <portName>push_consumer_sq_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
+      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
     </internalEndpoint>
   </connection>
   <connection>
@@ -556,7 +554,7 @@
       <portName>push_consumer_sq_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
+      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
     </internalEndpoint>
   </connection-->
 
@@ -577,7 +575,7 @@
       <portName>push_consumer_tr_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
+      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
     </internalEndpoint>
   </connection>
   <connection>
@@ -596,7 +594,7 @@
       <portName>push_consumer_tr_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
+      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
     </internalEndpoint>
   </connection>
   <connection>
@@ -615,7 +613,7 @@
       <portName>push_consumer_tr_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
+      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
     </internalEndpoint>
   </connection-->
 

@@ -1,6 +1,12 @@
 // $Id$
 
 #include "connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h"
+#include "ace/Reactor.h"
+
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::DDS_MT_Event_Connector_T (void)
+{
+}
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
 typename CCM_TYPE::supplier_sq_traits::data_type::_ptr_type
@@ -73,7 +79,6 @@ template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
 ::CCM_DDS::CCM_ContentFilterSetting*
 DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_push_consumer_sq_filter_config(void)
 {
-
   return ::CCM_DDS::CCM_ContentFilterSetting::_nil ();
 }
 
@@ -391,27 +396,23 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::configuration_complete (voi
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
 void
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::ccm_activate (ACE_Reactor* reactor)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::ccm_activate (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ\n"));
+  ACE_Reactor * reactor = 0;
+  ACE_NEW_THROW_EX (reactor,
+                    ACE_Reactor (),
+                    ::CORBA::NO_MEMORY ());
   TopicBaseConnector::ccm_activate (reactor);
-  ACE_DEBUG ((LM_DEBUG, "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY\n"));
 
   this->sq_supplier_.activate ();
-  ACE_DEBUG ((LM_DEBUG, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n"));
   this->tr_supplier_.activate ();
-  ACE_DEBUG ((LM_DEBUG, "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW\n"));
   this->cl_supplier_.activate ();
-  ACE_DEBUG ((LM_DEBUG, "VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV\n"));
 
   //TODO: Portstatuslistener nil ??
-  ACE_DEBUG ((LM_DEBUG, "UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU\n"));
   this->pull_consumer_sq_.activate (::CCM_DDS::PortStatusListener::_nil (),
                                     reactor);
-  ACE_DEBUG ((LM_DEBUG, "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT\n"));
   this->pull_consumer_tr_.activate (::CCM_DDS::PortStatusListener::_nil (),
                                     reactor);
-  ACE_DEBUG ((LM_DEBUG, "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSs\n"));
   this->pull_consumer_cl_.activate (::CCM_DDS::PortStatusListener::_nil (),
                                     reactor);
 }
