@@ -2988,10 +2988,35 @@ ACE_OS::thr_setcancelstate (int new_state, int *old_state)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_setcancelstate (new_state,
-                                                               old_state),
-                                       result),
-                     int, -1);
+  int local_new, local_old;
+  switch (new_state)
+    {
+    case THR_CANCEL_ENABLE:
+      local_new = PTHREAD_CANCEL_ENABLE;
+      break;
+    case THR_CANCEL_DISABLE:
+      local_new = PTHREAD_CANCEL_DISABLE;
+      break;
+    default:
+      errno = EINVAL;
+      return -1;
+    }
+  ACE_OSCALL (ACE_ADAPT_RETVAL (pthread_setcancelstate (local_new,
+                                                        &local_old),
+                                result),
+              int, -1, result);
+  if (result == -1)
+    return -1;
+  switch (local_old)
+    {
+    case PTHREAD_CANCEL_ENABLE:
+      *old_state = THR_CANCEL_ENABLE;
+      break;
+    case PTHREAD_CANCEL_DISABLE:
+      *old_state = THR_CANCEL_DISABLE;
+      break;
+    }
+  return result;
 # elif defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (new_state);
   ACE_UNUSED_ARG (old_state);
@@ -3019,10 +3044,35 @@ ACE_OS::thr_setcanceltype (int new_type, int *old_type)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_setcanceltype (new_type,
-                                                              old_type),
-                                       result),
-                     int, -1);
+  int local_new, local_old;
+  switch (new_type)
+    {
+    case THR_CANCEL_DEFERRED:
+      local_new = PTHREAD_CANCEL_DEFERRED;
+      break;
+    case THR_CANCEL_ASYNCHRONOUS:
+      local_new = PTHREAD_CANCEL_ASYNCHRONOUS;
+      break;
+    default:
+      errno = EINVAL;
+      return -1;
+    }
+  ACE_OSCALL (ACE_ADAPT_RETVAL (pthread_setcanceltype (local_new,
+                                                       &local_old),
+                                result),
+              int, -1, result);
+  if (result == -1)
+    return -1;
+  switch (local_old)
+    {
+    case PTHREAD_CANCEL_DEFERRED:
+      *old_type = THR_CANCEL_DEFERRED;
+      break;
+    case PTHREAD_CANCEL_ASYNCHRONOUS:
+      *old_type = THR_CANCEL_ASYNCHRONOUS;
+      break;
+    }
+  return result;
 # else /* Could be ACE_HAS_PTHREADS && ACE_LACKS_PTHREAD_CANCEL */
   ACE_UNUSED_ARG (new_type);
   ACE_UNUSED_ARG (old_type);

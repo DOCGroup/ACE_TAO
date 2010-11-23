@@ -1684,9 +1684,11 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   const char* thr_name (void);
 
+  /// State is THR_CANCEL_ENABLE or THR_CANCEL_DISABLE
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_setcancelstate (int new_state, int *old_state);
 
+  /// Type is THR_CANCEL_DEFERRED or THR_CANCEL_ASYNCHRONOUS
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_setcanceltype (int new_type, int *old_type);
 
