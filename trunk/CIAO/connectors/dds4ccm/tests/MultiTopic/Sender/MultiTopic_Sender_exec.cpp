@@ -303,7 +303,7 @@ namespace CIAO_Shapes_Sender_Impl
     this->circle_->shapesize = max_size_;
     this->circle_->color = CORBA::string_dup("GREEN");
 
-//     this->start ();
+    this->start ();
   }
 
   void
