@@ -1,3 +1,14 @@
+Tue Nov 23 14:20:02 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.h:
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp:
+        * connectors/dds4ccm/tests/MultiTopic/Receiver/MultiTopic_Receiver.idl:
+        * connectors/dds4ccm/tests/MultiTopic/Receiver/MultiTopic_Receiver_exec.h:
+        * connectors/dds4ccm/tests/MultiTopic/Receiver/MultiTopic_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/MultiTopic/Sender/MultiTopic_Sender.idl:
+        * connectors/dds4ccm/tests/MultiTopic/descriptors/Plan.cdp:
+          Circle listener is working now.
+
 Tue Nov 23 14:09:35 UTC 2010  Marijke Hengstmengel  <mhengstmengelt@remedy.nl>
 
         * connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.cpp:

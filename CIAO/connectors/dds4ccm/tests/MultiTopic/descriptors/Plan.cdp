@@ -178,39 +178,6 @@
         </value>
       </value>
     </configProperty>
-    <configProperty>
-      <name>get_data</name>
-      <value>
-        <type>
-          <kind>tk_boolean</kind>
-        </type>
-        <value>
-          <boolean>true</boolean>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>read_data</name>
-      <value>
-        <type>
-          <kind>tk_boolean</kind>
-        </type>
-        <value>
-          <boolean>false</boolean>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>raw_listen</name>
-      <value>
-        <type>
-          <kind>tk_boolean</kind>
-        </type>
-        <value>
-          <boolean>true</boolean>
-        </value>
-      </value>
-    </configProperty>
   </instance>
   <instance xmi:id="Shapes_ConnectorSenderInstance">
     <name>Shapes_ConnectorComponent</name>
@@ -377,7 +344,7 @@
 
   <!-- RECEIVER RECEIVER RECEIVER RECEIVER RECEIVER -->
 
-  <!-- SQUARE -->
+  <!-- SQUARE: (Getter only) -->
   <connection>
     <name>info_get_sq_fresh_data</name>
     <deployRequirement>
@@ -397,7 +364,7 @@
       <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
     </internalEndpoint>
   </connection>
-  <!-- TRIANGLE -->
+  <!-- TRIANGLE (Getter only) -->
   <connection>
     <name>info_get_tr_fresh_data</name>
     <deployRequirement>
@@ -417,48 +384,8 @@
       <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
     </internalEndpoint>
   </connection>
-  <!-- CIRCLE -->
-  <connection>
-    <name>info_get_cl_fresh_data</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
-    <internalEndpoint>
-      <portName>info_get_cl_fresh_data</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>pull_consumer_cl_fresh_data</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
-    </internalEndpoint>
-  </connection>
 
-
-  <!-- CIRCLE -->
-  <!--connection>
-    <name>info_out_cl_data</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
-    <internalEndpoint>
-      <portName>info_out_cl_data</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>push_consumer_cl_data</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
-    </internalEndpoint>
-  </connection>
+  <!-- CIRCLE (Listener only) -->
   <connection>
     <name>_listenercontrol_cl</name>
     <deployRequirement>
@@ -496,125 +423,7 @@
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
     </internalEndpoint>
-  </connection-->
-
-  <!-- SQUARE -->
-  <!--connection>
-    <name>info_out_sq_data</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
-    <internalEndpoint>
-      <portName>info_out_sq_data</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>push_consumer_sq_data</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
-    </internalEndpoint>
   </connection>
-  <connection>
-    <name>_listenercontrol_sq</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
-    <internalEndpoint>
-      <portName>info_out_sq_data_control</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>push_consumer_sq_data_control</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
-    </internalEndpoint>
-  </connection>
-  <connection>
-    <name>_listener_sq</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
-    <internalEndpoint>
-      <portName>info_out_sq_data_listener</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>push_consumer_sq_data_listener</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
-    </internalEndpoint>
-  </connection-->
-
-  <!-- TRIANGLE -->
-  <!--connection>
-    <name>info_out_tr_data</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
-    <internalEndpoint>
-      <portName>info_out_tr_data</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>push_consumer_tr_data</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
-    </internalEndpoint>
-  </connection>
-  <connection>
-    <name>_listenercontrol_tr</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
-    <internalEndpoint>
-      <portName>info_out_tr_data_control</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>push_consumer_tr_data_control</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
-    </internalEndpoint>
-  </connection>
-  <connection>
-    <name>_listener_tr</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
-    <internalEndpoint>
-      <portName>info_out_tr_data_listener</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>push_consumer_tr_data_listener</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
-    </internalEndpoint>
-  </connection-->
 
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>
