@@ -7,6 +7,7 @@
 #include "connectors/dds4ccm/impl/DDS_Write_T.h"
 #include "connectors/dds4ccm/impl/DDS_Get_T.h"
 #include "connectors/dds4ccm/impl/DDS_Listen_T.h"
+#include "connectors/dds4ccm/impl/DataListenerControl_T.h"
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
 class DDS_MT_Event_Connector_T
@@ -210,11 +211,13 @@ private:
 
   DDS_Get_T <typename CCM_TYPE::pull_consumer_sq_traits, DDS_TYPE, FIXED> pull_consumer_sq_;
   DDS_Get_T <typename CCM_TYPE::pull_consumer_tr_traits, DDS_TYPE, FIXED> pull_consumer_tr_;
-  DDS_Get_T <typename CCM_TYPE::pull_consumer_cl_traits, DDS_TYPE, FIXED> pull_consumer_cl_;
 
-//   DDS_Listen_T <typename CCM_TYPE::push_consumer_sq_traits, DDS_TYPE> push_consumer_sq_;
-//   DDS_Listen_T <typename CCM_TYPE::push_consumer_tr_traits, DDS_TYPE> push_consumer_tr_;
-//   DDS_Listen_T <typename CCM_TYPE::push_consumer_cl_traits, DDS_TYPE> push_consumer_cl_;
+  // Just one listener implemented.
+  DDS_Listen_T <typename CCM_TYPE::push_consumer_cl_traits, DDS_TYPE> push_consumer_cl_;
+
+  //connection to the receiver implementation
+  typename CCM_TYPE::push_consumer_cl_traits::data_listener_type::_var_type dl_;
+
 };
 
 #include "/home/marcel/Develop/ACE/latest/ACE_wrappers/TAO/CIAO/connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp"
