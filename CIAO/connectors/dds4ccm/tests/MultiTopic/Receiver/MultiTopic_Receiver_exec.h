@@ -186,13 +186,6 @@ namespace CIAO_Shapes_Receiver_Impl
     ::Shapes::DDS_Typed::CCM_Listener_var ciao_info_out_tr_data_listener_;
     ::Shapes::DDS_Typed::CCM_Listener_var ciao_info_out_cl_data_listener_;
 
-    ::CCM_DDS::CCM_PortStatusListener_var ciao_info_out_sq_status_;
-    ::CCM_DDS::CCM_PortStatusListener_var ciao_info_out_tr_status_;
-    ::CCM_DDS::CCM_PortStatusListener_var ciao_info_out_cl_status_;
-    ::CCM_DDS::CCM_PortStatusListener_var ciao_info_get_sq_status_;
-    ::CCM_DDS::CCM_PortStatusListener_var ciao_info_get_tr_status_;
-    ::CCM_DDS::CCM_PortStatusListener_var ciao_info_get_cl_status_;
-
      read_action_Generator * ticker_;
 
     ::CORBA::ULong rate_;

@@ -399,9 +399,6 @@ void
 DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::ccm_activate (void)
 {
   ACE_Reactor * reactor = 0;
-  ACE_NEW_THROW_EX (reactor,
-                    ACE_Reactor (),
-                    ::CORBA::NO_MEMORY ());
   TopicBaseConnector::ccm_activate (reactor);
 
   this->sq_supplier_.activate ();

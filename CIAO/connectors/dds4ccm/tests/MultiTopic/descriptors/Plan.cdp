@@ -185,7 +185,7 @@
           <kind>tk_boolean</kind>
         </type>
         <value>
-          <boolean>false</boolean>
+          <boolean>true</boolean>
         </value>
       </value>
     </configProperty>
@@ -261,7 +261,7 @@
           <kind>tk_ulong</kind>
         </type>
         <value>
-          <ulong>10</ulong>
+          <ulong>1</ulong>
         </value>
       </value>
     </configProperty>
@@ -417,7 +417,6 @@
       <instance xmi:idref="Shapes_ConnectorReceiverInstance" />
     </internalEndpoint>
   </connection>
-
   <!-- CIRCLE -->
   <connection>
     <name>info_get_cl_fresh_data</name>
