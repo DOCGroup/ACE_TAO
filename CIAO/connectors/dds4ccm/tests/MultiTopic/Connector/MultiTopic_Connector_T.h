@@ -16,6 +16,8 @@ class DDS_MT_Event_Connector_T
 typedef DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE> TopicBaseConnector;
 
 public:
+  DDS_MT_Event_Connector_T (void);
+
   /**
     * Square connector
     **/
@@ -198,7 +200,7 @@ public:
     **/
   virtual void configuration_complete (void);
   virtual void ccm_remove (void);
-  virtual void ccm_activate (ACE_Reactor* reactor);
+  virtual void ccm_activate (void);
   virtual void ccm_passivate (void);
 
 private:
@@ -210,9 +212,9 @@ private:
   DDS_Get_T <typename CCM_TYPE::pull_consumer_tr_traits, DDS_TYPE, FIXED> pull_consumer_tr_;
   DDS_Get_T <typename CCM_TYPE::pull_consumer_cl_traits, DDS_TYPE, FIXED> pull_consumer_cl_;
 
-  DDS_Listen_T <typename CCM_TYPE::push_consumer_sq_traits, DDS_TYPE> push_consumer_sq_;
-  DDS_Listen_T <typename CCM_TYPE::push_consumer_tr_traits, DDS_TYPE> push_consumer_tr_;
-  DDS_Listen_T <typename CCM_TYPE::push_consumer_cl_traits, DDS_TYPE> push_consumer_cl_;
+//   DDS_Listen_T <typename CCM_TYPE::push_consumer_sq_traits, DDS_TYPE> push_consumer_sq_;
+//   DDS_Listen_T <typename CCM_TYPE::push_consumer_tr_traits, DDS_TYPE> push_consumer_tr_;
+//   DDS_Listen_T <typename CCM_TYPE::push_consumer_cl_traits, DDS_TYPE> push_consumer_cl_;
 };
 
 #include "/home/marcel/Develop/ACE/latest/ACE_wrappers/TAO/CIAO/connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp"

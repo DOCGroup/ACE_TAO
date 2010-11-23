@@ -1,3 +1,12 @@
+Tue Nov 23 11:23:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.h:
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp:
+        * connectors/dds4ccm/tests/MultiTopic/Sender/MultiTopic_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/MultiTopic/descriptors/Plan.cdp:
+          Work in progress. Enabled both components again.
+          Still some issues left regarding the Receiver component.
+
 Tue Nov 23 07:14:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
