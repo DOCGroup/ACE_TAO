@@ -24,7 +24,6 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::DDS_Base_Connector_T (void)
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
-
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::~DDS_Base_Connector_T (void)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::~DDS_Base_Connector_T");
@@ -38,7 +37,6 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::~DDS_Base_Connector_T (void)
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
-
 ::DDS::DomainId_t
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::domain_id (void)
 {
@@ -48,7 +46,6 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::domain_id (void)
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
-
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::domain_id (
   ::DDS::DomainId_t domain_id)
@@ -66,7 +63,6 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::domain_id (
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
-
 char *
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::qos_profile (void)
 {
@@ -76,7 +72,6 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::qos_profile (void)
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
-
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::qos_profile (
   const char * qos_profile)
@@ -94,7 +89,6 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::qos_profile (
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
-
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_default_domain (void)
 {
@@ -160,7 +154,6 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_default_domain (void)
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
-
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::set_session_context (
   ::Components::SessionContext_ptr ctx)
@@ -179,7 +172,6 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::set_session_context (
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
-
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::configuration_complete (void)
 {
@@ -189,7 +181,6 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::configuration_complete (void)
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
-
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_activate (void)
 {
@@ -197,7 +188,6 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_activate (void)
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
-
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_passivate (void)
 {
@@ -205,7 +195,6 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_passivate (void)
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
-
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove (void)
 {
@@ -222,7 +211,6 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove (void)
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
-
 ACE_Reactor*
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::reactor (void)
 {

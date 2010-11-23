@@ -48,11 +48,11 @@ namespace CIAO_Shapes_Receiver_Impl
   int
   read_action_Generator::handle_timeout (const ACE_Time_Value &, const void *)
   {
-    if (pulse_callback_.read_data ())
-      {
-        this->pulse_callback_.read_one();
-//      this->pulse_callback_.read_all();
-      }
+//     if (pulse_callback_.read_data ())
+//       {
+//         this->pulse_callback_.read_one ();
+//      this->pulse_callback_.read_all ();
+//       }
     if (pulse_callback_.get_data ())
       {
         this->pulse_callback_.get_one ();
@@ -119,7 +119,7 @@ namespace CIAO_Shapes_Receiver_Impl
     ShapeType  shape_info;
     shape_info.color = "GREEN";
     ::CCM_DDS::ReadInfo readinfo;
-
+    ACE_DEBUG ((LM_DEBUG, "READ ONE\n"));
     try
       {
         ::Shapes::DDS_Typed::Reader_var reader_sq =
@@ -202,8 +202,13 @@ namespace CIAO_Shapes_Receiver_Impl
       }
     catch(const CCM_DDS::NonExistent& )
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ShapeType_Read_One: ")
-                  ACE_TEXT ("no shape_info receieved\n")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Receiver::read_one - ")
+                  ACE_TEXT ("ERROR: NonExistent exception caught\n")));
+      }
+    catch (...)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Receiver_exec_i::read_one - ")
+                  ACE_TEXT ("ERROR: unexpected exception caught\n")));
       }
   }
 
@@ -539,6 +544,7 @@ namespace CIAO_Shapes_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
+    /*
     ::CCM_DDS::DataListenerControl_var lc_sq =
       this->ciao_context_->get_connection_info_out_sq_data_control ();
     if (::CORBA::is_nil (lc_sq.in ()))
@@ -570,13 +576,14 @@ namespace CIAO_Shapes_Receiver_Impl
       }
 
     lc_cl->mode (::CCM_DDS::ONE_BY_ONE);
-    this->start();
+    */
+     this->start ();
   }
 
   void
   Receiver_exec_i::ccm_passivate (void)
   {
-//  this->stop();
+    this->stop();
   }
 
   void
@@ -588,8 +595,6 @@ namespace CIAO_Shapes_Receiver_Impl
   extern "C" RECEIVER_EXEC_Export  ::Components::EnterpriseComponent_ptr
   create_Shape_Receiver_Impl (void)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("111   create_Shape_Receiver_Impl\n")));
-
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
 

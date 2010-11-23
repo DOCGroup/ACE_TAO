@@ -102,7 +102,7 @@ namespace CIAO_Shapes_Sender_Impl
       try
         {
           ::Shapes::DDS_Typed::Writer_var writer;
-          if (this->TypeOfShape == SHAPE_TYPE_CIRCLE)
+          if (this->TypeOfShape == SHAPE_TYPE_SQUARE)
             {
               writer = this->ciao_context_->get_connection_info_write_sq_data ();
             }
@@ -121,7 +121,7 @@ namespace CIAO_Shapes_Sender_Impl
               return;
             }
 
-         if (this->TypeOfShape == SHAPE_TYPE_CIRCLE)
+         if (this->TypeOfShape == SHAPE_TYPE_SQUARE)
           {
             this->TypeOfShape = SHAPE_TYPE_TRIANGLE;
             writer->write_one (*square_, ::DDS::HANDLE_NIL);
@@ -157,14 +157,12 @@ namespace CIAO_Shapes_Sender_Impl
         }
       catch (const CCM_DDS::NonExistent& )
         {
-          //TODO: mentioning the correct shape in log message
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Shape_info for <%C> not updated: <%C> didn't exist.\n"),
                       this->square_->color.in (), this->square_->color.in ()));
         }
       catch (const CCM_DDS::InternalError& )
         {
-          //TODO: mentioning the correct shape in log message
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Internal Error while updating Shape_info for <%C>.\n"),
                       this->square_->color.in ()));
@@ -305,19 +303,13 @@ namespace CIAO_Shapes_Sender_Impl
     this->circle_->shapesize = max_size_;
     this->circle_->color = CORBA::string_dup("GREEN");
 
-    //Register shape with dds.
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("REGISTER Shape_info for <%C> %u:%u:%u\n"),
-                  square_->color.in (),
-                  square_->x,
-                  square_->y,
-                  square_->shapesize));
-    this->start ();
+//     this->start ();
   }
 
   void
   Sender_exec_i::ccm_passivate (void)
   {
-    this->stop();
+//     this->stop ();
   }
 
   void
