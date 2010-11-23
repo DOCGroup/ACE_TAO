@@ -1,12 +1,26 @@
+Tue Nov 23 14:56:59 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * adbc/SQLite/Exception.h:
+        * adbc/SQLite/Exception.inl:
+        * adbc/SQLite/Exception.cpp:
+
+          Made some of the methods inline.
+
+        * adbc/SQLite/Query.inl:
+        * adbc/SQLite/Query.cpp:
+
+          Bug fix where execute_no_record () was throwing the wrong
+          exception type if the query failed.
+
 Mon Nov  8 05:06:16 UTC 2010  James H. Hill  <james.hill@sprezzat.com>
 
         * adbc/ODBC/ODBC_Connection.cpp:
-        
+
           Bug fix where the environment pointer used when creating
           the connection during the init () was incorrect.
-          
+
         * adbc/ODBC/ODBC_Record.cpp:
-          
+
           Bug fix where the record was not initialized to the first
           item in the collection.
 

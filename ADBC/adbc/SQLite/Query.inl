@@ -8,6 +8,19 @@ namespace ADBC
 namespace SQLite
 {
 //
+// Query
+//
+ADBC_INLINE
+Query::Query (Connection & parent)
+: parent_ (parent),
+  stmt_ (0),
+  params_ (*this),
+  record_ (*this)
+{
+
+}
+
+//
 // ~Query
 //
 ADBC_INLINE

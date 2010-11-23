@@ -9,24 +9,11 @@
 #include "Connection.h"
 #include "Exception.h"
 #include "ace/CORBA_macros.h"
-#include "sqlite3.h"
 
 namespace ADBC
 {
 namespace SQLite
 {
-//
-// Query
-//
-ADBC_INLINE
-Query::Query (Connection & parent)
-: parent_ (parent),
-  stmt_ (0),
-  params_ (*this),
-  record_ (*this)
-{
-
-}
 
 //
 // prepare
@@ -80,7 +67,7 @@ void Query::execute_no_record (void)
   this->record_.reset ();
 
   if (!this->record_.done ())
-    throw Exception ("SQL statement was a SELECT statement");
+    throw Exception (this->parent_);
 }
 
 //
