@@ -126,6 +126,7 @@ protected:
                            , ACE_SEH_EXCEPT_HANDLER selector = 0
                            , ACE_SEH_EXCEPT_HANDLER handler = 0
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+                           , long cancel_flags = 0
                       );
   /// Inherit the logging features if the parent thread has an
   /// ACE_Log_Msg.
@@ -179,6 +180,11 @@ protected:
   /// Keep a reference to the configuration context that spawns the
   /// thread so the child can inherit it.
   ACE_Service_Gestalt * const ctx_;
+
+  /// Pass through the thread-creation flags that can only be acted on by
+  /// the spawned thread. Currently this is only the cancellation-related
+  /// flags.
+  long flags_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

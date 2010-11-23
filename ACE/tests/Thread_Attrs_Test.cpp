@@ -30,6 +30,109 @@ namespace
   const bool PRINT_DEBUG_MSGS = true;
 }
 
+class Cancel_Check : public ACE_Task<ACE_MT_SYNCH>
+{
+public:
+  // Create a checker with the state, type requested.
+  Cancel_Check (bool enable, bool async);
+
+  //FUZZ: disable check_for_lack_ACE_OS
+  // Spawn the thread
+  virtual int open (void * = 0);
+  //FUZZ: enable check_for_lack_ACE_OS
+
+  // Check the cancel settings against what is expected then exit.
+  virtual int svc (void);
+
+  bool operator! ();
+  // Returns true iff settings match what was requested.
+
+private:
+  bool enable_req_;
+  bool async_req_;
+  bool failed_;
+};
+
+bool
+Cancel_Check::operator!()
+{
+  return this->failed_;
+}
+
+Cancel_Check::Cancel_Check (bool enable, bool async)
+  : enable_req_ (enable), async_req_(async), failed_ (false)
+{
+}
+
+int
+Cancel_Check::svc (void)
+{
+#if defined (ACE_HAS_PTHREADS)
+  int state;
+  pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, &state);
+  if (state == PTHREAD_CANCEL_ENABLE && !this->enable_req_)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Cancel found enabled, should not be\n")));
+      this->failed_ = true;
+    }
+  else if (state == PTHREAD_CANCEL_DISABLE && this->enable_req_)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Cancel found disabled, should not be\n")));
+      this->failed_ = true;
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Cancel found %s; ok\n"),
+                  state == PTHREAD_CANCEL_ENABLE ? ACE_TEXT ("enabled") :
+                                                   ACE_TEXT ("disabled")));
+    }
+
+  int type;
+  pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, &type);
+  if (type == PTHREAD_CANCEL_ASYNCHRONOUS && !this->async_req_)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Cancel type async, should not be\n")));
+      this->failed_ = true;
+    }
+  else if (type == PTHREAD_CANCEL_DEFERRED && this->async_req_)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Cancel type deferred, should not be\n")));
+      this->failed_ = true;
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Cancel type %s; ok\n"),
+                  type == PTHREAD_CANCEL_DEFERRED ? ACE_TEXT ("deferred") :
+                                                    ACE_TEXT ("asynchronous")));
+    }
+
+#endif
+  return 0;
+}
+
+int
+Cancel_Check::open (void *)
+{
+  long flags = THR_NEW_LWP | THR_JOINABLE;
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Flags before cancels: 0x%x\n"), flags));
+  flags |= (this->enable_req_ ? THR_CANCEL_ENABLE : THR_CANCEL_DISABLE);
+  flags |= (this->async_req_ ? THR_CANCEL_ASYNCHRONOUS : THR_CANCEL_DEFERRED);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Flags after cancels: 0x%x\n"), flags));
+  if (this->activate (flags) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("Cancel_Check activate failed")),
+                      -1);
+  return 0;
+}
+
+
 class Stack_Size_Check : public ACE_Task<ACE_MT_SYNCH>
 {
   // = TITLE
@@ -142,6 +245,47 @@ run_main (int, ACE_TCHAR *[])
                             1);
       if (!size_checker)
         status = 1;
+    }
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Cancel flags sanity check:\n")
+              ACE_TEXT ("  THR_CANCEL_ENABLE: 0x%x\n")
+              ACE_TEXT ("  THR_CANCEL_DISABLE: 0x%x\n")
+              ACE_TEXT ("  THR_CANCEL_DEFERRED: 0x%x\n")
+              ACE_TEXT ("  THR_CANCEL_ASYNCHRONOUS: 0x%x\n"),
+              THR_CANCEL_ENABLE,
+              THR_CANCEL_DISABLE,
+              THR_CANCEL_DEFERRED,
+              THR_CANCEL_ASYNCHRONOUS));
+  // Cancel check args:  enable (yes/no), async/deferred
+  Cancel_Check check1 (true, true);
+  Cancel_Check check2 (true, false);
+  Cancel_Check check3 (false, true);
+  Cancel_Check check4 (false, false);
+  if (check1.open(0) == 0)
+    {
+      check1.wait ();
+      if (!check1)
+        status = 1;
+
+      check2.open (0);
+      check2.wait ();
+      if (!check2)
+        status = 1;
+
+      check3.open (0);
+      check3.wait ();
+      if (!check3)
+        status = 1;
+
+      check4.open (0);
+      check4.wait ();
+      if (!check4)
+        status = 1;
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("Cancel_Check open")));
+      status = 1;
     }
 #else
   ACE_ERROR ((LM_INFO,

@@ -571,7 +571,8 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                       this,
                                       new_thr_desc.get (),
                                       ACE_OS_Object_Manager::seh_except_selector(),
-                                      ACE_OS_Object_Manager::seh_except_handler()),
+                                      ACE_OS_Object_Manager::seh_except_handler(),
+                                      flags),
                   -1);
 # else
   ACE_NEW_RETURN (thread_args,
@@ -579,7 +580,8 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                       args,
                                       (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
                                       this,
-                                      new_thr_desc.get ()),
+                                      new_thr_desc.get (),
+                                      flags),
                   -1);
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
   auto_ptr <ACE_Base_Thread_Adapter> auto_thread_args (static_cast<ACE_Base_Thread_Adapter *> (thread_args));
