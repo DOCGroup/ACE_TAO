@@ -145,18 +145,6 @@ namespace CIAO_Shapes_Receiver_Impl
     virtual ::CORBA::ULong rate (void);
 
     virtual void rate (::CORBA::ULong rate);
-
-    virtual ::CORBA::Boolean get_data (void);
-
-    virtual void get_data (::CORBA::Boolean get_data);
-
-    virtual ::CORBA::Boolean read_data (void);
-
-    virtual void read_data (::CORBA::Boolean read_data);
-
-    virtual ::CORBA::Boolean raw_listen (void);
-
-    virtual void raw_listen (::CORBA::Boolean raw_listen);
     //@}
 
     //@{
@@ -170,7 +158,6 @@ namespace CIAO_Shapes_Receiver_Impl
 
     //@{
     /** User defined public operations. */
-    virtual void read_one (void);
     virtual void get_one (void);
     virtual void start (void);
     virtual void stop (void);
@@ -182,19 +169,11 @@ namespace CIAO_Shapes_Receiver_Impl
 
     //@{
     /** Component attributes. */
-    ::Shapes::DDS_Typed::CCM_Listener_var ciao_info_out_sq_data_listener_;
-    ::Shapes::DDS_Typed::CCM_Listener_var ciao_info_out_tr_data_listener_;
     ::Shapes::DDS_Typed::CCM_Listener_var ciao_info_out_cl_data_listener_;
 
      read_action_Generator * ticker_;
 
     ::CORBA::ULong rate_;
-
-    ::CORBA::Boolean get_data_;
-
-    ::CORBA::Boolean read_data_;
-
-    ::CORBA::Boolean raw_listen_;
     //@}
 
     //@{

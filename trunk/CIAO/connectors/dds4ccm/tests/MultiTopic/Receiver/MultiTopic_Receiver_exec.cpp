@@ -48,16 +48,7 @@ namespace CIAO_Shapes_Receiver_Impl
   int
   read_action_Generator::handle_timeout (const ACE_Time_Value &, const void *)
   {
-//     if (pulse_callback_.read_data ())
-//       {
-//         this->pulse_callback_.read_one ();
-//      this->pulse_callback_.read_all ();
-//       }
-    if (pulse_callback_.get_data ())
-      {
-        this->pulse_callback_.get_one ();
-//      this->pulse_callback_.get_all ();
-      }
+    this->pulse_callback_.get_one ();
     return 0;
   }
 
@@ -102,10 +93,7 @@ namespace CIAO_Shapes_Receiver_Impl
 
   Receiver_exec_i::Receiver_exec_i (void)
     : ticker_ (0),
-      rate_ (0),
-      get_data_ (false),
-      read_data_ (false),
-      raw_listen_ (false)
+      rate_ (0)
   {
     ACE_NEW_THROW_EX (this->ticker_,
                       read_action_Generator (*this),
@@ -117,104 +105,6 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   // Supported operations and attributes.
-  void
-  Receiver_exec_i::read_one (void)
-  {
-    ShapeType  shape_info;
-    shape_info.color = "GREEN";
-    ::CCM_DDS::ReadInfo readinfo;
-    ACE_DEBUG ((LM_DEBUG, "READ ONE\n"));
-    try
-      {
-        ::Shapes::DDS_Typed::Reader_var reader_sq =
-          this->ciao_context_->get_connection_info_out_sq_data ();
-        if (!::CORBA::is_nil (reader_sq.in ()))
-          {
-            reader_sq->read_one_last (shape_info, readinfo, ::DDS::HANDLE_NIL);
-            time_t tim = readinfo.source_timestamp.sec;
-            tm * time = ACE_OS::localtime(&tim);
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ONE square_Info ")
-                      ACE_TEXT (" -> date = %02d:%02d:%02d.%d\n"),
-                                time->tm_hour,
-                                time->tm_min,
-                                time->tm_sec,
-                                readinfo.source_timestamp.nanosec));
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ON square info : ")
-                ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
-                shape_info.color.in (),
-                shape_info.x,
-                shape_info.y,
-                shape_info.shapesize));
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, "Receiver_exec_i::read_one - "
-                      "ERROR: DataReader for Square seems to be nil\n"));
-          }
-
-        ::Shapes::DDS_Typed::Reader_var reader_tr =
-          this->ciao_context_->get_connection_info_out_tr_data ();
-        if (!::CORBA::is_nil (reader_tr.in ()))
-          {
-            reader_tr->read_one_last (shape_info, readinfo, ::DDS::HANDLE_NIL);
-            time_t tim = readinfo.source_timestamp.sec;
-            tm * time = ACE_OS::localtime(&tim);
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ONE triangle_Info ")
-                      ACE_TEXT (" -> date = %02d:%02d:%02d.%d\n"),
-                                 time->tm_hour,
-                                 time->tm_min,
-                                 time->tm_sec,
-                                 readinfo.source_timestamp.nanosec));
-             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ON triangle info : ")
-                 ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
-                 shape_info.color.in (),
-                 shape_info.x,
-                 shape_info.y,
-                 shape_info.shapesize));
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, "Receiver_exec_i::read_one - "
-                      "ERROR: DataReader for Triangle seems to be nil\n"));
-          }
-
-        ::Shapes::DDS_Typed::Reader_var reader_cl =
-          this->ciao_context_->get_connection_info_out_cl_data ();
-        if (!::CORBA::is_nil (reader_cl.in ()))
-          {
-             reader_cl->read_one_last (shape_info, readinfo, ::DDS::HANDLE_NIL);
-             time_t tim = readinfo.source_timestamp.sec;
-             tm * time = ACE_OS::localtime(&tim);
-             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ONE circle_Info ")
-                        ACE_TEXT (" -> date = %02d:%02d:%02d.%d\n"),
-                                  time->tm_hour,
-                                  time->tm_min,
-                                  time->tm_sec,
-                                  readinfo.source_timestamp.nanosec));
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ON circle info : ")
-                  ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
-                  shape_info.color.in (),
-                  shape_info.x,
-                  shape_info.y,
-                  shape_info.shapesize));
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, "Receiver_exec_i::read_one - "
-                      "ERROR: DataReader for Circle seems to be nil\n"));
-          }
-      }
-    catch(const CCM_DDS::NonExistent& )
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Receiver::read_one - ")
-                  ACE_TEXT ("ERROR: NonExistent exception caught\n")));
-      }
-    catch (...)
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Receiver_exec_i::read_one - ")
-                  ACE_TEXT ("ERROR: unexpected exception caught\n")));
-      }
-  }
 
   void
   Receiver_exec_i::get_one (void)
@@ -289,39 +179,7 @@ namespace CIAO_Shapes_Receiver_Impl
             ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_one - "
                       "ERROR: Getter for Triangle seems to be nil\n"));
           }
-
-        ::Shapes::DDS_Typed::Getter_var getter_cl =
-          this-> ciao_context_->get_connection_info_get_cl_fresh_data ();
-        if (!::CORBA::is_nil (getter_cl.in ()))
-          {
-            if (getter_cl->get_one (shape_info.out (), readinfo.out ()))
-              {
-                time_t tim = readinfo->source_timestamp.sec;
-                tm * time = ACE_OS::localtime(&tim);
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE circle ReadInfo -> ")
-                                      ACE_TEXT ("date = %02d:%02d:%02d.%d\n"),
-                                      time->tm_hour,
-                                      time->tm_min,
-                                      time->tm_sec,
-                                      readinfo->source_timestamp.nanosec));
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ShapeType  circle: ")
-                                      ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
-                                      shape_info->color.in (),
-                                      shape_info->x,
-                                      shape_info->y,
-                                      shape_info->shapesize));
-              }
-            else
-              {
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE  circle No data available for <%C>\n"),
-                           shape_info->color.in ()));
-              }
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_one - "
-                      "ERROR: Getter for Circle seems to be nil\n"));
-          }
+        //Circle is retrieved by the listener functionality
       }
     catch(const CCM_DDS::NonExistent& )
        {
@@ -379,42 +237,14 @@ namespace CIAO_Shapes_Receiver_Impl
   ::Shapes::DDS_Typed::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_sq_data_listener (void)
   {
-    if ( ::CORBA::is_nil (this->ciao_info_out_sq_data_listener_.in ()))
-      {
-        info_out_data_listener_exec_i *tmp = 0;
-        ACE_NEW_RETURN (
-          tmp,
-          info_out_data_listener_exec_i (
-            this->ciao_context_.in ()),
-            ::Shapes::DDS_Typed::CCM_Listener::_nil ());
-
-          this->ciao_info_out_sq_data_listener_ = tmp;
-      }
-
-    return
-      ::Shapes::DDS_Typed::CCM_Listener::_duplicate (
-        this->ciao_info_out_sq_data_listener_.in ());
+    return ::Shapes::DDS_Typed::CCM_Listener::_nil ();
   }
 
   ::Shapes::DDS_Typed::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_tr_data_listener (void)
   {
-    if ( ::CORBA::is_nil (this->ciao_info_out_tr_data_listener_.in ()))
-      {
-        info_out_data_listener_exec_i *tmp = 0;
-        ACE_NEW_RETURN (
-          tmp,
-          info_out_data_listener_exec_i (
-            this->ciao_context_.in ()),
-            ::Shapes::DDS_Typed::CCM_Listener::_nil ());
-
-        this->ciao_info_out_tr_data_listener_ = tmp;
-      }
-
-    return
-      ::Shapes::DDS_Typed::CCM_Listener::_duplicate (
-        this->ciao_info_out_tr_data_listener_.in ());
-   }
+    return ::Shapes::DDS_Typed::CCM_Listener::_nil ();
+  }
 
   ::Shapes::DDS_Typed::CCM_Listener_ptr
    Receiver_exec_i::get_info_out_cl_data_listener (void)
@@ -486,47 +316,7 @@ namespace CIAO_Shapes_Receiver_Impl
     this->rate_ = rate;
   }
 
-  ::CORBA::Boolean
-  Receiver_exec_i::get_data (void)
-  {
-    return this->get_data_;
-  }
-
-  void
-  Receiver_exec_i::get_data (
-    const ::CORBA::Boolean get_data)
-  {
-    this->get_data_ = get_data;
-  }
-
-  ::CORBA::Boolean
-  Receiver_exec_i::read_data (void)
-  {
-    return this->read_data_;
-  }
-
-  void
-  Receiver_exec_i::read_data (
-    const ::CORBA::Boolean read_data)
-  {
-    this->read_data_ = read_data;
-  }
-
-  ::CORBA::Boolean
-  Receiver_exec_i::raw_listen (void)
-  {
-    return this->raw_listen_;
-  }
-
-  void
-  Receiver_exec_i::raw_listen (
-    const ::CORBA::Boolean raw_listen)
-  {
-    this->raw_listen_ = raw_listen;
-  }
-
   // Operations from Components::SessionComponent.
-
   void
   Receiver_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
@@ -548,28 +338,6 @@ namespace CIAO_Shapes_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    /*
-    ::CCM_DDS::DataListenerControl_var lc_sq =
-      this->ciao_context_->get_connection_info_out_sq_data_control ();
-    if (::CORBA::is_nil (lc_sq.in ()))
-      {
-        ACE_ERROR ((LM_INFO,
-                ACE_TEXT ("Error:  Listener control receptacle sq is null!\n")));
-        throw ::CORBA::INTERNAL ();
-      }
-
-    lc_sq->mode (::CCM_DDS::ONE_BY_ONE);
-
-    ::CCM_DDS::DataListenerControl_var lc_tr =
-    this->ciao_context_->get_connection_info_out_tr_data_control ();
-    if (::CORBA::is_nil (lc_tr.in ()))
-      {
-        ACE_ERROR ((LM_INFO,
-            ACE_TEXT ("Error:  Listener control receptacle tr is null!\n")));
-        throw ::CORBA::INTERNAL ();
-      }
-    lc_tr->mode (::CCM_DDS::ONE_BY_ONE);
-
     ::CCM_DDS::DataListenerControl_var lc_cl =
     this->ciao_context_->get_connection_info_out_cl_data_control ();
     if (::CORBA::is_nil (lc_cl.in ()))
@@ -578,10 +346,9 @@ namespace CIAO_Shapes_Receiver_Impl
             ACE_TEXT ("Error:  Listener control receptacle cl is null!\n")));
         throw ::CORBA::INTERNAL ();
       }
-
     lc_cl->mode (::CCM_DDS::ONE_BY_ONE);
-    */
-     this->start ();
+
+    this->start ();
   }
 
   void
