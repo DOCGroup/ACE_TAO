@@ -220,6 +220,6 @@ private:
 
 };
 
-#include "/home/marcel/Develop/ACE/latest/ACE_wrappers/TAO/CIAO/connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp"
+#include "MultiTopic_Connector_T.cpp"
 
 #endif
