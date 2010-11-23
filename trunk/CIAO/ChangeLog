@@ -1,3 +1,18 @@
+Tue Nov 23 07:14:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+          Layout changes
+
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.h:
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp:
+        * connectors/dds4ccm/tests/MultiTopic/Receiver/MultiTopic_Receiver_exec.h:
+        * connectors/dds4ccm/tests/MultiTopic/Receiver/MultiTopic_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/MultiTopic/Sender/MultiTopic_Sender_exec.cpp:
+          Updated. Added MultiTopicConnector_T.cpp.
+
+        * connectors/dds4ccm/tests/MultiTopic/descriptors/Plan.cdp:
+          Reorganized connections.
+
 Mon Nov 22 15:13:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Large_Deployment/Common/Single_Service_Common.mpc:

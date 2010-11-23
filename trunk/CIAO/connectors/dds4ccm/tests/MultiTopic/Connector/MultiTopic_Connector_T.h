@@ -5,6 +5,8 @@
 
 #include "connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h"
 #include "connectors/dds4ccm/impl/DDS_Write_T.h"
+#include "connectors/dds4ccm/impl/DDS_Get_T.h"
+#include "connectors/dds4ccm/impl/DDS_Listen_T.h"
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
 class DDS_MT_Event_Connector_T
@@ -203,6 +205,14 @@ private:
   DDS_Write_T <typename CCM_TYPE::supplier_sq_traits, DDS_TYPE> sq_supplier_;
   DDS_Write_T <typename CCM_TYPE::supplier_sq_traits, DDS_TYPE> tr_supplier_;
   DDS_Write_T <typename CCM_TYPE::supplier_sq_traits, DDS_TYPE> cl_supplier_;
+
+  DDS_Get_T <typename CCM_TYPE::pull_consumer_sq_traits, DDS_TYPE, FIXED> pull_consumer_sq_;
+  DDS_Get_T <typename CCM_TYPE::pull_consumer_tr_traits, DDS_TYPE, FIXED> pull_consumer_tr_;
+  DDS_Get_T <typename CCM_TYPE::pull_consumer_cl_traits, DDS_TYPE, FIXED> pull_consumer_cl_;
+
+  DDS_Listen_T <typename CCM_TYPE::push_consumer_sq_traits, DDS_TYPE> push_consumer_sq_;
+  DDS_Listen_T <typename CCM_TYPE::push_consumer_tr_traits, DDS_TYPE> push_consumer_tr_;
+  DDS_Listen_T <typename CCM_TYPE::push_consumer_cl_traits, DDS_TYPE> push_consumer_cl_;
 };
 
 #include "/home/marcel/Develop/ACE/latest/ACE_wrappers/TAO/CIAO/connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp"
