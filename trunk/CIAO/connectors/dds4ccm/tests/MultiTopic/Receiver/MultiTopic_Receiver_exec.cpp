@@ -101,11 +101,15 @@ namespace CIAO_Shapes_Receiver_Impl
    */
 
   Receiver_exec_i::Receiver_exec_i (void)
-    : rate_ (0),
+    : ticker_ (0),
+      rate_ (0),
       get_data_ (false),
       read_data_ (false),
       raw_listen_ (false)
   {
+    ACE_NEW_THROW_EX (this->ticker_,
+                      read_action_Generator (*this),
+                      ::CORBA::NO_MEMORY ());
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)
@@ -356,7 +360,7 @@ namespace CIAO_Shapes_Receiver_Impl
     if (this->reactor ()->schedule_timer (
                 this->ticker_,
                 0,
-                ACE_Time_Value (0, usec),
+                ACE_Time_Value (1, usec),
                 ACE_Time_Value (0, usec)) == -1)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
