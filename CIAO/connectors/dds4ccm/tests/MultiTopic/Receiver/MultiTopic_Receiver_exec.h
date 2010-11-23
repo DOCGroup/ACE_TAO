@@ -93,35 +93,6 @@ namespace CIAO_Shapes_Receiver_Impl
   };
 
   /**
-   * Provider Executor Implementation Class: info_get_status_exec_i
-   */
-
-  class RECEIVER_EXEC_Export info_get_status_exec_i
-    : public virtual ::CCM_DDS::CCM_PortStatusListener,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    info_get_status_exec_i (
-      ::Shapes::CCM_Receiver_Context_ptr ctx);
-    virtual ~info_get_status_exec_i (void);
-
-    //@{
-    /** Operations and attributes from ::CCM_DDS::PortStatusListener. */
-
-    virtual
-    void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,
-    const ::DDS::RequestedDeadlineMissedStatus & status);
-
-    virtual
-    void on_sample_lost (::DDS::DataReader_ptr the_reader,
-    const ::DDS::SampleLostStatus & status);
-    //@}
-
-  private:
-    ::Shapes::CCM_Receiver_Context_var ciao_context_;
-  };
-
-  /**
    * Component Executor Implementation Class: Receiver_exec_i
    */
 
@@ -214,6 +185,13 @@ namespace CIAO_Shapes_Receiver_Impl
     ::Shapes::DDS_Typed::CCM_Listener_var ciao_info_out_sq_data_listener_;
     ::Shapes::DDS_Typed::CCM_Listener_var ciao_info_out_tr_data_listener_;
     ::Shapes::DDS_Typed::CCM_Listener_var ciao_info_out_cl_data_listener_;
+
+    ::CCM_DDS::CCM_PortStatusListener_var ciao_info_out_sq_status_;
+    ::CCM_DDS::CCM_PortStatusListener_var ciao_info_out_tr_status_;
+    ::CCM_DDS::CCM_PortStatusListener_var ciao_info_out_cl_status_;
+    ::CCM_DDS::CCM_PortStatusListener_var ciao_info_get_sq_status_;
+    ::CCM_DDS::CCM_PortStatusListener_var ciao_info_get_tr_status_;
+    ::CCM_DDS::CCM_PortStatusListener_var ciao_info_get_cl_status_;
 
      read_action_Generator * ticker_;
 
