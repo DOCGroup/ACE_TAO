@@ -3858,12 +3858,14 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                     ACE_OS_Thread_Adapter (func, args,
                                            (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
                                            ACE_OS_Object_Manager::seh_except_selector(),
-                                           ACE_OS_Object_Manager::seh_except_handler()),
+                                           ACE_OS_Object_Manager::seh_except_handler(),
+                                           flags),
                     -1);
 #else
   ACE_NEW_RETURN (thread_args,
                   ACE_OS_Thread_Adapter (func, args,
-                                         (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME),
+                                         (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
+                                         flags),
                   -1);
 
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */

@@ -1,3 +1,31 @@
+Tue Nov 23 23:20:07 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/os_include/os_pthread.h: Give definite values to THR_CANCEL_*
+          flags - using the PTHREAD_CANCEL_* values gives the THR_CANCEL_*
+          options overlapping bits making it impossible to distinguish them.
+
+        * ace/Base_Thread_Adapter.{h, cpp}:
+        * ace/OS_NS_Thread.cpp (thr_create):
+        * ace/OS_Thread_Adapter.{h, cpp}:
+        * ace/Thread_Adapter.{h, cpp}:
+        * ace/Thread_Manager.cpp (spawn):
+          Added a member in the thread adapters to carry the cancel flags
+          through to the spawned thread. In the spawned thread, check the
+          cancel-related flags and act on them if set. This enables proper
+          support for spawning threads with the THR_CANCEL_* flags as
+          documented.
+
+        * ace/OS_NS_Thread.{h inl} (thr_setcancelstate, thr_setcanceltype):
+          Map the THR_CANCEL_* values to PTHREAD_CANCEL_* values on both
+          sides of the pthread call. Makes this API portable across OSes
+          in case cancel support is ever added anywhere else.
+          Added comments for doxygen to pick up explaining this.
+
+        * tests/Thread_Attrs_Test.cpp: Added test cases for spawning threads
+          with various cancel settings.
+
+          Resolves Bugzilla #3932.
+
 Fri Nov 19 18:55:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * THANKS:
