@@ -165,12 +165,15 @@ be_visitor_servant_svh::visit_provides (be_provides *node)
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl
       << "void" << be_nl
-      << "setup_" << port_name << "_i (void);"
-      << be_uidt_nl << be_nl;
+      << "setup_" << port_name << "_i (void);";
 
-  os_ << "private:" << be_idt_nl
-      << "::" << obj_name << "_var" << be_nl
-      << "provide_" << port_name << "_;";
+  if (!be_global->gen_lwccm ())
+     {
+      os_ << be_uidt_nl << be_nl
+          << "private:" << be_idt_nl
+          << "::" << obj_name << "_var" << be_nl
+          << "provide_" << port_name << "_;";
+     }
 
   return 0;
 }
