@@ -15,6 +15,7 @@
 
 #include "adbc/Exception.h"
 #include "SQLite_export.h"
+#include "sqlite3.h"
 
 namespace ADBC
 {
