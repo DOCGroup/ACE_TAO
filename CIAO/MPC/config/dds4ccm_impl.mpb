@@ -11,7 +11,7 @@ feature(dds4ccm_splice) : dds4ccm_skel, dds4ccm_lem_stub, dds4ccm_logger {
   libs += CIAO_DDS4CCM_DDS_Impl
 }
 
-feature(dds4ccm_ndds) : dds4ccm_skel, dds4ccm_lem_stub, dds4ccm_logger, nddslib \
+feature(dds4ccm_ndds) : dds4ccm_skel, dds4ccm_lem_stub, dds4ccm_logger, nddslib, \
                         ndds_impl {
   after += CIAO_DDS4CCM_DDS_Impl
   libs += CIAO_DDS4CCM_DDS_Impl
