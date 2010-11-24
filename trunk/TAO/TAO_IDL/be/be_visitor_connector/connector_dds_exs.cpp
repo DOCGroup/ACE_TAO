@@ -71,7 +71,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
             }
           else
             {
-              os_ << dt_name;
+              os_ << dt_name << ",";
             }
 
           AST_Structure *s = AST_Structure::narrow_from_decl (d);
@@ -84,16 +84,13 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
                   s = AST_Structure::narrow_from_decl (td->primitive_base_type ());
                 }
             }
-          if (s)
+          if (s && s->size_type () == AST_Type::FIXED)
             {
-              if (s->size_type () == AST_Type::FIXED)
-                {
-                  os_ << be_nl << "true";
-                }
-              else
-                {
-                  os_ << be_nl << "false";
-                }
+              os_ << be_nl << "true";
+            }
+          else
+            {
+              os_ << be_nl << "false";
             }
           if (slot < this->t_args_->size ())
             {
