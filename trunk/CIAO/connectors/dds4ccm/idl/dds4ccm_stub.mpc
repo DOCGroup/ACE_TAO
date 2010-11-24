@@ -14,7 +14,9 @@ project (DDS4CCM_idl_gen) : install, dds4ccm, componentidldefaults {
   }
 
   IDL_Files {
+    idlflags -= -Gxhst -Gxhsk
     idlflags += -Sci -SS -Scc
+    dds4ccm_Entity.idl
     ccm_dds.idl
   }
 
