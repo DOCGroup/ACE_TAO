@@ -49,7 +49,7 @@ public:
 private:
   /// Generate application-specific instantiations of
   /// middleware templates containing traits constructs.
-  void gen_dds_traits (void);
+  void gen_dds_traits (AST_Decl *datatype);
   void gen_connector_traits (void);
 
   /// Common code triggered by provides and uses ports.

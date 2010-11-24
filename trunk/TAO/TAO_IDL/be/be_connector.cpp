@@ -2,6 +2,8 @@
 
 #include "be_connector.h"
 #include "be_visitor.h"
+#include "ast_module.h"
+#include "ast_template_module_inst.h"
 
 #include "utl_identifier.h"
 
@@ -89,16 +91,13 @@ be_connector::ami_connector (void)
 void
 be_connector::check_ancestors (void)
 {
-  /// Start from derived connector since we are no longer
-  /// (2010-05-05) putting derived DDS4CCM connector declarations
-  /// in application IDL.
   AST_Connector *base = this;
 
   while (base != 0)
     {
       const char *base_fname = base->full_name ();
 
-      if (ACE_OS::strcmp (base_fname, "CCM_DDS::DDS_TopicBase") == 0)
+      if (ACE_OS::strcmp (base_fname, "CCM_DDS::DDS_Base") == 0)
         {
           this->dds_connector_ = true;
           idl_global->dds_connector_seen_ = true;
@@ -109,6 +108,27 @@ be_connector::check_ancestors (void)
           this->ami_connector_ = true;
           idl_global->ami_connector_seen_ = true;
           break;
+        }
+      else
+        {
+          // If we have a templated module, enable it as dds_connector_
+          // for the moment
+          AST_Module *m =
+            AST_Module::narrow_from_scope (this->defined_in ());
+          AST_Template_Module_Inst *t_inst = 0;
+          while (t_inst == 0 && m != 0)
+            {
+              t_inst = m->from_inst ();
+              m = AST_Module::narrow_from_scope (m->defined_in ());
+            }
+          if (t_inst != 0 && t_inst->template_args () != 0)
+            {
+              if (t_inst->template_args ()->size () > 0)
+                {
+//                  this->dds_connector_ = true;
+//                  idl_global->dds_connector_seen_ = true;
+                }
+            }
         }
 
       base = base->base_connector ();

@@ -85,10 +85,10 @@ public:
   /// proxy implementation.
   virtual const char *full_remote_proxy_impl_name (void);
 
-  /// retrieve the name of the Directx  proxy implementation.
+  /// retrieve the name of the direct proxy implementation.
   virtual const char *direct_proxy_impl_name (void);
 
-  /// retrieve the fully qualified name of the Directx  proxy
+  /// retrieve the fully qualified name of the direct proxy
   /// implementation.
   virtual const char *full_direct_proxy_impl_name (void);
 
@@ -141,7 +141,7 @@ public:
   virtual void gen_def_ctors (TAO_OutStream* os);
 
   /// Generated the global hooks used for non-defined forward
-  /// declared interfaces, and the contructor from stub object.
+  /// declared interfaces, and the constructor from stub object.
   virtual void gen_stub_ctor (TAO_OutStream* os);
 
   /// Generate the declarations used by the template _var, _out
