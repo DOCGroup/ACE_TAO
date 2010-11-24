@@ -41,7 +41,8 @@ project(Single_Service_Common_stub) : ccm_stub {
 }
 
 project(Single_Service_Common_svnt) : ccm_svnt {
-  after += Single_Service_Common_idl_gen
+  after += Single_Service_Common_stub
+  libs += Single_Service_Common_stub
 
   libpaths += ../lib
   libout = ../lib

@@ -186,13 +186,35 @@
     <source/>
     <implementation xmi:idref="Shapes_ConnectorComponentImplementation" />
     <configProperty>
-      <name>topic_name</name>
+      <name>topic_name_sq</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string></string>
+          <string>Square</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name_tr</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Triangle</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name_cl</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Circle</string>
         </value>
       </value>
     </configProperty>
@@ -204,13 +226,35 @@
     <source/>
     <implementation xmi:idref="Shapes_ConnectorComponentImplementation" />
     <configProperty>
-      <name>topic_name</name>
+      <name>topic_name_sq</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string></string>
+          <string>Square</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name_tr</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Triangle</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name_cl</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Circle</string>
         </value>
       </value>
     </configProperty>
