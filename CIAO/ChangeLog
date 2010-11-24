@@ -1,3 +1,10 @@
+Wed Nov 24 12:00:21 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dds4ccm_impl.mpb:
+        * MPC/config/ndds_impl.mpb:
+        * connectors/dds4ccm/impl/dds4ccm_impl.mpc:
+          Resolved unresolved externals on Windows.
+
 Wed Nov 24 11:04:46 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Event_Connector_T.h:
