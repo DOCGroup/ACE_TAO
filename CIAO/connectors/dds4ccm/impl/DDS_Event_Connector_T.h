@@ -13,7 +13,7 @@
 #include "dds4ccm/impl/DDS_Write_T.h"
 #include "dds4ccm/impl/DDS_Listen_T.h"
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 class DDS_Event_Connector_T
   : public virtual DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>
 {
