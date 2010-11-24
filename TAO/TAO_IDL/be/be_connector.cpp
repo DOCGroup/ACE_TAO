@@ -125,8 +125,8 @@ be_connector::check_ancestors (void)
             {
               if (t_inst->template_args ()->size () > 0)
                 {
-//                  this->dds_connector_ = true;
-//                  idl_global->dds_connector_seen_ = true;
+                  this->dds_connector_ = true;
+                  idl_global->dds_connector_seen_ = true;
                 }
             }
         }

@@ -75,31 +75,34 @@ be_visitor_connector_dds_ex_base::is_dds_type (
 {
   bool result = false;
   AST_Connector* base = node->base_connector ();
-  while (base->base_connector () != 0)
+  if (base)
     {
-      base = base->base_connector ();
-    }
-  const char* lname = base->local_name ()->get_string ();
-  if (ACE_OS::strcmp (lname, "DDS_Base") == 0)
-    {
-      AST_Structure *s = AST_Structure::narrow_from_decl (d);
-      if (s == 0)
+      while (base->base_connector () != 0)
         {
-          AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
-
-          if (td != 0)
+          base = base->base_connector ();
+        }
+      const char* lname = base->local_name ()->get_string ();
+      if (ACE_OS::strcmp (lname, "DDS_Base") == 0)
+        {
+          AST_Structure *s = AST_Structure::narrow_from_decl (d);
+          if (s == 0)
             {
-              s = AST_Structure::narrow_from_decl (td->primitive_base_type ());
+              AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+
+              if (td != 0)
+                {
+                  s = AST_Structure::narrow_from_decl (td->primitive_base_type ());
+                }
+            }
+          if (s)
+            {
+              result = true;
             }
         }
-      if (s)
+      else
         {
-          result = true;
+          // result = idl_global->is_dcps_type (d->name ());
         }
-    }
-  else
-    {
-      // result = idl_global->is_dcps_type (d->name ());
     }
 
   return result;
