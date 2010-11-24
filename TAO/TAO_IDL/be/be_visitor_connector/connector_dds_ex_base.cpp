@@ -34,27 +34,19 @@ be_visitor_connector_dds_ex_base::begin (be_connector *node)
 {
   node_ = node;
 
+  this->process_template_args (node);
+
   AST_Connector *base = node->base_connector ();
 
-  if (base)
+  while (this->t_args_ == 0 && base != 0)
     {
       this->process_template_args (base);
+      base = base->base_connector ();
     }
 
-  /// If the previous call hasn't initialized our arg
-  /// list, it could be because we were processing
-  /// DDS_State or DDS_Event, whose base class,
-  /// DDS_TopicBase, is not in a template module.
-  /// To check this, we call again with the node itself,
-  /// and if we get an arg list this time, proceed.
   if (this->t_args_ == 0)
     {
-      this->process_template_args (node);
-
-      if (this->t_args_ == 0)
-        {
-          return false;
-        }
+      return false;
     }
 
   /// CIDL-generated namespace used 'CIDL_' + composition name.
@@ -114,6 +106,8 @@ be_visitor_connector_dds_ex_base::process_template_args (
 {
   AST_Module *m =
     AST_Module::narrow_from_scope (node->defined_in ());
+
+  this->t_inst_ = m->from_inst ();
 
   /// We assume the connector comes from the instantiation
   /// of a template module, and the regular module it's
