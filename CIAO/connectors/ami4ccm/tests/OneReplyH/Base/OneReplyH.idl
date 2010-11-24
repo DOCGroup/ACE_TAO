@@ -10,6 +10,16 @@
 
 module OneReplyH
 {
+
+  const short cmd_synch_foo_ok = 1;
+  const short cmd_synch_foo_nok = 2;
+  const short cmd_asynch_foo_ok = 3;
+  const short cmd_asynch_foo_nok = 4;
+  const short cmd_synch_bar_ok = 5;
+  const short cmd_synch_bar_nok = 6;
+  const short cmd_asynch_bar_ok = 7;
+  const short cmd_asynch_bar_nok = 8;
+
   exception InternalError
     {
       long id;

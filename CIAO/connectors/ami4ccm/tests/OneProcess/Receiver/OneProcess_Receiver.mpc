@@ -11,7 +11,6 @@ project(AMI_OneProcess_Base_Receiver_idl_gen) : componentidldefaults {
               -Wb,exec_export_macro=ONEPROCESS_RECEIVER_EXEC_Export \
               -Wb,exec_export_include=OneProcess_Receiver_exec_export.h \
               -Glem -I..
-
   IDL_Files {
     OneProcess_Receiver.idl
   }
