@@ -84,13 +84,13 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
                   s = AST_Structure::narrow_from_decl (td->primitive_base_type ());
                 }
             }
-          if (s && s->size_type () == AST_Type::FIXED)
+          if (s && s->size_type () == AST_Type::VARIABLE)
             {
-              os_ << be_nl << "true";
+              os_ << be_nl << "false";
             }
           else
             {
-              os_ << be_nl << "false";
+              os_ << be_nl << "true";
             }
           if (slot < this->t_args_->size ())
             {
