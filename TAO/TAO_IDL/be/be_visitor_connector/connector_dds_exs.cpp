@@ -40,55 +40,83 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
       return -1;
     }
 
-  os_ << be_nl
-      << this->node_->local_name () << "_exec_i::"
-      << this->node_->local_name () << "_exec_i (void)"
-      << be_idt_nl
-      << ": " << this->base_tname_ << "_Connector_T";
-
-  AST_Decl **datatype = 0;
-  int const status = this->t_args_->get (datatype, 0UL);
-
-  if (status != 0)
+  // If we have a connector within a templated module
+  if (this->t_args_->size () > 0)
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("be_visitor_connector_dds_exh::")
-                  ACE_TEXT ("gen_dds_traits - ")
-                  ACE_TEXT ("template arg not found\n ")));
+      os_ << be_nl
+          << this->node_->local_name () << "_exec_i::"
+          << this->node_->local_name () << "_exec_i (void)"
+          << be_idt_nl
+          << ": " << this->base_tname_ << "_Connector_T";
 
-      return -1;
+      os_ << " <" << be_idt << be_idt_nl;
+
+      os_ << "DDS_" << this->node_->local_name ()
+          << "_Traits," << be_nl;
+      size_t slot = 1UL;
+
+      for (FE_Utils::T_ARGLIST::CONST_ITERATOR i (*this->t_args_);
+          !i.done ();
+          i.advance (), ++slot)
+        {
+          AST_Decl **item = 0;
+          i.next (item);
+          AST_Decl *d = *item;
+
+          UTL_ScopedName *dt_name = d->name ();
+          if (this->is_dds_type (node, d))
+            {
+              os_ << dt_name
+                  << "_DDS_Traits,";
+            }
+          else
+            {
+              os_ << dt_name;
+            }
+
+          AST_Structure *s = AST_Structure::narrow_from_decl (d);
+          if (s == 0)
+            {
+              AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+
+              if (td != 0)
+                {
+                  s = AST_Structure::narrow_from_decl (td->primitive_base_type ());
+                }
+            }
+          if (s)
+            {
+              if (s->size_type () == AST_Type::FIXED)
+                {
+                  os_ << be_nl << "true";
+                }
+              else
+                {
+                  os_ << be_nl << "false";
+                }
+            }
+          if (slot < this->t_args_->size ())
+            {
+              os_ << "," << be_nl;
+            }
+        }
+
+      os_ << ">";
+
+      os_ << "()"
+          << be_uidt << be_uidt << be_uidt_nl
+          << "{" << be_nl
+          << "}";
+
+      os_ << be_nl_2
+          << this->node_->local_name () << "_exec_i::~"
+          << this->node_->local_name () << "_exec_i (void)" << be_nl
+          << "{" << be_nl
+          << "}";
+
+      this->gen_exec_entrypoint_defn ();
+
     }
-
-  AST_Type *ut = AST_Type::narrow_from_decl (*datatype);
-
-  /// Assumes parent connector exists and is either DDS_State
-  /// or DDS_Event, so we generate inheritance from the
-  /// corresponding template. May have to generalize this logic.
-  os_ << " <" << be_idt << be_idt_nl
-      << "DDS_" << this->node_->local_name () << "_Traits," << be_nl
-      << this->dds_traits_name_.c_str () << "," << be_nl;
-
-  if (ut->size_type () == AST_Type::FIXED)
-    {
-      os_ << "true>";
-    }
-  else
-    {
-      os_ << "false>";
-    }
-
-  os_ << "()"
-      << be_uidt << be_uidt << be_uidt_nl
-      << "{" << be_nl
-      << "}";
-
-  os_ << be_nl_2
-      << this->node_->local_name () << "_exec_i::~"
-      << this->node_->local_name () << "_exec_i (void)" << be_nl
-      << "{" << be_nl
-      << "}";
-
-  this->gen_exec_entrypoint_defn ();
 
   os_ << be_uidt_nl
       << "}";

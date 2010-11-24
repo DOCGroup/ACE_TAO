@@ -38,6 +38,8 @@ public:
 protected:
   bool begin (be_connector *node);
 
+  bool is_dds_type (be_connector *node, AST_Decl *d);
+
 protected:
   // Storage for the current template module instantiation we
   // are using, and its associated template args.

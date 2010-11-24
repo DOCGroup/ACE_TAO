@@ -1,3 +1,15 @@
+Wed Nov 24 11:01:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_connector.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
+        * TAO_IDL/be/be_visitor_structure/serializer_op_ch.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_visitor_connector/connector_dds_ex_base.h:
+        * TAO_IDL/be_include/be_visitor_connector/connector_dds_exh.h:
+          Extended support for non dds4ccm templated connectors
+
 Tue Nov 23 09:15:23 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:

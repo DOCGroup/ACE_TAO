@@ -13,6 +13,9 @@
  */
 //=============================================================================
 
+#include "ast_structure.h"
+#include "ast_typedef.h"
+
 be_visitor_connector_dds_ex_base::be_visitor_connector_dds_ex_base (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),
@@ -33,7 +36,10 @@ be_visitor_connector_dds_ex_base::begin (be_connector *node)
 
   AST_Connector *base = node->base_connector ();
 
-  this->process_template_args (base);
+  if (base)
+    {
+      this->process_template_args (base);
+    }
 
   /// If the previous call hasn't initialized our arg
   /// list, it could be because we were processing
@@ -61,6 +67,42 @@ be_visitor_connector_dds_ex_base::begin (be_connector *node)
   this->base_tname_ = node->local_name ();
 
   return true;
+}
+
+bool
+be_visitor_connector_dds_ex_base::is_dds_type (
+  be_connector *node, AST_Decl *d)
+{
+  bool result = false;
+  AST_Connector* base = node->base_connector ();
+  while (base->base_connector () != 0)
+    {
+      base = base->base_connector ();
+    }
+  const char* lname = base->local_name ()->get_string ();
+  if (ACE_OS::strcmp (lname, "DDS_Base") == 0)
+    {
+      AST_Structure *s = AST_Structure::narrow_from_decl (d);
+      if (s == 0)
+        {
+          AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+
+          if (td != 0)
+            {
+              s = AST_Structure::narrow_from_decl (td->primitive_base_type ());
+            }
+        }
+      if (s)
+        {
+          result = true;
+        }
+    }
+  else
+    {
+      // result = idl_global->is_dcps_type (d->name ());
+    }
+
+  return result;
 }
 
 void
