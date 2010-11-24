@@ -15,7 +15,7 @@ module Typed_NonTopic_Test_1<typename T,typename U,typename V,
        {
          void create(out T dat_T, out U dat_u, out V dat_v);
        };
-     connector Y
+     connector NT
        {
          uses TestControl foo;
        };
@@ -28,7 +28,7 @@ module Typed_NonTopic_Test_2<typename T,typename U,
        {
          void create(out T dat_T, out U dat_u);
        };
-     connector Y
+     connector NT
        {
          uses TestControl foo;
        };
