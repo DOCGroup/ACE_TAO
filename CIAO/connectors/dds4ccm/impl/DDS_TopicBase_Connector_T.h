@@ -37,22 +37,34 @@ public:
   virtual void ccm_remove (void);
 
 protected:
-  ::DDS::ReturnCode_t init_type (const char * typesupport_name);
-  void init_default_topic (const char * typesupport_name);
+  // Initialization
+  void register_type (const char * typesupport_name);
+  void init_topic (::DDS::Topic_ptr & topic,
+                   const char * topic_name,
+                   const char * typesupport_name);
   void init_publisher (void);
   void init_subscriber (void);
 
-  void activate_default_topic (ACE_Reactor* reactor);
+  //activation
+  void activate_topic (ACE_Reactor* reactor,
+                       ::DDS::Topic_ptr topic,
+                       ::DDS::TopicListener_ptr & listener);
   void activate_publisher (ACE_Reactor* reactor);
   void activate_subscriber (ACE_Reactor* reactor);
 
-  void passivate_default_topic (void);
+  //passivation
+  void passivate_topic (::DDS::Topic_ptr topic,
+                        ::DDS::TopicListener_ptr & listener);
+
   void passivate_publisher (void);
   void passivate_subscriber (void);
 
-  void remove_default_topic (void);
+  //removal
+  void remove_topic (::DDS::Topic_ptr & topic);
   void remove_publisher (void);
   void remove_subscriber (void);
+
+  void unregister_type (const char * typesupport_name);
 
   bool late_binding (void);
   void late_binding (bool late_binding);

@@ -30,6 +30,8 @@
 #include "ace/OS_NS_time.h"
 #include "ace/Reactor.h"
 
+#define TIME_OUT_SEC 1
+
 namespace CIAO_Shapes_Receiver_Impl
 {
 
@@ -46,7 +48,8 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   int
-  read_action_Generator::handle_timeout (const ACE_Time_Value &, const void *)
+  read_action_Generator::handle_timeout (const ACE_Time_Value &,
+                                         const void *)
   {
     this->pulse_callback_.get_one ();
     return 0;
@@ -219,7 +222,7 @@ namespace CIAO_Shapes_Receiver_Impl
                 this->ticker_,
                 0,
                 ACE_Time_Value (1, usec),
-                ACE_Time_Value (0, usec)) == -1)
+                ACE_Time_Value (2*TIME_OUT_SEC, usec)) == -1)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
                               ACE_TEXT ("Error scheduling timer")));
@@ -229,10 +232,8 @@ namespace CIAO_Shapes_Receiver_Impl
   void
   Receiver_exec_i::stop (void)
   {
-    ACE_DEBUG ((LM_DEBUG, "STOP_STOP_STOP_STOP_STOP_STOP_STOP_STOP_STOP_STOP_STOP_STOP_STOP_STOP\n"));
     this->reactor ()->cancel_timer (this->ticker_);
     delete this->ticker_;
-    ACE_DEBUG ((LM_DEBUG, "STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED\n"));
   }
   // Component attributes and port operations.
 
@@ -351,7 +352,7 @@ namespace CIAO_Shapes_Receiver_Impl
     lc_cl->mode (::CCM_DDS::ONE_BY_ONE);
 
     ::DDS::Duration_t to;
-    to.sec = 2;
+    to.sec = TIME_OUT_SEC;
     to.nanosec = 0;
 
     ::Shapes::DDS_Typed::Getter_var getter_sq =
@@ -385,7 +386,6 @@ namespace CIAO_Shapes_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    ACE_DEBUG ((LM_DEBUG, "REMOVE_REMOVE_REMOVE_REMOVE_REMOVE_REMOVE_REMOVE_REMOVE_REMOVE_REMOVE\n"));
     /* Your code here. */
   }
 

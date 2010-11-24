@@ -72,12 +72,14 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::configuration_complete (void)
 
   BaseConnector::configuration_complete ();
   const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
-  ::DDS::ReturnCode_t retcode = this->init_type (typesupport_name);
-  if (retcode != ::DDS::RETCODE_OK)
+
+  if (::CORBA::is_nil (this->topic_.in ()))
     {
-      throw ::CCM_DDS::InternalError (retcode, 0);
+      this->register_type (typesupport_name);
+      this->init_topic (this->topic_.inout () ,
+                        this->topic_name_.in (),
+                        typesupport_name);
     }
-  this->init_default_topic (typesupport_name);
   this->init_subscriber ();
   this->init_publisher ();
 }
@@ -88,7 +90,10 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_activate (ACE_Reactor* reacto
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_activate");
   BaseConnector::ccm_activate ();
-  this->activate_default_topic (reactor);
+
+  this->activate_topic (reactor,
+                        this->topic_.in (),
+                        this->topiclistener_.inout ());
   this->activate_subscriber (reactor);
   this->activate_publisher (reactor);
 }
@@ -98,7 +103,8 @@ void
 DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_passivate (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_passivate");
-  this->passivate_default_topic ();
+  this->passivate_topic (this->topic_.in (),
+                         this->topiclistener_.inout ());
   this->passivate_subscriber ();
   this->passivate_publisher ();
   BaseConnector::ccm_passivate ();
@@ -109,7 +115,10 @@ void
 DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove");
-  this->remove_default_topic ();
+  this->remove_topic (this->topic_.inout ());
+
+  const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
+  this->unregister_type (typesupport_name);
   this->remove_subscriber ();
   this->remove_publisher ();
   BaseConnector::ccm_remove ();
@@ -187,78 +196,82 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::key_fields (void)
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
-::DDS::ReturnCode_t
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::init_type (
+void
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::register_type (
   const char * typesupport_name)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::init_type");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::register_type");
 
   ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_OK;
-  if (::CORBA::is_nil (this->topic_.in ()))
-    {
 #if (CIAO_DDS4CCM_NDDS==1)
-      ::CIAO::NDDS::DDS_DomainParticipant_i *part =
-        dynamic_cast< CIAO::NDDS::DDS_DomainParticipant_i * > (
-          this->domain_participant_.in ());
-      if (!part)
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-              "DDS_TopicBase_Connector_T::init_default_topic - "
-              "Unable to cast the DomainParticipant proxy to its internal "
-              "representation.\n"));
-          throw ::CORBA::INTERNAL ();
-        }
-
-      ::CIAO::NDDS::DDS_TypeFactory_i * factory = new ::CIAO::NDDS::DDS_TypeFactory_T <DDS_TYPE> ();
-
-      ::CIAO::NDDS::DDS_TypeSupport_i::register_type (
-          typesupport_name, factory, this->domain_participant_.in ());
-
-      retcode = DDS_TYPE::type_support::register_type(
-        part->get_rti_entity (), typesupport_name);
-#endif
+  ::CIAO::NDDS::DDS_DomainParticipant_i *part =
+    dynamic_cast< CIAO::NDDS::DDS_DomainParticipant_i * > (
+      this->domain_participant_.in ());
+  if (!part)
+    {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+          "DDS_TopicBase_Connector_T::register_type - "
+          "Unable to cast the DomainParticipant proxy to its internal "
+          "representation.\n"));
+      throw ::CORBA::INTERNAL ();
     }
-  return retcode;
+
+  ::CIAO::NDDS::DDS_TypeFactory_i * factory = new ::CIAO::NDDS::DDS_TypeFactory_T <DDS_TYPE> ();
+
+  ::CIAO::NDDS::DDS_TypeSupport_i::register_type (
+      typesupport_name, factory, this->domain_participant_.in ());
+
+  retcode = DDS_TYPE::type_support::register_type(
+    part->get_rti_entity (), typesupport_name);
+#endif
+  if (retcode != ::DDS::RETCODE_OK)
+    {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+          "DDS_TopicBase_Connector_T::register_type - "
+          "Error registering type <%C>\n",
+          ::CIAO::DDS4CCM::translate_retcode (retcode)));
+      throw ::CCM_DDS::InternalError (retcode, 0);
+    }
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::init_default_topic (const char* typesupport_name)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::init_topic (
+  ::DDS::Topic_ptr & topic,
+  const char * topic_name,
+  const char * typesupport_name)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::init_default_topic");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::init_topic");
 
-  if (::CORBA::is_nil (this->topic_.in ()))
+  ::DDS::Topic_var tp;
+  if (this->library_name_ && this->profile_name_)
     {
-      if (this->library_name_ && this->profile_name_)
-        {
-          this->topic_ =
-            this->domain_participant_->create_topic_with_profile (
-              this->topic_name_.in (),
-              typesupport_name,
-              this->library_name_,
-              this->profile_name_,
-              ::DDS::TopicListener::_nil (),
-              0);
-        }
-      else
-        {
-          ::DDS::TopicQos tqos;
-          this->topic_ =
-            this->domain_participant_->create_topic (
-              this->topic_name_.in (),
-              typesupport_name,
-              tqos,
-              ::DDS::TopicListener::_nil (),
-              0);
-        }
-      if (::CORBA::is_nil (this->topic_.in ()))
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_TopicBase_Connector_T::init_default_topic - "
-                        "Error: Proxy returned a nil topic\n"));
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
-        }
+      tp = this->domain_participant_->create_topic_with_profile (
+                                              topic_name,
+                                              typesupport_name,
+                                              this->library_name_,
+                                              this->profile_name_,
+                                              ::DDS::TopicListener::_nil (),
+                                              0);
     }
+  else
+    {
+      ::DDS::TopicQos tqos;
+      tp = this->domain_participant_->create_topic (
+                                              topic_name,
+                                              typesupport_name,
+                                              tqos,
+                                              ::DDS::TopicListener::_nil (),
+                                              0);
+    }
+  if (::CORBA::is_nil (tp))
+    {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
+                    "DDS_TopicBase_Connector_T::init_topic - "
+                    "Error: Proxy returned a nil topic\n"));
+      throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+    }
+  topic = tp._retn ();
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
@@ -335,9 +348,12 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::init_publisher (void)
 
 template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::activate_default_topic (ACE_Reactor* reactor)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::activate_topic (
+  ACE_Reactor* reactor,
+  ::DDS::Topic_ptr topic,
+  ::DDS::TopicListener_ptr & listener)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::activate_default_topic");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::activate_topic");
 
   ::CCM_DDS::ConnectorStatusListener_var error_listener =
     this->context_->get_connection_error_listener ();
@@ -347,25 +363,25 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::activate_default_topic (ACE_React
 
   if (mask != 0)
     {
-      if (::CORBA::is_nil (this->topiclistener_.in ()))
+      if (::CORBA::is_nil (listener))
         {
-          ACE_NEW_THROW_EX (this->topiclistener_,
+          ACE_NEW_THROW_EX (listener,
                             ::CIAO::DDS4CCM::TopicListener (
                               error_listener.in (),
                               reactor),
                             ::CORBA::NO_MEMORY ());
-        }
 
-      ::DDS::ReturnCode_t const retcode = this->topic_->set_listener (
-                                  this->topiclistener_.in (), mask);
+          ::DDS::ReturnCode_t const retcode = topic->set_listener (listener,
+                                                                   mask);
 
-      if (retcode != ::DDS::RETCODE_OK)
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_TopicBase_Connector_T::activate_default_topic - "
-                        "Error while setting the listener on the topic - <%C>\n",
-                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
-          throw ::CORBA::INTERNAL ();
+          if (retcode != ::DDS::RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                            "DDS_TopicBase_Connector_T::activate_topic - "
+                            "Error while setting the listener on the topic - <%C>\n",
+                            ::CIAO::DDS4CCM::translate_retcode (retcode)));
+              throw ::CORBA::INTERNAL ();
+            }
         }
     }
 }
@@ -447,25 +463,24 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::activate_publisher (
 
 template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::passivate_default_topic (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::passivate_topic (
+  ::DDS::Topic_ptr topic,
+  ::DDS::TopicListener_ptr & listener)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::passivate_default_topic");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::passivate_topic");
 
-  if (!::CORBA::is_nil (this->topiclistener_.in ()))
+  ::DDS::ReturnCode_t const retcode =
+    topic->set_listener (::DDS::TopicListener::_nil (), 0);
+  if (retcode != ::DDS::RETCODE_OK)
     {
-      ::DDS::ReturnCode_t const retcode =
-        this->topic_->set_listener (::DDS::TopicListener::_nil (), 0);
-      if (retcode != ::DDS::RETCODE_OK)
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_TopicBase_Connector_T::passivate_default_topic - "
-                        "Error while setting the listener on the topic - <%C>\n",
-                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
-          throw ::CORBA::INTERNAL ();
-        }
-
-      this->topiclistener_ = ::DDS::TopicListener::_nil ();
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                    "DDS_TopicBase_Connector_T::passivate_topic - "
+                    "Error while setting the listener on the topic - <%C>\n",
+                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
+      throw ::CORBA::INTERNAL ();
     }
+
+  listener = ::DDS::TopicListener::_nil ();
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
@@ -517,25 +532,30 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::passivate_publisher (void)
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
-void
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::remove_default_topic (void)
+void DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::remove_topic (
+  ::DDS::Topic_ptr & topic)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::remove_default_topic");
 
   ::DDS::ReturnCode_t retcode =
-    this->domain_participant_->delete_topic (this->topic_.in ());
+    this->domain_participant_->delete_topic (topic);
   if (retcode != ::DDS::RETCODE_OK)
     {
       throw ::CCM_DDS::InternalError (retcode, 0);
     }
-  this->topic_ = ::DDS::Topic::_nil ();
+  topic = ::DDS::Topic::_nil ();
 
+}
+
+template <typename CCM_TYPE, typename DDS_TYPE>
+void
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::unregister_type (
+  const char * typesupport_name)
+{
 #if (CIAO_DDS4CCM_NDDS==1)
-  const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
   ::CIAO::NDDS::DDS_TypeFactory_i * factory =
     ::CIAO::NDDS::DDS_TypeSupport_i::unregister_type (
       typesupport_name, this->domain_participant_.in ());
-
   delete factory;
 #endif
 }
