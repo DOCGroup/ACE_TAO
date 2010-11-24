@@ -2,33 +2,33 @@
 
 #include "connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h"
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::DDS_MT_Event_Connector_T (void)
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::DDS_MT_Event_Connector_T (void)
 {
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::supplier_sq_traits::data_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_supplier_sq_data (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_supplier_sq_data (void)
 {
-  DDS4CCM_TRACE ("DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_supplier_sq_data");
+  DDS4CCM_TRACE ("DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_supplier_sq_data");
 
   typename CCM_TYPE::supplier_sq_traits::data_type::_var_type dw =
     this->sq_supplier_.get_data ();
   return CCM_TYPE::supplier_sq_traits::data_type::_duplicate (dw.in ());
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::supplier_sq_traits::dds_entity_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_supplier_sq_dds_entity (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_supplier_sq_dds_entity (void)
 {
 
   return CCM_TYPE::supplier_sq_traits::dds_entity_type::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::pull_consumer_sq_traits::fresh_data_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_pull_consumer_sq_fresh_data (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_sq_fresh_data (void)
 {
   typename CCM_TYPE::pull_consumer_sq_traits::fresh_data_type::_var_type fresh_data =
     this->pull_consumer_sq_.get_fresh_data ();
@@ -36,84 +36,84 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_pull_consumer_sq_fresh_
                                                               fresh_data.in ());
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::pull_consumer_sq_traits::data_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_pull_consumer_sq_data (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_sq_data (void)
 {
 
   return CCM_TYPE::pull_consumer_sq_traits::data_type::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::pull_consumer_sq_traits::dds_entity_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_pull_consumer_sq_dds_entity (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_sq_dds_entity (void)
 {
 
   return CCM_TYPE::pull_consumer_sq_traits::dds_entity_type::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 ::CCM_DDS::QueryFilter*
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::pull_consumer_sq_filter (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::pull_consumer_sq_filter (void)
 {
   return 0;
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::pull_consumer_sq_filter (const ::CCM_DDS::QueryFilter&)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::pull_consumer_sq_filter (const ::CCM_DDS::QueryFilter&)
 {
 
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 ::CCM_DDS::CCM_ContentFilterSetting_ptr
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_pull_consumer_sq_filter_config(void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_sq_filter_config(void)
 {
 
   return ::CCM_DDS::CCM_ContentFilterSetting::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 ::CCM_DDS::CCM_ContentFilterSetting*
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_push_consumer_sq_filter_config(void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_sq_filter_config(void)
 {
   return ::CCM_DDS::CCM_ContentFilterSetting::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 ::CCM_DDS::QueryFilter *
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::push_consumer_sq_filter (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::push_consumer_sq_filter (void)
 {
   return 0;
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::push_consumer_sq_filter (const ::CCM_DDS::QueryFilter &)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::push_consumer_sq_filter (const ::CCM_DDS::QueryFilter &)
 {
 
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::push_consumer_sq_traits::data_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_push_consumer_sq_data (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_sq_data (void)
 {
 
   return CCM_TYPE::push_consumer_sq_traits::data_type::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::push_consumer_sq_traits::data_control_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_push_consumer_sq_data_control (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_sq_data_control (void)
 {
 
   return CCM_TYPE::push_consumer_sq_traits::data_control_type::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::push_consumer_sq_traits::dds_entity_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_push_consumer_sq_dds_entity (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_sq_dds_entity (void)
 {
 
   return CCM_TYPE::push_consumer_sq_traits::dds_entity_type::_nil ();
@@ -121,28 +121,28 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_push_consumer_sq_dds_en
 
 //TRIANGEL
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::supplier_tr_traits::data_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_supplier_tr_data (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_supplier_tr_data (void)
 {
-  DDS4CCM_TRACE ("DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_supplier_tr_data");
+  DDS4CCM_TRACE ("DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_supplier_tr_data");
 
   typename CCM_TYPE::supplier_sq_traits::data_type::_var_type dw =
     this->tr_supplier_.get_data ();
   return CCM_TYPE::supplier_sq_traits::data_type::_duplicate (dw.in ());
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::supplier_tr_traits::dds_entity_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_supplier_tr_dds_entity (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_supplier_tr_dds_entity (void)
 {
 
   return CCM_TYPE::supplier_tr_traits::dds_entity_type::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::pull_consumer_tr_traits::fresh_data_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_pull_consumer_tr_fresh_data (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_tr_fresh_data (void)
 {
   typename CCM_TYPE::pull_consumer_tr_traits::fresh_data_type::_var_type fresh_data =
     this->pull_consumer_tr_.get_fresh_data ();
@@ -151,88 +151,88 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_pull_consumer_tr_fresh_
                                                               fresh_data.in ());
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::pull_consumer_tr_traits::data_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_pull_consumer_tr_data (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_tr_data (void)
 {
 
   return CCM_TYPE::pull_consumer_tr_traits::data_type::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::pull_consumer_tr_traits::dds_entity_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_pull_consumer_tr_dds_entity (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_tr_dds_entity (void)
 {
 
   return CCM_TYPE::pull_consumer_tr_traits::dds_entity_type::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 ::CCM_DDS::QueryFilter*
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::pull_consumer_tr_filter (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::pull_consumer_tr_filter (void)
 {
 
   return 0;
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::pull_consumer_tr_filter (const ::CCM_DDS::QueryFilter&)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::pull_consumer_tr_filter (const ::CCM_DDS::QueryFilter&)
 {
 
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 ::CCM_DDS::CCM_ContentFilterSetting*
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_pull_consumer_tr_filter_config(void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_tr_filter_config(void)
 {
 
   return ::CCM_DDS::CCM_ContentFilterSetting::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 ::CCM_DDS::CCM_ContentFilterSetting*
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_push_consumer_tr_filter_config(void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_tr_filter_config(void)
 {
 
   return ::CCM_DDS::CCM_ContentFilterSetting::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 ::CCM_DDS::QueryFilter *
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::push_consumer_tr_filter (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::push_consumer_tr_filter (void)
 {
 
   return 0;
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::push_consumer_tr_filter (
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::push_consumer_tr_filter (
   const ::CCM_DDS::QueryFilter &)
 {
 
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::push_consumer_tr_traits::data_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_push_consumer_tr_data (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_tr_data (void)
 {
 
   return CCM_TYPE::push_consumer_tr_traits::data_type::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::push_consumer_tr_traits::data_control_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_push_consumer_tr_data_control (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_tr_data_control (void)
 {
 
   return CCM_TYPE::push_consumer_tr_traits::data_control_type::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::push_consumer_tr_traits::dds_entity_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_push_consumer_tr_dds_entity (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_tr_dds_entity (void)
 {
 
   return CCM_TYPE::push_consumer_tr_traits::dds_entity_type::_nil ();
@@ -240,164 +240,164 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_push_consumer_tr_dds_en
 
 //CIRCLE
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::supplier_cl_traits::data_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_supplier_cl_data (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_supplier_cl_data (void)
 {
-  DDS4CCM_TRACE ("DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_supplier_cl_data");
+  DDS4CCM_TRACE ("DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_supplier_cl_data");
   typename CCM_TYPE::supplier_sq_traits::data_type::_var_type dw =
     this->cl_supplier_.get_data ();
   return CCM_TYPE::supplier_sq_traits::data_type::_duplicate (dw.in ());
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::supplier_cl_traits::dds_entity_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_supplier_cl_dds_entity (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_supplier_cl_dds_entity (void)
 {
 
   return CCM_TYPE::supplier_cl_traits::dds_entity_type::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::pull_consumer_cl_traits::fresh_data_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_pull_consumer_cl_fresh_data (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_cl_fresh_data (void)
 {
   return CCM_TYPE::pull_consumer_cl_traits::fresh_data_type::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::pull_consumer_cl_traits::data_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_pull_consumer_cl_data (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_cl_data (void)
 {
 
   return CCM_TYPE::pull_consumer_cl_traits::data_type::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::pull_consumer_cl_traits::dds_entity_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_pull_consumer_cl_dds_entity (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_cl_dds_entity (void)
 {
 
   return CCM_TYPE::pull_consumer_cl_traits::dds_entity_type::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 ::CCM_DDS::QueryFilter*
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::pull_consumer_cl_filter (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::pull_consumer_cl_filter (void)
 {
 
   return 0;
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::pull_consumer_cl_filter (const ::CCM_DDS::QueryFilter&)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::pull_consumer_cl_filter (const ::CCM_DDS::QueryFilter&)
 {
 
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 ::CCM_DDS::CCM_ContentFilterSetting*
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_pull_consumer_cl_filter_config(void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_cl_filter_config(void)
 {
 
   return ::CCM_DDS::CCM_ContentFilterSetting::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 ::CCM_DDS::CCM_ContentFilterSetting*
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_push_consumer_cl_filter_config(void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_cl_filter_config(void)
 {
 
   return ::CCM_DDS::CCM_ContentFilterSetting::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 ::CCM_DDS::QueryFilter *
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::push_consumer_cl_filter (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::push_consumer_cl_filter (void)
 {
   return 0;
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::push_consumer_cl_filter (const ::CCM_DDS::QueryFilter &)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::push_consumer_cl_filter (const ::CCM_DDS::QueryFilter &)
 {
 
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::push_consumer_cl_traits::data_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_push_consumer_cl_data (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_cl_data (void)
 {
   return CCM_TYPE::push_consumer_cl_traits::data_type::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::push_consumer_cl_traits::data_control_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_push_consumer_cl_data_control (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_cl_data_control (void)
 {
   typename CCM_TYPE::push_consumer_cl_traits::data_control_type::_var_type dlc =
     this->push_consumer_cl_.get_data_control ();
   return CCM_TYPE::push_consumer_cl_traits::data_control_type::_duplicate (dlc.in ());
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::push_consumer_cl_traits::dds_entity_type::_ptr_type
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_push_consumer_cl_dds_entity (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_cl_dds_entity (void)
 {
   return CCM_TYPE::push_consumer_cl_traits::dds_entity_type::_nil ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 char *
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::topic_name_sq (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::topic_name_sq (void)
 {
   return CORBA::string_dup (this->topic_name_sq_.in ());
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::topic_name_sq (
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::topic_name_sq (
   const char * topic_name_sq)
 {
   this->topic_name_sq_ = topic_name_sq;
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 char *
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::topic_name_tr (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::topic_name_tr (void)
 {
   return CORBA::string_dup (this->topic_name_tr_.in ());
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::topic_name_tr (
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::topic_name_tr (
   const char * topic_name_tr)
 {
   this->topic_name_tr_ = topic_name_tr;
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 char *
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::topic_name_cl (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::topic_name_cl (void)
 {
   return CORBA::string_dup (this->topic_name_cl_.in ());
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::topic_name_cl (
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::topic_name_cl (
   const char * topic_name_cl)
 {
   this->topic_name_cl_ = topic_name_cl;
 }
 
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 ::DDS::Topic_ptr
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::create_topic (
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::create_topic (
   const char * topic_name,
   const char * typesupport_name)
 {
@@ -424,9 +424,9 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::create_topic (
   return tp._retn ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::create_topics (
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::create_topics (
   const char * typesupport_name)
 {
   this->topic_sq_ = this->create_topic (this->topic_name_sq_.in (),
@@ -437,9 +437,9 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::create_topics (
                                         typesupport_name);
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::configuration_complete (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::configuration_complete (void)
 {
   // Init default domain (Base_Connector)
   this->init_default_domain ();
@@ -487,9 +487,9 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::configuration_complete (voi
                                       this->profile_name_);
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::activate_topic (
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::activate_topic (
   ::DDS::Topic_ptr topic,
   ::DDS::TopicListener_ptr topiclistener)
 {
@@ -524,9 +524,9 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::activate_topic (
     }
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::activate_topics (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::activate_topics (void)
 {
   this->activate_topic (this->topic_sq_.in (),
                         this->topiclistener_sq_.in ());
@@ -535,9 +535,9 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::activate_topics (void)
   this->activate_topic (this->topic_cl_.in (),
                         this->topiclistener_cl_.in ());
 }
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::ccm_activate (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_activate (void)
 {
   TopicBaseConnector::ccm_activate (0);
 
@@ -567,9 +567,9 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::ccm_activate (void)
                   0);
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::ccm_passivate (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_passivate (void)
 {
   this->sq_supplier_.passivate ();
   this->tr_supplier_.passivate ();
@@ -583,9 +583,9 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::ccm_passivate (void)
   TopicBaseConnector::ccm_passivate ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::ccm_remove (void)
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove (void)
 {
   this->sq_supplier_.remove (this->publisher_.in ());
   this->tr_supplier_.remove (this->publisher_.in ());

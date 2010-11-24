@@ -1,3 +1,27 @@
+Wed Nov 24 11:04:46 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.h:
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp:
+        * connectors/dds4ccm/tests/MultiTopic/Connector/ccm_dds_mt.idl:
+
+        * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector.idl:
+        * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector.mpc:
+
+        * connectors/dds4ccm/tests/MultipleTemp/Receiver/MultipleTemp_Receiver.mpc:
+
+        * connectors/dds4ccm/tests/MultipleTemp/Sender/MultipleTemp_Sender.mpc:
+
+        * connectors/dds4ccm/tests/PSAT/DDS_PSAT_Connector_T.h:
+
+        * tests/IDL_Test/NonTopic_Connector/nontopic_test.idl:
+
+        * tutorials/Quoter/Simple/README.html:
+
 Wed Nov 24 10:23:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Large_Deployment/Common/Single_Service_Common.mpc:
