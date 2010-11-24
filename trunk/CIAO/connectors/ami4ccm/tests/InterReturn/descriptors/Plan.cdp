@@ -16,7 +16,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_InterReturnT_AMI_Receiver_Impl</string>
+          <string>create_InterReturnT_Receiver_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -67,7 +67,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_InterReturnT_AMI_Sender_Impl</string>
+          <string>create_InterReturnT_Sender_Impl</string>
         </value>
       </value>
     </execParameter>
