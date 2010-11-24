@@ -27,6 +27,7 @@
 
 #include "InterOutArgsT_Sender_exec.h"
 #include "InterOutArgsTA_conn_i.h"
+#include "ace/OS_NS_unistd.h"
 
 namespace CIAO_InterOutArgsT_Sender_Impl
 {
