@@ -160,15 +160,18 @@ DDS_Subscriber_Base_T<CCM_TYPE, DDS_TYPE>::remove (
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<CCM_TYPE, DDS_TYPE>::remove");
 
   ::DDS::DataReader_var dr = this->dds_read_->get_dds_reader ();
-  ::DDS::ReturnCode_t const retval =
-    subscriber->delete_datareader (dr.in ());
-  if (retval != ::DDS::RETCODE_OK)
+  if (!::CORBA::is_nil (dr.in ()))
     {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                    ACE_TEXT ("DDS_Subscriber_Base_T::remove - ")
-                    ACE_TEXT ("Unable to delete DataReader: <%C>\n"),
-                    ::CIAO::DDS4CCM::translate_retcode (retval)));
-      throw ::CORBA::INTERNAL ();
+      ::DDS::ReturnCode_t const retval =
+        subscriber->delete_datareader (dr.in ());
+      if (retval != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        ACE_TEXT ("DDS_Subscriber_Base_T::remove - ")
+                        ACE_TEXT ("Unable to delete DataReader: <%C>\n"),
+                        ::CIAO::DDS4CCM::translate_retcode (retval)));
+          throw ::CORBA::INTERNAL ();
+        }
     }
   this->cft_setting_->delete_contentfilteredtopic (subscriber);
   this->dds_read_->_set_component (::CORBA::Object::_nil ());
