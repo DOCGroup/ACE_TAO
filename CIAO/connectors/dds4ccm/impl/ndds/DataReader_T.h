@@ -220,9 +220,6 @@ namespace CIAO
 
       typename DDS_TYPE::datareader_type * rti_entity (void);
 
-      ::CORBA::ULong get_nr_valid_samples (
-        const typename DDS_TYPE::sampleinfo_seq_type& sample_infos);
-
       void complete_read (
         typename DDS_TYPE::dds_seq_type & dds_data_values,
         typename DDS_TYPE::seq_type & data_values,
