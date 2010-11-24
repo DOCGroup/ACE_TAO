@@ -110,7 +110,7 @@ namespace CIAO_InterReturnT_Receiver_Impl
 
   ::InterReturnT::TestSeq *
   do_my_foo_exec_i::ret_seq (const char * /* in_str */,
-  ::CORBA::String_out answer,
+  ::CORBA::String_out /* answer */,
   ::CORBA::Long_out l_cmd)
   {
     l_cmd = 6;
