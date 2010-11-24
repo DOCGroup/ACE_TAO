@@ -1,3 +1,8 @@
+Wed Nov 24 13:15:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector.mpc:
+          Removed some dummy labels
+
 Wed Nov 24 09:06:35 UTC 2010  Marijke Hengstmengel  <mhengstmengelt@remedy.nl>
 
         * connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender_exec.cpp:
