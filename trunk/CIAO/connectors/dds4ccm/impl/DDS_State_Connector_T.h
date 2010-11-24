@@ -15,7 +15,7 @@
 #include "dds4ccm/impl/DDS_Update_T.h"
 #include "dds4ccm/impl/DDS_Read_T.h"
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE, bool FIXED_SEQ_TYPE>
 class DDS_State_Connector_T
   : public virtual DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>
 {
