@@ -18,8 +18,15 @@
 module CCM_DDS
 {
   module Duplex_Typed <typename T, sequence<T> TSeq, typename Y, sequence <Y> YSeq> {
+    alias Typed <T, TSeq> T_Typed;
+    alias Typed <Y, YSeq> Y_Typed;
     local interface Foo {
       void op ();
+    };
+    connector FooConnector : CCM_DDS::DDS_Base
+    {
+      mirrorport T_Typed::DDS_Listen t_listen;
+      mirrorport Y_Typed::DDS_Listen y_listen;
     };
   };
 };
