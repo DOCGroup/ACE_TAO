@@ -1,3 +1,38 @@
+Wed Nov 24 09:06:35 UTC 2010  Marijke Hengstmengel  <mhengstmengelt@remedy.nl>
+
+        * connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender_exec.h:
+        * connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender.mpc:
+        * connectors/ami4ccm/tests/OneProcess/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/OneProcess/Receiver/OneProcess_Receiver.mpc:
+        * connectors/ami4ccm/tests/OneProcess/Receiver/OneProcess_Receiver_exec.cpp:
+        * connectors/ami4ccm/tests/OneProcess/Receiver/OneProcess_Receiver_exec.h:
+        * connectors/ami4ccm/tests/OneProcess/Base/OneProcess.mpc:
+        * connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyH_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyH_Sender_exec.h:
+        * connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyH_Sender.mpc:
+        * connectors/ami4ccm/tests/NoReplyH/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/NoReplyH/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/NoReplyH/Receiver/NoReplyH_Receiver_exec.cpp:
+        * connectors/ami4ccm/tests/NoReplyH/Receiver/NoReplyH_Receiver_exec.h:
+        * connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyH_Sender_exec.h:
+        * connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyH_Sender.mpc:
+        * connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyH_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/OneReplyH/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/OneReplyH/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/OneReplyH/Receiver/OneReplyH_Receiver_exec.h:
+        * connectors/ami4ccm/tests/OneReplyH/Receiver/OneReplyH_Receiver_exec.cpp:
+        * connectors/ami4ccm/tests/OneReplyH/Base/OneReplyH.idl:
+        * connectors/ami4ccm/tests/OneProcess/Sender/OneProcessA_conn_i.cpp:
+        * connectors/ami4ccm/tests/OneProcess/Sender/OneProcessA_conn_i.h:
+        * connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyHA_conn_i.cpp:
+        * connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyHA_conn_i.h:
+        * connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyHA_conn_i.h:
+        * connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyHA_conn_i.cpp:
+        Generated executors with -Gex. Solve Valgrind warning.
+
+
+
 Wed Nov 24 12:51:05 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector.idl:
