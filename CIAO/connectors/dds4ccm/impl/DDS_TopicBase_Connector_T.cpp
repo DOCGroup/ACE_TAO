@@ -71,7 +71,13 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::configuration_complete (void)
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::configuration_complete");
 
   BaseConnector::configuration_complete ();
-  this->init_default_topic ();
+  const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
+  ::DDS::ReturnCode_t retcode = this->init_type (typesupport_name);
+  if (retcode != ::DDS::RETCODE_OK)
+    {
+      throw ::CCM_DDS::InternalError (retcode, 0);
+    }
+  this->init_default_topic (typesupport_name);
   this->init_subscriber ();
   this->init_publisher ();
 }
@@ -181,15 +187,15 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::key_fields (void)
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
-void
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::init_default_topic (void)
+::DDS::ReturnCode_t
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::init_type (
+  const char * typesupport_name)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::init_default_topic");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::init_type");
 
+  ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_OK;
   if (::CORBA::is_nil (this->topic_.in ()))
     {
-      const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
-      ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_OK;
 #if (CIAO_DDS4CCM_NDDS==1)
       ::CIAO::NDDS::DDS_DomainParticipant_i *part =
         dynamic_cast< CIAO::NDDS::DDS_DomainParticipant_i * > (
@@ -211,42 +217,46 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::init_default_topic (void)
       retcode = DDS_TYPE::type_support::register_type(
         part->get_rti_entity (), typesupport_name);
 #endif
+    }
+  return retcode;
+}
 
-      if (retcode == ::DDS::RETCODE_OK)
+template <typename CCM_TYPE, typename DDS_TYPE>
+void
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::init_default_topic (const char* typesupport_name)
+{
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::init_default_topic");
+
+  if (::CORBA::is_nil (this->topic_.in ()))
+    {
+      if (this->library_name_ && this->profile_name_)
         {
-          if (this->library_name_ && this->profile_name_)
-            {
-              this->topic_ =
-                this->domain_participant_->create_topic_with_profile (
-                  this->topic_name_.in (),
-                  typesupport_name,
-                  this->library_name_,
-                  this->profile_name_,
-                  ::DDS::TopicListener::_nil (),
-                  0);
-            }
-          else
-            {
-              ::DDS::TopicQos tqos;
-              this->topic_ =
-                this->domain_participant_->create_topic (
-                  this->topic_name_.in (),
-                  typesupport_name,
-                  tqos,
-                  ::DDS::TopicListener::_nil (),
-                  0);
-            }
-          if (::CORBA::is_nil (this->topic_.in ()))
-            {
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
-                            "DDS_TopicBase_Connector_T::init_default_topic - "
-                            "Error: Proxy returned a nil topic\n"));
-              throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
-            }
+          this->topic_ =
+            this->domain_participant_->create_topic_with_profile (
+              this->topic_name_.in (),
+              typesupport_name,
+              this->library_name_,
+              this->profile_name_,
+              ::DDS::TopicListener::_nil (),
+              0);
         }
       else
         {
-          throw ::CCM_DDS::InternalError (retcode, 0);
+          ::DDS::TopicQos tqos;
+          this->topic_ =
+            this->domain_participant_->create_topic (
+              this->topic_name_.in (),
+              typesupport_name,
+              tqos,
+              ::DDS::TopicListener::_nil (),
+              0);
+        }
+      if (::CORBA::is_nil (this->topic_.in ()))
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
+                        "DDS_TopicBase_Connector_T::init_default_topic - "
+                        "Error: Proxy returned a nil topic\n"));
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
     }
 }

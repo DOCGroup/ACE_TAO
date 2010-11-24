@@ -296,12 +296,12 @@ namespace CIAO_Shapes_Sender_Impl
     this->triangle_->x = ACE_OS::rand () % this->max_x_;
     this->triangle_->y = ACE_OS::rand () % this->max_y_;
     this->triangle_->shapesize = max_size_;
-    this->triangle_->color = CORBA::string_dup("GREEN");
+    this->triangle_->color = CORBA::string_dup("YELLOW");
 
     this->circle_->x = ACE_OS::rand () % this->max_x_;
     this->circle_->y = ACE_OS::rand () % this->max_y_;
     this->circle_->shapesize = max_size_;
-    this->circle_->color = CORBA::string_dup("GREEN");
+    this->circle_->color = CORBA::string_dup("BLUE");
 
     this->start ();
   }
