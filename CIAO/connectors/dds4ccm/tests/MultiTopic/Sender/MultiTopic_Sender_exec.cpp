@@ -257,13 +257,21 @@ namespace CIAO_Shapes_Sender_Impl
   void
   Sender_exec_i::stop (void)
   {
-    this->reactor ()->cancel_timer (this->ticker_);
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
-    delete this->ticker_;
-    delete this->square_;
-    delete this->triangle_;
-    delete this->circle_;
+    try
+      {
+        this->reactor ()->cancel_timer (this->ticker_);
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
+        delete this->ticker_;
+        delete this->square_;
+        delete this->triangle_;
+        delete this->circle_;
+      }
+    catch (...)
+      {
+        ACE_ERROR ((LM_ERROR, "Sender_exec_i::stop - "
+                  "ERROR: unexpected exception caught while shutting down.\n"));
+      }
   }
 
   // Operations from Components::SessionComponent.
@@ -309,7 +317,7 @@ namespace CIAO_Shapes_Sender_Impl
   void
   Sender_exec_i::ccm_passivate (void)
   {
-//     this->stop ();
+     this->stop ();
   }
 
   void

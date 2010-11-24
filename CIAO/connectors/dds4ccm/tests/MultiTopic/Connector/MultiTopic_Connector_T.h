@@ -9,7 +9,7 @@
 #include "connectors/dds4ccm/impl/DDS_Listen_T.h"
 #include "connectors/dds4ccm/impl/DataListenerControl_T.h"
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE, bool FIXED_SEQ_TYPE>
 class DDS_MT_Event_Connector_T
   : public virtual DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>
 {
@@ -240,13 +240,13 @@ private:
   ::DDS::TopicListener_var topiclistener_tr_;
   ::DDS::TopicListener_var topiclistener_cl_;
 
-  ::DDS::Topic_ptr create_topic (const char * topic_name,
-                                 const char * typesupport_name);
+  ACE_Reactor * reactor_;
+
   void create_topics (const char * typesupport_name);
 
   void activate_topics (void);
-  void activate_topic (::DDS::Topic_ptr topic,
-                       ::DDS::TopicListener_ptr topiclistener);
+  void passivate_topics (void);
+  void remove_topics (void);
 };
 
 #include "MultiTopic_Connector_T.cpp"
