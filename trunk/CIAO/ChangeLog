@@ -1,3 +1,9 @@
+Wed Nov 24 09:14:35 UTC 2010  Marijke Hengstmengel  <mhengstmengelt@remedy.nl>
+
+        * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.cpp:
+        Add include for sleep function.
+
 Wed Nov 24 09:06:35 UTC 2010  Marijke Hengstmengel  <mhengstmengelt@remedy.nl>
 
         * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.h:
