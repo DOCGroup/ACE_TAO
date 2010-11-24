@@ -34,16 +34,19 @@ module CCM_DDS_MT
       // DDS MT Connector
       // ------------------
       connector DDS_MT_Event : CCM_DDS::DDS_TopicBase {
-           mirrorport DDS_Typed::DDS_Write            supplier_sq;
-           mirrorport DDS_Typed::DDS_Get              pull_consumer_sq;
-           mirrorport DDS_Typed::DDS_Listen           push_consumer_sq;
-           mirrorport DDS_Typed::DDS_Write            supplier_tr;
-           mirrorport DDS_Typed::DDS_Get              pull_consumer_tr;
-           mirrorport DDS_Typed::DDS_Listen           push_consumer_tr;
-           mirrorport DDS_Typed::DDS_Write            supplier_cl;
-           mirrorport DDS_Typed::DDS_Get              pull_consumer_cl;
-           mirrorport DDS_Typed::DDS_Listen           push_consumer_cl;
+        mirrorport DDS_Typed::DDS_Write            supplier_sq;
+        mirrorport DDS_Typed::DDS_Get              pull_consumer_sq;
+        mirrorport DDS_Typed::DDS_Listen           push_consumer_sq;
+        mirrorport DDS_Typed::DDS_Write            supplier_tr;
+        mirrorport DDS_Typed::DDS_Get              pull_consumer_tr;
+        mirrorport DDS_Typed::DDS_Listen           push_consumer_tr;
+        mirrorport DDS_Typed::DDS_Write            supplier_cl;
+        mirrorport DDS_Typed::DDS_Get              pull_consumer_cl;
+        mirrorport DDS_Typed::DDS_Listen           push_consumer_cl;
 
+        attribute string topic_name_sq;
+        attribute string topic_name_tr;
+        attribute string topic_name_cl;
       };
    };
 };

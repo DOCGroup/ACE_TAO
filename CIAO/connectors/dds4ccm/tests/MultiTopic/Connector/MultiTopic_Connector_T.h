@@ -197,6 +197,16 @@ public:
   get_push_consumer_cl_dds_entity (void);
 
   /**
+    * Topic names.
+    **/
+  virtual char * topic_name_sq (void);
+  virtual void topic_name_sq (const char * topic_name_sq);
+  virtual char * topic_name_tr (void);
+  virtual void topic_name_tr (const char * topic_name_tr);
+  virtual char * topic_name_cl (void);
+  virtual void topic_name_cl (const char * topic_name_cl);
+
+  /**
     * Deployment methods.
     **/
   virtual void configuration_complete (void);
@@ -218,6 +228,25 @@ private:
   //connection to the receiver implementation
   typename CCM_TYPE::push_consumer_cl_traits::data_listener_type::_var_type dl_;
 
+  CORBA::String_var topic_name_sq_;
+  CORBA::String_var topic_name_tr_;
+  CORBA::String_var topic_name_cl_;
+
+  ::DDS::Topic_var topic_sq_;
+  ::DDS::Topic_var topic_tr_;
+  ::DDS::Topic_var topic_cl_;
+
+  ::DDS::TopicListener_var topiclistener_sq_;
+  ::DDS::TopicListener_var topiclistener_tr_;
+  ::DDS::TopicListener_var topiclistener_cl_;
+
+  ::DDS::Topic_ptr create_topic (const char * topic_name,
+                                 const char * typesupport_name);
+  void create_topics (const char * typesupport_name);
+
+  void activate_topics (void);
+  void activate_topic (::DDS::Topic_ptr topic,
+                       ::DDS::TopicListener_ptr topiclistener);
 };
 
 #include "MultiTopic_Connector_T.cpp"

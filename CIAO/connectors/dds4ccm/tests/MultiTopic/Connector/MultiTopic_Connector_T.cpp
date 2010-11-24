@@ -350,38 +350,138 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::get_push_consumer_cl_dds_en
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+char *
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::topic_name_sq (void)
+{
+  return CORBA::string_dup (this->topic_name_sq_.in ());
+}
+
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+void
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::topic_name_sq (
+  const char * topic_name_sq)
+{
+  this->topic_name_sq_ = topic_name_sq;
+}
+
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+char *
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::topic_name_tr (void)
+{
+  return CORBA::string_dup (this->topic_name_tr_.in ());
+}
+
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+void
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::topic_name_tr (
+  const char * topic_name_tr)
+{
+  this->topic_name_tr_ = topic_name_tr;
+}
+
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+char *
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::topic_name_cl (void)
+{
+  return CORBA::string_dup (this->topic_name_cl_.in ());
+}
+
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+void
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::topic_name_cl (
+  const char * topic_name_cl)
+{
+  this->topic_name_cl_ = topic_name_cl;
+}
+
+
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+::DDS::Topic_ptr
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::create_topic (
+  const char * topic_name,
+  const char * typesupport_name)
+{
+  ::DDS::Topic_var tp;
+  if (this->library_name_ && this->profile_name_)
+    {
+      tp  = this->domain_participant_->create_topic_with_profile (
+                                                    topic_name,
+                                                    typesupport_name,
+                                                    this->library_name_,
+                                                    this->profile_name_,
+                                                    ::DDS::TopicListener::_nil (),
+                                                    0);
+    }
+  else
+    {
+      ::DDS::TopicQos tqos;
+      tp = this->domain_participant_->create_topic (topic_name,
+                                                    typesupport_name,
+                                                    tqos,
+                                                    ::DDS::TopicListener::_nil (),
+                                                    0);
+    }
+  return tp._retn ();
+}
+
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+void
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::create_topics (
+  const char * typesupport_name)
+{
+  this->topic_sq_ = this->create_topic (this->topic_name_sq_.in (),
+                                        typesupport_name);
+  this->topic_tr_ = this->create_topic (this->topic_name_tr_.in (),
+                                        typesupport_name);
+  this->topic_cl_ = this->create_topic (this->topic_name_cl_.in (),
+                                        typesupport_name);
+}
+
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
 void
 DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::configuration_complete (void)
 {
-  TopicBaseConnector::configuration_complete ();
+  // Init default domain (Base_Connector)
+  this->init_default_domain ();
+
+  // Init type (TopicBase_Connector)
+  const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
+  this->init_type (typesupport_name);
+
+  // Create the topics needed (this class)
+  this->create_topics (typesupport_name);
+
+  // Init the subscriber and publisher (TopicBase_Connector)
+  this->init_subscriber ();
+  this->init_publisher ();
 
   this->sq_supplier_.configuration_complete (
-                                      this->topic_.in (),
+                                      this->topic_sq_.in (),
                                       this->publisher_.in (),
                                       this->library_name_,
                                       this->profile_name_);
   this->tr_supplier_.configuration_complete (
-                                      this->topic_.in (),
+                                      this->topic_tr_.in (),
                                       this->publisher_.in (),
                                       this->library_name_,
                                       this->profile_name_);
   this->cl_supplier_.configuration_complete (
-                                      this->topic_.in (),
+                                      this->topic_cl_.in (),
                                       this->publisher_.in (),
                                       this->library_name_,
                                       this->profile_name_);
   this->pull_consumer_sq_.configuration_complete (
-                                      this->topic_.in (),
+                                      this->topic_sq_.in (),
                                       this->subscriber_.in (),
                                       this->library_name_,
                                       this->profile_name_);
   this->pull_consumer_tr_.configuration_complete (
-                                      this->topic_.in (),
+                                      this->topic_tr_.in (),
                                       this->subscriber_.in (),
                                       this->library_name_,
                                       this->profile_name_);
   this->push_consumer_cl_.configuration_complete (
-                                      this->topic_.in (),
+                                      this->topic_cl_.in (),
                                       this->subscriber_.in (),
                                       this->library_name_,
                                       this->profile_name_);
@@ -389,9 +489,59 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::configuration_complete (voi
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
 void
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::activate_topic (
+  ::DDS::Topic_ptr topic,
+  ::DDS::TopicListener_ptr topiclistener)
+{
+  ::CCM_DDS::ConnectorStatusListener_var error_listener =
+    this->context_->get_connection_error_listener ();
+
+  ::DDS::StatusMask const mask =
+    ::CIAO::DDS4CCM::TopicListener::get_mask (error_listener.in ());
+
+  if (mask != 0)
+    {
+      if (::CORBA::is_nil (topiclistener))
+        {
+          ACE_NEW_THROW_EX (topiclistener,
+                            ::CIAO::DDS4CCM::TopicListener (
+                              error_listener.in (),
+                              0),
+                            ::CORBA::NO_MEMORY ());
+        }
+
+      ::DDS::ReturnCode_t const retcode = topic->set_listener (topiclistener,
+                                                               mask);
+
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DDS_MT_Event_Connector_T::activate_topic - "
+                        "Error while setting the listener on the topic - <%C>\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CORBA::INTERNAL ();
+        }
+    }
+}
+
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+void
+DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::activate_topics (void)
+{
+  this->activate_topic (this->topic_sq_.in (),
+                        this->topiclistener_sq_.in ());
+  this->activate_topic (this->topic_tr_.in (),
+                        this->topiclistener_tr_.in ());
+  this->activate_topic (this->topic_cl_.in (),
+                        this->topiclistener_cl_.in ());
+}
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+void
 DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::ccm_activate (void)
 {
   TopicBaseConnector::ccm_activate (0);
+
+  this->activate_topics ();
 
   this->sq_supplier_.activate ();
   this->tr_supplier_.activate ();

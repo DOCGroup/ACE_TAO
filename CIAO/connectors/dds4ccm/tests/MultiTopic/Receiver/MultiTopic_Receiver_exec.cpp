@@ -72,8 +72,8 @@ namespace CIAO_Shapes_Receiver_Impl
   info_out_data_listener_exec_i::on_one_data (const ::ShapeType & datum,
   const ::CCM_DDS::ReadInfo & /* info */)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ShapeType_Listener: ")
-            ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<CIRCLE Listener> : ")
+            ACE_TEXT ("received CIRCLE for <%C> at %u:%u:%u\n"),
             datum.color.in (),
             datum.x,
             datum.y,
@@ -122,13 +122,13 @@ namespace CIAO_Shapes_Receiver_Impl
               {
                 time_t tim = readinfo->source_timestamp.sec;
                 tm * time = ACE_OS::localtime(&tim);
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ReadInfo square-> ")
+                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<GET_ONE - SQUARE> ReadInfo -> ")
                                       ACE_TEXT ("date = %02d:%02d:%02d.%d\n"),
                                       time->tm_hour,
                                       time->tm_min,
                                       time->tm_sec,
                                       readinfo->source_timestamp.nanosec));
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ShapeType square : ")
+                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<GET_ONE - SQUARE> : ")
                                       ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
                                       shape_info->color.in (),
                                       shape_info->x,
@@ -137,14 +137,14 @@ namespace CIAO_Shapes_Receiver_Impl
               }
             else
               {
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE square No data available for <%C>\n"),
+                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<GET_ONE - SQUARE> No data available for <%C>\n"),
                          shape_info->color.in ()));
               }
           }
         else
           {
             ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_one - "
-                      "ERROR: Getter for Square seems to be nil\n"));
+                      "ERROR: Getter for <SQUARE> seems to be nil\n"));
           }
 
         ::Shapes::DDS_Typed::Getter_var getter_tr =
@@ -155,13 +155,13 @@ namespace CIAO_Shapes_Receiver_Impl
               {
                 time_t tim = readinfo->source_timestamp.sec;
                 tm * time = ACE_OS::localtime(&tim);
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ReadInfo triangle-> ")
+                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<GET_ONE - TRIANGLE> ReadInfo -> ")
                                       ACE_TEXT ("date = %02d:%02d:%02d.%d\n"),
                                       time->tm_hour,
                                       time->tm_min,
                                       time->tm_sec,
                                       readinfo->source_timestamp.nanosec));
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ShapeType triangle: ")
+                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<GET_ONE - TRIANGLE> : ")
                                       ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
                                       shape_info->color.in (),
                                       shape_info->x,
@@ -170,14 +170,14 @@ namespace CIAO_Shapes_Receiver_Impl
               }
             else
               {
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE triangle No data available for <%C>\n"),
+                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<GET_ONE - TRIANGLE> : No data available for <%C>\n"),
                             shape_info->color.in ()));
               }
           }
         else
           {
             ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_one - "
-                      "ERROR: Getter for Triangle seems to be nil\n"));
+                      "ERROR: Getter for TRIANGLE seems to be nil\n"));
           }
         //Circle is retrieved by the listener functionality
       }
@@ -229,8 +229,10 @@ namespace CIAO_Shapes_Receiver_Impl
   void
   Receiver_exec_i::stop (void)
   {
+    ACE_DEBUG ((LM_DEBUG, "STOP_STOP_STOP_STOP_STOP_STOP_STOP_STOP_STOP_STOP_STOP_STOP_STOP_STOP\n"));
     this->reactor ()->cancel_timer (this->ticker_);
     delete this->ticker_;
+    ACE_DEBUG ((LM_DEBUG, "STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED_STOPPED\n"));
   }
   // Component attributes and port operations.
 
@@ -348,6 +350,29 @@ namespace CIAO_Shapes_Receiver_Impl
       }
     lc_cl->mode (::CCM_DDS::ONE_BY_ONE);
 
+    ::DDS::Duration_t to;
+    to.sec = 2;
+    to.nanosec = 0;
+
+    ::Shapes::DDS_Typed::Getter_var getter_sq =
+      this-> ciao_context_->get_connection_info_get_sq_fresh_data ();
+    if (CORBA::is_nil (getter_sq.in ()))
+      {
+        ACE_ERROR ((LM_INFO,
+            ACE_TEXT ("Error: Getter of SQUARE seems to be nil!\n")));
+        throw ::CORBA::INTERNAL ();
+      }
+    getter_sq->time_out (to);
+
+    ::Shapes::DDS_Typed::Getter_var getter_tr =
+      this-> ciao_context_->get_connection_info_get_tr_fresh_data ();
+    if (CORBA::is_nil (getter_tr.in ()))
+      {
+        ACE_ERROR ((LM_INFO,
+            ACE_TEXT ("Error: Getter of TRIANGLE seems to be nil!\n")));
+        throw ::CORBA::INTERNAL ();
+      }
+    getter_tr->time_out (to);
     this->start ();
   }
 
@@ -360,6 +385,7 @@ namespace CIAO_Shapes_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
+    ACE_DEBUG ((LM_DEBUG, "REMOVE_REMOVE_REMOVE_REMOVE_REMOVE_REMOVE_REMOVE_REMOVE_REMOVE_REMOVE\n"));
     /* Your code here. */
   }
 

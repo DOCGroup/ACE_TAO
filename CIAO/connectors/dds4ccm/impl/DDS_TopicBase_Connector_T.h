@@ -37,7 +37,8 @@ public:
   virtual void ccm_remove (void);
 
 protected:
-  void init_default_topic (void);
+  ::DDS::ReturnCode_t init_type (const char * typesupport_name);
+  void init_default_topic (const char * typesupport_name);
   void init_publisher (void);
   void init_subscriber (void);
 
