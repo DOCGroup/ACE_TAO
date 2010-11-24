@@ -36,7 +36,7 @@ be_visitor_connector_dds_ex_base::begin (be_connector *node)
 
   this->process_template_args (node);
 
-  AST_Connector *base = node->base_connector ();
+  AST_Connector *base = node;
 
   while (this->t_args_ == 0 && base != 0)
     {
