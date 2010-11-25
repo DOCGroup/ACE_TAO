@@ -1,5 +1,5 @@
 // $Id$
-project(NT_Base_idl_gen) : componentidldefaults {
+project(NT_Base_idl_gen) : componentidldefaults, anytypecode {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=NONTOPIC_BASE_STUB_Export \
               -Wb,stub_export_include=NonTopic_Base_stub_export.h \
@@ -35,7 +35,7 @@ project(NT_Base_stub) : ccm_stub   {
   }
 
 }
-project(NT_test_idl_gen) : componentidldefaults {
+project(NT_test_idl_gen) : componentidldefaults, anytypecode {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=NONTOPIC_TEST_STUB_Export \
               -Wb,stub_export_include=nontopic_test_stub_export.h \
@@ -45,10 +45,9 @@ project(NT_test_idl_gen) : componentidldefaults {
   IDL_Files {
     nontopic_test.idl
   }
-
 }
 
-project(NT_Test_stub) : ccm_stub   {
+project(NT_Test_stub) : ccm_stub {
   after += NT_test_idl_gen 
   libs  += 
   sharedname = NT_Test_stub
@@ -71,7 +70,6 @@ project(NT_Test_stub) : ccm_stub   {
   }
 
 }
-
 
 project(NT_Connector_idl_gen) : connectoridldefaults, anytypecode {
   custom_only = 1
@@ -105,7 +103,6 @@ project(NT_Connector_lem_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-//project(NT_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
 project(NT_Connector_lem_stub) : ccm_svnt {
   after += NT_Connector_lem_gen NT_Connector_stub NT_Base_idl_gen NT_Test_stub NT_Base_stub
   libs  += NonTopic_Connector_stub NT_Base_stub NT_Test_stub
@@ -131,6 +128,7 @@ project(NT_Connector_lem_stub) : ccm_svnt {
     NonTopic_ConnectorEC.inl
   }
 }
+
 project(NT_Connector_stub) : ccm_stub {
   after += NT_Connector_lem_gen
   libs  += 
@@ -178,12 +176,11 @@ project(NT_Connector_skel) : ciao_executor {
     NonTopic_ConnectorS.inl
   }
 }
-//project(NT_Connector_exec) : ciao_executor, dds4ccm_impl {
+
 project(NT_Connector_exec) : ciao_executor {
   after   += NT_Connector_stub NT_Connector_lem_stub NT_Base_idl_gen NT_Test_stub NT_Base_stub
   sharedname = NT_Connector_exec
   libs += NonTopic_Connector_stub NonTopic_Connector_lem_stub NT_Base_stub NT_Test_stub
-  // DDS_KeyedWriterBase_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -207,8 +204,6 @@ project(NT_Connector_exec) : ciao_executor {
   }
 }
 
-
-//project(NT_Connector_svnt) : ciao_servant, dds4ccm_impl {
 project(NT_Connector_svnt) : ciao_servant {
   after      += NT_Connector_exec NT_Connector_stub NT_Connector_lem_stub
   sharedname  = NT_Connector_svnt
@@ -239,4 +234,3 @@ project(NT_Connector_svnt) : ciao_servant {
     NonTopic_ConnectorS.inl
   }
 }
-  
