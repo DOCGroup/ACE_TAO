@@ -11,9 +11,10 @@
 #include "dds4ccm/impl/DDS_Subscriber_Base_T.h"
 #include "dds4ccm/impl/Getter_T.h"
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED>
+template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE,
+          typename SEQ_VALUE_TYPE, bool FIXED>
 class DDS_Get_T
-  : public DDS_Subscriber_Base_T<CCM_TYPE, DDS_TYPE>
+  : public DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>
 {
 public:
   DDS_Get_T (void);
@@ -39,13 +40,14 @@ public:
     ::DDS::Subscriber_ptr subscriber);
 
 private:
-  typedef DDS_Subscriber_Base_T<CCM_TYPE, DDS_TYPE>
-    DDSSubscriberBase_type;
+  typedef DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>
+    SubscriberBase_type;
+
   typedef ::CIAO::DDS4CCM::Getter_T<
       typename CCM_TYPE::fresh_data_type,
-      typename DDS_TYPE::typed_reader_type,
-      typename DDS_TYPE::value_type,
-      typename DDS_TYPE::seq_type,
+      TYPED_DDS_READER ,
+      VALUE_TYPE,
+      SEQ_VALUE_TYPE,
       FIXED>
     Getter_type;
 

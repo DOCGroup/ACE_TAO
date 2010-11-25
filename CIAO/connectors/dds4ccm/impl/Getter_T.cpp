@@ -7,23 +7,23 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename GETTER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
-    Getter_Base_T<GETTER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::Getter_Base_T (void)
+    template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    Getter_Base_T<GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::Getter_Base_T (void)
       : time_out_ (),
         max_delivered_data_ (0)
     {
       DDS4CCM_TRACE ("Getter_Base_T::Getter_Base_T");
     }
 
-    template <typename GETTER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
-    Getter_Base_T<GETTER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::~Getter_Base_T (void)
+    template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    Getter_Base_T<GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::~Getter_Base_T (void)
     {
       DDS4CCM_TRACE ("Getter_Base_T::~Getter_Base_T");
     }
 
-    template <typename GETTER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
-    typename DDS_READER_TYPE::_ptr_type
-    Getter_Base_T<GETTER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::dds_reader (void)
+    template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    typename TYPED_DDS_READER::_ptr_type
+    Getter_Base_T<GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::dds_reader (void)
     {
       if (this->dds_reader_)
         {
@@ -38,9 +38,9 @@ namespace CIAO
         }
     }
 
-    template <typename GETTER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     ::DDS::ReturnCode_t
-    Getter_Base_T<GETTER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::get (
+    Getter_Base_T<GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::get (
       SEQ_VALUE_TYPE & data,
       ::DDS::SampleInfoSeq & sample_info,
       const ::CORBA::Long & max_samples)
@@ -73,9 +73,9 @@ namespace CIAO
         }
     }
 
-    template <typename GETTER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     ::DDS::ReturnCode_t
-    Getter_Base_T<GETTER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::get (
+    Getter_Base_T<GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::get (
       SEQ_VALUE_TYPE & data,
       ::DDS::SampleInfoSeq & sample_info,
       const ::CORBA::Long & max_samples,
@@ -93,9 +93,9 @@ namespace CIAO
       return ::DDS::RETCODE_ERROR;
     }
 
-    template <typename GETTER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     ::DDS::ReturnCode_t
-    Getter_Base_T<GETTER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::get (
+    Getter_Base_T<GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::get (
       SEQ_VALUE_TYPE & data,
       ::DDS::SampleInfoSeq & sample_info,
       const ::CORBA::Long & max_samples,
@@ -113,9 +113,9 @@ namespace CIAO
       return DDS_RETCODE_ERROR;
     }
 
-    template <typename GETTER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     bool
-    Getter_Base_T<GETTER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::get_many (
+    Getter_Base_T<GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::get_many (
       SEQ_VALUE_TYPE& instances,
       ::CCM_DDS::ReadInfoSeq& infos)
     {
@@ -211,62 +211,62 @@ namespace CIAO
       return true;
     }
 
-    template <typename GETTER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     ::DDS::Duration_t
-    Getter_Base_T<GETTER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::time_out (void)
+    Getter_Base_T<GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::time_out (void)
     {
       DDS4CCM_TRACE ("Getter_Base_T::time_out");
 
       return this->time_out_;
     }
 
-    template <typename GETTER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Getter_Base_T<GETTER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::time_out (
+    Getter_Base_T<GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::time_out (
       const ::DDS::Duration_t & time_out)
     {
       this->time_out_ = time_out;
     }
 
-    template <typename GETTER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     ::CCM_DDS::DataNumber_t
-    Getter_Base_T<GETTER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::max_delivered_data (void)
+    Getter_Base_T<GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::max_delivered_data (void)
     {
       return this->max_delivered_data_;
     }
 
-    template <typename GETTER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Getter_Base_T<GETTER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::max_delivered_data (
+    Getter_Base_T<GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::max_delivered_data (
       ::CCM_DDS::DataNumber_t max_delivered_data)
     {
       this->max_delivered_data_ = max_delivered_data;
     }
 
-    template <typename GETTER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Getter_Base_T<GETTER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::set_dds_reader (
+    Getter_Base_T<GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::set_dds_reader (
       ::DDS::DataReader_ptr dr,
       ::CIAO::DDS4CCM::ConditionManager * condition_manager)
     {
       DDS4CCM_TRACE ("Getter_Base_T::set_dds_reader");
 
-      this->dds_reader_ = DDS_READER_TYPE::_narrow (dr);
+      this->dds_reader_ = TYPED_DDS_READER::_narrow (dr);
       this->condition_manager_ = condition_manager;
       this->condition_manager_->set_dds_entity (dr);
       this->condition_manager_->init_readcondition ();
     }
 
-    template <typename GETTER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     ::DDS::DataReader_ptr
-    Getter_Base_T<GETTER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::get_dds_reader (void)
+    Getter_Base_T<GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::get_dds_reader (void)
     {
       return ::DDS::DataReader::_duplicate (this->dds_reader_.in ());
     }
 
-    template <typename GETTER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     bool
-    Getter_T<GETTER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE, true>::get_one (
+    Getter_T<GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE, true>::get_one (
       typename VALUE_TYPE::_out_type an_instance,
       ::CCM_DDS::ReadInfo_out info)
     {
@@ -349,9 +349,9 @@ namespace CIAO
       return true;
     }
 
-    template <typename GETTER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     bool
-    Getter_T<GETTER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE, false>::get_one (
+    Getter_T<GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE, false>::get_one (
       typename VALUE_TYPE::_out_type an_instance,
       ::CCM_DDS::ReadInfo_out info)
     {

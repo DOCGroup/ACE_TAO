@@ -14,9 +14,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 class DDS_Listen_T
-  : public DDS_Subscriber_Base_T<CCM_TYPE, DDS_TYPE>
+  : public DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>
 {
 public:
   DDS_Listen_T (void);
@@ -40,12 +40,12 @@ public:
   void remove (::DDS::Subscriber_ptr subscriber);
 
 private:
-  typedef ::CIAO::DDS4CCM::DataReaderListener_T<CCM_TYPE, DDS_TYPE>
+  typedef ::CIAO::DDS4CCM::DataReaderListener_T<CCM_TYPE, TYPED_DDS_READER, SEQ_VALUE_TYPE>
     DataReaderListener_type;
   typedef CCM_DDS_DataListenerControl_T< ::CCM_DDS::CCM_DataListenerControl>
     DataListenerControl_type;
-  typedef DDS_Subscriber_Base_T<CCM_TYPE, DDS_TYPE>
-    DDSSubscriberBase_type;
+  typedef DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>
+    SubscriberBase_type;
 
   /**
    * DDS_Listen
