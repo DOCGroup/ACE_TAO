@@ -400,7 +400,8 @@ void
 DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::create_topics (
   const char * typesupport_name)
 {
-   this->init_topic (this->topic_sq_.inout (),
+   this->init_topic (this->domain_participant_.in (),
+                     this->topic_sq_.inout (),
                      this->topic_name_sq_.in (),
                      typesupport_name);
    if (::CORBA::is_nil (this->topic_sq_.in ()))
@@ -409,7 +410,8 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::c
                   "Error creating topic for Square\n"));
        throw ::CORBA::INTERNAL ();
      }
-   this->init_topic (this->topic_tr_.inout (),
+   this->init_topic (this->domain_participant_.in (),
+                     this->topic_tr_.inout (),
                      this->topic_name_tr_.in (),
                      typesupport_name);
    if (::CORBA::is_nil (this->topic_tr_.in ()))
@@ -418,7 +420,8 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::c
                   "Error creating topic for Triangle\n"));
        throw ::CORBA::INTERNAL ();
      }
-   this->init_topic (this->topic_cl_.inout (),
+   this->init_topic (this->domain_participant_.in (),
+                     this->topic_cl_.inout (),
                      this->topic_name_cl_.in (),
                      typesupport_name);
    if (::CORBA::is_nil (this->topic_cl_.in ()))
@@ -434,18 +437,21 @@ void
 DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::configuration_complete (void)
 {
   // Init default domain (Base_Connector)
-  this->init_default_domain ();
+  this->init_domain (this->domain_participant_.inout ());
 
   // Init type (TopicBase_Connector)
   const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
-  this->register_type (typesupport_name);
+  this->register_type (this->domain_participant_.in (),
+                       typesupport_name);
 
   // Create the topics needed (this class)
   this->create_topics (typesupport_name);
 
   // Init the subscriber and publisher (TopicBase_Connector)
-  this->init_subscriber (this->subscriber_.inout ());
-  this->init_publisher (this->publisher_.inout ());
+  this->init_subscriber (this->domain_participant_.in (),
+                         this->subscriber_.inout ());
+  this->init_publisher (this->domain_participant_.in (),
+                        this->publisher_.inout ());
 
   this->sq_supplier_.configuration_complete (
                                       this->topic_sq_.in (),
@@ -567,18 +573,12 @@ template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE, b
 void
 DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::remove_topics (void)
 {
-  this->sq_supplier_.remove (this->publisher_.in ());
-  this->tr_supplier_.remove (this->publisher_.in ());
-  this->cl_supplier_.remove (this->publisher_.in ());
-
-  this->pull_consumer_sq_.remove (this->subscriber_.in ());
-  this->pull_consumer_tr_.remove (this->subscriber_.in ());
-
-  this->push_consumer_cl_.remove (this->subscriber_.in ());
-
-  this->remove_topic (this->topic_sq_.inout ());
-  this->remove_topic (this->topic_tr_.inout ());
-  this->remove_topic (this->topic_cl_.inout ());
+  this->remove_topic (this->domain_participant_.in (),
+                      this->topic_sq_.inout ());
+  this->remove_topic (this->domain_participant_.in (),
+                      this->topic_tr_.inout ());
+  this->remove_topic (this->domain_participant_.in (),
+                      this->topic_cl_.inout ());
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE, bool FIXED_SEQ_TYPE>
@@ -595,6 +595,13 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::c
 
   this->remove_topics ();
 
+  this->remove_publisher (this->domain_participant_.in (),
+                          this->publisher_.inout ());
+  this->remove_subscriber (this->domain_participant_.in (),
+                           this->subscriber_.inout ());
   const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
-  this->unregister_type (typesupport_name);
+  this->unregister_type (this->domain_participant_.in (),
+                         typesupport_name);
+
+  this->remove_domain (this->domain_participant_.inout ());
 }
