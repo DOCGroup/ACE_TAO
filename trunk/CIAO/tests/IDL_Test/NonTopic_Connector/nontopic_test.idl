@@ -8,6 +8,10 @@
 #ifndef NONTOPIC_TEST_IDL
 #define NONTOPIC_TEST_IDL
 
+#include <Components.idl>
+
+#pragma dds4ccm impl "NonTopic_Connector_T.h"
+
 module Typed_NonTopic_Test_1<typename T,typename U,typename V,
                            sequence<T> TSeq, sequence<U> USeq, sequence<V> VSeq>
    {
@@ -28,9 +32,9 @@ module Typed_NonTopic_Test_2<typename T,typename U,
        {
          void create(out T dat_T, out U dat_u);
        };
-     connector NT
+     connector NT_2
        {
-         uses TestControl foo;
+         uses TestControl bar;
        };
     };
 
