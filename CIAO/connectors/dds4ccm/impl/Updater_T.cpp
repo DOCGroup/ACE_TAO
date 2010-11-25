@@ -8,48 +8,48 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename UPDATER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
-    Updater_T<UPDATER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::Updater_T (void)
-    : InstanceHandleManager_T<UPDATER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE> (),
+    template <typename UPDATER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::Updater_T (void)
+    : InstanceHandleManager_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE> (),
       is_global_scope_ (false),
       is_coherent_write_ (false)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::Updater_T");
     }
 
-    template <typename UPDATER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
-    Updater_T<UPDATER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::~Updater_T (void)
+    template <typename UPDATER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::~Updater_T (void)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::~Updater_T");
     }
 
-    template <typename UPDATER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename UPDATER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     bool
-    Updater_T<UPDATER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::is_global_scope (void)
+    Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::is_global_scope (void)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::is_global_scope");
       return this->is_global_scope_;
     }
 
-    template <typename UPDATER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename UPDATER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     bool
-    Updater_T<UPDATER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::is_coherent_write (void)
+    Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::is_coherent_write (void)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::is_coherent_write");
       return this->is_coherent_write_;
     }
 
-    template <typename UPDATER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename UPDATER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Updater_T<UPDATER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::is_coherent_write (bool value)
+    Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::is_coherent_write (bool value)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::is_coherent_write");
       this->is_coherent_write_ = value;
     }
 
-    template <typename UPDATER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename UPDATER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Updater_T<UPDATER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::create_i (
+    Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::create_i (
       const VALUE_TYPE& an_instance,
       ::CCM_DDS::DataNumber_t index)
     {
@@ -74,9 +74,9 @@ namespace CIAO
         }
     }
 
-    template <typename UPDATER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename UPDATER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Updater_T<UPDATER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::create_one (
+    Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::create_one (
       const VALUE_TYPE& an_instance)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::create_one");
@@ -89,9 +89,9 @@ namespace CIAO
       this->create_i (an_instance, 0);
     }
 
-    template <typename UPDATER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename UPDATER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Updater_T<UPDATER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::update_i (
+    Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::update_i (
       const VALUE_TYPE& an_instance,
       const ::DDS::InstanceHandle_t & instance_handle,
       ::CCM_DDS::DataNumber_t index)
@@ -109,9 +109,9 @@ namespace CIAO
         }
     }
 
-    template <typename UPDATER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename UPDATER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Updater_T<UPDATER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::update_one (
+    Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::update_one (
       const VALUE_TYPE& an_instance,
       const ::DDS::InstanceHandle_t & instance_handle)
     {
@@ -140,9 +140,9 @@ namespace CIAO
       this->update_i (an_instance, instance_handle, 0);
     }
 
-    template <typename UPDATER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename UPDATER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Updater_T<UPDATER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::delete_i (
+    Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::delete_i (
       const VALUE_TYPE& an_instance,
       const ::DDS::InstanceHandle_t & instance_handle,
       ::CCM_DDS::DataNumber_t index)
@@ -169,9 +169,9 @@ namespace CIAO
         }
     }
 
-    template <typename UPDATER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename UPDATER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Updater_T<UPDATER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::delete_one (
+    Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::delete_one (
       const VALUE_TYPE& an_instance,
       const ::DDS::InstanceHandle_t & instance_handle)
     {
@@ -200,9 +200,9 @@ namespace CIAO
       this->delete_i (an_instance, instance_handle, 0);
     }
 
-    template <typename UPDATER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename UPDATER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Updater_T<UPDATER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::create_many (
+    Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::create_many (
       const SEQ_VALUE_TYPE& data)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::create_many");
@@ -219,9 +219,9 @@ namespace CIAO
         }
     }
 
-    template <typename UPDATER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename UPDATER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Updater_T<UPDATER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::check_existent (
+    Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::check_existent (
         const SEQ_VALUE_TYPE& data)
     {
       ::CCM_DDS::NonExistent exception;
@@ -243,9 +243,9 @@ namespace CIAO
         }
     }
 
-    template <typename UPDATER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename UPDATER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Updater_T<UPDATER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::check_already_created (
+    Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::check_already_created (
       const SEQ_VALUE_TYPE& data)
     {
       ::CCM_DDS::AlreadyCreated exception;
@@ -267,9 +267,9 @@ namespace CIAO
         }
     }
 
-    template <typename UPDATER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename UPDATER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Updater_T<UPDATER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::update_many (
+    Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::update_many (
         const SEQ_VALUE_TYPE& data)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::update_many");
@@ -286,9 +286,9 @@ namespace CIAO
         }
     }
 
-    template <typename UPDATER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename UPDATER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Updater_T<UPDATER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::delete_many (
+    Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::delete_many (
       const SEQ_VALUE_TYPE& data)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::delete_many");

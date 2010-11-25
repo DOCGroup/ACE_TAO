@@ -17,9 +17,9 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename WRITER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename WRITER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     class Writer_T
-      : public InstanceHandleManager_T <WRITER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE>
+      : public InstanceHandleManager_T <WRITER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE>
     {
     public:
       /// Constructor

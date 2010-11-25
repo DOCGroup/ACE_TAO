@@ -8,8 +8,8 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename CCM_TYPE, typename DDS_TYPE>
-    DataReaderListener_T<CCM_TYPE, DDS_TYPE>::DataReaderListener_T (
+    template <typename CCM_TYPE, typename TYPED_READER, typename SEQ_TYPE>
+    DataReaderListener_T<CCM_TYPE, TYPED_READER, SEQ_TYPE>::DataReaderListener_T (
       typename CCM_TYPE::data_listener_type::_ptr_type listener,
       ::CCM_DDS::PortStatusListener_ptr port_status_listener,
       ::CCM_DDS::DataListenerControl_ptr control,
@@ -23,15 +23,15 @@ namespace CIAO
       DDS4CCM_TRACE ("DataReaderListener_T::DataReaderListener_T");
     }
 
-    template <typename CCM_TYPE, typename DDS_TYPE>
-    DataReaderListener_T<CCM_TYPE, DDS_TYPE>::~DataReaderListener_T (void)
+    template <typename CCM_TYPE, typename TYPED_READER, typename SEQ_TYPE>
+    DataReaderListener_T<CCM_TYPE, TYPED_READER, SEQ_TYPE>::~DataReaderListener_T (void)
     {
       DDS4CCM_TRACE ("DataReaderListener_T::~DataReaderListener_T");
     }
 
-    template <typename CCM_TYPE, typename DDS_TYPE>
+    template <typename CCM_TYPE, typename TYPED_READER, typename SEQ_TYPE>
     void
-    DataReaderListener_T<CCM_TYPE, DDS_TYPE>::on_data_available (
+    DataReaderListener_T<CCM_TYPE, TYPED_READER, SEQ_TYPE>::on_data_available (
       ::DDS::DataReader_ptr rdr)
     {
       DDS4CCM_TRACE ("DataReaderListener_T::on_data_available");
@@ -59,9 +59,9 @@ namespace CIAO
         }
     }
 
-    template <typename CCM_TYPE, typename DDS_TYPE>
+    template <typename CCM_TYPE, typename TYPED_READER, typename SEQ_TYPE>
     void
-    DataReaderListener_T<CCM_TYPE, DDS_TYPE>::on_data_available_i (
+    DataReaderListener_T<CCM_TYPE, TYPED_READER, SEQ_TYPE>::on_data_available_i (
       ::DDS::DataReader_ptr rdr)
     {
       DDS4CCM_TRACE ("DataReaderListener_T::on_data_available_i");
@@ -80,8 +80,8 @@ namespace CIAO
           return;
         }
 
-      typename DDS_TYPE::typed_reader_type::_var_type reader;
-      reader = DDS_TYPE::typed_reader_type::_narrow (rdr);
+      typename TYPED_READER::_var_type reader;
+      reader = TYPED_READER::_narrow (rdr);
 
       if (::CORBA::is_nil (reader.in ()))
         {
@@ -92,7 +92,7 @@ namespace CIAO
           return;
         }
 
-      typename DDS_TYPE::seq_type data;
+      SEQ_TYPE data;
       ::DDS::SampleInfoSeq sample_info;
       ::CORBA::Long max_samples = 0;
 
@@ -157,7 +157,7 @@ namespace CIAO
 
               if (nr_of_samples > 0)
                 {
-                  typename DDS_TYPE::seq_type inst_seq (nr_of_samples);
+                  SEQ_TYPE inst_seq (nr_of_samples);
                   ::CCM_DDS::ReadInfoSeq infoseq (nr_of_samples);
 
                   infoseq.length (nr_of_samples);
@@ -190,9 +190,9 @@ namespace CIAO
         }
     }
 
-    template <typename CCM_TYPE, typename DDS_TYPE>
+    template <typename CCM_TYPE, typename TYPED_READER, typename SEQ_TYPE>
     ::DDS::StatusMask
-    DataReaderListener_T<CCM_TYPE, DDS_TYPE>::get_mask (
+    DataReaderListener_T<CCM_TYPE, TYPED_READER, SEQ_TYPE>::get_mask (
       typename CCM_TYPE::data_listener_type::_ptr_type listener,
       ::CCM_DDS::PortStatusListener_ptr status)
     {
