@@ -45,7 +45,7 @@ public:
   /**
    * Default constructor which isn't bound to a specific environment
    * variable name or a default value.  Before being useful it must
-   * <open>'d.
+   * open()'d.
    */
   ACE_Env_Value (void);
 
