@@ -1,21 +1,45 @@
 // $Id$
-project(NT_Base_idl_gen) : taoidldefaults, anytypecode {
+project(NT_Base_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=NONTOPIC_BASE_STUB_Export \
-              -Wb,stub_export_include=NonTopic_base_stub_export.h \
-               -I ..
+              -Wb,stub_export_include=NonTopic_Base_stub_export.h \
+               -Gxhex -Gxhsk \
+              -I ..
 
   IDL_Files {
     idlflags += -Gxhst
     NonTopic_Base.idl
   }
+}
+
+project(NT_Base_stub) : ccm_stub   {
+  after += NT_Base_idl_gen 
+  libs  += 
+  sharedname = NT_Base_stub
+  dynamicflags += NONTOPIC_BASE_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    NonTopic_BaseC.cpp
+  }
+
+  Header_Files {
+    NonTopic_BaseC.h
+    NonTopic_Base_stub_export.h
+  }
+
+  Inline_Files {
+    NonTopic_BaseC.inl
+  }
 
 }
-project(NT_test_idl_gen) : taoidldefaults, anytypecode {
+project(NT_test_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=NONTOPIC_TEST_STUB_Export \
-              -Wb,stub_export_include=NonTopic_test_stub_export.h \
-              -SS -Gxhst -Gxhsk \
+              -Wb,stub_export_include=nontopic_test_stub_export.h \
+              -Gxhst -Gxhsk -Gxhex \
               -I ..
 
   IDL_Files {
@@ -23,6 +47,32 @@ project(NT_test_idl_gen) : taoidldefaults, anytypecode {
   }
 
 }
+
+project(NT_Test_stub) : ccm_stub   {
+  after += NT_test_idl_gen 
+  libs  += 
+  sharedname = NT_Test_stub
+  dynamicflags += NONTOPIC_TEST_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    nontopic_testC.cpp
+  }
+
+  Header_Files {
+    nontopic_testC.h
+    nontopic_test_stub_export.h
+  }
+
+  Inline_Files {
+    nontopic_testC.inl
+  }
+
+}
+
+
 project(NT_Connector_idl_gen) : connectoridldefaults, anytypecode {
   custom_only = 1
   after+=NT_Base_idl_gen NT_test_idl_gen
@@ -30,6 +80,10 @@ project(NT_Connector_idl_gen) : connectoridldefaults, anytypecode {
               -Wb,stub_export_include=NonTopic_Connector_stub_export.h \
               -Wb,skel_export_macro=NONTOPIC_CONNECTOR_SKEL_Export \
               -Wb,skel_export_include=NonTopic_Connector_skel_export.h \
+              -Wb,svnt_export_macro=NONTOPIC_CONNECTOR_SVNT_Export \
+              -Wb,svnt_export_include=NonTopic_Connector_svnt_export.h \
+              -Wb,conn_export_macro=NONTOPIC_CONNECTOR_CONN_Export \
+              -Wb,conn_export_include=NonTopic_Connector_conn_export.h \
               -I ..
 
   IDL_Files {
@@ -41,10 +95,8 @@ project(NT_Connector_idl_gen) : connectoridldefaults, anytypecode {
 project(NT_Connector_lem_gen) : ciaoidldefaults, anytypecode {
   custom_only = 1
   after += NT_Connector_idl_gen
-  idlflags += -Wb,stub_export_macro=NONTOPIC_CONNECTOR_STUB_Export \
-              -Wb,stub_export_include=NonTopic_Connector_stub_export.h \
-              -Wb,skel_export_macro=NONTOPIC_CONNECTOR_SKEL_Export \
-              -Wb,skel_export_include=NonTopic_Connector_skel_export.h \
+  idlflags += -Wb,stub_export_macro=NONTOPIC_CONNECTOR_LEM_STUB_Export \
+              -Wb,stub_export_include=Nontopic_Connector_lem_stub_export.h \
               -SS -Gxhst \
               -I ..
 
@@ -53,6 +105,32 @@ project(NT_Connector_lem_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
+//project(NT_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
+project(NT_Connector_lem_stub) : ccm_svnt {
+  after += NT_Connector_lem_gen NT_Connector_stub NT_Base_idl_gen NT_Test_stub NT_Base_stub
+  libs  += NonTopic_Connector_stub NT_Base_stub NT_Test_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = NonTopic_Connector_lem_stub
+  dynamicflags += NT_CONNECTOR_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    NonTopic_ConnectorEC.cpp
+  }
+
+  Header_Files {
+    NonTopic_ConnectorEC.h
+    NonTopic_Connector_lem_stub_export.h
+  }
+
+  Inline_Files {
+    NonTopic_ConnectorEC.inl
+  }
+}
 project(NT_Connector_stub) : ccm_stub {
   after += NT_Connector_lem_gen
   libs  += 
@@ -100,3 +178,65 @@ project(NT_Connector_skel) : ciao_executor {
     NonTopic_ConnectorS.inl
   }
 }
+//project(NT_Connector_exec) : ciao_executor, dds4ccm_impl {
+project(NT_Connector_exec) : ciao_executor {
+  after   += NT_Connector_stub NT_Connector_lem_stub NT_Base_idl_gen NT_Test_stub NT_Base_stub
+  sharedname = NT_Connector_exec
+  libs += NonTopic_Connector_stub NonTopic_Connector_lem_stub NT_Base_stub NT_Test_stub
+  // DDS_KeyedWriterBase_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags += NT_CONNECTOR_CONN_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    NonTopic_Connector_conn.cpp
+    NonTopic_Connector_T.cpp
+  }
+
+  Header_Files {
+    NonTopic_Connector_conn.h
+    NonTopic_Connector_conn_export.h
+    NonTopic_Connector_T.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+//project(NT_Connector_svnt) : ciao_servant, dds4ccm_impl {
+project(NT_Connector_svnt) : ciao_servant {
+  after      += NT_Connector_exec NT_Connector_stub NT_Connector_lem_stub
+  sharedname  = NT_Connector_svnt
+  libs       += NonTopic_Connector_stub \
+                NT_Connector_exec \
+                NonTopic_Connector_lem_stub \
+                NT_Base_stub \
+                NT_Test_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags += NT_CONNECTOR_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+   Source_Files {
+    NonTopic_ConnectorS.cpp
+    NonTopic_Connector_svnt.cpp
+  }
+
+  Header_Files {
+    NonTopic_ConnectorS.h
+    NonTopic_Connector_svnt.h
+    NonTopic_Connector_svnt_export.h
+  }
+
+  Inline_Files {
+    NonTopic_ConnectorS.inl
+  }
+}
+  
