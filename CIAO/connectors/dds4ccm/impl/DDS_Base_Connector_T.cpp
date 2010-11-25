@@ -94,12 +94,28 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::qos_profile (
   else
     {
       this->qos_profile_ = qos_profile;
+      char* buf = ACE_OS::strdup (qos_profile);
+      ACE_Tokenizer_T<char> tok (buf);
+      tok.delimiter_replace ('#', 0);
+      for (char *p = tok.next (); p; p = tok.next ())
+        {
+          if (!this->library_name_)
+            {
+              this->library_name_ = ACE_OS::strdup (p);
+            }
+          else if (!this->profile_name_)
+            {
+              this->profile_name_ = ACE_OS::strdup (p);
+            }
+        }
+      ACE_OS::free (buf);
     }
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_default_domain (void)
+DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_domain (
+  ::DDS::DomainParticipant_ptr & participant)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_default_domain");
 
@@ -109,49 +125,30 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_default_domain (void)
                 this->domain_id_));
 
   // Generic parsing code, library and profile should be separated by a #
-  if (this->qos_profile_.in ())
-    {
-      char* buf = ACE_OS::strdup (this->qos_profile_.in ());
-      ACE_Tokenizer_T<char> tok (buf);
-      tok.delimiter_replace ('#', 0);
-      for (char *p = tok.next (); p; p = tok.next ())
-      {
-        if (!this->library_name_)
-        {
-          this->library_name_ = ACE_OS::strdup (p);
-        }
-        else if (!this->profile_name_)
-        {
-          this->profile_name_ = ACE_OS::strdup (p);
-        }
-      }
-      ACE_OS::free (buf);
-    }
   if (this->library_name_ && this->profile_name_)
     {
-      this->dp_factory_.set_default_participant_qos_with_profile (
-          this->library_name_,
-          this->profile_name_);
-      this->domain_participant_ =
-        this->dp_factory_.create_participant_with_profile (
-            this->domain_id_,
-            this->library_name_,
-            this->profile_name_,
-            ::DDS::DomainParticipantListener::_nil (),
-            0);
+      this->participant_factory_.set_default_participant_qos_with_profile (
+                                      this->library_name_,
+                                      this->profile_name_);
+
+      participant = this->participant_factory_.create_participant_with_profile (
+                                      this->domain_id_,
+                                      this->library_name_,
+                                      this->profile_name_,
+                                      ::DDS::DomainParticipantListener::_nil (),
+                                      0);
     }
   else
     {
       ::DDS::DomainParticipantQos qos;
-      this->domain_participant_ =
-        this->dp_factory_.create_participant (
-          this->domain_id_,
-          qos,
-          ::DDS::DomainParticipantListener::_nil (),
-          0);
+      participant = this->participant_factory_.create_participant (
+                                      this->domain_id_,
+                                      qos,
+                                      ::DDS::DomainParticipantListener::_nil (),
+                                      0);
     }
 
-  if (::CORBA::is_nil (this->domain_participant_.in ()))
+  if (::CORBA::is_nil (participant))
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                   "DDS_Base_Connector_T::init_default_domain - "
@@ -159,7 +156,6 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_default_domain (void)
                   this->domain_id_));
       throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
     }
-
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
@@ -185,7 +181,7 @@ void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::configuration_complete (void)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::configuration_complete");
-  this->init_default_domain ();
+  this->init_domain (this->domain_participant_.inout ());
   this->configuration_complete_ = true;
 }
 
@@ -209,14 +205,7 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove (void)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove");
 
-  ::DDS::ReturnCode_t const retcode = this->dp_factory_.delete_participant (
-                                                this->domain_participant_.in ());
-  if (retcode != ::DDS::RETCODE_OK)
-    {
-      throw ::CCM_DDS::InternalError (retcode, 0);
-    }
-
-  this->domain_participant_ = ::DDS::DomainParticipant::_nil ();
+  this->remove_domain (this->domain_participant_.inout ());
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
@@ -246,6 +235,7 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::reactor (void)
 template <typename CCM_TYPE, typename DDS_TYPE>
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::register_type (
+  ::DDS::DomainParticipant_ptr participant,
   const char * typesupport_name)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::register_type");
@@ -253,8 +243,7 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::register_type (
   ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_OK;
 #if (CIAO_DDS4CCM_NDDS==1)
   ::CIAO::NDDS::DDS_DomainParticipant_i *part =
-    dynamic_cast< CIAO::NDDS::DDS_DomainParticipant_i * > (
-      this->domain_participant_.in ());
+    dynamic_cast< CIAO::NDDS::DDS_DomainParticipant_i * > (participant);
   if (!part)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -266,8 +255,7 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::register_type (
 
   ::CIAO::NDDS::DDS_TypeFactory_i * factory = new ::CIAO::NDDS::DDS_TypeFactory_T <DDS_TYPE> ();
 
-  ::CIAO::NDDS::DDS_TypeSupport_i::register_type (
-      typesupport_name, factory, this->domain_participant_.in ());
+  ::CIAO::NDDS::DDS_TypeSupport_i::register_type (typesupport_name, factory, participant);
 
   retcode = DDS_TYPE::type_support::register_type(
     part->get_rti_entity (), typesupport_name);
@@ -288,6 +276,7 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::register_type (
 template <typename CCM_TYPE, typename DDS_TYPE>
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_topic (
+  ::DDS::DomainParticipant_ptr participant,
   ::DDS::Topic_ptr & topic,
   const char * topic_name,
   const char * typesupport_name)
@@ -297,23 +286,21 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_topic (
   ::DDS::Topic_var tp;
   if (this->library_name_ && this->profile_name_)
     {
-      tp = this->domain_participant_->create_topic_with_profile (
-                                              topic_name,
-                                              typesupport_name,
-                                              this->library_name_,
-                                              this->profile_name_,
-                                              ::DDS::TopicListener::_nil (),
-                                              0);
+      tp = participant->create_topic_with_profile (topic_name,
+                                          typesupport_name,
+                                          this->library_name_,
+                                          this->profile_name_,
+                                          ::DDS::TopicListener::_nil (),
+                                          0);
     }
   else
     {
       ::DDS::TopicQos tqos;
-      tp = this->domain_participant_->create_topic (
-                                              topic_name,
-                                              typesupport_name,
-                                              tqos,
-                                              ::DDS::TopicListener::_nil (),
-                                              0);
+      tp = participant->create_topic (topic_name,
+                             typesupport_name,
+                             tqos,
+                             ::DDS::TopicListener::_nil (),
+                             0);
     }
   if (::CORBA::is_nil (tp))
     {
@@ -328,6 +315,7 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_topic (
 template <typename CCM_TYPE, typename DDS_TYPE>
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_publisher (
+  ::DDS::DomainParticipant_ptr participant,
   ::DDS::Publisher_ptr & publisher)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::init_publisher");
@@ -336,21 +324,18 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_publisher (
     {
       if (this->library_name_ && this->profile_name_)
         {
-          publisher = this->domain_participant_->
-            create_publisher_with_profile (
-              this->library_name_,
-              this->profile_name_,
-              ::DDS::PublisherListener::_nil (),
-              0);
+          publisher = participant->create_publisher_with_profile (
+                                              this->library_name_,
+                                              this->profile_name_,
+                                              ::DDS::PublisherListener::_nil (),
+                                              0);
         }
       else
         {
           ::DDS::PublisherQos pqos;
-          publisher = this->domain_participant_->
-            create_publisher (
-              pqos,
-              ::DDS::PublisherListener::_nil (),
-              0);
+          publisher = participant->create_publisher (pqos,
+                                            ::DDS::PublisherListener::_nil (),
+                                            0);
         }
       if (::CORBA::is_nil (publisher))
         {
@@ -365,6 +350,7 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_publisher (
 template <typename CCM_TYPE, typename DDS_TYPE>
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_subscriber (
+  ::DDS::DomainParticipant_ptr participant,
   ::DDS::Subscriber_ptr & subscriber)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::init_subscriber");
@@ -373,21 +359,18 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_subscriber (
     {
       if (this->library_name_ && this->profile_name_)
         {
-          subscriber = this->domain_participant_->
-            create_subscriber_with_profile (
-              this->library_name_,
-              this->profile_name_,
-              ::DDS::SubscriberListener::_nil (),
-              0);
+          subscriber = participant->create_subscriber_with_profile (
+                                              this->library_name_,
+                                              this->profile_name_,
+                                              ::DDS::SubscriberListener::_nil (),
+                                              0);
         }
       else
         {
           ::DDS::SubscriberQos sqos;
-          subscriber = this->domain_participant_->
-            create_subscriber (
-              sqos,
-              ::DDS::SubscriberListener::_nil (),
-              0);
+          subscriber = participant->create_subscriber (sqos,
+                                              ::DDS::SubscriberListener::_nil (),
+                                              0);
         }
       if (::CORBA::is_nil (subscriber))
         {
@@ -604,40 +587,55 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::passivate_subscriber (
  **/
 template <typename CCM_TYPE, typename DDS_TYPE>
 void DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::remove_topic (
+  ::DDS::DomainParticipant_ptr participant,
   ::DDS::Topic_ptr & topic)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::remove_topic");
 
-  ::DDS::ReturnCode_t retcode =
-    this->domain_participant_->delete_topic (topic);
+  ::DDS::ReturnCode_t retcode = participant->delete_topic (topic);
   if (retcode != ::DDS::RETCODE_OK)
     {
       throw ::CCM_DDS::InternalError (retcode, 0);
     }
   topic = ::DDS::Topic::_nil ();
-
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::remove_publisher (
+  ::DDS::DomainParticipant_ptr participant,
   ::DDS::Publisher_ptr & publisher)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::remove_publisher");
 
-  this->domain_participant_->delete_publisher (publisher);
+  participant->delete_publisher (publisher);
   publisher = ::DDS::Publisher::_nil ();
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::remove_subscriber (
+  ::DDS::DomainParticipant_ptr participant,
   ::DDS::Subscriber_ptr & subscriber)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::remove_subscriber");
 
-  this->domain_participant_->delete_subscriber (subscriber);;
+  participant->delete_subscriber (subscriber);;
   subscriber = ::DDS::Subscriber::_nil ();
+}
+
+template <typename CCM_TYPE, typename DDS_TYPE>
+void
+DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::remove_domain (
+  ::DDS::DomainParticipant_ptr & participant)
+{
+  ::DDS::ReturnCode_t const retcode = this->participant_factory_.delete_participant (participant);
+  if (retcode != ::DDS::RETCODE_OK)
+    {
+      throw ::CCM_DDS::InternalError (retcode, 0);
+    }
+
+  participant = ::DDS::DomainParticipant::_nil ();
 }
 
 /**
@@ -646,12 +644,12 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::remove_subscriber (
 template <typename CCM_TYPE, typename DDS_TYPE>
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::unregister_type (
+  ::DDS::DomainParticipant_ptr participant,
   const char * typesupport_name)
 {
 #if (CIAO_DDS4CCM_NDDS==1)
   ::CIAO::NDDS::DDS_TypeFactory_i * factory =
-    ::CIAO::NDDS::DDS_TypeSupport_i::unregister_type (
-      typesupport_name, this->domain_participant_.in ());
+    ::CIAO::NDDS::DDS_TypeSupport_i::unregister_type (typesupport_name, participant);
   delete factory;
 #endif
 }
