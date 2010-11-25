@@ -1,3 +1,14 @@
+Thu Nov 25 10:12:40 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/Derived/DDS_Derived_Connector_T.h:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Connector/DNM_Connector.idl:
+        * connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Connector/FSS_Event_Connector.idl:
+        * connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Connector/FSS_State_Connector.idl:
+        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.idl:
+        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.idl:
+        * connectors/dds4ccm/tests/TwoTopics/Connector/TwoTopics_Connector.idl:
+          Removed unneeded pragma's, fixed problems
+
 Thu Nov 25 08:59:45 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:

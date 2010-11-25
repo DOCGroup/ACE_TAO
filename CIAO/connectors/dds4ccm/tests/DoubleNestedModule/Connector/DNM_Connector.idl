@@ -14,7 +14,6 @@
 #include "Base/DNM_Base.idl"
 
 #pragma ciao lem "Connector/DNM_ConnectorE.idl"
-#pragma ndds typesupport "Base/DNM_BaseSupport.h"
 
 module DNM_Test_Connector
 {
