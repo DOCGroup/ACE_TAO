@@ -14,7 +14,6 @@
 #include "Base/TwoTopics_Base.idl"
 
 #pragma ciao lem "Connector/TwoTopics_ConnectorE.idl"
-#pragma ndds typesupport "Base/TwoTopics_BaseSupport.h"
 
 module TT_Connector
 {
