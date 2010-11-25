@@ -12,7 +12,7 @@
 #include "dds4ccm/impl/Writer_T.h"
 #include "dds4ccm/impl/CCM_DataWriter.h"
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 class DDS_Write_T
 {
 public:
@@ -46,9 +46,9 @@ public:
 private:
   typedef ::CIAO::DDS4CCM::Writer_T<
     typename CCM_TYPE::data_type,
-    typename DDS_TYPE::typed_writer_type,
-    typename DDS_TYPE::value_type,
-    typename DDS_TYPE::seq_type>
+    TYPED_WRITER,
+    VALUE_TYPE,
+    SEQ_VALUE_TYPE>
       Writer_type;
 
   /**

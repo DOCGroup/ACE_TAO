@@ -87,7 +87,12 @@ private:
    * DDS_Write supplier
    */
   //@{
-  DDS_Write_T <typename CCM_TYPE::supplier_traits, DDS_TYPE> supplier_;
+  DDS_Write_T <
+      typename CCM_TYPE::supplier_traits,
+      typename DDS_TYPE::typed_writer_type,
+      typename DDS_TYPE::value_type,
+      typename DDS_TYPE::seq_type>
+    supplier_;
   //@}
 
   /**

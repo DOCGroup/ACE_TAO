@@ -1,3 +1,12 @@
+Thu Nov 25 10:48:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Write_T.h:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.h:
+          Changed template arguments of DDS_Write_T. Removed DDS_TYPE and added
+          TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE.
+
 Thu Nov 25 10:12:40 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/Derived/DDS_Derived_Connector_T.h:
