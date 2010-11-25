@@ -1,3 +1,16 @@
+Thu Nov 25 08:19:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+          Removed unnecessary text.
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp:
+          Moved all helper methods from TopicBase to Base. That way, an user
+          can also derive his/her classes from Base.
+
 Wed Nov 24 15:17:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:

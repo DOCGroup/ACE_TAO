@@ -54,6 +54,40 @@ public:
 protected:
   void init_default_domain (void);
 
+  // Initialization
+  void register_type    (const char * typesupport_name);
+  void init_topic       (::DDS::Topic_ptr & topic,
+                         const char * topic_name,
+                         const char * typesupport_name);
+  void init_publisher   (::DDS::Publisher_ptr & publisher);
+  void init_subscriber  (::DDS::Subscriber_ptr & subscriber);
+
+  //activation
+  void activate_topic       (ACE_Reactor* reactor,
+                             ::DDS::Topic_ptr topic,
+                             ::DDS::TopicListener_ptr & listener);
+  void activate_publisher   (ACE_Reactor* reactor,
+                             ::DDS::Publisher_ptr publisher,
+                             ::DDS::PublisherListener_ptr & publisher_listener);
+  void activate_subscriber  (ACE_Reactor* reactor,
+                             ::DDS::Subscriber_ptr subscriber,
+                             ::DDS::SubscriberListener_ptr & subscriber_listener);
+
+  //passivation
+  void passivate_topic      (::DDS::Topic_ptr topic,
+                             ::DDS::TopicListener_ptr & listener);
+  void passivate_publisher  (::DDS::Publisher_ptr publisher,
+                             ::DDS::PublisherListener_ptr & publisher_listener);
+  void passivate_subscriber (::DDS::Subscriber_ptr subscriber,
+                             ::DDS::SubscriberListener_ptr & subscriber_listener);
+
+  //removal
+  void remove_topic       (::DDS::Topic_ptr & topic);
+  void remove_publisher   (::DDS::Publisher_ptr & publisher);
+  void remove_subscriber  (::DDS::Subscriber_ptr & subscriber);
+
+  void unregister_type    (const char * typesupport_name);
+
   /// Get the reactor associated with this component
   ACE_Reactor* reactor (void);
 
