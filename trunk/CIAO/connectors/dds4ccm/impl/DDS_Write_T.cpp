@@ -5,33 +5,33 @@
 #include "dds4ccm/impl/DataListenerControl_T.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
-template <typename CCM_TYPE, typename DDS_TYPE>
-DDS_Write_T<CCM_TYPE, DDS_TYPE>::DDS_Write_T (void)
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::DDS_Write_T (void)
 {
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
-DDS_Write_T<CCM_TYPE, DDS_TYPE>::~DDS_Write_T (void)
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::~DDS_Write_T (void)
 {
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 void
-DDS_Write_T<CCM_TYPE, DDS_TYPE>::set_component (
+DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::set_component (
   ::CORBA::Object_ptr component)
 {
   this->dds_write_->_set_component (component);
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 void
-DDS_Write_T<CCM_TYPE, DDS_TYPE>::configuration_complete (
+DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_complete (
   ::DDS::Topic_ptr topic,
   ::DDS::Publisher_ptr publisher,
   const char* library_name,
   const char* profile_name)
 {
-  DDS4CCM_TRACE ("DDS_Write_T<CCM_TYPE, DDS_TYPE>::configuration_complete");
+  DDS4CCM_TRACE ("DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_complete");
   ::DDS::DataWriter_var dw = this->dds_write_->get_dds_writer ();
   if (::CORBA::is_nil (dw.in ()))
     {
@@ -65,26 +65,26 @@ DDS_Write_T<CCM_TYPE, DDS_TYPE>::configuration_complete (
       this->ccm_data_writer_->set_dds_entity (dwv_tmp.in ());
     }
 }
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 void
-DDS_Write_T<CCM_TYPE, DDS_TYPE>::activate ()
+DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::activate ()
 {
-  DDS4CCM_TRACE ("DDS_Write_T<CCM_TYPE, DDS_TYPE>::activate");
+  DDS4CCM_TRACE ("DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::activate");
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 void
-DDS_Write_T<CCM_TYPE, DDS_TYPE>::passivate ()
+DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::passivate ()
 {
-  DDS4CCM_TRACE ("DDS_Write_T<CCM_TYPE, DDS_TYPE>::passivate");
+  DDS4CCM_TRACE ("DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::passivate");
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 void
-DDS_Write_T<CCM_TYPE, DDS_TYPE>::remove (
+DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove (
   ::DDS::Publisher_ptr publisher)
 {
-  DDS4CCM_TRACE ("DDS_Write_T<CCM_TYPE, DDS_TYPE>::remove");
+  DDS4CCM_TRACE ("DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove");
 
   ::DDS::DataWriter_var writer = this->dds_write_->get_dds_writer ();
   if (!::CORBA::is_nil (writer.in ()))
@@ -105,20 +105,20 @@ DDS_Write_T<CCM_TYPE, DDS_TYPE>::remove (
     }
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 typename CCM_TYPE::data_type::_ptr_type
-DDS_Write_T<CCM_TYPE, DDS_TYPE>::get_data (void)
+DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::get_data (void)
 {
-  DDS4CCM_TRACE ("DDS_Write_T<CCM_TYPE, DDS_TYPE>::get_data");
+  DDS4CCM_TRACE ("DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::get_data");
 
   return CCM_TYPE::data_type::_duplicate (this->dds_write_);
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 typename CCM_TYPE::dds_entity_type::_ptr_type
-DDS_Write_T<CCM_TYPE, DDS_TYPE>::get_dds_entity (void)
+DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::get_dds_entity (void)
 {
-  DDS4CCM_TRACE ("DDS_Write_T<CCM_TYPE, DDS_TYPE>::get_dds_entity");
+  DDS4CCM_TRACE ("DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::get_dds_entity");
   return ::DDS::CCM_DataWriter::_duplicate (this->ccm_data_writer_);
 }
 
