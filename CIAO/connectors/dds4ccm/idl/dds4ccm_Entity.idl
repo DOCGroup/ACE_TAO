@@ -144,3 +144,4 @@ module DDS_Entity <typename T, sequence<T> TSeq> {
 };
 
 #endif
+
