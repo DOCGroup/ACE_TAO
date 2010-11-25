@@ -8,6 +8,11 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.8.3 and CIAO-1.0.0
   The DDS entities will be created and initilized once the topic name is
   set at run time.
 
+. Reworked dds4ccm core to make it easier to implement custom dds4ccm
+  connectors
+
+. Improved dds4ccm logging
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.8.2 and CIAO-0.8.3
 =======================================================
 
