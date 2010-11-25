@@ -51,7 +51,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
 
       os_ << " <" << be_idt << be_idt_nl;
 
-      os_ << "DDS_" << this->node_->local_name ()
+      os_ << "CCM_" << this->node_->flat_name ()
           << "_Traits," << be_nl;
       size_t slot = 1UL;
 
@@ -63,15 +63,14 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
           i.next (item);
           AST_Decl *d = *item;
 
-          UTL_ScopedName *dt_name = d->name ();
           if (this->is_dds_type (node, d))
             {
-              os_ << dt_name
+              os_ << d->flat_name ()
                   << "_DDS_Traits,";
             }
           else
             {
-              os_ << dt_name << ",";
+              os_ << d->name () << ",";
             }
 
           AST_Structure *s = AST_Structure::narrow_from_decl (d);
@@ -98,9 +97,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
             }
         }
 
-      os_ << ">";
-
-      os_ << "()"
+      os_ << "> ()"
           << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_nl
           << "}";

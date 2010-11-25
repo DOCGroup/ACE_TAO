@@ -1,3 +1,11 @@
+Thu Nov 25 10:11:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+          Fixed ami4ccm and dds4ccm problems
+
 Wed Nov 24 13:58:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
