@@ -1,6 +1,5 @@
 USER VISIBLE CHANGES BETWEEN CIAO-0.8.3 and CIAO-1.0.0
 =======================================================
-Thu Oct 28 07:00:47 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
 . Implemented 'LateBinding' in the DDS4CCM connector.
   This means that the DDS entities will NOT be created and initialized

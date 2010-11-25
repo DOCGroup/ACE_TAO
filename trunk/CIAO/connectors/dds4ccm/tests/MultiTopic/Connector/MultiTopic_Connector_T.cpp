@@ -444,8 +444,8 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::c
   this->create_topics (typesupport_name);
 
   // Init the subscriber and publisher (TopicBase_Connector)
-  this->init_subscriber ();
-  this->init_publisher ();
+  this->init_subscriber (this->subscriber_.inout ());
+  this->init_publisher (this->publisher_.inout ());
 
   this->sq_supplier_.configuration_complete (
                                       this->topic_sq_.in (),
@@ -499,8 +499,12 @@ void
 DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::ccm_activate (void)
 {
   this->activate_topics ();
-  this->activate_subscriber (this->reactor_);
-  this->activate_publisher (this->reactor_);
+  this->activate_subscriber (this->reactor_,
+                             this->subscriber_.in (),
+                             this->subscriber_listener_.inout ());
+  this->activate_publisher (this->reactor_,
+                            this->publisher_.in (),
+                            this->publisher_listener_.inout ());
 
   this->sq_supplier_.activate ();
   this->tr_supplier_.activate ();
@@ -553,8 +557,10 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::c
 
   this->passivate_topics ();
 
-  this->passivate_subscriber ();
-  this->passivate_publisher ();
+  this->passivate_subscriber (this->subscriber_.in (),
+                              this->subscriber_listener_.inout ());
+  this->passivate_publisher (this->publisher_.in (),
+                             this->publisher_listener_.inout ());
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE, bool FIXED_SEQ_TYPE>

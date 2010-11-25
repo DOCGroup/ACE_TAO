@@ -10,10 +10,7 @@
 
 #include "ace/Copy_Disabled.h"
 
-#include "dds4ccm/impl/TopicListener.h"
 #include "dds4ccm/impl/DDS_Base_Connector_T.h"
-#include "dds4ccm/impl/PublisherListener.h"
-#include "dds4ccm/impl/SubscriberListener.h"
 
 template <typename CCM_TYPE, typename DDS_TYPE>
 class DDS_TopicBase_Connector_T
@@ -37,35 +34,6 @@ public:
   virtual void ccm_remove (void);
 
 protected:
-  // Initialization
-  void register_type (const char * typesupport_name);
-  void init_topic (::DDS::Topic_ptr & topic,
-                   const char * topic_name,
-                   const char * typesupport_name);
-  void init_publisher (void);
-  void init_subscriber (void);
-
-  //activation
-  void activate_topic (ACE_Reactor* reactor,
-                       ::DDS::Topic_ptr topic,
-                       ::DDS::TopicListener_ptr & listener);
-  void activate_publisher (ACE_Reactor* reactor);
-  void activate_subscriber (ACE_Reactor* reactor);
-
-  //passivation
-  void passivate_topic (::DDS::Topic_ptr topic,
-                        ::DDS::TopicListener_ptr & listener);
-
-  void passivate_publisher (void);
-  void passivate_subscriber (void);
-
-  //removal
-  void remove_topic (::DDS::Topic_ptr & topic);
-  void remove_publisher (void);
-  void remove_subscriber (void);
-
-  void unregister_type (const char * typesupport_name);
-
   bool late_binding (void);
   void late_binding (bool late_binding);
   bool late_binded (const char * topic_name);
