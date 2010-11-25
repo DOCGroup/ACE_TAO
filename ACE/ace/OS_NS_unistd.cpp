@@ -22,22 +22,6 @@
 # include "cpuset.h"
 #endif /* ACE_HAS_VXCPULIB */
 
-#if defined (ACE_NEEDS_FTRUNCATE)
-extern "C" int
-ftruncate (ACE_HANDLE handle, long len)
-{
-  struct flock fl;
-  fl.l_whence = 0;
-  fl.l_len = 0;
-  fl.l_start = len;
-  fl.l_type = F_WRLCK;
-
-  return ACE_OS::fcntl (handle, F_FREESP, reinterpret_cast <long> (&fl));
-}
-#endif /* ACE_NEEDS_FTRUNCATE */
-
-/*****************************************************************************/
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int

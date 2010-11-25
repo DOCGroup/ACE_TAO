@@ -1,3 +1,18 @@
+Thu Nov 25 12:17:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.h:
+        * ace/OS_NS_unistd.cpp:
+          Removed not enabled ftruncate workaround
+
+        * ace/Env_Value_T.h:
+          Doxygen change
+
+        * ace/OS_NS_sys_utsname.cpp:
+        * ace/OS_NS_sys_wait.cpp:
+        * ace/OS_NS_time.cpp:
+        * ace/OS_NS_wchar.cpp:
+          Layout changes
+
 Tue Nov 23 23:20:07 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/os_include/os_pthread.h: Give definite values to THR_CANCEL_*

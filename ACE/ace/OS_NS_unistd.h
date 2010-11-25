@@ -31,17 +31,10 @@
 #include "ace/os_include/os_unistd.h"
 #include "ace/os_include/os_stdio.h"
 
-
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
-
-// This should go in os_unistd.h, but since we don't yet implement any code
-// at that level, we put it here.  It used to be in OS.i.
-#if defined (ACE_NEEDS_FTRUNCATE)
-extern "C" ACE_Export int ftruncate (ACE_HANDLE handle, long len);
-#endif /* ACE_NEEDS_FTRUNCATE */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
