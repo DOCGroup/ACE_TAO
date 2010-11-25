@@ -23,14 +23,4 @@ operator<<= (::DDS::SampleInfoSeq &ddsinfo_seq, const ::DDS_SampleInfoSeq & info
     }
 }
 
-inline void
-operator<<= (::DDS_SampleInfoSeq &ddsinfo_seq, const ::DDS::SampleInfoSeq & info_seq)
-{
-  ddsinfo_seq.length (info_seq.length ());
-  for (::CORBA::ULong i = 0; i < info_seq.length (); ++i)
-    {
-      ddsinfo_seq[i] <<= info_seq[i];
-    }
-}
-
 #endif /* DDS4CCM_SAMPLELOSTSTATUS_H */

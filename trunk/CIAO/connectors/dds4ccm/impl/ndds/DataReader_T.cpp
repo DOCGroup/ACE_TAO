@@ -107,7 +107,6 @@ namespace CIAO
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::read");
 
       DDS_SampleInfoSeq dds_sample_infos;
-      dds_sample_infos <<= sample_infos;
 
       typename DDS_TYPE::dds_seq_type dds_data_values;
 
@@ -137,7 +136,6 @@ namespace CIAO
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::take");
 
       DDS_SampleInfoSeq dds_sample_infos;
-      dds_sample_infos <<= sample_infos;
 
       typename DDS_TYPE::dds_seq_type dds_data_values;
 
@@ -166,7 +164,7 @@ namespace CIAO
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::read_w_condition");
 
       DDS_SampleInfoSeq dds_sample_infos;
-      dds_sample_infos <<= sample_infos;
+
       typename DDS_TYPE::dds_seq_type dds_data_values;
 
       ::DDS::ReturnCode_t retcode_read_w_condition = ::DDS::RETCODE_ERROR;
@@ -224,7 +222,7 @@ namespace CIAO
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::take_w_condition");
 
       DDS_SampleInfoSeq dds_sample_infos;
-      dds_sample_infos <<= sample_infos;
+
       typename DDS_TYPE::dds_seq_type dds_data_values;
 
       ::DDS::ReturnCode_t retcode_take_w_condition = ::DDS::RETCODE_ERROR;
@@ -281,7 +279,6 @@ namespace CIAO
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::read_next_sample");
 
       DDS_SampleInfo dds_sample_info;
-      dds_sample_info <<= sample_info;
 
       ::DDS::ReturnCode_t const retcode_read_next_sample =
         this->rti_entity ()->read_next_sample (data_values,
@@ -299,7 +296,6 @@ namespace CIAO
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::take_next_sample");
 
       DDS_SampleInfo dds_sample_info;
-      dds_sample_info <<= sample_info;
 
       ::DDS::ReturnCode_t const retcode_take_next_sample =
         this->rti_entity ()->take_next_sample (data_values,
@@ -322,7 +318,6 @@ namespace CIAO
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::read_instance");
 
       DDS_SampleInfoSeq dds_sample_infos;
-      dds_sample_infos <<= sample_infos;
 
       ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
       dds_handle <<= a_handle;
@@ -358,7 +353,6 @@ namespace CIAO
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::take_instance");
 
       DDS_SampleInfoSeq dds_sample_infos;
-      dds_sample_infos <<= sample_infos;
 
       ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
       dds_handle <<= a_handle;
@@ -393,7 +387,6 @@ namespace CIAO
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::read_next_instance");
 
       DDS_SampleInfoSeq dds_sample_infos;
-      dds_sample_infos <<= sample_infos;
 
       ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
       dds_handle <<= a_handle;
@@ -428,7 +421,6 @@ namespace CIAO
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::take_next_instance");
 
       DDS_SampleInfoSeq dds_sample_infos;
-      dds_sample_infos <<= sample_infos;
 
       ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
       dds_handle <<= a_handle;
@@ -461,7 +453,6 @@ namespace CIAO
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::read_next_instance_w_condition");
 
       DDS_SampleInfoSeq dds_sample_infos;
-      dds_sample_infos <<= sample_infos;
 
       ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
       dds_handle <<= previous_handle;
@@ -501,7 +492,6 @@ namespace CIAO
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::take_next_instance_w_condition");
 
       DDS_SampleInfoSeq dds_sample_infos;
-      dds_sample_infos <<= sample_infos;
 
       ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
       dds_handle <<= previous_handle;
