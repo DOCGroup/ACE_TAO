@@ -70,13 +70,17 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::configuration_complete (void)
 
   if (::CORBA::is_nil (this->topic_.in ()))
     {
-      this->register_type (typesupport_name);
-      this->init_topic (this->topic_.inout () ,
+      this->register_type (this->domain_participant_.in (),
+                           typesupport_name);
+      this->init_topic (this->domain_participant_.in (),
+                        this->topic_.inout () ,
                         this->topic_name_.in (),
                         typesupport_name);
     }
-  this->init_subscriber (this->subscriber_.inout ());
-  this->init_publisher (this->publisher_.inout ());
+  this->init_subscriber (this->domain_participant_.in (),
+                         this->subscriber_.inout ());
+  this->init_publisher (this->domain_participant_.in (),
+                        this->publisher_.inout ());
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
@@ -116,12 +120,16 @@ void
 DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove");
-  this->remove_topic (this->topic_.inout ());
+  this->remove_topic (this->domain_participant_.in (),
+                      this->topic_.inout ());
 
   const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
-  this->unregister_type (typesupport_name);
-  this->remove_subscriber (this->subscriber_.inout ());
-  this->remove_publisher (this->publisher_.inout ());
+  this->unregister_type (this->domain_participant_.in (),
+                         typesupport_name);
+  this->remove_subscriber (this->domain_participant_.in (),
+                           this->subscriber_.inout ());
+  this->remove_publisher (this->domain_participant_.in (),
+                          this->publisher_.inout ());
   BaseConnector::ccm_remove ();
 }
 

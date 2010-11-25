@@ -52,15 +52,19 @@ public:
   virtual void ccm_passivate (void);
 
 protected:
-  void init_default_domain (void);
+  void init_domain (::DDS::DomainParticipant_ptr & participant);
 
   // Initialization
-  void register_type    (const char * typesupport_name);
-  void init_topic       (::DDS::Topic_ptr & topic,
+  void register_type    (::DDS::DomainParticipant_ptr participant,
+                         const char * typesupport_name);
+  void init_topic       (::DDS::DomainParticipant_ptr participant,
+                         ::DDS::Topic_ptr & topic,
                          const char * topic_name,
                          const char * typesupport_name);
-  void init_publisher   (::DDS::Publisher_ptr & publisher);
-  void init_subscriber  (::DDS::Subscriber_ptr & subscriber);
+  void init_publisher   (::DDS::DomainParticipant_ptr participant,
+                         ::DDS::Publisher_ptr & publisher);
+  void init_subscriber  (::DDS::DomainParticipant_ptr participant,
+                         ::DDS::Subscriber_ptr & subscriber);
 
   //activation
   void activate_topic       (ACE_Reactor* reactor,
@@ -82,11 +86,16 @@ protected:
                              ::DDS::SubscriberListener_ptr & subscriber_listener);
 
   //removal
-  void remove_topic       (::DDS::Topic_ptr & topic);
-  void remove_publisher   (::DDS::Publisher_ptr & publisher);
-  void remove_subscriber  (::DDS::Subscriber_ptr & subscriber);
+  void remove_topic       (::DDS::DomainParticipant_ptr participant,
+                           ::DDS::Topic_ptr & topic);
+  void remove_publisher   (::DDS::DomainParticipant_ptr participant,
+                           ::DDS::Publisher_ptr & publisher);
+  void remove_subscriber  (::DDS::DomainParticipant_ptr participant,
+                           ::DDS::Subscriber_ptr & subscriber);
+  void remove_domain      (::DDS::DomainParticipant_ptr & participant);
 
-  void unregister_type    (const char * typesupport_name);
+  void unregister_type    (::DDS::DomainParticipant_ptr participant,
+                           const char * typesupport_name);
 
   /// Get the reactor associated with this component
   ACE_Reactor* reactor (void);
@@ -103,7 +112,7 @@ protected:
 
   typename CCM_TYPE::context_type::_var_type context_;
 
-  DomainParticipantFactory dp_factory_;
+  DomainParticipantFactory participant_factory_;
 };
 
 #include "dds4ccm/impl/DDS_Base_Connector_T.cpp"
