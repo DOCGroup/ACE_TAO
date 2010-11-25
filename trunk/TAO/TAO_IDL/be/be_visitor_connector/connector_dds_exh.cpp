@@ -71,7 +71,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
 
       os_ << " <" << be_idt << be_idt_nl;
 
-      os_ << "DDS_" << this->node_->local_name ()
+      os_ << "CCM_" << this->node_->flat_name ()
           << "_Traits," << be_nl;
 
       size_t slot = 1UL;
@@ -86,7 +86,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
 
           if (this->is_dds_type (node, d))
             {
-              os_ << d->name ()
+              os_ << d->flat_name ()
                   << "_DDS_Traits,";
             }
           else
@@ -255,7 +255,7 @@ be_visitor_connector_dds_exh::gen_dds_traits (AST_Decl *datatype)
   if (the_dds_impl != BE_GlobalData::NONE)
     {
       os_ << be_nl
-          << "struct " << dt_name << "_DDS_Traits" << be_nl
+          << "struct " << datatype->flat_name () << "_DDS_Traits" << be_nl
           << "{" << be_idt_nl
           << "typedef ::" << dt_name << " value_type;" << be_nl
           << "typedef ::" << dt_name;
@@ -293,7 +293,7 @@ be_visitor_connector_dds_exh::gen_connector_traits (void)
     (comp_scope->node_type () == AST_Decl::NT_root);
 
   os_ << be_nl_2
-      << "struct DDS_" << this->node_->local_name ()
+      << "struct CCM_" << this->node_->flat_name ()
       << "_Traits" << be_nl
       << "{" << be_idt_nl
       << "typedef ::CIAO_" << this->node_->flat_name () << "_Impl::"

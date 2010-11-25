@@ -884,30 +884,30 @@ be_visitor_module::visit_connector (be_connector *node)
     {
       case TAO_CodeGen::TAO_ROOT_CNH:
         {
-          if (node->dds_connector ())
+          if (node->ami_connector ())
             {
-              be_visitor_connector_dds_exh visitor (&ctx);
+              be_visitor_connector_ami_exh visitor (&ctx);
               status = node->accept (&visitor);
               break;
             }
-          else if (node->ami_connector ())
+          else if (node->dds_connector ())
             {
-              be_visitor_connector_ami_exh visitor (&ctx);
+              be_visitor_connector_dds_exh visitor (&ctx);
               status = node->accept (&visitor);
               break;
             }
         }
       case TAO_CodeGen::TAO_ROOT_CNS:
         {
-          if (node->dds_connector ())
+          if (node->ami_connector ())
             {
-              be_visitor_connector_dds_exs visitor (&ctx);
+              be_visitor_connector_ami_exs visitor (&ctx);
               status = node->accept (&visitor);
               break;
             }
-          else if (node->ami_connector ())
+          else if (node->dds_connector ())
             {
-              be_visitor_connector_ami_exs visitor (&ctx);
+              be_visitor_connector_dds_exs visitor (&ctx);
               status = node->accept (&visitor);
               break;
             }
