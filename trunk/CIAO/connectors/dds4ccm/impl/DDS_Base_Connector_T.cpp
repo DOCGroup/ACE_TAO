@@ -606,7 +606,7 @@ template <typename CCM_TYPE, typename DDS_TYPE>
 void DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::remove_topic (
   ::DDS::Topic_ptr & topic)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T::remove_default_topic");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T::remove_topic");
 
   ::DDS::ReturnCode_t retcode =
     this->domain_participant_->delete_topic (topic);

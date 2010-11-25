@@ -3,9 +3,9 @@
 #include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
-template <typename CCM_TYPE, typename DDS_TYPE>
-CIAO::DDS4CCM::DataReaderHandler_T<CCM_TYPE, DDS_TYPE>::DataReaderHandler_T (
-            typename CIAO::DDS4CCM::DataReaderListener_T<CCM_TYPE, DDS_TYPE>* drl,
+template <typename CCM_TYPE, typename TYPED_READER, typename SEQ_TYPE>
+CIAO::DDS4CCM::DataReaderHandler_T<CCM_TYPE, TYPED_READER, SEQ_TYPE>::DataReaderHandler_T (
+            DataReaderListener_type * drl,
             ::DDS::DataReader_ptr dr)
       : drl_ (drl),
         dr_ (::DDS::DataReader::_duplicate (dr))
@@ -14,14 +14,14 @@ CIAO::DDS4CCM::DataReaderHandler_T<CCM_TYPE, DDS_TYPE>::DataReaderHandler_T (
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
-CIAO::DDS4CCM::DataReaderHandler_T<CCM_TYPE, DDS_TYPE>::~DataReaderHandler_T (void)
+template <typename CCM_TYPE, typename TYPED_READER, typename SEQ_TYPE>
+CIAO::DDS4CCM::DataReaderHandler_T<CCM_TYPE, TYPED_READER, SEQ_TYPE>::~DataReaderHandler_T (void)
 {
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename TYPED_READER, typename SEQ_TYPE>
 int
-CIAO::DDS4CCM::DataReaderHandler_T<CCM_TYPE, DDS_TYPE>::handle_exception (ACE_HANDLE)
+CIAO::DDS4CCM::DataReaderHandler_T<CCM_TYPE, TYPED_READER, SEQ_TYPE>::handle_exception (ACE_HANDLE)
 {
   try
     {
@@ -43,9 +43,9 @@ CIAO::DDS4CCM::DataReaderHandler_T<CCM_TYPE, DDS_TYPE>::handle_exception (ACE_HA
   return 0;
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
-CIAO::DDS4CCM::DataReaderStateHandler_T<CCM_TYPE, DDS_TYPE>::DataReaderStateHandler_T (
-            typename CIAO::DDS4CCM::DataReaderStateListener_T<CCM_TYPE, DDS_TYPE>* drl,
+template <typename CCM_TYPE, typename TYPED_READER, typename SEQ_TYPE>
+CIAO::DDS4CCM::DataReaderStateHandler_T<CCM_TYPE, TYPED_READER, SEQ_TYPE>::DataReaderStateHandler_T (
+            DataReaderStateListener_type * drl,
             ::DDS::DataReader_ptr dr)
       : drl_ (drl),
         dr_ (::DDS::DataReader::_duplicate (dr))
@@ -54,14 +54,14 @@ CIAO::DDS4CCM::DataReaderStateHandler_T<CCM_TYPE, DDS_TYPE>::DataReaderStateHand
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
-CIAO::DDS4CCM::DataReaderStateHandler_T<CCM_TYPE, DDS_TYPE>::~DataReaderStateHandler_T (void)
+template <typename CCM_TYPE, typename TYPED_READER, typename SEQ_TYPE>
+CIAO::DDS4CCM::DataReaderStateHandler_T<CCM_TYPE, TYPED_READER, SEQ_TYPE>::~DataReaderStateHandler_T (void)
 {
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename TYPED_READER, typename SEQ_TYPE>
 int
-CIAO::DDS4CCM::DataReaderStateHandler_T<CCM_TYPE, DDS_TYPE>::handle_exception (ACE_HANDLE)
+CIAO::DDS4CCM::DataReaderStateHandler_T<CCM_TYPE, TYPED_READER, SEQ_TYPE>::handle_exception (ACE_HANDLE)
 {
   try
     {

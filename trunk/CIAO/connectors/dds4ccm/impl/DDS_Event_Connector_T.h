@@ -91,7 +91,7 @@ private:
       typename CCM_TYPE::supplier_traits,
       typename DDS_TYPE::typed_writer_type,
       typename DDS_TYPE::value_type,
-      typename DDS_TYPE::seq_type>
+      SEQ_TYPE>
     supplier_;
   //@}
 
@@ -99,14 +99,25 @@ private:
    * DDS_Listen push_consumer
    */
   //@{
-  DDS_Listen_T <typename CCM_TYPE::push_consumer_traits, DDS_TYPE> push_consumer_;
+  DDS_Listen_T <
+      typename CCM_TYPE::push_consumer_traits,
+      typename DDS_TYPE::typed_reader_type,
+      typename DDS_TYPE::value_type,
+      SEQ_TYPE>
+    push_consumer_;
   //@}
 
   /**
    * DDS_Get pull_consumer
    */
   //@{
-  DDS_Get_T <typename CCM_TYPE::pull_consumer_traits, DDS_TYPE, FIXED> pull_consumer_;
+  DDS_Get_T <
+      typename CCM_TYPE::pull_consumer_traits,
+      typename DDS_TYPE::typed_reader_type,
+      typename DDS_TYPE::value_type,
+      SEQ_TYPE,
+      FIXED>
+    pull_consumer_;
   //@}
 
   void do_configuration_complete (void);

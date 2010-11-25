@@ -215,33 +215,49 @@ public:
   virtual void ccm_passivate (void);
 
 private:
-  typedef DDS_Write_T <
-    typename CCM_TYPE::supplier_sq_traits,
-    typename DDS_TYPE::typed_writer_type,
-    typename DDS_TYPE::value_type,
-    typename DDS_TYPE::seq_type>
-    Writer_Type;
+  DDS_Write_T <
+      typename CCM_TYPE::supplier_sq_traits,
+      typename DDS_TYPE::typed_writer_type,
+      typename DDS_TYPE::value_type,
+      SEQ_TYPE>
+    sq_supplier_;
 
-  typedef DDS_Get_T <
-    typename CCM_TYPE::pull_consumer_sq_traits,
-    DDS_TYPE,
-    FIXED>
-    Getter_Type;
+  DDS_Write_T <
+      typename CCM_TYPE::supplier_tr_traits,
+      typename DDS_TYPE::typed_writer_type,
+      typename DDS_TYPE::value_type,
+      SEQ_TYPE>
+    tr_supplier_;
 
-  typedef DDS_Listen_T<
-    typename CCM_TYPE::push_consumer_cl_traits,
-    DDS_TYPE>
-    Listener_Type;
+  DDS_Write_T <
+      typename CCM_TYPE::supplier_cl_traits,
+      typename DDS_TYPE::typed_writer_type,
+      typename DDS_TYPE::value_type,
+      SEQ_TYPE>
+    cl_supplier_;
 
-  Writer_Type sq_supplier_;
-  Writer_Type tr_supplier_;
-  Writer_Type cl_supplier_;
+  DDS_Get_T <
+      typename CCM_TYPE::pull_consumer_sq_traits,
+      typename DDS_TYPE::typed_reader_type,
+      typename DDS_TYPE::value_type,
+      SEQ_TYPE,
+      FIXED>
+    pull_consumer_sq_;
 
-  Getter_Type pull_consumer_sq_;
-  Getter_Type pull_consumer_tr_;
+  DDS_Get_T <
+      typename CCM_TYPE::pull_consumer_tr_traits,
+      typename DDS_TYPE::typed_reader_type,
+      typename DDS_TYPE::value_type,
+      SEQ_TYPE,
+      FIXED>
+    pull_consumer_tr_;
 
-  // Just one listener implemented.
-  Listener_Type push_consumer_cl_;
+  DDS_Listen_T<
+      typename CCM_TYPE::push_consumer_cl_traits,
+      typename DDS_TYPE::typed_reader_type,
+      typename DDS_TYPE::value_type,
+      SEQ_TYPE>
+    push_consumer_cl_;
 
   //connection to the receiver implementation
   typename CCM_TYPE::push_consumer_cl_traits::data_listener_type::_var_type dl_;

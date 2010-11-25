@@ -8,22 +8,22 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
-    Reader_T<READER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::Reader_T (void)
+    template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::Reader_T (void)
       : condition_manager_ (0)
     {
       DDS4CCM_TRACE ("Reader_T::Reader_T");
     }
 
-    template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
-    Reader_T<READER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::~Reader_T (void)
+    template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::~Reader_T (void)
     {
       DDS4CCM_TRACE ("Reader_T::~Reader_T");
     }
 
-    template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     ::DDS::InstanceHandle_t
-    Reader_T<READER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::check_handle (
+    Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::check_handle (
       const VALUE_TYPE& an_instance,
       const ::DDS::InstanceHandle_t & instance_handle)
     {
@@ -34,9 +34,9 @@ namespace CIAO
                                                      lookup_hnd);
     }
 
-    template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     CORBA::ULong
-    Reader_T<READER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::get_nr_valid_samples (
+    Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::get_nr_valid_samples (
       const ::DDS::SampleInfoSeq& sample_infos,
       const bool determine_last)
     {
@@ -65,9 +65,9 @@ namespace CIAO
       return nr_of_samples;
     }
 
-    template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Reader_T<READER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::convert_data (
+    Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::convert_data (
       const SEQ_VALUE_TYPE & all_data,
       SEQ_VALUE_TYPE & data_to_return,
       ::CCM_DDS::ReadInfoSeq& infos,
@@ -90,9 +90,9 @@ namespace CIAO
         }
     }
 
-    template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Reader_T<READER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::read_w_instance (
+    Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::read_w_instance (
       SEQ_VALUE_TYPE & data,
       ::DDS::SampleInfoSeq & sample_info,
       const ::DDS::InstanceHandle_t & lookup_hnd)
@@ -121,9 +121,9 @@ namespace CIAO
         }
     }
 
-    template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Reader_T<READER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::read_wo_instance (
+    Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::read_wo_instance (
       SEQ_VALUE_TYPE & data,
       ::DDS::SampleInfoSeq & sample_info,
       ::DDS::QueryCondition_ptr qc)
@@ -160,9 +160,9 @@ namespace CIAO
         }
     }
 
-    template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Reader_T<READER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::return_loan (
+    Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::return_loan (
       SEQ_VALUE_TYPE & data,
       ::DDS::SampleInfoSeq  sample_info)
     {
@@ -178,9 +178,9 @@ namespace CIAO
         }
     }
 
-    template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Reader_T<READER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::read_last (
+    Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::read_last (
       SEQ_VALUE_TYPE& instances,
       ::CCM_DDS::ReadInfoSeq& infos)
     {
@@ -209,9 +209,9 @@ namespace CIAO
         }
     }
 
-    template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Reader_T<READER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::read_all (
+    Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::read_all (
               SEQ_VALUE_TYPE& instances,
               ::CCM_DDS::ReadInfoSeq& infos)
     {
@@ -227,9 +227,9 @@ namespace CIAO
       this->return_loan (instances, sample_info);
     }
 
-    template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Reader_T<READER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::read_one_last (
+    Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::read_one_last (
       VALUE_TYPE& an_instance,
       ::CCM_DDS::ReadInfo_out info,
       const ::DDS::InstanceHandle_t & instance_handle)
@@ -263,9 +263,9 @@ namespace CIAO
         }
     }
 
-    template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Reader_T<READER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::read_one_all (
+    Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::read_one_all (
       const VALUE_TYPE& an_instance,
       SEQ_VALUE_TYPE& instances,
       ::CCM_DDS::ReadInfoSeq& infos,
@@ -284,17 +284,17 @@ namespace CIAO
       this->return_loan (instances, sample_info);
     }
 
-    template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     ::CCM_DDS::QueryFilter *
-    Reader_T<READER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::query (void)
+    Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::query (void)
     {
       DDS4CCM_TRACE ("Reader_T::query");
       return this->condition_manager_->query ();
     }
 
-    template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Reader_T<READER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::query (
+    Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::query (
       const ::CCM_DDS::QueryFilter & query)
     {
       DDS4CCM_TRACE ("Reader_T::query");
@@ -302,29 +302,29 @@ namespace CIAO
       return this->condition_manager_->query (query);
     }
 
-    template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Reader_T<READER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::set_dds_reader (
+    Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::set_dds_reader (
       ::DDS::DataReader_ptr dr,
       ConditionManager * condition_manager)
     {
       DDS4CCM_TRACE ("Reader_T::set_dds_reader");
-      this->dds_reader_ = DDS_READER_TYPE::_narrow (dr);
+      this->dds_reader_ = TYPED_DDS_READER::_narrow (dr);
       this->condition_manager_ = condition_manager;
     }
 
-    template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     ::DDS::DataReader_ptr
-    Reader_T<READER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::get_dds_reader (void)
+    Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::get_dds_reader (void)
     {
       DDS4CCM_TRACE ("Reader_T::get_dds_reader");
 
       return ::DDS::DataReader::_duplicate (this->dds_reader_.in ());
     }
 
-    template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
-    typename DDS_READER_TYPE::_ptr_type
-    Reader_T<READER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::dds_reader (void)
+    template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    typename TYPED_DDS_READER::_ptr_type
+    Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::dds_reader (void)
     {
       if (! ::CORBA::is_nil (this->dds_reader_))
         {

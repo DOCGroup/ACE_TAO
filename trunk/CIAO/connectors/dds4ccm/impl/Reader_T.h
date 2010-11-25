@@ -20,7 +20,7 @@ namespace CIAO
   {
     class ConditionManager;
 
-    template <typename READER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     class Reader_T :
         public virtual READER_TYPE,
         public virtual LocalObject,
@@ -62,10 +62,10 @@ namespace CIAO
       ::DDS::DataReader_ptr get_dds_reader (void);
 
     private:
-      typename DDS_READER_TYPE::_var_type dds_reader_;
+      typename TYPED_DDS_READER::_var_type dds_reader_;
       ::CIAO::DDS4CCM::ConditionManager * condition_manager_;
 
-      typename DDS_READER_TYPE::_ptr_type dds_reader (void);
+      typename TYPED_DDS_READER::_ptr_type dds_reader (void);
 
       // Helper methods
       ::CORBA::ULong get_nr_valid_samples (

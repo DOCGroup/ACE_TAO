@@ -21,7 +21,7 @@ namespace CIAO
   namespace DDS4CCM
   {
     /**
-    * @class Getter_Base_T<DDS_TYPE,CCM_TYPE>
+    * @class Getter_Base_T<GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>
     *
     * @brief Templated base class for the Getter port.
     *
@@ -35,7 +35,7 @@ namespace CIAO
     *               All methods return a boolean as result indicating whether actual data
     *               are provided (TRUE) or if the time-out occurred (FALSE).
     */
-    template <typename GETTER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     class Getter_Base_T :
         public virtual GETTER_TYPE,
         public virtual LocalObject,
@@ -85,13 +85,13 @@ namespace CIAO
                             ::CIAO::DDS4CCM::ConditionManager * condition_manager);
       ::DDS::DataReader_ptr get_dds_reader (void);
     protected:
-        typename DDS_READER_TYPE::_var_type dds_reader_;
+        typename TYPED_DDS_READER::_var_type dds_reader_;
       ::CIAO::DDS4CCM::ConditionManager * condition_manager_;
 
       ::DDS::Duration_t time_out_;
       ::CCM_DDS::DataNumber_t max_delivered_data_;
 
-      typename DDS_READER_TYPE::_ptr_type dds_reader (void);
+      typename TYPED_DDS_READER::_ptr_type dds_reader (void);
 
       ::DDS::ReturnCode_t get (SEQ_VALUE_TYPE& data,
                                 ::DDS::SampleInfoSeq & sample_info,
@@ -109,16 +109,16 @@ namespace CIAO
         ::DDS::ReadCondition_ptr rd);
     };
 
-    template <typename GETTER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE, bool FIXED>
+    template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE, bool FIXED>
     class Getter_T;
 
     /**
     * @brief Implementation of the Getter port for variable sized data types.
     *
     */
-    template <typename GETTER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
-    class Getter_T <GETTER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE, false> :
-      public Getter_Base_T <GETTER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>
+    template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    class Getter_T <GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE, false> :
+      public Getter_Base_T <GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>
     {
     public:
       /**
@@ -136,9 +136,9 @@ namespace CIAO
     * @brief Implementation of the Getter port for fixed sized data types.
     *
     */
-    template <typename GETTER_TYPE, typename DDS_READER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
-    class Getter_T <GETTER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE, true> :
-      public Getter_Base_T <GETTER_TYPE, DDS_READER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>
+    template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    class Getter_T <GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE, true> :
+      public Getter_Base_T <GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>
     {
     public:
       /**

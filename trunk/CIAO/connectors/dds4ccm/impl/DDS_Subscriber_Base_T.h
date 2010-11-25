@@ -17,7 +17,7 @@
 #include "dds4ccm/impl/CCM_DataReader.h"
 #include "dds4ccm/impl/LocalObject_T.h"
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 class DDS_Subscriber_Base_T
 {
 public:
@@ -59,9 +59,9 @@ public:
 protected:
   typedef ::CIAO::DDS4CCM::Reader_T<
       typename CCM_TYPE::data_type,
-      typename DDS_TYPE::typed_reader_type,
-      typename DDS_TYPE::value_type,
-      typename DDS_TYPE::seq_type>
+      TYPED_DDS_READER,
+      VALUE_TYPE,
+      SEQ_VALUE_TYPE>
     Reader_type;
   typedef ::CIAO::DDS4CCM::CCM_DDS_ContentFilterSetting_i
     ContentFilterSetting_type;

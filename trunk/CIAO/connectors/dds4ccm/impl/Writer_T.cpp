@@ -8,23 +8,23 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename WRITER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
-    Writer_T<WRITER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::Writer_T (void)
-    : InstanceHandleManager_T<WRITER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE> (),
+    template <typename WRITER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    Writer_T<WRITER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::Writer_T (void)
+    : InstanceHandleManager_T<WRITER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE> (),
       is_coherent_write_ (false)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Writer_T::Writer_T");
     }
 
-    template <typename WRITER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
-    Writer_T<WRITER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::~Writer_T (void)
+    template <typename WRITER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    Writer_T<WRITER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::~Writer_T (void)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Writer_T::~Writer_T");
     }
 
-    template <typename WRITER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename WRITER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Writer_T<WRITER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::write_i (
+    Writer_T<WRITER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::write_i (
       const VALUE_TYPE& datum,
       const ::DDS::InstanceHandle_t& instance_handle,
       ::CCM_DDS::DataNumber_t index)
@@ -43,9 +43,9 @@ namespace CIAO
         }
     }
 
-    template <typename WRITER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename WRITER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Writer_T<WRITER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::write_one (
+    Writer_T<WRITER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::write_one (
       const VALUE_TYPE & an_instance,
       const ::DDS::InstanceHandle_t & instance_handle)
     {
@@ -58,9 +58,9 @@ namespace CIAO
           "Write successful\n"));
     }
 
-    template <typename WRITER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename WRITER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Writer_T<WRITER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::write_many (
+    Writer_T<WRITER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::write_many (
       const SEQ_VALUE_TYPE& instances)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Writer_T::write_many");
@@ -91,16 +91,16 @@ namespace CIAO
           "Write successful\n"));
     }
 
-    template <typename WRITER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename WRITER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     ::CORBA::Boolean
-    Writer_T<WRITER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::is_coherent_write (void)
+    Writer_T<WRITER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::is_coherent_write (void)
     {
       return this->is_coherent_write_;
     }
 
-    template <typename WRITER_TYPE, typename DDS_WRITER_TYPE, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+    template <typename WRITER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     void
-    Writer_T<WRITER_TYPE, DDS_WRITER_TYPE, VALUE_TYPE, SEQ_VALUE_TYPE>::is_coherent_write (
+    Writer_T<WRITER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::is_coherent_write (
         ::CORBA::Boolean value)
     {
       this->is_coherent_write_ = value;

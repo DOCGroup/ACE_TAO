@@ -140,38 +140,60 @@ private:
    */
   //@{
   DDS_Update_T <
-    typename CCM_TYPE::observable_traits,
-    typename DDS_TYPE::typed_writer_type,
-    typename DDS_TYPE::value_type,
-    typename DDS_TYPE::seq_type> observable_;
+      typename CCM_TYPE::observable_traits,
+      typename DDS_TYPE::typed_writer_type,
+      typename DDS_TYPE::value_type,
+      SEQ_TYPE>
+    observable_;
   //@}
 
   /**
    * DDS_Read passive_observer
    */
   //@{
-  DDS_Read_T <typename CCM_TYPE::passive_observer_traits, DDS_TYPE> passive_observer_;
+  DDS_Read_T <
+      typename CCM_TYPE::passive_observer_traits,
+      typename DDS_TYPE::typed_reader_type,
+      typename DDS_TYPE::value_type,
+      SEQ_TYPE>
+    passive_observer_;
   //@}
 
   /**
    * DDS_Get pull_observer
    */
   //@{
-  DDS_Get_T <typename CCM_TYPE::pull_observer_traits, DDS_TYPE, FIXED> pull_observer_;
+  DDS_Get_T <
+      typename CCM_TYPE::pull_observer_traits,
+      typename DDS_TYPE::typed_reader_type,
+      typename DDS_TYPE::value_type,
+      SEQ_TYPE,
+      FIXED>
+    pull_observer_;
   //@}
 
   /**
    * DDS_Listen push_observer
    */
   //@{
-  DDS_Listen_T <typename CCM_TYPE::push_observer_traits, DDS_TYPE> push_observer_;
+  DDS_Listen_T <
+      typename CCM_TYPE::push_observer_traits,
+      typename DDS_TYPE::typed_reader_type,
+      typename DDS_TYPE::value_type,
+      SEQ_TYPE>
+  push_observer_;
   //@}
 
   /**
    * DDS_StateListen push_state_observer
    */
   //@{
-  DDS_StateListen_T <typename CCM_TYPE::push_state_observer_traits, DDS_TYPE> push_state_observer_;
+  DDS_StateListen_T <
+      typename CCM_TYPE::push_state_observer_traits,
+      typename DDS_TYPE::typed_reader_type,
+      typename DDS_TYPE::value_type,
+      SEQ_TYPE>
+    push_state_observer_;
   //@}
 
   void do_configuration_complete (void);
