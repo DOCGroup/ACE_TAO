@@ -3,6 +3,8 @@
 #ifndef NT_CONNECTOR_T
 #define NT_CONNECTOR_T
 
+#include "NonTopic_ConnectorEC.h"
+
 // connector template for Typed_NonTopic_Test_1
 template <typename CCM_TYPE, typename T, bool FIXED_T,
                                typename U, bool FIXED_U,
