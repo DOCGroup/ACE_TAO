@@ -1,3 +1,13 @@
+Thu Nov 25 14:03:39 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * tests/IDL_Test/NonTopic_Connector/nontopic_test.idl:
+        * tests/IDL_Test/NonTopic_Connector/NonTopic_Connector.mpc:
+        * tests/IDL_Test/NonTopic_Connector/NonTopic_Connector.idl:
+        * tests/IDL_Test/NonTopic_Connector/NonTopic_Connector_T.h:
+        * tests/IDL_Test/NonTopic_Connector/NonTopic_Connector_T.cpp:
+        Changed after TAO_IDL change .
+
+
 Thu Nov 25 13:52:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:

@@ -15,9 +15,9 @@
 
 #pragma ciao lem "NonTopic_ConnectorE.idl"
 
-module Typed_NonTopic_Test_1< ::X,::Y,::Z, ::XSeq,::YSeq, ZSeq> Xtest_1;
+module Typed_NonTopic_Test_1< ::X,::Y,::testEnum, ::XSeq,::YSeq, testEnumSeq> Xtest_1;
 module Typed_NonTopic_Test_2< ::testUnion,::Z, ::testUnionSeq,::ZSeq> Xtest_2;
-module Typed_NonTopic_Test_2< ::testSeq,::testArray, ::testSeq,::testArraySeq> Xtest_3;
+module Typed_NonTopic_Test_2< ::testSeq,::testArray, ::testSeqSeq,::testArraySeq> Xtest_3;
 
 #endif /* NONTOPIC_CONNECTOR_IDL_ */
 
