@@ -3,13 +3,11 @@
 #ifndef OFM_CONNECTOR_IDL
 #define OFM_CONNECTOR_IDL
 
-#include "OFM_Base.idl"
-#if defined __TAO_IDL
-
+#include <Components.idl>
 #include <ccm_dds.idl>
-#endif
 
-#pragma ndds typesupport "OFM_BaseSupport.h"
+#include "OFM_Base.idl"
+
 #pragma ciao lem "OFM_ConnectorE.idl"
 
 module ::CCM_DDS::Typed < ::Topic1, ::Topic1Seq> Topic1Connector;

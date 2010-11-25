@@ -8,13 +8,11 @@
 #ifndef ONEFILE_CONNECTOR_IDL_
 #define ONEFILE_CONNECTOR_IDL_
 
-#if defined __TAO_IDL
+#include <Components.idl>
 #include <ccm_dds.idl>
-#endif
 
 #include "OneFile_Base.idl"
 
-#pragma ndds typesupport "OneFile_BaseSupport.h"
 #pragma ciao lem "OneFile_ConnectorE.idl"
 
 module OneFile_Connector
