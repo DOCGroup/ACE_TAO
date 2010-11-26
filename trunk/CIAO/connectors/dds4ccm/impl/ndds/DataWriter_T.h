@@ -17,10 +17,10 @@ namespace CIAO
 {
   namespace NDDS
   {
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_WRITER, typename TYPED_WRITER_TYPE, typename VALUE_TYPE>
     class DataWriter_T
       : public virtual DDS_DataWriter_Base,
-        public virtual DDS_TYPE::typed_writer_type
+        public virtual TYPED_WRITER_TYPE
     {
     public:
       explicit DataWriter_T (::DDSDataWriter * dw,
@@ -74,55 +74,55 @@ namespace CIAO
       virtual DDS_INSTANCE_HANDLE_T_RETN get_instance_handle (void);
 
       virtual ::DDS::InstanceHandle_t register_instance (
-        const typename DDS_TYPE::value_type& instance_data);
+        const VALUE_TYPE & instance_data);
 
       virtual ::DDS::InstanceHandle_t register_instance_w_timestamp (
-        const typename  DDS_TYPE::value_type & instance_data,
+        const VALUE_TYPE & instance_data,
         const ::DDS::Time_t & source_timestamp);
 
       virtual ::DDS::ReturnCode_t unregister_instance (
-        const typename DDS_TYPE::value_type & instance_data,
+        const VALUE_TYPE & instance_data,
         const ::DDS::InstanceHandle_t & handle);
 
       virtual ::DDS::ReturnCode_t unregister_instance_w_timestamp (
-        const typename  DDS_TYPE::value_type & instance_data,
+        const VALUE_TYPE & instance_data,
         const ::DDS::InstanceHandle_t & handle,
         const ::DDS::Time_t & source_timestamp);
 
       virtual ::DDS::ReturnCode_t write (
-        const typename DDS_TYPE::value_type & instance_data,
+        const VALUE_TYPE & instance_data,
         const ::DDS::InstanceHandle_t & handle);
 
       virtual ::DDS::ReturnCode_t write_w_timestamp (
-        const typename DDS_TYPE::value_type & instance_data,
+        const VALUE_TYPE & instance_data,
         const ::DDS::InstanceHandle_t & handle,
         const ::DDS::Time_t & source_timestamp);
 
       virtual ::DDS::ReturnCode_t dispose (
-        const typename DDS_TYPE::value_type& instance_data,
+        const VALUE_TYPE & instance_data,
         const ::DDS::InstanceHandle_t & instance_handle);
 
       virtual ::DDS::ReturnCode_t dispose_w_timestamp (
-        const typename DDS_TYPE::value_type& instance_data,
+        const VALUE_TYPE & instance_data,
         const ::DDS::InstanceHandle_t & instance_handle,
         const ::DDS::Time_t & source_timestamp);
 
       virtual ::DDS::ReturnCode_t get_key_value (
-        typename DDS_TYPE::value_type & key_holder,
+        VALUE_TYPE & key_holder,
         const ::DDS::InstanceHandle_t & handle);
 
       virtual ::DDS::InstanceHandle_t lookup_instance (
-        const typename DDS_TYPE::value_type& instance_data);
+        const VALUE_TYPE & instance_data);
 
       virtual ::DDSDataWriter * get_rti_entity (void);
 
 
     private:
-      typename DDS_TYPE::datawriter_type * rti_entity_;
+      TYPED_DDS_WRITER * rti_entity_;
       ::DDS::DomainParticipant_var dp_;
       ::DDS::Publisher_var pub_;
 
-      typename DDS_TYPE::datawriter_type * rti_entity (void);
+      TYPED_DDS_WRITER * rti_entity (void);
 
       virtual void set_rti_entity (::DDSDataWriter * dw);
     };
