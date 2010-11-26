@@ -142,6 +142,13 @@ namespace CIAO
       return this->rti_entity_;
     }
 
+    void
+    DDS_Topic_i::set_rti_entity (::DDSTopic* topic)
+    {
+      this->rti_entity_ = topic;
+    }
+
+
     DDSTopic *
     DDS_Topic_i::rti_entity (void)
     {

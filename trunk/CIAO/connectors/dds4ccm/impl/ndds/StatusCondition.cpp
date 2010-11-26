@@ -51,6 +51,12 @@ namespace CIAO
       return this->rti_entity_;
     }
 
+    void
+    DDS_StatusCondition_i::set_rti_entity (::DDSStatusCondition * status_condition)
+    {
+      this->rti_entity_ = status_condition;
+    }
+
     ::DDSStatusCondition *
     DDS_StatusCondition_i::rti_entity (void)
     {

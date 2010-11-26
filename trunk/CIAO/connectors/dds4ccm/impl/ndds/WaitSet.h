@@ -15,7 +15,7 @@
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
 
 class DDSWaitSet;
-class DDSConditionSeq;
+struct DDSConditionSeq;
 
 namespace CIAO
 {

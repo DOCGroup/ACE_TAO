@@ -10,7 +10,7 @@
 
 namespace CCM_DDS
 {
-  class QueryFilter;
+  struct QueryFilter;
 }
 
 namespace CIAO

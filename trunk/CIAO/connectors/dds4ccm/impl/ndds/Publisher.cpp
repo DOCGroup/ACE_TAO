@@ -245,6 +245,7 @@ namespace CIAO
       // Delete the previously set listener
       DDSPublisherListener *listener = this->rti_entity ()->get_listener ();
       delete listener;
+      listener = 0;
 
       DDS_PublisherListener_i * ccm_dds_impl_list  = 0;
       if (! ::CORBA::is_nil (a_listener))
