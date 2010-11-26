@@ -326,6 +326,7 @@ public:
 
   /// Used with ami4ccm.
   int gen_ami4ccm_idl (TAO_OutStream *os);
+  int gen_ami4ccm_rh_idl (TAO_OutStream *os);
 
   bool is_ami_rh (void) const;
   void is_ami_rh (bool val);
