@@ -8,6 +8,8 @@
 #ifndef ONEFILE_BASE_IDL_
 #define ONEFILE_BASE_IDL_
 
+#pragma ndds typesupport "OneFile_BaseSupport.h"
+
 struct OneFileTopic {
   string hello; //@key
   long iteration;

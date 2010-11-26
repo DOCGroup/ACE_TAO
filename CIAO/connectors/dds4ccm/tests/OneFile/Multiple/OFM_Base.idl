@@ -3,6 +3,8 @@
 #ifndef OFM_BASE_IDL
 #define OFM_BASE_IDL
 
+#pragma ndds typesupport "OFM_BaseSupport.h"
+
 struct Topic1 {
   string key_value_topic1; //@key
   long long_value;
