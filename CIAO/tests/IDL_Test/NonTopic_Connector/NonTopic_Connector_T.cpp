@@ -7,9 +7,9 @@ template <typename CCM_TYPE, typename T, bool FIXED_T,
                                 typename Tseq, bool FIXED_Ts,
                                 typename Useq, bool FIXED_Ys,
                                 typename VSeq, bool FIXED_Vs>
-NT_Connector_T<CCM_TYPE, T, FIXED_T,U, FIXED_U,V,  FIXED_V,
+NT_Connector_T<CCM_TYPE, T, FIXED_T,U, FIXED_U, V, FIXED_V,
                Tseq, FIXED_Ts, Useq,  FIXED_Ys,
-               VSeq,  FIXED_Vs>::NT_Connector_T (void)
+               VSeq, FIXED_Vs>::NT_Connector_T (void)
 {
 }
 
