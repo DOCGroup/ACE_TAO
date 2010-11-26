@@ -81,7 +81,7 @@ project(Single_Service_stub) : ccm_stub   {
 }
 
 project(Single_Service_exec) : ciao_executor   {
-  after   += Single_Service_lem_stub Single_Service_stub
+  after   += Single_Service_lem_stub Single_Service_stub Single_Service_Common_stub
   sharedname = Single_Service_exec
   libs += Single_Service_stub Single_Service_lem_stub Single_Service_Common_stub
   libpaths += ../lib
@@ -107,10 +107,10 @@ project(Single_Service_exec) : ciao_executor   {
 
 
 project(Single_Service_svnt) : ciao_servant {
-  after      += Single_Service_lem_stub Single_Service_Common_svnt
+  after      += Single_Service_lem_stub Single_Service_Common_skel
   sharedname  = Single_Service_svnt
   libs       += Single_Service_stub Single_Service_lem_stub \
-                Single_Service_Common_svnt
+                Single_Service_Common_skel
   libpaths += ../lib
   libout = ../lib
   includes += ..
