@@ -16,7 +16,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_ThreeComp_AMI_Receiver_Impl</string>
+          <string>create_ThreeComp_Receiver_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -67,7 +67,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_ThreeComp_AMI_Sender_Impl</string>
+          <string>create_ThreeComp_Sender_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -118,7 +118,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_ThreeComp_AMI_Master_Impl</string>
+          <string>create_ThreeComp_Master_Impl</string>
         </value>
       </value>
     </execParameter>
