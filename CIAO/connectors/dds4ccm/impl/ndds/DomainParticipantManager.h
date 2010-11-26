@@ -53,10 +53,11 @@ namespace CIAO
         Topics tps_;
     };
 
-    public:
+    private:
       /// Constructor
       DomainParticipantManager (void);
 
+    public:
       /// Destructor
       ~DomainParticipantManager (void);
 

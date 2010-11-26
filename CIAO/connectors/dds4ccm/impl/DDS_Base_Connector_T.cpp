@@ -120,7 +120,7 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_domain (
   DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_domain");
 
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
-                "DDS_Base_Connector_T::init_default_domain - "
+                "DDS_Base_Connector_T::init_domain - "
                 "Start configuring default domain <%d>\n",
                 this->domain_id_));
 
@@ -151,7 +151,7 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_domain (
   if (::CORBA::is_nil (participant))
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                  "DDS_Base_Connector_T::init_default_domain - "
+                  "DDS_Base_Connector_T::init_domain - "
                   "Error: Unable to create DomainParticipant for domain <%d>\n",
                   this->domain_id_));
       throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
@@ -205,7 +205,8 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove (void)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove");
 
-  this->remove_domain (this->domain_participant_.inout ());
+  this->remove_domain (this->domain_participant_.in ());
+  this->domain_participant_ = ::DDS::DomainParticipant::_nil ();
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
@@ -512,29 +513,30 @@ template <typename CCM_TYPE, typename DDS_TYPE>
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::passivate_topic (
   ::DDS::Topic_ptr topic,
-  ::DDS::TopicListener_ptr & listener)
+  ::DDS::TopicListener_ptr topic_listener)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::passivate_topic");
 
-  ::DDS::ReturnCode_t const retcode =
-    topic->set_listener (::DDS::TopicListener::_nil (), 0);
-  if (retcode != ::DDS::RETCODE_OK)
+  if (!::CORBA::is_nil (topic_listener))
     {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                    "DDS_Base_Connector_T::passivate_topic - "
-                    "Error while setting the listener on the topic - <%C>\n",
-                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
-      throw ::CORBA::INTERNAL ();
+      ::DDS::ReturnCode_t const retcode =
+        topic->set_listener (::DDS::TopicListener::_nil (), 0);
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DDS_Base_Connector_T::passivate_topic - "
+                        "Error while setting the listener on the topic - <%C>\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CORBA::INTERNAL ();
+        }
     }
-
-  listener = ::DDS::TopicListener::_nil ();
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::passivate_publisher (
   ::DDS::Publisher_ptr publisher,
-  ::DDS::PublisherListener_ptr & publisher_listener)
+  ::DDS::PublisherListener_ptr publisher_listener)
 
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::passivate_publisher");
@@ -552,8 +554,6 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::passivate_publisher (
                         ::CIAO::DDS4CCM::translate_retcode (retcode)));
           throw ::CORBA::INTERNAL ();
         }
-
-      publisher_listener = ::DDS::PublisherListener::_nil ();
     }
 }
 
@@ -561,7 +561,7 @@ template <typename CCM_TYPE, typename DDS_TYPE>
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::passivate_subscriber (
   ::DDS::Subscriber_ptr subscriber,
-  ::DDS::SubscriberListener_ptr & subscriber_listener)
+  ::DDS::SubscriberListener_ptr subscriber_listener)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::passivate_subscriber");
 
@@ -577,8 +577,6 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::passivate_subscriber (
                         ::CIAO::DDS4CCM::translate_retcode (retcode)));
           throw ::CORBA::INTERNAL ();
         }
-
-      subscriber_listener = ::DDS::SubscriberListener::_nil ();
     }
 }
 
@@ -588,7 +586,7 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::passivate_subscriber (
 template <typename CCM_TYPE, typename DDS_TYPE>
 void DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::remove_topic (
   ::DDS::DomainParticipant_ptr participant,
-  ::DDS::Topic_ptr & topic)
+  ::DDS::Topic_ptr topic)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::remove_topic");
 
@@ -597,37 +595,34 @@ void DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::remove_topic (
     {
       throw ::CCM_DDS::InternalError (retcode, 0);
     }
-  topic = ::DDS::Topic::_nil ();
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::remove_publisher (
   ::DDS::DomainParticipant_ptr participant,
-  ::DDS::Publisher_ptr & publisher)
+  ::DDS::Publisher_ptr publisher)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::remove_publisher");
 
   participant->delete_publisher (publisher);
-  publisher = ::DDS::Publisher::_nil ();
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::remove_subscriber (
   ::DDS::DomainParticipant_ptr participant,
-  ::DDS::Subscriber_ptr & subscriber)
+  ::DDS::Subscriber_ptr subscriber)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::remove_subscriber");
 
-  participant->delete_subscriber (subscriber);;
-  subscriber = ::DDS::Subscriber::_nil ();
+  participant->delete_subscriber (subscriber);
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
 void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::remove_domain (
-  ::DDS::DomainParticipant_ptr & participant)
+  ::DDS::DomainParticipant_ptr participant)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::remove_domain");
 
@@ -636,8 +631,6 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::remove_domain (
     {
       throw ::CCM_DDS::InternalError (retcode, 0);
     }
-
-  participant = ::DDS::DomainParticipant::_nil ();
 }
 
 /**

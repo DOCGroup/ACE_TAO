@@ -79,20 +79,20 @@ protected:
 
   //passivation
   void passivate_topic      (::DDS::Topic_ptr topic,
-                             ::DDS::TopicListener_ptr & listener);
+                             ::DDS::TopicListener_ptr topic_listener);
   void passivate_publisher  (::DDS::Publisher_ptr publisher,
-                             ::DDS::PublisherListener_ptr & publisher_listener);
+                             ::DDS::PublisherListener_ptr publisher_listener);
   void passivate_subscriber (::DDS::Subscriber_ptr subscriber,
-                             ::DDS::SubscriberListener_ptr & subscriber_listener);
+                             ::DDS::SubscriberListener_ptr subscriber_listener);
 
   //removal
   void remove_topic       (::DDS::DomainParticipant_ptr participant,
-                           ::DDS::Topic_ptr & topic);
+                           ::DDS::Topic_ptr topic);
   void remove_publisher   (::DDS::DomainParticipant_ptr participant,
-                           ::DDS::Publisher_ptr & publisher);
+                           ::DDS::Publisher_ptr publisher);
   void remove_subscriber  (::DDS::DomainParticipant_ptr participant,
-                           ::DDS::Subscriber_ptr & subscriber);
-  void remove_domain      (::DDS::DomainParticipant_ptr & participant);
+                           ::DDS::Subscriber_ptr subscriber);
+  void remove_domain      (::DDS::DomainParticipant_ptr participant);
 
   void unregister_type    (::DDS::DomainParticipant_ptr participant,
                            const char * typesupport_name);
