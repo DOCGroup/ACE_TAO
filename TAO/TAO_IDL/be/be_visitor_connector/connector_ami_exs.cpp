@@ -92,21 +92,6 @@ be_visitor_connector_ami_exs::visit_connector (be_connector *node)
 
             new_stream = tao_cg->ciao_ami_rh_impl_source ();
         }
-
-      /// Initialize new visitor with a copy of our context,
-      /// because the new visitor gets a different stream.
-      be_visitor_context new_ctx (*this->ctx_);
-      new_ctx.stream (new_stream);
-      be_visitor_connector_ami_rh_exs impl_visitor (&new_ctx);
-
-      if (impl_visitor.visit_component (node) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_connector_ami_rh_exh::")
-                             ACE_TEXT ("visit_connector - ")
-                             ACE_TEXT ("rh impl visitor failed\n")),
-                            -1);
-        }
     }
 
   return 0;

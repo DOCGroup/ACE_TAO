@@ -1,3 +1,41 @@
+Fri Nov 26 22:30:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_connector/connector_ami_rh_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_ami_rh_exh.cpp:
+        * TAO_IDL/be_include/be_visitor_connector/connector_ami_rh_exh.h:
+        * TAO_IDL/be_include/be_visitor_connector/connector_ami_rh_exs.h:
+
+          Removed these visitors, they are replaced by the new ones below.
+
+        * TAO_IDL/be_include/be_visitor_component/component_ami_rh_exs.h:
+        * TAO_IDL/be_include/be_visitor_component/component_ami_rh_exh.h:
+        * TAO_IDL/be/be_visitor_component/component_ami_rh_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ami_rh_exs.cpp:
+
+          New visitors, replacing the removed ones above.
+
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ex_idl.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_connector.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_ami_exh.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_visitor_connector.h:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+
+          Moved generation of AMI4CCM reply handler implementations
+          from the *A_conn_i.{h.cpp} files to the appropriate
+          component executor implementation files. This change
+          also required moving the AMI4CCM reply handler IDL from
+          the *A.idl file to the *E.idl file. This set of changes
+          closes [BUGID:3929].
+
 Fri Nov 26 17:45:08 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_module.h:
