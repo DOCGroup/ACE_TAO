@@ -1,3 +1,36 @@
+Fri Nov 26 10:10:39 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.h:
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender.mpc:
+        * connectors/ami4ccm/tests/UsesMulti/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/UsesMulti/Receiver/UsesMulti_Receiver_exec.cpp:
+        * connectors/ami4ccm/tests/UsesMulti/Receiver/UsesMulti_Receiver_exec.h:
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.h:
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender.mpc:
+        * connectors/ami4ccm/tests/SimplexMulti/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/SimplexMulti/Receiver/UsesSM_Receiver_exec.cpp:
+        * connectors/ami4ccm/tests/SimplexMulti/Receiver/UsesSM_Receiver_exec.h:
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.h:
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender.mpc:
+        * connectors/ami4ccm/tests/UsesMulti/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/UsesMulti/Receiver/UsesMulti_Receiver_exec.cpp:
+        * connectors/ami4ccm/tests/UsesMulti/Receiver/UsesMulti_Receiver_exec.h:
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.h:
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender.mpc:
+        * connectors/ami4ccm/tests/SimplexMulti/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/SimplexMulti/Receiver/UsesSM_Receiver_exec.cpp:
+        * connectors/ami4ccm/tests/SimplexMulti/Receiver/UsesSM_Receiver_exec.h:
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMultiA_conn_i.cpp:
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMultiA_conn_i.h:
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSMA_conn_i.cpp:
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSMA_conn_i.h:
+        Generated executors with -Gex. Solve Valgrind warning.
+
+
 Fri Nov 26 09:09:04 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataWriter_T.h:
