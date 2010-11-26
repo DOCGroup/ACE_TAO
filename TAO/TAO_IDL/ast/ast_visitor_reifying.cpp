@@ -32,6 +32,8 @@
 
 #include "utl_identifier.h"
 #include "utl_exprlist.h"
+#include "utl_strlist.h"
+#include "utl_string.h"
 #include "nr_extern.h"
 
 ast_visitor_reifying::ast_visitor_reifying (
@@ -548,8 +550,11 @@ int
 ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
 {
   size_t i = 0;
-  FE_Utils::T_ARGLIST *t_args =
+  FE_Utils::T_ARGLIST const *t_args =
     this->ctx_->template_args ();
+
+  UTL_StrList *param_refs =
+    const_cast<UTL_StrList *> (idl_global->alias_params ());
 
   for (FE_Utils::T_PARAMLIST_INFO::ITERATOR iter (
          *this->ctx_->template_params ());
@@ -559,7 +564,15 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
       FE_Utils::T_Param_Info *item = 0;
       iter.next (item);
 
-      if (item->name_ == node->info ()->name_)
+      ACE_CString name (item->name_);
+
+      /// The param holder's info->name_ may be the same as the
+      /// node's local name, but if the node comes from an
+      /// alias, info->name_ will be the name of the alias's
+      /// referenced template module parameter, while the local
+      /// name will be that of the corresponding alias param
+      /// name, which is what we want.
+      if (name == node->local_name ()->get_string ())
         {
           AST_Decl **ret_ptr = 0;
 

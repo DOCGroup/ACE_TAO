@@ -95,6 +95,10 @@ public:
   virtual int visit_factory (AST_Factory *node);
   virtual int visit_finder (AST_Finder *node);
 
+protected:
+  // Store for passing on to subsequent create modules.
+  AST_Template_Module_Inst *tmi_;
+
 private:
   // If arg is a param holder, return the matching template arg,
   // otherwise return arg unchanged. If the arg is declared in

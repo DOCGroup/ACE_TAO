@@ -41,7 +41,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
     }
 
   // If we have a connector within a templated module
-  if (this->t_args_->size () > 0)
+  if (! this->t_args_.is_empty ())
     {
       os_ << be_nl
           << this->node_->local_name () << "_exec_i::"
@@ -53,9 +53,10 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
 
       os_ << "CCM_" << this->node_->flat_name ()
           << "_Traits," << be_nl;
+
       size_t slot = 1UL;
 
-      for (FE_Utils::T_ARGLIST::CONST_ITERATOR i (*this->t_args_);
+      for (FE_Utils::T_ARGLIST::CONST_ITERATOR i (this->t_args_);
           !i.done ();
           i.advance (), ++slot)
         {
@@ -91,7 +92,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
             {
               os_ << be_nl << "true";
             }
-          if (slot < this->t_args_->size ())
+          if (slot < this->t_args_.size ())
             {
               os_ << "," << be_nl;
             }

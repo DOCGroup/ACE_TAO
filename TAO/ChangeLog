@@ -1,3 +1,35 @@
+Fri Nov 26 17:45:08 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/ast_template_module_ref.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/ast_visitor_tmpl_module_inst.h:
+        * TAO_IDL/include/ast_visitor_context.h:
+        * TAO_IDL/include/ast_template_module_inst.h:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_ref.cpp:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_visitor_reifying.cpp:
+        * TAO_IDL/ast/ast_visitor_context.cpp:
+        * TAO_IDL/ast/ast_template_module_ref.cpp:
+        * TAO_IDL/ast/ast_template_module_inst.cpp:
+        * TAO_IDL/be_include/be_visitor_connector/connector_dds_ex_base.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Fixed two bugs, both related to code generation from
+          connectors that are declared as implied IDL from a
+          referenced template module ('alias' keyword). If the
+          'alias' construct uses a proper subset of the containing
+          template module's template parameters, all code generation
+          for any connectors inside it must use only that subset.
+
 Thu Nov 25 10:11:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/ast/ast_type.cpp:
