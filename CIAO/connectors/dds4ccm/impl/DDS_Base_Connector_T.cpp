@@ -117,7 +117,7 @@ void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_domain (
   ::DDS::DomainParticipant_ptr & participant)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_default_domain");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::init_domain");
 
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                 "DDS_Base_Connector_T::init_default_domain - "
@@ -629,6 +629,8 @@ void
 DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::remove_domain (
   ::DDS::DomainParticipant_ptr & participant)
 {
+  DDS4CCM_TRACE ("DDS_Base_Connector_T::remove_domain");
+
   ::DDS::ReturnCode_t const retcode = this->participant_factory_.delete_participant (participant);
   if (retcode != ::DDS::RETCODE_OK)
     {
@@ -647,6 +649,7 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::unregister_type (
   ::DDS::DomainParticipant_ptr participant,
   const char * typesupport_name)
 {
+  DDS4CCM_TRACE ("DDS_Base_Connector_T::unregister_type");
 #if (CIAO_DDS4CCM_NDDS==1)
   ::CIAO::NDDS::DDS_TypeFactory_i * factory =
     ::CIAO::NDDS::DDS_TypeSupport_i::unregister_type (typesupport_name, participant);

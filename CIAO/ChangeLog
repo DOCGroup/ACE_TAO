@@ -1,3 +1,13 @@
+Fri Nov 26 08:37:06 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+          Optimized logging/tracing
+
+        * connectors/dds4ccm/impl/ndds/DataReader_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/TypeSupport.h:
+          Every trait, needed from DDS_TYPE, has got his own template argument.
+
 Fri Nov 26 07:42:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Base.idl:
