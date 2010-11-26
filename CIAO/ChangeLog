@@ -1,3 +1,11 @@
+Fri Nov 26 22:35:09 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.idl:
+        * connectors/ami4ccm/examples/Hello/Base/Hello.idl:
+
+          Changes to the #pragma directives necessary to reflect the
+          recent changes in AMI4CCM reply handler generation.
+
 Fri Nov 26 19:04:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
