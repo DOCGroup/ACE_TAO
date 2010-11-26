@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "utl_indenter.h"
 #include "utl_string.h"
+#include "utl_strlist.h"
 #include "ast_valuebox.h"
 #include "ast_valuetype.h"
 #include "ast_valuetype_fwd.h"
@@ -1885,42 +1886,53 @@ UTL_Scope::match_param (UTL_ScopedName *e)
   FE_Utils::T_Param_Info *param = 0;
   unsigned long index = 0;
 
+  UTL_StrList *alias_params =
+    const_cast<UTL_StrList *> (idl_global->alias_params ());
+  UTL_String *alias_param = 0;
+
   for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (*params);
        i.next (param);
        i.advance (), ++index)
     {
       if (param->name_ == name)
         {
-          FE_Utils::T_PARAMLIST_INFO const *alias_params =
-            idl_global->alias_params ();
-
           /// If we are parsing this template module as a
           /// reference, the param holder we create must have
           /// the name of the corresponding aliased param.
           if (alias_params != 0)
             {
-              FE_Utils::T_Param_Info *alias_param = 0;
-              alias_params->get (alias_param, index);
-              Identifier id (alias_param->name_.c_str ());
+              unsigned long slot = 0;
+
+              for (UTL_StrlistActiveIterator iter (alias_params);
+                   !iter.is_done ();
+                   iter.next (), ++slot)
+                {
+                  if (slot == index)
+                    {
+                      alias_param = iter.item ();
+                      break;
+                    }
+                }
+
+              Identifier id (alias_param->get_string ());
               UTL_ScopedName sn (&id, 0);
 
-              retval =
+              return
                 idl_global->gen ()->create_param_holder (
                   &sn,
-                  alias_param);
+                  param);
             }
           else
             {
-              retval =
-                idl_global->gen ()->create_param_holder (e,
-                                                         param);
+              return
+                idl_global->gen ()->create_param_holder (
+                  e,
+                  param);
             }
-
-          break;
         }
     }
 
-  return retval;
+  return 0;
 }
 
 bool

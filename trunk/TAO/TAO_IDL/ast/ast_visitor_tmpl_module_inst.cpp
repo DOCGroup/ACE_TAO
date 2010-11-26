@@ -56,6 +56,7 @@ ast_visitor_tmpl_module_inst::ast_visitor_tmpl_module_inst (
       ast_visitor_context *ctx,
       bool ref_only)
   : ast_visitor (),
+    tmi_ (0),
     ctx_ (ctx),
     for_eventtype_ (false),
     for_finder_ (false),
@@ -682,12 +683,22 @@ ast_visitor_tmpl_module_inst::visit_module (AST_Module *node)
     idl_global->gen ()->create_module (idl_global->scopes ().top (),
                                        &sn);
 
+  added_module->from_inst (this->tmi_);
+
   AST_Module *m =
     AST_Module::narrow_from_scope (idl_global->scopes ().top ());
 
   m->fe_add_module (added_module);
 
   idl_global->scopes ().push (added_module);
+
+  AST_Template_Module_Ref *ref = node->from_ref ();
+
+  if (ref != 0)
+    {
+      added_module->from_ref (ref);
+      idl_global->alias_params (ref->param_refs ());
+    }
 
   if (this->visit_scope (node) == -1)
     {
@@ -700,6 +711,8 @@ ast_visitor_tmpl_module_inst::visit_module (AST_Module *node)
 
   // Restore scope stack.
   idl_global->scopes ().pop ();
+
+  idl_global->alias_params (0);
 
   return 0;
 }
@@ -729,6 +742,7 @@ ast_visitor_tmpl_module_inst::visit_template_module_inst (
   AST_Template_Module_Inst *node)
 {
   this->ctx_->template_args (node->template_args ());
+  this->tmi_ = node;
 
   AST_Module *instance =
     idl_global->gen ()->create_module (idl_global->scopes ().top (),

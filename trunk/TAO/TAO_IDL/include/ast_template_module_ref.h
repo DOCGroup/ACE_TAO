@@ -21,7 +21,7 @@ public:
 
   AST_Template_Module *ref (void) const;
 
-  UTL_StrList const * param_refs (void) const;
+  UTL_StrList *param_refs (void) const;
 
   // Narrowing.
   DEF_NARROW_FROM_DECL (AST_Template_Module_Ref);
@@ -50,7 +50,7 @@ public:
   static AST_Decl::NodeType const NT;
 
 private:
-  UTL_StrList * param_refs_;
+  UTL_StrList *param_refs_;
 
   /// Flag to prevent multiple module creations when we encounter
   /// 'chained' alias declarations.

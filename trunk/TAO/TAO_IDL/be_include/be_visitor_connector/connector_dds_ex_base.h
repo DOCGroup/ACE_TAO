@@ -44,7 +44,8 @@ protected:
   // Storage for the current template module instantiation we
   // are using, and its associated template args.
   AST_Template_Module_Inst *t_inst_;
-  FE_Utils::T_ARGLIST *t_args_;
+  AST_Template_Module_Ref *t_ref_;
+  FE_Utils::T_ARGLIST t_args_;
 
   // Derives from the DDS datatype, so we want to calculate it
   // once and store it.
@@ -53,6 +54,7 @@ protected:
 
 private:
   void process_template_args (AST_Connector *node);
+  void match_template_args (void);
 };
 
 #endif /* _BE_CONNECTOR_CONNECTOR_DDS_EX_BASE_H_ */

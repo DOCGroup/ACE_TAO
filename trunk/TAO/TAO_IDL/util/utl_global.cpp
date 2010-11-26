@@ -1625,7 +1625,7 @@ FE_Utils::T_PARAMLIST_INFO *params)
   this->current_params_ = params;
 }
 
-FE_Utils::T_PARAMLIST_INFO const *
+UTL_StrList const *
 IDL_GlobalData::alias_params (void) const
 {
   return this->alias_params_;
@@ -1633,7 +1633,7 @@ IDL_GlobalData::alias_params (void) const
 
 void
 IDL_GlobalData::alias_params (
-FE_Utils::T_PARAMLIST_INFO *params)
+UTL_StrList *params)
 {
   this->alias_params_ = params;
 }
