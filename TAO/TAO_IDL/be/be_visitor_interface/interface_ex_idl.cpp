@@ -53,6 +53,21 @@ be_visitor_interface_ex_idl::visit_interface (be_interface *node)
 
   node->gen_facet_idl (*this->ctx_->stream ());
 
+  for (ACE_Unbounded_Queue<char *>::CONST_ITERATOR i (
+         idl_global->ciao_ami_iface_names ());
+       ! i.done ();
+       i.advance ())
+    {
+      char **item = 0;
+      i.next (item);
+
+      if (ACE_OS::strcmp (node->full_name (), *item) == 0)
+        {
+          return
+            node->gen_ami4ccm_rh_idl (this->ctx_->stream ());
+        }
+    }
+
   return 0;
 }
 

@@ -80,4 +80,5 @@
 #include "be_visitor_component/executor_exs.cpp"
 #include "be_visitor_component/executor_exs_attr_init.cpp"
 #include "be_visitor_component/component_ami_rh_exh.cpp"
+#include "be_visitor_component/component_ami_rh_exs.cpp"
 
