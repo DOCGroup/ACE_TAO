@@ -233,22 +233,6 @@
 #  endif /* ! ACE_LACKS_COND_T */
    typedef pthread_mutex_t ACE_thread_mutex_t;
 
-#  if !defined (PTHREAD_CANCEL_DISABLE)
-#    define PTHREAD_CANCEL_DISABLE      0
-#  endif /* PTHREAD_CANCEL_DISABLE */
-
-#  if !defined (PTHREAD_CANCEL_ENABLE)
-#    define PTHREAD_CANCEL_ENABLE       0
-#  endif /* PTHREAD_CANCEL_ENABLE */
-
-#  if !defined (PTHREAD_CANCEL_DEFERRED)
-#    define PTHREAD_CANCEL_DEFERRED     0
-#  endif /* PTHREAD_CANCEL_DEFERRED */
-
-#  if !defined (PTHREAD_CANCEL_ASYNCHRONOUS)
-#    define PTHREAD_CANCEL_ASYNCHRONOUS 0
-#  endif /* PTHREAD_CANCEL_ASYNCHRONOUS */
-
 #  define THR_CANCEL_DISABLE      0x00000100
 #  define THR_CANCEL_ENABLE       0x00000200
 #  define THR_CANCEL_DEFERRED     0x00000400
