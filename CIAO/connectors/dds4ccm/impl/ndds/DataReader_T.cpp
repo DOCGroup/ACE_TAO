@@ -30,8 +30,8 @@ namespace CIAO
 {
   namespace NDDS
   {
-    template <typename DDS_TYPE>
-    DataReader_T<DDS_TYPE>::DataReader_T (
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::DataReader_T (
       DDSDataReader * dr,
       ::DDS::DomainParticipant_ptr dp,
       ::DDS::Subscriber_ptr sub)
@@ -43,21 +43,21 @@ namespace CIAO
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::DataReader_T");
       if (dr)
         {
-          this->rti_entity_ = DDS_TYPE::datareader_type::narrow (dr);
+          this->rti_entity_ = TYPED_DDS_READER::narrow (dr);
         }
     }
 
-    template <typename DDS_TYPE>
-    DataReader_T<DDS_TYPE>::~DataReader_T (void)
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::~DataReader_T (void)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::~DataReader_T");
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     void
-    DataReader_T<DDS_TYPE>::complete_read (
-        typename DDS_TYPE::dds_seq_type & dds_data_values,
-        typename DDS_TYPE::seq_type & data_values,
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::complete_read (
+        RTI_SEQ_TYPE & dds_data_values,
+        SEQ_TYPE & data_values,
         DDS_SampleInfoSeq & dds_sample_infos,
         ::DDS::SampleInfoSeq & sample_infos,
         const ::DDS::ReturnCode_t & retcode,
@@ -94,10 +94,10 @@ namespace CIAO
         }
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::read (
-        typename DDS_TYPE::seq_type & data_values,
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::read (
+        SEQ_TYPE & data_values,
         ::DDS::SampleInfoSeq & sample_infos,
         ::CORBA::Long max_samples,
         ::DDS::SampleStateMask sample_states,
@@ -108,7 +108,7 @@ namespace CIAO
 
       DDS_SampleInfoSeq dds_sample_infos;
 
-      typename DDS_TYPE::dds_seq_type dds_data_values;
+      RTI_SEQ_TYPE dds_data_values;
 
       ::DDS::ReturnCode_t const retcode_read =
         this->rti_entity ()->read (dds_data_values,
@@ -123,10 +123,10 @@ namespace CIAO
       return retcode_read;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::take (
-      typename DDS_TYPE::seq_type & data_values,
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::take (
+      SEQ_TYPE & data_values,
       ::DDS::SampleInfoSeq & sample_infos,
       ::CORBA::Long max_samples,
       ::DDS::SampleStateMask sample_states,
@@ -137,7 +137,7 @@ namespace CIAO
 
       DDS_SampleInfoSeq dds_sample_infos;
 
-      typename DDS_TYPE::dds_seq_type dds_data_values;
+      RTI_SEQ_TYPE dds_data_values;
 
       ::DDS::ReturnCode_t const retcode_take =
         this->rti_entity ()->take (dds_data_values,
@@ -153,10 +153,10 @@ namespace CIAO
       return retcode_take;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::read_w_condition (
-      typename DDS_TYPE::seq_type & data_values,
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::read_w_condition (
+      SEQ_TYPE & data_values,
       ::DDS::SampleInfoSeq & sample_infos,
       ::CORBA::Long max_samples,
       ::DDS::ReadCondition_ptr a_condition)
@@ -165,7 +165,7 @@ namespace CIAO
 
       DDS_SampleInfoSeq dds_sample_infos;
 
-      typename DDS_TYPE::dds_seq_type dds_data_values;
+      RTI_SEQ_TYPE dds_data_values;
 
       ::DDS::ReturnCode_t retcode_read_w_condition = ::DDS::RETCODE_ERROR;
 
@@ -211,10 +211,10 @@ namespace CIAO
       return retcode_read_w_condition;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::take_w_condition (
-      typename DDS_TYPE::seq_type & data_values,
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::take_w_condition (
+      SEQ_TYPE & data_values,
       ::DDS::SampleInfoSeq & sample_infos,
       ::CORBA::Long max_samples,
       ::DDS::ReadCondition_ptr a_condition)
@@ -223,7 +223,7 @@ namespace CIAO
 
       DDS_SampleInfoSeq dds_sample_infos;
 
-      typename DDS_TYPE::dds_seq_type dds_data_values;
+      RTI_SEQ_TYPE dds_data_values;
 
       ::DDS::ReturnCode_t retcode_take_w_condition = ::DDS::RETCODE_ERROR;
 
@@ -270,10 +270,10 @@ namespace CIAO
       return retcode_take_w_condition;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::read_next_sample (
-      typename DDS_TYPE::value_type & data_values,
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::read_next_sample (
+      VALUE_TYPE & data_values,
       ::DDS::SampleInfo & sample_info)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::read_next_sample");
@@ -287,10 +287,10 @@ namespace CIAO
       return retcode_read_next_sample;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::take_next_sample (
-      typename DDS_TYPE::value_type & data_values,
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::take_next_sample (
+      VALUE_TYPE & data_values,
       ::DDS::SampleInfo & sample_info)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::take_next_sample");
@@ -304,10 +304,10 @@ namespace CIAO
       return retcode_take_next_sample ;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::read_instance (
-      typename DDS_TYPE::seq_type & data_values,
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::read_instance (
+      SEQ_TYPE & data_values,
       ::DDS::SampleInfoSeq & sample_infos,
       ::CORBA::Long max_samples,
       const ::DDS::InstanceHandle_t & a_handle,
@@ -322,7 +322,7 @@ namespace CIAO
       ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
       dds_handle <<= a_handle;
 
-      typename DDS_TYPE::dds_seq_type dds_data_values;
+      RTI_SEQ_TYPE dds_data_values;
 
       ::DDS::ReturnCode_t const retcode_read_instance =
         this->rti_entity ()->read_instance (dds_data_values,
@@ -339,10 +339,10 @@ namespace CIAO
       return retcode_read_instance;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::take_instance (
-      typename DDS_TYPE::seq_type & data_values,
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::take_instance (
+      SEQ_TYPE & data_values,
       ::DDS::SampleInfoSeq & sample_infos,
       ::CORBA::Long max_samples,
       const ::DDS::InstanceHandle_t & a_handle,
@@ -357,7 +357,7 @@ namespace CIAO
       ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
       dds_handle <<= a_handle;
 
-      typename DDS_TYPE::dds_seq_type dds_data_values;
+      RTI_SEQ_TYPE dds_data_values;
 
       ::DDS::ReturnCode_t const retcode_take_instance =
         this->rti_entity ()->take_instance (dds_data_values,
@@ -373,10 +373,10 @@ namespace CIAO
       return retcode_take_instance;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::read_next_instance (
-      typename DDS_TYPE::seq_type & data_values,
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::read_next_instance (
+      SEQ_TYPE & data_values,
       ::DDS::SampleInfoSeq & sample_infos,
       ::CORBA::Long max_samples,
       const ::DDS::InstanceHandle_t & a_handle,
@@ -391,7 +391,7 @@ namespace CIAO
       ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
       dds_handle <<= a_handle;
 
-      typename DDS_TYPE::dds_seq_type dds_data_values;
+      RTI_SEQ_TYPE dds_data_values;
 
       ::DDS::ReturnCode_t const retcode_read_next_instance =
         this->rti_entity ()->read_next_instance (dds_data_values,
@@ -407,10 +407,10 @@ namespace CIAO
       return retcode_read_next_instance;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::take_next_instance (
-      typename DDS_TYPE::seq_type & data_values,
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::take_next_instance (
+      SEQ_TYPE & data_values,
       ::DDS::SampleInfoSeq & sample_infos,
       ::CORBA::Long max_samples,
       const ::DDS::InstanceHandle_t & a_handle,
@@ -425,7 +425,7 @@ namespace CIAO
       ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
       dds_handle <<= a_handle;
 
-      typename DDS_TYPE::dds_seq_type dds_data_values;
+      RTI_SEQ_TYPE dds_data_values;
 
       ::DDS::ReturnCode_t const retcode_take_next_instance =
         this->rti_entity ()->take_next_instance (dds_data_values,
@@ -441,10 +441,10 @@ namespace CIAO
       return retcode_take_next_instance;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::read_next_instance_w_condition (
-      typename DDS_TYPE::seq_type & data_values,
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::read_next_instance_w_condition (
+      SEQ_TYPE & data_values,
       ::DDS::SampleInfoSeq & sample_infos,
       ::CORBA::Long max_samples,
       const ::DDS::InstanceHandle_t & previous_handle,
@@ -465,7 +465,7 @@ namespace CIAO
           dds_condition = dds_condition_proxy->get_rti_entity ();
         }
 
-      typename DDS_TYPE::dds_seq_type dds_data_values;
+      RTI_SEQ_TYPE dds_data_values;
 
       ::DDS::ReturnCode_t const retcode_read_next_instance_w_condition =
         this->rti_entity ()->read_next_instance_w_condition (dds_data_values,
@@ -480,10 +480,10 @@ namespace CIAO
       return retcode_read_next_instance_w_condition;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::take_next_instance_w_condition (
-      typename DDS_TYPE::seq_type & data_values,
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::take_next_instance_w_condition (
+      SEQ_TYPE & data_values,
       ::DDS::SampleInfoSeq & sample_infos,
       ::CORBA::Long max_samples,
       const ::DDS::InstanceHandle_t & previous_handle,
@@ -504,7 +504,7 @@ namespace CIAO
           dds_condition = dds_condition_proxy->get_rti_entity ();
         }
 
-      typename DDS_TYPE::dds_seq_type dds_data_values;
+      RTI_SEQ_TYPE dds_data_values;
 
       ::DDS::ReturnCode_t const retcode_take_next_instance_w_condition =
         this->rti_entity ()->take_next_instance_w_condition (dds_data_values,
@@ -519,10 +519,10 @@ namespace CIAO
       return retcode_take_next_instance_w_condition;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::return_loan (
-      typename DDS_TYPE::seq_type & /*data_values*/,
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::return_loan (
+      SEQ_TYPE & /*data_values*/,
       ::DDS::SampleInfoSeq & /*sample_infos*/)
     {
       // No need to implement this since a return_loan is
@@ -530,10 +530,10 @@ namespace CIAO
       return ::DDS::RETCODE_OK;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::get_key_value (
-      typename DDS_TYPE::value_type & key_holder,
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_key_value (
+      VALUE_TYPE & key_holder,
       const ::DDS::InstanceHandle_t & handle)
     {
       ::DDS_InstanceHandle_t dds_handle = ::DDS_HANDLE_NIL;
@@ -543,10 +543,10 @@ namespace CIAO
                                                  dds_handle);
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::InstanceHandle_t
-    DataReader_T<DDS_TYPE>::lookup_instance (
-      const typename DDS_TYPE::value_type& an_instance)
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::lookup_instance (
+      const VALUE_TYPE& an_instance)
     {
       ::DDS_InstanceHandle_t hnd =
         this->rti_entity ()->lookup_instance (an_instance);
@@ -555,9 +555,9 @@ namespace CIAO
       return ret;
     }
 
-    template <typename DDS_TYPE>
-    typename DDS_TYPE::datareader_type *
-    DataReader_T<DDS_TYPE>::rti_entity (void)
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
+    TYPED_DDS_READER *
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::rti_entity (void)
     {
       if (this->rti_entity_)
         {
@@ -566,22 +566,22 @@ namespace CIAO
       else
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
-                        "DataReader_T<DDS_TYPE>::rti_entity - "
+                        "DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::rti_entity - "
                         "Throwing BAD_INV_ORDER.\n"));
           throw ::CORBA::BAD_INV_ORDER ();
         }
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::enable (void)
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::enable (void)
     {
       return this->rti_entity ()->enable ();
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::StatusCondition_ptr
-    DataReader_T<DDS_TYPE>::get_statuscondition (void)
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_statuscondition (void)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::get_statuscondition");
 
@@ -596,18 +596,18 @@ namespace CIAO
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::StatusMask
-    DataReader_T<DDS_TYPE>::get_status_changes (void)
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_status_changes (void)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::get_status_changes");
 
       return this->rti_entity ()->get_status_changes ();
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     DDS_INSTANCE_HANDLE_T_RETN
-    DataReader_T<DDS_TYPE>::get_instance_handle (void)
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_instance_handle (void)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::get_instance_handle");
 
@@ -618,9 +618,9 @@ namespace CIAO
       return handle;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReadCondition_ptr
-    DataReader_T<DDS_TYPE>::create_readcondition (
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::create_readcondition (
       ::DDS::SampleStateMask sample_states,
       ::DDS::ViewStateMask view_states,
       ::DDS::InstanceStateMask instance_states)
@@ -641,9 +641,9 @@ namespace CIAO
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::QueryCondition_ptr
-    DataReader_T<DDS_TYPE>::create_querycondition (
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::create_querycondition (
       ::DDS::SampleStateMask sample_states,
       ::DDS::ViewStateMask view_states,
       ::DDS::InstanceStateMask instance_states,
@@ -671,9 +671,9 @@ namespace CIAO
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::delete_readcondition (
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::delete_readcondition (
       ::DDS::ReadCondition_ptr a_condition)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::delete_readcondition");
@@ -721,18 +721,18 @@ namespace CIAO
       return retcode;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::delete_contained_entities (void)
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::delete_contained_entities (void)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::delete_contained_entities");
 
       return this->rti_entity ()->delete_contained_entities ();
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::set_qos (
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::set_qos (
       const ::DDS::DataReaderQos &qos)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::set_qos");
@@ -742,9 +742,9 @@ namespace CIAO
       return this->rti_entity ()->set_qos (ddsqos);
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::get_qos (
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_qos (
       ::DDS::DataReaderQos &qos)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::get_qos");
@@ -755,13 +755,13 @@ namespace CIAO
       return retval;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::set_listener (
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::set_listener (
       ::DDS::DataReaderListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T<DDS_TYPE>::set_listener");
+      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::set_listener");
 
       // Delete the previously set listener
       DDSDataReaderListener *listener = this->rti_entity ()->get_listener ();
@@ -780,11 +780,11 @@ namespace CIAO
       return this->rti_entity ()->set_listener (listener, mask);
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::DataReaderListener_ptr
-    DataReader_T<DDS_TYPE>::get_listener (void)
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_listener (void)
     {
-      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T<DDS_TYPE>::get_listener");
+      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_listener");
 
       DDSDataReaderListener *drl = this->rti_entity ()->get_listener ();
       DDS_DataReaderListener_i *ccm_dds_drl =
@@ -799,9 +799,9 @@ namespace CIAO
       return ccm_dds_drl->get_datareaderlistener ();
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::TopicDescription_ptr
-    DataReader_T<DDS_TYPE>::get_topicdescription (void)
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_topicdescription (void)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::get_topicdescription");
 
@@ -833,18 +833,18 @@ namespace CIAO
       return dds_td._retn ();
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::Subscriber_ptr
-    DataReader_T<DDS_TYPE>::get_subscriber (void)
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_subscriber (void)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::get_subscriber");
 
       return ::DDS::Subscriber::_duplicate (this->sub_.in ());
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::get_sample_rejected_status (
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_sample_rejected_status (
       ::DDS::SampleRejectedStatus & status)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::get_sample_rejected_status");
@@ -855,9 +855,9 @@ namespace CIAO
       return retval;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::get_liveliness_changed_status (
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_liveliness_changed_status (
       ::DDS::LivelinessChangedStatus & status)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::get_liveliness_changed_status");
@@ -868,9 +868,9 @@ namespace CIAO
       return retval;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::get_requested_deadline_missed_status (
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_requested_deadline_missed_status (
       ::DDS::RequestedDeadlineMissedStatus & status)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::get_requested_deadline_missed_status");
@@ -881,9 +881,9 @@ namespace CIAO
       return retval;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::get_requested_incompatible_qos_status (
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_requested_incompatible_qos_status (
       ::DDS::RequestedIncompatibleQosStatus & status)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::get_requested_incompatible_qos_status");
@@ -895,9 +895,9 @@ namespace CIAO
       return retval;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::get_subscription_matched_status (
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_subscription_matched_status (
       ::DDS::SubscriptionMatchedStatus & status)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::get_subscription_matched_status");
@@ -908,9 +908,9 @@ namespace CIAO
       return retval;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::get_sample_lost_status (
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_sample_lost_status (
       ::DDS::SampleLostStatus & status)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::get_sample_lost_status");
@@ -921,9 +921,9 @@ namespace CIAO
       return retval;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::wait_for_historical_data (
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::wait_for_historical_data (
       const ::DDS::Duration_t & max_wait)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::wait_for_historical_data");
@@ -933,12 +933,12 @@ namespace CIAO
       return this->rti_entity ()->wait_for_historical_data (rtiduration);
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::get_matched_publications (
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_matched_publications (
       ::DDS::InstanceHandleSeq & publication_handles)
     {
-      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T<DDS_TYPE>::get_matched_publications");
+      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_matched_publications");
 
       ::DDS_InstanceHandleSeq rtiseq;
       ::DDS::ReturnCode_t const retval = this->rti_entity ()->get_matched_publications (rtiseq);
@@ -946,9 +946,9 @@ namespace CIAO
       return retval;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::ReturnCode_t
-    DataReader_T<DDS_TYPE>::get_matched_publication_data (
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_matched_publication_data (
       ::DDS::PublicationBuiltinTopicData & publication_data,
       DDS_INSTANCE_HANDLE_T_IN publication_handle)
     {
@@ -966,29 +966,29 @@ namespace CIAO
       return retcode;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDS::StatusMask
-    DataReader_T<DDS_TYPE>::get_mask (void)
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_mask (void)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::get_mask");
 
       return this->lst_mask_;
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     void
-    DataReader_T<DDS_TYPE>::set_rti_entity (
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::set_rti_entity (
       ::DDSDataReader* dr, ::DDS::DomainParticipant_ptr dp)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::set_impl");
 
-      this->rti_entity_ = DDS_TYPE::datareader_type::narrow (dr);
+      this->rti_entity_ = TYPED_DDS_READER::narrow (dr);
       this->dp_ = ::DDS::DomainParticipant::_duplicate (dp);
     }
 
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     ::DDSDataReader*
-    DataReader_T<DDS_TYPE>::get_rti_entity (void)
+    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_rti_entity (void)
     {
       return this->rti_entity_;
     }
