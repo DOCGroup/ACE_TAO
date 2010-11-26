@@ -4,9 +4,9 @@ project(Single_Service_Common_idl_gen) : taoidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SINGLE_SERVICE_COMMON_STUB_Export \
               -Wb,stub_export_include=Single_Service_Common_stub_export.h \
-              -Wb,skel_export_macro=SINGLE_SERVICE_COMMON_SVNT_Export \
+              -Wb,skel_export_macro=SINGLE_SERVICE_COMMON_SKEL_Export \
               -Wb,skel_export_include=Single_Service_Common_skel_export.h \
-              -Gxhst
+              -Gxhst -Gxhsk
 
   IDL_Files {
     Single_Service_Common.idl
