@@ -47,7 +47,13 @@ namespace CIAO
                                              ::DDS::DomainParticipant_ptr dp,
                                              ::DDS::Subscriber_ptr sub)
       {
-        typedef CIAO::NDDS::DataReader_T<DDS_TYPE> DataReader_type;
+        typedef CIAO::NDDS::DataReader_T<
+            typename DDS_TYPE::datareader_type,
+            typename DDS_TYPE::typed_reader_type,
+            typename DDS_TYPE::value_type,
+            typename DDS_TYPE::seq_type,
+            typename DDS_TYPE::dds_seq_type>
+          DataReader_type;
         return new DataReader_type (dr, dp, sub);
       }
     };

@@ -19,10 +19,10 @@ namespace CIAO
 {
   namespace NDDS
   {
-    template <typename DDS_TYPE>
+    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
     class DataReader_T
       : public virtual DDS_DataReader_Base,
-        public virtual DDS_TYPE::typed_reader_type
+        public virtual TYPED_READER_TYPE
     {
     public:
       /// Constructor
@@ -34,7 +34,7 @@ namespace CIAO
       virtual ~DataReader_T (void);
 
       virtual ::DDS::ReturnCode_t read (
-        typename DDS_TYPE::seq_type & data_values,
+        SEQ_TYPE & data_values,
         ::DDS::SampleInfoSeq & sample_infos,
         ::CORBA::Long max_samples,
         ::DDS::SampleStateMask sample_states,
@@ -42,7 +42,7 @@ namespace CIAO
         ::DDS::InstanceStateMask instance_states);
 
       virtual ::DDS::ReturnCode_t take (
-        typename DDS_TYPE::seq_type & data_values,
+        SEQ_TYPE & data_values,
         ::DDS::SampleInfoSeq & sample_infos,
         ::CORBA::Long max_samples,
         ::DDS::SampleStateMask sample_states,
@@ -50,27 +50,27 @@ namespace CIAO
         ::DDS::InstanceStateMask instance_states);
 
       virtual ::DDS::ReturnCode_t read_w_condition (
-        typename DDS_TYPE::seq_type & data_values,
+        SEQ_TYPE & data_values,
         ::DDS::SampleInfoSeq & sample_infos,
         ::CORBA::Long max_samples,
         ::DDS::ReadCondition_ptr a_condition);
 
       virtual ::DDS::ReturnCode_t take_w_condition (
-        typename DDS_TYPE::seq_type & data_values,
+        SEQ_TYPE & data_values,
         ::DDS::SampleInfoSeq & sample_infos,
         ::CORBA::Long max_samples,
         ::DDS::ReadCondition_ptr a_condition);
 
       virtual ::DDS::ReturnCode_t read_next_sample (
-        typename DDS_TYPE::value_type & data_values,
+        VALUE_TYPE & data_values,
         ::DDS::SampleInfo & sample_info);
 
       virtual ::DDS::ReturnCode_t take_next_sample (
-        typename DDS_TYPE::value_type & data_values,
+        VALUE_TYPE & data_values,
         ::DDS::SampleInfo & sample_info);
 
       virtual ::DDS::ReturnCode_t read_instance (
-        typename DDS_TYPE::seq_type & data_values,
+        SEQ_TYPE & data_values,
         ::DDS::SampleInfoSeq & sample_infos,
         ::CORBA::Long max_samples,
         const ::DDS::InstanceHandle_t & a_handle,
@@ -79,7 +79,7 @@ namespace CIAO
         ::DDS::InstanceStateMask instance_states);
 
       virtual ::DDS::ReturnCode_t take_instance (
-        typename DDS_TYPE::seq_type & data_values,
+        SEQ_TYPE & data_values,
         ::DDS::SampleInfoSeq & sample_infos,
         ::CORBA::Long max_samples,
         const ::DDS::InstanceHandle_t & a_handle,
@@ -88,7 +88,7 @@ namespace CIAO
         ::DDS::InstanceStateMask instance_states);
 
       virtual ::DDS::ReturnCode_t read_next_instance (
-        typename DDS_TYPE::seq_type & data_values,
+        SEQ_TYPE & data_values,
         ::DDS::SampleInfoSeq & sample_infos,
         ::CORBA::Long max_samples,
         const ::DDS::InstanceHandle_t & previous_handle,
@@ -97,7 +97,7 @@ namespace CIAO
         ::DDS::InstanceStateMask instance_states);
 
       virtual ::DDS::ReturnCode_t take_next_instance (
-        typename DDS_TYPE::seq_type & data_values,
+        SEQ_TYPE & data_values,
         ::DDS::SampleInfoSeq & sample_infos,
         ::CORBA::Long max_samples,
         const ::DDS::InstanceHandle_t & previous_handle,
@@ -106,29 +106,29 @@ namespace CIAO
         ::DDS::InstanceStateMask instance_states);
 
       virtual ::DDS::ReturnCode_t read_next_instance_w_condition (
-        typename DDS_TYPE::seq_type & data_values,
+        SEQ_TYPE & data_values,
         ::DDS::SampleInfoSeq & sample_infos,
         ::CORBA::Long max_samples,
         const ::DDS::InstanceHandle_t & previous_handle,
         ::DDS::ReadCondition_ptr a_condition);
 
       virtual ::DDS::ReturnCode_t take_next_instance_w_condition (
-        typename DDS_TYPE::seq_type & data_values,
+        SEQ_TYPE & data_values,
         ::DDS::SampleInfoSeq & sample_infos,
         ::CORBA::Long max_samples,
         const ::DDS::InstanceHandle_t & previous_handle,
         ::DDS::ReadCondition_ptr a_condition);
 
       virtual ::DDS::ReturnCode_t return_loan (
-        typename DDS_TYPE::seq_type & data_values,
+        SEQ_TYPE & data_values,
         ::DDS::SampleInfoSeq & sample_infos);
 
       virtual ::DDS::ReturnCode_t get_key_value (
-        typename DDS_TYPE::value_type & key_holder,
+        VALUE_TYPE & key_holder,
         const ::DDS::InstanceHandle_t & handle);
 
       virtual ::DDS::InstanceHandle_t lookup_instance (
-        const typename DDS_TYPE::value_type& an_instance);
+        const VALUE_TYPE& an_instance);
 
       virtual ::DDS::ReturnCode_t enable (void);
 
@@ -213,16 +213,16 @@ namespace CIAO
       ::DDSDataReader * get_rti_entity (void);
 
     private:
-      typename DDS_TYPE::datareader_type * rti_entity_;
+      TYPED_DDS_READER * rti_entity_;
       ::DDS::DomainParticipant_var dp_;
       ::DDS::Subscriber_var sub_;
       ::DDS::StatusMask lst_mask_;
 
-      typename DDS_TYPE::datareader_type * rti_entity (void);
+      TYPED_DDS_READER * rti_entity (void);
 
       void complete_read (
-        typename DDS_TYPE::dds_seq_type & dds_data_values,
-        typename DDS_TYPE::seq_type & data_values,
+        RTI_SEQ_TYPE & dds_data_values,
+        SEQ_TYPE & data_values,
         DDS_SampleInfoSeq & dds_sample_infos,
         ::DDS::SampleInfoSeq & sample_infos,
         const ::DDS::ReturnCode_t & retcode,
