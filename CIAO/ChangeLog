@@ -1,3 +1,11 @@
+Fri Nov 26 10:39:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm_ts_default.mpb:
+          Removed dummy label when no dds vendor is enabled
+
+        * tests/IDL_Test/NonTopic_Connector/NonTopic_Connector_T.cpp:
+          Removed not needed include
+
 Fri Nov 26 10:10:39 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.cpp:
@@ -29,7 +37,6 @@ Fri Nov 26 10:10:39 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
         * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSMA_conn_i.cpp:
         * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSMA_conn_i.h:
         Generated executors with -Gex. Solve Valgrind warning.
-
 
 Fri Nov 26 09:09:04 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
