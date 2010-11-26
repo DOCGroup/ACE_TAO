@@ -1,3 +1,12 @@
+Fri Nov 26 17:36:10 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/os_include/os_pthread.h: Removed the #defines for
+          PTHREAD_CANCEL_{ENABLE, DISABLE, DEFERRED, ASYNCHRONOUS}. They
+          were breaking the LynxOS build (LynxOS sets these via enum, not
+          macro). If a platform doesn't have these symbols then the
+          ACE_LACKS_PTHREAD_CANCEL config setting should be used to avoid
+          code that references them.
+
 Thu Nov 25 12:17:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.h:
