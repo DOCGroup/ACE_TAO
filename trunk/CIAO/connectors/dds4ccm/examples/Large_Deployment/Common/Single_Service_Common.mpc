@@ -4,8 +4,8 @@ project(Single_Service_Common_idl_gen) : taoidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SINGLE_SERVICE_COMMON_STUB_Export \
               -Wb,stub_export_include=Single_Service_Common_stub_export.h \
-              -Wb,svnt_export_macro=SINGLE_SERVICE_COMMON_SVNT_Export \
-              -Wb,svnt_export_include=Single_Service_Common_svnt_export.h \
+              -Wb,skel_export_macro=SINGLE_SERVICE_COMMON_SVNT_Export \
+              -Wb,skel_export_include=Single_Service_Common_skel_export.h \
               -Gxhst
 
   IDL_Files {
@@ -40,14 +40,14 @@ project(Single_Service_Common_stub) : ccm_stub {
   }
 }
 
-project(Single_Service_Common_svnt) : ccm_svnt {
+project(Single_Service_Common_skel) : ccm_svnt {
   after += Single_Service_Common_stub
   libs += Single_Service_Common_stub
 
   libpaths += ../lib
   libout = ../lib
 
-  sharedname = Single_Service_Common_svnt
+  sharedname = Single_Service_Common_skel
   dynamicflags += SINGLE_SERVICE_COMMON_SVNT_BUILD_DLL
 
   IDL_Files {
@@ -59,7 +59,7 @@ project(Single_Service_Common_svnt) : ccm_svnt {
 
   Header_Files {
     Single_Service_CommonS.h
-    Single_Service_Common_svnt_export.h
+    Single_Service_Common_skel_export.h
   }
 
   Inline_Files {
