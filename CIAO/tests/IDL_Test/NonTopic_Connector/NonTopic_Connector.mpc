@@ -38,35 +38,11 @@ project(NT_test_idl_gen) : componentidldefaults, anytypecode {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=NONTOPIC_TEST_STUB_Export \
               -Wb,stub_export_include=nontopic_test_stub_export.h \
-              -Gxhst -Gxhsk -Gxhex
+              -Gxhst -Gxhsk -Gxhex -SS -Sci -Scc
 
   IDL_Files {
     nontopic_test.idl
   }
-}
-
-project(NT_Test_stub) : ccm_stub {
-  after += NT_test_idl_gen
-  libs  +=
-  sharedname = NT_Test_stub
-  dynamicflags += NONTOPIC_TEST_STUB_BUILD_DLL
-
-  IDL_Files {
-  }
-
-  Source_Files {
-    nontopic_testC.cpp
-  }
-
-  Header_Files {
-    nontopic_testC.h
-    nontopic_test_stub_export.h
-  }
-
-  Inline_Files {
-    nontopic_testC.inl
-  }
-
 }
 
 project(NT_Connector_idl_gen) : connectoridldefaults, anytypecode {
@@ -100,8 +76,8 @@ project(NT_Connector_lem_gen) : ciaoidldefaults, anytypecode {
 }
 
 project(NT_Connector_lem_stub) : ccm_svnt {
-  after += NT_Connector_lem_gen NT_Connector_stub NT_Base_idl_gen NT_Test_stub NT_Base_stub
-  libs  += NonTopic_Connector_stub NT_Base_stub NT_Test_stub
+  after += NT_Connector_lem_gen NT_Connector_stub NT_Base_idl_gen NT_Test_idl_gen NT_Base_stub
+  libs  += NonTopic_Connector_stub NT_Base_stub
   sharedname = NonTopic_Connector_lem_stub
   dynamicflags += NONTOPIC_CONNECTOR_LEM_STUB_BUILD_DLL
 
@@ -146,9 +122,9 @@ project(NT_Connector_stub) : ccm_stub {
 }
 
 project(NT_Connector_exec) : ciao_executor {
-  after   += NT_Connector_stub NT_Connector_lem_stub NT_Base_idl_gen NT_Test_stub NT_Base_stub
+  after   += NT_Connector_stub NT_Connector_lem_stub NT_Base_idl_gen NT_Test_idl_gen NT_Base_stub
   sharedname = NT_Connector_exec
-  libs += NonTopic_Connector_stub NonTopic_Connector_lem_stub NT_Base_stub NT_Test_stub
+  libs += NonTopic_Connector_stub NonTopic_Connector_lem_stub NT_Base_stub
   dynamicflags += NONTOPIC_CONNECTOR_CONN_BUILD_DLL
 
   IDL_Files {
@@ -178,8 +154,7 @@ project(NT_Connector_svnt) : ciao_servant {
   libs       += NonTopic_Connector_stub \
                 NT_Connector_exec \
                 NonTopic_Connector_lem_stub \
-                NT_Base_stub \
-                NT_Test_stub
+                NT_Base_stub
   dynamicflags += NONTOPIC_CONNECTOR_SVNT_BUILD_DLL
 
   IDL_Files {
