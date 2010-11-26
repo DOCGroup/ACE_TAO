@@ -40,7 +40,11 @@ namespace CIAO
                                              ::DDS::DomainParticipant_ptr dp,
                                              ::DDS::Publisher_ptr pub)
       {
-        typedef CIAO::NDDS::DataWriter_T<DDS_TYPE> DataWriter_type;
+        typedef CIAO::NDDS::DataWriter_T<
+            typename DDS_TYPE::datawriter_type,
+            typename DDS_TYPE::typed_writer_type,
+            typename DDS_TYPE::value_type>
+          DataWriter_type;
         return new DataWriter_type (dw, dp, pub);
       }
       DDS::DataReader_ptr create_datareader (DDSDataReader* dr,
