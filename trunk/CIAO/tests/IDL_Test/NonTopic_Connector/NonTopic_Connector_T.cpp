@@ -1,7 +1,5 @@
 // $Id$
 
-#include "NonTopic_Connector_T.h"
-
 // connector template for Typed_NonTopic_Test_1
 template <typename CCM_TYPE, typename T, bool FIXED_T,
                                 typename U, bool FIXED_U,

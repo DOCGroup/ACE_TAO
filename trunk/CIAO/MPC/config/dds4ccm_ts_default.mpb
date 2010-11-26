@@ -54,7 +54,6 @@ feature(!dds4ccm_splice) {
 }
 
 feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice) : typecode {
-  requires += dummy_label
   Define_Custom(DDSGenerator) {
     keyword dds_ts_flags
   }
