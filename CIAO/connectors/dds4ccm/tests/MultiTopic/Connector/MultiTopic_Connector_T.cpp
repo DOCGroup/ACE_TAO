@@ -530,10 +530,9 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::c
     this->context_->get_connection_push_consumer_cl_status ();
 
   this->dl_ = this->context_->get_connection_push_consumer_cl_data_listener ();
-  this->push_consumer_cl_.activate (
-                  this->dl_.in (),
-                  push_consumer_cl_psl.in (),
-                  this->reactor_);
+  this->push_consumer_cl_.activate (this->dl_.in (),
+                                    push_consumer_cl_psl.in (),
+                                    this->reactor_);
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE, bool FIXED_SEQ_TYPE>

@@ -1,3 +1,23 @@
+Fri Nov 26 14:10:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager.h:
+        * connectors/dds4ccm/impl/ndds/WaitSet.h:
+          Changed forward declaration (struct instead of class).
+
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+          Set listener to 0 explicitely (to be consistent with subscriber).
+
+        * connectors/dds4ccm/impl/ndds/StatusCondition.h:
+        * connectors/dds4ccm/impl/ndds/StatusCondition.cpp:
+          Added set_rti_entity method. To be consistent with other classes.
+
+        * connectors/dds4ccm/impl/ndds/Topic.h:
+        * connectors/dds4ccm/impl/ndds/Topic.cpp:
+          Resolved typos.
+
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp:
+          Layout changes.
+
 Fri Nov 26 13:11:39 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/ThreeComp/Sender/ThreeComp_Sender_exec.h:
