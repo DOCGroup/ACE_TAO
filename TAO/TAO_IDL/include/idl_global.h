@@ -685,8 +685,8 @@ public:
   // referenced template parameter of the eclosing template
   // module.
 
-  FE_Utils::T_PARAMLIST_INFO const *alias_params (void) const;
-  void alias_params (FE_Utils::T_PARAMLIST_INFO *params);
+  UTL_StrList const *alias_params (void) const;
+  void alias_params (UTL_StrList *params);
   // Accessors for the member. If we are parsing a template
   // module reference, we traverse the scope of the referenced
   // template module, but create param holders with the
@@ -856,7 +856,7 @@ private:
   // Stored if we are parsing the scope of a template module,
   // 0 otherwise.
 
-  FE_Utils::T_PARAMLIST_INFO *alias_params_;
+  UTL_StrList *alias_params_;
   // Stored if we are parsing a template module reference. The
   // scope traversed will be that of the referenced template
   // module, but the param holder(s) created will use the

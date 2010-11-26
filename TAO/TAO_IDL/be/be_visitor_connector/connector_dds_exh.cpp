@@ -13,8 +13,13 @@
 //=============================================================================
 
 #include "global_extern.h"
+#include "utl_strlist.h"
+#include "utl_string.h"
+
 #include "ast_structure.h"
 #include "ast_union.h"
+#include "ast_template_module_ref.h"
+#include "ast_template_module.h"
 
 be_visitor_connector_dds_exh::be_visitor_connector_dds_exh (
       be_visitor_context *ctx)
@@ -45,16 +50,17 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
     }
 
   // If we have a connector within a templated module
-  if (this->t_args_->size () > 0)
+  if (! this->t_args_.is_empty ())
     {
       // Generate all needed dds_traits
-      for (FE_Utils::T_ARGLIST::CONST_ITERATOR i (*this->t_args_);
+      for (FE_Utils::T_ARGLIST::CONST_ITERATOR i (this->t_args_);
           !i.done ();
           i.advance ())
         {
           AST_Decl **item = 0;
           i.next (item);
           AST_Decl *d = *item;
+
           if (this->is_dds_type (node, d))
             {
               this->gen_dds_traits (d);
@@ -76,7 +82,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
 
       size_t slot = 1UL;
 
-      for (FE_Utils::T_ARGLIST::CONST_ITERATOR i (*this->t_args_);
+      for (FE_Utils::T_ARGLIST::CONST_ITERATOR i (this->t_args_);
           !i.done ();
           i.advance (), ++slot)
         {
@@ -88,31 +94,40 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
             {
               os_ << d->flat_name ()
                   << "_DDS_Traits,";
-            }
-          else
-            {
-              os_ << d->name () << ",";
-            }
 
-          AST_Structure *s = AST_Structure::narrow_from_decl (d);
-          if (s == 0)
-            {
-              AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+              AST_Structure *s =
+                AST_Structure::narrow_from_decl (d);
 
-              if (td != 0)
+              if (s == 0)
                 {
-                  s = AST_Structure::narrow_from_decl (td->primitive_base_type ());
+                  AST_Typedef *td =
+                    AST_Typedef::narrow_from_decl (d);
+
+                  if (td != 0)
+                    {
+                      AST_Decl *pbt =
+                        td->primitive_base_type ();
+
+                      s =
+                        AST_Structure::narrow_from_decl (pbt);
+                    }
+                }
+
+              if (s != 0 && s->size_type () == AST_Type::VARIABLE)
+                {
+                  os_ << be_nl << "false";
+                }
+              else
+                {
+                  os_ << be_nl << "true";
                 }
             }
-          if (s && s->size_type () == AST_Type::VARIABLE)
-            {
-              os_ << be_nl << "false";
-            }
           else
             {
-              os_ << be_nl << "true";
+              os_ << d->name ();
             }
-          if (slot < this->t_args_->size ())
+
+          if (slot < this->t_args_.size ())
             {
               os_ << "," << be_nl;
             }

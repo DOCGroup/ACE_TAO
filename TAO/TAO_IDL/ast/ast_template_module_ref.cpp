@@ -36,7 +36,7 @@ AST_Template_Module_Ref::ref (void) const
     AST_Template_Module::narrow_from_decl (this->field_type ());
 }
 
-UTL_StrList const *
+UTL_StrList *
 AST_Template_Module_Ref::param_refs (void) const
 {
   return this->param_refs_;

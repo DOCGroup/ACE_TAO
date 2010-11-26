@@ -76,6 +76,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // enums are inserted in the enclosing scope.
 
 class AST_Template_Module_Inst;
+class AST_Template_Module_Ref;
 
 class TAO_IDL_FE_Export AST_Module : public virtual AST_Decl,
                                      public virtual UTL_Scope
@@ -137,6 +138,10 @@ public:
   // Accessors for the member.
   AST_Template_Module_Inst *from_inst (void) const;
   void from_inst (AST_Template_Module_Inst *node);
+
+  // Accessors for the member.
+  AST_Template_Module_Ref *from_ref (void) const;
+  void from_ref (AST_Template_Module_Ref *node);
 
   // Override that looks in previous openings.
   virtual AST_Decl *special_lookup (UTL_ScopedName *e,
@@ -237,6 +242,9 @@ private: // Data
 
   AST_Template_Module_Inst *from_inst_;
   /// Reference to the instantiation that created us, if any.
+
+  AST_Template_Module_Ref *from_ref_;
+  /// Reference to the 'alias' type that created us, if any.
 };
 
 #endif           // _AST_MODULE_AST_MODULE_HH

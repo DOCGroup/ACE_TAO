@@ -43,14 +43,14 @@ ast_visitor_context::template_params (FE_Utils::T_PARAMLIST_INFO *params)
   this->template_params_ = params;
 }
 
-FE_Utils::T_ARGLIST *
+FE_Utils::T_ARGLIST const *
 ast_visitor_context::template_args (void) const
 {
   return this->template_args_;
 }
 
 void
-ast_visitor_context::template_args (FE_Utils::T_ARGLIST *args)
+ast_visitor_context::template_args (FE_Utils::T_ARGLIST const *args)
 {
   this->template_args_ = args;
 }

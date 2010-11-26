@@ -37,13 +37,13 @@ public:
   FE_Utils::T_PARAMLIST_INFO *template_params (void) const;
   void template_params (FE_Utils::T_PARAMLIST_INFO *args);
 
-  FE_Utils::T_ARGLIST *template_args (void) const;
-  void template_args (FE_Utils::T_ARGLIST *args);
+  FE_Utils::T_ARGLIST const *template_args (void) const;
+  void template_args (FE_Utils::T_ARGLIST const *args);
 
 protected:
   // Storage for the current template module params and args.
   FE_Utils::T_PARAMLIST_INFO *template_params_;
-  FE_Utils::T_ARGLIST *template_args_;
+  FE_Utils::T_ARGLIST const *template_args_;
 };
 
 #endif /* AST_VISITOR_CONTEXT_H */

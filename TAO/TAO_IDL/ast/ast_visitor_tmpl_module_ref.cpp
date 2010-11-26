@@ -60,6 +60,9 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
     idl_global->gen ()->create_module (idl_global->scopes (). top (),
                                        &sn);
 
+  added_module->from_ref (node);
+  added_module->from_inst (this->tmi_);
+
   idl_global->scopes ().top ()->add_to_scope (added_module);
 
   idl_global->scopes ().push (added_module);
@@ -73,7 +76,8 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
     const_cast<FE_Utils::T_PARAMLIST_INFO *> (
       idl_global->current_params ());
 
-  idl_global->alias_params (holder);
+  idl_global->alias_params (
+    const_cast<UTL_StrList *> (node->param_refs ()));
   AST_Template_Module *tm = node->ref ();
   idl_global->current_params (tm->template_params ());
 

@@ -110,7 +110,8 @@ AST_Module::AST_Module (UTL_ScopedName *n, AST_Module *previous)
     pd_has_nested_valuetype_ (0),
     previous_opening_ (previous),
     last_in_same_parent_scope_ (this),
-    from_inst_ (0)
+    from_inst_ (0),
+    from_ref_ (0)
 {
   // NOTE previous passed into this constructor should be
   // the FIRST module that is a previous opening of this same
@@ -319,6 +320,18 @@ void
 AST_Module::from_inst (AST_Template_Module_Inst *node)
 {
   this->from_inst_ = node;
+}
+
+AST_Template_Module_Ref *
+AST_Module::from_ref (void) const
+{
+  return this->from_ref_;
+}
+
+void
+AST_Module::from_ref (AST_Template_Module_Ref *node)
+{
+  this->from_ref_ = node;
 }
 
 AST_Decl *

@@ -33,7 +33,7 @@ AST_Template_Module_Inst::ref (void) const
     AST_Template_Module::narrow_from_decl (this->field_type ());
 }
 
-FE_Utils::T_ARGLIST *
+FE_Utils::T_ARGLIST const *
 AST_Template_Module_Inst::template_args (void) const
 {
   return this->template_args_;
