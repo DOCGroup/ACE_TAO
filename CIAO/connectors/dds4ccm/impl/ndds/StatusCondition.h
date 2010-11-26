@@ -42,6 +42,8 @@ namespace CIAO
 
       ::DDSStatusCondition * get_rti_entity (void);
 
+      void set_rti_entity (::DDSStatusCondition * status_condition);
+
     private:
       ::DDSStatusCondition * rti_entity_;
       ::DDS::Entity_var entity_;

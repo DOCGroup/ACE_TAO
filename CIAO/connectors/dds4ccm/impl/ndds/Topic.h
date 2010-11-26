@@ -60,7 +60,7 @@ namespace CIAO
 
       ::DDSTopic * get_rti_entity (void);
 
-      void get_rti_entity (::DDSTopic* topic);
+      void set_rti_entity (::DDSTopic* topic);
 
     private:
       ::DDSTopic * rti_entity_;
