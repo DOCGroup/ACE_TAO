@@ -153,30 +153,6 @@ project(NT_Connector_stub) : ccm_stub {
   }
 }
 
-project(NT_Connector_skel) : ciao_executor {
-  after += NT_Connector_stub
-  libs  += NonTopic_Connector_stub
-
-  sharedname = NonTopic_Connector_skel
-  dynamicflags += NONTOPIC_CONNECTOR_SKEL_BUILD_DLL
-
-  IDL_Files {
-  }
-
-  Source_Files {
-    NonTopic_ConnectorS.cpp
-  }
-
-  Header_Files {
-    NonTopic_ConnectorS.h
-    NonTopic_Connector_skel_export.h
-  }
-
-  Inline_Files {
-    NonTopic_ConnectorS.inl
-  }
-}
-
 project(NT_Connector_exec) : ciao_executor {
   after   += NT_Connector_stub NT_Connector_lem_stub NT_Base_idl_gen NT_Test_stub NT_Base_stub
   sharedname = NT_Connector_exec
