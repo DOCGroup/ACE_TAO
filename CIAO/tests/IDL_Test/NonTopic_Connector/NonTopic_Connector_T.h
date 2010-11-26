@@ -3,8 +3,6 @@
 #ifndef NT_CONNECTOR_T
 #define NT_CONNECTOR_T
 
-#include "NonTopic_ConnectorEC.h"
-
 // connector template for Typed_NonTopic_Test_1
 template <typename CCM_TYPE, typename T, bool FIXED_T,
                                typename U, bool FIXED_U,
@@ -47,5 +45,7 @@ public:
    virtual void ccm_activate (void);
    virtual void ccm_passivate (void);
 };
+
+#include "NonTopic_Connector_T.cpp"
 
 #endif
