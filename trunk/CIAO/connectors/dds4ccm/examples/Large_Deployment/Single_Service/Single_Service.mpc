@@ -107,10 +107,10 @@ project(Single_Service_exec) : ciao_executor   {
 
 
 project(Single_Service_svnt) : ciao_servant {
-  after      += Single_Service_lem_stub Single_Service_Common_skel
+  after      += Single_Service_lem_stub Single_Service_Common_skel Single_Service_Common_stub
   sharedname  = Single_Service_svnt
   libs       += Single_Service_stub Single_Service_lem_stub \
-                Single_Service_Common_skel
+                Single_Service_Common_skel Single_Service_Common_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
