@@ -26,6 +26,7 @@
  **/
 
 #include "UsesMulti_Receiver_exec.h"
+#include "ace/OS_NS_unistd.h"
 
 namespace CIAO_UsesMulti_Receiver_Impl
 {

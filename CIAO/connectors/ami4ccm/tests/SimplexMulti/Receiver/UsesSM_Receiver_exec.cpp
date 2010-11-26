@@ -26,6 +26,7 @@
  **/
 
 #include "UsesSM_Receiver_exec.h"
+#include "ace/OS_NS_unistd.h"
 
 namespace CIAO_UsesSM_Receiver_Impl
 {
