@@ -15,7 +15,6 @@ class NT_Connector_T
 {
 public:
     NT_Connector_T (void);
-    virtual ~NT_Connector_T (void);
 
     virtual void set_session_context (Components::SessionContext_ptr ctx);
 
@@ -36,7 +35,6 @@ class NT_2_Connector_T
 {
 public:
    NT_2_Connector_T (void);
-   virtual ~NT_2_Connector_T (void);
 
    virtual void set_session_context (Components::SessionContext_ptr ctx);
 
