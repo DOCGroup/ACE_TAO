@@ -48,7 +48,7 @@ project(Single_Service_Common_skel) : ccm_svnt {
   libout = ../lib
 
   sharedname = Single_Service_Common_skel
-  dynamicflags += SINGLE_SERVICE_COMMON_SVNT_BUILD_DLL
+  dynamicflags += SINGLE_SERVICE_COMMON_SKEL_BUILD_DLL
 
   IDL_Files {
   }
