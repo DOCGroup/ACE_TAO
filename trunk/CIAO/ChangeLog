@@ -1,3 +1,15 @@
+Fri Nov 26 07:42:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Base.idl:
+        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Base.idl:
+          Added typesupport pragma's
+
+        * tests/IDL_Test/NonTopic_Connector/NonTopic_Connector.mpc:
+          _T must be a template file
+
+        * tests/IDL_Test/NonTopic_Connector/NonTopic_Connector_T.h:
+          Include cpp file here
+
 Thu Nov 25 19:57:29 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
