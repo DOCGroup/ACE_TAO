@@ -1,3 +1,14 @@
+Fri Nov 26 19:04:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp:
+          Resolved memory leaks.
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantManager.h:
+          Made constructor private since this is a singleton class.
+
 Fri Nov 26 14:10:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager.h:

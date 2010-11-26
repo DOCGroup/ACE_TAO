@@ -540,11 +540,14 @@ void
 DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::passivate_topics (void)
 {
   this->passivate_topic (this->topic_sq_.in (),
-                         this->topiclistener_sq_.inout ());
+                         this->topiclistener_sq_.in ());
   this->passivate_topic (this->topic_tr_.in (),
-                         this->topiclistener_tr_.inout ());
+                         this->topiclistener_tr_.in ());
   this->passivate_topic (this->topic_cl_.in (),
-                         this->topiclistener_cl_.inout ());
+                         this->topiclistener_cl_.in ());
+  this->topiclistener_sq_ = ::DDS::TopicListener::_nil ();
+  this->topiclistener_tr_ = ::DDS::TopicListener::_nil ();
+  this->topiclistener_cl_ = ::DDS::TopicListener::_nil ();
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE, bool FIXED_SEQ_TYPE>
@@ -563,9 +566,11 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::c
   this->passivate_topics ();
 
   this->passivate_subscriber (this->subscriber_.in (),
-                              this->subscriber_listener_.inout ());
+                              this->subscriber_listener_.in ());
   this->passivate_publisher (this->publisher_.in (),
-                             this->publisher_listener_.inout ());
+                             this->publisher_listener_.in ());
+  this->subscriber_listener_ = ::DDS::SubscriberListener::_nil ();
+  this->publisher_listener_ = ::DDS::PublisherListener::_nil ();
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE, bool FIXED_SEQ_TYPE>
@@ -595,12 +600,16 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::c
   this->remove_topics ();
 
   this->remove_publisher (this->domain_participant_.in (),
-                          this->publisher_.inout ());
+                          this->publisher_.in ());
   this->remove_subscriber (this->domain_participant_.in (),
-                           this->subscriber_.inout ());
+                           this->subscriber_.in ());
   const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
   this->unregister_type (this->domain_participant_.in (),
                          typesupport_name);
 
-  this->remove_domain (this->domain_participant_.inout ());
+  this->remove_domain (this->domain_participant_.in ());
+
+  this->publisher_          = ::DDS::Publisher::_nil ();
+  this->subscriber_         = ::DDS::Subscriber::_nil ();
+  this->domain_participant_ = ::DDS::DomainParticipant::_nil ();
 }

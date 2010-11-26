@@ -107,11 +107,15 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_passivate (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_passivate");
   this->passivate_topic (this->topic_.in (),
-                         this->topiclistener_.inout ());
+                         this->topiclistener_.in ());
   this->passivate_subscriber (this->subscriber_.in (),
-                              this->subscriber_listener_.inout ());
+                              this->subscriber_listener_.in ());
   this->passivate_publisher (this->publisher_.in (),
                              this->publisher_listener_.inout ());
+
+  this->topiclistener_      = ::DDS::TopicListener::_nil ();
+  this->subscriber_listener_ = ::DDS::SubscriberListener::_nil ();
+  this->publisher_listener_  = ::DDS::PublisherListener::_nil ();
   BaseConnector::ccm_passivate ();
 }
 
@@ -121,15 +125,20 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove");
   this->remove_topic (this->domain_participant_.in (),
-                      this->topic_.inout ());
+                      this->topic_.in ());
 
   const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
   this->unregister_type (this->domain_participant_.in (),
                          typesupport_name);
+
   this->remove_subscriber (this->domain_participant_.in (),
-                           this->subscriber_.inout ());
+                           this->subscriber_.in ());
   this->remove_publisher (this->domain_participant_.in (),
-                          this->publisher_.inout ());
+                          this->publisher_.in ());
+  this->topic_ = ::DDS::Topic::_nil ();
+  this->publisher_ = ::DDS::Publisher::_nil ();
+  this->subscriber_ = ::DDS::Subscriber::_nil ();
+
   BaseConnector::ccm_remove ();
 }
 
