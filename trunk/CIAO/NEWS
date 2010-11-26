@@ -9,7 +9,9 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.8.3 and CIAO-1.0.0
   set at run time.
 
 . Reworked dds4ccm core to make it easier to implement custom dds4ccm
-  connectors
+  connectors. Any already written custom dds4ccm connectors will need to be
+  updated because of changes in the C++ template signature and the internal
+  classes.
 
 . Improved dds4ccm logging
 
