@@ -72,3 +72,16 @@ module Second
 {
   typedef string<32> SecondString;
 };
+
+/// There was a problem generating the *_Forany
+/// for the inner array.
+typedef struct teststruct
+{
+  char b[4];
+
+  struct embeddedstruct
+  {
+    char a[4];
+  } estruct;
+
+} tstruct;
