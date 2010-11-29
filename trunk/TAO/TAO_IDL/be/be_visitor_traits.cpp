@@ -105,6 +105,10 @@ be_visitor_traits::visit_interface (be_interface *node)
       return 0;
     }
 
+  /// Some type of recursion can cause fprintf problems,
+  /// easily avoided by setting the flag before visit_scope().
+  node->cli_traits_gen (true);
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Since the three blocks below generate specialized (i.e., non-template)
@@ -115,19 +119,21 @@ be_visitor_traits::visit_interface (be_interface *node)
     {
       os->gen_ifdef_macro (node->flat_name (), "traits", false);
 
+      const char *fname = node->full_name ();
+
       *os << be_nl_2
           << "template<>" << be_nl
           << "struct " << be_global->stub_export_macro () << " Objref_Traits<"
-          << " ::" << node->name () << ">" << be_nl
+          << " ::" << fname << ">" << be_nl
           << "{" << be_idt_nl
-          << "static ::" << node->name () << "_ptr duplicate ("
+          << "static ::" << fname << "_ptr duplicate ("
           << be_idt << be_idt_nl
-          << "::" << node->name () << "_ptr p);" << be_uidt << be_uidt_nl
+          << "::" << fname << "_ptr p);" << be_uidt << be_uidt_nl
           << "static void release (" << be_idt << be_idt_nl
-          << "::" << node->name () << "_ptr p);" << be_uidt << be_uidt_nl
-          << "static ::" << node->name () << "_ptr nil (void);" << be_nl
+          << "::" << fname << "_ptr p);" << be_uidt << be_uidt_nl
+          << "static ::" << fname << "_ptr nil (void);" << be_nl
           << "static ::CORBA::Boolean marshal (" << be_idt << be_idt_nl
-          << "const ::" << node->name () << "_ptr p," << be_nl
+          << "const ::" << fname << "_ptr p," << be_nl
           << "TAO_OutputCDR & cdr);" << be_uidt  << be_uidt << be_uidt_nl
           << "};";
 
@@ -142,7 +148,6 @@ be_visitor_traits::visit_interface (be_interface *node)
                         -1);
     }
 
-  node->cli_traits_gen (true);
   return 0;
 }
 
@@ -179,6 +184,10 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
       return 0;
     }
 
+  /// Some type of recursion can cause fprintf problems,
+  /// easily avoided by setting the flag before visit_scope().
+  node->cli_traits_gen (true);
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   // I think we need to generate this only for non-defined forward
@@ -212,7 +221,6 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
-  node->cli_traits_gen (true);
   return 0;
 }
 
@@ -312,13 +320,6 @@ int
 be_visitor_traits::visit_field (be_field *node)
 {
   be_type *ft = be_type::narrow_from_decl (node->field_type ());
-  AST_Decl::NodeType nt = ft->node_type ();
-
-  // All we are trying to catch in here are anonymous array members.
-  if (nt != AST_Decl::NT_array)
-    {
-      return 0;
-    }
 
   if (ft->accept (this) == -1)
     {
