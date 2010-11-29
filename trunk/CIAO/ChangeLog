@@ -1,3 +1,13 @@
+Mon Nov 29 10:51:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager.cpp:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp:
+          Shutting down the dds4ccm connector in a thread safe and memory leak free
+          manner.
+
 Mon Nov 29 10:31:39 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
         *bin/ciao_tests.lst:
@@ -8,7 +18,7 @@ Mon Nov 29 10:15:39 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
         * tests/IDL_Test/NonTopic_Connector/descriptors:
         * tests/IDL_Test/NonTopic_Connector/descriptors/DeploymentPlan.cdp:
         * tests/IDL_Test/NonTopic_Connector/descriptors/run_test.pl:
-	Add deployment and run script.
+        Add deployment and run script.
 
 Fri Nov 26 22:35:09 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
