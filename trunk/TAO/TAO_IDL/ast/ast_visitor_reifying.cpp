@@ -553,9 +553,6 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
   FE_Utils::T_ARGLIST const *t_args =
     this->ctx_->template_args ();
 
-  UTL_StrList *param_refs =
-    const_cast<UTL_StrList *> (idl_global->alias_params ());
-
   for (FE_Utils::T_PARAMLIST_INFO::ITERATOR iter (
          *this->ctx_->template_params ());
        !iter.done ();
