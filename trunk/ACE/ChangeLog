@@ -1,3 +1,9 @@
+Mon Nov 29 17:20:47 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * THANKS:
+
+          Added Shi John <John dot Shi at acxiom dot com>.
+
 Fri Nov 26 17:36:10 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/os_include/os_pthread.h: Removed the #defines for
