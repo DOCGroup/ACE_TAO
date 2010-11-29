@@ -255,42 +255,27 @@ namespace CIAO_InterMulti_Sender_Impl
   Sender_exec_i::ccm_remove (void)
   {
     if (this->nr_of_received_.value() != 5)
-       {
-         ACE_ERROR ((LM_ERROR, "ERROR: Did not get all callbacks for"
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: Did not get all callbacks for"
                                "derived classes."
                                " Received = %u of 5\n",
                                this->nr_of_received_.value()));
-       }
-     else
-       {
-         ACE_DEBUG ((LM_DEBUG,
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG,
                      "OK: All messages received back by Sender\n"));
-       }
-    if (this->asynch_one_gen)
-      {
-        delete this->asynch_one_gen;
-        this->asynch_one_gen = 0;
       }
-    if (this->synch_one_gen)
-      {
-        delete this->synch_one_gen;
-        this->synch_one_gen = 0;
-      }
-    if (this->asynch_two_gen)
-      {
-        delete this->asynch_two_gen;
-        this->asynch_two_gen = 0;
-      }
-    if (this->asynch_three_gen)
-      {
-        delete this->asynch_three_gen;
-        this->asynch_three_gen = 0;
-      }
-    if (this->synch_three_gen)
-      {
-        delete this->synch_three_gen;
-        this->synch_three_gen = 0;
-      }
+    delete this->asynch_one_gen;
+    this->asynch_one_gen = 0;
+    delete this->synch_one_gen;
+    this->synch_one_gen = 0;
+    delete this->asynch_two_gen;
+    this->asynch_two_gen = 0;
+    delete this->asynch_three_gen;
+    this->asynch_three_gen = 0;
+    delete this->synch_three_gen;
+    this->synch_three_gen = 0;
   }
 
   extern "C" INTERMULTI_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
