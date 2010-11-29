@@ -476,7 +476,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::check_filter_getter (void)
   {
-    ::CCM_DDS::QueryFilter * filter = 0;
+    ::CCM_DDS::QueryFilter_var filter;
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver_exec_i::check_filter <GETTER> - ")
                           ACE_TEXT ("checking filter\n")));
 
@@ -592,7 +592,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::check_filter_reader (void)
   {
-    ::CCM_DDS::QueryFilter * filter = 0;
+    ::CCM_DDS::QueryFilter_var filter;
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver_exec_i::check_filter <READER> - ")
                           ACE_TEXT ("checking filter\n")));
 
