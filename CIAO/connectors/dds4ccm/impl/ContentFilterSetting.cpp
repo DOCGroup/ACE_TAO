@@ -23,7 +23,12 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_ContentFilterSetting_i::filter");
       ::CCM_DDS::QueryFilter* retval = new ::CCM_DDS::QueryFilter;
-      *retval = this->filter_;
+      retval->expression = ::CORBA::string_dup (this->filter_.expression);
+      retval->parameters.length (this->filter_.parameters.length ());
+      for (::CORBA::ULong i = 0; i < this->filter_.parameters.length (); ++i)
+        {
+          retval->parameters[i] = ::CORBA::string_dup (this->filter_.parameters[i]);
+        }
       return retval;
     }
 
