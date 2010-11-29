@@ -135,7 +135,8 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::p
 
   this->condition_manager_.passivate ();
   ::DDS::DataReader_var reader = this->dds_read_->get_dds_reader ();
-  if (!::CORBA::is_nil (this->listener_.in ()) &&
+  ::DDS::DataReaderListener_var reader_listener = this->listener_._retn ();
+  if (!::CORBA::is_nil (reader_listener.in ()) &&
       !::CORBA::is_nil (reader.in ()) )
     {
       ::DDS::ReturnCode_t const retcode =
@@ -148,7 +149,6 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::p
                         ::CIAO::DDS4CCM::translate_retcode (retcode)));
           throw ::CORBA::INTERNAL ();
         }
-      this->listener_ = ::DDS::DataReaderListener::_nil ();
     }
 }
 

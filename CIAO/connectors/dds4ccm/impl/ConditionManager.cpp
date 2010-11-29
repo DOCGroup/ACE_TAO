@@ -348,13 +348,19 @@ namespace CIAO
       ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_OK;
       if (! ::CORBA::is_nil (this->qc_reader_.in ()))
         {
-          this->remove_condition (this->qc_reader_.in (), "reader");
-          this->qc_reader_ = ::DDS::QueryCondition::_nil ();
+          ::DDS::QueryCondition_var qc = this->qc_reader_._retn ();
+          if (!::CORBA::is_nil (qc.in ()))
+            {
+              this->remove_condition (qc.in (), "reader");
+            }
         }
       if (! ::CORBA::is_nil (this->qc_listener_.in ()))
         {
-          this->remove_condition (this->qc_listener_.in (), "listener");
-          this->qc_listener_ = ::DDS::QueryCondition::_nil ();
+          ::DDS::QueryCondition_var qc = this->qc_listener_._retn ();
+          if (!::CORBA::is_nil (qc.in ()))
+            {
+              this->remove_condition (qc.in (), "listener");
+            }
         }
 
       if (this->ws_.get_rti_entity ())
@@ -367,8 +373,11 @@ namespace CIAO
                   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                                 ACE_TEXT ("ConditionManager::remove_conditions - ")
                                 ACE_TEXT ("Query condition successfully detached from waitset.\n")));
-                  this->remove_condition (this->qc_getter_.in (), "getter");
-                  this->qc_getter_ = ::DDS::QueryCondition::_nil ();
+                  ::DDS::QueryCondition_var qc = this->qc_getter_._retn ();
+                  if (!::CORBA::is_nil (qc.in ()))
+                    {
+                      this->remove_condition (qc.in (), "getter");
+                    }
                 }
               else
                 {
@@ -404,7 +413,12 @@ namespace CIAO
         }
       if (! ::CORBA::is_nil (this->rd_condition_.in ()))
         {
-          retcode = this->dds_entity ()->delete_readcondition (this->rd_condition_.in ());
+          retcode = ::DDS::RETCODE_OK;
+          ::DDS::ReadCondition_var rd = this->rd_condition_._retn ();
+          if (!::CORBA::is_nil (rd.in ()))
+            {
+              retcode = this->dds_entity ()->delete_readcondition (rd.in ());
+            }
           if (retcode != ::DDS::RETCODE_OK)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO

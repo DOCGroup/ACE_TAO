@@ -106,16 +106,29 @@ void
 DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_passivate (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_passivate");
-  this->passivate_topic (this->topic_.in (),
-                         this->topiclistener_.in ());
-  this->passivate_subscriber (this->subscriber_.in (),
-                              this->subscriber_listener_.in ());
-  this->passivate_publisher (this->publisher_.in (),
-                             this->publisher_listener_.inout ());
 
-  this->topiclistener_      = ::DDS::TopicListener::_nil ();
-  this->subscriber_listener_ = ::DDS::SubscriberListener::_nil ();
-  this->publisher_listener_  = ::DDS::PublisherListener::_nil ();
+  ::DDS::TopicListener_var topiclistener =
+    this->topiclistener_._retn ();
+  if (! CORBA::is_nil (topiclistener.in ()))
+    {
+      this->passivate_topic (this->topic_.in (),
+                             topiclistener.in ());
+    }
+  ::DDS::SubscriberListener_var subscriber_listener =
+    this->subscriber_listener_._retn ();
+  if (! CORBA::is_nil (subscriber_listener.in ()))
+    {
+      this->passivate_subscriber (this->subscriber_.in (),
+                                  subscriber_listener.in ());
+    }
+  ::DDS::PublisherListener_var publisher_listener =
+    this->publisher_listener_._retn ();
+  if (!::CORBA::is_nil (publisher_listener.in ()))
+    {
+      this->passivate_publisher (this->publisher_.in (),
+                                 publisher_listener.in ());
+    }
+
   BaseConnector::ccm_passivate ();
 }
 
@@ -124,21 +137,29 @@ void
 DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove");
-  this->remove_topic (this->domain_participant_.in (),
-                      this->topic_.in ());
+  ::DDS::Topic_var topic = this->topic_._retn ();
+  if (! CORBA::is_nil (topic.in ()))
+    {
+      this->remove_topic (this->domain_participant_.in (),
+                          topic.in ());
+    }
 
   const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
   this->unregister_type (this->domain_participant_.in (),
                          typesupport_name);
 
-  this->remove_subscriber (this->domain_participant_.in (),
-                           this->subscriber_.in ());
-  this->remove_publisher (this->domain_participant_.in (),
-                          this->publisher_.in ());
-  this->topic_ = ::DDS::Topic::_nil ();
-  this->publisher_ = ::DDS::Publisher::_nil ();
-  this->subscriber_ = ::DDS::Subscriber::_nil ();
-
+  ::DDS::Subscriber_var subscriber = this->subscriber_._retn ();
+  if (! CORBA::is_nil (subscriber.in ()))
+    {
+      this->remove_subscriber (this->domain_participant_.in (),
+                               subscriber.in ());
+    }
+  ::DDS::Publisher_var publisher = this->publisher_._retn ();
+  if (!::CORBA::is_nil (publisher.in ()))
+    {
+      this->remove_publisher (this->domain_participant_.in (),
+                              publisher);
+    }
   BaseConnector::ccm_remove ();
 }
 
