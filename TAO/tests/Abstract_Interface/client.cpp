@@ -277,7 +277,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (which_test == TEST_EXCEPTION || which_test == TEST_ALL)
         {
-          which_test = TEST_EXCEPTION;
           test_exception (package.in ());
         }
 

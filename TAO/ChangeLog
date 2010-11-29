@@ -1,3 +1,8 @@
+Mon Nov 29 19:02:18 UTC 2010  Martin Corino  <corino_m@remedy.nl>
+
+        * tests/Abstract_Interface/client.cpp:
+          Fixed test so now it really runs the null-test part.
+
 Mon Nov 29 17:11:52 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_array.cpp:
@@ -26,6 +31,7 @@ Mon Nov 29 15:26:46 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Removed unused local variables.
 
+>>>>>>> .r92751
 Fri Nov 26 22:30:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connector/connector_ami_rh_exs.cpp:
