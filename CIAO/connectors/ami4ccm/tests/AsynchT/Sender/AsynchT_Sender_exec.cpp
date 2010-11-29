@@ -230,16 +230,10 @@ namespace CIAO_AsynchT_Sender_Impl
         ACE_DEBUG ((LM_DEBUG, "OK: Test asynchronous, received back %u.\n",
                       this->nr_of_rec_.value()));
       }
-    if (this->asynch_foo_gen)
-      {
-        delete this->asynch_foo_gen;
-        this->asynch_foo_gen = 0;
-      }
-    if (this->synch_foo_gen)
-      {
-        delete this->synch_foo_gen;
-        this->synch_foo_gen = 0;
-      }
+    delete this->asynch_foo_gen;
+    this->asynch_foo_gen = 0;
+    delete this->synch_foo_gen;
+    this->synch_foo_gen = 0;
   }
 
   extern "C" ASYNCHT_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

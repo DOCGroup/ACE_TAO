@@ -241,16 +241,11 @@ namespace CIAO_OneProcess_Sender_Impl
         ACE_DEBUG ((LM_DEBUG,
                    "OK: All in one proces worked synchronous as expected\n"));
       }
-    if (this->asynch_foo_gen)
-      {
-        delete this->asynch_foo_gen;
-        this->asynch_foo_gen = 0;
-      }
-    if (this->synch_foo_gen)
-      {
-        delete this->synch_foo_gen;
-        this->synch_foo_gen = 0;
-      }}
+    delete this->asynch_foo_gen;
+    this->asynch_foo_gen = 0;
+    delete this->synch_foo_gen;
+    this->synch_foo_gen = 0;
+  }
 
   extern "C" ONEPROCESS_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_OneProcess_Sender_Impl (void)
