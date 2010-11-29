@@ -205,8 +205,11 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove (void)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove");
 
-  this->remove_domain (this->domain_participant_.in ());
-  this->domain_participant_ = ::DDS::DomainParticipant::_nil ();
+  ::DDS::DomainParticipant_var dp = this->domain_participant_._retn ();
+  if (!::CORBA::is_nil (dp.in ()))
+    {
+      this->remove_domain (dp.in ());
+    }
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>

@@ -539,15 +539,24 @@ template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE, b
 void
 DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::passivate_topics (void)
 {
-  this->passivate_topic (this->topic_sq_.in (),
-                         this->topiclistener_sq_.in ());
-  this->passivate_topic (this->topic_tr_.in (),
-                         this->topiclistener_tr_.in ());
-  this->passivate_topic (this->topic_cl_.in (),
-                         this->topiclistener_cl_.in ());
-  this->topiclistener_sq_ = ::DDS::TopicListener::_nil ();
-  this->topiclistener_tr_ = ::DDS::TopicListener::_nil ();
-  this->topiclistener_cl_ = ::DDS::TopicListener::_nil ();
+  ::DDS::TopicListener_var topic_listener = this->topiclistener_sq_._retn ();
+  if (!::CORBA::is_nil (topic_listener.in ()))
+    {
+      this->passivate_topic (this->topic_sq_.in (),
+                             topic_listener.in ());
+    }
+  topic_listener = this->topiclistener_tr_._retn ();
+  if (!::CORBA::is_nil (topic_listener.in ()))
+    {
+      this->passivate_topic (this->topic_tr_.in (),
+                             topic_listener.in ());
+    }
+  topic_listener = this->topiclistener_cl_._retn ();
+  if (!::CORBA::is_nil (topic_listener.in ()))
+    {
+      this->passivate_topic (this->topic_cl_.in (),
+                             topic_listener.in ());
+    }
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE, bool FIXED_SEQ_TYPE>
@@ -565,12 +574,20 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::c
 
   this->passivate_topics ();
 
-  this->passivate_subscriber (this->subscriber_.in (),
-                              this->subscriber_listener_.in ());
-  this->passivate_publisher (this->publisher_.in (),
-                             this->publisher_listener_.in ());
-  this->subscriber_listener_ = ::DDS::SubscriberListener::_nil ();
-  this->publisher_listener_ = ::DDS::PublisherListener::_nil ();
+  ::DDS::SubscriberListener_var subscriber_listener =
+    this->subscriber_listener_._retn ();
+  if (!::CORBA::is_nil (subscriber_listener.in ()))
+    {
+      this->passivate_subscriber (this->subscriber_.in (),
+                                  subscriber_listener.in ());
+    }
+  ::DDS::PublisherListener_var publisher_listener =
+    this->publisher_listener_._retn ();
+  if (!::CORBA::is_nil (publisher_listener.in ()))
+    {
+      this->passivate_publisher (this->publisher_.in (),
+                                 publisher_listener.in ());
+    }
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE, bool FIXED_SEQ_TYPE>
@@ -599,17 +616,35 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::c
 
   this->remove_topics ();
 
-  this->remove_publisher (this->domain_participant_.in (),
-                          this->publisher_.in ());
-  this->remove_subscriber (this->domain_participant_.in (),
-                           this->subscriber_.in ());
+  /**
+    *
+    * In order to close down in a thread safe and memory leak free manner, one
+    * should first declare a temporary _var variable and assign this one with the
+    * class member, using _retn (). This'll free all references to the class member
+    * so one's sure that the only one left is the temporary _var variable. This
+    * one should be used in calls to the 'remove_xxx' methods.
+  **/
+  ::DDS::Publisher_var publisher = this->publisher_._retn ();
+  if (!::CORBA::is_nil (publisher.in ()))
+    {
+      this->remove_publisher (this->domain_participant_.in (),
+                              publisher.in ());
+    }
+  ::DDS::Subscriber_var subscriber = this->subscriber_._retn ();
+  if (!::CORBA::is_nil (subscriber.in ()))
+    {
+      this->remove_subscriber (this->domain_participant_.in (),
+                               subscriber.in ());
+    }
+
   const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
   this->unregister_type (this->domain_participant_.in (),
                          typesupport_name);
 
-  this->remove_domain (this->domain_participant_.in ());
+  ::DDS::DomainParticipant_var dp = this->domain_participant_._retn ();
+  if (!::CORBA::is_nil (dp.in ()))
+    {
+      this->remove_domain (dp.in ());
+    }
 
-  this->publisher_          = ::DDS::Publisher::_nil ();
-  this->subscriber_         = ::DDS::Subscriber::_nil ();
-  this->domain_participant_ = ::DDS::DomainParticipant::_nil ();
 }
