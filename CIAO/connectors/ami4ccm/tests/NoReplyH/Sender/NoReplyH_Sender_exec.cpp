@@ -205,16 +205,10 @@ namespace CIAO_NoReplyH_Sender_Impl
                               "callbacks: %u.\n",
                               this->nr_received_back_.value()));
       }
-    if (this->asynch_foo_gen)
-      {
-        delete this->asynch_foo_gen;
-        this->asynch_foo_gen = 0;
-      }
-    if (this->synch_foo_gen)
-      {
-        delete this->synch_foo_gen;
-        this->synch_foo_gen = 0;
-      }
+    delete this->asynch_foo_gen;
+    this->asynch_foo_gen = 0;
+    delete this->synch_foo_gen;
+    this->synch_foo_gen = 0;
   }
 
   extern "C" NOREPLYH_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

@@ -262,16 +262,10 @@ namespace CIAO_ExceptionT_Sender_Impl
                               " exceptions for  asynchronous and "
                               "synchronous calls\n"));
       }
-    if (this->asynch_foo_gen)
-      {
-        delete this->asynch_foo_gen;
-        this->asynch_foo_gen = 0;
-      }
-    if (this->synch_foo_gen)
-      {
-        delete this->synch_foo_gen;
-        this->synch_foo_gen = 0;
-      }
+    delete this->asynch_foo_gen;
+    this->asynch_foo_gen = 0;
+    delete this->synch_foo_gen;
+    this->synch_foo_gen = 0;
   }
 
   extern "C"  ::Components::EnterpriseComponent_ptr

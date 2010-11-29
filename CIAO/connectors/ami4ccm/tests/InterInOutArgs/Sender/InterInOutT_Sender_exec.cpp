@@ -248,29 +248,24 @@ namespace CIAO_InterInOutT_Sender_Impl
                             "Expected: 2, Received: %u.\n",
                             nr_of_excep_received));
     }
-  if (this->nr_of_received_.value() != 6)
-    {
-      ACE_ERROR ((LM_ERROR, "ERROR: Sender not received the expected number"
-                            " of callbacks and returns  for syn- and "
-                            "asynchronous calls. Expected: 6,"
-                            " Received: %u.\n",
-                            this->nr_of_received_.value()));
-    }
-  if ((this->nr_of_received_.value() == 6) && (nr_of_excep_received == 2))
-    {
-      ACE_DEBUG ((LM_DEBUG, "OK: Sender received the expected number of"
-                            " callbacks and exceptions for syn- and "
-                            "asynchronous calls\n"));
-    }  if (this->asynch_foo_gen)
+    if (this->nr_of_received_.value() != 6)
       {
-        delete this->asynch_foo_gen;
-        this->asynch_foo_gen = 0;
+        ACE_ERROR ((LM_ERROR, "ERROR: Sender not received the expected number"
+                              " of callbacks and returns  for syn- and "
+                              "asynchronous calls. Expected: 6,"
+                              " Received: %u.\n",
+                              this->nr_of_received_.value()));
       }
-    if (this->synch_foo_gen)
+    if ((this->nr_of_received_.value() == 6) && (nr_of_excep_received == 2))
       {
-        delete this->synch_foo_gen;
-        this->synch_foo_gen = 0;
+        ACE_DEBUG ((LM_DEBUG, "OK: Sender received the expected number of"
+                              " callbacks and exceptions for syn- and "
+                              "asynchronous calls\n"));
       }
+    delete this->asynch_foo_gen;
+    this->asynch_foo_gen = 0;
+    delete this->synch_foo_gen;
+    this->synch_foo_gen = 0;
   }
 
   extern "C" INTERINOUT_T_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

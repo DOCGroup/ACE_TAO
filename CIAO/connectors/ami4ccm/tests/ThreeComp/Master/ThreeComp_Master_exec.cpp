@@ -198,16 +198,10 @@ namespace CIAO_ThreeComp_Master_Impl
       {
         ACE_DEBUG ((LM_DEBUG, "OK: Test Master.\n"));
       }
-    if (this->asynch_state_gen)
-      {
-        delete this->asynch_state_gen;
-        this->asynch_state_gen = 0;
-      }
-    if (this->synch_state_gen)
-      {
-        delete this->synch_state_gen;
-        this->synch_state_gen = 0;
-      }
+    delete this->asynch_state_gen;
+    this->asynch_state_gen = 0;
+    delete this->synch_state_gen;
+    this->synch_state_gen = 0;
   }
 
   extern "C" THREECOMP_MASTER_EXEC_Export ::Components::EnterpriseComponent_ptr
