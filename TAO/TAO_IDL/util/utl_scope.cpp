@@ -1881,7 +1881,6 @@ UTL_Scope::match_param (UTL_ScopedName *e)
       return 0;
     }
 
-  AST_Param_Holder *retval = 0;
   const char *name = e->first_component ()->get_string ();
   FE_Utils::T_Param_Info *param = 0;
   unsigned long index = 0;

@@ -1,3 +1,10 @@
+Mon Nov 29 15:26:46 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_visitor_reifying.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Removed unused local variables.
+
 Fri Nov 26 22:30:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connector/connector_ami_rh_exs.cpp:
