@@ -16,7 +16,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_AMI_Receiver_comp_Impl</string>
+          <string>create_Hello_Receiver_comp_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -67,7 +67,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_AMI_Sender_comp_Impl</string>
+          <string>create_Hello_Sender_comp_Impl</string>
         </value>
       </value>
     </execParameter>
