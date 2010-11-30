@@ -60,22 +60,22 @@ namespace CIAO_MultipleTemp_Sender_Impl
     void start (void);
     void stop (void);
     void add_instances_of_topic (void);
-    CORBA::Boolean create_one(void);
-    CORBA::Boolean update_one(void);
-    CORBA::Boolean create_many(void);
-    CORBA::Boolean update_many(void);
+    CORBA::Boolean create_one_topic(void);
+    CORBA::Boolean update_one_topic(void);
+    CORBA::Boolean create_many_topics(void);
+    CORBA::Boolean update_many_topics(void);
 
     pulse_Generator * ticker_;
     ::MultipleTemp::CCM_Sender_Context_var context_;
-    ::MultipleTemp::MultipleTempConnector::MultipleTemp_var updater_one_;
-    ::MultipleTemp::MultipleTempConnector::MultipleTemp_var updater_two_;
+	::MultipleTemp::MultipleTempConnector::T_Typed::Updater_var updater_one_;
+	::MultipleTemp::MultipleTempConnector::Y_Typed::Updater_var updater_two_;
 
     MULTIPLE_TEMP_TEST test_nr_;
     Atomic_Boolean test_ok_;
     TestTopicOneSeq topic_one_seq_one_;
     TestTopicOneSeq topic_one_seq_many_;
-    TestTopicOneSeq topic_two_seq_one_;
-    TestTopicOneSeq topic_two_seq_many_;
+    TestTopicTwoSeq topic_two_seq_one_;
+    TestTopicTwoSeq topic_two_seq_many_;
 
  };
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

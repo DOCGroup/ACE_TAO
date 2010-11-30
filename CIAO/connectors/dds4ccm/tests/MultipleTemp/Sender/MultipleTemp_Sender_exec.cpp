@@ -62,11 +62,12 @@ namespace CIAO_MultipleTemp_Sender_Impl
   }
   // Supported operations and attributes.
   CORBA::Boolean
-  Sender_exec_i::create_one()
+  Sender_exec_i::create_one_topic()
   {
     CORBA::Boolean result = true;
     TestTopicOne i = this->topic_one_seq_one_[0];
-    TestTopicTwo u = this->topic_two_seq_one_[0];
+ //   TestTopicTwo u = this->topic_two_seq_one_[0];
+	TestTopicOne u = this->topic_one_seq_one_[1];
     try
     {
       if ( ::CORBA::is_nil (this->updater_one_) ||
@@ -79,18 +80,18 @@ namespace CIAO_MultipleTemp_Sender_Impl
         {
           this->updater_one_->create_one(i);
           this->updater_two_->create_one(u);
-
+ 
            ACE_DEBUG ((LM_DEBUG,
                        ACE_TEXT ("MultipleTemp: create_one with instance keys")
                        ACE_TEXT ("<%C> and <%C>\n"),
-                       i.keyOne.in(), u.keyTwo.in()));
+                       i.keyOne.in(), u.keyOne.in()));
         }
     }
     catch(const CCM_DDS::AlreadyCreated &)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: AlreadyCreated ")
                             ACE_TEXT ("with test updater create_one <%C>.\n"),
-                            i.keyOne.in(), u.keyTwo.in()));
+                            i.keyOne.in(), u.keyOne.in()));
       result= false;
     }
     catch (const CCM_DDS::InternalError& )
@@ -103,27 +104,30 @@ namespace CIAO_MultipleTemp_Sender_Impl
 
 
   CORBA::Boolean
-  Sender_exec_i::update_one()
+  Sender_exec_i::update_one_topic()
   {
     //update already created instance with handle nil
     CORBA::Boolean result = true;
     TestTopicOne i = this->topic_one_seq_one_[0];
-    TestTopicOne u = this->topic_two_seq_one_[0];
+//   TestTopicTwo u = this->topic_two_seq_one_[0];
+    TestTopicOne u = this->topic_one_seq_one_[1];
+
     try
     {
       this->updater_one_->update_one(i, DDS::HANDLE_NIL);
-      this->updater_two_->update_two(u, DDS::HANDLE_NIL);
+      this->updater_two_->update_one(u, DDS::HANDLE_NIL);
+  
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("MultipleTemp: update_one with already"
-                  ACE_TEXT (" existing instance with DDS::HANDLE_NIL,"
+                  ACE_TEXT ("MultipleTemp: update_one with already")
+                  ACE_TEXT (" existing instance with DDS::HANDLE_NIL,")
                   ACE_TEXT (" key <%C> and key <%C>\n"),
-                  i.keyOne.in(), u.keyTwo.in()));
+                  i.keyOne.in(), u.keyOne.in()));
     }
     catch(const CCM_DDS::NonExistent &)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent ")
-                            ACE_TEXT ("with test updater update_one.\n"),));
+                            ACE_TEXT ("with test updater update_one.\n")));
       result = false;
     }
     catch (const CCM_DDS::InternalError& )
@@ -135,7 +139,7 @@ namespace CIAO_MultipleTemp_Sender_Impl
   }
 
   CORBA::Boolean
-  Sender_exec_i::create_many()
+  Sender_exec_i::create_many_topics()
   {
     //create many with no exception
     CORBA::Boolean result = false;
@@ -145,7 +149,8 @@ namespace CIAO_MultipleTemp_Sender_Impl
                   ACE_TEXT ("create_many both topics : <%u> samples\n"),
                   this->topic_one_seq_many_.length ()));
       this->updater_one_->create_many (this->topic_one_seq_many_);
-      this->updater_two_->create_many (this->topic_two_seq_many_);
+  //    this->updater_two_->create_many (this->topic_two_seq_many_);
+ 
       result = true;
     }
     catch(const CCM_DDS::NonExistent& )
@@ -165,13 +170,13 @@ namespace CIAO_MultipleTemp_Sender_Impl
   }
 
   CORBA::Boolean
-  Sender_exec_i::update_many()
+  Sender_exec_i::update_many_topics()
   {
     CORBA::Boolean result = false;
     try
     {
       this->updater_one_->update_many (this->topic_one_seq_many_);
-      this->updater_two_->update_many (this->topic_two_seq_many_);
+ //     this->updater_two_->update_many (this->topic_two_seq_many_);
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("update_many : written <%u> samples\n"),
                  this->topic_one_seq_many_.length ()));
       result = true;
@@ -179,7 +184,7 @@ namespace CIAO_MultipleTemp_Sender_Impl
     catch(const CCM_DDS::NonExistent& )
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Unexpected exception: NonExistent "
+                  ACE_TEXT ("Unexpected exception: NonExistent ")
                   ACE_TEXT ("with test updater update_many.\n")));
       result = false;
     }
@@ -190,6 +195,7 @@ namespace CIAO_MultipleTemp_Sender_Impl
                    ex.index, ex.error_code));
       result = false;
     }
+	return result;
   }
 
   void
@@ -231,7 +237,8 @@ namespace CIAO_MultipleTemp_Sender_Impl
         new_key.z = i;
         this->topic_two_seq_one_[i-1] = new_key;
       }
-    //sequence for tests with .._many
+
+	//sequence for tests with .._many
     this->topic_two_seq_many_.length (total);
     for (int i = 1; i < (total + 1); i++)
       {
@@ -254,7 +261,7 @@ namespace CIAO_MultipleTemp_Sender_Impl
       switch (this->test_nr_)
       {
         case UPDATE_CREATE:
-          this->test_ok_ = this->create_one();
+          this->test_ok_ = this->create_one_topic();
           if(this->test_ok_.value())
             {
               this->test_nr_ = UPDATE_ONE;
@@ -265,11 +272,11 @@ namespace CIAO_MultipleTemp_Sender_Impl
             }
           break;
         case UPDATE_ONE:
-          this->test_ok_ = this->update_one();
+          this->test_ok_ = this->update_one_topic();
           this->test_nr_ = CREATE_MANY;
           break;
         case CREATE_MANY:
-          this->test_ok_ = this->create_many();
+          this->test_ok_ = this->create_many_topics();
           if(this->test_ok_.value())
             {
               this->test_nr_ = UPDATE_MANY;
@@ -281,7 +288,7 @@ namespace CIAO_MultipleTemp_Sender_Impl
           this->test_nr_ = UPDATE_MANY;
           break;
         case UPDATE_MANY:
-          this->test_ok_ = this->update_many();
+          this->test_ok_ = this->update_many_topics();
           this->test_nr_ = END_TEST;
           break;
         default:
@@ -331,7 +338,7 @@ namespace CIAO_MultipleTemp_Sender_Impl
     this->updater_one_  =
         this->context_->get_connection_test_topic_one_update_data ();
     this->updater_two_  =
-        this->context_->get_connection_test_topic_one_update_data ();
+        this->context_->get_connection_test_topic_two_update_data ();
   }
 
   void

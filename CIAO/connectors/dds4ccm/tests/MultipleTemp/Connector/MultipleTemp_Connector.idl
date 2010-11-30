@@ -17,9 +17,17 @@
 
 module CCM_DDS
 {
-  module Duplex_Typed <typename T, sequence<T> TSeq, typename Y, sequence <Y> YSeq> {
+  module Duplex_Typed <typename T, sequence<T> TSeq, typename Y,  sequence <Y> YSeq> {
     alias Typed <T, TSeq> T_Typed;
     alias Typed <Y, YSeq> Y_Typed;
+
+	//new
+	typedef T_Typed::DataReader DataReader_t;
+    typedef T_Typed::DataWriter DataWriter_t;
+    typedef Y_Typed::DataReader DataReader_y;
+    typedef Y_Typed::DataWriter DataWriter_y;
+  // end new
+
     local interface Foo {
       void op ();
     };
