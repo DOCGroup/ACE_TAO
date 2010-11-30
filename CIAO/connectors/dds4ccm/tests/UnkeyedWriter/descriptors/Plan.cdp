@@ -180,6 +180,19 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>keys</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <!-- should be equal to keys in
+               Sender component -->
+          <ushort>5</ushort>
+        </value>
+      </value>
+    </configProperty>
   </instance>
   <instance xmi:id="Writer_ConnectorComponentInstance">
     <name>Writer_ConnectorComponent</name>
@@ -198,8 +211,8 @@
         </value>
       </value>
     </configProperty>
-      <!--configProperty>
-      <name>qos_profile</name>
+    <configProperty>
+    <name>qos_profile</name>
       <value>
         <type>
           <kind>tk_string</kind>
@@ -208,8 +221,8 @@
           <string>UnkeyedWriter_Library#UnkeyedWriter_Profile</string>
         </value>
       </value>
-    </configProperty-->
-</instance>
+    </configProperty>
+  </instance>
   <instance xmi:id="Writer_ConnectorComponentInstance2">
     <name>Writer_ConnectorComponent2</name>
     <node>ReceiverNode</node>
@@ -227,7 +240,7 @@
         </value>
       </value>
     </configProperty>
-    <!--configProperty>
+    <configProperty>
       <name>qos_profile</name>
       <value>
         <type>
@@ -237,7 +250,7 @@
           <string>UnkeyedWriter_Library#UnkeyedWriter_Profile</string>
         </value>
       </value>
-    </configProperty-->
+    </configProperty>
   </instance>
   <instance xmi:id="SenderComponentInstance">
     <name>SenderComponent</name>

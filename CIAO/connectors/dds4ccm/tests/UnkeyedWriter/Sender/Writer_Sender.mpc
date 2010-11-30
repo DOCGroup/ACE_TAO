@@ -84,9 +84,9 @@ project(DDS_UnkeyedWriterSender_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(DDS_UnkeyedWriterSender_exec) : ciao_executor, dds4ccm_lem_stub {
-  after   += DDS_UnkeyedWriterSender_lem_stub DDS_UnkeyedWriterSender_stub DDS_UnkeyedWriterConnector_lem_stub DDS_UnkeyedWriterConnector_stub 
+  after   += DDS_UnkeyedWriterSender_lem_stub DDS_UnkeyedWriterSender_stub DDS_UnkeyedWriterConnector_lem_stub DDS_UnkeyedWriterConnector_stub
   sharedname = Sender_exec
-  libs += Sender_stub Sender_lem_stub DDS_UnkeyedWriterBase_stub DDS_UnkeyedWriterConnector_lem_stub DDS_UnkeyedWriterConnector_stub 
+  libs += Sender_stub Sender_lem_stub DDS_UnkeyedWriterBase_stub DDS_UnkeyedWriterConnector_lem_stub DDS_UnkeyedWriterConnector_stub
   libpaths += ../lib
   includes += ..
   libout = ../lib

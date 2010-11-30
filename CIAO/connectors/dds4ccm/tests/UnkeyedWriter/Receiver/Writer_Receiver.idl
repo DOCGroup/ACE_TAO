@@ -16,6 +16,7 @@ module Writer
   {
     port WriterTestConnector::DDS_Listen info_out;
     attribute unsigned short iterations;
+    attribute unsigned short keys;
   };
 };
 
