@@ -37,7 +37,7 @@ be_visitor_component_ami_rh_exh::visit_uses (be_uses *node)
 
   this->init ();
 
-  const char *suffix = "ReplyHandler";
+//  const char *suffix = "ReplyHandler";
 
   os_ << be_nl_2
       << "class " << this->export_macro_.c_str () << " "
@@ -51,18 +51,17 @@ be_visitor_component_ami_rh_exh::visit_uses (be_uses *node)
 
   /// This overload of traverse_inheritance_graph() used here
   /// doesn't automatically prime the queues.
-  this->callback_iface_->get_insert_queue ().reset ();
-  this->callback_iface_->get_del_queue ().reset ();
-  this->callback_iface_->get_insert_queue ().enqueue_tail (
-    this->callback_iface_);
+  this->iface_->get_insert_queue ().reset ();
+  this->iface_->get_del_queue ().reset ();
+  this->iface_->get_insert_queue ().enqueue_tail (this->iface_);
 
   Exec_ReplyHandler_Op_Attr_Decl_Generator op_attr_gen (this);
 
   int status =
-    this->callback_iface_->traverse_inheritance_graph (op_attr_gen,
-                                                       &os_,
-                                                       false,
-                                                       false);
+    this->iface_->traverse_inheritance_graph (op_attr_gen,
+                                              &os_,
+                                              false,
+                                              false);
 
   if (status == -1)
     {
@@ -84,29 +83,55 @@ int
 be_visitor_component_ami_rh_exh::visit_attribute (
   be_attribute *node)
 {
-  this->ctx_->interface (this->callback_iface_);
-  TAO_CodeGen::CG_STATE state = this->ctx_->state ();
-  this->ctx_->state (TAO_CodeGen::TAO_ROOT_IH);
+  os_ << be_nl_2
+      << "virtual void" << be_nl
+      << "get_" << node->local_name ()->get_string ()
+      << " (" << be_idt_nl;
 
-  be_visitor_attribute v (this->ctx_);
+  be_argument arg (AST_Argument::dir_IN,
+                   node->field_type (),
+                   node->name ());
 
-  if (v.visit_attribute (node) == -1)
+  be_visitor_args_arglist arg_visitor (this->ctx_);
+  arg_visitor.set_fixed_direction (AST_Argument::dir_IN);
+
+  if (arg_visitor.visit_argument (&arg) == -1)
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("be_visitor_component_ami_rh_exh")
-                  ACE_TEXT ("::visit_attribute - ")
-                  ACE_TEXT ("be_visitor_attribute:: ")
-                  ACE_TEXT ("visit_attribute failed\n")));
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_component_ami_rh_exh")
+                         ACE_TEXT ("::visit_attribute - ")
+                         ACE_TEXT ("get_*() arg gen failed\n")),
+                        -1);
     }
 
-  this->ctx_->state (state);
+  os_ << ");" << be_uidt;
+
+  arg.destroy ();
+
+  this->gen_excep_op ("get_", node);
+
+  if (! node->readonly ())
+    {
+      os_ << be_nl_2
+          << "virtual void" << be_nl
+          << "set_" << node->local_name ()->get_string ()
+          << " (void);";
+
+      this->gen_excep_op ("set_", node);
+    }
 
   return 0;
 }
 
 int
-be_visitor_component_ami_rh_exh::visit_operation (be_operation *node)
+be_visitor_component_ami_rh_exh::visit_operation (
+  be_operation *node)
 {
+  if (node->is_sendc_ami ())
+    {
+      return 0;
+    }
+
   AST_Decl *d =
     ScopeAsDecl (node->defined_in ());
 
@@ -119,18 +144,103 @@ be_visitor_component_ami_rh_exh::visit_operation (be_operation *node)
       return  0;
     }
 
-  /// We're generating implementation operation declarations,
-  /// so we can just use this visitor.
-  be_visitor_operation_ih v (this->ctx_);
+  os_ << be_nl_2
+      << "virtual void" << be_nl
+      << node->local_name ()->get_string () << " (";
 
-  if (v.visit_operation (node) == -1)
+  int count =
+    node->count_arguments_with_direction (
+      AST_Argument::dir_INOUT | AST_Argument::dir_OUT);
+
+  bool vrt = node->void_return_type ();
+
+  if (count == 0 && vrt)
+    {
+      os_ << "void);";
+
+      return  0;
+    }
+
+  os_ << be_idt_nl;
+
+  if (!vrt)
+    {
+      be_visitor_operation_rettype rt_visitor (this->ctx_);
+      be_decl *rt =
+        be_decl::narrow_from_decl (node->return_type ());
+
+      if (rt->accept (&rt_visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_component_ami_rh_exh")
+                             ACE_TEXT ("::visit_operation - ")
+                             ACE_TEXT ("return type arg gen failed\n")),
+                            -1);
+        }
+
+      os_ << " ami_return_val";
+
+      if (count != 0)
+        {
+          os_ << "," << be_nl;
+        }
+    }
+
+  if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_component_ami_rh_exh")
                          ACE_TEXT ("::visit_operation - ")
-                         ACE_TEXT ("be_visitor_operation_ih ")
-                         ACE_TEXT ("failed\n")),
+                         ACE_TEXT ("visit_scope() failed\n")),
                         -1);
+    }
+
+  os_ << ");" << be_uidt;
+
+  this->gen_excep_op ("", node);
+
+  return 0;
+}
+
+int
+be_visitor_component_ami_rh_exh::visit_argument (
+  be_argument *node)
+{
+  if (node->direction () == AST_Argument::dir_IN)
+    {
+      return 0;
+    }
+
+  be_visitor_args_arglist arg_visitor (this->ctx_);
+  arg_visitor.set_fixed_direction (AST_Argument::dir_IN);
+
+  if (arg_visitor.visit_argument (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_component_ami_rh_exh")
+                         ACE_TEXT ("::visit_argument - ")
+                         ACE_TEXT ("be_visitor_args_arglist failed\n")),
+                        -1);
+    }
+
+  return 0;
+}
+
+int
+be_visitor_component_ami_rh_exh::post_process (be_decl *bd)
+{
+  // Has to be (1) an argument, (2) not an IN arg, and
+  // (3) not the last INOUT or OUT arg.
+  if (AST_Decl::NodeType () == AST_Decl::NT_argument)
+    {
+      AST_Argument *arg =
+        AST_Argument::narrow_from_decl (bd);
+
+      if (arg->direction () != AST_Argument::dir_IN
+          && ! this->last_inout_or_out_node (bd))
+        {
+          os_ << "," << be_nl;
+        }
     }
 
   return 0;
@@ -171,6 +281,19 @@ be_visitor_component_ami_rh_exh::init (void)
   sn->destroy ();
   delete sn;
   sn = 0;
+}
+
+void
+be_visitor_component_ami_rh_exh::gen_excep_op (
+  const char *prefix,
+  be_decl *node)
+{
+  os_ << be_nl_2
+      << "virtual void" << be_nl
+      << prefix << node->local_name ()->get_string ()
+      << "_excep (" << be_idt_nl
+      << "::CCM_AMI::ExceptionHolder_ptr excep_holder);"
+      << be_uidt;
 }
 
 // ======================================================

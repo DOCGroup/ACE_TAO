@@ -1,3 +1,9 @@
+Tue Nov 30 18:15:54 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_ami_rh_exh.cpp:
+
+          Removed an unused variable.
+
 Tue Nov 30 18:05:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
