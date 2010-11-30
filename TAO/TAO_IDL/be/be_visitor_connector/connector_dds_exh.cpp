@@ -125,6 +125,10 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
           else
             {
               os_ << d->name ();
+
+              // This arg will be gone in the generic connector.
+              os_ << "," << be_nl
+                  << "false";
             }
 
           if (slot < this->t_args_.size ())
