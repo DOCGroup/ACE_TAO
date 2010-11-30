@@ -1,3 +1,21 @@
+Tue Nov 30 09:56:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager.cpp:
+          Removed unnecessary checks for nil pointers.
+
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.cpp:
+          Rewritten, using the generated executor files.
+
 Mon Nov 29 13:17:52 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:

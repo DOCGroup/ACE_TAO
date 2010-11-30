@@ -349,18 +349,12 @@ namespace CIAO
       if (! ::CORBA::is_nil (this->qc_reader_.in ()))
         {
           ::DDS::QueryCondition_var qc = this->qc_reader_._retn ();
-          if (!::CORBA::is_nil (qc.in ()))
-            {
-              this->remove_condition (qc.in (), "reader");
-            }
+          this->remove_condition (qc.in (), "reader");
         }
       if (! ::CORBA::is_nil (this->qc_listener_.in ()))
         {
           ::DDS::QueryCondition_var qc = this->qc_listener_._retn ();
-          if (!::CORBA::is_nil (qc.in ()))
-            {
-              this->remove_condition (qc.in (), "listener");
-            }
+          this->remove_condition (qc.in (), "listener");
         }
 
       if (this->ws_.get_rti_entity ())
@@ -374,10 +368,7 @@ namespace CIAO
                                 ACE_TEXT ("ConditionManager::remove_conditions - ")
                                 ACE_TEXT ("Query condition successfully detached from waitset.\n")));
                   ::DDS::QueryCondition_var qc = this->qc_getter_._retn ();
-                  if (!::CORBA::is_nil (qc.in ()))
-                    {
-                      this->remove_condition (qc.in (), "getter");
-                    }
+                  this->remove_condition (qc.in (), "getter");
                 }
               else
                 {
@@ -433,7 +424,6 @@ namespace CIAO
                             ACE_TEXT ("ConditionManager::remove_conditions - ")
                             ACE_TEXT ("Read condition successfully deleted from DDSDataReader.\n")));
             }
-          this->rd_condition_ = ::DDS::ReadCondition::_nil ();
         }
     }
 
