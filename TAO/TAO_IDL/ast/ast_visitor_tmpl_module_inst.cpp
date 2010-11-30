@@ -693,6 +693,7 @@ ast_visitor_tmpl_module_inst::visit_module (AST_Module *node)
   idl_global->scopes ().push (added_module);
 
   AST_Template_Module_Ref *ref = node->from_ref ();
+  UTL_StrList const *old_refs = idl_global->alias_params ();
 
   if (ref != 0)
     {
@@ -712,7 +713,7 @@ ast_visitor_tmpl_module_inst::visit_module (AST_Module *node)
   // Restore scope stack.
   idl_global->scopes ().pop ();
 
-  idl_global->alias_params (0);
+  idl_global->alias_params (const_cast<UTL_StrList *> (old_refs));
 
   return 0;
 }
