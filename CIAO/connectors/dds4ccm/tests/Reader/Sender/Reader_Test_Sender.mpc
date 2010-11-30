@@ -89,11 +89,11 @@ project(DDS_Reader_Test_Sender_stub) : ccm_stub, dds4ccm_base {
 
 project(DDS_Reader_Test_Sender_exec) : ciao_executor, dds4ccm_lem_stub {
   after   += DDS_Reader_Test_Sender_lem_stub DDS_Reader_Test_Sender_stub \
-             DDS_Reader_Test_Connector_lem_stub DDS_Reader_Test_Connector_stub 
+             DDS_Reader_Test_Connector_lem_stub DDS_Reader_Test_Connector_stub
   sharedname = Sender_exec
   libs    += Sender_stub Sender_lem_stub DDS_Reader_Test_Base_stub \
              DDS_Reader_Test_Connector_lem_stub DDS_Reader_Test_Connector_stub \
-             Reader_Starter_stub 
+             Reader_Starter_stub
   libpaths += ../lib
   includes += ..
   libout = ../lib
