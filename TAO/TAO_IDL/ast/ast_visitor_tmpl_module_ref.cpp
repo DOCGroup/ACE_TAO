@@ -76,6 +76,8 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
     const_cast<FE_Utils::T_PARAMLIST_INFO *> (
       idl_global->current_params ());
 
+  UTL_StrList const *old_refs = idl_global->alias_params ();
+
   idl_global->alias_params (
     const_cast<UTL_StrList *> (node->param_refs ()));
   AST_Template_Module *tm = node->ref ();
@@ -95,7 +97,7 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
 
   /// Restore the global param list state.
   idl_global->current_params (holder);
-  idl_global->alias_params (0);
+  idl_global->alias_params (const_cast<UTL_StrList *> (old_refs));
 
   idl_global->scopes ().pop ();
 
