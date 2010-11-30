@@ -1,3 +1,13 @@
+Tue Nov 30 09:55:39 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Deployment/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Deployment/scripts/run_test.pl:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/src/Hello_Receiver_comp_exec.h:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/src/Hello_Receiver_comp_exec.cpp:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.cpp:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.h:
+        Implemente get_methods and generated exec's .
+
 Tue Nov 30 09:56:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager.cpp:
