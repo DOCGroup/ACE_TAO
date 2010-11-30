@@ -23,12 +23,12 @@ namespace CIAO_MultipleTemp_Receiver_Impl
   // ListenOneByOneTest_Listener_exec_i one
   //============================================================
   class RECEIVER_EXEC_Export ListenOne_Listener_exec_i
-    : public virtual ::MultipleTemp::MultipleTempConnector::CCM_Listener,
+	  : public virtual ::MultipleTemp::MultipleTempConnector::T_Typed::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
     ListenOne_Listener_exec_i (
-        :::MultipleTemp::CCM_Receiver_Context_ptr ctx);
+        ::MultipleTemp::CCM_Receiver_Context_ptr ctx);
 
     virtual ~ListenOne_Listener_exec_i (void);
 
@@ -47,7 +47,7 @@ namespace CIAO_MultipleTemp_Receiver_Impl
   // ListenOneByOneTest_Listener_exec_i two
   //============================================================
   class RECEIVER_EXEC_Export ListenTwo_Listener_exec_i
-    : public virtual ::MultipleTemp::MultipleTempConnector::CCM_Listener,
+	  : public virtual ::MultipleTemp::MultipleTempConnector::Y_Typed::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -58,11 +58,13 @@ namespace CIAO_MultipleTemp_Receiver_Impl
 
     virtual void
     on_one_data (
-      const TestTopicTwo& an_instance,
+//      const TestTopicTwo& an_instance,
+      const TestTopicOne& an_instance,
       const ::CCM_DDS::ReadInfo & info);
     virtual void
       on_many_data (
-        const TestTopicTwoSeq & an_instance,
+ //       const TestTopicTwoSeq & an_instance,
+        const TestTopicOneSeq & an_instance,
         const ::CCM_DDS::ReadInfoSeq & info);
   private:
     ::MultipleTemp::CCM_Receiver_Context_var ciao_context_;
@@ -79,16 +81,16 @@ namespace CIAO_MultipleTemp_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     // Port operations.
-    virtual ::MultipleTemp::MultipleTempConnector::CCM_Listener_ptr
-    get_info_out_one_data_listener (void);
-    virtual ::MultipleTemp::MultipleTempConnector::CCM_Listener_ptr
-    get_info_out_two_data_listener (void);
+	virtual ::MultipleTemp::MultipleTempConnector::T_Typed::CCM_Listener_ptr
+    get_info_one_out_data_listener (void);
+	virtual ::MultipleTemp::MultipleTempConnector::Y_Typed::CCM_Listener_ptr
+    get_info_two_out_data_listener (void);
 
-
+ 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
-    get_info_out_one_status (void);
+    get_info_one_out_status (void);
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
-    get_info_out_two_status (void);
+    get_info_two_out_status (void);
 
     // Operations from Components::SessionComponent.
     virtual void
@@ -103,8 +105,8 @@ namespace CIAO_MultipleTemp_Receiver_Impl
 
   private:
     ::MultipleTemp::CCM_Receiver_Context_var ciao_context_;
-    ::MultipleTemp::MultipleTempConnector::CCM_Listener_var ciao_info_out_one_data_listener_;
-    ::MultipleTemp::MultipleTempConnector::CCM_Listener_var ciao_info_out_two_data_listener_;
+	::MultipleTemp::MultipleTempConnector::T_Typed::CCM_Listener_var ciao_info_out_one_data_listener_;
+	::MultipleTemp::MultipleTempConnector::Y_Typed::CCM_Listener_var ciao_info_out_two_data_listener_;
    };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

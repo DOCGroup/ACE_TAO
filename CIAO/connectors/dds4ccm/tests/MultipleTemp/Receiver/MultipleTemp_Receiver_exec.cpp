@@ -83,20 +83,23 @@ namespace CIAO_MultipleTemp_Receiver_Impl
 
   void
   ListenTwo_Listener_exec_i::on_one_data (
-                                  const TestTopicTwo & an_instance,
+//                                  const TestTopicTwo & an_instance,
+                                  const TestTopicOne & an_instance,
                                   const ::CCM_DDS::ReadInfo & info)
     {
       ACE_DEBUG ((LM_DEBUG, "ListenTwo_Listener_exec_i::on_one_data: "
                               "key <%C> - iteration <%d>\n",
-                              an_instance.keyTwo.in (),
-                              an_instance.y));
+                        //      an_instance.keyTwo.in (),
+							  an_instance.keyOne.in (),
+                              an_instance.x));
       if (!info.instance_handle.isValid)
         {
           ACE_ERROR ((LM_ERROR, "ERROR: ListenTwo_Listener_exec_i::on_one_data: "
                               "instance handle seems to be invalid "
                               "key <%C> - iteration <%d>\n",
-                              an_instance.keyTwo.in (),
-                              an_instance.y));
+                              an_instance.keyOne.in (),
+  			         //        an_instance.keyTwo.in (),
+                              an_instance.x));
         }
       if (info.source_timestamp.sec == 0 &&
           info.source_timestamp.nanosec == 0)
@@ -104,15 +107,17 @@ namespace CIAO_MultipleTemp_Receiver_Impl
           ACE_ERROR ((LM_ERROR, "ERROR: ListenTwo_Listener_exec_i::on_one_data: "
                               "source timestamp seems to be invalid (nil) "
                               "key <%C> - iteration <%d>\n",
-                              an_instance.keyTwo.in (),
-                              an_instance.y));
+                  //            an_instance.keyTwo.in (),
+	                           an_instance.keyOne.in (),
+                               an_instance.x));
         }
     ++received_two;
   }
 
   void
   ListenTwo_Listener_exec_i::on_many_data (
-                                  const TestTopicTwoSeq & ,
+//                                  const TestTopicTwoSeq & ,
+                                  const TestTopicOneSeq & ,
                                   const ::CCM_DDS::ReadInfoSeq & )
   {
   }
@@ -127,55 +132,54 @@ namespace CIAO_MultipleTemp_Receiver_Impl
   Receiver_exec_i::~Receiver_exec_i (void)
   {
   }
-
-  // Port operations.
+   // Port operations.
   ::CCM_DDS::CCM_PortStatusListener_ptr
-  Receiver_exec_i::get_info_out_one_status (void)
+  Receiver_exec_i::get_info_one_out_status (void)
   {
     return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
-   Receiver_exec_i::get_info_out_two_status (void)
+   Receiver_exec_i::get_info_two_out_status (void)
    {
      return ::CCM_DDS::CCM_PortStatusListener::_nil ();
    }
 
-  ::MultipleTemp::MultipleTempConnector::CCM_Listener_ptr
-  Receiver_exec_i::get_info_out_one_data_listener (void)
+  ::MultipleTemp::MultipleTempConnector::T_Typed::CCM_Listener_ptr
+  Receiver_exec_i::get_info_one_out_data_listener (void)
   {
     if ( ::CORBA::is_nil (this->ciao_info_out_one_data_listener_.in ()))
        {
-         info_out_one_data_listener_exec_i *tmp = 0;
+         ListenOne_Listener_exec_i *tmp = 0;
          ACE_NEW_RETURN (
            tmp,
-           info_out_one_data_listener_exec_i (
+           ListenOne_Listener_exec_i (
              this->ciao_context_.in ()),
-             :::MultipleTemp::MultipleTempConnector::CCM_Listener::_nil ());
+			 ::MultipleTemp::MultipleTempConnector::T_Typed::CCM_Listener::_nil ());
            this->ciao_info_out_one_data_listener_ = tmp;
        }
 
      return
-         ::MultipleTemp::MultipleTempConnector::CCM_Listener::_duplicate (
+         ::MultipleTemp::MultipleTempConnector::T_Typed::CCM_Listener::_duplicate (
          this->ciao_info_out_one_data_listener_.in ());
    }
 
-  ::MultipleTemp::MultipleTempConnector::CCM_Listener_ptr
-   Receiver_exec_i::get_info_out_two_data_listener (void)
+  ::MultipleTemp::MultipleTempConnector::Y_Typed::CCM_Listener_ptr
+   Receiver_exec_i::get_info_two_out_data_listener (void)
    {
     if ( ::CORBA::is_nil (this->ciao_info_out_two_data_listener_.in ()))
         {
-          info_out_two_data_listener_exec_i *tmp = 0;
+          ListenTwo_Listener_exec_i *tmp = 0;
           ACE_NEW_RETURN (
             tmp,
-            info_out_two_data_listener_exec_i (
+            ListenTwo_Listener_exec_i (
               this->ciao_context_.in ()),
-              :::MultipleTemp::MultipleTempConnector::CCM_Listener::_nil ());
+              ::MultipleTemp::MultipleTempConnector::Y_Typed::CCM_Listener::_nil ());
             this->ciao_info_out_two_data_listener_ = tmp;
         }
 
       return
-          ::MultipleTemp::MultipleTempConnector::CCM_Listener::_duplicate (
+          ::MultipleTemp::MultipleTempConnector::Y_Typed::CCM_Listener::_duplicate (
           this->ciao_info_out_two_data_listener_.in ());
    }
 
@@ -186,7 +190,7 @@ namespace CIAO_MultipleTemp_Receiver_Impl
   {
     this->ciao_context_ =
       ::MultipleTemp::CCM_Receiver_Context::_narrow (ctx);
-    if ( ::CORBA::is_nil (this->context_.in ()))
+    if ( ::CORBA::is_nil (this->ciao_context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
@@ -201,11 +205,11 @@ namespace CIAO_MultipleTemp_Receiver_Impl
   Receiver_exec_i::ccm_activate (void)
   {
     ::CCM_DDS::DataListenerControl_var dlc_one =
-        this->context_->get_connection_info_out_one_data_control ();
-    ::CCM_DDS::DataListenerControl_var dlc_one =
-        this->context_->get_connection_info_out_two_data_control ();
-    dlc_one->mode (::CCM_DDS::ONE_BY_ONE);
-    dlc_one->mode (::CCM_DDS::ONE_BY_ONE);
+        this->ciao_context_->get_connection_info_one_out_data_control ();
+    ::CCM_DDS::DataListenerControl_var dlc_two =
+        this->ciao_context_->get_connection_info_two_out_data_control ();
+
+	dlc_two->mode (::CCM_DDS::ONE_BY_ONE);
   }
 
   void
