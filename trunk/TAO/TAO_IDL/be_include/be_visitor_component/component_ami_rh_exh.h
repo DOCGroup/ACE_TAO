@@ -44,9 +44,14 @@ public:
   virtual int visit_uses (be_uses *node);
   virtual int visit_attribute (be_attribute *node);
   virtual int visit_operation (be_operation *node);
+  virtual int visit_argument (be_argument *node);
+
+  virtual int post_process (be_decl *bd);
 
 private:
   void init (void);
+
+  void gen_excep_op (const char *prefix, be_decl *node);
 
 private:
   be_interface *iface_;

@@ -1,3 +1,11 @@
+Wed Dec  1 12:09:31 UTC 2010  Martin Corino  <corino_m@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+          Fixed compilation errors.
+        * TAO_IDL/be_include/be_visitor_component/component_ami_rh_exh.h:
+          Fixed mismatched connector generation (.h <> .cpp).
+
 Tue Nov 30 20:48:06 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:

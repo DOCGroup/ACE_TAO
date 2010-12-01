@@ -39,6 +39,7 @@
 #include "be_structure.h"
 #include "be_typedef.h"
 #include "be_valuetype.h"
+#include "be_argument.h"
 
 #include "be_visitor_component.h"
 #include "be_visitor_attribute.h"
@@ -57,6 +58,9 @@
 #include "be_helper.h"
 #include "be_identifier_helper.h"
 #include "be_extern.h"
+
+#include "be_visitor_argument/argument.h"
+#include "be_visitor_argument/arglist.h"
 
 #include "be_visitor_component/component.cpp"
 #include "be_visitor_component/component_svh.cpp"
