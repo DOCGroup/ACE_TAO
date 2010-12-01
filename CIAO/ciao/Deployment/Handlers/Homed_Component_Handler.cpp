@@ -132,7 +132,6 @@ namespace CIAO
         Deployment_Common::create_attribute_configuration (idd.configProperty,
                                                            attr_config);
 
-
         container->set_attributes (ref.in (),
                                    attr_config);
       }
@@ -417,7 +416,7 @@ namespace CIAO
       {
         ref->configuration_complete ();
       }
-    catch (CORBA::Exception &ex)
+    catch (const CORBA::Exception &ex)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Homed_Component_Handler_i::instance_configured - "
