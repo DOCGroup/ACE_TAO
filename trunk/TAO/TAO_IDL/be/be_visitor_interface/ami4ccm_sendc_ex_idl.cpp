@@ -90,7 +90,8 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_operation (be_operation *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ami4ccm_rh_ex_idl::visit_operation - ")
+                         ACE_TEXT ("be_visitor_ami4ccm_sendc_ex_idl")
+                         ACE_TEXT ("::visit_operation - ")
                          ACE_TEXT ("visit_scope() failed\n")),
                         -1);
     }

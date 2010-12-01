@@ -326,6 +326,13 @@ TAO_OutStream::operator<< (const char *str)
 }
 
 TAO_OutStream &
+TAO_OutStream::operator<< (const ACE_CString &str)
+{
+  ACE_OS::fprintf (this->fp_, "%s", str.c_str ());
+  return *this;
+}
+
+TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::UShort num)
 {
   ACE_OS::fprintf (this->fp_,

@@ -3317,13 +3317,23 @@ be_interface::gen_ami4ccm_idl (TAO_OutStream *os)
   be_visitor_context ctx;
   ctx.stream (os);
 
+  be_visitor_ami4ccm_rh_ex_idl rh_visitor (&ctx);
+
+  if (rh_visitor.visit_interface (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_interface::gen_ami4ccm_idl - ")
+                         ACE_TEXT ("rh visitor failed\n")),
+                        -1);
+    }
+
   be_visitor_ami4ccm_sendc_ex_idl sendc_visitor (&ctx);
 
   if (sendc_visitor.visit_interface (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_interface::gen_ami4ccm_idl - ")
-                         ACE_TEXT ("sendc op visitor failed\n")),
+                         ACE_TEXT ("sendc visitor failed\n")),
                         -1);
     }
 
@@ -3341,35 +3351,6 @@ be_interface::gen_ami4ccm_idl (TAO_OutStream *os)
 
   this->ami4ccm_ex_idl_gen (true);
 
-  return 0;
-}
-
-int
-be_interface::gen_ami4ccm_rh_idl (TAO_OutStream *os)
-{
-  if (this->ami4ccm_rh_ex_idl_gen ())
-    {
-      return 0;
-    }
-
-  be_util::gen_nesting_open (*os, this);
-
-  be_visitor_context ctx;
-  ctx.stream (os);
-
-  be_visitor_ami4ccm_rh_ex_idl rh_visitor (&ctx);
-
-  if (rh_visitor.visit_interface (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_interface::gen_ami4ccm_rh_idl - ")
-                         ACE_TEXT ("reply handler visitor failed\n")),
-                        -1);
-    }
-
-  be_util::gen_nesting_close (*os, this);
-
-  this->ami4ccm_rh_ex_idl_gen (true);
   return 0;
 }
 
