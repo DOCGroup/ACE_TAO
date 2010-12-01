@@ -78,7 +78,8 @@ namespace CIAO_Writer_Receiver_Impl
   info_out_data_listener_exec_i::on_many_data (const ::WriterTestSeq & /* data */,
   const ::CCM_DDS::ReadInfoSeq & /* infos */)
   {
-    /* Your code here. */
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("WriterTest_Listener: ")
+            ACE_TEXT ("on_many_data has been called.\n")));
   }
 
   /**
