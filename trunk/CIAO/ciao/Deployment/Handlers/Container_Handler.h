@@ -23,11 +23,9 @@
 
 #include "ciao/Deployment/Handlers/CIAO_Locality_Handler_Export.h"
 #include "tao/LocalObject.h"
-#include <set>
+
 namespace CIAO
 {
-  class CIAO_LocalityActivator_i;
-
   class CIAO_Locality_Handler_Export Container_Handler_i
     : public virtual DAnCE::InstanceDeploymentHandler,
       public virtual ::CORBA::LocalObject

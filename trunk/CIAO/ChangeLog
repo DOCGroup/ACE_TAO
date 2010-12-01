@@ -1,3 +1,26 @@
+Wed Dec  1 10:18:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ciao_extension_container.mpb:
+        * MPC/config/ciao_extension_container_stub.mpb:
+        * MPC/config/ciao_session_container.mpb:
+        * MPC/config/ciao_session_container_stub.mpb:
+        * ciao/Containers/Container_Base.idl:
+        * ciao/Containers/Extension/Extension_Container.mpc:
+        * ciao/Containers/Extension/Extension_Container.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Containers/Session/Session_Container.mpc:
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Deployment/Handlers/Container_Handler.h:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
+        * docs/releasenotes/switch.html:
+        * MPC/config/ccm_componentserver_stub.mpb:
+        * ccm/ComponentServer:
+        * ccm/ComponentServer/CCM_ComponentServer.mpc:
+        * ccm/ComponentServer/CCM_ComponentServer_Base.idl:
+          Removed ccm_component_server_stub, the exceptions listed there are
+          only used in the container. That part has to be rewritten because
+          the exceptions are not in idl
+
 Wed Dec  1 10:24:36 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver.idl:
