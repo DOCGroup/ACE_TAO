@@ -21,8 +21,8 @@ module CCM_DDS
     alias Typed <T, TSeq> T_Typed;
     alias Typed <Y, YSeq> Y_Typed;
 
-	//new
-	typedef T_Typed::DataReader DataReader_t;
+    //new
+    typedef T_Typed::DataReader DataReader_t;
     typedef T_Typed::DataWriter DataWriter_t;
     typedef Y_Typed::DataReader DataReader_y;
     typedef Y_Typed::DataWriter DataWriter_y;
