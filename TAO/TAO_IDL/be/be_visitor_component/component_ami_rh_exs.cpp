@@ -15,13 +15,8 @@
 
 be_visitor_component_ami_rh_exs::be_visitor_component_ami_rh_exs (
       be_visitor_context *ctx)
-  : be_visitor_scope (ctx),
-    iface_ (0),
-    callback_iface_ (0),
-    scope_name_ (0),
-    iface_name_ (0),
-    callback_name_ (0),
-    smart_scope_ (0)
+  : be_visitor_component_ami_rh_ex_base (ctx),
+    your_code_here_ ("/* Your code here. */")
 {
 }
 
@@ -38,14 +33,14 @@ be_visitor_component_ami_rh_exs::visit_uses (be_uses *node)
   this->init ();
 
   os_ << be_nl_2
-      << this->callback_name_ << "_i" << "::"
-      << this->callback_name_ << "_i" << " (void)" << be_nl
+      << this->prefix_ << this->iface_name_ << this->suffix_ << "_i" << "::"
+      << this->prefix_ << this->iface_name_ << this->suffix_ << "_i" << " (void)" << be_nl
       << "{" << be_nl
       << "}";
 
   os_ << be_nl_2
-      << this->callback_name_ << "_i" << "::~"
-      << this->callback_name_ << "_i" << " (void)" << be_nl
+      << this->prefix_ << this->iface_name_ << this->suffix_ << "_i" << "::~"
+      << this->prefix_ << this->iface_name_ << this->suffix_ << "_i" << " (void)" << be_nl
       << "{" << be_nl
       << "}";
 
@@ -54,18 +49,17 @@ be_visitor_component_ami_rh_exs::visit_uses (be_uses *node)
 
   /// This overload of traverse_inheritance_graph() used here
   /// doesn't automatically prime the queues.
-  this->callback_iface_->get_insert_queue ().reset ();
-  this->callback_iface_->get_del_queue ().reset ();
-  this->callback_iface_->get_insert_queue ().enqueue_tail (
-    this->callback_iface_);
+  this->iface_->get_insert_queue ().reset ();
+  this->iface_->get_del_queue ().reset ();
+  this->iface_->get_insert_queue ().enqueue_tail (this->iface_);
 
-  Exec_ReplyHandler_Op_Attr_Defn_Generator op_attr_gen (this);
+  Exec_ReplyHandler_Op_Attr_Generator op_attr_gen (this);
 
   int status =
-    this->callback_iface_->traverse_inheritance_graph (op_attr_gen,
-                                                       &os_,
-                                                       false,
-                                                       false);
+    this->iface_->traverse_inheritance_graph (op_attr_gen,
+                                              &os_,
+                                              false,
+                                              false);
 
   if (status == -1)
     {
@@ -85,80 +79,126 @@ int
 be_visitor_component_ami_rh_exs::visit_operation (
   be_operation *node)
 {
-  AST_Decl::NodeType nt = node->defined_in ()->scope_node_type ();
-
-  if (nt != AST_Decl::NT_interface)
+  /// Skip these for the reply handler.
+  if (node->is_sendc_ami ())
     {
       return 0;
     }
 
-  be_visitor_operation_exs v (this->ctx_);
-  v.scope (this->callback_iface_);
-  v.class_extension ("_i");
-  return v.visit_operation (node);
+  AST_Decl *d =
+    ScopeAsDecl (node->defined_in ());
+
+  /// We end up here also from the visit_scope() call on the
+  /// connector. We want to skip the CCM-related operations
+  /// that were added to the connector since it's a component.
+  /// We want only the facet interface operations.
+  if (d->node_type () != AST_Decl::NT_interface)
+    {
+      return  0;
+    }
+
+  os_ << be_nl_2
+      << "void" << be_nl
+      << this->class_name_ << "_i"
+      << "::" << node->local_name ()->get_string ()
+      << " (";
+
+  int count =
+    node->count_arguments_with_direction (
+      AST_Argument::dir_INOUT | AST_Argument::dir_OUT);
+
+  bool vrt = node->void_return_type ();
+
+  if (count == 0 && vrt)
+    {
+      os_ << "void)";
+    }
+  else
+    {
+      os_ << be_idt_nl;
+    }
+
+  if (!vrt)
+    {
+      be_visitor_operation_rettype rt_visitor (this->ctx_);
+      be_decl *rt =
+        be_decl::narrow_from_decl (node->return_type ());
+
+      if (rt->accept (&rt_visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_component_ami_rh_exs")
+                             ACE_TEXT ("::visit_operation - ")
+                             ACE_TEXT ("return type arg gen failed\n")),
+                            -1);
+        }
+
+      os_ << " /* ami_return_val */";
+
+      if (count != 0)
+        {
+          os_ << "," << be_nl;
+        }
+    }
+
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_component_ami_rh_exs")
+                         ACE_TEXT ("::visit_operation - ")
+                         ACE_TEXT ("visit_scope() failed\n")),
+                        -1);
+    }
+
+  if (count != 0 || vrt)
+    {
+      os_ << ")" << be_uidt;
+    }
+
+  this->gen_op_body ();
+
+  this->gen_excep_op ("", node, true);
+
+  return 0;
 }
 
 int
 be_visitor_component_ami_rh_exs::visit_attribute (
   be_attribute *node)
 {
-  be_visitor_attribute v (this->ctx_);
-  v.op_scope (this->callback_iface_);
-  v.exec_class_extension ("_i");
-  return v.visit_attribute (node);
-}
-
-void
-be_visitor_component_ami_rh_exs::init (void)
-{
-  UTL_Scope *s = this->iface_->defined_in ();
-  AST_Decl *scope = ScopeAsDecl (s);
-  this->scope_name_ = scope->full_name ();
-  bool global = (scope->node_type () == AST_Decl::NT_root);
-  this->smart_scope_ = (global ? "" : "::");
-  this->iface_name_ = this->iface_->local_name ();
-
-  /// The reply handler class we are generating inherits from the
-  /// CORBA AMI skeleton class, not the AMI_xxxCallback class
-  /// generated from the corresponding interface in this IDL file.
-  /// So to get the correct *_excep operation signatures, we
-  /// visit the scope of the AMI_xxxHandler interface generated
-  /// by -GC, which must be applied to this IDL file.
-  this->handler_str_ = this->scope_name_;
-  this->handler_str_ += this->smart_scope_;
-  this->handler_str_ += "AMI4CCM_";
-
-  ACE_CString tmp (this->iface_name_);
-  this->handler_str_ += tmp;
-  this->handler_str_ += "ReplyHandler";
-
-  /// Look up the AMI_xxxCallback class (see comment above)
-  /// so we can traverse its inheritance graph below.
-  UTL_ScopedName *sn =
-    FE_Utils::string_to_scoped_name (this->handler_str_.c_str ());
-  AST_Decl *d = s->lookup_by_name (sn, true, false);
-  this->callback_iface_ = be_interface::narrow_from_decl (d);
-  this->callback_name_ = this->callback_iface_->local_name ();
-
-  sn->destroy ();
-  delete sn;
-  sn = 0;
-}
-
-// ======================================================
-
-Exec_ReplyHandler_Op_Attr_Defn_Generator::Exec_ReplyHandler_Op_Attr_Defn_Generator (
-    be_visitor_scope * visitor)
-  : visitor_ (visitor)
-{
+  return this->gen_attr_op (node, true);
 }
 
 int
-Exec_ReplyHandler_Op_Attr_Defn_Generator::emit (
-  be_interface * /* derived_interface */,
-  TAO_OutStream * /* os */,
-  be_interface * base_interface)
+be_visitor_component_ami_rh_exs::visit_argument (
+  be_argument *node)
 {
-  return visitor_->visit_scope (base_interface);
+  if (node->direction () == AST_Argument::dir_IN)
+    {
+      return 0;
+    }
+
+  be_visitor_args_arglist arg_visitor (this->ctx_);
+  arg_visitor.set_fixed_direction (AST_Argument::dir_IN);
+  arg_visitor.unused (true);
+
+  if (arg_visitor.visit_argument (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_component_ami_rh_exs")
+                         ACE_TEXT ("::visit_argument - ")
+                         ACE_TEXT ("be_visitor_args_arglist failed\n")),
+                        -1);
+    }
+
+  return 0;
 }
 
+void
+be_visitor_component_ami_rh_exs::gen_op_body (void)
+{
+  os_ << be_nl
+      << "{" << be_idt_nl
+      << this->your_code_here_ << be_uidt_nl
+      << "}";
+}

@@ -172,6 +172,7 @@ public:
   // =overloaded operators
 
   TAO_OutStream &operator<< (const char *str);
+  TAO_OutStream &operator<< (const ACE_CString &str);
   TAO_OutStream &operator<< (const ACE_CDR::UShort num);
   TAO_OutStream &operator<< (const ACE_CDR::Short num);
   TAO_OutStream &operator<< (const ACE_CDR::ULong num);

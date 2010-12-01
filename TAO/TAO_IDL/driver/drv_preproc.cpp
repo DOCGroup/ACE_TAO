@@ -1053,10 +1053,9 @@ DRV_pre_proc (const char *myfile)
   if (file == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%C: Unable to open temporary ")
-                  ACE_TEXT ("file \"%C\": %p\n"),
+                  "%C: Unable to open file : %p\n",
                   idl_global->prog_name (),
-                  tmp_file));
+                  myfile));
 
       throw Bailout ();
     }

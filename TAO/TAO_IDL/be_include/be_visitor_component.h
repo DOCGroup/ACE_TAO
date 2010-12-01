@@ -40,6 +40,7 @@
 #include "be_visitor_component/facet_exs.h"
 #include "be_visitor_component/executor_exs.h"
 #include "be_visitor_component/executor_exs_attr_init.h"
+#include "be_visitor_component/component_ami_rh_ex_base.h"
 #include "be_visitor_component/component_ami_rh_exh.h"
 #include "be_visitor_component/component_ami_rh_exs.h"
 
