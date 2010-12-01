@@ -1,3 +1,40 @@
+Wed Dec  1 22:15:07 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_sendc_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ami_rh_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ami_rh_exh.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_visitor_component/component_ami_rh_exs.h:
+        * TAO_IDL/be_include/be_visitor_component/component_ami_rh_exh.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+
+          Moved the generation of AMI4CCM reply handler IDL back to
+          the *A.idl file, from the *E.idl file. Also modified
+          the AMI4CCM reply handler implementation class visitors
+          to traverse the original interface and generate the
+          implied IDL operations on the fly, since the reply
+          handler interface itself is now unavailable.
+
+        * TAO_IDL/be/be_argument.cpp:
+
+          Removed extra whitespace.
+
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be_include/be_helper.h:
+
+          Added overload of TAO_OutStream << operator to accept
+          an ACE_CString.
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+          Fixed ACE error message that had a mismatched number of
+          format symbols and described the wrong error. If it was
+          actually called, the mismatch in number of format
+          symbols was causing a crash.
+
 Wed Dec  1 13:53:59 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/anonymous.idl:

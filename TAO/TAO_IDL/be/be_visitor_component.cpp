@@ -22,6 +22,7 @@
 #include "ast_argument.h"
 #include "ast_exception.h"
 
+#include "be_argument.h"
 #include "be_connector.h"
 #include "be_provides.h"
 #include "be_uses.h"
@@ -44,6 +45,7 @@
 #include "be_visitor_component.h"
 #include "be_visitor_attribute.h"
 #include "be_visitor_operation.h"
+#include "be_visitor_argument.h"
 #include "be_visitor_interface.h"
 #include "be_visitor_structure.h"
 #include "be_visitor_typedef.h"
@@ -83,6 +85,7 @@
 #include "be_visitor_component/facet_exs.cpp"
 #include "be_visitor_component/executor_exs.cpp"
 #include "be_visitor_component/executor_exs_attr_init.cpp"
+#include "be_visitor_component/component_ami_rh_ex_base.cpp"
 #include "be_visitor_component/component_ami_rh_exh.cpp"
 #include "be_visitor_component/component_ami_rh_exs.cpp"
 
