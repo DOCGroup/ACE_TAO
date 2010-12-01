@@ -1,3 +1,21 @@
+Wed Dec  1 13:53:59 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/anonymous.idl:
+        * tests/IDL_Tests/array.idl:
+
+          Moved some recently added IDL from anonymous.idl, where
+          a struct-in-struct declaration made it incompatible with
+          the -GA option used on that file, to array.idl, where -GA
+          is not used, and where the problem uncovered by the IDL
+          (non-generation of an Array_Traits<> instantiation for
+          an anonymous array in the nested struct) is more
+          appropriately tested anyway. It is a known issue that a
+          type declaration inside an interface, valuetype, component,
+          home, struct or union is not compatible with the -GA
+          option, since these container types can't be reopened in
+          the *A.h file (created by the option) to declare the
+          typecode in the proper scope.
+
 Wed Dec  1 12:09:31 UTC 2010  Martin Corino  <corino_m@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component.cpp:
