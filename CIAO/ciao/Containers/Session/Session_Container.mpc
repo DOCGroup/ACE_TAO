@@ -17,7 +17,7 @@ project(CIAO_Session_Container_idl) : install, ciaoidldefaults {
 }
 
 project(CIAO_Session_Container_stub) : install, ccm_stub, ciao_lib, ciao_container_base_stub, utils,  ciao_base, \
-                                  ccm_componentserver_stub, ciao_servant_activator_stub {
+                                  ciao_servant_activator_stub {
   after += CIAO_Session_Container_idl
   dynamicflags += SESSION_CONTAINER_STUB_BUILD_DLL
 
@@ -39,7 +39,7 @@ project(CIAO_Session_Container_stub) : install, ccm_stub, ciao_lib, ciao_contain
 }
 
 project(CIAO_Session_Container) : install, ccm_svnt, ciao_lib, utils,  ciao_base, \
-                                  ccm_componentserver_stub, ciao_servant_activator, ciao_servant, ciao_session_container_stub {
+                                  ciao_servant_activator, ciao_servant, ciao_session_container_stub {
   after += CIAO_Session_Container_idl
   dynamicflags += SESSION_CONTAINER_BUILD_DLL
 

@@ -5,7 +5,7 @@
 
 #include <Components.idl>
 
-#include "Base/HelloA.idl"
+#include "Base/Hello.idl"
 
 #pragma ciao ami4ccm receptacle "Hello::Sender::run_my_foo"
 

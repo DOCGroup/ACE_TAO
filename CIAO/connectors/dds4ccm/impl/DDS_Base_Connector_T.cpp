@@ -27,9 +27,12 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE>::DDS_Base_Connector_T (void)
 
   ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), this->domain_id_);
   this->domain_id_ = id;
-  this->dlf_ = ACE_Dynamic_Service<CIAO::DDS4CCM::Logger_Service>::instance ("DDS4CCM_Logger");
-  this->dlf_->init ();
-
+  this->dlf_ =
+    ACE_Dynamic_Service<CIAO::DDS4CCM::Logger_Service>::instance ("DDS4CCM_Logger");
+  if (this->dlf_)
+    {
+      this->dlf_->init ();
+    }
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE>
