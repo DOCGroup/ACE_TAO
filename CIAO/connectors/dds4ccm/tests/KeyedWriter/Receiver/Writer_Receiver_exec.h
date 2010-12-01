@@ -129,6 +129,15 @@ namespace CIAO_Writer_Receiver_Impl
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
+
+    virtual ::CORBA::UShort iterations (void);
+
+    virtual void iterations (::CORBA::UShort iterations);
+
+    virtual ::CORBA::UShort keys (void);
+
+    virtual void keys (::CORBA::UShort keys);
+
     //@}
 
     //@{
@@ -152,12 +161,15 @@ namespace CIAO_Writer_Receiver_Impl
     /** Component attributes. */
     ::WriterTestConnector::CCM_Listener_var ciao_info_out_data_listener_;
     ::CCM_DDS::CCM_PortStatusListener_var ciao_info_out_status_;
+
+    ::CORBA::UShort iterations_;
+
+    ::CORBA::UShort keys_;
     //@}
 
     //@{
     /** User defined members. */
     Atomic_ULong samples_received_;
-    ::CORBA::UShort iterations_;
     //@}
 
     //@{

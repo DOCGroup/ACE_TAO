@@ -118,8 +118,8 @@ namespace CIAO_Writer_Receiver_Impl
    */
 
   Receiver_exec_i::Receiver_exec_i (void)
-    : samples_received_ (0)
-      , iterations_ (0)
+    : iterations_ (10)
+      , samples_received_ (0)
   {
   }
 
@@ -141,7 +141,7 @@ namespace CIAO_Writer_Receiver_Impl
           tmp,
           info_out_data_listener_exec_i (
             this->ciao_context_.in (),
-            this->iterations_,
+            this->iterations_ * this->iterations_,
             this->samples_received_),
             ::WriterTestConnector::CCM_Listener::_nil ());
 
@@ -171,6 +171,32 @@ namespace CIAO_Writer_Receiver_Impl
     return
       ::CCM_DDS::CCM_PortStatusListener::_duplicate (
         this->ciao_info_out_status_.in ());
+  }
+
+  ::CORBA::UShort
+  Receiver_exec_i::iterations (void)
+  {
+    return this->iterations_;
+  }
+
+  void
+  Receiver_exec_i::iterations (
+    const ::CORBA::UShort iterations)
+  {
+    this->iterations_ = iterations;
+  }
+
+  ::CORBA::UShort
+  Receiver_exec_i::keys (void)
+  {
+    return this->keys_;
+  }
+
+  void
+  Receiver_exec_i::keys (
+    const ::CORBA::UShort keys)
+  {
+    this->keys_ = keys;
   }
 
   // Operations from Components::SessionComponent.
@@ -217,7 +243,21 @@ namespace CIAO_Writer_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    /* Your code here. */
+    if (this->samples_received_.value () !=
+        (::CORBA::ULong)this->iterations () * this->keys ())
+      {
+        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::ccm_remove - "
+                  "ERROR: did not receive the expected number "
+                  "of samples. expected <%u> - received <%u>\n",
+                  this->iterations() * this->keys (),
+                  this->samples_received_.value ()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::ccm_remove - "
+                  "OK: received the expected number of samples <%u>\n",
+                  this->iterations() * this->keys ()));
+      }
   }
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
