@@ -94,43 +94,30 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
             {
               os_ << d->flat_name ()
                   << "_DDS_Traits,";
-
-              AST_Structure *s =
-                AST_Structure::narrow_from_decl (d);
-
-              if (s == 0)
-                {
-                  AST_Typedef *td =
-                    AST_Typedef::narrow_from_decl (d);
-
-                  if (td != 0)
-                    {
-                      AST_Decl *pbt =
-                        td->primitive_base_type ();
-
-                      s =
-                        AST_Structure::narrow_from_decl (pbt);
-                    }
-                }
-
-              if (s != 0 && s->size_type () == AST_Type::VARIABLE)
-                {
-                  os_ << be_nl << "false";
-                }
-              else
-                {
-                  os_ << be_nl << "true";
-                }
             }
           else
             {
-              os_ << d->name ();
-
-              // This arg will be gone in the generic connector.
-              os_ << "," << be_nl
-                  << "false";
+              os_ << d->name () << ",";
             }
 
+          AST_Structure *s = AST_Structure::narrow_from_decl (d);
+          if (s == 0)
+            {
+              AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+
+              if (td != 0)
+                {
+                  s = AST_Structure::narrow_from_decl (td->primitive_base_type ());
+                }
+            }
+          if (s && s->size_type () == AST_Type::VARIABLE)
+            {
+              os_ << be_nl << "false";
+            }
+          else
+            {
+              os_ << be_nl << "true";
+            }
           if (slot < this->t_args_.size ())
             {
               os_ << "," << be_nl;
