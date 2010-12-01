@@ -167,6 +167,28 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="ReceiverComponentImplementation" />
+    <configProperty>
+      <name>iterations</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>3</ushort>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>keys</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>2</ushort>
+        </value>
+      </value>
+    </configProperty>
   </instance>
   <instance xmi:id="Writer_ConnectorComponentInstance">
     <name>Writer_ConnectorComponent</name>
