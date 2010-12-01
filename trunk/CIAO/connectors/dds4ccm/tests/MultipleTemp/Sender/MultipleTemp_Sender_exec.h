@@ -67,8 +67,8 @@ namespace CIAO_MultipleTemp_Sender_Impl
 
     pulse_Generator * ticker_;
     ::MultipleTemp::CCM_Sender_Context_var context_;
-	::MultipleTemp::MultipleTempConnector::T_Typed::Updater_var updater_one_;
-	::MultipleTemp::MultipleTempConnector::Y_Typed::Updater_var updater_two_;
+    ::MultipleTemp::MultipleTempConnector::T_Typed::Updater_var updater_one_;
+    ::MultipleTemp::MultipleTempConnector::Y_Typed::Updater_var updater_two_;
 
     MULTIPLE_TEMP_TEST test_nr_;
     Atomic_Boolean test_ok_;

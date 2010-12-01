@@ -23,7 +23,7 @@ namespace CIAO_MultipleTemp_Receiver_Impl
   // ListenOneByOneTest_Listener_exec_i one
   //============================================================
   class RECEIVER_EXEC_Export ListenOne_Listener_exec_i
-	  : public virtual ::MultipleTemp::MultipleTempConnector::T_Typed::CCM_Listener,
+  : public virtual ::MultipleTemp::MultipleTempConnector::T_Typed::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -47,7 +47,7 @@ namespace CIAO_MultipleTemp_Receiver_Impl
   // ListenOneByOneTest_Listener_exec_i two
   //============================================================
   class RECEIVER_EXEC_Export ListenTwo_Listener_exec_i
-	  : public virtual ::MultipleTemp::MultipleTempConnector::Y_Typed::CCM_Listener,
+  : public virtual ::MultipleTemp::MultipleTempConnector::Y_Typed::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -81,12 +81,11 @@ namespace CIAO_MultipleTemp_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     // Port operations.
-	virtual ::MultipleTemp::MultipleTempConnector::T_Typed::CCM_Listener_ptr
+    virtual ::MultipleTemp::MultipleTempConnector::T_Typed::CCM_Listener_ptr
     get_info_one_out_data_listener (void);
-	virtual ::MultipleTemp::MultipleTempConnector::Y_Typed::CCM_Listener_ptr
+    virtual ::MultipleTemp::MultipleTempConnector::Y_Typed::CCM_Listener_ptr
     get_info_two_out_data_listener (void);
 
- 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_one_out_status (void);
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -105,8 +104,8 @@ namespace CIAO_MultipleTemp_Receiver_Impl
 
   private:
     ::MultipleTemp::CCM_Receiver_Context_var ciao_context_;
-	::MultipleTemp::MultipleTempConnector::T_Typed::CCM_Listener_var ciao_info_out_one_data_listener_;
-	::MultipleTemp::MultipleTempConnector::Y_Typed::CCM_Listener_var ciao_info_out_two_data_listener_;
+    ::MultipleTemp::MultipleTempConnector::T_Typed::CCM_Listener_var ciao_info_out_one_data_listener_;
+    ::MultipleTemp::MultipleTempConnector::Y_Typed::CCM_Listener_var ciao_info_out_two_data_listener_;
    };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

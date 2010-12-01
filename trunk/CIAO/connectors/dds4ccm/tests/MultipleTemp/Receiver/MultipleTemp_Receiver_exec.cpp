@@ -90,7 +90,7 @@ namespace CIAO_MultipleTemp_Receiver_Impl
       ACE_DEBUG ((LM_DEBUG, "ListenTwo_Listener_exec_i::on_one_data: "
                               "key <%C> - iteration <%d>\n",
                         //      an_instance.keyTwo.in (),
-							  an_instance.keyOne.in (),
+                              an_instance.keyOne.in (),
                               an_instance.x));
       if (!info.instance_handle.isValid)
         {
@@ -98,7 +98,7 @@ namespace CIAO_MultipleTemp_Receiver_Impl
                               "instance handle seems to be invalid "
                               "key <%C> - iteration <%d>\n",
                               an_instance.keyOne.in (),
-  			         //        an_instance.keyTwo.in (),
+                         //     an_instance.keyTwo.in (),
                               an_instance.x));
         }
       if (info.source_timestamp.sec == 0 &&
@@ -108,7 +108,7 @@ namespace CIAO_MultipleTemp_Receiver_Impl
                               "source timestamp seems to be invalid (nil) "
                               "key <%C> - iteration <%d>\n",
                   //            an_instance.keyTwo.in (),
-	                           an_instance.keyOne.in (),
+                               an_instance.keyOne.in (),
                                an_instance.x));
         }
     ++received_two;
@@ -155,7 +155,7 @@ namespace CIAO_MultipleTemp_Receiver_Impl
            tmp,
            ListenOne_Listener_exec_i (
              this->ciao_context_.in ()),
-			 ::MultipleTemp::MultipleTempConnector::T_Typed::CCM_Listener::_nil ());
+             ::MultipleTemp::MultipleTempConnector::T_Typed::CCM_Listener::_nil ());
            this->ciao_info_out_one_data_listener_ = tmp;
        }
 
@@ -209,7 +209,7 @@ namespace CIAO_MultipleTemp_Receiver_Impl
     ::CCM_DDS::DataListenerControl_var dlc_two =
         this->ciao_context_->get_connection_info_two_out_data_control ();
 
-	dlc_two->mode (::CCM_DDS::ONE_BY_ONE);
+    dlc_two->mode (::CCM_DDS::ONE_BY_ONE);
   }
 
   void

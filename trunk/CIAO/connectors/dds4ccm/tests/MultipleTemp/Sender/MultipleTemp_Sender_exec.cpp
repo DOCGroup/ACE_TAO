@@ -67,7 +67,7 @@ namespace CIAO_MultipleTemp_Sender_Impl
     CORBA::Boolean result = true;
     TestTopicOne i = this->topic_one_seq_one_[0];
  //   TestTopicTwo u = this->topic_two_seq_one_[0];
-	TestTopicOne u = this->topic_one_seq_one_[1];
+    TestTopicOne u = this->topic_one_seq_one_[1];
     try
     {
       if ( ::CORBA::is_nil (this->updater_one_) ||
@@ -80,8 +80,7 @@ namespace CIAO_MultipleTemp_Sender_Impl
         {
           this->updater_one_->create_one(i);
           this->updater_two_->create_one(u);
- 
-           ACE_DEBUG ((LM_DEBUG,
+          ACE_DEBUG ((LM_DEBUG,
                        ACE_TEXT ("MultipleTemp: create_one with instance keys")
                        ACE_TEXT ("<%C> and <%C>\n"),
                        i.keyOne.in(), u.keyOne.in()));
@@ -116,7 +115,6 @@ namespace CIAO_MultipleTemp_Sender_Impl
     {
       this->updater_one_->update_one(i, DDS::HANDLE_NIL);
       this->updater_two_->update_one(u, DDS::HANDLE_NIL);
-  
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("MultipleTemp: update_one with already")
@@ -150,7 +148,7 @@ namespace CIAO_MultipleTemp_Sender_Impl
                   this->topic_one_seq_many_.length ()));
       this->updater_one_->create_many (this->topic_one_seq_many_);
   //    this->updater_two_->create_many (this->topic_two_seq_many_);
- 
+
       result = true;
     }
     catch(const CCM_DDS::NonExistent& )
@@ -195,7 +193,7 @@ namespace CIAO_MultipleTemp_Sender_Impl
                    ex.index, ex.error_code));
       result = false;
     }
-	return result;
+    return result;
   }
 
   void
@@ -237,8 +235,7 @@ namespace CIAO_MultipleTemp_Sender_Impl
         new_key.z = i;
         this->topic_two_seq_one_[i-1] = new_key;
       }
-
-	//sequence for tests with .._many
+	  //sequence for tests with .._many
     this->topic_two_seq_many_.length (total);
     for (int i = 1; i < (total + 1); i++)
       {
@@ -251,7 +248,6 @@ namespace CIAO_MultipleTemp_Sender_Impl
         this->topic_two_seq_many_[i-1] = new_key;
       }
   }
-
 
   void
   Sender_exec_i::tick ()
