@@ -16,8 +16,8 @@ module MultipleTemp
 {
   component Sender
   {
-	  port MultipleTempConnector::T_Typed::DDS_Update test_topic_one_update;
-	  port MultipleTempConnector::Y_Typed::DDS_Update test_topic_two_update;
+    port MultipleTempConnector::T_Typed::DDS_Update test_topic_one_update;
+    port MultipleTempConnector::Y_Typed::DDS_Update test_topic_two_update;
   };
 };
 
