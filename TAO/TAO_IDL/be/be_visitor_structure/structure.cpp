@@ -73,18 +73,6 @@ be_visitor_structure::visit_field (be_field *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
-      {
-        be_visitor_field_serializer_op_ch visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
-      {
-        be_visitor_field_serializer_op_cs visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,

@@ -110,12 +110,11 @@ BE_GlobalData::BE_GlobalData (void)
     gen_tie_classes_ (false),
     gen_smart_proxies_ (false),
     gen_inline_constants_ (true),
-    gen_dcps_type_support_ (false),
-    gen_dcps_type_support_only_ (false),
     gen_orb_h_include_ (true),
     gen_empty_anyop_header_ (false),
     lookup_strategy_ (TAO_PERFECT_HASH),
     dds_impl_ (NONE),
+    opendds_sequence_suffix_ ("Seq"),
     void_type_ (0),
     ccmobject_ (0),
     messaging_ (0),
@@ -1750,31 +1749,6 @@ BE_GlobalData::gen_inline_constants (void) const
 }
 
 void
-BE_GlobalData::gen_dcps_type_support (bool val)
-{
-  this->gen_dcps_type_support_ = val;
-}
-
-bool
-BE_GlobalData::gen_dcps_type_support (void) const
-{
-  return this->gen_dcps_type_support_;
-}
-
-void
-BE_GlobalData::gen_dcps_type_support_only (bool val)
-{
-  this->gen_dcps_type_support_only_ = val;
-}
-
-bool
-BE_GlobalData::gen_dcps_type_support_only (void) const
-{
-  return this->gen_dcps_type_support_only_;
-}
-
-
-void
 BE_GlobalData::gen_orb_h_include (bool val)
 {
   this->gen_orb_h_include_ = val;
@@ -1841,6 +1815,18 @@ BE_GlobalData::DDS_IMPL
 BE_GlobalData::dds_impl (void) const
 {
   return this->dds_impl_;
+}
+
+void
+BE_GlobalData::opendds_sequence_suffix (const char *val)
+{
+  this->opendds_sequence_suffix_ = val;
+}
+
+const char *
+BE_GlobalData::opendds_sequence_suffix (void) const
+{
+  return this->opendds_sequence_suffix_.c_str ();
 }
 
 void
@@ -3167,43 +3153,7 @@ BE_GlobalData::parse_args (long &i, char **av)
           }
         else if (av[i][2] == 'd')
           {
-            if (av[i][3] == 'c')
-              {
-                if (av[i][4] == 'p' && av[i][5] =='s')
-                  {
-                    if ('\0' == av[i][6])
-                      {
-                        // DDS DCPS type support.
-                        be_global->gen_dcps_type_support (true);
-                      }
-                    else if (av[i][6] == 'o' && av[i][7] == 'n'
-                      && av[i][8] == 'l' && av[i][9] == 'y' && '\0' == av[i][10])
-                      {
-                        // DDS DCPS type only support
-                        be_global->gen_dcps_type_support (true);
-                        be_global->gen_dcps_type_support_only (true);
-                      }
-                    else
-                      {
-                        ACE_ERROR ((
-                            LM_ERROR,
-                            ACE_TEXT ("IDL: I don't understand ")
-                            ACE_TEXT ("the '%C' option\n"),
-                            av[i]
-                          ));
-                      }
-                  }
-                else
-                  {
-                    ACE_ERROR ((
-                        LM_ERROR,
-                        ACE_TEXT ("IDL: I don't understand ")
-                        ACE_TEXT ("the '%C' option\n"),
-                        av[i]
-                      ));
-                  }
-              }
-            else if ('\0' == av[i][3])
+            if ('\0' == av[i][3])
               {
                 // Generating Direct collocated stubs.
                 be_global->gen_direct_collocation (true);

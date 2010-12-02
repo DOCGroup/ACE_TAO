@@ -24,6 +24,5 @@
 #include "be_visitor_module/module_ih.h"
 #include "be_visitor_module/any_op.h"
 #include "be_visitor_module/cdr_op.h"
-#include "be_visitor_module/serializer_op.h"
 
 #endif // TAO_BE_VISITOR_MODULE_H

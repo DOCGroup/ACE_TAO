@@ -51,7 +51,6 @@ private:
   int gen_template_exports (be_root *node);
   int gen_any_ops (be_root *node);
   int gen_cdr_ops (be_root *node);
-  int gen_dds_serializer_ops (be_root *node);
 
 private:
   /// Can't use base class be_visitor_decl's member since
