@@ -1,3 +1,18 @@
+Thu Dec  2 19:30:21 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Fixed generated include in *A.idl, not restored when
+          previous changes were reversed.
+
+        * TAO_IDL/driver/drv_preproc.cpp(DRV_pre_proc):
+
+          Added code to unlink all temporary files at any point
+          where this method might bail out. If an automated build
+          takes place when there is something going wrong in
+          TAO_IDL preprocessing, a great many temporary files could
+          have been left over.
+
 Thu Dec  2 14:12:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component_ami_rh_exs.cpp:
