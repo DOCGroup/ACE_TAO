@@ -1,3 +1,16 @@
+Thu Dec  2 18:29:36 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.{h cpp} (timestamp): Changed the format produced from
+          ACE::timestamp() from ctime-ish "Day Mon dd hh:mm:ss yyyy" to
+          ISO-8601 yyyy-mm-dd hh:mm:ss.mmmmmm. Thank you to Thomas
+          Lockhart for this fix. Resolves Bugzilla #3210.
+          Also fixed up the doxygen comments related.
+
+        * ace/Log_Record.cpp (format_msg): VERBOSE[_LITE] timestamp also
+          changed to ISO-8601 format but uses 3 decimal places after secs.
+
+        * NEWS: Described above change for users.
+
 Mon Nov 29 17:20:47 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * THANKS:

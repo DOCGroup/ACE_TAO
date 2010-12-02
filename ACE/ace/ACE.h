@@ -474,15 +474,23 @@ namespace ACE
                                               ACE_DIRECTORY_SEPARATOR_CHAR);
 
   /**
-   * Returns the given timestamp in the form
-   * "hour:minute:second:microsecond."  The month, day, and year are
-   * also stored in the beginning of the @a date_and_time array, which
-   * is a user-supplied array of size @a time_len> @c ACE_TCHARs.
-   * Returns 0 if unsuccessful, else returns pointer to beginning of the
-   * "time" portion of @a date_and_time.  If @a
-   * return_pointer_to_first_digit is 0 then return a pointer to the
-   * space before the time, else return a pointer to the beginning of
-   * the time portion.
+   * Translate the given timestamp to ISO-8601 format.
+   *
+   * @param time_value      ACE_Time_Value to format. This is assumed to be
+   *                        an absolute time value.
+   * @param date_and_time   Array to hold the timestamp.
+   * @param time_len        Size of @a date_and_time in ACE_TCHARs.
+   *                        Must be greater than or equal to 27.
+   * @param return_pointer_to_first_digit  If true, returned pointer value
+   *                        is to the first time digit, else to the space
+   *                        prior to the first time digit. See Return Values.
+   *
+   * @retval 0 if unsuccessful, with errno set. If @a time_len is less than
+   *           27 errno will be EINVAL.
+   * @retval If successful, pointer to beginning of the "time" portion of
+   *         @a date_and_time.  If @a return_pointer_to_first_digit is false
+   *         the pointer is actually to the space before the time, else
+   *         the pointer is to the first time digit.
    */
   extern ACE_Export ACE_TCHAR *timestamp (const ACE_Time_Value& time_value,
                                           ACE_TCHAR date_and_time[],
@@ -490,15 +498,21 @@ namespace ACE
                                           bool return_pointer_to_first_digit = false);
 
   /**
-   * Returns the current timestamp in the form
-   * "hour:minute:second:microsecond."  The month, day, and year are
-   * also stored in the beginning of the @a date_and_time array, which
-   * is a user-supplied array of size @a time_len> @c ACE_TCHARs.
-   * Returns 0 if unsuccessful, else returns pointer to beginning of the
-   * "time" portion of @a date_and_time.  If @a
-   * return_pointer_to_first_digit is 0 then return a pointer to the
-   * space before the time, else return a pointer to the beginning of
-   * the time portion.
+   * Translate the current time to ISO-8601 timestamp format.
+   *
+   * @param date_and_time   Array to hold the timestamp.
+   * @param time_len        Size of @a date_and_time in ACE_TCHARs.
+   *                        Must be greater than or equal to 27.
+   * @param return_pointer_to_first_digit  If true, returned pointer value
+   *                        is to the first time digit, else to the space
+   *                        prior to the first time digit. See Return Values.
+   *
+   * @retval 0 if unsuccessful, with errno set. If @a time_len is less than
+   *           27 errno will be EINVAL.
+   * @retval If successful, pointer to beginning of the "time" portion of
+   *         @a date_and_time.  If @a return_pointer_to_first_digit is false
+   *         the pointer is actually to the space before the time, else
+   *         the pointer is to the first time digit.
    */
   extern ACE_Export ACE_TCHAR *timestamp (ACE_TCHAR date_and_time[],
                                           size_t time_len,
