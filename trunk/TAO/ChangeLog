@@ -1,3 +1,10 @@
+Thu Dec  2 20:23:13 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be/be_decl.cpp:
+
+          Removed a flag and its accessors that are no longer used.
+
 Thu Dec  2 19:30:21 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
@@ -148,7 +155,6 @@ Mon Nov 29 15:26:46 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Removed unused local variables.
 
->>>>>>> .r92751
 Fri Nov 26 22:30:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connector/connector_ami_rh_exs.cpp:
