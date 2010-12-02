@@ -3777,8 +3777,7 @@ TAO_CodeGen::gen_ami_conn_idl_includes (void)
 
   this->gen_standard_include (
     this->ciao_ami_conn_idl_,
-    BE_GlobalData::be_get_ciao_exec_idl (
-      idl_global->stripped_filename ()));
+    idl_global->stripped_filename ()->get_string ());
 }
 
 void
