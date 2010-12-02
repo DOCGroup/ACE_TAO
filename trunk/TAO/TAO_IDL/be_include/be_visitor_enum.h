@@ -24,7 +24,5 @@
 #include "be_visitor_enum/any_op_cs.h"
 #include "be_visitor_enum/cdr_op_ch.h"
 #include "be_visitor_enum/cdr_op_cs.h"
-#include "be_visitor_enum/serializer_op_ch.h"
-#include "be_visitor_enum/serializer_op_cs.h"
 
 #endif /* TAO_BE_VISITOR_ENUM_H */

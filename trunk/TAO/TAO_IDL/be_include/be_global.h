@@ -709,18 +709,6 @@ public:
   bool gen_inline_constants (void) const;
 
   /// Set the flag.
-  void gen_dcps_type_support (bool value);
-
-  /// Return the flag.
-  bool gen_dcps_type_support (void) const;
-
-  /// Set the flag.
-  void gen_dcps_type_support_only (bool value);
-
-  /// Return the flag.
-  bool gen_dcps_type_support_only (void) const;
-
-  /// Set the flag.
   void gen_orb_h_include (bool value);
 
   /// Return the flag.
@@ -745,6 +733,12 @@ public:
   /// Return the enumerated value for the DDS implementation.
   /// Default is NDDS.
   DDS_IMPL dds_impl (void) const;
+
+  /// Set the suffix of OpenDDS-specific native sequences.
+  void opendds_sequence_suffix (const char *val);
+
+  /// Return the suffix of OpenDDS-specific native sequences.
+  const char *opendds_sequence_suffix (void) const;
 
   /// Cleanup function.
   void destroy (void);
@@ -1092,14 +1086,6 @@ private:
   /// generation that pleases the C++ compiler better on some platforms.
   bool gen_inline_constants_;
 
-  /// Flag to indicate whether we are supporting DDS DCPS type definitions.
-  /// Includes Serializer operators (like TAO_Input/OutuptCDR).
-  bool gen_dcps_type_support_;
-
-  /// Flag to indicate whether we are supporting DDS DCPS type only definitions.
-  /// Only generate DDS Serializer operators for tao/*Seq.pidl.
-  bool gen_dcps_type_support_only_;
-
   /// Flag to indicate whether ORB.h include should be generated, needed for
   /// regenerating the pidl files.
   bool gen_orb_h_include_;
@@ -1112,6 +1098,10 @@ private:
 
   /// The enumerated value indicating the DDS implementation.
   DDS_IMPL dds_impl_;
+
+  /// Option to customize the suffix of OpenDDS-specific sequences,
+  /// for use with CIAO's dds4ccm implementation.
+  ACE_CString opendds_sequence_suffix_;
 
   /// Used for void operation return types.
   AST_PredefinedType *void_type_;

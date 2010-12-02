@@ -135,9 +135,6 @@ public:
       TAO_ROOT_CDR_OP_CH,
       TAO_ROOT_CDR_OP_CS,
 
-      TAO_ROOT_SERIALIZER_OP_CH,
-      TAO_ROOT_SERIALIZER_OP_CS,
-
       // Emitting code for sequence base type.
       TAO_SEQUENCE_BASE_CH,
 
@@ -175,11 +172,6 @@ public:
       TAO_CDR_INPUT,
       TAO_CDR_OUTPUT,
       TAO_CDR_SCOPE,
-
-      // DDS DCPS Serializer support methods
-      TAO_MAX_MARSHALED_SIZE,
-      TAO_IS_BOUNDED_SIZE,
-      TAO_FIND_SIZE,
 
       // These are for typecode generation.
       TAO_TC_DEFN_TYPECODE,                   // top level typecode

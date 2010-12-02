@@ -81,4 +81,3 @@
 #include "be_visitor_root/root_cns.cpp"
 #include "be_visitor_root/any_op.cpp"
 #include "be_visitor_root/cdr_op.cpp"
-#include "be_visitor_root/serializer_op.cpp"

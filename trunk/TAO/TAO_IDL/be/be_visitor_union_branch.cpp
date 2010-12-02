@@ -50,6 +50,3 @@
 #include "be_visitor_union_branch/public_cs.cpp"
 #include "be_visitor_union_branch/cdr_op_ch.cpp"
 #include "be_visitor_union_branch/cdr_op_cs.cpp"
-#include "be_visitor_union_branch/serializer_op_ch.cpp"
-#include "be_visitor_union_branch/serializer_op_cs.cpp"
-

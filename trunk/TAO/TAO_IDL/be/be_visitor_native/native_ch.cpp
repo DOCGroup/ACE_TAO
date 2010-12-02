@@ -48,6 +48,9 @@ be_visitor_native_ch::visit_native (be_native *node)
 
   const char *node_name = node->full_name ();
 
+  const char *dds_suffix = be_global->opendds_sequence_suffix ();
+  const size_t dds_suffix_len = ACE_OS::strlen (dds_suffix);
+
   if (ACE_OS::strcmp (node_name, "PortableServer::ServantLocator::Cookie") == 0)
     {
       *os << "typedef void *Cookie;" << be_nl;
@@ -68,8 +71,9 @@ be_visitor_native_ch::visit_native (be_native *node)
           << "Seq;" << be_nl;
     }
   else if (idl_global->dcps_support_zero_copy_read ()
-      && ACE_OS::strlen (node_name) > 3
-      && 0 == ACE_OS::strcmp (node_name + ACE_OS::strlen (node_name)-3, "Seq") )
+      && ACE_OS::strlen (node_name) > dds_suffix_len
+      && 0 == ACE_OS::strcmp (node_name + ACE_OS::strlen (node_name) -
+                              dds_suffix_len, dds_suffix) )
     {
       // DDS/DCPS zero-copy read sequence type support.
 
@@ -84,8 +88,8 @@ be_visitor_native_ch::visit_native (be_native *node)
       char sample_name[max_name_length];
       ACE_OS::strncpy (sample_name,
                        node_name,
-                       ACE_OS::strlen (node_name) - 3);
-      sample_name[ACE_OS::strlen (node_name) - 3] = '\0';
+                       ACE_OS::strlen (node_name) - dds_suffix_len);
+      sample_name[ACE_OS::strlen (node_name) - dds_suffix_len] = '\0';
 
       *os << be_nl_2
           << "typedef ::TAO::DCPS::ZeroCopyDataSeq< "

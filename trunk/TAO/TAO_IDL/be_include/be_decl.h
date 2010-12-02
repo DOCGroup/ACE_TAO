@@ -82,11 +82,6 @@ public:
   bool cli_stub_cdr_op_gen (void);
   bool cli_inline_cdr_op_gen (void);
   bool cli_inline_cdr_decl_gen (void);
-  bool cli_hdr_serializer_op_gen (void);
-  bool cli_stub_serializer_op_gen (void);
-  bool cli_inline_serializer_op_gen (void);
-  bool cli_inline_serializer_decl_gen (void);
-
   bool cli_traits_gen (void);
   bool cli_arg_traits_gen (void);
   bool srv_arg_traits_gen (void);
@@ -134,11 +129,6 @@ public:
   void cli_stub_cdr_op_gen (bool);
   void cli_inline_cdr_op_gen (bool);
   void cli_inline_cdr_decl_gen (bool);
-  void cli_hdr_serializer_op_gen (bool);
-  void cli_stub_serializer_op_gen (bool);
-  void cli_inline_serializer_op_gen (bool);
-  void cli_inline_serializer_decl_gen (bool);
-
   void cli_traits_gen (bool);
   void cli_arg_traits_gen (bool);
   void srv_arg_traits_gen (bool);
@@ -196,11 +186,6 @@ private:
   bool cli_stub_cdr_op_gen_;
   bool cli_inline_cdr_op_gen_;
   bool cli_inline_cdr_decl_gen_;
-  bool cli_hdr_serializer_op_gen_;
-  bool cli_stub_serializer_op_gen_;
-  bool cli_inline_serializer_op_gen_;
-  bool cli_inline_serializer_decl_gen_;
-
   bool cli_traits_gen_;
   bool cli_arg_traits_gen_;
   bool srv_arg_traits_gen_;
