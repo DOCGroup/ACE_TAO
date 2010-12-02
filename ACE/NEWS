@@ -1,6 +1,13 @@
 USER VISIBLE CHANGES BETWEEN ACE-5.8.3 and ACE-6.0.0
 ====================================================
 
+. Changed the string format produced by ACE::timestamp() from the ctime
+  format "Day Mon dd hh:mm:ss yyyy" to ISO-8601 yyyy-mm-dd hh:mm:ss.mmmmmm.
+  This makes the time easier to collate and removes any dependence on locale.
+  The change affects the output from ACE_Log_Msg's %D format and both VERBOSE
+  and VERBOSE_LIGHT timestamps in addition to application-made direct calls
+  to ACE::timestamp().
+
 . Removed GCC < 3 support
 
 . A new build system hook was added for users to include site-private rules

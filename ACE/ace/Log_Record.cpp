@@ -214,18 +214,16 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
                             u_long verbose_flag,
                             ACE_TCHAR *verbose_msg)
 {
-  /* 0123456789012345678901234     */
-  /* Oct 18 14:25:36.000 1989<nul> */
-  ACE_TCHAR timestamp[26]; // Only used by VERBOSE and VERBOSE_LITE.
+  /* 012345678901234567890123456     */
+  /* yyyy-mm-dd hh:mm:ss.mmmmmm<nul> */
+  ACE_TCHAR timestamp[27]; // Only used by VERBOSE and VERBOSE_LITE.
 
   // The sprintf format needs to be different for Windows and POSIX
   // in the wide-char case.
 #if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
-  const ACE_TCHAR *time_fmt =         ACE_TEXT ("%s.%03ld %s");
   const ACE_TCHAR *verbose_fmt =      ACE_TEXT ("%s@%s@%u@%s@%s");
   const ACE_TCHAR *verbose_lite_fmt = ACE_TEXT ("%s@%s@%s");
 #else
-  const ACE_TCHAR *time_fmt = ACE_TEXT ("%ls.%03ld %ls");
   const ACE_TCHAR *verbose_fmt = ACE_TEXT ("%ls@%ls@%u@%ls@%ls");
   const ACE_TCHAR *verbose_lite_fmt = ACE_TEXT ("%ls@%ls@%ls");
 #endif
@@ -235,23 +233,10 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
       || ACE_BIT_ENABLED (verbose_flag,
                           ACE_Log_Msg::VERBOSE_LITE))
     {
-      time_t const now = this->secs_;
-      ACE_TCHAR ctp[26]; // 26 is a magic number...
-
-      if (ACE_OS::ctime_r (&now, ctp, sizeof ctp / sizeof (ACE_TCHAR)) == 0)
-        return -1;
-
-      /* 01234567890123456789012345 */
-      /* Wed Oct 18 14:25:36 1989n0 */
-
-      ctp[19] = '\0'; // NUL-terminate after the time.
-      ctp[24] = '\0'; // NUL-terminate after the date.
-
-      ACE_OS::sprintf (timestamp,
-                       time_fmt,
-                       ctp + 4,
-                       ((long) this->usecs_) / 1000,
-                       ctp + 20);
+      ACE_Time_Value now (this->secs_, this->usecs_);
+      ACE::timestamp (now, timestamp, 27);
+      // Historical timestamp in VERBOSE[_LITE] used 3 places for partial sec.
+      timestamp[23] = '\0';
     }
 
   if (ACE_BIT_ENABLED (verbose_flag,

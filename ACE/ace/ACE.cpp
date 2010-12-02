@@ -2371,7 +2371,8 @@ ACE::format_hexdump (const char *buffer,
 
 // Returns the current timestamp in the form
 // "hour:minute:second:microsecond."  The month, day, and year are
-// also stored in the beginning of the date_and_time array.
+// also stored in the beginning of the date_and_time array
+// using ISO-8601 format.
 
 ACE_TCHAR *
 ACE::timestamp (ACE_TCHAR date_and_time[],
@@ -2386,7 +2387,8 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
 
 // Returns the given timestamp in the form
 // "hour:minute:second:microsecond."  The month, day, and year are
-// also stored in the beginning of the date_and_time array.
+// also stored in the beginning of the date_and_time array
+// using ISO-8601 format.
 
 ACE_TCHAR *
 ACE::timestamp (const ACE_Time_Value& time_value,
@@ -2396,92 +2398,29 @@ ACE::timestamp (const ACE_Time_Value& time_value,
 {
   //ACE_TRACE ("ACE::timestamp");
 
-  if (date_and_timelen < 35)
+  if (date_and_timelen < 27)
     {
       errno = EINVAL;
       return 0;
     }
 
-#if defined (WIN32)
-  if (time_value == ACE_Time_Value::zero)
-  {
-    // Emulate Unix.  Win32 does NOT support all the UNIX versions
-    // below, so DO we need this ifdef.
-    static const ACE_TCHAR *day_of_week_name[] =
-      {
-        ACE_TEXT ("Sun"),
-        ACE_TEXT ("Mon"),
-        ACE_TEXT ("Tue"),
-        ACE_TEXT ("Wed"),
-        ACE_TEXT ("Thu"),
-        ACE_TEXT ("Fri"),
-        ACE_TEXT ("Sat")
-      };
-
-    static const ACE_TCHAR *month_name[] =
-      {
-        ACE_TEXT ("Jan"),
-        ACE_TEXT ("Feb"),
-        ACE_TEXT ("Mar"),
-        ACE_TEXT ("Apr"),
-        ACE_TEXT ("May"),
-        ACE_TEXT ("Jun"),
-        ACE_TEXT ("Jul"),
-        ACE_TEXT ("Aug"),
-        ACE_TEXT ("Sep"),
-        ACE_TEXT ("Oct"),
-        ACE_TEXT ("Nov"),
-        ACE_TEXT ("Dec")
-      };
-
-    SYSTEMTIME local;
-    ::GetLocalTime (&local);
-
-    ACE_OS::sprintf (date_and_time,
-                    ACE_TEXT ("%3s %3s %2d %04d %02d:%02d:%02d.%06d"),
-                    day_of_week_name[local.wDayOfWeek],
-                    month_name[local.wMonth - 1],
-                    (int) local.wDay,
-                    (int) local.wYear,
-                    (int) local.wHour,
-                    (int) local.wMinute,
-                    (int) local.wSecond,
-                    (int) (local.wMilliseconds * 1000));
-    return &date_and_time[15 + (return_pointer_to_first_digit != 0)];
-  }
-#endif  /* WIN32 */
-  ACE_TCHAR timebuf[26]; // This magic number is based on the ctime(3c) man page.
   ACE_Time_Value cur_time =
     (time_value == ACE_Time_Value::zero) ?
         ACE_Time_Value (ACE_OS::gettimeofday ()) : time_value;
   time_t secs = cur_time.sec ();
-
-  ACE_OS::ctime_r (&secs,
-                   timebuf,
-                   sizeof timebuf / sizeof (ACE_TCHAR));
-  // date_and_timelen > sizeof timebuf!
-  ACE_OS::strsncpy (date_and_time,
-                    timebuf,
-                    date_and_timelen);
-  ACE_TCHAR yeartmp[5];
-  ACE_OS::strsncpy (yeartmp,
-                    &date_and_time[20],
-                    5);
-  ACE_TCHAR timetmp[9];
-  ACE_OS::strsncpy (timetmp,
-                    &date_and_time[11],
-                    9);
-  ACE_OS::sprintf (&date_and_time[11],
-#  if defined (ACE_USES_WCHAR)
-                   ACE_TEXT ("%ls %ls.%06ld"),
-#  else
-                   ACE_TEXT ("%s %s.%06ld"),
-#  endif /* ACE_USES_WCHAR */
-                   yeartmp,
-                   timetmp,
-                   cur_time.usec ());
-  date_and_time[33] = '\0';
-  return &date_and_time[15 + (return_pointer_to_first_digit != 0)];
+  struct tm tms;
+  ACE_OS::localtime_r (&secs, &tms);
+  ACE_OS::sprintf (date_and_time,
+                   ACE_TEXT ("%4.4d-%2.2d-%2.2d %2.2d:%2.2d:%2.2d.%06ld"),
+                   tms.tm_year + 1900,
+                   tms.tm_mon + 1,
+                   tms.tm_mday,
+                   tms.tm_hour,
+                   tms.tm_min,
+                   tms.tm_sec,
+                   cur_time.usec());
+  date_and_time[26] = '\0';
+  return &date_and_time[11 + (return_pointer_to_first_digit != 0)];
 }
 
 // This function rounds the request to a multiple of the page size.
