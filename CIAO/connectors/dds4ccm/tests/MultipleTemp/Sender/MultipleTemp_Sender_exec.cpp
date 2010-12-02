@@ -66,8 +66,8 @@ namespace CIAO_MultipleTemp_Sender_Impl
   {
     CORBA::Boolean result = true;
     TestTopicOne i = this->topic_one_seq_one_[0];
- //   TestTopicTwo u = this->topic_two_seq_one_[0];
-    TestTopicOne u = this->topic_one_seq_one_[1];
+    TestTopicTwo u = this->topic_two_seq_one_[0];
+//    TestTopicOne u = this->topic_one_seq_one_[1];
     try
     {
       if ( ::CORBA::is_nil (this->updater_one_) ||
@@ -90,7 +90,7 @@ namespace CIAO_MultipleTemp_Sender_Impl
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: AlreadyCreated ")
                             ACE_TEXT ("with test updater create_one <%C>.\n"),
-                            i.keyOne.in(), u.keyOne.in()));
+                            i.keyOne.in(), u.keyTwo.in()));
       result= false;
     }
     catch (const CCM_DDS::InternalError& )
@@ -108,8 +108,8 @@ namespace CIAO_MultipleTemp_Sender_Impl
     //update already created instance with handle nil
     CORBA::Boolean result = true;
     TestTopicOne i = this->topic_one_seq_one_[0];
-//   TestTopicTwo u = this->topic_two_seq_one_[0];
-    TestTopicOne u = this->topic_one_seq_one_[1];
+   TestTopicTwo u = this->topic_two_seq_one_[0];
+//    TestTopicOne u = this->topic_one_seq_one_[1];
 
     try
     {
@@ -120,7 +120,7 @@ namespace CIAO_MultipleTemp_Sender_Impl
                   ACE_TEXT ("MultipleTemp: update_one with already")
                   ACE_TEXT (" existing instance with DDS::HANDLE_NIL,")
                   ACE_TEXT (" key <%C> and key <%C>\n"),
-                  i.keyOne.in(), u.keyOne.in()));
+                  i.keyOne.in(), u.keyTwo.in()));
     }
     catch(const CCM_DDS::NonExistent &)
     {
@@ -146,8 +146,8 @@ namespace CIAO_MultipleTemp_Sender_Impl
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("create_many both topics : <%u> samples\n"),
                   this->topic_one_seq_many_.length ()));
-      this->updater_one_->create_many (this->topic_one_seq_many_);
-  //    this->updater_two_->create_many (this->topic_two_seq_many_);
+  //    this->updater_one_->create_many (this->topic_one_seq_many_);
+      this->updater_two_->create_many (this->topic_two_seq_many_);
 
       result = true;
     }
@@ -174,7 +174,7 @@ namespace CIAO_MultipleTemp_Sender_Impl
     try
     {
       this->updater_one_->update_many (this->topic_one_seq_many_);
- //     this->updater_two_->update_many (this->topic_two_seq_many_);
+      this->updater_two_->update_many (this->topic_two_seq_many_);
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("update_many : written <%u> samples\n"),
                  this->topic_one_seq_many_.length ()));
       result = true;
@@ -235,7 +235,7 @@ namespace CIAO_MultipleTemp_Sender_Impl
         new_key.z = i;
         this->topic_two_seq_one_[i-1] = new_key;
       }
-	  //sequence for tests with .._many
+     //sequence for tests with .._many
     this->topic_two_seq_many_.length (total);
     for (int i = 1; i < (total + 1); i++)
       {

@@ -15,7 +15,7 @@ module MultipleTemp
   component Receiver
   {
     port MultipleTempConnector::T_Typed::DDS_Listen info_one_out;
-	  port MultipleTempConnector::Y_Typed::DDS_Listen info_two_out;
+    port MultipleTempConnector::Y_Typed::DDS_Listen info_two_out;
   };
 };
 
