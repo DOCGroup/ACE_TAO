@@ -1,3 +1,90 @@
+Thu Dec  2 21:31:19 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be/be_visitor_native/native_ch.cpp:
+
+          Added the option -Wb,opendds_sequence_suffix which allows the user
+          to customize the suffix for OpenDDS native sequence support.
+          This is designed for use with dds4ccm (CIAO) and should probably be
+          avoided in other use-cases.
+
+        * TAO_IDL/be/be_visitor_array.cpp:
+        * TAO_IDL/be/be_visitor_enum.cpp:
+        * TAO_IDL/be/be_visitor_field.cpp:
+        * TAO_IDL/be/be_visitor_module.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+        * TAO_IDL/be/be_visitor_root/root_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence.cpp:
+        * TAO_IDL/be/be_visitor_structure.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure.cpp:
+        * TAO_IDL/be/be_visitor_typedef.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef.cpp:
+        * TAO_IDL/be/be_visitor_union.cpp:
+        * TAO_IDL/be/be_visitor_union/union.cpp:
+        * TAO_IDL/be/be_visitor_union_branch.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be_include/be_visitor_array.h:
+        * TAO_IDL/be_include/be_visitor_enum.h:
+        * TAO_IDL/be_include/be_visitor_field.h:
+        * TAO_IDL/be_include/be_visitor_module.h:
+        * TAO_IDL/be_include/be_visitor_root.h:
+        * TAO_IDL/be_include/be_visitor_root/root_ch.h:
+        * TAO_IDL/be_include/be_visitor_root/root_cs.h:
+        * TAO_IDL/be_include/be_visitor_sequence.h:
+        * TAO_IDL/be_include/be_visitor_structure.h:
+        * TAO_IDL/be_include/be_visitor_typedef.h:
+        * TAO_IDL/be_include/be_visitor_union.h:
+        * TAO_IDL/be_include/be_visitor_union_branch.h:
+
+          Removed obsolete code generation for OpenDDS.
+
+        * TAO_IDL/be/be_visitor_array/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_enum/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_field/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_module/serializer_op.cpp:
+        * TAO_IDL/be/be_visitor_root/serializer_op.cpp:
+        * TAO_IDL/be/be_visitor_sequence/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_typedef/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_typedef/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/serializer_op_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_array/serializer_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_array/serializer_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_enum/serializer_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_enum/serializer_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_field/serializer_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_field/serializer_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_module/serializer_op.h:
+        * TAO_IDL/be_include/be_visitor_root/serializer_op.h:
+        * TAO_IDL/be_include/be_visitor_sequence/serializer_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_sequence/serializer_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_structure/serializer_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_structure/serializer_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_typedef/serializer_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_typedef/serializer_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_union/serializer_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_union/serializer_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_union_branch/serializer_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_union_branch/serializer_op_cs.h:
+
+          Removed these files.
+
 Thu Dec  2 20:23:13 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_decl.h:

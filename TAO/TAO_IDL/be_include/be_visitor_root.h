@@ -38,6 +38,5 @@
 #include "be_visitor_root/root_cns.h"
 #include "be_visitor_root/any_op.h"
 #include "be_visitor_root/cdr_op.h"
-#include "be_visitor_root/serializer_op.h"
 
 #endif // TAO_BE_VISITOR_ROOT_H

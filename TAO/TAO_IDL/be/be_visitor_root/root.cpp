@@ -69,13 +69,6 @@ be_visitor_root::visit_module (be_module *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
-    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
-      {
-        be_visitor_module_serializer_op visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
     default:
       {
         be_visitor_module visitor (&ctx);

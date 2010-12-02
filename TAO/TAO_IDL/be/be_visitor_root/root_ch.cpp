@@ -101,15 +101,6 @@ be_visitor_root_ch::visit_root (be_root *node)
     }
 
 
-  if (this->gen_dds_serializer_ops (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_root_ch::")
-                         ACE_TEXT ("visit_root - failed to ")
-                         ACE_TEXT ("generate DDS serialization\n")),
-                        -1);
-    }
-
   (void) tao_cg->end_client_header ();
 
   return 0;
@@ -361,20 +352,6 @@ be_visitor_root_ch::gen_cdr_ops (be_root *node)
 {
   be_visitor_context ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_ROOT_CDR_OP_CH);
-  be_visitor_root_cdr_op visitor (&ctx);
-  return node->accept (&visitor);
-}
-
-int
-be_visitor_root_ch::gen_dds_serializer_ops (be_root *node)
-{
-  if (! be_global->gen_dcps_type_support ())
-    {
-      return 0;
-    }
-
-  be_visitor_context ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH);
   be_visitor_root_cdr_op visitor (&ctx);
   return node->accept (&visitor);
 }
