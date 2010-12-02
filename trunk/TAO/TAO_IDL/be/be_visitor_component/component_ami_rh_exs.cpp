@@ -202,3 +202,4 @@ be_visitor_component_ami_rh_exs::gen_op_body (void)
       << this->your_code_here_ << be_uidt_nl
       << "}";
 }
+

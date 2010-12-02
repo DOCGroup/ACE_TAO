@@ -1,3 +1,16 @@
+Thu Dec  2 14:12:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_ami_rh_exs.cpp:
+
+          Added newline at EOF.
+
+        * TAO_IDL/be/be_visitor_component/component_ami_rh_ex_base.cpp:
+        * TAO_IDL/be_include/be_visitor_component/component_ami_rh_ex_base.h:
+
+          New files, a base class visitor containing common code for
+          the corresponding concrete visitors generating code for the
+          header and source files.
+
 Wed Dec  1 22:15:07 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component.cpp:
