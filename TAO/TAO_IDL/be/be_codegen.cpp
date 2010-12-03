@@ -52,8 +52,6 @@ TAO_CodeGen::TAO_CodeGen (void)
     ciao_conn_header_ (0),
     ciao_conn_source_ (0),
     ciao_ami_conn_idl_ (0),
-    ciao_ami_rh_impl_header_ (0),
-    ciao_ami_rh_impl_source_ (0),
     gperf_input_filename_ (0)
 {
 }
@@ -1482,130 +1480,6 @@ TAO_CodeGen::ciao_ami_conn_idl (void)
   return this->ciao_ami_conn_idl_;
 }
 
-int
-TAO_CodeGen::start_ciao_ami_rh_impl_header (const char *fname)
-{
-  // Clean up between multiple files.
-  delete this->ciao_ami_rh_impl_header_;
-
-  ACE_NEW_RETURN (this->ciao_ami_rh_impl_header_,
-                  TAO_OutStream,
-                  -1);
-
-  int status =
-    this->ciao_ami_rh_impl_header_->open (
-      fname,
-      TAO_OutStream::CIAO_AMI_RH_IMPL_HDR);
-
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO_CodeGen::")
-                         ACE_TEXT ("start_ciao_ami_rh_impl_header - ")
-                         ACE_TEXT ("Error opening file\n")),
-                        -1);
-    }
-
-  TAO_OutStream &os = *this->ciao_ami_rh_impl_header_;
-
-  os << be_nl
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__
-     << be_nl_2;
-
-  // Generate the #ident string, if any.
-  this->gen_ident_string (this->ciao_conn_header_);
-
-  // Generate the #ifndef clause.
-  this->gen_ifndef_string (fname,
-                           this->ciao_ami_rh_impl_header_,
-                           "CIAO_",
-                           "_H_");
-
-  if (be_global->pre_include () != 0)
-    {
-      os << "#include /**/ \""
-         << be_global->pre_include ()
-         << "\"\n";
-    }
-
-  // This will almost certainly be true, but just in case...
-  if (be_global->conn_export_include () != 0)
-    {
-      this->gen_standard_include (
-        this->ciao_ami_rh_impl_header_,
-        be_global->conn_export_include (),
-        true);
-    }
-
-  // Some compilers don't optimize the #ifndef header include
-  // protection, but do optimize based on #pragma once.
-  os << "\n\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
-     << "# pragma once\n"
-     << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
-
-  this->gen_standard_include (
-    this->ciao_ami_rh_impl_header_,
-    be_global->be_get_client_hdr_fname (true));
-
-  *this->ciao_ami_rh_impl_header_ << be_global->versioning_begin ();
-
-  return 0;
-}
-
-TAO_OutStream *
-TAO_CodeGen::ciao_ami_rh_impl_header (void)
-{
-  return this->ciao_ami_rh_impl_header_;
-}
-
-int
-TAO_CodeGen::start_ciao_ami_rh_impl_source (const char *fname)
-{
-  // Clean up between multiple files.
-  delete this->ciao_ami_rh_impl_source_;
-
-  ACE_NEW_RETURN (this->ciao_ami_rh_impl_source_,
-                  TAO_OutStream,
-                  -1);
-
-  int status =
-    this->ciao_ami_rh_impl_source_->open (
-      fname,
-      TAO_OutStream::CIAO_AMI_RH_IMPL_SRC);
-
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO_CodeGen::")
-                         ACE_TEXT ("start_ciao_ami_rh_impl_source - ")
-                         ACE_TEXT ("Error opening file\n")),
-                        -1);
-    }
-
-  TAO_OutStream &os = *this->ciao_ami_rh_impl_source_;
-
-  os << be_nl
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__
-     << be_nl;
-
-  // Generate the #ident string, if any.
-  this->gen_ident_string (this->ciao_ami_rh_impl_source_);
-
-  this->gen_standard_include (
-    this->ciao_ami_rh_impl_source_,
-    be_global->be_get_ciao_ami_conn_impl_hdr_fname (true));
-
-  return 0;
-}
-
-TAO_OutStream *
-TAO_CodeGen::ciao_ami_rh_impl_source (void)
-{
-  return this->ciao_ami_rh_impl_source_;
-}
-
 // Set the server header stream.
 int
 TAO_CodeGen::start_implementation_header (const char *fname)
@@ -2061,37 +1935,6 @@ int
 TAO_CodeGen::end_ciao_ami_conn_idl (void)
 {
   *this->ciao_ami_conn_idl_ << "\n\n#endif /* ifndef */\n";
-
-  return 0;
-}
-
-int
-TAO_CodeGen::end_ciao_ami_rh_impl_header (void)
-{
-  *this->ciao_ami_rh_impl_header_ << be_nl_2 << "// TAO_IDL - Generated from"
-                                  << be_nl << "// " << __FILE__ << ":"
-                                  << __LINE__ << be_nl;
-
-  // End versioned namespace support before remaining include
-  // directives at end of file.
-  *this->ciao_ami_rh_impl_header_ << be_global->versioning_end ();
-
-  if (be_global->post_include () != 0)
-    {
-      *this->ciao_ami_rh_impl_header_ << "\n\n#include /**/ \""
-                                      << be_global->post_include ()
-                                      << "\"";
-    }
-
-  *this->ciao_ami_rh_impl_header_ << "\n\n#endif /* ifndef */\n";
-
-  return 0;
-}
-
-int
-TAO_CodeGen::end_ciao_ami_rh_impl_source (void)
-{
-  *this->ciao_ami_rh_impl_source_ << "\n";
 
   return 0;
 }
@@ -3760,8 +3603,6 @@ TAO_CodeGen::destroy (void)
   delete this->ciao_conn_header_;
   delete this->ciao_conn_source_;
   delete this->ciao_ami_conn_idl_;
-  delete this->ciao_ami_rh_impl_header_;
-  delete this->ciao_ami_rh_impl_source_;
   delete this->gperf_input_stream_;
   delete [] this->gperf_input_filename_;
 }

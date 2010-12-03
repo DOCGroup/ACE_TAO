@@ -47,16 +47,6 @@ be_visitor_root_cnh::visit_root (be_root *node)
 
   (void) tao_cg->end_ciao_conn_header ();
 
-  TAO_OutStream *rh_impl = tao_cg->ciao_ami_rh_impl_header ();
-
-  /// If this stream has been created during the connector AST
-  /// pass we generate the file ending stuff here, to make sure
-  /// that all the AST nodes have been traversed.
-  if (rh_impl != 0)
-    {
-      (void) tao_cg->end_ciao_ami_rh_impl_header ();
-    }
-
   return 0;
 }
 

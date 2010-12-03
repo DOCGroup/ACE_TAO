@@ -67,33 +67,6 @@ be_visitor_connector_ami_exs::visit_connector (be_connector *node)
   os_ << be_uidt_nl
       << "}";
 
-  /// Presence of -Gex option here triggers generation of AMI4CCM
-  /// reply handler impl class, with empty methods for user to
-  /// complete, in its own set of files.
-  if (be_global->gen_ciao_exec_impl ())
-    {
-      TAO_OutStream *new_stream = tao_cg->ciao_ami_rh_impl_source ();
-
-      if (new_stream == 0)
-        {
-          int status =
-            tao_cg->start_ciao_ami_rh_impl_source (
-              be_global->be_get_ciao_ami_conn_impl_src_fname ());
-
-           if (status == -1)
-              {
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("be_visitor_connector_ami_exh")
-                                   ACE_TEXT ("::visit_connector - ")
-                                   ACE_TEXT ("Error opening CIAO AMI ")
-                                   ACE_TEXT ("conn rh impl header file\n")),
-                                  -1);
-              }
-
-            new_stream = tao_cg->ciao_ami_rh_impl_source ();
-        }
-    }
-
   return 0;
 }
 
