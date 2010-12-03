@@ -118,9 +118,9 @@ namespace CIAO
               result = reader->take (data,
                                      sample_info,
                                      max_samples,
-                                     DDS_NOT_READ_SAMPLE_STATE,
-                                     DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                                     DDS_ANY_INSTANCE_STATE);
+                                     ::DDS::NOT_READ_SAMPLE_STATE,
+                                     ::DDS::NEW_VIEW_STATE | ::DDS::NOT_NEW_VIEW_STATE,
+                                     ::DDS::ANY_INSTANCE_STATE);
             }
 
           if (result == ::DDS::RETCODE_NO_DATA)
@@ -142,7 +142,7 @@ namespace CIAO
                   // deleted so don't check the valid_data flag
                   // here.
                   if (sample_info[i].instance_state ==
-                          ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
+                          ::DDS::NOT_ALIVE_DISPOSED_INSTANCE_STATE)
                     {
                       ::CCM_DDS::ReadInfo readinfo;
                       readinfo <<= sample_info[i];
@@ -150,7 +150,7 @@ namespace CIAO
                     }
                   else if (sample_info[i].valid_data)
                     {
-                      if (sample_info[i].view_state == ::DDS_NEW_VIEW_STATE)
+                      if (sample_info[i].view_state == ::DDS::NEW_VIEW_STATE)
                         {
                           ::CCM_DDS::ReadInfo readinfo;
                           readinfo <<= sample_info[i];
@@ -173,8 +173,8 @@ namespace CIAO
               for (::CORBA::ULong i = 0 ; i < sample_info.length(); i++)
                 {
                   if ((sample_info[i].valid_data &&
-                       sample_info[i].view_state == ::DDS_NEW_VIEW_STATE) ||
-                       sample_info[i].instance_state == ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
+                       sample_info[i].view_state == ::DDS::NEW_VIEW_STATE) ||
+                       sample_info[i].instance_state == ::DDS::NOT_ALIVE_DISPOSED_INSTANCE_STATE)
                     {
                       if (updates.size () > 0)
                         {
@@ -200,14 +200,14 @@ namespace CIAO
                         }
                       // Now invoke on_creation or on_deletion
                       if (sample_info[i].valid_data &&
-                          sample_info[i].view_state == ::DDS_NEW_VIEW_STATE)
+                          sample_info[i].view_state == ::DDS::NEW_VIEW_STATE)
                         {
                           ::CCM_DDS::ReadInfo readinfo;
                           readinfo <<= sample_info[i];
                           this->listener_->on_creation (data[i], readinfo);
                         }
                       else if (sample_info[i].instance_state ==
-                               ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
+                               ::DDS::NOT_ALIVE_DISPOSED_INSTANCE_STATE)
                         {
                           ::CCM_DDS::ReadInfo readinfo;
                           readinfo <<= sample_info[i];

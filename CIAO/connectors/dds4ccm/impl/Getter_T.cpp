@@ -130,7 +130,7 @@ namespace CIAO
       ::CORBA::Long max_samples = this->max_delivered_data_;
       if (max_samples == 0)
         {
-          max_samples = DDS_LENGTH_UNLIMITED;
+          max_samples = ::DDS::LENGTH_UNLIMITED;
         }
 
       ::DDS::SampleInfoSeq sample_info;

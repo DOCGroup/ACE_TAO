@@ -130,7 +130,7 @@ namespace CIAO
 
           if (hnd != instance_handle)
             {
-              throw ::CCM_DDS::InternalError (::DDS_RETCODE_BAD_PARAMETER, 0);
+              throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
             }
         }
       if (hnd == ::DDS::HANDLE_NIL)
@@ -190,7 +190,7 @@ namespace CIAO
 
           if (hnd != instance_handle)
             {
-              throw ::CCM_DDS::InternalError (::DDS_RETCODE_BAD_PARAMETER, 0);
+              throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
             }
         }
       if (hnd == ::DDS::HANDLE_NIL)
