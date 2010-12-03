@@ -1,3 +1,8 @@
+Fri Dec  3 06:13:19 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+          Removed seq_type from DDS traits since it's not needed there anymore.
+
 Thu Dec  2 21:31:19 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * TAO_IDL/be/be_codegen.cpp:

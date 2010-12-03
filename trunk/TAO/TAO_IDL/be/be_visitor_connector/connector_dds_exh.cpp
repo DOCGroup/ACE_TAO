@@ -272,7 +272,6 @@ be_visitor_connector_dds_exh::gen_dds_traits (AST_Decl *datatype)
         }
 
       os_ << "Seq dds_seq_type;" << be_nl
-          << "typedef ::" << dt_name << "Seq seq_type;" << be_nl
           << "typedef ::" << dt_name
           << "TypeSupport type_support;" << be_nl
           << "typedef ::DDS_SampleInfoSeq sampleinfo_seq_type;" << be_nl
@@ -318,7 +317,6 @@ be_visitor_connector_dds_exh::gen_connector_traits (void)
 
       return;
     }
-
   os_ << be_uidt_nl
       << "};";
 }
