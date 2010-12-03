@@ -52,7 +52,8 @@ TAO_RT_Stub::parse_policies (void)
         {
           case RTCORBA::PRIORITY_MODEL_POLICY_TYPE:
             {
-              this->exposed_priority_model (policy_list[i]);            }
+              this->exposed_priority_model (policy_list[i]);
+            }
             break;
           case RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE :
             {

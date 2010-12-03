@@ -66,8 +66,7 @@ public:
    * if you're interested in writing maximally portable programs avoid
    * using this operation in your program designs.
    */
-  virtual CORBA::Boolean try_lock (TimeBase::TimeT max_wait
-                                   );
+  virtual CORBA::Boolean try_lock (TimeBase::TimeT max_wait);
 
   /// Returns the name of the mutex.
   virtual const char *name (void) const;
