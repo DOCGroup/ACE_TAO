@@ -48,12 +48,9 @@ protected:
 
 protected:
   be_interface *iface_;
-  const char *scope_name_;
-  const char *iface_name_;
-  const char *smart_scope_;
-  const char *prefix_;
-  const char *suffix_;
+  be_uses *port_;
   ACE_CString class_name_;
+  ACE_CString base_class_name_;
 };
 
 // ======================================================
