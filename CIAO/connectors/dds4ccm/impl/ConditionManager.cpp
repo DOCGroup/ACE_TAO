@@ -221,9 +221,9 @@ namespace CIAO
         }
       else if (ACE_OS::strlen (filter.expression.in ()) > 0)
         {
-          this->set_parameters (filter, this->qc_reader_);
-          this->set_parameters (filter, this->qc_getter_);
-          this->set_parameters (filter, this->qc_listener_);
+          this->set_parameters (filter, this->qc_reader_.in ());
+          this->set_parameters (filter, this->qc_getter_.in ());
+          this->set_parameters (filter, this->qc_listener_.in ());
         }
       else
         {

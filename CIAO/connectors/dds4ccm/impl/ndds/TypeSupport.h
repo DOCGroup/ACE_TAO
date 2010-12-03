@@ -32,7 +32,7 @@ namespace CIAO
                                                      ::DDS::Subscriber_ptr sub) = 0;
     };
 
-    template <typename DDS_TYPE>
+    template <typename DDS_TYPE, typename SEQ_TYPE>
     class DDS_TypeFactory_T : public DDS_TypeFactory_i
     {
     public:
@@ -55,7 +55,7 @@ namespace CIAO
             typename DDS_TYPE::datareader_type,
             typename DDS_TYPE::typed_reader_type,
             typename DDS_TYPE::value_type,
-            typename DDS_TYPE::seq_type,
+            SEQ_TYPE,
             typename DDS_TYPE::dds_seq_type>
           DataReader_type;
         return new DataReader_type (dr, dp, sub);

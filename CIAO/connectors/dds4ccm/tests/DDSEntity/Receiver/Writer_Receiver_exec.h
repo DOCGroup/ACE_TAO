@@ -153,7 +153,6 @@ namespace CIAO_Writer_Receiver_Impl
 
     //@{
     /** User defined members. */
-    WriterTestDataReader * reader_;
 
     //@}
 
