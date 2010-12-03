@@ -27,20 +27,22 @@ be_visitor_component_ami_rh_exs::~be_visitor_component_ami_rh_exs (void)
 int
 be_visitor_component_ami_rh_exs::visit_uses (be_uses *node)
 {
+  this->port_ = node;
+
   this->iface_ =
     be_interface::narrow_from_decl (node->uses_type ());
 
   this->init ();
 
   os_ << be_nl_2
-      << this->prefix_ << this->iface_name_ << this->suffix_ << "_i" << "::"
-      << this->prefix_ << this->iface_name_ << this->suffix_ << "_i" << " (void)" << be_nl
+      << this->class_name_ << "::"
+      << this->class_name_ << " (void)" << be_nl
       << "{" << be_nl
       << "}";
 
   os_ << be_nl_2
-      << this->prefix_ << this->iface_name_ << this->suffix_ << "_i" << "::~"
-      << this->prefix_ << this->iface_name_ << this->suffix_ << "_i" << " (void)" << be_nl
+      << this->class_name_ << "::~"
+      << this->class_name_ << " (void)" << be_nl
       << "{" << be_nl
       << "}";
 
@@ -99,8 +101,8 @@ be_visitor_component_ami_rh_exs::visit_operation (
 
   os_ << be_nl_2
       << "void" << be_nl
-      << this->class_name_ << "_i"
-      << "::" << node->local_name ()->get_string ()
+      << this->class_name_ << "::"
+      << node->local_name ()->get_string ()
       << " (";
 
   int count =
@@ -150,7 +152,7 @@ be_visitor_component_ami_rh_exs::visit_operation (
                         -1);
     }
 
-  if (count != 0 || vrt)
+  if (count != 0 || ! vrt)
     {
       os_ << ")" << be_uidt;
     }

@@ -26,6 +26,8 @@ be_visitor_component_ami_rh_exh::~be_visitor_component_ami_rh_exh (void)
 int
 be_visitor_component_ami_rh_exh::visit_uses (be_uses *node)
 {
+  this->port_ = node;
+
   this->iface_ =
     be_interface::narrow_from_decl (node->uses_type ());
 
@@ -33,15 +35,12 @@ be_visitor_component_ami_rh_exh::visit_uses (be_uses *node)
 
   os_ << be_nl_2
       << "class " << this->export_macro_.c_str () << " "
-      << this->class_name_ << "_i" << be_idt_nl
-      << ": public ::" << this->scope_name_ << this->smart_scope_
-      << this->class_name_ << be_uidt_nl
+      << this->class_name_ << be_idt_nl
+      << ": public ::" << this->base_class_name_ << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << this->prefix_ << this->iface_name_ << this->suffix_
-      << "_i (void);" << be_nl
-      << "virtual ~" << this->prefix_ << this->iface_name_
-      << this->suffix_ << "_i (void);";
+      << this->class_name_ << " (void);" << be_nl
+      << "virtual ~" << this->class_name_ << " (void);";
 
   /// This overload of traverse_inheritance_graph() used here
   /// doesn't automatically prime the queues.
@@ -115,45 +114,48 @@ be_visitor_component_ami_rh_exh::visit_operation (
   if (count == 0 && vrt)
     {
       os_ << "void);";
-
-      return  0;
     }
-
-  os_ << be_idt_nl;
-
-  if (!vrt)
+  else
     {
-      be_visitor_operation_rettype rt_visitor (this->ctx_);
-      be_decl *rt =
-        be_decl::narrow_from_decl (node->return_type ());
+      os_ << be_idt_nl;
 
-      if (rt->accept (&rt_visitor) == -1)
+      if (!vrt)
+        {
+          be_visitor_operation_rettype rt_visitor (this->ctx_);
+          be_decl *rt =
+            be_decl::narrow_from_decl (node->return_type ());
+
+          if (rt->accept (&rt_visitor) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_visitor_component")
+                                 ACE_TEXT ("_ami_rh_exh")
+                                 ACE_TEXT ("::visit_operation - ")
+                                 ACE_TEXT ("return type arg")
+                                 ACE_TEXT (" gen failed\n")),
+                                -1);
+            }
+
+          os_ << " ami_return_val";
+
+          if (count != 0)
+            {
+              os_ << "," << be_nl;
+            }
+        }
+
+      if (this->visit_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_component_ami_rh_exh")
+                             ACE_TEXT ("be_visitor_component")
+                             ACE_TEXT ("_ami_rh_exh")
                              ACE_TEXT ("::visit_operation - ")
-                             ACE_TEXT ("return type arg gen failed\n")),
+                             ACE_TEXT ("visit_scope() failed\n")),
                             -1);
         }
 
-      os_ << " ami_return_val";
-
-      if (count != 0)
-        {
-          os_ << "," << be_nl;
-        }
+      os_ << ");" << be_uidt;
     }
-
-  if (this->visit_scope (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_component_ami_rh_exh")
-                         ACE_TEXT ("::visit_operation - ")
-                         ACE_TEXT ("visit_scope() failed\n")),
-                        -1);
-    }
-
-  os_ << ");" << be_uidt;
 
   this->gen_excep_op ("", node, false);
 

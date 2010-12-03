@@ -1,3 +1,17 @@
+Fri Dec  3 18:13:01 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_ami_rh_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ami_rh_ex_base.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ami_rh_exh.cpp:
+        * TAO_IDL/be_include/be_visitor_component/component_ami_rh_ex_base.h:
+
+          Modified generation of AMI4CCM reply handler implementation
+          class to include the port name in the constructed class
+          name. This change eliminates redefinition errors when
+          a component has more than one AMI receptacle that uses
+          the same interface. The application developer can give
+          each of these reply handlers a unique behavior if desired.
+
 Fri Dec  3 16:10:08 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
