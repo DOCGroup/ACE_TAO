@@ -7,7 +7,7 @@
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE, bool FIXED_SEQ_TYPE>
 class DDS_PSAT_Event_Connector_T
-  : public virtual DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>
+  : public virtual DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>
 {
   virtual
   typename CCM_TYPE::supplier_traits::data_type::_ptr_type
