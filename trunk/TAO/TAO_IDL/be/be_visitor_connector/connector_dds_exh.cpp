@@ -270,6 +270,10 @@ be_visitor_connector_dds_exh::gen_dds_traits (AST_Decl *datatype)
         {
           os_ << "RTI";
         }
+      else if (the_dds_impl == BE_GlobalData::OPENDDS)
+        {
+          os_ << "DDS";
+        }
 
       os_ << "Seq dds_seq_type;" << be_nl
           << "typedef ::" << dt_name
