@@ -139,8 +139,6 @@ Invocation::GIOP_Buffer::GIOP_Buffer(const char *text,
       timebuf[time_tok - text] = 0;
       char *hms = ACE_OS::strchr (timebuf,' ');
       if (hms != 0)
-        hms = ACE_OS::strchr (hms + 1, ' ');
-      if (hms != 0)
         {
           int hr, min, sec, msec;
           ::sscanf (hms+1,"%d:%d:%d.%d", &hr, &min, &sec, &msec);

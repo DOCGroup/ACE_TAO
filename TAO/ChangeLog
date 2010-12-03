@@ -1,3 +1,12 @@
+Fri Dec  3 21:34:48 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * utils/logWalker/Invocation.cpp:
+
+          Updated logWalker to handle the new logging time format from the
+          ACE commit: Thu Dec  2 18:29:36 UTC 2010  Steve Huston
+          This patch was submitted by Thomas Lockhart
+          <Thomas dot Lockhart at jpl dot nasa dot gov>.
+
 Fri Dec  3 19:33:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/array_anon_nested.idl:
