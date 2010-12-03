@@ -1,3 +1,8 @@
+Fri Dec  3 10:33:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_i_handle.idl:
+          All idl in this file is for NDDS
+
 Fri Dec  3 10:21:40 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dds4ccm.mpb:
