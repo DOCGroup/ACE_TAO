@@ -188,9 +188,10 @@ namespace CIAO
       ::DDS::SampleInfoSeq sample_info;
       SEQ_VALUE_TYPE data;
 
+      ::DDS::QueryCondition_var qc = this->condition_manager_->get_querycondition_reader ();
       this->read_wo_instance (data,
                               sample_info,
-                              this->condition_manager_->get_querycondition_reader ());
+                              qc.in ());
 
       // Determine how many samples to return
       CORBA::ULong samples_to_return = this->get_nr_valid_samples (sample_info,
@@ -219,9 +220,10 @@ namespace CIAO
       ::DDS::SampleInfoSeq sample_info;
       SEQ_VALUE_TYPE data;
 
+      ::DDS::QueryCondition_var qc = this->condition_manager_->get_querycondition_reader ();
       this->read_wo_instance (data,
                               sample_info,
-                              this->condition_manager_->get_querycondition_reader ());
+                              qc.in ());
 
       this->convert_data (data, instances, infos, sample_info);
       this->return_loan (instances, sample_info);

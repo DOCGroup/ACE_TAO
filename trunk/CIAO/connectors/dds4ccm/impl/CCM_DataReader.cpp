@@ -187,7 +187,7 @@ CIAO::DDS4CCM::CCM_DataReader::get_dds_entity (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DataReader::get_dds_entity");
 
-  return ::DDS::DataReader::_duplicate (this->dds_entity ());
+  return ::DDS::DataReader::_duplicate (this->dds_entity_);
 }
 
 ::DDS::DataReader_ptr

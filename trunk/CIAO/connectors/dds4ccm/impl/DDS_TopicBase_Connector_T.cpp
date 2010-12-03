@@ -4,40 +4,40 @@
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "ace/Reactor.h"
 
-template <typename CCM_TYPE, typename DDS_TYPE>
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::DDS_TopicBase_Connector_T (void) :
+template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::DDS_TopicBase_Connector_T (void) :
     BaseConnector ()
   , late_binding_ (false)
 {
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::~DDS_TopicBase_Connector_T (void)
+template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::~DDS_TopicBase_Connector_T (void)
 {
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
 bool
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::late_binding (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::late_binding (void)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::late_binding");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::late_binding");
   return this->late_binding_;
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
 void
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::late_binding (bool late_binding)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::late_binding (bool late_binding)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::late_binding");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::late_binding");
   this->late_binding_ |= late_binding;
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
 bool
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::late_binded (
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::late_binded (
   const char * topic_name)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::late_binded");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::late_binded");
 
   this->late_binding (ACE_OS::strlen (topic_name) == 0);
 
@@ -59,11 +59,11 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::late_binded (
   return false;
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
 void
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::configuration_complete (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::configuration_complete (void)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::configuration_complete");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::configuration_complete");
 
   BaseConnector::configuration_complete ();
   const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
@@ -83,11 +83,11 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::configuration_complete (void)
                         this->publisher_.inout ());
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
 void
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_activate (ACE_Reactor* reactor)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_activate (ACE_Reactor* reactor)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_activate");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_activate");
   BaseConnector::ccm_activate ();
 
   this->activate_topic (reactor,
@@ -101,11 +101,11 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_activate (ACE_Reactor* reacto
                             this->publisher_listener_.inout ());
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
 void
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_passivate (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_passivate (void)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_passivate");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_passivate");
 
   ::DDS::TopicListener_var topiclistener =
     this->topiclistener_._retn ();
@@ -132,11 +132,11 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_passivate (void)
   BaseConnector::ccm_passivate ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
 void
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_remove (void)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_remove");
   ::DDS::Topic_var topic = this->topic_._retn ();
   if (! CORBA::is_nil (topic.in ()))
     {
@@ -163,18 +163,18 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::ccm_remove (void)
   BaseConnector::ccm_remove ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
 char *
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::topic_name (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::topic_name (void)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::topic_name");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::topic_name");
 
   return CORBA::string_dup (this->topic_name_.in ());
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
 void
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::topic_name (
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::topic_name (
   const char * topic_name)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::topic_name");
@@ -182,12 +182,12 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::topic_name (
   this->topic_name_ = topic_name;
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
 void
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::key_fields (
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::key_fields (
   const ::DDS::StringSeq & key_fields)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::key_fields");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::key_fields");
   if (this->configuration_complete_)
     {
       throw ::CCM_DDS::NonChangeable ();
@@ -202,11 +202,11 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::key_fields (
     }
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
 ::DDS::StringSeq *
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::key_fields (void)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::key_fields (void)
 {
-  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>::key_fields");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::key_fields");
 /*
     For future use, DDS_TYPE doesn't have get_typecode yet
     ::DDS_TypeCode* ptr = ::DDS_TYPE::type_support::get_typecode ();

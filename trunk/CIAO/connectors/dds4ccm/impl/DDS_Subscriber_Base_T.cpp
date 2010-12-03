@@ -178,6 +178,7 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::r
   this->dds_read_->set_dds_reader (::DDS::DataReader::_nil (),
                                    0);
   this->condition_manager_.set_dds_entity (::DDS::DataReader::_nil ());
+  this->ccm_data_reader_->set_dds_entity (::DDS::DataReader::_nil ());
 }
 
 template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>

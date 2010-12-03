@@ -15,7 +15,7 @@
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE, bool FIXED_SEQ_TYPE>
 class DDS_Event_Connector_T
-  : public virtual DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>
+  : public virtual DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>
 {
 public:
   DDS_Event_Connector_T (void);
@@ -123,7 +123,7 @@ private:
   void do_configuration_complete (void);
   void do_ccm_activate (void);
 
-  typedef DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE> TopicBaseConnector;
+  typedef DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE> TopicBaseConnector;
 };
 
 #include "dds4ccm/impl/DDS_Event_Connector_T.cpp"
