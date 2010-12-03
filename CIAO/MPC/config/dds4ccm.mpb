@@ -5,6 +5,7 @@ feature(dds4ccm_opendds) : taoidldefaults, dcps {
   macros += CIAO_DDS4CCM_OPENDDS=1
   idlflags += -DCIAO_DDS4CCM_OPENDDS=1 \
               -Wb,dds_impl=opendds \
+              -Wb,opendds_sequence_suffix=DDSSeq \
               -I $(CIAO_ROOT)/connectors \
               -I $(CIAO_ROOT)/connectors/dds4ccm/idl
   includes += $(CIAO_ROOT)/connectors/dds4ccm/idl

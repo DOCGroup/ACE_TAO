@@ -1,3 +1,9 @@
+Fri Dec  3 10:21:40 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm.mpb:
+        * MPC/config/dds4ccm_ts_default.mpb:
+          Added flags for OpenDDS
+
 Fri Dec  3 09:36:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/IDL_Test/Hello_Component.idl:
