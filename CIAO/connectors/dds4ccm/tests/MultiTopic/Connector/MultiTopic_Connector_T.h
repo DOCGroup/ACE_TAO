@@ -11,10 +11,10 @@
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE, bool FIXED_SEQ_TYPE>
 class DDS_MT_Event_Connector_T
-  : public virtual DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE>
+  : public virtual DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>
 {
 
-typedef DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE> TopicBaseConnector;
+typedef DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE> TopicBaseConnector;
 
 public:
   DDS_MT_Event_Connector_T (void);

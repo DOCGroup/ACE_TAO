@@ -109,7 +109,7 @@ namespace CIAO_Reader_Test_Sender_Impl
   }
 
   // Supported operations and attributes.
-void
+  void
   Sender_exec_i::start (void)
   {
     ::Reader_Test::ReaderTestConnector::Writer_var writer =

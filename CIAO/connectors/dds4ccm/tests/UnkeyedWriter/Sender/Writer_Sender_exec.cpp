@@ -119,7 +119,7 @@ namespace CIAO_Writer_Sender_Impl
             ++this->last_key->second->iteration;
             OctetSeq_var reply_mesg = new OctetSeq (1);
             reply_mesg->length (1);
-            this->last_key->second->data = *reply_mesg._retn ();
+            this->last_key->second->data = reply_mesg;
             writer->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written keyed <%C> - iteration <%d>\n"),
                     this->last_key->first.c_str (),
@@ -170,7 +170,7 @@ namespace CIAO_Writer_Sender_Impl
         new_key.iteration = i;
         OctetSeq_var reply_mesg = new OctetSeq (1);
         reply_mesg->length (1);
-        new_key.data = *reply_mesg._retn ();
+        new_key.data = reply_mesg;
         write_many_no_excep[i-1] = new_key;
       }
     try
@@ -205,7 +205,7 @@ namespace CIAO_Writer_Sender_Impl
             long const length = 100000;
             OctetSeq_var reply_mesg = new OctetSeq (length);
             reply_mesg->length (length);
-            this->last_key->second->data = *reply_mesg._retn ();
+            this->last_key->second->data = reply_mesg;
             writer->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: No InternalError ")
                         ACE_TEXT ("caught while writing a large amount of data.\n")));

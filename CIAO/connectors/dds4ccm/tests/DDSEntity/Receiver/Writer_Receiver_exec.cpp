@@ -30,6 +30,7 @@
 #include "ace/Reactor.h"
 
 #include "Connector/Writer_Connector_conn.h"
+#include <dds4ccm/impl/CCM_DataReader.h>
 
 namespace CIAO_Writer_Receiver_Impl
 {
@@ -184,6 +185,8 @@ namespace CIAO_Writer_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
+    WriterTestDataReader * reader = 0;
+
     ::DDS::DataReader_var dds_dr =
       this->ciao_context_->get_connection_info_out_dds_entity ();
 
@@ -201,34 +204,45 @@ namespace CIAO_Writer_Receiver_Impl
       {
         typedef ::CIAO::NDDS::DDS_DataReader_Base DataReader_type;
 
-        DataReader_type * typed_ccm_dr =
-          dynamic_cast <DataReader_type*> (ccm_dr->get_dds_entity ());
-        if (typed_ccm_dr)
+        ::DDS::DataReader_var tmp = ccm_dr->get_dds_entity ();
+        if (! ::CORBA::is_nil (tmp.in ()))
           {
-            DDSDataReader* dds_reader = typed_ccm_dr->get_rti_entity ();
-            if (dds_reader)
+            DataReader_type * typed_ccm_dr =
+              dynamic_cast <DataReader_type*> (tmp.in ());
+            if (typed_ccm_dr)
               {
-                this->reader_ =
-                  ::CIAO_WriterTestConnector_DDS_Event_Impl::WriterTest_DDS_Traits::datareader_type::narrow (dds_reader);
-                if (!this->reader_)
+                DDSDataReader* dds_reader = typed_ccm_dr->get_rti_entity ();
+                if (dds_reader)
+                  {
+                    reader = ::CIAO_WriterTestConnector_DDS_Event_Impl
+                             ::WriterTest_DDS_Traits
+                             ::datareader_type::narrow (dds_reader);
+                    if (!reader)
+                      {
+                        ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                    "Error narrowing to a typed "
+                                    "DDS DataReader.\n"));
+                        throw ::CORBA::INTERNAL ();
+                      }
+                  }
+                else
                   {
                     ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
-                                "Error narrowing to a typed "
-                                "DDS DataReader.\n"));
+                                "Error getting DDS Datareader.\n"));
                     throw ::CORBA::INTERNAL ();
                   }
               }
             else
               {
                 ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
-                            "Error getting DDS Datareader.\n"));
+                            "Error casting DataReader to typed DataReader\n"));
                 throw ::CORBA::INTERNAL ();
               }
           }
         else
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
-                        "Error casting DataReader to typed DataReader\n"));
+                        "::DDS::DataReader of CCM DataReader seems nil\n"));
             throw ::CORBA::INTERNAL ();
           }
       }
@@ -244,7 +258,7 @@ namespace CIAO_Writer_Receiver_Impl
     ::CIAO_WriterTestConnector_DDS_Event_Impl::WriterTest_DDS_Traits::sampleinfo_seq_type
       sample_info_seq;
 
-    ::DDS::ReturnCode_t const result = this->reader_->take (
+    ::DDS::ReturnCode_t const result = reader->take (
                 data,
                 sample_info_seq,
                 1,
@@ -253,7 +267,7 @@ namespace CIAO_Writer_Receiver_Impl
     ACE_DEBUG ((LM_DEBUG, "Take returned %C with %d samples\n",
                 ::CIAO::DDS4CCM::translate_retcode (result), data.length ()));
 
-    ::DDS::ReturnCode_t const result_loan = this->reader_->return_loan (data, sample_info_seq);
+    ::DDS::ReturnCode_t const result_loan = reader->return_loan (data, sample_info_seq);
 
     ACE_DEBUG ((LM_DEBUG, "Return loan returned %C\n",
                 ::CIAO::DDS4CCM::translate_retcode (result_loan)));
