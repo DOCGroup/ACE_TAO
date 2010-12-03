@@ -1,3 +1,9 @@
+Fri Dec  3 15:46:55 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * be/be_visitor_component/component_ami_rh_ex_base.cpp:
+
+          Fixed cut and paste error.
+
 Fri Dec  3 10:20:22 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
