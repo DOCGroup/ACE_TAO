@@ -1,3 +1,17 @@
+Fri Dec  3 19:33:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/array_anon_nested.idl:
+
+          New file, containing an unusual IDL construct
+          removed from array.idl below, so it can have
+          the appropriate tao_idl options and avoid RTI
+          DDS IDL processing.
+
+        * tests/IDL_Test/IDL_Test.mpc:
+        * tests/IDL_Test/array.idl:
+
+          Changes corresponding to the above description.
+
 Fri Dec  3 18:13:01 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component_ami_rh_exs.cpp:
