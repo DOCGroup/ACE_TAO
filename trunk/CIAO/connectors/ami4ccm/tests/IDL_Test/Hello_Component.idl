@@ -18,6 +18,8 @@
 #pragma ciao ami4ccm receptacle "Hello::Sender::m_run_mybar"
 #pragma ciao ami4ccm receptacle "Hello::Sender::m_run_three"
 
+#pragma ciao ami4ccm receptacle "Bar::SecondSender::run_my_foo"
+
 module Hello
 {
   component Sender
@@ -35,6 +37,15 @@ module Hello
     provides MyFoo my_foo;
     provides Bar::Three my_three;
     provides X myx;
+  };
+};
+
+module Bar
+{
+  component SecondSender
+  {
+    uses Hello::MyFoo run_my_foo;
+    uses multiple Hello::MyFoo m_run_my_foo;
   };
 };
 
