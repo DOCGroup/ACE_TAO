@@ -35,7 +35,7 @@ be_visitor_component_ami_rh_ex_base::post_process (be_decl *bd)
 {
   // Has to be (1) an argument, (2) not an IN arg, and
   // (3) not the last INOUT or OUT arg.
-  if (AST_Decl::NodeType () == AST_Decl::NT_argument)
+  if (bd->node_type () == AST_Decl::NT_argument)
     {
       AST_Argument *arg =
         AST_Argument::narrow_from_decl (bd);
