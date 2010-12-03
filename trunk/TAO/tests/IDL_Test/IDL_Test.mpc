@@ -53,6 +53,7 @@ project(*IDL): taoserver, messaging, gen_ostream {
     idlflags += -as
     enum_in_struct.idl
     array.idl
+    array_anon_nested.idl
     included.idl
     including.idl
     sequence.idl
@@ -100,6 +101,8 @@ project(*DLL): taoidldefaults, taolib, messaging {
     anonymousS.cpp
     arrayC.cpp
     arrayS.cpp
+    array_anon_nestedC.cpp
+    array_anon_nestedS.cpp
     array_onlyA.cpp
     array_onlyC.cpp
     array_onlyS.cpp
