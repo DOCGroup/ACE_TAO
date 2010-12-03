@@ -1,3 +1,16 @@
+Fri Dec  3 16:10:08 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_root/root_cnh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_cns.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_ami_exh.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+
+          Removed AMI4CCM reply handler impl stream and the
+          associated mechanism to manage it, since this class is
+          now generated in the component executor.
+
 Fri Dec  3 15:46:55 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * be/be_visitor_component/component_ami_rh_ex_base.cpp:
