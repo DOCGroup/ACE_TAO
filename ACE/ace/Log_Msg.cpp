@@ -1051,27 +1051,30 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
     }
 
   if (timestamp_ > 0)
-  {
-     ACE_TCHAR day_and_time[35];
-     const ACE_TCHAR *s = 0;
-     if (timestamp_ == 1)
-     {
-        // Print just the time
-        s = ACE::timestamp (day_and_time, sizeof day_and_time / sizeof (ACE_TCHAR), 1);
-     }
-     else
-     {
-        // Print time and date
-        ACE::timestamp (day_and_time, sizeof day_and_time / sizeof (ACE_TCHAR));
-        s = day_and_time;
-     }
+    {
+      ACE_TCHAR day_and_time[27];
+      const ACE_TCHAR *s = 0;
+      if (timestamp_ == 1)
+        {
+          // Print just the time
+          s = ACE::timestamp (day_and_time,
+                              sizeof (day_and_time) / sizeof (ACE_TCHAR),
+                              true);
+        }
+      else
+        {
+          // Print time and date
+          ACE::timestamp (day_and_time,
+                          sizeof (day_and_time) / sizeof (ACE_TCHAR));
+          s = day_and_time;
+        }
 
-     for (; bspace > 1 && (*bp = *s) != '\0'; ++s, --bspace)
-       ++bp;
+      for (; bspace > 1 && (*bp = *s) != '\0'; ++s, --bspace)
+        ++bp;
 
-     *bp++ = '|';
-     --bspace;
-  }
+      *bp++ = '|';
+      --bspace;
+    }
 
   while (*format_str != '\0' && bspace > 0)
     {
@@ -1648,21 +1651,23 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   }
 
                 case 'D': // Format the timestamp in format:
-                          // Weekday Month day year hour:minute:sec.usec
+                          // yyyy-mm-dd hour:minute:sec.usec
+                          // This is a maximum of 27 characters
+                          // including terminator.
                   {
-                    ACE_TCHAR day_and_time[35];
+                    ACE_TCHAR day_and_time[27];
                     // Did we find the flag indicating a time value argument
                     if (format[1] == ACE_TEXT('#'))
                     {
                       ACE_Time_Value* time_value = va_arg (argp, ACE_Time_Value*);
                       ACE::timestamp (*time_value,
                                       day_and_time,
-                                      sizeof day_and_time / sizeof (ACE_TCHAR));
+                                      sizeof (day_and_time) / sizeof (ACE_TCHAR));
                     }
                     else
                     {
                       ACE::timestamp (day_and_time,
-                                      sizeof day_and_time / sizeof (ACE_TCHAR));
+                                      sizeof (day_and_time) / sizeof (ACE_TCHAR));
                     }
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
                     ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
@@ -1679,9 +1684,9 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   }
 
                 case 'T': // Format the timestamp in
-                          // hour:minute:sec:usec format.
+                          // hour:minute:sec.usec format.
                   {
-                    ACE_TCHAR day_and_time[35];
+                    ACE_TCHAR day_and_time[27];
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
                     ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
 #else
