@@ -5,7 +5,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_time.h"
 #include "ace/CDR_Stream.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Truncate.h"
@@ -233,9 +232,15 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
       || ACE_BIT_ENABLED (verbose_flag,
                           ACE_Log_Msg::VERBOSE_LITE))
     {
-      ACE_Time_Value now (this->secs_, this->usecs_);
-      ACE::timestamp (now, timestamp, 27);
+      ACE_Time_Value reftime (this->secs_, this->usecs_);
+      if (0 == ACE::timestamp (reftime,
+                               timestamp,
+                               sizeof (timestamp) / sizeof (ACE_TCHAR)))
+        return -1;
+
       // Historical timestamp in VERBOSE[_LITE] used 3 places for partial sec.
+      // 012345678901234567890123456
+      // 1989-10-18 14:25:36.123<nul>
       timestamp[23] = '\0';
     }
 

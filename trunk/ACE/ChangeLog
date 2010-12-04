@@ -1,3 +1,13 @@
+Sat Dec  4 14:25:26 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp (timestamp):
+        * ace/Log_Msg.cpp (log):
+        * ace/Log_Msg_UNIX_Syslog.cpp (log):
+        * ace/Log_Record.cpp (format_msg):
+        * examples/Misc/test_timestamp.cpp: Cleanups, correcting buffer sizes
+          from old 35-char length to 27 based on new timestamp format. Thanks
+          to Thomas Lockhart for these.
+
 Thu Dec  2 18:29:36 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.{h cpp} (timestamp): Changed the format produced from

@@ -2389,6 +2389,8 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
 // "hour:minute:second:microsecond."  The month, day, and year are
 // also stored in the beginning of the date_and_time array
 // using ISO-8601 format.
+// 012345678901234567890123456
+// 2010-12-02 12:56:00.123456<nul>
 
 ACE_TCHAR *
 ACE::timestamp (const ACE_Time_Value& time_value,
@@ -2398,6 +2400,8 @@ ACE::timestamp (const ACE_Time_Value& time_value,
 {
   //ACE_TRACE ("ACE::timestamp");
 
+  // This magic number is from the formatting statement
+  // farther down this routine.
   if (date_and_timelen < 27)
     {
       errno = EINVAL;
@@ -2410,16 +2414,17 @@ ACE::timestamp (const ACE_Time_Value& time_value,
   time_t secs = cur_time.sec ();
   struct tm tms;
   ACE_OS::localtime_r (&secs, &tms);
-  ACE_OS::sprintf (date_and_time,
-                   ACE_TEXT ("%4.4d-%2.2d-%2.2d %2.2d:%2.2d:%2.2d.%06ld"),
-                   tms.tm_year + 1900,
-                   tms.tm_mon + 1,
-                   tms.tm_mday,
-                   tms.tm_hour,
-                   tms.tm_min,
-                   tms.tm_sec,
-                   cur_time.usec());
-  date_and_time[26] = '\0';
+  ACE_OS::snprintf (date_and_time,
+                    date_and_timelen,
+                    ACE_TEXT ("%4.4d-%2.2d-%2.2d %2.2d:%2.2d:%2.2d.%06ld"),
+                    tms.tm_year + 1900,
+                    tms.tm_mon + 1,
+                    tms.tm_mday,
+                    tms.tm_hour,
+                    tms.tm_min,
+                    tms.tm_sec,
+                    cur_time.usec());
+  date_and_time[date_and_timelen - 1] = '\0';
   return &date_and_time[11 + (return_pointer_to_first_digit != 0)];
 }
 
