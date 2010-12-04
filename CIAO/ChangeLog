@@ -1,3 +1,10 @@
+Sat Dec  4 10:37:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp:
+          Replace DDS4CCM logging macros with ACE macros, since this is user code
+          and doesn't belong to the DDS4CCM core. This'll probably solve unresolved
+          externals on windows builds.
+
 Fri Dec  3 14:20:25 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:

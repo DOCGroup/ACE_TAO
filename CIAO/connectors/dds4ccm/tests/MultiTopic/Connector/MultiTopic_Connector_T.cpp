@@ -12,7 +12,7 @@ template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE, b
 typename CCM_TYPE::supplier_sq_traits::data_type::_ptr_type
 DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::get_supplier_sq_data (void)
 {
-  DDS4CCM_TRACE ("DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::get_supplier_sq_data");
+  ACE_TRACE ("DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::get_supplier_sq_data");
 
   typename CCM_TYPE::supplier_sq_traits::data_type::_var_type dw =
     this->sq_supplier_.get_data ();
@@ -126,7 +126,7 @@ template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE, b
 typename CCM_TYPE::supplier_tr_traits::data_type::_ptr_type
 DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::get_supplier_tr_data (void)
 {
-  DDS4CCM_TRACE ("DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::get_supplier_tr_data");
+  ACE_TRACE ("DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::get_supplier_tr_data");
 
   typename CCM_TYPE::supplier_sq_traits::data_type::_var_type dw =
     this->tr_supplier_.get_data ();
@@ -245,7 +245,7 @@ template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE, b
 typename CCM_TYPE::supplier_cl_traits::data_type::_ptr_type
 DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::get_supplier_cl_data (void)
 {
-  DDS4CCM_TRACE ("DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::get_supplier_cl_data");
+  ACE_TRACE ("DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE, FIXED_SEQ_TYPE>::get_supplier_cl_data");
   typename CCM_TYPE::supplier_sq_traits::data_type::_var_type dw =
     this->cl_supplier_.get_data ();
   return CCM_TYPE::supplier_sq_traits::data_type::_duplicate (dw.in ());
