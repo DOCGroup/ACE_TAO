@@ -85,7 +85,7 @@ namespace CIAO_Hello_Sender_comp_Impl
     virtual int svc (void);
 
   private:
-    ::Hello::CCM_Sender_comp_Context_ptr context_;
+    ::Hello::CCM_Sender_comp_Context_var context_;
   };
 
   /// Worker thread for synchronous invocations
@@ -97,7 +97,7 @@ namespace CIAO_Hello_Sender_comp_Impl
     virtual int svc (void);
 
   private:
-    ::Hello::CCM_Sender_comp_Context_ptr context_;
+    ::Hello::CCM_Sender_comp_Context_var context_;
   };
 
   //============================================================
