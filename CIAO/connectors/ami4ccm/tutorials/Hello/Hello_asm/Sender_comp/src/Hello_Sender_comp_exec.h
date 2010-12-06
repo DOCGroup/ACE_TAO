@@ -41,12 +41,13 @@
 
 namespace CIAO_Hello_Sender_comp_Impl
 {
-  class  AMI4CCM_MyFoo_objReplyHandler_i
-      : public ::Hello::AMI4CCM_MyFoo_objReplyHandler
-  {
-  public:
-    AMI4CCM_MyFoo_objReplyHandler_i (void);
-    virtual ~AMI4CCM_MyFoo_objReplyHandler_i (void);
+  class MyFoo_obj_callback_exec_i
+     : public virtual ::Hello::CCM_AMI4CCM_MyFoo_objReplyHandler,
+       public virtual ::CORBA::LocalObject
+   {
+   public:
+     MyFoo_obj_callback_exec_i (void);
+     virtual ~MyFoo_obj_callback_exec_i (void);
 
     virtual void foo (::CORBA::Long ami_return_val, const char * answer);
 
