@@ -1,3 +1,13 @@
+Mon Dec  6 00:27:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm_ts_default.mpb:
+          Updated some comments
+
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector.mpc:
+        * connectors/dds4ccm/tests/MultiTopic/Connector/ccm_dds_mt.idl:
+        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.mpc:
+          Fixed compile problems when no dds implementation is enabled
+
 Sat Dec  4 10:37:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp:

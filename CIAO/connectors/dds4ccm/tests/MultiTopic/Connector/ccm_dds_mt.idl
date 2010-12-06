@@ -12,9 +12,7 @@
 
 #pragma dds4ccm impl "MultiTopic_Connector_T.h"
 
-#if defined (__TAO_IDL)
 #include <ccm_dds.idl>
-#endif
 
 /**
  * @namespace CCM_DDS_MT
