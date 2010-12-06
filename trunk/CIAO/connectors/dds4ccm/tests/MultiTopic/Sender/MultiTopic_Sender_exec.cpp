@@ -29,8 +29,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
-#include "Connector/MultiTopic_Connector_T.h"
-
 namespace CIAO_Shapes_Sender_Impl
 {
   //============================================================
