@@ -20,7 +20,7 @@ namespace CIAO_Hello_Receiver_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    MyFoo_exec_i (void);
+    MyFoo_exec_i (::Hello::CCM_Receiver_Context_ptr ctx);
     virtual ~MyFoo_exec_i (void);
 
     virtual ::CORBA::Long foo (const char * in_str, ::CORBA::String_out answer);
@@ -33,6 +33,7 @@ namespace CIAO_Hello_Receiver_Impl
 
     virtual CORBA::Short ro_attrib ();
   private:
+    ::Hello::CCM_Receiver_Context_var ciao_context_;
     bool get_rw_;
     bool get_ro_;
   };
@@ -57,6 +58,8 @@ namespace CIAO_Hello_Receiver_Impl
 
   private:
     ::Hello::CCM_Receiver_Context_var context_;
+    ::Hello::CCM_MyFoo_var ciao_do_my_foo_;
+
   };
 
   extern "C" HELLO_RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
