@@ -31,6 +31,8 @@ project(OneFile_Connector_idl_gen) : connectoridldefaults, dds4ccm {
               -Wb,skel_export_include=OneFile_Connector_skel_export.h \
               -Wb,conn_export_macro=ONEFILE_CONNECTOR_CONN_Export \
               -Wb,conn_export_include=OneFile_Connector_conn_export.h \
+              -Wb,skel_export_macro=ONEFILE_CONNECTOR_SVNT_Export \
+              -Wb,skel_export_include=OneFile_Connector_svnt_export.h
 
   IDL_Files {
     OneFile_Connector.idl
@@ -124,7 +126,7 @@ project(OneFile_Connector_svnt) : ciao_servant, dds4ccm_impl {
   sharedname  = OneFile_Connector_svnt
   libs       += OneFile_Connector_stub OneFile_Connector_lem_stub OneFile_Base_stub
 
-  dynamicflags += ONEFILE_CONNECTOR_SVNT_BUILD_DLL
+  dynamicflags += ONEFILE_CONNECTOR_SVNT_BUILD_DLL ONEFILE_CONNECTOR_SKEL_BUILD_DLL
 
   IDL_Files {
   }
