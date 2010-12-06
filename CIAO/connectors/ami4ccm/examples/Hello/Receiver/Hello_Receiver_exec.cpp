@@ -9,7 +9,9 @@ namespace CIAO_Hello_Receiver_Impl
   MyFoo_exec_i::MyFoo_exec_i (
    ::Hello::CCM_Receiver_Context_ptr ctx)
   : ciao_context_ (
-     ::Hello::CCM_Receiver_Context::_duplicate (ctx))
+     ::Hello::CCM_Receiver_Context::_duplicate (ctx)),
+      get_rw_ (false),
+      get_ro_ (false)
   {
   }
 
