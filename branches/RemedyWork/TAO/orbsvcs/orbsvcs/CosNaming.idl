@@ -1,0 +1,274 @@
+/* -*- C++ -*- */
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    cos
+//
+// = FILENAME
+//    CosNaming.idl
+//
+// = AUTHOR
+//    Marina Spivak <marina@cs.wustl.edu>
+//
+// ============================================================================
+
+#ifndef TAO_NAMING_IDL
+#define TAO_NAMING_IDL
+
+#pragma prefix "omg.org"
+
+/**
+ * This module provides interface for using COS Naming Service.
+ */
+module CosNaming
+{
+  /// Define a typedef for String.  Maybe at some point, <Istring> will
+  /// be different to support Internationalization.
+  typedef string Istring;
+
+  /*
+   * This is a 'simple' name.
+   *
+   * Both id and kind fields are used in resolving names.
+   */
+  struct NameComponent
+  {
+    /// This is the name that is used to identify object references.
+    Istring id;
+
+    /// Stores any additional info about the object reference.
+    Istring kind;
+  };
+
+  /// This is a compound name: <c1; c2; c3; cn> where c1 to cn-1 are
+  /// the names of the nested contexts, and cn is the name of the
+  /// object bound in cn-1.
+  typedef sequence <NameComponent> Name;
+
+  enum BindingType
+  {
+    /// object binding.
+    nobject,
+
+    /// Naming context binding.
+    ncontext
+  };
+
+  struct Binding
+  {
+    /// Simple name, under which an object is bound in a given context.
+    Name binding_name;
+
+    /// Indicates whether the binding_name identifies a context, and, therefore, can
+    /// participate in name resolution.
+    BindingType binding_type;
+  };
+
+  typedef sequence <Binding> BindingList;
+
+  // Forward declaration.
+  interface BindingIterator;
+
+  /// Interface for managing name bindings and naming contexts.
+  interface NamingContext
+    {
+      // = Exceptions.
+
+      enum NotFoundReason
+      {
+        missing_node,
+        not_context,
+        not_object
+      };
+
+      /// Indicates that the name does not identify a binding.
+      exception NotFound
+      {
+
+        NotFoundReason why;
+        Name rest_of_name;
+      };
+
+      /// Implementation may throw this exception if some reason it cannot
+      /// complete the operation.  This is currently not used in TAO.
+      exception CannotProceed
+      {
+
+        NamingContext cxt;
+        Name rest_of_name;
+      };
+
+      /// A name of length 0 is invalid.  Implementations may place
+      /// further restrictions.
+      exception InvalidName
+      {
+      };
+
+      /// Indicates that the specified name is already bound to
+      /// some object.  Only one object can be bound to a
+      /// particular name in an context.  To change the binding,
+      /// <rebind> and <rebind_context> can be used.
+      exception AlreadyBound
+      {
+      };
+
+      /// Indicates that the context is not empty.
+      exception NotEmpty
+      {
+      };
+
+      // = Binding operations.
+
+      /// Create a binding for name <n> and object <obj> in the naming
+      /// context.  Compound names are treated as follows: ctx->bind
+      /// (<c1; c2; c3; cn>, obj) = (ctx->resolve (<c1; c2;
+      /// cn-1>))->bind (<cn>, obj) if the there already exists a
+      /// binding for the specified name, <AlreadyBound> exception is
+      /// thrown.  Naming contexts should be bound using <bind_context>
+      /// and <rebind_context> in order to participate in name
+      /// resolution later.
+      void bind (in Name n, in Object obj)
+        raises (NotFound, CannotProceed, InvalidName, AlreadyBound);
+
+      /// This is similar to <bind> operation above, except for when
+      /// the binding for the specified name already exists in the
+      /// specified context.  In that case, the existing binding is
+      /// replaced with the new one.
+      void rebind (in Name n, in Object obj)
+        raises (NotFound, CannotProceed, InvalidName);
+
+      /// This is the version of <bind> specifically for binding naming
+      /// contexts, so that they will participate in name resolution
+      /// when compound names are passed to be resolved.
+      void bind_context (in Name n, in NamingContext nc)
+        raises(NotFound, CannotProceed, InvalidName, AlreadyBound);
+
+      /// This is a version of <rebind> specifically for naming
+      /// contexts, so that they can participate in name resolution
+      /// when compound names are passed.
+      void rebind_context (in Name n, in NamingContext nc)
+        raises (NotFound, CannotProceed, InvalidName);
+
+      // = Resolving names.
+
+      /// Return object reference that is bound to the name.  Compound
+      /// name resolve is defined as follows: ctx->resolve (<c1; c2;
+      /// cn>) = ctx->resolve (<c1; c2 cn-1>)->resolve (<cn>) The
+      /// naming service does not return the type of the object.
+      /// Clients are responsible for "narrowing" the object to the
+      /// appropriate type.
+      Object resolve (in Name n)
+        raises (NotFound, CannotProceed, InvalidName);
+
+      // = Unbinding names.
+
+      /// Remove the name binding from the context.  When compound
+      /// names are used, unbind is defined as follows: ctx->unbind
+      /// (<c1; c2; cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind
+      /// (<cn>)
+      void unbind (in Name n)
+        raises (NotFound, CannotProceed, InvalidName);
+
+      // = Creating Naming Contexts.
+
+      /// This operation returns a new naming context implemented by
+      /// the same naming server in which the operation was invoked.
+      /// The context is not bound.
+      NamingContext new_context ();
+
+      /// This operation creates a new context and binds it to the name
+      /// supplied as an argument.  The newly-created context is
+      /// implemented by the same server as the context in which it was
+      /// bound (the name argument excluding the last component).
+      NamingContext bind_new_context (in Name n)
+        raises (NotFound, AlreadyBound, CannotProceed, InvalidName);
+
+      // = Deleting contexts.
+
+      /// Delete the naming context.  @note the user should <unbind>
+      /// any bindings in which the given context is bound to some
+      /// names before invoking <destroy> operation on it.
+      void destroy ()
+        raises (NotEmpty);
+
+
+      // = Listing the naming context.
+
+      /// Returns at most the requested number of bindings @a how_many
+      /// in @a bl.  If the naming context contains additional bindings,
+      /// they are returned with a BindingIterator.  In the naming
+      /// context does not contain any additional bindings @a bi
+      /// returned as null.
+      void list (in unsigned long how_many,
+                 out BindingList bl,
+                 out BindingIterator bi);
+    };
+
+  /// Interface for iterating over Bindings returned with the
+  /// <list> operation.
+  interface BindingIterator
+    {
+      /// This operation returns the next binding.  If there are no
+      /// more bindings false is returned.
+      boolean next_one (out Binding b);
+
+      /// This operation returns at most the requested number of
+      /// bindings.
+      boolean next_n (in unsigned long how_many,
+                      out BindingList bl);
+
+      /// This operation destroys the iterator.
+      void destroy ();
+    };
+
+  /// Interface for providing operations required to use URLs and
+  /// stringified names.
+  ///
+  /// Reference to: Document orbos/98-10-11 (Interoperable Naming Joint Revised Submission)
+  /// Joint Submission by BEA Systems, DSTC, IONA, and Inprise
+  interface NamingContextExt : NamingContext
+    {
+      /// Stringified form of a Name.
+      typedef string StringName;
+
+      /// URL address such as myhost.xyz.com.
+      typedef string Address;
+
+      /// Stringified form of a URL address componoent.
+      typedef string URLString;
+
+      /// This operation accepts a Name and returns a stringified
+      /// name. If the name is invalid, an InvalidName exception is
+      /// raised.
+      StringName to_string (in Name n)
+        raises (InvalidName);
+
+      /// This operation returns a Name. If the input stringified
+      /// name is syntactically malformed or violates an
+      /// implementation limit, an InvalidName exception is
+      /// raised.
+      Name to_name (in StringName sn)
+        raises (InvalidName);
+
+      /// Indicates that the URL address is invalid.
+      exception InvalidAddress {
+      };
+
+      /// It performs any escapes necessary on the stringified name
+      /// and returns a fully formed URL string. An exception is
+      /// raised if either the protocol or name parameters are invalid.
+      URLString to_url (in Address addr,
+                        in StringName sn)
+        raises (InvalidAddress, InvalidName);
+
+      /// This is similar to @c resolve as in the
+      /// CosNaming::NamingContext interface, except that it accepts
+      /// a stringified name as an argument instead of a Name.
+      Object resolve_str (in StringName n)
+        raises (NotFound, CannotProceed, InvalidName);
+    };
+};
+
+#endif /* TAO_NAMING_IDL */

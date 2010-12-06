@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef EXCEPTION_T_SENDER_IDL
+#define EXCEPTION_T_SENDER_IDL
+
+#include <Components.idl>
+
+#include "Base/ExceptionT.idl"
+
+#pragma ciao ami4ccm receptacle "ExceptionT::Sender::run_my_foo"
+
+module ExceptionT
+{
+  component Sender
+  {
+    /// For synchronous invocation
+    uses MyFoo run_my_foo;
+  };
+};
+
+#endif

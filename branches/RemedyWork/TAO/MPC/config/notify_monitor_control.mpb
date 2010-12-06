@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+feature(notify_monitor_control) {
+  avoids += wince
+  after += TAO_Monitor CosNotification_MC CosNotification_MC_Ext
+  libs  += TAO_CosNotification_MC_Ext TAO_CosNotification_MC TAO_Monitor
+  macros += TAO_HAS_NOTIFICATION_MONITOR_CONTROL
+}

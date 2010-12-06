@@ -1,0 +1,41 @@
+$Id$
+
+This test involves a multithreaded client.  The purpose of the test is
+to verify that client-side and server-side RTCORBA processing works ok
+when multiple threads are making invocations.
+
+NOTE:
+-----
+
+Since output verification script relies on ORB debug messages, i.e.,
+it checks for certain debug messages, it is BRITTLE.  Whenever ORB
+developers modify/remove certain debug messages in the ORB, the output
+verification script may start reporting that there is an error, since
+something it was looking for was not found.  In such case,
+process-output.pl must be updated to reflect debug output changes.
+
+Description
+-----------
+
+Server creates an object with RTCORBA::CLIENT_PROPAGATED priority
+model, and writes its IOR to the file.
+
+Client spawns two threads of different priorities.  Each thread sets
+RTCORBA::ClientProtocolPolicy override to a single protocol on the
+PolicyCurrent level.  After setting the override, each thread performs
+a number of invocations on the server object in a loop.  The number of
+invocations, each thread's priority and protocol are all specified
+through command-line arguments.
+
+This test consists of two parts.  In the first, we run client and
+server, which follow the description above.  We also turn on the
+debugging output for the server, and collect the entire test output
+(client and server) into a data file.  The second part of the test is
+verifying the output of the test using process-output.pl perl script.
+(The perl script is used since a large number of iterations results in
+a sizeable output, which is impractical to verify manually).
+
+run_test.pl does both, i.e., it runs client and server and then runs
+the verification script on the output.  See run_test.pl for
+instructions on how to run both client/server and the verification
+script.

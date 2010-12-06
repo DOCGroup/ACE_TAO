@@ -1,0 +1,56 @@
+// -*- MPC -*-
+// $Id$
+
+project(*IDL): taoidldefaults {
+  IDL_Files {
+    Identity.idl
+    Load_Balancer.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, utils {
+  avoids += repo
+  after += *IDL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    IdentityC.cpp
+    IdentityS.cpp
+    Load_BalancerC.cpp
+    Identity_Server.cpp
+    Identity_i.cpp
+  }
+}
+
+project(*Client): taoclient, utils, portableserver {
+  avoids += repo
+  after += *IDL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    IdentityC.cpp
+    Load_BalancerC.cpp
+    Identity_Client.cpp
+  }
+}
+
+project(*Balancer): taoserver, utils  {
+  exename = load_balancer
+  avoids += repo ace_for_tao
+  after += *IDL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Load_BalancerS.cpp
+    Load_BalancerC.cpp
+    Load_Balancer_i.cpp
+    Load_Balancing_Service.cpp
+  }
+}

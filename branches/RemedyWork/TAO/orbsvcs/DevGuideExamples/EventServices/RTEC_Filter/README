@@ -1,0 +1,59 @@
+// $Id$
+
+Real-Time Event Service
+
+
+File: DevGuideExamples/EventServices/RTEC_Filter/README
+
+
+This directory contains some example code for the filters, correlations,
+and timeouts features of the RT Event service.  For now the code is all
+in the EchoEventConsumerMain.cpp file.  Simply, comment out the filters/
+timeouts/correlations required, remake, and run as below.
+
+-------------------------------------------------------------------------
+
+Note: To test this, you must first run the Naming Service and the
+Event Service, e.g.:
+
+$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o ns.ior&
+$TAO_ROOT/orbsvcs/Event_Service/Event_Service -ORBSvcConf ec.conf -ORBInitRef NameService=file://ns.ior&
+
+-------------------------------------------------------------------------
+
+EchoEventSupplerMain.cpp
+
+  Main program for a PushSupplier.
+
+    EchoEventSupplier -ORBInitRef NameService=file://ns.ior
+  
+  It will publish an event to the event channel every 1 second.
+  Use Control-C to kill the process.
+
+-------------------------------------------------------------------------
+
+EchoEventConsumerMain.cpp
+
+  Main program for a PushConsumer.
+
+  To run it:
+
+    EchoEventConsumer -ORBInitRef NameService=file://ns.ior
+
+  Use Control-C to kill the process.
+
+-------------------------------------------------------------------------
+
+EchoEventConsumer_i.{h,cpp}
+
+  Call which implements the RtecEventComm::PushConsumer interface.
+
+
+
+Exeuction via Perl Script
+-------------------------
+
+A Perl script has been created to automate the steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl

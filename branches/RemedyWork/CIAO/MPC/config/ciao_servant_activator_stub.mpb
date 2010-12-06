@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : portableserver, avoids_minimum_corba {
+  after += CIAO_Servant_Activator_stub
+  libs += CIAO_Servant_Activator_stub
+}

@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef SIMPLE_USER_IDL
+#define SIMPLE_USER_IDL
+
+#include "SimpleCommon.idl"
+#include "Components.idl"
+
+module Simple
+{
+  component SimpleNilFacetUser
+  {
+    uses Trigger trig;
+  };
+
+  home SimpleNilFacetUserHome manages SimpleNilFacetUser
+  {
+  };
+};
+
+#endif /*SIMPLE_USER_IDL*/

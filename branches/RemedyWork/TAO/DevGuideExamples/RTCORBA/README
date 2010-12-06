@@ -1,0 +1,19 @@
+// $Id$
+
+DevGuideExamples/RTCORBA/README
+
+This directory contains an RTCORBA example illustrating a simple client and
+a server with a Interface Messenger. The Messenger Interface has
+an operation for sending a message (send_message).
+
+How to Run
+----------
+
+To start the server:
+------------------
+./MessengerServer
+
+
+To start the client:
+------------------
+./MessengerClient

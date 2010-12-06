@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  includes += $(CIAO_ROOT)
+  libpaths += $(ACE_ROOT)/lib
+}
