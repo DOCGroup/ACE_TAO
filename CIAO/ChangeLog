@@ -1,3 +1,8 @@
+Mon Dec  6 11:14:04 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.mpc:
+          Resolved link errors/warnings on windows.
+
 Mon Dec  6 10:17:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/MultiTopic/Sender/MultiTopic_Sender.mpc:
