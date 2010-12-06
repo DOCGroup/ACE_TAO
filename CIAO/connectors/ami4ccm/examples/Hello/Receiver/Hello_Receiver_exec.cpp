@@ -6,7 +6,10 @@
 
 namespace CIAO_Hello_Receiver_Impl
 {
-  MyFoo_exec_i::MyFoo_exec_i (void) : get_rw_ (false), get_ro_ (false)
+  MyFoo_exec_i::MyFoo_exec_i (
+   ::Hello::CCM_Receiver_Context_ptr ctx)
+  : ciao_context_ (
+     ::Hello::CCM_Receiver_Context::_duplicate (ctx))
   {
   }
 
@@ -96,7 +99,21 @@ namespace CIAO_Hello_Receiver_Impl
   ::Hello::CCM_MyFoo_ptr
   Receiver_exec_i::get_do_my_foo (void)
   {
-    return new MyFoo_exec_i ();
+    if ( ::CORBA::is_nil (this->ciao_do_my_foo_.in ()))
+      {
+        MyFoo_exec_i *tmp = 0;
+        ACE_NEW_RETURN (
+          tmp,
+          MyFoo_exec_i (
+            this->context_.in ()),
+            ::Hello::CCM_MyFoo::_nil ());
+
+          this->ciao_do_my_foo_ = tmp;
+      }
+
+    return
+      ::Hello::CCM_MyFoo::_duplicate (
+        this->ciao_do_my_foo_.in ());
   }
 
   void

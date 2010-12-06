@@ -1,3 +1,14 @@
+Mon Dec  6 12:15:12 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/tests/AMIDDS/Sender/AmiDds_Sender_exec.cpp:
+        * connectors/tests/AMIDDS/Sender/AmiDds_Sender_exec.h:
+        * connectors/ami4ccm/tests/GetComp/descriptors/run_test.pl:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        Resolve some memory leaks, reported by valgrind built.
+
 Mon Dec  6 11:24:12 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.mpc:
