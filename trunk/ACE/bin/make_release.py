@@ -614,17 +614,15 @@ def tag ():
                         opts.mpc_root + "/tags/" + branch)
 
         # Update latest tag
-        # mcorino@remedy.nl - subversion does not seem to support propset directly
-        #                     on URLs (except for some strange reason through propedit)
-        #if opts.release_type == "major":
-            #update_latest_tag ("Major", branch)
-        #elif opts.release_type == "minor":
-            #update_latest_tag ("Minor", branch)
-        #elif opts.release_type == "beta":
-            #update_latest_tag ("Beta", branch)
-            #update_latest_tag ("Micro", branch)
-            #if comp_versions["ACE_beta"] == 1:
-                    #update_latest_tag ("BFO", branch)
+        if opts.release_type == "major":
+            update_latest_tag ("Major", branch)
+        elif opts.release_type == "minor":
+            update_latest_tag ("Minor", branch)
+        elif opts.release_type == "beta":
+            update_latest_tag ("Beta", branch)
+            update_latest_tag ("Micro", branch)
+            if comp_versions["ACE_beta"] == 1:
+                    update_latest_tag ("BFO", branch)
     else:
         print "Creating tags:\n"
         print opts.repo_root + "/trunk -> " + opts.repo_root + "/tags/" + branch + "\n"
