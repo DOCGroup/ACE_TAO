@@ -1,3 +1,10 @@
+Tue Dec  7 15:09:23 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tests/DAnCE/LocalityManager/CommandlinePassage/run_test_cmd.pl:
+        * tests/DAnCE/LocalityManager/CommandlinePassage/Component_cmd.cdp:
+        * bin/ciao_tests.lst:
+        Added --server-args nodemanager test.
+
 Tue Dec  7 15:03:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver.mpc:
