@@ -1,3 +1,13 @@
+Tue Dec  7 15:03:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QCLE_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QCLE_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QCLE_Test_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
 Tue Dec  7 14:11:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/Different/Receiver/Different_Test_Receiver.mpc:
