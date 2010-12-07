@@ -3387,11 +3387,6 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
       BE_GlobalData::DDS_IMPL const the_dds_impl =
         be_global->dds_impl ();
 
-      /// The default, and we have to set the reference to
-      /// something.
-      ACE_Unbounded_Queue<char *> &ts_files =
-        idl_global->ciao_rti_ts_file_names ();
-
       switch (the_dds_impl)
         {
           case BE_GlobalData::NDDS:
