@@ -41,7 +41,7 @@ project(AMI_AmiDds_Base_lema_gen) : ciaoidldefaults {
               -Wb,svnt_export_include=AmiDds_Base_svnt_export.h \
               -Wb,skel_export_macro=AMIDDS_BASE_SKEL_Export \
               -Wb,skel_export_include=AmiDds_Base_skel_export.h \
-              -I.. -Gex -Gsv -Gcn -Glem -GC -Gxhst -Gxhsv
+              -I.. -Gsv -Gcn -Glem -GC -Gxhst -Gxhsv
 
   IDL_Files {
     AmiDds_BaseA.idl
@@ -157,12 +157,10 @@ project(AMI_AmiDds_Base_conn) : ciao_executor, ami, ami4ccm_lem_stub {
 
   Source_Files {
     AmiDds_BaseA_conn.cpp
-    AmiDds_BaseA_conn_i.cpp
   }
 
   Header_Files {
     AmiDds_BaseA_conn.h
-    AmiDds_BaseA_conn_i.h
     AmiDds_Base_conn_export.h
   }
 

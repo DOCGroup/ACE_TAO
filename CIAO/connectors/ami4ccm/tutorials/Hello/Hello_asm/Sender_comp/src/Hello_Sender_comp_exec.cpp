@@ -32,13 +32,13 @@
 namespace CIAO_Hello_Sender_comp_Impl
 {
   //============================================================
-    // Facet Executor Implementation Class: MyFoo_callback_exec_i
-    //============================================================
-  AMI4CCM_MyFoo_objReplyHandler_i::AMI4CCM_MyFoo_objReplyHandler_i (void)
+  // Facet Executor Implementation Class: MyFoo_callback_exec_i
+  //============================================================
+  MyFoo_obj_callback_exec_i::MyFoo_obj_callback_exec_i (void)
   {
   }
 
-  AMI4CCM_MyFoo_objReplyHandler_i::~AMI4CCM_MyFoo_objReplyHandler_i (void)
+  MyFoo_obj_callback_exec_i::~MyFoo_obj_callback_exec_i (void)
   {
   }
 
@@ -47,7 +47,7 @@ namespace CIAO_Hello_Sender_comp_Impl
   //============================================================
   // Foo methods
   void
-  AMI4CCM_MyFoo_objReplyHandler_i::foo (
+  MyFoo_obj_callback_exec_i::foo (
     ::CORBA::Long ami_return_val,
     const char * answer)
   {
@@ -59,7 +59,7 @@ namespace CIAO_Hello_Sender_comp_Impl
   }
 
   void
-  AMI4CCM_MyFoo_objReplyHandler_i::foo_excep (
+  MyFoo_obj_callback_exec_i::foo_excep (
       ::CCM_AMI::ExceptionHolder * excep_holder)
   {
     /* Your code here. */
@@ -78,7 +78,7 @@ namespace CIAO_Hello_Sender_comp_Impl
 
   // Hello methods
   void
-  AMI4CCM_MyFoo_objReplyHandler_i::hello (::CORBA::Long answer)
+  MyFoo_obj_callback_exec_i::hello (::CORBA::Long answer)
   {
     /* Your code here. */
     ACE_DEBUG ((LM_DEBUG,
@@ -87,7 +87,7 @@ namespace CIAO_Hello_Sender_comp_Impl
   }
 
   void
-  AMI4CCM_MyFoo_objReplyHandler_i::hello_excep (
+  MyFoo_obj_callback_exec_i::hello_excep (
       ::CCM_AMI::ExceptionHolder * excep_holder)
   {
     /* Your code here. */
@@ -106,7 +106,7 @@ namespace CIAO_Hello_Sender_comp_Impl
 
   // GET rw_attrib meyhods
   void
-  AMI4CCM_MyFoo_objReplyHandler_i::get_rw_attrib (
+  MyFoo_obj_callback_exec_i::get_rw_attrib (
     ::CORBA::Short ami_return_val)
   {
     /* Your code here. */
@@ -116,7 +116,7 @@ namespace CIAO_Hello_Sender_comp_Impl
   }
 
   void
-  AMI4CCM_MyFoo_objReplyHandler_i::get_rw_attrib_excep (
+  MyFoo_obj_callback_exec_i::get_rw_attrib_excep (
     ::CCM_AMI::ExceptionHolder * excep_holder)
   {
     /* Your code here. */
@@ -125,7 +125,7 @@ namespace CIAO_Hello_Sender_comp_Impl
 
   //SET rw_attrib methods
   void
-  AMI4CCM_MyFoo_objReplyHandler_i::set_rw_attrib ()
+  MyFoo_obj_callback_exec_i::set_rw_attrib ()
   {
     /* Your code here. */
     ACE_DEBUG ((LM_DEBUG,
@@ -134,7 +134,7 @@ namespace CIAO_Hello_Sender_comp_Impl
   }
 
   void
-  AMI4CCM_MyFoo_objReplyHandler_i::set_rw_attrib_excep (
+  MyFoo_obj_callback_exec_i::set_rw_attrib_excep (
     ::CCM_AMI::ExceptionHolder * excep_holder)
   {
     /* Your code here. */
@@ -143,7 +143,7 @@ namespace CIAO_Hello_Sender_comp_Impl
 
   //ro_attrib Reply Handler
   void
-  AMI4CCM_MyFoo_objReplyHandler_i::get_ro_attrib (
+  MyFoo_obj_callback_exec_i::get_ro_attrib (
     ::CORBA::Short ami_return_val)
   {
     /* Your code here. */
@@ -153,7 +153,7 @@ namespace CIAO_Hello_Sender_comp_Impl
   }
 
   void
-  AMI4CCM_MyFoo_objReplyHandler_i::get_ro_attrib_excep (
+  MyFoo_obj_callback_exec_i::get_ro_attrib_excep (
     ::CCM_AMI::ExceptionHolder * excep_holder)
   {
     /* Your code here. */
@@ -184,26 +184,26 @@ namespace CIAO_Hello_Sender_comp_Impl
                      ACE_TEXT("\tfoo_ami is NIL !!!\n")));
          return 1;
        }
-    ::Hello::AMI4CCM_MyFoo_objReplyHandler_var cb =
-                  new AMI4CCM_MyFoo_objReplyHandler_i ();
+    ::Hello::CCM_AMI4CCM_MyFoo_objReplyHandler_var cb =
+      new MyFoo_obj_callback_exec_i ();
 
     for (int i = 0; i < 5; ++i)
       {
- //       my_foo_ami_->sendc_foo (cb.in (),
- //                               "Do something asynchronous");
- //       my_foo_ami_->sendc_hello (cb.in ());
- //       my_foo_ami_->sendc_get_rw_attrib(cb.in ());
- //       my_foo_ami_->sendc_set_rw_attrib(cb.in (),
- //                                        15);
- //       my_foo_ami_->sendc_get_ro_attrib(cb.in ());
+        my_foo_ami_->sendc_foo (cb.in (),
+                                "Do something asynchronous");
+        my_foo_ami_->sendc_hello (cb.in ());
+        my_foo_ami_->sendc_get_rw_attrib(cb.in ());
+        my_foo_ami_->sendc_set_rw_attrib(cb.in (),
+                                         15);
+        my_foo_ami_->sendc_get_ro_attrib(cb.in ());
         ACE_DEBUG ((LM_DEBUG,
            ACE_TEXT("Sender (ASYNCH) :\tInvoked 5 Asynchronous calls\n")));
       }
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Sender (ASYNCH) :\tInvoke Asynchronous calls ")
                 ACE_TEXT("to test except handling\n")));
- //   my_foo_ami_->sendc_foo (cb.in (), "");
- //   my_foo_ami_->sendc_set_rw_attrib(cb.in (), 0);
+    my_foo_ami_->sendc_foo (cb.in (), "");
+    my_foo_ami_->sendc_set_rw_attrib(cb.in (), 0);
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Sender (ASYNCH) :\tInvoked 2 Asynchronous call.\n")));
     return 0;
@@ -232,7 +232,7 @@ namespace CIAO_Hello_Sender_comp_Impl
         try
           {
             ACE_DEBUG ((LM_DEBUG,
-               ACE_TEXT("Sender (SYNCH) :\tInvoke synchronous call (foo)\n")));
+               ACE_TEXT("Sender (SYNCH):\tInvoke synchronous call (foo)\n")));
             CORBA::Long result = my_foo_ami_->foo ("Do something synchronous",
                                                    out_str.out());
             ACE_DEBUG ((LM_DEBUG,
@@ -242,7 +242,7 @@ namespace CIAO_Hello_Sender_comp_Impl
 
             CORBA::Long answer;
             ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("Sender (SYNCH) :\tInvoke synchronous call")
+                    ACE_TEXT("Sender (SYNCH):\tInvoke synchronous call")
                     ACE_TEXT(" (hello)\n")));
             my_foo_ami_->hello (answer);
             ACE_DEBUG ((LM_DEBUG,
@@ -250,7 +250,7 @@ namespace CIAO_Hello_Sender_comp_Impl
                     ACE_TEXT("call  (hello) result <%u>\n"), answer));
 
             ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("Sender (SYNCH) :\tInvoke synchronous call ")
+                    ACE_TEXT("Sender (SYNCH):\tInvoke synchronous call ")
                     ACE_TEXT("(rw_attrib())\n")));
             CORBA::Short rw_attrib = my_foo_ami_->rw_attrib ();
             ACE_DEBUG ((LM_DEBUG,
@@ -258,7 +258,7 @@ namespace CIAO_Hello_Sender_comp_Impl
                 ACE_TEXT("(rw_attrib()) return <%u>\n"), rw_attrib));
 
             ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("Sender (SYNCH) :\tInvoke synchronous call")
+                ACE_TEXT("Sender (SYNCH):\tInvoke synchronous call")
                 ACE_TEXT(" (rw_attrib(15))\n")));
             my_foo_ami_->rw_attrib (15);
             ACE_DEBUG ((LM_DEBUG,
@@ -266,7 +266,7 @@ namespace CIAO_Hello_Sender_comp_Impl
                 ACE_TEXT("(rw_attrib(15))\n")));
 
             ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("Sender (SYNCH) :\tInvoke synchronous call")
+                ACE_TEXT("Sender (SYNCH):\tInvoke synchronous call")
                 ACE_TEXT(" (ro_attrib())\n")));
             CORBA::Short ro_attrib = my_foo_ami_->ro_attrib ();
             ACE_DEBUG ((LM_DEBUG,

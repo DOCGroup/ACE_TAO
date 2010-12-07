@@ -106,6 +106,8 @@ namespace CIAO_Hello_Sender_Impl
 
   private:
     ::Hello::CCM_Sender_Context_var context_;
+    asynch_foo_generator* asynch_foo_gen_;
+    synch_foo_generator* synch_foo_gen_;
   };
 
   extern "C" HELLO_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

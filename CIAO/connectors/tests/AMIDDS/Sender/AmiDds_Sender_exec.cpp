@@ -170,10 +170,13 @@ namespace CIAO_AmiDds_Sender_Impl
           }
         else
           {
+            ::AmiDds::CCM_AMI4CCM_MyFooReplyHandler_var cb =
+                new MyFoo_callback_exec_i ();
+
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT("Sender (AMI4CCM)) :\t")
                         ACE_TEXT("Invoke Asynchronous call nr %u\n"),(i + 1)));
-            my_foo_ami->sendc_hello (new MyFoo_callback_exec_i ());
+            my_foo_ami->sendc_hello (cb.in ());
           }
       }
     return result;
@@ -270,26 +273,47 @@ namespace CIAO_AmiDds_Sender_Impl
       }
   }
 
+  ACE_Reactor*
+  Sender_exec_i::reactor (void)
+  {
+    ACE_Reactor* reactor = 0;
+    ::CORBA::Object_var ccm_object =
+      this->context_->get_CCM_object();
+    if (! ::CORBA::is_nil (ccm_object.in ()))
+      {
+        ::CORBA::ORB_var orb = ccm_object->_get_orb ();
+        if (! ::CORBA::is_nil (orb.in ()))
+          {
+            reactor = orb->orb_core ()->reactor ();
+          }
+      }
+    if (reactor == 0)
+      {
+        throw ::CORBA::INTERNAL ();
+      }
+    return reactor;
+  }
+
   void
   Sender_exec_i::start (void)
   {
     long sec = 3L;
     long const usec = 0L;
-    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
+    if (this->reactor ()->schedule_timer (
                 this->ticker_,
                 0,
                 ACE_Time_Value (sec, usec),
                 ACE_Time_Value (sec, usec)) == -1)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
-                              ACE_TEXT ("Error scheduling timer")));
+                               ACE_TEXT ("Error scheduling timer")));
       }
   }
 
   void
   Sender_exec_i::stop (void)
   {
-    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+    this->reactor ()->cancel_timer (this->ticker_);
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
     delete this->ticker_;
   }
