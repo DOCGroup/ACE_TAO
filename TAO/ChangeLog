@@ -1,3 +1,11 @@
+Tue Dec  7 21:49:36 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+
+          Fixed a double deletion problem when OpenDDS is the DDS
+          implementation and connector IDL is processed.
+
 Tue Dec  7 20:07:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_global.h:
