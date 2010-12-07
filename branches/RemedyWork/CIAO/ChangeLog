@@ -1,3 +1,24 @@
+Tue Dec  7 10:39:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Receiver/CFTLE_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Receiver/CFTLE_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Receiver/CFTLE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Sender/CFTLE_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Sender/CFTLE_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Sender/CFTLE_Test_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Sender/WU_LateBinding_Sender_exec.cpp:
+          Resolved compiler warning.
+
+        * connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
 Mon Dec  6 15:40:12 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         *connectors/tests/AMIDDS/Base/AmiDds_Base.mpc:
