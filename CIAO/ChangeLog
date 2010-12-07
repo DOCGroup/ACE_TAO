@@ -1,3 +1,12 @@
+Tue Dec  7 15:16:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/SampleInfo.h:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/convertors/SampleInfoSeq.h:
+        * connectors/dds4ccm/impl/ndds/convertors/SampleInfo.h:
+          Moved the conversion from ::DDS::SampleInfo to CCM_DDS::ReadInfo to
+          the impl directory.
+
 Tue Dec  7 15:09:23 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * tests/DAnCE/LocalityManager/CommandlinePassage/run_test_cmd.pl:

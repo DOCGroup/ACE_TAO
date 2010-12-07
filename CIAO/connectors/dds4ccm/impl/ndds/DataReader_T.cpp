@@ -10,7 +10,6 @@
 #include "dds4ccm/impl/ndds/ContentFilteredTopic.h"
 
 #include "dds4ccm/impl/ndds/convertors/SampleInfoSeq.h"
-#include "dds4ccm/impl/ndds/convertors/SampleInfo.h"
 #include "dds4ccm/impl/ndds/convertors/SampleLostStatus.h"
 #include "dds4ccm/impl/ndds/convertors/SubscriptionMatchedStatus.h"
 #include "dds4ccm/impl/ndds/convertors/RequestedDeadlineMissedStatus.h"
@@ -23,6 +22,7 @@
 #include "dds4ccm/impl/ndds/convertors/InstanceHandleSeq.h"
 #include "dds4ccm/impl/ndds/convertors/DataReaderQos.h"
 #include "dds4ccm/impl/ndds/convertors/StringSeq.h"
+#include "dds4ccm/impl/SampleInfo.h"
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
