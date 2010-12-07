@@ -10,7 +10,8 @@ project(QC_Different_Test_Receiver_idl_gen) : componentidldefaults, dds4ccm {
               -Wb,svnt_export_macro=RECEIVER_SVNT_Export \
               -Wb,svnt_export_include=Receiver_svnt_export.h \
               -Wb,exec_export_macro=RECEIVER_EXEC_Export \
-              -Wb,exec_export_include=Receiver_exec_export.h -I..
+              -Wb,exec_export_include=Receiver_exec_export.h \
+              -I..
 
   IDL_Files {
     Different_Test_Receiver.idl
@@ -87,10 +88,10 @@ project(QC_Different_Test_Receiver_stub) : ccm_stub, dds4ccm_base {
 project(QC_Different_Test_Receiver_exec) : ciao_executor, dds4ccm_lem_stub {
   after   += QC_Different_Test_Receiver_lem_stub QC_Different_Test_Receiver_stub \
              QC_Different_Test_Base_stub QC_Different_Test_Connector_stub \
-             QC_Different_Test_Connector_lem_stub 
+             QC_Different_Test_Connector_lem_stub
   sharedname = Receiver_exec
   libs += Receiver_stub Receiver_lem_stub QC_Different_Test_Base_stub \
-          QC_Different_Test_Connector_stub QC_Different_Test_Connector_lem_stub 
+          QC_Different_Test_Connector_stub QC_Different_Test_Connector_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -116,11 +117,11 @@ project(QC_Different_Test_Receiver_exec) : ciao_executor, dds4ccm_lem_stub {
 project(QC_Different_Test_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   after      +=   QC_Different_Test_Receiver_lem_stub QC_Different_Test_Base_stub \
                   QC_Different_Test_Connector_stub QC_Different_Test_Connector_svnt \
-                  QC_Different_Test_Receiver_exec QC_Different_Test_Connector_lem_stub 
+                  QC_Different_Test_Receiver_exec QC_Different_Test_Connector_lem_stub
   sharedname  = Receiver_svnt
   libs       += Receiver_stub Receiver_lem_stub QC_Different_Test_Base_stub \
                 QC_Different_Test_Connector_stub QC_Different_Test_Connector_svnt \
-                Receiver_exec QC_Different_Test_Connector_lem_stub 
+                Receiver_exec QC_Different_Test_Connector_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
