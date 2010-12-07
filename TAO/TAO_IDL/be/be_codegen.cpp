@@ -3395,34 +3395,19 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
       switch (the_dds_impl)
         {
           case BE_GlobalData::NDDS:
+            this->gen_conn_ts_includes (
+              idl_global->ciao_rti_ts_file_names ());
             break;
           case BE_GlobalData::OPENSPLICE:
-            ts_files =
-              idl_global->ciao_spl_ts_file_names ();
+            this->gen_conn_ts_includes (
+              idl_global->ciao_spl_ts_file_names ());
             break;
           case BE_GlobalData::OPENDDS:
-            ts_files =
-              idl_global->ciao_oci_ts_file_names ();
+            this->gen_conn_ts_includes (
+              idl_global->ciao_oci_ts_file_names ());
             break;
           case BE_GlobalData::NONE:
             break;
-        }
-
-      if (ts_files.size () > 0)
-        {
-          *this->ciao_conn_header_ << be_nl;
-        }
-
-      for (ACE_Unbounded_Queue_Iterator<char *> iter (
-             ts_files);
-           iter.done () == 0;
-           iter.advance ())
-        {
-          iter.next (path_tmp);
-
-          this->gen_standard_include (
-            this->ciao_conn_header_,
-            *path_tmp);
         }
     }
 
@@ -3577,6 +3562,27 @@ TAO_CodeGen::make_rand_extension (char * const t)
       while (!ACE_OS::ace_isalnum (r));
 
       t[n] = static_cast<char> (ACE_OS::ace_toupper (r));
+    }
+}
+
+void
+TAO_CodeGen::gen_conn_ts_includes (
+  ACE_Unbounded_Queue<char *> &ts_files)
+{
+  if (ts_files.size () > 0)
+    {
+      *this->ciao_conn_header_ << be_nl;
+    }
+
+  char **tmp = 0;
+
+  for (ACE_Unbounded_Queue_Iterator<char *> i (ts_files);
+       !i.done ();
+       i.advance ())
+    {
+      i.next (tmp);
+      this->gen_standard_include (this->ciao_conn_header_,
+                                  *tmp);
     }
 }
 

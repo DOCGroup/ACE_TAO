@@ -18,6 +18,8 @@
 
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"
+#include "ace/Unbounded_Queue.h"
+
 #include "TAO_IDL_BE_Export.h"
 
 class TAO_OutStream;
@@ -429,6 +431,8 @@ private:
                         bool for_skel = false);
 
   void make_rand_extension (char * const t);
+
+  void gen_conn_ts_includes (ACE_Unbounded_Queue<char *> &ts_files);
 
 private:
   /// Client header stream.
