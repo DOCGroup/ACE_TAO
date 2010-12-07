@@ -1,3 +1,11 @@
+Tue Dec  7 15:52:02 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * tests/Atomic_Op_Test.cpp: For platforms w/o built-in atomic op
+          support, run fewer iterations of the test loop. Those platforms
+          sometimes time out during regression tests. This was a problem
+          with Riverace's PA-RISC box so if this change causes problems
+          otherwise, please let me know.
+
 Mon Dec  6 15:59:52 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/make_release.py:
