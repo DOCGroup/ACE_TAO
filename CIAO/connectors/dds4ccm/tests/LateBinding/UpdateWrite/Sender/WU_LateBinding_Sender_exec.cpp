@@ -122,7 +122,7 @@ namespace CIAO_WU_LateBinding_Sender_Impl
                     "ERROR: No exception thrown while calling write_one "
                     "on a late binded connector (port).\n"));
       }
-    catch (const ::CORBA::BAD_INV_ORDER &e)
+    catch (const ::CORBA::BAD_INV_ORDER &)
       {
         ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::test_exception - "
                     "Expected BAD_INV_ORDER thrown.\n"));
