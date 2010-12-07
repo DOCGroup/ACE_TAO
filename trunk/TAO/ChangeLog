@@ -1,3 +1,14 @@
+Tue Dec  7 20:07:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_ref.cpp:
+        * TAO_IDL/ast/ast_visitor_reifying.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Fixed bug in code generation of DDS4CCM DataWriter
+          and DataReader classes.
+
 Fri Dec  3 21:34:48 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * utils/logWalker/Invocation.cpp:
