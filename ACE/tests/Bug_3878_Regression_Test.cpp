@@ -14,6 +14,8 @@
 #include "ace/Condition_T.h"
 #include "test_config.h"
 
+#if defined (ACE_HAS_THREADS)
+
 class Worker;
 
 class IManager
@@ -232,6 +234,7 @@ Manager::thread_id (Worker *worker)
 {
   return worker->thread_id ();
 }
+#endif
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -261,6 +264,9 @@ run_main (int, ACE_TCHAR *[])
     }
 
   ACE_Thread_Manager::instance ()->wait ();
+#else /* ACE_HAS_THREADS */
+  ACE_ERROR ((LM_INFO,
+              ACE_TEXT ("threads are not supported on this platform\n")));
 #endif
 
   ACE_END_TEST;
