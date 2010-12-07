@@ -1,3 +1,41 @@
+Mon Dec  6 15:40:12 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        *connectors/tests/AMIDDS/Base/AmiDds_Base.mpc:
+        *connectors/ami4ccm/examples/Hello/Base/Hello.mpc:
+        Removed -Gex option and includes of conn_i files.
+
+Mon Dec  6 14:25:12 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.h:
+        Solve memory leak.
+
+Mon Dec  6 14:03:12 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.cpp:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.h:
+        Activate sendc functions.
+
+Mon Dec  6 12:15:12 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/tests/AMIDDS/Sender/AmiDds_Sender_exec.cpp:
+        * connectors/tests/AMIDDS/Sender/AmiDds_Sender_exec.h:
+        * connectors/ami4ccm/tests/GetComp/descriptors/run_test.pl:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        Resolve some memory leaks, reported by valgrind built.
+
+Mon Dec  6 11:24:12 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.mpc:
+          Resolved link errors/warnings on windows.
+
+Mon Dec  6 11:14:04 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.mpc:
+          Resolved link errors/warnings on windows.
+
 Mon Dec  6 10:17:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/MultiTopic/Sender/MultiTopic_Sender.mpc:

@@ -71,6 +71,7 @@ namespace CIAO_AmiDds_Sender_Impl
     void tick (void);
 
   private:
+    ACE_Reactor* reactor (void);
     void start (void);
     void stop (void);
     void add_instances_of_topic (void);
