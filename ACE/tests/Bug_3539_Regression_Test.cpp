@@ -24,6 +24,8 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Atomic_Op_T.h"
 
+ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> status;
+
 #if defined (ACE_HAS_THREADS)
 
 struct ObjectWithTSS
@@ -37,8 +39,6 @@ int Errno::flags_;
 int Errno::created_;
 int Errno::deleted_;
 ACE_Thread_Mutex *Errno::lock_ = 0;
-
-ACE_Atomic_Op<ACE_Thread_Mutex, int> status;
 
 ACE_THR_FUNC_RETURN
 check_tss (ObjectWithTSS *o)
