@@ -1886,7 +1886,14 @@ UTL_Scope::match_param (UTL_ScopedName *e)
   unsigned long index = 0;
 
   UTL_StrList *alias_params =
-    const_cast<UTL_StrList *> (idl_global->alias_params ());
+    const_cast<UTL_StrList *> (idl_global->for_new_holder ());
+
+  if (alias_params == 0)
+    {
+      alias_params =
+        const_cast<UTL_StrList *> (idl_global->alias_params ());
+    }
+
   UTL_String *alias_param = 0;
 
   for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (*params);
