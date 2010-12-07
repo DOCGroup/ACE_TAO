@@ -10,7 +10,8 @@ project(QC_QCTQ_Test_Receiver_idl_gen) : componentidldefaults, dds4ccm {
               -Wb,svnt_export_macro=RECEIVER_SVNT_Export \
               -Wb,svnt_export_include=Receiver_svnt_export.h \
               -Wb,exec_export_macro=RECEIVER_EXEC_Export \
-              -Wb,exec_export_include=Receiver_exec_export.h -I..
+              -Wb,exec_export_include=Receiver_exec_export.h \
+              -I..
 
   IDL_Files {
     QCTQ_Test_Receiver.idl
