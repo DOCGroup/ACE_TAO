@@ -10,6 +10,7 @@
 #include "ast_structure.h"
 #include "ast_valuetype.h"
 #include "ast_sequence.h"
+#include "ast_template_module.h"
 
 #include "global_extern.h"
 
@@ -839,6 +840,8 @@ FE_Utils::can_be_redefined (AST_Decl *prev_decl,
   AST_StructureFwd *s_fwd = 0;
   AST_Interface *i = 0;
   AST_InterfaceFwd *i_fwd = 0;
+  AST_Template_Module *ptm = 0;
+  AST_Template_Module *ctm = 0;
 
   bool nt_eq = (pnt == cnt);
   bool s_eq = (prev_scope == curr_scope);
@@ -846,8 +849,16 @@ FE_Utils::can_be_redefined (AST_Decl *prev_decl,
   switch (pnt)
   {
     case AST_Decl::NT_module:
-      /// Just need to check that both are modules.
-      return (cnt == AST_Decl::NT_module);
+      /// Need to check that both are modules.
+      if (cnt != AST_Decl::NT_module)
+        {
+          return false;
+        }
+
+      /// Neither can be a template module.
+      ptm = AST_Template_Module::narrow_from_decl (prev_decl);
+      ctm = AST_Template_Module::narrow_from_decl (curr_decl);
+      return (ptm == 0 && ctm == 0);
     /// For the *_fwd types, if scopes aren't related, it's ok.
     /// If they are related, then we need another fwd or a full decl.
     case AST_Decl::NT_component_fwd:

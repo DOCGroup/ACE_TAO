@@ -151,6 +151,7 @@ IDL_GlobalData::IDL_GlobalData (void)
     big_file_name_ ("PICML_IDL_file_bag"),
     current_params_ (0),
     alias_params_ (0),
+    for_new_holder_ (0),
     included_ami_receps_done_ (false),
     corba_module_ (0),
     anon_type_diagnostic_ (ANON_TYPE_ERROR),
@@ -1636,6 +1637,19 @@ IDL_GlobalData::alias_params (
 UTL_StrList *params)
 {
   this->alias_params_ = params;
+}
+
+UTL_StrList const *
+IDL_GlobalData::for_new_holder (void) const
+{
+  return this->for_new_holder_;
+}
+
+void
+IDL_GlobalData::for_new_holder (
+  UTL_StrList *params)
+{
+  this->for_new_holder_ = params;
 }
 
 void

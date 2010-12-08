@@ -249,17 +249,25 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Atomic_Op_Test"));
 
+  // Some platforms w/o builtin atomic ops time out the regression tests,
+  // so run fewer iterations there.
+#if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
+  const int ITERATIONS = 1000000;
+#else
+  const int ITERATIONS = 100000;
+#endif /* ACE_HAS_BUILTIN_ATOMIC_OP */
+
   int retval = 0;
 
-  retval += test <int, int> (ACE_TEXT("int"), 1000000);
-  retval += test <long, int> (ACE_TEXT("long"), 1000000);
-  retval += test <unsigned int, int> (ACE_TEXT("unsigned int"), 1000000);
-  retval += test <unsigned long, int> (ACE_TEXT("unsigned long"), 1000000);
-  retval += test <short, int> (ACE_TEXT("short"), 10000);
-  retval += test <unsigned short, int> (ACE_TEXT("unsigned short"), 10000);
-  retval += test <bool> (ACE_TEXT("bool"), 1000000);
+  retval += test <int, int> (ACE_TEXT("int"), ITERATIONS);
+  retval += test <long, int> (ACE_TEXT("long"), ITERATIONS);
+  retval += test <unsigned int, int> (ACE_TEXT("unsigned int"), ITERATIONS);
+  retval += test <unsigned long, int> (ACE_TEXT("unsigned long"), ITERATIONS);
+  retval += test <short, int> (ACE_TEXT("short"), ITERATIONS);
+  retval += test <unsigned short, int> (ACE_TEXT("unsigned short"), ITERATIONS);
+  retval += test <bool> (ACE_TEXT("bool"), ITERATIONS);
 #if !defined (ACE_LACKS_LONGLONG_T)
-  retval += test <long long, int> (ACE_TEXT("long long"), 1000000);
+  retval += test <long long, int> (ACE_TEXT("long long"), ITERATIONS);
 #endif
 
   ACE_END_TEST;

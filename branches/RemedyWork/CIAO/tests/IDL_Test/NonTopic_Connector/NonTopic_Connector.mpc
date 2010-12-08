@@ -99,8 +99,8 @@ project(NT_Connector_lem_stub) : ccm_svnt {
 }
 
 project(NT_Connector_stub) : ccm_stub {
-  after += NT_Connector_lem_gen
-  libs  +=
+  after += NT_Connector_lem_gen NT_Base_stub NT_Base_idl_gen
+  libs  += NT_Base_stub
   sharedname = NonTopic_Connector_stub
   dynamicflags += NONTOPIC_CONNECTOR_STUB_BUILD_DLL
 

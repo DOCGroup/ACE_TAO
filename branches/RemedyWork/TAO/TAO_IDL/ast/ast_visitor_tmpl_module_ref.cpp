@@ -33,7 +33,7 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
   AST_Template_Module_Ref *node)
 {
   /// This traversal should be done only once. If the template
-  /// module this ref is contain in is itself aliased later,
+  /// module this ref is contained in is itself aliased later,
   /// we don't want to execute the steps below again.
   if (node->processed ())
     {
@@ -72,11 +72,16 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
   /// that's what will be search for any matches. We save the
   /// current list to restore after the traversal.
 
-  FE_Utils::T_PARAMLIST_INFO *holder =
-    const_cast<FE_Utils::T_PARAMLIST_INFO *> (
-      idl_global->current_params ());
+  if (idl_global->for_new_holder () == 0)
+    {
+      idl_global->for_new_holder (
+        const_cast<UTL_StrList *> (
+          node->param_refs ()));
+    }
 
   UTL_StrList const *old_refs = idl_global->alias_params ();
+  FE_Utils::T_PARAMLIST_INFO const *old_params =
+    idl_global->current_params ();
 
   idl_global->alias_params (
     const_cast<UTL_StrList *> (node->param_refs ()));
@@ -96,7 +101,10 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
     }
 
   /// Restore the global param list state.
-  idl_global->current_params (holder);
+  idl_global->current_params (
+    const_cast<FE_Utils::T_PARAMLIST_INFO *> (
+      old_params));
+  idl_global->for_new_holder (0);
   idl_global->alias_params (const_cast<UTL_StrList *> (old_refs));
 
   idl_global->scopes ().pop ();
