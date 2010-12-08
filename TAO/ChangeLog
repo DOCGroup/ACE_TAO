@@ -1,3 +1,37 @@
+Wed Dec  8 03:13:28 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_utils.cpp(can_be_redefined):
+
+          Modified the method to return 'false' if either of its 2
+          arguments is a template module. Such a return will
+          cause a redefinition error to be output.
+
+Tue Dec  7 22:10:52 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Removed an unused variable. Thanks to Adam Mitz
+          <mitza@ociweb.com> for pointing it out.
+
+Tue Dec  7 21:49:36 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+
+          Fixed a double deletion problem when OpenDDS is the DDS
+          implementation and connector IDL is processed.
+
+Tue Dec  7 20:07:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_ref.cpp:
+        * TAO_IDL/ast/ast_visitor_reifying.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Fixed bug in code generation of DDS4CCM DataWriter
+          and DataReader classes.
+
 Fri Dec  3 21:34:48 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * utils/logWalker/Invocation.cpp:

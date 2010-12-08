@@ -692,6 +692,13 @@ public:
   // template module, but create param holders with the
   // alias names.
 
+  UTL_StrList const *for_new_holder (void) const;
+  void for_new_holder (UTL_StrList *params);
+  // Accessors for the member. If a lookup matches something
+  // from current_params(), the actual created param holder must
+  // match the corresponding element on this list, if it is
+  // non-zero.
+
 #if defined (ACE_OPENVMS)
   static char* translateName (const char* name, char *name_buf);
 #endif
@@ -854,13 +861,20 @@ private:
 
   FE_Utils::T_PARAMLIST_INFO *current_params_;
   // Stored if we are parsing the scope of a template module,
-  // 0 otherwise.
+  // 0 otherwise. Contains the params of the referenced
+  // template module if we are traversing an alias.
 
   UTL_StrList *alias_params_;
   // Stored if we are parsing a template module reference. The
   // scope traversed will be that of the referenced template
   // module, but the param holder(s) created will use the
   // aliased names.
+
+  UTL_StrList *for_new_holder_;
+  // Stored if we are traversing an alias, this is a list of
+  // the enclosing template module's params. When we create
+  // a param holder, it will need this name rather than the
+  // name of the alias's referenced param.
 
   ACE_Unbounded_Queue<char *> ciao_lem_file_names_;
   // Files parsed with ciao lem pragma
