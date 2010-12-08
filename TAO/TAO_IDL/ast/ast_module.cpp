@@ -362,12 +362,14 @@ AST_Module::fe_add_module (AST_Module *t)
         {
           AST_Decl *parent = ScopeAsDecl (scope);
           const char *prefix_holder = parent->prefix ();
+
           if (!prefix_holder)
             {
               break; // We have reached global scope.
             }
 
           t->prefix (const_cast<char *> (prefix_holder));
+
           if (ACE_OS::strcmp (t->prefix (), ""))
             {
               break;
