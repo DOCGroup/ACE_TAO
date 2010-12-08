@@ -24,8 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO_ASYNCHT_SENDER_EXEC_QWD5YB_H_
-#define CIAO_ASYNCHT_SENDER_EXEC_QWD5YB_H_
+#ifndef CIAO_ASYNCHT_SENDER_EXEC_LZKPQ3_H_
+#define CIAO_ASYNCHT_SENDER_EXEC_LZKPQ3_H_
 
 #include /**/ "ace/pre.h"
 #include "ace/Task.h"
@@ -41,39 +41,40 @@
 namespace CIAO_AsynchT_Sender_Impl
 {
 
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::UShort > Atomic_UShort;
+	typedef ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::UShort> Atomic_UShort;
 
-  /// Worker thread for asynchronous invocations
-  class asynch_foo_generator : public virtual ACE_Task_Base
-  {
-    public:
-      asynch_foo_generator (::AsynchT::CCM_Sender_Context_ptr context,
-                               Atomic_UShort &nr_of_sent,
-                               Atomic_UShort &nr_of_rec);
+	/// Worker thread for asynchronous invocations
+	class asynch_foo_generator: public virtual ACE_Task_Base
+	{
+	public:
+		asynch_foo_generator(::AsynchT::CCM_Sender_Context_ptr context,
+				Atomic_UShort &nr_of_sent, Atomic_UShort &nr_of_rec);
 
-      virtual int svc (void);
+		virtual int svc(void);
 
-    private:
-      ::AsynchT::CCM_Sender_Context_var context_;
-      Atomic_UShort  &nr_of_sent_;
-      Atomic_UShort  &nr_of_rec_;
+	private:
+		::AsynchT::CCM_Sender_Context_var context_;
+		Atomic_UShort &nr_of_sent_;
+		Atomic_UShort &nr_of_rec_;
 
-  };
+	};
 
-  /// Worker thread for synchronous invocations
-  class synch_foo_generator : public virtual ACE_Task_Base
-  {
-    public:
-      synch_foo_generator (::AsynchT::CCM_Sender_Context_ptr context);
+	/// Worker thread for synchronous invocations
+	class synch_foo_generator: public virtual ACE_Task_Base
+	{
+	public:
+		synch_foo_generator(::AsynchT::CCM_Sender_Context_ptr context);
 
-      virtual int svc (void);
+		virtual int svc(void);
 
-    private:
-      ::AsynchT::CCM_Sender_Context_var context_;
-  };
+	private:
+		::AsynchT::CCM_Sender_Context_var context_;
+	};
+
   /**
    * Component Executor Implementation Class: Sender_exec_i
    */
+
   class Sender_exec_i
     : public virtual Sender_Exec,
       public virtual ::CORBA::LocalObject
@@ -93,8 +94,7 @@ namespace CIAO_AsynchT_Sender_Impl
 
     //@{
     /** Operations from Components::SessionComponent. */
-    virtual void
-    set_session_context (::Components::SessionContext_ptr ctx);
+    virtual void set_session_context (::Components::SessionContext_ptr ctx);
     virtual void configuration_complete (void);
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
@@ -103,13 +103,13 @@ namespace CIAO_AsynchT_Sender_Impl
 
     //@{
     /** User defined public operations. */
+
     //@}
 
   private:
     ::AsynchT::CCM_Sender_Context_var ciao_context_;
     asynch_foo_generator* asynch_foo_gen;
     synch_foo_generator* synch_foo_gen;
-
 
     //@{
     /** Component attributes. */
@@ -123,12 +123,66 @@ namespace CIAO_AsynchT_Sender_Impl
 
     //@{
     /** User defined private operations. */
+
     //@}
   };
 
-  extern "C" ASYNCHT_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_AsynchT_Sender_Impl (void);
-}
+  class AMI4CCM_MyFooReplyHandler_run_my_foo_i
+    : public ::AsynchT::CCM_AMI4CCM_MyFooReplyHandler,
+      public virtual ::CORBA::LocalObject
+    {
+    public:
+      AMI4CCM_MyFooReplyHandler_run_my_foo_i (Atomic_UShort &nr_of_sent,
+          																				 Atomic_UShort &nr_of_rec);
+      virtual ~AMI4CCM_MyFooReplyHandler_run_my_foo_i (void);
+
+      virtual void
+      foo (
+        ::CORBA::Long ami_return_val,
+        const char * answer);
+
+      virtual void
+      foo_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      bar (
+        ::CORBA::Long l_cmd);
+
+      virtual void
+      bar_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      get_rw_attrib (
+        ::CORBA::Short rw_attrib);
+
+      virtual void
+      get_rw_attrib_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      set_rw_attrib (void);
+
+      virtual void
+      set_rw_attrib_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      get_ro_attrib (
+        ::CORBA::Short ro_attrib);
+
+      virtual void
+      get_ro_attrib_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+    private:
+      Atomic_UShort &nr_of_sent_;
+      Atomic_UShort &nr_of_rec_;
+    };
+
+    extern "C" ASYNCHT_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+    create_AsynchT_Sender_Impl (void);
+  }
 
 #include /**/ "ace/post.h"
 

@@ -1,3 +1,15 @@
+Wed Dec  8 14:28:53 UTC 2010  Martin Corino  <corino_m@remedy.nl>
+
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchTA_conn_i.h:
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchTA_conn_i.cpp:
+          Removed these files.
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender.mpc:
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender_exec.h:
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender_exec.cpp:
+          Updated to use the new AMI reply handler executor implementation
+          skeleton generated in de _exec.* files instead of separate
+          _conn_i.* files.
+
 Wed Dec  8 10:59:48 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
