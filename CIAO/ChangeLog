@@ -1,3 +1,9 @@
+Wed Dec  8 10:59:48 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+          Added dance_xml_utils parent to CIAO_IDL3_TO_XMI_EXE. It's needed
+          on static builds.
+
 Mon Dec  6 15:40:12 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         *connectors/tests/AMIDDS/Base/AmiDds_Base.mpc:
