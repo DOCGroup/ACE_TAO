@@ -1,3 +1,10 @@
+Wed Dec  8 12:36:06 UTC 2010  Martin Corino  <corino_m@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/component_ami_rh_ex_base.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ami_rh_exh.cpp:
+          Some more fixes for the AMI reply handler executor implementation
+          generation.
+
 Wed Dec  8 03:13:28 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_utils.cpp(can_be_redefined):

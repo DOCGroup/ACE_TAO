@@ -34,9 +34,9 @@ be_visitor_component_ami_rh_exh::visit_uses (be_uses *node)
   this->init ();
 
   os_ << be_nl_2
-      << "class " << this->export_macro_.c_str () << " "
-      << this->class_name_ << be_idt_nl
-      << ": public ::" << this->base_class_name_ << be_uidt_nl
+      << "class " << this->class_name_ << be_idt_nl
+      << ": public ::" << this->base_class_name_ << "," << be_idt_nl
+      << "public virtual ::CORBA::LocalObject" << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
       << this->class_name_ << " (void);" << be_nl
