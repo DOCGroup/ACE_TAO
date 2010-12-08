@@ -1,3 +1,10 @@
+Wed Dec  8 17:34:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3936_Regression:
+        * tests/Bug_3937_Regression:
+          Two new idl tests, will enable them in the test suite after
+          the release
+
 Wed Dec  8 14:28:53 UTC 2010  Martin Corino  <corino_m@remedy.nl>
 
         * connectors/ami4ccm/tests/AsynchT/Sender/AsynchTA_conn_i.h:
