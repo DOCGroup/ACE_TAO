@@ -1,3 +1,11 @@
+Wed Dec  8 03:13:28 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_utils.cpp(can_be_redefined):
+
+          Modified the method to return 'false' if either of its 2
+          arguments is a template module. Such a return will
+          cause a redefinition error to be output.
+
 Tue Dec  7 22:10:52 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
