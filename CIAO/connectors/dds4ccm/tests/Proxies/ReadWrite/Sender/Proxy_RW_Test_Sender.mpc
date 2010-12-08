@@ -90,11 +90,11 @@ project(Proxy_RW_Test_Sender_stub) : ccm_stub, dds4ccm_base {
 project(Proxy_RW_Test_Sender_exec) : ciao_executor, dds4ccm_lem_stub, dds4ccm_impl {
   after   += Proxy_RW_Test_Sender_lem_stub Proxy_RW_Test_Sender_stub \
              Proxy_RW_Test_Connector_lem_stub Proxy_RW_Test_Connector_stub \
-             Reader_Starter_svnt
+             Reader_Starter_svnt Reader_Starter_lem_stub
   sharedname = Sender_exec
   libs    += Sender_stub Sender_lem_stub Proxy_RW_Test_Base_stub \
              Proxy_RW_Test_Connector_lem_stub Proxy_RW_Test_Connector_stub \
-             Reader_Starter_stub Reader_Starter_svnt
+             Reader_Starter_stub Reader_Starter_svnt Reader_Starter_lem_stub
   libpaths += ../lib
   includes += ..
   libout = ../lib
@@ -121,11 +121,12 @@ project(Proxy_RW_Test_Sender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_ske
   after      += Proxy_RW_Test_Base_stub  Proxy_RW_Test_Sender_lem_stub \
                 Proxy_RW_Test_Connector_stub \
                 Proxy_RW_Test_Connector_svnt Proxy_RW_Test_Connector_lem_stub \
-                Reader_Starter_stub
+                Reader_Starter_stub Reader_Starter_lem_stub Reader_Starter_svnt
   sharedname  = Sender_svnt
   libs       += Sender_stub Sender_lem_stub Proxy_RW_Test_Base_stub \
                 Proxy_RW_Test_Connector_stub Proxy_RW_Test_Connector_svnt \
-                Proxy_RW_Test_Connector_lem_stub Reader_Starter_stub
+                Proxy_RW_Test_Connector_lem_stub Reader_Starter_stub \
+                Reader_Starter_lem_stub Reader_Starter_svnt
   libpaths += ../lib
   libout = ../lib
   includes += ..
