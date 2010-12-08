@@ -633,8 +633,14 @@ template_module
                                                         $3);
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Module *m = s->fe_add_module (tm);
 
-          (void) s->fe_add_module (tm);
+          // We've probably tried to reopen a template module,
+          // going further will cause a crash.
+          if (m == 0)
+            {
+              return 1;
+            }
 
           /*
            * Push it on the stack
