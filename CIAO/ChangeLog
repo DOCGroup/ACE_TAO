@@ -1,3 +1,9 @@
+Wed Dec  8 17:03:29 UTC 2010  Martin Corino  <corino_m@remedy.nl>
+
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender_exec.h:
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender_exec.cpp:
+          Fuzz fix.
+
 Wed Dec  8 17:34:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3936_Regression:
