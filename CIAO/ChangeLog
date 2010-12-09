@@ -1,3 +1,8 @@
+Thu Dec  9 08:19:14 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+          Attempt to fix a path to tao_idl3_to_xmi on installed builds.
+
 Wed Dec  8 17:03:29 UTC 2010  Martin Corino  <corino_m@remedy.nl>
 
         * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender_exec.h:
