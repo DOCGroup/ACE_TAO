@@ -2,7 +2,7 @@
 
 project(Base_stub) : taoidldefaults, ndds_ts_defaults, typecode, nddslib {
   sharedname = Base_stub
-  dynamicflags += BASE_STUB_BUILD_DLL
+  dynamicflags += BASE_STUB_BUILD_DLL NDDS_USER_DLL_EXPORT
   libout = ../descriptors
 
   idlflags += -SS -Sci \

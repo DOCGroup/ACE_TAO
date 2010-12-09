@@ -96,12 +96,46 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
   }
 
   /**
+   * Facet Executor Implementation Class: reader_start_exec_i
+   */
+
+  reader_start_exec_i::reader_start_exec_i (
+        ::RG_LateBinding::CCM_Receiver_Context_ptr ctx,
+        Receiver_exec_i &callback)
+    : ciao_context_ (
+        ::RG_LateBinding::CCM_Receiver_Context::_duplicate (ctx))
+      , callback_ (callback)
+  {
+  }
+
+  reader_start_exec_i::~reader_start_exec_i (void)
+  {
+  }
+
+  // Operations from ::ReaderStarter
+
+  void
+  reader_start_exec_i::start_read (void)
+  {
+    this->callback_.start_read ();
+  }
+
+  void
+  reader_start_exec_i::set_reader_properties (::CORBA::UShort nr_keys,
+  ::CORBA::UShort nr_iterations)
+  {
+    this->callback_.keys (nr_keys);
+    this->callback_.iterations (nr_iterations);
+  }
+
+  /**
    * Component Executor Implementation Class: Receiver_exec_i
    */
 
   Receiver_exec_i::Receiver_exec_i (void)
     : impl_ (0)
-    , iterations_ (0)
+      , keys_ (5)
+      , iterations_ (0)
   {
   }
 
@@ -111,27 +145,30 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
   }
 
   // Supported operations and attributes.
-  ACE_Reactor*
-  Receiver_exec_i::reactor (void)
+
+  void
+  Receiver_exec_i::start_read (void)
   {
-    ACE_Reactor* reactor = 0;
-    ::CORBA::Object_var ccm_object =
-      this->ciao_context_->get_CCM_object();
-    if (! ::CORBA::is_nil (ccm_object.in ()))
-      {
-        ::CORBA::ORB_var orb = ccm_object->_get_orb ();
-        if (! ::CORBA::is_nil (orb.in ()))
-          {
-            reactor = orb->orb_core ()->reactor ();
-          }
-      }
-    if (reactor == 0)
-      {
-        throw ::CORBA::INTERNAL ();
-      }
-    return reactor;
+    ACE_NEW_THROW_EX (this->impl_,
+                      RG_LateBinding_Receiver_impl (
+                        this->ciao_context_.in (),
+                        this->iterations_,
+                        this->keys_),
+                      ::CORBA::INTERNAL ());
+    this->impl_->start ();
   }
 
+  void
+  Receiver_exec_i::keys (::CORBA::UShort keys)
+  {
+    this->keys_ = keys;
+  }
+
+  void
+  Receiver_exec_i::iterations (::CORBA::UShort iterations)
+  {
+    this->iterations_ = iterations;
+  }
   // Component attributes and port operations.
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -174,17 +211,25 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
         this->ciao_info_read_status_.in ());
   }
 
-  ::CORBA::UShort
-  Receiver_exec_i::iterations (void)
+  ::CCM_ReaderStarter_ptr
+  Receiver_exec_i::get_start_reading (void)
   {
-    return this->iterations_;
-  }
+    if ( ::CORBA::is_nil (this->ciao_reader_start_.in ()))
+      {
+        reader_start_exec_i *tmp = 0;
+        ACE_NEW_RETURN (
+          tmp,
+          reader_start_exec_i (
+            this->ciao_context_.in (),
+            *this),
+            ::CCM_ReaderStarter::_nil ());
 
-  void
-  Receiver_exec_i::iterations (
-    const ::CORBA::UShort iterations)
-  {
-    this->iterations_ = iterations;
+          this->ciao_reader_start_ = tmp;
+      }
+
+    return
+      ::CCM_ReaderStarter::_duplicate (
+        this->ciao_reader_start_.in ());
   }
 
   // Operations from Components::SessionComponent.
@@ -211,12 +256,7 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    ACE_NEW_THROW_EX (this->impl_,
-                      RG_LateBinding_Receiver_impl (
-                        this->ciao_context_.in (),
-                        this->iterations ()),
-                      ::CORBA::INTERNAL ());
-    this->impl_->start (this->reactor ());
+    /* Your code here. */
   }
 
   void
