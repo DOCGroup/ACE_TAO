@@ -1,3 +1,10 @@
+Thu Dec  9 13:25:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/*:
+          Added test/example which tests the IDL to c++ wrapper. This is a
+          small shapes sender/receiver application.
+
 Wed Dec  8 14:28:53 UTC 2010  Martin Corino  <corino_m@remedy.nl>
 
         * connectors/ami4ccm/tests/AsynchT/Sender/AsynchTA_conn_i.h:
