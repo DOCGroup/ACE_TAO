@@ -1,3 +1,21 @@
+Thu Dec  9 09:54:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver.idl:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver.mpc:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_exec.h:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_impl.h:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_impl.cpp:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender.idl:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender.mpc:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/descriptors/Plan.cdp:
+          Resolved test errors by checking whether the last sample is available on the
+          receiver side.
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.mpc:
+          Resolved unresolved externals on windows builds.
+
 Thu Dec  9 08:19:14 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:

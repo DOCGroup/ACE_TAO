@@ -11,6 +11,7 @@
 #define RG_LATEBINDING_SENDER_IDL
 
 #include "Connector/RG_LateBinding_Connector.idl"
+#include "Base/Reader_Starter.idl"
 
 module RG_LateBinding
 {
@@ -20,6 +21,8 @@ module RG_LateBinding
 
     attribute unsigned short iterations;
     attribute unsigned short keys;
+
+    uses ReaderStarter reader_start;
   };
 };
 
