@@ -1,3 +1,12 @@
+Thu Dec  9 13:26:48 UTC 2010  Martin Corino  <corino_m@remedy.nl>
+
+        * ciao/Containers/Extension/Extension_Container.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+          Added code to ignore the CookieRequired exception at shutdown and log
+          only at a higher log level.
+          This will be reverted after the disconnect behaviour has been properly
+          fixed.
+
 Thu Dec  9 10:02:03 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/LateBinding/ReadGet/Base/Reader_Starter.idl:
