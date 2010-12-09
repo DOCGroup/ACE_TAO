@@ -41,6 +41,8 @@
 namespace CIAO_RG_LateBinding_Receiver_Impl
 {
   class RG_LateBinding_Receiver_impl;
+  class Receiver_exec_i;
+
   /**
    * Provider Executor Implementation Class: info_get_status_exec_i
    */
@@ -100,6 +102,36 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
   };
 
   /**
+   * Provider Executor Implementation Class: reader_start_exec_i
+   */
+
+  class reader_start_exec_i
+    : public virtual ::CCM_ReaderStarter,
+      public virtual ::CORBA::LocalObject
+  {
+  public:
+    reader_start_exec_i (
+      ::RG_LateBinding::CCM_Receiver_Context_ptr ctx,
+      Receiver_exec_i &callback);
+    virtual ~reader_start_exec_i (void);
+
+    //@{
+    /** Operations and attributes from ::ReaderStarter. */
+
+    virtual
+    void start_read (void);
+
+    virtual
+    void set_reader_properties (::CORBA::UShort nr_keys,
+    ::CORBA::UShort nr_iterations);
+    //@}
+
+  private:
+    ::RG_LateBinding::CCM_Receiver_Context_var ciao_context_;
+    Receiver_exec_i &callback_;
+  };
+
+  /**
    * Component Executor Implementation Class: Receiver_exec_i
    */
 
@@ -125,9 +157,8 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_read_status (void);
 
-    virtual ::CORBA::UShort iterations (void);
-
-    virtual void iterations (::CORBA::UShort iterations);
+    virtual ::CCM_ReaderStarter_ptr
+    get_start_reading (void);
     //@}
 
     //@{
@@ -141,7 +172,10 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
 
     //@{
     /** User defined public operations. */
+    void keys (::CORBA::UShort keys);
+    void iterations (::CORBA::UShort iterations);
 
+    void start_read (void);
     //@}
 
   private:
@@ -151,14 +185,16 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
     /** Component attributes. */
     ::CCM_DDS::CCM_PortStatusListener_var ciao_info_get_status_;
     ::CCM_DDS::CCM_PortStatusListener_var ciao_info_read_status_;
+    ::CCM_ReaderStarter_var ciao_reader_start_;
 
     RG_LateBinding_Receiver_impl *impl_;
 
-    ::CORBA::UShort iterations_;
     //@}
 
     //@{
     /** User defined members. */
+    ::CORBA::UShort keys_;
+    ::CORBA::UShort iterations_;
 
     //@}
 

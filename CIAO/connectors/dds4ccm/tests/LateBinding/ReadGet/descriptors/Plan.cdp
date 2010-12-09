@@ -216,17 +216,6 @@
     <node>ReceiverNode</node>
     <source/>
     <implementation xmi:idref="ReceiverComponentImplementation" />
-    <configProperty>
-      <name>iterations</name>
-      <value>
-        <type>
-          <kind>tk_ushort</kind>
-        </type>
-        <value>
-          <ushort>50</ushort>
-        </value>
-      </value>
-    </configProperty>
   </instance>
 
   <instance xmi:id="LateBinding_SenderEventConnectorInstance">
@@ -344,6 +333,22 @@
       </value>
     </configProperty>
   </instance>
+
+  <connection>
+    <name>reader_starter</name>
+    <internalEndpoint>
+      <portName>reader_start</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>start_reading</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+  </connection>
 
   <connection>
     <name>reader_connection</name>

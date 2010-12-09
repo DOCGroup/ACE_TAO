@@ -9,6 +9,7 @@
 #define RECEIVER_IDL
 
 #include "Connector/RG_LateBinding_Connector.idl"
+#include "Base/Reader_Starter.idl"
 
 module RG_LateBinding
 {
@@ -17,7 +18,7 @@ module RG_LateBinding
     port RG_LateBindingTestConnector::DDS_Get info_get;
     port RG_LateBindingTestConnector::DDS_Read info_read;
 
-    attribute unsigned short iterations;
+    provides ReaderStarter start_reading;
   };
 };
 
