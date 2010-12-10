@@ -1,3 +1,13 @@
+Fri Dec 10 16:01:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver.mpc:
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender.mpc:
+        * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender_exec.h:
+        * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
 Fri Dec 10 14:28:52 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver.idl:
@@ -9,7 +19,7 @@ Fri Dec 10 14:28:52 UTC 2010  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.cpp:
         * connectors/dds4ccm/tests/UnkeyedSamples/descriptors/Plan.cdp:
           Rewritter, using the generated executor code.
-          Added a check on the number of samples received. 
+          Added a check on the number of samples received.
 
 Fri Dec 10 13:50:18 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
