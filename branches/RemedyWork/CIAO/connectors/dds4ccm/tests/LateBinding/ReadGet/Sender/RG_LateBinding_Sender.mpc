@@ -32,8 +32,9 @@ project (RG_LateBindingSender_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project (RG_LateBindingSender_lem_stub) : ccm_svnt, dds4ccm_base {
-  after += RG_LateBindingSender_lem_gen RG_LateBindingSender_stub RG_LateBindingBase_stub
-  libs  += RG_LateBindingBase_stub Sender_stub
+  after += RG_LateBindingSender_lem_gen RG_LateBindingSender_stub \
+           RG_LateBindingBase_stub Reader_Starter_stub
+  libs  += RG_LateBindingBase_stub Sender_stub Reader_Starter_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -58,8 +59,11 @@ project (RG_LateBindingSender_lem_stub) : ccm_svnt, dds4ccm_base {
 }
 
 project (RG_LateBindingSender_stub) : ccm_stub, dds4ccm_base {
-  after += RG_LateBindingSender_idl_gen RG_LateBindingBase_stub RG_LateBindingConnector_stub
-  libs  += RG_LateBindingBase_stub RG_LateBindingConnector_stub
+  after += RG_LateBindingSender_idl_gen RG_LateBindingBase_stub \
+           RG_LateBindingConnector_stub Reader_Starter_stub \
+           Reader_Starter_lem_stub
+  libs  += RG_LateBindingBase_stub RG_LateBindingConnector_stub \
+           Reader_Starter_stub
   includes += ..
   libpaths += ../lib
   libout = ../lib
@@ -85,10 +89,12 @@ project (RG_LateBindingSender_stub) : ccm_stub, dds4ccm_base {
 
 project (RG_LateBindingSender_exec) : ciao_executor, dds4ccm_lem_stub {
   after   += RG_LateBindingSender_lem_stub RG_LateBindingSender_stub \
-             RG_LateBindingConnector_lem_stub RG_LateBindingConnector_stub
+             RG_LateBindingConnector_lem_stub RG_LateBindingConnector_stub \
+             Reader_Starter_svnt Reader_Starter_lem_stub
   sharedname = Sender_exec
   libs += Sender_stub Sender_lem_stub RG_LateBindingBase_stub \
-          RG_LateBindingConnector_lem_stub RG_LateBindingConnector_stub
+          RG_LateBindingConnector_lem_stub RG_LateBindingConnector_stub \
+          Reader_Starter_stub Reader_Starter_svnt Reader_Starter_lem_stub
   libpaths += ../lib
   includes += ..
   libout = ../lib
@@ -113,10 +119,13 @@ project (RG_LateBindingSender_exec) : ciao_executor, dds4ccm_lem_stub {
 
 project (RG_LateBindingSender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   after      += RG_LateBindingBase_stub  RG_LateBindingSender_lem_stub RG_LateBindingConnector_stub \
-                RG_LateBindingConnector_svnt RG_LateBindingConnector_lem_stub
+                RG_LateBindingConnector_svnt RG_LateBindingConnector_lem_stub \
+                Reader_Starter_stub Reader_Starter_lem_stub Reader_Starter_svnt
   sharedname  = Sender_svnt
   libs       += Sender_stub Sender_lem_stub  \
-                RG_LateBindingBase_stub RG_LateBindingConnector_stub RG_LateBindingConnector_svnt RG_LateBindingConnector_lem_stub
+                RG_LateBindingBase_stub RG_LateBindingConnector_stub RG_LateBindingConnector_svnt \
+                RG_LateBindingConnector_lem_stub Reader_Starter_stub \
+                Reader_Starter_lem_stub Reader_Starter_svnt
   libpaths += ../lib
   libout = ../lib
   includes += ..

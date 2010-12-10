@@ -46,6 +46,57 @@ Thu Dec  9 13:25:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
           Added test/example which tests the IDL to c++ wrapper. This is a
           small shapes sender/receiver application.
 
+Thu Dec  9 13:26:48 UTC 2010  Martin Corino  <corino_m@remedy.nl>
+
+        * ciao/Containers/Extension/Extension_Container.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+          Added code to ignore the CookieRequired exception at shutdown and log
+          only at a higher log level.
+          This will be reverted after the disconnect behaviour has been properly
+          fixed.
+
+Thu Dec  9 10:02:03 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Base/Reader_Starter.idl:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Base/Reader_Starter.mpc:
+          Added since they belong the the LateBinding test.
+
+Thu Dec  9 09:54:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver.idl:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver.mpc:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_exec.h:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_impl.h:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_impl.cpp:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender.idl:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender.mpc:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/descriptors/Plan.cdp:
+          Resolved test errors by checking whether the last sample is available on the
+          receiver side.
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.mpc:
+          Resolved unresolved externals on windows builds.
+
+Thu Dec  9 08:19:14 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+          Attempt to fix a path to tao_idl3_to_xmi on installed builds.
+
+Wed Dec  8 17:03:29 UTC 2010  Martin Corino  <corino_m@remedy.nl>
+
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender_exec.h:
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender_exec.cpp:
+          Fuzz fix.
+
+Wed Dec  8 17:34:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3936_Regression:
+        * tests/Bug_3937_Regression:
+          Two new idl tests, will enable them in the test suite after
+          the release
+
 Wed Dec  8 14:28:53 UTC 2010  Martin Corino  <corino_m@remedy.nl>
 
         * connectors/ami4ccm/tests/AsynchT/Sender/AsynchTA_conn_i.h:
