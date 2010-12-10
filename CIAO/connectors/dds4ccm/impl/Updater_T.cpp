@@ -210,8 +210,8 @@ namespace CIAO
       // Check for existence of instances
       this->check_already_created (data);
 
-      Coherent_Changes_Guard guard (this->dds_writer ()->get_publisher(),
-          this->is_coherent_write_);
+      ::DDS::Publisher_var pub = this->dds_writer ()->get_publisher();
+      Coherent_Changes_Guard guard (pub.in (), this->is_coherent_write_);
 
       for (::CORBA::ULong index = 0; index < data.length (); index++)
         {
@@ -277,8 +277,8 @@ namespace CIAO
       // Check for existence of instances
       this->check_existent (data);
 
-      Coherent_Changes_Guard guard (this->dds_writer ()->get_publisher(),
-          this->is_coherent_write_);
+      ::DDS::Publisher_var pub = this->dds_writer ()->get_publisher();
+      Coherent_Changes_Guard guard (pub.in (), this->is_coherent_write_);
 
       for (::CORBA::ULong index = 0; index < data.length (); index++)
         {
@@ -296,9 +296,8 @@ namespace CIAO
       // Check for existence of instances
       this->check_existent (data);
 
-      Coherent_Changes_Guard guard (
-          this->dds_writer ()->get_publisher(),
-          this->is_coherent_write_);
+      ::DDS::Publisher_var pub = this->dds_writer ()->get_publisher();
+      Coherent_Changes_Guard guard (pub.in (), this->is_coherent_write_);
 
       for (::CORBA::ULong index = 0; index < data.length (); index++)
         {

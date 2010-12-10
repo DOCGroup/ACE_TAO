@@ -1,3 +1,19 @@
+Fri Dec 10 13:50:18 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+          Added .in () to a _var.
+
+        * connectors/dds4ccm/impl/Updater_T.cpp:
+          Resolved some memory leaks.
+
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver.mpc:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender.mpc:
+        * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.h:
+        * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.cpp:
+          Rewritter, using the generated executor code.
+
 Fri Dec 10 10:50:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h:
