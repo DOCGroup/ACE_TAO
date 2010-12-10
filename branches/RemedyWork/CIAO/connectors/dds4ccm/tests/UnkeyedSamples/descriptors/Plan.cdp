@@ -174,8 +174,18 @@
           <kind>tk_ushort</kind>
         </type>
         <value>
-          <!-- Sender->keys * Sender->iterations -->
-          <ushort>30</ushort>
+          <ushort>10</ushort>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>keys</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>3</ushort>
         </value>
       </value>
     </configProperty>
