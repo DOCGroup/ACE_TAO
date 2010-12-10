@@ -14,8 +14,6 @@
 #include "tao/LocalObject.h"
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
 
-#include <map>
-
 namespace CIAO
 {
   namespace NDDS
