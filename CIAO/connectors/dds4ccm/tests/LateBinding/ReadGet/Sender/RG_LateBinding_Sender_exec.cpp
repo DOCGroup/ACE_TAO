@@ -105,9 +105,23 @@ namespace CIAO_RG_LateBinding_Sender_Impl
                 ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::start_event_test - "
                             "Sample written : key <%C> - iteration <%d>\n",
                             tmp, iter));
-                ACE_Time_Value tv (0, 50000);
-                ACE_OS::sleep (tv);
               }
+          }
+        ACE_Time_Value tv (2, 0);
+        ACE_OS::sleep (tv);
+        ReaderStarter_var starter =
+          this->ciao_context_->get_connection_reader_start ();
+        if (!::CORBA::is_nil (starter.in ()))
+          {
+            ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::start_event_test - "
+                      "Inform the receiver that all samples were written\n"));
+            starter->set_reader_properties (this->keys (), this->iterations ());
+            starter->start_read ();
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR, "Sender_exec_i::start_event_test - "
+                      "ERROR: unable to get connection to the ReaderStarter\n"));
           }
       }
     catch (const ::CCM_DDS::NonChangeable &)

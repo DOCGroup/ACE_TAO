@@ -1,34 +1,33 @@
 // $Id$
 #include "RG_LateBinding_Receiver_impl.h"
+#include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
 namespace CIAO_RG_LateBinding_Receiver_Impl
 {
-  /**
-   * Timeout_Handler
-   */
 
-  Timeout_Handler::Timeout_Handler (RG_LateBinding_Receiver_impl &callback)
+  /**
+   * Check last
+   */
+  LastSampleChecker::LastSampleChecker (RG_LateBinding_Receiver_impl &callback,
+                                        const ::CORBA::UShort &iterations)
     : callback_ (callback)
+      , iterations_ (iterations)
+  {
+  }
+
+  LastSampleChecker::~LastSampleChecker ()
   {
   }
 
   int
-  Timeout_Handler::handle_timeout (const ACE_Time_Value &, const void *arg)
+  LastSampleChecker::handle_timeout (const ACE_Time_Value &, const void *)
   {
-    unsigned long assingment = reinterpret_cast<unsigned long> (arg);
-    if (assingment == 0)
+    ACE_DEBUG ((LM_DEBUG, "Checking if last sample "
+                          "is available in DDS...\n"));
+    if (this->callback_.check_last ())
       {
-        this->callback_.test_exception ();
-        this->callback_.set_topic_name_reader ();
-        this->callback_.start_reading ();
-      }
-    else if (assingment == 1)
-      {
-        this->callback_.set_topic_name_getter ();
-        this->callback_.start_getting ();
-        this->callback_.set_topic_name_reader (true);
-        this->callback_.set_topic_name_getter (true);
+        this->callback_.start_read ();
       }
     return 0;
   }
@@ -38,23 +37,109 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
    */
   RG_LateBinding_Receiver_impl::RG_LateBinding_Receiver_impl (
       ::RG_LateBinding::CCM_Receiver_Context_ptr ctx,
-      ::CORBA::UShort expected)
+      const ::CORBA::UShort & iterations,
+      const ::CORBA::UShort & keys)
     : ciao_context_ (
         ::RG_LateBinding::CCM_Receiver_Context::_duplicate (ctx))
-    , expected_ (expected)
+    , iterations_ (iterations)
+    , keys_ (keys)
   {
-    ACE_NEW_THROW_EX (this->to_handler_read_,
-                      Timeout_Handler (*this),
-                      ::CORBA::INTERNAL ());
-    ACE_NEW_THROW_EX (this->to_handler_get_,
-                      Timeout_Handler (*this),
-                      ::CORBA::INTERNAL ());
   }
 
   RG_LateBinding_Receiver_impl::~RG_LateBinding_Receiver_impl ()
   {
-    delete this->to_handler_read_;
-    delete this->to_handler_get_;
+    delete this->checker_;
+  }
+
+  ACE_Reactor*
+  RG_LateBinding_Receiver_impl::reactor (void)
+  {
+    ACE_Reactor* reactor = 0;
+    ::CORBA::Object_var ccm_object =
+      this->ciao_context_->get_CCM_object();
+    if (! ::CORBA::is_nil (ccm_object.in ()))
+      {
+        ::CORBA::ORB_var orb = ccm_object->_get_orb ();
+        if (! ::CORBA::is_nil (orb.in ()))
+          {
+            reactor = orb->orb_core ()->reactor ();
+          }
+      }
+    if (reactor == 0)
+      {
+        throw ::CORBA::INTERNAL ();
+      }
+    return reactor;
+  }
+
+  bool
+  RG_LateBinding_Receiver_impl::check_last (void)
+  {
+    ::RG_LateBinding::RG_LateBindingTestConnector::Reader_var reader =
+      this->ciao_context_->get_connection_info_read_data ();
+    try
+      {
+        RG_LateBindingTest datum;
+        ::CCM_DDS::ReadInfo readinfo;
+        char key[10];
+        ACE_OS::sprintf (key, "KEY_%d", this->keys_);
+        datum.key = CORBA::string_dup (key);
+        reader->read_one_last (
+                datum,
+                readinfo,
+                ::DDS::HANDLE_NIL);
+        ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::check_last - "
+                              "last iteration <%02d> - <%02d>\n",
+                               datum.iteration,
+                               this->iterations_));
+        return datum.iteration >= this->iterations_;
+      }
+    catch (const ::CCM_DDS::InternalError &)
+      {
+      }
+    catch (const ::CCM_DDS::NonExistent &)
+      {
+      }
+    catch (...)
+      {
+        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::check_last: "
+                              "ERROR: Unexpected exception caught\n"));
+      }
+    return false;
+  }
+
+  void
+  RG_LateBinding_Receiver_impl::start (void)
+  {
+    this->test_exception ();
+    this->set_topic_name_reader ();
+
+    ACE_NEW_THROW_EX (this->checker_,
+                      LastSampleChecker (*this,
+                                         this->iterations_),
+                      ::CORBA::NO_MEMORY ());
+    if (this->reactor ()->schedule_timer (this->checker_,
+                                          0,
+                                          ACE_Time_Value (1, 0),
+                                          ACE_Time_Value (1, 0)) == -1)
+      {
+        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::schedule_timer - "
+                  "ERROR: Error while starting LastSampleChecker\n"));
+      }
+  }
+
+  void
+  RG_LateBinding_Receiver_impl::start_read ()
+  {
+    if (this->checker_)
+      {
+        this->reactor ()->cancel_timer (this->checker_);
+      }
+    this->start_reading ();
+    this->set_topic_name_getter ();
+    this->start_getting ();
+    this->set_topic_name_reader (true);
+    this->set_topic_name_getter (true);
   }
 
   void
@@ -153,7 +238,7 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
         RG_LateBindingTestSeq samples;
         ::CCM_DDS::ReadInfoSeq readinfo_seq;
         reader->read_all (samples, readinfo_seq);
-        this->check_samples ("read", samples, this->expected_);
+        this->check_samples ("read", samples, this->iterations_ * this->keys_);
       }
     catch (const CORBA::Exception &e)
       {
@@ -312,28 +397,6 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
             ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::set_topic_name_getter - "
                         "ERROR: Caught NonChangeable exception.\n"));
           }
-      }
-  }
-
-  void
-  RG_LateBinding_Receiver_impl::start (
-    ACE_Reactor *reactor)
-  {
-    if (reactor->schedule_timer (
-               this->to_handler_read_,
-               reinterpret_cast<const void *> (0),
-               ACE_Time_Value (8, 0)) == -1)
-      {
-        ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::start - "
-                              "Error scheduling timer"));
-      }
-    if (reactor->schedule_timer (
-               this->to_handler_get_,
-               reinterpret_cast<const void *> (1),
-               ACE_Time_Value (10, 0)) == -1)
-      {
-        ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::start - "
-                              "Error scheduling timer"));
       }
   }
 }

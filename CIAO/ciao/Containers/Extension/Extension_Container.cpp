@@ -796,7 +796,21 @@ namespace CIAO
         // Note: Spec says that facet executor provided by component MAY BE NIL
         if (!::CORBA::is_nil (exec.in ()))
           {
-            ::CORBA::Object_var port = user_serv->disconnect (user_port, 0);
+            try
+              {
+                ::CORBA::Object_var port = user_serv->disconnect (user_port, 0);
+              }
+            catch (const ::Components::CookieRequired&ex)
+              {
+                CIAO_ERROR (6,
+                            (LM_ERROR,
+                            CLINFO
+                            "Extension_Container_i::disconnect_local_facet - "
+                            "Ingnoring exception %C.\n",
+                            ex._info ().c_str ()));
+
+                // mcorino@remedy.nl - Ignore this for now; disconnect behaviour will be fixed properly
+              }
           }
         else
           {
