@@ -1,3 +1,9 @@
+Fri Dec 10 12:03:52 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ciao/Base/CIAO_Base.mpc:
+          Another attempt to fix the path to tao_idl3_to_xmi on
+          installed builds.
+
 Thu Dec  9 13:26:48 UTC 2010  Martin Corino  <corino_m@remedy.nl>
 
         * ciao/Containers/Extension/Extension_Container.cpp:
