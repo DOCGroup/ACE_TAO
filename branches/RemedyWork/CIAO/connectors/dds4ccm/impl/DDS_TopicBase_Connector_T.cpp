@@ -158,7 +158,7 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_remove (void)
   if (!::CORBA::is_nil (publisher.in ()))
     {
       this->remove_publisher (this->domain_participant_.in (),
-                              publisher);
+                              publisher.in ());
     }
   BaseConnector::ccm_remove ();
 }
