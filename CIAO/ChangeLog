@@ -1,3 +1,18 @@
+Fri Dec 10 10:50:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h:
+          Removed unneccasary include.
+
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/Plan.cdp:
+          Rewritten, using the generated executor code.
+
 Fri Dec 10 09:54:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.h:
