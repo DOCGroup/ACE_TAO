@@ -1,3 +1,11 @@
+Fri Dec 10 09:54:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.h:
+          Fuzz fixes.
+
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.h:
+          Removed this file.
+
 Fri Dec 10 09:48:01 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver.mpc:
