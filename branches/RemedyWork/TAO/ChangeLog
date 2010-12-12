@@ -1,3 +1,14 @@
+﻿Sun Dec 12 16:19:01 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Bug_1482_Regression/Hello.cpp:
+          Fixes 'maybe undefined operation' warning in MingW GCC 4.5.0.
+
+        * tests/OBV/Simple/Client_i.cpp:
+          Removed unnecessary include leading to redefinition warnings.
+
+        * tests/POA/DSI/Database_i.cpp:
+          Fixes 'uninitialized use' warnings.
+
 Wed Dec  8 15:20:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_module.cpp:
@@ -5491,7 +5502,7 @@ Mon Jul 12 08:19:49 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
           - Refactored non-data code in FE and BE global data classes
             to corresponding utils classes.
 
-          - Changed code generation triggered by �SS to generate the
+          - Changed code generation triggered by ?SS to generate the
             *S.h and *C.h includes, so they can be propagated to
             including IDL files.
 
