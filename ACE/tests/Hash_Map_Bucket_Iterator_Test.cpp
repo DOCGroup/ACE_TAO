@@ -87,8 +87,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   for (i = 0; i < iterations; ++i)
     {
       int result = map.bind (i, i);
-      ACE_ASSERT (result == 0);
-      ACE_UNUSED_ARG (result);
+      ACE_TEST_ASSERT (result == 0);
     }
 
   for (i = 0; i < table_size; ++i)
@@ -106,7 +105,7 @@ run_main (int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG, "%d ", (*iterator).int_id_));
           ACE_UINT32 key = (*iterator).ext_id_;
-          ACE_ASSERT (((key - i) % table_size) == 0);
+          ACE_TEST_ASSERT (((key - i) % table_size) == 0);
         }
 
       ACE_DEBUG ((LM_DEBUG, "\n"));

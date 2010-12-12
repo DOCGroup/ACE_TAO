@@ -46,12 +46,12 @@ public:
 
   ~Test_SIGINT_Handler()
   {
-    ACE_ASSERT (Test_SIGINT_Handler::handle_signal_count_ == Test_SIGINT_Handler::registration_count_);
+    ACE_TEST_ASSERT (Test_SIGINT_Handler::handle_signal_count_ == Test_SIGINT_Handler::registration_count_);
   }
 
   virtual int handle_signal (int signal, siginfo_t *, ucontext_t *)
   {
-    ACE_ASSERT (signal == SIGINT);
+    ACE_TEST_ASSERT (signal == SIGINT);
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Main::Test_SIGINT_Handler (%u) - %s\n"),
                 this,
@@ -85,7 +85,7 @@ public:
 
   virtual int handle_signal (int signal, siginfo_t *, ucontext_t *)
   {
-    ACE_ASSERT (signal == SIGINT);
+    ACE_TEST_ASSERT (signal == SIGINT);
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Main::Test_SIGINT_Shutdown_Handler (%u)\n"),
                 this));

@@ -76,7 +76,7 @@ test_bind (ACE_Naming_Context &ns_context)
 
       ACE_OS::sprintf (type, "%s%d", "type", array [i]);
       int bind_result = ns_context.bind (w_name, w_value, type);
-      ACE_ASSERT (bind_result != -1);
+      ACE_TEST_ASSERT (bind_result != -1);
     }
 }
 
@@ -92,7 +92,7 @@ test_find_failure (ACE_Naming_Context &ns_context)
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
     {
       int resolve = ns_context.resolve (w_name, w_value, l_type);
-      ACE_ASSERT (resolve == -1);
+      ACE_TEST_ASSERT (resolve == -1);
     }
 }
 
@@ -115,7 +115,7 @@ test_rebind (ACE_Naming_Context &ns_context)
 
       ACE_OS::sprintf (type, "%s%d", "type", -array[i]);
       int rebind = ns_context.rebind (w_name, w_value, type);
-      ACE_ASSERT (rebind != -1);
+      ACE_TEST_ASSERT (rebind != -1);
     }
 }
 
@@ -133,7 +133,7 @@ test_unbind (ACE_Naming_Context &ns_context)
       ACE_OS::sprintf (name, "%s%d", "name", array[i]);
       ACE_NS_WString w_name (name);
       int unbind = ns_context.unbind (w_name);
-      ACE_ASSERT (unbind != -1);
+      ACE_TEST_ASSERT (unbind != -1);
     }
 }
 
@@ -179,7 +179,7 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
 
       if (l_value)
         {
-          ACE_ASSERT (w_value == val);
+          ACE_TEST_ASSERT (w_value == val);
           if (ns_context.name_options ()->debug ())
             {
               if (type_out)
@@ -193,7 +193,7 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
 
           if (type_out)
             {
-              ACE_ASSERT (ACE_OS::strcmp (type_out, temp_type) == 0);
+              ACE_TEST_ASSERT (ACE_OS::strcmp (type_out, temp_type) == 0);
               delete[] type_out;
             }
         }

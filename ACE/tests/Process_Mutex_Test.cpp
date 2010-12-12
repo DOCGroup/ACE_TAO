@@ -79,7 +79,7 @@ acquire_release (void)
   ACE_Process_Mutex mutex (mutex_name);
 
   // Make sure the constructor succeeded
-  ACE_ASSERT (ACE_LOG_MSG->op_status () == 0);
+  ACE_TEST_ASSERT (ACE_LOG_MSG->op_status () == 0);
 
   // To see if we really are the only holder of the mutex below,
   // we'll try to create a file with exclusive access. If the file
@@ -90,7 +90,7 @@ acquire_release (void)
 
   // Grab the lock
   int mutex_acq = mutex.acquire ();
-  ACE_ASSERT (mutex_acq == 0);
+  ACE_TEST_ASSERT (mutex_acq == 0);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P) Mutex acquired %s\n"),
@@ -99,7 +99,7 @@ acquire_release (void)
   ACE_HANDLE checker_handle = ACE_OS::open (mutex_check, O_CREAT | O_EXCL);
   if (checker_handle == ACE_INVALID_HANDLE)
     {
-      ACE_ASSERT (errno != EEXIST);
+      ACE_TEST_ASSERT (errno != EEXIST);
       ACE_DEBUG ((LM_WARNING, ACE_TEXT ("(%P): %p\n"),
                   ACE_TEXT ("checker file open")));
     }
@@ -122,7 +122,7 @@ acquire_release (void)
                   ACE_TEXT ("(%P) Releasing the mutex %s\n"),
                   mutex_name));
       int mutex_release = mutex.release ();
-      ACE_ASSERT (mutex_release == 0);
+      ACE_TEST_ASSERT (mutex_release == 0);
     }
 }
 
@@ -200,7 +200,7 @@ run_main (int argc, ACE_TCHAR *argv[])
           ACE_exitcode child_status;
           // Wait for the child processes we created to exit.
           int wait_result = children[i].wait (&child_status);
-          ACE_ASSERT (wait_result != -1);
+          ACE_TEST_ASSERT (wait_result != -1);
           if (child_status == 0)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("Child %d finished ok\n"),

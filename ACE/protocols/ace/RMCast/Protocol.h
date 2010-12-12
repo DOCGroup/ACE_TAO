@@ -1019,7 +1019,7 @@ namespace ACE_RMCast
     u64
     find (Address const& addr) const
     {
-      u64 sn;
+      u64 sn = 0;
 
       if (map_.find (addr, sn) == -1) return 0;
 
