@@ -60,8 +60,8 @@ test_duplicates (size_t count)
         }
     }
 
-  ACE_ASSERT (count == sets + clears);
-  ACE_ASSERT (handle_set.num_set () + duplicates == sets);
+  ACE_TEST_ASSERT (count == sets + clears);
+  ACE_TEST_ASSERT (handle_set.num_set () + duplicates == sets);
 }
 
 // This is the vector of handles to test.  These numbers are chosen to
@@ -109,7 +109,7 @@ test_boundaries (void)
        (handle = i1 ()) != ACE_INVALID_HANDLE;
        )
     {
-      ACE_ASSERT (0 ==
+      ACE_TEST_ASSERT (0 ==
                   ACE_TEXT ("this shouldn't get called since ")
                   ACE_TEXT ("the set is empty!\n"));
     }
@@ -149,11 +149,11 @@ test_boundaries (void)
                   ACE_TEXT ("obtained handle %d\n"),
                   handle));
       int done = set.remove (handle);
-      ACE_ASSERT (done == 0);
+      ACE_TEST_ASSERT (done == 0);
       count++;
     }
 
-  ACE_ASSERT (count == handle_set.num_set ());
+  ACE_TEST_ASSERT (count == handle_set.num_set ());
 }
 
 static void
@@ -182,7 +182,7 @@ test_performance (size_t max_handles,
 
   timer.stop ();
 
-  ACE_ASSERT (count == max_handles * max_iterations);
+  ACE_TEST_ASSERT (count == max_handles * max_iterations);
 
   ACE_Profile_Timer::ACE_Elapsed_Time et;
 

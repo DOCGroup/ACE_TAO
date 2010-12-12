@@ -72,7 +72,7 @@ run_main (int, ACE_TCHAR *[])
     ACE_DEBUG ((LM_DEBUG, "Validating Tree\n"));
     {for (size_t i= 0u; i < sizeof(nodes)/sizeof(Nodes); ++i)
     {
-      ACE_RB_Tree_Node<char, int> *node;
+      ACE_RB_Tree_Node<char, int> *node = 0;
 
       if (tree.find (nodes[i].key, node))
       {
@@ -106,7 +106,7 @@ run_main (int, ACE_TCHAR *[])
         }
         else
         {
-          ACE_RB_Tree_Node<char, int> *node;
+          ACE_RB_Tree_Node<char, int> *node = 0;
 
           if (0 == tree.find (nodes[i].key, node))
           {

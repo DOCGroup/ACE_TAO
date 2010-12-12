@@ -56,6 +56,11 @@ CXX_MAJOR_VERSION := $(firstword $(subst ., ,$(CXX_VERSION)))
 else
 CXX_MAJOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/\..*$$//')
 endif
+ifeq (cmd,$(findstring cmd,$(SHELL)))
+CXX_MINOR_VERSION := $(word 2,$(subst ., ,$(CXX_VERSION)))
+else
+CXX_MINOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/^[0-9]*\.//' | sed -e 's/\..*$$//')
+endif
 ifeq ($(findstring $(CXX_MAJOR_VERSION),1 2 3),$(CXX_MAJOR_VERSION))
 GXX_4_OR_BETTER := 0
 else

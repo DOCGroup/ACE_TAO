@@ -272,7 +272,7 @@ namespace ACE_RMCast
 
       u64 sn (static_cast<SN const*> (m->find (SN::id))->num ());
 
-      Map::ENTRY* e;
+      Map::ENTRY* e = 0;
 
       if (hold_.find (from, e) == -1)
       {

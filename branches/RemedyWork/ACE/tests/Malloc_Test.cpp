@@ -203,8 +203,8 @@ initialize (MALLOC *allocator)
   long long_cont_1 = *lt->bpl_;
   long long_cont_2 = lt->bpl_[3];
 
-  ACE_ASSERT (long_cont_1 == 1000);
-  ACE_ASSERT (long_cont_2 == 1003);
+  ACE_TEST_ASSERT (long_cont_1 == 1000);
+  ACE_TEST_ASSERT (long_cont_2 == 1003);
 
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Long_Test)),
@@ -223,8 +223,8 @@ initialize (MALLOC *allocator)
   long long_cont_3 = *lt->bpl_;
   long long_cont_4 = lt->bpl_[4];
 
-  ACE_ASSERT (long_cont_3 == 2000);
-  ACE_ASSERT (long_cont_4 == 2004);
+  ACE_TEST_ASSERT (long_cont_3 == 2000);
+  ACE_TEST_ASSERT (long_cont_4 == 2004);
 
   return data2;
 }
@@ -280,7 +280,7 @@ parent (Test_Data *data)
     myalloc->free (small_buf[cntr]);
 #endif /* ACE_TEST_REMAP_ON_FAULT */
 
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
   return 0;
 }
 
@@ -369,7 +369,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       MALLOC *myalloc = myallocator (PARENT_BASE_ADDR);
 
       Test_Data *data = initialize (myalloc);
-      ACE_ASSERT (data != 0);
+      ACE_TEST_ASSERT (data != 0);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P) PARENT allocator at = %@, ")
@@ -378,7 +378,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                   data));
       myalloc->dump ();
       int result = myalloc->bind ("foo", data);
-      ACE_ASSERT (result != -1);
+      ACE_TEST_ASSERT (result != -1);
 
       ACE_Process p;
       pid_t pid = p.spawn (options);
@@ -395,7 +395,7 @@ run_main (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("wait")), 1);
-      ACE_ASSERT (myalloc->ref_counter () == 1);
+      ACE_TEST_ASSERT (myalloc->ref_counter () == 1);
       myalloc->remove ();
       ACE_END_TEST;
       return 0;
@@ -408,7 +408,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       void *data = 0;
       MALLOC *myalloc = myallocator (CHILD_BASE_ADDR);
       int result = myalloc->find ("foo", data);
-      ACE_ASSERT (result != -1);
+      ACE_TEST_ASSERT (result != -1);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P) CHILD allocator at = %@, ")

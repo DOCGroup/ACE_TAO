@@ -48,6 +48,11 @@ public:
                                      size_t handles_to_be_resumed,
                                      size_t handles_to_be_deleted)
   {
+    ACE_UNUSED_ARG (wfmo_reactor);  // for release builds where ACE_ASSERT is noop
+    ACE_UNUSED_ARG (handles_to_be_added);
+    ACE_UNUSED_ARG (handles_to_be_suspended);
+    ACE_UNUSED_ARG (handles_to_be_resumed);
+    ACE_UNUSED_ARG (handles_to_be_deleted);
     ACE_ASSERT (wfmo_reactor.handler_rep_.handles_to_be_added_ == handles_to_be_added);
     ACE_ASSERT (wfmo_reactor.handler_rep_.handles_to_be_suspended_ == handles_to_be_suspended);
     ACE_ASSERT (wfmo_reactor.handler_rep_.handles_to_be_resumed_ == handles_to_be_resumed);
