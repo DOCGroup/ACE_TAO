@@ -3,8 +3,6 @@
 #include "Client_i.h"
 #include "OBV_impl.h"
 
-#include "tao/ORB_Core.h"
-
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_sys_time.h"
 
