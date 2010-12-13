@@ -1,3 +1,14 @@
+Mon Dec 13 14:01:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver.mpc:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.cpp:
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender.mpc:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
 Mon Dec 13 13:02:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver.mpc:
