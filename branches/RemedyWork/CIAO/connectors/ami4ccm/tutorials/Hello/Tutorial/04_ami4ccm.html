@@ -56,7 +56,7 @@ Synchronous:<br>
 asynchronus and synchronous invocations.<br>
 The asynchronous methods have the prefix sendc_. The first 
 argument is the Reply handler.<br>
-<CODE>my_foo_ami_-&gt;sendc_foo (<FONT COLOR="blue">new</FONT> MyFoo_obj_callback_exec_i (), <FONT COLOR="red">"Do something 
+<CODE>my_foo_ami_-&gt;sendc_foo (<FONT COLOR="blue">new</FONT> AMI4CCM_MyFoo_objReplyHandler_run_my_foo_i (), <FONT COLOR="red">"Do something 
 asynchronous"</FONT>);</CODE><br>
 The same synchronous method:<br>
 <CODE>CORBA::Long result = my_foo_ami_-&gt;foo(<FONT COLOR="red">"Do something synchronous"</FONT>, out_str.out());</P>
@@ -65,7 +65,7 @@ The same synchronous method:<br>
 interface for each method must be coded.</P>
 <P>Example foo callback:<br>
 <CODE><FONT COLOR="#0000ff">void<BR></FONT> 
-MyFoo_obj_callback_exec_i::foo (::CORBA::Long 
+AMI4CCM_MyFoo_objReplyHandler_run_my_foo_i::foo (::CORBA::Long 
 ami_return_val, <FONT COLOR="blue">const char</FONT> * answer)<BR>
 {<BR>
 <FONT COLOR="green">&nbsp;&nbsp;/*Your code here. */<BR></FONT>
@@ -77,7 +77,7 @@ foo:"</FONT>);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ACE_TEXT(<FONT COLOR="red"
 &lt;%C&gt;\n"</FONT>),<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ami_return_val,answer));<BR>
 }<br><br>
 <FONT COLOR="blue">void<BR></FONT>
-MyFoo_obj_callback_exec_i::foo_excep (::CCM_AMI::ExceptionHolder * excep_holder)<BR>
+AMI4CCM_MyFoo_objReplyHandler_run_my_foo_i::foo_excep (::CCM_AMI::ExceptionHolder * excep_holder)<BR>
 {<BR>
 <FONT COLOR="green">&nbsp;&nbsp;&nbsp;&nbsp;/* Your code here. */</FONT><BR>
 }</CODE></P>
