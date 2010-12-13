@@ -1,4 +1,9 @@
-﻿Sun Dec 12 16:20:22 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+Mon Dec 13 07:59:21 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Message_Queue_NT.cpp:
+          Add missing activation in open() (setting state indicator).
+
+?Sun Dec 12 16:20:22 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_g++_common.GNU:
         * include/makeinclude/platform_gnuwin32_common.GNU:
@@ -12,13 +17,13 @@
         * tests/Bug_3911_Regression_Test.cpp:
         * tests/Hash_Map_Manager_Test.cpp:
           Fixed uninitialized use warnings.
-          
+
         * ace/WIN32_Asynch_IO.cpp:
           Fixed comparison always true warning.
 
         * examples/Reactor/WFMO_Reactor/Handle_Close.cpp:
           Fixed constant char* assignment.
-          
+
         * examples/Reactor/WFMO_Reactor/Suspended_Removals.cpp:
           Fixed unused argument/variable warnings.
 
@@ -34,7 +39,7 @@
         * tests/Sig_Handlers_Test.cpp:
         * tests/Sigset_Ops_Test.cpp:
         * tests/Timer_Queue_Test.cpp:
-          Replaced ACE_ASSERT by ACE_TEST_ASSERT to make test 
+          Replaced ACE_ASSERT by ACE_TEST_ASSERT to make test
           function in release (NDEBUG) builds as well.
 
 Wed Dec  8 09:36:00 UTC 2010  Martin Corino <mcorino@remedy.nl>
