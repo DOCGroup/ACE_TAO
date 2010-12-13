@@ -1,3 +1,8 @@
+Mon Dec 13 07:56:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Connector/I2C_Shapes_Connector.idl:
+          Fuzz.
+
 Mon Dec 13 07:44:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Proxies/ReadWrite/Base/Reader_Starter.mpc:
