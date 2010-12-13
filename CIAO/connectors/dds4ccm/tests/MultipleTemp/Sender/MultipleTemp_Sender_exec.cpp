@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-//Test MultipleTemp functions
+//Test Multiple templates connector
 #include "MultipleTemp_Sender_exec.h"
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
@@ -67,8 +67,7 @@ namespace CIAO_MultipleTemp_Sender_Impl
     CORBA::Boolean result = true;
     TestTopicOne i = this->topic_one_seq_one_[0];
     TestTopicTwo u = this->topic_two_seq_one_[0];
-//    TestTopicOne u = this->topic_one_seq_one_[1];
-    try
+  try
     {
       if ( ::CORBA::is_nil (this->updater_one_) ||
            ::CORBA::is_nil (this->updater_two_))
@@ -81,15 +80,16 @@ namespace CIAO_MultipleTemp_Sender_Impl
           this->updater_one_->create_one(i);
           this->updater_two_->create_one(u);
           ACE_DEBUG ((LM_DEBUG,
-                       ACE_TEXT ("MultipleTemp: create_one with instance keys")
+                       ACE_TEXT ("MultipleTemp: create_one for both topics ")
                        ACE_TEXT ("<%C> and <%C>\n"),
-                       i.keyOne.in(), u.keyOne.in()));
+                       i.keyOne.in(), u.keyTwo.in()));
         }
     }
     catch(const CCM_DDS::AlreadyCreated &)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: AlreadyCreated ")
-                            ACE_TEXT ("with test updater create_one <%C>.\n"),
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unexpected exception: ")
+                            ACE_TEXT ("AlreadyCreated with test updater")
+                            ACE_TEXT (" create_one <%C> or <%C>.\n"),
                             i.keyOne.in(), u.keyTwo.in()));
       result= false;
     }
@@ -108,8 +108,7 @@ namespace CIAO_MultipleTemp_Sender_Impl
     //update already created instance with handle nil
     CORBA::Boolean result = true;
     TestTopicOne i = this->topic_one_seq_one_[0];
-   TestTopicTwo u = this->topic_two_seq_one_[0];
-//    TestTopicOne u = this->topic_one_seq_one_[1];
+    TestTopicTwo u = this->topic_two_seq_one_[0];
 
     try
     {
@@ -124,8 +123,9 @@ namespace CIAO_MultipleTemp_Sender_Impl
     }
     catch(const CCM_DDS::NonExistent &)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: NonExistent ")
-                            ACE_TEXT ("with test updater update_one.\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unexpected exception: ")
+                            ACE_TEXT ("NonExistent with test updater ")
+                            ACE_TEXT ("update_one.\n")));
       result = false;
     }
     catch (const CCM_DDS::InternalError& )
@@ -146,7 +146,7 @@ namespace CIAO_MultipleTemp_Sender_Impl
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("create_many both topics : <%u> samples\n"),
                   this->topic_one_seq_many_.length ()));
-  //    this->updater_one_->create_many (this->topic_one_seq_many_);
+      this->updater_one_->create_many (this->topic_one_seq_many_);
       this->updater_two_->create_many (this->topic_two_seq_many_);
 
       result = true;
@@ -154,13 +154,13 @@ namespace CIAO_MultipleTemp_Sender_Impl
     catch(const CCM_DDS::NonExistent& )
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Unexpected exception:")
+                  ACE_TEXT ("ERROR Unexpected exception:")
                   ACE_TEXT (" NonExistent with test updater create_many\n")));
     }
     catch (const CCM_DDS::InternalError& ex)
     {
-       ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
-                   ACE_TEXT ("in updater: create_many: index <%d> - retval <%d>\n"),
+       ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error in updater:")
+                   ACE_TEXT (" create_many: index <%d> - retval <%d>\n"),
                    ex.index, ex.error_code));
 
     }
@@ -355,7 +355,8 @@ namespace CIAO_MultipleTemp_Sender_Impl
   {
     if(!this->test_ok_.value())
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Error in MultipleTemp in Sender")));
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("ERROR: Error in MultipleTemp in Sender")));
       }
   }
 
