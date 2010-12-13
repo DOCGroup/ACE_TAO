@@ -1,3 +1,11 @@
+Mon Dec 13 08:18:22 UTC 2010  Marijke Hengstmengel  <mhegstmengel@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        Made (un)register_type virtual in Base and add implementation in TopicBase.
+
 Mon Dec 13 07:56:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Connector/I2C_Shapes_Connector.idl:

@@ -77,7 +77,7 @@ protected:
   //@{
   void init_domain (::DDS::DomainParticipant_ptr & participant);
 
-  void register_type    (::DDS::DomainParticipant_ptr participant,
+  virtual void register_type    (::DDS::DomainParticipant_ptr participant,
                          const char * typesupport_name);
   void init_topic       (::DDS::DomainParticipant_ptr participant,
                          ::DDS::Topic_ptr & topic,
@@ -159,6 +159,7 @@ protected:
                            ::DDS::Subscriber_ptr subscriber);
   void remove_domain      (::DDS::DomainParticipant_ptr participant);
 
+  virtual
   void unregister_type    (::DDS::DomainParticipant_ptr participant,
                            const char * typesupport_name);
   //@}
