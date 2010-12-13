@@ -66,7 +66,7 @@ namespace CIAO
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Writer_T::write_many");
 
       ::DDS::Publisher_var pub = this->dds_writer ()->get_publisher ();
-      if (CORBA::is_nil (pub.in ()))
+      if (::CORBA::is_nil (pub.in ()))
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         ACE_TEXT ("Writer_T::write_many - ")

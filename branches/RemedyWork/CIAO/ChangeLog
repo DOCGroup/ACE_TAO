@@ -1,3 +1,17 @@
+Mon Dec 13 11:00:49 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/Writer_T.cpp:
+          Minor code layout changes
+
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver.mpc:
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender.mpc:
+        * connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender_exec.h:
+        * connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
 Mon Dec 13 08:18:22 UTC 2010  Marijke Hengstmengel  <mhegstmengel@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
