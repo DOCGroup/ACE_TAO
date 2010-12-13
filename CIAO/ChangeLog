@@ -1,3 +1,16 @@
+Mon Dec 13 14:59:22 UTC 2010  Marijke Hengstmengel  <mhegstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.cpp:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.h:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/04_ami4ccm.html:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Sender_comp_exec.cpp:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Sender_comp_exec.h:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/ImplementedExec/Hello_Receiver_comp_exec.h:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/ImplementedExec/Hello_Sender_comp_exec.cpp:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/ImplementedExec/Hello_Receiver_comp_exec.cpp:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/ImplementedExec/Hello_Sender_comp_exec.h:
+        Changed tutorial and code for changed generated ReplyHandler with -Gex.
+
 Mon Dec 13 14:01:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver.mpc:
