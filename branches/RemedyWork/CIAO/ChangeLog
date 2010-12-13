@@ -1,3 +1,14 @@
+Mon Dec 13 16:45:53 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver.mpc:
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver_exec.cpp:
+
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender.mpc:
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender_exec.h:
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
 Mon Dec 13 15:21:04 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver.mpc:
