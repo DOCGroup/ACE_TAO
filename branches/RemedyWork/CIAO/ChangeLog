@@ -1,3 +1,21 @@
+Mon Dec 13 12:49:22 UTC 2010  Marijke Hengstmengel  <mhegstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/MultipleTemp/Sender/MultipleTemp_Sender.mpc:
+        * connectors/dds4ccm/tests/MultipleTemp/Sender/MultipleTemp_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/MultipleTemp/Sender/MultipleTemp_Sender.idl:
+        * connectors/dds4ccm/tests/MultipleTemp/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/MultipleTemp/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/MultipleTemp/Receiver/MultipleTemp_Receiver_exec.h:
+        * connectors/dds4ccm/tests/MultipleTemp/Receiver/MultipleTemp_Receiver.mpc:
+        * connectors/dds4ccm/tests/MultipleTemp/Receiver/MultipleTemp_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector.idl:
+        * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector.mpc:
+        * connectors/dds4ccm/tests/MultipleTemp/Connector/ccm_dds_mlt.idl:
+        * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector_T.cpp:
+        * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector_T.h:
+        Implementation multiple templates. Still needed a TAO_IDL change for Typed::DataWriter/Reader.
+
+
 Mon Dec 13 11:00:49 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Write_T.cpp:

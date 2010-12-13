@@ -1,7 +1,20 @@
 // $Id$
+project (DDS_MLT_idl_gen) : taoidldefaults, anytypecode, dds4ccm {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=CCM_DDS_MLT_STUB_Export \
+              -Wb,stub_export_include=ccm_dds_mlt_stub_export.h \
+              -Wb,skel_export_macro=CCM_DDS_MLT_SKEL_Export \
+              -Wb,skel_export_include=ccm_dds_mlt_skel_export.h \
+              -SS -Scc -Sci -Gxhst \
+              -I $(CIAO_ROOT)/connectors/dds4ccm/idl
+
+  IDL_Files {
+    ccm_dds_mlt.idl
+  }
+}
 
 project(DDS_MT_TEMP_Connector_idl_gen) : connectoridldefaults, dds4ccm {
-  after += DDS4CCM_idl_gen
+  after += DDS4CCM_idl_gen DDS_MLT_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=MULTIPLE_TEMP_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=MultipleTemp_Connector_stub_export.h \
@@ -84,7 +97,6 @@ project(DDS_MultipleTemp_Connector_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(DDS_MultipleTemp_Connector_exec) : ciao_executor, dds4ccm_impl {
-  requires += dummy_label
   after   += DDS_MT_TEMP_Connector_lem_stub DDS_MultipleTemp_Connector_stub DDS_MultipleTemp_Base_stub
   sharedname = DDS_MultipleTemp_Connector_exec
   libs += DDS_MultipleTemp_Connector_stub DDS_MT_TEMP_Connector_lem_stub DDS_MultipleTemp_Base_stub DDS_MultipleTemp_Base_stub
@@ -96,6 +108,10 @@ project(DDS_MultipleTemp_Connector_exec) : ciao_executor, dds4ccm_impl {
   IDL_Files {
   }
 
+  Template_Files{
+    MultipleTemp_Connector_T.cpp
+  }
+
   Source_Files {
     MultipleTemp_Connector_conn.cpp
   }
@@ -103,6 +119,7 @@ project(DDS_MultipleTemp_Connector_exec) : ciao_executor, dds4ccm_impl {
   Header_Files {
     MultipleTemp_Connector_conn.h
     MultipleTemp_Connector_conn_export.h
+    MultipleTemp_Connector_T.h
   }
 
   Inline_Files {
@@ -111,7 +128,6 @@ project(DDS_MultipleTemp_Connector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(DDS_MT_Connector_svnt) : ciao_servant, dds4ccm_impl {
-  requires += dummy_label
   after      += DDS_MT_TEMP_Connector_lem_stub DDS_MultipleTemp_Connector_exec DDS_MultipleTemp_Connector_stub
   sharedname  = DDS_MultipleTemp_Connector_svnt
   libs       += DDS_MultipleTemp_Connector_stub \

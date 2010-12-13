@@ -58,13 +58,11 @@ namespace CIAO_MultipleTemp_Receiver_Impl
 
     virtual void
     on_one_data (
-//      const TestTopicTwo& an_instance,
-      const TestTopicOne& an_instance,
+      const TestTopicTwo& an_instance,
       const ::CCM_DDS::ReadInfo & info);
     virtual void
       on_many_data (
- //       const TestTopicTwoSeq & an_instance,
-        const TestTopicOneSeq & an_instance,
+        const TestTopicTwoSeq & an_instance,
         const ::CCM_DDS::ReadInfoSeq & info);
   private:
     ::MultipleTemp::CCM_Receiver_Context_var ciao_context_;

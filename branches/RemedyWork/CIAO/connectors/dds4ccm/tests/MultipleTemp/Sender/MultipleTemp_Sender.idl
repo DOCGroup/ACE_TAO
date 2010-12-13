@@ -4,7 +4,6 @@
  * @file
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
  *
- * by-hand idl3 translation of sender components.
  */
 
 #ifndef DDS_MULTIPLE_TEMP_SENDER_IDL
