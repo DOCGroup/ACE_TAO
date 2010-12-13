@@ -33,9 +33,9 @@ project(Proxy_RW_Test_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
 project(Proxy_RW_Test_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
   after += Proxy_RW_Test_Receiver_lem_gen Proxy_RW_Test_Receiver_stub  \
            Proxy_RW_Test_Connector_stub Proxy_RW_Test_Base_stub \
-           Reader_Starter_stub
+           RW_Reader_Starter_stub
   libs  +=  Receiver_stub Proxy_RW_Test_Connector_stub \
-            Proxy_RW_Test_Base_stub Reader_Starter_stub
+            Proxy_RW_Test_Base_stub RW_Reader_Starter_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -62,9 +62,9 @@ project(Proxy_RW_Test_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
 project(Proxy_RW_Test_Receiver_stub) : ccm_stub, dds4ccm_base {
   after += Proxy_RW_Test_Receiver_idl_gen  Proxy_RW_Test_Connector_stub \
            Proxy_RW_Test_Base_stub Proxy_RW_Test_Connector_lem_gen \
-           Reader_Starter_stub Reader_Starter_lem_stub
+           RW_Reader_Starter_stub RW_Reader_Starter_lem_stub
   libs  += Proxy_RW_Test_Connector_stub Proxy_RW_Test_Base_stub \
-           Reader_Starter_stub
+           RW_Reader_Starter_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -92,11 +92,11 @@ project(Proxy_RW_Test_Receiver_exec) : ciao_executor, dds4ccm_lem_stub, dds4ccm_
   after   += Proxy_RW_Test_Receiver_lem_stub Proxy_RW_Test_Receiver_stub \
              Proxy_RW_Test_Base_stub Proxy_RW_Test_Connector_stub \
              Proxy_RW_Test_Connector_lem_stub \
-             Reader_Starter_lem_stub Reader_Starter_stub
+             RW_Reader_Starter_lem_stub RW_Reader_Starter_stub
   sharedname = Receiver_exec
   libs += Receiver_stub Receiver_lem_stub Proxy_RW_Test_Base_stub \
           Proxy_RW_Test_Connector_stub Proxy_RW_Test_Connector_lem_stub \
-          Reader_Starter_lem_stub Reader_Starter_stub
+          RW_Reader_Starter_lem_stub RW_Reader_Starter_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -123,14 +123,14 @@ project(Proxy_RW_Test_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_s
   after      +=   Proxy_RW_Test_Receiver_lem_stub Proxy_RW_Test_Base_stub \
                   Proxy_RW_Test_Connector_stub Proxy_RW_Test_Connector_svnt \
                   Proxy_RW_Test_Receiver_exec Proxy_RW_Test_Connector_lem_stub \
-                  Reader_Starter_stub \
-                  Reader_Starter_svnt Reader_Starter_lem_stub
+                  RW_Reader_Starter_stub \
+                  RW_Reader_Starter_svnt RW_Reader_Starter_lem_stub
   sharedname  = Receiver_svnt
   libs       += Receiver_stub Receiver_lem_stub Proxy_RW_Test_Base_stub \
                 Proxy_RW_Test_Connector_stub Proxy_RW_Test_Connector_svnt \
                 Receiver_exec Proxy_RW_Test_Connector_lem_stub \
-                Reader_Starter_stub Reader_Starter_svnt \
-                Reader_Starter_lem_stub
+                RW_Reader_Starter_stub RW_Reader_Starter_svnt \
+                RW_Reader_Starter_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..

@@ -1,3 +1,10 @@
+Mon Dec 13 07:44:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Proxies/ReadWrite/Base/Reader_Starter.mpc:
+        * connectors/dds4ccm/tests/Proxies/ReadWrite/Receiver/Proxy_RW_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/Proxies/ReadWrite/Sender/Proxy_RW_Test_Sender.mpc:
+          Removed duplicate names in Reader_Starter projects.
+
 Fri Dec 10 16:01:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver.mpc:
