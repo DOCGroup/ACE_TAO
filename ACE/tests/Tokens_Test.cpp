@@ -14,7 +14,7 @@
 //     collections.  This is accomplished with the ACE Token Invariant
 //     utilities that allow and application to check that
 //     readers/writer and mutex lock invariants are always satisfied.
-//     Throughout this test, ACE_ASSERTs are used in conjunction with
+//     Throughout this test, ACE_TEST_ASSERTs are used in conjunction with
 //     Token Invariant operations, so that errors are reported using
 //     the ACE tests convention.  This application performs a local
 //     test and then fork_execs a token server and performs the same
@@ -88,7 +88,7 @@ run_thread (void *vp)
           return (void *) -1;
         }
 
-      ACE_ASSERT ((TOKEN_INVARIANTS::instance ()->acquired (tp->token1_) == 1) ||
+      ACE_TEST_ASSERT ((TOKEN_INVARIANTS::instance ()->acquired (tp->token1_) == 1) ||
                   (TOKEN_INVARIANTS::instance ()->acquired (tp->token2_) == 1));
 
       ACE_DEBUG ((LM_DEBUG,
@@ -111,7 +111,7 @@ run_thread (void *vp)
           return (void *) -1;
         }
 
-      ACE_ASSERT (TOKEN_INVARIANTS::instance ()->acquired (tp->token1_) == 1 ||
+      ACE_TEST_ASSERT (TOKEN_INVARIANTS::instance ()->acquired (tp->token1_) == 1 ||
                   TOKEN_INVARIANTS::instance ()->acquired (tp->token2_) == 1);
 
       ACE_DEBUG ((LM_DEBUG,

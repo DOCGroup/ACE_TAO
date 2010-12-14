@@ -97,7 +97,7 @@ Client::Client (void)
 int
 Client::open (void *)
 {
-  //  ACE_ASSERT (this->reactor () != 0);
+  //  ACE_TEST_ASSERT (this->reactor () != 0);
 
   if (this->reactor ()
       && this->reactor ()->register_handler (

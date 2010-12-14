@@ -47,7 +47,7 @@
 //
 // ============================================================================
 
-#include "test_config.h" /* Include first to enable ACE_ASSERT. */
+#include "test_config.h" /* Include first to enable ACE_TEST_ASSERT. */
 #include "ace/Message_Queue.h"
 #include "ace/Thread_Manager.h"
 #include "ace/High_Res_Timer.h"
@@ -137,7 +137,7 @@ static const ACE_Time_Value offset_step (0, 5);
 static void *
 order_consumer (void *args)
 {
-  ACE_ASSERT (args != 0);
+  ACE_TEST_ASSERT (args != 0);
 
   ACE_Message_Queue<ACE_SYNCH> *msg_queue =
     static_cast<ArgStruct *> (args)->queue_;
@@ -146,8 +146,8 @@ order_consumer (void *args)
   u_int expected_count =
     static_cast<ArgStruct *> (args)->expected_count_;
 
-  ACE_ASSERT (receipt_order != 0);
-  ACE_ASSERT (msg_queue != 0);
+  ACE_TEST_ASSERT (receipt_order != 0);
+  ACE_TEST_ASSERT (msg_queue != 0);
 
   u_int local_count = 0;
 
@@ -167,11 +167,11 @@ order_consumer (void *args)
 
     local_count++;
 
-    ACE_ASSERT (*expected == *mb->rd_ptr ());
+    ACE_TEST_ASSERT (*expected == *mb->rd_ptr ());
   }
 
-  ACE_ASSERT (local_count == ACE_OS::strlen (receipt_order));
-  ACE_ASSERT (local_count == expected_count);
+  ACE_TEST_ASSERT (local_count == ACE_OS::strlen (receipt_order));
+  ACE_TEST_ASSERT (local_count == expected_count);
   return 0;
 }
 
@@ -183,7 +183,7 @@ order_consumer (void *args)
 static void *
 order_producer (void *args)
 {
-  ACE_ASSERT (args != 0);
+  ACE_TEST_ASSERT (args != 0);
 
   ACE_Message_Queue<ACE_SYNCH> *msg_queue =
     static_cast<ArgStruct *> (args)->queue_;
@@ -194,8 +194,8 @@ order_producer (void *args)
   int expected_count =
     static_cast<ArgStruct *> (args)->expected_count_;
 
-  ACE_ASSERT (send_order != 0);
-  ACE_ASSERT (block_array != 0);
+  ACE_TEST_ASSERT (send_order != 0);
+  ACE_TEST_ASSERT (block_array != 0);
 
   // Iterate through the send order string and the message block
   // array, setting the current message block's read pointer to the
@@ -207,7 +207,7 @@ order_producer (void *args)
     {
       // point to the current message block
       ACE_Message_Block *mb = block_array [local_count];
-      ACE_ASSERT (mb != 0);
+      ACE_TEST_ASSERT (mb != 0);
 
       // Set the current send character in the current message block
       // at its read pointer position, and adjust the write pointer.
@@ -220,7 +220,7 @@ order_producer (void *args)
         break;
     }
 
-  ACE_ASSERT (local_count == expected_count);
+  ACE_TEST_ASSERT (local_count == expected_count);
 
   return 0;
 }
@@ -233,10 +233,10 @@ run_order_test (ACE_Message_Queue<ACE_SYNCH>* msg_queue,
   u_int i;
   u_int array_size = ACE_OS::strlen (send_order);
 
-  ACE_ASSERT (msg_queue != 0);
-  ACE_ASSERT (send_order != 0);
-  ACE_ASSERT (receipt_order != 0);
-  ACE_ASSERT (ACE_OS::strlen (send_order) == ACE_OS::strlen (receipt_order));
+  ACE_TEST_ASSERT (msg_queue != 0);
+  ACE_TEST_ASSERT (send_order != 0);
+  ACE_TEST_ASSERT (receipt_order != 0);
+  ACE_TEST_ASSERT (ACE_OS::strlen (send_order) == ACE_OS::strlen (receipt_order));
 
   ArgStruct supplier_args, consumer_args;
 
@@ -307,7 +307,7 @@ run_order_test (ACE_Message_Queue<ACE_SYNCH>* msg_queue,
           break;
           // should never reach here, but its better to make sure
         default:
-          ACE_ASSERT ((4 * i) / array_size < 4);
+          ACE_TEST_ASSERT ((4 * i) / array_size < 4);
           break;
         }
     }
@@ -340,14 +340,14 @@ performance_consumer (void * args)
 {
   ACE_High_Res_Timer timer;
 
-  ACE_ASSERT (args != 0);
+  ACE_TEST_ASSERT (args != 0);
 
   ACE_Message_Queue<ACE_SYNCH> *msg_queue =
     static_cast<ArgStruct *> (args)->queue_;
   u_int expected_count =
     static_cast<ArgStruct *> (args)->expected_count_;
 
-  ACE_ASSERT (msg_queue != 0);
+  ACE_TEST_ASSERT (msg_queue != 0);
 
   u_int local_count = 0;
   ACE_Message_Block *mb = 0;
@@ -371,7 +371,7 @@ performance_consumer (void * args)
               tv.msec (),
               (ACE_timer_t) tv.msec () / local_count));
 
-  ACE_ASSERT (local_count == expected_count);
+  ACE_TEST_ASSERT (local_count == expected_count);
   return 0;
 }
 
@@ -386,7 +386,7 @@ performance_producer (void *args)
 {
   ACE_High_Res_Timer timer;
 
-  ACE_ASSERT (args != 0);
+  ACE_TEST_ASSERT (args != 0);
 
   ACE_Message_Queue<ACE_SYNCH> *msg_queue =
     static_cast<ArgStruct *> (args)->queue_;
@@ -395,8 +395,8 @@ performance_producer (void *args)
   int expected_count =
     static_cast<ArgStruct *> (args)->expected_count_;
 
-  ACE_ASSERT (send_order != 0);
-  ACE_ASSERT (block_array != 0);
+  ACE_TEST_ASSERT (send_order != 0);
+  ACE_TEST_ASSERT (block_array != 0);
 
   // reset, then start timer
   timer.reset ();
@@ -411,7 +411,7 @@ performance_producer (void *args)
     {
       // Point to the current message block.
       ACE_Message_Block *mb = block_array [local_count];
-      ACE_ASSERT (mb != 0);
+      ACE_TEST_ASSERT (mb != 0);
 
       // Set a character in the current message block at its
       // read pointer position, and adjust the write pointer.
@@ -433,7 +433,7 @@ performance_producer (void *args)
               tv.msec (),
               (ACE_timer_t) tv.msec () / local_count));
 
-  ACE_ASSERT (local_count == expected_count);
+  ACE_TEST_ASSERT (local_count == expected_count);
   return 0;
 }
 
@@ -457,16 +457,16 @@ run_performance_test (u_int min_load,
 
   ACE_Message_Queue<ACE_SYNCH> *static_queue =
     ACE_Message_Queue_Factory<ACE_SYNCH>::create_static_message_queue (max_queue);
-  ACE_ASSERT (static_queue != 0);
+  ACE_TEST_ASSERT (static_queue != 0);
 
   ACE_Message_Queue<ACE_SYNCH> *deadline_queue =
     ACE_Message_Queue_Factory<ACE_SYNCH>::create_deadline_message_queue (max_queue);
-  ACE_ASSERT (deadline_queue != 0);
+  ACE_TEST_ASSERT (deadline_queue != 0);
 
   ACE_Message_Queue<ACE_SYNCH> *laxity_queue =
     ACE_Message_Queue_Factory<ACE_SYNCH>::create_laxity_message_queue (max_queue);
 
-  ACE_ASSERT (laxity_queue != 0);
+  ACE_TEST_ASSERT (laxity_queue != 0);
 
   // Zero out unused struct members.
   supplier_args.order_string_ = 0;
@@ -727,7 +727,7 @@ run_main (int, ACE_TCHAR *[])
   // Test factory, static message queue.
   ACE_Message_Queue<ACE_SYNCH> *test_queue =
     ACE_Message_Queue_Factory<ACE_SYNCH>::create_static_message_queue (max_queue);
-  ACE_ASSERT (test_queue != 0);
+  ACE_TEST_ASSERT (test_queue != 0);
   run_order_test (test_queue,
                   send_order,
                   static_receipt_order);
@@ -736,7 +736,7 @@ run_main (int, ACE_TCHAR *[])
   // Test factory, dynamic message queue (deadline strategy).
   test_queue =
     ACE_Message_Queue_Factory<ACE_SYNCH>::create_deadline_message_queue (max_queue);
-  ACE_ASSERT (test_queue != 0);
+  ACE_TEST_ASSERT (test_queue != 0);
   run_order_test (test_queue,
                   send_order,
                   deadline_receipt_order);
@@ -745,7 +745,7 @@ run_main (int, ACE_TCHAR *[])
   // Test factory, dynamic message queue (laxity strategy).
   test_queue =
     ACE_Message_Queue_Factory<ACE_SYNCH>::create_laxity_message_queue (max_queue);
-  ACE_ASSERT (test_queue != 0);
+  ACE_TEST_ASSERT (test_queue != 0);
   run_order_test (test_queue,
                   send_order,
                   laxity_receipt_order);
@@ -756,7 +756,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_Message_Queue_Vx *test_queue_vx =
     ACE_Message_Queue_Factory<ACE_NULL_SYNCH>::create_Vx_message_queue (vx_max_queue,
                                                                         vx_msg_size);
-  ACE_ASSERT (test_queue_vx != 0);
+  ACE_TEST_ASSERT (test_queue_vx != 0);
   // (TBD - does message receipt order test make any sense for Vx Queue ?
   //  If so, uncomment order test, or if not remove order test, below)
   // @@ % levine 22 Jul 1998 % It'd be nice to run the test, but:

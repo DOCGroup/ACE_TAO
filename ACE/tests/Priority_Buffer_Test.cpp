@@ -73,8 +73,8 @@ consumer (void *args)
         {
           // This isn't a "shutdown" message, so process it
           // "normally."
-          ACE_ASSERT (c == *mb->rd_ptr ());
-          ACE_ASSERT (mb->msg_priority () < cur_priority);
+          ACE_TEST_ASSERT (c == *mb->rd_ptr ());
+          ACE_TEST_ASSERT (mb->msg_priority () < cur_priority);
           cur_priority = mb->msg_priority ();
         }
 
@@ -88,7 +88,7 @@ consumer (void *args)
         break;
     }
 
-  ACE_ASSERT (local_count == message_count);
+  ACE_TEST_ASSERT (local_count == message_count);
   return 0;
 }
 

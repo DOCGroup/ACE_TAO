@@ -158,7 +158,7 @@ MyTask::create_reactor (void)
                     this->lock_,
                     -1);
 
-  ACE_ASSERT (this->my_reactor_ == 0);
+  ACE_TEST_ASSERT (this->my_reactor_ == 0);
 
   ACE_TP_Reactor * pImpl = 0;
 

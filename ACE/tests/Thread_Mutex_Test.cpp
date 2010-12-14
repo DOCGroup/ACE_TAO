@@ -101,7 +101,7 @@ test (void *args)
       else
         {
           result = mutex->release ();
-          ACE_ASSERT (result == 0);
+          ACE_TEST_ASSERT (result == 0);
         }
 
       // Now try the standard mutex.
@@ -110,7 +110,7 @@ test (void *args)
                   ACE_TEXT ("(%P|%t) = trying to acquire on iteration %d\n"),
                   i));
       result = mutex->acquire ();
-      ACE_ASSERT (result == 0);
+      ACE_TEST_ASSERT (result == 0);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) = acquired on iteration %d\n"),
                   i));
@@ -121,7 +121,7 @@ test (void *args)
       ACE_OS::sleep (ACE_OS::rand () % 2);
 
       result = mutex->release ();
-      ACE_ASSERT (result == 0);
+      ACE_TEST_ASSERT (result == 0);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) = released on iteration %d\n"),
                   i));
@@ -133,7 +133,7 @@ test (void *args)
       {
         // Construct an ACE_Guard to implicitly acquire the mutex.
         ACE_Guard<ACE_TEST_MUTEX> guard (*mutex);
-        ACE_ASSERT (guard.locked () != 0);
+        ACE_TEST_ASSERT (guard.locked () != 0);
 
         // Perform some operation which might exit the current scope
         // prematurely, e.g. by returning or throwing an exception.
@@ -148,7 +148,7 @@ test (void *args)
       {
         // Construct an ACE_Guard to implicitly acquire the mutex.
         ACE_Guard<ACE_TEST_MUTEX> guard (*mutex);
-        ACE_ASSERT (guard.locked () != 0);
+        ACE_TEST_ASSERT (guard.locked () != 0);
 
         // Perform some operation which might exit the current scope
         // prematurely, e.g. by returning or throwing an exception.
@@ -156,7 +156,7 @@ test (void *args)
 
         // Release the mutex since we no longer need it.
         guard.release ();
-        ACE_ASSERT (guard.locked () == 0);
+        ACE_TEST_ASSERT (guard.locked () == 0);
 
         // Do something else which does not require the mutex to be locked.
         // ...
@@ -173,7 +173,7 @@ test (void *args)
       {
         // Construct an ACE_Guard to implicitly acquire the mutex.
         ACE_Guard<ACE_TEST_MUTEX> guard (*mutex);
-        ACE_ASSERT (guard.locked () != 0);
+        ACE_TEST_ASSERT (guard.locked () != 0);
 
         // Perform some operation which might exit the current scope
         // prematurely, e.g. by returning or throwing an exception.
@@ -182,13 +182,13 @@ test (void *args)
         // Relinquish ownership of the mutex lock. Someone else must
         // now release it.
         guard.disown ();
-        ACE_ASSERT (guard.locked () == 0);
+        ACE_TEST_ASSERT (guard.locked () == 0);
 
         // ACE_Guard object's destructor will not release the mutex.
       }
       // We are now responsible for releasing the mutex.
       result = mutex->release ();
-      ACE_ASSERT (result == 0);
+      ACE_TEST_ASSERT (result == 0);
 
       // Construct an ACE_Guard without automatically acquiring the lock.
       {
@@ -197,13 +197,13 @@ test (void *args)
         // lock. The third parameter tells the guard that the mutex
         // has not been locked.
         ACE_Guard<ACE_TEST_MUTEX> guard (*mutex, 0, 0);
-        ACE_ASSERT (guard.locked () == 0);
+        ACE_TEST_ASSERT (guard.locked () == 0);
 
         // Conditionally acquire the mutex.
         if (i % 2 == 0)
           {
             guard.acquire ();
-            ACE_ASSERT (guard.locked () != 0);
+            ACE_TEST_ASSERT (guard.locked () != 0);
           }
 
         // Perform some operation that might exit the current scope
@@ -225,7 +225,7 @@ test (void *args)
           // existing lock.  The third parameter tells the guard that
           // the mutex has already been locked.
           ACE_Guard<ACE_TEST_MUTEX> guard (*mutex, 0, 1);
-          ACE_ASSERT (guard.locked () != 0);
+          ACE_TEST_ASSERT (guard.locked () != 0);
 
           // Perform some operation which might exit the current scope
           // prematurely, e.g. by returning or throwing an exception.

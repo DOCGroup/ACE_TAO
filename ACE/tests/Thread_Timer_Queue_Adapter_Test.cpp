@@ -201,7 +201,7 @@ run_main (int, ACE_TCHAR *[])
             ACE_OS::gettimeofday() + ACE_Time_Value(1, 0));
 
         ACE_OS::sleep(ACE_Time_Value(1, 100 * 1000));
-        ACE_ASSERT(iCallCount == 1);
+        ACE_TEST_ASSERT(iCallCount == 1);
 
         delete p_TestEventHandler;
 
@@ -228,7 +228,7 @@ run_main (int, ACE_TCHAR *[])
 
         ACE_OS::sleep(ACE_Time_Value(1, 100 * 1000));
 
-        ACE_ASSERT(iCallCount == 0);
+        ACE_TEST_ASSERT(iCallCount == 0);
 
         // Test event handler was deleted by the timer.
 
@@ -253,12 +253,12 @@ run_main (int, ACE_TCHAR *[])
                  ACE_Time_Value(1, 0));
 
         ACE_OS::sleep(ACE_Time_Value(3, 500 * 1000));
-        ACE_ASSERT(iCallCount == 3);
+        ACE_TEST_ASSERT(iCallCount == 3);
 
         // Cancel the repeating timer
         TimerWheelThreadAdapter.cancel(lTimerHandle);
 
-        ACE_ASSERT(iCallCount == 3);
+        ACE_TEST_ASSERT(iCallCount == 3);
 
         ACE_DEBUG((LM_DEBUG,
                    ACE_TEXT("%I(%t) Success in Repeating timer with cancellation test.\n")));
@@ -290,7 +290,7 @@ run_main (int, ACE_TCHAR *[])
                  ACE_OS::gettimeofday() + ACE_Time_Value(2, 0));
 
         ACE_OS::sleep(ACE_Time_Value(3, 0));
-        ACE_ASSERT(iCallCount == 3);
+        ACE_TEST_ASSERT(iCallCount == 3);
 
         delete p_TestEventHandler;
 

@@ -127,7 +127,7 @@ Thread_Pool::svc (void)
 
       int result = this->getq (mb);
 
-      ACE_ASSERT (result != -1 || errno == ESHUTDOWN);
+      ACE_TEST_ASSERT (result != -1 || errno == ESHUTDOWN);
 
       if (result == -1 && errno == ESHUTDOWN)
         {

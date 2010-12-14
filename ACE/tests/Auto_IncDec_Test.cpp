@@ -109,7 +109,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_Thread_Manager::instance ()->wait ();
 
-  ACE_ASSERT (current_threads_in_first_section.value () == 0
+  ACE_TEST_ASSERT (current_threads_in_first_section.value () == 0
               && current_threads_in_second_section.value () == 0);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -118,21 +118,21 @@ run_main (int, ACE_TCHAR *[])
   int counter = 0;
   {
     ACE_Auto_IncDec<int> Auto_IncDec1 (counter);
-    ACE_ASSERT (counter == 1);
+    ACE_TEST_ASSERT (counter == 1);
 
     ACE_Auto_IncDec<int> Auto_IncDec2 (counter);
-    ACE_ASSERT (counter == 2);
+    ACE_TEST_ASSERT (counter == 2);
 
     {
-      ACE_ASSERT (counter == 2);
+      ACE_TEST_ASSERT (counter == 2);
       ACE_Auto_IncDec<int> Auto_IncDec3 (counter);
-      ACE_ASSERT (counter == 3);
+      ACE_TEST_ASSERT (counter == 3);
     }
 
-    ACE_ASSERT (counter == 2);
+    ACE_TEST_ASSERT (counter == 2);
   }
 
-  ACE_ASSERT (counter == 0);
+  ACE_TEST_ASSERT (counter == 0);
 
 #endif /* ACE_HAS_THREADS */
 

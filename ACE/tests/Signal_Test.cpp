@@ -104,7 +104,7 @@ handle_signal (int signum)
 #endif
         int const result = ACE_OS::kill (child_pid,
                                          SIGTERM);
-        ACE_ASSERT (result != -1);
+        ACE_TEST_ASSERT (result != -1);
 
         return -1;
       }
@@ -236,7 +236,7 @@ worker_child (void *arg)
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) %p\n"),
                           ACE_TEXT ("kill")));
-              ACE_ASSERT (result != -1);
+              ACE_TEST_ASSERT (result != -1);
             }
         }
     }
@@ -250,7 +250,7 @@ worker_child (void *arg)
           // We need to do this to dislodge the signal handling thread if
           // it hasn't shut down on its own accord yet.
           int const result = ACE_OS::kill (ACE_OS::getpid (), SIGINT);
-          ACE_ASSERT (result != -1);
+          ACE_TEST_ASSERT (result != -1);
         }
     }
   ACE_DEBUG ((LM_DEBUG,
@@ -362,7 +362,7 @@ run_test (ACE_THR_FUNC worker,
                 (worker,
                   reinterpret_cast <void *> (handle_signals_synchronously),
                   THR_DETACHED);
-      ACE_ASSERT (result != -1);
+      ACE_TEST_ASSERT (result != -1);
 
       if (handle_signals_in_separate_thread)
         {
@@ -373,7 +373,7 @@ run_test (ACE_THR_FUNC worker,
             (synchronous_signal_handler,
              0,
              THR_DETACHED);
-          ACE_ASSERT (result != -1);
+          ACE_TEST_ASSERT (result != -1);
         }
       else
         {
@@ -382,7 +382,7 @@ run_test (ACE_THR_FUNC worker,
 
       // Wait for the thread(s) to finish.
       result = ACE_Thread_Manager::instance ()->wait ();
-      ACE_ASSERT (result != -1);
+      ACE_TEST_ASSERT (result != -1);
     }
   else
 #else

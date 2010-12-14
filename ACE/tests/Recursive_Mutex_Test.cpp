@@ -77,7 +77,7 @@ test_recursion_depth (int nesting_level,
         }
 #endif  /* !ACE_HAS_WTHREADS */
       int result = rm->acquire ();
-      ACE_ASSERT (result == 0);
+      ACE_TEST_ASSERT (result == 0);
 #if !defined (ACE_HAS_WTHREADS)
       if (nesting_level_supported
           && (nesting_level + 1) != rm->get_nesting_level ())
@@ -106,7 +106,7 @@ test_recursion_depth (int nesting_level,
         }
 #endif  /* !ACE_HAS_WTHREADS */
       result = rm->release ();
-      ACE_ASSERT (result == 0);
+      ACE_TEST_ASSERT (result == 0);
 #if !defined (ACE_HAS_WTHREADS)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) = released, nesting = %d, thread id = %u\n"),
@@ -186,7 +186,7 @@ test_timed_wait (int nesting_level,
           else
             {
               result = rm->release ();
-              ACE_ASSERT (result == 0);
+              ACE_TEST_ASSERT (result == 0);
             }
 
           // Now try the standard mutex.
@@ -195,7 +195,7 @@ test_timed_wait (int nesting_level,
                       ACE_TEXT ("(%P|%t) = trying to acquire on iteration %d\n"),
                       i));
           result = rm->acquire ();
-          ACE_ASSERT (result == 0);
+          ACE_TEST_ASSERT (result == 0);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) = acquired on iteration %d\n"),
                       i));
@@ -206,7 +206,7 @@ test_timed_wait (int nesting_level,
           ACE_OS::sleep (ACE_OS::rand () % 2);
 
           result = rm->release ();
-          ACE_ASSERT (result == 0);
+          ACE_TEST_ASSERT (result == 0);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) = released on iteration %d\n"),
                       i));
@@ -218,7 +218,7 @@ test_timed_wait (int nesting_level,
           {
             // Construct an ACE_Guard to implicitly acquire the mutex.
             ACE_Guard<ACE_TEST_MUTEX> guard (*rm);
-            ACE_ASSERT (guard.locked () != 0);
+            ACE_TEST_ASSERT (guard.locked () != 0);
 
             // Perform some operation which might exit the current scope
             // prematurely, e.g. by returning or throwing an exception.
@@ -233,7 +233,7 @@ test_timed_wait (int nesting_level,
           {
             // Construct an ACE_Guard to implicitly acquire the mutex.
             ACE_Guard<ACE_TEST_MUTEX> guard (*rm);
-            ACE_ASSERT (guard.locked () != 0);
+            ACE_TEST_ASSERT (guard.locked () != 0);
 
             // Perform some operation which might exit the current scope
             // prematurely, e.g. by returning or throwing an exception.
@@ -241,7 +241,7 @@ test_timed_wait (int nesting_level,
 
             // Release the mutex since we no longer need it.
             guard.release ();
-            ACE_ASSERT (guard.locked () == 0);
+            ACE_TEST_ASSERT (guard.locked () == 0);
 
             // Do something else which does not require the mutex to be locked.
             // ...
@@ -258,7 +258,7 @@ test_timed_wait (int nesting_level,
           {
             // Construct an ACE_Guard to implicitly acquire the mutex.
             ACE_Guard<ACE_TEST_MUTEX> guard (*rm);
-            ACE_ASSERT (guard.locked () != 0);
+            ACE_TEST_ASSERT (guard.locked () != 0);
 
             // Perform some operation which might exit the current scope
             // prematurely, e.g. by returning or throwing an exception.
@@ -267,13 +267,13 @@ test_timed_wait (int nesting_level,
             // Relinquish ownership of the mutex lock. Someone else must
             // now release it.
             guard.disown ();
-            ACE_ASSERT (guard.locked () == 0);
+            ACE_TEST_ASSERT (guard.locked () == 0);
 
             // ACE_Guard object's destructor will not release the mutex.
         }
           // We are now responsible for releasing the mutex.
           result = rm->release ();
-          ACE_ASSERT (result == 0);
+          ACE_TEST_ASSERT (result == 0);
 
           // Construct an ACE_Guard without automatically acquiring the lock.
           {
@@ -282,13 +282,13 @@ test_timed_wait (int nesting_level,
             // lock. The third parameter tells the guard that the mutex
             // has not been locked.
             ACE_Guard<ACE_TEST_MUTEX> guard (*rm, 0, 0);
-            ACE_ASSERT (guard.locked () == 0);
+            ACE_TEST_ASSERT (guard.locked () == 0);
 
             // Conditionally acquire the mutex.
             if (i % 2 == 0)
               {
                 guard.acquire ();
-                ACE_ASSERT (guard.locked () != 0);
+                ACE_TEST_ASSERT (guard.locked () != 0);
               }
 
             // Perform some operation that might exit the current scope
@@ -310,7 +310,7 @@ test_timed_wait (int nesting_level,
               // existing lock.  The third parameter tells the guard that
               // the mutex has already been locked.
               ACE_Guard<ACE_TEST_MUTEX> guard (*rm, 0, 1);
-              ACE_ASSERT (guard.locked () != 0);
+              ACE_TEST_ASSERT (guard.locked () != 0);
 
               // Perform some operation which might exit the current scope
               // prematurely, e.g. by returning or throwing an exception.

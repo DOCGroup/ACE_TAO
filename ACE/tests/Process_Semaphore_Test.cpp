@@ -90,7 +90,7 @@ acquire_release (void)
 #endif
 
   // Make sure the constructor succeeded
-  ACE_ASSERT (ACE_LOG_MSG->op_status () == 0);
+  ACE_TEST_ASSERT (ACE_LOG_MSG->op_status () == 0);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P) Begin ping-pong\n")));
@@ -121,7 +121,7 @@ acquire_release (void)
     wait.sec (wait.sec () + 3); // timeout in 3 secs
 
     if (sema_pong.acquire (wait))
-        ACE_ASSERT(errno == ETIME);
+        ACE_TEST_ASSERT(errno == ETIME);
     else
         ACE_DEBUG ((LM_ERROR,
                     ACE_TEXT ("(%P) Acquired pong without release()\n")));
@@ -156,7 +156,7 @@ acquire_release (void)
 
     if (sema_ping.acquire (wait))
     {
-        ACE_ASSERT(errno == ETIME);
+        ACE_TEST_ASSERT(errno == ETIME);
         ACE_DEBUG ((LM_ERROR,
                     ACE_TEXT ("(%P) Acquiring pong timed out\n")));
     }
@@ -213,7 +213,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       // Spawn the child process.
       int result = child.spawn (options);
-      ACE_ASSERT (result != -1);
+      ACE_TEST_ASSERT (result != -1);
       ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Parent spawned child process with pid = %d.\n"),
                 child.getpid ()));
@@ -223,7 +223,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ACE_exitcode child_status;
       // Wait for the child processes we created to exit.
-      ACE_ASSERT (child.wait (&child_status) != -1);
+      ACE_TEST_ASSERT (child.wait (&child_status) != -1);
       if (child_status == 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Child %d finished ok\n"),

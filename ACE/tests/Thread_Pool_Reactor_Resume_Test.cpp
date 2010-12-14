@@ -310,7 +310,7 @@ worker (void *)
   int grp = ACE_Thread_Manager::instance ()->spawn_n (cli_thrno,
                                                       &cli_worker,
                                                       buf);
-  ACE_ASSERT (grp != -1);
+  ACE_TEST_ASSERT (grp != -1);
 
   ACE_Thread_Manager::instance ()->wait_grp (grp);
 

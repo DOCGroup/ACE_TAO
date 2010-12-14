@@ -90,7 +90,7 @@ Test_Task::~Test_Task (void)
               ACE_TEXT ("(%t) TT- Test_Task::task_count_ = %d\n"),
               Test_Task::task_count_));
 
-  ACE_ASSERT (Test_Task::task_count_ == 0);
+  ACE_TEST_ASSERT (Test_Task::task_count_ == 0);
 }
 
 int
@@ -111,7 +111,7 @@ Test_Task::close (u_long)
               ACE_TEXT ("(%t) close Test_Task::task_count_ = %d\n"),
               Test_Task::task_count_));
 
-  ACE_ASSERT (Test_Task::task_count_ >= 0);
+  ACE_TEST_ASSERT (Test_Task::task_count_ >= 0);
 
   return 0;
 }
@@ -208,12 +208,12 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Reactors_Test"));
 
 #if defined (ACE_HAS_THREADS)
-  ACE_ASSERT (ACE_LOG_MSG->op_status () != -1);
+  ACE_TEST_ASSERT (ACE_LOG_MSG->op_status () != -1);
 
   thr_mgr = ACE_Thread_Manager::instance ();
 
   ACE_Reactor reactor;
-  ACE_ASSERT (ACE_LOG_MSG->op_status () != -1);
+  ACE_TEST_ASSERT (ACE_LOG_MSG->op_status () != -1);
 
   Test_Task tt1[MAX_TASKS];
   Test_Task tt2[MAX_TASKS];
