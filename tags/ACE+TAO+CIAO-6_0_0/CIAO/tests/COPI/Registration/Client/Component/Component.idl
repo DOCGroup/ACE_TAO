@@ -1,0 +1,15 @@
+// $Id$
+
+#ifndef COMPONENT_IDL_
+#define COMPONENT_IDL_
+
+#include <Components.idl>
+
+module Registration
+{
+  component Client_Registration
+  {
+  };
+};
+
+#endif /* COMPONENT_IDL_ */

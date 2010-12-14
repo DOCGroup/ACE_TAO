@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file   CSL_DeadlineTest_Base.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef CSL_DEADLINETEST_BASE_IDL
+#define CSL_DEADLINETEST_BASE_IDL
+
+#pragma ndds typesupport "Base/CSL_DeadlineTest_BaseSupport.h"
+
+#pragma DCPS_DATA_TYPE "TestTopic"
+#pragma DCPS_DATA_KEY "TestTopic key"
+
+struct TestTopic {
+  string key; //@key
+  long x;
+};
+
+typedef sequence<TestTopic> TestTopicSeq;
+
+#endif

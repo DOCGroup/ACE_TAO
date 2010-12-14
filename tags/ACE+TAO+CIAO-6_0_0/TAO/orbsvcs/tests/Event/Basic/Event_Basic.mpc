@@ -1,0 +1,108 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Reconnect): rteventtestexe {
+  exename = Reconnect
+  Source_Files {
+    Reconnect.cpp
+  }
+}
+
+project(*Shutdown): rteventtestexe {
+  exename = Shutdown
+  Source_Files {
+    Shutdown.cpp
+  }
+}
+
+project(*Observer): rteventtestexe {
+  exename = Observer
+  Source_Files {
+    Observer.cpp
+  }
+}
+
+project(*BCast): rteventtestexe {
+  exename = BCast
+  Source_Files {
+    BCast.cpp
+  }
+}
+
+project(*Timeout): rteventtestexe {
+  exename = Timeout
+  Source_Files {
+    Timeout.cpp
+  }
+}
+
+project(*Wildcard): rteventtestexe {
+  exename = Wildcard
+  Source_Files {
+    Wildcard.cpp
+  }
+}
+
+project(*Negation): rteventtestexe {
+  exename = Negation
+  Source_Files {
+    Negation.cpp
+  }
+}
+
+project(*Disconnect): rteventtestexe {
+  exename = Disconnect
+  Source_Files {
+    Disconnect.cpp
+  }
+}
+
+project(*MT_Disconnect): rteventtestexe {
+  exename = MT_Disconnect
+  Source_Files {
+    MT_Disconnect.cpp
+  }
+}
+
+project(*Atomic_Reconnect): rteventtestexe {
+  exename = Atomic_Reconnect
+  Source_Files {
+    Atomic_Reconnect.cpp
+  }
+}
+
+project(*Bitmask): rteventtestexe {
+  exename = Bitmask
+  Source_Files {
+    Bitmask.cpp
+  }
+}
+
+project(*Complex): rteventtestexe {
+  exename = Complex
+  Source_Files {
+    Complex.cpp
+  }
+}
+
+project(*Gateway): rteventtestexe {
+  exename = Gateway
+  Source_Files {
+    Gateway.cpp
+  }
+}
+
+project(*Control): rteventtestexe {
+  exename = Control
+  Source_Files {
+    Control.cpp
+  }
+}
+
+project(*Random) : rteventtestexe {
+  exename = Random
+  Source_Files {
+    Random.cpp
+  }
+}
+
