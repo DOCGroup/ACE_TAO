@@ -35,7 +35,7 @@ sizeof_from_lt_sizeof_to (void)
     typedef signed char from_type;
     typedef unsigned int to_type;
 
-    ACE_ASSERT (sizeof (from_type) < sizeof (to_type));
+    ACE_TEST_ASSERT (sizeof (from_type) < sizeof (to_type));
 
     from_type f =
       ACE_Numeric_Limits<from_type>::max ();  // Should not be truncated.
@@ -55,7 +55,7 @@ sizeof_from_lt_sizeof_to (void)
     typedef unsigned char from_type;
     typedef signed int to_type;
 
-    ACE_ASSERT (sizeof (from_type) < sizeof (to_type));
+    ACE_TEST_ASSERT (sizeof (from_type) < sizeof (to_type));
 
     from_type f =
       ACE_Numeric_Limits<from_type>::max ();  // Should not be truncated.
@@ -75,7 +75,7 @@ sizeof_from_lt_sizeof_to (void)
     typedef signed char from_type;
     typedef signed int to_type;
 
-    ACE_ASSERT (sizeof (from_type) < sizeof (to_type));
+    ACE_TEST_ASSERT (sizeof (from_type) < sizeof (to_type));
 
     from_type f1 = -1;  // Should not be truncated.
     from_type f2 =
@@ -97,7 +97,7 @@ sizeof_from_lt_sizeof_to (void)
     typedef unsigned char from_type;
     typedef unsigned int to_type;
 
-    ACE_ASSERT (sizeof (from_type) < sizeof (to_type));
+    ACE_TEST_ASSERT (sizeof (from_type) < sizeof (to_type));
 
     from_type f =
       ACE_Numeric_Limits<from_type>::max ();  // Should not be truncated.
@@ -134,7 +134,7 @@ sizeof_from_eq_sizeof_to (void)
     typedef signed int from_type;
     typedef unsigned int to_type;
 
-    ACE_ASSERT (sizeof (from_type) == sizeof (to_type));
+    ACE_TEST_ASSERT (sizeof (from_type) == sizeof (to_type));
 
     from_type f1 = -1;  // Should not be truncated.
     from_type f2 =
@@ -156,7 +156,7 @@ sizeof_from_eq_sizeof_to (void)
     typedef unsigned int from_type;
     typedef signed int to_type;
 
-    ACE_ASSERT (sizeof (from_type) == sizeof (to_type));
+    ACE_TEST_ASSERT (sizeof (from_type) == sizeof (to_type));
 
     from_type f =
       ACE_Numeric_Limits<from_type>::max ();  // Should be truncated.
@@ -176,7 +176,7 @@ sizeof_from_eq_sizeof_to (void)
     typedef signed int from_type;
     typedef signed int to_type;
 
-    ACE_ASSERT (sizeof (from_type) == sizeof (to_type));
+    ACE_TEST_ASSERT (sizeof (from_type) == sizeof (to_type));
 
     from_type f1 = -1;  // Should not be truncated.
     from_type f2 =
@@ -198,7 +198,7 @@ sizeof_from_eq_sizeof_to (void)
     typedef unsigned int from_type;
     typedef unsigned int to_type;
 
-    ACE_ASSERT (sizeof (from_type) == sizeof (to_type));
+    ACE_TEST_ASSERT (sizeof (from_type) == sizeof (to_type));
 
     from_type f =
       ACE_Numeric_Limits<from_type>::max ();  // Should not be truncated.
@@ -235,7 +235,7 @@ sizeof_from_gt_sizeof_to (void)
     typedef signed int from_type;
     typedef unsigned char to_type;
 
-    ACE_ASSERT (sizeof (from_type) > sizeof (to_type));
+    ACE_TEST_ASSERT (sizeof (from_type) > sizeof (to_type));
 
     from_type f =
       ACE_Numeric_Limits<from_type>::max ();  // Should be truncated.
@@ -255,7 +255,7 @@ sizeof_from_gt_sizeof_to (void)
     typedef unsigned int from_type;
     typedef signed char to_type;
 
-    ACE_ASSERT (sizeof (from_type) > sizeof (to_type));
+    ACE_TEST_ASSERT (sizeof (from_type) > sizeof (to_type));
 
     from_type f =
       ACE_Numeric_Limits<from_type>::max ();  // Should be truncated.
@@ -275,7 +275,7 @@ sizeof_from_gt_sizeof_to (void)
     typedef signed int from_type;
     typedef signed char to_type;
 
-    ACE_ASSERT (sizeof (from_type) > sizeof (to_type));
+    ACE_TEST_ASSERT (sizeof (from_type) > sizeof (to_type));
 
     from_type f1 = -1;  // Should not be truncated.
     from_type f2 =
@@ -297,7 +297,7 @@ sizeof_from_gt_sizeof_to (void)
     typedef unsigned int from_type;
     typedef unsigned char to_type;
 
-    ACE_ASSERT (sizeof (from_type) > sizeof (to_type));
+    ACE_TEST_ASSERT (sizeof (from_type) > sizeof (to_type));
 
     from_type f =
       ACE_Numeric_Limits<from_type>::max ();  // Should be truncated.

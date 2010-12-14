@@ -242,7 +242,7 @@ notify (ACE_Reactor &reactor,
 
   int result =
     event_loop_thread.activate ();
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   for (int i = 0;
        i < iterations;
@@ -253,7 +253,7 @@ notify (ACE_Reactor &reactor,
       result = reactor.notify (event_handler,
                                ACE_Event_Handler::READ_MASK);
 
-      ACE_ASSERT (result == 0);
+      ACE_TEST_ASSERT (result == 0);
     }
 
   thread_manager.wait ();

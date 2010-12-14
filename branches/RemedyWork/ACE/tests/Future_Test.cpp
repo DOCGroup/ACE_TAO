@@ -386,17 +386,17 @@ run_main (int, ACE_TCHAR *[])
                   Prime_Scheduler (ACE_TEXT ("andres")),
                   -1);
   int result = andres->open ();
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
   ACE_NEW_RETURN (peter,
                   Prime_Scheduler (ACE_TEXT ("peter")),
                   -1);
   result = peter->open ();
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
   ACE_NEW_RETURN (helmut,
                   Prime_Scheduler (ACE_TEXT ("helmut")),
                   -1);
   result = helmut->open ();
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   // Matias passes all asynchronous method calls on to Andres...
   ACE_NEW_RETURN (matias,
@@ -404,7 +404,7 @@ run_main (int, ACE_TCHAR *[])
                                    andres),
                   -1);
   result = matias->open ();
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   for (int i = 0; i < n_loops; i++)
     {

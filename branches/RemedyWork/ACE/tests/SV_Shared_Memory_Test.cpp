@@ -69,19 +69,19 @@ parent (char *shm)
 
   int result;
   result = parent_mutex->release ();
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   result = parent_synch->acquire ();
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   result = myallocator ().remove ();
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   result = parent_mutex->remove ();
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   result = parent_synch->remove ();
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   return 0;
 }
@@ -98,7 +98,7 @@ child (char *shm)
   result = mutex.open (SEM_KEY_1,
                        ACE_SV_Semaphore_Complex::ACE_CREATE,
                        0);
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   ACE_SV_Semaphore_Complex synch;
   // This semaphore is initially created with a count of 0, i.e., it
@@ -106,7 +106,7 @@ child (char *shm)
   result = synch.open (SEM_KEY_2,
                        ACE_SV_Semaphore_Complex::ACE_CREATE,
                        0);
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   // Perform "busy waiting" here until we acquire the semaphore.  This
   // isn't really a good design -- it's just to illustrate that you
@@ -120,14 +120,14 @@ child (char *shm)
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P) child mutex.tryacquire")));
-        ACE_ASSERT (result != -1);
+        ACE_TEST_ASSERT (result != -1);
       }
 
   for (int i = 0; i < SHMSZ; i++)
-    ACE_ASSERT (SHMDATA[i] == shm[i]);
+    ACE_TEST_ASSERT (SHMDATA[i] == shm[i]);
 
   result = synch.release ();
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   return 0;
 }
@@ -166,14 +166,14 @@ run_main (int, ACE_TCHAR *[])
   int result = parent_mutex->open (SEM_KEY_1,
                                    ACE_SV_Semaphore_Complex::ACE_CREATE,
                                    0);
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   // This semaphore is initially created with a count of 0, i.e., it
   // is "locked."
   result = parent_synch->open (SEM_KEY_2,
                                ACE_SV_Semaphore_Complex::ACE_CREATE,
                                0);
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   switch (ACE_OS::fork (ACE_TEXT ("SV_Shared_Memory_Test.cpp")))
     {

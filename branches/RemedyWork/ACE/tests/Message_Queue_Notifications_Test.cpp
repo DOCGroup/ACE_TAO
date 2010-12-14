@@ -231,7 +231,7 @@ Watermark_Test::producer (void)
   // has dropped under the lwm.
   this->put_message ();
 
-  ACE_ASSERT (this->msg_queue ()-> message_bytes () <= this->lwm_ + this->len_);
+  ACE_TEST_ASSERT (this->msg_queue ()-> message_bytes () <= this->lwm_ + this->len_);
 
   this->print_producer_debug_message ();
 
