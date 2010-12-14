@@ -218,7 +218,7 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::unregister_type (
   ::DDS::DomainParticipant_ptr participant,
   const char * typesupport_name)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T::unregister_type");
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::unregister_type");
 #if (CIAO_DDS4CCM_NDDS==1)
   ::CIAO::NDDS::DDS_TypeFactory_i * factory =
     ::CIAO::NDDS::DDS_TypeSupport_i::unregister_type (typesupport_name, participant);

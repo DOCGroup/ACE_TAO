@@ -390,7 +390,7 @@
       <instance xmi:idref="MultipleTemp_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection-->
-  
+
   <connection>
     <name>info_two_out_data</name>
     <deployRequirement>
