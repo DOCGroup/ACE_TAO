@@ -25,7 +25,7 @@ FooConnector_Connector_T<CCM_TYPE, DDS_TYPE_T, FIXED_T, SEQ_TYPE_T, FIXED_SEQ_TY
   ::DDS::DomainParticipant_ptr participant,
   const char * /*typesupport_name*/)
 {
-  DDS4CCM_TRACE ("DDS_MultipleTemp_FooConnector_T::register_type");
+  DDS4CCM_TRACE ("FooConnector_Connector_T::register_type");
 
   ::DDS::ReturnCode_t retcode_t = ::DDS::RETCODE_OK;
   ::DDS::ReturnCode_t retcode_y = ::DDS::RETCODE_OK;
@@ -106,7 +106,7 @@ typename DDS_TYPE_Y, bool FIXED_Y, typename SEQ_TYPE_Y, bool FIXED_SEQ_TYPE_Y>
  FooConnector_Connector_T<CCM_TYPE, DDS_TYPE_T, FIXED_T, SEQ_TYPE_T, FIXED_SEQ_TYPE_T,
  DDS_TYPE_Y, FIXED_Y, SEQ_TYPE_Y, FIXED_SEQ_TYPE_Y>::get_push_consumer_t_filter_config(void)
 {
-  DDS4CCM_TRACE ("FooConnector_Connector_T<>::get_push_consumer_t_filter_config");
+  DDS4CCM_TRACE ("FooConnector_Connector_T::get_push_consumer_t_filter_config");
   this->push_consumer_t_.set_component (this);
   return this->push_consumer_t_.get_filter_config ();
 }
@@ -126,7 +126,7 @@ void
 FooConnector_Connector_T<CCM_TYPE, DDS_TYPE_T, FIXED_T, SEQ_TYPE_T, FIXED_SEQ_TYPE_T,
 DDS_TYPE_Y, FIXED_Y, SEQ_TYPE_Y, FIXED_SEQ_TYPE_Y>::push_consumer_t_filter (const ::CCM_DDS::QueryFilter &filter)
 {
-  DDS4CCM_TRACE ("FooConnector_Connector_T<>::push_consumer_t_filter");
+  DDS4CCM_TRACE ("FooConnector_Connector_T::push_consumer_t_filter");
   this->push_consumer_t_.filter (filter);
 }
 
@@ -136,7 +136,7 @@ typename CCM_TYPE::push_consumer_t_traits::data_type::_ptr_type
 FooConnector_Connector_T<CCM_TYPE, DDS_TYPE_T, FIXED_T, SEQ_TYPE_T, FIXED_SEQ_TYPE_T,
 DDS_TYPE_Y, FIXED_Y, SEQ_TYPE_Y, FIXED_SEQ_TYPE_Y>::get_push_consumer_t_data (void)
 {
-  DDS4CCM_TRACE ("FooConnector_Connector_T<>::get_push_consumer_t_data");
+  DDS4CCM_TRACE ("FooConnector_Connector_T::get_push_consumer_t_data");
   this->push_consumer_t_.set_component (this);
   return this->push_consumer_t_.get_data ();
 }
@@ -147,7 +147,7 @@ typename CCM_TYPE::push_consumer_t_traits::data_control_type::_ptr_type
 FooConnector_Connector_T<CCM_TYPE, DDS_TYPE_T, FIXED_T, SEQ_TYPE_T, FIXED_SEQ_TYPE_T,
 DDS_TYPE_Y, FIXED_Y, SEQ_TYPE_Y, FIXED_SEQ_TYPE_Y>::get_push_consumer_t_data_control (void)
 {
-  DDS4CCM_TRACE ("FooConnector_Connector_T<C::get_push_consumer_t_data_control");
+  DDS4CCM_TRACE ("FooConnector_Connector_T::get_push_consumer_t_data_control");
   this->push_consumer_t_.set_component (this);
   return this->push_consumer_t_.get_data_control ();
 }
@@ -158,7 +158,7 @@ typename CCM_TYPE::push_consumer_t_traits::dds_entity_type::_ptr_type
 FooConnector_Connector_T<CCM_TYPE, DDS_TYPE_T, FIXED_T, SEQ_TYPE_T, FIXED_SEQ_TYPE_T,
 DDS_TYPE_Y, FIXED_Y, SEQ_TYPE_Y, FIXED_SEQ_TYPE_Y>::get_push_consumer_t_dds_entity (void)
 {
-  DDS4CCM_TRACE ("FooConnector_Connector_T<>::get_push_consumer_t_dds_entity");
+  DDS4CCM_TRACE ("FooConnector_Connector_T::get_push_consumer_t_dds_entity");
   this->push_consumer_t_.set_component (this);
   return this->push_consumer_t_.get_dds_entity ();
 }
@@ -210,7 +210,7 @@ typename DDS_TYPE_Y, bool FIXED_Y, typename SEQ_TYPE_Y, bool FIXED_SEQ_TYPE_Y>
  FooConnector_Connector_T<CCM_TYPE, DDS_TYPE_T, FIXED_T, SEQ_TYPE_T, FIXED_SEQ_TYPE_T,
  DDS_TYPE_Y, FIXED_Y, SEQ_TYPE_Y, FIXED_SEQ_TYPE_Y>::get_push_consumer_y_filter_config(void)
 {
-  DDS4CCM_TRACE ("FooConnector_Connector_T<>::get_push_consumer_y_filter_config");
+  DDS4CCM_TRACE ("FooConnector_Connector_T::get_push_consumer_y_filter_config");
   this->push_consumer_y_.set_component (this);
   return this->push_consumer_y_.get_filter_config ();
 }
@@ -259,7 +259,7 @@ typename CCM_TYPE::push_consumer_y_traits::dds_entity_type::_ptr_type
 FooConnector_Connector_T<CCM_TYPE, DDS_TYPE_T, FIXED_T, SEQ_TYPE_T, FIXED_SEQ_TYPE_T,
 DDS_TYPE_Y, FIXED_Y, SEQ_TYPE_Y, FIXED_SEQ_TYPE_Y>::get_push_consumer_y_dds_entity (void)
 {
-  DDS4CCM_TRACE ("FooConnector_Connector_T<>::get_push_consumer_y_dds_entity");
+  DDS4CCM_TRACE ("FooConnector_Connector_T::get_push_consumer_y_dds_entity");
   this->push_consumer_y_.set_component (this);
   return this->push_consumer_y_.get_dds_entity ();
 }
@@ -280,7 +280,7 @@ typename CCM_TYPE::observable_y_traits::dds_entity_type::_ptr_type
 FooConnector_Connector_T<CCM_TYPE, DDS_TYPE_T, FIXED_T, SEQ_TYPE_T, FIXED_SEQ_TYPE_T,
 DDS_TYPE_Y, FIXED_Y, SEQ_TYPE_Y, FIXED_SEQ_TYPE_Y>::get_observable_y_dds_entity (void)
 {
-  DDS4CCM_TRACE ("FooConnector_Connector_T<>::get_observable_y_dds_entity");
+  DDS4CCM_TRACE ("FooConnector_Connector_T::get_observable_y_dds_entity");
   this->observable_y_.set_component (this);
   return this->observable_y_.get_dds_entity ();
 }
@@ -291,7 +291,7 @@ void
 FooConnector_Connector_T<CCM_TYPE, DDS_TYPE_T, FIXED_T, SEQ_TYPE_T, FIXED_SEQ_TYPE_T,
 DDS_TYPE_Y, FIXED_Y, SEQ_TYPE_Y, FIXED_SEQ_TYPE_Y>::configuration_complete (void)
 {
-  DDS4CCM_TRACE ("FooConnector_Connector_T<>::configuration complete");
+  DDS4CCM_TRACE ("FooConnector_Connector_T::configuration complete");
   // Init default domain in Base_Connector
   BaseConnector::configuration_complete ();
 
@@ -384,7 +384,7 @@ void
 FooConnector_Connector_T<CCM_TYPE, DDS_TYPE_T, FIXED_T, SEQ_TYPE_T, FIXED_SEQ_TYPE_T,
 DDS_TYPE_Y, FIXED_Y, SEQ_TYPE_Y, FIXED_SEQ_TYPE_Y>::ccm_activate (void)
 {
-  DDS4CCM_TRACE ("FooConnector_Connector_T<>::ccm_activate");
+  DDS4CCM_TRACE ("FooConnector_Connector_T::ccm_activate");
   BaseConnector::ccm_activate ();
   ACE_Reactor* reactor = 0;
 
@@ -419,7 +419,7 @@ void
 FooConnector_Connector_T<CCM_TYPE, DDS_TYPE_T, FIXED_T, SEQ_TYPE_T, FIXED_SEQ_TYPE_T,
 DDS_TYPE_Y, FIXED_Y, SEQ_TYPE_Y, FIXED_SEQ_TYPE_Y>::ccm_passivate (void)
 {
-  DDS4CCM_TRACE ("FooConnector_Connector_T<>::ccm_passivate");
+  DDS4CCM_TRACE ("FooConnector_Connector_T::ccm_passivate");
 
   if (ACE_OS::strlen (this->topic_name_t_) != 0)
     {
@@ -489,7 +489,7 @@ void
 FooConnector_Connector_T<CCM_TYPE, DDS_TYPE_T, FIXED_T, SEQ_TYPE_T, FIXED_SEQ_TYPE_T,
 DDS_TYPE_Y, FIXED_Y, SEQ_TYPE_Y, FIXED_SEQ_TYPE_Y>::ccm_remove (void)
 {
-  DDS4CCM_TRACE ("FooConnector_Connector_T<>::ccm_remove");
+  DDS4CCM_TRACE ("FooConnector_Connector_T::ccm_remove");
 
   if (ACE_OS::strlen (this->topic_name_t_) != 0)
     {
