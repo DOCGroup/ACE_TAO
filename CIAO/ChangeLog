@@ -1,3 +1,8 @@
+Tue Dec 14 11:43:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.cpp:
+          Fixed memory leaks.
+
 Tue Dec 14 11:23:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDSCallbackStatusHandler.h:
