@@ -21,8 +21,16 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_DDS_IMPL_Export OnUnexpectedStatusHandler :
-      public ACE_Event_Handler
+    class DDSCallbackStatusHandlerBase
+      : public ACE_Event_Handler
+    {
+      public:
+        DDSCallbackStatusHandlerBase (void);
+        ~DDSCallbackStatusHandlerBase (void);
+    };
+
+    class DDS4CCM_DDS_IMPL_Export OnUnexpectedStatusHandler
+      : public DDSCallbackStatusHandlerBase
     {
       public:
         OnUnexpectedStatusHandler (
@@ -38,8 +46,8 @@ namespace CIAO
         ::DDS::StatusKind status_kind_;
     };
 
-    class DDS4CCM_DDS_IMPL_Export OnRequestedOncompatibleQosHandler :
-      public ACE_Event_Handler
+    class DDS4CCM_DDS_IMPL_Export OnRequestedOncompatibleQosHandler
+      : public DDSCallbackStatusHandlerBase
     {
       public:
         OnRequestedOncompatibleQosHandler (
@@ -54,8 +62,8 @@ namespace CIAO
         ::DDS::RequestedIncompatibleQosStatus const status_;
     };
 
-    class DDS4CCM_DDS_IMPL_Export OnSampleRejectedHandler :
-      public ACE_Event_Handler
+    class DDS4CCM_DDS_IMPL_Export OnSampleRejectedHandler
+      : public DDSCallbackStatusHandlerBase
     {
       public:
         OnSampleRejectedHandler (
@@ -70,8 +78,8 @@ namespace CIAO
         ::DDS::SampleRejectedStatus const status_;
     };
 
-    class DDS4CCM_DDS_IMPL_Export OnInconsistentTopicHandler :
-      public ACE_Event_Handler
+    class DDS4CCM_DDS_IMPL_Export OnInconsistentTopicHandler
+      : public DDSCallbackStatusHandlerBase
     {
       public:
         OnInconsistentTopicHandler (
@@ -86,8 +94,8 @@ namespace CIAO
         ::DDS::InconsistentTopicStatus const status_;
     };
 
-    class DDS4CCM_DDS_IMPL_Export OnOfferedDeadlineMissedHandler :
-      public ACE_Event_Handler
+    class DDS4CCM_DDS_IMPL_Export OnOfferedDeadlineMissedHandler
+      : public DDSCallbackStatusHandlerBase
     {
       public:
         OnOfferedDeadlineMissedHandler (
@@ -102,8 +110,8 @@ namespace CIAO
         ::DDS::OfferedDeadlineMissedStatus const status_;
     };
 
-    class DDS4CCM_DDS_IMPL_Export OnOfferedIncompatibleQoSHandler :
-      public ACE_Event_Handler
+    class DDS4CCM_DDS_IMPL_Export OnOfferedIncompatibleQoSHandler
+      : public DDSCallbackStatusHandlerBase
     {
       public:
         OnOfferedIncompatibleQoSHandler (
@@ -118,8 +126,8 @@ namespace CIAO
         ::DDS::OfferedIncompatibleQosStatus const status_;
     };
 
-    class DDS4CCM_DDS_IMPL_Export OnRequestedDeadlineMissedHandler :
-      public ACE_Event_Handler
+    class DDS4CCM_DDS_IMPL_Export OnRequestedDeadlineMissedHandler
+      : public DDSCallbackStatusHandlerBase
     {
       public:
         OnRequestedDeadlineMissedHandler (
@@ -134,8 +142,8 @@ namespace CIAO
         ::DDS::RequestedDeadlineMissedStatus const status_;
     };
 
-    class DDS4CCM_DDS_IMPL_Export OnSampleLostHandler :
-      public ACE_Event_Handler
+    class DDS4CCM_DDS_IMPL_Export OnSampleLostHandler
+      : public DDSCallbackStatusHandlerBase
     {
       public:
         OnSampleLostHandler (

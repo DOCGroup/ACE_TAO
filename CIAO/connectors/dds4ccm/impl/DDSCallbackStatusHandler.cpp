@@ -11,6 +11,17 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
+    DDSCallbackStatusHandlerBase::DDSCallbackStatusHandlerBase (void)
+    {
+      this->reference_counting_policy ().value
+        (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
+    }
+
+    DDSCallbackStatusHandlerBase::~DDSCallbackStatusHandlerBase (void)
+    {
+
+    }
+
     OnUnexpectedStatusHandler::OnUnexpectedStatusHandler (
       ::CCM_DDS::ConnectorStatusListener_ptr error_listener,
       ::DDS::Entity_ptr entity,
@@ -19,8 +30,6 @@ namespace CIAO
         entity_ (::DDS::Entity::_duplicate (entity)),
         status_kind_ (status_kind)
     {
-      this->reference_counting_policy ().value
-        (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
     }
 
     OnUnexpectedStatusHandler::~OnUnexpectedStatusHandler (void)
@@ -63,8 +72,6 @@ namespace CIAO
         dr_ (::DDS::DataReader::_duplicate (dr)),
         status_ (status)
     {
-      this->reference_counting_policy ().value
-        (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
     }
 
     OnRequestedOncompatibleQosHandler::~OnRequestedOncompatibleQosHandler (void)
@@ -105,8 +112,6 @@ namespace CIAO
         dr_ (::DDS::DataReader::_duplicate (dr)),
         status_ (status)
     {
-      this->reference_counting_policy ().value
-        (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
     }
 
     OnSampleRejectedHandler::~OnSampleRejectedHandler (void)
@@ -147,8 +152,6 @@ namespace CIAO
         tp_ (::DDS::Topic::_duplicate (tp)),
         status_ (status)
     {
-      this->reference_counting_policy ().value
-        (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
     }
 
     OnInconsistentTopicHandler::~OnInconsistentTopicHandler (void)
@@ -189,8 +192,6 @@ namespace CIAO
         dw_ (::DDS::DataWriter::_duplicate (dw)),
         status_ (status)
     {
-      this->reference_counting_policy ().value
-        (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
     }
 
     OnOfferedDeadlineMissedHandler::~OnOfferedDeadlineMissedHandler (void)
@@ -231,8 +232,6 @@ namespace CIAO
         dw_ (::DDS::DataWriter::_duplicate (dw)),
         status_ (status)
     {
-      this->reference_counting_policy ().value
-        (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
     }
 
     OnOfferedIncompatibleQoSHandler::~OnOfferedIncompatibleQoSHandler (void)

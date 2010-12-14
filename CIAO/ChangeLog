@@ -1,3 +1,16 @@
+Tue Dec 14 11:23:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDSCallbackStatusHandler.h:
+        * connectors/dds4ccm/impl/DDSCallbackStatusHandler.cpp:
+          Added a base class in which ref counting is enabled in the
+          constructor. All other dds eventhandler classes are derived
+          from this base class.
+          This'll resolve some valgrind errors in the PortStatusListener.
+
+        * connectors/dds4ccm/impl/PortStatusListener.cpp:
+        * connectors/dds4ccm/impl/SubscriberListener.cpp:
+          Layout changes
+
 Tue Dec 14 09:05:48 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender.mpc:
