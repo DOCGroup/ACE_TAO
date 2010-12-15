@@ -1,3 +1,8 @@
+Wed Dec 15 14:43:48 UTC 2010  Marijke Hengstmengel  <mhengstmengelm@remedy.nl>
+
+        * tests/DAnCE/LocalityManager/CommandlinePassage/run_test_cmd.pl:
+        Changed sever args. 
+
 Wed Dec 15 14:02:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
