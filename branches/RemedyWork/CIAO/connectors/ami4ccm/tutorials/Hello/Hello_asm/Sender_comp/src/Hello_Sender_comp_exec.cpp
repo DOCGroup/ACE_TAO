@@ -26,6 +26,7 @@
  **/
 
 #include "Hello_Sender_comp_exec.h"
+#include "ace/OS_NS_unistd.h"
 
 namespace CIAO_Hello_Sender_comp_Impl
 {
