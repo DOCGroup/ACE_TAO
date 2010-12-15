@@ -1,3 +1,11 @@
+Wed Dec 15 11:25:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm_ts_default.mpb:
+          Enable typecodes with opendds
+
+        * bin/ciao_tests.lst:
+          Enabled new tests
+
 Tue Dec 14 15:24:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
