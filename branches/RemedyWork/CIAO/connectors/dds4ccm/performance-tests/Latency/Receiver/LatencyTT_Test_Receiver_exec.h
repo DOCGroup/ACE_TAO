@@ -121,7 +121,6 @@ namespace CIAO_LatencyTT_Test_Receiver_Impl
     //@{
     /** Component attributes. */
     ::LatencyTT_Test::LatencyTTTestConn::CCM_Listener_var ciao_info_listen_data_listener_;
-    ::CCM_DDS::CCM_PortStatusListener_var ciao_info_listen_status_;
     //@}
 
     //@{
