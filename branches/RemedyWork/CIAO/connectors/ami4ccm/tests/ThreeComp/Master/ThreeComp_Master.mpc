@@ -11,7 +11,6 @@ project(AMI_ThreeComp_Base_Master_idl_gen) : componentidldefaults {
               -Wb,exec_export_macro=THREECOMP_MASTER_EXEC_Export \
               -Wb,exec_export_include=ThreeComp_Master_exec_export.h \
               -I.. -GC
-
   IDL_Files {
     ThreeComp_Master.idl
   }
@@ -92,13 +91,11 @@ project(AMI_ThreeComp_Base_Master_exec) : ciao_executor, ami, ami4ccm_stub {
 
   Source_Files {
     ThreeComp_Master_exec.cpp
-    ../Base/ThreeCompA_conn_i.cpp
   }
 
   Header_Files {
     ThreeComp_Master_exec.h
     ThreeComp_Master_exec_export.h
-    ../Base/ThreeCompA_conn_i.h
   }
 
   Inline_Files {

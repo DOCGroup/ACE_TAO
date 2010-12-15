@@ -26,11 +26,9 @@
  **/
 
 #include "InterMulti_Sender_exec.h"
-#include "InterMultiA_conn_i.h"
 
 namespace CIAO_InterMulti_Sender_Impl
 {
-
   //============================================================
    // Worker thread for asynchronous invocations for One
    //============================================================
@@ -48,7 +46,7 @@ namespace CIAO_InterMulti_Sender_Impl
         context_->get_connection_sendc_run_my_one();
 
       ::InterMulti::AMI4CCM_OneReplyHandler_var cb =
-        new CIAO_InterMulti_AMI4CCM_One_Connector_AMI4CCM_Connector_Impl::AMI4CCM_OneReplyHandler_i (
+        new AMI4CCM_OneReplyHandler_run_my_one_i (
         this->nr_of_received_);
 
      //Invoke Asynchronous calls to test
@@ -82,7 +80,7 @@ namespace CIAO_InterMulti_Sender_Impl
      else
        {
          ::InterMulti::AMI4CCM_TwoReplyHandler_var cb =
-           new CIAO_InterMulti_AMI4CCM_Two_Connector_AMI4CCM_Connector_Impl::AMI4CCM_TwoReplyHandler_i (
+           new AMI4CCM_TwoReplyHandler_run_my_two_i (
            this->nr_of_received_);
 
          //Invoke Asynchronous calls to test
@@ -116,7 +114,7 @@ namespace CIAO_InterMulti_Sender_Impl
      else
        {
         ::InterMulti::AMI4CCM_ThreeReplyHandler_var cb =
-           new CIAO_InterMulti_AMI4CCM_Three_Connector_AMI4CCM_Connector_Impl::AMI4CCM_ThreeReplyHandler_i (
+           new AMI4CCM_ThreeReplyHandler_run_my_three_i (
            this->nr_of_received_);
 
          //Invoke Asynchronous calls to test
@@ -276,6 +274,121 @@ namespace CIAO_InterMulti_Sender_Impl
     this->asynch_three_gen = 0;
     delete this->synch_three_gen;
     this->synch_three_gen = 0;
+  }
+
+
+  AMI4CCM_OneReplyHandler_run_my_one_i::AMI4CCM_OneReplyHandler_run_my_one_i (
+      Atomic_UShort &nr_of_received)
+  : nr_of_received_(nr_of_received)
+  {
+  }
+
+  AMI4CCM_OneReplyHandler_run_my_one_i::~AMI4CCM_OneReplyHandler_run_my_one_i (void)
+  {
+  }
+
+  void
+  AMI4CCM_OneReplyHandler_run_my_one_i::foo (::CORBA::Long /* ami_return_val */,
+      const char * answer)
+  {
+    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchronous callback from ONE::foo,"
+                          " answer = <%C>\n",
+                          answer));
+    ++this->nr_of_received_;  }
+
+  void
+  AMI4CCM_OneReplyHandler_run_my_one_i::foo_excep (
+      ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    excep_holder->raise_exception ();
+  }
+
+
+  AMI4CCM_TwoReplyHandler_run_my_two_i::AMI4CCM_TwoReplyHandler_run_my_two_i (
+      Atomic_UShort &nr_of_received)
+  : nr_of_received_(nr_of_received)
+
+  {
+  }
+
+  AMI4CCM_TwoReplyHandler_run_my_two_i::~AMI4CCM_TwoReplyHandler_run_my_two_i (void)
+  {
+  }
+
+  void
+  AMI4CCM_TwoReplyHandler_run_my_two_i::bar (const char * answer)
+  {
+    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchronous callback from TWO::bar,"
+                          " answer = <%C>\n",
+                          answer));
+    ++this->nr_of_received_;
+  }
+
+  void
+  AMI4CCM_TwoReplyHandler_run_my_two_i::bar_excep (
+      ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    excep_holder->raise_exception ();
+  }
+
+
+  AMI4CCM_ThreeReplyHandler_run_my_three_i::AMI4CCM_ThreeReplyHandler_run_my_three_i (
+      Atomic_UShort &nr_of_received)
+  : nr_of_received_(nr_of_received)
+  {
+  }
+
+  AMI4CCM_ThreeReplyHandler_run_my_three_i::~AMI4CCM_ThreeReplyHandler_run_my_three_i (void)
+  {
+  }
+
+  void
+  AMI4CCM_ThreeReplyHandler_run_my_three_i::foo (::CORBA::Long /* ami_return_val */,
+  const char * answer)
+  {
+    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchronous callback from THREE::foo,"
+                          " answer = <%C>\n",
+                          answer));
+    ++this->nr_of_received_;
+ }
+
+  void
+  AMI4CCM_ThreeReplyHandler_run_my_three_i::foo_excep (
+      ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    excep_holder->raise_exception ();
+  }
+
+  void
+  AMI4CCM_ThreeReplyHandler_run_my_three_i::bar (const char * answer)
+  {
+    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchronous callback from THREE::bar,"
+                           " answer = <%C>\n",
+                           answer));
+     ++this->nr_of_received_;
+ }
+
+  void
+  AMI4CCM_ThreeReplyHandler_run_my_three_i::bar_excep (
+  ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    excep_holder->raise_exception ();
+  }
+
+  void
+  AMI4CCM_ThreeReplyHandler_run_my_three_i::plus (const char * answer )
+  {
+    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchronous callback from THREE::plus,"
+                          " answer = <%C>\n",
+                          answer));
+     ++this->nr_of_received_;
+  }
+
+  void
+  AMI4CCM_ThreeReplyHandler_run_my_three_i::plus_excep (
+      ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    excep_holder->raise_exception ();
   }
 
   extern "C" INTERMULTI_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

@@ -24,8 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO_ONEREPLYH_SENDER_EXEC_RBKN1X_H_
-#define CIAO_ONEREPLYH_SENDER_EXEC_RBKN1X_H_
+#ifndef CIAO_ONEREPLYH_SENDER_EXEC_QDXBFS_H_
+#define CIAO_ONEREPLYH_SENDER_EXEC_QDXBFS_H_
 
 #include /**/ "ace/pre.h"
 
@@ -134,9 +134,38 @@ namespace CIAO_OneReplyH_Sender_Impl
     //@}
   };
 
-  extern "C" ONEREPLYH_T_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_OneReplyH_Sender_Impl (void);
-}
+  class AMI4CCM_MyFooReplyHandler_run_my_foo_i
+    : public ::OneReplyH::CCM_AMI4CCM_MyFooReplyHandler,
+      public virtual ::CORBA::LocalObject
+    {
+    public:
+      AMI4CCM_MyFooReplyHandler_run_my_foo_i (Atomic_UShort &);
+      virtual ~AMI4CCM_MyFooReplyHandler_run_my_foo_i (void);
+
+      virtual void
+      foo (
+        ::CORBA::Long ami_return_val,
+        const char * answer);
+
+      virtual void
+      foo_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      bar (
+        const char * answer,
+        ::CORBA::Long l_cmd);
+
+      virtual void
+      bar_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+    private:
+      Atomic_UShort &nr_of_received_;
+    };
+
+    extern "C" ONEREPLYH_T_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+    create_OneReplyH_Sender_Impl (void);
+  }
 
 #include /**/ "ace/post.h"
 

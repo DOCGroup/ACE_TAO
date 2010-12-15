@@ -24,16 +24,18 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO_EXCEPTIONT_SENDER_EXEC_7KCIGI_H_
-#define CIAO_EXCEPTIONT_SENDER_EXEC_7KCIGI_H_
+#ifndef CIAO_EXCEPTIONT_SENDER_EXEC_4QC1XJ_H_
+#define CIAO_EXCEPTIONT_SENDER_EXEC_4QC1XJ_H_
+
+#include /**/ "ace/pre.h"
 
 #include "ExceptionT_SenderEC.h"
-#include "ExceptionT_Sender_exec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include /**/ "ExceptionT_Sender_exec_export.h"
 #include "tao/LocalObject.h"
 #include "ace/Task.h"
 
@@ -44,6 +46,10 @@ namespace CIAO_ExceptionT_Sender_Impl
       long id,
       const char* error_string,
       const char* test,
+      const char* func);
+
+  void HandleException (
+      ::Messaging::ExceptionHolder * excep_holder,
       const char* func);
 
   /// Worker thread for asynchronous invocations
@@ -123,8 +129,60 @@ namespace CIAO_ExceptionT_Sender_Impl
     //@}
   };
 
-  extern "C" EXCEPTION_T_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_ExceptionT_Sender_Impl (void);
-}
+
+  class AMI4CCM_MyFooReplyHandler_run_my_foo_i
+    : public ::ExceptionT::CCM_AMI4CCM_MyFooReplyHandler,
+      public virtual ::CORBA::LocalObject
+    {
+    public:
+      AMI4CCM_MyFooReplyHandler_run_my_foo_i (void);
+      virtual ~AMI4CCM_MyFooReplyHandler_run_my_foo_i (void);
+
+      virtual void
+      foo (
+        ::CORBA::Long ami_return_val,
+        const char * answer);
+
+      virtual void
+      foo_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      hello (
+        ::CORBA::Long answer);
+
+      virtual void
+      hello_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      get_rw_attrib (
+        ::CORBA::Short rw_attrib);
+
+      virtual void
+      get_rw_attrib_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      set_rw_attrib (void);
+
+      virtual void
+      set_rw_attrib_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      get_ro_attrib (
+        ::CORBA::Short ro_attrib);
+
+      virtual void
+      get_ro_attrib_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+    };
+
+    extern "C" EXCEPTION_T_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+    create_ExceptionT_Sender_Impl (void);
+  }
+
+#include /**/ "ace/post.h"
 
 #endif /* ifndef */

@@ -24,8 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO_ONEPROCESS_SENDER_EXEC_X4XYXL_H_
-#define CIAO_ONEPROCESS_SENDER_EXEC_X4XYXL_H_
+#ifndef CIAO_ONEPROCESS_SENDER_EXEC_MFMTWV_H_
+#define CIAO_ONEPROCESS_SENDER_EXEC_MFMTWV_H_
 
 #include /**/ "ace/pre.h"
 
@@ -120,10 +120,30 @@ namespace CIAO_OneProcess_Sender_Impl
     /** User defined private operations. */
     //@}
   };
+  class AMI4CCM_MyFooReplyHandler_run_my_foo_i
+    : public ::OneProcess::CCM_AMI4CCM_MyFooReplyHandler,
+      public virtual ::CORBA::LocalObject
+    {
+    public:
+      AMI4CCM_MyFooReplyHandler_run_my_foo_i (Atomic_Boolean &asynch);
+      virtual ~AMI4CCM_MyFooReplyHandler_run_my_foo_i (void);
 
-  extern "C" ONEPROCESS_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_OneProcess_Sender_Impl (void);
-}
+      virtual void
+      foo (
+        ::CORBA::Long ami_return_val,
+        const char * answer);
+
+      virtual void
+      foo_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+    private:
+      Atomic_Boolean &asynch_;
+
+    };
+
+    extern "C" ONEPROCESS_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+    create_OneProcess_Sender_Impl (void);
+  }
 
 #include /**/ "ace/post.h"
 

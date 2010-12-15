@@ -26,7 +26,6 @@
  **/
 
 #include "OneReplyH_Sender_exec.h"
-#include "OneReplyHA_conn_i.h"
 #include "ace/OS_NS_unistd.h"
 
 
@@ -60,8 +59,8 @@ namespace CIAO_OneReplyH_Sender_Impl
         : context_(::OneReplyH::CCM_Sender_Context::_duplicate (context)),
           nr_of_received_(nr_of_received)
   {
-    cb_ = new CIAO_OneReplyH_Sender_Impl::AMI4CCM_MyFooReplyHandler_i (
-                                                      this->nr_of_received_);
+    cb_ = new AMI4CCM_MyFooReplyHandler_run_my_foo_i (
+                                                 this->nr_of_received_);
   }
 
   int asynch_foo_generator::svc ()
@@ -251,6 +250,77 @@ namespace CIAO_OneReplyH_Sender_Impl
     this->asynch_foo_gen = 0;
     delete this->synch_foo_gen;
     this->synch_foo_gen = 0;
+  }
+
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::AMI4CCM_MyFooReplyHandler_run_my_foo_i (
+      Atomic_UShort &nr_of_received)
+   : nr_of_received_ (nr_of_received)
+  {
+  }
+
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::~AMI4CCM_MyFooReplyHandler_run_my_foo_i (void)
+  {
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::foo (
+      ::CORBA::Long ami_return_val,
+      const char * /* answer */)
+  {
+    if ( ami_return_val == OneReplyH::cmd_asynch_foo_ok)
+      {
+        ++this->nr_of_received_;
+      }
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::foo_excep (
+    ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    try
+       {
+         excep_holder->raise_exception ();
+       }
+     catch (const OneReplyH::InternalError& ex)
+       {
+         CIAO_OneReplyH_Sender_Impl::HandleException (ex.id,
+                               OneReplyH::cmd_asynch_foo_nok,
+                               ex.error_string.in(), "asynch foo");
+       }
+     catch (const CORBA::Exception& ex)
+       {
+         ex._tao_print_exception ("ERROR: Caught unexpected exception:");
+       }
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::bar (
+    const char * /* answer */,
+    ::CORBA::Long l_cmd)
+  {
+    if ( l_cmd == OneReplyH::cmd_asynch_bar_ok )
+      {
+        ++this->nr_of_received_;
+      }
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::bar_excep (
+    ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    try
+      {
+         excep_holder->raise_exception ();
+      }
+    catch (const OneReplyH::InternalError& ex)
+      {
+        CIAO_OneReplyH_Sender_Impl::HandleException (ex.id, OneReplyH::cmd_asynch_bar_nok,
+                        ex.error_string.in(), "asynch bar");
+      }
+    catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("ERROR: Caught unexpected exception:");
+      }
   }
 
   extern "C" ONEREPLYH_T_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

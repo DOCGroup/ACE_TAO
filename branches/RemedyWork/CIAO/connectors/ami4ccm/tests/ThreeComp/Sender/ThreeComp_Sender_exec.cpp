@@ -24,106 +24,104 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-// test 3 components: Master <-> Sender <-> Receiver
-// Sender uses and provides ports.
+
 #include "ThreeComp_Sender_exec.h"
-#include "../Base/ThreeCompA_conn_i.h"
 #include "ace/OS_NS_unistd.h"
 
 namespace CIAO_ThreeComp_Sender_Impl
 {
   CORBA::Boolean asynch = false;
   //============================================================
-    // Worker thread for asynchronous invocations for MyFoo
-    //============================================================
-    asynch_foo_generator::asynch_foo_generator (
-     ::ThreeComp::CCM_Sender_Context_ptr context,
-      Atomic_UShort  &nr_of_rec,
-      Atomic_UShort  &nr_of_sent)
-    : context_(::ThreeComp::CCM_Sender_Context::_duplicate (context)),
-     nr_of_rec_(nr_of_rec),
-     nr_of_sent_(nr_of_sent)
+  // Worker thread for asynchronous invocations for MyFoo
+  //============================================================
+  asynch_foo_generator::asynch_foo_generator (
+   ::ThreeComp::CCM_Sender_Context_ptr context,
+    Atomic_UShort  &nr_of_rec,
+    Atomic_UShort  &nr_of_sent)
+  : context_(::ThreeComp::CCM_Sender_Context::_duplicate (context)),
+   nr_of_rec_(nr_of_rec),
+   nr_of_sent_(nr_of_sent)
 
-    {
-    }
+  {
+  }
 
-    int asynch_foo_generator::svc ()
-    {
-      ::ThreeComp::Sender::sendc_run_my_fooConnections_var  my_foo_ami_ =
-         context_->get_connections_sendc_run_my_foo();
-      ::ThreeComp::AMI4CCM_MyFooReplyHandler_var cb =
-         new CIAO_ThreeComp_AMI4CCM_MyFoo_Connector_AMI4CCM_Connector_Impl::AMI4CCM_MyFooReplyHandler_i (
-                                                   this->nr_of_rec_,
-                                                   this->nr_of_sent_);
+  int asynch_foo_generator::svc ()
+  {
+    ::ThreeComp::Sender::sendc_run_my_fooConnections_var  my_foo_ami_ =
+       context_->get_connections_sendc_run_my_foo();
+    ::ThreeComp::AMI4CCM_MyFooReplyHandler_var cb =
+       new AMI4CCM_MyFooReplyHandler_run_my_foo_i (
+                                                 this->nr_of_rec_,
+                                                 this->nr_of_sent_);
 
-        // Invoke Asynchronous calls to test
-       for (CORBA::ULong i = 0; i < my_foo_ami_->length (); ++i)
-         {
-           ++this->nr_of_sent_;
-           my_foo_ami_[i].objref->sendc_foo (cb.in(),
-                                             10 );
-           ACE_DEBUG ((LM_DEBUG, "OK Sender send ASYNCHRONOUS call to Receiver.\n"));
-          // There is more than 1 message sent, without receiving callbacks,
-          // so it is asynchronous
-          if (this->nr_of_sent_.value() > 1)
-            {
-              asynch = true;
-            }
-         }
-      return 0;
-    }
-    //============================================================
-    // Worker thread for synchronous invocations for MyFoo
-    //============================================================
-    synch_foo_generator::synch_foo_generator (
-     ::ThreeComp::CCM_Sender_Context_ptr context,
-      Atomic_UShort  &nr_of_rec)
-    : context_(::ThreeComp::CCM_Sender_Context::_duplicate (context)),
-      nr_of_rec_(nr_of_rec)
-    {
-    }
+      // Invoke Asynchronous calls to test
+     for (CORBA::ULong i = 0; i < my_foo_ami_->length (); ++i)
+       {
+         ++this->nr_of_sent_;
+         my_foo_ami_[i].objref->sendc_foo (cb.in(),
+                                           10 );
+         ACE_DEBUG ((LM_DEBUG, "OK Sender send ASYNCHRONOUS call to Receiver.\n"));
+        // There is more than 1 message sent, without receiving callbacks,
+        // so it is asynchronous
+        if (this->nr_of_sent_.value() > 1)
+          {
+            asynch = true;
+          }
+       }
+    return 0;
+  }
+  //============================================================
+  // Worker thread for synchronous invocations for MyFoo
+  //============================================================
+  synch_foo_generator::synch_foo_generator (
+   ::ThreeComp::CCM_Sender_Context_ptr context,
+    Atomic_UShort  &nr_of_rec)
+  : context_(::ThreeComp::CCM_Sender_Context::_duplicate (context)),
+    nr_of_rec_(nr_of_rec)
+  {
+  }
 
-    int synch_foo_generator::svc ()
-    {
+  int synch_foo_generator::svc ()
+  {
 
-      ::ThreeComp::Sender::run_my_fooConnections_var my_foo_ami_ =
-            context_->get_connections_run_my_foo ();
+    ::ThreeComp::Sender::run_my_fooConnections_var my_foo_ami_ =
+          context_->get_connections_run_my_foo ();
 
-      CORBA::Boolean wait = false;
+    CORBA::Boolean wait = false;
 
-      for(CORBA::ULong i = 0; i < my_foo_ami_->length(); ++i)
-         {
-           CORBA::String_var answer;
-           try
-             {
-               if ( wait==true)
-                 {
-                    ACE_ERROR ((LM_ERROR,
-                                 "ERROR: Sender didn't receive SYNCHRONOUS answer"
-                                 " from Receiver.\n"));
-                  }
-               wait = true;
-               ACE_DEBUG ((LM_DEBUG, "OK Sender send SYNCHRONOUS CALL to Receiver.\n"));
+    for(CORBA::ULong i = 0; i < my_foo_ami_->length(); ++i)
+       {
+         CORBA::String_var answer;
+         try
+           {
+             if ( wait==true)
+               {
+                  ACE_ERROR ((LM_ERROR,
+                               "ERROR: Sender didn't receive SYNCHRONOUS answer"
+                               " from Receiver.\n"));
+                }
+             wait = true;
+             ACE_DEBUG ((LM_DEBUG, "OK Sender send SYNCHRONOUS CALL to Receiver.\n"));
 
-               CORBA::ULong result = my_foo_ami_[i].objref->foo( 20,
-                                         answer.out ());
-               if (result == 2)
-                 {
-                   ACE_DEBUG ((LM_DEBUG, "OK Sender received SYNCHRONOUS answer "
-                                         "from Receiver <%C>\n",
-                                         answer.in ()));
-                   ++this->nr_of_rec_;
-                   wait = false;
-                 }
+             CORBA::ULong result = my_foo_ami_[i].objref->foo( 20,
+                                       answer.out ());
+             if (result == 2)
+               {
+                 ACE_DEBUG ((LM_DEBUG, "OK Sender received SYNCHRONOUS answer "
+                                       "from Receiver <%C>\n",
+                                       answer.in ()));
+                 ++this->nr_of_rec_;
+                 wait = false;
                }
-           catch (const ThreeComp::InternalError&)
-             {
-               ACE_ERROR ((LM_ERROR, "ERROR: synch_foo_generator::foo: "
-                                  "Unexpected exception.\n"));
              }
-         }
-      return 0;
-    }
+         catch (const ThreeComp::InternalError&)
+           {
+             ACE_ERROR ((LM_ERROR, "ERROR: synch_foo_generator::foo: "
+                                "Unexpected exception.\n"));
+           }
+       }
+    return 0;
+  }
   /**
    * Facet Executor Implementation Class: do_my_state_exec_i
    */
@@ -295,7 +293,41 @@ namespace CIAO_ThreeComp_Sender_Impl
     this->asynch_foo_gen = 0;
     delete this->synch_foo_gen;
     this->synch_foo_gen = 0;
-   }
+  }
+
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::AMI4CCM_MyFooReplyHandler_run_my_foo_i (
+      Atomic_UShort  &nr_of_rec,
+       Atomic_UShort  &nr_of_sent)
+   : nr_of_rec_(nr_of_rec),
+     nr_of_sent_(nr_of_sent)
+  {
+  }
+
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::~AMI4CCM_MyFooReplyHandler_run_my_foo_i (void)
+  {
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::foo (
+    ::CORBA::Long  ami_ret_val,
+    const char *  answer )
+  {
+    ++this->nr_of_rec_;
+    if (ami_ret_val == 1 )
+      {
+        --this->nr_of_sent_;
+        ACE_DEBUG ((LM_DEBUG,
+            "OK: Sender get ASYNCHRONOUS callback from Receiver: <%C>.\n",
+             answer));
+      }
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::foo_excep (
+    ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    excep_holder->raise_exception ();
+  }
 
   extern "C" THREECOMP_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_ThreeComp_Sender_Impl (void)

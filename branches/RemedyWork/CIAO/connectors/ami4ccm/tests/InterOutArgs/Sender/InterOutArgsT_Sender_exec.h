@@ -122,7 +122,45 @@ namespace CIAO_InterOutArgsT_Sender_Impl
     /** User defined private operations. */
     //@}
   };
+    class AMI4CCM_MyFooReplyHandler_run_my_foo_i
+         : public ::InterOutArgsT::CCM_AMI4CCM_MyFooReplyHandler,
+           public virtual ::CORBA::LocalObject
+     {
+     public:
+       AMI4CCM_MyFooReplyHandler_run_my_foo_i (Atomic_UShort  &nr_of_received_);
+       virtual ~AMI4CCM_MyFooReplyHandler_run_my_foo_i (void);
 
+       virtual
+       void var_outs (const char * answer,
+       ::CORBA::Double d_cmd,
+       ::CORBA::Long l_cmd);
+
+       virtual
+       void var_outs_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+       virtual
+       void var_div_outs (const ::InterOutArgsT::TestTopic & test_topic,
+       const ::InterOutArgsT::TopicString & topic_str,
+       const ::InterOutArgsT::TopicArray & topic_arr);
+
+       virtual
+       void var_div_outs_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+       virtual
+       void var_div2_outs (const ::InterOutArgsT::X_Union & x_uni,
+       const ::InterOutArgsT::test_seq & seq);
+
+       virtual
+       void var_div2_outs_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+       virtual
+       void enum_out (::InterOutArgsT::test_enum out_test);
+
+       virtual
+       void enum_out_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
+     private:
+       Atomic_UShort  &nr_of_received_;
+     };
   extern "C" INTEROUTARGS_T_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_InterOutArgsT_Sender_Impl (void);
 }
