@@ -1,4 +1,11 @@
-﻿Sun Dec 12 16:19:01 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+﻿Tue Dec 14 12:34:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/component_ami_rh_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ami_rh_exh.cpp:
+         Correction for return values ami4ccm callbacks.
+   
+
+Sun Dec 12 16:19:01 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Bug_1482_Regression/Hello.cpp:
           Fixes 'maybe undefined operation' warning in MingW GCC 4.5.0.
