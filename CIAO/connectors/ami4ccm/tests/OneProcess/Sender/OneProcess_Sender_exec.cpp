@@ -24,11 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-// sender, receiver and connector in one node: asynchronous callbacks
-// should become received synchronous.
 
 #include "OneProcess_Sender_exec.h"
-#include "OneProcessA_conn_i.h"
 #include "ace/OS_NS_unistd.h"
 
 
@@ -55,19 +52,19 @@ namespace CIAO_OneProcess_Sender_Impl
        this->context_->get_connection_sendc_run_my_foo();
 
     ::OneProcess::AMI4CCM_MyFooReplyHandler_var cb0 =
-        new CIAO_OneProcess_Sender_Impl::AMI4CCM_MyFooReplyHandler_i (
+        new AMI4CCM_MyFooReplyHandler_run_my_foo_i (
             this->asynch_);
     ::OneProcess::AMI4CCM_MyFooReplyHandler_var cb1 =
-        new CIAO_OneProcess_Sender_Impl::AMI4CCM_MyFooReplyHandler_i (
+        new AMI4CCM_MyFooReplyHandler_run_my_foo_i (
             this->asynch_);
     ::OneProcess::AMI4CCM_MyFooReplyHandler_var cb2 =
-        new CIAO_OneProcess_Sender_Impl::AMI4CCM_MyFooReplyHandler_i (
+        new AMI4CCM_MyFooReplyHandler_run_my_foo_i (
             this->asynch_);
     ::OneProcess::AMI4CCM_MyFooReplyHandler_var cb3 =
-        new CIAO_OneProcess_Sender_Impl::AMI4CCM_MyFooReplyHandler_i (
+        new AMI4CCM_MyFooReplyHandler_run_my_foo_i (
             this->asynch_);
     ::OneProcess::AMI4CCM_MyFooReplyHandler_var cb4 =
-        new CIAO_OneProcess_Sender_Impl::AMI4CCM_MyFooReplyHandler_i (
+        new AMI4CCM_MyFooReplyHandler_run_my_foo_i (
             this->asynch_);
 
     for (int i = 0; i < 5; ++i)
@@ -245,6 +242,40 @@ namespace CIAO_OneProcess_Sender_Impl
     this->asynch_foo_gen = 0;
     delete this->synch_foo_gen;
     this->synch_foo_gen = 0;
+  }
+
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::AMI4CCM_MyFooReplyHandler_run_my_foo_i (
+      Atomic_Boolean &asynch)
+   : asynch_(asynch)
+  {
+  }
+
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::~AMI4CCM_MyFooReplyHandler_run_my_foo_i (void)
+  {
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::foo (
+     ::CORBA::Long ami_return_val,
+     const char * /* answer */)
+  {
+    if (ami_return_val == 1)
+      {
+        ACE_DEBUG ((LM_DEBUG, "OK: GET ASYNCHRONOUS CALLBACK, \n"));
+        this->asynch_ = false;
+      }
+    if (ami_return_val == 2)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: GET ASYNCHRONOUS CALLBACK "
+                             "FROM SYNCHRONOUS SENT MESSAGE\n"));
+      }
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::foo_excep (
+    ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    excep_holder->raise_exception ();
   }
 
   extern "C" ONEPROCESS_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

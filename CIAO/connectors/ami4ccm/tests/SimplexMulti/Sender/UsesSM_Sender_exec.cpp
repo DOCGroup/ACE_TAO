@@ -24,9 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-// test use multiple and simplex porttypes side by side.
+
 #include "UsesSM_Sender_exec.h"
-#include "UsesSMA_conn_i.h"
 
 namespace CIAO_UsesSM_Sender_Impl
 {
@@ -71,7 +70,7 @@ namespace CIAO_UsesSM_Sender_Impl
     for (CORBA::ULong i = 0; i < my_one_ami_->length (); ++i)
       {
         ::UsesSM::AMI4CCM_OneReplyHandler_var cb_one =
-          new CIAO_UsesSM_AMI4CCM_One_Connector_AMI4CCM_Connector_Impl::AMI4CCM_OneReplyHandler_i (
+          new AMI4CCM_OneReplyHandler_run_my_um_one_i (
                                                    this->nr_of_received_,
                                                    this->nr_of_sent_);
 
@@ -105,7 +104,7 @@ namespace CIAO_UsesSM_Sender_Impl
         ACE_DEBUG ((LM_DEBUG,
                     "Sender (ASYNCH) : send asynch call bar <%u>!\n", i));
         ::UsesSM::AMI4CCM_TwoReplyHandler_var cb_two =
-           new CIAO_UsesSM_AMI4CCM_Two_Connector_AMI4CCM_Connector_Impl::AMI4CCM_TwoReplyHandler_i (
+           new AMI4CCM_TwoReplyHandler_run_my_two_i (
                                                     this->nr_of_received_);
         my_two_ami_->sendc_bar ( cb_two.in (), i);
     }
@@ -248,6 +247,110 @@ namespace CIAO_UsesSM_Sender_Impl
     this->asynch_foo_gen = 0;
     delete this->synch_foo_gen;
     this->synch_foo_gen = 0;
+  }
+
+
+  AMI4CCM_OneReplyHandler_run_my_um_one_i::AMI4CCM_OneReplyHandler_run_my_um_one_i (
+      Atomic_UShort  &nr_of_received,
+       Atomic_UShort  &nr_of_sent)
+   : nr_of_received_(nr_of_received),
+     nr_of_sent_(nr_of_sent)
+  {
+  }
+
+  AMI4CCM_OneReplyHandler_run_my_um_one_i::~AMI4CCM_OneReplyHandler_run_my_um_one_i (void)
+  {
+  }
+
+  void
+  AMI4CCM_OneReplyHandler_run_my_um_one_i::foo (
+    ::CORBA::Long /* ami_return_val */,
+     const char * answer)
+   {
+     ACE_DEBUG ((LM_DEBUG, "Sender: Get asynchronous callback from foo,"
+                            " answer = <%C>\n",
+                            answer));
+      ++this->nr_of_received_;
+      --this->nr_of_sent_;
+  }
+
+  void
+  AMI4CCM_OneReplyHandler_run_my_um_one_i::foo_excep (
+    ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    excep_holder->raise_exception ();
+  }
+
+  AMI4CCM_TwoReplyHandler_run_my_two_i::AMI4CCM_TwoReplyHandler_run_my_two_i (
+      Atomic_UShort  &nr_of_received)
+   : nr_of_received_(nr_of_received)
+  {
+  }
+
+  AMI4CCM_TwoReplyHandler_run_my_two_i::~AMI4CCM_TwoReplyHandler_run_my_two_i (void)
+  {
+  }
+
+  void
+  AMI4CCM_TwoReplyHandler_run_my_two_i::bar (
+    const char * answer)
+  {
+    ACE_DEBUG ((LM_DEBUG, "Sender: Get asynchronous callback from bar,"
+                          " answer = <%C>\n",
+                          answer));
+    ++this->nr_of_received_;
+  }
+
+  void
+  AMI4CCM_TwoReplyHandler_run_my_two_i::bar_excep (
+    ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    excep_holder->raise_exception ();
+  }
+
+  AMI4CCM_OneReplyHandler_s_run_my_um_one_i::AMI4CCM_OneReplyHandler_s_run_my_um_one_i (void)
+  {
+  }
+
+  AMI4CCM_OneReplyHandler_s_run_my_um_one_i::~AMI4CCM_OneReplyHandler_s_run_my_um_one_i (void)
+  {
+  }
+
+  void
+  AMI4CCM_OneReplyHandler_s_run_my_um_one_i::foo (
+    ::CORBA::Long /* ami_return_val */,
+    const char * /* answer */)
+  {
+    /* Your code here. */
+  }
+
+  void
+  AMI4CCM_OneReplyHandler_s_run_my_um_one_i::foo_excep (
+    ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    excep_holder->raise_exception ();
+  }
+
+  AMI4CCM_TwoReplyHandler_m_run_my_two_i::AMI4CCM_TwoReplyHandler_m_run_my_two_i (void)
+  {
+  }
+
+  AMI4CCM_TwoReplyHandler_m_run_my_two_i::~AMI4CCM_TwoReplyHandler_m_run_my_two_i (void)
+  {
+  }
+
+  void
+  AMI4CCM_TwoReplyHandler_m_run_my_two_i::bar (
+    const char * /* answer */)
+  {
+    /* Your code here. */
+  }
+
+  void
+  AMI4CCM_TwoReplyHandler_m_run_my_two_i::bar_excep (
+    ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    excep_holder->raise_exception ();
   }
 
   extern "C" USESSM_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

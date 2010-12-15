@@ -130,6 +130,56 @@ namespace CIAO_InterInOutT_Sender_Impl
     //@}
   };
 
+  class AMI4CCM_MyFooReplyHandler_run_my_foo_i
+      : public ::InterInOutT::CCM_AMI4CCM_MyFooReplyHandler,
+        public virtual ::CORBA::LocalObject
+  {
+  public:
+    AMI4CCM_MyFooReplyHandler_run_my_foo_i (Atomic_UShort  &nr_of_received_);
+    virtual ~AMI4CCM_MyFooReplyHandler_run_my_foo_i (void);
+
+    virtual
+    void foo (::CORBA::Long ami_return_val,
+    ::CORBA::Long cmd,
+    const char * answer);
+
+    virtual
+    void foo_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+    virtual
+    void var_ins (const char * answer,
+    ::CORBA::Double cmd);
+
+    virtual
+    void var_ins_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+    virtual
+    void var_div_ins (const ::InterInOutT::TestTopic & test_topic,
+    const ::InterInOutT::TopicString & topic_str,
+    const ::InterInOutT::TestArray topic_arr,
+    const char * answer);
+
+    virtual
+    void var_div_ins_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+    virtual
+    void var_div2_ins (const ::InterInOutT::X_Union & topic_union,
+    const ::InterInOutT::test_seq & seq,
+    const char * answer);
+
+    virtual
+    void var_div2_ins_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+    virtual
+    void enum_in (const char * answer,
+    ::InterInOutT::test_enum in_test);
+
+    virtual
+    void enum_in_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
+  private:
+    Atomic_UShort &nr_of_received_;
+  };
+
   extern "C" INTERINOUT_T_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_InterInOutT_Sender_Impl (void);
 }

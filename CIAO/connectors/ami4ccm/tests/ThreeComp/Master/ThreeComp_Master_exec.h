@@ -24,8 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO_THREECOMP_MASTER_EXEC_X6NIIT_H_
-#define CIAO_THREECOMP_MASTER_EXEC_X6NIIT_H_
+#ifndef CIAO_THREECOMP_MASTER_EXEC_0MCF2C_H_
+#define CIAO_THREECOMP_MASTER_EXEC_0MCF2C_H_
 
 #include /**/ "ace/pre.h"
 
@@ -122,10 +122,32 @@ namespace CIAO_ThreeComp_Master_Impl
     /** User defined private operations. */
     //@}
   };
+  class AMI4CCM_StateReplyHandler_run_my_state_i
+    : public ::ThreeComp::CCM_AMI4CCM_StateReplyHandler,
+      public virtual ::CORBA::LocalObject
+    {
+    public:
+      AMI4CCM_StateReplyHandler_run_my_state_i (
+          Atomic_UShort  &nr_of_rec,
+          Atomic_UShort  &nr_of_sent);
+      virtual ~AMI4CCM_StateReplyHandler_run_my_state_i (void);
 
-  extern "C" THREECOMP_MASTER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_ThreeComp_Master_Impl (void);
-}
+      virtual void
+      bar (
+        ::CORBA::Long ami_return_val,
+        const char * answer);
+
+      virtual void
+      bar_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+    private:
+      Atomic_UShort  &nr_of_rec_;
+      Atomic_UShort  &nr_of_sent_;
+    };
+
+    extern "C" THREECOMP_MASTER_EXEC_Export ::Components::EnterpriseComponent_ptr
+    create_ThreeComp_Master_Impl (void);
+  }
 
 #include /**/ "ace/post.h"
 

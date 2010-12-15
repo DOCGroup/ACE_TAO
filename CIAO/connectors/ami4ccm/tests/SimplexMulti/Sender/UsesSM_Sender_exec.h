@@ -24,8 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO_USESSM_SENDER_EXEC_BETNOE_H_
-#define CIAO_USESSM_SENDER_EXEC_BETNOE_H_
+#ifndef CIAO_USESSM_SENDER_EXEC_U17LTA_H_
+#define CIAO_USESSM_SENDER_EXEC_U17LTA_H_
 
 #include /**/ "ace/pre.h"
 
@@ -124,9 +124,88 @@ namespace CIAO_UsesSM_Sender_Impl
     //@}
   };
 
-  extern "C" USESSM_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_UsesSM_Sender_Impl (void);
-}
+  class AMI4CCM_OneReplyHandler_run_my_um_one_i
+    : public ::UsesSM::CCM_AMI4CCM_OneReplyHandler,
+      public virtual ::CORBA::LocalObject
+    {
+    public:
+      AMI4CCM_OneReplyHandler_run_my_um_one_i (
+          Atomic_UShort  &nr_of_received_,
+           Atomic_UShort  &nr_of_sent_);
+      virtual ~AMI4CCM_OneReplyHandler_run_my_um_one_i (void);
+
+      virtual void
+      foo (
+        ::CORBA::Long ami_return_val,
+        const char * answer);
+
+      virtual void
+      foo_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+    private:
+      Atomic_UShort  &nr_of_received_;
+      Atomic_UShort  &nr_of_sent_;
+
+    };
+
+    class AMI4CCM_TwoReplyHandler_run_my_two_i
+      : public ::UsesSM::CCM_AMI4CCM_TwoReplyHandler,
+        public virtual ::CORBA::LocalObject
+      {
+      public:
+        AMI4CCM_TwoReplyHandler_run_my_two_i (Atomic_UShort &);
+        virtual ~AMI4CCM_TwoReplyHandler_run_my_two_i (void);
+
+        virtual void
+        bar (
+          const char * answer);
+
+        virtual void
+        bar_excep (
+          ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+      private:
+        Atomic_UShort  &nr_of_received_;
+
+      };
+
+      class AMI4CCM_OneReplyHandler_s_run_my_um_one_i
+        : public ::UsesSM::CCM_AMI4CCM_OneReplyHandler,
+          public virtual ::CORBA::LocalObject
+        {
+        public:
+          AMI4CCM_OneReplyHandler_s_run_my_um_one_i (void);
+           virtual ~AMI4CCM_OneReplyHandler_s_run_my_um_one_i (void);
+
+          virtual void
+          foo (
+            ::CORBA::Long ami_return_val,
+            const char * answer);
+
+          virtual void
+          foo_excep (
+            ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+        };
+
+        class AMI4CCM_TwoReplyHandler_m_run_my_two_i
+          : public ::UsesSM::CCM_AMI4CCM_TwoReplyHandler,
+            public virtual ::CORBA::LocalObject
+          {
+          public:
+            AMI4CCM_TwoReplyHandler_m_run_my_two_i (void);
+            virtual ~AMI4CCM_TwoReplyHandler_m_run_my_two_i (void);
+
+            virtual void
+            bar (
+              const char * answer);
+
+            virtual void
+            bar_excep (
+              ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+          };
+
+          extern "C" USESSM_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+          create_UsesSM_Sender_Impl (void);
+        }
 
 #include /**/ "ace/post.h"
 
