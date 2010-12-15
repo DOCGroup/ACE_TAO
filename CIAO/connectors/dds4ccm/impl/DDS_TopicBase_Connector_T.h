@@ -14,7 +14,7 @@
 
 template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
 class DDS_TopicBase_Connector_T
-  : public virtual DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>
+  : public virtual DDS_Base_Connector_T<CCM_TYPE>
 {
 public:
   DDS_TopicBase_Connector_T (void);
@@ -55,7 +55,7 @@ protected:
   ::DDS::Subscriber_var subscriber_;
   ::DDS::SubscriberListener_var subscriber_listener_;
 
-  typedef DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE> BaseConnector;
+  typedef DDS_Base_Connector_T<CCM_TYPE> BaseConnector;
 private:
   bool late_binding_;
 };

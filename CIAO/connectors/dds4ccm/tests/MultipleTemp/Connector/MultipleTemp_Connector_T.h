@@ -13,11 +13,10 @@
 template <typename CCM_TYPE, typename DDS_TYPE_T, bool FIXED_T,typename SEQ_TYPE_T, bool FIXED_SEQ_TYPE_T,
 typename DDS_TYPE_Y, bool FIXED_Y, typename SEQ_TYPE_Y, bool FIXED_SEQ_TYPE_Y>
 class FooConnector_Connector_T
-  : public virtual DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE_T, SEQ_TYPE_T>
-  //DDS_TYPE_T and SEQ_TYPE_T only used in DDS_Base_Connector to satisfy compiler
+  : public virtual DDS_Base_Connector_T<CCM_TYPE>
 {
 
-  typedef DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE_T, SEQ_TYPE_T> BaseConnector;
+  typedef DDS_Base_Connector_T<CCM_TYPE> BaseConnector;
 
 public:
   FooConnector_Connector_T (void);
