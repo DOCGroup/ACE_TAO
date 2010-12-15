@@ -1,3 +1,14 @@
+Wed Dec 15 09:15:45 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Latency/Receiver/LatencyTT_Test_Receiver.mpc:
+        * connectors/dds4ccm/performance-tests/Latency/Receiver/LatencyTT_Test_Receiver_exec.h:
+        * connectors/dds4ccm/performance-tests/Latency/Receiver/LatencyTT_Test_Receiver_exec.cpp:
+
+        * connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender.mpc:
+        * connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender_exec.h:
+        * connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
 Tue Dec 14 14:46:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver.mpc:
