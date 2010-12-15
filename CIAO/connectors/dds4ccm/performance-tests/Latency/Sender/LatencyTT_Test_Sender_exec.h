@@ -206,7 +206,6 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
     //@{
     /** Component attributes. */
     ::LatencyTT_Test::LatencyTTTestConn::CCM_Listener_var ciao_ping_listen_data_listener_;
-    ::CCM_DDS::CCM_PortStatusListener_var ciao_ping_listen_status_;
     ::CCM_DDS::CCM_ConnectorStatusListener_var ciao_connector_status_;
 
     ::CORBA::ULong iterations_;

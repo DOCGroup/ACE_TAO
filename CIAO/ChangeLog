@@ -1,3 +1,17 @@
+Wed Dec 15 10:26:52 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Latency/Receiver/LatencyTT_Test_Receiver_exec.h:
+        * connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender_exec.h:
+          Removed unnecessary class members.
+
+        * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver.mpc:
+        * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.h:
+        * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender.mpc:
+        * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender_exec.h:
+        * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
 Wed Dec 15 09:15:45 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Latency/Receiver/LatencyTT_Test_Receiver.mpc:
