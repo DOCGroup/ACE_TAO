@@ -11,7 +11,7 @@ project(DDS_CSL_USTest_Receiver_idl_gen) : componentidldefaults, dds4ccm {
               -Wb,svnt_export_include=Receiver_svnt_export.h \
               -Wb,exec_export_macro=RECEIVER_EXEC_Export \
               -Wb,exec_export_include=Receiver_exec_export.h \
-              -I.. -Gexr
+              -I..
 
   IDL_Files {
     CSL_USTest_Receiver.idl

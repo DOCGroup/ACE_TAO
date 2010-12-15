@@ -1,10 +1,16 @@
+Wed Dec 15 13:10:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver.mpc:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender.mpc:
+          Don't let the IDL compiler generate the executor code.
+
 Wed Dec 15 12:46:48 UTC 2010  Marijke Hengstmengel  <mhengstmengelm@remedy.nl>
 
         * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnTA_conn_i.h:
         * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnTA_conn_i.cpp:
         * connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsTA_conn_i.cpp:
         * connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsTA_conn_i.h:
-        Removed. 
+        Removed.
 
 Wed Dec 15 12:23:48 UTC 2010  Marijke Hengstmengel  <mhengstmengelm@remedy.nl>
 
@@ -56,7 +62,7 @@ Wed Dec 15 12:23:48 UTC 2010  Marijke Hengstmengel  <mhengstmengelm@remedy.nl>
         *connectors/ami4ccm/tests/InterInOutArgs/Sender/InterInOutT_Sender_exec.cpp:
         *connectors/ami4ccm/tests/InterInOutArgs/Sender/InterInOutT_Sender_exec.h:
         *connectors/ami4ccm/tests/InterInOutArgs/Base/InterInOutT.idl:
-	Remove ReplyHandler from separate conn_i file to Sender_exec, according new
+        Remove ReplyHandler from separate conn_i file to Sender_exec, according new
         output -Gex option.
 
         *connectors/ami4ccm/tests/OneProcess/Sender/OneProcessA_conn_i.cpp:
@@ -64,17 +70,17 @@ Wed Dec 15 12:23:48 UTC 2010  Marijke Hengstmengel  <mhengstmengelm@remedy.nl>
         *connectors/ami4ccm/tests/Exceptions/Sender/ExceptionTA_conn_i.cpp:
         *connectors/ami4ccm/tests/Exceptions/Sender/ExceptionTA_conn_i.h:
         *connectors/ami4ccm/tests/ThreeComp/Base/ThreeCompA_conn_i.h:
-        *connectors/ami4ccm/tests/ThreeComp/Base/ThreeCompA_conn_i.cpp:                                                                                                                                      
-        *connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsTA_conn_i.cpp:                                                                                                                           
-        *connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsTA_conn_i.h :                                                                                                                              
-        *connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyHA_conn_i.cpp :                                                                                                                                   
-        *connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyHA_conn_i.h:                                                                                                                                    
-        *connectors/ami4ccm/tests/UsesMulti/Sender/UsesMultiA_conn_i.cpp:                                                                                                                                  
-        *connectors/ami4ccm/tests/UsesMulti/Sender/UsesMultiA_conn_i.h:                                                                                                                                     
-        *connectors/ami4ccm/tests/InterMulti/Sender/InterMultiA_conn_i.cpp:                                                                                                                                  
-        *connectors/ami4ccm/tests/InterMulti/Sender/InterMultiA_conn_i.h:                                                                                                                                    
-        *connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSMA_conn_i.cpp:                                                                                                                                    
-        *connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSMA_conn_i.h:                                                                                                                                      
+        *connectors/ami4ccm/tests/ThreeComp/Base/ThreeCompA_conn_i.cpp:
+        *connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsTA_conn_i.cpp:
+        *connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsTA_conn_i.h :
+        *connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyHA_conn_i.cpp :
+        *connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyHA_conn_i.h:
+        *connectors/ami4ccm/tests/UsesMulti/Sender/UsesMultiA_conn_i.cpp:
+        *connectors/ami4ccm/tests/UsesMulti/Sender/UsesMultiA_conn_i.h:
+        *connectors/ami4ccm/tests/InterMulti/Sender/InterMultiA_conn_i.cpp:
+        *connectors/ami4ccm/tests/InterMulti/Sender/InterMultiA_conn_i.h:
+        *connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSMA_conn_i.cpp:
+        *connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSMA_conn_i.h:
         *connectors/ami4ccm/tests/GetComp/Sender/GetCompA_conn_i.cpp:
         *connectors/ami4ccm/tests/GetComp/Sender/GetCompA_conn_i.h:
         *connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyHA_conn_i.cpp:
