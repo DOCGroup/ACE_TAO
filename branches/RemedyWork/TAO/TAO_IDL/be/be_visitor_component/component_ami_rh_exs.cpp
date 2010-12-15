@@ -122,20 +122,49 @@ be_visitor_component_ami_rh_exs::visit_operation (
 
   if (!vrt)
     {
-      be_visitor_operation_rettype rt_visitor (this->ctx_);
-      be_decl *rt =
-        be_decl::narrow_from_decl (node->return_type ());
+      Identifier *id = 0;
+      UTL_ScopedName *sn = 0;
 
-      if (rt->accept (&rt_visitor) == -1)
+      ACE_NEW_RETURN (id,
+                      Identifier ("ami_return_val"),
+                      -1);
+
+      UTL_ScopedName *tmp = 0;
+
+      ACE_NEW_RETURN (tmp,
+                      UTL_ScopedName (id,
+                                      0),
+                      -1);
+
+      sn = (UTL_ScopedName *)node->name ()->copy ();
+      sn->nconc (tmp);
+
+      // Create the argument.
+      be_argument *arg = 0;
+      ACE_NEW_RETURN (arg,
+                      be_argument (AST_Argument::dir_OUT,
+                                  node->return_type (),
+                                  sn),
+                      -1);
+
+      arg->set_defined_in (node);
+      arg->set_name (sn);
+
+      if (this->visit_argument (arg) == -1)
         {
+          delete arg;
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_component_ami_rh_exs")
-                             ACE_TEXT ("::visit_operation - ")
-                             ACE_TEXT ("return type arg gen failed\n")),
+                              ACE_TEXT ("be_visitor_component")
+                              ACE_TEXT ("_ami_rh_exh")
+                              ACE_TEXT ("::visit_operation - ")
+                              ACE_TEXT ("return type arg")
+                              ACE_TEXT (" gen failed\n")),
                             -1);
         }
-
-      os_ << " /* ami_return_val */";
+      else
+        {
+          delete arg;
+        }
 
       if (count != 0)
         {
