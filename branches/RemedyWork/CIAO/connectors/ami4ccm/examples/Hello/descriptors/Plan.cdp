@@ -67,7 +67,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_AMI_Sender_Impl</string>
+          <string>create_Hello_Sender_Impl</string>
         </value>
       </value>
     </execParameter>
