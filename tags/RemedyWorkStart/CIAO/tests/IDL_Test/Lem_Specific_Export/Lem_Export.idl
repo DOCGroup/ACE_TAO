@@ -1,0 +1,8 @@
+
+// $Id$
+
+#include <Components.idl>
+
+component Foo
+{
+};

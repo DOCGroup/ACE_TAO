@@ -1,0 +1,17 @@
+../../ACE_wrappers/bin/generate_export_file.pl       usr/share/ace/bin
+../../ACE_wrappers/bin/split-cpp.pl                  usr/share/ace/bin
+../../ACE_wrappers/bin/g++dep                        usr/share/ace/bin
+../../ACE_wrappers/bin/add_rel_link.sh               usr/share/ace/bin
+../../ACE_wrappers/bin/depgen.pl                     usr/share/ace/bin
+../../ACE_wrappers/bin/DependencyGenerator           usr/share/ace/bin
+../../ACE_wrappers/include                           usr/share/ace
+../../ACE_wrappers/include/makeinclude/platform_macros.GNU usr/share/ace/include/makeinclude
+usr/include/ace/*.{h,inl,cpp}
+usr/include/ace/os_include
+usr/lib/libACE.so
+usr/include/ace/ETCL/*.{h,inl,cpp}
+usr/include/ace/Monitor_Control/*.{h,inl,cpp}
+usr/lib/libACE_ETCL_Parser.so
+usr/lib/libACE_Monitor_Control.so
+usr/lib/libACE_ETCL.so
+usr/include/apps/gperf/src

@@ -1,0 +1,26 @@
+// $Id$
+
+project (DDS_SMLDT_Base_stub) : taoidldefaults, dds4ccm_ts_default {
+  sharedname = DDS_SMLDT_Base_stub
+  dynamicflags += STATE_MEMLEAKDETECTION_TEST_BASE_STUB_BUILD_DLL
+  libout = ../lib
+
+  idlflags += -SS -Sci \
+              -Wb,stub_export_macro=STATE_MEMLEAKDETECTION_TEST_BASE_STUB_Export \
+              -Wb,stub_export_include=State_MemLeakDetection_Test_Base_stub_export.h
+
+  IDL_Files {
+    idlflags += -Gxhst
+    State_MemLeakDetection_Test_Base.idl
+  }
+
+  opendds_ts_flags += --export=STATE_MEMLEAKDETECTION_TEST_BASE_STUB_Export
+
+  DDSGenerator_Files {
+    State_MemLeakDetection_Test_Base.idl
+  }
+
+  Source_Files {
+  }
+}
+

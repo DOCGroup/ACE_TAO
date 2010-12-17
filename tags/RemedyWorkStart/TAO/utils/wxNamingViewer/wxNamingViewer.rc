@@ -1,0 +1,4 @@
+#include "wx/msw/wx.rc"
+mondrian ICON "mondrian.ico"
+
+wxNamingViewerResources WXRDATA "wxNamingViewer.wxr"

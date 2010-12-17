@@ -1,0 +1,10 @@
+// $Id$
+
+project (static) : adbc_odbc {
+  exename = static
+  install = .
+
+  Source_Files {
+    static.cpp
+  }
+}
