@@ -47,7 +47,7 @@ static int cancel_reads = 0;
 void
 write_to_pipe (ACE_Pipe &pipe)
 {
-  char *data = "hello";
+  const char *data = "hello";
   size_t len = ACE_OS::strlen (data);
 
   ssize_t result = ACE::send (pipe.write_handle (),

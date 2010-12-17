@@ -216,7 +216,7 @@ Manager::shut_down (void)
       // Wait for the exit.
       worker->wait ();
 
-      ACE_ASSERT (worker->msg_queue ()->is_empty ());
+      ACE_TEST_ASSERT (worker->msg_queue ()->is_empty ());
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Worker %C shut down.\n"),
                   buf));

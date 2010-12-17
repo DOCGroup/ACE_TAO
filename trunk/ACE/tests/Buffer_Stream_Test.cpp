@@ -183,7 +183,7 @@ Consumer::svc (void)
       if (length > 0)
         {
           output = mb->rd_ptr ();
-          ACE_ASSERT (*c == output[0]);
+          ACE_TEST_ASSERT (*c == output[0]);
           c++;
         }
       mb->release ();

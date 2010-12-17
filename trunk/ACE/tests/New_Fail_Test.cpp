@@ -117,7 +117,7 @@ run_main (int, ACE_TCHAR *[])
         }
       else
         {
-          ACE_ASSERT (blocks[i] == 0);
+          ACE_TEST_ASSERT (blocks[i] == 0);
           if (errno == ENOMEM)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("ACE_NEW failed properly at block %d\n"),
@@ -152,7 +152,7 @@ run_main (int, ACE_TCHAR *[])
         }
       else
         {
-          ACE_ASSERT (blocks[i] == 0);
+          ACE_TEST_ASSERT (blocks[i] == 0);
           if (errno == ENOMEM)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("ACE_NEW_RETURN failed properly at block %d\n"),
@@ -185,7 +185,7 @@ run_main (int, ACE_TCHAR *[])
         }
       else
         {
-          ACE_ASSERT (blocks[i] == 0);
+          ACE_TEST_ASSERT (blocks[i] == 0);
           if (errno == ENOMEM)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("ACE_NEW_NORETURN failed properly at block %d\n"),

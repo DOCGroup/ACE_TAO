@@ -97,7 +97,7 @@ public:
 
   void* getMemoryBlock(const char* block_name, unsigned int block_size)
   {
-    void* shared;
+    void* shared = 0;
 
     ACE_DEBUG((LM_INFO, ACE_TEXT("errno = %d. Looking for a Shared Memory block named %C\n"),
                         ACE_OS::last_error(),

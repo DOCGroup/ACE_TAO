@@ -36,39 +36,39 @@ int test (const ACE_TCHAR* type, int iterations)
   int retval = 0;
   ACE_Atomic_Op <ACE_SYNCH_MUTEX, TYPE> foo (5);
 
-  ACE_ASSERT (foo == 5);
+  ACE_TEST_ASSERT (foo == 5);
 
   TYPE result = ++foo;
-  ACE_ASSERT (foo == 6);
-  ACE_ASSERT (result == 6);
+  ACE_TEST_ASSERT (foo == 6);
+  ACE_TEST_ASSERT (result == 6);
 
   result = --foo;
-  ACE_ASSERT (foo == 5);
-  ACE_ASSERT (result == 5);
+  ACE_TEST_ASSERT (foo == 5);
+  ACE_TEST_ASSERT (result == 5);
 
   result = foo++;
-  ACE_ASSERT (foo == 6);
-  ACE_ASSERT (result == 5);
+  ACE_TEST_ASSERT (foo == 6);
+  ACE_TEST_ASSERT (result == 5);
 
   result = foo--;
-  ACE_ASSERT (foo == 5);
-  ACE_ASSERT (result == 6);
+  ACE_TEST_ASSERT (foo == 5);
+  ACE_TEST_ASSERT (result == 6);
 
   result = foo += 10;
-  ACE_ASSERT (foo == 15);
-  ACE_ASSERT (result == 15);
+  ACE_TEST_ASSERT (foo == 15);
+  ACE_TEST_ASSERT (result == 15);
 
   result = foo -= 10;
-  ACE_ASSERT (foo == 5);
-  ACE_ASSERT (result == 5);
+  ACE_TEST_ASSERT (foo == 5);
+  ACE_TEST_ASSERT (result == 5);
 
   foo = 7;
-  ACE_ASSERT (foo == 7);
+  ACE_TEST_ASSERT (foo == 7);
 
   ACE_Atomic_Op <ACE_SYNCH_MUTEX, TYPE> foo2 (5);
   foo2 = foo;
-  ACE_ASSERT (foo == 7);
-  ACE_ASSERT (foo2 == 7);
+  ACE_TEST_ASSERT (foo == 7);
+  ACE_TEST_ASSERT (foo2 == 7);
 
   ACE_UINT64 usec;
 

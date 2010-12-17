@@ -117,7 +117,7 @@ ACE_Future_Set<T>::next_readable (ACE_Future<T> &future,
     return 0;
 
   // Remove the hash map entry with the specified future rep from our map.
-  FUTURE_HOLDER *future_holder;
+  FUTURE_HOLDER *future_holder = 0;
   if (this->future_map_.find (future_rep,
                               future_holder) != -1)
     {

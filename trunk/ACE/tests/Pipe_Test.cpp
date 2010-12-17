@@ -80,10 +80,10 @@ open_pipe (ACE_Pipe &pipe,
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("opening %C\n"), name));
   int result = pipe.open ();
 
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
   result = pipe.read_handle () != ACE_INVALID_HANDLE
     && pipe.write_handle () != ACE_INVALID_HANDLE;
-  ACE_ASSERT (result == 1);
+  ACE_TEST_ASSERT (result == 1);
 
   if (close_pipe)
     pipe.close ();

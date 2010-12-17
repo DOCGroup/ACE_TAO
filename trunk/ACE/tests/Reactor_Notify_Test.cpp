@@ -192,7 +192,7 @@ Supplier_Task::open (void *)
   int result;
 
   result = this->pipe_.open ();
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   // Register the pipe's write handle with the <Reactor> for writing.
   // This should mean that it's always "active."
@@ -202,12 +202,12 @@ Supplier_Task::open (void *)
         (this->pipe_.write_handle (),
          this,
          ACE_Event_Handler::WRITE_MASK);
-      ACE_ASSERT (result != -1);
+      ACE_TEST_ASSERT (result != -1);
     }
 
   // Make this an Active Object.
   result = this->activate (THR_BOUND | THR_DETACHED);
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
   return 0;
 }
 
@@ -224,7 +224,7 @@ Supplier_Task::close (u_long)
       result = ACE_Reactor::instance ()->remove_handler
         (this->pipe_.write_handle (),
          ACE_Event_Handler::WRITE_MASK);
-      ACE_ASSERT (result != -1);
+      ACE_TEST_ASSERT (result != -1);
     }
   else
     {
@@ -233,7 +233,7 @@ Supplier_Task::close (u_long)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) waiting to be shutdown by main thread\n")));
       result = this->waiter_.acquire ();
-      ACE_ASSERT (result != -1);
+      ACE_TEST_ASSERT (result != -1);
     }
   return 0;
 }
@@ -278,7 +278,7 @@ Supplier_Task::perform_notifications (int notifications)
                         ACE_TEXT ("(%t) %p\n"),
                         ACE_TEXT ("notify")));
           else
-            ACE_ASSERT (result != -1);
+            ACE_TEST_ASSERT (result != -1);
         }
 
       // Wait for our <handle_exception> method to release the
@@ -287,7 +287,7 @@ Supplier_Task::perform_notifications (int notifications)
           && this->disable_notify_pipe_ == 0)
         {
           result = this->waiter_.acquire ();
-          ACE_ASSERT (result != -1);
+          ACE_TEST_ASSERT (result != -1);
         }
     }
 
@@ -321,7 +321,7 @@ Supplier_Task::svc (void)
 int
 Supplier_Task::handle_exception (ACE_HANDLE handle)
 {
-  ACE_ASSERT (handle == ACE_INVALID_HANDLE);
+  ACE_TEST_ASSERT (handle == ACE_INVALID_HANDLE);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) handle_exception\n")));
 
@@ -332,7 +332,7 @@ Supplier_Task::handle_exception (ACE_HANDLE handle)
 int
 Supplier_Task::handle_output (ACE_HANDLE handle)
 {
-  ACE_ASSERT (handle == this->pipe_.write_handle ());
+  ACE_TEST_ASSERT (handle == this->pipe_.write_handle ());
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) handle_output\n")));
 
@@ -371,17 +371,17 @@ run_test (int disable_notify_pipe,
 
   // Set the Singleton Reactor.
   ACE_Reactor *orig_reactor = ACE_Reactor::instance (reactor);
-  ACE_ASSERT (ACE_LOG_MSG->op_status () != -1);
-  ACE_ASSERT (ACE_Reactor::instance () == reactor);
+  ACE_TEST_ASSERT (ACE_LOG_MSG->op_status () != -1);
+  ACE_TEST_ASSERT (ACE_Reactor::instance () == reactor);
 
   Supplier_Task task (disable_notify_pipe,
                       tv);
-  ACE_ASSERT (ACE_LOG_MSG->op_status () != -1);
+  ACE_TEST_ASSERT (ACE_LOG_MSG->op_status () != -1);
 
   int result;
 
   result = task.open ();
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   if (tv.sec () == LONG_TIMEOUT)
     // Sleep for a while so that the <ACE_Reactor>'s notification

@@ -199,7 +199,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
                     this->lock_,
                     -1);
 
-  ACE_ASSERT (this->proactor_ == 0);
+  ACE_TEST_ASSERT (this->proactor_ == 0);
 
 #if defined (ACE_WIN32)
 
