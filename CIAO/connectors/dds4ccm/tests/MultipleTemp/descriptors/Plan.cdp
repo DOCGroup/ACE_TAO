@@ -72,7 +72,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_MultipleTemp_MultipleTempConnector_DDS_State_Impl</string>
+          <string>create_MultipleTemp_MultipleTempConnector_FooConnector_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -83,7 +83,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_MultipleTemp_MultipleTempConnector_DDS_State_Servant</string>
+          <string>create_MultipleTemp_MultipleTempConnector_FooConnector_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -94,7 +94,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>MultipleTemp_Connector_svnt</string>
+          <string>DDS_MultipleTemp_Connector_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -105,7 +105,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>MultipleTemp_Connector_exec</string>
+          <string>DDS_MultipleTemp_Connector_exec</string>
         </value>
       </value>
     </execParameter>
@@ -178,13 +178,24 @@
     <source/>
     <implementation xmi:idref="MultipleTemp_ConnectorComponentImplementation" />
     <configProperty>
-      <name>topic_name</name>
+      <name>topic_name_t</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>TestQoS</string>
+          <string>TestOne</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name_y</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>TestTwo</string>
         </value>
       </value>
     </configProperty>
@@ -196,13 +207,24 @@
     <source/>
     <implementation xmi:idref="MultipleTemp_ConnectorComponentImplementation" />
     <configProperty>
-      <name>topic_name</name>
+      <name>topic_name_t</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>TestQoS</string>
+          <string>TestOne</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name_y</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>TestTwo</string>
         </value>
       </value>
     </configProperty>
@@ -222,13 +244,13 @@
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_out_one_data_control</portName>
+      <portName>info_one_out_data_control</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>push_observer_data_control</portName>
+      <portName>push_consumer_t_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="MultipleTemp_ConnectorComponentInstance2" />
@@ -241,51 +263,51 @@
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_out_one_data_listener</portName>
+      <portName>info_one_out_data_listener</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>push_observer_data_listener</portName>
+      <portName>push_consumer_t_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="MultipleTemp_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-  <connection>
+  <!--connection>
     <name>_portstatuslistener_one</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_out_one_status</portName>
+      <portName>info_one_out_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>push_state_observer_status</portName>
+      <portName>push_consumer_t_status</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="MultipleTemp_ConnectorComponentInstance2" />
     </internalEndpoint>
-  </connection>
+  </connection-->
   <connection>
-    <name>info_out_one_data</name>
+    <name>info_one_out_data</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_out_one_data</portName>
+      <portName>info_one_out_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>push_state_observer_data</portName>
+      <portName>push_consumer_t_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="MultipleTemp_ConnectorComponentInstance2" />
@@ -304,7 +326,7 @@
       <instance xmi:idref="SenderComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>observable_data</portName>
+      <portName>observable_t_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="MultipleTemp_ConnectorComponentInstance" />
@@ -318,13 +340,13 @@
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_out_two_data_control</portName>
+      <portName>info_two_out_data_control</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>push_observer_data_control</portName>
+      <portName>push_consumer_y_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="MultipleTemp_ConnectorComponentInstance2" />
@@ -337,51 +359,52 @@
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_out_two_data_listener</portName>
+      <portName>info_two_out_data_listener</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>push_observer_data_listener</portName>
+      <portName>push_consumer_y_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="MultipleTemp_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-  <connection>
+  <!--connection>
     <name>_portstatuslistener_two</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_out_two_status</portName>
+      <portName>info_two_out_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>push_state_observer_status</portName>
+      <portName>push_consumer_y_status</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="MultipleTemp_ConnectorComponentInstance2" />
     </internalEndpoint>
-  </connection>
+  </connection-->
+
   <connection>
-    <name>info_out_two_data</name>
+    <name>info_two_out_data</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_out_two_data</portName>
+      <portName>info_two_out_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>push_state_observer_data</portName>
+      <portName>push_consumer_y_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="MultipleTemp_ConnectorComponentInstance2" />
@@ -400,7 +423,7 @@
       <instance xmi:idref="SenderComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>observable_data</portName>
+      <portName>observable_y_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="MultipleTemp_ConnectorComponentInstance" />
@@ -426,13 +449,13 @@
     <location>Sender_stub</location>
   </artifact>
   <artifact xmi:id="MultipleTemp_Connector_ExecArtifact">
-    <name>MultipleTemp_Connector_exec</name>
+    <name>DDS_MultipleTemp_Connector_exec</name>
     <source/>
     <node/>
     <location>DDS_MultipleTemp_Connector_exec</location>
   </artifact>
   <artifact xmi:id="MultipleTemp_Connector_SvntArtifact">
-    <name>MultipleTemp_Connector_svnt</name>
+    <name>DDS_MultipleTemp_Connector_svnt</name>
     <source/>
     <node/>
     <location>DDS_MultipleTemp_Connector_svnt</location>

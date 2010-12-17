@@ -18,7 +18,7 @@ namespace CIAO_MultipleTemp_Receiver_Impl
   CORBA::UShort received_two= 0;
 
   //============================================================
-  // ListenOne_Listener_exec_i one
+  // ListenOne_Listener_exec_i Listener to topic One
   //============================================================
   ListenOne_Listener_exec_i::ListenOne_Listener_exec_i (
       ::MultipleTemp::CCM_Receiver_Context_ptr ctx)
@@ -38,14 +38,14 @@ namespace CIAO_MultipleTemp_Receiver_Impl
                                   const ::CCM_DDS::ReadInfo & info)
   {
     ACE_DEBUG ((LM_DEBUG, "ListenOne_Listener_exec_i::on_one_data: "
-                            "key <%C> - iteration <%d>\n",
+                            "key <%C> - x <%d>\n",
                             an_instance.keyOne.in (),
                             an_instance.x));
     if (!info.instance_handle.isValid)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: ListenOne_Listener_exec_i::on_one_data: "
                             "instance handle seems to be invalid "
-                            "key <%C> - iteration <%d>\n",
+                            "key <%C> - x <%d>\n",
                             an_instance.keyOne.in (),
                             an_instance.x));
       }
@@ -54,7 +54,7 @@ namespace CIAO_MultipleTemp_Receiver_Impl
       {
         ACE_ERROR ((LM_ERROR, "ERROR: ListenOne_Listener_exec_i::on_one_data: "
                             "source timestamp seems to be invalid (nil) "
-                            "key <%C> - iteration <%d>\n",
+                            "key <%C> - x <%d>\n",
                             an_instance.keyOne.in (),
                             an_instance.x));
       }
@@ -68,7 +68,7 @@ namespace CIAO_MultipleTemp_Receiver_Impl
   {
   }
   //============================================================
-  // ListenTwo_Listener_exec_i twoe
+  // ListenTwo_Listener_exec_i Listener to topic Two
   //============================================================
   ListenTwo_Listener_exec_i::ListenTwo_Listener_exec_i (
       ::MultipleTemp::CCM_Receiver_Context_ptr ctx)
@@ -83,23 +83,20 @@ namespace CIAO_MultipleTemp_Receiver_Impl
 
   void
   ListenTwo_Listener_exec_i::on_one_data (
-//                                  const TestTopicTwo & an_instance,
-                                  const TestTopicOne & an_instance,
+                                  const TestTopicTwo & an_instance,
                                   const ::CCM_DDS::ReadInfo & info)
     {
       ACE_DEBUG ((LM_DEBUG, "ListenTwo_Listener_exec_i::on_one_data: "
-                              "key <%C> - iteration <%d>\n",
-                        //      an_instance.keyTwo.in (),
-                              an_instance.keyOne.in (),
-                              an_instance.x));
+                              "key <%C> - y <%d>\n",
+                              an_instance.keyTwo.in (),
+                              an_instance.y));
       if (!info.instance_handle.isValid)
         {
           ACE_ERROR ((LM_ERROR, "ERROR: ListenTwo_Listener_exec_i::on_one_data: "
                               "instance handle seems to be invalid "
-                              "key <%C> - iteration <%d>\n",
-                              an_instance.keyOne.in (),
-                         //     an_instance.keyTwo.in (),
-                              an_instance.x));
+                              "key <%C> - y <%d>\n",
+                              an_instance.keyTwo.in (),
+                              an_instance.y));
         }
       if (info.source_timestamp.sec == 0 &&
           info.source_timestamp.nanosec == 0)
@@ -107,17 +104,15 @@ namespace CIAO_MultipleTemp_Receiver_Impl
           ACE_ERROR ((LM_ERROR, "ERROR: ListenTwo_Listener_exec_i::on_one_data: "
                               "source timestamp seems to be invalid (nil) "
                               "key <%C> - iteration <%d>\n",
-                  //            an_instance.keyTwo.in (),
-                               an_instance.keyOne.in (),
-                               an_instance.x));
+                              an_instance.keyTwo.in (),
+                              an_instance.y));
         }
     ++received_two;
   }
 
   void
   ListenTwo_Listener_exec_i::on_many_data (
-//                                  const TestTopicTwoSeq & ,
-                                  const TestTopicOneSeq & ,
+                                  const TestTopicTwoSeq & ,
                                   const ::CCM_DDS::ReadInfoSeq & )
   {
   }
@@ -208,7 +203,7 @@ namespace CIAO_MultipleTemp_Receiver_Impl
         this->ciao_context_->get_connection_info_one_out_data_control ();
     ::CCM_DDS::DataListenerControl_var dlc_two =
         this->ciao_context_->get_connection_info_two_out_data_control ();
-
+    dlc_one->mode (::CCM_DDS::ONE_BY_ONE);
     dlc_two->mode (::CCM_DDS::ONE_BY_ONE);
   }
 
@@ -221,21 +216,21 @@ namespace CIAO_MultipleTemp_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    if (received_one != 5)
+    if (received_one != 8)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Receiver: "
                                "Received wrong number of topic one: "
-                               "received <%C> - expected <5>\n",
+                               "received <%C> - expected <8>\n",
                                received_one));
        }
-    if (received_two != 5)
+    if (received_two != 8)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Receiver: "
                                "Received wrong number of topic two: "
-                               "received <%C> - expected <5>\n",
+                               "received <%C> - expected <8>\n",
                                received_two));
        }
-    if ((received_two == 5) && (received_one != 5))
+    if ((received_two == 8) && (received_one == 8))
       {
         ACE_DEBUG ((LM_DEBUG, "OK: Receiver: "
                                "Received received expected topics.\n"));

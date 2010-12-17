@@ -1,0 +1,27 @@
+// $Id$
+
+/**
+ * @file I2C_Shapes_Connector.idl
+ * @author
+ */
+
+#ifndef I2C_SHAPES_CONNECTOR_IDL_
+#define I2C_SHAPES_CONNECTOR_IDL_
+
+#include "connectors/dds4ccm/idl/dds4ccm_Entity.idl"
+
+#include "Base/I2C_Shapes_Base.idl"
+
+#pragma ciao lem "Connector/I2C_Shapes_ConnectorE.idl"
+
+module I2C_Typed <typename T, sequence<T> TSeq> {
+  alias DDS_Entity<T, TSeq> DDS_Typed_Entity;
+  typedef DDS_Typed_Entity::DataReader DataReader;
+  typedef DDS_Typed_Entity::DataWriter DataWriter;
+};
+
+module ::I2C_Typed < ::ShapeType, ::ShapeTypeSeq> I2C_Shapes;
+
+#endif /* I2C_SHAPES_CONNECTOR_IDL_ */
+
+

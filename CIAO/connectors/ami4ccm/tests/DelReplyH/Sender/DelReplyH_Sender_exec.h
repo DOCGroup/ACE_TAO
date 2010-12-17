@@ -24,17 +24,18 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO_DELREPLYH_SENDER_EXEC_JPNNPA_H_
-#define CIAO_DELREPLYH_SENDER_EXEC_JPNNPA_H_
+#ifndef CIAO_DELREPLYH_SENDER_EXEC_9OZUBT_H_
+#define CIAO_DELREPLYH_SENDER_EXEC_9OZUBT_H_
 
+#include /**/ "ace/pre.h"
 
 #include "DelReplyH_SenderEC.h"
-#include "DelReplyH_Sender_exec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include /**/ "DelReplyH_Sender_exec_export.h"
 #include "tao/LocalObject.h"
 #include "ace/Task.h"
 
@@ -127,8 +128,32 @@ namespace CIAO_DelReplyH_Sender_Impl
     //@}
   };
 
-  extern "C"  DELREPLYH_SENDER_EXEC_Export::Components::EnterpriseComponent_ptr
-  create_DelReplyH_Sender_Impl (void);
-}
+  class AMI4CCM_MyFooReplyHandler_run_my_foo_i
+    : public ::DelReplyH::CCM_AMI4CCM_MyFooReplyHandler,
+      public virtual ::CORBA::LocalObject
+    {
+    public:
+      AMI4CCM_MyFooReplyHandler_run_my_foo_i (Atomic_UShort &nr_callbacks,
+          Atomic_UShort &nr_exceptions);
+      virtual ~AMI4CCM_MyFooReplyHandler_run_my_foo_i (void);
+
+      virtual void
+      foo (
+        ::CORBA::Long ami_return_val,
+        const char * answer);
+
+      virtual void
+      foo_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+    private:
+      Atomic_UShort &nr_callbacks_;
+      Atomic_UShort &nr_exceptions_;
+    };
+
+    extern "C" DELREPLYH_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+    create_DelReplyH_Sender_Impl (void);
+  }
+
+#include /**/ "ace/post.h"
 
 #endif /* ifndef */

@@ -12,7 +12,7 @@ project(DDS_DDSInstanceHandleSender_idl_gen) : componentidldefaults, dds4ccm {
               -Wb,svnt_export_include=Sender_svnt_export.h \
               -Wb,exec_export_macro=SENDER_EXEC_Export \
               -Wb,exec_export_include=Sender_exec_export.h \
-              -I ..
+              -I..
 
   IDL_Files {
     Writer_Sender.idl
@@ -87,10 +87,10 @@ project(DDS_DDSInstanceHandleSender_stub) : ccm_stub, dds4ccm_base {
 
 project(DDS_DDSInstanceHandleSender_exec) : ciao_executor, dds4ccm_impl {
   after += DDS_DDSInstanceHandleSender_lem_stub DDS_DDSInstanceHandleSender_stub \
-           DDS_InstanceHandleConnector_lem_stub DDS_InstanceHandleConnector_stub 
+           DDS_InstanceHandleConnector_lem_stub DDS_InstanceHandleConnector_stub
   sharedname = Sender_exec
   libs += Sender_stub Sender_lem_stub DDS_DDSInstanceHandleBase_stub \
-          DDS_InstanceHandleConnector_lem_stub DDS_InstanceHandleConnector_stub 
+          DDS_InstanceHandleConnector_lem_stub DDS_InstanceHandleConnector_stub
   libpaths += ../lib
   includes += ..
   libout = ../lib

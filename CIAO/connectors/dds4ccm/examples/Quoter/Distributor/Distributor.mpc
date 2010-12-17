@@ -12,7 +12,7 @@ project(DDS_Distributor_idl_gen) : componentidldefaults, dds4ccm {
               -Wb,svnt_export_include=Distributor_svnt_export.h \
               -Wb,exec_export_macro=DISTRIBUTOR_EXEC_Export \
               -Wb,exec_export_include=Distributor_exec_export.h \
-              -I ..
+              -I..
 
   IDL_Files {
     Distributor.idl
@@ -84,9 +84,9 @@ project(DDS_Distributor_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(DDS_Distributor_exec) : ciao_executor, dds4ccm_lem_stub {
-  after   += DDS_Distributor_lem_stub DDS_Distributor_stub DDS_Quoter_Connector_lem_stub DDS_Quoter_Connector_stub 
+  after   += DDS_Distributor_lem_stub DDS_Distributor_stub DDS_Quoter_Connector_lem_stub DDS_Quoter_Connector_stub
   sharedname = Distributor_exec
-  libs += Distributor_stub Distributor_lem_stub DDS_Quoter_Base_stub DDS_Quoter_Connector_lem_stub DDS_Quoter_Connector_stub 
+  libs += Distributor_stub Distributor_lem_stub DDS_Quoter_Base_stub DDS_Quoter_Connector_lem_stub DDS_Quoter_Connector_stub
   libpaths += ../lib
   includes += ..
   libout = ../lib

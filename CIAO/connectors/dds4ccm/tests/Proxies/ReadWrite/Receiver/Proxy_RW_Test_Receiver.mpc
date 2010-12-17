@@ -1,0 +1,158 @@
+// $Id$
+
+project(Proxy_RW_Test_Receiver_idl_gen) : componentidldefaults, dds4ccm {
+  custom_only = 1
+  after += Proxy_RW_Test_Connector_idl_gen
+  idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
+              -Wb,stub_export_include=Receiver_stub_export.h \
+              -Wb,skel_export_macro=RECEIVER_SVNT_Export \
+              -Wb,skel_export_include=Receiver_svnt_export.h \
+              -Wb,svnt_export_macro=RECEIVER_SVNT_Export \
+              -Wb,svnt_export_include=Receiver_svnt_export.h \
+              -Wb,exec_export_macro=RECEIVER_EXEC_Export \
+              -Wb,exec_export_include=Receiver_exec_export.h \
+              -I..
+
+  IDL_Files {
+    Proxy_RW_Test_Receiver.idl
+  }
+}
+
+project(Proxy_RW_Test_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
+  after += Proxy_RW_Test_Receiver_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=RECEIVER_LEM_STUB_Export \
+              -Wb,stub_export_include=Receiver_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    Proxy_RW_Test_ReceiverE.idl
+  }
+}
+
+project(Proxy_RW_Test_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
+  after += Proxy_RW_Test_Receiver_lem_gen Proxy_RW_Test_Receiver_stub  \
+           Proxy_RW_Test_Connector_stub Proxy_RW_Test_Base_stub \
+           RW_Reader_Starter_stub
+  libs  +=  Receiver_stub Proxy_RW_Test_Connector_stub \
+            Proxy_RW_Test_Base_stub RW_Reader_Starter_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = Receiver_lem_stub
+  dynamicflags += RECEIVER_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Proxy_RW_Test_ReceiverEC.cpp
+  }
+
+  Header_Files {
+    Proxy_RW_Test_ReceiverEC.h
+    Receiver_lem_stub_export.h
+  }
+
+  Inline_Files {
+    Proxy_RW_Test_ReceiverEC.inl
+  }
+}
+
+project(Proxy_RW_Test_Receiver_stub) : ccm_stub, dds4ccm_base {
+  after += Proxy_RW_Test_Receiver_idl_gen  Proxy_RW_Test_Connector_stub \
+           Proxy_RW_Test_Base_stub Proxy_RW_Test_Connector_lem_gen \
+           RW_Reader_Starter_stub RW_Reader_Starter_lem_stub
+  libs  += Proxy_RW_Test_Connector_stub Proxy_RW_Test_Base_stub \
+           RW_Reader_Starter_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = Receiver_stub
+  dynamicflags += RECEIVER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Proxy_RW_Test_ReceiverC.cpp
+  }
+
+  Header_Files {
+    Proxy_RW_Test_ReceiverC.h
+    Receiver_stub_export.h
+  }
+
+  Inline_Files {
+    Proxy_RW_Test_ReceiverC.inl
+  }
+}
+
+project(Proxy_RW_Test_Receiver_exec) : ciao_executor, dds4ccm_lem_stub, dds4ccm_impl {
+  after   += Proxy_RW_Test_Receiver_lem_stub Proxy_RW_Test_Receiver_stub \
+             Proxy_RW_Test_Base_stub Proxy_RW_Test_Connector_stub \
+             Proxy_RW_Test_Connector_lem_stub \
+             RW_Reader_Starter_lem_stub RW_Reader_Starter_stub
+  sharedname = Receiver_exec
+  libs += Receiver_stub Receiver_lem_stub Proxy_RW_Test_Base_stub \
+          Proxy_RW_Test_Connector_stub Proxy_RW_Test_Connector_lem_stub \
+          RW_Reader_Starter_lem_stub RW_Reader_Starter_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags += RECEIVER_EXEC_BUILD_DLL READER_STARTER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Proxy_RW_Test_Receiver_exec.cpp
+  }
+
+  Header_Files {
+    Proxy_RW_Test_Receiver_exec.h
+    Receiver_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(Proxy_RW_Test_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
+  after      +=   Proxy_RW_Test_Receiver_lem_stub Proxy_RW_Test_Base_stub \
+                  Proxy_RW_Test_Connector_stub Proxy_RW_Test_Connector_svnt \
+                  Proxy_RW_Test_Receiver_exec Proxy_RW_Test_Connector_lem_stub \
+                  RW_Reader_Starter_stub \
+                  RW_Reader_Starter_svnt RW_Reader_Starter_lem_stub
+  sharedname  = Receiver_svnt
+  libs       += Receiver_stub Receiver_lem_stub Proxy_RW_Test_Base_stub \
+                Proxy_RW_Test_Connector_stub Proxy_RW_Test_Connector_svnt \
+                Receiver_exec Proxy_RW_Test_Connector_lem_stub \
+                RW_Reader_Starter_stub RW_Reader_Starter_svnt \
+                RW_Reader_Starter_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags += RECEIVER_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Proxy_RW_Test_ReceiverS.cpp
+    Proxy_RW_Test_Receiver_svnt.cpp
+  }
+
+  Header_Files {
+    Proxy_RW_Test_ReceiverS.h
+    Proxy_RW_Test_Receiver_svnt.h
+    Receiver_svnt_export.h
+  }
+
+  Inline_Files {
+    Proxy_RW_Test_ReceiverS.inl
+  }
+}
+
+

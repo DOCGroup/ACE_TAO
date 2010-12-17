@@ -89,8 +89,8 @@ DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove (
   ::DDS::DataWriter_var writer = this->dds_write_->get_dds_writer ();
   if (!::CORBA::is_nil (writer.in ()))
     {
-      DDS::ReturnCode_t const retcode =
-          publisher->delete_datawriter (writer.in ());
+      ::DDS::ReturnCode_t const retcode =
+        publisher->delete_datawriter (writer.in ());
 
       if (retcode == ::DDS::RETCODE_OK)
         {

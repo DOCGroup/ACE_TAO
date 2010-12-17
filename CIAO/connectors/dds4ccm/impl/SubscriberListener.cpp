@@ -49,7 +49,7 @@ namespace CIAO
       if (! ::CORBA::is_nil (this->error_listener_))
         {
           try
-          {
+            {
               if (this->reactor_)
                 {
                   ::CIAO::DDS4CCM::OnRequestedOncompatibleQosHandler* rh = 0;
@@ -69,20 +69,20 @@ namespace CIAO
                 {
                   this->error_listener_->on_requested_incompatible_qos (reader, status);
                 }
-          }
+            }
           catch (const ::CORBA::Exception& ex)
-          {
+            {
               DDS4CCM_PRINT_CORBA_EXCEPTION (
                   DDS4CCM_LOG_LEVEL_ERROR,
                   ex,
                   "SubscriberListener::on_requested_incompatible_qos");
-          }
+            }
           catch (...)
-          {
+            {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                   "SubscriberListener::on_requested_incompatible_qos - "
                   "Unexpected exception caught\n"));
-          }
+            }
         }
       else
         {
@@ -102,7 +102,7 @@ namespace CIAO
       if (! ::CORBA::is_nil (this->error_listener_))
         {
           try
-          {
+            {
               if (this->reactor_)
                 {
                   ::CIAO::DDS4CCM::OnUnexpectedStatusHandler* rh = 0;
@@ -114,28 +114,28 @@ namespace CIAO
                     {
                       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                           ACE_TEXT ("SubscriberListener::on_unexpected_status - ")
-                      ACE_TEXT ("failed to use reactor.\n")));
+                          ACE_TEXT ("failed to use reactor.\n")));
                     }
                 }
               else
                 {
                   this->error_listener_->on_unexpected_status (entity, status_kind);
                 }
-          }
+            }
           catch (const ::CORBA::Exception& ex)
-          {
+            {
               DDS4CCM_PRINT_CORBA_EXCEPTION (
                   DDS4CCM_LOG_LEVEL_ERROR,
                   ex,
                   "SubscriberListener::on_unexpected_status");
-          }
+            }
           catch (...)
-          {
+            {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                   "SubscriberListener::on_unexpected_status - "
                   "Unexpected exception caught for <%C>\n",
                   translate_statuskind (status_kind)));
-          }
+            }
         }
       else
         {
@@ -186,7 +186,7 @@ namespace CIAO
       if (! ::CORBA::is_nil (this->error_listener_))
         {
           try
-          {
+            {
               if (this->reactor_)
                 {
                   ::CIAO::DDS4CCM::OnSampleRejectedHandler* rh = 0;
@@ -205,20 +205,20 @@ namespace CIAO
                 {
                   this->error_listener_->on_sample_rejected (reader, status);
                 }
-          }
+            }
           catch (const ::CORBA::Exception& ex)
-          {
+            {
               DDS4CCM_PRINT_CORBA_EXCEPTION (
                   DDS4CCM_LOG_LEVEL_ERROR,
                   ex,
                   "SubscriberListener::on_sample_rejected");
-          }
+            }
           catch (...)
-          {
+            {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                   "SubscriberListener::on_sample_rejected - "
                   "Unexpected exception caught\n"));
-          }
+            }
         }
       else
         {
@@ -229,7 +229,7 @@ namespace CIAO
     }
 
     void
-    SubscriberListener::on_subscription_matched(
+    SubscriberListener::on_subscription_matched (
         ::DDS::DataReader* reader,
          const ::DDS::SubscriptionMatchedStatus& status)
     {
@@ -249,7 +249,7 @@ namespace CIAO
     }
 
     void
-    SubscriberListener::on_data_on_readers(
+    SubscriberListener::on_data_on_readers (
         ::DDS::Subscriber *)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::SubscriberListener::on_data_on_readers");

@@ -24,9 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-// test 3 components: Master <-> Sender <-> Receiver
+
 #include "ThreeComp_Master_exec.h"
-#include "../Base/ThreeCompA_conn_i.h"
 #include "ace/OS_NS_unistd.h"
 
 
@@ -53,7 +52,7 @@ namespace CIAO_ThreeComp_Master_Impl
 
     ACE_OS::sleep(2);
    ::ThreeComp::AMI4CCM_StateReplyHandler_var cb =
-        new CIAO_ThreeComp_AMI4CCM_State_Connector_AMI4CCM_Connector_Impl::AMI4CCM_StateReplyHandler_i (
+        new AMI4CCM_StateReplyHandler_run_my_state_i (
                                                   this->nr_of_rec_,
                                                   this->nr_of_sent_);
 
@@ -202,6 +201,40 @@ namespace CIAO_ThreeComp_Master_Impl
     this->asynch_state_gen = 0;
     delete this->synch_state_gen;
     this->synch_state_gen = 0;
+  }
+
+  AMI4CCM_StateReplyHandler_run_my_state_i::AMI4CCM_StateReplyHandler_run_my_state_i (
+      Atomic_UShort  &nr_of_rec,
+       Atomic_UShort  &nr_of_sent)
+   : nr_of_rec_(nr_of_rec),
+     nr_of_sent_(nr_of_sent)
+  {
+  }
+
+  AMI4CCM_StateReplyHandler_run_my_state_i::~AMI4CCM_StateReplyHandler_run_my_state_i (void)
+  {
+  }
+
+  void
+  AMI4CCM_StateReplyHandler_run_my_state_i::bar (
+    ::CORBA::Long  ami_return_val,
+    const char * answer)
+  {
+    if (ami_return_val == 1)
+       {
+         ++this->nr_of_rec_;
+         --this->nr_of_sent_;
+         ACE_DEBUG ((LM_DEBUG, "OK: Master get ASYNCHRONOUS callback "
+                    "from Sender: <%C>.\n",
+                    answer));
+       }
+  }
+
+  void
+  AMI4CCM_StateReplyHandler_run_my_state_i::bar_excep (
+    ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    excep_holder->raise_exception ();
   }
 
   extern "C" THREECOMP_MASTER_EXEC_Export ::Components::EnterpriseComponent_ptr

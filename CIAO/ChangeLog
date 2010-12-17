@@ -1,3 +1,13 @@
+Fri Dec 17 15:01:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * */*.*:
+          Merged RemedyWork branch.
+
+Fri Dec 17 10:35:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.mpc:
+          Resolved linker error on windows builds
+
 Wed Dec 15 11:49:02 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/ndds.mpc:
@@ -11,20 +21,413 @@ Wed Dec 15 11:25:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
         * bin/ciao_tests.lst:
           Enabled new tests
 
+Wed Dec 15 14:43:48 UTC 2010  Marijke Hengstmengel  <mhengstmengelm@remedy.nl>
+
+        * tests/DAnCE/LocalityManager/CommandlinePassage/run_test_cmd.pl:
+        Changed sever args.
+
+Wed Dec 15 14:02:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector_T.h:
+          Removed DDS_TYPE and SEQ_TYPE template parameters from the Base Connector
+
+Wed Dec 15 13:15:48 UTC 2010  Marijke Hengstmengel  <mhengstmengelm@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/ami4ccm/examples/Hello/descriptors/Plan.cdp:
+        Generate ReplyHandler in exec with -Gex option.
+
+Wed Dec 15 13:10:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver.mpc:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender.mpc:
+          Don't let the IDL compiler generate the executor code.
+
+Wed Dec 15 12:46:48 UTC 2010  Marijke Hengstmengel  <mhengstmengelm@remedy.nl>
+
+        * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnTA_conn_i.h:
+        * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnTA_conn_i.cpp:
+        * connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsTA_conn_i.cpp:
+        * connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsTA_conn_i.h:
+        Removed.
+
+Wed Dec 15 12:23:48 UTC 2010  Marijke Hengstmengel  <mhengstmengelm@remedy.nl>
+
+        *connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender_exec.cpp:
+        *connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender_exec.h:
+        *connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender.mpc:
+        *connectors/ami4ccm/tests/OneProcess/Base/OneProcess.mpc:
+        *connectors/ami4ccm/tests/Exceptions/Sender/ExceptionT_Sender.mpc:
+        *connectors/ami4ccm/tests/Exceptions/Sender/ExceptionT_Sender_exec.cpp:
+        *connectors/ami4ccm/tests/Exceptions/Sender/ExceptionT_Sender_exec.h:
+        *connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.h:
+        *connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender.mpc:
+        *connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.cpp:
+        *connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.h:
+        *connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender.mpc:
+        *connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.cpp:
+        *connectors/ami4ccm/tests/InterInArgs/Base/InterInArgsT.idl:
+        *connectors/ami4ccm/tests/ThreeComp/Sender/ThreeComp_Sender_exec.h:
+        *connectors/ami4ccm/tests/ThreeComp/Sender/ThreeComp_Sender.mpc:
+        *connectors/ami4ccm/tests/ThreeComp/Sender/ThreeComp_Sender_exec.cpp:
+        *connectors/ami4ccm/tests/ThreeComp/Master/ThreeComp_Master.mpc:
+        *connectors/ami4ccm/tests/ThreeComp/Master/ThreeComp_Master_exec.cpp:
+        *connectors/ami4ccm/tests/ThreeComp/Master/ThreeComp_Master_exec.h:
+        *connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.cpp:
+        *connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.h:
+        *connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender.mpc:
+        *connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.h:
+        *connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender.mpc:
+        *connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.cpp:
+        *connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.cpp:
+        *connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.h:
+        *connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender.mpc:
+        *connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.cpp:
+        *connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.h:
+        *connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender.mpc:
+        *connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.cpp:
+        *connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.h:
+        *connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender.mpc:
+        *connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender_exec.cpp:
+        *connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender_exec.h:
+        *connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender.mpc:
+        *connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyH_Sender_exec.cpp:
+        *connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyH_Sender_exec.h:
+        *connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyH_Sender.mpc:
+        *connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyH_Sender_exec.h:
+        *connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyH_Sender.mpc:
+        *connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyH_Sender_exec.cpp:
+        *connectors/ami4ccm/tests/InterInOutArgs/Sender/InterInOutT_Sender.mpc:
+        *connectors/ami4ccm/tests/InterInOutArgs/Sender/InterInOutT_Sender_exec.cpp:
+        *connectors/ami4ccm/tests/InterInOutArgs/Sender/InterInOutT_Sender_exec.h:
+        *connectors/ami4ccm/tests/InterInOutArgs/Base/InterInOutT.idl:
+        Remove ReplyHandler from separate conn_i file to Sender_exec, according new
+        output -Gex option.
+
+        *connectors/ami4ccm/tests/OneProcess/Sender/OneProcessA_conn_i.cpp:
+        *connectors/ami4ccm/tests/OneProcess/Sender/OneProcessA_conn_i.h:
+        *connectors/ami4ccm/tests/Exceptions/Sender/ExceptionTA_conn_i.cpp:
+        *connectors/ami4ccm/tests/Exceptions/Sender/ExceptionTA_conn_i.h:
+        *connectors/ami4ccm/tests/ThreeComp/Base/ThreeCompA_conn_i.h:
+        *connectors/ami4ccm/tests/ThreeComp/Base/ThreeCompA_conn_i.cpp:
+        *connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsTA_conn_i.cpp:
+        *connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsTA_conn_i.h :
+        *connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyHA_conn_i.cpp :
+        *connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyHA_conn_i.h:
+        *connectors/ami4ccm/tests/UsesMulti/Sender/UsesMultiA_conn_i.cpp:
+        *connectors/ami4ccm/tests/UsesMulti/Sender/UsesMultiA_conn_i.h:
+        *connectors/ami4ccm/tests/InterMulti/Sender/InterMultiA_conn_i.cpp:
+        *connectors/ami4ccm/tests/InterMulti/Sender/InterMultiA_conn_i.h:
+        *connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSMA_conn_i.cpp:
+        *connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSMA_conn_i.h:
+        *connectors/ami4ccm/tests/GetComp/Sender/GetCompA_conn_i.cpp:
+        *connectors/ami4ccm/tests/GetComp/Sender/GetCompA_conn_i.h:
+        *connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyHA_conn_i.cpp:
+        *connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyHA_conn_i.h:
+        *connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyHA_conn_i.h:
+        *connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyHA_conn_i.cpp:
+        *connectors/ami4ccm/tests/InterInOutArgs/Sender/InterInOutTA_conn_i.h:
+        *connectors/ami4ccm/tests/InterInOutArgs/Sender/InterInOutTA_conn_i.cpp:
+        Remove files.
+
+Wed Dec 15 11:45:48 UTC 2010  Martin Corino  <corino_m@remedy.nl>
+
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.cpp:
+          Added missing include.
+
+Wed Dec 15 10:26:52 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Latency/Receiver/LatencyTT_Test_Receiver_exec.h:
+        * connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender_exec.h:
+          Removed unnecessary class members.
+
+        * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver.mpc:
+        * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.h:
+        * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender.mpc:
+        * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender_exec.h:
+        * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
+Wed Dec 15 09:15:45 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Latency/Receiver/LatencyTT_Test_Receiver.mpc:
+        * connectors/dds4ccm/performance-tests/Latency/Receiver/LatencyTT_Test_Receiver_exec.h:
+        * connectors/dds4ccm/performance-tests/Latency/Receiver/LatencyTT_Test_Receiver_exec.cpp:
+
+        * connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender.mpc:
+        * connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender_exec.h:
+        * connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
 Tue Dec 14 15:24:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
           Prepared for next release
 
+Tue Dec 14 14:46:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver.mpc:
+        * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver_exec.h:
+        * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver_exec.cpp:
+
+        * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender.mpc:
+        * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.h:
+        * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
+Tue Dec 14 13:29:14 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.mpc:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.mpc:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
+          Rewritten, using the generated executor code.
+
 Tue Dec 14 13:13:17 CET 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO version 1.0.0 released.
 
+Tue Dec 14 11:43:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.cpp:
+          Fixed memory leaks.
+
+Tue Dec 14 11:23:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDSCallbackStatusHandler.h:
+        * connectors/dds4ccm/impl/DDSCallbackStatusHandler.cpp:
+          Added a base class in which ref counting is enabled in the
+          constructor. All other dds eventhandler classes are derived
+          from this base class.
+          This'll resolve some valgrind errors in the PortStatusListener.
+
+        * connectors/dds4ccm/impl/PortStatusListener.cpp:
+        * connectors/dds4ccm/impl/SubscriberListener.cpp:
+          Layout changes
+
+Tue Dec 14 09:05:48 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender.mpc:
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.h:
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.cpp:
+          Rewritten, using the generated executor code. This was the last test
+          for now. All tests using the reactor are now rewritten.
+
+Tue Dec 14 08:35:22 UTC 2010  Marijke Hengstmengel  <mhegstmengel@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/tests/MultipleTemp/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector_T.cpp:
+        Fuzz.
+
+Mon Dec 13 16:45:53 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver.mpc:
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver_exec.cpp:
+
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender.mpc:
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender_exec.h:
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
+Mon Dec 13 15:21:04 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver.mpc:
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.cpp:
+
+        * connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender.mpc:
+        * connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender_exec.h:
+        * connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
+Mon Dec 13 14:59:22 UTC 2010  Marijke Hengstmengel  <mhegstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.cpp:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.h:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/04_ami4ccm.html:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Sender_comp_exec.cpp:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Sender_comp_exec.h:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/ImplementedExec/Hello_Receiver_comp_exec.h:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/ImplementedExec/Hello_Sender_comp_exec.cpp:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/ImplementedExec/Hello_Receiver_comp_exec.cpp:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/ImplementedExec/Hello_Sender_comp_exec.h:
+        Changed tutorial and code for changed generated ReplyHandler with -Gex.
+
+Mon Dec 13 14:01:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver.mpc:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.cpp:
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender.mpc:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
+Mon Dec 13 13:02:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver.mpc:
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.h:
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.cpp:
+
+        * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender.mpc:
+        * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender_exec.h:
+        * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
+Mon Dec 13 12:49:22 UTC 2010  Marijke Hengstmengel  <mhegstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/MultipleTemp/Sender/MultipleTemp_Sender.mpc:
+        * connectors/dds4ccm/tests/MultipleTemp/Sender/MultipleTemp_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/MultipleTemp/Sender/MultipleTemp_Sender.idl:
+        * connectors/dds4ccm/tests/MultipleTemp/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/MultipleTemp/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/MultipleTemp/Receiver/MultipleTemp_Receiver_exec.h:
+        * connectors/dds4ccm/tests/MultipleTemp/Receiver/MultipleTemp_Receiver.mpc:
+        * connectors/dds4ccm/tests/MultipleTemp/Receiver/MultipleTemp_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector.idl:
+        * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector.mpc:
+        * connectors/dds4ccm/tests/MultipleTemp/Connector/ccm_dds_mlt.idl:
+        * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector_T.cpp:
+        * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector_T.h:
+        Implementation multiple templates. Still needed a TAO_IDL change for Typed::DataWriter/Reader.
+
+
+Mon Dec 13 11:00:49 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/Writer_T.cpp:
+          Minor code layout changes
+
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver.mpc:
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender.mpc:
+        * connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender_exec.h:
+        * connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
+Mon Dec 13 08:18:22 UTC 2010  Marijke Hengstmengel  <mhegstmengel@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        Made (un)register_type virtual in Base and add implementation in TopicBase.
+
+Mon Dec 13 07:56:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Connector/I2C_Shapes_Connector.idl:
+          Fuzz.
+
+Mon Dec 13 07:44:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Proxies/ReadWrite/Base/Reader_Starter.mpc:
+        * connectors/dds4ccm/tests/Proxies/ReadWrite/Receiver/Proxy_RW_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/Proxies/ReadWrite/Sender/Proxy_RW_Test_Sender.mpc:
+          Removed duplicate names in Reader_Starter projects.
+
+Fri Dec 10 16:01:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver.mpc:
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender.mpc:
+        * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender_exec.h:
+        * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
+Fri Dec 10 14:28:52 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedSamples/descriptors/Plan.cdp:
+          Rewritter, using the generated executor code.
+          Added a check on the number of samples received.
+
+Fri Dec 10 13:50:18 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+          Added .in () to a _var.
+
+        * connectors/dds4ccm/impl/Updater_T.cpp:
+          Resolved some memory leaks.
+
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver.mpc:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender.mpc:
+        * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.h:
+        * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.cpp:
+          Rewritter, using the generated executor code.
+
 Fri Dec 10 12:03:52 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
-        * ciao/Base/CIAO_Base.mpc:
-          Another attempt to fix the path to tao_idl3_to_xmi on
-          installed builds.
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.mpc:
+          Resolved linker error on windows builds
+
+Fri Dec 10 10:50:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h:
+          Removed unneccasary include.
+
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/Plan.cdp:
+          Rewritten, using the generated executor code.
+
+Fri Dec 10 09:54:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.h:
+          Fuzz fixes.
+
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.h:
+          Removed this file.
+
+Fri Dec 10 09:48:01 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CoherentWriter/Sender/CoherentWrite_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/CoherentWriter/Sender/CoherentWrite_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/CoherentWriter/Sender/CoherentWrite_Test_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
+Fri Dec 10 09:17:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/UserdataCopyCount/Component/UCC_Test_Component.mpc:
+        * connectors/dds4ccm/tests/UserdataCopyCount/Component/UCC_Test_Component_exec.h:
+        * connectors/dds4ccm/tests/UserdataCopyCount/Component/UCC_Test_Component_exec.cpp:
+        * connectors/dds4ccm/tests/UserdataCopyCount/descriptors/Plan.cdp:
+          Rewritten, using the generated executor code.
+
+Thu Dec  9 13:25:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/*:
+          Added test/example which tests the IDL to c++ wrapper. This is a
+          small shapes sender/receiver application.
 
 Thu Dec  9 13:26:48 UTC 2010  Martin Corino  <corino_m@remedy.nl>
 
@@ -89,11 +492,99 @@ Wed Dec  8 14:28:53 UTC 2010  Martin Corino  <corino_m@remedy.nl>
           skeleton generated in de _exec.* files instead of separate
           _conn_i.* files.
 
+Wed Dec  8 12:16:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Proxies/ReadWrite/Sender/Proxy_RW_Test_Sender.mpc:
+          Resolved linker issues on windows.
+
 Wed Dec  8 10:59:48 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
           Added dance_xml_utils parent to CIAO_IDL3_TO_XMI_EXE. It's needed
           on static builds.
+
+Tue Dec  7 15:16:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/SampleInfo.h:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/convertors/SampleInfoSeq.h:
+        * connectors/dds4ccm/impl/ndds/convertors/SampleInfo.h:
+          Moved the conversion from ::DDS::SampleInfo to CCM_DDS::ReadInfo to
+          the impl directory.
+
+Tue Dec  7 15:09:23 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tests/DAnCE/LocalityManager/CommandlinePassage/run_test_cmd.pl:
+        * tests/DAnCE/LocalityManager/CommandlinePassage/Component_cmd.cdp:
+        * bin/ciao_tests.lst:
+        Added --server-args nodemanager test.
+
+Tue Dec  7 15:03:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QCLE_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QCLE_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QCLE_Test_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
+Tue Dec  7 14:11:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/Different/Receiver/Different_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/Different/Receiver/Different_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/Different/Receiver/Different_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/Different/Sender/Different_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/Different/Sender/Different_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/Different/Sender/Different_Test_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
+Tue Dec  7 13:44:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Receiver/QCTL_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Receiver/QCTL_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Receiver/QCTL_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
+Tue Dec  7 13:07:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Sender/QCTQ_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Sender/QCTQ_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Sender/QCTQ_Test_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
+Tue Dec  7 11:49:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/Proxies/*:
+          Added test which tests the IDL DataWriter/DataReader.
+
+Tue Dec  7 10:39:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Receiver/CFTLE_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Receiver/CFTLE_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Receiver/CFTLE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Sender/CFTLE_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Sender/CFTLE_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Sender/CFTLE_Test_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
+
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Sender/WU_LateBinding_Sender_exec.cpp:
+          Resolved compiler warning.
+
+        * connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender_exec.cpp:
+          Rewritten, using the generated executor code.
 
 Mon Dec  6 15:40:12 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 

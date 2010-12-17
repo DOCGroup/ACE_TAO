@@ -24,8 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO_THREECOMP_SENDER_EXEC_GBRV83_H_
-#define CIAO_THREECOMP_SENDER_EXEC_GBRV83_H_
+#ifndef CIAO_THREECOMP_SENDER_EXEC_G5GGIG_H_
+#define CIAO_THREECOMP_SENDER_EXEC_G5GGIG_H_
 
 #include /**/ "ace/pre.h"
 
@@ -37,6 +37,7 @@
 
 #include /**/ "ThreeComp_Sender_exec_export.h"
 #include "tao/LocalObject.h"
+
 #include "ace/Task.h"
 
 namespace CIAO_ThreeComp_Sender_Impl
@@ -183,9 +184,32 @@ namespace CIAO_ThreeComp_Sender_Impl
     //@}
   };
 
-  extern "C" THREECOMP_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_ThreeComp_Sender_Impl (void);
-}
+  class AMI4CCM_MyFooReplyHandler_run_my_foo_i
+    : public ::ThreeComp::CCM_AMI4CCM_MyFooReplyHandler,
+      public virtual ::CORBA::LocalObject
+    {
+    public:
+      AMI4CCM_MyFooReplyHandler_run_my_foo_i (
+          Atomic_UShort  &nr_of_rec,
+          Atomic_UShort  &nr_of_sent);
+      virtual ~AMI4CCM_MyFooReplyHandler_run_my_foo_i (void);
+
+      virtual void
+      foo (
+        ::CORBA::Long ami_return_val,
+        const char * answer);
+
+      virtual void
+      foo_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+    private:
+      Atomic_UShort  &nr_of_rec_;
+      Atomic_UShort  &nr_of_sent_;
+    };
+
+    extern "C" THREECOMP_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+    create_ThreeComp_Sender_Impl (void);
+  }
 
 #include /**/ "ace/post.h"
 

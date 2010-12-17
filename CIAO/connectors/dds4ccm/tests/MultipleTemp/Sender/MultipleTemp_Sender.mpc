@@ -20,7 +20,7 @@ project(DDS_MultipleTemp_Sender_idl_gen) : componentidldefaults, dds4ccm {
 }
 
 project(DDS_MultipleTemp_Sender_lem_gen) : ciaoidldefaults, dds4ccm {
- requires += dummy_label
+  requires += dummy_label
   after += DDS_MultipleTemp_Sender_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SENDER_LEM_STUB_Export \
@@ -33,7 +33,7 @@ project(DDS_MultipleTemp_Sender_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project(DDS_MultipleTemp_Sender_lem_stub) : ccm_svnt, dds4ccm_base {
- requires += dummy_label
+  requires += dummy_label
   after += DDS_MultipleTemp_Sender_lem_gen DDS_MultipleTemp_Sender_stub DDS_MultipleTemp_Base_stub
   libs  += DDS_MultipleTemp_Base_stub Sender_stub
   libpaths += ../lib
@@ -60,7 +60,7 @@ project(DDS_MultipleTemp_Sender_lem_stub) : ccm_svnt, dds4ccm_base {
 }
 
 project(DDS_MultipleTemp_Sender_stub) : ccm_stub, dds4ccm_base {
- requires += dummy_label
+  requires += dummy_label
   after += DDS_MultipleTemp_Sender_idl_gen DDS_MultipleTemp_Base_stub DDS_MultipleTemp_Connector_stub
   libs  += DDS_MultipleTemp_Base_stub DDS_MultipleTemp_Connector_stub
   includes += ..
@@ -87,10 +87,10 @@ project(DDS_MultipleTemp_Sender_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(DDS_MultipleTemp_Sender_exec) : ciao_executor, dds4ccm_lem_stub {
- requires += dummy_label
-  after   += DDS_MultipleTemp_Sender_lem_stub DDS_MultipleTemp_Sender_stub DDS_MT_TEMP_Connector_lem_stub DDS_MultipleTemp_Connector_stub  
+  requires += dummy_label
+  after   += DDS_MultipleTemp_Sender_lem_stub DDS_MultipleTemp_Sender_stub DDS_MT_TEMP_Connector_lem_stub DDS_MultipleTemp_Connector_stub
   sharedname = Sender_exec
-  libs += Sender_stub Sender_lem_stub DDS_MultipleTemp_Base_stub DDS_MT_TEMP_Connector_lem_stub  DDS_MultipleTemp_Connector_stub  
+  libs += Sender_stub Sender_lem_stub DDS_MultipleTemp_Base_stub DDS_MT_TEMP_Connector_lem_stub  DDS_MultipleTemp_Connector_stub
   libpaths += ../lib
   includes += ..
   libout = ../lib
@@ -114,7 +114,7 @@ project(DDS_MultipleTemp_Sender_exec) : ciao_executor, dds4ccm_lem_stub {
 
 
 project(DDS_MultipleTemp_Sender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
- requires += dummy_label
+  requires += dummy_label
   after      += DDS_MultipleTemp_Base_stub  DDS_MultipleTemp_Sender_lem_stub DDS_MultipleTemp_Connector_stub DDS_MultipleTemp_Connector_svnt DDS_MT_TEMP_Connector_lem_stub
   sharedname  = Sender_svnt
   libs       += Sender_stub Sender_lem_stub  \

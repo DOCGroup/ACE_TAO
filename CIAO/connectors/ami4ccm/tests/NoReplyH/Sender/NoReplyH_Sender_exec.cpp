@@ -26,7 +26,6 @@
  **/
 
 #include "NoReplyH_Sender_exec.h"
-#include "NoReplyHA_conn_i.h"
 #include "ace/OS_NS_unistd.h"
 
 
@@ -57,7 +56,7 @@ namespace CIAO_NoReplyH_Sender_Impl
     else
       {
         ::NoReplyH::AMI4CCM_MyFooReplyHandler_var cb =
-            new CIAO_NoReplyH_Sender_Impl::AMI4CCM_MyFooReplyHandler_i (
+            new AMI4CCM_MyFooReplyHandler_run_my_foo_i (
                                                  this->nr_received_back_);
 
         //Invoke Asynchronous calls
@@ -209,6 +208,106 @@ namespace CIAO_NoReplyH_Sender_Impl
     this->asynch_foo_gen = 0;
     delete this->synch_foo_gen;
     this->synch_foo_gen = 0;
+  }
+
+
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::AMI4CCM_MyFooReplyHandler_run_my_foo_i (
+      Atomic_UShort &nr_received_back)
+   : nr_received_back_(nr_received_back)
+  {
+  }
+
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::~AMI4CCM_MyFooReplyHandler_run_my_foo_i (void)
+  {
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::foo (
+    ::CORBA::Long /* ami_return_val */,
+     const char * answer)
+   {
+     ++this->nr_received_back_;
+     ACE_DEBUG ((LM_DEBUG, "OK: ASYNCH foo() returns answer: %C.\n",
+                              answer));
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::foo_excep (
+    ::CCM_AMI::ExceptionHolder_ptr /* excep_holder */)
+  {
+    ACE_ERROR ((LM_ERROR, "ERROR: MI4CCM_MyFooReplyHandler_i::foo_excep: "
+                           "Unexpected return.\n"));
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::hello (
+    ::CORBA::Long /* answer */)
+  {
+    // never should come here in this test.
+    ACE_ERROR ((LM_ERROR, "ERROR: MI4CCM_MyFooReplyHandler_i::hello: "
+                           "Unexpected return.\n"));
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::hello_excep (
+    ::CCM_AMI::ExceptionHolder_ptr /* excep_holder */)
+  {
+    // never should come here in this test.
+    ACE_ERROR ((LM_ERROR, "ERROR: MI4CCM_MyFooReplyHandler_i::hello_excep: "
+                           "Unexpected return.\n"));
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::get_rw_attrib (
+    ::CORBA::Short /* rw_attrib */)
+  {
+    // never should come here in this test.
+    ACE_ERROR ((LM_ERROR, "ERROR: MI4CCM_MyFooReplyHandler_i::get_rw_attrib: "
+                           "Unexpected return.\n"));
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::get_rw_attrib_excep (
+    ::CCM_AMI::ExceptionHolder_ptr /* excep_holder */)
+  {
+    // never should come here in this test.
+    ACE_ERROR ((LM_ERROR, "ERROR: MI4CCM_MyFooReplyHandler_i::get_rw_attrib_excep: "
+                           "Unexpected return.\n"));
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::set_rw_attrib (void)
+  {
+    // never should come here in this test.
+    ACE_ERROR ((LM_ERROR, "ERROR: MI4CCM_MyFooReplyHandler_i::set_rw_attrib: "
+                           "Unexpected return.\n"));
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::set_rw_attrib_excep (
+    ::CCM_AMI::ExceptionHolder_ptr /* excep_holder */)
+  {
+    // never should come here in this test.
+    ACE_ERROR ((LM_ERROR, "ERROR: MI4CCM_MyFooReplyHandler_i::set_rw_attrib_excep: "
+                           "Unexpected return.\n"));
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::get_ro_attrib (
+    ::CORBA::Short /* ro_attrib */)
+  {
+    // never should come here in this test.
+    ACE_ERROR ((LM_ERROR, "ERROR: MI4CCM_MyFooReplyHandler_i::get_ro_attrib: "
+                           "Unexpected return.\n"));
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::get_ro_attrib_excep (
+    ::CCM_AMI::ExceptionHolder_ptr /* excep_holder */)
+  {
+    // never should come here in this test.
+    ACE_ERROR ((LM_ERROR, "ERROR: MI4CCM_MyFooReplyHandler_i::get_ro_attrib_excep: "
+                           "Unexpected return.\n"));
   }
 
   extern "C" NOREPLYH_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
