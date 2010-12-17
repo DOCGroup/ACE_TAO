@@ -1,0 +1,26 @@
+// $Id$
+
+#ifndef TAO_BIDIR_POLICY_PIDL
+#define TAO_BIDIR_POLICY_PIDL
+
+#include "tao/Policy.pidl"
+
+#pragma prefix "omg.org"
+
+// Self contained module for Bi-directional GIOP policy
+module BiDirPolicy
+{
+  typedef unsigned short BidirectionalPolicyValue;
+  const BidirectionalPolicyValue NORMAL = 0;
+  const BidirectionalPolicyValue BOTH = 1;
+  const CORBA::PolicyType BIDIRECTIONAL_POLICY_TYPE = 37;
+
+  // @@ This has been made local. It was not so in the spec. Any reason
+  //    why this shouldn't be a local interface ?
+  local interface BidirectionalPolicy : CORBA::Policy
+  {
+    readonly attribute BidirectionalPolicyValue value;
+  };
+};
+
+#endif  /* TAO_BIDIR_POLICY_PIDL*/

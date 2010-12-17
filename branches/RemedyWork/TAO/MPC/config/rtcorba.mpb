@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project : taolib, pi {
+  after   += RTCORBA
+  libs    += TAO_RTCORBA
+  requires += rt_corba
+}

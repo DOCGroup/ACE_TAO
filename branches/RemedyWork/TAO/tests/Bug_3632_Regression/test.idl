@@ -1,0 +1,6 @@
+// $Id$
+
+module Test
+{
+  typedef sequence <string, 10> bounded_string_seq;
+};

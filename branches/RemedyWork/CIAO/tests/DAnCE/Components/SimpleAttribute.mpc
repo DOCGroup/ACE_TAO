@@ -1,0 +1,108 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl SimpleAttribute"
+
+project(SimpleAttribute_idl_gen) : componentidldefaults {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SIMPLEATTRIBUTE_STUB_Export \
+              -Wb,stub_export_include=SimpleAttribute_stub_export.h \
+              -Wb,skel_export_macro=SIMPLEATTRIBUTE_SVNT_Export \
+              -Wb,skel_export_include=SimpleAttribute_svnt_export.h \
+              -Wb,exec_export_macro=SIMPLEATTRIBUTE_EXEC_Export \
+              -Wb,exec_export_include=SimpleAttribute_exec_export.h
+
+  IDL_Files {
+    SimpleAttribute.idl
+  }
+}
+
+project(SimpleAttribute_lem_gen) : ciaoidldefaults {
+  after += SimpleAttribute_idl_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro=SIMPLEATTRIBUTE_EXEC_Export \
+              -Wb,export_include=SimpleAttribute_exec_export.h \
+              -SS
+
+  IDL_Files {
+    SimpleAttributeE.idl
+  }
+}
+
+project(SimpleAttribute_stub) : ccm_stub {
+  after += SimpleAttribute_idl_gen
+  libs  +=
+
+  sharedname = SimpleAttribute_stub
+  dynamicflags += SIMPLEATTRIBUTE_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SimpleAttributeC.cpp
+  }
+
+  Header_Files {
+    SimpleAttributeC.h
+    SimpleAttribute_stub_export.h
+  }
+
+  Inline_Files {
+    SimpleAttributeC.inl
+  }
+}
+
+project(SimpleAttribute_exec) : ciao_executor {
+  after   += SimpleAttribute_lem_gen SimpleAttribute_stub
+  sharedname = SimpleAttribute_exec
+  libs += SimpleAttribute_stub
+
+  dynamicflags += SIMPLEATTRIBUTE_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SimpleAttributeEC.cpp
+    SimpleAttribute_exec.cpp
+  }
+
+  Header_Files {
+    SimpleAttributeEC.h
+    SimpleAttribute_exec.h
+    SimpleAttribute_exec_export.h
+  }
+
+  Inline_Files {
+    SimpleAttributeEC.inl
+  }
+}
+
+
+project(SimpleAttribute_svnt) : ciao_servant {
+  after      +=  SimpleAttribute_exec
+  sharedname  = SimpleAttribute_svnt
+  libs       += SimpleAttribute_exec \
+                SimpleAttribute_stub
+
+  dynamicflags += SIMPLEATTRIBUTE_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SimpleAttributeS.cpp
+    SimpleAttribute_svnt.cpp
+  }
+
+  Header_Files {
+    SimpleAttributeS.h
+    SimpleAttribute_svnt.h
+    SimpleAttribute_svnt_export.h
+  }
+
+  Inline_Files {
+    SimpleAttributeS.inl
+  }
+}
+
+

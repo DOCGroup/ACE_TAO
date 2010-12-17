@@ -1,0 +1,11 @@
+// $Id$
+
+#ifndef SINGLE_SERVICE_COMMON_IDL_
+#define SINGLE_SERVICE_COMMON_IDL_
+
+interface Simple_Service
+{
+  oneway void ping ();
+};
+
+#endif /* SINGLE_SERVICE_COMMON_IDL_ */
