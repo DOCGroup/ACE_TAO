@@ -3,6 +3,19 @@ Fri Dec 17 10:35:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.mpc:
           Resolved linker error on windows builds
 
+Wed Dec 15 11:49:02 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/ndds.mpc:
+          Simplified base projects and correct header directory
+
+Wed Dec 15 11:25:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm_ts_default.mpb:
+          Enable typecodes with opendds
+
+        * bin/ciao_tests.lst:
+          Enabled new tests
+
 Wed Dec 15 14:43:48 UTC 2010  Marijke Hengstmengel  <mhengstmengelm@remedy.nl>
 
         * tests/DAnCE/LocalityManager/CommandlinePassage/run_test_cmd.pl:
@@ -146,6 +159,11 @@ Wed Dec 15 09:15:45 UTC 2010  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender_exec.cpp:
           Rewritten, using the generated executor code.
 
+Tue Dec 14 15:24:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Prepared for next release
+
 Tue Dec 14 14:46:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver.mpc:
@@ -167,6 +185,10 @@ Tue Dec 14 13:29:14 UTC 2010  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.h:
         * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
           Rewritten, using the generated executor code.
+
+Tue Dec 14 13:13:17 CET 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.0.0 released.
 
 Tue Dec 14 11:43:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
@@ -348,6 +370,11 @@ Fri Dec 10 13:50:18 UTC 2010  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.h:
         * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.cpp:
           Rewritter, using the generated executor code.
+
+Fri Dec 10 12:03:52 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.mpc:
+          Resolved linker error on windows builds
 
 Fri Dec 10 10:50:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
