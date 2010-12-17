@@ -60,8 +60,8 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "void" << be_nl
           << "TAO::Value_Traits<" << node->name  () << ">::add_ref ("
           << be_idt << be_idt_nl
-          << node->name () << " * p" << be_uidt_nl
-          << ")" << be_uidt_nl
+          << node->name () << " * p)" << be_uidt
+          << be_uidt_nl
           << "{" << be_idt_nl
           << "::CORBA::add_ref (p);" << be_uidt_nl
           << "}";
@@ -70,8 +70,8 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "void" << be_nl
           << "TAO::Value_Traits<" << node->name () << ">::remove_ref ("
           << be_idt << be_idt_nl
-          << node->name () << " * p" << be_uidt_nl
-          << ")" << be_uidt_nl
+          << node->name () << " * p)" << be_uidt
+          << be_uidt_nl
           << "{" << be_idt_nl
           << "::CORBA::remove_ref (p);" << be_uidt_nl
           << "}";
@@ -80,8 +80,8 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "void" << be_nl
           << "TAO::Value_Traits<" << node->name () << ">::release ("
           << be_idt << be_idt_nl
-          << node->name () << " * p" << be_uidt_nl
-          << ")" << be_uidt_nl
+          << node->name () << " * p)" << be_uidt
+          << be_uidt_nl
           << "{" << be_idt_nl
           << "::CORBA::remove_ref (p);" << be_uidt_nl
           << "}";

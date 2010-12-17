@@ -1,9 +1,23 @@
-﻿Wed Dec 15 12:34:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+Wed Dec 15 12:34:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/component_ami_rh_exs.cpp:
         * TAO_IDL/be/be_visitor_component/component_ami_rh_exh.cpp:
          Correction for return values ami4ccm callbacks.
-   
+
+
+Wed Dec 15 11:34:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+          Layout changes to the generated code
+
+Tue Dec 14 15:25:53 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Prepared for next release
+
+Tue Dec 14 13:13:17 CET 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 2.0.0 released.
 
 Sun Dec 12 16:19:01 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
