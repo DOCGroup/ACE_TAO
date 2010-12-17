@@ -12,7 +12,7 @@ project(DDS_QCLE_Test_Sender_idl_gen) : componentidldefaults, dds4ccm {
               -Wb,svnt_export_include=Sender_svnt_export.h \
               -Wb,exec_export_macro=SENDER_EXEC_Export \
               -Wb,exec_export_include=Sender_exec_export.h \
-              -I ..
+              -I..
 
   IDL_Files {
     QCLE_Test_Sender.idl
@@ -87,10 +87,10 @@ project(DDS_QCLE_Test_Sender_stub) : ccm_stub, dds4ccm_base {
 
 project(DDS_QCLE_Test_Sender_exec) : ciao_executor, dds4ccm_lem_stub {
   after   += DDS_QCLE_Test_Sender_lem_stub DDS_QCLE_Test_Sender_stub \
-             DDS_QCLE_Test_Connector_lem_stub DDS_QCLE_Test_Connector_stub 
+             DDS_QCLE_Test_Connector_lem_stub DDS_QCLE_Test_Connector_stub
   sharedname = Sender_exec
   libs    += Sender_stub Sender_lem_stub DDS_QCLE_Test_Base_stub \
-             DDS_QCLE_Test_Connector_lem_stub DDS_QCLE_Test_Connector_stub 
+             DDS_QCLE_Test_Connector_lem_stub DDS_QCLE_Test_Connector_stub
   libpaths += ../lib
   includes += ..
   libout = ../lib

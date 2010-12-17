@@ -14,7 +14,7 @@ module Keyed_Test
 {
   component Receiver
   {
-    port KeyedTestConnector::DDS_Listen info_out;
+    port KeyedTestConnector::DDS_Get info_out;
     attribute unsigned long rate;
     attribute unsigned short iterations;
     attribute unsigned short keys;

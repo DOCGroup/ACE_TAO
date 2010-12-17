@@ -16,14 +16,14 @@
 # include "dds4ccm/impl/ndds/DomainParticipant.h"
 #endif
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::DDS_Base_Connector_T (void)
+template <typename CCM_TYPE>
+DDS_Base_Connector_T<CCM_TYPE>::DDS_Base_Connector_T (void)
   : domain_id_ (0)
   , configuration_complete_ (false)
   , library_name_ (0)
   , profile_name_ (0)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::DDS_Base_Connector_T");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE>::DDS_Base_Connector_T");
 
   ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), this->domain_id_);
   this->domain_id_ = id;
@@ -35,10 +35,10 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::DDS_Base_Connector_T (void)
     }
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::~DDS_Base_Connector_T (void)
+template <typename CCM_TYPE>
+DDS_Base_Connector_T<CCM_TYPE>::~DDS_Base_Connector_T (void)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::~DDS_Base_Connector_T");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE>::~DDS_Base_Connector_T");
 
   ACE_OS::free (library_name_);
   ACE_OS::free (profile_name_);
@@ -48,21 +48,21 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::~DDS_Base_Connector_T (void)
                 "Connector has been destructed\n"));
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 ::DDS::DomainId_t
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::domain_id (void)
+DDS_Base_Connector_T<CCM_TYPE>::domain_id (void)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::domain_id");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE>::domain_id");
 
   return this->domain_id_;
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::domain_id (
+DDS_Base_Connector_T<CCM_TYPE>::domain_id (
   ::DDS::DomainId_t domain_id)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::domain_id");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE>::domain_id");
 
   if (this->configuration_complete_)
     {
@@ -74,21 +74,21 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::domain_id (
     }
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 char *
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::qos_profile (void)
+DDS_Base_Connector_T<CCM_TYPE>::qos_profile (void)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::qos_profile");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE>::qos_profile");
 
   return CORBA::string_dup (this->qos_profile_.in ());
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::qos_profile (
+DDS_Base_Connector_T<CCM_TYPE>::qos_profile (
   const char * qos_profile)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::qos_profile");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE>::qos_profile");
 
   if (this->configuration_complete_)
     {
@@ -115,12 +115,12 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::qos_profile (
     }
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::init_domain (
+DDS_Base_Connector_T<CCM_TYPE>::init_domain (
   ::DDS::DomainParticipant_ptr & participant)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::init_domain");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE>::init_domain");
 
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                 "DDS_Base_Connector_T::init_domain - "
@@ -161,12 +161,12 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::init_domain (
     }
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::set_session_context (
+DDS_Base_Connector_T<CCM_TYPE>::set_session_context (
   ::Components::SessionContext_ptr ctx)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::set_session_context");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE>::set_session_context");
 
   typename CCM_TYPE::context_type::_var_type lctx =
     CCM_TYPE::context_type::_narrow (ctx);
@@ -179,34 +179,34 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::set_session_context (
   this->context_ = lctx;
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::configuration_complete (void)
+DDS_Base_Connector_T<CCM_TYPE>::configuration_complete (void)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::configuration_complete");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE>::configuration_complete");
   this->init_domain (this->domain_participant_.inout ());
   this->configuration_complete_ = true;
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_activate (void)
+DDS_Base_Connector_T<CCM_TYPE>::ccm_activate (void)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_activate");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE>::ccm_activate");
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_passivate (void)
+DDS_Base_Connector_T<CCM_TYPE>::ccm_passivate (void)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_passivate");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE>::ccm_passivate");
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_remove (void)
+DDS_Base_Connector_T<CCM_TYPE>::ccm_remove (void)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_remove");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE>::ccm_remove");
 
   ::DDS::DomainParticipant_var dp = this->domain_participant_._retn ();
   if (!::CORBA::is_nil (dp.in ()))
@@ -215,11 +215,11 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_remove (void)
     }
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 ACE_Reactor*
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::reactor (void)
+DDS_Base_Connector_T<CCM_TYPE>::reactor (void)
 {
-  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::reactor");
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE>::reactor");
 
   ACE_Reactor* reactor = 0;
 
@@ -239,54 +239,21 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::reactor (void)
 /**
   * Type registration
  **/
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::register_type (
-  ::DDS::DomainParticipant_ptr participant,
-  const char * typesupport_name)
+DDS_Base_Connector_T<CCM_TYPE>::register_type (
+  ::DDS::DomainParticipant_ptr /*participant*/,
+  const char * /*typesupport_name*/)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::register_type");
-
-  ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_OK;
-#if (CIAO_DDS4CCM_NDDS==1)
-  ::CIAO::NDDS::DDS_DomainParticipant_i *part =
-    dynamic_cast< CIAO::NDDS::DDS_DomainParticipant_i * > (participant);
-  if (!part)
-    {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-          "DDS_Base_Connector_T::register_type - "
-          "Unable to cast the DomainParticipant proxy to its internal "
-          "representation.\n"));
-      throw ::CORBA::INTERNAL ();
-    }
-
-  typedef ::CIAO::NDDS::DDS_TypeFactory_T <DDS_TYPE, SEQ_TYPE> dds_type_factory;
-  ::CIAO::NDDS::DDS_TypeFactory_i * factory = 0;
-  ACE_NEW_THROW_EX (factory,
-                    dds_type_factory (),
-                    ::CORBA::NO_MEMORY ());
-
-  ::CIAO::NDDS::DDS_TypeSupport_i::register_type (typesupport_name, factory, participant);
-
-  retcode = DDS_TYPE::type_support::register_type(
-    part->get_rti_entity (), typesupport_name);
-#endif
-  if (retcode != ::DDS::RETCODE_OK)
-    {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-          "DDS_Base_Connector_T::register_type - "
-          "Error registering type <%C>\n",
-          ::CIAO::DDS4CCM::translate_retcode (retcode)));
-      throw ::CCM_DDS::InternalError (retcode, 0);
-    }
 }
 
 /**
   * Initialization
  **/
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::init_topic (
+DDS_Base_Connector_T<CCM_TYPE>::init_topic (
   ::DDS::DomainParticipant_ptr participant,
   ::DDS::Topic_ptr & topic,
   const char * topic_name,
@@ -323,9 +290,9 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::init_topic (
   topic = tp._retn ();
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::init_publisher (
+DDS_Base_Connector_T<CCM_TYPE>::init_publisher (
   ::DDS::DomainParticipant_ptr participant,
   ::DDS::Publisher_ptr & publisher)
 {
@@ -358,9 +325,9 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::init_publisher (
     }
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::init_subscriber (
+DDS_Base_Connector_T<CCM_TYPE>::init_subscriber (
   ::DDS::DomainParticipant_ptr participant,
   ::DDS::Subscriber_ptr & subscriber)
 {
@@ -396,9 +363,9 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::init_subscriber (
 /**
   * Activation
  **/
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::activate_topic (
+DDS_Base_Connector_T<CCM_TYPE>::activate_topic (
   ACE_Reactor* reactor,
   ::DDS::Topic_ptr topic,
   ::DDS::TopicListener_ptr & listener)
@@ -436,9 +403,9 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::activate_topic (
     }
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::activate_publisher (
+DDS_Base_Connector_T<CCM_TYPE>::activate_publisher (
   ACE_Reactor* reactor,
   ::DDS::Publisher_ptr publisher,
   ::DDS::PublisherListener_ptr & publisher_listener)
@@ -476,9 +443,9 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::activate_publisher (
     }
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::activate_subscriber (
+DDS_Base_Connector_T<CCM_TYPE>::activate_subscriber (
   ACE_Reactor* reactor,
   ::DDS::Subscriber_ptr subscriber,
   ::DDS::SubscriberListener_ptr & subscriber_listener)
@@ -519,9 +486,9 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::activate_subscriber (
 /**
   * Passivation
  **/
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::passivate_topic (
+DDS_Base_Connector_T<CCM_TYPE>::passivate_topic (
   ::DDS::Topic_ptr topic,
   ::DDS::TopicListener_ptr topic_listener)
 {
@@ -542,9 +509,9 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::passivate_topic (
     }
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::passivate_publisher (
+DDS_Base_Connector_T<CCM_TYPE>::passivate_publisher (
   ::DDS::Publisher_ptr publisher,
   ::DDS::PublisherListener_ptr publisher_listener)
 
@@ -567,9 +534,9 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::passivate_publisher (
     }
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::passivate_subscriber (
+DDS_Base_Connector_T<CCM_TYPE>::passivate_subscriber (
   ::DDS::Subscriber_ptr subscriber,
   ::DDS::SubscriberListener_ptr subscriber_listener)
 {
@@ -593,8 +560,8 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::passivate_subscriber (
 /**
   * Removal
  **/
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
-void DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::remove_topic (
+template <typename CCM_TYPE>
+void DDS_Base_Connector_T<CCM_TYPE>::remove_topic (
   ::DDS::DomainParticipant_ptr participant,
   ::DDS::Topic_ptr topic)
 {
@@ -607,9 +574,9 @@ void DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::remove_topic (
     }
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::remove_publisher (
+DDS_Base_Connector_T<CCM_TYPE>::remove_publisher (
   ::DDS::DomainParticipant_ptr participant,
   ::DDS::Publisher_ptr publisher)
 {
@@ -618,9 +585,9 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::remove_publisher (
   participant->delete_publisher (publisher);
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::remove_subscriber (
+DDS_Base_Connector_T<CCM_TYPE>::remove_subscriber (
   ::DDS::DomainParticipant_ptr participant,
   ::DDS::Subscriber_ptr subscriber)
 {
@@ -629,9 +596,9 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::remove_subscriber (
   participant->delete_subscriber (subscriber);
 }
 
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::remove_domain (
+DDS_Base_Connector_T<CCM_TYPE>::remove_domain (
   ::DDS::DomainParticipant_ptr participant)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::remove_domain");
@@ -646,16 +613,11 @@ DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::remove_domain (
 /**
   * Unregister type
  **/
-template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+template <typename CCM_TYPE>
 void
-DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::unregister_type (
-  ::DDS::DomainParticipant_ptr participant,
-  const char * typesupport_name)
+DDS_Base_Connector_T<CCM_TYPE>::unregister_type (
+  ::DDS::DomainParticipant_ptr /*participant*/,
+  const char * /*typesupport_name*/)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::unregister_type");
-#if (CIAO_DDS4CCM_NDDS==1)
-  ::CIAO::NDDS::DDS_TypeFactory_i * factory =
-    ::CIAO::NDDS::DDS_TypeSupport_i::unregister_type (typesupport_name, participant);
-  delete factory;
-#endif
 }

@@ -24,8 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO_GETCOMP_SENDER_EXEC_1DLEKU_H_
-#define CIAO_GETCOMP_SENDER_EXEC_1DLEKU_H_
+#ifndef CIAO_GETCOMP_SENDER_EXEC_FENJU5_H_
+#define CIAO_GETCOMP_SENDER_EXEC_FENJU5_H_
 
 #include /**/ "ace/pre.h"
 
@@ -73,7 +73,7 @@ namespace CIAO_GetComp_Sender_Impl
 
     //@{
     /** User defined public operations. */
-    virtual int get_component(void);
+
     //@}
 
   private:
@@ -90,13 +90,31 @@ namespace CIAO_GetComp_Sender_Impl
 
     //@{
     /** User defined private operations. */
-
+    virtual int get_component(void);
     //@}
   };
 
-  extern "C" GETCOMP_T_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_GetComp_Sender_Impl (void);
-}
+  class AMI4CCM_MyFooReplyHandler_run_my_foo_i
+    : public ::GetComp::CCM_AMI4CCM_MyFooReplyHandler,
+      public virtual ::CORBA::LocalObject
+    {
+    public:
+      AMI4CCM_MyFooReplyHandler_run_my_foo_i (void);
+      virtual ~AMI4CCM_MyFooReplyHandler_run_my_foo_i (void);
+
+      virtual void
+      foo (
+        ::CORBA::Long ami_return_val,
+        const char * answer);
+
+      virtual void
+      foo_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+    };
+
+    extern "C" GETCOMP_T_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+    create_GetComp_Sender_Impl (void);
+  }
 
 #include /**/ "ace/post.h"
 

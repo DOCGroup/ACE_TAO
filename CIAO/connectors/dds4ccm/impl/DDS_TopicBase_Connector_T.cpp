@@ -158,9 +158,72 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_remove (void)
   if (!::CORBA::is_nil (publisher.in ()))
     {
       this->remove_publisher (this->domain_participant_.in (),
-                              publisher);
+                              publisher.in ());
     }
   BaseConnector::ccm_remove ();
+}
+
+
+/**
+  * Type registration
+ **/
+template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+void
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::register_type (
+  ::DDS::DomainParticipant_ptr participant,
+  const char * typesupport_name)
+{
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::register_type");
+
+  ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_OK;
+#if (CIAO_DDS4CCM_NDDS==1)
+  ::CIAO::NDDS::DDS_DomainParticipant_i *part =
+    dynamic_cast< CIAO::NDDS::DDS_DomainParticipant_i * > (participant);
+  if (!part)
+    {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+          "DDS_TopicBase_Connector_T::register_type - "
+          "Unable to cast the DomainParticipant proxy to its internal "
+          "representation.\n"));
+      throw ::CORBA::INTERNAL ();
+    }
+
+  typedef ::CIAO::NDDS::DDS_TypeFactory_T <DDS_TYPE, SEQ_TYPE> dds_type_factory;
+  ::CIAO::NDDS::DDS_TypeFactory_i * factory = 0;
+  ACE_NEW_THROW_EX (factory,
+                    dds_type_factory (),
+                    ::CORBA::NO_MEMORY ());
+
+  ::CIAO::NDDS::DDS_TypeSupport_i::register_type (typesupport_name, factory, participant);
+
+  retcode = DDS_TYPE::type_support::register_type(
+    part->get_rti_entity (), typesupport_name);
+#endif
+  if (retcode != ::DDS::RETCODE_OK)
+    {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+          "DDS_TopicBase_Connector_T::register_type - "
+          "Error registering type <%C>\n",
+          ::CIAO::DDS4CCM::translate_retcode (retcode)));
+      throw ::CCM_DDS::InternalError (retcode, 0);
+    }
+}
+
+/**
+  * Unregister type
+ **/
+template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+void
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::unregister_type (
+  ::DDS::DomainParticipant_ptr participant,
+  const char * typesupport_name)
+{
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::unregister_type");
+#if (CIAO_DDS4CCM_NDDS==1)
+  ::CIAO::NDDS::DDS_TypeFactory_i * factory =
+    ::CIAO::NDDS::DDS_TypeSupport_i::unregister_type (typesupport_name, participant);
+  delete factory;
+#endif
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>

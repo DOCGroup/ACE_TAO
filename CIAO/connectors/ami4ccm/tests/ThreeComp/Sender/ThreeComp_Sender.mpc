@@ -92,15 +92,11 @@ project(AMI_ThreeComp_Base_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
 
   Source_Files {
     ThreeComp_Sender_exec.cpp
-    ../Base/ThreeCompA_conn_i.cpp
-    
   }
 
   Header_Files {
     ThreeComp_Sender_exec.h
     ThreeComp_Sender_exec_export.h
-    ../Base/ThreeCompA_conn_i.h
-    
   }
 
   Inline_Files {

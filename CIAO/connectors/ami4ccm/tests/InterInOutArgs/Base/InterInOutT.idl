@@ -11,10 +11,6 @@
 module InterInOutT
 {
   const short update_val = 999;
-  const short cmd_synch_ok = 1;
-  const short cmd_synch_nok = 2;
-  const short cmd_asynch_ok = 3;
-  const short cmd_asynch_nok =  4;
 
   typedef short short_array[5];
 

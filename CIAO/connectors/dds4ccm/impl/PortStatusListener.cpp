@@ -42,39 +42,39 @@ namespace CIAO
       if (! ::CORBA::is_nil (this->port_status_listener_))
         {
           try
-          {
+            {
               if (this->reactor_)
                 {
                   ::CIAO::DDS4CCM::OnRequestedDeadlineMissedHandler* rh = 0;
                   ACE_NEW (rh,
                       ::CIAO::DDS4CCM::OnRequestedDeadlineMissedHandler (
-                          this->port_status_listener_, the_reader, status));
+                            this->port_status_listener_.in (), the_reader, status));
                   ACE_Event_Handler_var safe_handler (rh);
                   if (this->reactor_->notify (rh) != 0)
                     {
                       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                           ACE_TEXT ("PortStatusListener::on_requested_deadline_missed: ")
-                      ACE_TEXT ("failed to use reactor.\n")));
+                          ACE_TEXT ("failed to use reactor.\n")));
                     }
                 }
               else
                 {
                   this->port_status_listener_->on_requested_deadline_missed (the_reader, status);
                 }
-          }
+            }
           catch (const ::CORBA::Exception& ex)
-          {
+            {
               DDS4CCM_PRINT_CORBA_EXCEPTION (
                   DDS4CCM_LOG_LEVEL_ERROR,
                   ex,
                   "PortStatusListener::on_requested_deadline_missed");
-          }
+            }
           catch (...)
-          {
+            {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                   "PortStatusListener::on_requested_deadline_missed - "
                   "Unexpected exception caught\n"));
-          }
+            }
         }
       else
         {
@@ -96,16 +96,16 @@ namespace CIAO
       ACE_TEXT ("total count <%d> - total change <%d>\n"),
       status.total_count, status.total_count_change));
 
-      if (! ::CORBA::is_nil (this->port_status_listener_))
+      if (! ::CORBA::is_nil (this->port_status_listener_.in ()))
         {
           try
-          {
+            {
               if (this->reactor_)
                 {
                   ::CIAO::DDS4CCM::OnSampleLostHandler* rh = 0;
                   ACE_NEW (rh,
                       ::CIAO::DDS4CCM::OnSampleLostHandler (
-                          this->port_status_listener_,
+                          this->port_status_listener_.in (),
                           the_reader,
                           status));
                   ACE_Event_Handler_var safe_handler (rh);
@@ -120,20 +120,20 @@ namespace CIAO
                 {
                   this->port_status_listener_->on_sample_lost (the_reader, status);
                 }
-          }
+            }
           catch (const ::CORBA::Exception& ex)
-          {
+            {
               DDS4CCM_PRINT_CORBA_EXCEPTION (
                   DDS4CCM_LOG_LEVEL_ERROR,
                   ex,
                   "PortStatusListener::on_sample_lost");
-          }
+            }
           catch (...)
-          {
+            {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                   "PortStatusListener::on_sample_lost - "
                   "Unexpected exception caught\n"));
-          }
+            }
         }
       else
         {

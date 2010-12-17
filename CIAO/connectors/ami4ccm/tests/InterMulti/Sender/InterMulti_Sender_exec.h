@@ -24,11 +24,11 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO_INTERMULTI_SENDER_EXEC_CTET9E_H_
-#define CIAO_INTERMULTI_SENDER_EXEC_CTET9E_H_
+#ifndef CIAO_INTERMULTI_SENDER_EXEC_QPLRQR_H_
+#define CIAO_INTERMULTI_SENDER_EXEC_QPLRQR_H_
 
 #include /**/ "ace/pre.h"
-#include "ace/Task.h"
+
 #include "InterMulti_SenderEC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -37,9 +37,11 @@
 
 #include /**/ "InterMulti_Sender_exec_export.h"
 #include "tao/LocalObject.h"
+#include "ace/Task.h"
 
 namespace CIAO_InterMulti_Sender_Impl
 {
+
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::UShort > Atomic_UShort;
 
     /// Worker threads for asynchronous invocations
@@ -173,9 +175,88 @@ namespace CIAO_InterMulti_Sender_Impl
     //@}
   };
 
-  extern "C" INTERMULTI_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_InterMulti_Sender_Impl (void);
-}
+
+  class AMI4CCM_OneReplyHandler_run_my_one_i
+    : public ::InterMulti::CCM_AMI4CCM_OneReplyHandler,
+      public virtual ::CORBA::LocalObject
+    {
+    public:
+      AMI4CCM_OneReplyHandler_run_my_one_i (Atomic_UShort  &nr_of_received_);
+      virtual ~AMI4CCM_OneReplyHandler_run_my_one_i (void);
+
+      virtual void
+      foo (
+        ::CORBA::Long ami_return_val,
+        const char * answer);
+
+      virtual void
+      foo_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+    private:
+      Atomic_UShort  &nr_of_received_;
+
+    };
+
+    class AMI4CCM_TwoReplyHandler_run_my_two_i
+      : public ::InterMulti::CCM_AMI4CCM_TwoReplyHandler,
+        public virtual ::CORBA::LocalObject
+      {
+      public:
+        AMI4CCM_TwoReplyHandler_run_my_two_i (Atomic_UShort  &nr_of_received_);
+        virtual ~AMI4CCM_TwoReplyHandler_run_my_two_i (void);
+
+        virtual void
+        bar (
+          const char * answer);
+
+        virtual void
+        bar_excep (
+          ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+      private:
+        Atomic_UShort  &nr_of_received_;
+
+      };
+
+      class AMI4CCM_ThreeReplyHandler_run_my_three_i
+        : public ::InterMulti::CCM_AMI4CCM_ThreeReplyHandler,
+          public virtual ::CORBA::LocalObject
+        {
+        public:
+          AMI4CCM_ThreeReplyHandler_run_my_three_i (Atomic_UShort  &nr_of_received_);
+          virtual ~AMI4CCM_ThreeReplyHandler_run_my_three_i (void);
+
+          virtual void
+          foo (
+            ::CORBA::Long ami_return_val,
+            const char * answer);
+
+          virtual void
+          foo_excep (
+            ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+          virtual void
+          bar (
+            const char * answer);
+
+          virtual void
+          bar_excep (
+            ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+          virtual void
+          plus (
+            const char * answer);
+
+          virtual void
+          plus_excep (
+            ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+        private:
+          Atomic_UShort  &nr_of_received_;
+
+        };
+
+        extern "C" INTERMULTI_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+        create_InterMulti_Sender_Impl (void);
+      }
 
 #include /**/ "ace/post.h"
 
