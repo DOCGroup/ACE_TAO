@@ -163,7 +163,7 @@ worker (void *c)
       {
         // Use the guard to serialize access
         ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, output_lock, 0));
-        ACE_ASSERT ((*tss_error)->flags () == ITERATIONS);
+        ACE_TEST_ASSERT ((*tss_error)->flags () == ITERATIONS);
       }
 
       // Demonstrate use of ACE_TSS_Type_Adapter to wrap built-in

@@ -331,7 +331,7 @@ run_main (int, ACE_TCHAR *[])
 #endif /* ACE_HAS_VXTHREADS */
                   );
 
-  ACE_ASSERT (grp_id != -1);
+  ACE_TEST_ASSERT (grp_id != -1);
   thread_start->wait ();
 
   // Wait for 1 second and then suspend every thread in the group.
@@ -403,16 +403,16 @@ run_main (int, ACE_TCHAR *[])
                      SIGINT);
 #elif !defined (ACE_HAS_PTHREADS_DRAFT4) && !defined(ACE_LACKS_PTHREAD_KILL)
 #if defined (CHORUS)
-  ACE_ASSERT (thr_mgr->kill_grp (grp_id,
+  ACE_TEST_ASSERT (thr_mgr->kill_grp (grp_id,
                                  SIGTHREADKILL) != -1);
 #else
-  ACE_ASSERT (thr_mgr->kill_grp (grp_id,
+  ACE_TEST_ASSERT (thr_mgr->kill_grp (grp_id,
                                  SIGINT) != -1);
 #endif /* CHORUS */
 #else
   if (thr_mgr->kill_grp (grp_id,
                          SIGINT) == -1)
-    ACE_ASSERT (errno == ENOTSUP);
+    ACE_TEST_ASSERT (errno == ENOTSUP);
 #endif /* ACE_HAS_WTHREADS */
 
   // Wait and then cancel all the threads.
@@ -421,7 +421,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) cancelling group\n")));
 
-  ACE_ASSERT (thr_mgr->cancel_grp (grp_id) != -1);
+  ACE_TEST_ASSERT (thr_mgr->cancel_grp (grp_id) != -1);
 
   // Perform a barrier wait until all the threads have shut down.
   // But, wait for a limited time, just in case.

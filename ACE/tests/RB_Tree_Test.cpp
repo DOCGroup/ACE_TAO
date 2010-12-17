@@ -26,7 +26,7 @@
 //
 // ============================================================================
 
-#include "test_config.h" /* Include first to enable ACE_ASSERT. */
+#include "test_config.h" /* Include first to enable ACE_TEST_ASSERT. */
 #include "ace/RB_Tree.h"
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"

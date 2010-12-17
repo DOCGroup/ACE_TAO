@@ -87,7 +87,7 @@ Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler (void)
                 this->reference_count_.value ()));
 
   if (this->expected_number_of_handle_close_calls_ != -1)
-    ACE_ASSERT (this->number_of_handle_close_calls_ ==
+    ACE_TEST_ASSERT (this->number_of_handle_close_calls_ ==
                 this->expected_number_of_handle_close_calls_);
 }
 
@@ -157,7 +157,7 @@ cancellation (ACE_Timer_Queue &timer_queue,
                               one_second_timeout,
                               ACE_Time_Value (1) + timer_queue.gettimeofday (),
                               ACE_Time_Value (1));
-      ACE_ASSERT (first_timer_id != -1);
+      ACE_TEST_ASSERT (first_timer_id != -1);
     }
   else
     {
@@ -165,7 +165,7 @@ cancellation (ACE_Timer_Queue &timer_queue,
         timer_queue.schedule (handler,
                               one_second_timeout,
                               ACE_Time_Value (1) + timer_queue.gettimeofday ());
-      ACE_ASSERT (first_timer_id != -1);
+      ACE_TEST_ASSERT (first_timer_id != -1);
     }
 
   if (second_timer)
@@ -175,7 +175,7 @@ cancellation (ACE_Timer_Queue &timer_queue,
                               two_second_timeout,
                               ACE_Time_Value (2) + timer_queue.gettimeofday (),
                               ACE_Time_Value (2));
-      ACE_ASSERT (second_timer_id != -1);
+      ACE_TEST_ASSERT (second_timer_id != -1);
     }
 
   if (cancel_handler)
@@ -185,9 +185,9 @@ cancellation (ACE_Timer_Queue &timer_queue,
                             dont_call_handle_close);
 
       if (second_timer)
-        ACE_ASSERT (result == 2);
+        ACE_TEST_ASSERT (result == 2);
       else
-        ACE_ASSERT (result == 1);
+        ACE_TEST_ASSERT (result == 1);
     }
   else
     {
@@ -195,7 +195,7 @@ cancellation (ACE_Timer_Queue &timer_queue,
         timer_queue.cancel (first_timer_id,
                             0,
                             dont_call_handle_close);
-      ACE_ASSERT (result == 1);
+      ACE_TEST_ASSERT (result == 1);
 
       if (second_timer)
         {
@@ -203,7 +203,7 @@ cancellation (ACE_Timer_Queue &timer_queue,
             timer_queue.cancel (second_timer_id,
                                 0,
                                 dont_call_handle_close);
-          ACE_ASSERT (result == 1);
+          ACE_TEST_ASSERT (result == 1);
         }
     }
 }
@@ -317,13 +317,13 @@ expire (ACE_Timer_Queue &timer_queue,
                           one_second_timeout,
                           ACE_Time_Value (1) + timer_queue.gettimeofday (),
                           ACE_Time_Value (1));
-  ACE_ASSERT (timer_id != -1);
+  ACE_TEST_ASSERT (timer_id != -1);
 
   result =
     timer_queue.schedule (handler,
                           two_second_timeout,
                           ACE_Time_Value (2) + timer_queue.gettimeofday ());
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   events += 4;
 
@@ -334,7 +334,7 @@ expire (ACE_Timer_Queue &timer_queue,
       result =
         expire_function (timer_queue);
 
-      ACE_ASSERT (result >= 0);
+      ACE_TEST_ASSERT (result >= 0);
 
       i += result;
     }
@@ -453,13 +453,13 @@ simple (ACE_Timer_Queue &timer_queue)
                             one_second_timeout,
                             ACE_Time_Value (1) + timer_queue.gettimeofday (),
                             ACE_Time_Value (1));
-    ACE_ASSERT (timer_id != -1);
+    ACE_TEST_ASSERT (timer_id != -1);
 
     result =
       timer_queue.cancel (timer_id,
                           0,
                           0);
-    ACE_ASSERT (result == 1);
+    ACE_TEST_ASSERT (result == 1);
   }
 
   {
@@ -471,7 +471,7 @@ simple (ACE_Timer_Queue &timer_queue)
                             one_second_timeout,
                             ACE_Time_Value (1) + timer_queue.gettimeofday (),
                             ACE_Time_Value (1));
-    ACE_ASSERT (timer_id != -1);
+    ACE_TEST_ASSERT (timer_id != -1);
 
     events += 3;
   }
@@ -483,7 +483,7 @@ simple (ACE_Timer_Queue &timer_queue)
       result =
         timer_queue.expire ();
 
-      ACE_ASSERT (result >= 0);
+      ACE_TEST_ASSERT (result >= 0);
 
       i += result;
     }

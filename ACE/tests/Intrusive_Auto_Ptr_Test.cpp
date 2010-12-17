@@ -79,25 +79,25 @@ int run_main (int, ACE_TCHAR *[])
   One *theone (new One(0));
 
   {
-    ACE_ASSERT (theone->has_refs (0));
-    ACE_ASSERT (!One::was_released ());
+    ACE_TEST_ASSERT (theone->has_refs (0));
+    ACE_TEST_ASSERT (!One::was_released ());
 
     ACE_Intrusive_Auto_Ptr<One> ip2(theone);
 
     {
-      ACE_ASSERT (theone->has_refs (1));
-      ACE_ASSERT (!One::was_released ());
+      ACE_TEST_ASSERT (theone->has_refs (1));
+      ACE_TEST_ASSERT (!One::was_released ());
 
       ACE_Intrusive_Auto_Ptr<One> ip2(theone);
-      ACE_ASSERT (theone->has_refs (2));
-      ACE_ASSERT (!One::was_released ());
+      ACE_TEST_ASSERT (theone->has_refs (2));
+      ACE_TEST_ASSERT (!One::was_released ());
     }
 
-    ACE_ASSERT (theone->has_refs (1));
-    ACE_ASSERT (!One::was_released ());
+    ACE_TEST_ASSERT (theone->has_refs (1));
+    ACE_TEST_ASSERT (!One::was_released ());
   }
 
-  ACE_ASSERT (One::was_released());
+  ACE_TEST_ASSERT (One::was_released());
 
   ACE_END_TEST;
   return 0;

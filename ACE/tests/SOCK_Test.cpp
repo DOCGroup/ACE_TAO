@@ -122,7 +122,7 @@ server (void *arg)
 
   int result = ACE::handle_read_ready (peer_acceptor->get_handle (), &tv);
 
-  ACE_ASSERT (tv == def_timeout);
+  ACE_TEST_ASSERT (tv == def_timeout);
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("handle_read_ready")), 0);
@@ -147,7 +147,7 @@ server (void *arg)
 
           while ((r_bytes = new_stream.recv (buf, 1)) > 0)
             {
-              ACE_ASSERT (*t == buf[0]);
+              ACE_TEST_ASSERT (*t == buf[0]);
               t++;
             }
 

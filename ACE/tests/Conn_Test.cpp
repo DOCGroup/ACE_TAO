@@ -183,7 +183,7 @@ Svc_Handler::recv_data (void)
 
           while ((r_bytes = new_stream.recv (&c, 1)) > 0)
             {
-              ACE_ASSERT (*t == c);
+              ACE_TEST_ASSERT (*t == c);
 
               // We need to guard against cached connections, which
               // will send multiple sequences of letters from 'a' ->
@@ -748,7 +748,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("open")));
-      ACE_ASSERT (0);
+      ACE_TEST_ASSERT (0);
     }
   else
     {

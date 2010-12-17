@@ -69,21 +69,21 @@ child (void * = 0)
 
   // Wait for the parent to be initialized.
   result = synchronizer->acquire ();
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   const char *t = ACE_ALPHABET;
   ACE_Shared_Memory_MM shm_child;
 
   result = shm_child.open (shm_key);
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   char *shm = (char *) shm_child.malloc ();
 
-  ACE_ASSERT (shm != 0);
+  ACE_TEST_ASSERT (shm != 0);
 
   for (char *s = shm; *s != '\0'; s++)
     {
-      ACE_ASSERT (*t == s[0]);
+      ACE_TEST_ASSERT (*t == s[0]);
       t++;
     }
 
@@ -100,11 +100,11 @@ parent (void * = 0)
   ACE_Shared_Memory_MM shm_parent;
 
   result = shm_parent.open (shm_key, SHMSZ);
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   char *shm = (char *) shm_parent.malloc ();
 
-  ACE_ASSERT (shm != 0);
+  ACE_TEST_ASSERT (shm != 0);
 
   char *s = shm;
 
@@ -115,7 +115,7 @@ parent (void * = 0)
 
   // Allow the child to proceed.
   result = synchronizer->release ();
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   // Perform a "busy wait" until the child sets the character to '*'.
   while (*shm != '*')
@@ -123,7 +123,7 @@ parent (void * = 0)
                 ACE_TEXT ("(%P) spinning in parent!\n")));
 
   result = shm_parent.remove ();
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   ACE_OS::unlink (shm_key);
   return 0;

@@ -125,7 +125,7 @@ server (void *)
 
   while (new_stream.recv (buf, 1) > 0)
     {
-      ACE_ASSERT (*t == buf[0]);
+      ACE_TEST_ASSERT (*t == buf[0]);
       t++;
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("End of connection. Closing handle\n")));
@@ -158,7 +158,7 @@ server (void *)
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("recv"), 1));
           break;
         }
-      ACE_ASSERT (*t == buf[0]);
+      ACE_TEST_ASSERT (*t == buf[0]);
     }
 
   // Wait for the client to stream in the buffer one byte at a time.
@@ -170,7 +170,7 @@ server (void *)
   if (new_stream.recv (buf, sizeof(buf)) != (ssize_t) ACE_OS::strlen (ACE_ALPHABET))
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("recv"), 1));
   else
-    ACE_ASSERT(ACE_OS::memcmp(ACE_ALPHABET, buf, ACE_OS::strlen (ACE_ALPHABET)) == 0);
+    ACE_TEST_ASSERT(ACE_OS::memcmp(ACE_ALPHABET, buf, ACE_OS::strlen (ACE_ALPHABET)) == 0);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("End of connection. Closing handle\n")));
   new_stream.close ();

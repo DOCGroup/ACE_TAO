@@ -48,7 +48,7 @@ insertion_removal_test (void)
   typedef ACE_Array_Map<char, ACE_TString> Map;
   Map phonetic[2];
 
-  ACE_ASSERT (phonetic[0] == phonetic[1]);  // Sanity check.
+  ACE_TEST_ASSERT (phonetic[0] == phonetic[1]);  // Sanity check.
 
   static size_t const phonetic_len =
     sizeof (phonetic) / sizeof (phonetic[0]);
@@ -86,7 +86,7 @@ insertion_removal_test (void)
                               false);
         }
 
-      ACE_ASSERT (m->size () == letters_len);
+      ACE_TEST_ASSERT (m->size () == letters_len);
     }
 
   // Test equality of identically populated maps.
@@ -105,7 +105,7 @@ insertion_removal_test (void)
                         false);
     }
 
-  ACE_ASSERT (!phonetic[0].is_empty ()); // Sanity check.
+  ACE_TEST_ASSERT (!phonetic[0].is_empty ()); // Sanity check.
 
   Map foo (phonetic[0]);  // Copy construction
   Map bar = foo;          // Assignment
@@ -156,8 +156,8 @@ insertion_removal_test (void)
 
   // Remove two elements from map.
   Map::iterator letter_A = A.find ('A');
-  ACE_ASSERT (letter_A == A.begin ());  // Should be first map element.
-  ACE_ASSERT (A.count ('A') == 1);      // Should only be one letter 'A'.
+  ACE_TEST_ASSERT (letter_A == A.begin ());  // Should be first map element.
+  ACE_TEST_ASSERT (A.count ('A') == 1);      // Should only be one letter 'A'.
 
   A.erase (letter_A);
   if (A.find ('A') != A.end ()
@@ -186,8 +186,8 @@ insertion_removal_test (void)
   Map::iterator const first = B.begin () + 2;
   Map::iterator const last  = first + removed_len;
 
-  ACE_ASSERT (static_cast<Map::size_type> (last - first) < B.size ());
-  ACE_ASSERT (last < B.end ());
+  ACE_TEST_ASSERT (static_cast<Map::size_type> (last - first) < B.size ());
+  ACE_TEST_ASSERT (last < B.end ());
 
   Map::value_type removed[removed_len];
   size_t rcount = 0;
@@ -228,8 +228,8 @@ index_operator_test (void)
   typedef ACE_Array_Map<char, ACE_TString> Map;
   Map phonetic;
 
-  ACE_ASSERT (phonetic.size () == 0 && phonetic.is_empty ());
-  ACE_ASSERT (phonetic.max_size () > 1);
+  ACE_TEST_ASSERT (phonetic.size () == 0 && phonetic.is_empty ());
+  ACE_TEST_ASSERT (phonetic.max_size () > 1);
 
   // Run the same test twice, clearing the contents of the map between
   // the iterations.  The goal is to verify that the constant time
@@ -250,7 +250,7 @@ index_operator_test (void)
           phonetic[*i] = *word;
         }
 
-      ACE_ASSERT (phonetic.size () == letters_len);
+      ACE_TEST_ASSERT (phonetic.size () == letters_len);
 
       typedef Map::const_iterator         const_iterator;
 
@@ -319,12 +319,12 @@ index_operator_test (void)
         }
 
       // The size should not have changed.
-      ACE_ASSERT (phonetic.size () == letters_len);
+      ACE_TEST_ASSERT (phonetic.size () == letters_len);
 
       // Empty the map of its contents wholesale.
       phonetic.clear ();
 
-      ACE_ASSERT (phonetic.size () == 0 && phonetic.is_empty ());
+      ACE_TEST_ASSERT (phonetic.size () == 0 && phonetic.is_empty ());
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -402,7 +402,7 @@ reference_count_test (void)
 
   RefCounted counted (&ref_count);
 
-  ACE_ASSERT (counted.refcount () == 1);
+  ACE_TEST_ASSERT (counted.refcount () == 1);
 
   {
     Map map (CAPACITY);  // Preallocate storage for a number of
@@ -411,7 +411,7 @@ reference_count_test (void)
 
     map[ACE_TEXT("One")] = counted;
 
-    ACE_ASSERT (counted.refcount () == 2);
+    ACE_TEST_ASSERT (counted.refcount () == 2);
 
 
     std::pair<Map::iterator, bool> result;
@@ -423,10 +423,10 @@ reference_count_test (void)
       result = map.insert (std::make_pair (ACE_TString (ACE_TEXT ("Two")),
                                            counted));
 
-      ACE_ASSERT (result.second);
+      ACE_TEST_ASSERT (result.second);
     }
 
-    ACE_ASSERT (counted.refcount () == 3);
+    ACE_TEST_ASSERT (counted.refcount () == 3);
 
     {
       // Enter a new scope block to assure destruction of temporaries
@@ -435,22 +435,22 @@ reference_count_test (void)
       result = map.insert (std::make_pair (ACE_TString (ACE_TEXT ("Three")),
                                            counted));
 
-      ACE_ASSERT (result.second);
+      ACE_TEST_ASSERT (result.second);
     }
 
 
-    ACE_ASSERT (counted.refcount () == 4);
+    ACE_TEST_ASSERT (counted.refcount () == 4);
 
     Map::size_type const erased = map.erase (ACE_TEXT ("One"));
 
-    ACE_ASSERT (erased == 1);
-    ACE_ASSERT (counted.refcount () == 3);
+    ACE_TEST_ASSERT (erased == 1);
+    ACE_TEST_ASSERT (counted.refcount () == 3);
   }
 
   // Map instance no longer contains any references to the "counted"
   // object so the reference count should be back to one.
 
-  ACE_ASSERT (counted.refcount () == 1);
+  ACE_TEST_ASSERT (counted.refcount () == 1);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Reference count test passed.\n")));
@@ -465,7 +465,7 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Array_Map_Test"));
 
-  ACE_ASSERT (::letters_len == ::words_len);
+  ACE_TEST_ASSERT (::letters_len == ::words_len);
 
   bool const success =
     ::insertion_removal_test ()

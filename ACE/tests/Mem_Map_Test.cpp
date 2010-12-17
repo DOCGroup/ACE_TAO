@@ -261,7 +261,7 @@ run_main (int, ACE_TCHAR *[])
 
   // Now do a memcmp -- the orig file and the second temporary file
   // should be identical.
-  ACE_ASSERT (ACE_OS::memcmp (temp_mmap2.addr (),
+  ACE_TEST_ASSERT (ACE_OS::memcmp (temp_mmap2.addr (),
                               mmap.addr (),
                               mmap.size ()) == 0);
 
