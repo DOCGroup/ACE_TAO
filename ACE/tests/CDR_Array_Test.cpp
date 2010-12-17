@@ -391,7 +391,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
 
   char* toread = 0;
   {
-    ACE_ASSERT(use_array || total % 4 == 0);
+    ACE_TEST_ASSERT(use_array || total % 4 == 0);
 
     double totalsecs = 0.0;
     int n;

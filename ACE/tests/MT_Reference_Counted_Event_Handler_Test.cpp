@@ -604,7 +604,7 @@ Connector::connect (ACE_HANDLE &client_handle,
         ACE_OS::sleep (pipe_retry_timeout);
     }
 
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
   ACE_UNUSED_ARG (result);
 
   Receiver *receiver =
@@ -628,7 +628,7 @@ Connector::connect (ACE_HANDLE &client_handle,
       ACE_Event_Handler_var safe_receiver (receiver);
     }
 
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
   ACE_UNUSED_ARG (result);
 
   client_handle =
@@ -678,7 +678,7 @@ Connection_Cache::add_connection (Sender *sender)
 
   // Make sure that the state of the connection cache is as
   // expected. <sender> should not be already in the cache.
-  ACE_ASSERT (this->find (sender) == -1);
+  ACE_TEST_ASSERT (this->find (sender) == -1);
 
   int empty_index =
     this->find (0);
@@ -833,7 +833,7 @@ Invocation_Thread::create_connection (void)
     connector.connect (client_handle,
                        server_handle,
                        this->run_receiver_thread_);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
   ACE_UNUSED_ARG (result);
 
   // Create a new sender.
@@ -865,7 +865,7 @@ Invocation_Thread::create_connection (void)
                                      sender,
                                      ACE_Event_Handler::READ_MASK);
 #if 0
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
   ACE_UNUSED_ARG (result);
 #else
   if (result != 0)
@@ -902,7 +902,7 @@ Invocation_Thread::svc (void)
               // connection has been created.
               int result =
                 this->new_connection_event_.signal ();
-              ACE_ASSERT (result == 0);
+              ACE_TEST_ASSERT (result == 0);
               ACE_UNUSED_ARG (result);
 
               ++connection_counter;
@@ -1028,7 +1028,7 @@ Close_Socket_Thread::svc (void)
       int result =
         this->new_connection_event_.wait (&timeout,
                                           0);
-      ACE_ASSERT (result == 0 ||
+      ACE_TEST_ASSERT (result == 0 ||
                   (result == -1 && errno == ETIME));
 
       if (result == -1 &&
@@ -1215,7 +1215,7 @@ testing (ACE_Reactor *reactor,
 
   result =
     invocation_thread.activate ();
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   // Create the thread for closing the server socket.
   Close_Socket_Thread close_socket_thread (thread_manager,
@@ -1225,7 +1225,7 @@ testing (ACE_Reactor *reactor,
                                            run_receiver_thread);
   result =
     close_socket_thread.activate ();
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   global_event_loop_thread_variable = 0;
 
@@ -1239,7 +1239,7 @@ testing (ACE_Reactor *reactor,
 
       result =
         event_loop_thread.activate ();
-      ACE_ASSERT (result == 0);
+      ACE_TEST_ASSERT (result == 0);
     }
 
   // Create a thread to run the purger.
@@ -1250,12 +1250,12 @@ testing (ACE_Reactor *reactor,
     {
       result =
         purger_thread.activate ();
-      ACE_ASSERT (result == 0);
+      ACE_TEST_ASSERT (result == 0);
     }
 
   // Wait for threads to exit.
   result = thread_manager.wait ();
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   // Set the global variable to zero again because the
   // event_loop_thread exists on the stack and now

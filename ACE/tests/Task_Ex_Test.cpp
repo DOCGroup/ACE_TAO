@@ -73,7 +73,7 @@ int Consumer::svc ()
   User_Defined_Msg* pMsg=0;
   while(this->getq (pMsg)!=-1)
   {
-    ACE_ASSERT (pMsg!=0);
+    ACE_TEST_ASSERT (pMsg!=0);
     auto_ptr<User_Defined_Msg> pAuto(pMsg);
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("Consumer::svc got msg id=%d\n"),
@@ -93,7 +93,7 @@ int Consumer::svc ()
 ACE_THR_FUNC_RETURN producer (void *arg)
 {
   Consumer* c = static_cast<Consumer*> (arg);
-  ACE_ASSERT(c!=0);
+  ACE_TEST_ASSERT(c!=0);
   if (c==0)
   {
     ACE_ERROR((LM_ERROR,

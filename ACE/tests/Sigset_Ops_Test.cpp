@@ -48,7 +48,7 @@ siglistset (sigset_t x, int *sigset, int can_miss = 0)
             i));
           result = 1;
         }
-      ACE_ASSERT ((sigset [i] ? result > 0 : result <= 0)) ;
+      ACE_TEST_ASSERT ((sigset [i] ? result > 0 : result <= 0)) ;
     }
 
   if (empty)
@@ -140,7 +140,7 @@ run_main (int, ACE_TCHAR *[])
   // that fall into this catagory, please let me know.  Thanks.
   ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Now testing invalid sigset.  If your platform gets a \nsegmentation fault, then it doesn't check the error properly.\n"))) ;
 
-  ACE_ASSERT (ACE_OS::sigfillset (0) < 0 && ACE_OS::last_error () == EFAULT) ;
+  ACE_TEST_ASSERT (ACE_OS::sigfillset (0) < 0 && ACE_OS::last_error () == EFAULT) ;
   */
 
   ACE_END_TEST;

@@ -1,3 +1,8 @@
+Fri Dec 17 14:42:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * */*.*:
+          Merged RemedyWork branch.
+
 Wed Dec 15 11:32:59 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.cpp:
@@ -14,6 +19,116 @@ Tue Dec 14 15:26:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 Tue Dec 14 13:13:17 CET 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 6.0.0 released.
+
+Tue Dec 14 10:12:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Atomic_Op_Test.cpp:
+        * tests/Auto_IncDec_Test.cpp:
+        * tests/Buffer_Stream_Test.cpp:
+        * tests/Bug_2434_Regression_Test.cpp:
+        * tests/Bug_3332_Regression_Test.cpp:
+        * tests/Bug_3878_Regression_Test.cpp:
+        * tests/CDR_Array_Test.cpp:
+        * tests/CDR_Test.cpp:
+        * tests/Cache_Map_Manager_Test.cpp:
+        * tests/Collection_Test.cpp:
+        * tests/Conn_Test.cpp:
+        * tests/Dev_Poll_Reactor_Test.cpp:
+        * tests/Dynamic_Priority_Test.cpp:
+        * tests/Dynamic_Test.cpp:
+        * tests/Future_Set_Test.cpp:
+        * tests/Future_Test.cpp:
+        * tests/IOStream_Test.cpp:
+        * tests/Integer_Truncate_Test.cpp:
+        * tests/Intrusive_Auto_Ptr_Test.cpp:
+        * tests/MM_Shared_Memory_Test.cpp:
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+        * tests/MT_Reference_Counted_Notify_Test.cpp:
+        * tests/MT_SOCK_Test.cpp:
+        * tests/Mem_Map_Test.cpp:
+        * tests/Message_Queue_Notifications_Test.cpp:
+        * tests/New_Fail_Test.cpp:
+        * tests/NonBlocking_Conn_Test.cpp:
+        * tests/Object_Manager_Flipping_Test.cpp:
+        * tests/Pipe_Test.cpp:
+        * tests/Priority_Buffer_Test.cpp:
+        * tests/Proactor_Scatter_Gather_Test.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Test_IPV6.cpp:
+        * tests/Proactor_UDP_Test.cpp:
+        * tests/Process_Semaphore_Test.cpp:
+        * tests/Process_Strategy_Test.cpp:
+        * tests/RB_Tree_Test.cpp:
+        * tests/Reactor_Timer_Test.cpp:
+        * tests/Reactors_Test.cpp:
+        * tests/Recursive_Mutex_Test.cpp:
+        * tests/SOCK_Send_Recv_Test_IPV6.cpp:
+        * tests/SOCK_Test.cpp:
+        * tests/SOCK_Test_IPv6.cpp:
+        * tests/SPIPE_Test.cpp:
+        * tests/SV_Shared_Memory_Test.cpp:
+        * tests/Signal_Test.cpp:
+        * tests/TP_Reactor_Test.cpp:
+        * tests/TSS_Test.cpp:
+        * tests/Task_Ex_Test.cpp:
+        * tests/Thread_Manager_Test.cpp:
+        * tests/Thread_Mutex_Test.cpp:
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp:
+        * tests/Thread_Pool_Reactor_Test.cpp:
+        * tests/Thread_Pool_Test.cpp:
+        * tests/Thread_Timer_Queue_Adapter_Test.cpp:
+        * tests/Time_Value_Test.cpp:
+        * tests/Timer_Queue_Reference_Counting_Test.cpp:
+        * tests/Tokens_Test.cpp:
+        * tests/UPIPE_SAP_Test.cpp:
+        * tests/Vector_Test.cpp:
+        * tests/WFMO_Reactor_Test.cpp:
+          Replaced ACE_ASSERT by ACE_TEST_ASSERT to conditions get
+          tested in release mode as well.
+
+Mon Dec 13 07:59:21 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Message_Queue_NT.cpp:
+          Add missing activation in open() (setting state indicator).
+
+Sun Dec 12 16:20:22 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Fix DLL export problems with MingW GCC 4.5.0
+
+        * ace/Future_Set.cpp:
+        * protocols/ace/RMCast/Acknowledge.cpp:
+        * protocols/ace/RMCast/Protocol.h:
+        * protocols/ace/RMCast/Reassemble.cpp:
+        * tests/Bug_3332_Regression_Test.cpp:
+        * tests/Bug_3911_Regression_Test.cpp:
+        * tests/Hash_Map_Manager_Test.cpp:
+          Fixed uninitialized use warnings.
+
+        * ace/WIN32_Asynch_IO.cpp:
+          Fixed comparison always true warning.
+
+        * examples/Reactor/WFMO_Reactor/Handle_Close.cpp:
+          Fixed constant char* assignment.
+
+        * examples/Reactor/WFMO_Reactor/Suspended_Removals.cpp:
+          Fixed unused argument/variable warnings.
+
+        * tests/Array_Map_Test.cpp:
+        * tests/Handle_Set_Test.cpp:
+        * tests/Hash_Map_Bucket_Iterator_Test.cpp:
+        * tests/MT_Reactor_Timer_Test.cpp:
+        * tests/Malloc_Test.cpp:
+        * tests/Naming_Test.cpp:
+        * tests/Process_Manual_Event_Test.cpp:
+        * tests/Process_Mutex_Test.cpp:
+        * tests/Reactor_Notify_Test.cpp:
+        * tests/Sig_Handlers_Test.cpp:
+        * tests/Sigset_Ops_Test.cpp:
+        * tests/Timer_Queue_Test.cpp:
+          Replaced ACE_ASSERT by ACE_TEST_ASSERT to make test
+          function in release (NDEBUG) builds as well.
 
 Wed Dec  8 09:36:00 UTC 2010  Martin Corino <mcorino@remedy.nl>
 

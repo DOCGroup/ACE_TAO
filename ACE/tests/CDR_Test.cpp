@@ -553,15 +553,15 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   // Sanity checks.
-  ACE_ASSERT (sizeof (ACE_CDR::Boolean)    >= 1);
-  ACE_ASSERT (sizeof (ACE_CDR::Octet)      == 1);
-  ACE_ASSERT (sizeof (ACE_CDR::WChar)      >= 2);
-  ACE_ASSERT (sizeof (ACE_CDR::Short)      == 2);
-  ACE_ASSERT (sizeof (ACE_CDR::Long)       == 4);
-  ACE_ASSERT (sizeof (ACE_CDR::LongLong)   == 8);
-  ACE_ASSERT (sizeof (ACE_CDR::Float)      == 4);
-  ACE_ASSERT (sizeof (ACE_CDR::Double)     == 8);
-  ACE_ASSERT (sizeof (ACE_CDR::LongDouble) == 16);
+  ACE_TEST_ASSERT (sizeof (ACE_CDR::Boolean)    >= 1);
+  ACE_TEST_ASSERT (sizeof (ACE_CDR::Octet)      == 1);
+  ACE_TEST_ASSERT (sizeof (ACE_CDR::WChar)      >= 2);
+  ACE_TEST_ASSERT (sizeof (ACE_CDR::Short)      == 2);
+  ACE_TEST_ASSERT (sizeof (ACE_CDR::Long)       == 4);
+  ACE_TEST_ASSERT (sizeof (ACE_CDR::LongLong)   == 8);
+  ACE_TEST_ASSERT (sizeof (ACE_CDR::Float)      == 4);
+  ACE_TEST_ASSERT (sizeof (ACE_CDR::Double)     == 8);
+  ACE_TEST_ASSERT (sizeof (ACE_CDR::LongDouble) == 16);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing ACE CDR functions - short stream\n\n")));

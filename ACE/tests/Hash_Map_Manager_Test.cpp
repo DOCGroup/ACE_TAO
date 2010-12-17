@@ -202,7 +202,7 @@ run_test (void)
                          ACE_TEXT ("bind"),
                          string_table[i].key_), -1);
 
-  const ACE_TCHAR *entry;
+  const ACE_TCHAR *entry = 0;
 
   // Check the <find> operation.
   for (i = 0; string_table[i].key_ != 0; i++)

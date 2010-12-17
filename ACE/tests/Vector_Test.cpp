@@ -44,13 +44,13 @@ int run_main (int, ACE_TCHAR *[])
   for (i = 0; i < TOP; ++i)
     vector.push_back (i);
 
-  ACE_ASSERT (vector.size () == TOP);
+  ACE_TEST_ASSERT (vector.size () == TOP);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Size: %d\n"),
               vector.size ()));
 
   for (i = 0; i < TOP; ++i)
-    ACE_ASSERT (vector[i] == i);
+    ACE_TEST_ASSERT (vector[i] == i);
 
   // Test to be sure the iterator gets the correct count and entries.
   ITERATOR iter (vector);
@@ -74,14 +74,14 @@ int run_main (int, ACE_TCHAR *[])
   for (i = 0; i < (TOP - LEFT); ++i)
     vector.pop_back ();
 
-  ACE_ASSERT (vector.size () == LEFT);
+  ACE_TEST_ASSERT (vector.size () == LEFT);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Size: %d\n"),
               vector.size ()));
 
   for (i = 0; i < LEFT; ++i)
     {
-      ACE_ASSERT (vector[i] == i);
+      ACE_TEST_ASSERT (vector[i] == i);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("vector[%d]:%d\n"),
                   i, vector[i]));
@@ -97,11 +97,11 @@ int run_main (int, ACE_TCHAR *[])
       // second argument of the resize() call.
       if (i < LEFT)
         {
-          ACE_ASSERT (vector[i] == i);
+          ACE_TEST_ASSERT (vector[i] == i);
         }
       else
         {
-          ACE_ASSERT (vector[i] == 0);
+          ACE_TEST_ASSERT (vector[i] == 0);
         }
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("vector[%d]:%d\n"),
@@ -109,7 +109,7 @@ int run_main (int, ACE_TCHAR *[])
     }
 
   vector.clear ();
-  ACE_ASSERT (vector.size () == 0);
+  ACE_TEST_ASSERT (vector.size () == 0);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Size: %d\n"),
               vector.size ()));
@@ -141,9 +141,9 @@ int run_main (int, ACE_TCHAR *[])
     vector2.push_back (FILLER2);
 
   // now we check the result
-  ACE_ASSERT (vector2[0] == FILLER1);
+  ACE_TEST_ASSERT (vector2[0] == FILLER1);
   for (i = 0; i < boundary; ++i)
-    ACE_ASSERT (vector2[i+1] == FILLER2);
+    ACE_TEST_ASSERT (vector2[i+1] == FILLER2);
 
   VECTOR v1;
   VECTOR v2;

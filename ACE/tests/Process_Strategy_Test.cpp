@@ -249,7 +249,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                       -1);
       break;
 #else
-      ACE_ASSERT ("PROCESS invalid on this platform" == 0);
+      ACE_TEST_ASSERT ("PROCESS invalid on this platform" == 0);
 #endif /* !defined (ACE_LACKS_FORK) */
     case Options::THREAD:
 #if defined (ACE_HAS_THREADS)
@@ -261,7 +261,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                       -1);
       break;
 #else
-      ACE_ASSERT (!"THREAD invalid on this platform");
+      ACE_TEST_ASSERT (!"THREAD invalid on this platform");
 #endif /* !ACE_HAS_THREADS */
     case Options::REACTIVE:
       // Settle for the purely Reactive strategy.

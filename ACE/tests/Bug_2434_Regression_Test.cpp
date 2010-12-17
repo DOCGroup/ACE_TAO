@@ -46,21 +46,21 @@ run_main (int, ACE_TCHAR *[])
   tv1.set (max_time_t - 1, 499999);
   tv2.set (max_time_t, 999999);  // ACE_Time_Value::max_time
   tv1 *= 10.0;
-  ACE_ASSERT (tv1 == tv2);
+  ACE_TEST_ASSERT (tv1 == tv2);
   tv1.set (max_time_t - 1, 499999);
   tv2.set (min_time_t, -999999);
   tv1 *= -10.0;
-  ACE_ASSERT (tv1 == tv2);
+  ACE_TEST_ASSERT (tv1 == tv2);
 
   // test results near limits
   tv1.set ((max_time_t >> 1), 499999);
   tv2.set ((-(max_time_t >> 1) << 1), -999998);
   tv1 *= -2.0;
-  ACE_ASSERT (tv1 == tv2);
+  ACE_TEST_ASSERT (tv1 == tv2);
   tv1.set (max_time_t >> 1, 499999);
   tv2.set (((max_time_t >> 1) << 1), 999998);
   tv1 *= 2.0;
-  ACE_ASSERT (tv1 == tv2);
+  ACE_TEST_ASSERT (tv1 == tv2);
 
   ACE_END_TEST;
 

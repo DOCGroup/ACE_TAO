@@ -84,7 +84,7 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
 {
   long current_count = static_cast<long> (reinterpret_cast<size_t> (arg));
   if (current_count >= 0)
-    ACE_ASSERT (current_count == the_count);
+    ACE_TEST_ASSERT (current_count == the_count);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("[%x] Timer id %d with count #%d|%d timed out at %d!\n"),
@@ -140,7 +140,7 @@ test_registering_all_handlers (void)
         ACE_Reactor::instance ()->schedule_timer (&rt[i],
                                                   (const void *) i,
                                                   ACE_Time_Value (2 * i + 1));
-      ACE_ASSERT (t_id[i] != -1);
+      ACE_TEST_ASSERT (t_id[i] != -1);
       rt[i].timer_id (t_id[i]);
     }
 
@@ -166,7 +166,7 @@ test_registering_one_handler (void)
         ACE_Reactor::instance ()->schedule_timer (&rt[0],
                                                   (const void *) i,
                                                   ACE_Time_Value (2 * i + 1));
-      ACE_ASSERT (t_id[i] != -1);
+      ACE_TEST_ASSERT (t_id[i] != -1);
     }
 
   while (!done)
@@ -191,7 +191,7 @@ test_canceling_odd_timers (void)
       t_id[i] = ACE_Reactor::instance ()->schedule_timer (&rt[i],
                                                           (const void *) i,
                                                           ACE_Time_Value (2 * i + 1));
-      ACE_ASSERT (t_id[i] != -1);
+      ACE_TEST_ASSERT (t_id[i] != -1);
       rt[i].timer_id (t_id[i]);
     }
 
@@ -231,7 +231,7 @@ test_resetting_timer_intervals (void)
      // Start off by making this an interval timer.
      ACE_Time_Value (1));
 
-  ACE_ASSERT (t_id != -1);
+  ACE_TEST_ASSERT (t_id != -1);
   rt.timer_id (t_id);
 
   while (!done)

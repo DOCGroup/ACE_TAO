@@ -56,10 +56,10 @@ A::operator new (size_t n)
 
   if (dynamic_instance == 0)
     {
-      // If this ACE_ASSERT fails, it may be due to running of out TSS
+      // If this ACE_TEST_ASSERT fails, it may be due to running of out TSS
       // keys.  Try using ACE_HAS_TSS_EMULATION, or increasing
       // ACE_DEFAULT_THREAD_KEYS if already using TSS emulation.
-      ACE_ASSERT (dynamic_instance != 0);
+      ACE_TEST_ASSERT (dynamic_instance != 0);
 
       ACE_throw_bad_alloc;
     }
@@ -81,10 +81,10 @@ A::operator new (size_t n, const ACE_nothrow_t&) throw()
 
   if (dynamic_instance == 0)
     {
-      // If this ACE_ASSERT fails, it may be due to running of out TSS
+      // If this ACE_TEST_ASSERT fails, it may be due to running of out TSS
       // keys.  Try using ACE_HAS_TSS_EMULATION, or increasing
       // ACE_DEFAULT_THREAD_KEYS if already using TSS emulation.
-      ACE_ASSERT (dynamic_instance != 0);
+      ACE_TEST_ASSERT (dynamic_instance != 0);
 
       return 0;
     }

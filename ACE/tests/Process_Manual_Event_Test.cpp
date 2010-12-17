@@ -80,7 +80,7 @@ acquire_release (void)
   ACE_Manual_Event event_pong (0, USYNC_PROCESS, event_pong_name);
 
   // Make sure the constructor succeeded
-  ACE_ASSERT (ACE_LOG_MSG->op_status () == 0);
+  ACE_TEST_ASSERT (ACE_LOG_MSG->op_status () == 0);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P) Begin ping-pong\n")));
@@ -239,7 +239,7 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
       ACE_exitcode child_status;
       // Wait for the child processes we created to exit.
       int wait_result = child.wait (&child_status);
-      ACE_ASSERT (wait_result != -1);
+      ACE_TEST_ASSERT (wait_result != -1);
       if (child_status == 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Child %d finished ok\n"),

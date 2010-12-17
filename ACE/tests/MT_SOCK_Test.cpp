@@ -184,7 +184,7 @@ server (void *arg)
       ACE_DEBUG((LM_DEBUG, "(%P|%t) server: Waiting for connection...\n"));
 
       int result = ACE::handle_read_ready (peer_acceptor->get_handle (), &tv);
-      ACE_ASSERT (tv == def_timeout);
+      ACE_TEST_ASSERT (tv == def_timeout);
 
       if (result == -1)
         {
@@ -248,7 +248,7 @@ server (void *arg)
 
               while ((r_bytes = new_stream.recv (buf, 1)) > 0)
                 {
-                  ACE_ASSERT (*t == buf[0]);
+                  ACE_TEST_ASSERT (*t == buf[0]);
                   t++;
                 }
 

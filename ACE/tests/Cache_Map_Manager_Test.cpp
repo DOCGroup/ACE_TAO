@@ -143,14 +143,14 @@ run_iterator_cache (MAP_CACHE &cache)
                   (*iter).first (),
                   (*iter).second ()));
 
-      ACE_ASSERT ((*iter).first () == (*iter).second ());
+      ACE_TEST_ASSERT ((*iter).first () == (*iter).second ());
       ++counter;
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
   ACE_UNUSED_ARG (iterations);
-  ACE_ASSERT (counter == iterations);
+  ACE_TEST_ASSERT (counter == iterations);
 }
 
 static void
@@ -170,14 +170,14 @@ run_iterator_hash_cache (HASH_MAP_CACHE &cache)
                   (*iter).first (),
                   (*iter).second ()));
 
-      ACE_ASSERT ((*iter).first () == (*iter).second ());
+      ACE_TEST_ASSERT ((*iter).first () == (*iter).second ());
       ++counter;
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
   ACE_UNUSED_ARG (iterations);
-  ACE_ASSERT (counter == iterations);
+  ACE_TEST_ASSERT (counter == iterations);
 }
 
 static void
@@ -190,7 +190,7 @@ run_reverse_iterator_cache (MAP_CACHE &cache)
        iter != rend;
        ++iter)
     {
-      ACE_ASSERT ((*iter).first () == (*iter).second ());
+      ACE_TEST_ASSERT ((*iter).first () == (*iter).second ());
 
       // Debugging info.
       if (debug)
@@ -204,7 +204,7 @@ run_reverse_iterator_cache (MAP_CACHE &cache)
   if (debug)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
-  ACE_ASSERT (counter == 0);
+  ACE_TEST_ASSERT (counter == 0);
 }
 
 static void
@@ -217,7 +217,7 @@ run_reverse_iterator_hash_cache (HASH_MAP_CACHE &cache)
        iter != rend;
        ++iter)
     {
-      ACE_ASSERT ((*iter).first () == (*iter).second ());
+      ACE_TEST_ASSERT ((*iter).first () == (*iter).second ());
 
       // Debugging info.
       if (debug)
@@ -231,7 +231,7 @@ run_reverse_iterator_hash_cache (HASH_MAP_CACHE &cache)
   if (debug)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
-  ACE_ASSERT (counter == 0);
+  ACE_TEST_ASSERT (counter == 0);
 }
 
 static void
@@ -242,8 +242,8 @@ find_test_cache (MAP_CACHE &cache)
       VALUE j = 0;
       int result = cache.find (lookup_array[i], j);
 
-      ACE_ASSERT (result != -1);
-      ACE_ASSERT (j == lookup_array[i]);
+      ACE_TEST_ASSERT (result != -1);
+      ACE_TEST_ASSERT (j == lookup_array[i]);
 
       if (debug)
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d  "), j));
@@ -263,8 +263,8 @@ find_test_hash_cache (HASH_MAP_CACHE &cache)
       VALUE j = 0;
       int result = cache.find (lookup_array[i], j);
 
-      ACE_ASSERT (result != -1);
-      ACE_ASSERT (j == lookup_array[i]);
+      ACE_TEST_ASSERT (result != -1);
+      ACE_TEST_ASSERT (j == lookup_array[i]);
 
       if (debug)
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d  "), j));
@@ -290,7 +290,7 @@ purge_test_cache (MAP_CACHE &cache)
 
   // Purge from cache.
   int result = cache.purge ();
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
   ACE_UNUSED_ARG (result);
 
   size_t resultant_size = 0;
@@ -300,7 +300,7 @@ purge_test_cache (MAP_CACHE &cache)
     resultant_size = current_map_size - entries_to_remove;
 
   // Make sure the purge took out the appropriate number of entries.
-  ACE_ASSERT (cache.current_size () == resultant_size);
+  ACE_TEST_ASSERT (cache.current_size () == resultant_size);
   ACE_UNUSED_ARG (resultant_size);
 }
 
@@ -318,7 +318,7 @@ purge_test_hash_cache (HASH_MAP_CACHE &cache)
 
   // Purge from cache.
   int result = cache.purge ();
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
   ACE_UNUSED_ARG (result);
 
   size_t resultant_size = 0;
@@ -328,7 +328,7 @@ purge_test_hash_cache (HASH_MAP_CACHE &cache)
     resultant_size = current_map_size - entries_to_remove;
 
   // Make sure the purge took out the appropriate number of entries.
-  ACE_ASSERT (cache.current_size () == resultant_size);
+  ACE_TEST_ASSERT (cache.current_size () == resultant_size);
   ACE_UNUSED_ARG (resultant_size);
 }
 
@@ -345,14 +345,14 @@ functionality_test_cache (MAP_CACHING_STRATEGY &caching_strategy)
        ++i, ++j)
     {
       int result = cache.bind (i, j);
-      ACE_ASSERT (result == 0);
+      ACE_TEST_ASSERT (result == 0);
       ACE_UNUSED_ARG (result);
 
       if (debug)
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("keys[%d]=%d value=[%d]=%d\n"),
                     i, i, j, j));
       ++counter;
-      ACE_ASSERT (cache.current_size () == counter);
+      ACE_TEST_ASSERT (cache.current_size () == counter);
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -387,7 +387,7 @@ functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy)
        ++i, ++j)
     {
       int result = cache.bind (i, j);
-      ACE_ASSERT (result == 0);
+      ACE_TEST_ASSERT (result == 0);
       ACE_UNUSED_ARG (result);
 
       if (debug)
@@ -395,7 +395,7 @@ functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy)
                     ACE_TEXT ("keys[%d]=%d value=[%d]=%d\n"),
                     i, i, j, j));
       ++counter;
-      ACE_ASSERT (cache.current_size () == counter);
+      ACE_TEST_ASSERT (cache.current_size () == counter);
     }
 
   ACE_DEBUG ((LM_DEBUG,

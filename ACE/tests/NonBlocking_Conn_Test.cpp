@@ -143,7 +143,7 @@ test_connect (ACE_Reactor &reactor,
                        synch_options);
 
   if (!synch_options[ACE_Synch_Options::USE_REACTOR])
-    ACE_ASSERT (completion_counter == number_of_connections);
+    ACE_TEST_ASSERT (completion_counter == number_of_connections);
 
   if (complete_nonblocking_connections != Svc_Handler::Comp_NO)
     {
