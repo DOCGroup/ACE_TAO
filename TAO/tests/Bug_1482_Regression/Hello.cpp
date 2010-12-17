@@ -30,9 +30,10 @@ Hello::next_prime (void)
 
       while (bc == 0)
         {
-          if (ACE::is_prime (++this->latest_prime_,
+          ++this->latest_prime_;
+          if (ACE::is_prime (this->latest_prime_,
                              2,
-                             this->latest_prime_/2) == 0)
+                             this->latest_prime_ / 2) == 0)
             bc = 1;
         }
     }
