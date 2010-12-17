@@ -1,3 +1,15 @@
+Fri Dec 17 14:46:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * */*.*:
+          Merged RemedyWork branch.
+
+Wed Dec 15 12:34:01 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/component_ami_rh_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ami_rh_exh.cpp:
+         Correction for return values ami4ccm callbacks.
+
+
 Wed Dec 15 11:34:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
@@ -11,6 +23,17 @@ Tue Dec 14 15:25:53 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 Tue Dec 14 13:13:17 CET 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO version 2.0.0 released.
+
+Sun Dec 12 16:19:01 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Bug_1482_Regression/Hello.cpp:
+          Fixes 'maybe undefined operation' warning in MingW GCC 4.5.0.
+
+        * tests/OBV/Simple/Client_i.cpp:
+          Removed unnecessary include leading to redefinition warnings.
+
+        * tests/POA/DSI/Database_i.cpp:
+          Fixes 'uninitialized use' warnings.
 
 Wed Dec  8 15:20:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -5505,7 +5528,7 @@ Mon Jul 12 08:19:49 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
           - Refactored non-data code in FE and BE global data classes
             to corresponding utils classes.
 
-          - Changed code generation triggered by �SS to generate the
+          - Changed code generation triggered by ?SS to generate the
             *S.h and *C.h includes, so they can be propagated to
             including IDL files.
 
