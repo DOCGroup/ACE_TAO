@@ -126,6 +126,48 @@ namespace CIAO_InterInArgsT_Sender_Impl
     //@}
   };
 
+    class AMI4CCM_MyFooReplyHandler_run_my_foo_i
+      : public ::InterInArgsT::CCM_AMI4CCM_MyFooReplyHandler,
+        public virtual ::CORBA::LocalObject
+      {
+      public:
+    AMI4CCM_MyFooReplyHandler_run_my_foo_i (Atomic_UShort  &nr_of_received_);
+    virtual ~AMI4CCM_MyFooReplyHandler_run_my_foo_i (void);
+
+    virtual
+    void foo (::CORBA::Long ami_return_val,
+    const char * answer);
+
+    virtual
+    void foo_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+    virtual
+    void var_ins (const char * answer);
+
+    virtual
+    void var_ins_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+    virtual
+    void var_div_ins (const char * answer);
+
+    virtual
+    void var_div_ins_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+    virtual
+    void var_div2_ins (const char * answer);
+
+    virtual
+    void var_div2_ins_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+    virtual
+    void enum_in (const char * answer);
+
+    virtual
+    void enum_in_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
+  private:
+    Atomic_UShort  &nr_of_received_;
+  };
+
   extern "C" INTERINARGS_T_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_InterInArgsT_Sender_Impl (void);
 }

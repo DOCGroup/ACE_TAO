@@ -26,8 +26,6 @@
  **/
 
 #include "ExceptionT_Sender_exec.h"
-#include "ExceptionTA_conn_i.h"
-
 #include "ace/OS_NS_unistd.h"
 
 namespace CIAO_ExceptionT_Sender_Impl
@@ -60,6 +58,27 @@ namespace CIAO_ExceptionT_Sender_Impl
                             id, error_string, func));
     ++nr_of_received;
   }
+
+  void HandleException (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder,
+        const char* func)
+  {
+    try
+      {
+        excep_holder->raise_exception ();
+      }
+    catch (const ExceptionT::InternalError& ex)
+      {
+        CIAO_ExceptionT_Sender_Impl::HandleException (ex.id,
+                                                      ex.error_string.in (),
+                                                      ex.test.in(), func);
+      }
+    catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("ERROR: Caught unexpected exception:");
+      }
+  }
+
   //============================================================
   // Worker thread for asynchronous invocations for MyFoo
   //============================================================
@@ -83,7 +102,7 @@ namespace CIAO_ExceptionT_Sender_Impl
     else
       {
        ::ExceptionT::AMI4CCM_MyFooReplyHandler_var cb =
-          new CIAO_ExceptionT_AMI4CCM_MyFoo_Connector_AMI4CCM_Connector_Impl::AMI4CCM_MyFooReplyHandler_i ();
+          new AMI4CCM_MyFooReplyHandler_run_my_foo_i ();
 
         //Invoke Asynchronous calls to test exception handling
         //for this test, hello , get_ro_attrib and get_rw_attrib functions of
@@ -267,8 +286,95 @@ namespace CIAO_ExceptionT_Sender_Impl
     delete this->synch_foo_gen;
     this->synch_foo_gen = 0;
   }
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::AMI4CCM_MyFooReplyHandler_run_my_foo_i (void)
+  {
+  }
 
-  extern "C"  ::Components::EnterpriseComponent_ptr
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::~AMI4CCM_MyFooReplyHandler_run_my_foo_i (void)
+  {
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::foo (
+    ::CORBA::Long /* ami_return_val */,
+    const char * /* answer */)
+  {
+    // never should come here in this test.
+    ACE_ERROR ((LM_ERROR, "ERROR: MyFoo_callback_exec_i::foo: "
+                           "Unexpected return.\n"));
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::foo_excep (
+    ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    HandleException (excep_holder, "FOO (asyn)");
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::hello (
+    ::CORBA::Long /* answer */)
+  {
+    // never should come here in this test.
+     ACE_ERROR ((LM_ERROR, "ERROR: MyFoo_callback_exec_i::hello: "
+                            "Unexpected return.\n"));
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::hello_excep (
+    ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    HandleException (excep_holder, "HELLO (asyn)");
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::get_rw_attrib (
+    ::CORBA::Short /* rw_attrib */)
+  {
+    // never should come here in this test.
+       ACE_ERROR ((LM_ERROR, "ERROR: MyFoo_callback_exec_i::get_rw_attrib : "
+                              "Unexpected return.\n"));
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::get_rw_attrib_excep (
+    ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    HandleException (excep_holder, "get_rw_attrib (asyn)");
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::set_rw_attrib (void)
+  {
+    // never should come here in this test.
+     ACE_ERROR ((LM_ERROR, "ERROR: MyFoo_callback_exec_i::set_rw_attrib: "
+                            "Unexpected return.\n"));
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::set_rw_attrib_excep (
+    ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    HandleException (excep_holder, "SET_RW_ATTRIB (asyn)");
+ }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::get_ro_attrib (
+    ::CORBA::Short /* ro_attrib */)
+  {
+    // never should come here in this test.
+      ACE_ERROR ((LM_ERROR, "ERROR: MyFoo_callback_exec_i::get_ro_attrib: "
+                             "Unexpected return.\n"));
+  }
+
+  void
+  AMI4CCM_MyFooReplyHandler_run_my_foo_i::get_ro_attrib_excep (
+    ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    HandleException (excep_holder, "RO_ATTRIB (asyn)");
+  }
+
+  extern "C" EXCEPTION_T_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_ExceptionT_Sender_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =

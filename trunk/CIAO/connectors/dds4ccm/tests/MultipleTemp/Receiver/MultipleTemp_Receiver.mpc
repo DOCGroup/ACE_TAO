@@ -19,7 +19,7 @@ project(DDS_MultipleTemp_Receiver_idl_gen) : componentidldefaults, dds4ccm {
 }
 
 project(DDS_MultipleTemp_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
- requires += dummy_label
+  requires += dummy_label
   after += DDS_MultipleTemp_Receiver_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=RECEIVER_LEM_STUB_Export \
@@ -32,7 +32,7 @@ project(DDS_MultipleTemp_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project(DDS_MT_TEMP_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
- requires += dummy_label
+  requires += dummy_label
   after += DDS_MultipleTemp_Receiver_lem_gen DDS_MultipleTemp_Receiver_stub  DDS_MultipleTemp_Connector_stub DDS_MultipleTemp_Base_stub
   libs  +=  Receiver_stub DDS_MultipleTemp_Connector_stub DDS_MultipleTemp_Base_stub
   libpaths += ../lib
@@ -59,7 +59,7 @@ project(DDS_MT_TEMP_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
 }
 
 project(DDS_MultipleTemp_Receiver_stub) : ccm_stub, dds4ccm_base {
- requires += dummy_label
+  requires += dummy_label
   after += DDS_MultipleTemp_Receiver_idl_gen  DDS_MultipleTemp_Connector_stub DDS_MultipleTemp_Base_stub DDS_MT_TEMP_Connector_lem_gen
   libs  += DDS_MultipleTemp_Connector_stub DDS_MultipleTemp_Base_stub
   libpaths += ../lib
@@ -86,10 +86,10 @@ project(DDS_MultipleTemp_Receiver_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(DDS_MultipleTemp_Receiver_exec) : ciao_executor, dds4ccm_lem_stub {
- requires += dummy_label
-  after   += DDS_MT_TEMP_Receiver_lem_stub DDS_MultipleTemp_Receiver_stub DDS_MultipleTemp_Base_stub DDS_MultipleTemp_Connector_stub DDS_MT_TEMP_Connector_lem_stub 
+  requires += dummy_label
+  after   += DDS_MT_TEMP_Receiver_lem_stub DDS_MultipleTemp_Receiver_stub DDS_MultipleTemp_Base_stub DDS_MultipleTemp_Connector_stub DDS_MT_TEMP_Connector_lem_stub
   sharedname = Receiver_exec
-  libs += Receiver_stub Receiver_lem_stub DDS_MultipleTemp_Base_stub DDS_MultipleTemp_Connector_stub DDS_MT_TEMP_Connector_lem_stub 
+  libs += Receiver_stub Receiver_lem_stub DDS_MultipleTemp_Base_stub DDS_MultipleTemp_Connector_stub DDS_MT_TEMP_Connector_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -113,10 +113,10 @@ project(DDS_MultipleTemp_Receiver_exec) : ciao_executor, dds4ccm_lem_stub {
 
 
 project(DDS_MultipleTemp_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
- requires += dummy_label
-  after      +=   DDS_MT_TEMP_Receiver_lem_stub DDS_MultipleTemp_Base_stub DDS_MultipleTemp_Connector_stub DDS_MultipleTemp_Connector_svnt DDS_MultipleTemp_Receiver_exec DDS_MT_TEMP_Connector_lem_stub 
+  requires += dummy_label
+  after      +=   DDS_MT_TEMP_Receiver_lem_stub DDS_MultipleTemp_Base_stub DDS_MultipleTemp_Connector_stub DDS_MultipleTemp_Connector_svnt DDS_MultipleTemp_Receiver_exec DDS_MT_TEMP_Connector_lem_stub
   sharedname  = Receiver_svnt
-  libs       += Receiver_stub Receiver_lem_stub DDS_MultipleTemp_Base_stub DDS_MultipleTemp_Connector_stub DDS_MultipleTemp_Connector_svnt Receiver_exec DDS_MT_TEMP_Connector_lem_stub 
+  libs       += Receiver_stub Receiver_lem_stub DDS_MultipleTemp_Base_stub DDS_MultipleTemp_Connector_stub DDS_MultipleTemp_Connector_svnt Receiver_exec DDS_MT_TEMP_Connector_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..

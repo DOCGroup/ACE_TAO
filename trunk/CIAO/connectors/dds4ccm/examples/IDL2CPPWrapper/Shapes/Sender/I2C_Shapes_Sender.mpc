@@ -1,0 +1,19 @@
+// $Id$
+
+project(*i2c_shapes_sender) : ndds_impl, dds4ccm_stub, dds4ccm_ts_default {
+  exename = I2C_Shapes_Sender
+  after += I2C_Shapes_Base_Stub I2C_Shapes_Connector_stub I2C_Shapes_Common
+
+  includes += .. $(CIAO_ROOT) $(CIAO_ROOT)/connectors
+
+  exeout += ../lib
+  libs += I2C_Shapes_Base_stub I2C_Shapes_Connector_stub I2C_Shapes_Common
+  libpaths += ../lib
+
+  Source_Files {
+    I2C_Shapes_Sender.cpp
+  }
+
+  Header_Files {
+  }
+}

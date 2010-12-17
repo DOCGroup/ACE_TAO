@@ -25,9 +25,7 @@
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
 
-// test use multiple porttypes.
 #include "UsesMulti_Sender_exec.h"
-#include "UsesMultiA_conn_i.h"
 #include "ace/OS_NS_unistd.h"
 
 namespace CIAO_UsesMulti_Sender_Impl
@@ -56,7 +54,7 @@ namespace CIAO_UsesMulti_Sender_Impl
     for (CORBA::ULong i = 0; i < my_one_ami_->length (); ++i)
       {
         ::UsesMulti::AMI4CCM_OneReplyHandler_var cb =
-          new CIAO_UsesMulti_Sender_Impl::AMI4CCM_OneReplyHandler_i (
+          new AMI4CCM_OneReplyHandler_run_my_um_one_i (
                                                    this->nr_of_received_,
                                                    this->nr_of_sent_);
 
@@ -230,6 +228,37 @@ namespace CIAO_UsesMulti_Sender_Impl
     this->asynch_foo_gen = 0;
     delete this->synch_foo_gen;
     this->synch_foo_gen = 0;
+  }
+
+  AMI4CCM_OneReplyHandler_run_my_um_one_i::AMI4CCM_OneReplyHandler_run_my_um_one_i (
+      Atomic_UShort  &nr_of_received,
+      Atomic_UShort  &nr_of_sent)
+   : nr_of_received_(nr_of_received),
+     nr_of_sent_(nr_of_sent)
+  {
+  }
+
+  AMI4CCM_OneReplyHandler_run_my_um_one_i::~AMI4CCM_OneReplyHandler_run_my_um_one_i (void)
+  {
+  }
+
+  void
+  AMI4CCM_OneReplyHandler_run_my_um_one_i::foo (
+    ::CORBA::Long /* ami_return_val */,
+     const char * answer)
+  {
+    ACE_DEBUG ((LM_DEBUG, "Sender: Get asynchronous callback from foo,"
+                          " answer = <%C>\n",
+                          answer));
+    ++this->nr_of_received_;
+    --this->nr_of_sent_;
+  }
+
+  void
+  AMI4CCM_OneReplyHandler_run_my_um_one_i::foo_excep (
+    ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    excep_holder->raise_exception ();
   }
 
   extern "C" USESMULTI_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

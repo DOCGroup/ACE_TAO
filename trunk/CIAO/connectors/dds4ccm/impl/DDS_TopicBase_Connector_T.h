@@ -14,7 +14,7 @@
 
 template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
 class DDS_TopicBase_Connector_T
-  : public virtual DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>
+  : public virtual DDS_Base_Connector_T<CCM_TYPE>
 {
 public:
   DDS_TopicBase_Connector_T (void);
@@ -32,6 +32,12 @@ public:
   virtual void ccm_activate (ACE_Reactor* reactor);
   virtual void ccm_passivate (void);
   virtual void ccm_remove (void);
+  virtual void register_type (::DDS::DomainParticipant_ptr participant,
+                                      const char * typesupport_name);
+  virtual
+  void unregister_type    (::DDS::DomainParticipant_ptr participant,
+                              const char * typesupport_name);
+
 
 protected:
   bool late_binding (void);
@@ -49,7 +55,7 @@ protected:
   ::DDS::Subscriber_var subscriber_;
   ::DDS::SubscriberListener_var subscriber_listener_;
 
-  typedef DDS_Base_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE> BaseConnector;
+  typedef DDS_Base_Connector_T<CCM_TYPE> BaseConnector;
 private:
   bool late_binding_;
 };

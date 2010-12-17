@@ -92,13 +92,11 @@ project(AMI_OneProcess_Base_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
 
   Source_Files {
     OneProcess_Sender_exec.cpp
-    OneProcessA_conn_i.cpp
   }
 
   Header_Files {
     OneProcess_Sender_exec.h
     OneProcess_Sender_exec_export.h
-    OneProcessA_conn_i.h
   }
 
   Inline_Files {

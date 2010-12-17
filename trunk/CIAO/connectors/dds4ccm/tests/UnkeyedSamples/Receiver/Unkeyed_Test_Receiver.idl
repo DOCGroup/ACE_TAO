@@ -17,6 +17,7 @@ module Unkeyed_Test
     port UnkeyedTestConnector::DDS_Listen info_out;
     provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
     attribute unsigned short iterations;
+    attribute unsigned short keys;
   };
 };
 

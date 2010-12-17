@@ -92,13 +92,11 @@ project(AMI_GetComp_Base_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
 
   Source_Files {
     GetComp_Sender_exec.cpp
-    GetCompA_conn_i.cpp
   }
 
   Header_Files {
     GetComp_Sender_exec.h
     GetComp_Sender_exec_export.h
-    GetCompA_conn_i.h
   }
 
   Inline_Files {

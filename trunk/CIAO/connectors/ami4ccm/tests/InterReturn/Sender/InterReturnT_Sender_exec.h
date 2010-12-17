@@ -24,8 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO_INTERRETURNT_SENDER_EXEC_1UOEW8_H_
-#define CIAO_INTERRETURNT_SENDER_EXEC_1UOEW8_H_
+#ifndef CIAO_INTERRETURNT_SENDER_EXEC_GN3CO7_H_
+#define CIAO_INTERRETURNT_SENDER_EXEC_GN3CO7_H_
 
 #include /**/ "ace/pre.h"
 
@@ -121,10 +121,99 @@ namespace CIAO_InterReturnT_Sender_Impl
     /** User defined private operations. */
     //@}
   };
+  class AMI4CCM_MyFooReplyHandler_run_my_foo_i
+    : public ::InterReturnT::CCM_AMI4CCM_MyFooReplyHandler,
+      public virtual ::CORBA::LocalObject
+    {
+    public:
+      AMI4CCM_MyFooReplyHandler_run_my_foo_i (Atomic_UShort  &nr_of_received_);
+      virtual ~AMI4CCM_MyFooReplyHandler_run_my_foo_i (void);
 
-  extern "C" INTERRETURN_T_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_InterReturnT_Sender_Impl (void);
-}
+      virtual void
+      ret_void (
+        const char * answer,
+        ::CORBA::Long l_cmd);
+
+      virtual void
+      ret_void_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      ret_long (
+        ::CORBA::Long ami_return_val,
+        const char * answer,
+        ::CORBA::Long l_cmd);
+
+      virtual void
+      ret_long_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      ret_double (
+        ::CORBA::Double ami_return_val,
+        const char * answer,
+        ::CORBA::Long l_cmd);
+
+      virtual void
+      ret_double_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      ret_struct (
+        const ::InterReturnT::TestStruct & ami_return_val,
+        const char * answer,
+        ::CORBA::Long l_cmd);
+
+      virtual void
+      ret_struct_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      ret_array (
+        const ::InterReturnT::TestArray ami_return_val,
+        const char * answer,
+        ::CORBA::Long l_cmd);
+
+      virtual void
+      ret_array_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      ret_seq (
+        const ::InterReturnT::TestSeq & ami_return_val,
+        const char * answer,
+        ::CORBA::Long l_cmd);
+
+      virtual void
+      ret_seq_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      ret_union (
+        const ::InterReturnT::X_Union & ami_return_val,
+        const char * answer,
+        ::CORBA::Long l_cmd);
+
+      virtual void
+      ret_union_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      ret_enum (
+        ::InterReturnT::test_enum ami_return_val,
+        const char * answer,
+        ::CORBA::Long l_cmd);
+
+      virtual void
+      ret_enum_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+    private:
+      Atomic_UShort  &nr_of_received_;
+    };
+
+    extern "C" INTERRETURN_T_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+    create_InterReturnT_Sender_Impl (void);
+  }
 
 #include /**/ "ace/post.h"
 

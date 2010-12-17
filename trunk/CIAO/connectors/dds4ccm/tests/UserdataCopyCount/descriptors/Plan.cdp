@@ -20,7 +20,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_UCCTest_Component_Impl</string>
+          <string>create_UCC_Test_UCCTestComponent_Impl</string>
         </value>
       </value>
     </execParameter>

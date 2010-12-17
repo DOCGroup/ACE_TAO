@@ -24,11 +24,10 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO_NOREPLYH_SENDER_EXEC_QSWPQN_H_
-#define CIAO_NOREPLYH_SENDER_EXEC_QSWPQN_H_
+#ifndef CIAO_NOREPLYH_SENDER_EXEC_5F9YOB_H_
+#define CIAO_NOREPLYH_SENDER_EXEC_5F9YOB_H_
 
 #include /**/ "ace/pre.h"
-#include "ace/Task.h"
 
 #include "NoReplyH_SenderEC.h"
 
@@ -38,6 +37,7 @@
 
 #include /**/ "NoReplyH_Sender_exec_export.h"
 #include "tao/LocalObject.h"
+#include "ace/Task.h"
 
 namespace CIAO_NoReplyH_Sender_Impl
 {
@@ -122,10 +122,61 @@ namespace CIAO_NoReplyH_Sender_Impl
 
     //@}
   };
+  class AMI4CCM_MyFooReplyHandler_run_my_foo_i
+    : public ::NoReplyH::CCM_AMI4CCM_MyFooReplyHandler,
+      public virtual ::CORBA::LocalObject
+    {
+    public:
+      AMI4CCM_MyFooReplyHandler_run_my_foo_i (Atomic_UShort &);
+      virtual ~AMI4CCM_MyFooReplyHandler_run_my_foo_i (void);
 
-  extern "C" NOREPLYH_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_NoReplyH_Sender_Impl (void);
-}
+      virtual void
+      foo (
+        ::CORBA::Long ami_return_val,
+        const char * answer);
+
+      virtual void
+      foo_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      hello (
+        ::CORBA::Long answer);
+
+      virtual void
+      hello_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      get_rw_attrib (
+        ::CORBA::Short rw_attrib);
+
+      virtual void
+      get_rw_attrib_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      set_rw_attrib (void);
+
+      virtual void
+      set_rw_attrib_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+      virtual void
+      get_ro_attrib (
+        ::CORBA::Short ro_attrib);
+
+      virtual void
+      get_ro_attrib_excep (
+        ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+    private:
+      Atomic_UShort &nr_received_back_;
+
+    };
+
+    extern "C" NOREPLYH_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+    create_NoReplyH_Sender_Impl (void);
+  }
 
 #include /**/ "ace/post.h"
 
