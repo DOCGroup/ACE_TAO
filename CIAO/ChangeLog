@@ -1,3 +1,8 @@
+Fri Dec 17 15:01:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * */*.*:
+          Merged RemedyWork branch.
+
 Fri Dec 17 10:35:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.mpc:
