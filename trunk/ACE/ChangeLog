@@ -1,3 +1,9 @@
+Mon Dec 20 21:10:55 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ACEXML/common/NamespaceSupport.cpp:
+        * Kokyu/DSRT_Sched_Queue_T.cpp:
+          Initialize pointer with zero
+
 Mon Dec 20 20:58:26 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * examples/QOS/Change_Receiver_FlowSpec/Sender_QoS_Event_Handler.cpp:
