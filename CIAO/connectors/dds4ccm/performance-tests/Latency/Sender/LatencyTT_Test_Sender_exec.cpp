@@ -412,6 +412,9 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
     // This->sleep_ is in ms
     unsigned int sec = this->sleep_ / 1000;
     unsigned int usec = (this->sleep_ % 1000) * 1000;
+    ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::start - "
+              "Start test with interval <%u.%u>\n",
+              sec, usec));
     (void) ACE_High_Res_Timer::global_scale_factor ();
     this->reactor ()->timer_queue ()->gettimeofday (&ACE_High_Res_Timer::gettimeofday_hr);
     if (this->reactor ()->schedule_timer(
