@@ -12,43 +12,54 @@
 
 namespace Indentation
 {
+  /**
+   * @class Cxx
+   *
+   * Indentation implementation for C++ files.
+   */
   template <typename C>
-  class Cxx : public Buffer<C>
+  class Cxx : public Buffer <C>
   {
   public:
-    typedef
-    typename Buffer<C>::traits_type
-    traits_type;
+    /// Type definition of the traits type.
+    typedef typename Buffer <C>::traits_type traits_type;
 
-    typedef
-    typename Buffer<C>::char_type
-    char_type;
+    /// Type definition of the char type.
+    typedef typename Buffer <C>::char_type char_type;
 
-    typedef
-    typename Buffer<C>::int_type
-    int_type;
+    /// Type definition of the integer type
+    typedef typename Buffer <C>::int_type int_type;
 
-    typedef
-    typename Buffer<C>::EndOfStream
-    EndOfStream;
+    /// Type definition of the end of stream.
+    typedef typename Buffer <C>::EndOfStream EndOfStream;
 
   public:
-    Cxx (Buffer<C>& out)
-        : out_ (out),
-          position_ (0),
-          paren_balance_ (0),
-          spaces_ (2),
-          construct_ (OTHER)
+    /**
+     * Initializing constructor
+     *
+     * @param[in]           out       Target output buffer
+     */
+    Cxx (Buffer <C> & out)
+    : out_ (out),
+      position_ (0),
+      paren_balance_ (0),
+      spaces_ (2),
+      construct_ (OTHER)
     {
       indentation_.push (0);
     }
 
-    virtual
-    ~Cxx () throw () {}
+    /// Destructor
+    virtual ~Cxx (void)
+    {
+    }
 
   public:
-    virtual int_type
-    put (char_type c)
+    /**
+     * Add a new character to the buffer. Based on the character, different
+     * actions are taken. The newline always causes the buffer to be flushed.
+     */
+    virtual int_type put (char_type c)
     {
       int_type result = traits_type::to_int_type (c);
 
@@ -56,242 +67,262 @@ namespace Indentation
       {
         bool defaulting = false;
 
-        if (!hold_.empty () && hold_.back () == '(')
+        if (!this->hold_.empty () && this->hold_.back () == '(')
         {
-          unbuffer (); // We don't need to hold it any more.
+          // We do not need the buffered elements anymore.
+          this->unbuffer ();
 
           if (c == '\n')
-            indentation_.push (indentation_.top () + spaces_);
+            // Add another level to the indentation.
+            this->indentation_.push (this->indentation_.top () + this->spaces_);
           else
-            indentation_.push (position_);
+            // Save the current position.
+            this->indentation_.push (this->position_);
         }
 
         switch (c)
         {
         case '\n':
-          {
-            hold_.push_back (c);
-            position_ = 0; // Starting a new line.
+          // Save the eol character and start a new line.
+          this->hold_.push_back (c);
+          this->position_ = 0;
 
-            if (construct_ == CXX_COMMENT)
-            {
-              //std::cerr << "end comment" << endl;
-              construct_ = OTHER;
-            }
+          if (this->construct_ == CXX_COMMENT)
+            this->construct_ = OTHER;
 
-            break;
-          }
+          break;
+
         case '{':
+          if (this->construct_ != CXX_COMMENT &&
+              this->construct_ != STRING_LITERAL)
           {
-            if (!(construct_ == CXX_COMMENT || construct_ == STRING_LITERAL))
-            {
-              ensure_new_line ();
-              output_indentation ();
-              result = write (c);
-              ensure_new_line ();
+            // Make sure there is a new line in the buffer. We then need to
+            // move the correct position on the newline.
+            this->ensure_new_line ();
+            this->output_indentation ();
+            result = this->write (c);
 
-              indentation_.push (indentation_.top () + spaces_);
-            }
-            else
-              defaulting = true;
-            break;
+            // Make sure there is a newline after the brace.
+            this->ensure_new_line ();
+
+            // Increase the indentation by one.
+            this->indentation_.push (this->indentation_.top () + this->spaces_);
           }
+          else
+            defaulting = true;
+
+          break;
+
         case '}':
+          if (!(this->construct_ == CXX_COMMENT || this->construct_ == STRING_LITERAL))
           {
-            if (!(construct_ == CXX_COMMENT || construct_ == STRING_LITERAL))
+            // Remove the current indentation value, if it exists.
+            if (this->indentation_.size () > 1)
+              this->indentation_.pop ();
+
+            // Reduce multiple newlines to one.
+            while (this->hold_.size () > 1)
             {
-              if (indentation_.size () > 1)
-                indentation_.pop ();
+              typename Hold::reverse_iterator i = this->hold_.rbegin ();
 
-              // Reduce multiple newlines to one.
-              while (hold_.size () > 1)
-              {
-                typename Hold::reverse_iterator i = hold_.rbegin ();
-                if (*i == '\n' && *(i + 1) == '\n') hold_.pop_back ();
-                else break;
-              }
-
-              ensure_new_line ();
-              output_indentation ();
-
-              hold_.push_back (c);
-
-
-              // Add double newline after '}'.
-              //
-              hold_.push_back ('\n');
-              hold_.push_back ('\n');
-              position_ = 0;
+              if (*i == '\n' && *(i + 1) == '\n')
+                this->hold_.pop_back ();
+              else
+                break;
             }
-            else
-              defaulting = true;
 
-            break;
+            // Make sure we are on a newline and that we are at the
+            // right position.
+            this->ensure_new_line ();
+            this->output_indentation ();
+
+            // Now, we can add the new character to the newline.
+            this->hold_.push_back (c);
+
+
+            // Add double newline after '}'.
+            this->hold_.push_back ('\n');
+            this->hold_.push_back ('\n');
+
+            // Set position to the start of the line.
+            this->position_ = 0;
           }
+          else
+            defaulting = true;
+
+          break;
+
         case ';':
+          if (this->paren_balance_ != 0)
           {
-            if (paren_balance_ != 0)
-            {
-              // We are inside for (;;) statement. Nothing to do here.
-              //
-              defaulting = true;
-            }
-            else
-            {
-              // Handling '};' case.
-              //
-
-              bool brace (false);
-
-              if (hold_.size () > 1 && hold_.back () == '\n')
-              {
-                bool pop_nl (false);
-
-                for (typename Hold::reverse_iterator
-                       i (hold_.rbegin ()), e (hold_.rend ()); i != e; ++i)
-                {
-                  if (*i != '\n')
-                  {
-                    if (*i == '}') brace = pop_nl = true;
-                    break;
-                  }
-                }
-
-                if (pop_nl) while (hold_.back () == '\n') hold_.pop_back ();
-              }
-
-              output_indentation ();
-              result = write (c);
-              position_++;
-
-              if (brace)
-              {
-                hold_.push_back ('\n');
-                hold_.push_back ('\n');
-              }
-
-              if (construct_ != STRING_LITERAL && construct_ != CHAR_LITERAL)
-              {
-                ensure_new_line ();
-              }
-            }
-
-            break;
+            // We are inside for (;;) statement. Nothing to do here.
+            defaulting = true;
           }
+          else
+          {
+            // Handling the '};' case, i.e., complex type definitions.
+            bool brace = false;
+
+            if (this->hold_.size () > 1 && this->hold_.back () == '\n')
+            {
+              bool pop_nl = false;
+              typedef typename Hold::reverse_iterator iterator;
+
+              for (iterator i = this->hold_.rbegin (),
+                   e = this->hold_.rend ();
+                   i != e; ++ i)
+              {
+                if (*i != '\n')
+                {
+                  if (*i == '}')
+                    brace = pop_nl = true;
+
+                  break;
+                }
+              }
+
+              if (pop_nl)
+              {
+                while (this->hold_.back () == '\n')
+                  this->hold_.pop_back ();
+              }
+            }
+
+            // Make sure we write the indentation.
+            this->output_indentation ();
+            result = this->write (c);
+
+            // Update the position
+            this->position_ ++;
+
+            if (brace)
+            {
+              this->hold_.push_back ('\n');
+              this->hold_.push_back ('\n');
+            }
+
+            if (this->construct_ != STRING_LITERAL && this->construct_ != CHAR_LITERAL)
+              this->ensure_new_line ();
+          }
+          break;
+
         case '\\':
+          if (this->construct_ != CXX_COMMENT)
           {
-            if (construct_ != CXX_COMMENT)
-            {
-              output_indentation ();
-              hold_.push_back (c);
-              position_++;
-            }
-            else
-              defaulting = true;
+            this->output_indentation ();
+            this->hold_.push_back (c);
 
-            break;
+            // Increment the position marker.
+            ++ this->position_;
           }
-        case '\"':
-          {
-            if (construct_ != CXX_COMMENT && (hold_.empty () || hold_.back () != '\\'))
-            {
-              // not escape sequence
-              if (construct_ == STRING_LITERAL)
-                construct_ = OTHER;
-              else
-                construct_ = STRING_LITERAL;
-            }
-
+          else
             defaulting = true;
-            break;
+
+          break;
+
+        case '"':
+          if (this->construct_ != CXX_COMMENT &&
+             (this->hold_.empty () || this->hold_.back () != '\\'))
+          {
+            // not escape sequence
+            if (this->construct_ == STRING_LITERAL)
+              this->construct_ = OTHER;
+            else
+              this->construct_ = STRING_LITERAL;
           }
+
+          defaulting = true;
+          break;
+
         case '\'':
+          if (this->construct_ != CXX_COMMENT &&
+              this->construct_ != STRING_LITERAL &&
+             (this->hold_.empty () || this->hold_.back () != '\\'))
           {
-            if (construct_ != CXX_COMMENT &&
-                (hold_.empty () || hold_.back () != '\\'))
-            {
-              // not escape sequence
-              if (construct_ == CHAR_LITERAL) construct_ = OTHER;
-              else
-                {
-                  //std::cerr << "char literal" << endl;
-                  construct_ = CHAR_LITERAL;
-                }
-
-            }
-
-            defaulting = true;
-            break;
+            // not escape sequence
+            if (this->construct_ == CHAR_LITERAL)
+              this->construct_ = OTHER;
+            else
+              this->construct_ = CHAR_LITERAL;
           }
+
+          defaulting = true;
+          break;
+
         case '(':
+          if (this->construct_ == OTHER)
           {
-            if (construct_ == OTHER)
-            {
-              // Hold it so that we can see what's coming next.
-              //
-              output_indentation ();
-              hold_.push_back (c);
-              position_++;
-              paren_balance_++;
-            }
-            else
-              defaulting = true;
+            // Hold it so that we can see what's coming next.
+            this->output_indentation ();
+            this->hold_.push_back (c);
 
-            break;
+            // Update the position by one space to account for the
+            // location of this parenthesis.
+            this->position_ ++;
+
+            // We must balance a new set of parenthesis.
+            this->paren_balance_ ++;
           }
+          else
+            defaulting = true;
+
+          break;
+
         case ')':
+          if (this->construct_ == OTHER)
           {
-            if (construct_ == OTHER)
-            {
-              if (indentation_.size () > 1)
-                indentation_.pop ();
+            // We can remove the current indentation.
+            if (this->indentation_.size () > 1)
+              this->indentation_.pop ();
 
-              if (paren_balance_ > 0)
-                paren_balance_--;
-            }
-
-            defaulting = true;
-            break;
+            // We have balanced one of the parenthesis.
+            if (this->paren_balance_ > 0)
+              this->paren_balance_ --;
           }
+
+          defaulting = true;
+          break;
+
         case '/':
+          if (this->construct_ == OTHER)
           {
-            if (construct_ == OTHER)
+            if (!this->hold_.empty () && this->hold_.back () == '/')
             {
-              if (!hold_.empty () && hold_.back () == '/')
-              {
-                construct_ = CXX_COMMENT;
-                //std::cerr << "start comment" << endl;
-                defaulting = true;
-              }
-              else
-              {
-                output_indentation ();
-                hold_.push_back (c);
-                position_++;
-              }
+              // We are starting a C++ comment.
+              this->construct_ = CXX_COMMENT;
+              defaulting = true;
             }
             else
             {
-              defaulting = true;
-            }
+              // This is just another character. We can just write it to
+              // the holding buffer.
+              this->output_indentation ();
+              this->hold_.push_back (c);
 
-            break;
+              // Update the position.
+              ++ this->position_;
+            }
           }
-        default:
-          {
+          else
             defaulting = true;
-            break;
-          }
+
+          break;
+
+        default:
+          defaulting = true;
         }
 
         if (defaulting)
         {
-          output_indentation ();
-          result = write (c);
-          position_++;
+          // Write the character to the holding buffer.
+          this->output_indentation ();
+          result = this->write (c);
+
+          // Update the position.
+          ++ this->position_;
         }
       }
-      catch (Full const&)
+      catch (const Full &)
       {
         result = traits_type::eof ();
       }
@@ -299,79 +330,99 @@ namespace Indentation
       return result;
     }
 
-    virtual void
-    unbuffer ()
+    /**
+     * Unbuffer the elements. This will remove the elements on
+     * the holding queue to the target output stream.
+     */
+    virtual void unbuffer (void)
     {
       int_type result;
 
-      while (!hold_.empty ())
+      while (!this->hold_.empty ())
       {
-        result = out_.put (hold_.front ());
+        result = this->out_.put (this->hold_.front ());
 
-        //@@ failed
         if (result == traits_type::eof ())
-        {
           throw EndOfStream ("unable to flush buffer");
-        }
 
-        hold_.pop_front ();
+        this->hold_.pop_front ();
       }
     }
 
   private:
     class Full {};
 
-    void
-    ensure_new_line ()
+    /**
+     * Helper method that makes sure a newline exists at the end
+     * of the holding buffer.
+     */
+    void ensure_new_line (void)
     {
-      if (hold_.empty () || hold_.back () != '\n')
+      if (this->hold_.empty () || hold_.back () != '\n')
       {
-        hold_.push_back ('\n');
-        position_ = 0; // Starting a new line.
+        // Insert a new line in the holding buffer.
+        this->hold_.push_back ('\n');
+
+        // Update the position to the start of the line.
+        this->position_ = 0;
       }
     }
 
-
-    void
-    output_indentation ()
+    /**
+     * Helper method that writes the current indentation to the
+     * output buffer.
+     */
+    void output_indentation (void)
     {
-      if (!hold_.empty () && hold_.back () == '\n')
+      if (!this->hold_.empty () && this->hold_.back () == '\n')
       {
-        for (unsigned long i = 0; i < indentation_.top (); i++)
-          write (' ');
+        for (unsigned long i = 0; i < this->indentation_.top (); i++)
+          this->write (' ');
 
-        position_ += indentation_.top ();
+        this->position_ += this->indentation_.top ();
       }
     }
 
-    int_type
-    write (char_type c)
+    /**
+     * Write a new character to the holding buffer.
+     *
+     * @param[in]       c       The new character.
+     */
+    int_type write (char_type c)
     {
-      hold_.push_back (c);
-
+      this->hold_.push_back (c);
       int_type result (traits_type::eof ());
 
-      while (!hold_.empty ())
+      while (!this->hold_.empty ())
       {
-        result = out_.put (hold_.front ());
+        result = this->out_.put (this->hold_.front ());
 
         if (result == traits_type::eof ())
           throw Full ();
 
-        hold_.pop_front ();
+        this->hold_.pop_front ();
       }
 
       return result;
     }
 
-
   private:
-    Buffer<C>& out_;
-    unsigned long position_; // Current position on the line.
-    unsigned long paren_balance_; // ( ) balance.
-    std::stack<unsigned long> indentation_;
+    /// Target output buffer.
+    Buffer <C> & out_;
+
+    /// Current position on the line
+    unsigned long position_;
+
+    /// Balance the parenthesis
+    unsigned long paren_balance_;
+
+    /// Saved indentations based on state/scope.
+    std::stack <size_t> indentation_;
+
+    /// Number of space in a indentation.
     unsigned long spaces_;
 
+    /// Suppress newline generation.
     bool suppress_nl_;
 
     enum Construct
@@ -382,12 +433,13 @@ namespace Indentation
       CHAR_LITERAL
     };
 
+    /// The type of construct.
     Construct construct_;
 
-    typedef
-    std::deque<int_type>
-    Hold;
+    /// Type definition of the holding queue.
+    typedef std::deque <int_type> Hold;
 
+    /// Holding queue for elements.
     Hold hold_;
   };
 }

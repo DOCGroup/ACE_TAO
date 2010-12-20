@@ -1,3 +1,12 @@
+Mon Dec 20 22:42:59 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * CCF/CodeGenerationKit/IndentationCxx.hpp:
+
+          Cleaned up the implementation and add more comments.
+
+          Bug fix where the formatting failed if a string literal contained
+          a char literal.
+
 Mon Oct  4 20:13:59 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * MPC/config/ccf_common.mpb:
