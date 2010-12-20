@@ -26,7 +26,6 @@
  **/
 
 #include "InterInArgsT_Sender_exec.h"
-#include "InterInArgsTA_conn_i.h"
 #include "ace/OS_NS_unistd.h"
 
 namespace CIAO_InterInArgsT_Sender_Impl
