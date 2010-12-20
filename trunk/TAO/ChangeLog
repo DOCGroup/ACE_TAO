@@ -1,3 +1,17 @@
+Mon Dec 20 10:01:18 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+          Fixed bug#3941 and fixed broken formatting when processing sequences.
+
+        * tests/Bug_3941_Regression/test.cpp:
+        * tests/Bug_3941_Regression/test.idl:
+        * tests/Bug_3941_Regression/Bug_3941_Regression.mpc:
+        * tests/Bug_3941_Regression/run_test.pl:
+        * tests/Bug_3941_Regression/README:
+        * bin/tao_orb_tests.lst:
+          Added a test for bug#3941.
+
 Fri Dec 17 14:46:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * */*.*:
