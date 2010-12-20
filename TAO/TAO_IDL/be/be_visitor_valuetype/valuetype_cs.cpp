@@ -306,7 +306,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
   // The static T::_tao_unmarshal method
 
-  *os << "::CORBA::Boolean " << node->name()
+  *os << "::CORBA::Boolean " << be_nl << node->name()
       << "::_tao_unmarshal (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
       << node->local_name () << " *&new_object" << be_uidt_nl
@@ -322,19 +322,20 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "base," << be_nl
       << node->local_name () << "::_tao_obv_static_repository_id ()," << be_nl
       << "is_null_object," << be_nl
-      << "is_indirected" << be_uidt_nl << be_nl
+      << "is_indirected" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl << be_nl
       << "::CORBA::ValueBase_var owner (base);" << be_nl_2
       << "if (!retval)" << be_idt_nl
       << "return false;" << be_uidt_nl << be_nl
-      << "if (is_null_object)"  << be_idt_nl
+      << "if (is_null_object)" << be_idt_nl
       << "return true;" << be_uidt_nl << be_nl
-      << "if (!is_indirected && base != 0 && ! base->_tao_unmarshal_v (strm))" << be_idt_nl
+      << "if (!is_indirected && !base->_tao_unmarshal_v (strm))" << be_idt_nl
       << "return false;" << be_uidt_nl << be_nl
-      << "// Now base must be null or point to the unmarshaled object."
-      << be_nl
+      << "// Now base must point to the unmarshaled object." << be_nl
       << "// Align the pointer to the right subobject." << be_nl
       << "new_object = " << node->local_name () << "::_downcast (base);" << be_nl
+      << "if (0 == new_object)" << be_idt_nl
+      << "return false;" << be_uidt_nl << be_nl
       << "if (is_indirected)" << be_idt_nl
       << "new_object->_add_ref ();" << be_uidt_nl << be_nl
       << "owner._retn ();" << be_nl
