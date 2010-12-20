@@ -1,3 +1,10 @@
+Mon Dec 20 20:58:26 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * examples/QOS/Change_Receiver_FlowSpec/Sender_QoS_Event_Handler.cpp:
+        * examples/QOS/Change_Sender_TSpec/Sender_QoS_Event_Handler.cpp:
+        * examples/QOS/Simple/Sender_QoS_Event_Handler.cpp:
+          Fixed compile warnings.
+
 Fri Dec 17 14:42:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * */*.*:
