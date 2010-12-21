@@ -1,3 +1,11 @@
+Tue Dec 21 13:09:03 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_Shapes_Connector.idl:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_Shapes_Connector.mpc:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_Shapes_Traits.h:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.h:
+          Moved Connector/* files to Base.
+
 Tue Dec 21 10:44:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
