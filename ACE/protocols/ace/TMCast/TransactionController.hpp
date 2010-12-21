@@ -186,7 +186,7 @@ namespace ACE_TMCast
           // transfer payload
 
           size = send_->size ();
-	  ACE_OS::memcpy (payload, send_->payload (), size);
+          ACE_OS::memcpy (payload, send_->payload (), size);
 
           send_ = SendPtr ();
 
