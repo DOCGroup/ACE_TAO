@@ -1,3 +1,8 @@
+Tue Dec 21 09:57:54 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * protocols/ace/TMCast/TransactionController.hpp:
+          Added missing ACE_OS:: to memcpy call.
+
 Mon Dec 20 21:10:55 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * ACEXML/common/NamespaceSupport.cpp:
