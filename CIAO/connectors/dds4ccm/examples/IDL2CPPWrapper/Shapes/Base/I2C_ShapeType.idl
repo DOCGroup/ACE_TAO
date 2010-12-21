@@ -1,18 +1,18 @@
 // $Id$
 
 /**
- * @file I2C_Shapes_Connector.idl
+ * @file I2C_ShapeType.idl
  * @author
  */
 
-#ifndef I2C_SHAPES_CONNECTOR_IDL_
-#define I2C_SHAPES_CONNECTOR_IDL_
+#ifndef I2C_SHAPE_TYPE_IDL_
+#define I2C_SHAPE_TYPE_IDL_
 
 #include "connectors/dds4ccm/idl/dds4ccm_Entity.idl"
 
 #include "Base/I2C_Shapes_Base.idl"
 
-#pragma ciao lem "Base/I2C_Shapes_ConnectorE.idl"
+#pragma ciao lem "Base/I2C_ShapeTypeE.idl"
 
 module I2C_Typed <typename T, sequence<T> TSeq> {
   alias DDS_Entity<T, TSeq> DDS_Typed_Entity;
@@ -22,6 +22,7 @@ module I2C_Typed <typename T, sequence<T> TSeq> {
 
 module ::I2C_Typed < ::ShapeType, ::ShapeTypeSeq> I2C_Shapes;
 
-#endif /* I2C_SHAPES_CONNECTOR_IDL_ */
+#endif /* #ifndef I2C_SHAPE_TYPE_IDL_
+ */
 
 
