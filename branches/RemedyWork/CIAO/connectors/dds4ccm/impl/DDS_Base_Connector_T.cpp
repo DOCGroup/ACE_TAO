@@ -237,18 +237,6 @@ DDS_Base_Connector_T<CCM_TYPE>::reactor (void)
 }
 
 /**
-  * Type registration
- **/
-template <typename CCM_TYPE>
-void
-DDS_Base_Connector_T<CCM_TYPE>::register_type (
-  ::DDS::DomainParticipant_ptr /*participant*/,
-  const char * /*typesupport_name*/)
-{
-  DDS4CCM_TRACE ("DDS_Base_Connector_T::register_type");
-}
-
-/**
   * Initialization
  **/
 template <typename CCM_TYPE>
@@ -608,16 +596,4 @@ DDS_Base_Connector_T<CCM_TYPE>::remove_domain (
     {
       throw ::CCM_DDS::InternalError (retcode, 0);
     }
-}
-
-/**
-  * Unregister type
- **/
-template <typename CCM_TYPE>
-void
-DDS_Base_Connector_T<CCM_TYPE>::unregister_type (
-  ::DDS::DomainParticipant_ptr /*participant*/,
-  const char * /*typesupport_name*/)
-{
-  DDS4CCM_TRACE ("DDS_Base_Connector_T::unregister_type");
 }
