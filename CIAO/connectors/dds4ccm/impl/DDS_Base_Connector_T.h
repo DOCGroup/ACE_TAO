@@ -78,7 +78,8 @@ protected:
   void init_domain (::DDS::DomainParticipant_ptr & participant);
 
   virtual void register_type    (::DDS::DomainParticipant_ptr participant,
-                         const char * typesupport_name);
+                         const char * typesupport_name) = 0;
+
   void init_topic       (::DDS::DomainParticipant_ptr participant,
                          ::DDS::Topic_ptr & topic,
                          const char * topic_name,
@@ -161,7 +162,7 @@ protected:
 
   virtual
   void unregister_type    (::DDS::DomainParticipant_ptr participant,
-                           const char * typesupport_name);
+                           const char * typesupport_name) = 0;
   //@}
 
   /// Get the reactor associated with this component

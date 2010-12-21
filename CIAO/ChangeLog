@@ -1,3 +1,8 @@
+Tue Dec 21 13:43:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+          register_type and unregister_type are now pure virtual.
+
 Tue Dec 21 13:33:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender_exec.cpp:
