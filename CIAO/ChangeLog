@@ -1,3 +1,14 @@
+Tue Dec 21 10:44:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+          Optimized logging for with_profile methods.
+
+        * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.h:
+          Removed unused class variable.
+
 Fri Dec 17 15:01:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * */*.*:

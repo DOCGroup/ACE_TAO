@@ -231,9 +231,10 @@ namespace CIAO
           if (!cf_topic)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
-                            "DDS_Subscriber_i::create_datareader_with_profile - "
+                            "DDS_Subscriber_i::create_datareader_with_profile <%C#%C> - "
                             "Error: Unable to cast provided topic to one "
-                            "of its servant.\n"));
+                            "of its servant.\n",
+                            library_name, profile_name));
               delete ccm_dds_drl;
               return ::DDS::DataReader::_nil ();
             }
@@ -258,8 +259,9 @@ namespace CIAO
       if (!ccm_dds_dr)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_Subscriber_i::create_datareader_with_profile - "
-                        "Error: RTI Topic returned a nil datareader.\n"));
+                        "DDS_Subscriber_i::create_datareader_with_profile <%C#%C>- "
+                        "Error: RTI Topic returned a nil datareader.\n",
+                        library_name, profile_name));
           delete ccm_dds_drl;
           return ::DDS::DataReader::_nil ();
         }
