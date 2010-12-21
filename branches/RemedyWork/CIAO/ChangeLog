@@ -1,3 +1,18 @@
+Tue Dec 21 13:29:51 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.cpp:
+          Resolved compile error.
+
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_ShapeType.idl:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_ShapeType.mpc:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_Shapes_Traits.h:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.mpc:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.mpc:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Sender/I2C_Shapes_Sender.mpc:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_Shapes_Connector.idl:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_Shapes_Connector.mpc:
+          Renamed xxx_Connector.* files since these files do not contain connector stuff.
+
 Tue Dec 21 13:11:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Connector:

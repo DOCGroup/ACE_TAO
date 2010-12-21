@@ -5,7 +5,7 @@
 #define I2C_SHAPES_TRAITS_H_
 
 #include "Base/I2C_Shapes_BaseSupport.h"
-#include "Base/I2C_Shapes_ConnectorC.h"
+#include "Base/I2C_ShapeTypeC.h"
 
 struct ShapeType_DDS_Traits
 {
