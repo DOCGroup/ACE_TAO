@@ -148,8 +148,9 @@ namespace CIAO
           if (!dds_dp)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                            "DDS_DomainParticipantFactory_i::create_participant_with_profile - "
-                            "Error: Unable to create DomainParticipant\n"));
+                            "DDS_DomainParticipantFactory_i::create_participant_with_profile <%C> - "
+                            "Error: Unable to create DomainParticipant\n",
+                            qos_profile.c_str ()));
               return ::DDS::DomainParticipant::_nil ();
             }
           ::DDS::DomainParticipant_var retval;

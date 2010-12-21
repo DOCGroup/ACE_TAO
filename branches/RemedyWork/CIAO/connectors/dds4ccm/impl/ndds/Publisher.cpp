@@ -105,8 +105,9 @@ namespace CIAO
       if (!topic)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_Publisher_i::create_datawriter_with_profile - "
-                        "Error: Unable to cast provided topic to its servant.\n"));
+                        "DDS_Publisher_i::create_datawriter_with_profile <%C#%C>- "
+                        "Error: Unable to cast provided topic to its servant.\n",
+                        library_name, profile_name));
           return ::DDS::DataWriter::_nil ();
         }
 
@@ -127,8 +128,9 @@ namespace CIAO
       if (!ccm_dds_dw)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_Publisher_i::create_datawriter_with_profile - "
-                        "Error: RTI Topic returned a nil datawriter.\n"));
+                        "DDS_Publisher_i::create_datawriter_with_profile <%C#%C> - "
+                        "Error: RTI Topic returned a nil datawriter.\n",
+                        library_name, profile_name));
           delete ccm_dds_drl;
           return ::DDS::DataWriter::_nil ();
         }
@@ -137,8 +139,7 @@ namespace CIAO
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "DDS_Publisher_i::create_datawriter_with_profile - "
                         "Successfully created datawriter with profile <%C#%C>.\n",
-                        library_name,
-                        profile_name));
+                        library_name, profile_name));
         }
 
       ::DDS::DataWriter_var retval =
