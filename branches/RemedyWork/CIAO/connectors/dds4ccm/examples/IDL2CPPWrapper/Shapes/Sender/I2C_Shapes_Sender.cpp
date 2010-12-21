@@ -7,13 +7,10 @@
 
 #define MAX_X_Y 250
 
-typedef ::CIAO::NDDS::DataWriter_T<ShapeType_DDS_Traits::datawriter_type,
-                     ShapeType_DDS_Traits::typed_writer_type,
-                     ShapeType_DDS_Traits::value_type>
-        ShapesDataWriter;
+typedef ::ShapeType_DDS_Traits::typed_writer_type TypedDataWriter;
 
 void
-write (ShapesDataWriter * shapes_dw)
+write (TypedDataWriter::_ptr_type shapes_dw)
 {
   if (shapes_dw)
     {
@@ -86,7 +83,7 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
                                       ::DDS::DataWriterListener::_nil (),
                                       0);
 
-      ShapesDataWriter * shapes_dw = dynamic_cast <ShapesDataWriter *>(dw.in ());
+      TypedDataWriter::_var_type shapes_dw = TypedDataWriter::_narrow (dw.in ());
       write (shapes_dw);
     }
   catch (::CORBA::Exception &e)
