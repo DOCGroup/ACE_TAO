@@ -5,15 +5,10 @@
 
 #include "ace/OS_NS_unistd.h"
 
-typedef ::CIAO::NDDS::DataReader_T<ShapeType_DDS_Traits::datareader_type,
-                     ShapeType_DDS_Traits::typed_reader_type,
-                     ShapeType_DDS_Traits::value_type,
-                     ShapeTypeSeq,
-                     ShapeType_DDS_Traits::dds_seq_type>
-        ShapesDataReader;
+typedef ::ShapeType_DDS_Traits::typed_reader_type TypedDataReader;
 
 void
-read (ShapesDataReader* shapes_dr)
+read (TypedDataReader::_ptr_type shapes_dr)
 {
   int samples_received = 0;
   if (shapes_dr)
@@ -81,8 +76,8 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
                                       ::DDS::DataReaderListener::_nil (),
                                       0);
 
-      ShapesDataReader * shapes_dr = dynamic_cast <ShapesDataReader *>(dr.in ());
-      read (shapes_dr);
+      TypedDataReader::_var_type shapes_dr = TypedDataReader::_narrow (dr.in ());
+      read (shapes_dr.in ());
     }
   catch (::CORBA::Exception &e)
     {
