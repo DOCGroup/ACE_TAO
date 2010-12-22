@@ -1,3 +1,9 @@
+Wed Dec 22 13:08:01 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender_exec.cpp:
+          Resolved memory leak.
+
 Wed Dec 22 12:59:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component_exec.h:
