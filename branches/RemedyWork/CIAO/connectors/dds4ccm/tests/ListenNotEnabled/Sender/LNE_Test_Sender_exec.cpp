@@ -55,10 +55,15 @@ namespace CIAO_LNE_Test_Sender_Impl
     : keys_ (5)
       , iterations_ (10)
   {
+    ACE_NEW_THROW_EX (this->rh_,
+                      WriteManyHandler (*this),
+                      ::CORBA::NO_MEMORY ());
+
   }
 
   Sender_exec_i::~Sender_exec_i (void)
   {
+    delete this->rh_;
   }
 
   // Supported operations and attributes.
@@ -124,8 +129,7 @@ namespace CIAO_LNE_Test_Sender_Impl
   void
   Sender_exec_i::start (void)
   {
-    WriteManyHandler *rh = new WriteManyHandler (*this);
-    this->reactor ()->notify (rh);
+    this->reactor ()->notify (this->rh_);
   }
 
   // Component attributes and port operations.
