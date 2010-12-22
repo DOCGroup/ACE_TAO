@@ -1,3 +1,17 @@
+Wed Dec 22 11:42:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver.mpc:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender.mpc:
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          Rewritten, using the generated executor code.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/descriptors/run_test.pl:
+          Given the application some extra time to run
+
 Tue Dec 21 14:52:07 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
