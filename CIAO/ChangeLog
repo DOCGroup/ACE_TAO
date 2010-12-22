@@ -1,3 +1,13 @@
+Wed Dec 22 14:43:46 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.h:
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp:
+          Removed fith template parameter due to changes in the IDL compiler.
+
 Wed Dec 22 14:03:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/Latency_Sender.cpp:
