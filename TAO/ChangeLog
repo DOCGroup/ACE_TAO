@@ -1,3 +1,13 @@
+Wed Dec 22 14:42:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
+        * TAO_IDL/be_include/be_visitor_connector/connector_dds_ex_base.h:
+          Removes template parameters which indicates whether the sequence
+          contains fixed data. This fixes bugzilla #3939.
+
 Fri Dec 17 14:46:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * */*.*:
