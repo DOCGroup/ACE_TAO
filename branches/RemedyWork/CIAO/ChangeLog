@@ -1,3 +1,9 @@
+Wed Dec 22 15:44:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Derived/DDS_Derived_Connector_T.h:
+        * connectors/dds4ccm/tests/PSAT/DDS_PSAT_Connector_T.h:
+          Removed fith template parameter due to changes in the IDL compiler.
+
 Wed Dec 22 14:43:46 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Event_Connector_T.h:
