@@ -141,11 +141,7 @@ calculate_clock_overhead (void)
 void
 init_values (void)
 {
-  if (duration_times_)
-    {
-      delete duration_times_;
-      duration_times_ = 0;
-    }
+  delete [] duration_times_;
   duration_times_ = new ACE_UINT64[iterations_];
   datalen_range_ = new CORBA::Short[nr_of_runs_];
   int start = 16;
@@ -197,11 +193,7 @@ void
 reset_results (void)
 {
   count_ = 0;
-  if (duration_times_)
-    {
-      delete duration_times_;
-      duration_times_ = 0;
-    }
+  delete [] duration_times_;
   duration_times_ = new ACE_UINT64[iterations_];
   tv_total_ = 0L;
   tv_max_ = 0L;
@@ -566,10 +558,8 @@ clean_exit:
             main_result = 1;
           }
       }
-    if (datalen_range_)
-      {
-        delete datalen_range_;
-      }
+    delete [] datalen_range_;
+    delete [] duration_times_;
     return main_result;
 }
 
