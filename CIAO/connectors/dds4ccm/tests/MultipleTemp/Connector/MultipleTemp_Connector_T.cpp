@@ -78,6 +78,24 @@ FooConnector_Connector_T<CCM_TYPE, DDS_TYPE_T, FIXED_T, SEQ_TYPE_T, DDS_TYPE_Y, 
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE_T, bool FIXED_T, typename SEQ_TYPE_T, typename DDS_TYPE_Y, bool FIXED_Y, typename SEQ_TYPE_Y>
+void
+FooConnector_Connector_T<CCM_TYPE, DDS_TYPE_T, FIXED_T, SEQ_TYPE_T, DDS_TYPE_Y, FIXED_Y, SEQ_TYPE_Y>::unregister_type (
+  ::DDS::DomainParticipant_ptr participant,
+  const char * typesupport_name)
+{
+  DDS4CCM_TRACE ("FooConnector_Connector_T::unregister_type");
+#if (CIAO_DDS4CCM_NDDS==1)
+  ::CIAO::NDDS::DDS_TypeFactory_i * factory =
+    ::CIAO::NDDS::DDS_TypeSupport_i::unregister_type (typesupport_name, participant);
+  delete factory;
+#else
+  ACE_UNUSED_ARG (participant);
+  ACE_UNUSED_ARG (typesupport_name);
+#endif
+
+}
+
+template <typename CCM_TYPE, typename DDS_TYPE_T, bool FIXED_T, typename SEQ_TYPE_T, typename DDS_TYPE_Y, bool FIXED_Y, typename SEQ_TYPE_Y>
 char *
 FooConnector_Connector_T<CCM_TYPE, DDS_TYPE_T, FIXED_T, SEQ_TYPE_T, DDS_TYPE_Y, FIXED_Y, SEQ_TYPE_Y>::topic_name_t (void)
 {
