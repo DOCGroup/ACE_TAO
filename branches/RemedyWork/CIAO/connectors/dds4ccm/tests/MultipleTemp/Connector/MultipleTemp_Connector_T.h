@@ -30,6 +30,12 @@ public:
   ::DDS::DomainParticipant_ptr participant,
   const char * typesupport_name);
 
+  virtual
+  void
+  unregister_type (
+  ::DDS::DomainParticipant_ptr participant,
+  const char * typesupport_name);
+
   /**
    * T type connector
    **/
