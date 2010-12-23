@@ -1,3 +1,9 @@
+Thu Dec 23 08:11:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/IDL_Test/NonTopic_Connector/NonTopic_Connector_T.h:
+        * tests/IDL_Test/NonTopic_Connector/NonTopic_Connector_T.cpp:
+          Removed template parameters due to changes in the IDL compiler.
+
 Wed Dec 22 15:44:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Derived/DDS_Derived_Connector_T.h:
