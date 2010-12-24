@@ -110,7 +110,7 @@ namespace CIAO
                                                   max_samples,
                                                   rd);
         }
-      return DDS_RETCODE_ERROR;
+      return ::DDS::RETCODE_ERROR;
     }
 
     template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
