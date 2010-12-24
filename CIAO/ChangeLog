@@ -1,3 +1,11 @@
+Fri Dec 24 09:13:51 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.mpc:
+          Fuzz.
+
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+          ::DDS::xxx instead of DDS_xxx.
+
 Thu Dec 23 10:28:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector_T.h:
