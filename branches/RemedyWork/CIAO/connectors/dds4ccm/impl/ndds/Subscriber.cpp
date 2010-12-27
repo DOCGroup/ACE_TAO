@@ -9,7 +9,6 @@
 #include "dds4ccm/impl/ndds/DomainParticipant.h"
 #include "dds4ccm/impl/ndds/TypeSupport.h"
 
-#include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/ndds/SubscriberListener.h"
 
 #include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"

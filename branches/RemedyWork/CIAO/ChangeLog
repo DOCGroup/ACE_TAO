@@ -1,3 +1,75 @@
+Mon Dec 27 09:34:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dds4ccm.mpb:
+        * MPC/config/dds4ccm_base.mpb:
+        * MPC/config/ndds.mpb:
+        * MPC/config/ndds_lem_stub.mpb:
+        * MPC/config/ndds_skel.mpb:
+        * MPC/config/ndds_stub.mpb:
+        * connectors/dds4ccm/idl/dds4ccm_lem_stub.mpc:
+        * connectors/dds4ccm/idl/dds4ccm_skel.mpc:
+        * connectors/dds4ccm/idl/dds4ccm_stub.mpc:
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+        * connectors/dds4ccm/idl/ndds:
+        * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_i_handle.idl:
+        * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handle.idl:
+        * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handleC.h:
+        * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handleC.cpp:
+        * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handleEC.h:
+        * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handleS.h:
+        * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+        * connectors/dds4ccm/idl/ndds/ndds_lem_stub.mpc:
+        * connectors/dds4ccm/idl/ndds/ndds_skel.mpc:
+        * connectors/dds4ccm/idl/ndds/ndds_stub.mpc:
+        * connectors/dds4ccm/impl/ConditionManager.h:
+        * connectors/dds4ccm/impl/ConditionManager.cpp:
+        * connectors/dds4ccm/impl/DataReaderHandler_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.h:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+        * connectors/dds4ccm/impl/TopicListener.cpp:
+        * connectors/dds4ccm/impl/Utils.h:
+        * connectors/dds4ccm/impl/dds4ccm_impl.mpc:
+        * connectors/dds4ccm/impl/ndds/Condition.h:
+        * connectors/dds4ccm/impl/ndds/Condition.cpp:
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.h:
+        * connectors/dds4ccm/impl/ndds/DataReader.h:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.h:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriter.h:
+        * connectors/dds4ccm/impl/ndds/DataWriterListener.h:
+        * connectors/dds4ccm/impl/ndds/DataWriter_T.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener.h:
+        * connectors/dds4ccm/impl/ndds/Publisher.h:
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+        * connectors/dds4ccm/impl/ndds/PublisherListener.h:
+        * connectors/dds4ccm/impl/ndds/QueryCondition.h:
+        * connectors/dds4ccm/impl/ndds/ReadCondition.h:
+        * connectors/dds4ccm/impl/ndds/StatusCondition.h:
+        * connectors/dds4ccm/impl/ndds/Subscriber.h:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.h:
+        * connectors/dds4ccm/impl/ndds/Topic.h:
+        * connectors/dds4ccm/impl/ndds/TopicDescription.h:
+        * connectors/dds4ccm/impl/ndds/TopicListener.h:
+        * connectors/dds4ccm/impl/ndds/TypeSupport.h:
+        * connectors/dds4ccm/impl/ndds/WaitSet.h:
+        * connectors/dds4ccm/impl/ndds/WaitSet.cpp:
+        * connectors/dds4ccm/impl/ndds/ndds.mpc:
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_i_handle.idl:
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handle.idl:
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handleC.h:
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handleC.cpp:
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handleEC.h:
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handleS.h:
+          Splitted dds_rtf2_dcps.idl into two parts, given ndds it's own idl file with its own.
+          stub and skeleton projects. The NDDS wrapper library now inherits from these stub and
+          skeleton projects
+
 Fri Dec 24 09:13:51 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.mpc:

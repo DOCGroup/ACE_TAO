@@ -23,7 +23,6 @@ project (DDS4CCM_idl_gen) : install, dds4ccm, componentidldefaults {
   IDL_Files {
     idlflags -= -Gxhst -Gxhsk
     dds_rtf2_dcps.idl
-    dds_rtf2_dcps_i_handle.idl
     dds4ccm_PortStatusListener.idl
     dds4ccm_DataListenerControl.idl
     dds4ccm_ConnectorStatusListener.idl
@@ -58,8 +57,6 @@ project (DDS4CCM_stub) : install, dds4ccm, ccm_stub, ciaolib_with_idl, ciao_outp
     dds4ccm_StateListenerControlC.cpp
     dds4ccm_ConnectorC.cpp
     dds_rtf2_dcpsC.cpp
-    dds_rtf2_dcps_i_handleC.cpp
-    dds_rtf2_dcps_instance_handleC.cpp
   }
 }
 

@@ -2,7 +2,6 @@
 
 #include "dds4ccm/impl/TopicListener.h"
 #include "dds4ccm/impl/Utils.h"
-#include "dds4ccm/impl/ndds/Topic.h"
 #include "dds4ccm/impl/DDSCallbackStatusHandler.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "ace/Reactor.h"

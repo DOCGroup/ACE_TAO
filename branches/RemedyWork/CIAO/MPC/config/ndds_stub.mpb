@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : ndds {
+  libs += CIAO_NDDS_stub
+  after += CIAO_NDDS_stub
+}

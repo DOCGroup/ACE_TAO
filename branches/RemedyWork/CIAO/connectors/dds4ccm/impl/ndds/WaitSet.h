@@ -9,7 +9,7 @@
 #ifndef WAITSET_H_
 #define WAITSET_H_
 
-#include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "dds4ccm/idl/ndds/ndds_dcpsC.h"
 #include "tao/LocalObject.h"
 
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
@@ -50,7 +50,9 @@ namespace CIAO
 
       ::DDS::InstanceHandle_t
       check_handle (const ::DDS::InstanceHandle_t & instance_handle,
-                    const ::DDS::InstanceHandle_t & lookup_handle);
+                    const ::DDS::InstanceHandle_t & lookup_handle,
+                    bool & error,
+                    bool & non_existent);
 
       bool check_condition (::DDS::ReadCondition_ptr rc,
                             ::DDS::QueryCondition_ptr qc,
