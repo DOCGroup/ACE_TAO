@@ -1,3 +1,9 @@
+Mon Dec 27 10:30:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dds4ccm.mpb:
+        * MPC/config/dds4ccm_base.mpb:
+          Resolved linker errors on windows.
+
 Mon Dec 27 10:15:26 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
