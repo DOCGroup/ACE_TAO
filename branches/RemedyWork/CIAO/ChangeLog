@@ -1,3 +1,12 @@
+Mon Dec 27 15:10:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+
+        * tests/DAnCE/PartialShutdown/*:
+          Test which tests whether all connections are correctly shutdown
+          when one component is shutdown using a deploymentplan.
+          For now it tests whether all connections were shutdown properly.
+
 Mon Dec 27 12:47:16 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/dds4ccm_ts_default.mpb:
