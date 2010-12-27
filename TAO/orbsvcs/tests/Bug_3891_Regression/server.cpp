@@ -2,6 +2,9 @@
 #include "TestS.h"
 #include "tao/Stub.h"
 #include "ace/OS_NS_string.h"
+#ifdef TAO_AS_STATIC_LIBS
+# include "tao/ImR_Client/ImR_Client.h"
+#endif
 
 class Hello : public virtual POA_Test::Hello
 {
