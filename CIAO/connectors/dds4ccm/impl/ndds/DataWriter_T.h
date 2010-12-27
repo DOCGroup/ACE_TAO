@@ -9,7 +9,7 @@
 #ifndef DATAWRITER_T_H_
 #define DATAWRITER_T_H_
 
-#include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "dds4ccm/idl/ndds/ndds_dcpsC.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 #include "dds4ccm/impl/ndds/DataWriter.h"
 

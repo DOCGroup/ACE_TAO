@@ -3,9 +3,8 @@
 #ifndef DDS_RFT2_DCPS_IDL_I
 #define DDS_RFT2_DCPS_IDL_I
 
-#pragma ciao lem "connectors/dds4ccm/idl/dds_rtf2_dcps_i_handleE.idl"
+#pragma ciao lem "connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_i_handleE.idl"
 
-#if (CIAO_DDS4CCM_NDDS==1)
 module DDS {
     typedef octet octet_value[16];
     struct NativeInstanceHandle_t {
@@ -17,7 +16,6 @@ module DDS {
 
     typedef sequence<InstanceHandle_t> InstanceHandleSeq;
 };
-#endif
 
 #endif
 

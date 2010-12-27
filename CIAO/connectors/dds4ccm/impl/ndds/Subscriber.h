@@ -10,7 +10,7 @@
 #ifndef SUBSCRIBER_T_H_
 #define SUBSCRIBER_T_H_
 
-#include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "dds4ccm/idl/ndds/ndds_dcpsC.h"
 #include "dds4ccm/impl/ndds/DataReader_T.h"
 #include "tao/LocalObject.h"
 

@@ -11,7 +11,6 @@
 #include "dds4ccm/impl/ndds/SubscriberListener.h"
 #include "dds4ccm/impl/ndds/StatusCondition.h"
 
-#include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/ndds/TopicListener.h"
 #include "dds4ccm/impl/ndds/DomainParticipantManager.h"
 

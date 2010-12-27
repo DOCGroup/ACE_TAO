@@ -42,7 +42,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include /**/ "dds4ccm_lem_stub_export.h"
+#include /**/ "ndds_lem_stub_export.h"
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"

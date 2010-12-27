@@ -41,7 +41,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include /**/ "dds4ccm_skel_export.h"
+#include /**/ "ndds_skel_export.h"
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */

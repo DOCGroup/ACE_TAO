@@ -9,7 +9,7 @@
 #ifndef DDS4CCM_DATAWRITER_H
 #define DDS4CCM_DATAWRITER_H
 
-#include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "dds4ccm/idl/ndds/ndds_dcpsC.h"
 
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
 
