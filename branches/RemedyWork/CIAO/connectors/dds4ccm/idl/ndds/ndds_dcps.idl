@@ -6,10 +6,10 @@
 #pragma ciao lem "connectors/dds4ccm/idl/ndds/ndds_dcpsE.idl"
 
 
-# define DOMAINID_TYPE_NATIVE    long
-# define HANDLE_TYPE_NATIVE      long
-# define HANDLE_NIL_NATIVE       0
-# define BUILTIN_TOPIC_KEY_TYPE_NATIVE     long
+# define DOMAINID_TYPE_NATIVE           long
+# define HANDLE_TYPE_NATIVE             long
+# define HANDLE_NIL_NATIVE              0
+# define BUILTIN_TOPIC_KEY_TYPE_NATIVE  long
 
 #define TheParticipantFactory
 #define PARTICIPANT_QOS_DEFAULT
@@ -22,7 +22,7 @@
 #define DATAREADER_QOS_USE_TOPIC_QOS
 
 #include "tao/StringSeq.pidl"
-#include "connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handle.idl"
+#include "connectors/dds4ccm/idl/ndds/ndds_dcps_instance_handle.idl"
 
 module DDS {
     typedef long DomainId_t;

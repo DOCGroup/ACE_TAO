@@ -16,7 +16,7 @@
 #include /**/ "ndds_stub_export.h"
 #include /**/ "tao/Versioned_Namespace.h"
 
-#include "dds_rtf2_dcps_i_handleC.h"
+#include "ndds_dcps_i_handleC.h"
 
 namespace DDS
 {

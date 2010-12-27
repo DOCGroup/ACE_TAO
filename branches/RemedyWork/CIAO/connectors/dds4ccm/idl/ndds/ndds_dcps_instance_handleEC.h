@@ -56,7 +56,7 @@
 #include /**/ "tao/Versioned_Namespace.h"
 
 #include "ccm/CCM_ContainerC.h"
-#include "dds_rtf2_dcps_instance_handleC.h"
+#include "ndds_dcps_instance_handleC.h"
 
 
 #include /**/ "ace/post.h"

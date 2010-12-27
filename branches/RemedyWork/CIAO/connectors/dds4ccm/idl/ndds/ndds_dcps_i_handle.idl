@@ -1,9 +1,9 @@
 // $Id$
 
-#ifndef DDS_RFT2_DCPS_IDL_I
-#define DDS_RFT2_DCPS_IDL_I
+#ifndef NDDS_DCPS_IDL_I
+#define NDDS_DCPS_IDL_I
 
-#pragma ciao lem "connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_i_handleE.idl"
+#pragma ciao lem "connectors/dds4ccm/idl/ndds/ndds_dcps_i_handleE.idl"
 
 module DDS {
     typedef octet octet_value[16];

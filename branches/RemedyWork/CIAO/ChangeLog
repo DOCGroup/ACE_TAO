@@ -1,3 +1,23 @@
+Mon Dec 27 10:15:26 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+        * connectors/dds4ccm/idl/ndds/ndds_dcps_i_handle.idl:
+        * connectors/dds4ccm/idl/ndds/ndds_dcps_instance_handle.idl:
+        * connectors/dds4ccm/idl/ndds/ndds_dcps_instance_handleC.h:
+        * connectors/dds4ccm/idl/ndds/ndds_dcps_instance_handleC.cpp:
+        * connectors/dds4ccm/idl/ndds/ndds_dcps_instance_handleEC.h:
+        * connectors/dds4ccm/idl/ndds/ndds_dcps_instance_handleS.h:
+        * connectors/dds4ccm/idl/ndds/ndds_lem_stub.mpc:
+        * connectors/dds4ccm/idl/ndds/ndds_skel.mpc:
+        * connectors/dds4ccm/idl/ndds/ndds_stub.mpc:
+        * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_i_handle.idl:
+        * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handle.idl:
+        * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handleC.h:
+        * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handleC.cpp:
+        * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handleEC.h:
+        * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handleS.h:
+          Renamed dds_rtf2_dcps to ndds_dcps.
+
 Mon Dec 27 09:34:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/dds4ccm.mpb:

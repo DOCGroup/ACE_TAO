@@ -10,11 +10,11 @@ project (CIAO_NDDS_skel) : install, ndds_lem_stub, ciaolib_with_idl, ciao_output
 
   Header_Files {
     ndds_dcpsS.h
-    dds_rtf2_dcps_i_handleS.h
+    ndds_dcps_i_handleS.h
   }
 
   Source_Files {
     ndds_dcpsS.cpp
-    dds_rtf2_dcps_i_handleS.cpp
+    ndds_dcps_i_handleS.cpp
   }
 }
