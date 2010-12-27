@@ -20,7 +20,7 @@ feature(dds4ccm_splice) : taoidldefaults {
   includes += $(CIAO_ROOT)/connectors/dds4ccm/idl
 }
 
-feature(dds4ccm_ndds) : ndds, ndds_impl {
+feature(dds4ccm_ndds) : ndds {
   after += CIAO_NDDS_stub
   libs += CIAO_NDDS_stub
 }

@@ -1,3 +1,9 @@
+Mon Dec 27 10:42:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dds4ccm.mpb:
+        * MPC/config/dds4ccm_base.mpb:
+          Corrected base projects.
+
 Mon Dec 27 10:30:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/dds4ccm.mpb:
