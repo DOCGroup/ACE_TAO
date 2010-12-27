@@ -1,3 +1,10 @@
+Mon Dec 27 15:07:29 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/dance_tests.lst:
+
+        * tests/PartialShutdown/*:
+          Removed this test since it uses CIAO.
+
 Mon Dec 27 13:21:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * bin/dance_tests.lst:
