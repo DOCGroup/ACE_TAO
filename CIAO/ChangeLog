@@ -1,3 +1,16 @@
+Mon Dec 27 12:47:16 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dds4ccm_ts_default.mpb:
+        * MPC/config/ndds_ts_default.mpb:
+          Ability for users to create their ndds-only projects.
+
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_ShapeType.mpc:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_Shapes_Base.mpc:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.mpc:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.mpc:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Sender/I2C_Shapes_Sender.mpc:
+          Changed mpc files to only use ndds base projects.
+
 Mon Dec 27 10:42:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/dds4ccm.mpb:
