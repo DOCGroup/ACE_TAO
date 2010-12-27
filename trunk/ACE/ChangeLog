@@ -1,3 +1,15 @@
+Mon Dec 27 20:32:33 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Use $(LIB_PREFIX) and $(LIBEXT) for DEPLIBS.
+          New variable $(LD_RPATH_FLAGS) for extra linker flags that
+          will be used when RPATH is enabled.
+
+        * include/makeinclude/platform_linux.GNU:
+
+          Set LD_RPATH_FLAGS to enable DT_RUNPATH in the ELF headers.
+
 Tue Dec 21 09:57:54 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * protocols/ace/TMCast/TransactionController.hpp:

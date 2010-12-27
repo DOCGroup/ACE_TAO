@@ -678,7 +678,7 @@ ifneq ($(VXWORKSLINK),1)
 <%if(libs && libpaths)%>
 ifeq ($(static_libs_only), 1)
   ifeq ($(use_dep_libs), 1)
-    DEPLIBS = $(foreach lib,<%foreach(libs)%> <%libname_prefix%><%lib%><%endfor%> <%lit_libs%>, $(foreach libpath,<%foreach(libpaths)%><%if(targetoutdir)%> <%libpath%>/<%targetoutdir%><%endif%> <%libpath%><%endfor%>, $(wildcard $(libpath)/lib$(lib).a)))
+    DEPLIBS = $(foreach lib,<%foreach(libs)%> <%libname_prefix%><%lib%><%endfor%> <%lit_libs%>, $(foreach libpath,<%foreach(libpaths)%><%if(targetoutdir)%> <%libpath%>/<%targetoutdir%><%endif%> <%libpath%><%endfor%>, $(wildcard $(libpath)/$(LIB_PREFIX)$(lib).$(LIBEXT))))
   endif
 endif
 
@@ -738,7 +738,7 @@ install: <%if(postbuild)%>__postbuild__<%else%>all<%endif%>
 INSTALL_LIB ?= lib
 ifneq ($(INSTALL_PREFIX),)
 ifneq ($(install_rpath),0)
-LDFLAGS += -Wl,-R$(INSTALL_PREFIX)/$(INSTALL_LIB)
+LDFLAGS += -Wl,-R$(INSTALL_PREFIX)/$(INSTALL_LIB) $(LD_RPATH_FLAGS)
 endif
 endif
 
