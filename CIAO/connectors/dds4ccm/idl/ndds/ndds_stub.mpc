@@ -13,7 +13,7 @@ project (CIAO_NDDS_idl_gen) : install, ndds, componentidldefaults {
   }
   IDL_Files {
     idlflags -= -Gxhst -Gxhsk
-    dds_rtf2_dcps_i_handle.idl
+    ndds_dcps_i_handle.idl
   }
 }
 
@@ -28,13 +28,13 @@ project (CIAO_NDDS_stub) : install, ndds, ccm_stub, ciaolib_with_idl, ciao_outpu
 
   Header_Files {
     ndds_dcpsC.h
-    dds_rtf2_dcps_i_handleC.h
-    dds_rtf2_dcps_instance_handleC.h
+    ndds_dcps_i_handleC.h
+    ndds_dcps_instance_handleC.h
   }
 
   Source_Files {
     ndds_dcpsC.cpp
-    dds_rtf2_dcps_i_handleC.cpp
-    dds_rtf2_dcps_instance_handleC.cpp
+    ndds_dcps_i_handleC.cpp
+    ndds_dcps_instance_handleC.cpp
   }
 }

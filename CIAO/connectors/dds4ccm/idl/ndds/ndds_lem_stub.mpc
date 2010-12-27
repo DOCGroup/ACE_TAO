@@ -13,7 +13,7 @@ project (CIAO_NDDS_lem_gen) : install, ciaoidldefaults {
   }
 
   IDL_Files {
-     dds_rtf2_dcps_i_handleE.idl
+     ndds_dcps_i_handleE.idl
   }
 }
 
@@ -29,13 +29,13 @@ project (CIAO_NDDS_lem_stub) : install, ccm_lem_stub, ccm_session_stub, ciaolib_
 
   Source_Files {
    ndds_dcpsEC.cpp
-   dds_rtf2_dcps_i_handleEC.cpp
+   ndds_dcps_i_handleEC.cpp
   }
 
   Header_Files {
-   dds_rtf2_dcpsEC.h
+   ndds_dcpsEC.h
    ndds_lem_stub_export.h
-   dds_rtf2_dcps_i_handleEC.h
+   ndds_dcps_i_handleEC.h
   }
 }
 

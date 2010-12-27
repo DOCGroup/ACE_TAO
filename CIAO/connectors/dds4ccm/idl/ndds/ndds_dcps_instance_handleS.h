@@ -34,7 +34,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "dds_rtf2_dcps_i_handleC.h"
+#include "ndds_dcps_i_handleC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
