@@ -1,3 +1,8 @@
+Tue Dec 28 07:56:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_ShapeType.mpc:
+          Resolved compile issues on linux.
+
 Mon Dec 27 15:10:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
