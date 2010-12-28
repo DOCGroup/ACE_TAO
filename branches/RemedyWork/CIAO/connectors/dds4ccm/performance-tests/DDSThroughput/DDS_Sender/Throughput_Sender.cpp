@@ -99,7 +99,7 @@ CORBA::UShort domain_id = 0;
         instance_cmd->final_publisher_effort = max_load;
         try
           {
-            cmd_data_writer->write(*instance_cmd,::DDS::HANDLE_NIL);
+            cmd_data_writer->write(*instance_cmd, DDS_HANDLE_NIL);
           }
         catch (const ::CORBA::Exception& ex)
           {
@@ -118,7 +118,7 @@ CORBA::UShort domain_id = 0;
               {
                 try
                   {
-                     test_data_writer->write(*instance,::DDS::HANDLE_NIL);
+                     test_data_writer->write(*instance, DDS_HANDLE_NIL);
                      ++number_of_msg;
                   }
                 catch (const ::CORBA::Exception&)
@@ -138,7 +138,7 @@ CORBA::UShort domain_id = 0;
               {
                 test_complete = true;
                 instance_cmd->command = THROUGHPUT_COMMAND_COMPLETE;
-                cmd_data_writer->write ( *instance_cmd, ::DDS::HANDLE_NIL);
+                cmd_data_writer->write ( *instance_cmd, DDS_HANDLE_NIL);
               }
             if (!test_complete)
               {
