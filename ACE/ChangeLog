@@ -1,3 +1,9 @@
+Wed Dec 29 16:10:21 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Stream.h: Noted that the timeout on the counted send/recv
+          methods applies per operation, restarting on retries, not to the
+          overall set of retries.
+
 Mon Dec 27 20:32:33 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
