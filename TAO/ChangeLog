@@ -1,3 +1,8 @@
+Wed Dec 29 08:53:31 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * TAO_IDL/ast/ast_expression.cpp:
+          Use ACE::is_equal() to compare floating point values.
+
 Mon Dec 27 16:06:40 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/tests/Bug_3891_Regression/Bug_3891_Regression.mpc:
