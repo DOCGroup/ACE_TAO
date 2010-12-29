@@ -78,7 +78,10 @@ public:
    *                 wait indefinitely or until an error occurs for the
    *                 specified number of bytes to be transferred.
    *                 To avoid any waiting, specify a timeout value with
-   *                 0 seconds.
+   *                 0 seconds. Note that the timeout period restarts on
+   *                 each retried operation issued; therefore, an operation
+   *                 that requires multiples retries may take longer than the
+   *                 specified timeout to complete.
    * @param bytes_transferred If non-0, points to a location which receives
    *                 the total number of bytes transferred before the method
    *                 returns, even if it's less than the number requested.
