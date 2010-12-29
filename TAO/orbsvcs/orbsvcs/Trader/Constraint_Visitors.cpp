@@ -724,7 +724,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   try
     {
       CORBA::Double value = dyn_any.get_double ();
-      return_value = (value == element);
+      return_value = ACE::is_equal (value, element);
     }
   catch (const CORBA::Exception&){}
   return return_value;
