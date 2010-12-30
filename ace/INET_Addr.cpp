@@ -338,48 +338,67 @@ ACE_INET_Addr::set (u_short port_number,
                   sizeof this->inet_addr_);
 
 #if defined (ACE_HAS_IPV6)
-  struct addrinfo hints;
-  struct addrinfo *res = 0;
-  int error = 0;
-  ACE_OS::memset (&hints, 0, sizeof (hints));
-# if defined (ACE_USES_IPV4_IPV6_MIGRATION)
-  if (address_family == AF_UNSPEC && !ACE::ipv6_enabled())
+  // Let the IPv4 case fall through to the non-IPv6-capable section.
+  // We don't need the additional getaddrinfo() capability and the Linux
+  // getaddrinfo() is substantially slower than gethostbyname() w/
+  // large vlans.
+#  if defined (ACE_USES_IPV4_IPV6_MIGRATION)
+  if (address_family == AF_UNSPEC && !ACE::ipv6_enabled ())
     address_family = AF_INET;
-# endif /* ACE_USES_IPV4_IPV6_MIGRATION */
-  if (address_family == AF_UNSPEC || address_family == AF_INET6)
+#  endif /* ACE_USES_IPV4_IPV6_MIGRATION */
+  if (address_family != AF_INET)
     {
-      hints.ai_family = AF_INET6;
-      error = ::getaddrinfo (host_name, 0, &hints, &res);
-      if (error)
+#  if defined (ACE_HAS_GETHOSTBYNAME2)
+      hostent hentry;
+      hostent *hp;
+      ACE_HOSTENT_DATA buf;
+      int h_error = 0;  // Not the same as errno!
+
+      if (0 == ::gethostbyname2_r (host_name, AF_INET6, &hentry,
+                                   buf, sizeof(buf), &hp, &h_error))
         {
-          if (address_family == AF_INET6)
+          if (hp != 0)
             {
-              if (res)
-                ::freeaddrinfo(res);
-              errno = error;
-              return -1;
+              struct sockaddr_in6 v6;
+              ACE_OS::memset (&v6, 0, sizeof (v6));
+              v6.sin6_family = AF_INET6;
+              (void) ACE_OS::memcpy ((void *) &v6.sin6_addr,
+                                     hp->h_addr,
+                                     hp->h_length);
+              this->set_type (hp->h_addrtype);
+              this->set_addr (&v6, hp->h_length);
+              this->set_port_number (port_number, encode);
+              return 0;
             }
-          address_family = AF_INET;
         }
-    }
-  if (address_family == AF_INET)
-    {
-      hints.ai_family = AF_INET;
-      error = ::getaddrinfo (host_name, 0, &hints, &res);
-      if (error)
+        errno = h_error;
+        if (address_family == AF_INET6)
+          return -1;
+#  else
+      struct addrinfo hints;
+      struct addrinfo *res = 0;
+      int error = 0;
+      ACE_OS::memset (&hints, 0, sizeof (hints));
+      hints.ai_family = AF_INET6;
+      if ((error = ::getaddrinfo (host_name, 0, &hints, &res)) == 0)
+        {
+          this->set_type (res->ai_family);
+          this->set_addr (res->ai_addr, res->ai_addrlen);
+          this->set_port_number (port_number, encode);
+          ::freeaddrinfo (res);
+          return 0;
+        }
+      if (address_family == AF_INET6)
         {
           if (res)
             ::freeaddrinfo(res);
           errno = error;
           return -1;
         }
+#  endif /* ACE_HAS_GETHOSTBYNAME2 */
+      // Let AF_UNSPEC try again w/ IPv4.
     }
-  this->set_type (res->ai_family);
-  this->set_addr (res->ai_addr, res->ai_addrlen);
-  this->set_port_number (port_number, encode);
-  ::freeaddrinfo (res);
-  return 0;
-#else /* ACE_HAS_IPV6 */
+#endif /* ACE_HAS_IPV6 */
 
   // IPv6 not supported... insure the family is set to IPv4
   address_family = AF_INET;
@@ -396,9 +415,9 @@ ACE_INET_Addr::set (u_short port_number,
                       encode);
   else
     {
-#  if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)
       hostent *hp = ACE_OS::gethostbyname (host_name);
-#  else
+#else
       hostent hentry;
       ACE_HOSTENT_DATA buf;
       int h_error = 0;  // Not the same as errno!
@@ -407,7 +426,7 @@ ACE_INET_Addr::set (u_short port_number,
                                              buf, &h_error);
       if (hp == 0)
         errno = h_error;
-#  endif /* ACE_VXWORKS */
+#endif /* ACE_VXWORKS */
 
       if (hp == 0)
         {
@@ -423,7 +442,6 @@ ACE_INET_Addr::set (u_short port_number,
                             encode);
         }
     }
-#endif /* ACE_HAS_IPV6 */
 }
 
 // Helper function to get a port number from a port name.
