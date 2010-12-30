@@ -30,7 +30,7 @@ TAO_LB_LoadMinimum::TAO_LB_LoadMinimum (PortableServer::POA_ptr poa)
 {
   // A load map that retains previous load values at a given location
   // and lock are only needed if dampening is enabled, i.e. non-zero.
-  if (this->dampening_ != 0)
+  if (!ACE::is_equal (this->dampening_, 0.0f))
     {
       ACE_NEW (this->load_map_, TAO_LB_LoadMap (TAO_PG_MAX_LOCATIONS));
 
@@ -262,7 +262,7 @@ TAO_LB_LoadMinimum::analyze_loads (
           total_load.value = total_load.value + load.value;
           tmp[i] = load;
 
-          if ((load.value < min_load) && (load.value != 0))
+          if ((load.value < min_load) && !ACE::is_equal (load.value, 0.0f))
           {
             min_load = load.value;
           }
@@ -316,7 +316,7 @@ TAO_LB_LoadMinimum::analyze_loads (
               CORBA::Float percent_diff =
                 (tmp[j].value / min_load) - 1;
 
-              if (tmp[j].value == min_load)
+              if (ACE::is_equal (tmp[j].value, min_load))
               {
                 percent_diff = 0;
               }
@@ -409,7 +409,7 @@ TAO_LB_LoadMinimum::get_location (
           if (load.value < min_load)
             {
 
-              if (i > 0 && load.value != 0)
+              if (i > 0 && !ACE::is_equal (load.value, 0.0f))
                 {
                   /*
                     percent difference =
