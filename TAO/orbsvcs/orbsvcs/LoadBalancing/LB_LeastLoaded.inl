@@ -16,7 +16,7 @@ TAO_LB_LeastLoaded::effective_load (CORBA::Float previous_load,
   CORBA::Float result =
     this->dampening_ * previous_load + (1 - this->dampening_) * new_load;
 
-  ACE_ASSERT (this->tolerance_ != 0);
+  ACE_ASSERT (!ACE::is_equal (this->tolerance_, 0.0f));
 
   // Compute the effective load.
   result /= this->tolerance_;
