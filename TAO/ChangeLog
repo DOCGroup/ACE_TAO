@@ -1,3 +1,13 @@
+Thu Dec 30 09:01:39 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.inl:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.inl:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.inl:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp:
+          Use ACE::is_equal() to compare floating point values.
+
 Wed Dec 29 09:11:54 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
