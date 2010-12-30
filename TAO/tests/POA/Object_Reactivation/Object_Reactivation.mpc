@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(POA*): taoserver, avoids_corba_e_micro {
-  exename = Object_Reactivation
-}
