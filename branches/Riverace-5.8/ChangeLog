@@ -65,10 +65,6 @@ Wed Oct 20 16:07:09 UTC 2010  Steve Huston  <shuston@riverace.com>
           This prevents a deadlock on user code with multiple threads doing
           timer-related operations.
 
-Fri Sep 24 11:54:16 EDT 2010  Steve Huston  <shuston@riverace.com>
-
-	* ACE version 5.8a released.
-
 Thu Sep  2 14:59:27 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp (handle_ready):
