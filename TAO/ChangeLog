@@ -1,3 +1,14 @@
+Fri Dec 31 09:12:53 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/examples/LoadBalancing/server.cpp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
+        * orbsvcs/tests/Notify/lib/Task_Stats.cpp:
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.cpp:
+        * orbsvcs/tests/unit/Trading/Interpreter/Interpreter.cpp:
+        * tests/CDR/alignment.cpp:
+        * tests/LongDouble/client.cpp:
+          Use ACE::is_equal() to compare floating point values.
+
 Thu Dec 30 09:01:39 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.inl:

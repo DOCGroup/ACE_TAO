@@ -62,7 +62,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::LongDouble ld =
         longDoubleTest->get_long_double ();
 
-      if (ld == Global::get_long_double ())
+      if (ACE::is_equal (ld, Global::get_long_double ()))
         {
           cout << "Received: " << ld << endl;
         }
