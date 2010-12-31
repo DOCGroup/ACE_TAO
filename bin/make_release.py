@@ -208,7 +208,7 @@ def check_workspace ():
 
     try:
         rev = svn_client.update (doc_root + "/ACE/MPC")
-        print "Successfully updated MPC working copy to revision "
+        print "Successfully updated MPC working copy to revision " + str(rev)
     except:
         print "Unable to update the MPC workspace at " + doc_root + "/ACE/MPC"
         raise
@@ -220,7 +220,7 @@ def check_workspace ():
 
     # By default retrieve MPC root from working copy
     if opts.mpc_root is None:
-        info = svn_client.info2 (doc_root + "/MPC")[0]
+        info = svn_client.info2 (doc_root + "/ACE/MPC")[0]
         opts.mpc_root = info[1]["repos_root_URL"]
 
     vprint ("Repos root URL = " + opts.repo_root + "\n")
@@ -641,6 +641,9 @@ def tag ():
         # Tag ACE
         svn_client.copy (opts.repo_root + "/branches/Riverace-5.8",
                          opts.repo_root + "/tags/" + branch)
+        # Tag MPC trunk - always take advantage of it.
+        svn_client.copy (opts.mpc_root + "/trunk",
+                         opts.mpc_root + "/tags/" + branch)
     else:
         branch = "ACE+TAO+CIAO-%d_%d_%d" % (comp_versions["ACE_major"],
                                             comp_versions["ACE_minor"],
@@ -684,7 +687,7 @@ def export_wc (stage_dir):
                        stage_dir + "/ACE_wrappers")
 
     print ("Exporting MPC")
-    svn_client.export (doc_root + "/ACE/MPC",
+    svn_client.export (doc_root + "/MPC",
                        stage_dir + "/ACE_wrappers/MPC")
 
     if opts.ace_only != "yes":
