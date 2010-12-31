@@ -62,7 +62,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       if (input.read_double (read_dbl) == 0)
         ACE_DEBUG ((LM_DEBUG, "Failure reading double...\n"));
 
-      if (read_dbl != dbl)
+      if (!ACE::is_equal (read_dbl, dbl))
         {
           status = 1;
           ACE_DEBUG ((LM_DEBUG,

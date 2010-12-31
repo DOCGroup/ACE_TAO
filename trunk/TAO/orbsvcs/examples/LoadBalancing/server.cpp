@@ -133,16 +133,16 @@ join_object_group (CORBA::ORB_ptr orb,
           strategy_info.name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(strategy));
 
           if (ACE_OS::strcasecmp (strategy, ACE_TEXT("LeastLoaded")) == 0
-              && (reject_threshold != 0
-                  || critical_threshold != 0
-                  || dampening != 0))
+              && (!ACE::is_equal (reject_threshold, 0.0f)
+                  || !ACE::is_equal (critical_threshold, 0.0f)
+                  || !ACE::is_equal (dampening, 0.0f)))
             {
               CORBA::ULong len = 1;
 
               PortableGroup::Properties & props =
                 strategy_info.props;
 
-              if (reject_threshold != 0)
+              if (!ACE::is_equal (reject_threshold, 0.0f))
                 {
                   const CORBA::ULong i = len - 1;
 
@@ -154,7 +154,7 @@ join_object_group (CORBA::ORB_ptr orb,
                   props[i].val <<= reject_threshold;
                 }
 
-              if (critical_threshold != 0)
+              if (!ACE::is_equal (critical_threshold, 0.0f))
                 {
                   const CORBA::ULong i = len - 1;
 
@@ -166,7 +166,7 @@ join_object_group (CORBA::ORB_ptr orb,
                   props[i].val <<= critical_threshold;
                 }
 
-              if (dampening != 0)
+              if (!ACE::is_equal (dampening, 0.0f))
                 {
                   const CORBA::ULong i = len - 1;
 
