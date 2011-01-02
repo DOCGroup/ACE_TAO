@@ -1,4 +1,5 @@
-usr/include/tao/*.{h,i,inl,idl,pidl,cpp}
+usr/include/tao/*.{h,i,inl,cpp}
+usr/share/idl/tao
 usr/lib/libTAO.so
 usr/include/tao/AnyTypeCode
 usr/lib/libTAO_AnyTypeCode.so
@@ -61,9 +62,52 @@ usr/include/tao/Valuetype
 usr/lib/libTAO_Valuetype.so
 usr/lib/libTAO_DiffServPolicy.so
 usr/include/tao/DiffServPolicy
+usr/include/tao/ZIOP
+usr/lib/libTAO_ZIOP.so
 usr/lib/libTAO_ZlibCompressor.so
-TAO/MPC/config        usr/share/ace/TAO/MPC
-TAO/rules.tao.GNU     usr/share/ace/TAO
+usr/lib/libTAO_Bzip2Compressor.so
+usr/lib/libTAO_LzoCompressor.so
+usr/include/tao/ETCL
+usr/lib/libTAO_ETCL.so
+usr/include/tao/Monitor
+usr/lib/libTAO_Monitor.so
+../../ACE_wrappers/TAO/MPC/config        usr/lib/ace/TAO/MPC
+../../ACE_wrappers/TAO/rules.tao.GNU     usr/lib/ace/TAO
 usr/lib/libTAO_IFR_BE.so
 usr/lib/libTAO_IDL_FE.so
 usr/lib/libTAO_IDL_BE.so
+usr/lib/pkgconfig/TAO_RTScheduler.pc
+usr/lib/pkgconfig/TAO_DynamicInterface.pc
+usr/lib/pkgconfig/TAO_ZlibCompressor.pc
+usr/lib/pkgconfig/TAO_AnyTypeCode.pc
+usr/lib/pkgconfig/TAO_Bzip2Compressor.pc
+usr/lib/pkgconfig/TAO_LzoCompressor.pc
+usr/lib/pkgconfig/TAO_Valuetype.pc
+usr/lib/pkgconfig/TAO_BiDirGIOP.pc
+usr/lib/pkgconfig/TAO_IORInterceptor.pc
+usr/lib/pkgconfig/TAO_SmartProxies.pc
+usr/lib/pkgconfig/TAO_PortableServer.pc
+usr/lib/pkgconfig/TAO_TypeCodeFactory.pc
+usr/lib/pkgconfig/TAO.pc
+usr/lib/pkgconfig/TAO_Messaging.pc
+usr/lib/pkgconfig/TAO_CSD_Framework.pc
+usr/lib/pkgconfig/TAO_PI_Server.pc
+usr/lib/pkgconfig/TAO_ObjRefTemplate.pc
+usr/lib/pkgconfig/TAO_DynamicAny.pc
+usr/lib/pkgconfig/TAO_Monitor.pc
+usr/lib/pkgconfig/TAO_Compression.pc
+usr/lib/pkgconfig/TAO_Strategies.pc
+usr/lib/pkgconfig/TAO_IORTable.pc
+usr/lib/pkgconfig/TAO_CSD_ThreadPool.pc
+usr/lib/pkgconfig/TAO_CodecFactory.pc
+usr/lib/pkgconfig/TAO_EndpointPolicy.pc
+usr/lib/pkgconfig/TAO_IORManip.pc
+usr/lib/pkgconfig/TAO_ZIOP.pc
+usr/lib/pkgconfig/TAO_DiffServPolicy.pc
+usr/lib/pkgconfig/TAO_PI.pc
+usr/lib/pkgconfig/TAO_Utils.pc
+usr/lib/pkgconfig/TAO_IFR_Client.pc
+usr/lib/pkgconfig/TAO_ETCL.pc
+usr/lib/pkgconfig/TAO_RTPortableServer.pc
+usr/lib/pkgconfig/TAO_RTCORBA.pc
+usr/lib/pkgconfig/TAO_ImR_Client.pc
