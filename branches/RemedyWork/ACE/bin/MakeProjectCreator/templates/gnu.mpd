@@ -805,11 +805,11 @@ else
 	  -e'elsif ($$ok && s/^#//) {print}' $(MAKEFILE) | \
 	$(INSTALLER) -i -s $(subst $(SPACE),$(COMMA),$(INST_TAGS)) \
 	  $(INST_LOCATIONS) $(if $(ARCH),-d $(ARCH)) $(PRJINST_OPTIONS) \
-	  $(INSTALL_PREFIX)
+	  $(DESTDIR)$(INSTALL_PREFIX)
 <%foreach(custom_types)%>
 <%if(compares(custom_type, pkgconfig_files))%>
 <%if(custom_type->input_files)%>
-	$(ACE_ROOT)/bin/ace_install_pkgconfig.pl <%custom_type->input_files%> --prefix $(INSTALL_PREFIX) --libdir $(INSTALL_LIB) --libs "$(LIBS)" --version $(GNUACE_PROJECT_VERSION)<%foreach(pkgconfig_variables)%> --custom "<%pkgconfig_variable%>"<%endfor%>
+	$(ACE_ROOT)/bin/ace_install_pkgconfig.pl <%custom_type->input_files%> --destdir "$(DESTDIR)" --prefix $(INSTALL_PREFIX) --libdir $(INSTALL_LIB) --libs "$(LIBS)" --version $(GNUACE_PROJECT_VERSION)<%foreach(pkgconfig_variables)%> --custom "<%pkgconfig_variable%>"<%endfor%>
 <%endif%>
 <%endif%>
 <%endfor%>
