@@ -1,0 +1,101 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 12-add-DESTDIR-to-MPC.dpatch by Thomas Girard <thomas.g.girard@free.fr>
+##
+## DP: add DESTDIR to generated MPC makefiles.
+
+@DPATCH@
+--- ACE_wrappers.orig/bin/MakeProjectCreator/templates/gnu.mpd	2010-11-10 11:19:20.000000000 +0100
++++ ACE_wrappers/bin/MakeProjectCreator/templates/gnu.mpd	2010-12-23 21:38:18.606254131 +0100
+@@ -805,11 +805,11 @@
+ 	  -e'elsif ($$ok && s/^#//) {print}' $(MAKEFILE) | \
+ 	$(INSTALLER) -i -s $(subst $(SPACE),$(COMMA),$(INST_TAGS)) \
+ 	  $(INST_LOCATIONS) $(if $(ARCH),-d $(ARCH)) $(PRJINST_OPTIONS) \
+-	  $(INSTALL_PREFIX)
++	  $(DESTDIR)$(INSTALL_PREFIX)
+ <%foreach(custom_types)%>
+ <%if(compares(custom_type, pkgconfig_files))%>
+ <%if(custom_type->input_files)%>
+-	$(ACE_ROOT)/bin/ace_install_pkgconfig.pl <%custom_type->input_files%> --prefix $(INSTALL_PREFIX) --libdir $(INSTALL_LIB) --libs "$(LIBS)" --version $(GNUACE_PROJECT_VERSION)<%foreach(pkgconfig_variables)%> --custom "<%pkgconfig_variable%>"<%endfor%>
++	$(ACE_ROOT)/bin/ace_install_pkgconfig.pl <%custom_type->input_files%> --destdir "$(DESTDIR)" --prefix $(INSTALL_PREFIX) --libdir $(INSTALL_LIB) --libs "$(LIBS)" --version $(GNUACE_PROJECT_VERSION)<%foreach(pkgconfig_variables)%> --custom "<%pkgconfig_variable%>"<%endfor%>
+ <%endif%>
+ <%endif%>
+ <%endfor%>
+--- ACE_wrappers.orig/ace/ace.mpc	2010-11-10 19:17:55.000000000 +0100
++++ ACE_wrappers/ace/ace.mpc	2010-12-23 21:45:22.451156836 +0100
+@@ -496,9 +496,9 @@
+   }
+ 
+   verbatim(gnuace, postinstall) {
+-"	perl -i -pe's!\\$$[{(]ACE_ROOT[})]!$(INSTALL_PREFIX)/include!g unless /^\\s*include / || /^INS/' $(INSTALL_PREFIX)/share/ace/include/makeinclude/wrapper_macros.GNU"
+-"	perl -i -pe'BEGIN {$$lib = qq($(INSTALL_PREFIX)/$(INSTALL_LIB)); $$lp = qq(-value_project libpaths+=$$lib\\n); $$cl = qq(command_line =)}' -e'if ($$. == 1 && /^$$cl (.*)/ && $$1 !~ /$$lib\\b/) {chomp; print qq($$_ $$lp); $$_ = qq()}' -e'elsif ($$. == 1 && !/^$$cl/) {print qq($$cl $$lp)}' $(INSTALL_PREFIX)/share/ace/bin/MakeProjectCreator/config/MPC.cfg"
+-"	perl -i -ne'print unless /^\\s*ARCH\\s*[+?:]?=/' $(INSTALL_PREFIX)/share/ace/include/makeinclude/platform_macros.GNU"
+-"	echo export ACE_ROOT=$(INSTALL_PREFIX)/share/ace> $(INSTALL_PREFIX)/share/ace/ace-devel.sh"
++"	perl -i -pe's!\\$$[{(]ACE_ROOT[})]!$(INSTALL_PREFIX)/include!g unless /^\\s*include / || /^INS/' $(DESTDIR)$(INSTALL_PREFIX)/share/ace/include/makeinclude/wrapper_macros.GNU"
++"	perl -i -pe'BEGIN {$$lib = qq($(INSTALL_PREFIX)/$(INSTALL_LIB)); $$lp = qq(-value_project libpaths+=$$lib\\n); $$cl = qq(command_line =)}' -e'if ($$. == 1 && /^$$cl (.*)/ && $$1 !~ /$$lib\\b/) {chomp; print qq($$_ $$lp); $$_ = qq()}' -e'elsif ($$. == 1 && !/^$$cl/) {print qq($$cl $$lp)}' $(DESTDIR)$(INSTALL_PREFIX)/share/ace/bin/MakeProjectCreator/config/MPC.cfg"
++"	perl -i -ne'print unless /^\\s*ARCH\\s*[+?:]?=/' $(DESTDIR)$(INSTALL_PREFIX)/share/ace/include/makeinclude/platform_macros.GNU"
++"	echo export ACE_ROOT=$(INSTALL_PREFIX)/share/ace> $(DESTDIR)$(INSTALL_PREFIX)/share/ace/ace-devel.sh"
+   }
+ }
+--- ACE_wrappers.orig/TAO/tao/tao.mpc	2010-08-27 10:16:09.000000000 +0200
++++ ACE_wrappers/TAO/tao/tao.mpc	2010-12-23 21:50:55.082254155 +0100
+@@ -684,7 +684,7 @@
+   }
+ 
+   verbatim(gnuace, postinstall) {
+-"	perl -i -pe's!\\$$[{(]TAO_ROOT[})]!$(INSTALL_PREFIX)/include!g' $(INSTALL_PREFIX)/share/tao/rules.tao.GNU"
+-"	echo export TAO_ROOT=$(INSTALL_PREFIX)/share/tao> $(INSTALL_PREFIX)/share/tao/tao-devel.sh"
++"	perl -i -pe's!\\$$[{(]TAO_ROOT[})]!$(INSTALL_PREFIX)/include!g' $(DESTDIR)$(INSTALL_PREFIX)/share/tao/rules.tao.GNU"
++"	echo export TAO_ROOT=$(INSTALL_PREFIX)/share/tao> $(DESTDIR)$(INSTALL_PREFIX)/share/tao/tao-devel.sh"
+   }
+ }
+--- ACE_wrappers.orig/apps/gperf/src/gperf.mpc	2010-08-04 18:24:59.000000000 +0200
++++ ACE_wrappers/apps/gperf/src/gperf.mpc	2010-12-23 23:01:43.206294623 +0100
+@@ -18,7 +18,7 @@
+   }
+ 
+   verbatim(gnuace, postinstall) {
+-"	@$(MKDIR) $(INSTALL_PREFIX)/share/ace/bin"
+-"	ln -sf $(INSTALL_PREFIX)/bin/ace_gperf $(INSTALL_PREFIX)/share/ace/bin"
++"	@$(MKDIR) $(DESTDIR)$(INSTALL_PREFIX)/share/ace/bin"
++"	ln -sf $(INSTALL_PREFIX)/bin/ace_gperf $(DESTDIR)$(INSTALL_PREFIX)/share/ace/bin"
+   }
+ }
+--- ACE_wrappers.orig/TAO/TAO_IDL/tao_idl.mpc	2010-08-30 17:03:53.000000000 +0200
++++ ACE_wrappers/TAO/TAO_IDL/tao_idl.mpc	2010-12-23 23:04:23.246254587 +0100
+@@ -36,10 +36,10 @@
+   }
+ 
+   verbatim(gnuace, postinstall) {
+-"	@$(MKDIR) $(INSTALL_PREFIX)/share/ace/bin"
+-"	ln -sf $(INSTALL_PREFIX)/bin/tao_idl $(INSTALL_PREFIX)/share/ace/bin"
+-"	@$(MKDIR) $(INSTALL_PREFIX)/share/ace/$(INSTALL_LIB)"
+-"	ln -sf $(INSTALL_PREFIX)/$(INSTALL_LIB)/$(LIB_PREFIX)TAO_IDL_[FB]E.$(SOEXT) $(INSTALL_PREFIX)/share/ace/$(INSTALL_LIB)"
++"	@$(MKDIR) $(DESTDIR)$(INSTALL_PREFIX)/share/ace/bin"
++"	ln -sf $(INSTALL_PREFIX)/bin/tao_idl $(DESTDIR)$(INSTALL_PREFIX)/share/ace/bin"
++"	@$(MKDIR) $(DESTDIR)$(INSTALL_PREFIX)/share/ace/$(INSTALL_LIB)"
++"	ln -sf $(INSTALL_PREFIX)/$(INSTALL_LIB)/$(LIB_PREFIX)TAO_IDL_[FB]E.$(SOEXT) $(DESTDIR)$(INSTALL_PREFIX)/share/ace/$(INSTALL_LIB)"
+   }
+ 
+   Source_Files {
+--- ACE_wrappers.orig/bin/ace_install_pkgconfig.pl	2010-09-23 18:17:42.000000000 +0200
++++ ACE_wrappers/bin/ace_install_pkgconfig.pl	2010-12-24 10:33:51.666252166 +0100
+@@ -13,8 +13,9 @@
+ use strict;
+ use Getopt::Long;
+ 
+-my ($prefix, $libdir, $libs, $version, %custom);
++my ($prefix, $libdir, $libs, $destdir, $version, %custom);
+ GetOptions('prefix=s' => \$prefix, 'libdir=s' => \$libdir, 'libs=s' => \$libs,
++           'destdir=s' => \$destdir,
+            'version=s' => \$version, 'custom=s' => \%custom);
+ 
+ my %subs = ('LIBS' => $libs, 'VERSION' => $version, 'exec_prefix' => $prefix,
+@@ -25,7 +26,7 @@
+   $subs{$k} = $custom{$k};
+ }
+ 
+-my $pcdir = "$prefix/$libdir/pkgconfig";
++my $pcdir = "${destdir}$prefix/$libdir/pkgconfig";
+ if (scalar @ARGV && ! -d $pcdir) {
+   mkdir($pcdir, 0755);
+ }
