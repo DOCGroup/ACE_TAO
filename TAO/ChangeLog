@@ -1,3 +1,9 @@
+Sun Jan  2 13:25:46 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/tao_idl.mpc:
+        * tao/tao.mpc:
+          Integrated DESTDIR patches from debian packaging
+
 Wed Dec 22 14:42:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector.cpp:
