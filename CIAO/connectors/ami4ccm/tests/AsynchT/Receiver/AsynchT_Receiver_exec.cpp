@@ -54,7 +54,7 @@ namespace CIAO_AsynchT_Receiver_Impl
   {
     if (cmd == 1)
     {
-    ACE_OS::sleep(2);
+      ACE_OS::sleep(2);
     }
     answer = CORBA::string_dup ("Hi from receiver.");
     return cmd;
@@ -72,7 +72,7 @@ namespace CIAO_AsynchT_Receiver_Impl
   do_my_foo_exec_i::rw_attrib (void)
   {
     ACE_OS::sleep (ACE_OS::rand () % 2);
-     return 3;
+    return 3;
   }
 
   void
@@ -85,8 +85,8 @@ namespace CIAO_AsynchT_Receiver_Impl
   do_my_foo_exec_i::ro_attrib (void)
   {
     ACE_OS::sleep (2);
-     return 4;
-    }
+    return 4;
+  }
 
   /**
    * Component Executor Implementation Class: Receiver_exec_i
