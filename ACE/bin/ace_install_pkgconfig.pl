@@ -13,8 +13,9 @@ eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
 use strict;
 use Getopt::Long;
 
-my ($prefix, $libdir, $libs, $version, %custom);
+my ($prefix, $libdir, $libs, $destdir, $version, %custom);
 GetOptions('prefix=s' => \$prefix, 'libdir=s' => \$libdir, 'libs=s' => \$libs,
+           'destdir=s' => \$destdir,
            'version=s' => \$version, 'custom=s' => \%custom);
 
 my %subs = ('LIBS' => $libs, 'VERSION' => $version, 'exec_prefix' => $prefix,
@@ -25,7 +26,7 @@ for my $k (keys %custom) {
   $subs{$k} = $custom{$k};
 }
 
-my $pcdir = "$prefix/$libdir/pkgconfig";
+my $pcdir = "${destdir}$prefix/$libdir/pkgconfig";
 if (scalar @ARGV && ! -d $pcdir) {
   mkdir($pcdir, 0755);
 }
