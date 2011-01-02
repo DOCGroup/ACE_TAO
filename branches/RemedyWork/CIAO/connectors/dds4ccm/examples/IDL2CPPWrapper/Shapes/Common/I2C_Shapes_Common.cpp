@@ -9,7 +9,6 @@
 
 #define TOPIC_NAME "Square"
 
-
 I2C_Shapes_Common::I2C_Shapes_Common (void)
   : factory_ (0)
 {
