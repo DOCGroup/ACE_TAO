@@ -8,17 +8,12 @@
  * add cpp dependency to tao_idl
  * install .mpc files?
  * What about REACTOR_NOTIFICATION_QUEUE?
- * libACE_gperf_lib is a strange name for a library
  * fltk and gl
  * Build location leaks in generated documentation
 
 = MWC and MPC =
  * some makefile are not regenerated (e.g. JAWS). Seems like a bug.
 
-= autoconf support =
- * some macros are missing (see rules)
-
 = CIAO =
  * to restore
  * autoconf support
- * cidlc
