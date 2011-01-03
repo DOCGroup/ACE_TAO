@@ -1,0 +1,25 @@
+Sun Jan  2 13:19:44 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/QtReactor/ace_qt4reactor.mpc:
+          Added missing header
+
+        * ace/ace.mpc:
+        * apps/gperf/src/gperf.mpc:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/ace_install_pkgconfig.pl:
+          Added support for DESTDIR, needed for debian packaghing
+
+        * debian/patches/00list:
+          Removed patches merged upstream
+
+        * debian/patches/12-add-DESTDIR-to-MPC.dpatch:
+          Removed this file.
+
+        * docs/svn/config:
+          Added some more extensions
+
+Sun Jan  2 12:45:13 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/*:
+          Merged revision 734 from pkg-ace
+

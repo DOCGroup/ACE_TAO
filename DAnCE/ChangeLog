@@ -1,18 +1,3 @@
-Mon Dec 27 15:07:29 UTC 2010  Marcel Smit  <msmit@remedy.nl>
-
-        * bin/dance_tests.lst:
-
-        * tests/PartialShutdown/*:
-          Removed this test since it uses CIAO.
-
-Mon Dec 27 13:21:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
-
-        * bin/dance_tests.lst:
-        * tests/PartialShutdown/*:
-          Test which testswhether all connections are correctly shutdown
-          when one component is shutdown using a deploymentplan.
-          For now it tests whether all connections were shutdown properly.
-
 Fri Dec 17 15:14:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * */*.*:
