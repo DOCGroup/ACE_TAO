@@ -1,3 +1,9 @@
+Mon Jan  3 14:12:04 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * tests/LongDouble/client.cpp:
+          Reverted change "Fri Dec 31 09:12:53 UTC 2010  Olli Savia  <ops@iki.fi>"
+          which broke 32-but builds.
+
 Sat Jan  1 10:48:07 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/tests/Notify/lib/Task_Stats.cpp:
