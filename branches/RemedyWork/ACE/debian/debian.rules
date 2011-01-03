@@ -1,172 +1,167 @@
 #!/usr/bin/make -f
 
-# debian/rules file for the ACE Debian GNU/Linux package
+# debian/rules file for ACE+TAO Debian GNU/Linux packages
 # written February 2002 by Ossama Othman <ossama@debian.org>
 # Modified August 2003 by Brian Nelson <pyro@debian.org>
 # Copyright (C) 2004  Raphael Bossek <bossekr@debian.org>
-# Copyright © 2005-2008 Thomas Girard <thomas.g.girard@free.fr>
+# Copyright © 2005-2010 Thomas Girard <thomas.g.girard@free.fr>
 
-INSTALL := install -o root -g root
-INSTALL_755 := $(INSTALL) -m 755
-MWCFLAGS := -type gnuace -features "ssl=1,zlib=1,xt=1,tk=1,qt4=1,ace_qt4reactor=1" -noreldefs -genins
-ACE_MAKE_FLAGS := ssl=1 zlib=1 debug=0 inline=1 optimize=1
-PRJ_INSTALL_FLAGS := -k -s man_files,lib_output,header_files,inline_files,exe_output,idl_files,pidl_files,template_files  -b lib_output=usr/lib -b exe_output=usr/bin -b idl_files=usr/include -b pidl_files=usr/include -b template_files=usr/include -b header_files=usr/include -b inline_files=usr/include -b idl_files=usr/include -b man_files=usr/share/man
-MAN1 := debian/Basic_Logging_Service.1 \
-	debian/Event_Logging_Service.1 \
-	debian/Notify_Logging_Service.1 \
-	debian/RTEvent_Logging_Service.1 \
+INSTALL_755 := install -o root -g root -m 755
+
+ACE_SUBDIR := ACE_wrappers
+ACE_ARCHIVE := $(shell ls -1 ACE+TAO+CIAO-src-*.tar.bz2 2>/dev/null || echo ace-archive-missing)
+MWCFLAGS := -type gnuace -noreldefs
+ACE_MAKE_FLAGS := versioned_so=2
+
+MAN1 := debian/ace_netsvcs.1 \
+	debian/tao_catior.1 \
+	debian/tao_nslist.1 \
+	debian/tao_nsadd.1 \
+	debian/tao_nsdel.1 \
+	debian/tao_tls_basic.1 \
+	debian/tao_tls_event.1 \
+	debian/tao_tls_notify.1 \
+	debian/tao_tls_rtevent.1 \
 	debian/TAO_ORB_Options.1 \
 	debian/mpc-ace.1
-MAN5 :=
 # Where we install every file before calling dh_install
 DT := debian/tmp
 
-DOXYGEN_FILES_TO_REMOVE := -name '*.tag' -o \
-                           -name '*.md5' -o \
+DOXYGEN_FILES_TO_REMOVE := -name '*.md5' -o \
                            -name '*.dot' -o \
                            -name '*.idx' -o \
                            -name '*.map' -o \
+                           -name '*.tag' -o \
                            -name 'index.hh?'
 
-export ACE_ROOT := $(shell pwd)
+export ACE_ROOT := $(shell pwd)/$(ACE_SUBDIR)
+export MPC_ROOT := $(ACE_ROOT)/MPC
 export TAO_ROOT := $(ACE_ROOT)/TAO
 export CIAO_ROOT := $(TAO_ROOT)/CIAO
-export MPC_ROOT := $(ACE_ROOT)/MPC
 export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(ACE_ROOT)/lib
 export QTDIR := /usr/share/qt4
 
-# This dpatch is only a place holder. The `prepatch' targets stops
+# This dpatches are only a place holders. The `prepatch' and `postbuild' targets stops
 # here by default.
 PREPATCH_MARK := 50-prepatch-dummy-mark.dpatch
-UNTIL := $(PREPATCH_MARK)
+POST_BUILD_MARK := 75-post-build-dummy-mark.dpatch
+UNTIL_BUILD := $(PREPATCH_MARK)
+UNTIL_POST_BUILD := $(POST_BUILD_MARK)
 
-.NOTPARALLEL: debian/mpc-ace.sgml debian/%.1 debian/%.5 prepatch extract doxygen clean install build binary-indep binary-arch binary
-.PHONY: doxygen patch prepatch extract build clean binary-indep binary-arch binary install unpatch source diff
-
-extract-stamp:
-	cp include/makeinclude/platform_linux.GNU $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
-	cp ace/config-linux.h $(ACE_ROOT)/ace/config.h
-	touch $@
+.NOTPARALLEL: debian/mpc-ace.sgml debian/%.1 prepatch extract doxygen clean install build binary-indep binary-arch binary
+.PHONY: doxygen patch unpatch prepatch extract build clean binary-indep binary-arch binary install source diff configure
 
 extract: extract-stamp
+extract-stamp: $(ACE_ARCHIVE)
+	tar -xjf $<
+	cp debian/platform_macros.GNU $(ACE_ROOT)/include/makeinclude
+	cp debian/config.h $(ACE_ROOT)/ace/config.h
+	cp debian/default.features $(ACE_ROOT)/bin/MakeProjectCreator/config
+	# We need to delete this one to prevent an empty library generation
+	rm -f $(ACE_ROOT)/ace/ace_qt3reactor.mpc
+	touch $@
 
-debian/mpc-ace.sgml: MPC/docs/MPC.sgml
+debian/mpc-ace.sgml: ACE_wrappers/MPC/docs/MPC.sgml
 	sed -e 's/mpc\.pl/mpc-ace/g' -e 's/mwc\.pl/mwc-ace/g' $< > $@
 
-debian/%.1 debian/%.5: debian/%.sgml
+debian/%.1: debian/%.sgml
 	docbook-to-man $< > $@
 
 # Prepare a ACE_wrappers directory where most of the patches are applied.
-prepatch-stamp: extract-stamp $(MPC_ROOT)
-#	dpatch apply-until $(UNTIL)
-#	cp debian/ACE-DPKG.mwc $(ACE_ROOT)
-	cd $(ACE_ROOT) &&  $(ACE_ROOT)/bin/mwc.pl TAO/TAO_ACE.mwc $(MWCFLAGS)
-#ACE-DPKG.mwc
-#	cp debian/TAO-DPKG.mwc $(TAO_ROOT)
-#	cd $(TAO_ROOT) &&  $(TAO_ROOT)/bin/mwc.pl $(MWCFLAGS)
-#TAO-DPKG.mwc
-	touch $@
-
 prepatch: prepatch-stamp
-
-pl-stamp: extract-stamp
+prepatch-stamp: extract-stamp
+	dpatch apply-until $(UNTIL_BUILD)
 	touch $@
 
-patch-stamp: prepatch pl-stamp
-#	dpatch apply-all
+pl-stamp: prepatch-stamp
+	for fn in `find "$(ACE_ROOT)" -name "*.pl"`; do (echo '#!/usr/bin/perl'; cat "$$fn") > "$${fn}T"; mv "$${fn}T" "$$fn"; chmod a+x "$$fn"; done
+	touch $@
+
+configure: configure-stamp
+configure-stamp: prepatch-stamp pl-stamp
+	cp debian/ACE-DPKG.mwc $(ACE_ROOT)
+	cd $(ACE_ROOT) &&  ./bin/mwc.pl $(MWCFLAGS) ACE-DPKG.mwc
+	cp debian/TAO-DPKG.mwc $(TAO_ROOT)
+	cd $(TAO_ROOT) &&  ./../bin/mwc.pl $(MWCFLAGS) TAO-DPKG.mwc
 	touch $@
 
 patch: patch-stamp
-
-unpatch: patch-stamp
-	dpatch unpatch
-	rm -f $<
-
-build: build-stamp
-#manpages-stamp
-
-manpages-stamp: $(MAN1) $(MAN5)
+patch-stamp: configure-stamp
+	dpatch apply-until $(UNTIL_POST_BUILD)
 	touch $@
 
-doxygen-stamp: extract-stamp
-	cd $(ACE_ROOT) && bin/generate_doxygen.pl -is_release
-	find $(ACE_ROOT)/html/libace-doc $(DOXYGEN_FILES_TO_REMOVE) | xargs -r rm -f
-	find $(ACE_ROOT)/html/libtao-doc $(DOXYGEN_FILES_TO_REMOVE) | xargs -r rm -f
-	touch $@
+unpatch:
+	dpatch deapply-all
+	rm -rf patch-stamp debian/patched
 
 doxygen: doxygen-stamp
+doxygen-stamp: build-stamp
+	cd $(ACE_ROOT) && bin/generate_doxygen.pl -is_release -exclude_ciao
+	find $(ACE_ROOT)/html/libace-doc $(DOXYGEN_FILES_TO_REMOVE) | xargs -r rm -f
+	find $(ACE_ROOT)/html/libtao-doc $(DOXYGEN_FILES_TO_REMOVE) | xargs -r rm -f
+#	Somehow search/ is still generated, even if we don't want it.
+	find $(ACE_ROOT)/html -type d -name search | xargs -r rm -Rf
+	touch $@
 
+build: build-stamp manpages-stamp
 build-stamp: patch-stamp
 	dh_testdir
 	cd $(ACE_ROOT) && $(MAKE) $(ACE_MAKE_FLAGS)
 	cd $(TAO_ROOT) && $(MAKE) $(ACE_MAKE_FLAGS)
 	touch $@
 
+manpages-stamp: $(MAN1)
+	touch $@
+
 clean:
 	dh_testdir
-	dh_testroot
+	rm -rf $(ACE_SUBDIR) debian/patched $(MAN1) *-stamp debian/mpc-ace.sgml
 	dh_clean
 
-install: build
+post-build-patch: post-build-patch-stamp
+post-build-patch-stamp: build-stamp
+	dpatch apply-all
+	touch $@
+
+
+install: post-build-patch
 	dh_testdir
 	dh_testroot
-	dh_clean -k
+	dh_prep
 	dh_installdirs
-#       2nd-pass MPC generation is a quick bugfix related with write_install_files@MPC/modules/ProjectCreator.pm
-	echo 2nd-pass MPC generation
-#	cd $(ACE_ROOT) &&  bin/mwc.pl $(MWCFLAGS) ACE-DPKG.mwc
-#	cd $(TAO_ROOT) &&  $(ACE_ROOT)/bin/mwc.pl $(MWCFLAGS) TAO-DPKG.mwc
-#	Install ACE files in $(CURDIR)/$(DT)
-	echo Installing..
-	cd $(ACE_ROOT) && $(MPC_ROOT)/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) ace
-	cd $(ACE_ROOT) && $(MPC_ROOT)/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) apps
-	cd $(ACE_ROOT) && $(MPC_ROOT)/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) ACEXML
-	cd $(ACE_ROOT) && $(MPC_ROOT)/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) Kokyu
-	cd $(ACE_ROOT)/protocols && $(MPC_ROOT)/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) ace
+#	Install all files in debian/tmp
+	cd $(ACE_ROOT) && $(MAKE) install DESTDIR=$(CURDIR)/$(DT)/ INSTALL_PREFIX=/usr install_rpath=0 $(ACE_MAKE_FLAGS)
+	cd $(TAO_ROOT) && $(MAKE) install DESTDIR=$(CURDIR)/$(DT)/ INSTALL_PREFIX=/usr install_rpath=0 $(ACE_MAKE_FLAGS)
 
-#	Install TAO files in $(CURDIR)/$(DT)
-	cd $(TAO_ROOT) && $(MPC_ROOT)/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) tao
-	cd $(TAO_ROOT) && $(MPC_ROOT)/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) orbsvcs
-	cd $(TAO_ROOT) && $(MPC_ROOT)/prj_install.pl -k -s man_files,exe_output,lib_output  -b exe_output=usr/bin -b man_files=usr/share/man -b lib_output=usr/lib  $(CURDIR)/$(DT) TAO_IDL
-	cd $(TAO_ROOT) && $(MPC_ROOT)/prj_install.pl $(PRJ_INSTALL_FLAGS) $(CURDIR)/$(DT) utils
+	mkdir -p $(DT)/usr/share/man/man1
+	cp $(ACE_ROOT)/apps/gperf/ace_gperf.1 $(DT)/usr/share/man/man1
 
-#	Move libraries and executable to lib and bin, then remove subdirectories
-	cd $(CURDIR)/$(DT)/usr/bin &&  find . -executable -a -type f -exec mv {} . ';' && find . -type d -delete
-	cd $(CURDIR)/$(DT)/usr/lib &&  find . -type f -exec mv {} . ';' && find . -type d -delete
+#	Relocate .idl and .pidl files
+	cd $(DT) && for f in $$(find usr/include -name '*.idl' -o -name '*.pidl') ; do \
+	   g=$$(echo $${f%%include*}share/idl/$${f##*usr/include/}) ; \
+	   mkdir -p $$(dirname $$g) ; \
+	   mv $$f $$g ; \
+	   done
 
-#	Create .so links instead of copies
-	cd $(CURDIR)/$(DT)/usr/lib && find . -iname '*.so' -exec echo ln -sf {}.* {} ';' | sh
-
-#	Change man1 files location
-	mkdir -p $(CURDIR)/$(DT)/usr/share/man/man1
-	cd $(CURDIR)/$(DT)/usr/share/man && find . -iname *.1 -exec mv {}  man1 ';' && rm -rf apps
-
-#	Move orbsvcs files from include/tao/orbsvcs into include/orbsvcs
-	cd $(CURDIR)/$(DT)/usr/include/orbsvcs && mv -f orbsvcs/* . && rm -rf orbsvcs
-
-#	We provide scripts replacement for tao_idl and tao_ifr ; they
+#	We provide scripts replacement for tao_idl and tao_ifr; they
 #	automatically define ACE_ROOT and TAO_ROOT
-#	mv $(DT)/usr/bin/tao_idl $(DT)/usr/bin/tao_idl.real
-#	$(INSTALL_755) -D debian/tao_idl $(DT)/usr/bin/tao_idl
-#	mv  $(DT)/usr/bin/tao_ifr  $(DT)/usr/bin/tao_ifr.real
-#	$(INSTALL_755) -D debian/tao_ifr $(DT)/usr/bin/tao_ifr
+	mkdir -p $(DT)/usr/lib/ace/TAO
+	mv $(DT)/usr/bin/tao_idl $(DT)/usr/bin/tao_ifr $(DT)/usr/lib/ace/TAO
 
-#       Install mpc scripts
-	$(INSTALL_755) -D $(ACE_ROOT)/bin/mpc.pl $(DT)/usr/bin/mpc-ace
-	$(INSTALL_755) -D $(ACE_ROOT)/bin/mwc.pl $(DT)/usr/bin/mwc-ace
+	$(INSTALL_755) -D debian/tao_idl $(DT)/usr/bin/tao_idl
+	$(INSTALL_755) -D debian/tao_ifr $(DT)/usr/bin/tao_ifr
 
-#	Be lintian clean, fix permissions on examples
-#       But find returns nothing..
-#	-chmod -x `find $(TAO_ROOT)/examples/ -perm 755 ! -type d -a ! \( -name "*.pl" -o -name "*.sh" \)`
-
-	rm -f $(DT)/usr/bin/TAO_Service
-	dh_install --sourcedir=$(DT)
+	dh_install --sourcedir=$(DT) --list-missing
 
 binary-indep: build install doxygen-stamp
 	dh_testdir -i
 	dh_testroot -i
 	dh_installdocs -i
-	dh_installexamples -i
+
+	chmod -x debian/libtao-doc/usr/share/doc/libtao-doc/examples/RTCORBA/Activity/svc.conf.server
+	chmod -x debian/libtao-doc/usr/share/doc/libtao-doc/examples/Simulator/DOVEBrowser/make.bat
+	chmod -x debian/libtao-doc/usr/share/doc/libtao-doc/examples/RTCORBA/Activity/svc.conf.client
+
 	dh_installman -i
 	dh_installchangelogs -i $(ACE_ROOT)/ChangeLog
 	dh_perl -i
@@ -183,9 +178,9 @@ binary-arch: build install
 	dh_testroot -a
 	dh_installdocs -a -A
 	dh_installman -a
-	dh_installinfo -pgperf-ace $(ACE_ROOT)/apps/gperf/ace_gperf.info
+	dh_installinfo -pace-gperf $(ACE_ROOT)/apps/gperf/ace_gperf.info
 	dh_installchangelogs -a $(ACE_ROOT)/ChangeLog
-	dh_installchangelogs -pgperf-ace $(ACE_ROOT)/apps/gperf/ChangeLog
+	dh_installchangelogs -pace-gperf $(ACE_ROOT)/apps/gperf/ChangeLog
 	dh_strip -a
 	dh_link -a
 	dh_compress -a
@@ -201,4 +196,3 @@ source diff:
 	@echo >&2 'source and diff are obsolete - use dpkg-source -b'; false
 
 binary: binary-indep binary-arch
-
