@@ -1,3 +1,9 @@
+Mon Jan  3 14:38:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ace_components:
+        * include/makeinclude/component_check.GNU:
+          Removed support for PACE
+
 Sun Jan  2 13:19:44 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/QtReactor/ace_qt4reactor.mpc:
