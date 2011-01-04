@@ -1,0 +1,29 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ *
+ * by-hand idl3 translation of sender components.
+ */
+
+#ifndef DDS_QUERY_CONDITION_TEST_SENDER_IDL
+#define DDS_QUERY_CONDITION_TEST_SENDER_IDL
+
+#include "Connector/QCTQ_Test_Connector.idl"
+#include "Base/QCTQ_Starter.idl"
+
+module QCTQ_Test
+{
+  component Sender
+  {
+    port QCTQ_Test::QueryConditionTestConnector::DDS_Write info_write;
+
+    uses TwoQueriesStarter start_reader;
+    provides TwoQueriesRestarter restart_writer;
+
+    attribute unsigned short keys;
+  };
+};
+
+#endif

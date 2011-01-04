@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file State_MemLeakDetection_Test_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef STATE_MEMLEAKDETECTION_TEST_BASE_IDL
+#define STATE_MEMLEAKDETECTION_TEST_BASE_IDL
+
+#pragma ndds typesupport "Base/State_MemLeakDetection_Test_BaseSupport.h"
+
+#pragma DCPS_DATA_TYPE "State_MemLeakDetectionTest"
+#pragma DCPS_DATA_KEY "State_MemLeakDetectionTest key"
+
+struct State_MemLeakDetectionTest {
+  string key; //@key
+  long iteration;
+};
+
+typedef sequence<State_MemLeakDetectionTest> State_MemLeakDetectionTestSeq;
+
+#endif

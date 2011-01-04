@@ -1,0 +1,15 @@
+// $Id$
+module Test
+{
+  interface Dummy
+  {
+    string getMessage();
+  };
+
+  interface Time
+  {
+    long current_time ();
+    oneway void shutdown ();
+  };
+
+};

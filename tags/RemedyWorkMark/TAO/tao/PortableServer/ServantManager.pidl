@@ -1,0 +1,26 @@
+/**
+ * @file ServantManager.pidl
+ *
+ * $Id$
+ *
+ * @brief Pre-compiled IDL source for the PortableServer module.
+ */
+
+#ifndef _PORTABLESERVER_SERVANT_MANAGER_IDL_
+#define _PORTABLESERVER_SERVANT_MANAGER_IDL_
+
+#pragma prefix "omg.org"
+
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) && !defined (TAO_HAS_MINIMUM_POA)
+
+module PortableServer
+{
+# pragma version PortableServer 2.3
+
+  // ServantManager interface.
+  local interface ServantManager {};
+};
+
+#endif
+
+#endif // _PORTABLESERVER_SERVANT_MANAGER_IDL_
