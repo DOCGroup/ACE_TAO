@@ -1,3 +1,11 @@
+Tue Jan  4 11:10:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ace_tk.mpb:
+          Fixed typo
+
+        * bin/auto_run_tests.pl:
+          Document -ExeSubDir with --help
+
 Mon Jan  3 15:06:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_common.GNU:
