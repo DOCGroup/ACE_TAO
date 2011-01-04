@@ -1,3 +1,8 @@
+Tue Jan  4 13:50:15 UTC 2011  Martin Corino <mcorino@remedy.nl>
+
+        * ace/NT_Service.h:
+          Fix to prevent warning concerning const char* assignment.
+
 Tue Jan  4 11:10:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ace_tk.mpb:
