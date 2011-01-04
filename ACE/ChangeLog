@@ -1,3 +1,39 @@
+Wed Dec 29 16:10:21 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Stream.h: Noted that the timeout on the counted send/recv
+          methods applies per operation, restarting on retries, not to the
+          overall set of retries.
+
+Mon Dec 27 20:32:33 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Use $(LIB_PREFIX) and $(LIBEXT) for DEPLIBS.
+          New variable $(LD_RPATH_FLAGS) for extra linker flags that
+          will be used when RPATH is enabled.
+
+        * include/makeinclude/platform_linux.GNU:
+
+          Set LD_RPATH_FLAGS to enable DT_RUNPATH in the ELF headers.
+
+Tue Dec 21 09:57:54 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * protocols/ace/TMCast/TransactionController.hpp:
+          Added missing ACE_OS:: to memcpy call.
+
+Mon Dec 20 21:10:55 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * ACEXML/common/NamespaceSupport.cpp:
+        * Kokyu/DSRT_Sched_Queue_T.cpp:
+          Initialize pointer with zero
+
+Mon Dec 20 20:58:26 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * examples/QOS/Change_Receiver_FlowSpec/Sender_QoS_Event_Handler.cpp:
+        * examples/QOS/Change_Sender_TSpec/Sender_QoS_Event_Handler.cpp:
+        * examples/QOS/Simple/Sender_QoS_Event_Handler.cpp:
+          Fixed compile warnings.
+
 Fri Dec 17 14:42:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * */*.*:

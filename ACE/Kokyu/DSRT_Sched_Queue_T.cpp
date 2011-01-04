@@ -81,7 +81,7 @@ find (Guid_t guid,
       DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& found_item)
 {
   ACE_GUARD_RETURN (ACE_LOCK, mon, lock_, -1);
-  RB_Tree_Dispatch_Item_Node* rb_tree_node;
+  RB_Tree_Dispatch_Item_Node* rb_tree_node = 0;
 
   if (dispatch_items_hash_map_.find(guid, rb_tree_node) == -1)
     {
@@ -190,7 +190,7 @@ int Sched_Ready_Queue<DSRT_Scheduler_Traits,
 remove (Guid_t guid)
 {
   ACE_GUARD_RETURN (ACE_LOCK, mon, lock_, -1);
-  RB_Tree_Dispatch_Item_Node* rb_tree_node;
+  RB_Tree_Dispatch_Item_Node* rb_tree_node = 0;
 
   if (dispatch_items_hash_map_.find(guid, rb_tree_node) == 0)
     {

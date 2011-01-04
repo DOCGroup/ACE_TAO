@@ -321,7 +321,7 @@ IFR_DII_Client::invoke_and_display (void)
 
       ACE_ASSERT ((*args->item (2)->value () >>= price) == true);
 
-      ACE_ASSERT (price == 13.49f);
+      ACE_ASSERT (ACE::is_equal (price, 13.49f));
 
       if (this->debug_)
         {

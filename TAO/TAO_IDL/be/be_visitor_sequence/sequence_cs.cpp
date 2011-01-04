@@ -164,7 +164,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   // Copy constructor.
   *os << be_nl_2
       << node->name () << "::" << node->local_name ()
-      << " (" << be_idt << be_idt << be_idt_nl
+      << " (" << be_idt << be_idt_nl
       << "const " << node->local_name ()
       << " &seq)" << be_uidt << be_uidt_nl
       << "  : " << be_idt << be_idt;

@@ -1,6 +1,7 @@
 //$Id$
 
 #include "Task_Stats.h"
+#include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
@@ -69,7 +70,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg, int 
 
   char out_msg[BUFSIZ];
 
-  if (seconds == 0 || samples_count_ == 0)
+  if (ACE::is_equal (seconds, 0.0) || samples_count_ == 0)
   {
         ACE_OS::sprintf (out_msg,
                    "# No samples recorded\n");

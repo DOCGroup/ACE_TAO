@@ -129,7 +129,7 @@ Literal_Interpreter<const char*>::compare (const char* expected) const
 template<class T> bool
 Literal_Interpreter<T>::compare (T expected) const
 {
-  return (static_cast<T> (this->constraint_) == expected);
+  return ACE::is_equal (static_cast<T> (this->constraint_), expected);
 }
 
 template<class T> void
