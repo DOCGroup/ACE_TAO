@@ -225,7 +225,7 @@ ACEXML_NamespaceSupport::processName (const ACEXML_Char *qName,
     return 0;
   }
 
-  ACEXML_NS_CONTEXT_ENTRY *entry;
+  ACEXML_NS_CONTEXT_ENTRY *entry = 0;
 
   if (this->effective_context_->find (prefix, entry) == 0)
     uri = entry->int_id_.c_str ();

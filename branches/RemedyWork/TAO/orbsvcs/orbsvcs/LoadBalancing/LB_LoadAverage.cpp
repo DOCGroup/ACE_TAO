@@ -29,7 +29,7 @@ TAO_LB_LoadAverage::TAO_LB_LoadAverage (PortableServer::POA_ptr poa)
 {
   // A load map that retains previous load values at a given location
   // and lock are only needed if dampening is enabled, i.e. non-zero.
-  if (this->dampening_ != 0)
+  if (!ACE::is_equal (this->dampening_, 0.0f))
     {
       ACE_NEW (this->load_map_, TAO_LB_LoadMap (TAO_PG_MAX_LOCATIONS));
 
@@ -273,7 +273,7 @@ TAO_LB_LoadAverage::analyze_loads (
               CORBA::Float percent_diff =
                   (tmp[j].value / avg_load.value) - 1;
 
-              if (tmp[j].value == avg_load.value)
+              if (ACE::is_equal (tmp[j].value, avg_load.value))
               {
                 percent_diff = 0;
               }

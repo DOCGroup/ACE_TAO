@@ -1,3 +1,66 @@
+Mon Jan  3 14:12:04 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * tests/LongDouble/client.cpp:
+          Reverted change "Fri Dec 31 09:12:53 UTC 2010  Olli Savia  <ops@iki.fi>"
+          which broke 32-but builds.
+
+Sat Jan  1 10:48:07 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/tests/Notify/lib/Task_Stats.cpp:
+          Added missing include.
+
+Fri Dec 31 09:12:53 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/examples/LoadBalancing/server.cpp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
+        * orbsvcs/tests/Notify/lib/Task_Stats.cpp:
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.cpp:
+        * orbsvcs/tests/unit/Trading/Interpreter/Interpreter.cpp:
+        * tests/CDR/alignment.cpp:
+        * tests/LongDouble/client.cpp:
+          Use ACE::is_equal() to compare floating point values.
+
+Thu Dec 30 09:01:39 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.inl:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.inl:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.inl:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp:
+          Use ACE::is_equal() to compare floating point values.
+
+Wed Dec 29 09:11:54 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+          Use ACE::is_equal() to compare floating point values.
+
+Wed Dec 29 08:53:31 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * TAO_IDL/ast/ast_expression.cpp:
+          Use ACE::is_equal() to compare floating point values.
+
+Mon Dec 27 16:06:40 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/tests/Bug_3891_Regression/Bug_3891_Regression.mpc:
+        * orbsvcs/tests/Bug_3891_Regression/server.cpp:
+
+          Link to the ImR_Client library for static builds.
+
+Mon Dec 20 10:01:18 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+          Fixed bug#3941 and fixed broken formatting when processing sequences.
+
+        * tests/Bug_3941_Regression/test.cpp:
+        * tests/Bug_3941_Regression/test.idl:
+        * tests/Bug_3941_Regression/Bug_3941_Regression.mpc:
+        * tests/Bug_3941_Regression/run_test.pl:
+        * tests/Bug_3941_Regression/README:
+        * bin/tao_orb_tests.lst:
+          Added a test for bug#3941.
+
 Fri Dec 17 14:46:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * */*.*:

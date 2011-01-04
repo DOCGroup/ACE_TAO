@@ -80,6 +80,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "nr_extern.h"
 #include "global_extern.h"
 
+#include "ace/ACE.h"
+
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
@@ -1178,11 +1180,11 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_bool:
           return ev;
         case AST_Expression::EV_float:
-          ev->u.bval = (ev->u.fval == 0.0) ? false : true;
+          ev->u.bval = ACE::is_equal (ev->u.fval, 0.0f) ? false : true;
           ev->et = AST_Expression::EV_bool;
           return ev;
         case AST_Expression::EV_double:
-          ev->u.bval = (ev->u.dval == 0.0) ? false : true;
+          ev->u.bval = ACE::is_equal (ev->u.dval, 0.0) ? false : true;
           ev->et = AST_Expression::EV_bool;
           return ev;
         case AST_Expression::EV_char:
@@ -2006,7 +2008,7 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
       this->pd_v1->ev ()->u.dval * this->pd_v2->ev ()->u.dval;
     break;
   case EC_div:
-    if (this->pd_v2->ev ()->u.dval == 0.0)
+    if (ACE::is_equal (this->pd_v2->ev ()->u.dval, 0.0))
       {
         return 0;
       }
@@ -2908,9 +2910,9 @@ AST_Expression::operator== (AST_Expression *vc)
     case EV_ulong:
       return this->pd_ev->u.ulval == vc->ev()->u.ulval ? true : false;
     case EV_float:
-      return this->pd_ev->u.fval == vc->ev ()->u.fval ? true : false;
+      return ACE::is_equal (this->pd_ev->u.fval, vc->ev ()->u.fval) ? true : false;
     case EV_double:
-      return this->pd_ev->u.dval == vc->ev ()->u.dval ? true : false;
+      return ACE::is_equal (this->pd_ev->u.dval, vc->ev ()->u.dval) ? true : false;
     case EV_char:
       return this->pd_ev->u.cval == vc->ev ()->u.cval ? true : false;
     case EV_wchar:
@@ -2999,9 +3001,9 @@ AST_Expression::compare (AST_Expression *vc)
     case EV_ulong:
       return this->pd_ev->u.ulval == vc->ev ()->u.ulval ? true : false;
     case EV_float:
-      return this->pd_ev->u.fval == vc->ev ()->u.fval ? true : false;
+      return ACE::is_equal (this->pd_ev->u.fval, vc->ev ()->u.fval) ? true : false;
     case EV_double:
-      return this->pd_ev->u.dval == vc->ev ()->u.dval ? true : false;
+      return ACE::is_equal (this->pd_ev->u.dval, vc->ev ()->u.dval) ? true : false;
     case EV_char:
       return this->pd_ev->u.cval == vc->ev ()->u.cval ? true : false;
     case EV_wchar:

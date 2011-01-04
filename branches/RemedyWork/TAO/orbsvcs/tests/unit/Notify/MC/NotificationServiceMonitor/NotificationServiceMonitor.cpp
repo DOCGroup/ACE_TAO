@@ -128,7 +128,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       index = start_size + 1;
       num = data[index].data_union.num ();
 
-      if (num.average != 4.5)
+      if (!ACE::is_equal (num.average, 4.5))
         {
           error ("get_statistics() return the wrong data");
         }
