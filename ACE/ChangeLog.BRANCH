@@ -1,3 +1,8 @@
+Wed Jan  5 14:00:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          ACE_RCSID has been removed some time ago
+
 Tue Jan  4 14:20:15 UTC 2011  Martin Corino <mcorino@remedy.nl>
 
         * examples\OS\Process\process.cpp:
