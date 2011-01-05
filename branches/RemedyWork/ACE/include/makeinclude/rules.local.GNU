@@ -254,7 +254,7 @@ ifndef LN_S
   endif # ! WIN32
 endif # ! LN_S
 
-# Don't call shell/call directly below since we may need to 
+# Don't call shell/call directly below since we may need to
 # add the architecture specific suffix to the directory
 ifneq ($(mingw32),1)
 ARCH_SOURCE_DIR := $(patsubst %/,%,$(shell pwd)/$(ARCH))
@@ -467,20 +467,13 @@ depend.local: $(MAKEFILE) idl_stubs.local
 	$(RM) $(DEPENDENCY_FILE).old ;
 
 #----------------------------------------------------------------------------
-#       RCS info target
+#       idl_stubs target
 #----------------------------------------------------------------------------
 
 IDL_FILES ?=
 IDL_CLIENT_HDR_EXT ?=
 
 idl_stubs.local: $(foreach file, $(IDL_FILES), $(file)$(IDL_CLIENT_HDR_EXT))
-
-#----------------------------------------------------------------------------
-#       RCS info target
-#----------------------------------------------------------------------------
-
-rcs_info.local:
-	@rcs info
 
 #----------------------------------------------------------------------------
 #       Variant targets and conditional macros
