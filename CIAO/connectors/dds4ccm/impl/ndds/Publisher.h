@@ -40,8 +40,7 @@ namespace CIAO
 
       virtual ::DDS::DataWriter_ptr create_datawriter_with_profile (
           ::DDS::Topic_ptr a_topic,
-          const char* library_name,
-          const char *profile_name,
+          const char* qos_profile,
           ::DDS::DataWriterListener_ptr a_listener,
           ::DDS::StatusMask mask);
 

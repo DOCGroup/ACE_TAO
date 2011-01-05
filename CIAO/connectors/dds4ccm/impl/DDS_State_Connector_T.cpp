@@ -338,8 +338,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_configuration_com
       this->observable_.configuration_complete (
         this->topic_.in (),
         this->publisher_.in (),
-        this->library_name_,
-        this->profile_name_);
+        this->qos_profile_.in ());
     }
 
   if (this->push_observer_obtained_)
@@ -347,8 +346,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_configuration_com
       this->push_observer_.configuration_complete (
         this->topic_.in (),
         this->subscriber_.in (),
-        this->library_name_,
-        this->profile_name_);
+        this->qos_profile_.in ());
     }
 
   if (this->push_state_observer_obtained_)
@@ -356,8 +354,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_configuration_com
       this->push_state_observer_.configuration_complete (
         this->topic_.in (),
         this->subscriber_.in (),
-        this->library_name_,
-        this->profile_name_);
+        this->qos_profile_.in ());
     }
 
   if (this->pull_observer_obtained_)
@@ -365,8 +362,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_configuration_com
       this->pull_observer_.configuration_complete (
         this->topic_.in (),
         this->subscriber_.in (),
-        this->library_name_,
-        this->profile_name_);
+        this->qos_profile_.in ());
     }
 
   if (this->passive_observer_obtained_)
@@ -374,8 +370,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_configuration_com
       this->passive_observer_.configuration_complete (
         this->topic_.in (),
         this->subscriber_.in (),
-        this->library_name_,
-        this->profile_name_);
+        this->qos_profile_.in ());
     }
 }
 

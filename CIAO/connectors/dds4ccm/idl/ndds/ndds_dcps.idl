@@ -732,8 +732,7 @@ module DDS {
             in PublisherListener a_listener,
             in StatusMask mask);
         Publisher create_publisher_with_profile(
-            in string library_name,
-            in string profile_name,
+            in string qos_profile,
             in PublisherListener a_listener,
             in StatusMask mask);
         ReturnCode_t delete_publisher(
@@ -744,8 +743,7 @@ module DDS {
             in SubscriberListener a_listener,
             in StatusMask mask);
         Subscriber create_subscriber_with_profile(
-            in string library_name,
-            in string profile_name,
+            in string qos_profile,
             in SubscriberListener a_listener,
             in StatusMask mask);
         ReturnCode_t delete_subscriber(
@@ -761,8 +759,7 @@ module DDS {
         Topic create_topic_with_profile(
             in string topic_name,
             in string type_name,
-            in string library_name,
-            in string profile_name,
+            in string qos_profile,
             in TopicListener a_listener,
             in StatusMask mask);
 
@@ -859,8 +856,7 @@ module DDS {
             in StatusMask mask);
         DomainParticipant create_participant_with_profile(
             in DomainId_t domain_id,
-            in string library_name,
-            in string profile_name,
+            in string qos_profile,
             in DomainParticipantListener a_listener,
             in StatusMask mask);
         ReturnCode_t delete_participant(
@@ -872,8 +868,7 @@ module DDS {
         ReturnCode_t set_default_participant_qos(
             in DomainParticipantQos qos);
         ReturnCode_t set_default_participant_qos_with_profile(
-            in string library_name,
-            in string profile_name);
+            in string qos_profile);
         ReturnCode_t get_default_participant_qos(
             inout DomainParticipantQos qos);
 
@@ -938,8 +933,7 @@ module DDS {
             in StatusMask mask);
         DataWriter create_datawriter_with_profile(
             in Topic a_topic,
-            in string library_name,
-            in string probile_name,
+            in string qos_profile,
             in DataWriterListener a_listener,
             in StatusMask mask);
         ReturnCode_t delete_datawriter(
@@ -1025,8 +1019,7 @@ module DDS {
             in StatusMask mask);
         DataReader create_datareader_with_profile(
             in TopicDescription a_topic,
-            in string library_name,
-            in string profile_name,
+            in string qos_profile,
             in DataReaderListener a_listener,
             in StatusMask mask);
         ReturnCode_t delete_datareader(
