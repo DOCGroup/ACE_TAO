@@ -21,6 +21,14 @@
 #include "tao/ORB_Core.h"
 
 #include "ace/Reactor.h"
+
+const ACE_TCHAR * IMR_ACTIVATOR_SERVICE_NAME =
+  ACE_TEXT("TAOImRActivator");
+const ACE_TCHAR * IMR_ACTIVATOR_DISPLAY_NAME =
+  ACE_TEXT("TAO Implementation Repository Activator");
+const ACE_TCHAR * IMR_ACTIVATOR_DESCRIPTION =
+  ACE_TEXT("Implementation Repository Activator service for TAO");
+
 /**
  * Handles the SERVICE_CONTROL_SHUTDOWN and SERVICE_CONTROL_STOP commands
  * by shutting down the ORB.  Otherwise ACE_NT_Service::handle_control

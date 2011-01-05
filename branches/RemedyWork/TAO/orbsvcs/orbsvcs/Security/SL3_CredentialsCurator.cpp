@@ -180,7 +180,7 @@ SecurityLevel3::OwnCredentials_ptr
 TAO::SL3::CredentialsCurator::get_own_credentials (
     const char * credentials_id)
 {
-  Credentials_Table::ENTRY * entry;
+  Credentials_Table::ENTRY * entry = 0;
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -200,7 +200,7 @@ void
 TAO::SL3::CredentialsCurator::release_own_credentials (
     const char * credentials_id)
 {
-  Credentials_Table::ENTRY * entry;
+  Credentials_Table::ENTRY * entry = 0;
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
