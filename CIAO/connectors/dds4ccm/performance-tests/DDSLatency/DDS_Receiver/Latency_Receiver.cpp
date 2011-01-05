@@ -102,7 +102,7 @@ write_back (LatencyTest & an_instance)
 
   try
     {
-      test_data_writer_->write(an_instance, ::DDS::HANDLE_NIL);
+      test_data_writer_->write(an_instance, DDS_HANDLE_NIL);
     }
   catch (const ::CORBA::Exception& ex)
     {

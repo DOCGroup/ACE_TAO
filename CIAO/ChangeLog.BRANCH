@@ -1,3 +1,8 @@
+Wed Jan  5 09:15:01 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Receiver/Latency_Receiver.cpp:
+          Resolved runtime issues.
+
 Sun Jan  2 13:28:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO_TAO.mwc:
