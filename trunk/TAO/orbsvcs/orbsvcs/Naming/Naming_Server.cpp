@@ -721,7 +721,8 @@ TAO_Naming_Server::fini (void)
   // the Naming Service
   try
     {
-      this->ns_poa_->destroy (1, 1);
+      if (!CORBA::is_nil (this->ns_poa_.in ()))
+        this->ns_poa_->destroy (1, 1);
 
       CORBA::Object_var table_object =
         this->orb_->resolve_initial_references ("IORTable");
