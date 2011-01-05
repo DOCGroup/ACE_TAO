@@ -1,3 +1,15 @@
+Wed Jan  5 11:42:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added 3944
+
+        * tests/Bug_3944_Regression:
+        * tests/Bug_3944_Regression/base_connector_conn.idl:
+        * tests/Bug_3944_Regression/connector_conn.idl:
+        * tests/Bug_3944_Regression/connector_inst_conn.idl:
+        * tests/Bug_3944_Regression/run_test.pl:
+          New test for bugzilla 3944
+
 Wed Jan  5 11:01:04 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/DAnCE/PartialShutdown/Base/PartialShutdown.mpc:
