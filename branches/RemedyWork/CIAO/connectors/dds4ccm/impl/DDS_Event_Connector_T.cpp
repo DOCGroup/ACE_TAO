@@ -220,8 +220,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_configuration_com
       this->push_consumer_.configuration_complete (
         this->topic_.in (),
         this->subscriber_.in (),
-        this->library_name_,
-        this->profile_name_);
+        this->qos_profile_.in ());
     }
   else
     {
@@ -240,8 +239,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_configuration_com
       this->supplier_.configuration_complete(
         this->topic_.in (),
         this->publisher_.in (),
-        this->library_name_,
-        this->profile_name_);
+        this->qos_profile_.in ());
     }
   else
     {
@@ -260,8 +258,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_configuration_com
       this->pull_consumer_.configuration_complete (
         this->topic_.in (),
         this->subscriber_.in (),
-        this->library_name_,
-        this->profile_name_);
+        this->qos_profile_.in ());
     }
   else
     {

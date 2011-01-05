@@ -1,3 +1,32 @@
+Wed Jan  5 14:18:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Get_T.h:
+        * connectors/dds4ccm/impl/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.h:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/Utils.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher.h:
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber.h:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+        * connectors/dds4ccm/impl/ndds/ndds.mpc:
+          Replaced all libary_name/profile_name combination with one
+          string (qos_profile). Substract the library_name and profile_name in
+          the NDDS library (instead of the core).
+
 Wed Jan  5 11:42:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:

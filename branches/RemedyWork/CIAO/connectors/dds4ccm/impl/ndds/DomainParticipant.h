@@ -38,8 +38,7 @@ namespace CIAO
         ::DDS::StatusMask mask);
 
       virtual ::DDS::Publisher_ptr create_publisher_with_profile (
-        const char* library_name,
-        const char *profile_name,
+        const char* qos_profile,
         ::DDS::PublisherListener_ptr a_listener,
         ::DDS::StatusMask mask);
 
@@ -51,8 +50,7 @@ namespace CIAO
         ::DDS::StatusMask mask);
 
       virtual ::DDS::Subscriber_ptr create_subscriber_with_profile(
-        const char* library_name,
-        const char *profile_name,
+        const char* qos_profile,
         ::DDS::SubscriberListener_ptr a_listener,
         ::DDS::StatusMask mask);
 
@@ -70,8 +68,7 @@ namespace CIAO
       virtual ::DDS::Topic_ptr create_topic_with_profile (
         const char * impl_name,
         const char * type_name,
-        const char* library_name,
-        const char *profile_name,
+        const char* qos_profile,
         ::DDS::TopicListener_ptr a_listener,
         ::DDS::StatusMask mask);
 

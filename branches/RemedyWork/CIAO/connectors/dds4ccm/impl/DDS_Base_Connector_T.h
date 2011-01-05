@@ -184,14 +184,6 @@ protected:
     */
   bool configuration_complete_;
 
-  /**
-    * Result of splitting qos_profile into to different names.
-    */
-  //@{
-  char* library_name_;
-  char* profile_name_;
-  //@}
-
   ::CIAO::DDS4CCM::Logger_Service * dlf_;
 
   ::DDS::DomainParticipant_var domain_participant_;
