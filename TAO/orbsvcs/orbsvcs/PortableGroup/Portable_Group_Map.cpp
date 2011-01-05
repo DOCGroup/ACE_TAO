@@ -65,7 +65,7 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (
   new_entry->key = key;
 
   // First, check if the GroupId is already in the map.
-  Map_Entry *entry;
+  Map_Entry *entry = 0;
   if (this->map_.find (group_id,
                        entry) == 0)
     {

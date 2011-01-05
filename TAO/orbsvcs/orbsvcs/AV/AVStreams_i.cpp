@@ -2109,7 +2109,7 @@ TAO_StreamEndPoint::change_qos (AVStreams::streamQoS &new_qos,
       TAO_Forward_FlowSpec_Entry entry;
       entry.parse (the_flows [i]);
       ACE_CString flow_name_key (entry.flowname ());
-      Flow_Handler_Map_Entry *handler_entry;
+      Flow_Handler_Map_Entry *handler_entry = 0;
       if (this->flow_handler_map_.find (flow_name_key,
                                         handler_entry) == 0)
         {

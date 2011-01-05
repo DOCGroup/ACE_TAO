@@ -1,3 +1,26 @@
+Wed Jan  5 09:35:46 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * orbsvcs\orbsvcs\Log\Hash_LogStore.cpp:
+        * orbsvcs\orbsvcs\PortableGroup\Portable_Group_Map.cpp:
+        * orbsvcs\orbsvcs\PortableGroup\PG_ObjectGroupManager.cpp:
+        * orbsvcs\orbsvcs\Security\SL3_CredentialsCurator.cpp:
+        * orbsvcs\orbsvcs\Security\SL2_SecurityManager.cpp:
+        * orbsvcs\orbsvcs\AV\AVStreams_i.cpp:
+        * orbsvcs\orbsvcs\Event\EC_TPC_Dispatching.cpp:
+        * orbsvcs\orbsvcs\LoadBalancing\LB_LoadMinimum.cpp:
+        * orbsvcs\orbsvcs\LoadBalancing\LB_LoadManager.cpp:
+        * orbsvcs\orbsvcs\LoadBalancing\LB_LoadAverage.cpp:
+        * orbsvcs\tests\Concurrency\CC_command.tab.cpp:
+        * orbsvcs\ImplRepo_Service\Activator_NT_Service.cpp:
+        * orbsvcs\ImplRepo_Service\Locator_NT_Service.h:
+        * orbsvcs\ImplRepo_Service\Locator_Options.cpp:
+        * orbsvcs\ImplRepo_Service\Activator_NT_Service.h:
+        * orbsvcs\ImplRepo_Service\Locator_NT_Service.cpp:
+        * tao\ORB_Core.h:
+        * utils\logWalker\Session.cpp:
+          Fixed compile warnings (uninitialized use, const char* assignments, 
+          etc.).
+
 Sun Jan  2 13:25:46 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/tao_idl.mpc:
