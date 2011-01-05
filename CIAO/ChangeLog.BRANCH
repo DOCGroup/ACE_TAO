@@ -1,3 +1,8 @@
+Wed Jan  5 11:01:04 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/DAnCE/PartialShutdown/Base/PartialShutdown.mpc:
+          Resolved link issues on windows.
+
 Wed Jan  5 10:56:02 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/DAnCE/PartialShutdown/Component1/Component1.mpc:
