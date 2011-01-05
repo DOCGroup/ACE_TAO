@@ -106,7 +106,8 @@ struct My_Task : public ACE_Task_Base
      if (rv < 0)
      {
        ACE_ERROR ((LM_ERROR,
-                   ACE_TEXT("Cannot run reactor event loop\n")));
+                   ACE_TEXT ("%p\n"),
+                   ACE_TEXT ("Cannot run reactor event loop")));
      }
      return 0;
    }
@@ -141,10 +142,23 @@ run_main (int, ACE_TCHAR *[])
   if (activated < 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Could not activate task\n")), -1);
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Could not activate task")),
+                        -1);
     }
 
-  ACE_INET_Addr a1(9000, "localhost");
+  // Don't assume addr family of the listener - check and adapt when needed.
+  ACE_INET_Addr listen_addr;
+  acceptor.acceptor ().get_local_addr (listen_addr);
+#if defined (ACE_HAS_IPV6)
+  const ACE_TCHAR *me =
+    listen_addr.get_type () == PF_INET ? ACE_LOCALHOST : ACE_IPV6_LOCALHOST;
+#else
+  const ACE_TCHAR *me = ACE_LOCALHOST;
+#endif /* ACE_HAS_IPV6 */
+  ACE_INET_Addr a1 (listen_addr.get_port_number (),
+                    me,
+                    listen_addr.get_type ());
   ACE_SOCK_Connector c1;
   g_semaphore.acquire();// wait for reactor to start
 
@@ -153,7 +167,10 @@ run_main (int, ACE_TCHAR *[])
     ACE_SOCK_Stream s1;
     if (-1 == c1.connect (s1, a1))
       {
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("Could not connect\n")), -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("Could not connect")),
+                          -1);
       }
     g_semaphore.acquire(); // wait for accept_svc_handler() to start
   }
@@ -162,7 +179,10 @@ run_main (int, ACE_TCHAR *[])
     ACE_SOCK_Stream s1;
     if (-1 == c1.connect (s1, a1))
       {
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("Could not connect\n")), -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("Could not connect")),
+                          -1);
       }
     g_semaphore.acquire(); // wait for activate_svc_handler to complete
   }
@@ -180,8 +200,10 @@ run_main (int, ACE_TCHAR *[])
   if (g_svc_handlers_leaked != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-           ACE_TEXT("Svc_Handler leakage detected, %d objects\n")),
-           g_svc_handlers_leaked);
+                         ACE_TEXT ("Svc_Handler leakage detected, ")
+                         ACE_TEXT ("%d objects remain\n"),
+                         g_svc_handlers_leaked),
+                        1);
     }
 #else
   ACE_ERROR ((LM_INFO,
