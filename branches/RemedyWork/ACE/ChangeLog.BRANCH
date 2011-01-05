@@ -1,3 +1,13 @@
+Wed Jan  5 18:20:10 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-tandem.h:
+          Removed commented out define
+
+        * ace/os_include/os_string.h:
+        * ace/os_include/os_wchar.h:
+          Removed several ACE_LACKS_*_PROTOTYPE guarded code, the defines
+          are never set
+
 Wed Jan  5 14:02:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/rules.local.GNU:
