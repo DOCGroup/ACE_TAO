@@ -1,3 +1,8 @@
+Wed Jan  5 23:10:05 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * tests/Bug_2610_Regression_Test.cpp: Fixed a bunch of ACE_ERROR
+          statements to log the actual error cause; also fixed for IPv6.
+
 Wed Dec 29 20:11:11 EST 2010  Steve Huston  <shuston@riverace.com>
 
 	* ACE version 5.8a released.
