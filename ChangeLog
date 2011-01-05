@@ -1,3 +1,8 @@
+Wed Jan  5 23:10:05 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * tests/Bug_2610_Regression_Test.cpp: Fixed a bunch of ACE_ERROR
+          statements to log the actual error cause; also fixed for IPv6.
+
 Wed Dec 29 16:10:21 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK_Stream.h: Noted that the timeout on the counted send/recv
