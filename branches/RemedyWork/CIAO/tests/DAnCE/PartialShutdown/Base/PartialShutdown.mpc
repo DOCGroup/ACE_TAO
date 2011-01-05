@@ -20,8 +20,8 @@ project(PartialShutdown_lem_gen) : ciaoidldefaults, avoids_ccm_noevent {
   custom_only = 1
   after += PartialShutdown_idl_gen
   idlflags += \
-              -Wb,export_macro=PARTIALSHUTDOWN_EXEC_Export \
-              -Wb,export_include=PartialShutdown_exec_export.h \
+              -Wb,export_macro=PARTIALSHUTDOWN_STUB_Export \
+              -Wb,export_include=PartialShutdown_stub_export.h \
               -I..
 
   IDL_Files {
