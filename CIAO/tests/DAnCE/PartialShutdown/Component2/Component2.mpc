@@ -116,11 +116,9 @@ project(PartialShutdown_Component2_exec) : ciao_executor   {
 
 
 project(PartialShutdown_Component2_svnt) : ciao_servant   {
-  after      += PartialShutdown_skel  PartialShutdown_Component2_lem_stub
+  after      += PartialShutdown_Component2_lem_stub
   sharedname  = Component2_svnt
-  libs       += Component2_stub Component2_lem_stub  \
-                PartialShutdown_skel \
-                PartialShutdown_stub
+  libs       += Component2_stub Component2_lem_stub PartialShutdown_stub
 
   includes += ..
 

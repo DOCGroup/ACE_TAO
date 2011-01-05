@@ -1,3 +1,10 @@
+Wed Jan  5 10:56:02 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/DAnCE/PartialShutdown/Component1/Component1.mpc:
+        * tests/DAnCE/PartialShutdown/Component2/Component2.mpc:
+        * tests/DAnCE/PartialShutdown/Component3/Component3.mpc:
+          Resolved compile issues on windows.
+
 Wed Jan  5 09:15:01 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Receiver/Latency_Receiver.cpp:
