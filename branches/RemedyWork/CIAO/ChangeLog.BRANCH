@@ -1,3 +1,24 @@
+Thu Jan  6 10:33:41 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Containers/Container_Base.idl:
+        * ciao/Containers/Container_Base_T.h:
+        * ciao/Containers/Container_Base_T.cpp:
+        * ciao/Containers/Extension/Extension_Container.h:
+        * ciao/Containers/Extension/Extension_Container.cpp:
+        * ciao/Containers/Session/Session_Container.h:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Deployment/Handlers/Connection_Handler.h:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Moved (dis)connect methods to the base. Making use of the cookie
+          functionality when (dis)connecting local connections.
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+          Fixed typo.
+
+        * connectors/dds4ccm/impl/ndds/Utils.h:
+        * connectors/dds4ccm/impl/ndds/Utils.cpp:
+          Added.
+
 Wed Jan  5 14:18:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:

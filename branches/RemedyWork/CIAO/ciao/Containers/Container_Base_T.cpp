@@ -6,6 +6,7 @@
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "ciao/Containers/Servant_Activator.h"
+#include "ciao/Servants/Connector_Servant_Impl_Base.h"
 
 namespace CIAO
 {
@@ -23,7 +24,7 @@ namespace CIAO
   {
   }
 
-template <typename BASE>
+  template <typename BASE>
   void
   Container_i<BASE>::fini (void)
   {
@@ -162,6 +163,259 @@ template <typename BASE>
     this->sa_ = sa;
 
     this->facet_cons_poa_->set_servant_manager (this->sa_.in ());
+  }
+
+  template <typename BASE>
+  ::Components::Cookie *
+  Container_i<BASE>::connect_local_facet (::Components::CCMObject_ptr provider,
+                                          const char * provider_port,
+                                          ::Components::CCMObject_ptr user,
+                                          const char * user_port)
+  {
+    CIAO_TRACE ("Container_i::connect_local_facet");
+
+    if (!provider_port || !user_port)
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                     "Container_i::connect_local_facet - "
+                     "Nil port name provided to connect local "
+                     "facet, throwing exception\n"));
+
+        throw ::Components::InvalidConnection ();
+      }
+
+    try
+      {
+        PortableServer::ServantBase_var provider_tmp =
+          this->component_poa_->reference_to_servant (provider);
+
+        CIAO_DEBUG (9,
+                    (LM_TRACE,
+                     CLINFO
+                     "Container_i::connect_local_facet - "
+                     "Successfully fetched provider servant"
+                     " [%C] from POA\n",
+                     provider_port));
+
+        CIAO::Connector_Servant_Impl_Base *prov_serv =
+          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (provider_tmp.in ());
+
+        if (!prov_serv)
+          {
+            CIAO_ERROR (1,
+                        (LM_ERROR,
+                         CLINFO
+                         "Container_i::connect_local_facet - "
+                         "Unable to cast to provider servant "
+                         "implementation\n"));
+            throw ::Components::InvalidConnection ();
+          }
+
+        PortableServer::ServantBase_var user_tmp =
+          this->component_poa_->reference_to_servant (user);
+
+        CIAO_DEBUG (9, (LM_TRACE, CLINFO "Container_i::connect_local_facet - "
+                     "Successfully fetched user servant [%C] from POA\n", user_port));
+
+        CIAO::Connector_Servant_Impl_Base *user_serv =
+          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (user_tmp.in ());
+
+        if (user_serv == 0)
+          {
+            CIAO_ERROR (1,
+                        (LM_ERROR,
+                         CLINFO
+                         "Container_i::connect_local_facet - "
+                         "Unable to cast to user "
+                         "servant implementation\n"));
+
+            throw ::Components::InvalidConnection ();
+          }
+
+        ::CORBA::Object_var exec =
+          prov_serv->get_facet_executor (provider_port);
+
+        // Note: Spec says that facet executor provided by component MAY BE NIL
+        if (!::CORBA::is_nil (exec.in ()))
+          {
+            CIAO_DEBUG (6,
+                        (LM_DEBUG,
+                         CLINFO
+                         "Container_i::connect_local_facet - "
+                         "Create connection between [%C]"
+                         " and [%C]\n",
+                         user_port,
+                         provider_port));
+
+            ::Components::Cookie_var cookie =
+              user_serv->connect (user_port, exec.in ());
+            return cookie.in ();
+          }
+        else
+          {
+            CIAO_DEBUG (6,
+                        (LM_DEBUG,
+                         CLINFO
+                         "Container_i::connect_local_facet - "
+                         "Got nil facet executor for [%C]\n",
+                         provider_port));
+          }
+      }
+    catch (const ::Components::InvalidConnection &ex)
+      {
+        throw ex;
+      }
+    catch (const ::Components::InvalidName &ex)
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                     "Container_i::connect_local_facet - "
+                     "Caught exception InvalidName while connecting "
+                     "<%C> to <%C>\n",
+                     provider_port,
+                     user_port));
+
+        throw ex;
+      }
+    catch (const ::CORBA::Exception &ex)
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                     "Container_i::connect_local_facet - "
+                     "Caught exception %C.\n",
+                     ex._info ().c_str ()));
+        throw;
+      }
+    catch (...)
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                     "Container_i::connect_local_facet - "
+                     "Attempting to connect components not "
+                     "managed by this container.\n"));
+
+        throw ::Components::InvalidConnection ();
+      }
+    return 0;
+  }
+
+  template <typename BASE>
+  void
+  Container_i<BASE>::disconnect_local_facet (
+    ::Components::Cookie * cookie,
+    ::Components::CCMObject_ptr provider,
+    const char * provider_port,
+    ::Components::CCMObject_ptr user,
+    const char * user_port)
+  {
+    CIAO_TRACE ("Container_i::disconnect_local_facet");
+
+    try
+      {
+        PortableServer::ServantBase_var srv_tmp =
+          this->component_poa_->reference_to_servant (provider);
+
+        CIAO_DEBUG (9,
+                    (LM_TRACE,
+                     CLINFO
+                     "Container_i::disconnect_local_facet - "
+                     "Successfully fetched provider servant from POA\n"));
+
+        CIAO::Connector_Servant_Impl_Base *prov_serv =
+          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (srv_tmp.in ());
+
+        if (prov_serv == 0)
+          {
+            CIAO_ERROR (1,
+                        (LM_ERROR,
+                         CLINFO
+                         "Container_i::disconnect_local_facet - "
+                         "Unable to cast to provider servant "
+                         "implementation\n"));
+
+            throw ::Components::InvalidConnection ();
+          }
+
+        srv_tmp = this->component_poa_->reference_to_servant (user);
+
+        CIAO_DEBUG (9,
+                    (LM_TRACE,
+                     CLINFO
+                     "Container_i::disconnect_local_facet - "
+                     "Successfully fetched user servant from POA\n"));
+
+        CIAO::Connector_Servant_Impl_Base *user_serv =
+          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (srv_tmp.in ());
+
+        if (user_serv == 0)
+          {
+            CIAO_ERROR (1,
+                        (LM_ERROR,
+                         CLINFO
+                         "Container_i::disconnect_local_facet - "
+                         "Unable to cast to user servant "
+                         "implementation\n"));
+
+            throw ::Components::InvalidConnection ();
+          }
+
+        ::CORBA::Object_var exec =
+          prov_serv->get_facet_executor (provider_port);
+
+        // Note: Spec says that facet executor provided by component MAY BE NIL
+        if (!::CORBA::is_nil (exec.in ()))
+          {
+            try
+              {
+                ::CORBA::Object_var port = user_serv->disconnect (user_port, cookie);
+              }
+            catch (const ::Components::CookieRequired& ex)
+              {
+                CIAO_ERROR (6,
+                            (LM_ERROR,
+                            CLINFO
+                            "Container_i::disconnect_local_facet - "
+                            "Caught CookieRequired exception <%C>.\n",
+                            ex._info ().c_str ()));
+                throw ex;
+              }
+          }
+        else
+          {
+            throw ::Components::InvalidConnection ();
+          }
+      }
+    catch (const ::Components::InvalidConnection &)
+      {
+        throw;
+      }
+    catch (const ::CORBA::Exception &ex)
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                     "Container_i::disconnect_local_facet - "
+                     "Caught exception %C.\n",
+                     ex._info ().c_str ()));
+
+        throw;
+      }
+    catch (...)
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                     "Container_i::disconnect_local_facet - "
+                     "Attempting to connect components not "
+                     "managed by this container.\n"));
+
+        throw ::Components::InvalidConnection ();
+      }
   }
 }
 

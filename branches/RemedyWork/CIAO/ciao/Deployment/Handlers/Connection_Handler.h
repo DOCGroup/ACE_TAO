@@ -93,12 +93,14 @@ namespace CIAO
     void connect_local_port (const char *facet_id,
                              const char *facet_port,
                              const char *receptacle_id,
-                             const char *receptacle_port);
+                             const char *receptacle_port,
+                             const char *connection_name);
 
     void disconnect_local_port (const char *facet_id,
                                 const char *facet_port,
                                 const char *receptacle_id,
-                                const char *receptacle_port);
+                                const char *receptacle_port,
+                                const char *connection_name);
 
     bool is_local_facet (const ::Deployment::PlanConnectionDescription &conn);
 
