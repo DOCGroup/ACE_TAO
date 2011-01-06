@@ -1,3 +1,11 @@
+Thu Jan  6 09:46:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_cray.GNU:
+        * include/makeinclude/platform_mvs.GNU:
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+          Removed these files, platforms got removed some time ago but
+          seems we forgot to remove these files
+
 Wed Jan  5 18:20:10 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-tandem.h:
