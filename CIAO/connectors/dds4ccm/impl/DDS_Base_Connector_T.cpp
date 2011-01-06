@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-+#include "ace/Env_Value_T.h"
+#include "ace/Env_Value_T.h"
 #include "tao/ORB_Core.h"
 #include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
@@ -90,7 +90,7 @@ DDS_Base_Connector_T<CCM_TYPE>::qos_profile (
     }
   else
     {
-      this->qos_profile_ = ::CORBA::string_dup (qos_profile)
+      this->qos_profile_ = ::CORBA::string_dup (qos_profile);
     }
 }
 

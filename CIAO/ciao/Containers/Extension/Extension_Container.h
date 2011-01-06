@@ -119,18 +119,6 @@ namespace CIAO
                                                          const char *servant_entrypoint,
                                                          const char *name);
 
-    /// Connect a local facet
-    virtual void connect_local_facet (::Components::CCMObject_ptr provider,
-                                      const char * provider_port,
-                                      ::Components::CCMObject_ptr user,
-                                      const char * user_port);
-
-    /// Disconnect a local facet
-    virtual void disconnect_local_facet (::Components::CCMObject_ptr provider,
-                                         const char * provider_port,
-                                         ::Components::CCMObject_ptr user,
-                                         const char * user_port);
-
     /// Set attributes on a component
     virtual void set_attributes (CORBA::Object_ptr compref,
                                  const ::Components::ConfigValues & values);

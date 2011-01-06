@@ -97,6 +97,21 @@ namespace CIAO
 
     virtual CORBA::Object_ptr resolve_service_reference(const char *service_id);
 
+    /// Connect a local facet
+    virtual ::Components::Cookie *
+    connect_local_facet (::Components::CCMObject_ptr provider,
+                         const char * provider_port,
+                         ::Components::CCMObject_ptr user,
+                         const char * user_port);
+
+    /// Disconnect a local facet
+    virtual void
+    disconnect_local_facet (::Components::Cookie * cookie,
+                            ::Components::CCMObject_ptr provider,
+                            const char * provider_port,
+                            ::Components::CCMObject_ptr user,
+                            const char * user_port);
+
   protected:
     /// Reference to the ORB
     CORBA::ORB_var orb_;

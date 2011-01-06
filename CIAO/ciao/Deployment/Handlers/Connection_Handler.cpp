@@ -325,7 +325,8 @@ namespace CIAO
             this->connect_local_port (plan.instance[endpoint.instanceRef].name.in (),
                                       endpoint.portName.in (),
                                       plan.instance[other_endpoint.instanceRef].name.in (),
-                                      other_endpoint.portName.in ());
+                                      other_endpoint.portName.in (),
+                                      conn.name.in ());
             return;
           }
         else
@@ -427,7 +428,8 @@ namespace CIAO
             this->connect_local_port (plan.instance[other_endpoint.instanceRef].name.in (),
                                       other_endpoint.portName.in (),
                                       plan.instance[endpoint.instanceRef].name.in (),
-                                      endpoint.portName.in ());
+                                      endpoint.portName.in (),
+                                      conn.name.in ());
             return;
           }
         else
@@ -682,10 +684,13 @@ namespace CIAO
           {
             const ::Deployment::PlanSubcomponentPortEndpoint &other_endpoint =
               conn.internalEndpoint[other_endpointRef];
+
+
             this->disconnect_local_port (plan.instance[endpoint.instanceRef].name.in (),
                                       endpoint.portName.in (),
                                       plan.instance[other_endpoint.instanceRef].name.in (),
-                                      other_endpoint.portName.in ());
+                                      other_endpoint.portName.in (),
+                                      conn.name.in ());
             return;
           }
         else
@@ -748,7 +753,8 @@ namespace CIAO
   Connection_Handler::connect_local_port (const char *facet_id,
                                           const char *facet_port,
                                           const char *receptacle_id,
-                                          const char *receptacle_port)
+                                          const char *receptacle_port,
+                                          const char *connection_name)
   {
     CIAO_TRACE ("Connection_Handler::connect_local_port");
 
@@ -780,22 +786,25 @@ namespace CIAO
       facet = DEPLOYMENT_STATE::instance ()->fetch_component (facet_id),
       receptacle = DEPLOYMENT_STATE::instance ()->fetch_component (receptacle_id);
 
-    cont->connect_local_facet (facet,
-                               facet_port,
-                               receptacle,
-                               receptacle_port);
+    ::Components::Cookie_var cookie = cont->connect_local_facet (facet,
+                                                                 facet_port,
+                                                                 receptacle,
+                                                                 receptacle_port);
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_local_port - "
                     "Connected local port <%C>:<%C> to <%C>:<%C>\n",
                     facet_id, facet_port,
                     receptacle_id, receptacle_port));
+    this->cookies_[connection_name] = CONNECTION_INFO (cookie,
+                                                       ::Components::CCMObject::_duplicate (receptacle.in ()));
   }
 
   void
   Connection_Handler::disconnect_local_port (const char *facet_id,
                                              const char *facet_port,
                                              const char *receptacle_id,
-                                             const char *receptacle_port)
+                                             const char *receptacle_port,
+                                             const char *connection_name)
   {
     CIAO_TRACE ("Connection_Handler::disconnect_local_port");
 
@@ -827,7 +836,11 @@ namespace CIAO
       facet = DEPLOYMENT_STATE::instance ()->fetch_component (facet_id),
       receptacle = DEPLOYMENT_STATE::instance ()->fetch_component (receptacle_id);
 
-    cont->disconnect_local_facet (facet,
+    //retrieve cookie.
+    CONNECTION_INFO conn_info = this->cookies_[connection_name];
+    cont->disconnect_local_facet (
+                               conn_info.first.in (),
+                               facet,
                                facet_port,
                                receptacle,
                                receptacle_port);
