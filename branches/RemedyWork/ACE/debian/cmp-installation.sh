@@ -1,4 +1,5 @@
 #!/bin/sh
+# $Id$
 #
 # This script compares autoconf-based installation against regular builds
 # provided files.
@@ -20,7 +21,7 @@ ff() {
 
 # Remove path with examples, tests and tutorial from STDIN
 drop() {
-  grep -E -v '(examples|tests|tutorials)/' 
+  grep -E -v '(examples|tests|tutorials)/'
 }
 
 # Removed unused/unshipped stuff
