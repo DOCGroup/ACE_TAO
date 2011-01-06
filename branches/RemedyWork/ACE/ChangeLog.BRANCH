@@ -36,10 +36,10 @@ Wed Jan  5 14:00:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jan  4 14:20:15 UTC 2011  Martin Corino <mcorino@remedy.nl>
 
-        * examples\OS\Process\process.cpp:
-        * examples\QOS\Change_Sender_TSpec\Sender_QoS_Event_Handler.cpp:
-        * examples\QOS\Simple\Sender_QoS_Event_Handler.cpp:
-        * examples\QOS\Change_Receiver_FlowSpec\Sender_QoS_Event_Handler.cpp:
+        * examples/OS/Process/process.cpp:
+        * examples/QOS/Change_Sender_TSpec/Sender_QoS_Event_Handler.cpp:
+        * examples/QOS/Simple/Sender_QoS_Event_Handler.cpp:
+        * examples/QOS/Change_Receiver_FlowSpec/Sender_QoS_Event_Handler.cpp:
           Fixed const char* assignment warnings.
 
 Tue Jan  4 13:50:15 UTC 2011  Martin Corino <mcorino@remedy.nl>
