@@ -1,3 +1,43 @@
+Fri Jan  7 08:27:35 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ChangeLog:
+
+        * ace/Log_Msg.cpp:
+        * ace/OS_NS_Thread.cpp:
+        * ace/Task.cpp:
+        * ace/config-sunos5.6.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-win32-common.h:
+
+        * ace/os_include/sys/os_types.h:
+
+        * apps/gperf/src/Key_List.cpp:
+
+        * debian/patches/11-promote-QtResource-to-qt4.dpatch:
+
+        * ace/config-mvs.h:
+
+          Removed this file.
+
+Fri Jan  7 08:26:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+        * ace/OS_NS_Thread.cpp:
+        * ace/Task.cpp:
+        * ace/config-sunos5.6.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-win32-common.h:
+
+        * ace/os_include/sys/os_types.h:
+
+        * apps/gperf/src/Key_List.cpp:
+
+        * debian/patches/11-promote-QtResource-to-qt4.dpatch:
+
+        * ace/config-mvs.h:
+
+          Removed this file.
+
 Wed Dec 29 16:10:21 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK_Stream.h: Noted that the timeout on the counted send/recv
