@@ -33,6 +33,8 @@ module Hello
 
   interface MyFoo
     {
+      oneway void foo_oneway (in string in_str);
+
       long foo_return (in string in_str, out string answer)
         raises (InternalError);
       void foo_no_return (in string in_str, out string answer)

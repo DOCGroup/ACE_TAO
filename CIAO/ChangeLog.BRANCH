@@ -1,3 +1,8 @@
+Fri Jan  7 14:49:14 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/tests/IDL_Test/Hello.idl:
+          Added oneway method
+
 Fri Jan  7 12:52:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/ndds_stub.mpb:
