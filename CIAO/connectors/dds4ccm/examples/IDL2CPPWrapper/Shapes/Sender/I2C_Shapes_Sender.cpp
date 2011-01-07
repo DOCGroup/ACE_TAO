@@ -7,7 +7,7 @@
 
 #define MAX_X_Y 250
 
-typedef ::ShapeType_DDS_Traits::typed_writer_type TypedDataWriter;
+typedef ::I2C_Shapes::DataWriter TypedDataWriter;
 
 void
 write (TypedDataWriter::_ptr_type shapes_dw)
@@ -67,8 +67,7 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
   I2C_Shapes_Common common;
   try
     {
-      ::DDS::Publisher_var publisher;
-      publisher = common.create_publisher ();
+      ::DDS::Publisher_var publisher = common.create_publisher ();
       if (::CORBA::is_nil (publisher.in ()))
         {
           ACE_ERROR ((LM_ERROR, "ACE_TMAIN - Publisher seems to be nil\n"));
@@ -76,9 +75,8 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
         }
 
       ::DDS::Topic_var topic = common.get_topic ();
-      ::DDS::DataWriter_var dw;
       ::DDS::DataWriterQos wqos;
-      dw = publisher->create_datawriter (topic.in (),
+      ::DDS::DataWriter_var dw = publisher->create_datawriter (topic.in (),
                                       wqos,
                                       ::DDS::DataWriterListener::_nil (),
                                       0);

@@ -26,10 +26,7 @@ I2C_Shapes_Common::I2C_Shapes_Common (void)
 
 I2C_Shapes_Common::~I2C_Shapes_Common (void)
 {
-  if (this->factory_)
-    {
-      delete this->factory_;
-    }
+  delete this->factory_;
 }
 
 int
@@ -106,9 +103,8 @@ I2C_Shapes_Common::create_publisher (void)
     {
       initialize();
     }
-  ::DDS::Publisher_var publisher;
-      ::DDS::PublisherQos pqos;
-  publisher = participant_->create_publisher (pqos,
+  ::DDS::PublisherQos pqos;
+  ::DDS::Publisher_var publisher = participant_->create_publisher (pqos,
                                   ::DDS::PublisherListener::_nil (),
                                   0);
   return publisher._retn ();
@@ -121,9 +117,8 @@ I2C_Shapes_Common::create_subscriber (void)
     {
       initialize();
     }
-  ::DDS::Subscriber_var subscriber;
-      ::DDS::SubscriberQos sqos;
-  subscriber = participant_->create_subscriber (sqos,
+  ::DDS::SubscriberQos sqos;
+  ::DDS::Subscriber_var subscriber = participant_->create_subscriber (sqos,
                                   ::DDS::SubscriberListener::_nil (),
                                   0);
   return subscriber._retn ();

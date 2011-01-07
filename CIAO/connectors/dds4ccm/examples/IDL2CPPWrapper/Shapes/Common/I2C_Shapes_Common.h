@@ -4,7 +4,6 @@
 #define I2C_SHAPES_COMMON_H_
 
 #include "I2C_Shapes_Common_export.h"
-#include "Base/I2C_Shapes_Traits.h"
 #include "connectors/dds4ccm/impl/ndds/DomainParticipant.h"
 #include "connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h"
 #include "connectors/dds4ccm/impl/ndds/TypeSupport.h"
