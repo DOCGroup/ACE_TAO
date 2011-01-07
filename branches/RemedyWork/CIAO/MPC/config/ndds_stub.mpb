@@ -2,6 +2,7 @@
 // $Id$
 
 project : ndds {
+  includes += $(ACE_ROOT) $(CIAO_ROOT)
   libs += CIAO_NDDS_stub
   after += CIAO_NDDS_stub
 }
