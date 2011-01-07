@@ -55,6 +55,8 @@ project(TAO_Core_idl) : tao_versioning_idl_defaults, gen_ostream, install, pidl_
   }
 
   PidlInstallWithoutBuilding_Files {
+    InterfaceDef.pidl
+    InvalidName.pidl
     Object_Key.pidl
     Policy.pidl
     Typecode_types.pidl
