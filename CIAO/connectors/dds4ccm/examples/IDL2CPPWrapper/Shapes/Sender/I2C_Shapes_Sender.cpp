@@ -75,9 +75,9 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
         }
 
       ::DDS::Topic_var topic = common.get_topic ();
-      ::DDS::DataWriterQos wqos;
-      ::DDS::DataWriter_var dw = publisher->create_datawriter (topic.in (),
-                                      wqos,
+      ::DDS::DataWriter_var dw = publisher->create_datawriter_with_profile (
+                                      topic.in (),
+                                      QOS_PROFILE,
                                       ::DDS::DataWriterListener::_nil (),
                                       0);
 

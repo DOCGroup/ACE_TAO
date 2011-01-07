@@ -1,3 +1,12 @@
+Fri Jan  7 12:06:51 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.h:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.cpp:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.cpp:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Sender/I2C_Shapes_Sender.cpp:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/descriptors/USER_QOS_PROFILES.xml:
+          Created a profile and using the _with_profile methods in this example.
+
 Fri Jan  7 11:51:27 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.h:
