@@ -28,7 +28,6 @@ Cookie::check_cookie (::Components::Cookie * cookie)
   ptrdiff_t key = 0UL;
   try
     {
-      ACE_DEBUG ((LM_DEBUG, "########### 1\n"));
       if (cookie == 0 || ! ::CIAO::Cookie_Impl::extract (cookie, key))
         {
           ACE_ERROR ((LM_ERROR, "Cookie::check_cookie - "
@@ -36,7 +35,6 @@ Cookie::check_cookie (::Components::Cookie * cookie)
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "########### 2\n"));
           if (key == KEY_VALUE)
             {
               ACE_DEBUG ((LM_DEBUG, "Cookie::check_cookie - "
@@ -49,7 +47,6 @@ Cookie::check_cookie (::Components::Cookie * cookie)
                         KEY_VALUE, key));
             }
         }
-      ACE_DEBUG ((LM_DEBUG, "########### 3\n"));
     }
   catch (...)
     {
