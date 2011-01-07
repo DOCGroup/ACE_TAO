@@ -1,3 +1,9 @@
+Fri Jan  7 12:52:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/ndds_stub.mpb:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_ShapeType.mpc:
+          Optimized MPC-file's.
+
 Fri Jan  7 12:06:51 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.h:
