@@ -396,8 +396,12 @@ namespace CIAO
                     "Connection <%C> successfully established.\n",
                     conn.name.in ()));
 
-    this->cookies_[conn.name.in ()] = CONNECTION_INFO (cookie,
-                                                       ::Components::CCMObject::_duplicate (provided.in ()));
+    //TODO: check return value of insert.
+    CONNECTION_INFO conn_info = CONNECTION_INFO (cookie._retn (),
+                                                 ::Components::CCMObject::_duplicate (provided.in ()));
+    std::pair <std::string, CONNECTION_INFO> value_to_insert (conn.name.in (),
+                                                              conn_info);
+    this->cookies_.insert (value_to_insert);
   }
 
   void
@@ -504,8 +508,12 @@ namespace CIAO
                     "Connection <%C> successfully established.\n",
                     conn.name.in ()));
 
-    this->cookies_[conn.name.in ()] = CONNECTION_INFO (cookie,
-                                                       ::Components::CCMObject::_duplicate (receptacle.in ()));
+    //TODO: check return value of insert.
+    CONNECTION_INFO conn_info = CONNECTION_INFO (cookie._retn (),
+                                                 ::Components::CCMObject::_duplicate (receptacle.in ()));
+    std::pair <std::string, CONNECTION_INFO> value_to_insert (conn.name.in (),
+                                                              conn_info);
+    this->cookies_.insert (value_to_insert);
   }
 #if !defined (CCM_NOEVENT)
   void
@@ -565,8 +573,12 @@ namespace CIAO
                     "Connection <%C> successfully established.\n",
                     conn.name.in ()));
 
-    this->cookies_[conn.name.in ()] = CONNECTION_INFO (cookie,
-                                                       ::Components::CCMObject::_duplicate (publisher.in ()));
+    //TODO: check return value of insert.
+    CONNECTION_INFO conn_info = CONNECTION_INFO (cookie._retn (),
+                                                 ::Components::CCMObject::_duplicate (publisher.in ()));
+    std::pair <std::string, CONNECTION_INFO> value_to_insert (conn.name.in (),
+                                                              conn_info);
+    this->cookies_.insert (value_to_insert);
   }
 #endif
 #if !defined (CCM_NOEVENT)
@@ -655,8 +667,12 @@ namespace CIAO
 
     ::Components::Cookie_var nil_cookie;
 
-    this->cookies_[conn.name.in ()] = CONNECTION_INFO (nil_cookie,
-                                                       ::Components::CCMObject::_duplicate (emitter.in ()));
+    //TODO: check return value of insert.
+    CONNECTION_INFO conn_info = CONNECTION_INFO (nil_cookie._retn (),
+                                                 ::Components::CCMObject::_duplicate (emitter.in ()));
+    std::pair <std::string, CONNECTION_INFO> value_to_insert (conn.name.in (),
+                                                              conn_info);
+    this->cookies_.insert (value_to_insert);
   }
 #endif
   void
@@ -798,8 +814,12 @@ namespace CIAO
                     facet_id, facet_port,
                     receptacle_id, receptacle_port));
 
-    this->cookies_[connection_name]= CONNECTION_INFO (cookie.in (),
-                                                      ::Components::CCMObject::_duplicate (receptacle.in ()));
+    //TODO: check return value of insert.
+    CONNECTION_INFO conn_info = CONNECTION_INFO (cookie._retn (),
+                                                 ::Components::CCMObject::_duplicate (receptacle.in ()));
+    std::pair <std::string, CONNECTION_INFO> value_to_insert (connection_name,
+                                                              conn_info);
+    this->cookies_.insert (value_to_insert);
   }
 
   void

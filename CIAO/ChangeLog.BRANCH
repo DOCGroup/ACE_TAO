@@ -1,3 +1,8 @@
+Fri Jan  7 16:05:10 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Resolved disconnect issues.
+
 Fri Jan  7 14:49:14 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/IDL_Test/Hello.idl:
