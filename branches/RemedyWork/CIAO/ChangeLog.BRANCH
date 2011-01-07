@@ -1,3 +1,8 @@
+Fri Jan  7 09:24:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Cookies/Cookie.cpp:
+          Removed unnecessary debug statements.
+
 Fri Jan  7 09:04:25 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
