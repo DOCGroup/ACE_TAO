@@ -5,7 +5,7 @@
 
 #include "ace/OS_NS_unistd.h"
 
-typedef ::ShapeType_DDS_Traits::typed_reader_type TypedDataReader;
+typedef ::I2C_Shapes::DataReader TypedDataReader;
 
 void
 read (TypedDataReader::_ptr_type shapes_dr)
@@ -69,9 +69,8 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
         }
 
       ::DDS::Topic_var topic = common.get_topic ();
-      ::DDS::DataReader_var dr;
       ::DDS::DataReaderQos dqos;
-      dr = subscriber->create_datareader (topic.in (),
+      ::DDS::DataReader_var dr = subscriber->create_datareader (topic.in (),
                                       dqos,
                                       ::DDS::DataReaderListener::_nil (),
                                       0);
