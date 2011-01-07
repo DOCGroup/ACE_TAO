@@ -7,10 +7,13 @@
 #include "connectors/dds4ccm/impl/ndds/DomainParticipant.h"
 #include "connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h"
 #include "connectors/dds4ccm/impl/ndds/TypeSupport.h"
+#include "Base/I2C_Shapes_Traits.h"
 
 /**
  * Pulse generator
  */
+
+#define QOS_PROFILE "Shapes_Library#Shapes_Profile"
 
 class I2C_SHAPES_Export I2C_Shapes_Common
 {

@@ -18,7 +18,7 @@ read (TypedDataReader::_ptr_type shapes_dr)
           //start to read
           ShapeTypeSeq data;
           ::DDS::SampleInfoSeq  info;
-          ::DDS::ReturnCode_t retcode = shapes_dr->read (
+          ::DDS::ReturnCode_t retcode = shapes_dr->take (
                                                     data,
                                                     info,
                                                     ::DDS::LENGTH_UNLIMITED,
@@ -69,9 +69,9 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
         }
 
       ::DDS::Topic_var topic = common.get_topic ();
-      ::DDS::DataReaderQos dqos;
-      ::DDS::DataReader_var dr = subscriber->create_datareader (topic.in (),
-                                      dqos,
+      ::DDS::DataReader_var dr = subscriber->create_datareader_with_profile (
+                                      topic.in (),
+                                      QOS_PROFILE,
                                       ::DDS::DataReaderListener::_nil (),
                                       0);
 
