@@ -397,7 +397,7 @@ namespace CIAO
                     conn.name.in ()));
 
     this->cookies_[conn.name.in ()] = CONNECTION_INFO (cookie,
-                                                       ::Components::CCMObject::_duplicate (provided));
+                                                       ::Components::CCMObject::_duplicate (provided.in ()));
   }
 
   void
@@ -406,6 +406,8 @@ namespace CIAO
                                           ::CORBA::ULong endpointRef,
                                           const ::CORBA::Any & provided_reference)
   {
+    CIAO_TRACE ("Component_Handler_i::connect_receptacle");
+
     const ::Deployment::PlanConnectionDescription &conn =
       plan.connection[connectionRef];
     const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
@@ -574,7 +576,7 @@ namespace CIAO
                                         ::CORBA::ULong endpointRef,
                                         const ::CORBA::Any &)
   {
-    CIAO_TRACE ("Connection_Handler::connect_subscriber");
+    CIAO_TRACE ("Connection_Handler::connect_consumer");
 
     const ::Deployment::PlanConnectionDescription &conn =
       plan.connection[connectionRef];
@@ -795,8 +797,9 @@ namespace CIAO
                     "Connected local port <%C>:<%C> to <%C>:<%C>\n",
                     facet_id, facet_port,
                     receptacle_id, receptacle_port));
-    this->cookies_[connection_name] = CONNECTION_INFO (cookie,
-                                                       ::Components::CCMObject::_duplicate (receptacle.in ()));
+
+    this->cookies_[connection_name]= CONNECTION_INFO (cookie.in (),
+                                                      ::Components::CCMObject::_duplicate (receptacle.in ()));
   }
 
   void
@@ -836,14 +839,24 @@ namespace CIAO
       facet = DEPLOYMENT_STATE::instance ()->fetch_component (facet_id),
       receptacle = DEPLOYMENT_STATE::instance ()->fetch_component (receptacle_id);
 
-    //retrieve cookie.
-    CONNECTION_INFO conn_info = this->cookies_[connection_name];
+    COOKIES::iterator it = this->cookies_.find (connection_name);
+    if (it == this->cookies_.end ())
+      {
+        CIAO_ERROR (5, (LM_ERROR, CLINFO
+                        "Connection_Handler::disconnect_local_port - "
+                        "Cookie for <%C> not found\n",
+                        connection_name));
+        return;
+      }
     cont->disconnect_local_facet (
-                               conn_info.first.in (),
+                               it->second.first.in (),
                                facet,
                                facet_port,
                                receptacle,
                                receptacle_port);
+    it->second.second = ::Components::CCMObject::_nil ();
+    this->cookies_.erase (it);
+
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::disconnect_local_port - "
                     "Disconnected local port <%C>:<%C> to <%C>:<%C>\n",

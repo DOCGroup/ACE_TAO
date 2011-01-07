@@ -1,3 +1,25 @@
+Fri Jan  7 09:04:25 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * tests/Cookies:
+        * tests/Cookies/Cookie.h:
+        * tests/Cookies/Cookie.cpp:
+        * tests/Cookies/Cookies.mpc:
+        * tests/Cookies/Test.idl:
+        * tests/Cookies/client.cpp:
+        * tests/Cookies/run_test.pl:
+        * tests/Cookies/server.cpp:
+          Added test which explicitly tests the cookie implementation.
+
+        * ciao/Containers/Container_Base_T.cpp:
+          No need to catch the CookieRequired exception anymore.
+
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Remove cookie from the map on disconnect.
+
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp:
+          Resolved compile issues related to qos_profile name.
+
 Thu Jan  6 10:33:41 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Containers/Container_Base.idl:
