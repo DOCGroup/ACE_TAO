@@ -248,10 +248,9 @@ namespace CIAO
                          " and [%C]\n",
                          user_port,
                          provider_port));
-
             ::Components::Cookie_var cookie =
               user_serv->connect (user_port, exec.in ());
-            return cookie.in ();
+            return cookie._retn ();
           }
         else
           {
@@ -370,20 +369,7 @@ namespace CIAO
         // Note: Spec says that facet executor provided by component MAY BE NIL
         if (!::CORBA::is_nil (exec.in ()))
           {
-            try
-              {
-                ::CORBA::Object_var port = user_serv->disconnect (user_port, cookie);
-              }
-            catch (const ::Components::CookieRequired& ex)
-              {
-                CIAO_ERROR (6,
-                            (LM_ERROR,
-                            CLINFO
-                            "Container_i::disconnect_local_facet - "
-                            "Caught CookieRequired exception <%C>.\n",
-                            ex._info ().c_str ()));
-                throw ex;
-              }
+            ::CORBA::Object_var port = user_serv->disconnect (user_port, cookie);
           }
         else
           {

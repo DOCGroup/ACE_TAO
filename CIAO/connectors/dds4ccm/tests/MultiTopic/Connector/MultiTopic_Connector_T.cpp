@@ -456,33 +456,27 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::configuration_com
   this->sq_supplier_.configuration_complete (
                                       this->topic_sq_.in (),
                                       this->publisher_.in (),
-                                      this->library_name_,
-                                      this->profile_name_);
+                                      this->qos_profile_);
   this->tr_supplier_.configuration_complete (
                                       this->topic_tr_.in (),
                                       this->publisher_.in (),
-                                      this->library_name_,
-                                      this->profile_name_);
+                                      this->qos_profile_);
   this->cl_supplier_.configuration_complete (
                                       this->topic_cl_.in (),
                                       this->publisher_.in (),
-                                      this->library_name_,
-                                      this->profile_name_);
+                                      this->qos_profile_);
   this->pull_consumer_sq_.configuration_complete (
                                       this->topic_sq_.in (),
                                       this->subscriber_.in (),
-                                      this->library_name_,
-                                      this->profile_name_);
+                                      this->qos_profile_);
   this->pull_consumer_tr_.configuration_complete (
                                       this->topic_tr_.in (),
                                       this->subscriber_.in (),
-                                      this->library_name_,
-                                      this->profile_name_);
+                                      this->qos_profile_);
   this->push_consumer_cl_.configuration_complete (
                                       this->topic_cl_.in (),
                                       this->subscriber_.in (),
-                                      this->library_name_,
-                                      this->profile_name_);
+                                      this->qos_profile_);
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
