@@ -1,7 +1,7 @@
 //  -*- MPC -*- now wouldn't this be cool...
 // $Id$
 
-project(TAO_QtResource) : acelib, taolib, install, tao_output, taodefaults, ace_qtreactor, taoidldefaults {
+project(TAO_QtResource) : acelib, taolib, install, tao_output, taodefaults, ace_qt4reactor, taoidldefaults {
   sharedname   = TAO_QtResource
   dynamicflags += TAO_QTRESOURCE_BUILD_DLL
 
