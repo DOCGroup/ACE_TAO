@@ -1,3 +1,26 @@
+Fri Jan  7 08:04:59 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDir_GIOP/BiDir_GIOP.mpc:
+        * tao/CSD_Framework/CSD_Framework.mpc:
+        * tao/Codeset/Codeset.mpc:
+        * tao/DiffServPolicy/DiffServPolicy.mpc:
+        * tao/DynamicAny/DynamicAny.mpc:
+        * tao/EndpointPolicy/EndpointPolicy.mpc:
+        * tao/IORInterceptor/IORInterceptor.mpc:
+        * tao/IORManipulation/IORManipulation.mpc:
+        * tao/IORTable/IORTable.mpc:
+        * tao/ImR_Client/ImR_Client.mpc:
+        * tao/Messaging/Messaging.mpc:
+        * tao/Strategies/Strategies.mpc:
+        * tao/TransportCurrent/TC.mpc:
+        * tao/TransportCurrent/TC_IIOP.mpc:
+        * tao/TypeCodeFactory/TypeCodeFactory.mpc:
+        * tao/Valuetype/Valuetype.mpc:
+        * tao/ZIOP/ZIOP.mpc:
+        * tao/tao.mpc:
+          Fixed install problems with pidl files, thanks to Thomas Girard
+          for providing the patch
+
 Wed Jan  5 09:35:46 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * orbsvcs\orbsvcs\Log\Hash_LogStore.cpp:
@@ -18,7 +41,7 @@ Wed Jan  5 09:35:46 UTC 2011  Martin Corino  <mcorino@remedy.nl>
         * orbsvcs\ImplRepo_Service\Locator_NT_Service.cpp:
         * tao\ORB_Core.h:
         * utils\logWalker\Session.cpp:
-          Fixed compile warnings (uninitialized use, const char* assignments, 
+          Fixed compile warnings (uninitialized use, const char* assignments,
           etc.).
 
 Sun Jan  2 13:25:46 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>

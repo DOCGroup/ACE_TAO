@@ -1,5 +1,5 @@
 //$Id$
-project(*idl) : tao_versioning_idl_defaults {
+project(*idl) : tao_versioning_idl_defaults, install {
   custom_only = 1
   IDL_Files {
     idlflags += -SS -GA -Gp -Gd -Sorb -Sal \
@@ -59,6 +59,10 @@ project(*idl) : tao_versioning_idl_defaults {
                 -iC tao/Messaging
     idlflags -= -Sa -St
     Messaging.pidl
+  }
+
+  specific {
+    install_dir = tao/Messaging
   }
 }
 

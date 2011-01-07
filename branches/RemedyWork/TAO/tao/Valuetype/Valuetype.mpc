@@ -1,5 +1,5 @@
 //$Id$
-project(*idl) : tao_versioning_idl_defaults, gen_ostream {
+project(*idl) : tao_versioning_idl_defaults, gen_ostream, install {
   custom_only = 1
   IDL_Files {
     idlflags += -SS -Sorb \
@@ -8,6 +8,10 @@ project(*idl) : tao_versioning_idl_defaults, gen_ostream {
                 -iC tao/Valuetype
     idlflags -= -St
     StringValue.pidl
+  }
+
+  specific {
+    install_dir = tao/Valuetype
   }
 }
 

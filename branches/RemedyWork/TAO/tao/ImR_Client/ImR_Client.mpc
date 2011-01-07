@@ -1,5 +1,5 @@
 //$Id$
-project(*idl) : tao_versioning_idl_defaults {
+project(*idl) : tao_versioning_idl_defaults, install {
   custom_only = 1
   IDL_Files {
     idlflags += -Gp -Ssi -Gd -Sorb -GA \
@@ -17,6 +17,10 @@ project(*idl) : tao_versioning_idl_defaults {
                 -iC tao/ImR_Client
     idlflags -= -Sa -St
     ImplRepo.pidl
+  }
+
+  specific {
+    install_dir = tao/ImR_Client
   }
 }
 

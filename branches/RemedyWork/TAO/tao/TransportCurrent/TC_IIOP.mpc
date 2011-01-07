@@ -1,5 +1,5 @@
 //$Id$
-project(*idl) : tao_versioning_idl_defaults {
+project(*idl) : tao_versioning_idl_defaults, install {
   custom_only = 1
   IDL_Files {
     idlflags += -Wb,export_include=tao/TransportCurrent/Transport_Current_Export.h \
@@ -8,6 +8,10 @@ project(*idl) : tao_versioning_idl_defaults {
     idlflags -= -Sa -St
 
     TC_IIOP.idl
+  }
+
+  specific {
+    install_dir = tao/TransportCurrent
   }
 }
 
