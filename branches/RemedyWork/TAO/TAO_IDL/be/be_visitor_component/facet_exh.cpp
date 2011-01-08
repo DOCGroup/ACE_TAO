@@ -78,8 +78,8 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
 
       os_ << be_nl_2
           << "//@{" << be_nl
-          << "/** Operations and attributes from ::"
-          << intf->full_name () << ". */";
+          << "/** Operations and attributes from "
+          << intf->full_name () << " */";
 
       int const status =
         intf->traverse_inheritance_graph (
