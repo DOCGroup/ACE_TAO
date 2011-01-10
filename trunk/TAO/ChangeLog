@@ -1,3 +1,9 @@
+Mon Jan 10 14:02:08 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * tests/OctetSeq/client.cpp:
+        * tests/Param_Test/anyop.cpp:
+          Use ACE::is_equal() to compare floating point values.
+
 Wed Jan  5 13:14:09 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
@@ -8,7 +14,7 @@ Mon Jan  3 14:12:04 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * tests/LongDouble/client.cpp:
           Reverted change "Fri Dec 31 09:12:53 UTC 2010  Olli Savia  <ops@iki.fi>"
-          which broke 32-but builds.
+          which broke 32-bit builds.
 
 Sat Jan  1 10:48:07 UTC 2011  Olli Savia  <ops@iki.fi>
 
