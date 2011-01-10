@@ -58,7 +58,7 @@ namespace CIAO_Throughput_Receiver_Impl
     virtual ~info_listen_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::Throughput::ThroughputTestConn::Listener. */
+    /** Operations and attributes from Throughput::ThroughputTestConn::Listener. */
 
     virtual
     void on_one_data (const ::ThroughputTest & datum,
@@ -89,7 +89,7 @@ namespace CIAO_Throughput_Receiver_Impl
     virtual ~command_listen_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::Throughput::ThroughputCommandConn::Listener. */
+    /** Operations and attributes from Throughput::ThroughputCommandConn::Listener. */
 
     virtual
     void on_one_data (const ::ThroughputCommand & datum,

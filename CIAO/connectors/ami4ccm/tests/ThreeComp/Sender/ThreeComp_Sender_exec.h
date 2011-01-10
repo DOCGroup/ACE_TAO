@@ -86,7 +86,7 @@ namespace CIAO_ThreeComp_Sender_Impl
     virtual ~do_my_state_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::ThreeComp::State. */
+    /** Operations and attributes from ThreeComp::State. */
 
     virtual
     ::CORBA::Long bar (::CORBA::Long cmd,
@@ -111,7 +111,7 @@ namespace CIAO_ThreeComp_Sender_Impl
     virtual ~do_my_bar_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::ThreeComp::MyBar. */
+    /** Operations and attributes from ThreeComp::MyBar. */
 
     virtual
     ::CORBA::Long testbar (::CORBA::Long cmd,

@@ -52,7 +52,7 @@ namespace CIAO_ExceptionT_Receiver_Impl
     virtual ~do_my_foo_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::ExceptionT::MyFoo. */
+    /** Operations and attributes from ExceptionT::MyFoo. */
 
     virtual
     ::CORBA::Long foo (const char * in_str,

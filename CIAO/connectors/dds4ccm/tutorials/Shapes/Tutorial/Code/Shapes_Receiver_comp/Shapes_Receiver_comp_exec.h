@@ -53,7 +53,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
       ::Shapes::CCM_Receiver_comp_Context_ptr ctx);
     virtual ~info_out_data_listener_exec_i (void);
 
-    // Operations and attributes from ::Shapes::ShapeType_conn::Listener
+    // Operations and attributes from Shapes::ShapeType_conn::Listener
 
     virtual
     void on_one_data (const ::ShapeType & datum,
@@ -80,7 +80,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
       ::Shapes::CCM_Receiver_comp_Context_ptr ctx);
     virtual ~info_out_status_exec_i (void);
 
-    // Operations and attributes from ::CCM_DDS::PortStatusListener
+    // Operations and attributes from CCM_DDS::PortStatusListener
 
     virtual
     void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,

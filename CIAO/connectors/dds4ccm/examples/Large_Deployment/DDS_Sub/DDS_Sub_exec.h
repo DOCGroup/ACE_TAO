@@ -55,7 +55,7 @@ namespace CIAO_DDS_Sub_Impl
     Listener_exec_i (void);
     virtual ~Listener_exec_i (void);
 
-    // Operations and attributes from ::LargeTypeConn::Listener
+    // Operations and attributes from LargeTypeConn::Listener
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:37
@@ -85,7 +85,7 @@ namespace CIAO_DDS_Sub_Impl
     PortStatusListener_exec_i (void);
     virtual ~PortStatusListener_exec_i (void);
 
-    // Operations and attributes from ::CCM_DDS::PortStatusListener
+    // Operations and attributes from CCM_DDS::PortStatusListener
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:37

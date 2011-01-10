@@ -77,7 +77,7 @@ namespace CIAO_Shapes_Receiver_Impl
     virtual ~info_out_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::Shapes::Listener. */
+    /** Operations and attributes from Shapes::Listener. */
 
     virtual
     void on_one_data (const ::ShapeType & datum,

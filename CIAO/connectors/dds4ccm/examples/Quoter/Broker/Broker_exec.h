@@ -55,7 +55,7 @@ namespace CIAO_Quoter_Broker_Impl
     virtual ~info_out_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::Quoter::Listener. */
+    /** Operations and attributes from Quoter::Listener. */
 
     virtual
     void on_one_data (const ::Quoter::Stock_Info & datum,
@@ -84,7 +84,7 @@ namespace CIAO_Quoter_Broker_Impl
     virtual ~info_out_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PortStatusListener. */
+    /** Operations and attributes from CCM_DDS::PortStatusListener. */
 
     virtual
     void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,

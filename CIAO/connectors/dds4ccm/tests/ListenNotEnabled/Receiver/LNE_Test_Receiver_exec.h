@@ -58,7 +58,7 @@ namespace CIAO_LNE_Test_Receiver_Impl
     virtual ~info_listen_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::LNE_Test::ListenNotEnabledTestConnector::Listener. */
+    /** Operations and attributes from LNE_Test::ListenNotEnabledTestConnector::Listener. */
 
     virtual
     void on_one_data (const ::ListenNotEnabledTest & datum,
@@ -89,7 +89,7 @@ namespace CIAO_LNE_Test_Receiver_Impl
     virtual ~info_listen_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PortStatusListener. */
+    /** Operations and attributes from CCM_DDS::PortStatusListener. */
 
     virtual
     void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,

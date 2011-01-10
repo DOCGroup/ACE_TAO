@@ -55,7 +55,7 @@ namespace CIAO_Hello_Receiver_comp_Impl
       ::Hello::CCM_Receiver_comp_Context_ptr ctx);
     virtual ~do_my_foo_exec_i (void);
 
-    // Operations and attributes from ::Hello::MyFoo_obj
+    // Operations and attributes from Hello::MyFoo_obj
 
     virtual
     ::CORBA::Long foo (const char * in_str,

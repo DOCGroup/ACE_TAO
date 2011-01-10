@@ -77,7 +77,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
     virtual ~info_out_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PortStatusListener. */
+    /** Operations and attributes from CCM_DDS::PortStatusListener. */
 
     virtual
     void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,
