@@ -4,8 +4,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Tokenizer_T.h"
 
-#include <string>
-
 namespace CIAO
 {
   namespace NDDS

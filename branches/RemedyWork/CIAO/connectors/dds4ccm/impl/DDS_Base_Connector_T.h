@@ -62,9 +62,9 @@ protected:
   /**
    * Initialization of a connector.
    *
-   * When one wants to use his own ::DDS::DomainParticipant, ::DDS::Topic,
-   * ::DDS::Subscriber and/or ::DDS::Publisher, these helper methods allows
-   * to create these, independant of the DDS vendor.
+   * When one wants to use his own DDS::DomainParticipant, DDS::Topic,
+   * DDS::Subscriber and/or DDS::Publisher, these helper methods allows
+   * to create these, independent of the DDS vendor.
    *
    * See
    * $CIAO_ROOT/connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp
@@ -94,7 +94,7 @@ protected:
    * Activation of a connector.
    *
    * Helper methods to create the DDS listeners and attach them to the DDS Entities.
-   * This'll will activate the DDS Entities.
+   * This will activate the DDS Entities.
    *
    */
   //@{
