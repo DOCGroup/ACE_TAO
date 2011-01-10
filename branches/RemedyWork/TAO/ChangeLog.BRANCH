@@ -1,3 +1,11 @@
+Mon Jan 10 08:48:07 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * tao/Valuetype/ValueBase.h:
+          Layout and changes for doxygen
+
 Sat Jan  8 12:02:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/facet_exh.cpp:

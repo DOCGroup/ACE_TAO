@@ -184,11 +184,11 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       << "static " << node->local_name () << "* "
       << "_downcast ( ::CORBA::ValueBase *v);" << be_nl
       << be_nl
-      << "// (TAO extensions or internals)" << be_nl
+      << "/// TAO extensions or internals" << be_nl
       << "static ::CORBA::Boolean _tao_unmarshal (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
-      << node->local_name () << " *&new_object" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl
+      << node->local_name () << " *&new_object);" << be_uidt
+      << be_uidt_nl << be_nl
       << "virtual const char* "
       << "_tao_obv_repository_id (void) const;"
       << be_nl_2
