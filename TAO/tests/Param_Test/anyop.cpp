@@ -186,8 +186,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
             CORBA::Double o;
 
-            if (!(any >>= o)
-                || i != o)
+            if (!(any >>= o) || !ACE::is_equal (i, o))
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for CORBA::Double (%f,%f)\n",
@@ -268,9 +267,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 || o->c != i->c
                 || o->s != i->s
                 || o->o != i->o
-                || o->f != i->f
+                || !ACE::is_equal (o->f, i->f)
                 || o->b != i->b
-                || o->d != i->d)
+                || !ACE::is_equal (o->d, i->d))
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for Fixed_Struct "
@@ -284,9 +283,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 || o->c != i->c
                 || o->s != i->s
                 || o->o != i->o
-                || o->f != i->f
+                || !ACE::is_equal (o->f, i->f)
                 || o->b != i->b
-                || o->d != i->d)
+                || !ACE::is_equal (o->d, i->d))
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for Fixed_Struct "
