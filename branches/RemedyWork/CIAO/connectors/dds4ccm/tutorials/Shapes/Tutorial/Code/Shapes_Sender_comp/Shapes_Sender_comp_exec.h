@@ -53,7 +53,7 @@ namespace CIAO_Shapes_Sender_comp_Impl
       ::Shapes::CCM_Sender_comp_Context_ptr ctx);
     virtual ~control_exec_i (void);
 
-    // Operations and attributes from ::Shapes::Control_obj
+    // Operations and attributes from Shapes::Control_obj
 
     virtual
     ::Shapes::ReturnStatus setSize (::CORBA::UShort size);

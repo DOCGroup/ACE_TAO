@@ -48,7 +48,7 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
       Receiver_exec_i & callback);
     virtual ~reader_start_exec_i (void);
 
-    // Operations and attributes from ::CoherentUpdateStarter
+    // Operations and attributes from CoherentUpdateStarter
 
     virtual
     void set_reader_properties (

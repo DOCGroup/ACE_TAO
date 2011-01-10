@@ -56,7 +56,7 @@ namespace CIAO_CIF_CIF_Provider_Impl
       ::CIF::CCM_CIF_Provider_Context_ptr ctx);
     virtual ~provide_cif_foo_exec_i (void);
 
-    // Operations and attributes from ::CIF::foo
+    // Operations and attributes from CIF::foo
 
     virtual
     void do_foo (void);
@@ -76,7 +76,7 @@ namespace CIAO_CIF_CIF_Provider_Impl
       ::CIF::CCM_CIF_Provider_Context_ptr ctx);
     virtual ~provide_cif_derived_foo_exec_i (void);
 
-    // Operations and attributes from ::CIF::derived_foo
+    // Operations and attributes from CIF::derived_foo
 
     virtual
     void do_derived_foo (void);

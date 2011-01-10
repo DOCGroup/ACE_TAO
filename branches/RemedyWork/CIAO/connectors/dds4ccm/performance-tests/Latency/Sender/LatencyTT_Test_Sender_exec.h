@@ -74,7 +74,7 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
     virtual ~ping_listen_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::LatencyTT_Test::LatencyTTTestConn::Listener. */
+    /** Operations and attributes from LatencyTT_Test::LatencyTTTestConn::Listener. */
 
     virtual
     void on_one_data (const ::LatencyTTTest & datum,
@@ -107,7 +107,7 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
     virtual ~connector_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::ConnectorStatusListener. */
+    /** Operations and attributes from CCM_DDS::ConnectorStatusListener. */
 
     virtual
     void on_inconsistent_topic (::DDS::Topic_ptr the_topic,

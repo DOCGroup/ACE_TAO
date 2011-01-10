@@ -55,7 +55,7 @@ namespace CIAO_InterOutArgsT_Receiver_Impl
     virtual ~do_my_foo_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::InterOutArgsT::MyFoo. */
+    /** Operations and attributes from InterOutArgsT::MyFoo. */
 
     virtual
     void var_outs (const char * in_str,

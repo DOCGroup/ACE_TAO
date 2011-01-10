@@ -48,7 +48,7 @@ namespace CIAO_CoherentUpdate_Test_Sender_Impl
     virtual ~restart_updater_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CoherentUpdateRestarter. */
+    /** Operations and attributes from CoherentUpdateRestarter. */
 
     virtual
     void restart_update (void);

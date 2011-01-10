@@ -89,7 +89,7 @@ namespace CIAO_PartialShutdown_Component2_Impl
     virtual ~comp_2_writer_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::PartialShutdown::Writer. */
+    /** Operations and attributes from PartialShutdown::Writer. */
 
     virtual
     void write_line (const char * line);
@@ -115,7 +115,7 @@ namespace CIAO_PartialShutdown_Component2_Impl
     virtual ~comp_2_reader_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::PartialShutdown::Reader. */
+    /** Operations and attributes from PartialShutdown::Reader. */
 
     virtual
     ::CORBA::StringSeq * read_lines (void);

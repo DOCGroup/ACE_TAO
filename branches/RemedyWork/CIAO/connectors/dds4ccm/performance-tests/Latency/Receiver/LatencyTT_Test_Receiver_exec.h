@@ -57,7 +57,7 @@ namespace CIAO_LatencyTT_Test_Receiver_Impl
     virtual ~info_listen_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::LatencyTT_Test::LatencyTTTestConn::Listener. */
+    /** Operations and attributes from LatencyTT_Test::LatencyTTTestConn::Listener. */
 
     virtual
     void on_one_data (const ::LatencyTTTest & datum,

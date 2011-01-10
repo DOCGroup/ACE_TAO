@@ -79,7 +79,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
     virtual ~info_get_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PortStatusListener. */
+    /** Operations and attributes from CCM_DDS::PortStatusListener. */
 
     virtual
     void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,
@@ -110,7 +110,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
     virtual ~info_out_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::PSL_DeadlineTest::PSLDeadlineConnector::Listener. */
+    /** Operations and attributes from PSL_DeadlineTest::PSLDeadlineConnector::Listener. */
 
     virtual
     void on_one_data (const ::TestTopic & datum,
@@ -141,7 +141,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
     virtual ~info_out_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PortStatusListener. */
+    /** Operations and attributes from CCM_DDS::PortStatusListener. */
 
     virtual
     void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,

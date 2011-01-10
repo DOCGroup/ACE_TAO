@@ -33,7 +33,7 @@ namespace CIAO_Shapes_Sender_comp_Impl
       Sender_comp_exec_i &callback);
     virtual ~control_exec_i (void);
 
-    // Operations and attributes from ::Shapes::Control_obj
+    // Operations and attributes from Shapes::Control_obj
 
     virtual
     ::Shapes::ReturnStatus setSize (::CORBA::UShort size);

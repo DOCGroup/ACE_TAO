@@ -63,7 +63,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
     virtual ~info_out_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::SL_OneByOne::SL_OneByOneConnector::StateListener. */
+    /** Operations and attributes from SL_OneByOne::SL_OneByOneConnector::StateListener. */
 
     virtual
     void on_creation (const ::TestTopic & datum,
@@ -105,7 +105,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
     virtual ~info_out_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PortStatusListener. */
+    /** Operations and attributes from CCM_DDS::PortStatusListener. */
 
     virtual
     void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,
