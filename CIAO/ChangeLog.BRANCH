@@ -1,3 +1,17 @@
+Mon Jan 10 09:19:06 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao.doxygen:
+        * etc/ciao_dds4ccm.doxygen:
+          Removed deprecated macros
+
+        * tests/IDL_Test/Cornucopia/Cornucopia.doxygen:
+        * tests/IDL_Test/Cornucopia/run_test.pl:
+          Run doxygen on the generated executor file and see if no errors
+          or warnings are triggered as part of our test.
+
+        * bin/ciao_tests.lst:
+          Added new test only when DOXYGEN is deifned
+
 Mon Jan 10 08:24:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/AsynchT/Receiver/AsynchT_Receiver_exec.h:
