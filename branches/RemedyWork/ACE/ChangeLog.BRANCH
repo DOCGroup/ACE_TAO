@@ -1,3 +1,19 @@
+Mon Jan 10 09:09:16 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace.doxygen:
+        * etc/ace_inet.doxygen:
+        * etc/ace_man.doxygen:
+        * etc/ace_qos.doxygen:
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/acexml.doxygen:
+          Removed deprecated macros
+
+Fri Jan  7 08:25:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/patches/11-promote-QtResource-to-qt4.dpatch:
+          Removed part of this patch
+
 Thu Jan  6 11:20:15 UTC 2011  Martin Corino <mcorino@remedy.nl>
 
         * ace/Object_Manager.cpp:
