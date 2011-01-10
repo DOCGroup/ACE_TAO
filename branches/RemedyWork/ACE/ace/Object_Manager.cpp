@@ -268,7 +268,7 @@ ACE_Object_Manager::init (void)
           // And this will catch all unhandled exceptions.
           SetUnhandledExceptionFilter (&ACE_UnhandledExceptionFilter);
 
-#  if (_MSC_VER >= 1400) // VC++ 8.0 and above 
+#  if (_MSC_VER >= 1400) // VC++ 8.0 and above
           // And this will stop the abort system call from being treated as a crash
           _set_abort_behavior( 0,  _CALL_REPORTFAULT);
 #  endif
