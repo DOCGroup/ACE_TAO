@@ -57,16 +57,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
     defined (ACE_HAS_TSS_EMULATION)
 
-#if defined (ACE_MVS)
-  static ACE_thread_key_t the_log_msg_tss_key =
-  #if !defined(_LP64)
-      { '\0','\0','\0','\0' };
-  #else
-      { '\0','\0','\0','\0','\0','\0','\0','\0' };
-  #endif
-#else
-  static ACE_thread_key_t the_log_msg_tss_key = 0;
-#endif /* defined (ACE_MVS) */
+static ACE_thread_key_t the_log_msg_tss_key = 0;
 
 ACE_thread_key_t *log_msg_tss_key (void)
 {
@@ -1739,8 +1730,8 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   ACE_hthread_t t_id;
                   ACE_OS::thr_self (t_id);
 
-#  if defined (ACE_MVS) || defined (ACE_TANDEM_T1248_PTHREADS)
-                  // MVS's pthread_t is a struct... yuck. So use the ACE 5.0
+#  if defined (ACE_TANDEM_T1248_PTHREADS)
+                  // tandem pthread_t is a struct... yuck. So use the ACE 5.0
                   // code for it.
                   ACE_OS::strcpy (fp, ACE_TEXT ("u"));
                   if (can_check)

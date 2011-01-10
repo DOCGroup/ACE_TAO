@@ -61,8 +61,8 @@ ACE_Thread_ID::to_string (char *thr_string) const
                    format,
                    static_cast <unsigned> (this->thread_id_));
 #else
-# if defined (ACE_MVS) || defined (ACE_TANDEM_T1248_PTHREADS)
-                  // MVS's pthread_t is a struct... yuck. So use the ACE 5.0
+# if defined (ACE_TANDEM_T1248_PTHREADS)
+                  // Tandem pthread_t is a struct... yuck. So use the ACE 5.0
                   // code for it.
                   ACE_OS::strcpy (fp, "u");
                   ACE_OS::sprintf (thr_string, format, thread_handle_);
@@ -77,7 +77,7 @@ ACE_Thread_ID::to_string (char *thr_string) const
                   ACE_OS::sprintf (thr_string,
                                    format,
                                    (unsigned long) thread_handle_);
-# endif /* ACE_MVS || ACE_TANDEM_T1248_PTHREADS */
+# endif /* ACE_TANDEM_T1248_PTHREADS */
 #endif /* ACE_WIN32 */
 }
 

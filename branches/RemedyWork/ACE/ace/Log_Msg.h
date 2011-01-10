@@ -633,7 +633,7 @@ private:
   /**
    * If we're running in the context of an ACE_Thread_Manager this
    * will point to the thread descriptor adapter which holds the
-   * thread descriptor of the thread.  This can be used to repidly
+   * thread descriptor of the thread.  This can be used to rapidly
    * access all thread data kept in ACE_Thread_Descriptor.
    */
   ACE_Thread_Descriptor *thr_desc_;
