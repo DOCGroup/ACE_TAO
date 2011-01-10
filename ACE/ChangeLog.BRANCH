@@ -1,3 +1,24 @@
+Mon Jan 10 13:53:16 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.h:
+          Doxygen fix
+
+        * ace/Log_Msg.cpp:
+        * ace/OS_NS_Thread.cpp:
+        * ace/Task.cpp:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/os_include/sys/os_types.h:
+        * apps/gperf/src/Key_List.cpp:
+          Cleanup of MVS support, got deprecated already a long time ago, but
+          seems we forgot todo the cleanup
+
+        * ace/config-mvs.h:
+          Removed
+
+        * ace/config-sunos5.6.h:
+        * ace/config-win32-common.h:
+          Zapped some empty lines
+
 Mon Jan 10 12:38:10 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ace.doxygen:

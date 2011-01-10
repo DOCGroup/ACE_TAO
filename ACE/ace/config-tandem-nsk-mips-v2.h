@@ -180,7 +180,7 @@ typedef enum CMA_T_SCHED_POLICY {
 #define ACE_LACKS_WCTYPE_H
 
 // Platform supports the POSIX regular expression library.
-// [Note Tandem NSK platform does have regular expresson support but it
+// [Note Tandem NSK platform does have regular expression support but it
 // does not follow the assumptions made by ACE.  To use it would need
 // to make some ACE modifications.]
 //#define ACE_HAS_REGEX
