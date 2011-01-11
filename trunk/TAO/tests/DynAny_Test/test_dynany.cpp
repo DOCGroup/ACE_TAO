@@ -79,7 +79,7 @@ Test_DynAny::run_test (void)
         CORBA::Double d_out =
           fa1->get_double ();
 
-        if (d_out == data.m_double1)
+        if (ACE::is_equal (d_out, data.m_double1))
           {
             ACE_DEBUG ((LM_DEBUG,
                       "++ OK ++\n"));
@@ -102,7 +102,7 @@ Test_DynAny::run_test (void)
         CORBA::Any_var out_any1 = ftc1->to_any ();
         out_any1 >>= d_out;
 
-        if (d_out == data.m_double1)
+        if (ACE::is_equal (d_out, data.m_double1))
           {
             ACE_DEBUG ((LM_DEBUG,
                       "++ OK ++\n"));
@@ -133,7 +133,7 @@ Test_DynAny::run_test (void)
 
         CORBA::LongDouble d_out = fa1->get_longdouble ();
 
-        if (d_out == data.m_longdouble1)
+        if (ACE::is_equal (d_out, data.m_longdouble1))
           {
             ACE_DEBUG ((LM_DEBUG,
               "++ OK ++\n"));
@@ -160,7 +160,7 @@ Test_DynAny::run_test (void)
 
         out_any1.in() >>= d_out;
 
-        if (d_out == data.m_longdouble1)
+        if (ACE::is_equal (d_out, data.m_longdouble1))
         {
           ACE_DEBUG ((LM_DEBUG,
             "++ OK ++\n"));

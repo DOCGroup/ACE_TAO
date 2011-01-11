@@ -1,3 +1,10 @@
+Tue Jan 11 07:09:15 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * tests/Alt_Mapping/ub_struct_seq.cpp:
+        * tests/DynAny_Test/test_dynany.cpp:
+          Use ACE::is_equal() to compare floating point values.
+
 Mon Jan 10 14:02:08 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * tests/OctetSeq/client.cpp:
