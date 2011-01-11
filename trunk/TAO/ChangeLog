@@ -1,3 +1,13 @@
+Tue Jan 11 18:57:28 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_union/discriminant_ci.cpp(visit_enum):
+
+          When generating a default discriminant value of -1 (all
+          enum values are used in union cases), changed the cast
+          (to the enum type) from C-style to C++ style static_cast<>.
+          Thanks to Milan Cvetkovic <milan dot cvetkovic at mpathix dot com>
+          for the suggestion.
+
 Tue Jan 11 07:09:15 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
