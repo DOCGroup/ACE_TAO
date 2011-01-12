@@ -861,7 +861,6 @@ namespace CIAO
                                receptacle_port);
 
     it->second.second = ::Components::CCMObject::_nil ();
-    it->second.first->_remove_ref ();
     this->cookies_.erase (it);
 
     CIAO_DEBUG (5, (LM_INFO, CLINFO

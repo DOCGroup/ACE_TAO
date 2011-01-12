@@ -10,10 +10,6 @@
 #include "ciao/Containers/Extension/ServerContainerInterceptorRegistration_Impl.h"
 #include "ciao/Containers/Extension/StubContainerInterceptorRegistration_Impl.h"
 
-#if !defined (__ACE_INLINE__)
-# include "Extension_Container.inl"
-#endif /* __ACE_INLINE__ */
-
 namespace CIAO
 {
   ///////////////////////////////////////////////////////////////

@@ -1,3 +1,13 @@
+Wed Jan 12 15:15:09 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Containers/Extension/Extension_Container.h:
+        * ciao/Containers/Extension/Extension_Container.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+          Resolved link/compile issues on windows.
+
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Resolved runtime errors regarding cookie registration.
+
 Wed Jan 12 14:43:37 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Containers/Container_Base_T.h:
