@@ -573,7 +573,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ::test_wait ();
 
 #if defined (ACE_WIN32)
-  ACE_UNUSED_ARG (win32_test_ls);
+  ACE_UNUSED_ARG (&win32_test_ls);
 
   if (environment_string != 0)
     win32_spawn_environment_process ();
