@@ -109,6 +109,9 @@ namespace CIAO
     typedef std::map <std::string,
                       CONNECTION_INFO> COOKIES;
 
+    void insert_cookie (const char * connection_name,
+                        const CONNECTION_INFO conn_info);
+
     COOKIES cookies_;
   };
 }

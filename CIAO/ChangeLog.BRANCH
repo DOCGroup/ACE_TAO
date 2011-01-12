@@ -1,3 +1,23 @@
+Wed Jan 12 14:43:37 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.h:
+        * ciao/Containers/Container_Base_T.cpp:
+        * ciao/Containers/Extension/Extension_Container.h:
+        * ciao/Containers/Extension/Extension_Container.cpp:
+        * ciao/Containers/Extension/Extension_Container.mpc:
+        * ciao/Containers/Session/Session_Container.h:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Containers/Session/Session_Container.mpc:
+        * ciao/Containers/Extension/Extension_Container.inl:
+        * ciao/Containers/Session/Session_Container.inl:
+          Reorganized code. Moved as much as possible code to the base class.
+
+        * ciao/Deployment/Handlers/Connection_Handler.h:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Check whether the Cookie was succesfully inserted into the internal
+          map. If not, throw an InvalidConnection exception since disconnect
+          will certainly fail. Also remove the cookie and CCMObject again.
+
 Wed Jan 12 09:56:24 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/DAnCE/PartialShutdown/Component1/Component1_exec.cpp:
