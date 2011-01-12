@@ -1,7 +1,7 @@
-Tue Jan 11 13:46:15 UTC 2011  Martin Corino <mcorino@remedy.nl>
+Wed Jan 12 09:21:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * include/makeinclude/platform_gnuwin32_common.GNU:
-          Optimized link command for latest MingW version.
+        * apps/gperf/src/Key_List.cpp:
+          Fixed gcc warnings
 
 Mon Jan 10 13:53:16 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
