@@ -5,10 +5,6 @@
 #include "ciao/Servants/Servant_Impl_Base.h"
 #include "ciao/Logger/Log_Macros.h"
 
-#if !defined (__ACE_INLINE__)
-# include "Session_Container.inl"
-#endif /* __ACE_INLINE__ */
-
 namespace CIAO
 {
   ///////////////////////////////////////////////////////////////
