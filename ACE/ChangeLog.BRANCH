@@ -1,3 +1,8 @@
+Wed Jan 12 11:57:15 UTC 2011  Martin Corino <mcorino@remedy.nl>
+
+        * examples/OS/Process/process.cpp:
+          Fixed MSVC warning.
+
 Wed Jan 12 09:21:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/gperf/src/Key_List.cpp:
