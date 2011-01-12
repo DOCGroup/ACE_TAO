@@ -1,3 +1,11 @@
+Wed Jan 12 09:56:24 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/DAnCE/PartialShutdown/Component1/Component1_exec.cpp:
+        * tests/DAnCE/PartialShutdown/Component2/Component2_exec.cpp:
+        * tests/DAnCE/PartialShutdown/Component3/Component3_exec.cpp:
+          Shutting down tickers of component 3 on ccm_passivate.
+          Resolved valgrind issues.
+
 Mon Jan 10 11:26:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:

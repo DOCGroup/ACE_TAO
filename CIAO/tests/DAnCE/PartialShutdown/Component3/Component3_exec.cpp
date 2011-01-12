@@ -264,7 +264,7 @@ namespace CIAO_PartialShutdown_Component3_Impl
       }
     else
       {
-        writer_to_comp_1->write_line (::CORBA::string_dup (str_to_comp_1));
+        writer_to_comp_1->write_line (str_to_comp_1);
       }
 
     PartialShutdown::Writer_var writer_to_comp_2 =
@@ -277,7 +277,7 @@ namespace CIAO_PartialShutdown_Component3_Impl
       }
     else
       {
-        writer_to_comp_2->write_line (::CORBA::string_dup (str_to_comp_2));
+        writer_to_comp_2->write_line (str_to_comp_2);
       }
   }
 
@@ -407,7 +407,8 @@ namespace CIAO_PartialShutdown_Component3_Impl
   void
   Component3_exec_i::ccm_passivate (void)
   {
-    /* Your code here. */
+    this->reactor ()->cancel_timer (this->write_ticker_);
+    this->reactor ()->cancel_timer (this->read_ticker_);
   }
 
   void
