@@ -157,7 +157,8 @@ AST_Decl::AST_Decl (NodeType nt,
     anonymous_ (anonymous),
     typeid_set_ (false),
     last_referenced_as_ (0),
-    prefix_scope_ (0)
+    prefix_scope_ (0),
+    in_tmpl_mod_not_aliased_ (idl_global->in_tmpl_mod_no_alias ())
 {
   // If this is the root node, the filename won't have been set yet.
   UTL_String *fn = idl_global->filename ();
@@ -1500,7 +1501,8 @@ AST_Decl::masking_checks (AST_Decl *mod)
     }
 
   AST_Module *me_mod = AST_Module::narrow_from_decl (this);
-  if (me_mod)
+
+  if (me_mod != 0)
     {
       AST_Module *po_mod = AST_Module::narrow_from_decl (mod);
       if (po_mod)
@@ -1516,6 +1518,18 @@ AST_Decl::masking_checks (AST_Decl *mod)
     }
 
   return false;
+}
+
+bool
+AST_Decl::in_tmpl_mod_not_aliased (void) const
+{
+  return this->in_tmpl_mod_not_aliased_;
+}
+
+void
+AST_Decl::in_tmpl_mod_not_aliased (bool val)
+{
+  this->in_tmpl_mod_not_aliased_ = val;
 }
 
 //Narrowing methods for AST_Decl.

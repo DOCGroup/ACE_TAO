@@ -13,6 +13,7 @@
 #include "utl_indenter.h"
 #include "utl_err.h"
 #include "global_extern.h"
+#include "fe_extern.h"
 
 AST_Decl::NodeType const
 AST_Component::NT = AST_Decl::NT_component;
@@ -39,6 +40,8 @@ AST_Component::AST_Component (UTL_ScopedName *n,
                    false),
     pd_base_component (base_component)
 {
+  FE_Utils::tmpl_mod_ref_check (this, base_component);
+
   if (!this->imported ())
     {
       idl_global->component_seen_ = true;

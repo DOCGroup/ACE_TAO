@@ -134,12 +134,16 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
   // Enqueue the param holders (if any) for later destruction.
   // By the time our destroy() is called, it will be too late
   // to iterate over pd_inherits.
+  // Also check for illegal reference to a template module
+  // scope item.
   for (long i = 0; i < nih; ++i)
     {
       if (ih[i]->node_type () == AST_Decl::NT_param_holder)
         {
           this->param_holders_.enqueue_tail (ih[i]);
         }
+
+      FE_Utils::tmpl_mod_ref_check (this, ih[i]);
     }
 }
 

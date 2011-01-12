@@ -43,6 +43,8 @@ AST_Home::AST_Home (UTL_ScopedName *n,
     pd_primary_key (primary_key),
     owns_primary_key_ (false)
 {
+  FE_Utils::tmpl_mod_ref_check (this, base_home);
+
   AST_ValueType *pk =
     AST_ValueType::narrow_from_decl (primary_key);
 
