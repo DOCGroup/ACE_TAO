@@ -17,6 +17,7 @@ class AST_PortType;
 class AST_Enum;
 class AST_Component;
 class AST_Uses;
+class AST_Template_Module;
 
 struct TAO_IDL_FE_Export FE_Utils
 {
@@ -115,11 +116,21 @@ struct TAO_IDL_FE_Export FE_Utils
   can_be_redefined (AST_Decl *prev_dec,
                     AST_Decl *curr_decl);
 
+  /// Called any time there is a possible error from
+  /// referencing a decl contained in a template module,
+  /// but not via an alias.
+  static void
+  tmpl_mod_ref_check (AST_Decl *context,
+                      AST_Decl *ref);
+
 private:
   static bool
   check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
                           ACE_CString &param_id,
                           size_t index);
+
+  static AST_Template_Module *
+  get_tm_container (AST_Decl *contained);
 };
 
 #endif /* FE_UTILS_H */

@@ -58,12 +58,16 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
   // Enqueue the param holders (if any) for later destruction.
   // By the time our destroy() is called, it will be too late
   // to iterate over pd_inherits.
+  // Also check for illegal template module scope reference,
+  // as long as we're iterating.
   for (long i = 0; i < n_supports; ++i)
     {
       if (supports[i]->node_type () == AST_Decl::NT_param_holder)
         {
           this->param_holders_.enqueue_tail (supports[i]);
         }
+
+      FE_Utils::tmpl_mod_ref_check (this, supports[i]);
     }
 
   if (inherits_concrete != 0)

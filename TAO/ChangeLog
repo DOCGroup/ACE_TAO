@@ -1,3 +1,32 @@
+Wed Jan 12 21:08:04 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/fe_utils.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Added new error, reporting when there is an
+          illegal reference to an item in the scope
+          of a template module. Unless the item is
+          declared in the same scope in which it is
+          referenced, the reference must be to an
+          item in an alias of a template module. Also
+          added a mechanism to check for this error, and
+          usage of the mechanism in places where AST
+          nodes are referenced.
+
 Wed Jan 12 13:20:09 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/tests/Notify/MC/test_monitor.cpp:

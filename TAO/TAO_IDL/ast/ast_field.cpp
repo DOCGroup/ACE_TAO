@@ -96,6 +96,8 @@ AST_Field::AST_Field (AST_Type *ft,
     visibility_ (vis),
     owns_base_type_ (false)
 {
+  FE_Utils::tmpl_mod_ref_check (this, ft);
+
   AST_Decl::NodeType fnt = ft->node_type ();
 
   // In each of these cases, we are responsible for destroying
