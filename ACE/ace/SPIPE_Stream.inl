@@ -139,7 +139,7 @@ ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
   }
   return 0;
 #else
-  handle = handle;
+  ACE_UNUSED_ARG (handle);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STREAM_PIPES */
 }
@@ -195,7 +195,7 @@ ACE_SPIPE_Stream::recv_handle (ACE_HANDLE &handle) const
   }
   return 0;
 #else
-  handle = handle;
+  ACE_UNUSED_ARG (handle);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STREAM_PIPES */
 }
