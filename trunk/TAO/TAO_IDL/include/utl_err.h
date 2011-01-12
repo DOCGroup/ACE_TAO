@@ -130,7 +130,7 @@ public:
     EIDL_ENUM_VAL_EXPECTED,     // Expected an enumerator
     EIDL_ENUM_VAL_NOT_FOUND,    // Didnt find an enumerator with that name
     EIDL_EVAL_ERROR,            // Error in evaluating expression
-    EIDL_INCOMPATIBLE_TYPE,     // Assign floating pt. to integer or vice versa
+    EIDL_INCOMPATIBLE_TYPE,     // Assign floating pt. to int or vice versa
     EIDL_AMBIGUOUS,             // Ambiguous name definition
     EIDL_DECL_NOT_DEFINED,      // Forward declared but never defined
     EIDL_FWD_DECL_LOOKUP,       // Tried to lookup in fwd declared intf
@@ -146,10 +146,11 @@ public:
     EIDL_TC_SUPPRESSION_WARNING,// -St option used with exception decl
     EIDL_ILLEGAL_BOXED_TYPE,    // Valuetype not allowed for box value type
     EIDL_ILLEGAL_PRIMARY_KEY,   // Primary key doesn't meet spec constraints
-    EIDL_MISMATCHED_T_PARAM,    // Between defined & referenced template interfaces
-    EIDL_DUPLICATE_T_PARAM,     // A template interface's param ids must be unique
+    EIDL_MISMATCHED_T_PARAM,    // Between def'd & ref'd template interfaces
+    EIDL_DUPLICATE_T_PARAM,     // A tmpl module's param ids must be unique
     EIDL_T_ARG_LENGTH,          // Wrong # of template args
     EIDL_MISMATCHED_SEQ_PARAM,  // 'sequence<T>' must match a previous param
+    EIDL_TEMPLATE_NOT_ALIASED,  // ref to tmpl module scope must be via alias
     EIDL_OK                     // No error
   };
 
@@ -377,6 +378,10 @@ public:
 
   // Error (default) or warning (set by command line option).
   void anonymous_type_diagnostic (void);
+
+  // Reference to an item in the scope of a template
+  // module was not via an alias.
+  void template_scope_ref_not_aliased (AST_Decl *d);
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

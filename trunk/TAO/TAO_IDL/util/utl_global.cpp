@@ -155,7 +155,9 @@ IDL_GlobalData::IDL_GlobalData (void)
     included_ami_receps_done_ (false),
     corba_module_ (0),
     anon_type_diagnostic_ (ANON_TYPE_ERROR),
-    in_typedef_ (false)
+    in_typedef_ (false),
+    in_tmpl_mod_no_alias_ (false),
+    in_tmpl_mod_alias_ (false)
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
@@ -1792,4 +1794,28 @@ void
 IDL_GlobalData::in_typedef (bool val)
 {
   this->in_typedef_ = val;
+}
+
+bool
+IDL_GlobalData::in_tmpl_mod_no_alias (void) const
+{
+  return this->in_tmpl_mod_no_alias_;
+}
+
+void
+IDL_GlobalData::in_tmpl_mod_no_alias (bool val)
+{
+  this->in_tmpl_mod_no_alias_ = val;
+}
+
+bool
+IDL_GlobalData::in_tmpl_mod_alias (void) const
+{
+  return this->in_tmpl_mod_alias_;
+}
+
+void
+IDL_GlobalData::in_tmpl_mod_alias (bool val)
+{
+  this->in_tmpl_mod_alias_ = val;
 }

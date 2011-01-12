@@ -586,6 +586,16 @@ module
           /*
            * Finished with this module - pop it from the scope stack.
            */
+
+          AST_Template_Module *tm =
+            AST_Template_Module::narrow_from_scope (
+              idl_global->scopes ().top_non_null ());
+
+          if (tm != 0)
+            {
+              idl_global->in_tmpl_mod_no_alias (false);
+            }
+
           idl_global->scopes ().pop ();
         }
         ;
@@ -646,6 +656,9 @@ template_module
            * Push it on the stack
            */
           idl_global->scopes ().push (tm);
+
+          // Contained items not part of an alias will get flag set.
+          idl_global->in_tmpl_mod_no_alias (true);
 
           // Store these for reference as we parse the scope
           // of the template module.
@@ -751,6 +764,11 @@ template_module_ref
           delete $2;
           $2 = 0;
 
+          // Save the current flag value to be restored below.
+          bool itmna_flag = idl_global->in_tmpl_mod_no_alias ();
+          idl_global->in_tmpl_mod_no_alias (false);
+          idl_global->in_tmpl_mod_alias (true);
+
           ast_visitor_context ctx;
           ctx.template_params (ref->template_params ());
           ast_visitor_tmpl_module_ref v (&ctx);
@@ -771,6 +789,9 @@ template_module_ref
 
               idl_global->set_err_count (idl_global->err_count () + 1);
             }
+
+          idl_global->in_tmpl_mod_no_alias (itmna_flag);
+          idl_global->in_tmpl_mod_alias (false);
         }
         ;
 
