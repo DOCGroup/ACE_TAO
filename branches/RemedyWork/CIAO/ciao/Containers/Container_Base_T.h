@@ -71,7 +71,7 @@ namespace CIAO
                                                   const char *name) = 0;
 
     /// Uninstall a servant for component or home.
-    virtual void uninstall_home (Components::CCMHome_ptr homeref) = 0;
+    virtual void uninstall_home (Components::CCMHome_ptr homeref);
 
     virtual Components::CCMObject_ptr install_component (const char *primary_artifact,
                                                          const char *entry_point,
@@ -79,23 +79,17 @@ namespace CIAO
                                                          const char *servant_entrypoint,
                                                          const char *name) = 0;
 
-    virtual void uninstall_component (Components::CCMObject_ptr compref) = 0;
+    virtual void set_attributes (CORBA::Object_ptr compref,
+                                 const ::Components::ConfigValues & values);
 
-    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p) = 0;
+    /// Activate component
+    virtual void activate_component (Components::CCMObject_ptr compref);
 
-    virtual CORBA::Object_ptr install_servant (PortableServer::Servant objref,
-                                               Container_Types::OA_Type type,
-                                               PortableServer::ObjectId_out oid) = 0;
+    /// Passivate a component
+    virtual void passivate_component (Components::CCMObject_ptr compref);
 
-    /// Uninstall a servant for component.
-    virtual void uninstall_servant (PortableServer::Servant objref,
-                                    Container_Types::OA_Type type,
-                                    PortableServer::ObjectId_out oid) = 0;
-
-    /// Get a reference to the underlying ORB.
-    CORBA::ORB_ptr the_ORB (void) const;
-
-    virtual CORBA::Object_ptr resolve_service_reference(const char *service_id);
+    /// Uninstall a given component
+    virtual void uninstall_component (Components::CCMObject_ptr compref);
 
     /// Connect a local facet
     virtual ::Components::Cookie *
@@ -111,6 +105,32 @@ namespace CIAO
                             const char * provider_port,
                             ::Components::CCMObject_ptr user,
                             const char * user_port);
+
+    virtual CORBA::Object_ptr install_servant (PortableServer::Servant objref,
+                                               Container_Types::OA_Type type,
+                                               PortableServer::ObjectId_out oid);
+
+    /// Uninstall a servant for component.
+    virtual void uninstall_servant (PortableServer::Servant objref,
+                                    Container_Types::OA_Type type,
+                                    PortableServer::ObjectId_out oid);
+
+    /// Return the servant activator factory that activates the
+    /// servants for facets and consumers.
+    virtual ::CIAO::Servant_Activator_ptr ports_servant_activator (void);
+
+    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p);
+
+    /// Analog of the POA method that creates an object reference from
+    /// an object id string.
+    virtual CORBA::Object_ptr generate_reference (const char *obj_id,
+                                          const char *repo_id,
+                                          Container_Types::OA_Type t);
+
+    /// Get a reference to the underlying ORB.
+    CORBA::ORB_ptr the_ORB (void) const;
+
+    virtual CORBA::Object_ptr resolve_service_reference (const char *service_id);
 
   protected:
     /// Reference to the ORB
@@ -134,6 +154,9 @@ namespace CIAO
     /// The servant activator factory used to activate facets and
     /// consumer servants.
     Servant_Activator_var sa_;
+
+    /// Uninstall a servant for component or home.
+    void uninstall (CORBA::Object_ptr objref, Container_Types::OA_Type t);
 
   private:
     /// Not allowed to be used

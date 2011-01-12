@@ -3,6 +3,7 @@
 #include "ciao/Logger/Log_Macros.h"
 #include "dance/Deployment/Deployment_InvalidConnectionC.h"
 #include "CIAO_State.h"
+
 namespace CIAO
 {
   void
@@ -396,12 +397,9 @@ namespace CIAO
                     "Connection <%C> successfully established.\n",
                     conn.name.in ()));
 
-    //TODO: check return value of insert.
     CONNECTION_INFO conn_info = CONNECTION_INFO (cookie._retn (),
                                                  ::Components::CCMObject::_duplicate (provided.in ()));
-    std::pair <std::string, CONNECTION_INFO> value_to_insert (conn.name.in (),
-                                                              conn_info);
-    this->cookies_.insert (value_to_insert);
+    this->insert_cookie (conn.name.in (), conn_info);
   }
 
   void
@@ -508,12 +506,9 @@ namespace CIAO
                     "Connection <%C> successfully established.\n",
                     conn.name.in ()));
 
-    //TODO: check return value of insert.
     CONNECTION_INFO conn_info = CONNECTION_INFO (cookie._retn (),
                                                  ::Components::CCMObject::_duplicate (receptacle.in ()));
-    std::pair <std::string, CONNECTION_INFO> value_to_insert (conn.name.in (),
-                                                              conn_info);
-    this->cookies_.insert (value_to_insert);
+    this->insert_cookie (conn.name.in (), conn_info);
   }
 #if !defined (CCM_NOEVENT)
   void
@@ -573,12 +568,9 @@ namespace CIAO
                     "Connection <%C> successfully established.\n",
                     conn.name.in ()));
 
-    //TODO: check return value of insert.
     CONNECTION_INFO conn_info = CONNECTION_INFO (cookie._retn (),
                                                  ::Components::CCMObject::_duplicate (publisher.in ()));
-    std::pair <std::string, CONNECTION_INFO> value_to_insert (conn.name.in (),
-                                                              conn_info);
-    this->cookies_.insert (value_to_insert);
+    this->insert_cookie (conn.name.in (), conn_info);
   }
 #endif
 #if !defined (CCM_NOEVENT)
@@ -667,12 +659,9 @@ namespace CIAO
 
     ::Components::Cookie_var nil_cookie;
 
-    //TODO: check return value of insert.
     CONNECTION_INFO conn_info = CONNECTION_INFO (nil_cookie._retn (),
                                                  ::Components::CCMObject::_duplicate (emitter.in ()));
-    std::pair <std::string, CONNECTION_INFO> value_to_insert (conn.name.in (),
-                                                              conn_info);
-    this->cookies_.insert (value_to_insert);
+    this->insert_cookie (conn.name.in (), conn_info);
   }
 #endif
   void
@@ -814,12 +803,9 @@ namespace CIAO
                     facet_id, facet_port,
                     receptacle_id, receptacle_port));
 
-    //TODO: check return value of insert.
     CONNECTION_INFO conn_info = CONNECTION_INFO (cookie._retn (),
                                                  ::Components::CCMObject::_duplicate (receptacle.in ()));
-    std::pair <std::string, CONNECTION_INFO> value_to_insert (connection_name,
-                                                              conn_info);
-    this->cookies_.insert (value_to_insert);
+    this->insert_cookie (connection_name, conn_info);
   }
 
   void
@@ -866,7 +852,6 @@ namespace CIAO
                         "Connection_Handler::disconnect_local_port - "
                         "Cookie for <%C> not found\n",
                         connection_name));
-        return;
       }
     cont->disconnect_local_facet (
                                it->second.first.in (),
@@ -874,7 +859,9 @@ namespace CIAO
                                facet_port,
                                receptacle,
                                receptacle_port);
+
     it->second.second = ::Components::CCMObject::_nil ();
+    it->second.first->_remove_ref ();
     this->cookies_.erase (it);
 
     CIAO_DEBUG (5, (LM_INFO, CLINFO
@@ -888,6 +875,7 @@ namespace CIAO
   Connection_Handler::is_local_facet (const ::Deployment::PlanConnectionDescription &conn)
   {
     CIAO_TRACE ("Connection_Handler::is_local_facet");
+
     Deployment::Requirements const& deploy_req = conn.deployRequirement;
     for (CORBA::ULong i = 0; i < deploy_req.length (); i++)
       {
@@ -899,4 +887,25 @@ namespace CIAO
       }
     return false;
   }
+
+  void
+  Connection_Handler::insert_cookie (const char * connection_name,
+                                     const CONNECTION_INFO conn_info)
+  {
+    CIAO_TRACE ("Connection_Handler::insert_cookie");
+
+    std::pair <std::string, CONNECTION_INFO> value_to_insert (connection_name,
+                                                              conn_info);
+    std::pair<COOKIES::iterator, bool> ret = this->cookies_.insert (value_to_insert);
+    if (!ret.second)
+      {
+        CIAO_ERROR (1, (LM_ERROR,  CLINFO "Connection_Handler::insert_cookie - "
+                    "Error inserting new cookie\n"));
+        conn_info.first->_remove_ref ();
+        conn_info.second->_remove_ref ();
+        throw ::Deployment::InvalidConnection (connection_name,
+                                               "Unable to insert cookie.");
+      }
+  }
+
 }

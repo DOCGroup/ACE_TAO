@@ -38,32 +38,6 @@ namespace CIAO
     Container_i < ::CIAO::Session_Container>::fini ();
   }
 
-  CORBA::Object_ptr
-  Session_Container_i::install_servant (PortableServer::Servant p,
-                                        Container_Types::OA_Type t,
-                                        PortableServer::ObjectId_out oid)
-  {
-    CIAO_TRACE ("Session_Container_i::install_servant");
-
-    PortableServer::POA_ptr tmp = PortableServer::POA::_nil();
-
-    if (t == Container_Types::COMPONENT_t ||
-        t == Container_Types::HOME_t)
-      {
-        tmp = this->component_poa_.in ();
-      }
-    else
-      {
-        tmp = this->facet_cons_poa_.in ();
-      }
-
-    PortableServer::ObjectId_var tmp_id = tmp->activate_object (p);
-    CORBA::Object_var objref = tmp->id_to_reference (tmp_id.in ());
-    oid = tmp_id._retn ();
-
-    return objref._retn ();
-  }
-
   //@@ Apparently we need to be cautious when handling the exception
   //   thrown here. We should make sure that new DnC interfaces
   //   NodeApplication/NodeApplicationManager etc will cache the new
@@ -77,9 +51,6 @@ namespace CIAO
                                      const char *name)
   {
     CIAO_TRACE ("Session_Container_i::install_home");
-
-    HomeFactory hcreator = 0;
-    HomeServantFactory screator = 0;
 
     CIAO_DEBUG (6,
                 (LM_DEBUG,
@@ -215,12 +186,13 @@ namespace CIAO
     void *void_ptr =
       executor_dll.symbol (ACE_TEXT_CHAR_TO_TCHAR (entry_point));
     ptrdiff_t tmp_ptr = reinterpret_cast<ptrdiff_t> (void_ptr);
-    hcreator = reinterpret_cast<HomeFactory> (tmp_ptr);
+
+    HomeFactory hcreator = reinterpret_cast<HomeFactory> (tmp_ptr);
 
     void_ptr =
       servant_dll.symbol (ACE_TEXT_CHAR_TO_TCHAR (servant_entrypoint));
     tmp_ptr = reinterpret_cast<ptrdiff_t> (void_ptr);
-    screator = reinterpret_cast<HomeServantFactory> (tmp_ptr);
+    HomeServantFactory screator = reinterpret_cast<HomeServantFactory> (tmp_ptr);
 
     if (!hcreator)
       {
@@ -324,9 +296,6 @@ namespace CIAO
                                           const char *name)
   {
     CIAO_TRACE ("Session_Container_i::install_component");
-
-    ComponentFactory ccreator = 0;
-    ComponentServantFactory screator = 0;
 
     CIAO_DEBUG (6,
                 (LM_DEBUG,
@@ -460,12 +429,12 @@ namespace CIAO
     void *void_ptr =
       executor_dll.symbol (ACE_TEXT_CHAR_TO_TCHAR (entry_point));
     ptrdiff_t tmp_ptr = reinterpret_cast<ptrdiff_t> (void_ptr);
-    ccreator = reinterpret_cast<ComponentFactory> (tmp_ptr);
+    ComponentFactory ccreator = reinterpret_cast<ComponentFactory> (tmp_ptr);
 
     void_ptr =
       servant_dll.symbol (ACE_TEXT_CHAR_TO_TCHAR (servant_entrypoint));
     tmp_ptr = reinterpret_cast<ptrdiff_t> (void_ptr);
-    screator = reinterpret_cast<ComponentServantFactory> (tmp_ptr);
+    ComponentServantFactory screator = reinterpret_cast<ComponentServantFactory> (tmp_ptr);
 
     if (ccreator == 0)
       {
@@ -560,394 +529,5 @@ namespace CIAO
                 "Component successfully created\n"));
 
     return componentref._retn ();
-  }
-
-  void
-  Session_Container_i::set_attributes (CORBA::Object_ptr compref,
-                                     const ::Components::ConfigValues & values)
-  {
-    CIAO_TRACE("Session_Container_i::set_attributes");
-
-    try
-      {
-        PortableServer::ServantBase_var svt;
-
-        try
-          {
-            svt = this->component_poa_->reference_to_servant (compref);
-          }
-        catch (CORBA::Exception &ex)
-          {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO
-                            "Session_Container_i::set_attributes - "
-                            "Caught CORBA exception while retrieving servant: %C",
-                            ex._info ().c_str ()));
-            throw CIAO::InvalidComponent ();
-          }
-        catch (...)
-          {
-            CIAO_ERROR (1, (LM_EMERGENCY, "ex in ref to servant\n"));
-            throw CIAO::InvalidComponent ();
-          }
-
-        if (!svt)
-          {
-            CIAO_ERROR (1, (LM_EMERGENCY, "invalid servant reference\n"));
-            throw CIAO::InvalidComponent  ();
-          }
-        else
-          {
-            CIAO::Connector_Servant_Impl_Base * comp = 0;
-            CIAO::Home_Servant_Impl_Base *home = 0;
-
-            if ((comp = dynamic_cast <CIAO::Connector_Servant_Impl_Base *> (svt.in ())))
-              {
-                CIAO_DEBUG (9,
-                            (LM_TRACE,
-                             CLINFO
-                             "Session_Container_i::set_attributes - "
-                             "Configuring attribute values on "
-                             "component object reference.\n"));
-
-                comp->set_attributes (values);
-              }
-            else if ((home = dynamic_cast <CIAO::Home_Servant_Impl_Base *> (svt.in ())))
-              {
-                CIAO_DEBUG (9,
-                            (LM_TRACE,
-                             CLINFO
-                             "Session_Container_i::set_attributes - "
-                             "Configuring attribute values on "
-                             "home object reference.\n"));
-
-                home->set_attributes (values);
-              }
-            else
-              {
-                CIAO_ERROR (1, (LM_EMERGENCY, "not home or component\n"));
-                throw CIAO::InvalidComponent ();
-              }
-          }
-      }
-    catch (const CIAO::InvalidComponent &)
-      {
-        CIAO_ERROR (1,
-                    (LM_ERROR,
-                     CLINFO
-                     "Session_Container_i::set_attributes - "
-                     "Failed to retrieve servant and/or cast "
-                     "to servant pointer.\n"));
-        throw;
-      }
-    catch (const CORBA::Exception &ex)
-      {
-        CIAO_ERROR (1,
-                    (LM_ERROR,
-                     CLINFO
-                     "Session_Container_i::set_attributes - "
-                     "Caught CORBA exception while configuring "
-                     "component attributes: %C\n",
-                     ex._info ().c_str ()));
-        throw;
-      }
-    catch (...)
-      {
-        CIAO_ERROR (1,
-                    (LM_ERROR,
-                     CLINFO
-                     "Session_Container_i::set_attributes - "
-                     "Caught unknown C++ exception while "
-                     "configuring component attributes.\n"));
-
-        throw;
-      }
-  }
-
-  void
-  Session_Container_i::activate_component (
-    Components::CCMObject_ptr compref)
-  {
-    CIAO_TRACE("Session_Container_i::activate_component");
-
-    try
-      {
-
-        CIAO::Connector_Servant_Impl_Base * svt = 0;
-
-        try
-          {
-            PortableServer::ServantBase_var servant_from_reference =
-              this->component_poa_->reference_to_servant (compref);
-            svt =
-              dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (
-                servant_from_reference.in ());
-          }
-        catch (...)
-          {
-            throw InvalidComponent ();
-          }
-
-        if (!svt)
-          {
-            throw CIAO::InvalidComponent  ();
-          }
-        else
-          {
-            CIAO_DEBUG (9,
-                        (LM_TRACE,
-                         CLINFO
-                         "Session_Container_i::activate_component - "
-                         "Invoking CCM activate on provided "
-                         "component object reference.\n"));
-
-            svt->activate_component ();
-          }
-      }
-    catch (const CIAO::InvalidComponent &)
-      {
-        CIAO_ERROR (1,
-                    (LM_ERROR,
-                     CLINFO
-                     "Session_Container_i::activate_component - "
-                     "Failed to retrieve servant and/or cast "
-                     "to servant pointer.\n"));
-        throw;
-      }
-    catch (const CORBA::Exception &ex)
-      {
-        CIAO_ERROR (1,
-                    (LM_ERROR,
-                     CLINFO
-                     "Session_Container_i::activate_component - "
-                     "Caught CORBA exception while activating "
-                     "a component: %C\n",
-                     ex._info ().c_str ()));
-        throw;
-      }
-    catch (...)
-      {
-        CIAO_ERROR (1,
-                    (LM_ERROR,
-                     CLINFO
-                     "Session_Container_i::activate_component - "
-                     "Caught unknown C++ exception while "
-                     "activating a component.\n"));
-
-        throw;
-      }
-  }
-
-  void
-  Session_Container_i::passivate_component (Components::CCMObject_ptr compref)
-  {
-    CIAO_TRACE ("Session_Container_i::passivate_component");
-
-    try
-      {
-        CIAO::Connector_Servant_Impl_Base * svt = 0;
-
-        try
-          {
-            PortableServer::ServantBase_var servant_from_reference =
-              this->component_poa_->reference_to_servant (compref);
-            svt =
-              dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (
-                servant_from_reference.in ());
-          }
-        catch (...)
-          {
-            throw InvalidComponent ();
-          }
-
-        if (!svt)
-          {
-            throw CIAO::InvalidComponent  ();
-          }
-        else
-          {
-            CIAO_DEBUG (9,
-                        (LM_TRACE,
-                         CLINFO
-                         "Session_Container_i::passivate_component - "
-                         "Invoking CCM passivate on provided "
-                         "component object reference.\n"));
-
-            svt->passivate_component ();
-          }
-      }
-    catch (const CORBA::Exception &ex)
-      {
-        CIAO_ERROR (1,
-                    (LM_ERROR,
-                     CLINFO
-                     "Session_Container_i::passivate_component - "
-                     "Caught CORBA exception while passivating "
-                     "a component: %C\n",
-                     ex._info ().c_str ()));
-
-        throw;
-      }
-    catch (...)
-      {
-        CIAO_ERROR (1,
-                    (LM_ERROR,
-                     CLINFO
-                     "Session_Container_i::passivate_component - "
-                     "Caught unknown C++ exception while "
-                     "passivating a component.\n"));
-
-        throw;
-      }
-  }
-
-  void
-  Session_Container_i::uninstall (CORBA::Object_ptr objref,
-                                Container_Types::OA_Type y)
-  {
-    CIAO_TRACE ("Session_Container_i::uninstall");
-
-    PortableServer::ServantBase_var svnt;
-
-    switch (y)
-      {
-      case Container_Types::COMPONENT_t:
-      case Container_Types::HOME_t:
-        svnt = this->component_poa_->reference_to_servant (objref);
-        break;
-      default:
-        svnt = this->facet_cons_poa_->reference_to_servant (objref);
-        break;
-      }
-
-    PortableServer::ObjectId_var oid;
-    this->uninstall_servant (svnt.in (), y, oid.out ());
-  }
-
-  void
-  Session_Container_i::uninstall_home (Components::CCMHome_ptr homeref)
-  {
-    CIAO_TRACE ("Session_Container_i::uninstall_home");
-
-    this->uninstall (homeref, Container_Types::HOME_t);
-  }
-
-  void
-  Session_Container_i::uninstall_component (
-    Components::CCMObject_ptr homeref)
-  {
-    CIAO_TRACE ("Session_Container_i::uninstall_component");
-
-    PortableServer::ServantBase_var srv_tmp =
-      this->component_poa_->reference_to_servant (homeref);
-    CIAO::Connector_Servant_Impl_Base * svnt =
-      dynamic_cast <CIAO::Connector_Servant_Impl_Base *> (
-        srv_tmp.in ());
-
-    if (!svnt)
-      {
-        CIAO_ERROR (1,
-                    (LM_ERROR,
-                     CLINFO
-                     "Session_Container_i::uninstall_component - "
-                     "Unable to convert provided servant "
-                     "reference to servant implementation."));
-
-        throw ::Components::RemoveFailure ();
-      }
-    else
-      {
-        svnt->remove ();
-      }
-  }
-
-  void
-  Session_Container_i::uninstall_servant (PortableServer::Servant svnt,
-                                        Container_Types::OA_Type t,
-                                        PortableServer::ObjectId_out oid)
-  {
-    CIAO_TRACE ("Session_Container_i::uninstall_servant");
-
-    PortableServer::POA_ptr tmp = PortableServer::POA::_nil();
-
-    if ((t == Container_Types::COMPONENT_t) ||
-        (t == Container_Types::HOME_t))
-      {
-        CIAO_DEBUG (9,
-                    (LM_TRACE,
-                     CLINFO
-                     "Session_Container_i::uninstall_servant - "
-                     "Removing component or home servant\n"));
-
-        tmp = this->component_poa_.in ();
-      }
-    else
-      {
-        CIAO_DEBUG (9,
-                   (LM_TRACE,
-                    CLINFO
-                    "Session_Container_i::uninstall_servant - "
-                    "Removing facet or consumer servant\n"));
-
-        tmp = this->facet_cons_poa_.in ();
-      }
-
-    try
-      {
-        PortableServer::ObjectId_var tmp_id = tmp->servant_to_id (svnt);
-        tmp->deactivate_object (tmp_id);
-
-        CIAO_DEBUG (9,
-                    (LM_TRACE,
-                     CLINFO
-                     "Session_Container_i::uninstall_servant - "
-                     "Servant successfully removed, "
-                     "reference count is %u\n",
-                     svnt->_refcount_value () - 1));
-
-        oid = tmp_id._retn ();
-      }
-    catch (const CORBA::Exception &ex)
-      {
-        CIAO_ERROR (1,
-                    (LM_ERROR,
-                     CLINFO
-                     "Session_Container_i::uninstall_servant - "
-                     "Caught CORBA exception while "
-                     "uninstalling servant: %C\n",
-                     ex._info ().c_str ()));
-
-        throw Components::RemoveFailure ();
-      }
-  }
-
-  CORBA::Object_ptr
-  Session_Container_i::generate_reference (const char *obj_id,
-                                         const char *repo_id,
-                                         Container_Types::OA_Type t)
-  {
-    CIAO_TRACE ("Session_Container_i::generate_reference");
-
-    PortableServer::POA_ptr tmp = PortableServer::POA::_nil();
-
-    if (t == Container_Types::COMPONENT_t
-        || t == Container_Types::HOME_t)
-      {
-        tmp = this->component_poa_.in ();
-      }
-    else
-      {
-        tmp = this->facet_cons_poa_.in ();
-      }
-
-    PortableServer::ObjectId_var oid =
-      PortableServer::string_to_ObjectId (obj_id);
-
-    CORBA::String_var str =
-      PortableServer::ObjectId_to_string (oid.in ());
-
-    CORBA::Object_var objref =
-      tmp->create_reference_with_id (oid.in (), repo_id);
-
-    return objref._retn ();
   }
 }
