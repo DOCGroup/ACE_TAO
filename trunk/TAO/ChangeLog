@@ -1,3 +1,11 @@
+Wed Jan 12 13:00:13 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * tests/Param_Test/bd_struct_seq.cpp:
+        * tests/Param_Test/fixed_struct.cpp:
+        * tests/Param_Test/ub_struct_seq.cpp:
+        * tests/Param_Test/var_struct.cpp:
+          Use ACE::is_equal() to compare floating point values.
+
 Tue Jan 11 18:57:28 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_union/discriminant_ci.cpp(visit_enum):

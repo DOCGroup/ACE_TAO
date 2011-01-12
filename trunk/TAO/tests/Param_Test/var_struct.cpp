@@ -149,9 +149,9 @@ CORBA::Boolean
 Test_Var_Struct::check_validity (void)
 {
   CORBA::Boolean flag = 0;
-  if (this->in_.dbl == this->inout_->dbl &&
-      this->in_.dbl == this->out_->dbl &&
-      this->in_.dbl == this->ret_->dbl &&
+  if (ACE::is_equal (this->in_.dbl, this->inout_->dbl) &&
+      ACE::is_equal (this->in_.dbl, this->out_->dbl) &&
+      ACE::is_equal (this->in_.dbl, this->ret_->dbl) &&
       (!ACE_OS::strcmp (this->in_.dummy1, this->inout_->dummy1)) &&
       (!ACE_OS::strcmp (this->in_.dummy1, this->out_->dummy1)) &&
       (!ACE_OS::strcmp (this->in_.dummy1, this->ret_->dummy1)) &&
