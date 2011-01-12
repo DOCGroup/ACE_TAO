@@ -1,3 +1,11 @@
+Wed Jan 12 21:05:19 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/OS_NS_unistd.inl:
+        * ace/SPIPE_Stream.inl:
+
+          Use ACE_UNUSED_ARG instead of self assignment to suppress unused
+          variable warning.
+
 Wed Jan  5 23:10:05 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * tests/Bug_2610_Regression_Test.cpp: Fixed a bunch of ACE_ERROR
