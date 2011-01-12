@@ -264,7 +264,7 @@ namespace CIAO_PartialShutdown_Component2_Impl
       }
     else
       {
-        writer_to_comp_1->write_line (::CORBA::string_dup (str_to_comp_1));
+        writer_to_comp_1->write_line (str_to_comp_1);
       }
 
     PartialShutdown::Writer_var writer_to_comp_3 =
@@ -277,7 +277,7 @@ namespace CIAO_PartialShutdown_Component2_Impl
       }
     else
       {
-        writer_to_comp_3->write_line (::CORBA::string_dup (str_to_comp_3));
+        writer_to_comp_3->write_line (str_to_comp_3);
       }
   }
 
