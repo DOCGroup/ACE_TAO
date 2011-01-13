@@ -3098,7 +3098,7 @@ tao_yyreduce:
           (tao_yyvsp[(2) - (8)].idlist)->destroy ();
           delete (tao_yyvsp[(2) - (8)].idlist);
           (tao_yyvsp[(2) - (8)].idlist) = 0;
-          
+                
           // Save the current flag value to be restored below.
           bool itmna_flag = idl_global->in_tmpl_mod_no_alias ();
           idl_global->in_tmpl_mod_no_alias (false);
