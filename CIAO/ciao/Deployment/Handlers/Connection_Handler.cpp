@@ -53,7 +53,7 @@ namespace CIAO
 
                 endpoint_reference = out;
 
-                if (this->is_local_facet (conn))
+                if (this->is_local_connection (conn))
                   (*out) <<= comp.in ();
                 else
                   {
@@ -314,7 +314,7 @@ namespace CIAO
                     conn.name.in (),
                     plan.instance[endpoint.instanceRef].name.in ()));
 
-    if (this->is_local_facet (conn))
+    if (this->is_local_connection (conn))
       {
         CORBA::ULong other_endpointRef = (endpointRef + 1) % 2;
         if (conn.internalEndpoint.length () == 2 &&
@@ -341,12 +341,30 @@ namespace CIAO
             throw ::Deployment::InvalidConnection (conn.name.in (),
                                                    "Local facet connections require exactly 2 internalEndpoints");
           }
+        this->connect_non_local_facet (plan,
+                                       connectionRef,
+                                       endpointRef,
+                                       provided_reference);
       }
+  }
+
+  void
+  Connection_Handler::connect_non_local_facet (const ::Deployment::DeploymentPlan & plan,
+                                               ::CORBA::ULong connectionRef,
+                                               ::CORBA::ULong endpointRef,
+                                               const ::CORBA::Any & provided_reference)
+  {
+    CIAO_TRACE ("Connection_Handler::connect_non_local_facet");
+
+    const ::Deployment::PlanConnectionDescription &conn =
+      plan.connection[connectionRef];
+    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
+      conn.internalEndpoint[endpointRef];
 
     if (conn.externalReference.length () == 0)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::connect_facet - "
+                        "Connection_Handler::connect_non_local_facet - "
                         "Error: Expected external reference endpoint for connection <%C>",
                         conn.name.in ()));
         throw ::Deployment::InvalidConnection (conn.name.in (),
@@ -361,7 +379,7 @@ namespace CIAO
     if (CORBA::is_nil (provided))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::connect_facet - "
+                        "Connection_Handler::connect_non_local_facet - "
                         "While connecting <%C>:"
                         "Provided reference for connection where primary is Facet must be "
                         "non-nil.\n",
@@ -378,7 +396,7 @@ namespace CIAO
     if (CORBA::is_nil (facet_provider))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::connect_facet - "
+                        "Connection_Handler::connect_non_local_facet - "
                         "While connecting <%C>:"
                         "Providing component not deployed.",
                         plan.connection[connectionRef].name.in ()));
@@ -393,7 +411,7 @@ namespace CIAO
                                                          facet.in ());
 
     CIAO_DEBUG (5, (LM_INFO, CLINFO
-                    "Connection_Handler::connect_facet - "
+                    "Connection_Handler::connect_non_local_facet - "
                     "Connection <%C> successfully established.\n",
                     conn.name.in ()));
 
@@ -421,7 +439,7 @@ namespace CIAO
                     conn.name.in (),
                     plan.instance[endpoint.instanceRef].name.in ()));
 
-    if (this->is_local_facet (conn))
+    if (this->is_local_connection (conn))
       {
         CORBA::ULong other_endpointRef = (endpointRef + 1) % 2;
         if (conn.internalEndpoint.length () == 2 &&
@@ -447,13 +465,31 @@ namespace CIAO
                                                    "Local receptacle connections require exactly 2 internalEndpoints");
           }
       }
+    this->connect_non_local_receptacle (plan,
+                                        connectionRef,
+                                        endpointRef,
+                                        provided_reference);
+  }
+
+  void
+  Connection_Handler::connect_non_local_receptacle (const ::Deployment::DeploymentPlan & plan,
+                                                    ::CORBA::ULong connectionRef,
+                                                    ::CORBA::ULong endpointRef,
+                                                    const ::CORBA::Any & provided_reference)
+  {
+    CIAO_TRACE ("Component_Handler_i::connect_non_local_receptacle");
+
+    const ::Deployment::PlanConnectionDescription &conn =
+      plan.connection[connectionRef];
+    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
+      conn.internalEndpoint[endpointRef];
 
     ::CORBA::Object_var provided;
 
     if (!(provided_reference >>= CORBA::Any::to_object  (provided)))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::connect_facet - "
+                        "Connection_Handler::connect_non_local_receptacle - "
                         "Unable to extract provided reference to CORBA::Object\n",
                         plan.connection[connectionRef].name.in ()));
         throw ::Deployment::InvalidConnection (plan.connection[connectionRef].name.in (),
@@ -470,7 +506,7 @@ namespace CIAO
             if (CORBA::is_nil (facet_provider.in ()))
               {
                 CIAO_ERROR (1, (LM_ERROR, CLINFO
-                                "Connection_Handler::connect_facet - "
+                                "Connection_Handler::connect_non_local_receptacle - "
                                 "Unable to narrow provided external reference "
                                 "to CCMObject in connection <%C> for port <%C>\n",
                                 conn.name.in (),
@@ -490,7 +526,7 @@ namespace CIAO
     if (CORBA::is_nil (receptacle))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::connect_receptacle - "
+                        "Connection_Handler::connect_non_local_receptacle - "
                         "While connecting <%C>:"
                         "Receptacle component <%C> not deployed.\n",
                         plan.connection[connectionRef].name.in (),
@@ -502,7 +538,7 @@ namespace CIAO
     ::Components::Cookie_var cookie = receptacle->connect (endpoint.portName.in (),
                                                            provided.in ());
     CIAO_DEBUG (5, (LM_INFO, CLINFO
-                    "Connection_Handler::connect_receptacle - "
+                    "Connection_Handler::connect_non_local_receptacle - "
                     "Connection <%C> successfully established.\n",
                     conn.name.in ()));
 
@@ -510,6 +546,7 @@ namespace CIAO
                                                  ::Components::CCMObject::_duplicate (receptacle.in ()));
     this->insert_cookie (conn.name.in (), conn_info);
   }
+
 #if !defined (CCM_NOEVENT)
   void
   Connection_Handler::connect_publisher (const ::Deployment::DeploymentPlan & plan,
@@ -573,6 +610,7 @@ namespace CIAO
     this->insert_cookie (conn.name.in (), conn_info);
   }
 #endif
+
 #if !defined (CCM_NOEVENT)
   void
   Connection_Handler::connect_consumer (const ::Deployment::DeploymentPlan & plan,
@@ -664,6 +702,7 @@ namespace CIAO
     this->insert_cookie (conn.name.in (), conn_info);
   }
 #endif
+
   void
   Connection_Handler::disconnect_facet (const ::Deployment::DeploymentPlan &plan,
                                         ::CORBA::ULong connectionRef,
@@ -671,6 +710,7 @@ namespace CIAO
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_facet");
+
     const ::Deployment::PlanConnectionDescription &conn =
       plan.connection[connectionRef];
     const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
@@ -682,7 +722,7 @@ namespace CIAO
                     conn.name.in (),
                     plan.instance[endpoint.instanceRef].name.in ()));
 
-    if (this->is_local_facet (conn))
+    if (this->is_local_connection (conn))
       {
         CORBA::ULong other_endpointRef = (endpointRef + 1) % 2;
         if (conn.internalEndpoint.length () == 2 &&
@@ -704,23 +744,116 @@ namespace CIAO
           {
             CIAO_ERROR (1, (LM_ERROR, CLINFO
                             "Connection_Handler::disconnect_facet - "
-                            "Error: Wrong number of internal endpoints for local facet connection: "
-                            "expected <2> - found <%d>\n",
+                            "Error: Wrong number of internal endpoints for local facet "
+                            "connection: expected <2> - found <%d>\n",
                             conn.internalEndpoint.length ()));
 
             throw ::Deployment::InvalidConnection (conn.name.in (),
-                                                   "Local facet connections require exactly 2 internalEndpoints");
+                                                   "Local facet connections require exactly 2 "
+                                                   "internalEndpoints");
           }
       }
+    this->disconnect_non_local (plan, connectionRef);
   }
 
   void
-  Connection_Handler::disconnect_receptacle (const ::Deployment::DeploymentPlan &,
-                                             ::CORBA::ULong,
-                                             ::CORBA::ULong)
+  Connection_Handler::disconnect_non_local (const ::Deployment::DeploymentPlan &plan,
+                                            ::CORBA::ULong connectionRef)
+  {
+    CIAO_TRACE ("Connection_Handler::disconnect_non_local_facet");
+
+    const ::Deployment::PlanConnectionDescription &conn =
+      plan.connection[connectionRef];
+
+    if (conn.externalReference.length () == 0)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::disconnect_non_local_facet - "
+                        "Error: Expected external reference endpoint for connection <%C>",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                               "Expected external reference connection.");
+      }
+
+    COOKIES::iterator it = this->cookies_.find (conn.name.in ());
+    if (it == this->cookies_.end ())
+      {
+        CIAO_ERROR (5, (LM_ERROR, CLINFO
+                        "Connection_Handler::disconnect_local_port - "
+                        "Cookie for <%C> not found\n",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                               "Unable to find correct cookie");
+      }
+    ::Components::CCMObject_var obj = it->second.second;
+    if (::CORBA::is_nil (obj.in ()))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::disconnect_non_local_facet - "
+                        "Error: Stored facet seems to be nil.",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                               "Facet seems nil");
+      }
+    obj->disconnect (conn.externalReference[0].portName.in (),
+                     it->second.first.in ());
+
+
+    it->second.second = ::Components::CCMObject::_nil ();
+    this->cookies_.erase (it);
+
+  }
+
+  void
+  Connection_Handler::disconnect_receptacle (const ::Deployment::DeploymentPlan &plan,
+                                             ::CORBA::ULong connectionRef,
+                                             ::CORBA::ULong endpointRef)
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_receptacle");
+
+    const ::Deployment::PlanConnectionDescription &conn =
+      plan.connection[connectionRef];
+    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
+      conn.internalEndpoint[endpointRef];
+
+    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                    "Connection_Handler::disconnect_receptacle - "
+                    "Disconnecting connection <%C> on instance <%C>\n",
+                    conn.name.in (),
+                    plan.instance[endpoint.instanceRef].name.in ()));
+
+    if (this->is_local_connection (conn))
+      {
+        CORBA::ULong other_endpointRef = (endpointRef + 1) % 2;
+        if (conn.internalEndpoint.length () == 2 &&
+            conn.internalEndpoint[other_endpointRef].kind == ::Deployment::Facet)
+          {
+            const ::Deployment::PlanSubcomponentPortEndpoint &other_endpoint =
+              conn.internalEndpoint[other_endpointRef];
+
+
+            this->disconnect_local_port (plan.instance[endpoint.instanceRef].name.in (),
+                                      endpoint.portName.in (),
+                                      plan.instance[other_endpoint.instanceRef].name.in (),
+                                      other_endpoint.portName.in (),
+                                      conn.name.in ());
+            return;
+          }
+        else
+          {
+            CIAO_ERROR (1, (LM_ERROR, CLINFO
+                            "Connection_Handler::disconnect_receptacle - "
+                            "Error: Wrong number of internal endpoints for local receptacle "
+                            "connection: expected <2> - found <%d>\n",
+                            conn.internalEndpoint.length ()));
+
+            throw ::Deployment::InvalidConnection (conn.name.in (),
+                                                   "Local receptacle connections require exactly 2 "
+                                                   "internalEndpoints");
+          }
+      }
+    this->disconnect_non_local (plan, connectionRef);
   }
 
 #if !defined (CCM_NOEVENT)
@@ -852,6 +985,8 @@ namespace CIAO
                         "Connection_Handler::disconnect_local_port - "
                         "Cookie for <%C> not found\n",
                         connection_name));
+        throw ::Deployment::InvalidConnection (connection_name,
+                                                "Unable to find correct cookie");
       }
     cont->disconnect_local_facet (
                                it->second.first.in (),
@@ -871,9 +1006,9 @@ namespace CIAO
   }
 
   bool
-  Connection_Handler::is_local_facet (const ::Deployment::PlanConnectionDescription &conn)
+  Connection_Handler::is_local_connection (const ::Deployment::PlanConnectionDescription &conn)
   {
-    CIAO_TRACE ("Connection_Handler::is_local_facet");
+    CIAO_TRACE ("Connection_Handler::is_local_connection");
 
     Deployment::Requirements const& deploy_req = conn.deployRequirement;
     for (CORBA::ULong i = 0; i < deploy_req.length (); i++)

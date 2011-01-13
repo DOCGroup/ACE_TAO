@@ -158,6 +158,15 @@ namespace CIAO
     /// Uninstall a servant for component or home.
     void uninstall (CORBA::Object_ptr objref, Container_Types::OA_Type t);
 
+    void prepare_installation (const char *entity,
+                            const char *primary_artifact,
+                            const char *entry_point,
+                            const char *servant_artifact,
+                            const char *servant_entrypoint,
+                            const char *name,
+                            void * void_ptr_executor,
+                            void * void_ptr_servant);
+
   private:
     /// Not allowed to be used
     Container_i (void);

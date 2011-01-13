@@ -42,6 +42,7 @@ namespace CIAO
                              ::CORBA::ULong connectionRef,
                              ::CORBA::ULong endpoint,
                              const ::CORBA::Any & provided_reference);
+
 #if !defined (CCM_NOEVENT)
     void connect_publisher (const ::Deployment::DeploymentPlan & plan,
                             ::CORBA::ULong connectionRef,
@@ -102,7 +103,20 @@ namespace CIAO
                                 const char *receptacle_port,
                                 const char *connection_name);
 
-    bool is_local_facet (const ::Deployment::PlanConnectionDescription &conn);
+    void connect_non_local_receptacle (const ::Deployment::DeploymentPlan & plan,
+                                       ::CORBA::ULong connectionRef,
+                                       ::CORBA::ULong endpoint,
+                                       const ::CORBA::Any & provided_reference);
+
+    void connect_non_local_facet (const ::Deployment::DeploymentPlan & plan,
+                                  ::CORBA::ULong connectionRef,
+                                  ::CORBA::ULong endpointRef,
+                                  const ::CORBA::Any & provided_reference);
+
+    void disconnect_non_local (const ::Deployment::DeploymentPlan &plan,
+                            ::CORBA::ULong connectionRef);
+
+    bool is_local_connection (const ::Deployment::PlanConnectionDescription &conn);
 
     typedef std::pair < ::Components::Cookie_var,
                         ::Components::CCMObject_var> CONNECTION_INFO;

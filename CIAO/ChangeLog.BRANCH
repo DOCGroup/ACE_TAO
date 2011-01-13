@@ -1,3 +1,16 @@
+Thu Jan 13 17:33:38 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.h:
+        * ciao/Containers/Container_Base_T.cpp:
+        * ciao/Containers/Extension/Extension_Container.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+          Merged double code into one method.
+
+        * ciao/Deployment/Handlers/Connection_Handler.h:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Reorganized code. Added a method to disconnect
+          non local connections.
+
 Wed Jan 12 15:15:09 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Containers/Extension/Extension_Container.h:
