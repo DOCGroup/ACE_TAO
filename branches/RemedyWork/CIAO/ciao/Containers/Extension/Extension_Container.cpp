@@ -78,8 +78,8 @@ namespace CIAO
   {
     CIAO_TRACE ("Extension_Container_i::install_home");
 
-    void * void_ptr_executor = 0;
-    void * void_ptr_servant = 0;
+    ACE_DLL executor_dll;
+    ACE_DLL servant_dll;
 
     Container_i < ::CIAO::Extension_Container>::prepare_installation ("Extension Home",
                                                                     primary_artifact,
@@ -87,8 +87,11 @@ namespace CIAO
                                                                     servant_artifact,
                                                                     servant_entrypoint,
                                                                     name,
-                                                                    void_ptr_executor,
-                                                                    void_ptr_servant);
+                                                                    executor_dll,
+                                                                    servant_dll);
+
+    void *void_ptr_executor = executor_dll.symbol (ACE_TEXT_CHAR_TO_TCHAR (entry_point));
+    void *void_ptr_servant = servant_dll.symbol (ACE_TEXT_CHAR_TO_TCHAR (servant_entrypoint));
 
     ptrdiff_t tmp_ptr = reinterpret_cast<ptrdiff_t> (void_ptr_executor);
     HomeFactory hcreator = reinterpret_cast<HomeFactory> (tmp_ptr);
@@ -202,8 +205,8 @@ namespace CIAO
   {
     CIAO_TRACE ("Extension_Container_i::install_component");
 
-    void * void_ptr_executor = 0;
-    void * void_ptr_servant = 0;
+    ACE_DLL executor_dll;
+    ACE_DLL servant_dll;
 
     Container_i < ::CIAO::Extension_Container>::prepare_installation ("Extension Component",
                                                                     primary_artifact,
@@ -211,8 +214,12 @@ namespace CIAO
                                                                     servant_artifact,
                                                                     servant_entrypoint,
                                                                     name,
-                                                                    void_ptr_executor,
-                                                                    void_ptr_servant);
+                                                                    executor_dll,
+                                                                    servant_dll);
+
+    void *void_ptr_executor = executor_dll.symbol (ACE_TEXT_CHAR_TO_TCHAR (entry_point));
+    void *void_ptr_servant = servant_dll.symbol (ACE_TEXT_CHAR_TO_TCHAR (servant_entrypoint));
+
     ptrdiff_t tmp_ptr = reinterpret_cast<ptrdiff_t> (void_ptr_executor);
     ComponentFactory ccreator = reinterpret_cast<ComponentFactory> (tmp_ptr);
 

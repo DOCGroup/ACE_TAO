@@ -78,7 +78,7 @@ namespace CIAO_UsesSM_Sender_Impl
         switch (i)
           {
             case 0:
-              test = CORBA::string_dup ("Asynch. foo call one.");
+              test = CORBA::string_dup ("Asynch. foo call one");
               break;
             case 1:
               test = CORBA::string_dup ("Asynch. foo call two");

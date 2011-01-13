@@ -140,8 +140,8 @@ namespace CIAO
                                         const char *servant_artifact,
                                         const char *servant_entrypoint,
                                         const char *name,
-                                        void * void_ptr_executor,
-                                        void * void_ptr_servant)
+                                        ACE_DLL &executor_dll,
+                                        ACE_DLL &servant_dll)
   {
     CIAO_TRACE ("Container_i::prepare_installation");
 
@@ -222,7 +222,6 @@ namespace CIAO
         throw Components::Deployment::ImplEntryPointNotFound ();
       }
 
-    ACE_DLL executor_dll;
     if (executor_dll.open (ACE_TEXT_CHAR_TO_TCHAR (primary_artifact),
                             ACE_DEFAULT_SHLIB_MODE,
                             false) != 0)
@@ -252,8 +251,6 @@ namespace CIAO
                      primary_artifact));
       }
 
-    ACE_DLL servant_dll;
-
     if (servant_dll.open (ACE_TEXT_CHAR_TO_TCHAR (servant_artifact),
                           ACE_DEFAULT_SHLIB_MODE,
                           false) != 0)
@@ -282,9 +279,16 @@ namespace CIAO
                       entity,
                       servant_artifact));
       }
+  }
 
-    void_ptr_executor = executor_dll.symbol (ACE_TEXT_CHAR_TO_TCHAR (entry_point));
-    void_ptr_servant = servant_dll.symbol (ACE_TEXT_CHAR_TO_TCHAR (servant_entrypoint));
+  template <typename BASE>
+  void
+  Container_i<BASE>::uninstall_home (
+    Components::CCMHome_ptr homeref)
+  {
+    CIAO_TRACE ("Container_i::uninstall_home");
+
+    this->uninstall (homeref, Container_Types::HOME_t);
   }
 
   template <typename BASE>
