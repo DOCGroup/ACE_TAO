@@ -164,8 +164,8 @@ namespace CIAO
                             const char *servant_artifact,
                             const char *servant_entrypoint,
                             const char *name,
-                            void * void_ptr_executor,
-                            void * void_ptr_servant);
+                            ACE_DLL &executor_dll,
+                            ACE_DLL &servant_dll);
 
   private:
     /// Not allowed to be used
