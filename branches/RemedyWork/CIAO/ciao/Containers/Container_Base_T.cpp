@@ -134,11 +134,157 @@ namespace CIAO
 
   template <typename BASE>
   void
-  Container_i<BASE>::uninstall_home (Components::CCMHome_ptr homeref)
+  Container_i<BASE>::prepare_installation (const char *entity,
+                                        const char *primary_artifact,
+                                        const char *entry_point,
+                                        const char *servant_artifact,
+                                        const char *servant_entrypoint,
+                                        const char *name,
+                                        void * void_ptr_executor,
+                                        void * void_ptr_servant)
   {
-    CIAO_TRACE ("Container_i::uninstall_home");
+    CIAO_TRACE ("Container_i::prepare_installation");
 
-    this->uninstall (homeref, Container_Types::HOME_t);
+    CIAO_DEBUG (6,
+                (LM_DEBUG,
+                  CLINFO
+                  "Container_i::prepare_installation <%C> - "
+                  "Loading %C [%C] from shared libraries\n",
+                  entity, entity, name));
+
+    CIAO_DEBUG (6,
+                (LM_DEBUG,
+                  CLINFO
+                  "Container_i::prepare_installation <%C> - "
+                  "Executor library [%C] with entrypoint [%C]\n",
+                  entity,
+                  primary_artifact,
+                  entry_point));
+
+    CIAO_DEBUG (6,
+                (LM_DEBUG,
+                  CLINFO
+                  "Container_i::prepare_installation <%C> - "
+                  "Servant library [%C] with entrypoint [%C]\n",
+                  entity,
+                  servant_artifact,
+                  servant_entrypoint));
+
+    if (!primary_artifact)
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                      CLINFO
+                      "Container_i::prepare_installation <%C> - "
+                      "ERROR: Null component executor DLL name\n",
+                      entity));
+
+        throw Components::Deployment::UnknownImplId ();
+      }
+
+    if (!servant_artifact)
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                      CLINFO
+                      "Container_i::prepare_installation <%C> - "
+                      "ERROR: Null component servant DLL name\n",
+                      entity));
+
+        throw Components::Deployment::UnknownImplId ();
+      }
+
+    if (!entry_point)
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                      CLINFO
+                      "Container_i::prepare_installation <%C> - "
+                      "ERROR: Null entry point for "
+                      "executor DLL [%C]\n",
+                      entity,
+                      primary_artifact));
+
+        throw Components::Deployment::ImplEntryPointNotFound ();
+      }
+
+    if (!servant_entrypoint)
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                      CLINFO
+                      "Container_i::prepare_installation <%C> - "
+                      "ERROR: Null entry point for "
+                      "servant DLL [%C]\n",
+                      entity,
+                      servant_artifact));
+
+        throw Components::Deployment::ImplEntryPointNotFound ();
+      }
+
+    ACE_DLL executor_dll;
+    if (executor_dll.open (ACE_TEXT_CHAR_TO_TCHAR (primary_artifact),
+                            ACE_DEFAULT_SHLIB_MODE,
+                            false) != 0)
+      {
+        const ACE_TCHAR* error = executor_dll.error ();
+
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                      CLINFO
+                      "Container_i::prepare_installation <%C> - "
+                      "ERROR in opening the executor "
+                      "DLL [%C] with error [%s]\n",
+                      entity,
+                      primary_artifact,
+                      error));
+
+        throw Components::Deployment::UnknownImplId ();
+      }
+    else
+      {
+        CIAO_DEBUG (9,
+                    (LM_TRACE,
+                      CLINFO
+                    "Container_i::prepare_installation <%C> - "
+                    "Executor DLL [%C] successfully opened\n",
+                     entity,
+                     primary_artifact));
+      }
+
+    ACE_DLL servant_dll;
+
+    if (servant_dll.open (ACE_TEXT_CHAR_TO_TCHAR (servant_artifact),
+                          ACE_DEFAULT_SHLIB_MODE,
+                          false) != 0)
+      {
+        const ACE_TCHAR* error = servant_dll.error ();
+
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                      CLINFO
+                      "Container_i::prepare_installation <%C> - "
+                      "ERROR in opening the servant "
+                      "DLL [%C] with error [%s]\n",
+                      entity,
+                      servant_artifact,
+                      error));
+
+        throw Components::Deployment::UnknownImplId ();
+      }
+    else
+      {
+        CIAO_DEBUG (9,
+                    (LM_TRACE,
+                      CLINFO
+                      "Container_i::prepare_installation <%C> - "
+                      "Servant DLL [%C] successfully openend\n",
+                      entity,
+                      servant_artifact));
+      }
+
+    void_ptr_executor = executor_dll.symbol (ACE_TEXT_CHAR_TO_TCHAR (entry_point));
+    void_ptr_servant = servant_dll.symbol (ACE_TEXT_CHAR_TO_TCHAR (servant_entrypoint));
   }
 
   template <typename BASE>
