@@ -596,7 +596,6 @@ namespace CIAO
         throw ::Deployment::InvalidConnection (conn.name.in (),
                                                "Publisher component not deployed.");
       }
-
     Components::Cookie_var cookie = publisher->subscribe (endpoint.portName.in (),
                                                        event.in ());
 
@@ -774,30 +773,10 @@ namespace CIAO
         throw ::Deployment::InvalidConnection (conn.name.in (),
                                                "Expected internal endpoints.");
       }
-    COOKIES::iterator it = this->cookies_.find (conn.name.in ());
-    if (it == this->cookies_.end ())
-      {
-        CIAO_ERROR (5, (LM_ERROR, CLINFO
-                        "Connection_Handler::disconnect_local_port - "
-                        "Cookie for <%C> not found\n",
-                        conn.name.in ()));
-        throw ::Deployment::InvalidConnection (conn.name.in (),
-                                               "Unable to find correct cookie");
-      }
-    ::Components::CCMObject_var obj = it->second.second;
-    if (::CORBA::is_nil (obj.in ()))
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::disconnect_non_local_facet - "
-                        "Error: Stored facet seems to be nil.\n",
-                        conn.name.in ()));
-        throw ::Deployment::InvalidConnection (conn.name.in (),
-                                               "Facet seems nil");
-      }
+    ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
     obj->disconnect (conn.internalEndpoint[0].portName.in (),
-                     it->second.first.in ());
-    it->second.second = ::Components::CCMObject::_nil ();
-    this->cookies_.erase (it);
+                     this->get_cookie (conn.name.in ()));
+    this->remove_cookie (conn.name.in ());
   }
 
   void
@@ -860,6 +839,7 @@ namespace CIAO
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_publisher");
+    CIAO_ERROR (1, (LM_ERROR,  CLINFO "disconnect_publisher NOT IMPLEMENTED\n"));
   }
 #endif
 
@@ -871,17 +851,35 @@ namespace CIAO
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_emitter");
+    CIAO_ERROR (1, (LM_ERROR,  CLINFO "disconnect_emitter NOT IMPLEMENTED\n"));
   }
 #endif
 
 #if !defined (CCM_NOEVENT)
   void
-  Connection_Handler::disconnect_consumer (const ::Deployment::DeploymentPlan &,
-                                           ::CORBA::ULong,
-                                           ::CORBA::ULong)
+  Connection_Handler::disconnect_consumer (const ::Deployment::DeploymentPlan &plan,
+                                           ::CORBA::ULong connectionRef,
+                                           ::CORBA::ULong endpointRef)
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_consumer");
+
+    const ::Deployment::PlanConnectionDescription &conn =
+      plan.connection[connectionRef];
+    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
+      conn.internalEndpoint[endpointRef];
+
+    if (conn.internalEndpoint.length () == 0)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::disconnect_consumer - "
+                        "Error: Expected internal endpoints for connection <%C>\n",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                               "Expected internal endpoints.");
+      }
+    ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
+    obj->unsubscribe (endpoint.portName.in (), this->get_cookie (conn.name.in ()));
   }
 #endif
 
@@ -1038,4 +1036,64 @@ namespace CIAO
       }
   }
 
+  void
+  Connection_Handler::remove_cookie (const char* connection_name)
+  {
+    CIAO_TRACE ("Connection_Handler::remove_cookie");
+
+    COOKIES::iterator it = this->cookies_.find (connection_name);
+    if (it == this->cookies_.end ())
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::get_ccm_object - "
+                        "Unable to delete cookie for connection <%C>\n",
+                        connection_name));
+        return;
+      }
+    it->second.second = ::Components::CCMObject::_nil ();
+    this->cookies_.erase (it);
+  }
+
+  ::Components::Cookie *
+  Connection_Handler::get_cookie (const char * connection_name)
+  {
+    CIAO_TRACE ("Connection_Handler::get_cookie");
+    COOKIES::iterator it = this->cookies_.find (connection_name);
+    if (it == this->cookies_.end ())
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::get_ccm_object - "
+                        "Cookie for <%C> not found\n",
+                        connection_name));
+        throw ::Deployment::InvalidConnection (connection_name,
+                                               "Unable to find correct cookie");
+      }
+    return it->second.first.in ();
+  }
+
+  ::Components::CCMObject_ptr
+  Connection_Handler::get_ccm_object (const char * connection_name)
+  {
+    COOKIES::iterator it = this->cookies_.find (connection_name);
+    if (it == this->cookies_.end ())
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::get_ccm_object - "
+                        "Cookie for <%C> not found\n",
+                        connection_name));
+        throw ::Deployment::InvalidConnection (connection_name,
+                                               "Unable to find correct cookie");
+      }
+    ::Components::CCMObject_var ret = it->second.second;
+    if (::CORBA::is_nil (ret.in ()))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::get_ccm_object - "
+                        "Error: Stored CCM object seems to be nil.\n",
+                        connection_name));
+        throw ::Deployment::InvalidConnection (connection_name,
+                                               "Stored CCM object seems nil");
+      }
+    return ret.in ();
+  }
 }
