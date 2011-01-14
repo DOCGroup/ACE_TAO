@@ -28,7 +28,7 @@ module CCM_AMI
   };
 
   /**
-   * Templated Connector module for AMI4CC. Expects
+   * Templated Connector module for AMI4CCM. Expects
    * two template arguments, the original interface and
    * its AMI4CCM counterpart
    */
