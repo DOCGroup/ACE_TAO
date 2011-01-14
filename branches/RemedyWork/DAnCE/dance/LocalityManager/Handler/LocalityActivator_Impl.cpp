@@ -670,7 +670,7 @@ namespace DAnCE
     int DAnCE_LocalityActivator_i::Server_Child_Handler::handle_exit (
         ACE_Process *proc)
     {
-      DANCE_DEBUG (1, (LM_INFO, DLINFO
+      DANCE_DEBUG (5, (LM_INFO, DLINFO
                        ACE_TEXT ("DAnCE_LocalityActivator_i::Server_Child_Handler::handle_exit")
                        ACE_TEXT (" - Locality Manager UUID %C, pid=%d: %d\n"),
                        this->server_info_->uuid_.c_str (),
