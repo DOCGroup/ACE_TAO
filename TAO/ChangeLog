@@ -1,3 +1,10 @@
+Fri Jan 14 16:54:35 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_err.cpp:
+
+          Added the word "error" to the error header method, so the 
+          scoreboard will be triggered to output it.
+
 Fri Jan 14 14:24:47 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/y.tab.cpp:
