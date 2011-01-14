@@ -246,7 +246,7 @@ idl_error_header (UTL_Error::ErrorCode c,
                   ACE_CString s)
 {
   ACE_ERROR ((LM_ERROR,
-              "%C: \"%C\", line %d: %C",
+              "Error - %C: \"%C\", line %d: %C",
               idl_global->prog_name (),
               s.c_str (),
               lineno == -1 ? idl_global->lineno () : lineno,
@@ -1554,7 +1554,8 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
   const char *masking_file = masking->file_name ().c_str ();
 
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("%C: \"%C\", line %d: Did you mean \"::%C\"\n")
+              ACE_TEXT ("Error - %C: \"%C\", line %d: ")
+              ACE_TEXT ("Did you mean \"::%C\"\n")
               ACE_TEXT ("   declared at "),
               idl_global->prog_name (),
               this_file,
