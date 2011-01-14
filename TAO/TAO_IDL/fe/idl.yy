@@ -587,15 +587,6 @@ module
            * Finished with this module - pop it from the scope stack.
            */
 
-          AST_Template_Module *tm =
-            AST_Template_Module::narrow_from_scope (
-              idl_global->scopes ().top_non_null ());
-
-          if (tm != 0)
-            {
-              idl_global->in_tmpl_mod_no_alias (false);
-            }
-
           idl_global->scopes ().pop ();
         }
         ;
@@ -674,12 +665,17 @@ template_module
         }
         '}'
         {
+//      '}'
           idl_global->set_parse_state (IDL_GlobalData::PS_TmplModuleQsSeen);
 
           /*
            * Finished with this module - pop it from the scope stack.
            */
           idl_global->scopes ().pop ();
+
+          // Unset the flag, the no_alias version because any scope
+          // traversal triggered by an alias would have ended by now.
+          idl_global->in_tmpl_mod_no_alias (false);
 
           // Clear the pointer so scoped name lookup will know
           // that we are no longer in a template module scope.

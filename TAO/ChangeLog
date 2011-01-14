@@ -1,3 +1,11 @@
+Fri Jan 14 17:43:26 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          Moved code to unset a flag in IDL_GLobalData, it was in
+          the wrong place.
+
 Fri Jan 14 16:54:35 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_err.cpp:
