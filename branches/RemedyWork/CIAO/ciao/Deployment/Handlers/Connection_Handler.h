@@ -126,6 +126,12 @@ namespace CIAO
     void insert_cookie (const char * connection_name,
                         const CONNECTION_INFO conn_info);
 
+    ::Components::Cookie * get_cookie (const char * connection_name);
+
+    void remove_cookie (const char * connection_name);
+
+    ::Components::CCMObject_ptr get_ccm_object (const char * connection_name);
+
     COOKIES cookies_;
   };
 }
