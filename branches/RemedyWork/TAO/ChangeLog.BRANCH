@@ -1,3 +1,14 @@
+Fri Jan 14 17:19:46 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/catior/Catior_i.cpp:
+          Added more vendor ids
+
+        * utils/catior/README.catior:
+          Updated executable name
+
+        * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+          Reverted change below, wasn't complete
+
 Fri Jan 14 10:37:44 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
