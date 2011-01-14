@@ -279,7 +279,6 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
 {
   if(!be_global->gen_noeventccm ())
     {
-
       const char *obj_name = node->consumes_type ()->full_name ();
       const char *port_name = node->local_name ()->get_string ();
 
