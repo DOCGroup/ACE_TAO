@@ -760,21 +760,20 @@ namespace CIAO
   Connection_Handler::disconnect_non_local (const ::Deployment::DeploymentPlan &plan,
                                             ::CORBA::ULong connectionRef)
   {
-    CIAO_TRACE ("Connection_Handler::disconnect_non_local_facet");
+    CIAO_TRACE ("Connection_Handler::disconnect_non_local");
 
     const ::Deployment::PlanConnectionDescription &conn =
       plan.connection[connectionRef];
 
-    if (conn.externalReference.length () == 0)
+    if (conn.internalEndpoint.length () == 0)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::disconnect_non_local_facet - "
-                        "Error: Expected external reference endpoint for connection <%C>",
+                        "Connection_Handler::disconnect_non_local - "
+                        "Error: Expected internal endpoints for connection <%C>\n",
                         conn.name.in ()));
         throw ::Deployment::InvalidConnection (conn.name.in (),
-                                               "Expected external reference connection.");
+                                               "Expected internal endpoints.");
       }
-
     COOKIES::iterator it = this->cookies_.find (conn.name.in ());
     if (it == this->cookies_.end ())
       {
@@ -790,18 +789,15 @@ namespace CIAO
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::disconnect_non_local_facet - "
-                        "Error: Stored facet seems to be nil.",
+                        "Error: Stored facet seems to be nil.\n",
                         conn.name.in ()));
         throw ::Deployment::InvalidConnection (conn.name.in (),
                                                "Facet seems nil");
       }
-    obj->disconnect (conn.externalReference[0].portName.in (),
+    obj->disconnect (conn.internalEndpoint[0].portName.in (),
                      it->second.first.in ());
-
-
     it->second.second = ::Components::CCMObject::_nil ();
     this->cookies_.erase (it);
-
   }
 
   void

@@ -1,3 +1,8 @@
+Fri Jan 14 10:24:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Resolved issues regarding disconnect non local connections.
+
 Thu Jan 13 18:16:14 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Containers/Container_Base_T.h:
