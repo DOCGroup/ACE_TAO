@@ -1,3 +1,9 @@
+Fri Jan 14 14:24:47 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Fixed fuzz error.
+
 Thu Jan 13 14:47:20 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_utils.cpp:
