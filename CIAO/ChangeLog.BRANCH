@@ -1,3 +1,14 @@
+Mon Jan 17 11:02:27 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Deployment/Handlers/Connection_Handler.h:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Resolved runtime issues related to disconnect non local
+          connections.
+
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+          Resolved valgrind errors.
+
 Fri Jan 14 15:41:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Deployment/Handlers/Connection_Handler.h:
