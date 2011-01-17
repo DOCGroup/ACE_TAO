@@ -771,11 +771,10 @@ namespace CIAO
       }
 
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
-    ::Components::Cookie_var cookie = this->get_cookie (conn.name.in ());
 
     ::CORBA::Object_var safe_tmp =
       obj->disconnect (conn.internalEndpoint[0].portName.in (),
-                       cookie.in ());
+                       this->get_cookie (conn.name.in ()));
     this->remove_cookie (conn.name.in ());
   }
 
@@ -877,11 +876,10 @@ namespace CIAO
                                                "Expected internal endpoints.");
       }
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
-    ::Components::Cookie_var cookie = this->get_cookie (conn.name.in ());
 
     ::Components::EventConsumerBase_var safe_temp =
       obj->unsubscribe (endpoint.portName.in (),
-                        cookie.in ());
+                        this->get_cookie (conn.name.in ()));
   }
 #endif
 
@@ -974,9 +972,8 @@ namespace CIAO
       facet = DEPLOYMENT_STATE::instance ()->fetch_component (facet_id),
       receptacle = DEPLOYMENT_STATE::instance ()->fetch_component (receptacle_id);
 
-    ::Components::Cookie_var cookie = this->get_cookie (connection_name);
     cont->disconnect_local_facet (
-                               cookie.in (),
+                               this->get_cookie (connection_name),
                                facet,
                                facet_port,
                                receptacle,
