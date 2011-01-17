@@ -257,3 +257,19 @@ module YY
 module ZZ::DDSX < ::Hello, ::HelloSeq> ZZDDSX;
 
 module YY::DDSY < ::Hello, ::HelloSeq> ZZDDSY;
+
+module FooConnector_T<interface T, interface AMI4CCM_T>
+{
+  porttype AMI4CCM_Port_Type
+  {
+    provides AMI4CCM_T ami4ccm_provides;
+    provides T         ami4ccm_sync_provides;
+    uses T ami4ccm_uses;
+  };
+  connector AMI4CCM_Connector
+  {
+    port AMI4CCM_Port_Type ami4ccm_port;
+  };
+};
+
+module FooConnector_T<Supported::IfacePawPaw, Supported::IfacePawPaw> FooPawPaw;
