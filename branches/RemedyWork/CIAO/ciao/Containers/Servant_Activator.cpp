@@ -151,14 +151,14 @@ namespace CIAO
                       guard,
                       this->mutex_,
                       false);
-
+        CORBA::String_var safe_oid (pa->oid ());
+    ::CORBA::String_var safe_name (pa->name ());
     CIAO_DEBUG (6, (LM_INFO, CLINFO "Servant_Activator_i::register_port_activator - "
                  "Registering a port activator for port [%C] with ObjectID [%C]\n",
-                 pa->name (), pa->oid ()));
+                 safe_name.in (), safe_oid. in ()));
 
     try
       {
-        CORBA::String_var safe_oid (pa->oid ());
         this->pa_ [safe_oid.in ()] = Port_Activator::_duplicate (pa);
       }
     catch (...)

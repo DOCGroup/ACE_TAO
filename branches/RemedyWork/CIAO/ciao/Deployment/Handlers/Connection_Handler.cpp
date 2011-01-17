@@ -523,7 +523,7 @@ namespace CIAO
     ::Components::CCMObject_var receptacle =
         DEPLOYMENT_STATE::instance ()->fetch_component (plan.instance[endpoint.instanceRef].name.in ());
 
-    if (CORBA::is_nil (receptacle))
+    if (CORBA::is_nil (receptacle.in ()))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::connect_non_local_receptacle - "
@@ -771,9 +771,9 @@ namespace CIAO
       }
 
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
-    ::Components::Cookie_var cookie = this->get_cookie (conn.name.in ());
-    obj->disconnect (conn.internalEndpoint[0].portName.in (),
-                     cookie.in ());
+    ::CORBA::Object_var safe_tmp =
+      obj->disconnect (conn.internalEndpoint[0].portName.in (),
+                       this->get_cookie (conn.name.in ()));
     this->remove_cookie (conn.name.in ());
   }
 
@@ -877,8 +877,9 @@ namespace CIAO
                                                "Expected internal endpoints.");
       }
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
-    ::Components::Cookie_var cookie = this->get_cookie (conn.name.in ());
-    obj->unsubscribe (endpoint.portName.in (), cookie.in ());
+    ::Components::EventConsumerBase_var safe_temp =
+      obj->unsubscribe (endpoint.portName.in (),
+                        this->get_cookie (conn.name.in ()));
   }
 #endif
 
@@ -971,18 +972,9 @@ namespace CIAO
       facet = DEPLOYMENT_STATE::instance ()->fetch_component (facet_id),
       receptacle = DEPLOYMENT_STATE::instance ()->fetch_component (receptacle_id);
 
-    COOKIES::iterator it = this->cookies_.find (connection_name);
-    if (it == this->cookies_.end ())
-      {
-        CIAO_ERROR (5, (LM_ERROR, CLINFO
-                        "Connection_Handler::disconnect_local_port - "
-                        "Cookie for <%C> not found\n",
-                        connection_name));
-        throw ::Deployment::InvalidConnection (connection_name,
-                                                "Unable to find correct cookie");
-      }
+    ::Components::Cookie_var cookie = this->get_cookie (connection_name);
     cont->disconnect_local_facet (
-                               it->second.first.in (),
+                               cookie.in (),
                                facet,
                                facet_port,
                                receptacle,
@@ -1032,6 +1024,23 @@ namespace CIAO
         throw ::Deployment::InvalidConnection (connection_name,
                                                "Unable to insert cookie.");
       }
+    else
+      {
+        CIAO_DEBUG (5, (LM_DEBUG, CLINFO
+                        "Connection_Handler::insert_cookie - "
+                        "Inserted cookie for [%C]. Value [%@] "
+                        "- RefCount [%d].\n",
+                        connection_name,
+                        conn_info.first.in (),
+                        conn_info.first->_refcount_value()));
+        CIAO_DEBUG (5, (LM_DEBUG, CLINFO
+                        "Connection_Handler::insert_cookie - "
+                        "Inserted object for [%C]. Value [%@] "
+                        "- RefCount [%d].\n",
+                        connection_name,
+                        conn_info.second.in (),
+                        conn_info.second->_refcount_value()));
+      }
   }
 
   void
@@ -1048,6 +1057,20 @@ namespace CIAO
                         connection_name));
         return;
       }
+    CIAO_DEBUG (5, (LM_DEBUG, CLINFO
+                    "Connection_Handler::remove_cookie - "
+                    "About to remove cookie for [%C]. "
+                    "Value [%@] - RefCount [%d].\n",
+                    connection_name,
+                    it->second.first.in (),
+                    it->second.first->_refcount_value()));
+    CIAO_DEBUG (5, (LM_DEBUG, CLINFO
+                    "Connection_Handler::remove_cookie - "
+                    "About to remove object for [%C]. "
+                    "Value [%@] - RefCount [%d].\n",
+                    connection_name,
+                    it->second.second.in (),
+                    it->second.second->_refcount_value()));
     it->second.second = ::Components::CCMObject::_nil ();
     this->cookies_.erase (it);
   }
@@ -1065,6 +1088,16 @@ namespace CIAO
                         connection_name));
         throw ::Deployment::InvalidConnection (connection_name,
                                                "Unable to find correct cookie");
+      }
+    else
+      {
+        CIAO_DEBUG (5, (LM_DEBUG, CLINFO
+                        "Connection_Handler::get_cookie - "
+                        "Found cookie for [%C]. Value [%@] "
+                        "- RefCount [%d]\n",
+                        connection_name,
+                        it->second.first.in (),
+                        it->second.first->_refcount_value()));
       }
     return it->second.first.in ();
   }
