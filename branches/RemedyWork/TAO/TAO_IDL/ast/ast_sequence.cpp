@@ -107,6 +107,8 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
     pd_base_type (bt),
     owns_base_type_ (false)
 {
+  FE_Utils::tmpl_mod_ref_check (this, bt);
+
   AST_Decl::NodeType bnt = bt->node_type ();
 
   if (bnt == AST_Decl::NT_param_holder)

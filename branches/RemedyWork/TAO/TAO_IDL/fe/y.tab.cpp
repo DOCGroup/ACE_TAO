@@ -2914,6 +2914,7 @@ tao_yyreduce:
           /*
            * Finished with this module - pop it from the scope stack.
            */
+
           idl_global->scopes ().pop ();
         }
     break;
@@ -2981,6 +2982,9 @@ tao_yyreduce:
            */
           idl_global->scopes ().push (tm);
 
+          // Contained items not part of an alias will get flag set.
+          idl_global->in_tmpl_mod_no_alias (true);
+
           // Store these for reference as we parse the scope
           // of the template module.
           idl_global->current_params ((tao_yyvsp[(3) - (5)].plval));
@@ -3010,6 +3014,10 @@ tao_yyreduce:
            * Finished with this module - pop it from the scope stack.
            */
           idl_global->scopes ().pop ();
+
+          // Unset the flag, the no_alias version because any scope
+          // traversal triggered by an alias would have ended by now.
+          idl_global->in_tmpl_mod_no_alias (false);
 
           // Clear the pointer so scoped name lookup will know
           // that we are no longer in a template module scope.
@@ -3086,6 +3094,11 @@ tao_yyreduce:
           delete (tao_yyvsp[(2) - (8)].idlist);
           (tao_yyvsp[(2) - (8)].idlist) = 0;
 
+          // Save the current flag value to be restored below.
+          bool itmna_flag = idl_global->in_tmpl_mod_no_alias ();
+          idl_global->in_tmpl_mod_no_alias (false);
+          idl_global->in_tmpl_mod_alias (true);
+
           ast_visitor_context ctx;
           ctx.template_params (ref->template_params ());
           ast_visitor_tmpl_module_ref v (&ctx);
@@ -3106,6 +3119,9 @@ tao_yyreduce:
 
               idl_global->set_err_count (idl_global->err_count () + 1);
             }
+
+          idl_global->in_tmpl_mod_no_alias (itmna_flag);
+          idl_global->in_tmpl_mod_alias (false);
         }
     break;
 

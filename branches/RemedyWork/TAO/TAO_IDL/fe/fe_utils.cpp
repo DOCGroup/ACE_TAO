@@ -2,6 +2,7 @@
 
 #include "fe_utils.h"
 #include "fe_private.h"
+#include "fe_extern.h"
 
 #include "ast_uses.h"
 #include "ast_component.h"
@@ -908,6 +909,46 @@ FE_Utils::can_be_redefined (AST_Decl *prev_decl,
   }
 }
 
+void
+FE_Utils::tmpl_mod_ref_check (AST_Decl *context,
+                              AST_Decl *ref)
+{
+  if (ref == 0
+      || ref->node_type () == AST_Decl::NT_param_holder
+      || idl_global->in_tmpl_mod_alias ())
+    {
+      return;
+    }
+
+  bool ok = true;
+
+  if (ref->in_tmpl_mod_not_aliased ())
+    {
+      if (! context->in_tmpl_mod_not_aliased ())
+        {
+          ok = false;
+        }
+      else
+        {
+          AST_Template_Module *context_tm =
+            FE_Utils::get_tm_container (context);
+          AST_Template_Module *ref_tm =
+            FE_Utils::get_tm_container (ref);
+
+          if (context_tm != ref_tm)
+            {
+              ok = false;
+            }
+        }
+    }
+
+  if (! ok)
+    {
+      idl_global->err ()->template_scope_ref_not_aliased (ref);
+      throw Bailout ();
+    }
+}
+
 bool
 FE_Utils::check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
                                   ACE_CString &param_id,
@@ -936,3 +977,23 @@ FE_Utils::check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
   return false;
 }
 
+AST_Template_Module *
+FE_Utils::get_tm_container (AST_Decl *contained)
+{
+  AST_Decl *d = contained;
+
+  while (d != 0)
+    {
+      AST_Template_Module *tm =
+        AST_Template_Module::narrow_from_decl (d);
+
+      if (tm != 0)
+        {
+          return tm;
+        }
+
+      d = ScopeAsDecl (d->defined_in ());
+    }
+
+  return 0;
+}

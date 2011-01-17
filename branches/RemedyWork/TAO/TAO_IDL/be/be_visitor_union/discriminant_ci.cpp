@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // *************************************************************************
 // be_visitor_discriminant_ci - visitor for discriminant in client inline file
 // *************************************************************************
@@ -52,9 +51,9 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
   if (bu->default_value (dv) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_discriminant_ci::"
-                         "visit_enum - "
-                         "computing default value failed\n"),
+                         ACE_TEXT ("be_visitor_union_discriminant_ci::")
+                         ACE_TEXT ("visit_enum - ")
+                         ACE_TEXT ("computing default value failed\n")),
                         -1);
     }
 
@@ -75,6 +74,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
       // We use one of the enum values that isn't used in this
       // union if one is available.
       UTL_ScopedName *sn = node->value_to_name (dv.u.enum_val);
+
       if (sn)
         {
           // The function value_to_name() takes care of adding
@@ -85,9 +85,11 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
         {
           // Since CORBA defines enums to be 32bits, use -1 as the
           // out-of-bounds value for the _default() function.
-          *os << "(" << bt->name () << ") -1";
+          *os << "static_cast <" << bt->name () << "> (-1)";
         }
-      *os << ";" << be_uidt_nl << "}" << be_nl_2;
+
+      *os << ";" << be_uidt_nl
+          << "}" << be_nl_2;
     }
 
   // the set method
@@ -139,9 +141,9 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
   if (bu->default_value (dv) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_discriminant_ci::"
-                         "visit_enum - "
-                         "computing default value failed\n"),
+                         ACE_TEXT ("be_visitor_union_discriminant_ci::")
+                         ACE_TEXT ("visit_enum - ")
+                         ACE_TEXT ("computing default value failed\n")),
                         -1);
     }
 
@@ -164,42 +166,36 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
         {
         case AST_Expression::EV_short:
           *os << dv.u.short_val;
-
           break;
         case AST_Expression::EV_ushort:
           *os << dv.u.ushort_val;
-
           break;
         case AST_Expression::EV_long:
           *os << dv.u.long_val;
-
           break;
         case AST_Expression::EV_ulong:
           *os << dv.u.ulong_val;
-
           break;
         case AST_Expression::EV_char:
           os->print ("'\\%o'", dv.u.char_val);
           break;
         case AST_Expression::EV_bool:
           *os << (dv.u.bool_val == 0 ? "false" : "true");
-
           break;
         case AST_Expression::EV_longlong:
           *os << dv.u.longlong_val;
-
           break;
         case AST_Expression::EV_ulonglong:
           *os << dv.u.ulonglong_val;
-
           break;
         default:
           // Error caught earlier.
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_union_discriminant_ci::"
-                             "visit_predefined_type - "
-                             "bad or unimplemented discriminant type\n"),
-                        -1);
+                             ACE_TEXT ("be_visitor_union_discriminant_ci::")
+                             ACE_TEXT ("visit_predefined_type - ")
+                             ACE_TEXT ("bad or unimplemented ")
+                             ACE_TEXT ("discriminant type\n")),
+                            -1);
         }
 
       *os << ";" << be_uidt_nl << "}";
@@ -239,9 +235,9 @@ be_visitor_union_discriminant_ci::visit_typedef (be_typedef *node)
   if (!bt || (bt->accept (this) == -1))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_discriminant_ci::"
-                         "visit_typedef - "
-                         "Bad primitive type\n"),
+                         ACE_TEXT ("be_visitor_union_discriminant_ci::")
+                         ACE_TEXT ("visit_typedef - ")
+                         ACE_TEXT ("Bad primitive type\n")),
                         -1);
     }
 

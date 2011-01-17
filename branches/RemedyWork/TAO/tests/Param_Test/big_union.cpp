@@ -519,23 +519,23 @@ Test_Big_Union::check_validity (void)
                && in.c == inout.c
                && in.s == inout.s
                && in.o == inout.o
-               && in.f == inout.f
+               && ACE::is_equal (in.f, inout.f)
                && in.b == inout.b
-               && in.d == inout.d)
+               && ACE::is_equal (in.d, inout.d))
             || !(in.l == out.l
                  && in.c == out.c
                  && in.s == out.s
                  && in.o == out.o
-                 && in.f == out.f
+                 && ACE::is_equal (in.f, out.f)
                  && in.b == out.b
-                 && in.d == out.d)
+                 && ACE::is_equal (in.d, out.d))
             || !(in.l == ret.l
                  && in.c == ret.c
                  && in.s == ret.s
                  && in.o == ret.o
-                 && in.f == ret.f
+                 && ACE::is_equal (in.f, ret.f)
                  && in.b == ret.b
-                 && in.d == ret.d))
+                 && ACE::is_equal (in.d, ret.d)))
           {
             return 0;
           }
