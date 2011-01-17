@@ -1,0 +1,5 @@
+// $Id$
+
+According to the original report c_ok.idl compiled fine and
+c_nok.idl didn't compile. After this is fixed both of the files
+should compile.

@@ -1,0 +1,31 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ * @file test.idl
+ *
+ * $Id$
+ *
+ * "test" IDL interface for the PolicyFactory test.
+ *
+ * @author Ossama Othman <ossama@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
+
+#include "tao/Policy.pidl"
+
+module Test
+{
+
+  // Hopefully this test policy type number doesn't conflict with any
+  // other reserved PolicyTypes.
+  const CORBA::PolicyType POLICY_TYPE = 3456;
+
+  local interface Policy : CORBA::Policy
+  {
+    /// Returns value passed to PolicyFactory.
+    readonly attribute unsigned long value;
+  };
+
+};

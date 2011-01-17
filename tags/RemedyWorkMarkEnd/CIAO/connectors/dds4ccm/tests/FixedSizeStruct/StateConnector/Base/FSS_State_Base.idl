@@ -1,0 +1,20 @@
+// $Id$
+
+/**
+ * @file FSS_State_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef FIXED_SIZE_STRUCT_STATE_BASE_IDL
+#define FIXED_SIZE_STRUCT_STATE_BASE_IDL
+
+#pragma ndds typesupport "Base/FSS_State_BaseSupport.h"
+
+struct FixedStructSizeTest {
+  long one;
+  long two;
+};
+
+typedef sequence<FixedStructSizeTest> FixedStructSizeTestSeq;
+
+#endif

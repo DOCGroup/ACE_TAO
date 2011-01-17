@@ -1,0 +1,27 @@
+//=============================================================================
+/**
+ *  @file  README
+ *
+ *  $Id$
+ *
+ *  DynAny_Test
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
+This is a semi-complete run-through of DynAny functionality.
+To run a test, type
+
+basic_test -t <dynany|dynarray|dynenum|dynsequence|dynstruct|dynunion> -d
+
+To save on output, several things are tested in one pass. For each
+pass, a message is displayed, for example:
+
+"testing: constructor from any/insert/get"     or
+"testing: constructor from typecode/from_any/to_any"
+
+and finally an error count for the entire test.
+
+Each DynAny is analyzed to make sure its contents is ok. With the option -d
+this analys is also dumped to the output

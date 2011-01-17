@@ -1,0 +1,24 @@
+// $Id$
+
+/**
+ * @file GCS_Test_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef GET_COMPONENT_STATE_TEST_BASE_IDL
+#define GET_COMPONENT_STATE_TEST_BASE_IDL
+
+#pragma ndds typesupport "Base/GCS_Test_BaseSupport.h"
+
+#pragma DCPS_DATA_TYPE "GCSTest"
+#pragma DCPS_DATA_KEY "GCSTest symbol"
+
+struct GCSTest {
+  string symbol; //@key
+  long x;
+  long y;
+};
+
+typedef sequence<GCSTest> GCSTestSeq;
+
+#endif /* GET_COMPONENT_STATE_TEST_BASE_IDL */

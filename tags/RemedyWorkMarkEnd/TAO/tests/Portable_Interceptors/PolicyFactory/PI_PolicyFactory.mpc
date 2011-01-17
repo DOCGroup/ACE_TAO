@@ -1,0 +1,14 @@
+// -*- MPC -*-
+//
+// $Id$
+
+project(*Server): taoserver, iorinterceptor, interceptors {
+  Source_Files {
+    testC.cpp
+    Policy.cpp
+    PolicyFactory.cpp
+    Server_ORBInitializer.cpp
+    IORInterceptor.cpp
+    server.cpp
+  }
+}

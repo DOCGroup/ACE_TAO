@@ -1,0 +1,38 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    array_anon_nested.idl
+//
+// = DESCRIPTION
+//    This file contains examples of IDL code that has
+//    caused problems in the past for the TAO IDL
+//    compiler. This test is to make sure the problems
+//    stay fixed.
+//
+// = AUTHORS
+//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+//
+// ============================================================================
+
+/// There was a problem generating the *_Forany
+/// for the inner array. This construct is in a separate
+/// IDL file for two reasons - (1) to avoid the -GA
+/// option, which does not work when there are constructs
+/// that result in nested C++ classes, and (2) to avoid
+/// the RTI DDS processor, which chokes on this unusual
+/// IDL.
+typedef struct teststruct
+{
+  char b[4];
+
+  struct embeddedstruct
+  {
+    char a[4];
+  } estruct;
+
+} tstruct;

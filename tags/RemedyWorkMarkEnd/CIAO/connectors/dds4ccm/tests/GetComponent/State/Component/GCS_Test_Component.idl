@@ -1,0 +1,27 @@
+// $Id$
+
+/**
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef COMPONENT_IDL
+#define COMPONENT_IDL
+
+#include "Connector/GCS_Test_Connector.idl"
+
+module GCS_Test
+{
+  component GetComponentStateTestComponent
+  {
+    port GCSTestConnector::DDS_Read info_read;
+    port GCSTestConnector::DDS_Get info_get;
+    port GCSTestConnector::DDS_Listen info_listen;
+    port GCSTestConnector::DDS_StateListen info_statelisten;
+
+    port GCSTestConnector::DDS_Update info_update;
+
+    attribute boolean act_as_sender;
+  };
+};
+
+#endif

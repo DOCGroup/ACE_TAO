@@ -1,0 +1,55 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    invalid_scoping.idl
+//
+// = DESCRIPTION
+//    This file contains examples of IDL code that has
+//    caused problems in the past for the TAO IDL
+//    compiler. This test is to make sure the problems
+//    stay fixed.
+//
+// ============================================================================
+
+// Ensure that scope ::A::B::target exists
+// but doesn't contain enum numbers2.
+// ::A::B::target should hide the ::A::target
+// defined later when inside scope ::A::B.
+module A {
+  module B {
+    module target {
+      enum numbers1 {
+        ONE
+      };
+    };
+  };
+};
+
+// Ensure that enum ::A::target::numbers2 exists
+// which should not be found inside scope B due
+// to the internal "target" module above.
+module A {
+  module target {
+    enum numbers2 {
+      TWO
+    };
+  };
+};
+
+// Attempt to access global scope ::A::target::numbers2
+// with a local (non-fully pathed) name target::numbers2
+// from within ::A::B which DOES contain it's own target
+// module that does NOT contain numbers2. THIS SHOULD NOT
+// COMPILE OR LOCK-UP tao_idl. The two target modules are NOT
+// the same module and thus the outer one is hidden by the
+// closer local one.
+module A {
+  module B {
+    typedef target::numbers2 myType;
+  };
+};

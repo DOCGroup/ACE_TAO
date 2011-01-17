@@ -1,0 +1,33 @@
+// $Id$
+
+/**
+ * @file MultipleTemp_Base.idl
+ * @author Marijke Hengstmengel
+ */
+
+#ifndef MULTIPLE_TEMP_BASE_IDL
+#define MULTIPLE_TEMP_BASE_IDL
+
+#pragma ndds typesupport "Base/MultipleTemp_BaseSupport.h"
+
+#pragma DCPS_DATA_TYPE "TestTopicOne"
+#pragma DCPS_DATA_KEY "TestTopicOne keyOne"
+#pragma DCPS_DATA_TYPE "TestTopicTwo"
+#pragma DCPS_DATA_KEY "TestTopicTwo keyTwo"
+
+
+struct TestTopicOne {
+  string keyOne; //@key
+  long x;
+};
+
+struct TestTopicTwo {
+  string keyTwo; //@key
+  long y;
+  long z;
+};
+
+typedef sequence<TestTopicOne> TestTopicOneSeq;
+typedef sequence<TestTopicTwo> TestTopicTwoSeq;
+
+#endif
