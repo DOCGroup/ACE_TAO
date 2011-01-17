@@ -297,8 +297,10 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
   // If no errors
   if (!error)
     {
-      // Update the Proactor.
-      new_handler->proactor (this->proactor ());
+      // Update the Proactor unless make_handler() or constructed handler
+      // set up its own.
+      if (new_handler->proactor () == 0)
+        new_handler->proactor (this->proactor ());
 
       // Pass the addresses
       if (this->pass_addresses_)
