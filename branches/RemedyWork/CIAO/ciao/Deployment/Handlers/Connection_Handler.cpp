@@ -771,9 +771,11 @@ namespace CIAO
       }
 
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
+    ::Components::Cookie_var cookie = this->get_cookie (conn.name.in ());
+
     ::CORBA::Object_var safe_tmp =
       obj->disconnect (conn.internalEndpoint[0].portName.in (),
-                       this->get_cookie (conn.name.in ()));
+                       cookie.in ());
     this->remove_cookie (conn.name.in ());
   }
 
@@ -837,7 +839,6 @@ namespace CIAO
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_publisher");
-    CIAO_ERROR (1, (LM_ERROR,  CLINFO "disconnect_publisher NOT IMPLEMENTED\n"));
   }
 #endif
 
@@ -849,7 +850,6 @@ namespace CIAO
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_emitter");
-    CIAO_ERROR (1, (LM_ERROR,  CLINFO "disconnect_emitter NOT IMPLEMENTED\n"));
   }
 #endif
 
@@ -877,9 +877,11 @@ namespace CIAO
                                                "Expected internal endpoints.");
       }
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
+    ::Components::Cookie_var cookie = this->get_cookie (conn.name.in ());
+
     ::Components::EventConsumerBase_var safe_temp =
       obj->unsubscribe (endpoint.portName.in (),
-                        this->get_cookie (conn.name.in ()));
+                        cookie.in ());
   }
 #endif
 
@@ -1027,19 +1029,9 @@ namespace CIAO
     else
       {
         CIAO_DEBUG (5, (LM_DEBUG, CLINFO
-                        "Connection_Handler::insert_cookie - "
-                        "Inserted cookie for [%C]. Value [%@] "
-                        "- RefCount [%d].\n",
-                        connection_name,
-                        conn_info.first.in (),
-                        conn_info.first->_refcount_value()));
-        CIAO_DEBUG (5, (LM_DEBUG, CLINFO
-                        "Connection_Handler::insert_cookie - "
-                        "Inserted object for [%C]. Value [%@] "
-                        "- RefCount [%d].\n",
-                        connection_name,
-                        conn_info.second.in (),
-                        conn_info.second->_refcount_value()));
+                        "Connection_Handler::remove_cookie - "
+                        "Inserted cookie for [%C].\n",
+                        connection_name));
       }
   }
 
@@ -1059,18 +1051,8 @@ namespace CIAO
       }
     CIAO_DEBUG (5, (LM_DEBUG, CLINFO
                     "Connection_Handler::remove_cookie - "
-                    "About to remove cookie for [%C]. "
-                    "Value [%@] - RefCount [%d].\n",
-                    connection_name,
-                    it->second.first.in (),
-                    it->second.first->_refcount_value()));
-    CIAO_DEBUG (5, (LM_DEBUG, CLINFO
-                    "Connection_Handler::remove_cookie - "
-                    "About to remove object for [%C]. "
-                    "Value [%@] - RefCount [%d].\n",
-                    connection_name,
-                    it->second.second.in (),
-                    it->second.second->_refcount_value()));
+                    "About to remove cookie for [%C].\n",
+                    connection_name));
     it->second.second = ::Components::CCMObject::_nil ();
     this->cookies_.erase (it);
   }
