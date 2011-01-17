@@ -742,6 +742,14 @@ public:
   void in_typedef (bool val);
   // Accessors for the member.
 
+  bool in_tmpl_mod_no_alias (void) const;
+  void in_tmpl_mod_no_alias (bool val);
+  // Accessors for the member.
+
+  bool in_tmpl_mod_alias (void) const;
+  void in_tmpl_mod_alias (bool val);
+  // Accessors for the member.
+
 private:
   // Data
   UTL_ScopeStack             pd_scopes;              // Store scopes stack
@@ -921,6 +929,15 @@ private:
   /// Flag set in parser so we can decide whether to emit
   /// an anonymous type diagnostic.
   bool in_typedef_;
+
+  /// Used during AST creation, corresponding flag in each
+  /// AST_Decl created is set to this flag's value.
+  bool in_tmpl_mod_no_alias_;
+
+  /// Disables the error check faciliated by the above flag.
+  /// No errors are possible because created nodes are all
+  /// implied IDL.
+  bool in_tmpl_mod_alias_;
 };
 
 #endif  //_IDL_IDL_GLOBAL_HH

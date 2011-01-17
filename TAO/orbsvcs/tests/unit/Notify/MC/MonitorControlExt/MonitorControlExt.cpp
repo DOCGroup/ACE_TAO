@@ -115,7 +115,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       stat->update ();
       double count = stat->last_sample ();
 
-      if (count != 1)
+      if (!ACE::is_equal (count, 1.0))
         {
           error ("Invalid inactive event channel count");
         }
@@ -135,7 +135,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       stat->update ();
       count = stat->last_sample ();
 
-      if (count != 0)
+      if (!ACE::is_equal (count, 0.0))
         {
           error ("Invalid active event channel count");
         }
@@ -241,7 +241,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       stat->update ();
       count = stat->last_sample ();
 
-      if (count != 1)
+      if (!ACE::is_equal (count, 1.0))
         {
           error ("Invalid supplier count");
         }
@@ -340,7 +340,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       stat->update ();
       count = stat->last_sample ();
 
-      if (count != 1)
+      if (!ACE::is_equal (count, 1.0))
         {
           error ("Invalid consumer count");
         }

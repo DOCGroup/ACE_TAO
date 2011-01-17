@@ -127,7 +127,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                token,
                                returned_token);
 
-                  if (token != returned_token)
+                  if (!ACE::is_equal (token, returned_token))
                     {
                       ACE_ERROR ((LM_ERROR,
                                   "ERROR - invalid token <%f> returned,"

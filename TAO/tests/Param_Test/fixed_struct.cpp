@@ -124,23 +124,23 @@ Test_Fixed_Struct::check_validity (void)
       this->in_.c == this->inout_.c &&
       this->in_.s == this->inout_.s &&
       this->in_.o == this->inout_.o &&
-      this->in_.f == this->inout_.f &&
+      ACE::is_equal (this->in_.f, this->inout_.f) &&
       this->in_.b == this->inout_.b &&
-      this->in_.d == this->inout_.d &&
+      ACE::is_equal (this->in_.d, this->inout_.d) &&
       this->in_.l == this->out_.l &&
       this->in_.c == this->out_.c &&
       this->in_.s == this->out_.s &&
       this->in_.o == this->out_.o &&
-      this->in_.f == this->out_.f &&
+      ACE::is_equal (this->in_.f, this->out_.f) &&
       this->in_.b == this->out_.b &&
-      this->in_.d == this->out_.d &&
+      ACE::is_equal (this->in_.d, this->out_.d) &&
       this->in_.l == this->ret_.l &&
       this->in_.c == this->ret_.c &&
       this->in_.s == this->ret_.s &&
       this->in_.o == this->ret_.o &&
-      this->in_.f == this->ret_.f &&
+      ACE::is_equal (this->in_.f, this->ret_.f) &&
       this->in_.b == this->ret_.b &&
-      this->in_.d == this->ret_.d)
+      ACE::is_equal (this->in_.d, this->ret_.d))
     return 1;
   else
     return 0;

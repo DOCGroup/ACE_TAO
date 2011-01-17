@@ -232,6 +232,8 @@ error_string (UTL_Error::ErrorCode c)
       return "wrong # of template args";
     case UTL_Error::EIDL_MISMATCHED_SEQ_PARAM:
       return "no match for identifier";
+    case UTL_Error::EIDL_TEMPLATE_NOT_ALIASED:
+      return "ref to template module scope must be via alias";
   }
 
   return 0;
@@ -244,7 +246,7 @@ idl_error_header (UTL_Error::ErrorCode c,
                   ACE_CString s)
 {
   ACE_ERROR ((LM_ERROR,
-              "%C: \"%C\", line %d: %C",
+              "Error - %C: \"%C\", line %d: %C",
               idl_global->prog_name (),
               s.c_str (),
               lineno == -1 ? idl_global->lineno () : lineno,
@@ -1552,7 +1554,8 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
   const char *masking_file = masking->file_name ().c_str ();
 
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("%C: \"%C\", line %d: Did you mean \"::%C\"\n")
+              ACE_TEXT ("Error - %C: \"%C\", line %d: ")
+              ACE_TEXT ("Did you mean \"::%C\"\n")
               ACE_TEXT ("   declared at "),
               idl_global->prog_name (),
               this_file,
@@ -1629,3 +1632,16 @@ UTL_Error::anonymous_type_diagnostic (void)
       idl_global->set_err_count (idl_global->err_count () + 1);
     }
 }
+
+void
+UTL_Error::template_scope_ref_not_aliased (AST_Decl *d)
+{
+  idl_error_header (EIDL_TEMPLATE_NOT_ALIASED,
+                    idl_global->lineno (),
+                    d->file_name ());
+  ACE_ERROR ((LM_ERROR, " - "));
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR, "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
