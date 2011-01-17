@@ -131,11 +131,16 @@ namespace CIAO
                   DDSDataReaderListener * ccm_dds_drl,
                   ::DDS::StatusMask mask)
     {
-      return this->rti_entity ()->create_datareader_with_profile (topic,
-                                                            get_library_name (qos_profile),
-                                                            get_profile_name (qos_profile),
+      char * lib_name = get_library_name (qos_profile);
+      char * prof_name = get_profile_name (qos_profile);
+      DDSDataReader * dr = this->rti_entity ()->create_datareader_with_profile (topic,
+                                                            lib_name,
+                                                            prof_name,
                                                             ccm_dds_drl,
                                                             mask);
+      ACE_OS::free (lib_name);
+      ACE_OS::free (prof_name);
+      return dr;
     }
 
     ::DDS::DataReader_ptr

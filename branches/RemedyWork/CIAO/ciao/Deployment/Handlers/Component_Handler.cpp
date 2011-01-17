@@ -410,7 +410,7 @@ namespace CIAO
 
     ::CIAO::Container_var container = DEPLOYMENT_STATE::instance ()->fetch_container (cont_id);
 
-      if (CORBA::is_nil (container))
+      if (CORBA::is_nil (container.in ()))
         {
           CIAO_ERROR (1, (LM_INFO, CLINFO
                           "Component_Handler_i::remove_instance - "
