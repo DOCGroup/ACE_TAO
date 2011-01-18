@@ -341,11 +341,11 @@ namespace CIAO
             throw ::Deployment::InvalidConnection (conn.name.in (),
                                                    "Local facet connections require exactly 2 internalEndpoints");
           }
-        this->connect_non_local_facet (plan,
-                                       connectionRef,
-                                       endpointRef,
-                                       provided_reference);
       }
+    this->connect_non_local_facet (plan,
+                                    connectionRef,
+                                    endpointRef,
+                                    provided_reference);
   }
 
   void
@@ -409,7 +409,6 @@ namespace CIAO
 
     ::Components::Cookie_var cookie = provided->connect (conn.externalReference[0].portName.in (),
                                                          facet.in ());
-
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_non_local_facet - "
                     "Connection <%C> successfully established.\n",
@@ -597,7 +596,7 @@ namespace CIAO
                                                "Publisher component not deployed.");
       }
     Components::Cookie_var cookie = publisher->subscribe (endpoint.portName.in (),
-                                                       event.in ());
+                                                          event.in ());
 
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_publisher - "
@@ -771,7 +770,6 @@ namespace CIAO
       }
 
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
-
     ::CORBA::Object_var safe_tmp =
       obj->disconnect (conn.internalEndpoint[0].portName.in (),
                        this->get_cookie (conn.name.in ()));
@@ -796,7 +794,6 @@ namespace CIAO
                     "Disconnecting connection <%C> on instance <%C>\n",
                     conn.name.in (),
                     plan.instance[endpoint.instanceRef].name.in ()));
-
     if (this->is_local_connection (conn))
       {
         CORBA::ULong other_endpointRef = (endpointRef + 1) % 2;
@@ -1016,8 +1013,9 @@ namespace CIAO
     std::pair<COOKIES::iterator, bool> ret = this->cookies_.insert (value_to_insert);
     if (!ret.second)
       {
-        CIAO_ERROR (1, (LM_ERROR,  CLINFO "Connection_Handler::insert_cookie - "
-                    "Error inserting new cookie\n"));
+        CIAO_ERROR (1, (LM_ERROR,  CLINFO
+                        "Connection_Handler::insert_cookie - "
+                        "Error inserting new cookie\n"));
         conn_info.first->_remove_ref ();
         conn_info.second->_remove_ref ();
         throw ::Deployment::InvalidConnection (connection_name,
@@ -1026,7 +1024,7 @@ namespace CIAO
     else
       {
         CIAO_DEBUG (5, (LM_DEBUG, CLINFO
-                        "Connection_Handler::remove_cookie - "
+                        "Connection_Handler::insert_cookie - "
                         "Inserted cookie for [%C].\n",
                         connection_name));
       }
@@ -1041,7 +1039,7 @@ namespace CIAO
     if (it == this->cookies_.end ())
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::get_ccm_object - "
+                        "Connection_Handler::remove_cookie - "
                         "Unable to delete cookie for connection <%C>\n",
                         connection_name));
         return;
@@ -1058,6 +1056,7 @@ namespace CIAO
   Connection_Handler::get_cookie (const char * connection_name)
   {
     CIAO_TRACE ("Connection_Handler::get_cookie");
+
     COOKIES::iterator it = this->cookies_.find (connection_name);
     if (it == this->cookies_.end ())
       {
@@ -1072,11 +1071,8 @@ namespace CIAO
       {
         CIAO_DEBUG (5, (LM_DEBUG, CLINFO
                         "Connection_Handler::get_cookie - "
-                        "Found cookie for [%C]. Value [%@] "
-                        "- RefCount [%d]\n",
-                        connection_name,
-                        it->second.first.in (),
-                        it->second.first->_refcount_value()));
+                        "Found cookie for [%C]\n",
+                        connection_name));
       }
     return it->second.first.in ();
   }
