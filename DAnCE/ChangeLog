@@ -1,3 +1,9 @@
+Tue Jan 18 11:45:35 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/schema/README.html:
+
+          Removed mention of modified_deployment.
+
 Tue Jan 18 11:26:40 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/schema/Modified_Deployment.xsd:
