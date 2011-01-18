@@ -395,7 +395,7 @@ namespace DAnCE
             }
         }
 
-      DANCE_ERROR (1, (LM_INFO, DLINFO
+      DANCE_ERROR (1, (LM_ERROR, DLINFO
                        ACE_TEXT("DAnCE::Utility::get_instance_type - ")
                        ACE_TEXT("Unable to determine instance type, instance will be ignored.\n")));
       return 0;
