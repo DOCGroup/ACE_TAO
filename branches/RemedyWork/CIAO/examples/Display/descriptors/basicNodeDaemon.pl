@@ -32,19 +32,19 @@ $tg->DeleteFile ("NodeApp5.ior");
 $CIAO_ROOT=$ENV{'CIAO_ROOT'};
 
 $SV1 = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_node_manager",
-                             "-ORBEndpoint iiop://localhost:10000 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
+                             "-ORBEndpoint iiop://localhost:10000 -s $DANCE_ROOT/bin/dance_locality_manager");
 
 $SV2 = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_node_manager",
-                             "-ORBEndpoint iiop://localhost:20000  -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
+                             "-ORBEndpoint iiop://localhost:20000  -s $DANCE_ROOT/bin/dance_locality_manager");
 
 $SV3 = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_node_manager",
-                             "-ORBEndpoint iiop://localhost:30000  -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
+                             "-ORBEndpoint iiop://localhost:30000  -s $DANCE_ROOT/bin/dance_locality_manager");
 
 $SV4 = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_node_manager",
-                             "-ORBEndpoint iiop://localhost:40000  -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
+                             "-ORBEndpoint iiop://localhost:40000  -s $DANCE_ROOT/bin/dance_locality_manager");
 
 $SV5 = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_node_manager",
-                             "-ORBEndpoint iiop://localhost:50000  -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
+                             "-ORBEndpoint iiop://localhost:50000  -s $DANCE_ROOT/bin/dance_locality_manager");
 $SV1->Spawn ();
 $SV2->Spawn ();
 $SV3->Spawn ();
