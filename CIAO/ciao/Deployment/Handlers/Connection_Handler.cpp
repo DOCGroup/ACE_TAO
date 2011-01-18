@@ -829,12 +829,55 @@ namespace CIAO
 
 #if !defined (CCM_NOEVENT)
   void
-  Connection_Handler::disconnect_publisher (const ::Deployment::DeploymentPlan &,
-                                            ::CORBA::ULong,
-                                            ::CORBA::ULong)
+  Connection_Handler::disconnect_event_port (const char * type,
+                                             const ::Deployment::DeploymentPlan &plan,
+                                             ::CORBA::ULong connectionRef,
+                                             ::CORBA::ULong endpointRef)
+  {
+    CIAO_TRACE ("Connection_Handler::disconnect_event_port");
+
+    const ::Deployment::PlanConnectionDescription &conn =
+      plan.connection[connectionRef];
+    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
+      conn.internalEndpoint[endpointRef];
+
+    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                "Connection_Handler::disconnect_%C - "
+                "Disconnecting connection <%C> on instance <%C>\n",
+                type,
+                conn.name.in (),
+                plan.instance[endpoint.instanceRef].name.in ()));
+
+    if (conn.internalEndpoint.length () == 0)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::disconnect_event_port - "
+                        "Error: Expected internal endpoints for connection <%C>\n",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                               "Expected internal endpoints.");
+      }
+    ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
+
+    ::Components::EventConsumerBase_var safe_temp =
+      obj->unsubscribe (endpoint.portName.in (),
+                        this->get_cookie (conn.name.in ()));
+  }
+#endif
+
+#if !defined (CCM_NOEVENT)
+  void
+  Connection_Handler::disconnect_publisher (const ::Deployment::DeploymentPlan &plan,
+                                            ::CORBA::ULong connectionRef,
+                                            ::CORBA::ULong endpointRef)
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_publisher");
+
+    this->disconnect_event_port ("publisher",
+                                 plan,
+                                 connectionRef,
+                                 endpointRef);
   }
 #endif
 
@@ -846,6 +889,10 @@ namespace CIAO
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_emitter");
+    CIAO_ERROR (1, (LM_ERROR,  CLINFO
+                    "Connection_Handler::disconnect_emitter - "
+                    "ERROR: disconnect_emitter not implemented\n"));
+    throw ::CORBA::NO_IMPLEMENT ();
   }
 #endif
 
@@ -858,25 +905,10 @@ namespace CIAO
   {
     CIAO_TRACE ("Connection_Handler::disconnect_consumer");
 
-    const ::Deployment::PlanConnectionDescription &conn =
-      plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
-
-    if (conn.internalEndpoint.length () == 0)
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::disconnect_consumer - "
-                        "Error: Expected internal endpoints for connection <%C>\n",
-                        conn.name.in ()));
-        throw ::Deployment::InvalidConnection (conn.name.in (),
-                                               "Expected internal endpoints.");
-      }
-    ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
-
-    ::Components::EventConsumerBase_var safe_temp =
-      obj->unsubscribe (endpoint.portName.in (),
-                        this->get_cookie (conn.name.in ()));
+    this->disconnect_event_port ("consumer",
+                                 plan,
+                                 connectionRef,
+                                 endpointRef);
   }
 #endif
 
