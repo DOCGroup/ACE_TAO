@@ -1,3 +1,9 @@
+Tue Jan 18 11:33:18 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Resolved runtime test errors. Also optimized logging
+          and code layout.
+
 Mon Jan 17 15:13:22 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Deployment/Handlers/Connection_Handler.cpp:
