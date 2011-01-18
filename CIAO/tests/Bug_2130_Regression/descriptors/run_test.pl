@@ -134,7 +134,7 @@ if ($status != 0) {
 
 # Invoke execution manager.
 print "Invoking execution manager\n";
-$EM = $tg_exe_man->CreateProcess ("$CIAO_ROOT/bin/Execution_Manager",
+$EM = $tg_exe_man->CreateProcess ("$DANCE_ROOT/bin/dance_execution_manager",
                             "-o $ior_emfile -i -cdd $dat_file");
 $EM->Spawn ();
 
