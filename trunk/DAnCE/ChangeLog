@@ -1,3 +1,9 @@
+Tue Jan 18 11:26:40 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/schema/Modified_Deployment.xsd:
+
+          Removed this file.
+
 Fri Dec 17 15:14:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * */*.*:
