@@ -230,8 +230,21 @@ namespace CIAO
              i < conn.internalEndpoint.length ();
              ++i)
           {
-            if (conn.internalEndpoint[i].provider)
-              endpoint = i;
+            if (conn.internalEndpoint[i].kind == Deployment::EventEmitter ||
+                conn.internalEndpoint[i].kind == Deployment::EventPublisher ||
+                conn.internalEndpoint[i].kind == Deployment::EventConsumer)
+              {
+                if (!conn.internalEndpoint[i].provider)
+                  {
+                    endpoint = i;
+                    break;
+                  }
+              }
+            else if (conn.internalEndpoint[i].provider)
+              {
+                endpoint = i;
+                break;
+              }
           }
       }
 
@@ -829,12 +842,12 @@ namespace CIAO
 
 #if !defined (CCM_NOEVENT)
   void
-  Connection_Handler::disconnect_event_port (const char * type,
-                                             const ::Deployment::DeploymentPlan &plan,
-                                             ::CORBA::ULong connectionRef,
-                                             ::CORBA::ULong endpointRef)
+  Connection_Handler::disconnect_publisher (const ::Deployment::DeploymentPlan &plan,
+                                            ::CORBA::ULong connectionRef,
+                                            ::CORBA::ULong endpointRef)
+
   {
-    CIAO_TRACE ("Connection_Handler::disconnect_event_port");
+    CIAO_TRACE ("Connection_Handler::disconnect_publisher");
 
     const ::Deployment::PlanConnectionDescription &conn =
       plan.connection[connectionRef];
@@ -842,11 +855,12 @@ namespace CIAO
       conn.internalEndpoint[endpointRef];
 
     CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                "Connection_Handler::disconnect_%C - "
-                "Disconnecting connection <%C> on instance <%C>\n",
-                type,
+                "Connection_Handler::disconnect_publisher - "
+                "Disconnecting connection <%C> on instance <%C>. "
+                "Portname: [%C]\n",
                 conn.name.in (),
-                plan.instance[endpoint.instanceRef].name.in ()));
+                plan.instance[endpoint.instanceRef].name.in (),
+                endpoint.portName. in ()));
 
     if (conn.internalEndpoint.length () == 0)
       {
@@ -867,32 +881,12 @@ namespace CIAO
 
 #if !defined (CCM_NOEVENT)
   void
-  Connection_Handler::disconnect_publisher (const ::Deployment::DeploymentPlan &plan,
-                                            ::CORBA::ULong connectionRef,
-                                            ::CORBA::ULong endpointRef)
-
-  {
-    CIAO_TRACE ("Connection_Handler::disconnect_publisher");
-
-    this->disconnect_event_port ("publisher",
-                                 plan,
-                                 connectionRef,
-                                 endpointRef);
-  }
-#endif
-
-#if !defined (CCM_NOEVENT)
-  void
   Connection_Handler::disconnect_emitter (const ::Deployment::DeploymentPlan &,
                                           ::CORBA::ULong,
                                           ::CORBA::ULong)
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_emitter");
-    CIAO_ERROR (1, (LM_ERROR,  CLINFO
-                    "Connection_Handler::disconnect_emitter - "
-                    "ERROR: disconnect_emitter not implemented\n"));
-    throw ::CORBA::NO_IMPLEMENT ();
   }
 #endif
 
@@ -905,10 +899,32 @@ namespace CIAO
   {
     CIAO_TRACE ("Connection_Handler::disconnect_consumer");
 
-    this->disconnect_event_port ("consumer",
-                                 plan,
-                                 connectionRef,
-                                 endpointRef);
+    const ::Deployment::PlanConnectionDescription &conn =
+      plan.connection[connectionRef];
+    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
+      conn.internalEndpoint[endpointRef];
+
+    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                "Connection_Handler::disconnect_consumer - "
+                "Disconnecting connection <%C> on instance <%C>. "
+                "Portname: [%C]\n",
+                conn.name.in (),
+                plan.instance[endpoint.instanceRef].name.in (),
+                endpoint.portName. in ()));
+
+    if (conn.internalEndpoint.length () == 0)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::disconnect_event_port - "
+                        "Error: Expected internal endpoints for connection <%C>\n",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                               "Expected internal endpoints.");
+      }
+    ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
+
+    ::Components::EventConsumerBase_var safe_temp =
+      obj->disconnect_consumer (endpoint.portName.in ());
   }
 #endif
 

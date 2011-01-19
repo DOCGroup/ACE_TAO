@@ -115,13 +115,6 @@ namespace CIAO
 
     void disconnect_non_local (const ::Deployment::PlanConnectionDescription &conn);
 
-#if !defined (CCM_NOEVENT)
-    void disconnect_event_port (const char * type,
-                                const ::Deployment::DeploymentPlan &plan,
-                                ::CORBA::ULong connectionRef,
-                                ::CORBA::ULong endpointRef);
-#endif
-
     bool is_local_connection (const ::Deployment::PlanConnectionDescription &conn);
 
     typedef std::pair < ::Components::Cookie_var,
