@@ -1,8 +1,14 @@
+Wed Jan 19 13:03:24 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.h:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Resolved some issues regarding disconnecting event ports.
+
 Wed Jan 19 12:11:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
-		* bin/ciao_tests.lst:
-		  Exclude DAnCE/LocalityManager/CommandlinePassage/run_test_cmd
-		  test from running on Windows.
+                * bin/ciao_tests.lst:
+                  Exclude DAnCE/LocalityManager/CommandlinePassage/run_test_cmd
+                  test from running on Windows.
 
 Tue Jan 18 18:30:39 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
