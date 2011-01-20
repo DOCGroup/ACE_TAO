@@ -5530,12 +5530,8 @@ tao_yyreduce:
            * The top of the scopes must an empty union we added after we
            * encountered 'union <id> switch ('. Now we are ready to add a
            * correct one. Temporarily remove the top so that we setup the
-           * correct union in a right scope. But first save pragma prefix
-           * since UTL_ScopeStack::pop() removes it.
+           * correct union in a right scope.
            */
-          char *prefix = 0;
-          idl_global->pragma_prefixes ().top (prefix);
-          prefix = ACE::strnew (prefix);
           UTL_Scope *top = idl_global->scopes ().top_non_null ();
           idl_global->scopes ().pop ();
 
@@ -5579,7 +5575,6 @@ tao_yyreduce:
            * Restore the top.
            */
           idl_global->scopes ().push (top);
-          idl_global->pragma_prefixes ().push (prefix);
 
           (tao_yyvsp[(1) - (8)].idval)->destroy ();
           delete (tao_yyvsp[(1) - (8)].idval);
