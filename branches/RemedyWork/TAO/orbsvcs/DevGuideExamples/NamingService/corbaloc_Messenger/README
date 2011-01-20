@@ -1,0 +1,173 @@
+// $Id$
+
+DevGuideExamples/NamingService/corbaloc_Messenger/README
+// $Id$
+
+The example in this directory extends the example in GettingStartedUNIX 
+(or GettingStartedVC) to use the Naming_Service 
+and calling string_to_object instead of calling resolve_initial_references 
+to get the NameService object reference.
+ 
+This example only differs from the NamingService/Messenger example by a few lines
+in the MessengerClient.cpp.  (All other source files should be the same.)
+
+How to Run:
+-----------
+To start the Naming_Service:
+----------------------------
+$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -m 1 &
+
+Note: Must start the Naming_Service using multicast (-m 1) 
+      for the default initial reference for NameService to work.
+
+To start the server:
+------------------
+./MessengerServer 
+To start the client:
+------------------
+./MessengerClient
+
+
+This MessengerClient will optionally take parameter that is a URL (corbaloc:) 
+that addresses the Naming_Service.
+
+The MessengerServer and MessengerClient may also take an -ORBInitRef option
+to help qualify the address of the Naming_Service.
+
+Here are some examples:
+
+REM start the name server
+cd/d %TAO_ROOT%\orbsvcs\Naming_Service
+title NS
+Naming_Service -ORBListenEndpoints iiop://localhost:2809 -m 0
+
+REM start the example server
+cd/d %EXAMPLES%\NamingService\corbaloc_Messenger\Debug
+title server
+REM use -ORBInitRef with IIOP
+MessengerServer -ORBInitRef NameService=iiop://localhost:2809/NameService
+
+REM use -ORBDefaultInitRef with specific host and port
+MessengerServer -ORBDefaultInitRef iiop://localhost:2809
+
+REMuse -ORBDefaultInitRef <port 2809 is the default if not specified.
+MessengerServer -ORBDefaultInitRef corbaloc::localhost
+
+REM crashes - ? is this a bug?
+MessengerServer -ORBDefaultInitRef corbaloc:rir:/
+
+REM -ORBInitRef with corbaloc and default port
+MessengerServer -ORBInitRef NameService=corbaloc::localhost/NameService
+REM and specific port
+MessengerServer -ORBInitRef NameService=corbaloc::localhost:2809/NameService
+
+REM crashes
+MessengerServer -ORBInitRef NameService=corbaloc:rir/NameService
+
+REM start the client
+cd/d %EXAMPLES%\NamingService\corbaloc_Messenger\Debug
+title client
+MessengerClient -ORBInitRef NameService=iiop://localhost:2809/NameService corbaloc:rir:/NameService
+
+
+REM use -ORBDefaultInitRef with specific host and default port == 2809
+MessengerClient -ORBDefaultInitRef corbaloc::localhost corbaloc:rir:/NameService
+
+REM use a corbaloc that does not require -ORBDefaultInitRef (port defaults)
+MessengerClient corbaloc::localhost/NameService
+
+===========================
+REM !!! kill the previous Naming_Service and MessengerServer !!!
+
+REM start the name server (at another address)
+cd/d %TAO_ROOT%\orbsvcs\Naming_Service
+Naming_Service -ORBListenEndpoints iiop://localhost:9999 -m 0
+
+REM start the example server
+cd/d %EXAMPLES%\NamingService\corbaloc_Messenger\Debug
+MessengerServer -ORBInitRef NameService=iiop://localhost:9999/NameService
+
+
+
+REM start the client
+cd/d %EXAMPLES%\NamingService\corbaloc_Messenger\Debug
+MessengerClient -ORBInitRef NameService=iiop://localhost:9999/NameService
+
+
+
+MessengerClient -ORBInitRef NameService=iiop://localhost:9999/NameService
+Usage: MessengerClient [-ORB options] [corbaname URL for the name service]
+
+MessengerClient -ORBInitRef NameService=iiop://localhost:9999/NameService corbaloc:rir:/NameService
+Message was sent
+
+MessengerClient -ORBInitRef NameService=iiop://localhost:9999/NameService corbaloc:rir:/
+Message was sent
+
+MessengerClient -ORBInitRef NameService=iiop://localhost:9669/NameService corbaloc:rir:/
+Caught a CORBA exception: TRANSIENT (IDL:omg.org/CORBA/TRANSIENT:1.0)
+
+MessengerClient -ORBInitRef NameService=iiop://localhost:9669/NameService corbaloc:iiop:localhost:9999/NameService
+Message was sent
+
+MessengerClient -ORBInitRef NameService=iiop://localhost:9669/NameService corbaloc:localhost:9999/NameService
+TAO (249|231) no usable transport protocol was found.
+Caught a CORBA exception: BAD_PARAM (IDL:omg.org/CORBA/BAD_PARAM:1.0)
+
+MessengerClient -ORBInitRef NameService=iiop://localhost:9669/NameService corbaloc::localhost:9999/NameService
+Message was sent
+
+MessengerClient -ORBInitRef NameService=iiop://localhost:9669/NameService corbaloc::1.0\localhost:9999/NameService
+Caught a CORBA exception: TRANSIENT (IDL:omg.org/CORBA/TRANSIENT:1.0)
+
+MessengerClient -ORBInitRef NameService=iiop://localhost:9669/NameService corbaloc::1.0\@localhost:9999/NameService
+Caught a CORBA exception: TRANSIENT (IDL:omg.org/CORBA/TRANSIENT:1.0)
+
+MessengerClient -ORBInitRef NameService=iiop://localhost:9669/NameService corbaloc::localhost:9999/NameService
+Message was sent
+
+MessengerClient -ORBInitRef NameService=iiop://localhost:9669/NameService corbaloc::localhost/NameService
+Caught a CORBA exception: TRANSIENT (IDL:omg.org/CORBA/TRANSIENT:1.0)
+
+
+
+===================== IIOPLOC =================
+REM iioploc: is TAO specific and deprecated
+
+REM start the name server
+cd/d %TAO_ROOT%\orbsvcs\Naming_Service
+title NS
+Naming_Service -ORBListenEndpoints iiop://localhost:2809 -m 0
+
+REM -ORBInitRef with iioploc (TAO specific and deprecated)
+MessengerServer -ORBInitRef NameService=iioploc://localhost:2809/NameService
+
+cd/d %EXAMPLES%\NamingService\corbaloc_Messenger\Debug
+title client
+MessengerClient iioploc://localhost:2809/NameService
+
+===== MCAST example ======
+!!! only on platforms supporting multicast (not Windows) !!!
+
+
+# start the name server using MultiCast
+cd $TAO_ROOT/orbsvcs/Naming_Service
+Naming_Service -m 1
+
+# start the example server
+cd $EXAMPLES/NamingService/corbaloc_Messenger
+MessengerServer
+
+cd $EXAMPLES/NamingService/corbaloc_Messenger
+MessengerClient
+
+
+--- specify the multicast address.
+Naming_Service -m 1 -ORBNameServicePort 12345
+# -ORBNameServicePort 12345 is ingored if -m 1 is not specified.
+
+
+MessengerServer -ORBInitRef NameService=mcast://:12345::/NameService
+
+
+<TBD more using URL parameter>

@@ -1,0 +1,89 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -n PartialShutdown"
+
+project(PartialShutdown_idl_gen) : componentidldefaults   {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=PARTIALSHUTDOWN_STUB_Export \
+              -Wb,stub_export_include=PartialShutdown_stub_export.h \
+              -Wb,skel_export_macro=PARTIALSHUTDOWN_SKEL_Export \
+              -Wb,skel_export_include=PartialShutdown_skel_export.h \
+              -Wb,exec_export_macro=PARTIALSHUTDOWN_EXEC_Export \
+              -Wb,exec_export_include=PartialShutdown_exec_export.h \
+              -Gxhex -Gxhsk -Gxhst
+
+  IDL_Files {
+    PartialShutdown.idl
+  }
+}
+
+project(PartialShutdown_lem_gen) : ciaoidldefaults, avoids_ccm_noevent {
+  custom_only = 1
+  after += PartialShutdown_idl_gen
+  idlflags += \
+              -Wb,export_macro=PARTIALSHUTDOWN_STUB_Export \
+              -Wb,export_include=PartialShutdown_stub_export.h \
+              -I..
+
+  IDL_Files {
+    PartialShutdownE.idl
+  }
+}
+
+project(PartialShutdown_stub) : ccm_stub   {
+  after += PartialShutdown_lem_gen
+  libs  +=
+
+  libout = ../lib
+  libpaths += ../lib
+
+  sharedname = PartialShutdown_stub
+  dynamicflags += PARTIALSHUTDOWN_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    PartialShutdownC.cpp
+    PartialShutdownEC.cpp
+  }
+
+  Header_Files {
+    PartialShutdownC.h
+    PartialShutdownEC.h
+    PartialShutdown_stub_export.h
+  }
+
+  Inline_Files {
+    PartialShutdownC.inl
+  }
+}
+
+
+project(PartialShutdown_skel) : ciao_executor   {
+  after      +=  PartialShutdown_stub PartialShutdown_lem_stub
+  sharedname  = PartialShutdown_skel
+  libs       += PartialShutdown_stub
+
+  libout = ../lib
+  libpaths += ../lib
+
+  dynamicflags += PARTIALSHUTDOWN_SKEL_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    PartialShutdownS.cpp
+  }
+
+  Header_Files {
+    PartialShutdownS.h
+    PartialShutdown_skel_export.h
+  }
+
+  Inline_Files {
+    PartialShutdownS.inl
+  }
+}
+
+

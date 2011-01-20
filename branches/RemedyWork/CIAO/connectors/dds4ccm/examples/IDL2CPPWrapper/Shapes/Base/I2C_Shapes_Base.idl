@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file I2C_Shapes_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef I2C_SHAPES_BASE_IDL
+#define I2C_SHAPES_BASE_IDL
+
+struct ShapeType {
+  string color; //@key
+  long x;
+  long y;
+  long shapesize;
+};
+
+struct Attributes {
+  string shape; //@key
+  string color; //@key
+  float speed;
+};
+typedef sequence<ShapeType> ShapeTypeSeq;
+
+#endif /* I2C_SHAPES_BASE_IDL */

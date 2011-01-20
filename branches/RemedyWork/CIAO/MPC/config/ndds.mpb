@@ -1,0 +1,14 @@
+// -*- MPC -*-
+// $Id$
+
+project : nddslib, nddsmonitor, taoidldefaults {
+  macros += CIAO_DDS4CCM_NDDS=1
+  idlflags += -DCIAO_DDS4CCM_NDDS=1 \
+              -Wb,dds_impl=ndds \
+              -I $(CIAO_ROOT)/connectors \
+              -I $(CIAO_ROOT)/connectors/dds4ccm/idl \
+              -I $(CIAO_ROOT)/connectors/dds4ccm/idl/ndds
+  includes += $(CIAO_ROOT)/connectors/dds4ccm/idl \
+              $(CIAO_ROOT)/connectors/dds4ccm/idl/ndds \
+              $(CIAO_ROOT)/connectors
+}

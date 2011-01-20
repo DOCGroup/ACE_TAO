@@ -1,0 +1,26 @@
+/**
+ * @file Test.idl
+ *
+ * $Id$
+ *
+ */
+
+union FirstUnion switch (boolean) {
+   case TRUE :
+      long first_union_foo;
+   case FALSE :
+      long first_union_bar;
+};
+
+typedef FirstUnion FirstUnionArray[2];
+
+struct MyStruct {
+   FirstUnionArray my_struct_foo;
+};
+
+union SecondUnion switch (boolean) {
+   case TRUE :
+      MyStruct second_union_struct_member;
+   case FALSE :
+      long wibble;
+};

@@ -1,0 +1,16 @@
+// $Id$
+
+#ifndef DEPLOYMENT_RESOURCENOTAVAILABLE_IDL
+#define DEPLOYMENT_RESOURCENOTAVAILABLE_IDL
+
+module Deployment {
+  exception ResourceNotAvailable {
+    string name;
+    string resourceType;
+    string propertyName;
+    string elementName;
+    string resourceName;
+  };
+};
+
+#endif

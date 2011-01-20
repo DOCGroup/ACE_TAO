@@ -1,0 +1,44 @@
+// $Id$
+
+Portable Interceptors
+
+
+File: DevGuideExamples/PortableInterceptor/PICurrent_NameService/README
+
+
+This directory contains an example that shows how the PICurrent can
+be used to stop client-side interceptor recursions. This example is 
+identical to the ../PICurrent example but uses the Naming Service.
+
+This example is based on the Messenger example in GettingStarted 
+directory.  A message is send by MessengerClient and displayed by 
+MessengerServer.  When the client receives a reply, it asks the server
+for the current time. This causes a recursive call at the receive_reply()
+interception point. A flag is passed in the PICurrent to let the client 
+know the call is recursive.
+
+How to Run
+----------
+
+Start the Naming Service:
+-------------------------
+$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service \
+        -ORBListenEndpoints iiop://localhost:9876
+
+To start the server:
+------------------
+./MessengerServer \
+        -ORBInitRef NameService=iioploc://localhost:9876/NameService
+
+To start the client:
+------------------
+./MessengerClient \
+        -ORBInitRef NameService=iioploc://localhost:9876/NameService
+
+Execution via Perl Script
+-------------------------
+
+A Perl script has been created to automate the steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl

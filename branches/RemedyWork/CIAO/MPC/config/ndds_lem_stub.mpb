@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : ndds_stub, ccm_session_stub {
+  libs += CIAO_NDDS_lem_stub
+  after += CIAO_NDDS_lem_stub
+}

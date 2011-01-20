@@ -1,0 +1,60 @@
+// $Id$
+
+Description
+-----------
+
+This directory contains a simple test in the form of a sender and a
+receiver.  The test has the following features:
+
+1. It tests the AVStreams Pluggable Protocol Framework
+2. Shows a mechanism to pace data.
+3. Records the inter-frame arrival time and dumps the results
+in the Stats.dat file.
+
+Running the test
+----------------
+
+The test must be run with the naming service.  Check the run_test.pl
+to see how to configure the test case.
+
+receiver
+--------
+
+receiver -f <output_filename> -s <stats_file>
+
+-f <output_filename> -> The name of the file under which the received stream
+                        data has to be stored (defaults to "output")
+
+-s <stats_file>      -> File in which the frame inter-arrival time is recorded. Default name
+                        is Stats.dat
+
+sender
+------
+
+sender [-f <filename>] [-p <protocol>] [-r <frame rate>] [-l <local_address>] [-a <peer_address>] [-s <# of frames sent>] [-b <frame size>] [-d] 
+
+-f filename --> The file to be streamed to the receiver (defaults to
+                "input"). 
+
+-p protocol --> The protocol string could be UDP, TCP, RTP/UDP or SCTP_SEQ (defaults to
+                UDP). But with the multicast address it should be UDP.
+
+-r framerate--> The rate at which tha data frames need to be sent
+                (defaults to 30 frames per second).
+
+-l address  --> Local address in the format host:port. If protocol is SCTP_SEQ then specify "," 
+		separated secondary addresses.eg. primary_addr:port,sec_addr1,sec_addr2
+
+-a address  --> Destination address in the format host:port. If protocol is SCTP_SEQ then specify "," 
+		separated secondary addresses.eg. primary_addr:port,sec_addr1,sec_addr2
+
+-s frames   --> The number of frames to be sent from the sender to the receiver. The
+   sent         max frames that can be sent is 1000000 frames.
+
+-b frame    --> The size of each frame sent in bytes.
+   size
+
+-d          --> Increment the TAO_debug_level for debug messages.
+
+
+
