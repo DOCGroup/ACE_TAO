@@ -1,3 +1,8 @@
+Thu Jan 20 15:20:04 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/ndds.mpb:
+          Resolves compile issues related to non-dds builds
+
 Thu Jan 20 11:42:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.
