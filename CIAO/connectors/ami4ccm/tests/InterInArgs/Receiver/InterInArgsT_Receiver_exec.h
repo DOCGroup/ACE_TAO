@@ -55,7 +55,7 @@ namespace CIAO_InterInArgsT_Receiver_Impl
     virtual ~do_my_foo_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::InterInArgsT::MyFoo. */
+    /** Operations and attributes from InterInArgsT::MyFoo. */
 
     virtual
     ::CORBA::Long foo (const char * in_str,

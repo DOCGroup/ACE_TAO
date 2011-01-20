@@ -54,7 +54,7 @@ namespace CIAO_InterMulti_Receiver_Impl
     virtual ~do_my_one_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::InterMulti::One. */
+    /** Operations and attributes from InterMulti::One. */
 
     virtual
     ::CORBA::Long foo (const char * in_str,
@@ -80,7 +80,7 @@ namespace CIAO_InterMulti_Receiver_Impl
     virtual ~do_my_two_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::InterMulti::Two. */
+    /** Operations and attributes from InterMulti::Two. */
 
     virtual
     void bar (::CORBA::Long cmd,
@@ -105,7 +105,7 @@ namespace CIAO_InterMulti_Receiver_Impl
     virtual ~do_my_three_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::InterMulti::Three. */
+    /** Operations and attributes from InterMulti::Three. */
 
     virtual
     ::CORBA::Long foo (const char * in_str,

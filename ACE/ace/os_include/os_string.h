@@ -41,10 +41,6 @@ extern "C"
   char *strtok_r (char *s, const char *delim, char **save_ptr);
 #endif  /* ACE_LACKS_STRTOK_R_PROTOTYPE */
 
-#if defined (ACE_LACKS_STRNLEN_PROTOTYPE)
-  size_t strnlen(const char *s, size_t maxlen);
-#endif  /* ACE_LACKS_STRNLEN_PROTOTYPE */
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

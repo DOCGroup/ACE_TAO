@@ -77,9 +77,9 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
         be_interface::narrow_from_decl (impl);
 
       os_ << be_nl_2
-          << "//@{" << be_nl
-          << "/** Operations and attributes from ::"
-          << intf->full_name () << ". */";
+          << "/** @name Operations and attributes from "
+          << intf->full_name () << " */" << be_nl
+          << "//@{";
 
       int const status =
         intf->traverse_inheritance_graph (

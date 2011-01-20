@@ -106,7 +106,6 @@ namespace CIAO_CSL_SRTest_Sender_Impl
     pulse_Generator * ticker_;
     CORBA::ULong rate_;
 
-    TAO_SYNCH_MUTEX mutex_;
     typedef std::map<ACE_CString, TestTopic_var> CSL_SRTest_Table;
     CSL_SRTest_Table _ktests_;
     //@}

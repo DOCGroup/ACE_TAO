@@ -1,19 +1,19 @@
 = Misc =
  * default tao_idl lookup path?
- * put IDL in /usr/share/idl
  * current IDL should be in orvsvcs/orbsvcs
  * see current bugs:
-   o package netsvcs library
    o package websvcs library?
+   o create man pages for ace/tao binaries
  * rewrite the patch to load TAO libraries by SONAME and RFC it
- * move ACE_ROOT from /usr/share/ace to /usr/lib/ace?
- * hide .real programs in /usr/lib/ace?
- * make all TAO programs start with tao_, and put distribution compatible
-   program in /usr/lib/tao
+ * add cpp dependency to tao_idl
+ * install .mpc files?
+ * What about REACTOR_NOTIFICATION_QUEUE?
+ * fltk and gl
+ * Build location leaks in generated documentation
 
 = MWC and MPC =
- * they should define $ACE_ROOT and $TAO_ROOT if they're not
  * some makefile are not regenerated (e.g. JAWS). Seems like a bug.
 
 = CIAO =
  * to restore
+ * autoconf support

@@ -5,6 +5,7 @@
 #include "dds4ccm/impl/ndds/DomainParticipantListener.h"
 #include "dds4ccm/impl/ndds/convertors/DomainParticipantFactoryQos.h"
 #include "dds4ccm/impl/ndds/convertors/DomainParticipantQos.h"
+#include "dds4ccm/impl/ndds/Utils.h"
 #include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/ndds/DomainParticipantManager.h"
@@ -103,8 +104,7 @@ namespace CIAO
     ::DDS::DomainParticipant_ptr
     DDS_DomainParticipantFactory_i::create_participant_with_profile (
       ::DDS::DomainId_t domain_id,
-      const char * library_name,
-      const char * profile_name,
+      const char * qos_profile,
       ::DDS::DomainParticipantListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
@@ -114,8 +114,8 @@ namespace CIAO
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                     "DDS_DomainParticipantFactory_i::create_participant_with_profile - "
                     "Start creating domain participant: "
-                    "profile <%C#%C> - domain <%d>\n",
-                    library_name, profile_name, domain_id));
+                    "profile <%C> - domain <%d>\n",
+                    qos_profile, domain_id));
       DDS_DomainParticipantListener_i *ccm_dds_dpl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
@@ -124,32 +124,35 @@ namespace CIAO
                             ::CORBA::NO_MEMORY ());
         }
 
-      ACE_CString qos_profile = library_name;
-      qos_profile += "#";
-      qos_profile += profile_name;
-
-
       DDSDomainParticipant *dds_dp =
-        DPMANAGER->get_participant (qos_profile.c_str ());
+        DPMANAGER->get_participant (qos_profile);
 
       if (!dds_dp)
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "DDS_DomainParticipantFactory_i::create_participant_with_profile - "
                         "Creating participant: profile <%C> - domain <%d>\n",
-                        qos_profile.c_str (),
+                        qos_profile,
                         domain_id));
+
+          char * lib_name = get_library_name(qos_profile);
+          char * prof_name = get_profile_name(qos_profile);
+
           dds_dp = DDSDomainParticipantFactory::get_instance ()->
                             create_participant_with_profile (domain_id,
-                                                             library_name,
-                                                             profile_name,
+                                                             lib_name,
+                                                             prof_name,
                                                              ccm_dds_dpl,
                                                              mask);
+          ACE_OS::free (lib_name);
+          ACE_OS::free (prof_name);
+
           if (!dds_dp)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                            "DDS_DomainParticipantFactory_i::create_participant_with_profile - "
-                            "Error: Unable to create DomainParticipant\n"));
+                            "DDS_DomainParticipantFactory_i::create_participant_with_profile <%C> - "
+                            "Error: Unable to create DomainParticipant\n",
+                            qos_profile));
               return ::DDS::DomainParticipant::_nil ();
             }
           ::DDS::DomainParticipant_var retval;
@@ -168,7 +171,7 @@ namespace CIAO
             (retval.in ());
 
           typed_dp->set_rti_entity (dds_dp);
-          DPMANAGER->add_participant (qos_profile.c_str (), dds_dp);
+          DPMANAGER->add_participant (qos_profile, dds_dp);
           return retval._retn ();
         }
       else
@@ -176,7 +179,7 @@ namespace CIAO
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "DDS_DomainParticipantFactory_i::create_participant_with_profile - Re-using "
                         "participant for QOS profile <%C> and domain <%d>.\n",
-                        qos_profile.c_str (),
+                        qos_profile,
                         domain_id));
           ::DDS::DomainParticipant_var retval;
           ACE_NEW_THROW_EX (retval,
@@ -310,14 +313,18 @@ namespace CIAO
 
     ::DDS::ReturnCode_t
     DDS_DomainParticipantFactory_i::set_default_participant_qos_with_profile (
-                                                        const char * library_name,
-                                                        const char * profile_name)
+                                                        const char * qos_profile)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipantFactory_i::"
-                     "set_default_participant_qos_with_profile");
+      char * lib_name = get_library_name(qos_profile);
+      char * prof_name = get_profile_name(qos_profile);
 
-      return DDSDomainParticipantFactory::get_instance ()->
-        set_default_participant_qos_with_profile (library_name, profile_name);
+      ::DDS::ReturnCode_t retcode = DDSDomainParticipantFactory::get_instance ()->
+        set_default_participant_qos_with_profile (lib_name, prof_name);
+
+      ACE_OS::free (lib_name);
+      ACE_OS::free (prof_name);
+
+      return retcode;
     }
   }
 }

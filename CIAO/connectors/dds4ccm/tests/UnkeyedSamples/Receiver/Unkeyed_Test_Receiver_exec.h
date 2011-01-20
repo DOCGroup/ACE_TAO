@@ -57,7 +57,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
     virtual ~info_out_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::Unkeyed_Test::UnkeyedTestConnector::Listener. */
+    /** Operations and attributes from Unkeyed_Test::UnkeyedTestConnector::Listener. */
 
     virtual
     void on_one_data (const ::UnkeyedTest & datum,
@@ -87,7 +87,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
     virtual ~info_out_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PortStatusListener. */
+    /** Operations and attributes from CCM_DDS::PortStatusListener. */
 
     virtual
     void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,
@@ -116,7 +116,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
     virtual ~info_out_connector_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::ConnectorStatusListener. */
+    /** Operations and attributes from CCM_DDS::ConnectorStatusListener. */
 
     virtual
     void on_inconsistent_topic (::DDS::Topic_ptr the_topic,

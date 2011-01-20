@@ -87,7 +87,7 @@ Session::default_service (const char *addrspec)
 HostProcess *
 Session::find_process (long pid)
 {
-  Processes::ENTRY *entry;
+  Processes::ENTRY *entry = 0;
   if (this->processes_.find(pid,entry) == 0)
     return entry->item();
   else

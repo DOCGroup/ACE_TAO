@@ -4,14 +4,18 @@
  *
  * $Id$
  *
- * Misc utility classes for NDDS.
+ * Misc utility classes for DDS4CCM.
  */
 
-#ifndef NDDS_UTILS_H
-#define NDDS_UTILS_H
+#ifndef DDS4CCM_UTILS_H
+#define DDS4CCM_UTILS_H
 
-#include "dds4ccm_dds_impl_export.h"
-#include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#if (CIAO_DDS4CCM_NDDS==1)
+# include "dds4ccm/idl/ndds/ndds_dcpsC.h"
+#else
+# include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#endif
+
 #include "dds4ccm/impl/dds4ccm_conf.h"
 #include "ace/String_Base.h"
 

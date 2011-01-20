@@ -3,7 +3,10 @@
 #ifndef CONDITIONMANAGER_H_
 #define CONDITIONMANAGER_H_
 
+#if (CIAO_DDS4CCM_NDDS==1)
 #include "dds4ccm/impl/ndds/WaitSet.h"
+#endif
+
 #include <dds4ccm/idl/dds4ccm_BaseC.h>
 
 #include "dds4ccm/impl/dds4ccm_dds_impl_export.h"

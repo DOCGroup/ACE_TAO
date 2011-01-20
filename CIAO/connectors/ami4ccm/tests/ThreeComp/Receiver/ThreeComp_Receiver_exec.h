@@ -57,7 +57,7 @@ namespace CIAO_ThreeComp_Receiver_Impl
     virtual ~do_my_foo_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::ThreeComp::MyFoo. */
+    /** Operations and attributes from ThreeComp::MyFoo. */
 
     virtual
     ::CORBA::Long foo (::CORBA::Long cmd,

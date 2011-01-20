@@ -16,18 +16,7 @@ feature(dds4ccm_splice) : dds4ccm, splice_ts_defaults {
   }
 }
 
-feature(dds4ccm_ndds) : dds4ccm, ndds_ts_defaults, nddslib, typecode {
-  Define_Custom(DDSGenerator) : NDDSTypeSupport {
-    commandflags += -typeSequenceSuffix RTISeq -enableEscapeChar -verbosity 1 -I $(CIAO_ROOT)/connectors/dds4ccm/idl -I $(CIAO_ROOT)/ccm -I $(CIAO_ROOT)
-    keyword dds_ts_flags = commandflags
-  }
-
-  dynamicflags += NDDS_USER_DLL_EXPORT
-
-  verbatim(gnuace, macros) {
-    override no_hidden_visibility = 1
-    override no_strict_aliasing = 1
-  }
+feature(dds4ccm_ndds) : dds4ccm, ndds_ts_default {
 }
 
 feature(!dds4ccm_opendds) {

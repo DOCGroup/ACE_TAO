@@ -56,7 +56,7 @@ namespace CIAO_Null_Component_Impl
     Null_Interface_exec_i (void);
     virtual ~Null_Interface_exec_i (void);
 
-    // Operations and attributes from ::Null_Interface
+    // Operations and attributes from Null_Interface
 
     // TAO_IDL - Generated from
     // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42

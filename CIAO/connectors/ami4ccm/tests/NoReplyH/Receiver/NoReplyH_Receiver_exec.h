@@ -56,7 +56,7 @@ namespace CIAO_NoReplyH_Receiver_Impl
     virtual ~do_my_foo_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::NoReplyH::MyFoo. */
+    /** Operations and attributes from NoReplyH::MyFoo. */
 
     virtual
     ::CORBA::Long foo (const char * in_str,

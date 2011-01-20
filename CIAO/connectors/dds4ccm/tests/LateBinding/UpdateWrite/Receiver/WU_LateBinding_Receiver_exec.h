@@ -55,7 +55,7 @@ namespace CIAO_WU_LateBinding_Receiver_Impl
     virtual ~info_out_event_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::WU_LateBinding::WU_LateBindingTestConnector::Listener. */
+    /** Operations and attributes from WU_LateBinding::WU_LateBindingTestConnector::Listener. */
 
     virtual
     void on_one_data (const ::WU_LateBindingTest & datum,
@@ -84,7 +84,7 @@ namespace CIAO_WU_LateBinding_Receiver_Impl
     virtual ~info_out_event_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PortStatusListener. */
+    /** Operations and attributes from CCM_DDS::PortStatusListener. */
 
     virtual
     void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,
@@ -113,7 +113,7 @@ namespace CIAO_WU_LateBinding_Receiver_Impl
     virtual ~info_out_state_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::WU_LateBinding::WU_LateBindingTestConnector::StateListener. */
+    /** Operations and attributes from WU_LateBinding::WU_LateBindingTestConnector::StateListener. */
 
     virtual
     void on_creation (const ::WU_LateBindingTest & datum,
@@ -150,7 +150,7 @@ namespace CIAO_WU_LateBinding_Receiver_Impl
     virtual ~info_out_state_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PortStatusListener. */
+    /** Operations and attributes from CCM_DDS::PortStatusListener. */
 
     virtual
     void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,

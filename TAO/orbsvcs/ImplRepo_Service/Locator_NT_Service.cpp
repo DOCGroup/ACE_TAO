@@ -22,6 +22,10 @@
 #include "tao/corba.h"
 #include "ace/Reactor.h"
 
+const ACE_TCHAR* IMR_LOCATOR_SERVICE_NAME = ACE_TEXT("TAOImR");
+const ACE_TCHAR* IMR_LOCATOR_DISPLAY_NAME = ACE_TEXT("TAO Implementation Repository");
+const ACE_TCHAR* IMR_LOCATOR_DESCRIPTION = ACE_TEXT("Implementation Repository Locator service for TAO");
+
 /**
  * Handles the SERVICE_CONTROL_SHUTDOWN and SERVICE_CONTROL_STOP commands
  * by shutting down the ORB.  Otherwise ACE_NT_Service::handle_control

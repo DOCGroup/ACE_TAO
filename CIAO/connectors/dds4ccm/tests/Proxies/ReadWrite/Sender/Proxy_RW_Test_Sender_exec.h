@@ -59,7 +59,7 @@ namespace CIAO_Proxy_RW_Test_Sender_Impl
     virtual ~restart_writer_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::ReadGetRestarter. */
+    /** Operations and attributes from ReadGetRestarter. */
 
     virtual
     void restart_write (::ReaderStarter::assignment task);
@@ -85,7 +85,7 @@ namespace CIAO_Proxy_RW_Test_Sender_Impl
     virtual ~info_out_connector_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::ConnectorStatusListener. */
+    /** Operations and attributes from CCM_DDS::ConnectorStatusListener. */
 
     virtual
     void on_inconsistent_topic (::DDS::Topic_ptr the_topic,

@@ -27,8 +27,7 @@ void
 DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_complete (
   ::DDS::Topic_ptr topic,
   ::DDS::Subscriber_ptr subscriber,
-  const char* library_name,
-  const char* profile_name)
+  const char * qos_profile)
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_complete");
 
@@ -57,12 +56,11 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::c
         {
           td = ::DDS::TopicDescription::_narrow (topic);
         }
-      if (library_name && profile_name)
+      if (qos_profile)
         {
           dr = subscriber->create_datareader_with_profile (
                                           td.in (),
-                                          library_name,
-                                          profile_name,
+                                          qos_profile,
                                           ::DDS::DataReaderListener::_nil (),
                                           0);
         }

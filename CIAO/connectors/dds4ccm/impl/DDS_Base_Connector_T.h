@@ -62,9 +62,9 @@ protected:
   /**
    * Initialization of a connector.
    *
-   * When one wants to use his own ::DDS::DomainParticipant, ::DDS::Topic,
-   * ::DDS::Subscriber and/or ::DDS::Publisher, these helper methods allows
-   * to create these, independant of the DDS vendor.
+   * When one wants to use his own DDS::DomainParticipant, DDS::Topic,
+   * DDS::Subscriber and/or DDS::Publisher, these helper methods allows
+   * to create these, independent of the DDS vendor.
    *
    * See
    * $CIAO_ROOT/connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp
@@ -78,7 +78,8 @@ protected:
   void init_domain (::DDS::DomainParticipant_ptr & participant);
 
   virtual void register_type    (::DDS::DomainParticipant_ptr participant,
-                         const char * typesupport_name);
+                         const char * typesupport_name) = 0;
+
   void init_topic       (::DDS::DomainParticipant_ptr participant,
                          ::DDS::Topic_ptr & topic,
                          const char * topic_name,
@@ -93,7 +94,7 @@ protected:
    * Activation of a connector.
    *
    * Helper methods to create the DDS listeners and attach them to the DDS Entities.
-   * This'll will activate the DDS Entities.
+   * This will activate the DDS Entities.
    *
    */
   //@{
@@ -161,7 +162,7 @@ protected:
 
   virtual
   void unregister_type    (::DDS::DomainParticipant_ptr participant,
-                           const char * typesupport_name);
+                           const char * typesupport_name) = 0;
   //@}
 
   /// Get the reactor associated with this component
@@ -182,14 +183,6 @@ protected:
    * wants to set an attribute, a NonChangeable exception is thrown.
     */
   bool configuration_complete_;
-
-  /**
-    * Result of splitting qos_profile into to different names.
-    */
-  //@{
-  char* library_name_;
-  char* profile_name_;
-  //@}
 
   ::CIAO::DDS4CCM::Logger_Service * dlf_;
 

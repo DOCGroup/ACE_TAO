@@ -1,5 +1,5 @@
 //$Id$
-project(*idl) : tao_versioning_idl_defaults {
+project(*idl) : tao_versioning_idl_defaults, install {
   custom_only = 1
   IDL_Files {
     idlflags += -Sci -SS -Gp -Gd -Sorb -GA -Sal \
@@ -8,6 +8,10 @@ project(*idl) : tao_versioning_idl_defaults {
                 -iC tao/CSD_Framework
     idlflags -= -Sa -St
     CSD_Framework.pidl
+  }
+
+  specific {
+    install_dir = tao/CSD_Framework
   }
 }
 

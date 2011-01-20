@@ -54,7 +54,6 @@ project(CIAO_Extension_Container) : install, ccm_svnt, ciao_lib, ciao_extension_
     StubContainerInterceptorRegistration_Impl.cpp
   }
   Inline_Files {
-    Extension_Container.inl
   }
   Header_Files {
     Extension_Container.h

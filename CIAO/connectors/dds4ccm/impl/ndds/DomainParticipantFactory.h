@@ -10,7 +10,7 @@
 #ifndef DOMAINPARTICIPANTFACTORY_T_H_
 #define DOMAINPARTICIPANTFACTORY_T_H_
 
-#include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "dds4ccm/idl/ndds/ndds_dcpsC.h"
 #include "tao/LocalObject.h"
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
 
@@ -40,8 +40,7 @@ namespace CIAO
 
       virtual ::DDS::DomainParticipant_ptr create_participant_with_profile (
           ::DDS::DomainId_t domain_id,
-          const char * library_name,
-          const char * profile_name,
+          const char * qos_profile,
           ::DDS::DomainParticipantListener_ptr a_listener,
           ::DDS::StatusMask mask);
 
@@ -64,8 +63,7 @@ namespace CIAO
         ::DDS::ReturnCode_t get_qos (::DDS::DomainParticipantFactoryQos & qos);
 
       virtual ::DDS::ReturnCode_t set_default_participant_qos_with_profile(
-                                                        const char * library_name,
-                                                        const char * profile_name);
+                                                        const char * qos_profile);
     };
   }
 }

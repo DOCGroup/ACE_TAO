@@ -1,139 +1,135 @@
 // $Id$
 
 // connector template for Typed_NonTopic_Test_1
-template <typename CCM_TYPE, typename T, bool FIXED_T,
-                                typename U, bool FIXED_U,
-                                typename V, bool FIXED_V,
-                                typename Tseq, bool FIXED_Ts,
-                                typename Useq, bool FIXED_Ys,
-                                typename VSeq, bool FIXED_Vs>
-NT_Connector_T<CCM_TYPE, T, FIXED_T,U, FIXED_U, V, FIXED_V,
-               Tseq, FIXED_Ts, Useq,  FIXED_Ys,
-               VSeq, FIXED_Vs>::NT_Connector_T (void)
+template <typename CCM_TYPE,
+          typename T, bool FIXED_T,
+          typename U, bool FIXED_U,
+          typename V, bool FIXED_V,
+          typename Tseq,
+          typename Useq,
+          typename VSeq>
+NT_Connector_T<CCM_TYPE, T, FIXED_T, U, FIXED_U, V, FIXED_V, Tseq, Useq, VSeq>::NT_Connector_T (void)
 {
 }
 
-template <typename CCM_TYPE, typename T, bool FIXED_T,
-                                typename U, bool FIXED_U,
-                                typename V, bool FIXED_V,
-                                typename Tseq, bool FIXED_Ts,
-                                typename Useq, bool FIXED_Ys,
-                                typename VSeq, bool FIXED_Vs>
+template <typename CCM_TYPE,
+          typename T, bool FIXED_T,
+          typename U, bool FIXED_U,
+          typename V, bool FIXED_V,
+          typename Tseq,
+          typename Useq,
+          typename VSeq>
 void
-NT_Connector_T < CCM_TYPE, T,  FIXED_T,U, FIXED_U,V, FIXED_V,
-                  Tseq, FIXED_Ts,Useq, FIXED_Ys,
-                  VSeq,FIXED_Vs>::set_session_context (
-                      ::Components::SessionContext_ptr /* ctx*/)
+NT_Connector_T<CCM_TYPE, T, FIXED_T, U, FIXED_U, V, FIXED_V, Tseq, Useq, VSeq>::set_session_context (
+  ::Components::SessionContext_ptr /* ctx*/)
 {
 }
 
-template <typename CCM_TYPE, typename T, bool FIXED_T,
-                                typename U, bool FIXED_U,
-                                typename V, bool FIXED_V,
-                                typename Tseq, bool FIXED_Ts,
-                                typename Useq, bool FIXED_Ys,
-                                typename VSeq, bool FIXED_Vs>
+template <typename CCM_TYPE,
+          typename T, bool FIXED_T,
+          typename U, bool FIXED_U,
+          typename V, bool FIXED_V,
+          typename Tseq,
+          typename Useq,
+          typename VSeq>
 void
-NT_Connector_T < CCM_TYPE, T,  FIXED_T, U, FIXED_U, V, FIXED_V,
-                 Tseq, FIXED_Ts, Useq, FIXED_Ys,
-                VSeq, FIXED_Vs>::configuration_complete (void)
+NT_Connector_T<CCM_TYPE, T, FIXED_T, U, FIXED_U, V, FIXED_V, Tseq, Useq, VSeq>::configuration_complete (void)
 {
 }
 
-template <typename CCM_TYPE, typename T, bool FIXED_T,
-                                typename U, bool FIXED_U,
-                                typename V, bool FIXED_V,
-                                typename Tseq, bool FIXED_Ts,
-                                typename Useq, bool FIXED_Ys,
-                                typename VSeq, bool FIXED_Vs>
+template <typename CCM_TYPE,
+          typename T, bool FIXED_T,
+          typename U, bool FIXED_U,
+          typename V, bool FIXED_V,
+          typename Tseq,
+          typename Useq,
+          typename VSeq>
 void
-NT_Connector_T < CCM_TYPE, T,  FIXED_T, U, FIXED_U,   V, FIXED_V,
-                 Tseq, FIXED_Ts,Useq, FIXED_Ys,
-                 VSeq, FIXED_Vs>::ccm_remove (void)
+NT_Connector_T<CCM_TYPE, T, FIXED_T, U, FIXED_U, V, FIXED_V, Tseq, Useq, VSeq>::ccm_remove (void)
 {
 }
 
-template <typename CCM_TYPE, typename T, bool FIXED_T,
-                                typename U, bool FIXED_U,
-                                typename V, bool FIXED_V,
-                                typename Tseq, bool FIXED_Ts,
-                                typename Useq, bool FIXED_Ys,
-                                typename VSeq, bool FIXED_Vs>
+template <typename CCM_TYPE,
+          typename T, bool FIXED_T,
+          typename U, bool FIXED_U,
+          typename V, bool FIXED_V,
+          typename Tseq,
+          typename Useq,
+          typename VSeq>
 void
-NT_Connector_T < CCM_TYPE, T,  FIXED_T, U, FIXED_U, V, FIXED_V,
-Tseq, FIXED_Ts, Useq, FIXED_Ys, VSeq, FIXED_Vs>::ccm_activate (void)
+NT_Connector_T<CCM_TYPE, T, FIXED_T, U, FIXED_U, V, FIXED_V, Tseq, Useq, VSeq>::ccm_activate (void)
 {
 }
 
-template <typename CCM_TYPE, typename T, bool FIXED_T,
-                                typename U, bool FIXED_U,
-                                typename V, bool FIXED_V,
-                                typename Tseq, bool FIXED_Ts,
-                                typename Useq, bool FIXED_Ys,
-                                typename VSeq, bool FIXED_Vs>
+template <typename CCM_TYPE,
+          typename T, bool FIXED_T,
+          typename U, bool FIXED_U,
+          typename V, bool FIXED_V,
+          typename Tseq,
+          typename Useq,
+          typename VSeq>
 void
-NT_Connector_T < CCM_TYPE, T,  FIXED_T, U, FIXED_U, V, FIXED_V,
-Tseq, FIXED_Ts, Useq, FIXED_Ys, VSeq, FIXED_Vs>::ccm_passivate (void)
+NT_Connector_T<CCM_TYPE, T, FIXED_T, U, FIXED_U, V, FIXED_V, Tseq, Useq, VSeq>::ccm_passivate (void)
 {
 }
 
 // connector template for Typed_NonTopic_Test_2
-template <typename CCM_TYPE,typename  T, bool FIXED_T,
-                              typename  U, bool FIXED_U,
-                              typename  Tseq,bool FIXED_Ts,
-                              typename  Useq,bool FIXED_Us>
-NT_2_Connector_T<CCM_TYPE, T, FIXED_T, U, FIXED_U,
- Tseq, FIXED_Ts, Useq, FIXED_Us>::NT_2_Connector_T(void)
+template <typename CCM_TYPE,
+          typename T, bool FIXED_T,
+          typename U, bool FIXED_U,
+          typename Tseq,
+          typename Useq>
+NT_2_Connector_T<CCM_TYPE, T, FIXED_T, U, FIXED_U, Tseq, Useq>::NT_2_Connector_T(void)
 {
 }
 
-template <typename CCM_TYPE,typename  T, bool FIXED_T,
-                              typename  U, bool FIXED_U,
-                              typename  Tseq,bool FIXED_Ts,
-                              typename  Useq,bool FIXED_Us>
+template <typename CCM_TYPE,
+          typename T, bool FIXED_T,
+          typename U, bool FIXED_U,
+          typename Tseq,
+          typename Useq>
 void
-NT_2_Connector_T<CCM_TYPE, T, FIXED_T,U, FIXED_U,
-Tseq, FIXED_Ts,Useq, FIXED_Us>::set_session_context (
-    ::Components::SessionContext_ptr /* ctx*/)
+NT_2_Connector_T<CCM_TYPE, T, FIXED_T,U, FIXED_U, Tseq,Useq>::set_session_context (
+  ::Components::SessionContext_ptr /* ctx*/)
 {
 }
 
-template <typename CCM_TYPE,typename  T, bool FIXED_T,
-                              typename  U, bool FIXED_U,
-                              typename  Tseq,bool FIXED_Ts,
-                              typename  Useq,bool FIXED_Us>
+template <typename CCM_TYPE,
+          typename T, bool FIXED_T,
+          typename U, bool FIXED_U,
+          typename Tseq,
+          typename Useq>
 void
-NT_2_Connector_T<CCM_TYPE, T, FIXED_T,
-U, FIXED_U,Tseq, FIXED_Ts,Useq, FIXED_Us>::configuration_complete (void)
+NT_2_Connector_T<CCM_TYPE, T, FIXED_T, U, FIXED_U, Tseq, Useq>::configuration_complete (void)
 {
 }
 
-template <typename CCM_TYPE,typename  T, bool FIXED_T,
-                              typename  U, bool FIXED_U,
-                              typename  Tseq,bool FIXED_Ts,
-                              typename  Useq,bool FIXED_Us>
+template <typename CCM_TYPE,
+          typename T, bool FIXED_T,
+          typename U, bool FIXED_U,
+          typename Tseq,
+          typename Useq>
 void
-NT_2_Connector_T<CCM_TYPE, T, FIXED_T,U, FIXED_U,
-Tseq, FIXED_Ts,Useq, FIXED_Us>::ccm_remove (void)
+NT_2_Connector_T<CCM_TYPE, T, FIXED_T,U, FIXED_U, Tseq,Useq>::ccm_remove (void)
 {
 }
 
-template <typename CCM_TYPE,typename  T, bool FIXED_T,
-                              typename  U, bool FIXED_U,
-                              typename  Tseq,bool FIXED_Ts,
-                              typename  Useq,bool FIXED_Us>
+template <typename CCM_TYPE,
+          typename T, bool FIXED_T,
+          typename U, bool FIXED_U,
+          typename Tseq,
+          typename Useq>
 void
-NT_2_Connector_T<CCM_TYPE, T, FIXED_T,U, FIXED_U,
-Tseq, FIXED_Ts,Useq, FIXED_Us>::ccm_activate (void)
+NT_2_Connector_T<CCM_TYPE, T, FIXED_T,U, FIXED_U, Tseq,Useq>::ccm_activate (void)
 {
 }
 
-template <typename CCM_TYPE,typename  T, bool FIXED_T,
-                              typename  U, bool FIXED_U,
-                              typename  Tseq,bool FIXED_Ts,
-                              typename  Useq,bool FIXED_Us>
+template <typename CCM_TYPE,
+          typename T, bool FIXED_T,
+          typename U, bool FIXED_U,
+          typename Tseq,
+          typename Useq>
 void
-NT_2_Connector_T<CCM_TYPE, T, FIXED_T,U, FIXED_U,
-Tseq, FIXED_Ts,Useq, FIXED_Us>::ccm_passivate (void)
+NT_2_Connector_T<CCM_TYPE, T, FIXED_T,U, FIXED_U, Tseq,Useq>::ccm_passivate (void)
 {
 }

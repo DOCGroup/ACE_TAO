@@ -57,7 +57,7 @@ namespace CIAO_UsesMulti_Receiver_Impl
     virtual ~do_my_one_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::UsesMulti::One. */
+    /** Operations and attributes from UsesMulti::One. */
 
     virtual
     ::CORBA::Long foo (const char * in_str,

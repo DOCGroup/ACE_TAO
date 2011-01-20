@@ -10,7 +10,6 @@
 #error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
-
 // Windows Mobile (CE) stuff is primarily further restrictions to what's
 // in the rest of this file. Also, it defined ACE_HAS_WINCE, which is used
 // in this file.

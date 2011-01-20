@@ -59,7 +59,7 @@ namespace CIAO_Hello_Sender_Impl
 
     virtual ~ReadMessage_exec_i (void);
 
-    // Operations and attributes from ::Hello::ReadMessage
+    // Operations and attributes from Hello::ReadMessage
 
     // TAO_IDL - Generated from
     // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42

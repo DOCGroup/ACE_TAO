@@ -49,7 +49,6 @@ project(CIAO_Session_Container) : install, ccm_svnt, ciao_lib, utils,  ciao_base
     Session_Container.cpp
   }
   Inline_Files {
-    Session_Container.inl
   }
   Header_Files {
     Session_Container.h

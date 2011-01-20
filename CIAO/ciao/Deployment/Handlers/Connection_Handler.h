@@ -42,6 +42,7 @@ namespace CIAO
                              ::CORBA::ULong connectionRef,
                              ::CORBA::ULong endpoint,
                              const ::CORBA::Any & provided_reference);
+
 #if !defined (CCM_NOEVENT)
     void connect_publisher (const ::Deployment::DeploymentPlan & plan,
                             ::CORBA::ULong connectionRef,
@@ -93,19 +94,42 @@ namespace CIAO
     void connect_local_port (const char *facet_id,
                              const char *facet_port,
                              const char *receptacle_id,
-                             const char *receptacle_port);
+                             const char *receptacle_port,
+                             const char *connection_name);
 
     void disconnect_local_port (const char *facet_id,
                                 const char *facet_port,
                                 const char *receptacle_id,
-                                const char *receptacle_port);
+                                const char *receptacle_port,
+                                const char *connection_name);
 
-    bool is_local_facet (const ::Deployment::PlanConnectionDescription &conn);
+    void connect_non_local_receptacle (const ::Deployment::DeploymentPlan & plan,
+                                       ::CORBA::ULong connectionRef,
+                                       ::CORBA::ULong endpoint,
+                                       const ::CORBA::Any & provided_reference);
+
+    void connect_non_local_facet (const ::Deployment::DeploymentPlan & plan,
+                                  ::CORBA::ULong connectionRef,
+                                  ::CORBA::ULong endpointRef,
+                                  const ::CORBA::Any & provided_reference);
+
+    void disconnect_non_local (const ::Deployment::PlanConnectionDescription &conn);
+
+    bool is_local_connection (const ::Deployment::PlanConnectionDescription &conn);
 
     typedef std::pair < ::Components::Cookie_var,
                         ::Components::CCMObject_var> CONNECTION_INFO;
     typedef std::map <std::string,
                       CONNECTION_INFO> COOKIES;
+
+    void insert_cookie (const char * connection_name,
+                        const CONNECTION_INFO conn_info);
+
+    ::Components::Cookie * get_cookie (const char * connection_name);
+
+    void remove_cookie (const char * connection_name);
+
+    ::Components::CCMObject_ptr get_ccm_object (const char * connection_name);
 
     COOKIES cookies_;
   };

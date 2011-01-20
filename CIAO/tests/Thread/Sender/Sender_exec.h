@@ -28,7 +28,7 @@ namespace CIAO_Thread_Sender_Impl
 
     virtual ~ReadMessage_exec_i (void);
 
-    // Operations and attributes from ::Thread::ReadMessage
+    // Operations and attributes from Thread::ReadMessage
 
     virtual char *
     get_message (void);

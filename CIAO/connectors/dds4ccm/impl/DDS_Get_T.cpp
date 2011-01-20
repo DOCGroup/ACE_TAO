@@ -26,14 +26,12 @@ void
 DDS_Get_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE, FIXED>::configuration_complete (
   ::DDS::Topic_ptr topic,
   ::DDS::Subscriber_ptr subscriber,
-  const char* library_name,
-  const char* profile_name)
+  const char * qos_profile)
 {
   DDS4CCM_TRACE ("DDS_Get_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE, FIXED>::configuration_complete");
   SubscriberBase_type::configuration_complete (topic,
                                                   subscriber,
-                                                  library_name,
-                                                  profile_name);
+                                                  qos_profile);
 
   ::DDS::DataReader_var dr = this->dds_read_->get_dds_reader ();
   this->dds_get_->set_dds_reader (dr.in (),

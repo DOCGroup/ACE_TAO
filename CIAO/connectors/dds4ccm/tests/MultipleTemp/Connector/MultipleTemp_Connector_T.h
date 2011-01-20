@@ -10,8 +10,11 @@
 #include "connectors/dds4ccm/impl/DDS_Update_T.h"
 #include "connectors/dds4ccm/impl/DataListenerControl_T.h"
 
-template <typename CCM_TYPE, typename DDS_TYPE_T, bool FIXED_T,typename SEQ_TYPE_T, bool FIXED_SEQ_TYPE_T,
-typename DDS_TYPE_Y, bool FIXED_Y, typename SEQ_TYPE_Y, bool FIXED_SEQ_TYPE_Y>
+template <typename CCM_TYPE,
+          typename DDS_TYPE_T, bool FIXED_T,
+          typename SEQ_TYPE_T,
+          typename DDS_TYPE_Y, bool FIXED_Y,
+          typename SEQ_TYPE_Y>
 class FooConnector_Connector_T
   : public virtual DDS_Base_Connector_T<CCM_TYPE>
 {
@@ -24,6 +27,12 @@ public:
   virtual
   void
   register_type (
+  ::DDS::DomainParticipant_ptr participant,
+  const char * typesupport_name);
+
+  virtual
+  void
+  unregister_type (
   ::DDS::DomainParticipant_ptr participant,
   const char * typesupport_name);
 

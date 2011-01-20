@@ -57,7 +57,7 @@ namespace CIAO_UsesSM_Receiver_Impl
     virtual ~do_my_one_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::UsesSM::One. */
+    /** Operations and attributes from UsesSM::One. */
 
     virtual
     ::CORBA::Long foo (const char * in_str,
@@ -86,7 +86,7 @@ namespace CIAO_UsesSM_Receiver_Impl
     virtual ~do_my_two_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::UsesSM::Two. */
+    /** Operations and attributes from UsesSM::Two. */
 
     virtual
     void bar (::CORBA::Long cmd,

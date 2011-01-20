@@ -11,7 +11,7 @@
 #define READCONDITION_T_H_
 
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
-#include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "dds4ccm/idl/ndds/ndds_dcpsC.h"
 #include "tao/LocalObject.h"
 
 class DDSReadCondition;

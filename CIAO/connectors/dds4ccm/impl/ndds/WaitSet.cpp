@@ -2,8 +2,6 @@
 
 #include "WaitSet.h"
 
-#include "dds4ccm/idl/dds4ccm_BaseC.h"
-
 #include "ndds/ndds_cpp.h"
 
 #include "dds4ccm/impl/ndds/Condition.h"
@@ -14,7 +12,6 @@
 #include "dds4ccm/impl/Utils.h"
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
-
 
 namespace CIAO
 {
@@ -132,7 +129,9 @@ namespace CIAO
     ::DDS::InstanceHandle_t
     DDS_WaitSet_i::check_handle (
       const ::DDS::InstanceHandle_t & instance_handle,
-      const ::DDS::InstanceHandle_t & lookup_handle)
+      const ::DDS::InstanceHandle_t & lookup_handle,
+      bool & error,
+      bool & non_existent)
     {
       ::DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
       hnd <<= instance_handle;
@@ -140,17 +139,21 @@ namespace CIAO
       ::DDS_InstanceHandle_t lookup_hnd = ::DDS_HANDLE_NIL;
       lookup_hnd <<= lookup_handle;
 
+      ::DDS::InstanceHandle_t ret = ::DDS::HANDLE_NIL;
+
       if (!DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL) &&
           !DDS_InstanceHandle_equals (&hnd, &lookup_hnd))
         {
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          error = true;
         }
-      if (DDS_InstanceHandle_equals (&lookup_hnd, &::DDS_HANDLE_NIL))
+      else if (DDS_InstanceHandle_equals (&lookup_hnd, &::DDS_HANDLE_NIL))
         {
-          throw ::CCM_DDS::NonExistent ();
+          non_existent = true;
         }
-      ::DDS::InstanceHandle_t ret = ::DDS::HANDLE_NIL;
-      ret <<= lookup_hnd;
+      else
+        {
+          ret <<= lookup_hnd;
+        }
       return ret;
     }
 

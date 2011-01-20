@@ -55,7 +55,7 @@ namespace CIAO_InterReturnT_Receiver_Impl
     virtual ~do_my_foo_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::InterReturnT::MyFoo. */
+    /** Operations and attributes from InterReturnT::MyFoo. */
 
     virtual
     void ret_void (const char * in_str,

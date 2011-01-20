@@ -1,3 +1,156 @@
+Thu Jan 20 11:42:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Wed Jan 19 12:16:46 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+            * tao/TAO_Internal.cpp:
+              Fixed problem with argument parsing.
+
+        Fri Jan 14 17:19:46 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * utils/catior/Catior_i.cpp:
+                  Added more vendor ids
+
+                * utils/catior/README.catior:
+                  Updated executable name
+
+                * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+                  Reverted change below, wasn't complete
+
+        Fri Jan 14 10:37:44 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+                  Layout change
+
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+                  Layout change to the generated code
+
+                * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+                  Fixed race condition in generated servant, more fixes have to be made
+
+        Mon Jan 10 12:39:17 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * etc/tao_portableserver.doxygen:
+                  Doxygen improvement
+
+        Mon Jan 10 09:10:17 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * etc/tao.doxygen:
+                * etc/tao_anytypecode.doxygen:
+                * etc/tao_av.doxygen:
+                * etc/tao_compression.doxygen:
+                * etc/tao_cosevent.doxygen:
+                * etc/tao_cosnaming.doxygen:
+                * etc/tao_cosnotification.doxygen:
+                * etc/tao_costime.doxygen:
+                * etc/tao_costrader.doxygen:
+                * etc/tao_dynamicany.doxygen:
+                * etc/tao_dynamicinterface.doxygen:
+                * etc/tao_esf.doxygen:
+                * etc/tao_ifr.doxygen:
+                * etc/tao_implrepo.doxygen:
+                * etc/tao_iormanip.doxygen:
+                * etc/tao_iortable.doxygen:
+                * etc/tao_pi.doxygen:
+                * etc/tao_pi_server.doxygen:
+                * etc/tao_portablegroup.doxygen:
+                * etc/tao_portableserver.doxygen:
+                * etc/tao_rtcorba.doxygen:
+                * etc/tao_rtevent.doxygen:
+                * etc/tao_rtportableserver.doxygen:
+                * etc/tao_security.doxygen:
+                * etc/tao_smartproxies.doxygen:
+                * etc/tao_ssliop.doxygen:
+                * etc/tao_strategies.doxygen:
+                * etc/tao_transportcurrent.doxygen:
+                * etc/tao_ziop.doxygen:
+                  Removed deprecated macros
+
+        Mon Jan 10 08:48:07 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
+                * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+                * tao/Valuetype/ValueBase.h:
+                  Layout and changes for doxygen
+
+        Sat Jan  8 12:02:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
+                  Fixed comment to not trigger doxygen warnings
+
+        Fri Jan  7 08:25:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/QtResource/QtResource.mpc:
+                  Use qt4
+
+        Fri Jan  7 08:04:59 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/BiDir_GIOP/BiDir_GIOP.mpc:
+                * tao/CSD_Framework/CSD_Framework.mpc:
+                * tao/Codeset/Codeset.mpc:
+                * tao/DiffServPolicy/DiffServPolicy.mpc:
+                * tao/DynamicAny/DynamicAny.mpc:
+                * tao/EndpointPolicy/EndpointPolicy.mpc:
+                * tao/IORInterceptor/IORInterceptor.mpc:
+                * tao/IORManipulation/IORManipulation.mpc:
+                * tao/IORTable/IORTable.mpc:
+                * tao/ImR_Client/ImR_Client.mpc:
+                * tao/Messaging/Messaging.mpc:
+                * tao/Strategies/Strategies.mpc:
+                * tao/TransportCurrent/TC.mpc:
+                * tao/TransportCurrent/TC_IIOP.mpc:
+                * tao/TypeCodeFactory/TypeCodeFactory.mpc:
+                * tao/Valuetype/Valuetype.mpc:
+                * tao/ZIOP/ZIOP.mpc:
+                * tao/tao.mpc:
+                  Fixed install problems with pidl files, thanks to Thomas Girard
+                  for providing the patch
+
+        Wed Jan  5 09:35:46 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * orbsvcs\orbsvcs\Log\Hash_LogStore.cpp:
+                * orbsvcs\orbsvcs\PortableGroup\Portable_Group_Map.cpp:
+                * orbsvcs\orbsvcs\PortableGroup\PG_ObjectGroupManager.cpp:
+                * orbsvcs\orbsvcs\Security\SL3_CredentialsCurator.cpp:
+                * orbsvcs\orbsvcs\Security\SL2_SecurityManager.cpp:
+                * orbsvcs\orbsvcs\AV\AVStreams_i.cpp:
+                * orbsvcs\orbsvcs\Event\EC_TPC_Dispatching.cpp:
+                * orbsvcs\orbsvcs\LoadBalancing\LB_LoadMinimum.cpp:
+                * orbsvcs\orbsvcs\LoadBalancing\LB_LoadManager.cpp:
+                * orbsvcs\orbsvcs\LoadBalancing\LB_LoadAverage.cpp:
+                * orbsvcs\tests\Concurrency\CC_command.tab.cpp:
+                * orbsvcs\ImplRepo_Service\Activator_NT_Service.cpp:
+                * orbsvcs\ImplRepo_Service\Locator_NT_Service.h:
+                * orbsvcs\ImplRepo_Service\Locator_Options.cpp:
+                * orbsvcs\ImplRepo_Service\Activator_NT_Service.h:
+                * orbsvcs\ImplRepo_Service\Locator_NT_Service.cpp:
+                * tao\ORB_Core.h:
+                * utils\logWalker\Session.cpp:
+                  Fixed compile warnings (uninitialized use, const char* assignments,
+                  etc.).
+
+        Sun Jan  2 13:25:46 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/tao_idl.mpc:
+                * tao/tao.mpc:
+                  Integrated DESTDIR patches from debian packaging
+
+        Wed Dec 22 14:42:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_connector.cpp:
+                * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
+                * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+                * TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
+                * TAO_IDL/be_include/be_visitor_connector/connector_dds_ex_base.h:
+                  Removes template parameters which indicates whether the sequence
+                  contains fixed data. This fixes bugzilla #3939.
+
+        === end changelog ===
+
 Tue Jan 18 17:49:42 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * NEWS:
@@ -16,7 +169,7 @@ Fri Jan 14 16:54:35 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_err.cpp:
 
-          Added the word "error" to the error header method, so the 
+          Added the word "error" to the error header method, so the
           scoreboard will be triggered to output it.
 
 Fri Jan 14 14:24:47 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>

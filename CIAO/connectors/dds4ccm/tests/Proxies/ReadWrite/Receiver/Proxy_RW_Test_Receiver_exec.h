@@ -108,7 +108,7 @@ namespace CIAO_Proxy_RW_Test_Receiver_Impl
     virtual ~info_out_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::Proxy_RW_Test::ProxyReadWriteTestConnector::Listener. */
+    /** Operations and attributes from Proxy_RW_Test::ProxyReadWriteTestConnector::Listener. */
 
     virtual
     void on_one_data (const ::ProxyReadWriteTest & datum,
@@ -137,7 +137,7 @@ namespace CIAO_Proxy_RW_Test_Receiver_Impl
     virtual ~info_out_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PortStatusListener. */
+    /** Operations and attributes from CCM_DDS::PortStatusListener. */
 
     virtual
     void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,
@@ -167,7 +167,7 @@ namespace CIAO_Proxy_RW_Test_Receiver_Impl
     virtual ~reader_start_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::ReaderStarter. */
+    /** Operations and attributes from ReaderStarter. */
 
     virtual
     void start_read (::ReaderStarter::assignment task);

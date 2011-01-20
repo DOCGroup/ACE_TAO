@@ -11,28 +11,16 @@ This document describes how to compile/run the BasicSP (HUDisplay) example with 
   </LI>
 
   <LI>
-    Get the latest cidl compiler (if you did not compile from source) from:
-    <A href="http://www.dre.vanderbilt.edu/cidlc/binary/">
-      http://www.dre.vanderbilt.edu/cidlc/binary/
-    </A>
-
-    Copy the file into the <code> $CIAO_ROOT/bin </code> directory.
-    Build ACE, TAO, DAnCE before you proceed.
-    
     <br><br>
     <em>NOTE</em>:  <br>
            While buiding DAnCE, we also suggest that you build the tests in the $CIAO_ROOT/test directory and make sure
            all the tests run OK before you proceed to try out the BasicSP example or any other DAnCE-based
            applications. To do this, open the file
-    
-          $ACE_ROOT/bin/MakeProjectCreator/config/global.features, 
-          
-         then change the line from "cidl = 0" to "cidl = 1". <br><br>
-          
+
           After this, go back to the $CIAO_ROOT/DAnCE directory to generate your workspace/project or makefile by using MPC.<br>
           After the DAnCE and the tests are build OK, go to the $CIAO_ROOT/DAnCE/tests/NodeApplicationTest directory and make
           sure all the three perl scripts (run_test.pl, run_test_simple.pl and run_test_ex.pl) run successfully.
-          
+
           <br><br>
   </LI>
 
@@ -52,14 +40,14 @@ This document describes how to compile/run the BasicSP (HUDisplay) example with 
 <UL>
 
   <LI> Change into the $CIAO_ROOT/examples/BasicSP/descriptors directory Start NodeManagers (NodeDameon) by running <code> basicNodeDaemon.pl </code>
-  
+
   <LI> Start the execution manager:
-  <code>$CIAO_ROOT/DAnCE/ExecutionManager/Execution_Manager -o EM.ior -i NodeManagerMap.dat </code>
+  <code>$DANCE_ROOT/bin/dance_execution_manager -o EM.ior -i NodeManagerMap.dat </code>
   </LI>
 
   <LI> Start the executor:
-  <code> $CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -p flattern_deploymentplan.cdp -k file://EM.ior </code>
-  
+  <code>$DANCE_ROOT/bin/dance_plan_launcher -p flattern_deploymentplan.cdp -k file://EM.ior </code>
+
   <LI> After this, components should be deployed successfully. You can run the $CIAO_ROOT/examples/BasicSP/EC/controller to start the application.
        Please make sure that the component IOR file for the EC component is present when you run this client.
 

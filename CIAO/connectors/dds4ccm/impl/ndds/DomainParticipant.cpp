@@ -11,9 +11,9 @@
 #include "dds4ccm/impl/ndds/SubscriberListener.h"
 #include "dds4ccm/impl/ndds/StatusCondition.h"
 
-#include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/ndds/TopicListener.h"
 #include "dds4ccm/impl/ndds/DomainParticipantManager.h"
+#include "dds4ccm/impl/ndds/Utils.h"
 
 #include "dds4ccm/impl/ndds/convertors/PublisherQos.h"
 #include "dds4ccm/impl/ndds/convertors/SubscriberQos.h"
@@ -49,16 +49,16 @@ namespace CIAO
 
     ::DDS::Publisher_ptr
     DDS_DomainParticipant_i::create_publisher_with_profile (
-      const char* library_name,
-      const char *profile_name,
+      const char * qos_profile,
       ::DDS::PublisherListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_publisher_with_profile");
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
-                    "DDS_DomainParticipant_i::create_publisher_with_profile - "
-                    "Start creating Publisher\n"));
+                    "DDS_DomainParticipant_i::create_publisher_with_profile <%C> - "
+                    "Start creating Publisher\n",
+                    qos_profile));
       DDS_PublisherListener_i *ccm_dds_pl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
@@ -66,17 +66,24 @@ namespace CIAO
                             DDS_PublisherListener_i (a_listener, this),
                             ::CORBA::NO_MEMORY ());
         }
+      char * lib_name = get_library_name(qos_profile);
+      char * prof_name = get_profile_name(qos_profile);
+
       DDSPublisher * ccm_dds_pub =
-        this->rti_entity ()->create_publisher_with_profile (library_name,
-                                                      profile_name,
+        this->rti_entity ()->create_publisher_with_profile (
+                                                      lib_name,
+                                                      prof_name,
                                                       ccm_dds_pl,
                                                       mask);
+      ACE_OS::free (lib_name);
+      ACE_OS::free (prof_name);
 
       if (!ccm_dds_pub)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_DomainParticipant_i::create_publisher_with_profile - "
-                        "Error: Unable to create Publisher\n"));
+                        "DDS_DomainParticipant_i::create_publisher_with_profile <%C> - "
+                        "Error: Unable to create Publisher\n",
+                        qos_profile));
           delete ccm_dds_pl;
           return ::DDS::Publisher::_nil ();
         }
@@ -87,8 +94,9 @@ namespace CIAO
                         ::CORBA::NO_MEMORY ());
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
-                    "DDS_DomainParticipant_i::create_publisher_with_profile - "
-                    "Successfully created a DDSPublisher\n"));
+                    "DDS_DomainParticipant_i::create_publisher_with_profile <%C> - "
+                    "Successfully created a DDSPublisher\n",
+                    qos_profile));
 
       ccm_dds_pub->enable ();
       return retval._retn ();
@@ -191,8 +199,7 @@ namespace CIAO
 
     ::DDS::Subscriber_ptr
     DDS_DomainParticipant_i::create_subscriber_with_profile (
-      const char* library_name,
-      const char *profile_name,
+      const char * qos_profile,
       ::DDS::SubscriberListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
@@ -200,8 +207,9 @@ namespace CIAO
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                    "DDS_DomainParticipant_i"
-                   "::create_subscriber_with_profile - "
-                   "Creating Subscriber\n"));
+                   "::create_subscriber_with_profile <%C> - "
+                   "Creating Subscriber\n",
+                   qos_profile));
 
       DDS_SubscriberListener_i *ccm_dds_sl = 0;
       if (! ::CORBA::is_nil (a_listener))
@@ -210,19 +218,26 @@ namespace CIAO
                             DDS_SubscriberListener_i (a_listener, this),
                             ::CORBA::NO_MEMORY ());
         }
+      char * lib_name = get_library_name(qos_profile);
+      char * prof_name = get_profile_name(qos_profile);
+
       DDSSubscriber * ccm_dds_sub =
         this->rti_entity ()->create_subscriber_with_profile (
-          library_name,
-          profile_name,
+          lib_name,
+          prof_name,
           ccm_dds_sl,
           mask);
+
+      ACE_OS::free (lib_name);
+      ACE_OS::free (prof_name);
 
       if (!ccm_dds_sub)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                         "DDS_DomainParticipant_i::"
-                        "create_subscriber_with_profile - "
-                        "Error: RTI DDS returned a nil subscriber.\n"));
+                        "create_subscriber_with_profile <%C> - "
+                        "Error: RTI DDS returned a nil subscriber.\n",
+                        qos_profile));
           delete ccm_dds_sl;
           return ::DDS::Subscriber::_nil ();
         }
@@ -233,8 +248,9 @@ namespace CIAO
                         ::CORBA::NO_MEMORY ());
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
-                    "DDS_DomainParticipant_i::create_subscriber_with_profile - "
-                    "Successfully created a DDSSubscriber\n"));
+                    "DDS_DomainParticipant_i::create_subscriber_with_profile <%C> - "
+                    "Successfully created a DDSSubscriber\n",
+                    qos_profile));
 
       ccm_dds_sub->enable ();
       return retval._retn ();
@@ -273,7 +289,7 @@ namespace CIAO
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                         "DDS_DomainParticipant_i::"
-                        "create_subscriber_with_profile - "
+                        "create_subscriber - "
                         "Error: RTI DDS returned a nil subscriber.\n"));
           delete ccm_dds_sl;
           return ::DDS::Subscriber::_nil ();
@@ -441,8 +457,7 @@ namespace CIAO
     DDS_DomainParticipant_i::create_topic_with_profile (
         const char *impl_name,
         const char *type_name,
-        const char *library_name,
-        const char *profile_name,
+        const char *qos_profile,
         ::DDS::TopicListener_ptr a_listener,
         ::DDS::StatusMask mask)
     {
@@ -451,22 +466,25 @@ namespace CIAO
       if (impl_name == 0)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_DomainParticipant_i::create_topic_with_profile - "
-                        "Error: provided nil topic name\n"));
+                        "DDS_DomainParticipant_i::create_topic_with_profile <%C> - "
+                        "Error: provided nil topic name\n",
+                        qos_profile));
           return ::DDS::Topic::_nil ();
         }
 
       if (type_name == 0)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_DomainParticipant_i::create_topic_with_profile - "
-                        "Error: provided nil type name\n"));
+                        "DDS_DomainParticipant_i::create_topic_with_profile <%C> - "
+                        "Error: provided nil type name\n",
+                        qos_profile));
           return ::DDS::Topic::_nil ();
         }
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_DEBUG, DDS4CCM_INFO
-                    "DDS_DomainParticipant_i::create_topic_with_profile - "
+                    "DDS_DomainParticipant_i::create_topic_with_profile <%C> - "
                     "Attempting to create topic with name %C and type %C\n",
+                    qos_profile,
                     impl_name, type_name));
 
       DDS_TopicListener_i *ccm_dds_tl = 0;
@@ -488,19 +506,25 @@ namespace CIAO
 
       if (!dds_tp)
         {
+          char * lib_name = get_library_name(qos_profile);
+          char * prof_name = get_profile_name(qos_profile);
+
           dds_tp = this->rti_entity ()->create_topic_with_profile (
                                                         impl_name,
                                                         type_name,
-                                                        library_name,
-                                                        profile_name,
+                                                        lib_name,
+                                                        prof_name,
                                                         ccm_dds_tl,
                                                         mask);
+          ACE_OS::free (lib_name);
+          ACE_OS::free (prof_name);
 
           if (!dds_tp)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
-                            "DDS_DomainParticipant_i::create_topic_with_profile - "
-                            "Error: RTI DDS returned a nil topic\n"));
+                            "DDS_DomainParticipant_i::create_topic_with_profile <%C> - "
+                            "Error: RTI DDS returned a nil topic\n",
+                            qos_profile));
               delete ccm_dds_tl;
               return ::DDS::Topic::_nil ();
             }
@@ -511,8 +535,9 @@ namespace CIAO
                             ::CORBA::NO_MEMORY ());
 
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
-                        "DDS_DomainParticipant_i::create_topic_with_profile - "
+                        "DDS_DomainParticipant_i::create_topic_with_profile <%C> - "
                         "Successfully created topic with name %C and type %C\n",
+                        qos_profile,
                         impl_name, type_name));
 
           if (ccm_dds_tl)
@@ -526,8 +551,9 @@ namespace CIAO
       else
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                        "DDS_DomainParticipant_i::create_topic_with_profile - "
+                        "DDS_DomainParticipant_i::create_topic_with_profile <%C> - "
                         "Re-using topic with name %C and type %C.\n",
+                        qos_profile,
                         impl_name, type_name));
           DPMANAGER->_inc_ref (this->rti_entity (), dds_tp);
 

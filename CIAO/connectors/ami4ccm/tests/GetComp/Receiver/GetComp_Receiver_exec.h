@@ -55,7 +55,7 @@ namespace CIAO_GetComp_Receiver_Impl
     virtual ~do_my_foo_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::GetComp::MyFoo. */
+    /** Operations and attributes from GetComp::MyFoo. */
 
     virtual
     ::CORBA::Long foo (const char * in_str,
