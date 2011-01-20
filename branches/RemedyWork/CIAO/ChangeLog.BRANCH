@@ -1,0 +1,34 @@
+Thu Jan 20 13:48:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ccm/CCM_Events.idl:
+          Code alignment.
+
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Implemented disconnect_emitter.
+
+        * tests/CIF/Common/CIF_Common.h:
+        * tests/CIF/Common/CIF_Common.cpp:
+        * tests/CIF/Events:
+        * tests/CIF/Events/Events.mpc:
+        * tests/CIF/Events/client.cpp:
+        * tests/CIF/descriptors/run_test.pl:
+          Added new test to the CIF test framework.
+
+        * tests/CIF/Navigation/client.cpp:
+        * tests/CIF/Receptacle/client.cpp:
+          Optimized logging.
+
+        * tests/DAnCE/EM-Redeployment/run_test.pl:
+        * tests/DAnCE/ExecutionManager-Deployments/run_test.pl:
+        * tests/DAnCE/ExecutionManager-Deployments/run_test_cdr.pl:
+        * tests/DAnCE/Executor-Destructor/run_test.pl:
+        * tests/DAnCE/NodeManager-Deployments/run_test.pl:
+        * tests/DAnCE/NodeManager-Deployments/run_test_cdr.pl:
+        * tests/DAnCE/Progressive_Deployments/run_test.pl:
+          Added CIAO_LOG_LEVEL in order to an insight on the errors.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

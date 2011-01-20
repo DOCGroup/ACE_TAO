@@ -167,7 +167,7 @@ CIF_Common::get_navigation_interface()
                  "Narrow failed from CCMObject to Navigation\n"));
       return ::Components::Navigation::_nil();
     }
-  return ::Components::Navigation::_duplicate(nav.in());
+  return nav._retn ();
 }
 
 //============================================================
@@ -186,7 +186,34 @@ CIF_Common::get_receptacle_interface()
                  "Narrow failed from CCMObject to Receptacles\n"));
       return ::Components::Receptacles::_nil();
     }
-  return ::Components::Receptacles::_duplicate(rec.in());
+  return rec._retn ();
+}
+
+//============================================================
+// get_events_interface
+//============================================================
+::Components::Events_ptr
+CIF_Common::get_events_interface (bool source)
+{
+  ::CORBA::Object_var cmp;
+  if (source)
+    {
+      cmp = this->provider_object_->_get_component();
+    }
+  else
+    {
+      cmp = this->user_object_->_get_component ();
+    }
+  ::Components::Events_var ev =
+    ::Components::Events::_narrow(cmp.in());
+
+  if (::CORBA::is_nil(ev.in()))
+    {
+      ACE_ERROR((LM_ERROR,
+                "Narrow failed from CCMObject to Navigation\n"));
+      return ::Components::Events::_nil();
+    }
+  return ev._retn ();
 }
 
 //============================================================

@@ -479,7 +479,7 @@ test_get_named_publishers (::Components::CCMObject_ptr cmp)
     {
       ACE_DEBUG ((LM_DEBUG, "Navigation test_get_named_publishers - "
                             "Received expected InvalidName "
-                            "exception during connect\n"));
+                            "exception.\n"));
     }
   catch (const ::CORBA::Exception& ex)
     {
@@ -605,7 +605,7 @@ test_get_named_emitters (::Components::CCMObject_ptr cmp)
     {
       ACE_DEBUG ((LM_DEBUG, "Navigation test_get_named_emitters - "
                             "Received expected InvalidName "
-                            "exception during connect\n"));
+                            "exception.\n"));
     }
   catch (const ::CORBA::Exception& ex)
     {
@@ -641,10 +641,10 @@ run_test (::Components::Navigation_ptr nav,
   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
   ret += test_same_component (nav);
 
-
   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
   ret += test_get_all_ports (cmp);
-#if !defined (CCM_NOEVENT)
+
+# if !defined (CCM_NOEVENT)
   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
   ret += test_get_all_publishers (cmp);
 
@@ -656,10 +656,11 @@ run_test (::Components::Navigation_ptr nav,
 
   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
   ret += test_get_named_emitters (cmp);
-#endif
+# endif
 #else
   ACE_UNUSED_ARG (cmp);
 #endif
+
   return ret;
 }
 
