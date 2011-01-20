@@ -18,14 +18,14 @@ get_consumer (::Components::Events_ptr sink,
     }
   catch (const ::Components::InvalidName &)
     {
-      ACE_ERROR ((LM_ERROR, "Events test_subscribe_unsubscribe - "
+      ACE_ERROR ((LM_ERROR, "Events get_consumer - "
                             "Error: InvalidName exception caught "
                             "during get_consumer.\n"));
       return ::Components::EventConsumerBase::_nil ();
     }
   catch (...)
     {
-      ACE_ERROR ((LM_ERROR, "Navigation test_provide_facet - "
+      ACE_ERROR ((LM_ERROR, "Navigation get_consumer - "
                             "Error: Unknown exception caught "
                             "during get_consumer.\n"));
       return ::Components::EventConsumerBase::_nil ();
@@ -33,6 +33,69 @@ get_consumer (::Components::Events_ptr sink,
   return consumer._retn ();
 }
 
+//============================================================
+// test_get_consumer
+//============================================================
+int
+test_get_consumer (::Components::Events_ptr sink)
+{
+  try
+    {
+      ::Components::EventConsumerBase_var consumer =
+        sink->get_consumer ("consume_do_something");
+      if (::CORBA::is_nil (consumer.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, "Events test_get_consumer - "
+                                "Error: returned consumer "
+                                "seems nil.\n"));
+          return 1;
+        }
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_get_consumer - "
+                            "Error: InvalidName exception caught "
+                            "during get_consumer.\n"));
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Navigation test_get_consumer - "
+                            "Error: Unknown exception caught "
+                            "during get_consumer.\n"));
+      return 1;
+    }
+  return 0;
+}
+
+//============================================================
+// test_get_consumer_invalid_name
+//============================================================
+int
+test_get_consumer_invalid_name (::Components::Events_ptr sink)
+{
+  try
+    {
+      ::Components::EventConsumerBase_var consumer =
+        sink->get_consumer ("consume_do_something_invalid_name");
+      ACE_ERROR ((LM_ERROR, "Events test_get_consumer - "
+                            "Error: No InvalidName exception raised.\n"));
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_get_consumer - "
+                            "Received InvalidName exception "
+                            "during get_consumer.\n"));
+      return 0;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Navigation test_get_consumer - "
+                            "Error: Unknown exception caught "
+                            "during get_consumer.\n"));
+    }
+  return 1;
+}
 
 //============================================================
 // test_subscribe_unsubscribe
@@ -244,6 +307,376 @@ test_subscribe_invalid_connection (::Components::Events_ptr source,
   return 0;
 }
 
+//============================================================
+// connect_consumer
+//============================================================
+int
+connect_consumer (::Components::Events_ptr source,
+                  ::Components::Events_ptr sink,
+                  const char * name)
+{
+  ::Components::EventConsumerBase_var consumer =
+    get_consumer (sink, "consume_do_something");
+  if (::CORBA::is_nil (consumer.in ()))
+    {
+      ACE_ERROR ((LM_ERROR, "Events connect_consumer - "
+                            "Error:Consumer seems nil.\n"));
+      return 1;
+    }
+  try
+    {
+      source->connect_consumer (name,
+                                consumer.in ());
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events connect_consumer - "
+                            "Error: InvalidName exception caught "
+                            "during connect_consumer.\n"));
+    }
+  catch (const ::Components::InvalidConnection &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events connect_consumer - "
+                            "Error: InvalidConnection exception caught "
+                            "during connect_consumer.\n"));
+      return 1;
+    }
+  catch (const ::Components::AlreadyConnected &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events connect_consumer - "
+                            "Error: AlreadyConnected exception caught "
+                            "during connect_consumer.\n"));
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events connect_consumer - "
+                            "Error: Unknown exception caught "
+                            "during connect_consumer.\n"));
+      return 1;
+    }
+  return 0;
+}
+
+//============================================================
+// disconnect_consumer
+//============================================================
+int
+disconnect_consumer (::Components::Events_ptr source,
+                    const char * name)
+{
+  try
+    {
+      ::Components::EventConsumerBase_var obj =
+        source->disconnect_consumer (name);
+      if (::CORBA::is_nil (obj.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, "Events disconnect_consumer - "
+                                "Error: Returned object from disconnect_consumer "
+                                "seems nil.\n"));
+          return 1;
+        }
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events disconnect_consumer - "
+                            "Error: InvalidName exception caught "
+                            "during disconnect_consumer.\n"));
+      return 1;
+    }
+  catch (const ::Components::NoConnection &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events disconnect_consumer - "
+                            "Error: NoConnection exception caught "
+                            "during disconnect_consumer.\n"));
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events disconnect_consumer - "
+                            "Error: Unknown exception caught "
+                            "during disconnect_consumer.\n"));
+      return 1;
+    }
+  return 0;
+}
+//============================================================
+// test_connect_disconnect_consumer
+//============================================================
+int
+test_connect_disconnect_consumer (::Components::Events_ptr source,
+                                  ::Components::Events_ptr sink)
+{
+  if (connect_consumer (source, sink, "emit_do_something") == 0)
+    {
+      if (disconnect_consumer (source, "emit_do_something") == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Events test_connect_disconnect_consumer - "
+                                "Test passed!\n"));
+          return 0;
+        }
+    }
+  return 1;
+}
+
+//============================================================
+// test_connect_consumer_invalid_name
+//============================================================
+int
+test_connect_consumer_invalid_name (::Components::Events_ptr source,
+                                    ::Components::Events_ptr sink)
+{
+  ::Components::EventConsumerBase_var consumer =
+    get_consumer (sink, "consume_do_something");
+  if (::CORBA::is_nil (consumer.in ()))
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_connect_consumer_invalid_name - "
+                            "Error:Consumer seems nil.\n"));
+      return 1;
+    }
+  try
+    {
+      source->connect_consumer ("emit_do_something_invalid_name",
+                                consumer.in ());
+      ACE_ERROR ((LM_ERROR, "Events test_connect_consumer_invalid_name - "
+                            "Error: No InvalidName exception received.\n"));
+      disconnect_consumer (source, "emit_do_something");
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_connect_consumer_invalid_name - "
+                            "Received InvalidName exception "
+                            "during connect_consumer.\n"));
+    }
+  catch (const ::Components::InvalidConnection &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_connect_consumer_invalid_name - "
+                            "Error: InvalidConnection exception caught "
+                            "during connect_consumer.\n"));
+      return 1;
+    }
+  catch (const ::Components::AlreadyConnected &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_connect_consumer_invalid_name - "
+                            "Error: AlreadyConnected exception caught "
+                            "during connect_consumer.\n"));
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_connect_consumer_invalid_name - "
+                            "Error: Unknown exception caught "
+                            "during connect_consumer.\n"));
+      return 1;
+    }
+  ACE_DEBUG ((LM_DEBUG, "Events test_connect_consumer_invalid_name - "
+                        "Test passed!\n"));
+  return 0;
+}
+
+//============================================================
+// test_connect_consumer_already_connected
+//============================================================
+int
+test_connect_consumer_already_connected (::Components::Events_ptr source,
+                                        ::Components::Events_ptr sink)
+{
+  ::Components::EventConsumerBase_var consumer =
+    get_consumer (sink, "consume_do_something");
+  if (::CORBA::is_nil (consumer.in ()))
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_connect_consumer_already_connected - "
+                            "Error:Consumer seems nil.\n"));
+      return 1;
+    }
+  try
+    {
+      source->connect_consumer ("emit_do_something",
+                                consumer.in ());
+      source->connect_consumer ("emit_do_something",
+                                consumer.in ());
+      ACE_ERROR ((LM_ERROR, "Events test_connect_consumer_already_connected - "
+                            "Error: No AlreadyConnected exception received.\n"));
+      disconnect_consumer (source, "emit_do_something");
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_connect_consumer_already_connected - "
+                            "Error: InvalidName exception caught "
+                            "during connect_consumer.\n"));
+      return 1;
+    }
+  catch (const ::Components::InvalidConnection &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_connect_consumer_already_connected - "
+                            "Error: InvalidConnection exception caught "
+                            "during connect_consumer.\n"));
+      return 1;
+    }
+  catch (const ::Components::AlreadyConnected &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_connect_consumer_already_connected - "
+                            "Received AlreadyConnected exception "
+                            "during connect_consumer.\n"));
+      disconnect_consumer (source, "emit_do_something");
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_connect_consumer_already_connected - "
+                            "Error: Unknown exception caught "
+                            "during connect_consumer.\n"));
+      return 1;
+    }
+  ACE_DEBUG ((LM_DEBUG, "Events test_connect_consumer_already_connected - "
+                        "Test passed!\n"));
+  return 0;
+}
+
+//============================================================
+// test_connect_consumer_invalid_connection
+//============================================================
+int
+test_connect_consumer_invalid_connection (::Components::Events_ptr source,
+                                          ::Components::Events_ptr sink)
+{
+  ::Components::EventConsumerBase_var consumer =
+    get_consumer (sink, "consume_do_something");
+  if (::CORBA::is_nil (consumer.in ()))
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_connect_consumer_invalid_connection - "
+                            "Error:Consumer seems nil.\n"));
+      return 1;
+    }
+  try
+    {
+      source->connect_consumer ("emit_do_something_else",
+                                consumer.in ());
+      ACE_ERROR ((LM_ERROR, "Events test_connect_consumer_invalid_connection - "
+                            "Error: No InvalidConnection exception received.\n"));
+      disconnect_consumer (source, "emit_do_something");
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_connect_consumer_invalid_connection - "
+                            "Error: InvalidName exception caught "
+                            "during connect_consumer.\n"));
+      return 1;
+    }
+  catch (const ::Components::InvalidConnection &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_connect_consumer_invalid_connection - "
+                            "Received InvalidConnection exception "
+                            "during connect_consumer.\n"));
+    }
+  catch (const ::Components::AlreadyConnected &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_connect_consumer_invalid_connection - "
+                            "Error: AlreadyConnected exception caught"
+                            "during connect_consumer.\n"));
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_connect_consumer_invalid_connection - "
+                            "Error: Unknown exception caught "
+                            "during connect_consumer.\n"));
+      return 1;
+    }
+  ACE_DEBUG ((LM_DEBUG, "Events test_connect_consumer_invalid_connection - "
+                        "Test passed!\n"));
+  return 0;
+}
+
+//============================================================
+// test_disconnect_consumer_invalid_name
+//============================================================
+int
+test_disconnect_consumer_invalid_name (::Components::Events_ptr source,
+                                      ::Components::Events_ptr sink)
+{
+  try
+    {
+      if (connect_consumer (source, sink, "emit_do_something") == 0)
+        {
+          ::Components::EventConsumerBase_var obj =
+            source->disconnect_consumer ("emit_do_something_invalid_name");
+          ACE_ERROR ((LM_ERROR, "Events test_disconnect_consumer_invalid_name - "
+                                "Error: No InvalidName exception received.\n"));
+          return 1;
+        }
+      else
+        {
+          ACE_ERROR ((LM_ERROR, "Events test_disconnect_consumer_invalid_name - "
+                                "Error: Unable to connect to consumer.\n"));
+          return 1;
+        }
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_disconnect_consumer_invalid_name - "
+                            "Received InvalidName exception "
+                            "during disconnect_consumer.\n"));
+      disconnect_consumer (source, "emit_do_something");
+    }
+  catch (const ::Components::NoConnection &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_disconnect_consumer_invalid_name - "
+                            "Error: NoConnection exception caught "
+                            "during disconnect_consumer.\n"));
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_disconnect_consumer_invalid_name - "
+                            "Error: Unknown exception caught "
+                            "during connect_consumer.\n"));
+      return 1;
+    }
+  ACE_DEBUG ((LM_DEBUG, "Events test_disconnect_consumer_invalid_name - "
+                        "Test passed!\n"));
+  return 0;
+}
+
+//============================================================
+// test_disconnect_consumer_no_connection
+//============================================================
+int
+test_disconnect_consumer_no_connection (::Components::Events_ptr source)
+{
+  try
+    {
+      ::Components::EventConsumerBase_var obj =
+        source->disconnect_consumer ("emit_do_something");
+      ACE_ERROR ((LM_ERROR, "Events test_disconnect_consumer_no_connection - "
+                            "Error: No NoConnection exception received.\n"));
+      return 1;
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_disconnect_consumer_no_connection - "
+                            "Error: InvalidName exception caught "
+                            "during disconnect_consumer.\n"));
+      return 1;
+    }
+  catch (const ::Components::NoConnection &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_disconnect_consumer_no_connection - "
+                            "Received NoConnection exception "
+                            "during disconnect_consumer.\n"));
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_disconnect_consumer_no_connection - "
+                            "Error: Unknown exception caught "
+                            "during connect_consumer.\n"));
+      return 1;
+    }
+  ACE_DEBUG ((LM_DEBUG, "Events test_disconnect_consumer_no_connection - "
+                        "Test passed!\n"));
+  return 0;
+}
+
+
 int
 run_test (::Components::Events_ptr source,
           ::Components::Events_ptr sink)
@@ -251,17 +684,41 @@ run_test (::Components::Events_ptr source,
   int ret = 0;
   try
     {
-       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
-       ret += test_subscribe_unsubscribe (source, sink);
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_get_consumer (sink);
 
-       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
-       ret += test_subscribe_invalid_name (source, sink);
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_get_consumer_invalid_name (sink);
 
-       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
-       ret += test_subscribe_invalid_connection (source, sink);
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_subscribe_unsubscribe (source, sink);
 
-       //ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
-       //ret += test_subscribe_exceededconnectionlimit (source, sink);
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_subscribe_invalid_name (source, sink);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_subscribe_invalid_connection (source, sink);
+
+      //ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      //ret += test_subscribe_exceededconnectionlimit (source, sink);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_connect_disconnect_consumer (source, sink);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_connect_consumer_invalid_name (source, sink);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_connect_consumer_already_connected (source, sink);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_connect_consumer_invalid_connection (source, sink);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_disconnect_consumer_invalid_name (source, sink);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_disconnect_consumer_no_connection (source);
     }
   catch (...)
     {
