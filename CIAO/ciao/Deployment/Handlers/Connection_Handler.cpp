@@ -881,12 +881,13 @@ namespace CIAO
 
 #if !defined (CCM_NOEVENT)
   void
-  Connection_Handler::disconnect_emitter (const ::Deployment::DeploymentPlan &,
-                                          ::CORBA::ULong,
-                                          ::CORBA::ULong)
+  Connection_Handler::disconnect_emitter (const ::Deployment::DeploymentPlan &plan,
+                                          ::CORBA::ULong connectionRef,
+                                          ::CORBA::ULong endpointRef)
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_emitter");
+    this->disconnect_consumer (plan, connectionRef, endpointRef);
   }
 #endif
 

@@ -29,10 +29,10 @@ $ior_nsfile = 0;
 $ior_embase = "EM.ior";
 $ior_emfile = 0;
 
-$nr_clients = 2;
-
+$nr_clients = 3;
 @clients = ("../Navigation/Navigation_Test_Client",
-            "../Receptacle/Receptacle_Test_Client" );
+            "../Receptacle/Receptacle_Test_Client",
+            "../Events/Events_Test_Client");
 
 #  Processes
 $E = 0;

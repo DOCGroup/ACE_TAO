@@ -7,12 +7,20 @@
 //============================================================
 ::Components::Cookie *
 connect (::Components::Receptacles_ptr rec,
-         ::CORBA::Object_ptr facet)
+         ::CORBA::Object_ptr facet,
+         bool multiple = false)
 {
   ::Components::Cookie_var ck;
   try
     {
-      ck = rec->connect ("use_cif_foo", facet);
+      if (multiple)
+        {
+          ck = rec->connect ("use_multiple_foo", facet);
+        }
+      else
+        {
+          ck = rec->connect ("use_cif_foo", facet);
+        }
     }
   catch (const ::Components::InvalidName &)
     {
@@ -46,12 +54,20 @@ connect (::Components::Receptacles_ptr rec,
 //============================================================
 ::CORBA::Object_ptr
 disconnect (::Components::Receptacles_ptr rec,
-            ::Components::Cookie * ck)
+            ::Components::Cookie * ck,
+            bool multiple = false)
 {
   ::CORBA::Object_var obj;
   try
     {
-      obj = rec->disconnect ("use_cif_foo", ck);
+      if (multiple)
+        {
+          obj = rec->disconnect ("use_multiple_foo", ck);
+        }
+      else
+        {
+          obj = rec->disconnect ("use_cif_foo", ck);
+        }
     }
   catch (const ::Components::InvalidName &)
     {
@@ -98,8 +114,62 @@ test_connect_disconnect (::Components::Receptacles_ptr rec,
                             "disconnect test passed !\n"));
       return 0;
     }
-  else
-    return 1;
+  return 1;
+}
+
+//============================================================
+// test_connect_disconnect
+//============================================================
+int
+test_cookie_required_exception (::Components::Receptacles_ptr rec,
+                                ::CORBA::Object_ptr facet)
+{
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_cookie_required_exception - "
+                        "Start test\n"));
+  int ret = 0;
+  ::Components::Cookie_var ck1 = connect (rec, facet, true);
+  ::Components::Cookie_var ck2 = connect (rec, facet, true);
+
+  ::CORBA::Object_var obj;
+
+  try
+    {
+      obj = rec->disconnect ("use_multiple_foo", 0);
+      ACE_ERROR ((LM_ERROR, "Receptacle test_cookie_required_exception - "
+                            "Error: No exception during disconnect\n"));
+      ++ret;
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_cookie_required_exception - "
+                            "Error: InvalidName "
+                            "exception during disconnect\n"));
+      ++ret;
+    }
+  catch (const ::Components::InvalidConnection &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_cookie_required_exception - "
+                            "Error: InvalidConnection "
+                            "exception during disconnect\n"));
+      ++ret;
+    }
+  catch (const ::Components::CookieRequired &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Receptacle test_cookie_required_exception - "
+                            "Received expected CookieRequired "
+                            "exception during disconnect\n"));
+    }
+  catch (const ::Components::NoConnection &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_cookie_required_exception - "
+                            "Error: NoConnection "
+                            "exception during disconnect\n"));
+      ++ret;
+    }
+  //need to disconnect properly
+  obj = disconnect (rec, ck1.in (), true);
+  obj = disconnect (rec, ck2.in (), true);
+  return ret;
 }
 
 //============================================================
@@ -798,6 +868,9 @@ run_test (::Components::Receptacles_ptr rec,
     {
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_connect_disconnect (rec, facet);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_cookie_required_exception (rec, facet);
 
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_invalid_name_exception (rec, facet);
