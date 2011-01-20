@@ -1,4 +1,0 @@
-EC              corbaloc:iiop:localhost:10000/EC.NodeManager
-BMDisplay       corbaloc:iiop:localhost:20000/BMDisplay.NodeManager
-BMClosedED       corbaloc:iiop:localhost:30000/BMClosedED.NodeManager
-BMDevice       corbaloc:iiop:localhost:40000/BMDevice.NodeManager

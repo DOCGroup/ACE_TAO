@@ -1,8 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from ./examples/POA/Explicit_Activation/alternate.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <!--  Refer to Alternate_Resource_Factory/README for details -->
- <dynamic id="Resource_Factory" type="Service_Object">
-   <initializer path="Alt_Resources/Alt_Resource_Factory" init="_make_My_Resource_Factory"/>
- </dynamic>
-</ACE_Svc_Conf>

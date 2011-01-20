@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ace_etcl, anytypecode {
-  after += TAO_ETCL
-  libs += TAO_ETCL
-}

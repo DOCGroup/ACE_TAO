@@ -1,6 +1,0 @@
-// $Id$
-#include "abstract_parent.idl"
-
-local interface local_child : abstract_parent
-{
-};
