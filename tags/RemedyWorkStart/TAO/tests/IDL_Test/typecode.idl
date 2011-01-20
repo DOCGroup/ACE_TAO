@@ -1,0 +1,25 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    typecode.idl
+//
+// = DESCRIPTION
+//    Test a sequence of typecodes
+//
+// = AUTHORS
+//    Johnny Willemsen  <jwillemsen@remedy.nl>
+//
+// ============================================================================
+
+#include "orb.idl"
+
+module MyModule
+{
+  typedef sequence<CORBA::TypeCode> TypeCodeList;
+};
+

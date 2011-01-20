@@ -1,0 +1,115 @@
+/**
+ * @file RtecUDPAdmin.idl
+ *
+ * @brief Define the RtecUDPAdmin module
+ *
+ * $Id$
+ *
+ * TAO's Real-time Event Service is described in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/
+ *
+ * @author Carlos O'Ryan <coryan@uci.edu>
+ */
+
+#ifndef TAO_RTEC_UDP_ADMIN_IDL
+#define TAO_RTEC_UDP_ADMIN_IDL
+
+#include "RtecEventComm.idl"
+#include "tao/OctetSeq.pidl"
+
+/**
+ * @namespace RtecUDPAdmin
+ *
+ * @brief Define the data structures and interfaces used by UDP-based
+ *   gateways
+ */
+module RtecUDPAdmin
+{
+  /**
+   * @struct UDP_Addr
+   *
+   * @brief Represent a UDP SAP.
+   */
+  struct UDP_Addr
+  {
+    /// The IP address
+    unsigned long ipaddr;
+    /// The UDP port
+    unsigned short _port;
+  };
+
+  /**
+   * @struct UDP_Addr_v6
+   *
+   * @brief Represent a UDP SAP sufficient to hold an IPv6 address.
+   */
+
+  typedef char char16[16];
+  struct UDP_Addr_v6
+  {
+    char16 ipaddr; // used to match with ACE_INET_Addr::set_address
+    unsigned short _port;
+  };
+
+  /**
+   * @enum Address_Family
+   *
+   * @brief Defines the address family identifiers. The more familiar
+   *  AF_INET, AF_INET6 are not used to avoid potential confusion.
+   *
+   */
+  enum Address_Family
+  {
+    Rtec_inet,
+    Rtec_inet6
+  };
+
+  /**
+   * @union UDP_Address
+   *
+   * @brief Holds either an IPv4 or IPv6 address and used for the
+   *  return value from get_address below.
+   *
+   */
+  union UDP_Address switch (Address_Family)
+  {
+  case Rtec_inet:
+    UDP_Addr v4_addr;
+  case Rtec_inet6:
+    UDP_Addr_v6 v6_addr;
+  };
+
+  /**
+   * @interface AddrServer
+   *
+   * @brief Defines a interface to configure the mapping between
+   *   events and multicast groups (or UDP broadcast or UDP unicast)
+   *   addresses.
+   */
+  interface AddrServer
+  {
+    /// Get the UDP address given the event header
+    /**
+     * @deprecated, applications should use get_address, which
+     *   supports both IPv4 and IPv6 addresses.
+     * @param header The event header, used to fetch the type and
+     *   source of the event
+     * @param addr Return the address used for the given event type
+     */
+    void get_addr (in RtecEventComm::EventHeader header,
+                   out UDP_Addr addr);
+
+    /// Get the UDP address given the event header, supports either
+    /// IPv4 or IPv6
+    /**
+     * @param header The event header, used to fetch the type and
+     *   source of the event
+     * @param addr Return the address used for the given event type
+     */
+    void get_address (in RtecEventComm::EventHeader header,
+                      out UDP_Address addr);
+  };
+};
+
+#endif /* TAO_RTEC_UDP_ADMIN_IDL */

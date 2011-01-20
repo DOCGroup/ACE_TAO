@@ -1,0 +1,41 @@
+// $Id$
+
+project (CIAO_NDDS_lem_gen) : install, ciaoidldefaults {
+  custom_only = 1
+  after += CIAO_NDDS_idl_gen
+  idlflags += -I$(CIAO_ROOT)/connectors \
+              -Wb,stub_export_macro=NDDS_LEM_STUB_Export \
+              -Wb,stub_export_include=ndds_lem_stub_export.h -SS
+
+  IDL_Files {
+     idlflags += -Gxhst
+     ndds_dcpsE.idl
+  }
+
+  IDL_Files {
+     ndds_dcps_i_handleE.idl
+  }
+}
+
+project (CIAO_NDDS_lem_stub) : install, ccm_lem_stub, ccm_session_stub, ciaolib_with_idl, ciao_output, taolib, valuetype, ifr_client {
+  after += CIAO_NDDS_stub CIAO_NDDS_lem_gen
+  libs  += CIAO_NDDS_stub
+  includes += $(CIAO_ROOT)/connectors
+  sharedname = CIAO_NDDS_lem_stub
+  dynamicflags += NDDS_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+   ndds_dcpsEC.cpp
+   ndds_dcps_i_handleEC.cpp
+  }
+
+  Header_Files {
+   ndds_dcpsEC.h
+   ndds_lem_stub_export.h
+   ndds_dcps_i_handleEC.h
+  }
+}
+

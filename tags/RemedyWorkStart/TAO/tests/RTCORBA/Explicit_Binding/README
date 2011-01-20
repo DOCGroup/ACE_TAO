@@ -1,0 +1,99 @@
+$Id$
+
+This is a test for <Object::_validate_connection> method, i.e.,
+explicit binding functionality.
+
+Description.  
+-------- 
+The goal of this test is to check that <validate_connection>
+establishes connections appropriate for the effective policy
+overrides, and that it detects policy misconfigurations and reports
+them back to the client via <inconsistent_policies> parameter.
+
+The server creates an object, which can be used through IIOP or SHMIOP,
+and publishes its IOR.  The client performs three tests:
+
+1) Set ClientProtocolPolicy override to SHMIOP, and invoke
+<validate_connection> on the object.  This should return TRUE, and one
+SHMIOP connection should get established.
+
+2) Invoke <test_method> on the object.  The invocation should succeed
+and NO new connections should get established (connection from step 1
+should get used).
+
+3) Now set ClientProtocolPolicy override to UIOP, and invoke
+<validate_connection> on the object.  It should return FALSE (because
+the server is not reachable through UIOP), and <inconsistent_policies>
+should contain the problematic override: ClientProtocolPolicy we
+specified.
+
+
+To run (on Unix):
+-------
+$./server [-o <ior_output_file>] -ORBendpoint iiop:// -ORBendpoint shmiop://
+$./client [-o <ior>] -ORBdebuglevel 1
+
+
+Options:
+--------
+        Server:
+
+-o <ior_output_file>       Default: test.ior
+                           Filename for output of the server IOR.
+
+-ORBendpoint iiop://       Default: none
+-ORBendpoint shmiop://     Need to open server endpoints for several
+                           protocols.  Client is hardcoded to use
+                           SHMIOP, so these options must be specified
+                           for the test to work.
+
+        Client:
+
+-o <ior>                   Default: file://test.ior
+                           IOR of the test object.
+
+-ORBdebuglevel 1           Default: none
+                           Recommended debug level for monitoring of
+                           connection establishment.
+
+Expected output:
+----------------
+Below is a sample output from run_test.pl on NT.  Please note that
+since in this test we are using ORB debug option
+
+1) test output may look different from that shown below as ORB debug
+   messages are modified by developers
+2) the output may contain some debug information irrelevant to this
+   test
+
+
+********** RTCORBA Explicit Binding Unit Test
+
+<IOR:010000000d00000049444c3a546573743a312e300000000002000000000000007e000000010
+102cd050000006865726100cd37081b00000014010f005253547078283a180e0c000000000001000
+00001000000cd03000000000000000800000001cdcdcd004f4154010000001400000001cdcdcd010
+00100000000000901010000000000024f41541600000001cdcdcd01000000050000006865726100c
+d3708ffff0000024f41547e000000010102cd050000006865726100cd38081b00000014010f00525
+3547078283a180e0c00000000000100000001000000cd03000000000000000800000001cdcdcd004
+f4154010000001400000001cdcdcd01000100000000000901010000000000024f41541600000001c
+dcdcd01000000050000006865726100cd3808ffff>
+
+TAO (964|300) Loaded default protocol <IIOP_Factory>
+TAO (964|300) Loaded default protocol <SHMIOP_Factory>
+
+     Test 1
+TAO (964|300) Connector::connect - looking for SHMIOP connection.
+TAO (964|300) SHMIOP connection to server <127.0.0.1:2104> on 320
+
+     Test 2
+TAO (964|300) Connector::connect - looking for SHMIOP connection.
+Server: test_method invoked.
+
+     Test 3
+Inconsistent policies contain ClientProtocolPolicy, as expected.
+
+  Testing over - shutting down
+TAO (964|300) Connector::connect - looking for SHMIOP connection.
+Server ORB event loop finished
+TAO (964|300) SHMIOP_Client_Connection_Handler::handle_close (320, 511)
+

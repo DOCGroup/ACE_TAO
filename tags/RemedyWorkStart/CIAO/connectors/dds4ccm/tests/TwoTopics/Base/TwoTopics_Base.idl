@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file TwoTopics_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef TWOTOPICS_BASE_IDL
+#define TWOTOPICS_BASE_IDL
+
+#pragma ndds typesupport "Base/TwoTopics_BaseSupport.h"
+
+struct HelloTopic {
+  string hello; //@key
+  long iteration;
+};
+typedef sequence<HelloTopic> HelloTopicSeq;
+
+struct GoodbyeTopic {
+  string goodbye; //@key
+  long iteration;
+};
+typedef sequence<GoodbyeTopic> GoodbyeTopicSeq;
+
+#endif

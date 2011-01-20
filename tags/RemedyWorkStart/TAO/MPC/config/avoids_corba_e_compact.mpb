@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+feature(corba_e_compact) {
+  avoids += corba_e_compact
+}

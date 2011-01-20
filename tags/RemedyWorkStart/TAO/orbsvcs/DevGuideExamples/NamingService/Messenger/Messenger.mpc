@@ -1,0 +1,36 @@
+// $Id$
+
+project(NamingService*idl): taoidldefaults {
+  IDL_Files {
+    Messenger.idl
+  }
+  custom_only = 1
+}
+
+project(NamingService*Server): namingexe, naming_skel {
+  exename = MessengerServer
+  after += NamingService*idl
+  Source_Files {
+    Messenger_i.cpp
+    MessengerServer.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+    MessengerS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(NamingService*Client): namingexe {
+  exename = MessengerClient
+  after += NamingService*idl
+  Source_Files {
+    MessengerClient.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+  }
+  IDL_Files {
+  }
+}

@@ -1,0 +1,5 @@
+// $Id$
+
+workspace {
+  cmdline += -include $ADBC_ROOT/MPC/config
+}
