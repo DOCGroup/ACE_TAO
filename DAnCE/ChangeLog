@@ -1,3 +1,58 @@
+Thu Jan 20 11:42:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Tue Jan 18 16:13:27 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * DAnCE-INSTALL.html:
+                  Small improvements
+
+        Tue Jan 18 14:40:11 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * dance/DAnCE_Utility.cpp:
+                  Use LM_ERROR
+
+                * docs/schema/README.html:
+                  Updated a few text items
+
+                * docs/schema/xsc-banner.h:
+                  Removed BCB workaround
+
+                * etc/DAnCE.doxygen:
+                  Improved doxygen geneation
+
+                * docs/schema/CIAOEvents.xsd:
+                * docs/schema/CIAOServerResources.xsd:
+                * docs/schema/SANet_Network.xsd:
+                * docs/schema/ServerResourceUsage.txt:
+                * docs/schema/Task_Map.xsd:
+                * docs/schema/ciaopolicy.xsd:
+                  Removed these files, all obsolete
+
+        Fri Jan 14 10:25:00 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * dance/LocalityManager/Handler/LocalityActivator_Impl.cpp:
+                  Optimized logging.
+
+        Mon Dec 27 15:07:29 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * bin/dance_tests.lst:
+
+                * tests/PartialShutdown/*:
+                  Removed this test since it uses CIAO.
+
+        Mon Dec 27 13:21:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * bin/dance_tests.lst:
+                * tests/PartialShutdown/*:
+                  Test which testswhether all connections are correctly shutdown
+                  when one component is shutdown using a deploymentplan.
+                  For now it tests whether all connections were shutdown properly.
+
+        === end changelog ===
+
 Tue Jan 18 11:45:35 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/schema/README.html:
