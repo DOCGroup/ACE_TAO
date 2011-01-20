@@ -2,6 +2,7 @@
 // $Id$
 
 project : nddslib, nddsmonitor, taoidldefaults {
+  requires += ndds
   macros += CIAO_DDS4CCM_NDDS=1
   idlflags += -DCIAO_DDS4CCM_NDDS=1 \
               -Wb,dds_impl=ndds \
