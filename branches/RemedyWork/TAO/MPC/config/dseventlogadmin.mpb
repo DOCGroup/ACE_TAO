@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : orbsvcslib, dslogadmin, event {
-  after     += DsEventLogAdmin
-  libs      += TAO_DsEventLogAdmin
-  tagchecks += EventLog
-}
