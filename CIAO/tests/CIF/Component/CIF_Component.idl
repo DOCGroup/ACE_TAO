@@ -31,6 +31,7 @@ module CIF
     publishes DoSomething     publish_do_something;
     publishes DoSomethingElse publish_do_something_else;
     emits     DoSomething     emit_do_something;
+    emits     DoSomethingElse emit_do_something_else;
 #endif
     provides foo          provide_cif_foo;
     provides derived_foo  provide_cif_derived_foo;

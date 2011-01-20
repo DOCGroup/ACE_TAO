@@ -1,3 +1,11 @@
+Thu Jan 20 15:00:12 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Component/CIF_Component.idl:
+          Added new emitter.
+
+        * tests/CIF/Events/client.cpp:
+          Expanded tests.
+
 Thu Jan 20 13:48:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ccm/CCM_Events.idl:
