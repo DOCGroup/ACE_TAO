@@ -62,7 +62,7 @@ namespace CIAO_UsesMulti_Sender_Impl
         switch (i)
           {
             case 0:
-              test = CORBA::string_dup ("Asynch. call one.");
+              test = CORBA::string_dup ("Asynch. call one");
               break;
             case 1:
               test = CORBA::string_dup ("Asynch. call two");

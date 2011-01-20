@@ -30,7 +30,7 @@ project(TSEC_CheckPoint_lem_gen) : ciaoidldefaults {
 }
 
 
-project(TSEC_CheckPoint_stub): ccm_stub, event {
+project(TSEC_CheckPoint_stub): ccm_stub {
   after  += ENW_stub TSEC_CheckPoint_idl_gen
   libpaths += ../interfaces
   libs     += ENW_stub
@@ -54,7 +54,7 @@ project(TSEC_CheckPoint_stub): ccm_stub, event {
   }
 }
 
-project(TSEC_CheckPoint_svnt) : ciao_servant, event {
+project(TSEC_CheckPoint_svnt) : ciao_servant {
   after +=  TSEC_CheckPoint_skel TSEC_CheckPoint_exec
   after +=  ENW_skel ENW_stub
   sharedname  = TSEC_CheckPoint_svnt
@@ -74,7 +74,7 @@ project(TSEC_CheckPoint_svnt) : ciao_servant, event {
 }
 
 
-project(TSEC_CheckPoint_exec) : ciao_executor, event, ccm_svnt, ciao_session_container, naming {
+project(TSEC_CheckPoint_exec) : ciao_executor, ccm_svnt, ciao_session_container, naming {
   after   += TSEC_CheckPoint_stub TSEC_CheckPoint_lem_gen
   after   += ENW_skel ENW_stub
   requires += dummy_label
@@ -103,7 +103,7 @@ project(TSEC_CheckPoint_exec) : ciao_executor, event, ccm_svnt, ciao_session_con
 }
 
 
-project(TSEC_CheckPoint_controller) : ccm_stub, valuetype, event {
+project(TSEC_CheckPoint_controller) : ccm_stub, valuetype {
   exename = controller
   after += TSEC_CheckPoint_stub
   libs += TSEC_CheckPoint_stub ENW_stub

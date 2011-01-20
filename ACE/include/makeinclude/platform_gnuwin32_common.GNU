@@ -100,27 +100,25 @@ PLATFORM_WX_LDFLAGS   ?= $(shell wx-config --ldflags)
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-ifeq ($(GXX_4_OR_BETTER), 1)
+ifeq ($(GXX_4_OR_BETTER),1)
   ifeq ($(findstring $(CXX_MINOR_VERSION),5 6 7 8 9),$(CXX_MINOR_VERSION))
     GXX_4_5_OR_BETTER:=1
   endif
 endif
 GXX_4_5_OR_BETTER?=0
 
-# The sed below is to strip comments on the .def file,
-# to workaround to a bug in ld.
 CMDSEP ?= ;
-ifeq ($(GXX_4_5_OR_BETTER), 1)
+ifeq ($(GXX_4_5_OR_BETTER),1)
 SHLIBBUILD = \
   $(RM) $(VSHDIR)/$@.def.old $(VSHDIR)/$@.def $(CMDSEP) \
   $(DLLTOOL) --no-export-all --output-def $(VSHDIR)/$@.def --dllname $@ \
     $(VSHOBJS) \
-  && mv $(VSHDIR)/$@.def $(VSHDIR)/$@.def.old \
-  && sed "s/;.*$$//g" < $(VSHDIR)/$@.def.old > $(VSHDIR)/$@.def \
   && $(SOLINK.cc) -Wl,--enable-auto-image-base -Wl,--out-implib,$@.a \
     -shared -o $@ $(LDFLAGS) -Wl,$(VSHDIR)/$@.def \
     $(VSHOBJS) $(ACE_SHLIBS) $(LIBS)
 else
+# The sed below is to strip comments on the .def file,
+# to workaround to a bug in ld.
 SHLIBBUILD = \
   $(RM) $(VSHDIR)/$@.def.old $(VSHDIR)/$@.def $(CMDSEP) \
   $(DLLTOOL) --export-all --output-def $(VSHDIR)/$@.def --dllname $@ \

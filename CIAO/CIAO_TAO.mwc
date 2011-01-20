@@ -10,7 +10,6 @@ workspace {
   $(TAO_ROOT)/tao
   $(TAO_ROOT)/TAO_IDL
   $(TAO_ROOT)/utils
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming_Serv.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming_Skel.mpc

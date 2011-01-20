@@ -339,7 +339,7 @@ TAO_PG_ObjectGroupManager::groups_at_location (
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
 
-  TAO_PG_ObjectGroup_Array * groups;
+  TAO_PG_ObjectGroup_Array * groups = 0;
   if (this->location_map_.find (the_location, groups) == 0)
     {
       CORBA::ULong len = static_cast<CORBA::ULong> (groups->size ());

@@ -55,7 +55,7 @@ namespace CIAO_CompA_Impl
     Moo_exec_i (void);
     virtual ~Moo_exec_i (void);
 
-    // Operations and attributes from ::Moo
+    // Operations and attributes from Moo
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:37

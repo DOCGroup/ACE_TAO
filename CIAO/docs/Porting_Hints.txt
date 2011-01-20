@@ -14,7 +14,6 @@ that specifically identifies that home), or unhomed.  In the unhomed case,
 a factory method that instantiates the component executor must be added
 to the _exec header and source files.
 
-
 Porting the plan
 ===================
 There are a number of changes to the plan structure to better comply with

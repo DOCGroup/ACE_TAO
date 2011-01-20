@@ -81,8 +81,8 @@ be_visitor_executor_exh::visit_component (be_component *node)
       << "virtual ~" << lname << "_exec_i (void);";
 
   os_ << be_nl_2
-      << "//@{" << be_nl
-      << "/** Supported operations and attributes. */";
+      << "/** @name Supported operations and attributes. */" << be_nl
+      << "//@{";
 
   int status =
     node->traverse_inheritance_graph (
@@ -103,8 +103,8 @@ be_visitor_executor_exh::visit_component (be_component *node)
                         -1);
     }
 
-  os_ << "//@{" << be_nl
-      << "/** Component attributes and port operations. */";
+  os_ << "/** @name Component attributes and port operations. */" << be_nl
+      << "//@{";
 
   status = this->visit_component_scope (node);
 
@@ -120,9 +120,10 @@ be_visitor_executor_exh::visit_component (be_component *node)
                         -1);
     }
 
-  os_ << "//@{" << be_nl
-      << "/** Operations from Components::" << be_global->ciao_container_type ()
-      << "Component. */";
+  os_
+      << "/** @name Operations from Components::" << be_global->ciao_container_type ()
+      << "Component. */" << be_nl
+      << "//@{";
 
   const char *container_type = be_global->ciao_container_type ();
 
@@ -149,8 +150,8 @@ be_visitor_executor_exh::visit_component (be_component *node)
       << "//@}";
 
   os_ << be_nl_2
-      << "//@{" << be_nl
-      << "/** User defined public operations. */";
+      << "/** @name User defined public operations. */" << be_nl
+      << "//@{";
 
   os_ << be_nl_2 << "//@}";
 
@@ -168,8 +169,8 @@ be_visitor_executor_exh::visit_component (be_component *node)
   be_visitor_executor_private_exh v (this->ctx_);
   v.node (node);
 
-  os_ << "//@{" << be_nl
-      << "/** Component attributes. */";
+  os_ << "/** @name Component attributes. */" << be_nl
+      << "//@{";
 
   Exec_Attr_Decl_Generator attr_decl (&v);
 
@@ -191,14 +192,14 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   os_<< be_nl << "//@}" << be_nl_2;
 
-  os_ << "//@{" << be_nl
-      << "/** User defined members. */";
+  os_ << "/** @name User defined members. */" << be_nl
+      << "//@{";
 
   os_ << be_nl_2 << "//@}";
 
   os_ << be_nl_2
-      << "//@{" << be_nl
-      << "/** User defined private operations. */";
+      << "/** @name User defined private operations. */" << be_nl
+      << "//@{";
 
   os_ << be_nl_2 << "//@}";
 

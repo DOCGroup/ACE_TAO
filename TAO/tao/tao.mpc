@@ -55,6 +55,8 @@ project(TAO_Core_idl) : tao_versioning_idl_defaults, gen_ostream, install, pidl_
   }
 
   PidlInstallWithoutBuilding_Files {
+    InterfaceDef.pidl
+    InvalidName.pidl
     Object_Key.pidl
     Policy.pidl
     Typecode_types.pidl
@@ -684,7 +686,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
   }
 
   verbatim(gnuace, postinstall) {
-"	perl -i -pe's!\\$$[{(]TAO_ROOT[})]!$(INSTALL_PREFIX)/include!g' $(INSTALL_PREFIX)/share/tao/rules.tao.GNU"
-"	echo export TAO_ROOT=$(INSTALL_PREFIX)/share/tao> $(INSTALL_PREFIX)/share/tao/tao-devel.sh"
+"	perl -i -pe's!\\$$[{(]TAO_ROOT[})]!$(INSTALL_PREFIX)/include!g' $(DESTDIR)$(INSTALL_PREFIX)/share/tao/rules.tao.GNU"
+"	echo export TAO_ROOT=$(INSTALL_PREFIX)/share/tao> $(DESTDIR)$(INSTALL_PREFIX)/share/tao/tao-devel.sh"
   }
 }

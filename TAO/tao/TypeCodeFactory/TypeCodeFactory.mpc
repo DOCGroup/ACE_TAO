@@ -1,5 +1,5 @@
 //$Id$
-project(*idl) : tao_versioning_idl_defaults {
+project(*idl) : tao_versioning_idl_defaults, install {
   custom_only = 1
   IDL_Files {
     idlflags += -SS -Sci -Sorb \
@@ -8,6 +8,10 @@ project(*idl) : tao_versioning_idl_defaults {
                 -iC tao/TypeCodeFactory
     idlflags -= -Sa -St
     TypeCodeFactory.pidl
+  }
+
+  specific {
+    install_dir = tao/TypeCodeFactory
   }
 }
 

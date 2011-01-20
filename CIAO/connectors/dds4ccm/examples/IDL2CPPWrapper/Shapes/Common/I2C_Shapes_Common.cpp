@@ -9,7 +9,6 @@
 
 #define TOPIC_NAME "Square"
 
-
 I2C_Shapes_Common::I2C_Shapes_Common (void)
   : factory_ (0)
 {
@@ -27,10 +26,7 @@ I2C_Shapes_Common::I2C_Shapes_Common (void)
 
 I2C_Shapes_Common::~I2C_Shapes_Common (void)
 {
-  if (this->factory_)
-    {
-      delete this->factory_;
-    }
+  delete this->factory_;
 }
 
 int
@@ -44,10 +40,9 @@ I2C_Shapes_Common::get_domain_id (void)
 void
 I2C_Shapes_Common::initialize (void)
 {
-  ::DDS::DomainParticipantQos dp_qos;
-  this->participant_ = this->participant_factory_.create_participant (
+  this->participant_ = this->participant_factory_.create_participant_with_profile (
                                   this->get_domain_id (),
-                                  dp_qos,
+                                  QOS_PROFILE,
                                   ::DDS::DomainParticipantListener::_nil (),
                                   0);
 
@@ -80,10 +75,9 @@ I2C_Shapes_Common::initialize (void)
           "I2C_Shapes_Common::initialize - Unable to register type\n"));
       throw ::CORBA::INTERNAL ();
     }
-  ::DDS::TopicQos tqos;
-  this->topic_ = this->participant_->create_topic (TOPIC_NAME,
+  this->topic_ = this->participant_->create_topic_with_profile (TOPIC_NAME,
                                   typesupport_name,
-                                  tqos,
+                                  QOS_PROFILE,
                                   ::DDS::TopicListener::_nil (),
                                   0);
   if (::CORBA::is_nil (this->topic_.in ()))
@@ -107,9 +101,8 @@ I2C_Shapes_Common::create_publisher (void)
     {
       initialize();
     }
-  ::DDS::Publisher_var publisher;
-      ::DDS::PublisherQos pqos;
-  publisher = participant_->create_publisher (pqos,
+  ::DDS::Publisher_var publisher = participant_->create_publisher_with_profile (
+                                  QOS_PROFILE,
                                   ::DDS::PublisherListener::_nil (),
                                   0);
   return publisher._retn ();
@@ -122,9 +115,8 @@ I2C_Shapes_Common::create_subscriber (void)
     {
       initialize();
     }
-  ::DDS::Subscriber_var subscriber;
-      ::DDS::SubscriberQos sqos;
-  subscriber = participant_->create_subscriber (sqos,
+  ::DDS::Subscriber_var subscriber = participant_->create_subscriber_with_profile (
+                                  QOS_PROFILE,
                                   ::DDS::SubscriberListener::_nil (),
                                   0);
   return subscriber._retn ();

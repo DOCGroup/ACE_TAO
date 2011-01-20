@@ -265,7 +265,7 @@ Options::save_registry_options ()
   LONG err = ACE_TEXT_RegCreateKeyEx (SERVICE_REG_ROOT,
                              SERVICE_REG_PATH,
                              0,
-                             ACE_TEXT(""), // class
+                             const_cast<ACE_TCHAR*> (ACE_TEXT("")), // class
                              REG_OPTION_NON_VOLATILE,
                              KEY_ALL_ACCESS,
                              0,

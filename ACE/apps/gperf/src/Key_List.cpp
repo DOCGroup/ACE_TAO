@@ -1107,6 +1107,7 @@ Key_List::output_hash_function (void)
   const int max_column = 10;
   int count = max_hash_value;
 
+#if ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE
   // Lookup table for converting ASCII to EBCDIC.
   static const int ascii_to_ebcdic[ACE_ASCII_SIZE] =
   {
@@ -1132,6 +1133,7 @@ Key_List::output_hash_function (void)
 
    int ebcdic_to_ascii[ACE_EBCDIC_SIZE];
    int target;
+#endif /* ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE */
 
   // Calculate maximum number of digits required for MAX_HASH_VALUE.
 
@@ -1159,22 +1161,8 @@ Key_List::output_hash_function (void)
                   option[CONSTANT] ? "const " : "",
                   max_hash_value < ((int) UCHAR_MAX) ? "char" : (max_hash_value < ((int) USHRT_MAX) ? "short" : "int"));
 
-  ACE_OS::printf ("\n#if defined (ACE_MVS)");
 #if ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE
     {
-      // We are running in EBCDIC environment.
-      for (count = 0; count < ACE_EBCDIC_SIZE; ++count)
-        {
-          if (!(count % max_column))
-            ACE_OS::printf ("\n    ");
-
-          ACE_OS::printf ("%*d,",
-                          Key_List::field_width,
-                          Vectors::occurrences[count] ? Vectors::asso_values[count] : max_hash_value + 1);
-        }
-
-      ACE_OS::printf ("\n#else");
-
       for (count = 0; count < ACE_ASCII_SIZE; ++count)
         {
           if (!(count % max_column))
@@ -1188,28 +1176,6 @@ Key_List::output_hash_function (void)
     }
 #  else
     {
-      // We are running in ASCII environment.
-      for (count = 0; count < ACE_EBCDIC_SIZE; ++count)
-        ebcdic_to_ascii[count] = 0;
-
-      for (count = 0; count < ACE_ASCII_SIZE; ++count)
-        {
-          target = ascii_to_ebcdic[count];
-          ebcdic_to_ascii[target] = count;
-        }
-
-      for (count = 0; count < ACE_EBCDIC_SIZE; ++count)
-        {
-          if (!(count % max_column))
-            ACE_OS::printf ("\n    ");
-
-          target = ebcdic_to_ascii[count];
-          ACE_OS::printf ("%*d,",
-                          Key_List::field_width,
-                          Vectors::occurrences[target] ? Vectors::asso_values[target] : max_hash_value + 1);
-        }
-      ACE_OS::printf ("\n#else");
-
       for (count = 0; count < ACE_ASCII_SIZE; ++count)
         {
           if (!(count % max_column))
@@ -1221,7 +1187,6 @@ Key_List::output_hash_function (void)
         }
     }
 #endif /* ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE */
-   ACE_OS::printf ("\n#endif /* ACE_MVS */");
 
   // Optimize special case of ``-k 1,$''
   if (option[DEFAULTCHARS])

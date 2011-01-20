@@ -10,7 +10,7 @@
 #ifndef SUBSCRIBER_T_H_
 #define SUBSCRIBER_T_H_
 
-#include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "dds4ccm/idl/ndds/ndds_dcpsC.h"
 #include "dds4ccm/impl/ndds/DataReader_T.h"
 #include "tao/LocalObject.h"
 
@@ -49,8 +49,7 @@ namespace CIAO
       virtual ::DDS::DataReader_ptr
       create_datareader_with_profile (
         ::DDS::TopicDescription_ptr a_topic,
-        const char* library_name,
-        const char *profile_name,
+        const char * qos_profile,
         ::DDS::DataReaderListener_ptr a_listener,
         ::DDS::StatusMask mask);
 
@@ -127,16 +126,14 @@ namespace CIAO
       DDSDataReader *
       create_datareader_with_profile (
         DDSContentFilteredTopic * topic,
-        const char* library_name,
-        const char *profile_name,
+        const char * qos_profile,
         DDSDataReaderListener * ccm_dds_drl,
         ::DDS::StatusMask mask);
 
       DDSDataReader *
       create_datareader_with_profile (
         DDSTopic * topic,
-        const char* library_name,
-        const char *profile_name,
+        const char * qos_profile,
         DDSDataReaderListener * ccm_dds_drl,
         ::DDS::StatusMask mask);
     };

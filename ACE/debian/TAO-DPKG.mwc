@@ -1,0 +1,28 @@
+// $Id$
+
+workspace {
+  exclude {
+    CIAO
+    DAnCE
+    examples
+    orbsvcs/examples
+
+    performance-tests
+    orbsvcs/tests/Notify/performance-tests
+    orbsvcs/performance-tests
+
+    interop-tests
+
+    tests
+    examples/PluggableUDP/tests
+    orbsvcs/tests
+    orbsvcs/examples/CosEC/RtEC_Based/tests
+
+    docs
+    DevGuideExamples
+    orbsvcs/DevGuideExamples
+    utils/logWalker
+    utils/monitor
+  }
+}
+

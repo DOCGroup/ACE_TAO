@@ -75,7 +75,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
     virtual ~info_out_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CSL_US_Connector::Listener. */
+    /** Operations and attributes from CSL_US_Connector::Listener. */
 
     virtual
     void on_one_data (const ::TestTopic & datum,
@@ -104,7 +104,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
     virtual ~info_out_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PortStatusListener. */
+    /** Operations and attributes from CCM_DDS::PortStatusListener. */
 
     virtual
     void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,
@@ -133,7 +133,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
     virtual ~info_read_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PortStatusListener. */
+    /** Operations and attributes from CCM_DDS::PortStatusListener. */
 
     virtual
     void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,
@@ -166,7 +166,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
     virtual ~info_out_connector_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::ConnectorStatusListener. */
+    /** Operations and attributes from CCM_DDS::ConnectorStatusListener. */
 
     virtual
     void on_inconsistent_topic (::DDS::Topic_ptr the_topic,

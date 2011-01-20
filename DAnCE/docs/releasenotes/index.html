@@ -1,0 +1,95 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.79 [en] (Windows NT 5.0; U) [Netscape]">
+   <title>CIAO Release Information and TODO List</title>
+</head>
+<body text="#000000" bgcolor="#FFFFFF">
+<!-- $Id$ -->
+<center>
+<hr></center>
+
+<center>
+<h3>
+Release Information for the Deployment And Configuration Engine (DAnCE)</h3></center>
+This document contains information on the following topics related to the
+<a href="../../VERSION">current
+release</a> of <a href="http://www.dre.vanderbilt.edu/CIAO">CIAO</a>:
+
+<table BORDER=0 CELLSPACING=0 CELLPADDING=10 >
+<tr>
+<td VALIGN=TOP>
+<b></b>
+<br>
+<ul>
+<li>
+<a href="../index.html">Introduction</a></li>
+<li>
+<a href="dance.html">Status of DAnCE</a></li>
+<li>
+<a href="../TODO.html">TODO list</a></li>
+</ul>
+</td>
+</table>
+
+
+<hr>
+<h2>Current Status</h2><a name="status">
+<ol>
+<li>The first cut of the new <a
+  href="http://www.omg.org/cgi-bin/doc?ptc/2003-07-02"> DnC </a>
+  specification implementation, which we call DAnCE is available in
+  this distribution. DAnCE is housed under <CODE> $DANCE_ROOT
+  </CODE>. We plan to enhance DAnCE in the next few months. We believe
+  DAnCE will replace existing tool sets in <CODE>
+  $CIAO_ROOT/tools</CODE>. There are a few features in
+  <CODE>$CIAO_ROOT/tools</CODE> that are missing in the DAnCE
+  implementation. Please see <a href="../TODO.html"> TODO </a> file
+  for more details. We plan to implement them soon and use DAnCE
+  continuously.
+<p>
+ <li> The first cut of DAnCE includes two parts:
+  <ul>
+  <li>
+  A modeling tool chain , <a href="http://www.dre.vanderbilt.edu/CoSMIC/">
+  CoSMIC</a>, which is capable of describing the Assembly/Component
+  using <a
+  href="http://www.isis.vanderbilt.edu/Projects/gme/default.html">
+  GME</a> as the development bed. The artifacts generated from the
+ CoSMIC are a set of XML descriptors.
+
+  <!-- Tao, I realy don't understand what this means - Bala -->
+  <li>This run-time infrastructure that performs the actual deployment
+  and  configuration, with a superset of the capabilities described in
+  OMG DnC specification with CIAO extension.  </a>.<p><p>
+
+  </ul>
+  <!-- Tao, can you please see whether this is needed -->
+  In the new DnC run-time framework we have migrated all the
+  functionalities present in the old CIAO runtime except the
+  Real-Time configuration and Static Configuration, which are
+  developed by Washington University in St. Louis. Currently,
+  the two CIAO runtime co-exist in our source and the component
+  implementation could be used with both framework without much
+  change. (For the change that one has to go through please
+  read <a href="./switch.html">this</a>.)<p>
+
+ <li> CIAO doesn't yet support features that help integrating CORBA
+ components with Enterprise Java Beans (EJB).<p>
+
+ <li> To further interoperability with non-component-aware clients, there
+ are files in the $CIAO_ROOT/tools/IDL3_to_IDL2 directory that can be
+ compiled into an executable called tao_idl3_to_idl2. This executable
+ takes an IDL file (on the command line) containing IDL3 declarations
+ and outputs an IDL file with the IDL3 declarations converted to
+ equivalent IDL2. IDL2 declarations in the input file are unchanged.
+ See the README file in that directory for more information.<p>
+
+</ol>
+
+<b>Email: </b><a href="mailto:"</a<ADDRESS>ciao-users@cse.wustl.edu</ADDRESS>
+</body> </html>
+
+<!--  LocalWords:  TODOs CCM IDL backend idl
+ -->

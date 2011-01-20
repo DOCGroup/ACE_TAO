@@ -36,7 +36,7 @@ namespace CIAO_Hello_Receiver_Impl
 
     virtual ~info_out_data_listener_exec_i (void);
 
-    // Operations and attributes from ::Hello::Listener
+    // Operations and attributes from Hello::Listener
 
     virtual
     void on_one_data (
@@ -66,7 +66,7 @@ namespace CIAO_Hello_Receiver_Impl
       Atomic_ULong &lost);
     virtual ~info_out_status_exec_i (void);
 
-    // Operations and attributes from ::CCM_DDS::PortStatusListener
+    // Operations and attributes from CCM_DDS::PortStatusListener
 
     virtual
     void on_requested_deadline_missed (
@@ -94,7 +94,7 @@ namespace CIAO_Hello_Receiver_Impl
       ::Hello::CCM_Receiver_Context_ptr ctx);
     virtual ~info_out_connector_status_exec_i (void);
 
-    // Operations and attributes from ::CCM_DDS::ConnectorStatusListener
+    // Operations and attributes from CCM_DDS::ConnectorStatusListener
 
     virtual
     void on_inconsistent_topic (

@@ -34,8 +34,7 @@ public:
   void configuration_complete (
     ::DDS::Topic_ptr topic,
     ::DDS::Publisher_ptr publisher,
-    const char* library_name,
-    const char* profile_name);
+    const char* qos_profile);
 
   void activate (void);
 

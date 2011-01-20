@@ -485,10 +485,6 @@ endif # debug
 
 ifeq ($(debug),)
   CPPFLAGS += -DACE_NDEBUG
-# Disable the RCSID for release/non-debug builds.
-  ifeq (,$(findstring ACE_USE_RCSID,$(CPPFLAGS)))
-    CPPFLAGS += -DACE_USE_RCSID=0
-  endif
 else
   CFLAGS  += $(DCFLAGS)
   CCFLAGS += $(DCCFLAGS)

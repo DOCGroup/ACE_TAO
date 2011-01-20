@@ -9,7 +9,7 @@
 #include "connectors/dds4ccm/impl/DDS_Listen_T.h"
 #include "connectors/dds4ccm/impl/DataListenerControl_T.h"
 
-template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE, bool FIXED_SEQ_TYPE>
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 class DDS_MT_Event_Connector_T
   : public virtual DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>
 {

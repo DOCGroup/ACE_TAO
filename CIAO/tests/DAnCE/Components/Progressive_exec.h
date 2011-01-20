@@ -56,7 +56,7 @@ namespace CIAO_Simple_Progressive_Impl
                     ::Simple::CCM_Progressive_Context_ptr);
     virtual ~Trigger_exec_i (void);
 
-    // Operations and attributes from ::Simple::Trigger
+    // Operations and attributes from Simple::Trigger
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:37

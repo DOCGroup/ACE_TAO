@@ -7,13 +7,10 @@
 
 #define MAX_X_Y 250
 
-typedef ::CIAO::NDDS::DataWriter_T<ShapeType_DDS_Traits::datawriter_type,
-                     ShapeType_DDS_Traits::typed_writer_type,
-                     ShapeType_DDS_Traits::value_type>
-        ShapesDataWriter;
+typedef ::I2C_Shapes::DataWriter TypedDataWriter;
 
 void
-write (ShapesDataWriter * shapes_dw)
+write (TypedDataWriter::_ptr_type shapes_dw)
 {
   if (shapes_dw)
     {
@@ -70,8 +67,7 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
   I2C_Shapes_Common common;
   try
     {
-      ::DDS::Publisher_var publisher;
-      publisher = common.create_publisher ();
+      ::DDS::Publisher_var publisher = common.create_publisher ();
       if (::CORBA::is_nil (publisher.in ()))
         {
           ACE_ERROR ((LM_ERROR, "ACE_TMAIN - Publisher seems to be nil\n"));
@@ -79,14 +75,13 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
         }
 
       ::DDS::Topic_var topic = common.get_topic ();
-      ::DDS::DataWriter_var dw;
-      ::DDS::DataWriterQos wqos;
-      dw = publisher->create_datawriter (topic.in (),
-                                      wqos,
+      ::DDS::DataWriter_var dw = publisher->create_datawriter_with_profile (
+                                      topic.in (),
+                                      QOS_PROFILE,
                                       ::DDS::DataWriterListener::_nil (),
                                       0);
 
-      ShapesDataWriter * shapes_dw = dynamic_cast <ShapesDataWriter *>(dw.in ());
+      TypedDataWriter::_var_type shapes_dw = TypedDataWriter::_narrow (dw.in ());
       write (shapes_dw);
     }
   catch (::CORBA::Exception &e)

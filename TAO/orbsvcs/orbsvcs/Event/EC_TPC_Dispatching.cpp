@@ -184,7 +184,7 @@ TAO_EC_TPC_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t) TPC_Dispatching::push_nocopy(supplier=%@,consumer=%@)\n", proxy, consumer));
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-  TAO_EC_Dispatching_Task* dtask;
+  TAO_EC_Dispatching_Task* dtask = 0;
 
   if (this->consumer_task_map_.find (consumer, dtask) == -1)
     {

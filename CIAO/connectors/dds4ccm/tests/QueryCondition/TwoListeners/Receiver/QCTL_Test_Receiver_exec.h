@@ -61,7 +61,7 @@ namespace CIAO_QCTL_Test_Receiver_Impl
     virtual ~info_listen_1_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::QCTL_Test::QueryConditionTwoListenersTestConnector::Listener. */
+    /** Operations and attributes from QCTL_Test::QueryConditionTwoListenersTestConnector::Listener. */
 
     virtual
     void on_one_data (const ::QueryConditionTwoListenersTest & datum,
@@ -92,7 +92,7 @@ namespace CIAO_QCTL_Test_Receiver_Impl
     virtual ~info_listen_1_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PortStatusListener. */
+    /** Operations and attributes from CCM_DDS::PortStatusListener. */
 
     virtual
     void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,
@@ -123,7 +123,7 @@ namespace CIAO_QCTL_Test_Receiver_Impl
     virtual ~info_listen_2_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::QCTL_Test::QueryConditionTwoListenersTestConnector::Listener. */
+    /** Operations and attributes from QCTL_Test::QueryConditionTwoListenersTestConnector::Listener. */
 
     virtual
     void on_one_data (const ::QueryConditionTwoListenersTest & datum,
@@ -154,7 +154,7 @@ namespace CIAO_QCTL_Test_Receiver_Impl
     virtual ~info_listen_2_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PortStatusListener. */
+    /** Operations and attributes from CCM_DDS::PortStatusListener. */
 
     virtual
     void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,

@@ -17,6 +17,7 @@
 #define _BE_CONNECTOR_CONNECTOR_DDS_EX_BASE_H_
 
 class be_visitor_context;
+class AST_Template_Module;
 
 class be_visitor_connector_dds_ex_base
   : public be_visitor_component_scope
@@ -46,6 +47,7 @@ protected:
   AST_Template_Module_Inst *t_inst_;
   AST_Template_Module_Ref *t_ref_;
   FE_Utils::T_ARGLIST t_args_;
+  FE_Utils::T_PARAMLIST_INFO *t_params_;
 
   // Derives from the DDS datatype, so we want to calculate it
   // once and store it.

@@ -438,7 +438,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
       << "_reply_handler (ami_handler, poa));" << be_nl
       << "::PortableServer::ServantBase_var owner_transfer (handler);"
       << be_nl
-      << "::PortableServer::ObjectId_var oid ="
+      << "::PortableServer::ObjectId_var oid = "
       << "poa->activate_object (handler);" << be_nl
       << "::CORBA::Object_var handler_obj = poa->id_to_reference (oid.in ());"
       << be_nl

@@ -7,6 +7,7 @@
 
 #include "tao/PortableServer/PortableServer_include.pidl"
 #include "ccm/CCM_Home.idl"
+#include "ccm/CCM_Cookie.idl"
 #include "ccm/CCM_Base.idl"
 #include "ccm/CCM_StandardConfigurator.idl"
 #include "ccm/CCM_CCMException.idl"
@@ -100,17 +101,20 @@ module CIAO
 
     void uninstall_component (in Components::CCMObject compptr);
 
-    void connect_local_facet (in ::Components::CCMObject provider_ref,
+    Components::Cookie connect_local_facet (
+                              in ::Components::CCMObject provider_ref,
                               in string provider_port,
                               in ::Components::CCMObject user_ref,
                               in string user_port)
       raises (::Components::InvalidConnection,
               ::Components::AlreadyConnected);
 
-    void disconnect_local_facet (in ::Components::CCMObject provider_ref,
-                                 in string provider_port,
-                                 in ::Components::CCMObject user_ref,
-                                 in string user_port)
+    void disconnect_local_facet (
+                              in Components::Cookie cookie,
+                              in ::Components::CCMObject provider_ref,
+                              in string provider_port,
+                              in ::Components::CCMObject user_ref,
+                              in string user_port)
       raises (::Components::InvalidConnection);
 
     // *** Methods used by component specific container portions

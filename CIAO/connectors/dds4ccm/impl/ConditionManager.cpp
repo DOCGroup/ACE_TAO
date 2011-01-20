@@ -1,6 +1,7 @@
 // $Id$
 
 #include "dds4ccm/impl/ConditionManager.h"
+
 #include "dds4ccm/impl/Utils.h"
 
 #include "ace/OS_NS_sys_time.h"
@@ -56,8 +57,17 @@ namespace CIAO
     ConditionManager::check_handle (const ::DDS::InstanceHandle_t & instance_handle,
                                     const ::DDS::InstanceHandle_t & lookup_handle)
     {
-      return this->ws_.check_handle (instance_handle,
-                                     lookup_handle);
+      bool error = false;
+      bool non_existent = false;
+      ::DDS::InstanceHandle_t ret = this->ws_.check_handle (instance_handle,
+                                                            lookup_handle,
+                                                            error,
+                                                            non_existent);
+      if (error)
+        throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+      if (non_existent)
+        throw ::CCM_DDS::NonExistent ();
+      return ret;
     }
 
     bool
