@@ -1,3 +1,12 @@
+Thu Jan 20 15:28:10 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * TAO_IDL/fe/y.tab.cpp:
+          Corrected a fix that was committed for bug#3312. In that change
+          I was too smart and knowing the implementation of
+          UTL_ScopeStack::pop() I tried to mess with prefixes. Actually it
+          was not needed (I was warned by Jeff Parsons about that) and
+          when used it resulted in wrong generation of prefixes.
+
 Thu Jan 20 11:42:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.
