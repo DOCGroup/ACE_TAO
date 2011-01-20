@@ -67,31 +67,55 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
           if (this->is_dds_type (node, d))
             {
               os_ << d->flat_name ()
-                  << "_DDS_Traits,";
+                  << "_DDS_Traits";
             }
           else
             {
-              os_ << d->name () << ",";
+              os_ << d->name ();
             }
 
-          AST_Structure *s = AST_Structure::narrow_from_decl (d);
-          if (s == 0)
+          bool needs_bool = false;
+          bool is_fixed = false;
+          FE_Utils::T_Param_Info *param = 0;
+
+          if (this->t_params_->get (param, slot - 1) != 0)
             {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_visitor_connector_dds_exh::")
+                                 ACE_TEXT ("visit_connector - ")
+                                 ACE_TEXT ("template param fetch failed\n ")),
+                                -1);
+            }
+
+          if (d->node_type () == AST_Decl::NT_typedef)
+            {
+              /// Strip away all layers of typedef before narrowing.
               AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+              d = td->primitive_base_type ();
+            }
 
-              if (td != 0)
-                {
-                  s = AST_Structure::narrow_from_decl (td->primitive_base_type ());
-                }
-            }
-          if (s && s->size_type () == AST_Type::VARIABLE)
+          /// No need to check if this is 0, but must narrow
+          /// to call virtual function size_type() below.
+          AST_Type *t = AST_Type::narrow_from_decl (d);
+
+          switch (param->type_)
             {
-              os_ << be_nl << "false";
+              case AST_Decl::NT_type:
+              case AST_Decl::NT_struct:
+              case AST_Decl::NT_union:
+                needs_bool = true;
+                is_fixed = (t->size_type () == AST_Type::FIXED);
+                break;
+              default:
+                break;
             }
-          else
+
+          if (needs_bool)
             {
-              os_ << be_nl << "true";
+              os_ << "," << be_nl
+                  << (is_fixed ? "true" : "false");
             }
+
           if (slot < this->t_args_.size ())
             {
               os_ << "," << be_nl;

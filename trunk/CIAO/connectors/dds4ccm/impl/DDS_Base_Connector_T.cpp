@@ -1,7 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-#include "ace/Tokenizer_T.h"
 #include "ace/Env_Value_T.h"
 #include "tao/ORB_Core.h"
 #include "dds4ccm/impl/Utils.h"
@@ -20,8 +19,6 @@ template <typename CCM_TYPE>
 DDS_Base_Connector_T<CCM_TYPE>::DDS_Base_Connector_T (void)
   : domain_id_ (0)
   , configuration_complete_ (false)
-  , library_name_ (0)
-  , profile_name_ (0)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE>::DDS_Base_Connector_T");
 
@@ -39,9 +36,6 @@ template <typename CCM_TYPE>
 DDS_Base_Connector_T<CCM_TYPE>::~DDS_Base_Connector_T (void)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE>::~DDS_Base_Connector_T");
-
-  ACE_OS::free (library_name_);
-  ACE_OS::free (profile_name_);
 
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
                 "DDS_Base_Connector_T::~DDS_Base_Connector_T - "
@@ -96,22 +90,7 @@ DDS_Base_Connector_T<CCM_TYPE>::qos_profile (
     }
   else
     {
-      this->qos_profile_ = qos_profile;
-      char* buf = ACE_OS::strdup (qos_profile);
-      ACE_Tokenizer_T<char> tok (buf);
-      tok.delimiter_replace ('#', 0);
-      for (char *p = tok.next (); p; p = tok.next ())
-        {
-          if (!this->library_name_)
-            {
-              this->library_name_ = ACE_OS::strdup (p);
-            }
-          else if (!this->profile_name_)
-            {
-              this->profile_name_ = ACE_OS::strdup (p);
-            }
-        }
-      ACE_OS::free (buf);
+      this->qos_profile_ = ::CORBA::string_dup (qos_profile);
     }
 }
 
@@ -127,17 +106,14 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
                 "Start configuring default domain <%d>\n",
                 this->domain_id_));
 
-  // Generic parsing code, library and profile should be separated by a #
-  if (this->library_name_ && this->profile_name_)
+  if (!::CORBA::is_nil (this->qos_profile_.in ()))
     {
       this->participant_factory_.set_default_participant_qos_with_profile (
-                                      this->library_name_,
-                                      this->profile_name_);
+                                      this->qos_profile_.in ());
 
       participant = this->participant_factory_.create_participant_with_profile (
                                       this->domain_id_,
-                                      this->library_name_,
-                                      this->profile_name_,
+                                      this->qos_profile_.in (),
                                       ::DDS::DomainParticipantListener::_nil (),
                                       0);
     }
@@ -237,18 +213,6 @@ DDS_Base_Connector_T<CCM_TYPE>::reactor (void)
 }
 
 /**
-  * Type registration
- **/
-template <typename CCM_TYPE>
-void
-DDS_Base_Connector_T<CCM_TYPE>::register_type (
-  ::DDS::DomainParticipant_ptr /*participant*/,
-  const char * /*typesupport_name*/)
-{
-  DDS4CCM_TRACE ("DDS_Base_Connector_T::register_type");
-}
-
-/**
   * Initialization
  **/
 template <typename CCM_TYPE>
@@ -262,12 +226,11 @@ DDS_Base_Connector_T<CCM_TYPE>::init_topic (
   DDS4CCM_TRACE ("DDS_Base_Connector_T::init_topic");
 
   ::DDS::Topic_var tp;
-  if (this->library_name_ && this->profile_name_)
+  if (!::CORBA::is_nil (this->qos_profile_.in ()))
     {
       tp = participant->create_topic_with_profile (topic_name,
                                           typesupport_name,
-                                          this->library_name_,
-                                          this->profile_name_,
+                                          this->qos_profile_.in (),
                                           ::DDS::TopicListener::_nil (),
                                           0);
     }
@@ -300,11 +263,10 @@ DDS_Base_Connector_T<CCM_TYPE>::init_publisher (
 
   if (::CORBA::is_nil (publisher))
     {
-      if (this->library_name_ && this->profile_name_)
+      if (!::CORBA::is_nil (this->qos_profile_.in ()))
         {
           publisher = participant->create_publisher_with_profile (
-                                              this->library_name_,
-                                              this->profile_name_,
+                                              this->qos_profile_.in (),
                                               ::DDS::PublisherListener::_nil (),
                                               0);
         }
@@ -335,11 +297,10 @@ DDS_Base_Connector_T<CCM_TYPE>::init_subscriber (
 
   if (::CORBA::is_nil (subscriber))
     {
-      if (this->library_name_ && this->profile_name_)
+      if (!::CORBA::is_nil (this->qos_profile_.in ()))
         {
           subscriber = participant->create_subscriber_with_profile (
-                                              this->library_name_,
-                                              this->profile_name_,
+                                              this->qos_profile_.in (),
                                               ::DDS::SubscriberListener::_nil (),
                                               0);
         }
@@ -608,16 +569,4 @@ DDS_Base_Connector_T<CCM_TYPE>::remove_domain (
     {
       throw ::CCM_DDS::InternalError (retcode, 0);
     }
-}
-
-/**
-  * Unregister type
- **/
-template <typename CCM_TYPE>
-void
-DDS_Base_Connector_T<CCM_TYPE>::unregister_type (
-  ::DDS::DomainParticipant_ptr /*participant*/,
-  const char * /*typesupport_name*/)
-{
-  DDS4CCM_TRACE ("DDS_Base_Connector_T::unregister_type");
 }

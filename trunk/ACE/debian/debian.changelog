@@ -1,30 +1,99 @@
-ace (5.8.2-1) unstable; urgency=low
+ace (6.0.0-1) experimental; urgency=low
 
-  [ Johnny Wilemsen ]
-  * New upstream release
+  * New upstream release:
+    o use new make install target.
+    o remove generator_pkgconfig.sh, no longer needed.
+    o new binary renaming:
+      - LoadManager => tao_loadmanager
+      - LoadMonitor => tao_loadmonitor
+      - ImplRepo_Service => tao_imr_locator
+      - ImR_Activator => tao_imr_activator
+      - IFR_Service => tao_ifr_service
+      - Fault_Detector => tao_fault_detector
+      - Fault_Notifier => tao_fault_notifier
+      - Scheduling_Service => tao_cosscheduling
+      - Dump_Schedule => tao_dump_schedule
+    o remove libACE_gperf_lib.
+    o remove patches that were merged upstream:
+      - 11-create-ace_qt4reactor-mpb.dpatch
+      - 12-create-config_kfreebsd.dpatch
+      - 16-rename-tao-programs.dpatch
+      - 24-add-missing-headers.dpatch
+      - 25-remove-duplicate-files.dpatch
+      - 47-change-netsvcs.dpatch
+      - 48-fix-doxygen-cross-links.dpatch
+    o remove useless patches:
+      - 10-fix-prj-install.dpatch
+      - 19-gcc43.dpatch
+    o rework existing patches:
+      - 20-versioned_libs.dpatch, for versioned_so=2
+      - 34-bts386713.dpatch
+      - 90-patch-mpc-basedir.dpatch
+    o new patches or scripts:
+      - 12-add-DESTDIR-to-MPC.dpatch, to add and use DESTDIR in make install
+      - 13-add-QtReactor_export.h.dpatch, to add a missing header in
+        libace-qtreactor-dev package.
+      - fix_doxygen.sh, to regenerate the patch for Doxygen reduction.
+  * Bump Standards-Version: to 3.9.1.
 
- -- Johnny Willemsen <jwillemsen@remedy.nl>  Mon, 4 Sep 2010 20:00:00 +0100
+ -- Thomas Girard <thomas.g.girard@free.fr>  Thu, 30 Dec 2010 20:56:08 +0100
+
+ace (5.7.7-4) unstable; urgency=high
+  [ Marek Brudka ]
+  * Synchronized *.pc with *.so and created transitional tags. Closes: #598169
+
+ -- Marek Brudka <mbrudka@aster.pl>  Mon, 27 Sep 2010 20:36:00 +0200
+
+ace (5.7.7-3) unstable; urgency=low
+  [ Marek Brudka ]
+  * Configuration file for KFreeBSD created. Closes: #591586.
+  * Restored pkgconfig files. Closes: #591610.
+  * Provided manpages for tao_catior, tao_nslist, tao_nsdel,
+    tao_nsadd, ace_netsvcs.
+
+  [ Thomas Girard ]
+  * Disable -fvisibility=hidden on armel since it does not seem to work on
+    that platform. Closes: #593225.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Tue, 07 Sep 2010 20:04:20 +0200
+
+ace (5.7.7-2) unstable; urgency=low
+
+  * Rebuild with sid tk-dev build-dependency. Closes: #590512.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Mon, 02 Aug 2010 23:49:01 +0200
 
 ace (5.7.7-1) unstable; urgency=low
 
+  [ Thomas Girard ]
+  * Add Marek to Uploaders: field.
+  * Remove dependencies on autotools; these are no longer needed now that we
+    have agreed to move back to the traditional compilation method.
+  * Add bzip2 and lzo ZIOP implementation.
+  * New patch: 20-versioned_libs.dpatch, to generate libraries with names
+    following libACE-5.7.7.so pattern instead of libACE.so.5.7.7.
+  * Rename binaries and packages to follow what is used in RPMs.
+  * Move $ACE_ROOT to /usr/lib/ace.
+
   [ Marek Brudka ]
-  * New upstream release
-  * Install fix related with MPC bug for *.ins files
-  * Reverted mpc-ace changes
-  * Dropped 25-remove-duplicate-file patch
-  * Added PerlACE to mpc-ace. This should resolve #522557
-  * Replaced find [C,S,A].[h,inl] by 2-pass mpc generation
-  * Remove obsolete patches
-
- -- Marek Brudka <mbrudka@aster.pl>  Sat, 27 Mar 2010 20:00:00 +0100
-
-ace (5.7.5-2) unstable; urgency=low
-  [ Marek Brudka ]
-  * Change build method to MPC generated makefiles
-  * Changed installation method to MPC/prj_install.pl
-  * Changed .so naming from -x.y.z.so to so.x.y.z
-
-ace (5.7.5-1) unstable; urgency=low
+  * New upstream release:
+    o add libACE_gperf, libACE_ETCL and libACE_Monitor_Control to libace
+    o add headers and libraries for Monitor, ZIOP, ETCL to libtao package
+    o renamed gperf-ace to ace_gperf to follow the upstream convention
+    o renamed utilities (ns{add,del,list} to tao_ns{add,del,list}) in tao-utils
+      to follow the upstream changes
+  * Change compilation back to traditional ACE+TAO build method:
+    o adapt existing Debian build mechanism
+    o remove patches no longer needed because of this switch
+    o use MPC generated makefiles
+    o install build result using MPC/prj_install.pl and .ins files
+    o temporarily excluded logWalker from build
+  * New patch: 10-fix-prj-install to work-around a problem installing files
+  * Added PerlACE to mpc-ace. Closes: #522557
+  * Created patch to reduce the size of doxygen doc. Closes: #562164
+  * Created patch to fix cross references in doxygen tags
+  * Created libnetsvcs packages. Closes: #466137. Addresses: LP#185285
+  * Moved IDL fiels from /usr/include into /usr/share/idl
 
   [ Pau Garcia i Quiles ]
   * New upstream release
@@ -55,28 +124,13 @@ ace (5.7.5-1) unstable; urgency=low
   * Update patch 91-patch-dg-basedir
   * Add patch 93-hack-to-fix-libtoolize
   * Add patch 94-build-crosscompile
-  * ??? Add patch 95-build-ace-for-tao
+  * Add patch 95-build-ace-for-tao
   * Add patch 96-build-athena3d
   * Remove DH_COMPAT definition from the debian/rules file, it's already in
     debian/compat
   * Fix fox-config location, detection method has changed since 5.6.3
-  [Marek Brudka]
-  * renamed gperf-ace to ace_gperf to follow the upstream convention
-  * fixed fidone once again
-  * created gperf-ace-5.7.5 and gperf-ace-dev package for gperf runtime libraries
-  * included number of runtime and static libraries with headers (Monitor, ZIOP, ETCL, Catior) to libtao-orbsvcs-* packages
-  * renamed split-cpp to split-cpp.pl in libace-dev to follow the upstream
-    conventions
-  * renamed utilities (ns{add,del,list> to tao_ns{add,del,list}) in tao-utils
-    to follow the upstream changes
-  * removed permission fixes for example in debian/rules as there is nothing to fix
-  * created libace_gperf runtime and devel libraries
-  * added libACE_ETCL to libace (separate package?)
-  * added libACE_Monitor_Control to libace (separate package?)
-  * added libACE_gperf to libace (separate package?)
-  * added usr/bin/m[w,p]c.pl to avoid some problems related with $0 and workspace generation
-  * temporarily excluded logWalker from build
- -- Pau Garcia i Quiles <pgquiles@elpauer.org>, Marek Brudka <mbrudka@aster.pl>  Sun, 25 Oct 2009 12:59:18 +0100
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sun, 23 May 2010 16:58:42 +0200
 
 ace (5.6.3-6) unstable; urgency=low
 

@@ -69,7 +69,7 @@ namespace CIAO_ReadGet_Test_Sender_Impl
     virtual ~restart_writer_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::ReadGetRestarter. */
+    /** Operations and attributes from ReadGetRestarter. */
 
     virtual
     void restart_write (void);

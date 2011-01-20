@@ -110,68 +110,12 @@ namespace CIAO
                                                   const char *servant_entrypoint,
                                                   const char *name);
 
-    virtual void uninstall_home (Components::CCMHome_ptr homeref);
-
     /// Install a new component
     virtual Components::CCMObject_ptr install_component (const char *primary_artifact,
                                                          const char *entry_point,
                                                          const char *servant_artifact,
                                                          const char *servant_entrypoint,
                                                          const char *name);
-
-    /// Connect a local facet
-    virtual void connect_local_facet (::Components::CCMObject_ptr provider,
-                                      const char * provider_port,
-                                      ::Components::CCMObject_ptr user,
-                                      const char * user_port);
-
-    /// Disconnect a local facet
-    virtual void disconnect_local_facet (::Components::CCMObject_ptr provider,
-                                         const char * provider_port,
-                                         ::Components::CCMObject_ptr user,
-                                         const char * user_port);
-
-    /// Set attributes on a component
-    virtual void set_attributes (CORBA::Object_ptr compref,
-                                 const ::Components::ConfigValues & values);
-
-    /// Activate component
-    virtual void activate_component (Components::CCMObject_ptr compref);
-
-    /// Passivate a component
-    virtual void passivate_component (Components::CCMObject_ptr compref);
-
-    /// Uninstall a component
-    virtual void uninstall_component (Components::CCMObject_ptr compref);
-
-    /// Uninstall a servant
-    virtual void uninstall_servant (PortableServer::Servant objref,
-                                    Container_Types::OA_Type type,
-                                    PortableServer::ObjectId_out oid);
-
-    /// Install a servant for component or home.
-    virtual CORBA::Object_ptr install_servant (PortableServer::Servant p,
-                                               Container_Types::OA_Type type,
-                                               PortableServer::ObjectId_out oid);
-
-    /// Get an object reference to a component or home from the servant.
-    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p);
-
-    /// Uninstall a servant for component or home.
-    void uninstall (CORBA::Object_ptr objref, Container_Types::OA_Type t);
-
-    /// Uninstall a servant for component or home.
-    void uninstall (PortableServer::Servant svt, Container_Types::OA_Type t);
-
-    /// Analog of the POA method that creates an object reference from
-    /// an object id string.
-    CORBA::Object_ptr generate_reference (const char *obj_id,
-                                          const char *repo_id,
-                                          Container_Types::OA_Type t);
-
-    /// Return the servant activator factory that activates the
-    /// servants for facets and consumers.
-    ::CIAO::Servant_Activator_ptr ports_servant_activator (void);
 
     // @{
     /// Inherited from extension context.
@@ -180,7 +124,7 @@ namespace CIAO
 
     CORBA::Object_ptr uninstall_service_reference (Components::Cookie * ck);
 
-    CORBA::Object_ptr resolve_service_reference(const char *service_id);
+    CORBA::Object_ptr resolve_service_reference (const char *service_id);
     // @}
 
     // @{
@@ -222,10 +166,6 @@ namespace CIAO
     // @}
   };
 }
-
-#if defined (__ACE_INLINE__)
-# include "Extension_Container.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

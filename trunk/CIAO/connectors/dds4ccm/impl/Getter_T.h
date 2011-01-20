@@ -12,9 +12,11 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
 
-#include "dds4ccm/impl/ndds/Condition.h"
-#include "dds4ccm/impl/ndds/ReadCondition.h"
-#include "dds4ccm/impl/ndds/QueryCondition.h"
+#if (CIAO_DDS4CCM_NDDS==1)
+# include "dds4ccm/impl/ndds/Condition.h"
+# include "dds4ccm/impl/ndds/ReadCondition.h"
+# include "dds4ccm/impl/ndds/QueryCondition.h"
+#endif
 
 namespace CIAO
 {

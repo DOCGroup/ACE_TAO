@@ -28,11 +28,13 @@ be_visitor_connector_dds_ex_base::be_visitor_connector_dds_ex_base (
   : be_visitor_component_scope (ctx),
     t_inst_ (0),
     t_ref_ (0),
+    t_params_ (0),
     base_tname_ (0)
 {
 }
 
-be_visitor_connector_dds_ex_base::~be_visitor_connector_dds_ex_base (void)
+be_visitor_connector_dds_ex_base::~be_visitor_connector_dds_ex_base (
+  void)
 {
 }
 
@@ -74,16 +76,20 @@ be_visitor_connector_dds_ex_base::is_dds_type (
 {
   bool result = false;
   AST_Connector* base = node->base_connector ();
+
   if (base)
     {
       while (base->base_connector () != 0)
         {
           base = base->base_connector ();
         }
+
       const char* lname = base->local_name ()->get_string ();
+
       if (ACE_OS::strcmp (lname, "DDS_Base") == 0)
         {
           AST_Structure *s = AST_Structure::narrow_from_decl (d);
+
           if (s == 0)
             {
               AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
@@ -93,14 +99,11 @@ be_visitor_connector_dds_ex_base::is_dds_type (
                   s = AST_Structure::narrow_from_decl (td->primitive_base_type ());
                 }
             }
+
           if (s)
             {
               result = true;
             }
-        }
-      else
-        {
-          // result = idl_global->is_dcps_type (d->name ());
         }
     }
 
@@ -119,7 +122,6 @@ be_visitor_connector_dds_ex_base::process_template_args (
   /// just use the complete template arg list in the
   /// instantiation.
   this->t_ref_ = m->from_ref ();
-
   this->t_inst_ = m->from_inst ();
 
   /// We assume the connector comes from the instantiation
@@ -141,6 +143,13 @@ be_visitor_connector_dds_ex_base::process_template_args (
       /// its associated template arguments.
       return;
     }
+
+  /// We need to fetch and store these so we can match them
+  /// to the corresponding args and determine whether a
+  /// corresponding boolean template arg (indicating FIXED
+  /// size type) should be inserted into the
+  /// connector base class template arg list.
+  this->t_params_ = this->t_inst_->ref ()->template_params ();
 
   this->match_template_args ();
 

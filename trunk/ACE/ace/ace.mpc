@@ -496,9 +496,9 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
   }
 
   verbatim(gnuace, postinstall) {
-"	perl -i -pe's!\\$$[{(]ACE_ROOT[})]!$(INSTALL_PREFIX)/include!g unless /^\\s*include / || /^INS/' $(INSTALL_PREFIX)/share/ace/include/makeinclude/wrapper_macros.GNU"
-"	perl -i -pe'BEGIN {$$lib = qq($(INSTALL_PREFIX)/$(INSTALL_LIB)); $$lp = qq(-value_project libpaths+=$$lib\\n); $$cl = qq(command_line =)}' -e'if ($$. == 1 && /^$$cl (.*)/ && $$1 !~ /$$lib\\b/) {chomp; print qq($$_ $$lp); $$_ = qq()}' -e'elsif ($$. == 1 && !/^$$cl/) {print qq($$cl $$lp)}' $(INSTALL_PREFIX)/share/ace/bin/MakeProjectCreator/config/MPC.cfg"
-"	perl -i -ne'print unless /^\\s*ARCH\\s*[+?:]?=/' $(INSTALL_PREFIX)/share/ace/include/makeinclude/platform_macros.GNU"
-"	echo export ACE_ROOT=$(INSTALL_PREFIX)/share/ace> $(INSTALL_PREFIX)/share/ace/ace-devel.sh"
+"	perl -i -pe's!\\$$[{(]ACE_ROOT[})]!$(INSTALL_PREFIX)/include!g unless /^\\s*include / || /^INS/' $(DESTDIR)$(INSTALL_PREFIX)/share/ace/include/makeinclude/wrapper_macros.GNU"
+"	perl -i -pe'BEGIN {$$lib = qq($(INSTALL_PREFIX)/$(INSTALL_LIB)); $$lp = qq(-value_project libpaths+=$$lib\\n); $$cl = qq(command_line =)}' -e'if ($$. == 1 && /^$$cl (.*)/ && $$1 !~ /$$lib\\b/) {chomp; print qq($$_ $$lp); $$_ = qq()}' -e'elsif ($$. == 1 && !/^$$cl/) {print qq($$cl $$lp)}' $(DESTDIR)$(INSTALL_PREFIX)/share/ace/bin/MakeProjectCreator/config/MPC.cfg"
+"	perl -i -ne'print unless /^\\s*ARCH\\s*[+?:]?=/' $(DESTDIR)$(INSTALL_PREFIX)/share/ace/include/makeinclude/platform_macros.GNU"
+"	echo export ACE_ROOT=$(INSTALL_PREFIX)/share/ace> $(DESTDIR)$(INSTALL_PREFIX)/share/ace/ace-devel.sh"
   }
 }

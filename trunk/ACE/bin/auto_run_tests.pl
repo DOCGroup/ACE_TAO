@@ -37,16 +37,18 @@ if (!getopts ('adl:os:r:tC') || $opt_h) {
     print "Runs the tests listed in auto_run_tests.lst\n";
     print "\n";
     print "Options:\n";
-    print "    -a          ACE tests only\n";
-    print "    -c config   Run the tests for the <config> configuration\n";
-    print "    -h          display this help\n";
-    print "    -s sandbox  Runs each program using a sandbox program\n";
-    print "    -o          ORB test only\n";
-    print "    -t          TAO tests (other than ORB tests) only\n";
-    print "    -C          CIAO and DAnCE tests only\n";
-    print "    -Config cfg Run the tests for the <cfg> configuration\n";
-    print "    -l list     Load the list and run only those tests\n";
-    print "    -r dir      Root directory for running the tests\n";
+    print "    -a             ACE tests only\n";
+    print "    -c config      Run the tests for the <config> configuration\n";
+    print "    -h             Display this help\n";
+    print "    -s sandbox     Runs each program using a sandbox program\n";
+    print "    -o             ORB test only\n";
+    print "    -t             TAO tests (other than ORB tests) only\n";
+    print "    -C             CIAO and DAnCE tests only\n";
+    print "    -Config cfg    Run the tests for the <cfg> configuration\n";
+    print "    -l list        Load the list and run only those tests\n";
+    print "    -r dir         Root directory for running the tests\n";
+    print "    -ExeSubDir dir Subdirectory for finding the executables,\n";
+
     print "\n";
     $ace_config_list = new PerlACE::ConfigList;
     $ace_config_list->load ($ACE_ROOT."/bin/ace_tests.lst");

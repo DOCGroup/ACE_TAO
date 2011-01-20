@@ -114,7 +114,7 @@ namespace CIAO_LNE_Test_Sender_Impl
 
     //@{
     /** User defined members. */
-
+    WriteManyHandler *rh_;
     //@}
 
     //@{

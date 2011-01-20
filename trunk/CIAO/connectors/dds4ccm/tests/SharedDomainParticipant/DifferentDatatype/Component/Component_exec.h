@@ -15,9 +15,6 @@
 
 #include "tao/LocalObject.h"
 
-class SharedDPTest1DataWriter;
-class SharedDPTest2DataWriter;
-class SharedDPTest3DataWriter;
 class DDSDomainParticipant;
 
 namespace CIAO_SharedDP_SharedDPComponent_Impl
@@ -40,10 +37,6 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
 
   private:
     ::SharedDP::CCM_SharedDPComponent_Context_var context_;
-
-    SharedDPTest1DataWriter * writer1_;
-    SharedDPTest2DataWriter * writer2_;
-    SharedDPTest3DataWriter * writer3_;
 
     DDSDomainParticipant *  dds_dp1_;
     DDSDomainParticipant *  dds_dp2_;

@@ -87,7 +87,6 @@
 //#else
 // ...
 //#endif
-//#define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 #define ACE_HAS_TANDEM_SIGNALS
 //Compiler/platform defines the sig_atomic_t typedef
 #define ACE_HAS_SIG_ATOMIC_T

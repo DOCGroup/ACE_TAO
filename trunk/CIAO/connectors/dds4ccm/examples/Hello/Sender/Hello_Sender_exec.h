@@ -32,7 +32,7 @@ namespace CIAO_Hello_Sender_Impl
       Atomic_Boolean &ready_to_start);
     virtual ~connector_status_exec_i (void);
 
-    // Operations and attributes from ::CCM_DDS::ConnectorStatusListener
+    // Operations and attributes from CCM_DDS::ConnectorStatusListener
 
     virtual
     void on_inconsistent_topic (

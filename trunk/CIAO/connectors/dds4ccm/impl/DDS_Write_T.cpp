@@ -28,24 +28,22 @@ void
 DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_complete (
   ::DDS::Topic_ptr topic,
   ::DDS::Publisher_ptr publisher,
-  const char* library_name,
-  const char* profile_name)
+  const char * qos_profile)
 {
   DDS4CCM_TRACE ("DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_complete");
   ::DDS::DataWriter_var dw = this->dds_write_->get_dds_writer ();
   if (::CORBA::is_nil (dw.in ()))
     {
       ::DDS::DataWriter_var dwv_tmp;
-      if (library_name && profile_name)
+      if (qos_profile)
         {
           dwv_tmp = publisher->create_datawriter_with_profile (
               topic,
-              library_name,
-              profile_name,
+              qos_profile,
               ::DDS::DataWriterListener::_nil (),
               0);
         }
-        else
+      else
         {
           ::DDS::DataWriterQos dwqos;
           dwv_tmp = publisher->create_datawriter (
@@ -53,7 +51,7 @@ DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_c
               dwqos,
               ::DDS::DataWriterListener::_nil (),
               0);
-          }
+        }
       if (::CORBA::is_nil (dwv_tmp.in ()))
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO

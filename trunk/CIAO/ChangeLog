@@ -1,3 +1,739 @@
+Thu Jan 20 11:42:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Wed Jan 19 13:03:24 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Deployment/Handlers/Connection_Handler.h:
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Resolved some issues regarding disconnecting event ports.
+
+        Wed Jan 19 12:11:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                        * bin/ciao_tests.lst:
+                          Exclude DAnCE/LocalityManager/CommandlinePassage/run_test_cmd
+                          test from running on Windows.
+
+        Tue Jan 18 18:30:39 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * examples/BasicSP/README.html:
+                  Removed references cidl
+
+        Tue Jan 18 18:25:03 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * docs/Porting_Hints.txt:
+                * docs/releasenotes/switch.html:
+                * examples/BasicSP/README.html:
+                * examples/BasicSP/RepoMan_Usage.html:
+                * examples/Display/README.html:
+                * examples/Display/descriptors/basicNodeDaemon.pl:
+                * examples/Display/descriptors/run_NodeDaemons.pl:
+                * examples/Hello/descriptors/run_NodeDaemons.pl:
+                * examples/Hello/step-by-step.html:
+                * tests/Bug_2130_Regression/descriptors/run_test.pl:
+                * tutorials/Quoter/Simple/04.html:
+                * tutorials/Quoter/Simple/README.html:
+                  Updated executable names and locations
+
+        Tue Jan 18 14:50:14 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * docs/com-impl.html:
+                * docs/new_components.html:
+                  Small change, needs more updates
+
+                * docs/RT-Extension.html:
+                * docs/XML/ciao_rt_cad_ext.dtd:
+                  Removed these files, obsolete
+
+        Tue Jan 18 14:11:53 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Deployment/Handlers/Connection_Handler.h:
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Implement disconnect_publisher.
+
+        Tue Jan 18 11:33:18 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Resolved runtime test errors. Also optimized logging
+                  and code layout.
+
+        Mon Jan 17 15:13:22 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Resolved runtime issues related to cookies.
+
+        Mon Jan 17 14:18:33 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Storing cookies in a _var first.
+                  Optimized logging.
+
+        Mon Jan 17 13:05:58 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Containers/Servant_Activator.cpp:
+                  Resolved valgrind errors.
+
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Resolved valgrind errors. Optimized logging.
+
+        Mon Jan 17 11:02:27 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Deployment/Handlers/Component_Handler.cpp:
+                * ciao/Deployment/Handlers/Connection_Handler.h:
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Resolved runtime issues related to disconnect non local
+                  connections.
+
+                * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+                  Resolved valgrind errors.
+
+        Fri Jan 14 15:41:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Deployment/Handlers/Connection_Handler.h:
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Implemented disconnect_consumer
+
+                * tests/DAnCE/NodeManager-Deployments/PublishConnectionExplicitHome.cdp:
+                  Added extra connection in order to check cookie mechanism.
+
+        Fri Jan 14 10:24:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Resolved issues regarding disconnect non local connections.
+
+        Thu Jan 13 18:16:14 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Containers/Container_Base_T.h:
+                * ciao/Containers/Container_Base_T.cpp:
+                * ciao/Containers/Extension/Extension_Container.cpp:
+                * ciao/Containers/Session/Session_Container.cpp:
+                  Changed method header of prepare_installation
+
+                * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.cpp:
+                * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.cpp:
+                  Optimized logging.
+
+        Thu Jan 13 17:33:38 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Containers/Container_Base_T.h:
+                * ciao/Containers/Container_Base_T.cpp:
+                * ciao/Containers/Extension/Extension_Container.cpp:
+                * ciao/Containers/Session/Session_Container.cpp:
+                  Merged double code into one method.
+
+                * ciao/Deployment/Handlers/Connection_Handler.h:
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Reorganized code. Added a method to disconnect
+                  non local connections.
+
+        Wed Jan 12 15:15:09 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Containers/Extension/Extension_Container.h:
+                * ciao/Containers/Extension/Extension_Container.cpp:
+                * ciao/Containers/Session/Session_Container.cpp:
+                  Resolved link/compile issues on windows.
+
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Resolved runtime errors regarding cookie registration.
+
+        Wed Jan 12 14:43:37 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Containers/Container_Base_T.h:
+                * ciao/Containers/Container_Base_T.cpp:
+                * ciao/Containers/Extension/Extension_Container.h:
+                * ciao/Containers/Extension/Extension_Container.cpp:
+                * ciao/Containers/Extension/Extension_Container.mpc:
+                * ciao/Containers/Session/Session_Container.h:
+                * ciao/Containers/Session/Session_Container.cpp:
+                * ciao/Containers/Session/Session_Container.mpc:
+                * ciao/Containers/Extension/Extension_Container.inl:
+                * ciao/Containers/Session/Session_Container.inl:
+                  Reorganized code. Moved as much as possible code to the base class.
+
+                * ciao/Deployment/Handlers/Connection_Handler.h:
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Check whether the Cookie was succesfully inserted into the internal
+                  map. If not, throw an InvalidConnection exception since disconnect
+                  will certainly fail. Also remove the cookie and CCMObject again.
+
+        Wed Jan 12 09:56:24 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * tests/DAnCE/PartialShutdown/Component1/Component1_exec.cpp:
+                * tests/DAnCE/PartialShutdown/Component2/Component2_exec.cpp:
+                * tests/DAnCE/PartialShutdown/Component3/Component3_exec.cpp:
+                  Shutting down tickers of component 3 on ccm_passivate.
+                  Resolved valgrind issues.
+
+        Mon Jan 10 11:26:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+                  Fixed doxygen warnings
+
+                * connectors/dds4ccm/impl/ndds/Utils.cpp:
+                  Fixed fuzz
+
+        Mon Jan 10 09:19:06 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * etc/ciao.doxygen:
+                * etc/ciao_dds4ccm.doxygen:
+                  Removed deprecated macros
+
+                * tests/IDL_Test/Cornucopia/Cornucopia.doxygen:
+                * tests/IDL_Test/Cornucopia/run_test.pl:
+                  Run doxygen on the generated executor file and see if no errors
+                  or warnings are triggered as part of our test.
+
+                * bin/ciao_tests.lst:
+                  Added new test only when DOXYGEN is deifned
+
+        Mon Jan 10 08:24:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * connectors/ami4ccm/tests/AsynchT/Receiver/AsynchT_Receiver_exec.h:
+                * connectors/ami4ccm/tests/DelReplyH/Receiver/DelReplyH_Receiver_exec.h:
+                * connectors/ami4ccm/tests/Exceptions/Receiver/ExceptionT_Receiver_exec.h:
+                * connectors/ami4ccm/tests/GetComp/Receiver/GetComp_Receiver_exec.h:
+                * connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver_exec.h:
+                * connectors/ami4ccm/tests/InterInOutArgs/Receiver/InterInOutT_Receiver_exec.h:
+                * connectors/ami4ccm/tests/InterMulti/Receiver/InterMulti_Receiver_exec.h:
+                * connectors/ami4ccm/tests/InterOutArgs/Receiver/InterOutArgsT_Receiver_exec.h:
+                * connectors/ami4ccm/tests/InterReturn/Receiver/InterReturnT_Receiver_exec.h:
+                * connectors/ami4ccm/tests/NoReplyH/Receiver/NoReplyH_Receiver_exec.h:
+                * connectors/ami4ccm/tests/OneProcess/Receiver/OneProcess_Receiver_exec.h:
+                * connectors/ami4ccm/tests/OneReplyH/Receiver/OneReplyH_Receiver_exec.h:
+                * connectors/ami4ccm/tests/SimplexMulti/Receiver/UsesSM_Receiver_exec.h:
+                * connectors/ami4ccm/tests/ThreeComp/Receiver/ThreeComp_Receiver_exec.h:
+                * connectors/ami4ccm/tests/ThreeComp/Sender/ThreeComp_Sender_exec.h:
+                * connectors/ami4ccm/tests/UsesMulti/Receiver/UsesMulti_Receiver_exec.h:
+                * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/src/Hello_Receiver_comp_exec.h:
+                * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Receiver_comp_exec.h:
+                * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/ImplementedExec/Hello_Receiver_comp_exec.h:
+                * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
+                * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+                * connectors/dds4ccm/examples/Large_Deployment/DDS_Sub/DDS_Sub_exec.h:
+                * connectors/dds4ccm/examples/Large_Deployment/Single_Service/Single_Service_exec.h:
+                * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.h:
+                * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.h:
+                * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.h:
+                * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver_exec.h:
+                * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.h:
+                * connectors/dds4ccm/performance-tests/Latency/Receiver/LatencyTT_Test_Receiver_exec.h:
+                * connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender_exec.h:
+                * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.h:
+                * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender_exec.h:
+                * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.h:
+                * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.h:
+                * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.h:
+                * connectors/dds4ccm/tests/CoherentUpdater/Receiver/CoherentUpdate_Test_Receiver_exec.h:
+                * connectors/dds4ccm/tests/CoherentUpdater/Sender/CoherentUpdate_Test_Sender_exec.h:
+                * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver_exec.h:
+                * connectors/dds4ccm/tests/CoherentWriter/Sender/CoherentWrite_Test_Sender_exec.h:
+                * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Receiver/CFTLE_Test_Receiver_exec.h:
+                * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.h:
+                * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Sender/ReadGet_Test_Sender_exec.h:
+                * connectors/dds4ccm/tests/DDSEntity/Receiver/Writer_Receiver_exec.h:
+                * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.h:
+                * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.h:
+                * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.h:
+                * connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver_exec.h:
+                * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_exec.h:
+                * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Receiver/WU_LateBinding_Receiver_exec.h:
+                * connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver_exec.h:
+                * connectors/dds4ccm/tests/MultiTopic/Receiver/MultiTopic_Receiver_exec.h:
+                * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.h:
+                * connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender_exec.h:
+                * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.h:
+                * connectors/dds4ccm/tests/Proxies/ReadWrite/Receiver/Proxy_RW_Test_Receiver_exec.h:
+                * connectors/dds4ccm/tests/Proxies/ReadWrite/Sender/Proxy_RW_Test_Sender_exec.h:
+                * connectors/dds4ccm/tests/QueryCondition/Different/Receiver/Different_Test_Receiver_exec.h:
+                * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver_exec.h:
+                * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.h:
+                * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender_exec.h:
+                * connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QCLS_Test_Receiver_exec.h:
+                * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Receiver/QCTL_Test_Receiver_exec.h:
+                * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.h:
+                * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Sender/QCTQ_Test_Sender_exec.h:
+                * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.h:
+                * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.h:
+                * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.h:
+                * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.h:
+                * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.h:
+                * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.h:
+                * connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver_exec.h:
+                * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver_exec.h:
+                * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.h:
+                * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp_exec.h:
+                * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Receiver_comp/Shapes_Receiver_comp_exec.h:
+                * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Sender_comp/Shapes_Sender_comp_exec.h:
+                * examples/Hello/Sender/Sender_exec.h:
+                * examples/Null_Component/Null_Component_exec.h:
+                * examples/Null_Component_Glfa/Null_Component_exec.h:
+                * tests/Bug_3834_Regression/CompA_exec.h:
+                * tests/CIF/Component/CIF_Component_exec.h:
+                * tests/DAnCE/Components/Progressive_exec.h:
+                * tests/DAnCE/PartialShutdown/Component1/Component1_exec.h:
+                * tests/DAnCE/PartialShutdown/Component2/Component2_exec.h:
+                * tests/DAnCE/PartialShutdown/Component3/Component3_exec.h:
+                * tests/Thread/Sender/Sender_exec.h:
+                * tutorials/Quoter/Simple/Distributor/StockDistributor_exec.h:
+                  Fixed doxygen warnings
+
+        Fri Jan  7 16:05:10 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Resolved disconnect issues.
+
+        Fri Jan  7 14:49:14 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * connectors/ami4ccm/tests/IDL_Test/Hello.idl:
+                  Added oneway method
+
+        Fri Jan  7 12:52:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * MPC/config/ndds_stub.mpb:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_ShapeType.mpc:
+                  Optimized MPC-file's.
+
+        Fri Jan  7 12:06:51 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.h:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.cpp:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.cpp:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Sender/I2C_Shapes_Sender.cpp:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/descriptors/USER_QOS_PROFILES.xml:
+                  Created a profile and using the _with_profile methods in this example.
+
+        Fri Jan  7 11:51:27 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.h:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.cpp:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.cpp:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Sender/I2C_Shapes_Sender.cpp:
+                  Layout changes.
+
+        Fri Jan  7 09:24:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * tests/Cookies/Cookie.cpp:
+                  Removed unnecessary debug statements.
+
+        Fri Jan  7 09:04:25 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * bin/ciao_tests.lst:
+                * tests/Cookies:
+                * tests/Cookies/Cookie.h:
+                * tests/Cookies/Cookie.cpp:
+                * tests/Cookies/Cookies.mpc:
+                * tests/Cookies/Test.idl:
+                * tests/Cookies/client.cpp:
+                * tests/Cookies/run_test.pl:
+                * tests/Cookies/server.cpp:
+                  Added test which explicitly tests the cookie implementation.
+
+                * ciao/Containers/Container_Base_T.cpp:
+                  No need to catch the CookieRequired exception anymore.
+
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Remove cookie from the map on disconnect.
+
+                * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp:
+                  Resolved compile issues related to qos_profile name.
+
+        Thu Jan  6 10:33:41 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Containers/Container_Base.idl:
+                * ciao/Containers/Container_Base_T.h:
+                * ciao/Containers/Container_Base_T.cpp:
+                * ciao/Containers/Extension/Extension_Container.h:
+                * ciao/Containers/Extension/Extension_Container.cpp:
+                * ciao/Containers/Session/Session_Container.h:
+                * ciao/Containers/Session/Session_Container.cpp:
+                * ciao/Deployment/Handlers/Connection_Handler.h:
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Moved (dis)connect methods to the base. Making use of the cookie
+                  functionality when (dis)connecting local connections.
+
+                * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                  Fixed typo.
+
+                * connectors/dds4ccm/impl/ndds/Utils.h:
+                * connectors/dds4ccm/impl/ndds/Utils.cpp:
+                  Added.
+
+        Wed Jan  5 14:18:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+                * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+                * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+                * connectors/dds4ccm/impl/DDS_Get_T.h:
+                * connectors/dds4ccm/impl/DDS_Get_T.cpp:
+                * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+                * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+                * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+                * connectors/dds4ccm/impl/DDS_Update_T.h:
+                * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+                * connectors/dds4ccm/impl/DDS_Write_T.h:
+                * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+                * connectors/dds4ccm/impl/Utils.h:
+                * connectors/dds4ccm/impl/ndds/DomainParticipant.h:
+                * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+                * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h:
+                * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+                * connectors/dds4ccm/impl/ndds/Publisher.h:
+                * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+                * connectors/dds4ccm/impl/ndds/Subscriber.h:
+                * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+                * connectors/dds4ccm/impl/ndds/ndds.mpc:
+                  Replaced all libary_name/profile_name combination with one
+                  string (qos_profile). Substract the library_name and profile_name in
+                  the NDDS library (instead of the core).
+
+        Wed Jan  5 11:42:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * bin/ciao_tests.lst:
+                  Added 3944
+
+                * tests/Bug_3944_Regression:
+                * tests/Bug_3944_Regression/base_connector_conn.idl:
+                * tests/Bug_3944_Regression/connector_conn.idl:
+                * tests/Bug_3944_Regression/connector_inst_conn.idl:
+                * tests/Bug_3944_Regression/run_test.pl:
+                  New test for bugzilla 3944
+
+        Wed Jan  5 11:01:04 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * tests/DAnCE/PartialShutdown/Base/PartialShutdown.mpc:
+                  Resolved link issues on windows.
+
+        Wed Jan  5 10:56:02 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * tests/DAnCE/PartialShutdown/Component1/Component1.mpc:
+                * tests/DAnCE/PartialShutdown/Component2/Component2.mpc:
+                * tests/DAnCE/PartialShutdown/Component3/Component3.mpc:
+                  Resolved compile issues on windows.
+
+        Wed Jan  5 09:15:01 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Receiver/Latency_Receiver.cpp:
+                  Resolved runtime issues.
+
+        Sun Jan  2 13:28:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * CIAO_TAO.mwc:
+                * CIAO_TAO_DAnCE.mwc:
+
+                * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+
+                * connectors/ami4ccm/tests/AsynchT/Receiver/AsynchT_Receiver_exec.cpp:
+
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.cpp:
+
+                * connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl:
+
+                * connectors/dds4ccm/tests/MultipleTemp/Receiver/MultipleTemp_Receiver.mpc:
+
+                * connectors/dds4ccm/tests/MultipleTemp/Sender/MultipleTemp_Sender.mpc:
+
+        Tue Dec 28 14:42:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Sender/Throughput_Sender.cpp:
+                  Resolved test errors.
+
+        Tue Dec 28 07:56:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_ShapeType.mpc:
+                  Resolved compile issues on linux.
+
+        Mon Dec 27 15:10:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * bin/ciao_tests.lst:
+
+                * tests/DAnCE/PartialShutdown/*:
+                  Test which tests whether all connections are correctly shutdown
+                  when one component is shutdown using a deploymentplan.
+                  For now it tests whether all connections were shutdown properly.
+
+        Mon Dec 27 12:47:16 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * MPC/config/dds4ccm_ts_default.mpb:
+                * MPC/config/ndds_ts_default.mpb:
+                  Ability for users to create their ndds-only projects.
+
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_ShapeType.mpc:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_Shapes_Base.mpc:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.mpc:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.mpc:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Sender/I2C_Shapes_Sender.mpc:
+                  Changed mpc files to only use ndds base projects.
+
+        Mon Dec 27 10:42:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * MPC/config/dds4ccm.mpb:
+                * MPC/config/dds4ccm_base.mpb:
+                  Corrected base projects.
+
+        Mon Dec 27 10:30:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * MPC/config/dds4ccm.mpb:
+                * MPC/config/dds4ccm_base.mpb:
+                  Resolved linker errors on windows.
+
+        Mon Dec 27 10:15:26 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+                * connectors/dds4ccm/idl/ndds/ndds_dcps_i_handle.idl:
+                * connectors/dds4ccm/idl/ndds/ndds_dcps_instance_handle.idl:
+                * connectors/dds4ccm/idl/ndds/ndds_dcps_instance_handleC.h:
+                * connectors/dds4ccm/idl/ndds/ndds_dcps_instance_handleC.cpp:
+                * connectors/dds4ccm/idl/ndds/ndds_dcps_instance_handleEC.h:
+                * connectors/dds4ccm/idl/ndds/ndds_dcps_instance_handleS.h:
+                * connectors/dds4ccm/idl/ndds/ndds_lem_stub.mpc:
+                * connectors/dds4ccm/idl/ndds/ndds_skel.mpc:
+                * connectors/dds4ccm/idl/ndds/ndds_stub.mpc:
+                * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_i_handle.idl:
+                * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handle.idl:
+                * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handleC.h:
+                * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handleC.cpp:
+                * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handleEC.h:
+                * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handleS.h:
+                  Renamed dds_rtf2_dcps to ndds_dcps.
+
+        Mon Dec 27 09:34:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * MPC/config/dds4ccm.mpb:
+                * MPC/config/dds4ccm_base.mpb:
+                * MPC/config/ndds.mpb:
+                * MPC/config/ndds_lem_stub.mpb:
+                * MPC/config/ndds_skel.mpb:
+                * MPC/config/ndds_stub.mpb:
+                * connectors/dds4ccm/idl/dds4ccm_lem_stub.mpc:
+                * connectors/dds4ccm/idl/dds4ccm_skel.mpc:
+                * connectors/dds4ccm/idl/dds4ccm_stub.mpc:
+                * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+                * connectors/dds4ccm/idl/ndds:
+                * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_i_handle.idl:
+                * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handle.idl:
+                * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handleC.h:
+                * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handleC.cpp:
+                * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handleEC.h:
+                * connectors/dds4ccm/idl/ndds/dds_rtf2_dcps_instance_handleS.h:
+                * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+                * connectors/dds4ccm/idl/ndds/ndds_lem_stub.mpc:
+                * connectors/dds4ccm/idl/ndds/ndds_skel.mpc:
+                * connectors/dds4ccm/idl/ndds/ndds_stub.mpc:
+                * connectors/dds4ccm/impl/ConditionManager.h:
+                * connectors/dds4ccm/impl/ConditionManager.cpp:
+                * connectors/dds4ccm/impl/DataReaderHandler_T.cpp:
+                * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+                * connectors/dds4ccm/impl/Getter_T.h:
+                * connectors/dds4ccm/impl/Reader_T.cpp:
+                * connectors/dds4ccm/impl/TopicListener.cpp:
+                * connectors/dds4ccm/impl/Utils.h:
+                * connectors/dds4ccm/impl/dds4ccm_impl.mpc:
+                * connectors/dds4ccm/impl/ndds/Condition.h:
+                * connectors/dds4ccm/impl/ndds/Condition.cpp:
+                * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.h:
+                * connectors/dds4ccm/impl/ndds/DataReader.h:
+                * connectors/dds4ccm/impl/ndds/DataReaderListener.h:
+                * connectors/dds4ccm/impl/ndds/DataReader_T.h:
+                * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+                * connectors/dds4ccm/impl/ndds/DataWriter.h:
+                * connectors/dds4ccm/impl/ndds/DataWriterListener.h:
+                * connectors/dds4ccm/impl/ndds/DataWriter_T.h:
+                * connectors/dds4ccm/impl/ndds/DomainParticipant.h:
+                * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+                * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h:
+                * connectors/dds4ccm/impl/ndds/DomainParticipantListener.h:
+                * connectors/dds4ccm/impl/ndds/Publisher.h:
+                * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+                * connectors/dds4ccm/impl/ndds/PublisherListener.h:
+                * connectors/dds4ccm/impl/ndds/QueryCondition.h:
+                * connectors/dds4ccm/impl/ndds/ReadCondition.h:
+                * connectors/dds4ccm/impl/ndds/StatusCondition.h:
+                * connectors/dds4ccm/impl/ndds/Subscriber.h:
+                * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+                * connectors/dds4ccm/impl/ndds/SubscriberListener.h:
+                * connectors/dds4ccm/impl/ndds/Topic.h:
+                * connectors/dds4ccm/impl/ndds/TopicDescription.h:
+                * connectors/dds4ccm/impl/ndds/TopicListener.h:
+                * connectors/dds4ccm/impl/ndds/TypeSupport.h:
+                * connectors/dds4ccm/impl/ndds/WaitSet.h:
+                * connectors/dds4ccm/impl/ndds/WaitSet.cpp:
+                * connectors/dds4ccm/impl/ndds/ndds.mpc:
+                * connectors/dds4ccm/idl/dds_rtf2_dcps_i_handle.idl:
+                * connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handle.idl:
+                * connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handleC.h:
+                * connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handleC.cpp:
+                * connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handleEC.h:
+                * connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handleS.h:
+                  Splitted dds_rtf2_dcps.idl into two parts, given ndds it's own idl file with its own.
+                  stub and skeleton projects. The NDDS wrapper library now inherits from these stub and
+                  skeleton projects
+
+        Fri Dec 24 09:13:51 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.mpc:
+                  Fuzz.
+
+                * connectors/dds4ccm/impl/Getter_T.cpp:
+                  ::DDS::xxx instead of DDS_xxx.
+
+        Thu Dec 23 10:28:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector_T.h:
+                * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector_T.cpp:
+                  Implemented unregister_type since this one is pure virtual in the
+                  base class.
+
+        Thu Dec 23 09:02:00 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/MultiTopic/Connector/ccm_dds_mt.idl:
+                  Derive from DDS_Base instead of DDS_TopicBase.
+
+                * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector_T.h:
+                * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector_T.cpp:
+                  Removed unnecessary template parameters.
+                  Fuzz.
+
+        Thu Dec 23 08:11:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * tests/IDL_Test/NonTopic_Connector/NonTopic_Connector_T.h:
+                * tests/IDL_Test/NonTopic_Connector/NonTopic_Connector_T.cpp:
+                  Removed template parameters due to changes in the IDL compiler.
+
+        Wed Dec 22 15:44:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/Derived/DDS_Derived_Connector_T.h:
+                * connectors/dds4ccm/tests/PSAT/DDS_PSAT_Connector_T.h:
+                  Removed fith template parameter due to changes in the IDL compiler.
+
+        Wed Dec 22 14:43:46 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/impl/DDS_Event_Connector_T.h:
+                * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+                * connectors/dds4ccm/impl/DDS_State_Connector_T.h:
+                * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+                * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.h:
+                * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp:
+                  Removed fith template parameter due to changes in the IDL compiler.
+
+        Wed Dec 22 14:03:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/Latency_Sender.cpp:
+                * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/NDDS_Latency_Sender.cpp:
+                * connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender_exec.cpp:
+                  Resolved valgrind warnings/errors.
+
+        Wed Dec 22 13:29:28 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/Latency_Sender.cpp:
+                * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/NDDS_Latency_Sender.cpp:
+                  Resolved memory leaks.
+
+        Wed Dec 22 13:08:01 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender_exec.h:
+                * connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender_exec.cpp:
+                  Resolved memory leak.
+
+        Wed Dec 22 12:59:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component_exec.h:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component_exec.cpp:
+                  Resolved memory leaks.
+
+        Wed Dec 22 12:34:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+                  Layout changes
+
+                * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.h:
+                  Removed unused class variables.
+
+                * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.cpp:
+                  Resolved memory leaks.
+
+        Wed Dec 22 11:42:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver.mpc:
+                * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.h:
+                * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.cpp:
+                * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender.mpc:
+                * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender_exec.h:
+                * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender_exec.cpp:
+                * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+                  Rewritten, using the generated executor code.
+
+                * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/descriptors/run_test.pl:
+                  Given the application some extra time to run
+
+        Tue Dec 21 14:52:07 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                  Removed implementation of register_type and unregister_type
+                  since they're pure virtual.
+
+        Tue Dec 21 14:21:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.cpp:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Sender/I2C_Shapes_Sender.cpp:
+                  Using the IDL defined type specific datareader/datawriter.
+
+        Tue Dec 21 13:43:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+                  register_type and unregister_type are now pure virtual.
+
+        Tue Dec 21 13:33:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender_exec.cpp:
+                  Resolve compile error on windows.
+
+        Tue Dec 21 13:29:51 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.cpp:
+                  Resolved compile error.
+
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_ShapeType.idl:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_ShapeType.mpc:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_Shapes_Traits.h:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.mpc:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.mpc:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Sender/I2C_Shapes_Sender.mpc:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_Shapes_Connector.idl:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_Shapes_Connector.mpc:
+                  Renamed xxx_Connector.* files since these files do not contain connector stuff.
+
+        Tue Dec 21 13:11:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Connector:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Connector/I2C_Shapes_Connector.idl:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Connector/I2C_Shapes_Connector.mpc:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Connector/I2C_Shapes_Traits.h:
+                  Removed these files.
+
+        Tue Dec 21 13:09:03 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_Shapes_Connector.idl:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_Shapes_Connector.mpc:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_Shapes_Traits.h:
+                * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.h:
+                  Moved Connector/* files to Base.
+
+        Tue Dec 21 10:44:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+                * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+                * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+                * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+                  Optimized logging for with_profile methods.
+
+                * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.h:
+                  Removed unused class variable.
+
+        === end changelog ===
+
 Mon Dec 20 19:10:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/ndds.mpc:

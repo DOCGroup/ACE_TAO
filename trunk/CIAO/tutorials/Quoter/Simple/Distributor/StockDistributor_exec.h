@@ -61,7 +61,7 @@ namespace CIAO_Stock_StockDistributor_Impl
 
     virtual ~StockQuoter_exec_i (void);
 
-    // Operations and attributes from ::Stock::StockQuoter
+    // Operations and attributes from Stock::StockQuoter
 
     // TAO_IDL - Generated from
     // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42

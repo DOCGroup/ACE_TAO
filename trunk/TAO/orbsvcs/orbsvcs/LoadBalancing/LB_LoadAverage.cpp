@@ -99,7 +99,7 @@ TAO_LB_LoadAverage::push_loads (
     {
       ACE_GUARD (TAO_SYNCH_MUTEX, guard, *this->lock_);
 
-      TAO_LB_LoadMap::ENTRY * entry;
+      TAO_LB_LoadMap::ENTRY * entry = 0;
       if (this->load_map_->find (the_location, entry) == 0)
         {
           CosLoadBalancing::Load & previous_load = entry->int_id_;

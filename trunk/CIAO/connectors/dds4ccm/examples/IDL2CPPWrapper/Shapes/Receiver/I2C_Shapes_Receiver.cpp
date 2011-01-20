@@ -5,15 +5,10 @@
 
 #include "ace/OS_NS_unistd.h"
 
-typedef ::CIAO::NDDS::DataReader_T<ShapeType_DDS_Traits::datareader_type,
-                     ShapeType_DDS_Traits::typed_reader_type,
-                     ShapeType_DDS_Traits::value_type,
-                     ShapeTypeSeq,
-                     ShapeType_DDS_Traits::dds_seq_type>
-        ShapesDataReader;
+typedef ::I2C_Shapes::DataReader TypedDataReader;
 
 void
-read (ShapesDataReader* shapes_dr)
+read (TypedDataReader::_ptr_type shapes_dr)
 {
   int samples_received = 0;
   if (shapes_dr)
@@ -23,7 +18,7 @@ read (ShapesDataReader* shapes_dr)
           //start to read
           ShapeTypeSeq data;
           ::DDS::SampleInfoSeq  info;
-          ::DDS::ReturnCode_t retcode = shapes_dr->read (
+          ::DDS::ReturnCode_t retcode = shapes_dr->take (
                                                     data,
                                                     info,
                                                     ::DDS::LENGTH_UNLIMITED,
@@ -74,15 +69,14 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
         }
 
       ::DDS::Topic_var topic = common.get_topic ();
-      ::DDS::DataReader_var dr;
-      ::DDS::DataReaderQos dqos;
-      dr = subscriber->create_datareader (topic.in (),
-                                      dqos,
+      ::DDS::DataReader_var dr = subscriber->create_datareader_with_profile (
+                                      topic.in (),
+                                      QOS_PROFILE,
                                       ::DDS::DataReaderListener::_nil (),
                                       0);
 
-      ShapesDataReader * shapes_dr = dynamic_cast <ShapesDataReader *>(dr.in ());
-      read (shapes_dr);
+      TypedDataReader::_var_type shapes_dr = TypedDataReader::_narrow (dr.in ());
+      read (shapes_dr.in ());
     }
   catch (::CORBA::Exception &e)
     {

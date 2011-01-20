@@ -486,7 +486,7 @@ ace_cc_yyparse(ACE_CC_YYPARSE_PARAM_ARG)
   ACE_CC_YYSTYPE ace_cc_yyval;    /*  the variable used to return   */
         /*  semantic values from the action */
         /*  routines        */
-
+  ace_cc_yyval.id = 0;
   int ace_cc_yylen;
 
 #if ACE_CC_YYDEBUG != 0

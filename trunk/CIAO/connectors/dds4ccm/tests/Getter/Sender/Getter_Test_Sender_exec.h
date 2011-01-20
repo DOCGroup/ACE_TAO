@@ -72,7 +72,7 @@ namespace CIAO_Getter_Test_Sender_Impl
     virtual ~info_out_connector_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::ConnectorStatusListener. */
+    /** Operations and attributes from CCM_DDS::ConnectorStatusListener. */
 
     virtual
     void on_inconsistent_topic (::DDS::Topic_ptr the_topic,

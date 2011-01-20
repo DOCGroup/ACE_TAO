@@ -5,10 +5,10 @@ ACE for Debian
 == Environment variables ==
 
 If the software you are compiling requires $ACE_ROOT to be set (for
-example, the tutorials), you may set it to /usr/share/ace. For bash,
+example, the tutorials), you may set it to /usr/lib/ace. For bash,
 the command to do this is
  
- export ACE_ROOT=/usr/share/ace
+ export ACE_ROOT=/usr/lib/ace
 
 
 Likewise, for TAO:
@@ -33,3 +33,5 @@ need:
    mwc-ace -recurse -value_project install=. -value_project libout=.
 
  5. now you can compile your example.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>, Sun, 23 May 2010 11:04:27 +0200

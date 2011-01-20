@@ -185,6 +185,14 @@
     <implementation xmi:idref="SimpleConsumerHomeImplementation" />
   </instance>
 
+  <instance xmi:id="SimpleConsumerHomeInstance2">
+    <name>SimpleConsumerHome2</name>
+    <node>Node</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SimpleConsumerHomeImplementation" />
+  </instance>
+
   <instance xmi:id="SimpleConsumerComponentInstance">
     <name>SimpleConsumerComponent</name>
     <node>Node</node>
@@ -204,6 +212,25 @@
     </configProperty>
   </instance>
 
+  <instance xmi:id="SimpleConsumerComponentInstance2">
+    <name>SimpleConsumerComponent2</name>
+    <node>Node</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SimpleConsumerComponentImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleConsumerHome2</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
   <connection>
     <name>TestConnection</name>
     <internalEndpoint>
@@ -217,6 +244,21 @@
       <provider>true</provider>
       <kind>EventConsumer</kind>
       <instance xmi:idref="SimpleConsumerComponentInstance" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>TestConnection2</name>
+    <internalEndpoint>
+      <portName>hello_</portName>
+      <provider>false</provider>
+      <kind>EventPublisher</kind>
+      <instance xmi:idref="SimplePublisherComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>hello_</portName>
+      <provider>true</provider>
+      <kind>EventConsumer</kind>
+      <instance xmi:idref="SimpleConsumerComponentInstance2" />
     </internalEndpoint>
   </connection>
 

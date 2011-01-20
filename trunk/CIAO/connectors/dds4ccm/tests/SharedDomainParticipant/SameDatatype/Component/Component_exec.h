@@ -15,10 +15,6 @@
 
 #include "tao/LocalObject.h"
 
-class SharedDPTest1DataWriter;
-class SharedDPTest2DataWriter;
-class SharedDPTest3DataWriter;
-class SharedDPTest4DataWriter;
 class DDSDomainParticipant;
 class DDSTopic;
 
@@ -47,11 +43,6 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
     ::SharedDP::CCM_SharedDPComponent_Context_var context_;
 
     CORBA::Boolean perform_test_;
-
-    SharedDPTest1DataWriter * writer1_;
-    SharedDPTest2DataWriter * writer2_;
-    SharedDPTest3DataWriter * writer3_;
-    SharedDPTest4DataWriter * writer4_;
 
     DDSDomainParticipant * dds_dp1_;
     DDSDomainParticipant * dds_dp2_;

@@ -273,7 +273,7 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
   ACE_ARGV copyargv (argc, argv, true, true);
 
   // Adjust to proper type
-  int tmpargc = argc;
+  int tmpargc = copyargv.argc (); // use copied count, not original
   ACE_Argv_Type_Converter cvtargv (tmpargc, copyargv.argv());
 
   tmpargc = cvtargv.get_argc ();

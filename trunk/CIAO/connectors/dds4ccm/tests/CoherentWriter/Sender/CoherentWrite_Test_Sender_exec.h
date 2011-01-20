@@ -72,7 +72,7 @@ namespace CIAO_CoherentWrite_Test_Sender_Impl
     virtual ~restart_writer_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CoherentWriteRestarter. */
+    /** Operations and attributes from CoherentWriteRestarter. */
 
     virtual
     void restart_write (void);

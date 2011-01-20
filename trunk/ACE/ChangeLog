@@ -1,3 +1,159 @@
+Thu Jan 20 11:42:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Wed Jan 12 11:57:15 UTC 2011  Martin Corino <mcorino@remedy.nl>
+
+                * examples/OS/Process/process.cpp:
+                  Fixed MSVC warning.
+
+        Wed Jan 12 09:21:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * apps/gperf/src/Key_List.cpp:
+                  Fixed gcc warnings
+
+        Mon Jan 10 13:53:16 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * ace/Log_Msg.h:
+                  Doxygen fix
+
+                * ace/Log_Msg.cpp:
+                * ace/OS_NS_Thread.cpp:
+                * ace/Task.cpp:
+                * ace/config-tandem-nsk-mips-v2.h:
+                * ace/os_include/sys/os_types.h:
+                * apps/gperf/src/Key_List.cpp:
+                  Cleanup of MVS support, got deprecated already a long time ago, but
+                  seems we forgot todo the cleanup
+
+                * ace/config-mvs.h:
+                  Removed
+
+                * ace/config-sunos5.6.h:
+                * ace/config-win32-common.h:
+                  Zapped some empty lines
+
+        Mon Jan 10 12:38:10 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * etc/ace.doxygen:
+                  Doxygen improvmenet
+
+        Mon Jan 10 09:09:16 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * etc/ace.doxygen:
+                * etc/ace_inet.doxygen:
+                * etc/ace_man.doxygen:
+                * etc/ace_qos.doxygen:
+                * etc/ace_rmcast.doxygen:
+                * etc/ace_ssl.doxygen:
+                * etc/acexml.doxygen:
+                  Removed deprecated macros
+
+        Fri Jan  7 08:25:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * debian/patches/11-promote-QtResource-to-qt4.dpatch:
+                  Removed part of this patch
+
+        Thu Jan  6 11:20:15 UTC 2011  Martin Corino <mcorino@remedy.nl>
+
+                * ace/Object_Manager.cpp:
+                  Simplified preprocessor tests for ACE_DISABLE_WIN32_ERROR_WINDOWS
+                  which is ALWAYS explicitly user defined.
+                  Added support for using ACE_DISABLE_WIN32_ERROR_WINDOWS in MingW32
+                  builds.
+
+        Thu Jan  6 09:46:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * include/makeinclude/platform_cray.GNU:
+                * include/makeinclude/platform_mvs.GNU:
+                * include/makeinclude/platform_vxworks5.5.x.GNU:
+                  Removed these files, platforms got removed some time ago but
+                  seems we forgot to remove these files
+
+        Wed Jan  5 18:20:10 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * ace/config-tandem.h:
+                  Removed commented out define
+
+                * ace/os_include/os_string.h:
+                * ace/os_include/os_wchar.h:
+                  Removed several ACE_LACKS_*_PROTOTYPE guarded code, the defines
+                  are never set
+
+        Wed Jan  5 14:02:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * include/makeinclude/rules.local.GNU:
+                  Removed rcs target
+
+        Wed Jan  5 14:00:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * include/makeinclude/wrapper_macros.GNU:
+                  ACE_RCSID has been removed some time ago
+
+        Tue Jan  4 14:20:15 UTC 2011  Martin Corino <mcorino@remedy.nl>
+
+                * examples/OS/Process/process.cpp:
+                * examples/QOS/Change_Sender_TSpec/Sender_QoS_Event_Handler.cpp:
+                * examples/QOS/Simple/Sender_QoS_Event_Handler.cpp:
+                * examples/QOS/Change_Receiver_FlowSpec/Sender_QoS_Event_Handler.cpp:
+                  Fixed const char* assignment warnings.
+
+        Tue Jan  4 13:50:15 UTC 2011  Martin Corino <mcorino@remedy.nl>
+
+                * ace/NT_Service.h:
+                  Fix to prevent warning concerning const char* assignment.
+
+        Tue Jan  4 11:10:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * bin/MakeProjectCreator/config/ace_tk.mpb:
+                  Fixed typo
+
+                * bin/auto_run_tests.pl:
+                  Document -ExeSubDir with --help
+
+        Mon Jan  3 15:06:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * include/makeinclude/platform_linux_common.GNU:
+                  Fixed tcl an tk flags
+
+                * debian/patches/14-fix-tcl-flags.dpatch:
+                  Removed this file, merged this into file above
+
+        Mon Jan  3 14:38:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * bin/ace_components:
+                * include/makeinclude/component_check.GNU:
+                  Removed support for PACE
+
+        Sun Jan  2 13:19:44 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * ace/QtReactor/ace_qt4reactor.mpc:
+                  Added missing header
+
+                * ace/ace.mpc:
+                * apps/gperf/src/gperf.mpc:
+                * bin/MakeProjectCreator/templates/gnu.mpd:
+                * bin/ace_install_pkgconfig.pl:
+                  Added support for DESTDIR, needed for debian packaghing
+
+                * debian/patches/00list:
+                  Removed patches merged upstream
+
+                * debian/patches/12-add-DESTDIR-to-MPC.dpatch:
+                  Removed this file.
+
+                * docs/svn/config:
+                  Added some more extensions
+
+        Sun Jan  2 12:45:13 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * debian/*:
+                  Merged revision 734 from pkg-ace
+
+        === end changelog ===
+
 Mon Jan 17 20:47:01 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * ace/Asynch_Acceptor.cpp (handle_accept): If the new handler has

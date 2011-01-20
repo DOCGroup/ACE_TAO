@@ -23,6 +23,5 @@ project (DDS4CCM_skel) : install, dds4ccm_lem_stub, ciaolib_with_idl, ciao_outpu
     dds4ccm_ConnectorStatusListenerS.cpp
     dds4ccm_ConnectorS.cpp
     dds4ccm_StateListenerControlS.cpp
-    dds_rtf2_dcps_i_handleS.cpp
   }
 }

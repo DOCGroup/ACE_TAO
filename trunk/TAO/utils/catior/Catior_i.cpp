@@ -504,6 +504,36 @@ Catior_i::cat_tag_orb_type (TAO_InputCDR& stream) {
                          "ORB Type: 0x%x (TAO)\n", orbtype);
        break;
      }
+    case 0x47430000 :
+     {
+       ACE_OS::snprintf (buf, bufsize,
+                         "ORB Type: 0x%x (GNU Classpath)\n", orbtype);
+       break;
+     }
+    case 0x49540000 :
+     {
+       ACE_OS::snprintf (buf, bufsize,
+                         "ORB Type: 0x%x (Orbix)\n", orbtype);
+       break;
+     }
+    case 0x4A430000 :
+     {
+       ACE_OS::snprintf (buf, bufsize,
+                         "ORB Type: 0x%x (JacORB)\n", orbtype);
+       break;
+     }
+    case 0x41540000 :
+     {
+       ACE_OS::snprintf (buf, bufsize,
+                         "ORB Type: 0x%x (OmniORB)\n", orbtype);
+       break;
+     }
+    case 0x53550000 :
+     {
+       ACE_OS::snprintf (buf, bufsize,
+                         "ORB Type: 0x%x (Sun)\n", orbtype);
+       break;
+     }
    case 0x29A:
      {
        ACE_OS::snprintf (buf, bufsize,

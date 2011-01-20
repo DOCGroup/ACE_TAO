@@ -71,7 +71,7 @@ namespace CIAO_QCTQ_Test_Sender_Impl
     virtual ~restart_writer_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::TwoQueriesRestarter. */
+    /** Operations and attributes from TwoQueriesRestarter. */
 
     virtual
     void restart_write (void);

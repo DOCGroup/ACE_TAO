@@ -38,7 +38,7 @@
  * toolkit with ACE and/or TAO.
  *
  */
-class ACE_FoxReactor_Export ACE_FoxReactor : public FXObject , public ACE_Select_Reactor
+class ACE_FoxReactor_Export ACE_FoxReactor : public FXObject, public ACE_Select_Reactor
 {
   FXDECLARE(ACE_FoxReactor)
 public:

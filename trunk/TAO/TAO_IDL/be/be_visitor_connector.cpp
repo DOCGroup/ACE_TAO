@@ -12,6 +12,7 @@
  */
 //=============================================================================
 
+#include "ast_template_module.h"
 #include "ast_template_module_inst.h"
 #include "ast_uses.h"
 #include "ast_module.h"

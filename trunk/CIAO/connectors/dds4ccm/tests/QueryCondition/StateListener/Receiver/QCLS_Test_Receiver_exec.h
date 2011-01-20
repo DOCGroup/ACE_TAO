@@ -60,7 +60,7 @@ namespace CIAO_QCLS_Test_Receiver_Impl
     virtual ~info_state_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::QCLS_Test::QueryConditionListenStateTestConnector::StateListener. */
+    /** Operations and attributes from QCLS_Test::QueryConditionListenStateTestConnector::StateListener. */
 
     virtual
     void on_creation (const ::QueryConditionListenStateTest & datum,
@@ -99,7 +99,7 @@ namespace CIAO_QCLS_Test_Receiver_Impl
     virtual ~info_state_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PortStatusListener. */
+    /** Operations and attributes from CCM_DDS::PortStatusListener. */
 
     virtual
     void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,

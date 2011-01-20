@@ -60,7 +60,7 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
     virtual ~info_listen_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PerfKeyedTest::Listener. */
+    /** Operations and attributes from CCM_DDS::PerfKeyedTest::Listener. */
 
     virtual
     void on_one_data (const ::PerfKeyedTest & datum,

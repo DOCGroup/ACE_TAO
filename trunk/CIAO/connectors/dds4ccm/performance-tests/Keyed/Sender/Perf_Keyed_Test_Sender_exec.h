@@ -79,7 +79,7 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
     virtual ~connector_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::ConnectorStatusListener. */
+    /** Operations and attributes from CCM_DDS::ConnectorStatusListener. */
 
     virtual
     void on_inconsistent_topic (::DDS::Topic_ptr the_topic,
@@ -128,7 +128,7 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
     virtual ~ping_listen_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PerfKeyedTest::Listener. */
+    /** Operations and attributes from CCM_DDS::PerfKeyedTest::Listener. */
 
     virtual
     void on_one_data (const ::PerfKeyedTest & datum,

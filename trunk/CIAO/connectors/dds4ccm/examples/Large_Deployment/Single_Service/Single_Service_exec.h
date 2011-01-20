@@ -55,7 +55,7 @@ namespace CIAO_Single_Service_Impl
     Simple_Service_exec_i (void);
     virtual ~Simple_Service_exec_i (void);
 
-    // Operations and attributes from ::Simple_Service
+    // Operations and attributes from Simple_Service
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:37

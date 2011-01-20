@@ -1,3 +1,4 @@
+// -*- MPC -*-
 // $Id$
 
 project (DDS4CCM_lem_gen) : install, dds4ccm, ciaoidldefaults {
@@ -19,7 +20,6 @@ project (DDS4CCM_lem_gen) : install, dds4ccm, ciaoidldefaults {
      dds4ccm_ConnectorStatusListenerE.idl
      dds4ccm_StateListenerControlE.idl
      dds4ccm_ConnectorE.idl
-     dds_rtf2_dcps_i_handleE.idl
   }
 }
 
@@ -41,7 +41,6 @@ project (DDS4CCM_lem_stub) : install, dds4ccm, ccm_lem_stub, ccm_session_stub, c
    dds4ccm_ConnectorStatusListenerEC.cpp
    dds4ccm_StateListenerControlEC.cpp
    dds4ccm_ConnectorEC.cpp
-   dds_rtf2_dcps_i_handleEC.cpp
   }
 
   Header_Files {

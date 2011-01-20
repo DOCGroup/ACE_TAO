@@ -8,8 +8,8 @@
 #include "dds4ccm/impl/ndds/StatusCondition.h"
 #include "dds4ccm/impl/ndds/DomainParticipant.h"
 #include "dds4ccm/impl/ndds/TypeSupport.h"
+#include "dds4ccm/impl/ndds/Utils.h"
 
-#include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/ndds/SubscriberListener.h"
 
 #include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"
@@ -105,31 +105,42 @@ namespace CIAO
     DDSDataReader *
     DDS_Subscriber_i::create_datareader_with_profile (
                   DDSContentFilteredTopic * topic,
-                  const char * library_name,
-                  const char * profile_name,
+                  const char * qos_profile,
                   DDSDataReaderListener * ccm_dds_drl,
                   ::DDS::StatusMask mask)
     {
-      return this->rti_entity ()->create_datareader_with_profile (topic,
-                                                            library_name,
-                                                            profile_name,
+      char * lib_name = get_library_name(qos_profile);
+      char * prof_name = get_profile_name(qos_profile);
+
+      DDSDataReader * dr = this->rti_entity ()->create_datareader_with_profile (
+                                                            topic,
+                                                            lib_name,
+                                                            prof_name,
                                                             ccm_dds_drl,
                                                             mask);
+      ACE_OS::free (lib_name);
+      ACE_OS::free (prof_name);
+
+      return dr;
     }
 
     DDSDataReader *
     DDS_Subscriber_i::create_datareader_with_profile (
                   DDSTopic * topic,
-                  const char * library_name,
-                  const char * profile_name,
+                  const char * qos_profile,
                   DDSDataReaderListener * ccm_dds_drl,
                   ::DDS::StatusMask mask)
     {
-      return this->rti_entity ()->create_datareader_with_profile (topic,
-                                                            library_name,
-                                                            profile_name,
+      char * lib_name = get_library_name (qos_profile);
+      char * prof_name = get_profile_name (qos_profile);
+      DDSDataReader * dr = this->rti_entity ()->create_datareader_with_profile (topic,
+                                                            lib_name,
+                                                            prof_name,
                                                             ccm_dds_drl,
                                                             mask);
+      ACE_OS::free (lib_name);
+      ACE_OS::free (prof_name);
+      return dr;
     }
 
     ::DDS::DataReader_ptr
@@ -207,8 +218,7 @@ namespace CIAO
     ::DDS::DataReader_ptr
     DDS_Subscriber_i::create_datareader_with_profile (
       ::DDS::TopicDescription_ptr a_topic,
-      const char * library_name,
-      const char * profile_name,
+      const char * qos_profile,
       ::DDS::DataReaderListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
@@ -231,17 +241,17 @@ namespace CIAO
           if (!cf_topic)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
-                            "DDS_Subscriber_i::create_datareader_with_profile - "
+                            "DDS_Subscriber_i::create_datareader_with_profile <%C> - "
                             "Error: Unable to cast provided topic to one "
-                            "of its servant.\n"));
+                            "of its servant.\n",
+                            qos_profile));
               delete ccm_dds_drl;
               return ::DDS::DataReader::_nil ();
             }
           else
             {
               ccm_dds_dr = this->create_datareader_with_profile (cf_topic->get_rti_entity (),
-                                                           library_name,
-                                                           profile_name,
+                                                           qos_profile,
                                                            ccm_dds_drl,
                                                            mask);
             }
@@ -249,8 +259,7 @@ namespace CIAO
       else
         {
           ccm_dds_dr = this->create_datareader_with_profile (topic->get_rti_entity (),
-                                                             library_name,
-                                                             profile_name,
+                                                             qos_profile,
                                                              ccm_dds_drl,
                                                              mask);
         }
@@ -258,8 +267,9 @@ namespace CIAO
       if (!ccm_dds_dr)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_Subscriber_i::create_datareader_with_profile - "
-                        "Error: RTI Topic returned a nil datareader.\n"));
+                        "DDS_Subscriber_i::create_datareader_with_profile <%C>- "
+                        "Error: RTI Topic returned a nil datareader.\n",
+                        qos_profile));
           delete ccm_dds_drl;
           return ::DDS::DataReader::_nil ();
         }
@@ -267,9 +277,8 @@ namespace CIAO
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "DDS_Subscriber_i::create_datareader_with_profile - "
-                        "Successfully created datareader with profile <%C#%C>.\n",
-                        library_name,
-                        profile_name));
+                        "Successfully created datareader with profile <%C>.\n",
+                        qos_profile));
         }
 
       ::DDS::DataReader_var reader = DDS_TypeSupport_i::create_datareader (ccm_dds_dr,

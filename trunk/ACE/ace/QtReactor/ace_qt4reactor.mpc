@@ -21,6 +21,10 @@ project(ACE_Qt4Reactor) : acedefaults, install, acelib, ace_output, ace_qt4 {
     QtReactor.cpp
   }
 
+  Header_Files {
+    ACE_QtReactor_export.h
+  }
+
   specific {
     install_dir = ace/QtReactor
   }

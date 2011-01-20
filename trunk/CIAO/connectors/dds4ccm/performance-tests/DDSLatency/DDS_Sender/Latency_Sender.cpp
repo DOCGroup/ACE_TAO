@@ -34,8 +34,8 @@ ACE_UINT64 start_time_ = 0;
 ACE_UINT64 start_time_test_ = 0;
 ACE_UINT64 end_time_test_ = 0;
 
-ACE_UINT64 * duration_times_;
-CORBA::Short * datalen_range_;
+ACE_UINT64 * duration_times_ = 0;
+CORBA::Short * datalen_range_ = 0;
 ACE_UINT64 clock_overhead_;
 
 LatencyTest * instance_ = 0;
@@ -166,6 +166,7 @@ stop (void)
 void
 init_values (void)
 {
+  delete [] duration_times_;
   duration_times_ = new ACE_UINT64[iterations_];
   datalen_range_ = new CORBA::Short[nr_of_runs_];
   int start = 16;
@@ -214,6 +215,7 @@ void
 reset_results (void)
 {
   count_ = 0;
+  delete [] duration_times_;
   duration_times_ = new ACE_UINT64[iterations_];
   tv_total_ = 0L;
   tv_max_ = 0L;
@@ -594,7 +596,9 @@ clean_exit:
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("Deletion failed.\n")));
             main_result = 1;
           }
-    }
+      }
+    delete [] datalen_range_;
+    delete [] duration_times_;
     return main_result;
 }
 

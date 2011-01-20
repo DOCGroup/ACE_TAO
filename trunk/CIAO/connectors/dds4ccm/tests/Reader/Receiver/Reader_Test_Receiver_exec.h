@@ -76,7 +76,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
     virtual ~info_out_data_listener_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::Reader_Test::ReaderTestConnector::Listener. */
+    /** Operations and attributes from Reader_Test::ReaderTestConnector::Listener. */
 
     virtual
     void on_one_data (const ::ReaderTest & datum,
@@ -105,7 +105,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
     virtual ~info_out_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PortStatusListener. */
+    /** Operations and attributes from CCM_DDS::PortStatusListener. */
 
     virtual
     void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,
@@ -135,7 +135,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
     virtual ~reader_start_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::ReaderStarter. */
+    /** Operations and attributes from ReaderStarter. */
 
     virtual
     void start_read (void);

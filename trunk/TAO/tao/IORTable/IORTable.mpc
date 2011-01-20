@@ -1,5 +1,5 @@
 //$Id$
-project(*core_idl) : tao_versioning_idl_defaults {
+project(*core_idl) : tao_versioning_idl_defaults, install {
   custom_only = 1
   IDL_Files {
     idlflags += -Gp -Gd -Sci -SS -Sorb \
@@ -9,6 +9,10 @@ project(*core_idl) : tao_versioning_idl_defaults {
                 -Wb,safe_include=tao/IORTable/IORTable.h \
                 -iC tao/IORTable
     IORTable.pidl
+  }
+
+  specific {
+    install_dir = tao/IORTable
   }
 }
 

@@ -1,0 +1,79 @@
+// $Id$
+
+project(I2C_ShapeType_idl_gen) : connectoridldefaults, ndds, ndds_stub {
+  after += DDS4CCM_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=I2C_SHAPES_CONNECTOR_STUB_Export \
+              -Wb,stub_export_include=I2C_ShapeType_stub_export.h \
+              -I..
+  idlflags -= -Gcn -Gxhcn
+  IDL_Files {
+    I2C_ShapeType.idl
+  }
+}
+
+project(I2C_ShapeType_lem_gen) : ciaoidldefaults, ndds_stub {
+  custom_only = 1
+  after += I2C_ShapeType_idl_gen
+  idlflags += -Wb,stub_export_macro=I2C_SHAPES_CONNECTOR_LEM_STUB_Export \
+              -Wb,stub_export_include=I2C_ShapeType_lem_stub_export.h \
+              -SS -Gxhst \
+              -I ..
+
+  IDL_Files {
+    I2C_ShapeTypeE.idl
+  }
+}
+
+project(I2C_ShapeType_lem_stub) : ndds_lem_stub {
+  after += I2C_ShapeType_lem_gen I2C_ShapeType_stub I2C_Shapes_Base_stub
+  libs  += I2C_Shapes_Base_stub I2C_ShapeType_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = I2C_ShapeType_lem_stub
+  dynamicflags += I2C_SHAPES_CONNECTOR_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    I2C_ShapeTypeEC.cpp
+  }
+
+  Header_Files {
+    I2C_ShapeTypeEC.h
+    I2C_ShapeType_lem_stub_export.h
+  }
+
+  Inline_Files {
+    I2C_ShapeTypeEC.inl
+  }
+}
+
+project(I2C_ShapeType_stub) : ndds_ts_default, ndds_stub {
+  after += I2C_ShapeType_idl_gen I2C_Shapes_Base_stub
+  libs  += I2C_Shapes_Base_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = I2C_ShapeType_stub
+  dynamicflags += I2C_SHAPES_CONNECTOR_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    I2C_ShapeTypeC.cpp
+  }
+
+  Header_Files {
+    I2C_ShapeTypeC.h
+    I2C_ShapeType_stub_export.h
+    I2C_Shapes_Traits.h
+  }
+
+  Inline_Files {
+    I2C_ShapeTypeC.inl
+  }
+}

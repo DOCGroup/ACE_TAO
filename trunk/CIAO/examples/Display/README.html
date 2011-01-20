@@ -6,7 +6,7 @@
 <body alink="#0000ff" bgcolor="#ffffff" link="#000fff" text="#000000" vlink="#ff0f0f">
 
 <h2>Display example README</h2>
-<li>To download the code of this example please refer to the CVS repository at <code>$CIAO_ROOT/DAnCE/examples/Display</code>.</li>
+<li>To download the code of this example please refer to the SVN repository at <code>$CIAO_ROOT/examples/Display</code>.</li>
 <hr>
 
 <h2>Example Description</h2>
@@ -98,7 +98,7 @@ build.</font>
 <hr>
 
 <h3><font size="5">Make</font></h3>
-<li>Go to the directory <code>$CIAO_ROOT/DAnCE/examples/Display</code> and do:<br>
+<li>Go to the directory <code>$CIAO_ROOT/examples/Display</code> and do:<br>
     <code>$ACE_ROOT/bin/mwc.pl</code> (use -type option if you are using a compiler/IDE other than gnuace -which by default generates GNU makefiles)</li>
     <br>For example, using <code>$ACE_ROOT/bin/mwc.pl -type vc71</code> if you are using Visual C++ 7.1 IDE.
 
@@ -129,15 +129,15 @@ Note: Creating the deployment plan descriptor is a tedious and error-prone job, 
 
 <hr align="justify">
 <h3><font size="5">Run</font></h3>
-Finally you are ready to test the application you have made. From different shells in <code>$CIAO_ROOT/DAnCE/examples/Display/descriptors/</code> directory:
+Finally you are ready to test the application you have made. From different shells in <code>$CIAO_ROOT/examples/Display/descriptors/</code> directory:
 <br><br>
 
 <ul>
   <li> Start NodeManagers (NodeDameon) by running <code> basicNodeDaemons.pl </code>
 
   </li><li> Start the execution manager:
-  <code>$CIAO_ROOT/DAnCE/ExecutionManager/Execution_Manager -o EM.ior -i NodeManagerMap.dat </code>
-  The NodeManagerMap.dat file describes the deployment daemons CIAO's Execution_Manager
+  <code>$DANCE_ROOT/bin/dance_execution_manager -o EM.ior -i NodeManagerMap.dat </code>
+  The NodeManagerMap.dat file describes the deployment daemons DAnCE's Execution_Manager
   will contact to instantiate ComponentServer's, home's, and component
   instances.  Each line specify the name of a installation
   "destination" and the corresponding IOR for
@@ -160,7 +160,7 @@ Finally you are ready to test the application you have made. From different shel
   </li></ul>
 
   <li> Start the plan_launcher:
-  <code> $CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -p flattened_deploymentplan.cdp -k file://EM.ior </code>
+  <code>$DANCE_ROOT/bin/dance_plan_launcher -p flattened_deploymentplan.cdp -k file://EM.ior </code>
 
   After this, components should be deployed successfully.
 
@@ -168,8 +168,8 @@ Finally you are ready to test the application you have made. From different shel
   component to a file called "rategen.ior" in this
   directory.  You will then need to use a controller program in a
   separate shell window to switch on/off the Rate Generator.
-  Go to the <em> $CIAO_ROOT/DAnCE/examples/Display/descriptor </em> directory and run the <code>$CIAO_ROOT/DAnCE/examples/Display/RateGen/controller
-  -o </code> to start the application. To stop the application run <code>$CIAO_ROOT/DAnCE/examples/Display/RateGen/controller
+  Go to the <em> $CIAO_ROOT/examples/Display/descriptor </em> directory and run the <code>$CIAO_ROOT/examples/Display/RateGen/controller
+  -o </code> to start the application. To stop the application run <code>$CIAO_ROOT/examples/Display/RateGen/controller
   -f </code>
   </li>
 </ul>

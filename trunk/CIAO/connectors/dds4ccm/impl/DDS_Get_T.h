@@ -33,8 +33,7 @@ public:
   void configuration_complete (
     ::DDS::Topic_ptr topic,
     ::DDS::Subscriber_ptr subscriber,
-    const char* library_name,
-    const char* profile_name);
+    const char * qos_profile);
 
   void remove (
     ::DDS::Subscriber_ptr subscriber);

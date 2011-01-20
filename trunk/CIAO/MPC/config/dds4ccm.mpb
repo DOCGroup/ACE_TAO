@@ -20,16 +20,11 @@ feature(dds4ccm_splice) : taoidldefaults {
   includes += $(CIAO_ROOT)/connectors/dds4ccm/idl
 }
 
-feature(dds4ccm_ndds) : taoidldefaults {
-  macros += CIAO_DDS4CCM_NDDS=1
-  idlflags += -DCIAO_DDS4CCM_NDDS=1 \
-              -Wb,dds_impl=ndds \
-              -I $(CIAO_ROOT)/connectors \
-              -I $(CIAO_ROOT)/connectors/dds4ccm/idl
-  includes += $(CIAO_ROOT)/connectors/dds4ccm/idl
+feature(dds4ccm_ndds) : ndds {
+  after += CIAO_NDDS_stub
+  libs += CIAO_NDDS_stub
 }
 
 feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice) {
   requires += dummy_label
 }
-

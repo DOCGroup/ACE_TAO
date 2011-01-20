@@ -60,7 +60,7 @@ generate makefiles and Visual C++ project/solutions files for all <a
  href="http://www.cs.wustl.edu/%7Eschmidt/TAO.html">TAO</a> and <a
  href="http://www.cs.wustl.edu/%7Eschmidt/CIAO.html">CIAO</a>
 libraries. </li>
-<li>&nbsp;idl and cidl files for each component are placed in
+<li>&nbsp;idl and files for each component are placed in
 components directory.
 </li>
 <li>&nbsp;The <code>_exec.h</code> and <code>_exec.cpp</code> files
@@ -116,10 +116,10 @@ directory:
 <ul>
   <li>Start NodeManagers (NodeDameon) by running runNodeDaemon.pl </li>
   <li>Start the execution manager
-$CIAO_ROOT/DAnCE/ExecutionManager/Execution_Manager -o ior -i
+$DANCE_ROOT/bin/dance_execution_manager -o ior -i
 Stock.dat&nbsp; </li>
 </ul>
-<p>The Stock.dat file describes the deployment daemons CIAO's
+<p>The Stock.dat file describes the deployment daemons DAnCE's
 Execution_Manager
 will contact to instantiate ComponentServer's, home's, and component
 instances.
@@ -134,7 +134,7 @@ this in the future. </li>
 </ul>
 <ul>
   <li> Start the plan_launcher by running
-$CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -p
+$DANCE_ROOT/bin/dance_plan_launcher -p
 flattened_deploymentplan.cdp -k file://ior</li>
   <li>By now the components should be successfully deployed. You may
 run the driver program to start the application. Open a new shell, keep

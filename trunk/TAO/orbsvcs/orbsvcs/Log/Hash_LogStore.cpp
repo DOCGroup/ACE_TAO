@@ -131,7 +131,7 @@ TAO_Hash_LogStore::remove (DsLogAdmin::LogId id)
                             lock_,
                             CORBA::INTERNAL ());
 
-  TAO_Hash_LogRecordStore* recordstore;
+  TAO_Hash_LogRecordStore* recordstore = 0;
 
   int retval = this->hash_map_.unbind (id, recordstore);
   if (retval == 0)

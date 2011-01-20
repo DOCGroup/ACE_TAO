@@ -1,7 +1,5 @@
 // $Id$
 
-#include "dds4ccm/impl/Utils.h"
-
 #include "dds4ccm/impl/ndds/Publisher.h"
 #include "dds4ccm/impl/ndds/PublisherListener.h"
 #include "dds4ccm/impl/ndds/DomainParticipant.h"
@@ -10,6 +8,7 @@
 #include "dds4ccm/impl/ndds/StatusCondition.h"
 #include "dds4ccm/impl/ndds/DataWriterListener.h"
 #include "dds4ccm/impl/ndds/TypeSupport.h"
+#include "dds4ccm/impl/ndds/Utils.h"
 
 #include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"
 #include "dds4ccm/impl/ndds/convertors/Duration_t.h"
@@ -93,8 +92,7 @@ namespace CIAO
 
     ::DDS::DataWriter_ptr
     DDS_Publisher_i::create_datawriter_with_profile (::DDS::Topic_ptr a_topic,
-                                        const char* library_name,
-                                        const char *profile_name,
+                                        const char* qos_profile,
                                         ::DDS::DataWriterListener_ptr a_listener,
                                         ::DDS::StatusMask mask)
     {
@@ -105,8 +103,9 @@ namespace CIAO
       if (!topic)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_Publisher_i::create_datawriter_with_profile - "
-                        "Error: Unable to cast provided topic to its servant.\n"));
+                        "DDS_Publisher_i::create_datawriter_with_profile <%C>- "
+                        "Error: Unable to cast provided topic to its servant.\n",
+                        qos_profile));
           return ::DDS::DataWriter::_nil ();
         }
 
@@ -117,18 +116,25 @@ namespace CIAO
                             DDS_DataWriterListener_i (a_listener, 0),
                             ::CORBA::NO_MEMORY ());
         }
+
+      char * lib_name = get_library_name(qos_profile);
+      char * prof_name = get_profile_name(qos_profile);
+
       DDSDataWriter *ccm_dds_dw = this->rti_entity ()->create_datawriter_with_profile (
                                                               topic->get_rti_entity (),
-                                                              library_name,
-                                                              profile_name,
+                                                              lib_name,
+                                                              prof_name,
                                                               ccm_dds_drl,
                                                               mask);
+      ACE_OS::free (lib_name);
+      ACE_OS::free (prof_name);
 
       if (!ccm_dds_dw)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_Publisher_i::create_datawriter_with_profile - "
-                        "Error: RTI Topic returned a nil datawriter.\n"));
+                        "DDS_Publisher_i::create_datawriter_with_profile <%C> - "
+                        "Error: RTI Topic returned a nil datawriter.\n",
+                        qos_profile));
           delete ccm_dds_drl;
           return ::DDS::DataWriter::_nil ();
         }
@@ -136,9 +142,8 @@ namespace CIAO
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "DDS_Publisher_i::create_datawriter_with_profile - "
-                        "Successfully created datawriter with profile <%C#%C>.\n",
-                        library_name,
-                        profile_name));
+                        "Successfully created datawriter with profile <%C>.\n",
+                        qos_profile));
         }
 
       ::DDS::DataWriter_var retval =

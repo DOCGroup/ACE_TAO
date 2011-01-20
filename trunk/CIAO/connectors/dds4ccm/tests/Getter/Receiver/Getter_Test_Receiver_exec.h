@@ -98,7 +98,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
     virtual ~info_get_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PortStatusListener. */
+    /** Operations and attributes from CCM_DDS::PortStatusListener. */
 
     virtual
     void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,
@@ -127,7 +127,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
     virtual ~info_fixed_status_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::CCM_DDS::PortStatusListener. */
+    /** Operations and attributes from CCM_DDS::PortStatusListener. */
 
     virtual
     void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,
@@ -157,7 +157,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
     virtual ~getter_invoke_exec_i (void);
 
     //@{
-    /** Operations and attributes from ::GetInvoker. */
+    /** Operations and attributes from GetInvoker. */
 
     virtual
     void start_timeout_get_one (void);
