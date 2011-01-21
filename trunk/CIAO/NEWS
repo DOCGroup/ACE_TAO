@@ -1,6 +1,29 @@
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.0 and CIAO-1.0.1
 =======================================================
 
+. Improved disconnect of Simplex/Multiple facets and receptacles.
+
+. Improved disconnect of consumers and publishers.
+
+. Resolved some memory leaks in the DDS4CCM library. Therefor a lot of tests were
+  rewritten, using the generated executor implemtation.
+
+. Improved doxygen documentation.
+
+. Improved IDL to C++ wrapper for NDDS. Therefor one is able to create a NDDS only
+  application without using the DDS4CCM connector itself. See
+  $CIAO_ROOT/connectors/dds4ccm/examples/IDL2CPPWrapper for an example of such an
+  application.
+
+. Improved the DDS4CCM connector so that the user is able to implement his/her own
+  connector.
+  See $CIAO_ROOT/connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector_T.cpp/h
+  for an implementation of such a connector.
+
+. Improved the DDS4CCM connector so that it can handle more than one topic.
+  See $CIAO_ROOT/connectors/dds4ccm/tests/MultiTopic/ for an implementation
+  of such a connector.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.8.3 and CIAO-1.0.0
 =======================================================
 
