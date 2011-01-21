@@ -16,7 +16,7 @@ project(PartialShutdown_idl_gen) : componentidldefaults   {
   }
 }
 
-project(PartialShutdown_lem_gen) : ciaoidldefaults, avoids_ccm_noevent {
+project(PartialShutdown_lem_gen) : ciaoidldefaults {
   custom_only = 1
   after += PartialShutdown_idl_gen
   idlflags += \
