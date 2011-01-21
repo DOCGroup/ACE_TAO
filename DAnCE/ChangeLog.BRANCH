@@ -1,3 +1,10 @@
+Fri Jan 21 15:43:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp:
+          Fixed typo in comment
+
+        * tools/Config_Handlers/DynAny_Handler/DynStruct_Handler.cpp:
+          Postfix increment
 
 Local Variables:
 mode: change-log

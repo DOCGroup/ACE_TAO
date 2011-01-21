@@ -60,7 +60,7 @@ namespace DAnCE
               values[pos].id = ACE_TEXT_ALWAYS_CHAR ((*i)->name ().c_str ());
               values[pos].value = DYNANY_HANDLER->extract_into_dynany (*dt_map[(*i)->name ()],
                                                                        (*i)->value ());
-              pos++;
+              ++pos;
             }
 
           retval->set_members_as_dyn_any (values);
