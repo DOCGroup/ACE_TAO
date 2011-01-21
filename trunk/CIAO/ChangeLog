@@ -1,3 +1,11 @@
+Fri Jan 21 14:09:13 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/ndds_stub.mpb:
+          Typcode instead of anytypecode was sufficient.
+
+        * connectors/dds4ccm/impl/logger/dds4ccm_logger.mpc:
+          reverted last change.
+
 Fri Jan 21 13:40:56 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/ndds_stub.mpb:
