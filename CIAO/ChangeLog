@@ -1,3 +1,8 @@
+Fri Jan 21 09:26:08 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_lem_stub.mpc:
+          Resolved issues regarding to non-dds builds.
+
 Thu Jan 20 15:20:04 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/ndds.mpb:
