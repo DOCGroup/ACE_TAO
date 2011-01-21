@@ -57,11 +57,11 @@ PLATFORM_TK_LDFLAGS=
 
 ifeq ($(buildbits),32)
 PLATFORM_TCL_CPPFLAGS=$(shell . /usr/lib/tclConfig.sh && echo -n $$TCL_INCLUDE_SPEC $$TCL_DEFS)
-PLATFORM_TCL_LIBS=$(shell . /usr/lib/tclConfig.sh && echo -n $$(eval echo $$TCL_LIB_FLAG))
+PLATFORM_TCL_LIBS=-ltcl
 endif
 ifeq ($(buildbits),64)
 PLATFORM_TCL_CPPFLAGS=$(shell . /usr/lib64/tclConfig.sh && echo -n $$TCL_INCLUDE_SPEC $$TCL_DEFS)
-PLATFORM_TCL_LIBS=$(shell . /usr/lib64/tclConfig.sh && echo -n $$(eval echo $$TCL_LIB_FLAG))
+PLATFORM_TCL_LIBS=-ltcl
 endif
 PLATFORM_TCL_LDFLAGS=
 
