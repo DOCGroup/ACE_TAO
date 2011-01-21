@@ -133,7 +133,7 @@ namespace DAnCE
     {
       if (!type.sequence_p ())
         {
-          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("ERROR: Sequence type descriptioin required")));
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("ERROR: Sequence type description required")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Expected <sequence> element, incorrect tc_kind."));
         }
 
@@ -146,8 +146,7 @@ namespace DAnCE
 
       // @@ Leak this guy onto the heap to avoid a compile problem.
       CORBA::TypeCode_ptr tc =
-        DYNANY_HANDLER->orb ()->create_sequence_tc (bound,
-                                                    etc);
+        DYNANY_HANDLER->orb ()->create_sequence_tc (bound, etc);
 
       // Sequences don't have names.
       //      DYNANY_HANDLER->register_typecode (type.sequence_ ().typeId (),
