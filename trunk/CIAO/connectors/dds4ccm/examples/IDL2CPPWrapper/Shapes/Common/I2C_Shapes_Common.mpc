@@ -1,6 +1,6 @@
 // $Id$
 
-project(I2C_Shapes_Common) : ndds_impl, ndds_stub, dds4ccm_logger, ndds_ts_default {
+project(I2C_Shapes_Common) : dds4ccm_logger, ndds_impl, ndds_stub, ndds_ts_default  {
   sharedname = I2C_Shapes_Common
   dynamicflags += I2C_SHAPES_COMMON_BUILD_DLL
 

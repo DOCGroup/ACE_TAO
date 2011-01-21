@@ -3,7 +3,7 @@
 
 project(DDS4CCM_Logger): install, ciao_lib, taolib, acelib {
   sharedname   = DDS4CCM_Logger
-  dynamicflags += DDS4CCM_LOGGER_BUILD_DLL
+  dynamicflags += DDS4CCM_LOGGER_BUILD_DLL DDS4CCM_LOGGER_HAS_DLL
 
   Source_Files {
     Logger_Service.cpp
