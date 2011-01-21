@@ -1,12 +1,12 @@
 // $Id$
 
-project(*i2c_shapes_rec) : ndds_impl, ndds_stub, ndds_ts_default {
+project(*i2c_shapes_rec) : dds4ccm_logger, ndds_impl, ndds_stub, ndds_ts_default {
   exename = I2C_Shapes_Receiver
   after += I2C_Shapes_Base_Stub I2C_ShapeType_stub I2C_Shapes_Common
 
   includes += .. $(CIAO_ROOT) $(CIAO_ROOT)/connectors
 
-  libs += I2C_Shapes_Base_stub I2C_ShapeType_stub I2C_Shapes_Common
+  libs += I2C_Shapes_Common I2C_Shapes_Base_stub I2C_ShapeType_stub
   libpaths += ../lib
 
   exeout += ../lib
