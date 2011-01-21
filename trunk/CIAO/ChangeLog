@@ -1,3 +1,8 @@
+Fri Jan 21 10:33:20 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/DAnCE/PartialShutdown/Base/PartialShutdown.mpc:
+          No use to not to build Partial_lem_gen because of ccm_noevents
+
 Fri Jan 21 09:26:08 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/idl/ndds/ndds_lem_stub.mpc:
