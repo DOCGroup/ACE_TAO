@@ -1,3 +1,16 @@
+Fri Jan 21 00:15:19 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * bin/MakeProjectCreator/config/acemfcexe.mpb: New base project
+          that sets the proper subsystem and macros for an MFC app.
+
+        * tests/ACE_Init_Test.ico:
+        * tests/ACE_Init_Test.rc:
+        * tests/ACE_Init_Test_Resource.h: Modernized resource defs to let
+          ACE_Init_Test build and run properly.
+
+        * tests/tests.mpc: Added the rest of the needed files for ACE_Init_Test
+          and made it require mfc; base it off acemfcexe (new, above).
+
 Thu Jan 20 11:42:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.
