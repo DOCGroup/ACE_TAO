@@ -45,6 +45,9 @@ else
   endif
 endif
 
+# Want to be able to do [unsigned] long long.
+CCFLAGS += -ext
+
 ifeq (1,$(stdcpplib))
   CCFLAGS += -AA
   ifeq (03,$(CXXMAJORVERS))
@@ -62,25 +65,7 @@ endif
 # and specified compiler options.
 ifeq ($(threads),1)
   THR_DEFS = -DACE_HAS_THREADS
-
-  # x.30 was the first version offering -mt. So, if it's a .2x version,
-  # set the defs by hand; anything else, use -mt. This leaves out .1x
-  # versions, which should be no problem at this point.
-  ifeq (,$(filter 2%,$(CXXMINORVERS)))
-    CC_THR_DEFS += -mt
-  else
-    # Different for v2 vs. v1 C++ library selection.
-    ifeq (1,$(stdcpplib))
-      THR_DEFS += -D_RWSTD_MULTI_THREAD
-    else
-      THR_DEFS += -DRWSTD_MULTI_THREAD -D_THREAD_SAFE
-    endif
-
-    # For HP-UX 11.x, choose kernel threads over CMA (user) threads.
-    ifeq ($(word 2,$(HPVERS_WORDS)), 11)
-      THR_DEFS += -D_POSIX_C_SOURCE=199506L
-    endif
-  endif
+  CC_THR_DEFS += -mt
 else
   THR_DEFS = -DACE_HAS_THREADS=0
   # On HP-UX 11, even without building for threads, the *_r reentrant
