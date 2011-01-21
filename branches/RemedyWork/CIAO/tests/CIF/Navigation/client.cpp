@@ -320,11 +320,11 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
 
       ::Components::EmitterDescriptions eds;
       eds = cpd->emitters ();
-      if (eds.length () != 1)
+      if (eds.length () != 2)
         {
           ACE_ERROR ((LM_ERROR, "Navigation get_all_ports - "
                                 "Error: Unexpected number of emitters found: "
-                                "expected <1> - received <%d>\n",
+                                "expected <2> - received <%d>\n",
                                 eds.length ()));
           ++ret;
         }
@@ -511,13 +511,13 @@ test_get_all_emitters (::Components::CCMObject_ptr cmp)
     {
       ::Components::EmitterDescriptions_var eds;
       eds = cmp->get_all_emitters ();
-      if (eds->length () != 1)
+      if (eds->length () != 2)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                             "Navigation test_get_all_emitters - "
                             "Error: get_all_emitters returned an "
                             "unexpected number of emitters: "
-                            "expected <1> - received <%d>\n",
+                            "expected <2> - received <%d>\n",
                             eds->length ()),
                             1);
         }
