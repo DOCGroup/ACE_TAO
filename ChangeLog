@@ -1,3 +1,27 @@
+Fri Jan 21 17:04:29 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-11.00.h: Set ACE_LACKS_(STR|WCS)TO[U]LL when
+          the requisite long-long compiler settings are missing. Enables
+          use of these functions when they're available.
+
+        * m4/ace_func.m4: Remove the parts of ACE_FUNC_WCSTOLL and
+          ACE_FUNC_WCSTOULL that set ACE_LACKS_*_PROTOTYPE. The use of
+          the ACE_LACKS_*_PROTOTYPE was removed from ACE code in
+          Thu Jan 20 11:42:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+          plus, it's wrong. The functions (at least on HP-UX, which seems
+          to center on the issue here) are available when needed via a
+          #pragma extern, which effectively inlines the code from the
+          compiler. Adding a prototype is the wrong thing to do in this
+          case.
+
+        * m4/compiler.m4: Add -ext to aCC's options. Turns on long-long.
+
+        * include/makeinclude/platform_hpux_aCC.GNU: Remove all the specific
+          macro setting to try and select particular threading features and
+          Rogue Wave libs. Use -mt and be done with it. -mt does the right
+          thing wrt RW and preprocessor feature macros based on the -AA/-AP
+          options. Also add -ext to turn on long-long.
+
 Fri Jan 21 00:15:19 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * bin/MakeProjectCreator/config/acemfcexe.mpb: New base project
