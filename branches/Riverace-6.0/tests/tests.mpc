@@ -106,14 +106,31 @@ project(Service Config DLL) : acelib {
   }
 }
 
-project(ACE Init Test) : acetest {
+project(ACE Init Test) : acemfcexe {
+  requires += mfc
+  macros += _AFXDLL
+
+  after += Test_Output
+  libs  += Test_Output
+
   exename = ACE_Init_Test
   Source_Files {
     ACE_Init_Test.cpp
     ACE_Init_TestDlg.cpp
   }
+  Header_Files {
+    ACE_Init_Test.h
+    ACE_Init_Test_Resource.h
+    ACE_Init_TestDlg.h
+    ACE_Init_TestStdAfx.h
+  }
   Resource_Files {
+    ACE_Init_Test.ico
     ACE_Init_Test.rc
+  }
+  Build_Files {
+    tests.mpc
+    tests.mwc
   }
 }
 
