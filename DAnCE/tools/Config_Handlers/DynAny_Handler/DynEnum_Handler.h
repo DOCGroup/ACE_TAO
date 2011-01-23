@@ -29,14 +29,13 @@ namespace DAnCE
     /**
      * @class DynEnum_Handler
      * @brief Translates enums specified in deployment plans into Dynamic Anys
-     *
      */
     class DynEnum_Handler
     {
     public:
       static DynamicAny::DynAny_ptr extract_into_dynany (const DataType &type,
                                                          const DataValue &value,
-                                                         CORBA::TypeCode_ptr = 0);
+                                                         CORBA::TypeCode_ptr = CORBA::TypeCode::_nil ());
 
       static void extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn);
 
