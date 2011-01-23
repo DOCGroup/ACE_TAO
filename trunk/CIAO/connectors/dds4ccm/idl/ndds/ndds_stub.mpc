@@ -38,3 +38,17 @@ project (CIAO_NDDS_stub) : install, ndds, ccm_stub, ciaolib_with_idl, ciao_outpu
     ndds_dcps_instance_handleC.cpp
   }
 }
+
+project (CIAO_NDDS_idl_install_only) {
+
+  avoids += dds4ccm_opendds dds4ccm_ndds dds4ccm_splice
+
+  custom_only = 1
+
+  verbatim(gnuace, bottom) {
+"install:"
+" $(MKDIR) $(INSTALL_PREFIX)/share/ciao/connectors/dds4ccm/idl/ndds"
+" cp *.idl $(INSTALL_PREFIX)/share/ciao/connectors/dds4ccm/idl/ndds"
+  }
+
+}
