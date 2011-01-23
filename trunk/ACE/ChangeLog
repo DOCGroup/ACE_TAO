@@ -1,3 +1,8 @@
+Sun Jan 23 18:02:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_common.GNU:
+          Fixed problems with tcl flags
+
 Fri Jan 21 17:04:29 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-11.00.h: Set ACE_LACKS_(STR|WCS)TO[U]LL when
