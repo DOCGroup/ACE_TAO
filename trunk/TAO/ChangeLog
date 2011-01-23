@@ -1,3 +1,8 @@
+Sun Jan 23 18:03:49 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/tao_qtresource.mpb:
+          Use qt4
+
 Fri Jan 21 10:50:55 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * tests/OBV/ValueBox/client.cpp:
