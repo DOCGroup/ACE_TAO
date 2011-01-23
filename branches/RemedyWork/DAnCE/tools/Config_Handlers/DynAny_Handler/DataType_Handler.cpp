@@ -14,7 +14,7 @@ namespace DAnCE{
     {
     }
 
-    ///This method takes a <CIAO::Config_Handlers::DataType>
+    ///This method takes a CIAO::Config_Handlers::DataType
     ///and returns the corresponding CORBA::TypeCode.
     CORBA::TypeCode_ptr
     DataType_Handler::data_type (const DataType& desc)
