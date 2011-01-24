@@ -1,3 +1,8 @@
+Mon Jan 24 08:00:12 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ccm/CCM_Events.idl:
+          Fixed compile errors on windows.
+
 Sun Jan 23 19:49:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Container_Base_T.cpp:
