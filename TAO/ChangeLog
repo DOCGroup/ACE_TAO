@@ -1,3 +1,9 @@
+Mon Jan 24 15:14:42 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/idltocpp0x:
+        * docs/idltocpp0x/IDLC++0xRFP.odt:
+          Removed these files, RFP is now formally published by the OMG
+
 Sun Jan 23 18:03:49 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/tao_qtresource.mpb:
