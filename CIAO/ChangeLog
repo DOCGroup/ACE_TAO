@@ -1,3 +1,12 @@
+Mon Jan 24 14:51:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/docs/AMI4CCM-explanation.odt:
+        * connectors/ami4ccm/docs/AMI4CCM-spec.odt:
+        * connectors/ami4ccm/docs/RFP.odt:
+          Removed these files, RFP is formally published by the OMG and a
+          draft initial submission is now available which replaces our
+          draft specifications
+
 Mon Jan 24 14:13:36 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Containers/Container_Base_T.cpp:
