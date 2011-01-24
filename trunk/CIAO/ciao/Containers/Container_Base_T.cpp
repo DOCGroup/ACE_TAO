@@ -808,6 +808,15 @@ namespace CIAO
       }
     catch (const ::Components::InvalidConnection &ex)
       {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                     "Container_i::connect_local_facet - "
+                     "Caught exception InvalidConnection while connecting "
+                     "<%C> to <%C>\n",
+                     provider_port,
+                     user_port));
+
         throw ex;
       }
     catch (const ::Components::InvalidName &ex)
@@ -917,12 +926,26 @@ namespace CIAO
           }
         else
           {
-            throw ::Components::InvalidConnection ();
+            CIAO_DEBUG (6,
+                        (LM_DEBUG,
+                         CLINFO
+                         "Container_i::disconnect_local_facet - "
+                         "Got nil facet executor for [%C]\n",
+                         provider_port));
           }
       }
-    catch (const ::Components::InvalidConnection &)
+    catch (const ::Components::InvalidName &ex)
       {
-        throw;
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                     "Container_i::disconnect_local_facet - "
+                     "Caught exception InvalidName while connecting "
+                     "<%C> to <%C>\n",
+                     provider_port,
+                     user_port));
+
+        throw ex;
       }
     catch (const ::CORBA::Exception &ex)
       {
