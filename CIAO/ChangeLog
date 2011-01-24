@@ -1,3 +1,9 @@
+Mon Jan 24 14:13:36 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.cpp:
+          Don't need to throw an exception when the executor seems nil.
+          Optimized logging.
+
 Sun Jan 23 18:08:59 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds4ccm_stub.mpc:
