@@ -1,3 +1,8 @@
+Tue Jan 25 13:06:03 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Events/client.cpp:
+          Optimized logging.
+
 Tue Jan 25 12:42:45 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Component/CIF_Component.idl:

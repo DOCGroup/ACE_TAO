@@ -60,7 +60,7 @@ test_get_consumer (::Components::Events_ptr sink)
     }
   catch (...)
     {
-      ACE_ERROR ((LM_ERROR, "Navigation test_get_consumer - "
+      ACE_ERROR ((LM_ERROR, "Events test_get_consumer - "
                             "Error: Unknown exception caught "
                             "during get_consumer.\n"));
       return 1;
@@ -78,14 +78,16 @@ test_get_consumer_invalid_name (::Components::Events_ptr sink)
     {
       ::Components::EventConsumerBase_var consumer =
         sink->get_consumer ("consume_do_something_invalid_name");
-      ACE_ERROR ((LM_ERROR, "Events test_get_consumer - "
+      ACE_ERROR ((LM_ERROR, "Events test_get_consumer_invalid_name - "
                             "Error: No InvalidName exception raised.\n"));
     }
   catch (const ::Components::InvalidName &)
     {
-      ACE_DEBUG ((LM_DEBUG, "Events test_get_consumer - "
+      ACE_DEBUG ((LM_DEBUG, "Events test_get_consumer_invalid_name - "
                             "Received InvalidName exception "
                             "during get_consumer.\n"));
+      ACE_DEBUG ((LM_DEBUG, "Events test_get_consumer_invalid_name - "
+                            "Test passed!\n"));
       return 0;
     }
   catch (...)
@@ -281,7 +283,9 @@ test_subscribe_invalid_connection (::Components::Events_ptr source,
       ACE_DEBUG ((LM_DEBUG, "Events test_subscribe_invalid_connection - "
                             "Received expected InvalidConnection exception "
                             "during subscribe.\n"));
-      return 1;
+      ACE_DEBUG ((LM_DEBUG, "Events test_subscribe_invalid_connection - "
+                            "Test passed!\n"));
+      return 0;
     }
   catch (const ::Components::ExceededConnectionLimit &)
     {
