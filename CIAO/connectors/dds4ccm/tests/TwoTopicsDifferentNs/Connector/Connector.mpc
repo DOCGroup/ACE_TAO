@@ -33,7 +33,7 @@ project(DDS_TTDN_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
 
 project(DDS_TTDN_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
   after += DDS_TTDN_Connector_lem_gen DDS_TTDN_Connector_stub \
-           DDS_Goodbye_Namespace_Base_stub DDS_Hello_Namespace_Base_stub 
+           DDS_Goodbye_Namespace_Base_stub DDS_Hello_Namespace_Base_stub
   libs  += DDS_Connector_stub \
            DDS_Goodbye_Namespace_Base_stub DDS_Hello_Namespace_Base_stub
   libpaths += ../lib
@@ -88,10 +88,8 @@ project(DDS_TTDN_Connector_stub) : ccm_stub, dds4ccm_base {
 
 project(DDS_TTDN_Connector_exec) : ciao_executor, dds4ccm_impl {
   after += DDS_TTDN_Connector_lem_stub DDS_TTDN_Connector_stub \
-           DDS_Goodbye_Namespace_Base_stub DDS_Hello_Namespace_Base_stub \
            DDS_Goodbye_Namespace_Base_stub DDS_Hello_Namespace_Base_stub
   libs  += DDS_Connector_stub DDS_Connector_lem_stub \
-           DDS_Goodbye_Namespace_Base_stub DDS_Hello_Namespace_Base_stub \
            DDS_Goodbye_Namespace_Base_stub DDS_Hello_Namespace_Base_stub
   sharedname = DDS_Connector_exec
   libpaths += ../lib
@@ -119,11 +117,11 @@ project(DDS_TTDN_Connector_exec) : ciao_executor, dds4ccm_impl {
 project(DDS_TTDN_Connector_svnt) : ciao_servant, dds4ccm_impl {
   after      += DDS_TTDN_Connector_lem_stub DDS_TTDN_Connector_exec \
                 DDS_Goodbye_Namespace_Base_stub DDS_Hello_Namespace_Base_stub \
-                DDS_TTDN_Connector_stub 
+                DDS_TTDN_Connector_stub
   libs       += DDS_Connector_stub \
                 DDS_Connector_lem_stub  \
                 DDS_Goodbye_Namespace_Base_stub DDS_Hello_Namespace_Base_stub \
-                DDS_Connector_exec 
+                DDS_Connector_exec
   sharedname  = DDS_Connector_svnt
   libpaths += ../lib
   libout = ../lib
