@@ -1,3 +1,9 @@
+Tue Jan 25 10:27:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Catch extra exceptions since dance shuts down the locality managers
+          simultaniously.
+
 Mon Jan 24 14:51:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/docs/AMI4CCM-explanation.odt:
