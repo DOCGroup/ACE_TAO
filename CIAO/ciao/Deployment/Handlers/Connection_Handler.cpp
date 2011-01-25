@@ -230,9 +230,7 @@ namespace CIAO
              i < conn.internalEndpoint.length ();
              ++i)
           {
-            if (conn.internalEndpoint[i].kind == Deployment::EventEmitter ||
-                conn.internalEndpoint[i].kind == Deployment::EventPublisher ||
-                conn.internalEndpoint[i].kind == Deployment::EventConsumer)
+            if (!this->is_local_connection (conn))
               {
                 if (!conn.internalEndpoint[i].provider)
                   {
@@ -240,10 +238,23 @@ namespace CIAO
                     break;
                   }
               }
-            else if (conn.internalEndpoint[i].provider)
+            else
               {
-                endpoint = i;
-                break;
+                if (conn.internalEndpoint[i].kind == Deployment::EventEmitter ||
+                    conn.internalEndpoint[i].kind == Deployment::EventPublisher ||
+                    conn.internalEndpoint[i].kind == Deployment::EventConsumer)
+                  {
+                    if (!conn.internalEndpoint[i].provider)
+                      {
+                        endpoint = i;
+                        break;
+                      }
+                  }
+                else if (conn.internalEndpoint[i].provider)
+                  {
+                    endpoint = i;
+                    break;
+                  }
               }
           }
       }
@@ -290,7 +301,8 @@ namespace CIAO
     // Since DANCE shutdown the Locality managers simultaniously,
     // it could be that one locality manager is shutdown while the
     // other wants to disconnect from this locality manager. Therefor
-    // we catch an OBJECT_NOT_EXIST and a COMM_FAILURE at this point
+    // we catch an OBJECT_NOT_EXIST, TRANSIENT and a COMM_FAILURE at this point
+    // Once DANCE has been fixed in that manner, these catches can be removed.
     catch (const CORBA::COMM_FAILURE &ex)
       {
         CIAO_DEBUG (2, (LM_WARNING, CLINFO
@@ -304,6 +316,14 @@ namespace CIAO
         CIAO_DEBUG (2, (LM_WARNING, CLINFO
                         "Connection_Handler::disconnect_instance - "
                         "Caught OBJECT_NOT_EXIST exception whilst disconnecting\n"));
+        throw ::Deployment::InvalidConnection (name,
+                                               ex._info ().c_str ());
+      }
+    catch (const CORBA::TRANSIENT &ex)
+      {
+        CIAO_DEBUG (2, (LM_WARNING, CLINFO
+                        "Connection_Handler::disconnect_instance - "
+                        "Caught TRANSIENT exception whilst disconnecting\n"));
         throw ::Deployment::InvalidConnection (name,
                                                ex._info ().c_str ());
       }
@@ -784,11 +804,12 @@ namespace CIAO
                                                    "internalEndpoints");
           }
       }
-    this->disconnect_non_local (conn);
+    this->disconnect_non_local (conn, endpoint);
   }
 
   void
-  Connection_Handler::disconnect_non_local (const ::Deployment::PlanConnectionDescription &conn)
+  Connection_Handler::disconnect_non_local (const ::Deployment::PlanConnectionDescription &conn,
+                                            const ::Deployment::PlanSubcomponentPortEndpoint &endpoint)
   {
     CIAO_TRACE ("Connection_Handler::disconnect_non_local");
 
@@ -804,7 +825,7 @@ namespace CIAO
 
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
     ::CORBA::Object_var safe_tmp =
-      obj->disconnect (conn.internalEndpoint[0].portName.in (),
+      obj->disconnect (endpoint.portName.in (),
                        this->get_cookie (conn.name.in ()));
     this->remove_cookie (conn.name.in ());
   }
@@ -857,7 +878,7 @@ namespace CIAO
                                                    "internalEndpoints");
           }
       }
-    this->disconnect_non_local (conn);
+    this->disconnect_non_local (conn, endpoint);
   }
 
 #if !defined (CCM_NOEVENT)
