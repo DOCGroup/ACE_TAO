@@ -287,6 +287,26 @@ namespace CIAO
         // pass through
         throw;
       }
+    // Since DANCE shutdown the Locality managers simultaniously,
+    // it could be that one locality manager is shutdown while the
+    // other wants to disconnect from this locality manager. Therefor
+    // we catch an OBJECT_NOT_EXIST and a COMM_FAILURE at this point
+    catch (const CORBA::COMM_FAILURE &ex)
+      {
+        CIAO_DEBUG (2, (LM_WARNING, CLINFO
+                        "Connection_Handler::disconnect_instance - "
+                        "Caught COMM_FAILURE exception whilst disconnecting\n"));
+        throw ::Deployment::InvalidConnection (name,
+                                               ex._info ().c_str ());
+      }
+    catch (const CORBA::OBJECT_NOT_EXIST &ex)
+      {
+        CIAO_DEBUG (2, (LM_WARNING, CLINFO
+                        "Connection_Handler::disconnect_instance - "
+                        "Caught OBJECT_NOT_EXIST exception whilst disconnecting\n"));
+        throw ::Deployment::InvalidConnection (name,
+                                               ex._info ().c_str ());
+      }
     catch (CORBA::Exception &ex)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
