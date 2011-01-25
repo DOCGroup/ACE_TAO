@@ -230,13 +230,13 @@
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>trig</portName>
+      <portName>trig_provides</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="SimpleLocalProviderComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>trig</portName>
+      <portName>trig_uses</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="SimpleLocalUserComponentInstance" />
@@ -250,13 +250,13 @@
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>trig</portName>
+      <portName>trig_uses</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="SimpleLocalUserComponentInstanceReverse" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>trig</portName>
+      <portName>trig_provides</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="SimpleLocalProviderComponentInstance" />

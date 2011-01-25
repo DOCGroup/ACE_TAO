@@ -10,7 +10,7 @@ module Simple
 {
   component SimpleMultipleUser
   {
-    uses multiple Trigger trig;
+    uses multiple Trigger trig_uses_m;
   };
 
   home SimpleMultipleUserHome manages SimpleMultipleUser

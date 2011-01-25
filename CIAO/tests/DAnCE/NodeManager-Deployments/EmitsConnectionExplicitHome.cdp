@@ -207,13 +207,13 @@
   <connection>
     <name>TestConnection</name>
     <internalEndpoint>
-      <portName>hello_</portName>
+      <portName>hello_emits</portName>
       <provider>false</provider>
       <kind>EventEmitter</kind>
       <instance xmi:idref="SimpleEmitterComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>hello_</portName>
+      <portName>hello_consumes</portName>
       <provider>true</provider>
       <kind>EventConsumer</kind>
       <instance xmi:idref="SimpleConsumerComponentInstance" />

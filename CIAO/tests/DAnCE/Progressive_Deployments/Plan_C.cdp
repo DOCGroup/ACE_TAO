@@ -229,7 +229,7 @@
   <connection>
     <name>TestConnection</name>
    <internalEndpoint>
-      <portName>trig</portName>
+      <portName>trig_provides</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="SimpleProviderComponentInstance" />
@@ -245,7 +245,7 @@
   <connection>
     <name>TestConnectionReverse</name>
     <internalEndpoint>
-      <portName>trig</portName>
+      <portName>trig_uses</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="SimpleUserComponentInstance" />

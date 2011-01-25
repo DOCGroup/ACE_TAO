@@ -12,7 +12,7 @@ module Simple
 {
   component SimpleNilFacetProvider
   {
-    provides Trigger trig;
+    provides Trigger trig_provides;
   };
 
   home SimpleNilFacetProviderHome manages SimpleNilFacetProvider

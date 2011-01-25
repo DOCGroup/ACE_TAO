@@ -27,7 +27,7 @@ namespace CIAO_Simple_SimpleConsumer_Impl
   // Port operations.
 #if !defined (CCM_NOEVENT)
   void
-  SimpleConsumer_exec_i::push_hello_ (
+  SimpleConsumer_exec_i::push_hello_consumer (
     ::Simple::Hello * ev )
   {
     ACE_TRACE ("SimpleConsumer_exec_i::push_hello_ ()");

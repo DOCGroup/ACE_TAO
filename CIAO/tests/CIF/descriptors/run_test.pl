@@ -240,7 +240,7 @@ for ($client_nr = 0; $client_nr < $nr_clients; ++$client_nr) {
     if ($client_status != 0) {
         print STDERR "ERROR: client $clients[$client_nr] returned $client_status\n";
     }
-    print "Sleeping 2 seconds to allow task $clients[$i] to complete\n";
+    print "Sleeping 2 seconds to allow task $clients[$client_nr] to complete\n";
     sleep (2);
 
     # Invoke executor - stop the application -.

@@ -1,3 +1,65 @@
+Tue Jan 25 12:42:45 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Component/CIF_Component.idl:
+        * tests/CIF/Component/CIF_Component_exec.h:
+        * tests/CIF/Component/CIF_Component_exec.cpp:
+          Added a consumer in order to run some more tests.
+
+        * tests/CIF/Events/client.cpp:
+          Added get_all_consumers test.
+
+        * tests/CIF/Navigation/client.cpp:
+        * tests/CIF/Receptacle/client.cpp:
+          Changed the number of expected consumers.
+
+        * tests/CIF/descriptors/run_test.pl:
+          Sleep message didn't log the correct client.
+
+        * tests/DAnCE/Components/SimpleConsumer.idl:
+        * tests/DAnCE/Components/SimpleConsumer_exec.h:
+        * tests/DAnCE/Components/SimpleConsumer_exec.cpp:
+        * tests/DAnCE/Components/SimpleEmitter.idl:
+        * tests/DAnCE/Components/SimpleEmitter_exec.cpp:
+        * tests/DAnCE/Components/SimpleLocalProvider.idl:
+        * tests/DAnCE/Components/SimpleLocalProvider_exec.h:
+        * tests/DAnCE/Components/SimpleLocalProvider_exec.cpp:
+        * tests/DAnCE/Components/SimpleLocalUser.idl:
+        * tests/DAnCE/Components/SimpleLocalUser_exec.cpp:
+        * tests/DAnCE/Components/SimpleMultipleUser.idl:
+        * tests/DAnCE/Components/SimpleMultipleUser_exec.cpp:
+        * tests/DAnCE/Components/SimpleNilFacetProvider.idl:
+        * tests/DAnCE/Components/SimpleNilFacetProvider_exec.h:
+        * tests/DAnCE/Components/SimpleNilFacetProvider_exec.cpp:
+        * tests/DAnCE/Components/SimpleNilFacetUser.idl:
+        * tests/DAnCE/Components/SimpleNilFacetUser_exec.cpp:
+        * tests/DAnCE/Components/SimpleProvider.idl:
+        * tests/DAnCE/Components/SimpleProvider_exec.h:
+        * tests/DAnCE/Components/SimpleProvider_exec.cpp:
+        * tests/DAnCE/Components/SimplePublisher.idl:
+        * tests/DAnCE/Components/SimplePublisher_exec.cpp:
+        * tests/DAnCE/Components/SimpleUser.idl:
+        * tests/DAnCE/Components/SimpleUser_exec.cpp:
+        * tests/DAnCE/ExecutionManager-Deployments/EmitsConnectionExplicitHome.cdp:
+        * tests/DAnCE/ExecutionManager-Deployments/MultiplexConnectionExplicitHome.cdp:
+        * tests/DAnCE/ExecutionManager-Deployments/MultiplexConnectionExplicitHome_NS.cdp:
+        * tests/DAnCE/ExecutionManager-Deployments/MultiplexConnectionExplicitHome_NS_PL_DP.cdp:
+        * tests/DAnCE/ExecutionManager-Deployments/MultiplexConnectionExplicitHome_NS_PL_SP.cdp:
+        * tests/DAnCE/ExecutionManager-Deployments/PublishConnectionExplicitHome.cdp:
+        * tests/DAnCE/ExecutionManager-Deployments/SimplexConnectionExplicitHome.cdp:
+        * tests/DAnCE/ExecutionManager-Deployments/SimplexConnectionExplicitHome_NS.cdp:
+        * tests/DAnCE/ExecutionManager-Deployments/SimplexConnectionExplicitHome_NS_PL_DP.cdp:
+        * tests/DAnCE/ExecutionManager-Deployments/SimplexConnectionExplicitHome_NS_PL_SP.cdp:
+        * tests/DAnCE/ExecutionManager-Deployments/SimplexConnectionExplicitHome_NilFacet.cdp:
+        * tests/DAnCE/NodeManager-Deployments/EmitsConnectionExplicitHome.cdp:
+        * tests/DAnCE/NodeManager-Deployments/LocalSimplexConnectionExplicitHome.cdp:
+        * tests/DAnCE/NodeManager-Deployments/MultiplexConnectionExplicitHome.cdp:
+        * tests/DAnCE/NodeManager-Deployments/PublishConnectionExplicitHome.cdp:
+        * tests/DAnCE/NodeManager-Deployments/SimplexConnectionExplicitHome.cdp:
+        * tests/DAnCE/NodeManager-Deployments/TwoComponentsOneHome.cdp:
+        * tests/DAnCE/Progressive_Deployments/Plan_C.cdp:
+          Renamed portnames of facets, receptacle, event sources and event sinks in order to get
+          a more realistic test.
+
 Mon Jan 24 08:00:12 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ccm/CCM_Events.idl:

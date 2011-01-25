@@ -11,7 +11,7 @@ module Simple
   component SimpleEmitter
   {
 #if !defined (CCM_NOEVENT)
-    emits Hello hello_;
+    emits Hello hello_emits;
 #endif
   };
 
