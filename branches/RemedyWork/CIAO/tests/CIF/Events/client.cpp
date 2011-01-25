@@ -4,6 +4,7 @@
 #include <tests/CIF/Common/CIF_Common.h>
 #include <tests/CIF/Component/CIF_ComponentC.h>
 
+#if !defined (CCM_NOEVENT)
 //============================================================
 // test_subscribe_unsubscribe
 //============================================================
@@ -32,7 +33,9 @@ get_consumer (::Components::Events_ptr sink,
     }
   return consumer._retn ();
 }
+#endif
 
+#if !defined (CCM_NOEVENT)
 //============================================================
 // test_get_consumer
 //============================================================
@@ -67,7 +70,9 @@ test_get_consumer (::Components::Events_ptr sink)
     }
   return 0;
 }
+#endif
 
+#if !defined (CCM_NOEVENT)
 //============================================================
 // test_get_consumer_invalid_name
 //============================================================
@@ -98,7 +103,9 @@ test_get_consumer_invalid_name (::Components::Events_ptr sink)
     }
   return 1;
 }
+#endif
 
+#if !defined (CCM_NOEVENT)
 //============================================================
 // test_subscribe_unsubscribe
 //============================================================
@@ -192,7 +199,9 @@ test_subscribe_unsubscribe (::Components::Events_ptr source,
     }
   return ret;
 }
+#endif
 
+#if !defined (CCM_NOEVENT)
 //============================================================
 // test_subscribe_invalid_name
 //============================================================
@@ -246,7 +255,9 @@ test_subscribe_invalid_name (::Components::Events_ptr source,
                         "Test passed!\n"));
   return 0;
 }
+#endif
 
+#if !defined (CCM_NOEVENT)
 //============================================================
 // test_subscribe_invalid_name
 //============================================================
@@ -310,7 +321,9 @@ test_subscribe_invalid_connection (::Components::Events_ptr source,
                         "Test passed!\n"));
   return 0;
 }
+#endif
 
+#if !defined (CCM_NOEVENT)
 //============================================================
 // connect_consumer
 //============================================================
@@ -361,7 +374,9 @@ connect_consumer (::Components::Events_ptr source,
     }
   return 0;
 }
+#endif
 
+#if !defined (CCM_NOEVENT)
 //============================================================
 // disconnect_consumer
 //============================================================
@@ -404,6 +419,9 @@ disconnect_consumer (::Components::Events_ptr source,
     }
   return 0;
 }
+#endif
+
+#if !defined (CCM_NOEVENT)
 //============================================================
 // test_connect_disconnect_consumer
 //============================================================
@@ -422,7 +440,9 @@ test_connect_disconnect_consumer (::Components::Events_ptr source,
     }
   return 1;
 }
+#endif
 
+#if !defined (CCM_NOEVENT)
 //============================================================
 // test_connect_consumer_invalid_name
 //============================================================
@@ -477,7 +497,9 @@ test_connect_consumer_invalid_name (::Components::Events_ptr source,
                         "Test passed!\n"));
   return 0;
 }
+#endif
 
+#if !defined (CCM_NOEVENT)
 //============================================================
 // test_connect_consumer_already_connected
 //============================================================
@@ -535,7 +557,9 @@ test_connect_consumer_already_connected (::Components::Events_ptr source,
                         "Test passed!\n"));
   return 0;
 }
+#endif
 
+#if !defined (CCM_NOEVENT)
 //============================================================
 // test_connect_consumer_invalid_connection
 //============================================================
@@ -590,7 +614,9 @@ test_connect_consumer_invalid_connection (::Components::Events_ptr source,
                         "Test passed!\n"));
   return 0;
 }
+#endif
 
+#if !defined (CCM_NOEVENT)
 //============================================================
 // test_disconnect_consumer_invalid_name
 //============================================================
@@ -640,7 +666,9 @@ test_disconnect_consumer_invalid_name (::Components::Events_ptr source,
                         "Test passed!\n"));
   return 0;
 }
+#endif
 
+#if !defined (CCM_NOEVENT)
 //============================================================
 // test_disconnect_consumer_no_connection
 //============================================================
@@ -679,25 +707,44 @@ test_disconnect_consumer_no_connection (::Components::Events_ptr source)
                         "Test passed!\n"));
   return 0;
 }
+#endif
 
+#if !defined (CCM_NOEVENT)
 //============================================================
 // test_get_all_consumers
 //============================================================
 int
-test_get_all_consumers (::Components::Events_ptr source)
+test_get_all_consumers (::Components::Events_ptr sink)
 {
   int ret = 0;
   try
     {
       ::Components::ConsumerDescriptions_var cds =
-        source->get_all_consumers ();
+        sink->get_all_consumers ();
       if (cds->length () != 2)
         {
-          ACE_ERROR ((LM_ERROR, "Events test_disconnect_consumer_no_connection - "
+          ACE_ERROR ((LM_ERROR, "Events test_get_all_consumers - "
                                 "Error: Unexpected number of ConsumerDescriptions: "
                                 "expected <2> - received <%d>.\n",
                                 cds->length ()));
           ++ret;
+        }
+      for (::CORBA::ULong i = 0UL; i < cds->length (); ++i)
+        {
+          if (::ACE_OS::strcmp (cds[i]->name (), "consume_do_something") == 0 ||
+              ::ACE_OS::strcmp (cds[i]->name (), "consume_do_something_else") == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG, "Events test_get_all_consumers - "
+                                    "Correct consumer description found <%C>\n",
+                                    cds[i]->name ()));
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR, "Events test_get_all_consumers - "
+                                    "Error Incorrect consumer description found <%C>\n",
+                                    cds[i]->name ()));
+              ++ret;
+            }
         }
     }
   catch (const ::CORBA::Exception &ex)
@@ -709,7 +756,7 @@ test_get_all_consumers (::Components::Events_ptr source)
     {
       ACE_ERROR ((LM_ERROR, "Events test_get_all_consumers - "
                             "Error: Unknown exception caught "
-                            "during connect_consumer.\n"));
+                            "during get_all_consumers.\n"));
       return 1;
     }
   if (ret == 0)
@@ -719,6 +766,251 @@ test_get_all_consumers (::Components::Events_ptr source)
     }
   return ret;
 }
+#endif
+
+#if !defined (CCM_NOEVENT)
+//============================================================
+// test_get_named_consumers
+//============================================================
+int
+test_get_named_consumers (::Components::Events_ptr sink)
+{
+  int ret = 0;
+  try
+    {
+      ::Components::NameList_var names;
+      ACE_NEW_THROW_EX (names,
+                        ::Components::NameList,
+                        CORBA::NO_MEMORY ());
+      names->length (1);
+      (*names)[0] = CORBA::string_dup ("consume_do_something");
+      ::Components::ConsumerDescriptions_var cds =
+        sink->get_named_consumers (names);
+      if (cds->length () != 1)
+        {
+          ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers - "
+                                "Error: Unexpected number of ConsumerDescriptions: "
+                                "expected <1> - received <%d>.\n",
+                                cds->length ()));
+          ++ret;
+        }
+      for (::CORBA::ULong i = 0UL; i < cds->length (); ++i)
+        {
+          if (::ACE_OS::strcmp (cds[i]->name (), "consume_do_something") == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG, "Events test_get_named_consumers - "
+                                    "Correct consumer description found <%C>\n",
+                                    cds[i]->name ()));
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers - "
+                                    "Error Incorrect consumer description found <%C>\n",
+                                    cds[i]->name ()));
+              ++ret;
+            }
+        }
+
+      names->length (2);
+      (*names)[0] = CORBA::string_dup ("consume_do_something");
+      (*names)[1] = CORBA::string_dup ("consume_do_something_else");
+      cds = sink->get_named_consumers (names);
+      if (cds->length () != 2)
+        {
+          ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers - "
+                                "Error: Unexpected number of ConsumerDescriptions: "
+                                "expected <2> - received <%d>.\n",
+                                cds->length ()));
+          ++ret;
+        }
+      for (::CORBA::ULong i = 0UL; i < cds->length (); ++i)
+        {
+          if (::ACE_OS::strcmp (cds[i]->name (), "consume_do_something") == 0 ||
+              ::ACE_OS::strcmp (cds[i]->name (), "consume_do_something_else") == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG, "Events test_get_named_consumers - "
+                                    "Correct consumer description found <%C>\n",
+                                    cds[i]->name ()));
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers - "
+                                    "Error Incorrect consumer description found <%C>\n",
+                                    cds[i]->name ()));
+              ++ret;
+            }
+        }
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers - "
+                            "Error: InvalidName exception caught "
+                            "during get_named_consumers.\n"));
+      return 1;
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("test_get_named_consumers. Error: ");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers - "
+                            "Error: Unknown exception caught "
+                            "during get_named_consumers.\n"));
+      return 1;
+    }
+  if (ret == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_get_named_consumers - "
+                            "Test passed!\n"));
+    }
+  return ret;
+}
+#endif
+
+#if !defined (CCM_NOEVENT)
+//============================================================
+// test_get_named_consumers_invalid_name
+//============================================================
+int
+test_get_named_consumers_invalid_name (::Components::Events_ptr sink)
+{
+  int ret = 0;
+
+  ::Components::NameList_var names;
+  ACE_NEW_THROW_EX (names,
+                    ::Components::NameList,
+                    CORBA::NO_MEMORY ());
+  ::Components::ConsumerDescriptions_var cds;
+
+  try
+    {
+      names->length (1);
+      (*names)[0] = CORBA::string_dup ("consume_do_something_invalid_name");
+      cds = sink->get_named_consumers (names);
+      ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers_invalid_name <1> - "
+                            "Error: No InvalidName exception caught "
+                            "during get_named_consumers\n"));
+      ++ret;
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_get_named_consumers_invalid_name <1> - "
+                            "Received InvalidName exception "
+                            "during get_named_consumers.\n"));
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("test_get_named_consumers_invalid_name <1> . Error: ");
+      ++ret;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers_invalid_name  <1> - "
+                            "Error: Unknown exception caught "
+                            "during get_named_consumers.\n"));
+      ++ret;
+    }
+
+  try
+    {
+      names->length (2);
+      (*names)[0] = CORBA::string_dup ("consume_do_something");
+      (*names)[1] = CORBA::string_dup ("consume_do_something_else_invalid_name");
+      cds = sink->get_named_consumers (names);
+      ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers_invalid_name <2> - "
+                            "Error: No InvalidName exception caught "
+                            "during get_named_consumers\n"));
+      ++ret;
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_get_named_consumers_invalid_name <2> - "
+                            "Received InvalidName exception "
+                            "during get_named_consumers.\n"));
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("test_get_named_consumers_invalid_name <2>. Error: ");
+      ++ret;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers_invalid_name <2> - "
+                            "Error: Unknown exception caught "
+                            "during get_named_consumers.\n"));
+      ++ret;
+    }
+  if (ret == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_get_named_consumers_invalid_name - "
+                            "Test passed!\n"));
+    }
+  return ret;
+}
+#endif
+
+#if !defined (CCM_NOEVENT)
+//============================================================
+// test_get_all_emitters
+//============================================================
+int
+test_get_all_emitters (::Components::Events_ptr source)
+{
+  int ret = 0;
+
+  try
+    {
+      ::Components::EmitterDescriptions_var eds =
+        source->get_all_emitters ();
+      if (eds->length () != 2)
+        {
+          ACE_ERROR ((LM_ERROR, "Events test_get_all_emitters - "
+                                "Error: Unexpected number of Emitter "
+                                "descriptions received. expected <2> - "
+                                "received <%u>\n",
+                                eds->length ()));
+          ++ret;
+        }
+      for (::CORBA::ULong i = 0UL; i < eds->length (); ++i)
+        {
+          if (::ACE_OS::strcmp (eds[i]->name (), "emit_do_something") == 0 ||
+              ::ACE_OS::strcmp (eds[i]->name (), "emit_do_something_else") == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG, "Events test_get_all_emitters - "
+                                    "Correct emitter description found <%C>\n",
+                                    eds[i]->name ()));
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR, "Events test_get_all_emitters - "
+                                    "Error Incorrect emitter description found <%C>\n",
+                                    eds[i]->name ()));
+              ++ret;
+            }
+        }
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("test_get_all_emitters. Error: ");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_get_all_emitters - "
+                            "Error: Unknown exception caught "
+                            "during get_all_emitters.\n"));
+      return 1;
+    }
+  if (ret == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_get_all_emitters - "
+                            "Test passed!\n"));
+    }
+  return ret;
+}
+#endif
 
 int
 run_test (::Components::Events_ptr source,
@@ -727,6 +1019,8 @@ run_test (::Components::Events_ptr source,
   int ret = 0;
   try
     {
+
+#if !defined (CCM_NOEVENT)
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_get_consumer (sink);
 
@@ -764,7 +1058,17 @@ run_test (::Components::Events_ptr source,
       ret += test_disconnect_consumer_no_connection (source);
 
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
-      ret += test_get_all_consumers (source);
+      ret += test_get_all_consumers (sink);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_get_named_consumers (sink);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_get_named_consumers_invalid_name (sink);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_get_all_emitters (source);
+#endif
     }
   catch (...)
     {
