@@ -1,3 +1,21 @@
+Tue Jan 25 15:17:58 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * bin/MakeProjectCreator/config/acemfcexe.mpb: The SubSystem value
+          for "Windows" on VC10 is "Windows", not "2" as it is for VC8-9.
+
+        * tests/ACE_Init_Test.ico: Reverted changes from
+          Fri Jan 21 00:15:19 UTC 2011  Steve Huston  <shuston@riverace.com>
+          The VC8 resource compiler had problems with the new .ico file.
+          Although it's an issue with the VC8 resource compiler that can be
+          worked around, the test builds and works fine with the older
+          ico file, so I just put it back.
+
+        * tests/ACE_Init_Test_Resource.h: Fixed fuzz errors.
+
+        * tests/ACE_Init_Test.rc: Replaced #include afxres.h with winres.h.
+          Although VS generates it that way, afxres.h isn't needed unless
+          MFC is used and won't be present when MFC components aren't installed.
+
 Tue Jan 25 10:52:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Object_Manager.cpp:
