@@ -1,3 +1,22 @@
+/* -*- C++ -*- */
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    ACE_Init_Test_Resource.h
+//
+// = DESCRIPTION
+//   Header file for the ACE_INIT_TEST application.
+//
+// = AUTHOR
+//    Steve Huston <shuston@riverace.com>
+//
+// ============================================================================
+
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
 // Used by ACE_Init_Test.rc
@@ -504,7 +523,7 @@
 #define SPVERSION_MASK                  0x0000FF00
 
 // Next default values for new objects
-// 
+//
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        130
