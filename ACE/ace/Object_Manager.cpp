@@ -30,7 +30,7 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Mutex.h"
 #include "ace/RW_Thread_Mutex.h"
-#if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS)
+#if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS) && !defined (ACE_HAS_WINCE)
   #include "ace/OS_NS_stdlib.h"
 #endif // ACE_DISABLE_WIN32_ERROR_WINDOWS
 
@@ -54,7 +54,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Note the following fix was derived from that proposed by Jochen Kalmbach
 // http://blog.kalmbachnet.de/?postid=75
-#if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS)
+#if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS) && !defined (ACE_HAS_WINCE)
 LPTOP_LEVEL_EXCEPTION_FILTER WINAPI ACEdisableSetUnhandledExceptionFilter (
   LPTOP_LEVEL_EXCEPTION_FILTER /*lpTopLevelExceptionFilter*/)
 {
@@ -254,7 +254,7 @@ ACE_Object_Manager::init (void)
             }
 #     endif /* ACE_HAS_TSS_EMULATION */
 
-#if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS)
+#if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS) && !defined (ACE_HAS_WINCE)
 #if defined (_DEBUG) && (defined (_MSC_VER) || defined (__INTEL_COMPILER) || defined (__MINGW32__))
           _CrtSetReportMode( _CRT_ERROR, _CRTDBG_MODE_FILE );
           _CrtSetReportFile( _CRT_ERROR, _CRTDBG_FILE_STDERR );
