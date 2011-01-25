@@ -1314,6 +1314,11 @@ be_visitor_subscribe_block::visit_publishes (
       << "::" << obj_name << "Consumer_var sub =" << be_idt_nl
       << "::" << obj_name << "Consumer::_narrow (subscribe);"
       << be_uidt_nl << be_nl
+      << "if ( ::CORBA::is_nil (sub.in ()))"
+      << be_idt_nl
+      << "{" << be_idt_nl
+      << "throw ::Components::InvalidConnection ();" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
       << "return this->subscribe_" << port_name
       << " (sub.in ());" << be_uidt_nl
       << "}" << be_uidt;

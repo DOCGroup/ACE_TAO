@@ -1,3 +1,9 @@
+Tue Jan 25 13:04:28 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Throw an InvalidConnection exception when an EventConsumerBase can't
+          be narrowed to a type specific Event.
+
 
 Local Variables:
 mode: change-log
