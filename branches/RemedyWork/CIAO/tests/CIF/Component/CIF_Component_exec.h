@@ -174,6 +174,12 @@ namespace CIAO_CIF_CIF_User_Impl
       ::CIF::DoSomething * ev);
 #endif
 
+#if !defined (CCM_NOEVENT)
+    virtual void
+    push_consume_do_something_else (
+      ::CIF::DoSomethingElse * ev);
+#endif
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:36
 

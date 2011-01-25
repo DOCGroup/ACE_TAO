@@ -226,13 +226,13 @@
   <connection>
     <name>TestConnection</name>
     <internalEndpoint>
-      <portName>trig</portName>
+      <portName>trig_provides</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="SimpleNilFacetProviderComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>trig</portName>
+      <portName>trig_uses</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="SimpleNilFacetUserComponentInstance" />
@@ -242,13 +242,13 @@
   <connection>
     <name>TestConnectionReverse</name>
     <internalEndpoint>
-      <portName>trig</portName>
+      <portName>trig_uses</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="SimpleNilFacetUserComponentInstanceReverse" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>trig</portName>
+      <portName>trig_provides</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="SimpleNilFacetProviderComponentInstance" />

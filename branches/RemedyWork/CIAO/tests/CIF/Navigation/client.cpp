@@ -276,13 +276,13 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
           if (::ACE_OS::strcmp (fds[i]->name (), "provide_cif_foo") == 0 ||
               ::ACE_OS::strcmp (fds[i]->name (), "provide_cif_derived_foo") == 0)
             {
-              ACE_DEBUG ((LM_DEBUG, "Navigation get_all_ports - "
+              ACE_DEBUG ((LM_DEBUG, "Navigation test_get_all_ports - "
                                     "Correct facetdescription found <%C>\n",
                                     fds[i]->name ()));
             }
           else
             {
-              ACE_ERROR ((LM_ERROR, "Navigation get_all_ports - "
+              ACE_ERROR ((LM_ERROR, "Navigation test_get_all_ports - "
                                     "Error Incorrect facetdescription found <%C>\n",
                                     fds[i]->name ()));
             }
@@ -292,14 +292,14 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
       rds = cpd->receptacles ();
       if (rds.length () != 0)
         {
-          ACE_ERROR ((LM_ERROR, "Navigation get_all_ports - "
+          ACE_ERROR ((LM_ERROR, "Navigation test_get_all_ports - "
                                 "Error: Found receptacles an a Navigation "
                                 "Component\n"));
           ++ret;
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "Navigation get_all_ports - "
+          ACE_DEBUG ((LM_DEBUG, "Navigation test_get_all_ports - "
                                 "Expected number of Receptacles found\n"));
         }
 #if !defined (CCM_NOEVENT)
@@ -307,14 +307,14 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
       cds = cpd->consumers ();
       if (cds.length () != 0)
         {
-          ACE_ERROR ((LM_ERROR, "Navigation get_all_ports - "
+          ACE_ERROR ((LM_ERROR, "Navigation test_get_all_ports - "
                                 "Error: Found Consumers while not  "
                                 "configured\n"));
           ++ret;
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "Navigation get_all_ports - "
+          ACE_DEBUG ((LM_DEBUG, "Navigation test_get_all_ports - "
                                 "Expected number of Consumers found\n"));
         }
 
@@ -322,7 +322,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
       eds = cpd->emitters ();
       if (eds.length () != 2)
         {
-          ACE_ERROR ((LM_ERROR, "Navigation get_all_ports - "
+          ACE_ERROR ((LM_ERROR, "Navigation test_get_all_ports - "
                                 "Error: Unexpected number of emitters found: "
                                 "expected <2> - received <%d>\n",
                                 eds.length ()));
@@ -330,7 +330,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "Navigation get_all_ports - "
+          ACE_DEBUG ((LM_DEBUG, "Navigation test_get_all_ports - "
                                 "Expected number of Emitters found\n"));
         }
 
@@ -338,7 +338,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
       pds = cpd->publishers ();
       if (pds.length () != 2)
         {
-          ACE_ERROR ((LM_ERROR, "Navigation get_all_ports - "
+          ACE_ERROR ((LM_ERROR, "Navigation test_get_all_ports - "
                                 "Error: Unexpected number publishers found:  "
                                 "expected <2> - received <%d>\n",
                                 pds.length ()));
@@ -346,19 +346,19 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "Navigation get_all_ports - "
+          ACE_DEBUG ((LM_DEBUG, "Navigation test_get_all_ports - "
                                 "Expected number of Publishers found\n"));
         }
 #endif
     }
   catch (const ::CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Navigation get_all_ports");
+      ex._tao_print_exception ("Navigation test_get_all_ports");
       return 1;
     }
   catch (...)
     {
-      ACE_ERROR ((LM_ERROR, "Navigation get_all_ports - "
+      ACE_ERROR ((LM_ERROR, "Navigation test_get_all_ports - "
                             "Error: Unexpected exception caught.\n"));
       return 1;
     }

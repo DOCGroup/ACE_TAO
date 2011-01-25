@@ -597,7 +597,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "Receptacle get_all_ports - "
+          ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_all_ports - "
                                 "Expected number of Facets found\n"));
         }
 #if !defined (CCM_NOEVENT)
@@ -618,13 +618,13 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
               ::ACE_OS::strcmp (rds[i]->name (), "use_multiple_foo") == 0 ||
               ::ACE_OS::strcmp (rds[i]->name (), "use_cif_derived_foo") == 0)
             {
-              ACE_DEBUG ((LM_DEBUG, "Receptacle get_all_ports - "
+              ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_all_ports - "
                                     "Correct receptacledescription found <%C>\n",
                                     rds[i]->name ()));
             }
           else
             {
-              ACE_ERROR ((LM_ERROR, "Receptacle get_all_ports - "
+              ACE_ERROR ((LM_ERROR, "Receptacle test_get_all_ports - "
                                     "Error Incorrect receptacledescription found <%C>\n",
                                     rds[i]->name ()));
               ++ret;
@@ -633,17 +633,17 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
 
       ::Components::ConsumerDescriptions cds;
       cds = cpd->consumers ();
-      if (cds.length () != 1)
+      if (cds.length () != 2)
         {
-          ACE_ERROR ((LM_ERROR, "Receptacle get_all_ports - "
+          ACE_ERROR ((LM_ERROR, "Receptacle test_get_all_ports - "
                                 "Error: Unexpected number of consumers found:  "
-                                "expected <1> - received <%d>\n",
+                                "expected <2> - received <%d>\n",
                                 cds.length ()));
           ++ret;
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "Receptacle get_all_ports - "
+          ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_all_ports - "
                                 "Expected number of Consumers found\n"));
         }
 
@@ -651,14 +651,14 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
       eds = cpd->emitters ();
       if (eds.length () != 0)
         {
-          ACE_ERROR ((LM_ERROR, "Receptacle get_all_ports - "
+          ACE_ERROR ((LM_ERROR, "Receptacle test_get_all_ports - "
                                 "Error: Found Emitters while not  "
                                 "configured\n"));
           ++ret;
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "Receptacle get_all_ports - "
+          ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_all_ports - "
                                 "Expected number of Emitters found\n"));
         }
 
@@ -666,26 +666,26 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
       pds = cpd->publishers ();
       if (pds.length () != 0)
         {
-          ACE_ERROR ((LM_ERROR, "Receptacle get_all_ports - "
+          ACE_ERROR ((LM_ERROR, "Receptacle test_get_all_ports - "
                                 "Error: Found Publishers while not  "
                                 "configured\n"));
           ++ret;
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "Receptacle get_all_ports - "
+          ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_all_ports - "
                                 "Expected number of Publishers found\n"));
         }
 #endif
     }
   catch (const ::CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Receptacle get_all_ports");
+      ex._tao_print_exception ("Receptacle test_get_all_ports");
       return 1;
     }
   catch (...)
     {
-      ACE_ERROR ((LM_ERROR, "Receptacle get_all_ports - "
+      ACE_ERROR ((LM_ERROR, "Receptacle test_get_all_ports - "
                             "Error: Unexpected exception caught.\n"));
       return 1;
     }
@@ -743,13 +743,13 @@ test_get_all_consumers (::Components::CCMObject_ptr cmp)
     {
       ::Components::ConsumerDescriptions_var cds;
       cds = cmp->get_all_consumers ();
-      if (cds->length () != 1)
+      if (cds->length () != 2)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                             "Receptacle test_get_all_consumers - "
                             "Error: get_all_consumers returned an "
                             "unexpected number of consumers: "
-                            "expected <1> - received <%d>\n",
+                            "expected <2> - received <%d>\n",
                             cds->length ()),
                             1);
         }

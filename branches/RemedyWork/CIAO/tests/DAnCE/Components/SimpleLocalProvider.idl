@@ -10,7 +10,7 @@ module Simple
 {
   component SimpleLocalProvider
   {
-    provides LocalTrigger trig;
+    provides LocalTrigger trig_provides;
   };
 
   home SimpleLocalProviderHome manages SimpleLocalProvider

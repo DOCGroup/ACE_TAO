@@ -676,6 +676,45 @@ test_disconnect_consumer_no_connection (::Components::Events_ptr source)
   return 0;
 }
 
+//============================================================
+// test_get_all_consumers
+//============================================================
+int
+test_get_all_consumers (::Components::Events_ptr source)
+{
+  int ret = 0;
+  try
+    {
+      ::Components::ConsumerDescriptions_var cds =
+        source->get_all_consumers ();
+      if (cds->length () != 2)
+        {
+          ACE_ERROR ((LM_ERROR, "Events test_disconnect_consumer_no_connection - "
+                                "Error: Unexpected number of ConsumerDescriptions: "
+                                "expected <2> - received <%d>.\n",
+                                cds->length ()));
+          ++ret;
+        }
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("test_get_all_consumers. Error: ");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_get_all_consumers - "
+                            "Error: Unknown exception caught "
+                            "during connect_consumer.\n"));
+      return 1;
+    }
+  if (ret == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_get_all_consumers - "
+                            "Test passed!\n"));
+    }
+  return ret;
+}
 
 int
 run_test (::Components::Events_ptr source,
@@ -719,6 +758,9 @@ run_test (::Components::Events_ptr source,
 
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_disconnect_consumer_no_connection (source);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_get_all_consumers (source);
     }
   catch (...)
     {
