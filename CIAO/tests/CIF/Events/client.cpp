@@ -783,12 +783,12 @@ test_get_named_consumers (::Components::Events_ptr sink)
                         ::Components::NameList,
                         CORBA::NO_MEMORY ());
       names->length (1);
-      (*names)[0] = CORBA::string_dup ("consume_do_something");
+      (*names)[0] = CORBA::string_dup ("consume_do_something_else");
       ::Components::ConsumerDescriptions_var cds =
         sink->get_named_consumers (names);
       if (cds->length () != 1)
         {
-          ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers - "
+          ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers <1> - "
                                 "Error: Unexpected number of ConsumerDescriptions: "
                                 "expected <1> - received <%d>.\n",
                                 cds->length ()));
@@ -798,13 +798,13 @@ test_get_named_consumers (::Components::Events_ptr sink)
         {
           if (::ACE_OS::strcmp (cds[i]->name (), "consume_do_something") == 0)
             {
-              ACE_DEBUG ((LM_DEBUG, "Events test_get_named_consumers - "
+              ACE_DEBUG ((LM_DEBUG, "Events test_get_named_consumers <1> - "
                                     "Correct consumer description found <%C>\n",
                                     cds[i]->name ()));
             }
           else
             {
-              ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers - "
+              ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers <1> - "
                                     "Error Incorrect consumer description found <%C>\n",
                                     cds[i]->name ()));
               ++ret;
@@ -817,7 +817,7 @@ test_get_named_consumers (::Components::Events_ptr sink)
       cds = sink->get_named_consumers (names);
       if (cds->length () != 2)
         {
-          ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers - "
+          ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers <2> - "
                                 "Error: Unexpected number of ConsumerDescriptions: "
                                 "expected <2> - received <%d>.\n",
                                 cds->length ()));
@@ -828,13 +828,13 @@ test_get_named_consumers (::Components::Events_ptr sink)
           if (::ACE_OS::strcmp (cds[i]->name (), "consume_do_something") == 0 ||
               ::ACE_OS::strcmp (cds[i]->name (), "consume_do_something_else") == 0)
             {
-              ACE_DEBUG ((LM_DEBUG, "Events test_get_named_consumers - "
+              ACE_DEBUG ((LM_DEBUG, "Events test_get_named_consumers <2> - "
                                     "Correct consumer description found <%C>\n",
                                     cds[i]->name ()));
             }
           else
             {
-              ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers - "
+              ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers <2> - "
                                     "Error Incorrect consumer description found <%C>\n",
                                     cds[i]->name ()));
               ++ret;
@@ -968,7 +968,7 @@ test_get_all_emitters (::Components::Events_ptr source)
         {
           ACE_ERROR ((LM_ERROR, "Events test_get_all_emitters - "
                                 "Error: Unexpected number of Emitter "
-                                "descriptions received. expected <2> - "
+                                "descriptions received. expected - "
                                 "received <%u>\n",
                                 eds->length ()));
           ++ret;
@@ -1006,6 +1006,107 @@ test_get_all_emitters (::Components::Events_ptr source)
   if (ret == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "Events test_get_all_emitters - "
+                            "Test passed!\n"));
+    }
+  return ret;
+}
+#endif
+
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
+//============================================================
+// test_get_named_emitters
+//============================================================
+int
+test_get_named_emitters (::Components::Events_ptr sink)
+{
+  int ret = 0;
+  try
+    {
+      ::Components::NameList_var names;
+      ACE_NEW_THROW_EX (names,
+                        ::Components::NameList,
+                        CORBA::NO_MEMORY ());
+      names->length (1);
+      (*names)[0] = CORBA::string_dup ("emit_do_something_else");
+      ::Components::EmitterDescriptions_var eds =
+        sink->get_named_emitters (names);
+      if (eds->length () != 1)
+        {
+          ACE_ERROR ((LM_ERROR, "Events test_get_named_emitters <1> - "
+                                "Error: Unexpected number of ConsumerDescriptions: "
+                                "expected <1> - received <%d>.\n",
+                                eds->length ()));
+          ++ret;
+        }
+      for (::CORBA::ULong i = 0UL; i < eds->length (); ++i)
+        {
+          if (::ACE_OS::strcmp (eds[i]->name (), "consume_do_something") == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG, "Events test_get_named_emitters <1> - "
+                                    "Correct emitter description found <%C>\n",
+                                    eds[i]->name ()));
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR, "Events test_get_named_emitters <1> - "
+                                    "Error Incorrect emitter description found <%C>\n",
+                                    eds[i]->name ()));
+              ++ret;
+            }
+        }
+
+      names->length (2);
+      (*names)[0] = CORBA::string_dup ("emit_do_something");
+      (*names)[1] = CORBA::string_dup ("emit_do_something_else");
+      eds = sink->get_named_emitters (names);
+      if (eds->length () != 2)
+        {
+          ACE_ERROR ((LM_ERROR, "Events test_get_named_emitters <2> - "
+                                "Error: Unexpected number of EmitterDescriptions: "
+                                "expected <2> - received <%d>.\n",
+                                eds->length ()));
+          ++ret;
+        }
+      for (::CORBA::ULong i = 0UL; i < eds->length (); ++i)
+        {
+          if (::ACE_OS::strcmp (eds[i]->name (), "emit_do_something") == 0 ||
+              ::ACE_OS::strcmp (eds[i]->name (), "emit_do_something_else") == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG, "Events test_get_named_emitters <2> - "
+                                    "Correct emitter description found <%C>\n",
+                                    eds[i]->name ()));
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR, "Events test_get_named_emitters <2> - "
+                                    "Error Incorrect emitter description found <%C>\n",
+                                    eds[i]->name ()));
+              ++ret;
+            }
+        }
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_get_named_emitters - "
+                            "Error: InvalidName exception caught "
+                            "during get_named_emitters.\n"));
+      return 1;
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("test_get_named_emitters. Error: ");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_get_named_emitters - "
+                            "Error: Unknown exception caught "
+                            "during get_named_emitters.\n"));
+      return 1;
+    }
+  if (ret == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_get_named_emitters - "
                             "Test passed!\n"));
     }
   return ret;
@@ -1069,6 +1170,12 @@ run_test (::Components::Events_ptr source,
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_get_all_emitters (source);
 #endif
+
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_get_named_emitters (source);
+#endif
+
     }
   catch (...)
     {

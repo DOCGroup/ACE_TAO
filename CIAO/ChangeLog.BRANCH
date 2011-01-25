@@ -1,3 +1,11 @@
+Tue Jan 25 14:31:26 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Events/client.cpp:
+          Added some more tests.
+
+        * tests/CIF/Receptacle/client.cpp:
+          Changed the order of the names in the get_named_xxx tests.
+
 Tue Jan 25 14:06:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Events/client.cpp:

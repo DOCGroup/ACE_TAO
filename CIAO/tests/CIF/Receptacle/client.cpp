@@ -409,7 +409,7 @@ test_get_named_receptacles (::Components::Receptacles_ptr rec)
                     ::Components::NameList,
                     ::CORBA::NO_MEMORY ());
   one_name->length (1);
-  (*one_name)[0] = ::CORBA::string_dup ("use_cif_foo");
+  (*one_name)[0] = ::CORBA::string_dup ("use_cif_derived_foo");
 
   try
     {
@@ -786,7 +786,7 @@ test_get_named_consumers (::Components::CCMObject_ptr cmp)
                         ::Components::NameList,
                         ::CORBA::NO_MEMORY ());
       one_name->length (1);
-      (*one_name)[0] = ::CORBA::string_dup ("consume_do_something");
+      (*one_name)[0] = ::CORBA::string_dup ("consume_do_something_else");
       cds = cmp->get_named_consumers (one_name);
       if (cds->length () != 1)
         {
