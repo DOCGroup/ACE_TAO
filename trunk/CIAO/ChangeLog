@@ -1,3 +1,14 @@
+Tue Jan 25 11:01:57 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.h:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Use the proper endpoint to disconnect a non local connection.
+          Also catch a transient exception because of the fact that dance shuts
+          down the locality managers simultaniously.
+
+        * connectors/dds4ccm/tests/TwoTopicsDifferentNs/Connector/Connector.mpc:
+          Removed after and lib declarations.
+
 Tue Jan 25 10:27:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Deployment/Handlers/Connection_Handler.cpp:
