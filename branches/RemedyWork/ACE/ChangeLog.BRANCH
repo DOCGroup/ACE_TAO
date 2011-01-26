@@ -1,3 +1,20 @@
+Wed Jan 26 13:53:27 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Lock_Adapter_T.h:
+          Layout, doxygen changes
+
+        * ace/Lock_Adapter_T.inl:
+        * ace/Lock_Adapter_T.cpp:
+          Moved constructor to inline, the old compiler mentioned is deprecated
+          a long time ago
+
+        * ace/QtReactor/QtReactor.h:
+          Removed Qt3 support
+
+        * ace/QtReactor/ace_qt3reactor.mpc:
+        * bin/MakeProjectCreator/config/ace_qt3.mpb:
+        * bin/MakeProjectCreator/config/ace_qtreactor.mpb:
+          Removed these files, qt3 support is removed
 
 Local Variables:
 mode: change-log
