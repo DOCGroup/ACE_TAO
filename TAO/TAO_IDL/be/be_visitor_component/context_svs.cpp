@@ -335,13 +335,15 @@ be_visitor_context_svs::gen_uses_simplex (AST_Type *obj,
       << node_->local_name () << "_Context::disconnect_"
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "if ( ::CORBA::is_nil (this->ciao_uses_"
-      << port_name << "_.in ()))" << be_idt_nl
+      << "::" << fname << "_var ciao_uses_" << port_name << " =" << be_idt_nl
+      << "this->ciao_uses_" << port_name << "_._retn ();" << be_uidt_nl
+      << "if ( ::CORBA::is_nil (ciao_uses_"
+      << port_name << ".in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::NoConnection ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "return this->ciao_uses_" << port_name
-      << "_._retn ();" << be_uidt_nl
+      << "return ciao_uses_" << port_name
+      << "._retn ();" << be_uidt_nl
       << "}";
 }
 
