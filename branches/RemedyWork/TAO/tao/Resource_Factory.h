@@ -232,9 +232,6 @@ public:
   /// Creates the lock for the CORBA Object
   virtual ACE_Lock *create_corba_object_lock (void);
 
-  /// Creates the configurable refcount for the CORBA Object
-  virtual TAO_Configurable_Refcount create_corba_object_refcount (void);
-
   /// Creates the flushing strategy.  The new instance is owned by the
   /// caller.
   virtual TAO_Flushing_Strategy *create_flushing_strategy (void) = 0;

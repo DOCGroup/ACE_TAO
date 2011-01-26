@@ -1105,21 +1105,6 @@ TAO_Default_Resource_Factory::create_corba_object_lock (void)
   return the_lock;
 }
 
-TAO_Configurable_Refcount
-TAO_Default_Resource_Factory::create_corba_object_refcount (void)
-{
-  switch (this->corba_object_lock_type_)
-    {
-      case TAO_NULL_LOCK:
-        return TAO_Configurable_Refcount (
-                       TAO_Configurable_Refcount::TAO_NULL_LOCK);
-      case TAO_THREAD_LOCK:
-      default:
-        return TAO_Configurable_Refcount (
-                       TAO_Configurable_Refcount::TAO_THREAD_LOCK);
-    }
-}
-
 TAO_Flushing_Strategy *
 TAO_Default_Resource_Factory::create_flushing_strategy (void)
 {

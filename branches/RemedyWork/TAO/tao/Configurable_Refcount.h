@@ -37,14 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_Configurable_Refcount
 {
 public:
-  enum Lock_Type
-  {
-    TAO_NULL_LOCK,
-    TAO_THREAD_LOCK
-  };
-
-  TAO_Configurable_Refcount (Lock_Type type = TAO_THREAD_LOCK,
-                             unsigned long value = 1);
+  TAO_Configurable_Refcount (unsigned long value = 1);
 
   unsigned long increment (void);
   unsigned long decrement (void);
@@ -52,11 +45,8 @@ public:
   unsigned long value (void) const;
 
 private:
-  Lock_Type type_;
-  ACE_Atomic_Op<ACE_SYNCH_NULL_MUTEX, unsigned long> null_refcount_;
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> mutex_refcount_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
 };
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

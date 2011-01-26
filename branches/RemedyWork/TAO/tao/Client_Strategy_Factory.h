@@ -57,9 +57,6 @@ public:
    */
   virtual ACE_Lock* create_profile_lock (void);
 
-  /// Create the refcount for the profile
-  virtual TAO_Configurable_Refcount create_profile_refcount (void);
-
   /// Create the correct client request muxing strategy.
   virtual TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport);
 

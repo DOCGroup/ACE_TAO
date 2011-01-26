@@ -42,7 +42,8 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
                        CORBA::Boolean collocated,
                        TAO_Abstract_ServantBase * servant,
                        TAO_ORB_Core *orb_core)
-  : is_local_ (false)
+  : refcount_ (1)
+    , is_local_ (false)
     , is_evaluated_ (true)
     , ior_ (0)
     , orb_core_ (orb_core)
@@ -60,9 +61,6 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
   this->object_init_lock_ =
     this->orb_core_->resource_factory ()->create_corba_object_lock ();
 
-  this->refcount_ =
-    this->orb_core_->resource_factory ()->create_corba_object_refcount ();
-
   // Set the collocation marker on the stub. This may not be news to it.
   // This may also change the stub's object proxy broker.
   this->protocol_proxy_->is_collocated (collocated);
@@ -73,7 +71,8 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
 
 CORBA::Object::Object (IOP::IOR *ior,
                        TAO_ORB_Core *orb_core)
-  : is_local_ (false)
+  : refcount_ (1)
+    , is_local_ (false)
     , is_evaluated_ (false)
     , ior_ (ior)
     , orb_core_ (orb_core)
@@ -82,9 +81,6 @@ CORBA::Object::Object (IOP::IOR *ior,
 {
   this->object_init_lock_ =
     this->orb_core_->resource_factory ()->create_corba_object_lock ();
-
-  this->refcount_ =
-    this->orb_core_->resource_factory ()->create_corba_object_refcount ();
 }
 
 // Too lazy to do this check in every method properly! This is useful

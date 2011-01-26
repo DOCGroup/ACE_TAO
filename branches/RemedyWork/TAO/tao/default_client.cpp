@@ -268,21 +268,6 @@ TAO_Default_Client_Strategy_Factory::create_profile_lock (void)
   return the_lock;
 }
 
-TAO_Configurable_Refcount
-TAO_Default_Client_Strategy_Factory::create_profile_refcount (void)
-{
-  switch (this->profile_lock_type_)
-    {
-    case TAO_NULL_LOCK:
-      return TAO_Configurable_Refcount (
-                     TAO_Configurable_Refcount::TAO_NULL_LOCK);
-    case TAO_THREAD_LOCK:
-    default:
-      return TAO_Configurable_Refcount (
-                     TAO_Configurable_Refcount::TAO_THREAD_LOCK);
-    }
-}
-
 /// Create the correct client transport muxing strategy.
 TAO_Transport_Mux_Strategy *
 TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (TAO_Transport *transport)

@@ -19,6 +19,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::AbstractBase::AbstractBase (void)
   : is_objref_ (false)
   , is_collocated_ (false)
+  , refcount_ (1)
   , servant_ (0)
   , equivalent_obj_ (CORBA::Object::_nil ())
 {
@@ -27,6 +28,7 @@ CORBA::AbstractBase::AbstractBase (void)
 CORBA::AbstractBase::AbstractBase (const CORBA::AbstractBase &rhs)
   : is_objref_ (rhs.is_objref_)
   , is_collocated_ (rhs.is_collocated_)
+  , refcount_ (1)
   , servant_ (rhs.servant_)
   , equivalent_obj_ (CORBA::Object::_nil ())
 {
@@ -35,12 +37,6 @@ CORBA::AbstractBase::AbstractBase (const CORBA::AbstractBase &rhs)
       // Need to duplicate equivalent obj only if it's objref.
       this->equivalent_obj_ =
         CORBA::Object::_duplicate (rhs.equivalent_obj_.in ());
-
-      if (!CORBA::is_nil (this->equivalent_obj_.in ()))
-        {
-          this->refcount_ = this->equivalent_obj_->orb_core ()->
-            resource_factory ()->create_corba_object_refcount ();
-        }
     }
 }
 
@@ -49,17 +45,10 @@ CORBA::AbstractBase::AbstractBase (TAO_Stub * protocol_proxy,
                                    TAO_Abstract_ServantBase * servant)
   : is_objref_ (true)
   , is_collocated_ (collocated)
+  , refcount_ (1)
   , servant_ (servant)
   , equivalent_obj_ (this->create_object (protocol_proxy))
 {
-  if (this->is_objref_)
-    {
-      if (!CORBA::is_nil (this->equivalent_obj_.in ()))
-        {
-          this->refcount_ = this->equivalent_obj_->orb_core ()->
-            resource_factory ()->create_corba_object_refcount ();
-        }
-    }
 }
 
 CORBA::AbstractBase::~AbstractBase (void)
