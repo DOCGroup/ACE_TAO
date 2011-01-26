@@ -710,7 +710,7 @@ test_disconnect_consumer_no_connection (::Components::Events_ptr source)
 }
 #endif
 
-#if !defined (CCM_NOEVENT)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
 //============================================================
 // test_get_all_consumers
 //============================================================
@@ -776,7 +776,7 @@ test_get_all_consumers (::Components::Events_ptr sink)
 }
 #endif
 
-#if !defined (CCM_NOEVENT)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
 //============================================================
 // test_get_named_consumers
 //============================================================
@@ -891,7 +891,7 @@ test_get_named_consumers (::Components::Events_ptr sink)
 }
 #endif
 
-#if !defined (CCM_NOEVENT)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
 //============================================================
 // test_consumer_of_consumer
 //============================================================
@@ -958,7 +958,7 @@ test_consumer_of_consumer (::Components::Events_ptr source,
 }
 #endif
 
-#if !defined (CCM_NOEVENT)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
 //============================================================
 // test_get_named_consumers_invalid_name
 //============================================================
@@ -1040,7 +1040,7 @@ test_get_named_consumers_invalid_name (::Components::Events_ptr sink)
 }
 #endif
 
-#if !defined (CCM_NOEVENT)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
 //============================================================
 // test_get_all_emitters
 //============================================================
@@ -1663,6 +1663,9 @@ run_test (::Components::Events_ptr source,
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_disconnect_consumer_no_connection (source);
 
+#endif
+
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_get_all_consumers (sink);
 
@@ -1677,9 +1680,7 @@ run_test (::Components::Events_ptr source,
 
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_get_all_emitters (source);
-#endif
 
-#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_get_named_emitters (source);
 
@@ -1700,7 +1701,6 @@ run_test (::Components::Events_ptr source,
 
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_consumers_of_publishers (source, sink);
-
 #endif
 
     }
