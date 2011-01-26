@@ -177,7 +177,6 @@ public:
   virtual int max_muxed_connections (void) const;
   virtual ACE_Lock *create_cached_connection_lock (void);
   virtual ACE_Lock *create_object_key_table_lock (void);
-  virtual TAO_Configurable_Refcount create_corba_object_refcount (void);
   virtual ACE_Lock *create_corba_object_lock (void);
   virtual int locked_transport_cache (void);
   virtual TAO_Flushing_Strategy *create_flushing_strategy (void);

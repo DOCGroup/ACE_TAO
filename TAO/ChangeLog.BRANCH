@@ -1,3 +1,21 @@
+Wed Jan 26 13:39:14 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Client_Strategy_Factory.h:
+        * tao/Client_Strategy_Factory.cpp:
+        * tao/Configurable_Refcount.h:
+        * tao/Configurable_Refcount.inl:
+        * tao/Object.inl:
+        * tao/Object.cpp:
+        * tao/Profile.cpp:
+        * tao/Resource_Factory.h:
+        * tao/Resource_Factory.cpp:
+        * tao/Valuetype/AbstractBase.cpp:
+        * tao/default_client.h:
+        * tao/default_client.cpp:
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+          Simplified refcounts, this improves the runtime performance of TAO
+
 Wed Jan 26 10:44:30 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/context_svs.cpp:
