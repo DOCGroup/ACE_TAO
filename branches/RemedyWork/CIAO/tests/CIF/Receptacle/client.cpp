@@ -990,17 +990,17 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
     }
 
   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
-  ACE_DEBUG ((LM_DEBUG, "SUMMARY : \n"));
+  ACE_DEBUG ((LM_DEBUG, "SUMMARY : "));
   if (ret != 0)
     {
-      ACE_ERROR ((LM_ERROR, "\tReceptacle main - "
-              " %d error(s) found during tests.\n",
+      ACE_ERROR ((LM_ERROR, "Receptacle main - "
+              " %d error(s) found during tests.\n\n",
               ret));
     }
   else
     {
-      ACE_ERROR ((LM_ERROR, "\tReceptacle main - "
-              " No problems found during tests.\n"));
+      ACE_ERROR ((LM_ERROR, "Receptacle main - "
+              " No problems found during tests.\n\n"));
     }
   return ret;
 }

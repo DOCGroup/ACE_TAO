@@ -1,3 +1,13 @@
+Wed Jan 26 12:23:15 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Servants/Servant_Impl_Base.cpp:
+          Finished implementation of lookup_publish_description.
+
+        * tests/CIF/Events/client.cpp:
+        * tests/CIF/Navigation/client.cpp:
+        * tests/CIF/Receptacle/client.cpp:
+          Optimized test output.
+
 Wed Jan 26 11:29:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/DAnCE/Components/SimpleConsumer_exec.h:
