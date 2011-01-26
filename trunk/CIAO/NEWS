@@ -6,7 +6,7 @@ USER VISIBLE CHANGES BETWEEN CIAO-1.0.0 and CIAO-1.0.1
 . Improved disconnect of consumers and publishers.
 
 . Resolved some memory leaks in the DDS4CCM library. Therefor a lot of tests were
-  rewritten, using the generated executor implemtation.
+  rewritten, using the generated executor implementation.
 
 . Improved doxygen documentation.
 
