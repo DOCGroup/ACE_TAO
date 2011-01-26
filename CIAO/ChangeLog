@@ -1,3 +1,8 @@
+Wed Jan 26 16:23:17 UTC 2011  Martin Corino  <corino_m@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added new AMI4CCM test.
+
 Wed Jan 26 15:23:29 UTC 2011  Martin Corino  <corino_m@remedy.nl>
 
         * connectors/ami4ccm/tests/NoConnection:
