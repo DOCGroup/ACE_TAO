@@ -745,6 +745,13 @@ test_get_all_consumers (::Components::Events_ptr sink)
                                     cds[i]->name ()));
               ++ret;
             }
+          if (::CORBA::is_nil (cds[i]->consumer ()))
+            {
+              ACE_ERROR ((LM_ERROR, "Events test_get_all_consumers - "
+                                    "Error: Consumer of %C seems nil.\n",
+                                    cds[i]->name ()));
+              ++ret;
+            }
         }
     }
   catch (const ::CORBA::Exception &ex)
@@ -809,6 +816,13 @@ test_get_named_consumers (::Components::Events_ptr sink)
                                     cds[i]->name ()));
               ++ret;
             }
+          if (::CORBA::is_nil (cds[i]->consumer ()))
+            {
+              ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers <1> - "
+                                    "Error: Consumer of %C seems nil.\n",
+                                    cds[i]->name ()));
+              ++ret;
+            }
         }
 
       names->length (2);
@@ -836,6 +850,13 @@ test_get_named_consumers (::Components::Events_ptr sink)
             {
               ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers <2> - "
                                     "Error Incorrect consumer description found <%C>\n",
+                                    cds[i]->name ()));
+              ++ret;
+            }
+          if (::CORBA::is_nil (cds[i]->consumer ()))
+            {
+              ACE_ERROR ((LM_ERROR, "Events test_get_named_consumers <2> - "
+                                    "Error: Consumer of %C seems nil.\n",
                                     cds[i]->name ()));
               ++ret;
             }
@@ -1613,17 +1634,17 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
     }
 
   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
-  ACE_DEBUG ((LM_DEBUG, "SUMMARY : \n"));
+  ACE_DEBUG ((LM_DEBUG, "SUMMARY : "));
   if (ret != 0)
     {
-      ACE_ERROR ((LM_ERROR, "\tEvents main - "
-              " %d error(s) found during tests.\n",
+      ACE_ERROR ((LM_ERROR, "Events main - "
+              " %d error(s) found during tests.\n\n",
               ret));
     }
   else
     {
-      ACE_ERROR ((LM_ERROR, "\tEvents main - "
-              " No problems found during tests.\n"));
+      ACE_ERROR ((LM_ERROR, "Events main - "
+              " No problems found during tests.\n\n"));
     }
   return ret;
 }

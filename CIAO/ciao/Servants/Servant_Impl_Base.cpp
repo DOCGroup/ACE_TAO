@@ -380,8 +380,7 @@ namespace CIAO
                               CORBA::NO_MEMORY ());
             pd->name (publisher_desc->name ());
             pd->type_id (publisher_desc->type_id ());
-
-            //TODO copy SubscriberDescriptions.
+            pd->consumers (publisher_desc->consumers ());
             ::Components::PublisherDescription_var safe = pd;
             return safe._retn ();
           }
