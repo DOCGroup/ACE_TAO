@@ -1,3 +1,14 @@
+Wed Jan 26 11:21:00 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Servants/Servant_Impl_Base.cpp:
+          Implemented lookup_publisher_description
+
+        * tests/CIF/Component/CIF_Component.idl:
+          Layout changes.
+
+        * tests/CIF/Events/client.cpp:
+          implemented publisher tests.
+
 Wed Jan 26 07:57:05 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Servants/Servant_Impl_Base.cpp:
