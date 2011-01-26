@@ -1,3 +1,11 @@
+Wed Jan 26 10:44:30 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+          Fixed race condition in the disconnect
+
+        * tao/SystemException.cpp:
+          Layout change
+
 Tue Jan 25 14:01:47 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
