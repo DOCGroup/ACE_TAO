@@ -550,17 +550,4 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
   return (CORBA::Boolean) cdr.good_bit ();
 }
 
-void
-TAO_Stub::_incr_refcnt (void)
-{
-  ++this->refcount_;
-}
-
-void
-TAO_Stub::_decr_refcnt (void)
-{
-  if (--this->refcount_ == 0)
-    delete this;
-}
-
 TAO_END_VERSIONED_NAMESPACE_DECL

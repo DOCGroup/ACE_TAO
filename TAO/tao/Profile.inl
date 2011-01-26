@@ -67,20 +67,20 @@ TAO_Profile::object_key (void) const
 ACE_INLINE unsigned long
 TAO_Profile::_incr_refcnt (void)
 {
-  return this->refcount_.increment ();
+  return ++this->refcount_;
 }
 
 ACE_INLINE unsigned long
 TAO_Profile::_decr_refcnt (void)
 {
-  unsigned long count = this->refcount_.decrement ();
-  if (count != 0)
-    return count;
-
-  // refcount is 0, so delete us!
-  // delete will call our ~ destructor which in turn deletes stuff.
-  delete this;
-  return 0;
+  unsigned long count = --this->refcount_;
+  if (count == 0)
+    {
+      // refcount is 0, so delete us!
+      // delete will call our ~ destructor which in turn deletes stuff.
+      delete this;
+    }
+  return count;
 }
 
 
