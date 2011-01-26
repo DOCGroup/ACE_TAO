@@ -1,3 +1,8 @@
+Wed Jan 26 20:17:28 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix_ibm.GNU: If XL C/C++ 10.1 is used,
+          use the same compiler options as for XL C/C++ 9.
+
 Fri Jan 21 17:04:29 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-11.00.h: Set ACE_LACKS_(STR|WCS)TO[U]LL when
