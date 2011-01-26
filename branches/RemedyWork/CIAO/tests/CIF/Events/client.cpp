@@ -796,7 +796,7 @@ test_get_named_consumers (::Components::Events_ptr sink)
         }
       for (::CORBA::ULong i = 0UL; i < cds->length (); ++i)
         {
-          if (::ACE_OS::strcmp (cds[i]->name (), "consume_do_something") == 0)
+          if (::ACE_OS::strcmp (cds[i]->name (), "consume_do_something_else") == 0)
             {
               ACE_DEBUG ((LM_DEBUG, "Events test_get_named_consumers <1> - "
                                     "Correct consumer description found <%C>\n",
@@ -1017,7 +1017,7 @@ test_get_all_emitters (::Components::Events_ptr source)
 // test_get_named_emitters
 //============================================================
 int
-test_get_named_emitters (::Components::Events_ptr sink)
+test_get_named_emitters (::Components::Events_ptr source)
 {
   int ret = 0;
   try
@@ -1029,7 +1029,7 @@ test_get_named_emitters (::Components::Events_ptr sink)
       names->length (1);
       (*names)[0] = CORBA::string_dup ("emit_do_something_else");
       ::Components::EmitterDescriptions_var eds =
-        sink->get_named_emitters (names);
+        source->get_named_emitters (names);
       if (eds->length () != 1)
         {
           ACE_ERROR ((LM_ERROR, "Events test_get_named_emitters <1> - "
@@ -1040,7 +1040,7 @@ test_get_named_emitters (::Components::Events_ptr sink)
         }
       for (::CORBA::ULong i = 0UL; i < eds->length (); ++i)
         {
-          if (::ACE_OS::strcmp (eds[i]->name (), "consume_do_something") == 0)
+          if (::ACE_OS::strcmp (eds[i]->name (), "emit_do_something_else") == 0)
             {
               ACE_DEBUG ((LM_DEBUG, "Events test_get_named_emitters <1> - "
                                     "Correct emitter description found <%C>\n",
@@ -1058,7 +1058,7 @@ test_get_named_emitters (::Components::Events_ptr sink)
       names->length (2);
       (*names)[0] = CORBA::string_dup ("emit_do_something");
       (*names)[1] = CORBA::string_dup ("emit_do_something_else");
-      eds = sink->get_named_emitters (names);
+      eds = source->get_named_emitters (names);
       if (eds->length () != 2)
         {
           ACE_ERROR ((LM_ERROR, "Events test_get_named_emitters <2> - "
