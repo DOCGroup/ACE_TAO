@@ -334,6 +334,8 @@ project (Bug_2980_Regression_Dll): acelib {
     Test_Output.cpp
     Bug_2980_Regression_Dll.cpp
   }
+  Resource_Files {
+  }
 }
 
 project(Bug_3102_Regression_Test) : acetest {
