@@ -1,3 +1,25 @@
+Wed Jan 26 15:23:29 UTC 2011  Martin Corino  <corino_m@remedy.nl>
+
+        * connectors/ami4ccm/tests/NoConnection:
+        * connectors/ami4ccm/tests/NoConnection/Base:
+        * connectors/ami4ccm/tests/NoConnection/Base/HelloT.idl:
+        * connectors/ami4ccm/tests/NoConnection/Base/HelloT.mpc:
+        * connectors/ami4ccm/tests/NoConnection/Receiver:
+        * connectors/ami4ccm/tests/NoConnection/Receiver/HelloT_Receiver.idl:
+        * connectors/ami4ccm/tests/NoConnection/Receiver/HelloT_Receiver.mpc:
+        * connectors/ami4ccm/tests/NoConnection/Receiver/HelloT_Receiver_exec.h:
+        * connectors/ami4ccm/tests/NoConnection/Receiver/HelloT_Receiver_exec.cpp:
+        * connectors/ami4ccm/tests/NoConnection/Sender:
+        * connectors/ami4ccm/tests/NoConnection/Sender/HelloT_Sender.idl:
+        * connectors/ami4ccm/tests/NoConnection/Sender/HelloT_Sender.mpc:
+        * connectors/ami4ccm/tests/NoConnection/Sender/HelloT_Sender_exec.h:
+        * connectors/ami4ccm/tests/NoConnection/Sender/HelloT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/NoConnection/descriptors:
+        * connectors/ami4ccm/tests/NoConnection/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/NoConnection/descriptors/run_test.pl:
+          Added new test to verify required exception when AMI facet
+          not connected.
+
 Thu Jan 20 11:42:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.
