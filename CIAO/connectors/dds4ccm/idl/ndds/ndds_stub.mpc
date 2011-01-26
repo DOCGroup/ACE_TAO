@@ -47,8 +47,8 @@ project (CIAO_NDDS_idl_install_only) {
 
   verbatim(gnuace, bottom) {
 "install:"
-"   $(MKDIR) $(INSTALL_PREFIX)/share/ciao/connectors/dds4ccm/idl/ndds"
-"   cp *.idl $(INSTALL_PREFIX)/share/ciao/connectors/dds4ccm/idl/ndds"
+"	$(MKDIR) $(INSTALL_PREFIX)/share/ciao/connectors/dds4ccm/idl/ndds"
+"	cp *.idl $(INSTALL_PREFIX)/share/ciao/connectors/dds4ccm/idl/ndds"
   }
 
 }
