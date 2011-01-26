@@ -1,3 +1,9 @@
+Wed Jan 26 07:57:05 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Servants/Servant_Impl_Base.cpp:
+        * tests/CIF/Events/client.cpp:
+          Implemented and test get_named_emitters.
+
 Tue Jan 25 14:31:26 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Events/client.cpp:

@@ -193,30 +193,28 @@ namespace CIAO
       const ::Components::NameList & names)
   {
     CIAO_TRACE("Servant_Impl_Base::get_named_emitters");
-    ::Components::EmitterDescriptions_var retval;
+    ::Components::EmitterDescriptions *retval = 0;
     ACE_NEW_THROW_EX (retval,
                       ::Components::EmitterDescriptions,
                       ::CORBA::NO_MEMORY ());
 
-    retval->length (names.length ());
-    ::CORBA::ULong count = 0UL;
+    ::Components::EmitterDescriptions_var safe_retval = retval;
+    const ::CORBA::ULong len = names.length ();
+    safe_retval->length (len);
 
-    for (::CORBA::ULong name = 0UL;
-         name < names.length ();
-         ++name)
+    for (::CORBA::ULong i = 0UL; i < len; ++i)
       {
         ::Components::EmitterDescription * desc =
-          this->lookup_emitter_description (names[name].in ());
+          this->lookup_emitter_description (names[i].in ());
         if (desc)
           {
-            retval[count++] = desc;
+            safe_retval[i] = desc;
           }
         else
           {
             throw ::Components::InvalidName ();
           }
       }
-    ::Components::EmitterDescriptions_var safe_retval = retval;
     return safe_retval._retn ();
   }
 #endif
@@ -416,7 +414,13 @@ namespace CIAO
             ACE_NEW_THROW_EX (ed,
                               ::OBV_Components::EmitterDescription (),
                               CORBA::NO_MEMORY ());
-            ::Components::EmitterDescription_var safe = ed;
+
+            ed->name (emitter_desc->name ());
+            ed->type_id (emitter_desc->type_id ());
+            ed->consumer (emitter_desc->consumer());
+
+           ::Components::EmitterDescription_var safe = ed;
+
             return safe._retn ();
           }
       }
