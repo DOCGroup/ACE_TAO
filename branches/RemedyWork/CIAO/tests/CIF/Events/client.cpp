@@ -892,6 +892,73 @@ test_get_named_consumers (::Components::Events_ptr sink)
 
 #if !defined (CCM_NOEVENT)
 //============================================================
+// test_consumer_of_consumer
+//============================================================
+int
+test_consumer_of_consumer (::Components::Events_ptr source,
+                           ::Components::Events_ptr sink)
+{
+  int ret = 0;
+
+  try
+    {
+      connect_consumer (source, sink, "emit_do_something");
+      ::Components::NameList_var names;
+      ACE_NEW_THROW_EX (names,
+                        ::Components::NameList,
+                        CORBA::NO_MEMORY ());
+      names->length (1);
+      (*names)[0] = CORBA::string_dup ("consume_do_something");
+      ::Components::ConsumerDescriptions_var cds =
+        sink->get_named_consumers (names);
+      if (cds->length () != 1)
+        {
+          ACE_ERROR ((LM_ERROR, "Events test_consumer_of_consumer - "
+                                "Error: Unexpected number of consumer "
+                                "descriptions found. expected <1> - "
+                                "received <%u>\n",
+                                cds->length ()));
+          return 1;
+        }
+      if (::CORBA::is_nil (cds[0UL]->consumer()))
+        {
+          ACE_ERROR ((LM_ERROR, "Events test_consumer_of_consumer - "
+                                "Error: Consumer of consumer description "
+                                "seems to be nil.\n"));
+          return 1;
+        }
+      disconnect_consumer (source, "emit_do_something");
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_consumer_of_consumer - "
+                            "Error: Unexpected InvalidName exception caught"
+                            "during get_named_consumers.\n"));
+      ++ret;
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("test_consumer_of_consumer . Error: ");
+      ++ret;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_consumer_of_consumer - "
+                            "Error: Unknown exception caught "
+                            "during get_named_consumers.\n"));
+      ++ret;
+    }
+  if (ret == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_get_named_consumers - "
+                            "Test passed!\n"));
+    }
+  return ret;
+}
+#endif
+
+#if !defined (CCM_NOEVENT)
+//============================================================
 // test_get_named_consumers_invalid_name
 //============================================================
 int
@@ -1128,6 +1195,70 @@ test_get_named_emitters (::Components::Events_ptr source)
   if (ret == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "Events test_get_named_emitters - "
+                            "Test passed!\n"));
+    }
+  return ret;
+}
+#endif
+
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
+//============================================================
+// test_consumer_of_emitter
+//============================================================
+int
+test_consumer_of_emitter (::Components::Events_ptr source,
+                          ::Components::Events_ptr sink)
+{
+  int ret = 0;
+  try
+    {
+      connect_consumer (source, sink, "emit_do_something");
+      ::Components::NameList_var names;
+      ACE_NEW_THROW_EX (names,
+                        ::Components::NameList,
+                        CORBA::NO_MEMORY ());
+      names->length (1);
+      (*names)[0] = CORBA::string_dup ("emit_do_something");
+      ::Components::EmitterDescriptions_var eds =
+        source->get_named_emitters (names);
+      if (eds->length () != 1)
+        {
+          ACE_ERROR ((LM_ERROR, "Events test_consumer_of_emitter - "
+                                "Error: Unexpected number of ConsumerDescriptions: "
+                                "expected <1> - received <%d>.\n",
+                                eds->length ()));
+          return 1;
+        }
+      if (::CORBA::is_nil (eds[0UL]->consumer ()))
+        {
+          ACE_ERROR ((LM_ERROR, "Events test_consumer_of_emitter - "
+                                "Error: Consumer of Emmitter description "
+                                "seems nil.\n"));
+        }
+      disconnect_consumer (source, "emit_do_something");
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_consumer_of_emitter - "
+                            "Error: InvalidName exception caught "
+                            "during get_named_emitters.\n"));
+      return 1;
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("test_consumer_of_emitter. Error: ");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_consumer_of_emitter - "
+                            "Error: Unknown exception caught "
+                            "during get_named_emitters.\n"));
+      return 1;
+    }
+  if (ret == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_consumer_of_emitter - "
                             "Test passed!\n"));
     }
   return ret;
@@ -1541,6 +1672,9 @@ run_test (::Components::Events_ptr source,
       ret += test_get_named_consumers (sink);
 
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_consumer_of_consumer (source, sink);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_get_named_consumers_invalid_name (sink);
 
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
@@ -1550,6 +1684,9 @@ run_test (::Components::Events_ptr source,
 #if !defined (CCM_LW) && !defined (CCM_NOEVENT)
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_get_named_emitters (source);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_consumer_of_emitter (source, sink);
 
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_get_named_emitters_invalid_name (source);
@@ -1617,7 +1754,6 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
                             1);
         }
       ret = run_test (source.in (), sink.in ());
-      //::Components::CCMObject_var prov_cmp = ::Components::CCMObject::_narrow (prov);
 
       cmd.shutdown ();
     }

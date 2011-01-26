@@ -1,3 +1,8 @@
+Wed Jan 26 13:00:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Events/client.cpp:
+          Added some more additional tests.
+
 Wed Jan 26 12:23:15 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Servants/Servant_Impl_Base.cpp:
