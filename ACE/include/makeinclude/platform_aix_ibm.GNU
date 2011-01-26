@@ -111,6 +111,10 @@ else
       # try-catch blocks.
       CCFLAGS     += -qeh=v6
     else
+      # For now, use the V9 settings for V10.1
+      ifeq ($(XLCVERSION),0x0a01)
+        XLCVERSION = 0x0900
+      endif
       ifeq ($(XLCVERSION),0x0900)
         CCFLAGS += -qflag=w:w
         ifeq ($(templates),manual)
