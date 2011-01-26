@@ -1,3 +1,8 @@
+Wed Jan 26 13:12:27 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Events/client.cpp:
+          Resolve some compile issues on windows.
+
 Wed Jan 26 13:00:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Events/client.cpp:

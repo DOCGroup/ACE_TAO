@@ -1,8 +1,9 @@
 // $Id$
 
-#include "Common/CIF_Common.h"
 #include <tests/CIF/Common/CIF_Common.h>
 #include <tests/CIF/Component/CIF_ComponentC.h>
+
+#include <ccm/CCM_EventsC.h>
 
 #if !defined (CCM_NOEVENT)
 //============================================================
@@ -1643,9 +1644,6 @@ run_test (::Components::Events_ptr source,
 
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_subscribe_invalid_connection (source, sink);
-
-      //ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
-      //ret += test_subscribe_exceededconnectionlimit (source, sink);
 
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_connect_disconnect_consumer (source, sink);
