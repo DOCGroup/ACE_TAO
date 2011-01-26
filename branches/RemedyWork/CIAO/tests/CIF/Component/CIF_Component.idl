@@ -30,6 +30,7 @@ module CIF
 #if !defined (CCM_NOEVENT)
     publishes DoSomething     publish_do_something;
     publishes DoSomethingElse publish_do_something_else;
+
     emits     DoSomething     emit_do_something;
     emits     DoSomethingElse emit_do_something_else;
 #endif

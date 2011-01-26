@@ -375,10 +375,13 @@ namespace CIAO
         if (::ACE_OS::strcmp (publisher_name, publisher_desc->name ()) == 0)
           {
             ::Components::PublisherDescription *pd = 0;
-
             ACE_NEW_THROW_EX (pd,
                               ::OBV_Components::PublisherDescription (),
                               CORBA::NO_MEMORY ());
+            pd->name (publisher_desc->name ());
+            pd->type_id (publisher_desc->type_id ());
+
+            //TODO copy SubscriberDescriptions.
             ::Components::PublisherDescription_var safe = pd;
             return safe._retn ();
           }

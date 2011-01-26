@@ -1113,6 +1113,361 @@ test_get_named_emitters (::Components::Events_ptr source)
 }
 #endif
 
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
+//============================================================
+// test_get_named_emitters_invalid_name
+//============================================================
+int
+test_get_named_emitters_invalid_name (::Components::Events_ptr source)
+{
+  try
+    {
+      ::Components::NameList_var names;
+      ACE_NEW_THROW_EX (names,
+                        ::Components::NameList,
+                        CORBA::NO_MEMORY ());
+      names->length (2);
+      (*names)[0] = CORBA::string_dup ("emit_do_something");
+      (*names)[1] = CORBA::string_dup ("emit_do_something_else_invalid_name");
+      ::Components::EmitterDescriptions_var eds =
+        source->get_named_emitters (names);
+      ACE_ERROR ((LM_ERROR, "Events test_get_named_emitters_invalid_name - "
+                            "Error: No InvalidName exception caught "
+                            "during get_named_emitters\n"));
+      return 1;
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_get_named_emitters_invalid_name - "
+                            "Received InvalidName exception "
+                            "during get_named_emitters.\n"));
+      ACE_DEBUG ((LM_DEBUG, "Events test_get_named_emitters_invalid_name - "
+                            "Test passed!\n"));
+      return 0;
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("test_get_named_emitters_invalid_name. Error: ");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_get_named_emitters_invalid_name - "
+                            "Error: Unknown exception caught "
+                            "during get_named_emitters.\n"));
+      return 1;
+    }
+  return 1;
+}
+#endif
+
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
+//============================================================
+// test_get_all_publishers
+//============================================================
+int
+test_get_all_publishers (::Components::Events_ptr source)
+{
+  int ret = 0;
+
+  try
+    {
+      ::Components::PublisherDescriptions_var pds =
+        source->get_all_publishers ();
+      if (pds->length () != 2)
+        {
+          ACE_ERROR ((LM_ERROR, "Events test_get_all_publishers - "
+                                "Error: Unexpected number of Emitter "
+                                "descriptions received. expected - "
+                                "received <%u>\n",
+                                pds->length ()));
+          ++ret;
+        }
+      for (::CORBA::ULong i = 0UL; i < pds->length (); ++i)
+        {
+          if (::ACE_OS::strcmp (pds[i]->name (), "publish_do_something") == 0 ||
+              ::ACE_OS::strcmp (pds[i]->name (), "publish_do_something_else") == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG, "Events test_get_all_publishers - "
+                                    "Correct publisher description found <%C>\n",
+                                    pds[i]->name ()));
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR, "Events test_get_all_publishers - "
+                                    "Error Incorrect publisher description found <%C>\n",
+                                    pds[i]->name ()));
+              ++ret;
+            }
+        }
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("test_get_all_publishers. Error: ");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_get_all_publishers - "
+                            "Error: Unknown exception caught "
+                            "during get_all_publishers.\n"));
+      return 1;
+    }
+  if (ret == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_get_all_publishers - "
+                            "Test passed!\n"));
+    }
+  return ret;
+}
+#endif
+
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
+//============================================================
+// test_get_named_publishers
+//============================================================
+int
+test_get_named_publishers (::Components::Events_ptr source)
+{
+  int ret = 0;
+  try
+    {
+      ::Components::NameList_var names;
+      ACE_NEW_THROW_EX (names,
+                        ::Components::NameList,
+                        CORBA::NO_MEMORY ());
+      names->length (1);
+      (*names)[0] = CORBA::string_dup ("publish_do_something_else");
+      ::Components::PublisherDescriptions_var pds =
+        source->get_named_publishers (names);
+      if (pds->length () != 1)
+        {
+          ACE_ERROR ((LM_ERROR, "Events test_get_named_publishers <1> - "
+                                "Error: Unexpected number of PublisherDescriptions: "
+                                "expected <1> - received <%d>.\n",
+                                pds->length ()));
+          ++ret;
+        }
+      for (::CORBA::ULong i = 0UL; i < pds->length (); ++i)
+        {
+          if (::ACE_OS::strcmp (pds[i]->name (), "publish_do_something_else") == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG, "Events test_get_named_publishers <1> - "
+                                    "Correct publisher description found <%C>\n",
+                                    pds[i]->name ()));
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR, "Events test_get_named_publishers <1> - "
+                                    "Error Incorrect publisher description found <%C>\n",
+                                    pds[i]->name ()));
+              ++ret;
+            }
+        }
+
+      names->length (2);
+      (*names)[0] = CORBA::string_dup ("publish_do_something");
+      (*names)[1] = CORBA::string_dup ("publish_do_something_else");
+      pds = source->get_named_publishers (names);
+      if (pds->length () != 2)
+        {
+          ACE_ERROR ((LM_ERROR, "Events test_get_named_publishers <2> - "
+                                "Error: Unexpected number of PublisherDescriptions: "
+                                "expected <2> - received <%d>.\n",
+                                pds->length ()));
+          ++ret;
+        }
+      for (::CORBA::ULong i = 0UL; i < pds->length (); ++i)
+        {
+          if (::ACE_OS::strcmp (pds[i]->name (), "publish_do_something") == 0 ||
+              ::ACE_OS::strcmp (pds[i]->name (), "publish_do_something_else") == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG, "Events test_get_named_publishers <2> - "
+                                    "Correct publisher description found <%C>\n",
+                                    pds[i]->name ()));
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR, "Events test_get_named_publishers <2> - "
+                                    "Error Incorrect publisher description found <%C>\n",
+                                    pds[i]->name ()));
+              ++ret;
+            }
+        }
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_get_named_publishers - "
+                            "Error: InvalidName exception caught "
+                            "during get_named_publishers.\n"));
+      return 1;
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("test_get_named_publishers. Error: ");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_get_named_publishers - "
+                            "Error: Unknown exception caught "
+                            "during get_named_publishers.\n"));
+      return 1;
+    }
+  if (ret == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_get_named_publishers - "
+                            "Test passed!\n"));
+    }
+  return ret;
+}
+#endif
+
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
+//============================================================
+// test_get_named_publishers_invalid_name
+//============================================================
+int
+test_get_named_publishers_invalid_name (::Components::Events_ptr source)
+{
+  try
+    {
+      ::Components::NameList_var names;
+      ACE_NEW_THROW_EX (names,
+                        ::Components::NameList,
+                        CORBA::NO_MEMORY ());
+      names->length (2);
+      (*names)[0] = CORBA::string_dup ("publish_do_something");
+      (*names)[1] = CORBA::string_dup ("publish_do_something_else_invalid_name");
+      ::Components::PublisherDescriptions_var pds =
+        source->get_named_publishers (names);
+      ACE_ERROR ((LM_ERROR, "Events test_get_named_publishers_invalid_name - "
+                            "Error: No InvalidName exception caught "
+                            "during get_named_publishers\n"));
+      return 1;
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_get_named_publishers_invalid_name - "
+                            "Received InvalidName exception "
+                            "during get_named_publishers.\n"));
+      ACE_DEBUG ((LM_DEBUG, "Events test_get_named_publishers_invalid_name - "
+                            "Test passed!\n"));
+      return 0;
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("test_get_named_publishers_invalid_name. Error: ");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_get_named_publishers_invalid_name - "
+                            "Error: Unknown exception caught "
+                            "during get_named_publishers.\n"));
+      return 1;
+    }
+  return 1;
+}
+#endif
+
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
+//============================================================
+// test_get_named_publishers_invalid_name
+//============================================================
+int
+test_consumers_of_publishers (::Components::Events_ptr source,
+                              ::Components::Events_ptr sink)
+{
+  int ret = 0;
+  try
+    {
+      ::Components::EventConsumerBase_var consumer1 =
+        get_consumer (sink, "consume_do_something");
+      ::Components::EventConsumerBase_var consumer2 =
+        get_consumer (sink, "consume_do_something");
+      if (::CORBA::is_nil (consumer1.in ()) ||
+          ::CORBA::is_nil (consumer1.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, "Events test_consumers_of_publishers - "
+                                "Error: One of the consumers seems nil.\n"));
+          return 1;
+        }
+      ::Components::Cookie_var ck1 = source->subscribe ("publish_do_something",
+                                                      consumer1.in ());
+      ::Components::Cookie_var ck2 = source->subscribe ("publish_do_something",
+                                                      consumer2.in ());
+      ::Components::NameList_var names;
+      ACE_NEW_THROW_EX (names,
+                        ::Components::NameList,
+                        CORBA::NO_MEMORY ());
+      names->length (1);
+      (*names)[0] = CORBA::string_dup ("publish_do_something");
+      ::Components::PublisherDescriptions_var pds =
+        source->get_named_publishers (names);
+
+      if (pds->length () != 1)
+        {
+          ACE_ERROR ((LM_ERROR, "Events test_consumers_of_publishers - "
+                                "Error: Unexpected number of PublisherDescriptions: "
+                                "expected <1> - received <%d>.\n",
+                                pds->length ()));
+          return 1;
+        }
+      ::CORBA::ULong consumers = pds[0UL]->consumers ().length ();
+      if (consumers != 2)
+        {
+          ACE_ERROR ((LM_ERROR, "Events test_consumers_of_publishers - "
+                                "Error: Unexpected number of PublisherDescriptions: "
+                                "expected <2> - received <%d>.\n",
+                                pds[0UL]->consumers().length ()));
+          ++ret;
+        }
+      for (::CORBA::ULong consumer = 0; consumer < consumers; ++consumer)
+        {
+          source->unsubscribe ("publish_do_something",
+                              pds[0UL]->consumers ()[consumer]->ck ());
+        }
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_consumers_of_publishers - "
+                            "Error: InvalidName exception caught\n"));
+      return 1;
+    }
+  catch (const ::Components::InvalidConnection &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_consumers_of_publishers - "
+                            "Error: InvalidConnection exception caught\n"));
+      return 1;
+    }
+  catch (const ::Components::ExceededConnectionLimit &)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_consumers_of_publishers - "
+                            "Error: ExceededConnectionLimit exception caught\n"));
+      return 1;
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("test_consumers_of_publishers. Error: ");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Events test_consumers_of_publishers - "
+                            "Error: Unknown exception caught "
+                            "during get_named_publishers.\n"));
+      return 1;
+    }
+  if (ret == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Events test_consumers_of_publishers - "
+                            "Test passed!\n"));
+    }
+  return ret;
+}
+#endif
+
 int
 run_test (::Components::Events_ptr source,
           ::Components::Events_ptr sink)
@@ -1174,6 +1529,22 @@ run_test (::Components::Events_ptr source,
 #if !defined (CCM_LW) && !defined (CCM_NOEVENT)
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_get_named_emitters (source);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_get_named_emitters_invalid_name (source);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_get_all_publishers (source);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_get_named_publishers (source);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_get_named_publishers_invalid_name (source);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_consumers_of_publishers (source, sink);
+
 #endif
 
     }
