@@ -472,8 +472,17 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
     }
 
   os_ << ");" << be_uidt << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl
-      << "}";
+      << "}" << be_uidt << be_nl;
+
+  /// Throw an INV_OBJREF exception because there is no connection
+  /// see AMI4CCM mars/11-xx-yy , 2011
+
+  os_ << "else" << be_idt_nl
+      << "{" << be_idt_nl
+      << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl;
+
+  os_ << "}";
 
   return 0;
 }
