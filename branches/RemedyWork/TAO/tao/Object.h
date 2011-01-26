@@ -32,7 +32,7 @@
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
 #include "tao/Any_Insert_Policy_T.h"
-#include "tao/Configurable_Refcount.h"
+#include "ace/Atomic_Op.h"
 
 #if defined (HPUX) && defined (IOR)
    /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
@@ -356,7 +356,7 @@ namespace CORBA
     TAO::Object_Proxy_Broker *proxy_broker () const;
 
     /// Number of outstanding references to this object.
-    TAO_Configurable_Refcount refcount_;
+    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
 
   private:
 

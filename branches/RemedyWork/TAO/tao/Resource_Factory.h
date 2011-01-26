@@ -24,7 +24,6 @@
 
 #include /**/ "tao/Versioned_Namespace.h"
 #include "tao/Basic_Types.h"
-#include "tao/Configurable_Refcount.h"
 
 #include "ace/Service_Object.h"
 #include "ace/Unbounded_Set.h"

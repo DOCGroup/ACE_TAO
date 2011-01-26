@@ -1,3 +1,26 @@
+Wed Jan 26 13:51:51 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Client_Strategy_Factory.h:
+        * tao/Messaging/AMH_Response_Handler.cpp:
+        * tao/Object.h:
+        * tao/Object.cpp:
+        * tao/Profile.h:
+        * tao/Profile.inl:
+        * tao/Resource_Factory.h:
+        * tao/Stub.inl:
+        * tao/Stub.cpp:
+        * tao/Valuetype/AbstractBase.h:
+        * tao/Valuetype/AbstractBase.cpp:
+          Simplified refcounting and use more inlining
+
+        * tao/tao.mpc:
+          Updated
+
+        * tao/Configurable_Refcount.h:
+        * tao/Configurable_Refcount.inl:
+        * tao/Configurable_Refcount.cpp:
+          Removed these files, not used anymore
+
 Wed Jan 26 13:39:14 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Client_Strategy_Factory.h:

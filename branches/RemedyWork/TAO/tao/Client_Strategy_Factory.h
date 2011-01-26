@@ -23,7 +23,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include /**/ "tao/Versioned_Namespace.h"
-#include "tao/Configurable_Refcount.h"
 
 #include "ace/Service_Object.h"
 

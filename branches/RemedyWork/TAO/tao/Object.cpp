@@ -104,16 +104,16 @@ if (!this->is_evaluated_) \
 void
 CORBA::Object::_add_ref (void)
 {
-  this->refcount_.increment ();
+  ++this->refcount_;
 }
 
 void
 CORBA::Object::_remove_ref (void)
 {
-  if (this->refcount_.decrement () != 0)
-    return;
-
-  delete this;
+  if (--this->refcount_ == 0)
+    {
+      delete this;
+    }
 }
 
 CORBA::ULong
