@@ -1,3 +1,10 @@
+Wed Jan 26 11:29:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/DAnCE/Components/SimpleConsumer_exec.h:
+        * tests/DAnCE/Components/SimpleConsumer_exec.cpp:
+        * tests/DAnCE/Components/SimpleEmitter_exec.cpp:
+          Due to renaming of some ports.
+
 Wed Jan 26 11:21:00 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Servants/Servant_Impl_Base.cpp:
