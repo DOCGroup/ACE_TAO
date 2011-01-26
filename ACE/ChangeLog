@@ -1,3 +1,8 @@
+Wed Jan 26 08:58:32 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/tests.mpc:
+          Added empty resource file for 2980 dll
+
 Tue Jan 25 15:17:58 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * bin/MakeProjectCreator/config/acemfcexe.mpb: The SubSystem value
