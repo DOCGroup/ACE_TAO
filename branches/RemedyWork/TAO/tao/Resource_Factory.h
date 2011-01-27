@@ -225,9 +225,6 @@ public:
   /// transport cache needs to be locked  else return 0
   virtual int locked_transport_cache (void);
 
-  /// Creates the lock for the CORBA Object
-  virtual ACE_Lock *create_corba_object_lock (void);
-
   /// Creates the flushing strategy.  The new instance is owned by the
   /// caller.
   virtual TAO_Flushing_Strategy *create_flushing_strategy (void) = 0;

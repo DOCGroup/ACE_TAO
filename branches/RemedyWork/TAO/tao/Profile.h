@@ -54,7 +54,6 @@ namespace CORBA
 class TAO_Export TAO_Profile
 {
 public:
-
   /// Constructor
   TAO_Profile (CORBA::ULong tag,
                TAO_ORB_Core *orb_core,
