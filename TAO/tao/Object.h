@@ -405,7 +405,7 @@ namespace CORBA
      * not require reference counting (the default) may be
      * instantiated in the critical path.
      */
-    ACE_Lock * object_init_lock_;
+    TAO_SYNCH_MUTEX object_init_lock_;
   };
 }   // End CORBA namespace.
 

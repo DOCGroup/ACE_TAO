@@ -28,8 +28,7 @@ CORBA::Object::Object (int)
     is_evaluated_ (true),
     ior_ (),
     orb_core_ (0),
-    protocol_proxy_ (0),
-    object_init_lock_ (0)
+    protocol_proxy_ (0)
 {
 }
 

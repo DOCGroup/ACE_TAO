@@ -226,22 +226,6 @@ Roadmap</h3>
       -ORBCollocation </a></code> flag as an argument of <code>
       ORB_init </code> (most often thru the command line flags.) <p>
 
-  <li> <a NAME="profile"></a><b>Forwarding Profile</b> --
-      When multiple threads using the same
-      <tt>CORBA::Object</tt> and using forwarding, it is necessary to
-      protect the forwarding <tt>Profile</tt>, which is part of the
-      CORBA::Object, against multiple access. Therefore a mutex lock
-      is used by default to ensure proper access. <P>
-
-      Using the switch <tt><a href="Options.html#-ORBProfileLock">
-      -ORBProfileLock </a></tt> this policy can be deactivated
-      specifying <tt>-ORBProfileLock null</tt>.
-      The primary reason for doing this is to improve performance
-      when no forwarding is used or no multithreading with access to
-      shared <tt>CORBA::Object</tt>'s.  Using a null mutex reduces
-      the overhead compared with using a regular mutex
-      lock.</li><P>
-
   <li> <a NAME="orbsvcs"></a><b>orbsvcs Library</b> --
       By default,
       TAO's Makefiles build all the services that TAO
