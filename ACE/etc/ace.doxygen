@@ -131,13 +131,14 @@ MACRO_EXPANSION       = YES
 EXPAND_ONLY_PREDEF    = YES
 SEARCH_INCLUDES       = YES
 INCLUDE_PATH          = .
-PREDEFINED            = __ACE_INLINE__ \
-                        ACE_TEMPLATES_REQUIRE_SOURCE \
-                        ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
-                        ACE_END_VERSIONED_NAMESPACE_DECL \
+PREDEFINED            = __ACE_INLINE__= \
+                        ACE_TEMPLATES_REQUIRE_SOURCE= \
+                        ACE_BEGIN_VERSIONED_NAMESPACE_DECL= \
+                        ACE_END_VERSIONED_NAMESPACE_DECL= \
                         ACE_INLINE=inline \
                         ACE_NAMESPACE_INLINE_FUNCTION=inline \
-                        ACE_Export=
+                        ACE_Export= \
+                        ACE_HAS_THREADS=
 EXPAND_AS_DEFINED     = ACE_UNIMPLEMENTED_FUNC \
                         ACE_CACHE_MAP_MANAGER \
                         ACE_T1 \
