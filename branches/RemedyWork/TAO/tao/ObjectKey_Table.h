@@ -94,10 +94,6 @@ namespace TAO
 
     ~ObjectKey_Table (void);
 
-    /// Initialize method that sets up the underlying lock and other
-    /// related stuff.
-    int init (TAO_ORB_Core *orb);
-
     /// Iterates and unbinds the contents of the table.
     int destroy (void);
 
@@ -130,7 +126,7 @@ namespace TAO
                         ACE_Null_Mutex> TABLE;
 
     /// Lock for the table.
-    ACE_Lock *lock_;
+    TAO_SYNCH_MUTEX lock_;
 
     /// Table that contains the data
     TABLE table_;
@@ -138,6 +134,10 @@ namespace TAO
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (__ACE_INLINE__)
+# include "tao/ObjectKey_Table.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 
