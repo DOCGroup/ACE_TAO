@@ -57,7 +57,7 @@ namespace CIAO
 #endif
 
   /**
-   * @class Servant_Impl_Base
+   * @class Connector_Servant_Impl
    *
    * @brief Non-template base class for Connector_Servant_Impl.
    *
