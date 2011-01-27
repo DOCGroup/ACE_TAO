@@ -223,7 +223,7 @@ namespace CORBA
     virtual CORBA::ORB_ptr _get_orb (void);
 
     /**
-     * @name Reference Count Managment
+     * @name Reference Count Management
      *
      * These are the standard CORBA object reference count manipulations
      * methods.

@@ -21,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Null_Mutex.h"
+#include "ace/Copy_Disabled.h"
 
 #include "tao/Object_KeyC.h"
 #include /**/ "tao/Versioned_Namespace.h"
@@ -75,7 +76,7 @@ namespace TAO
    * @note This class uses the ACE_RB_Tree to maintain the table of
    * ObjectKeys. The RB_Tree has good insertion and lookup
    * properties. Its Iteration properties are not that good, but we
-   * dont need to do much iteration unless we are closing down the
+   * don't need to do much iteration unless we are closing down the
    * table.
    *
    * @note The reasons to use RB_Tree are its good dynamic
@@ -85,7 +86,7 @@ namespace TAO
    * will do that if our instrumentation shows the need for it.
    *
    */
-  class TAO_Export ObjectKey_Table
+  class ObjectKey_Table : private ACE_Copy_Disabled
   {
   public:
     /// Default Constructor and destructor..
@@ -122,12 +123,7 @@ namespace TAO
     int unbind_i (Refcounted_ObjectKey *&key);
 
   private:
-    void operator= (const ObjectKey_Table &);
-    ObjectKey_Table (const ObjectKey_Table &);
-
-  private:
-
-    // Some useful typedefs.
+    /// Some useful typedefs.
     typedef ACE_RB_Tree<TAO::ObjectKey,
                         TAO::Refcounted_ObjectKey *,
                         TAO::Less_Than_ObjectKey,

@@ -235,7 +235,7 @@ protected:
   /// limit
   int max_muxed_connections_;
 
-  /// If <0> then we create reactors with signal handling disabled.
+  /// If 0 then we create reactors with signal handling disabled.
   int reactor_mask_signals_;
 
   /**
@@ -292,7 +292,7 @@ private:
   /// Type of lock used by the corba object.
   Lock_Type object_key_table_lock_type_;
 
-  /// Type of lock used by the corba object.
+  /// Type of lock used by the CORBA object.
   Lock_Type corba_object_lock_type_;
 
   enum Flushing_Strategy_Type
@@ -305,8 +305,8 @@ private:
   /// Type of flushing strategy configured
   Flushing_Strategy_Type flushing_strategy_type_;
 
-  // Initialization options. To be used later when creating a codeset
-  // manager instance (s)
+  /// Initialization options. To be used later when creating a codeset
+  /// manager instance (s)
   TAO_Codeset_Parameters char_codeset_parameters_;
   TAO_Codeset_Parameters wchar_codeset_parameters_;
 

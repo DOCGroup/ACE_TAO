@@ -7,5 +7,5 @@
  <!--  -->
  <static id="Advanced_Resource_Factory" params="-ORBReactorType select_st -ORBConnectionCacheLock null"/>
  <static id="Client_Strategy_Factory" params="-ORBProfileLock null -ORBClientConnectionHandler ST"/>
- <static id="Server_Strategy_Factory" params="-ORBConcurrency reactive -ORBPOALock null"/>
+ <static id="Server_Strategy_Factory" params="-ORBConcurrency reactive"/>
 </ACE_Svc_Conf>
