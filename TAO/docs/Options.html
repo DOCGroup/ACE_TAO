@@ -1176,17 +1176,6 @@ particularly exacerbated for applications dealing with hundreds and
 thousands of objects. </td>
       </tr>
       <tr>
-        <td><code>-ORBObjectKeyTableLock</code> <em>locktype</em></td>
-        <td><a name="-ORBObjectKeyTableLock"></a> Specify the type of
-lock to be used by the ObjectKey table. ObjectKey table keeps track of
-the ObjectKeys that are generated and made available through IORs. The
-table manages the life time of the object keys within the ORB through a
-reference counting mechanism. Possible values for lock type are <code>thread</code>,
-which specifies that an inter-thread mutex is used to guarantee
-exclusive access, and <code>null</code>, which specifies that no
-locking be performed. The default is thread. </td>
-      </tr>
-      <tr>
         <td><code>-ORBFlushingStrategy</code> <em>type</em></td>
         <td><a name="-ORBFlushingStrategy"></a>By default TAO provides
 three strategies to flush queued messages. The <code>leader_follower</code>
