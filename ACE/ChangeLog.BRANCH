@@ -1,3 +1,12 @@
+Thu Jan 27 08:34:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Condition_T.h:
+        * ace/Lock.h:
+          Doxygen changes
+
+        * tests/tests.mpc:
+          Updated qt base project
+
 Wed Jan 26 13:53:27 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Lock_Adapter_T.h:

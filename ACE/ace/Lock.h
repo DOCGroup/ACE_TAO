@@ -43,7 +43,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Lock
 {
 public:
-  /// CE needs a default ctor here.
+  /// CE needs a default constructor here.
   ACE_Lock (void);
 
   /// Noop virtual destructor
