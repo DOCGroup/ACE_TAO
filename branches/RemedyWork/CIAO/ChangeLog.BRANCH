@@ -20,6 +20,33 @@ Thu Jan 27 09:13:17 UTC 2011  Marcel Smit  <msmit@remedy.nl>
         * tests/CIF/Receptacle/client.cpp:
           Explicitly test multiple.
 
+Wed Jan 26 16:23:17 UTC 2011  Martin Corino  <corino_m@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added new AMI4CCM test.
+
+Wed Jan 26 15:23:29 UTC 2011  Martin Corino  <corino_m@remedy.nl>
+
+        * connectors/ami4ccm/tests/NoConnection:
+        * connectors/ami4ccm/tests/NoConnection/Base:
+        * connectors/ami4ccm/tests/NoConnection/Base/HelloT.idl:
+        * connectors/ami4ccm/tests/NoConnection/Base/HelloT.mpc:
+        * connectors/ami4ccm/tests/NoConnection/Receiver:
+        * connectors/ami4ccm/tests/NoConnection/Receiver/HelloT_Receiver.idl:
+        * connectors/ami4ccm/tests/NoConnection/Receiver/HelloT_Receiver.mpc:
+        * connectors/ami4ccm/tests/NoConnection/Receiver/HelloT_Receiver_exec.h:
+        * connectors/ami4ccm/tests/NoConnection/Receiver/HelloT_Receiver_exec.cpp:
+        * connectors/ami4ccm/tests/NoConnection/Sender:
+        * connectors/ami4ccm/tests/NoConnection/Sender/HelloT_Sender.idl:
+        * connectors/ami4ccm/tests/NoConnection/Sender/HelloT_Sender.mpc:
+        * connectors/ami4ccm/tests/NoConnection/Sender/HelloT_Sender_exec.h:
+        * connectors/ami4ccm/tests/NoConnection/Sender/HelloT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/NoConnection/descriptors:
+        * connectors/ami4ccm/tests/NoConnection/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/NoConnection/descriptors/run_test.pl:
+          Added new test to verify required exception when AMI facet
+          not connected.
+
 Wed Jan 26 13:28:18 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Events/client.cpp:
