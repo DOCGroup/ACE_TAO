@@ -92,6 +92,11 @@ Thu Jan 27 10:46:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/Smart_Proxies/Collocation/svc.conf.xml:
           Removed -ORBPOALock, got removed
 
+Wed Jan 26 15:20:42 UTC 2011  Martin Corino  <corino_m@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+          Added exception in case AMI facet not connected.
+
 Wed Jan 26 13:51:51 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Client_Strategy_Factory.h:
