@@ -1,3 +1,8 @@
+Thu Jan 27 09:13:17 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Receptacle/client.cpp:
+          Explicitly test multiple.
+
 Wed Jan 26 13:28:18 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Events/client.cpp:
