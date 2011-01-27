@@ -2,6 +2,8 @@
 
 #include "Common/CIF_Common.h"
 
+#include <vector>
+
 //============================================================
 // connect
 //============================================================
@@ -531,43 +533,55 @@ test_get_named_receptacles (::Components::Receptacles_ptr rec)
 
 #if !defined (CCM_LW)
 int
-test_exceeded_limit_exception (::Components::Receptacles_ptr rec,
+test_multiple_facets (::Components::Receptacles_ptr rec,
                                ::CORBA::Object_ptr facet)
 {
+  std::vector < ::Components::Cookie_var > cookies;
   try
     {
       for (CORBA::ULong i = 0UL;
-           i < 100;
+           i < 5;
            ++i)
         {
-          rec->connect ("use_multiple_foo", facet);
+          ::Components::Cookie_var tmp =
+            rec->connect ("use_multiple_foo", facet);
+          cookies.push_back (tmp._retn ());
+          ACE_DEBUG ((LM_DEBUG, "Receptacle test_multiple_facets - "
+                                "%d receptacle(s) connected\n",
+                                i + 1));
+        }
+      for (CORBA::ULong i = 0UL;
+           i < 5;
+           ++i)
+        {
+          disconnect (rec, cookies[i].in (), true);
+          ACE_DEBUG ((LM_DEBUG, "Receptacle test_multiple_facets - "
+                                "Disconnected receptacle %d\n",
+                                i + 1));
         }
     }
   catch (const ::Components::ExceededConnectionLimit &)
     {
-      ACE_ERROR ((LM_ERROR, "Receptacle test_exceeded_limit_exception - "
-                            "Expected ExceededConnectionLimit "
-                            "exception received\n"));
-       ACE_DEBUG ((LM_DEBUG, "Receptacle test_exceeded_limit_exception - "
-                             "Test passed!\n"));
-      return 0;
+      ACE_ERROR ((LM_ERROR, "Receptacle test_multiple_facets - "
+                            "Error: ExceededConnectionLimit "
+                            "exception caught\n"));
+      return 1;
     }
   catch (const ::CORBA::Exception &ex)
     {
-      ex._tao_print_exception ("test_exceeded_limit_exception");
+      ex._tao_print_exception ("test_multiple_facets");
       return 1;
     }
   catch (...)
     {
-      ACE_ERROR ((LM_ERROR, "Receptacle test_exceeded_limit_exception - "
+      ACE_ERROR ((LM_ERROR, "Receptacle test_multiple_facets - "
                             "Error: exception during invocation of "
-                            "test_exceeded_limit_exception.\n"));
+                            "test_multiple_facets.\n"));
       return 1;
     }
-  ACE_ERROR ((LM_ERROR, "Receptacle test_exceeded_limit_exception - "
-                        "Error: Did not received the expected "
-                        "ExceededConnectionLimit exception!\n"));
-  return 1;
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_multiple_facets - "
+                        "Test passed!\n"));
+  return 0;
 }
 #endif
 
@@ -881,8 +895,8 @@ run_test (::Components::Receptacles_ptr rec,
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_invalid_connection_exception (rec);
 
-      //ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
-      //ret += test_exceeded_limit_exception (rec, facet);
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_multiple_facets (rec, facet);
 
 #if !defined (CCM_LW)
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
