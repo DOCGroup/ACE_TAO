@@ -138,8 +138,6 @@ public:
   /// Return the validator.
   TAO_Policy_Validator &validator (void);
 
-  int enable_locking() const;
-
   /// Return the set of default policies.
   TAO_POA_Policy_Set &default_poa_policies (void);
 
@@ -149,8 +147,7 @@ public:
   void servant_dispatcher (TAO_Servant_Dispatcher *dispatcher);
 
   /// Initialize the default set of POA policies.
-  void init_default_policies (TAO_POA_Policy_Set &policies
-                             );
+  void init_default_policies (TAO_POA_Policy_Set &policies);
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
@@ -201,8 +198,7 @@ protected:
   int unbind_persistent_poa (const poa_name &folded_name,
                              const poa_name &system_name);
 
-  static ACE_Lock *create_lock (int enable_locking,
-                                TAO_SYNCH_MUTEX &thread_lock);
+  static ACE_Lock *create_lock (TAO_SYNCH_MUTEX &thread_lock);
 
   virtual void do_dispatch (TAO_ServerRequest& req,
                             TAO::Portable_Server::Servant_Upcall& upcall);
@@ -378,8 +374,6 @@ protected:
   static void set_transient_poa_name_size (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters);
 
   TAO_ORB_Core &orb_core_;
-
-  int enable_locking_;
 
   TAO_SYNCH_MUTEX thread_lock_;
 

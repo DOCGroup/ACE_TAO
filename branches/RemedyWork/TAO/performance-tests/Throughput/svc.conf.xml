@@ -7,5 +7,5 @@
  <!--  -->
  <static id="Advanced_Resource_Factory" params="-ORBInputCDRAllocator null -ORBReactorType select_st -ORBReactorMaskSignals 0 -ORBConnectionCacheLock null -ORBFlushingStrategy blocking"/>
  <static id="Client_Strategy_Factory" params="-ORBProfileLock null -ORBClientConnectionHandler RW"/>
- <static id="Server_Strategy_Factory" params="-ORBPOALock null -ORBAllowReactivationOfSystemids 0"/>
+ <static id="Server_Strategy_Factory" params="-ORBAllowReactivationOfSystemids 0"/>
 </ACE_Svc_Conf>

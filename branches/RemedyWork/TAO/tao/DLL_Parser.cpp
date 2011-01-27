@@ -68,7 +68,6 @@ ACE_STATIC_SVC_DEFINE (TAO_DLL_Parser,
                                   ACE_Service_Type::DELETE_OBJ,
                        0)
 
-
 ACE_FACTORY_DEFINE (TAO, TAO_DLL_Parser)
 
 TAO_END_VERSIONED_NAMESPACE_DECL

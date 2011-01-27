@@ -21,12 +21,6 @@ TAO_Server_Strategy_Factory::open (TAO_ORB_Core*)
 }
 
 int
-TAO_Server_Strategy_Factory::enable_poa_locking (void)
-{
-  return -1;
-}
-
-int
 TAO_Server_Strategy_Factory::activate_server_connections (void)
 {
   return 0;

@@ -10,5 +10,5 @@
  <!--  http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/configurations.html#concurrency -->
  <!--  -->
  <static id="Advanced_Resource_Factory" params="-ORBReactorType select_st -ORBInputCDRAllocator null"/>
- <static id="Server_Strategy_Factory" params="-ORBconcurrency reactive  -ORBPOALock null"/>
+ <static id="Server_Strategy_Factory" params="-ORBconcurrency reactive"/>
 </ACE_Svc_Conf>
