@@ -1,3 +1,20 @@
+Thu Jan 27 14:13:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Hello/descriptors/svc_em.conf:
+        * performance-tests/Benchmark/RoundTrip/svc.conf:
+        * performance-tests/Benchmark/svc.conf:
+          Removed some -ORB options
+
+Thu Jan 27 10:41:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Connector_Servant_Impl_Base.h:
+          Doxygen fix
+
+        * examples/Hello/descriptors/svc_em.conf:
+        * performance-tests/Benchmark/RoundTrip/svc.conf:
+        * performance-tests/Benchmark/svc.conf:
+          Removed -ORBPOALock, it is risky and is removed from TAO
+
 Thu Jan 27 09:13:17 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Receptacle/client.cpp:
