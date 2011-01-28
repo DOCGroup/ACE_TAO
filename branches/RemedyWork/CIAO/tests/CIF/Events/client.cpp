@@ -1578,8 +1578,9 @@ test_consumers_of_publishers (::Components::Events_ptr source,
         }
       for (::CORBA::ULong consumer = 0; consumer < consumers; ++consumer)
         {
-          source->unsubscribe ("publish_do_something",
-                              pds[0UL]->consumers ()[consumer]->ck ());
+          ::Components::EventConsumerBase_var unsub =
+            source->unsubscribe ("publish_do_something",
+                                 pds[0UL]->consumers ()[consumer]->ck ());
         }
     }
   catch (const ::Components::InvalidName &)

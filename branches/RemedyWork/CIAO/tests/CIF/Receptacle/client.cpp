@@ -554,7 +554,7 @@ test_multiple_facets (::Components::Receptacles_ptr rec,
            i < 5;
            ++i)
         {
-          disconnect (rec, cookies[i].in (), true);
+          CORBA::Object_var objref = disconnect (rec, cookies[i].in (), true);
           ACE_DEBUG ((LM_DEBUG, "Receptacle test_multiple_facets - "
                                 "Disconnected receptacle %d\n",
                                 i + 1));

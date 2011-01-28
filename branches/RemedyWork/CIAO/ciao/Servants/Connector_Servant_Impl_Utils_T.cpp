@@ -11,12 +11,12 @@
 
 namespace CIAO
 {
-  template<typename T_var>
+  template<typename T>
   void
   Servant::describe_simplex_receptacle (
       const char *port_name,
       const char *port_type_repo_id,
-      T_var &connection,
+      typename T::_ptr_type connection,
       ::Components::ReceptacleDescriptions_var &descriptions,
       CORBA::ULong slot)
   {
@@ -39,18 +39,18 @@ namespace CIAO
     ::Components::ConnectionDescription_var safe_conn = conn;
 
     conn->ck (0);
-    conn->objref (connection.in ());
+    conn->objref (connection);
 
     elem->connections ()[0UL] = safe_conn._retn ();
     descriptions[slot] = safe_elem._retn ();
   }
 
-  template<typename T_var>
+  template<typename T>
   void
   Servant::describe_multiplex_receptacle (
     const char *port_name,
     const char *port_type_repo_id,
-    std::map<ptrdiff_t, T_var> &objrefs,
+    std::map<ptrdiff_t, typename T::_var_type> &objrefs,
     ::Components::ReceptacleDescriptions_var &descriptions,
     CORBA::ULong slot)
   {
@@ -71,7 +71,7 @@ namespace CIAO
     CORBA::ULong seq_slot = 0UL;
     ::Components::ConnectionDescription *conn = 0;
 
-    typedef typename std::map<ptrdiff_t, T_var>::const_iterator
+    typedef typename std::map<ptrdiff_t, typename T::_var_type>::const_iterator
       CONST_ITERATOR;
 
     for (CONST_ITERATOR iter = objrefs.begin ();
@@ -90,9 +90,7 @@ namespace CIAO
                           CORBA::NO_MEMORY ());
 
         conn->ck (key_cookie.in ());
-
         conn->objref (iter->second.in ());
-
         elem->connections ()[seq_slot] = safe_conn._retn ();
       }
 
