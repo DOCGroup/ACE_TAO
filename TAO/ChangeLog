@@ -1,3 +1,32 @@
+Fri Jan 28 11:21:05 CET 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 2.0.1 released.
+
+Mon Jan 24 15:14:42 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/idltocpp0x:
+        * docs/idltocpp0x/IDLC++0xRFP.odt:
+          Removed these files, RFP is now formally published by the OMG
+
+Sun Jan 23 18:03:49 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/tao_qtresource.mpb:
+          Use qt4
+
+Fri Jan 21 10:50:55 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * tests/OBV/ValueBox/client.cpp:
+          Use ACE::is_equal() to compare floating point values.
+
+Thu Jan 20 15:28:10 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * TAO_IDL/fe/y.tab.cpp:
+          Corrected a fix that was committed for bug#3312. In that change
+          I was too smart and knowing the implementation of
+          UTL_ScopeStack::pop() I tried to mess with prefixes. Actually it
+          was not needed (I was warned by Jeff Parsons about that) and
+          when used it resulted in wrong generation of prefixes.
+
 Thu Jan 20 11:42:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.
