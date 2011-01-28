@@ -1,3 +1,23 @@
+Fri Jan 28 14:26:35 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          First step in not letting the generate servant use context members
+          directly, this causes all kind race conditions in a MT situation.
+          More changes need to be made between the servant and the context.
+
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+
+        * tao/ObjectKey_Table.h:
+          Added export macro again, needed for strategies
+
+        * tao/operation_details.h:
+        * tao/Objref_VarOut_T.h:
+          Doxygen changes
+
+        * tao/On_Demand_Fragmentation_Strategy.h:
+          Doxygen change, use ACE_Copy_Disabled
+
 Thu Jan 27 11:29:03 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Options.html:
