@@ -67,6 +67,7 @@ namespace CIAO
                           "::create_participant - "
                           "Error: Unable to create DomainParticipant for domain <%d>\n",
                           domain_id));
+              delete ccm_dds_dpl;
               return ::DDS::DomainParticipant::_nil ();
             }
 
@@ -74,7 +75,19 @@ namespace CIAO
           ACE_NEW_THROW_EX (retval,
                             DDS_DomainParticipant_i (dds_dp),
                             ::CORBA::NO_MEMORY ());
-          dds_dp->enable ();
+          DDS_ReturnCode_t retcode = dds_dp->enable ();
+          if (retcode != DDS_RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                          "DDS_DomainParticipantFactory_i"
+                          "::create_participant - "
+                          "Error: Unable to enable the domainparticipant "
+                          "for domain <%d>: <%C>\n",
+                          domain_id,
+                          ::CIAO::DDS4CCM::translate_retcode (retcode)));
+              delete ccm_dds_dpl;
+              throw ::CORBA::INTERNAL ();
+            }
 
           if (ccm_dds_dpl)
             {
@@ -151,16 +164,28 @@ namespace CIAO
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                             "DDS_DomainParticipantFactory_i::create_participant_with_profile <%C> - "
-                            "Error: Unable to create DomainParticipant\n",
-                            qos_profile));
+                            "Error: Unable to create DomainParticipant for domain <%d>\n",
+                            qos_profile,
+                            domain_id));
+              delete ccm_dds_dpl;
               return ::DDS::DomainParticipant::_nil ();
             }
           ::DDS::DomainParticipant_var retval;
           ACE_NEW_THROW_EX (retval,
                             DDS_DomainParticipant_i (dds_dp),
                             ::CORBA::NO_MEMORY ());
-
-          dds_dp->enable ();
+          DDS_ReturnCode_t retcode = dds_dp->enable ();
+          if (retcode != DDS_RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                            "DDS_DomainParticipantFactory_i::create_participant_with_profile <%C> - "
+                            "Error: Unable to enable DomainParticipant for domain <%d>: <%C>\n",
+                            qos_profile,
+                            domain_id,
+                            ::CIAO::DDS4CCM::translate_retcode (retcode)));
+              delete ccm_dds_dpl;
+              throw ::CORBA::INTERNAL ();
+            }
 
           if (ccm_dds_dpl)
             {

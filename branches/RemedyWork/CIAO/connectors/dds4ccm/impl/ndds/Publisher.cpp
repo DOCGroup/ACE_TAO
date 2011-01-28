@@ -55,10 +55,10 @@ namespace CIAO
           return ::DDS::DataWriter::_nil ();
         }
 
-      DDS_DataWriterListener_i *ccm_dds_drl = 0;
+      DDS_DataWriterListener_i *ccm_dds_dwl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
-          ACE_NEW_THROW_EX (ccm_dds_drl,
+          ACE_NEW_THROW_EX (ccm_dds_dwl,
                             DDS_DataWriterListener_i (a_listener, 0),
                             ::CORBA::NO_MEMORY ());
         }
@@ -66,7 +66,7 @@ namespace CIAO
       DDSDataWriter *ccm_dds_dw = this->rti_entity ()->create_datawriter (
                                                             topic->get_rti_entity (),
                                                             ccm_dds_qos,
-                                                            ccm_dds_drl,
+                                                            ccm_dds_dwl,
                                                             mask);
 
       if (!ccm_dds_dw)
@@ -74,18 +74,27 @@ namespace CIAO
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Publisher_i::create_datawriter - "
                         "Error: RTI Topic returned a nil datawriter.\n"));
-          delete ccm_dds_drl;
+          delete ccm_dds_dwl;
           return ::DDS::DataWriter::_nil ();
         }
 
-     ::DDS::DataWriter_var retval = DDS_TypeSupport_i::create_datawriter (ccm_dds_dw,
+      ::DDS::DataWriter_var retval = DDS_TypeSupport_i::create_datawriter (ccm_dds_dw,
                                                                           this->dp_.in (),
                                                                           this);
-     if (ccm_dds_drl)
-       {
-         ccm_dds_drl->set_dds_entity (retval.in ());
-       }
-      ccm_dds_dw->enable ();
+      if (ccm_dds_dwl)
+        {
+          ccm_dds_dwl->set_dds_entity (retval.in ());
+        }
+      DDS_ReturnCode_t retcode = ccm_dds_dw->enable ();
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DDS_Publisher_i::create_datawriter - "
+                        "Error: Unable to enable the datawriter: <%C>\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          delete ccm_dds_dwl;
+          throw ::CORBA::INTERNAL ();
+        }
       return retval._retn ();
     }
 
@@ -109,10 +118,10 @@ namespace CIAO
           return ::DDS::DataWriter::_nil ();
         }
 
-      DDS_DataWriterListener_i *ccm_dds_drl = 0;
+      DDS_DataWriterListener_i *ccm_dds_dwl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
-          ACE_NEW_THROW_EX (ccm_dds_drl,
+          ACE_NEW_THROW_EX (ccm_dds_dwl,
                             DDS_DataWriterListener_i (a_listener, 0),
                             ::CORBA::NO_MEMORY ());
         }
@@ -124,7 +133,7 @@ namespace CIAO
                                                               topic->get_rti_entity (),
                                                               lib_name,
                                                               prof_name,
-                                                              ccm_dds_drl,
+                                                              ccm_dds_dwl,
                                                               mask);
       ACE_OS::free (lib_name);
       ACE_OS::free (prof_name);
@@ -135,7 +144,7 @@ namespace CIAO
                         "DDS_Publisher_i::create_datawriter_with_profile <%C> - "
                         "Error: RTI Topic returned a nil datawriter.\n",
                         qos_profile));
-          delete ccm_dds_drl;
+          delete ccm_dds_dwl;
           return ::DDS::DataWriter::_nil ();
         }
       else
@@ -150,11 +159,21 @@ namespace CIAO
         DDS_TypeSupport_i::create_datawriter (ccm_dds_dw,
                                               this->dp_.in (),
                                               this);
-      if (ccm_dds_drl)
+      if (ccm_dds_dwl)
         {
-          ccm_dds_drl->set_dds_entity (retval.in ());
+          ccm_dds_dwl->set_dds_entity (retval.in ());
         }
-      ccm_dds_dw->enable ();
+      DDS_ReturnCode_t retcode = ccm_dds_dw->enable ();
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DDS_Publisher_i::create_datawriter_with_profile <%C> - "
+                        "Error: Unable to enable the datawriter: <%C>\n",
+                        qos_profile,
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          delete ccm_dds_dwl;
+          throw ::CORBA::INTERNAL ();
+        }
       return retval._retn ();
     }
 
