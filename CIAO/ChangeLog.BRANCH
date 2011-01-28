@@ -1,3 +1,19 @@
+Fri Jan 28 17:41:28 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.h:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Refactored a few parts of this class.
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+          Checking the return value of the enable method of the DDS entities.
+          When not DDS_RETCODE_OK, a internal exception is thrown.
+
+        * tests/CIF/Common/CIF_Common.cpp:
+          Using the in method of _var variables.
+
 Fri Jan 28 16:29:59 UTC 2011  Martin Corino  <corino_m@remedy.nl>
 
         * bin/ciao_tests.lst:

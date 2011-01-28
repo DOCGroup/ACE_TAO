@@ -275,7 +275,7 @@ CIF_Common::test_provider_component()
   ::CORBA::Object_var provider_cmp = this->provider_object_->_get_component();
   ::CIF::CIF_Provider_var provider_object = ::CIF::CIF_Provider::_narrow(provider_cmp.in ());
 
-  if (::CORBA::is_nil(provider_cmp.in()))
+  if (::CORBA::is_nil(provider_object.in()))
     {
       ACE_ERROR_RETURN((LM_ERROR,
                         "CIF_Common::test_provider_component - "
@@ -328,7 +328,7 @@ CIF_Common::test_user_component()
   int ret = 0;
   ::CORBA::Object_var user_cmp = this->user_object_->_get_component();
   ::CIF::CIF_User_var user_object = ::CIF::CIF_User::_narrow(user_cmp.in ());
-  if (::CORBA::is_nil(user_object))
+  if (::CORBA::is_nil(user_object.in ()))
     {
       ACE_ERROR_RETURN((LM_ERROR,
                         "_get_component returned a nil component for User component\n"),

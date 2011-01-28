@@ -118,30 +118,8 @@ namespace CIAO
     CIAO_TRACE ("Connection_Handler::connect_instance");
 
     const ::Deployment::PlanConnectionDescription &conn = plan.connection[c_id];
-    const char *name = conn.name.in ();
 
-    if (conn.internalEndpoint.length () == 0)
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::connect_instance - "
-                        "Connection <%C> lacks an internalEndpoint.\n",
-                        name));
-        throw ::Deployment::InvalidConnection (name,
-                                       "No internal endpoint for connection\n");
-      }
-
-    CORBA::ULong endpoint (0);
-
-    if (conn.internalEndpoint.length () > 1)
-      {
-        for (CORBA::ULong i = 0;
-             i < conn.internalEndpoint.length ();
-             ++i)
-          {
-            if (!conn.internalEndpoint[i].provider)
-              endpoint = i;
-          }
-      }
+    CORBA::ULong endpoint = this->retrieve_endpoint (conn);
 
     try
       {
@@ -172,7 +150,7 @@ namespace CIAO
             CIAO_ERROR (1, (LM_ERROR, CLINFO
                             "Connection_Handler::connect_instance - "
                             "Unsupported port type.\n"));
-            throw ::Deployment::InvalidConnection (name,
+            throw ::Deployment::InvalidConnection (conn.name.in (),
                                                    "Unsupported port type");
 
           }
@@ -182,14 +160,14 @@ namespace CIAO
         // pass through
         throw;
       }
-    catch (const CORBA::Exception &ex)
+    catch (CORBA::Exception &ex)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::connect_instance - "
                         "Caught CORBA exception whilst connecting <%C>: %C\n",
-                        name,
+                        conn.name.in (),
                         ex._info ().c_str ()));
-        throw ::Deployment::InvalidConnection (name,
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                ex._info ().c_str ());
       }
     catch (...)
@@ -197,8 +175,8 @@ namespace CIAO
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::connect_instance - "
                         "Caught C++ exception whilst connecting <%C>\n",
-                        name));
-        throw ::Deployment::InvalidConnection (name,
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                "Unknown C++ Exception");
       }
   }
@@ -210,54 +188,8 @@ namespace CIAO
     CIAO_TRACE ("Connection_Handler::disconnect_instance");
 
     const ::Deployment::PlanConnectionDescription &conn = plan.connection[c_id];
-    const char *name = conn.name.in ();
 
-    if (conn.internalEndpoint.length () == 0)
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::disconnect_instance - "
-                        "Connection <%C> lacks an internalEndpoint.\n",
-                        name));
-        throw ::Deployment::InvalidConnection (name,
-                                       "No internal endpoint for connection\n");
-      }
-
-    CORBA::ULong endpoint (0);
-
-    if (conn.internalEndpoint.length () > 1)
-      {
-        for (CORBA::ULong i = 0;
-             i < conn.internalEndpoint.length ();
-             ++i)
-          {
-            if (!this->is_local_connection (conn))
-              {
-                if (!conn.internalEndpoint[i].provider)
-                  {
-                    endpoint = i;
-                    break;
-                  }
-              }
-            else
-              {
-                if (conn.internalEndpoint[i].kind == Deployment::EventEmitter ||
-                    conn.internalEndpoint[i].kind == Deployment::EventPublisher ||
-                    conn.internalEndpoint[i].kind == Deployment::EventConsumer)
-                  {
-                    if (!conn.internalEndpoint[i].provider)
-                      {
-                        endpoint = i;
-                        break;
-                      }
-                  }
-                else if (conn.internalEndpoint[i].provider)
-                  {
-                    endpoint = i;
-                    break;
-                  }
-              }
-          }
-      }
+    CORBA::ULong endpoint = this->retrieve_endpoint (conn);
 
     try
       {
@@ -288,7 +220,7 @@ namespace CIAO
             CIAO_ERROR (1, (LM_ERROR, CLINFO
                             "Connection_Handler::disconnect_instance - "
                             "Unsupported port type.\n"));
-            throw ::Deployment::InvalidConnection (name,
+            throw ::Deployment::InvalidConnection (conn.name.in (),
                                                    "Unsupported port type");
 
           }
@@ -307,24 +239,27 @@ namespace CIAO
       {
         CIAO_DEBUG (2, (LM_WARNING, CLINFO
                         "Connection_Handler::disconnect_instance - "
-                        "Caught COMM_FAILURE exception whilst disconnecting\n"));
-        throw ::Deployment::InvalidConnection (name,
+                        "Caught COMM_FAILURE exception whilst disconnecting <%C>\n",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                ex._info ().c_str ());
       }
     catch (const CORBA::OBJECT_NOT_EXIST &ex)
       {
         CIAO_DEBUG (2, (LM_WARNING, CLINFO
                         "Connection_Handler::disconnect_instance - "
-                        "Caught OBJECT_NOT_EXIST exception whilst disconnecting\n"));
-        throw ::Deployment::InvalidConnection (name,
+                        "Caught OBJECT_NOT_EXIST exception whilst disconnecting <%C>\n",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                ex._info ().c_str ());
       }
     catch (const CORBA::TRANSIENT &ex)
       {
         CIAO_DEBUG (2, (LM_WARNING, CLINFO
                         "Connection_Handler::disconnect_instance - "
-                        "Caught TRANSIENT exception whilst disconnecting\n"));
-        throw ::Deployment::InvalidConnection (name,
+                        "Caught TRANSIENT exception whilst disconnecting <%C>\n",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                ex._info ().c_str ());
       }
     catch (CORBA::Exception &ex)
@@ -332,9 +267,9 @@ namespace CIAO
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::disconnect_instance - "
                         "Caught CORBA exception whilst disconnecting <%C>: %C\n",
-                        name,
+                        conn.name.in (),
                         ex._info ().c_str ()));
-        throw ::Deployment::InvalidConnection (name,
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                ex._info ().c_str ());
       }
     catch (...)
@@ -342,8 +277,8 @@ namespace CIAO
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::disconnect_instance - "
                         "Caught C++ exception whilst disconnecting <%C>\n",
-                        name));
-        throw ::Deployment::InvalidConnection (name,
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                "Unknown C++ Exception");
       }
   }
@@ -369,36 +304,15 @@ namespace CIAO
 
     if (this->is_local_connection (conn))
       {
-        CORBA::ULong other_endpointRef = (endpointRef + 1) % 2;
-        if (conn.internalEndpoint.length () == 2 &&
-            (conn.internalEndpoint[other_endpointRef].kind == ::Deployment::MultiplexReceptacle ||
-             conn.internalEndpoint[other_endpointRef].kind == ::Deployment::SimplexReceptacle))
-          {
-            const ::Deployment::PlanSubcomponentPortEndpoint &other_endpoint =
-              conn.internalEndpoint[other_endpointRef];
-            this->connect_local_port (plan.instance[endpoint.instanceRef].name.in (),
-                                      endpoint.portName.in (),
-                                      plan.instance[other_endpoint.instanceRef].name.in (),
-                                      other_endpoint.portName.in (),
-                                      conn.name.in ());
-            return;
-          }
-        else
-          {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO
-                            "Connection_Handler::connect_facet - "
-                            "Error: Wrong number of internal endpoints for local facet connection: "
-                            "expected <2> - found <%d>\n",
-                            conn.internalEndpoint.length ()));
-
-            throw ::Deployment::InvalidConnection (conn.name.in (),
-                                                   "Local facet connections require exactly 2 internalEndpoints");
-          }
+        this->connect_local_port (plan, conn, endpointRef, endpoint);
       }
-    this->connect_non_local_facet (plan,
-                                    connectionRef,
-                                    endpointRef,
+    else
+      {
+        this->connect_non_local_facet (plan,
+                                      connectionRef,
+                                      endpointRef,
                                     provided_reference);
+      }
   }
 
   void
@@ -482,45 +396,26 @@ namespace CIAO
 
     const ::Deployment::PlanConnectionDescription &conn =
       plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
+    const ::Deployment::PlanSubcomponentPortEndpoint &receptacle_endpoint =
       conn.internalEndpoint[endpointRef];
 
     CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                     "Connection_Handler::connect_receptacle - "
                     "Connecting connection <%C> on instance <%C>\n",
                     conn.name.in (),
-                    plan.instance[endpoint.instanceRef].name.in ()));
+                    plan.instance[receptacle_endpoint.instanceRef].name.in ()));
 
     if (this->is_local_connection (conn))
       {
-        CORBA::ULong other_endpointRef = (endpointRef + 1) % 2;
-        if (conn.internalEndpoint.length () == 2 &&
-            (conn.internalEndpoint[other_endpointRef].kind == ::Deployment::Facet))
-          {
-            const ::Deployment::PlanSubcomponentPortEndpoint &other_endpoint =
-              conn.internalEndpoint[other_endpointRef];
-            this->connect_local_port (plan.instance[other_endpoint.instanceRef].name.in (),
-                                      other_endpoint.portName.in (),
-                                      plan.instance[endpoint.instanceRef].name.in (),
-                                      endpoint.portName.in (),
-                                      conn.name.in ());
-            return;
-          }
-        else
-          {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO
-                            "Connection_Handler::connect_receptacle - "
-                            "Error: Wrong number of internal endpoints for local receptacle connection: "
-                            "expected <2> - found <%d>\n",
-                            conn.internalEndpoint.length ()));
-            throw ::Deployment::InvalidConnection (conn.name.in (),
-                                                   "Local receptacle connections require exactly 2 internalEndpoints");
-          }
+        this->connect_local_port (plan, conn, endpointRef, receptacle_endpoint);
       }
-    this->connect_non_local_receptacle (plan,
-                                        connectionRef,
-                                        endpointRef,
-                                        provided_reference);
+    else
+      {
+        this->connect_non_local_receptacle (plan,
+                                            connectionRef,
+                                            endpointRef,
+                                            provided_reference);
+      }
   }
 
   void
@@ -533,7 +428,7 @@ namespace CIAO
 
     const ::Deployment::PlanConnectionDescription &conn =
       plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
+    const ::Deployment::PlanSubcomponentPortEndpoint &receptacle_endpoint =
       conn.internalEndpoint[endpointRef];
 
     ::CORBA::Object_var provided;
@@ -573,7 +468,7 @@ namespace CIAO
       }
 
     ::Components::CCMObject_var receptacle =
-        DEPLOYMENT_STATE::instance ()->fetch_component (plan.instance[endpoint.instanceRef].name.in ());
+        DEPLOYMENT_STATE::instance ()->fetch_component (plan.instance[receptacle_endpoint.instanceRef].name.in ());
 
     if (CORBA::is_nil (receptacle.in ()))
       {
@@ -582,12 +477,12 @@ namespace CIAO
                         "While connecting <%C>:"
                         "Receptacle component <%C> not deployed.\n",
                         plan.connection[connectionRef].name.in (),
-                        plan.instance[endpoint.instanceRef].name.in ()));
+                        plan.instance[receptacle_endpoint.instanceRef].name.in ()));
         throw ::Deployment::InvalidConnection (plan.connection[connectionRef].name.in (),
                                                "Receptacle component not deployed.");
       }
 
-    ::Components::Cookie_var cookie = receptacle->connect (endpoint.portName.in (),
+    ::Components::Cookie_var cookie = receptacle->connect (receptacle_endpoint.portName.in (),
                                                            provided.in ());
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_non_local_receptacle - "
@@ -764,47 +659,23 @@ namespace CIAO
 
     const ::Deployment::PlanConnectionDescription &conn =
       plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
+    const ::Deployment::PlanSubcomponentPortEndpoint &receptacle_endpoint =
       conn.internalEndpoint[endpointRef];
 
     CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                     "Connection_Handler::disconnect_facet - "
                     "Disconnecting connection <%C> on instance <%C>\n",
                     conn.name.in (),
-                    plan.instance[endpoint.instanceRef].name.in ()));
+                    plan.instance[receptacle_endpoint.instanceRef].name.in ()));
 
     if (this->is_local_connection (conn))
       {
-        CORBA::ULong other_endpointRef = (endpointRef + 1) % 2;
-        if (conn.internalEndpoint.length () == 2 &&
-            (conn.internalEndpoint[other_endpointRef].kind == ::Deployment::MultiplexReceptacle ||
-             conn.internalEndpoint[other_endpointRef].kind == ::Deployment::SimplexReceptacle))
-          {
-            const ::Deployment::PlanSubcomponentPortEndpoint &other_endpoint =
-              conn.internalEndpoint[other_endpointRef];
-
-
-            this->disconnect_local_port (plan.instance[endpoint.instanceRef].name.in (),
-                                      endpoint.portName.in (),
-                                      plan.instance[other_endpoint.instanceRef].name.in (),
-                                      other_endpoint.portName.in (),
-                                      conn.name.in ());
-            return;
-          }
-        else
-          {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO
-                            "Connection_Handler::disconnect_facet - "
-                            "Error: Wrong number of internal endpoints for local facet "
-                            "connection: expected <2> - found <%d>\n",
-                            conn.internalEndpoint.length ()));
-
-            throw ::Deployment::InvalidConnection (conn.name.in (),
-                                                   "Local facet connections require exactly 2 "
-                                                   "internalEndpoints");
-          }
+        this->disconnect_local_port (plan, conn, endpointRef, receptacle_endpoint);
       }
-    this->disconnect_non_local (conn, endpoint);
+    else
+      {
+        this->disconnect_non_local (conn, receptacle_endpoint);
+      }
   }
 
   void
@@ -812,16 +683,6 @@ namespace CIAO
                                             const ::Deployment::PlanSubcomponentPortEndpoint &endpoint)
   {
     CIAO_TRACE ("Connection_Handler::disconnect_non_local");
-
-    if (conn.internalEndpoint.length () == 0)
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::disconnect_non_local - "
-                        "Error: Expected internal endpoints for connection <%C>\n",
-                        conn.name.in ()));
-        throw ::Deployment::InvalidConnection (conn.name.in (),
-                                               "Expected internal endpoints.");
-      }
 
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
     ::CORBA::Object_var safe_tmp =
@@ -840,45 +701,26 @@ namespace CIAO
 
     const ::Deployment::PlanConnectionDescription &conn =
       plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
+    const ::Deployment::PlanSubcomponentPortEndpoint &receptacle_endpoint =
       conn.internalEndpoint[endpointRef];
 
     CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                     "Connection_Handler::disconnect_receptacle - "
                     "Disconnecting connection <%C> on instance <%C>\n",
                     conn.name.in (),
-                    plan.instance[endpoint.instanceRef].name.in ()));
+                    plan.instance[receptacle_endpoint.instanceRef].name.in ()));
+
     if (this->is_local_connection (conn))
       {
-        CORBA::ULong other_endpointRef = (endpointRef + 1) % 2;
-        if (conn.internalEndpoint.length () == 2 &&
-            conn.internalEndpoint[other_endpointRef].kind == ::Deployment::Facet)
-          {
-            const ::Deployment::PlanSubcomponentPortEndpoint &other_endpoint =
-              conn.internalEndpoint[other_endpointRef];
-
-
-            this->disconnect_local_port (plan.instance[endpoint.instanceRef].name.in (),
-                                      endpoint.portName.in (),
-                                      plan.instance[other_endpoint.instanceRef].name.in (),
-                                      other_endpoint.portName.in (),
-                                      conn.name.in ());
-            return;
-          }
-        else
-          {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO
-                            "Connection_Handler::disconnect_receptacle - "
-                            "Error: Wrong number of internal endpoints for local receptacle "
-                            "connection: expected <2> - found <%d>\n",
-                            conn.internalEndpoint.length ()));
-
-            throw ::Deployment::InvalidConnection (conn.name.in (),
-                                                   "Local receptacle connections require exactly 2 "
-                                                   "internalEndpoints");
-          }
+        this->disconnect_local_port (plan,
+                                     conn,
+                                     endpointRef,
+                                     receptacle_endpoint);
       }
-    this->disconnect_non_local (conn, endpoint);
+    else
+      {
+        this->disconnect_non_local (conn, receptacle_endpoint);
+      }
   }
 
 #if !defined (CCM_NOEVENT)
@@ -922,13 +764,12 @@ namespace CIAO
 
 #if !defined (CCM_NOEVENT)
   void
-  Connection_Handler::disconnect_emitter (const ::Deployment::DeploymentPlan &plan,
-                                          ::CORBA::ULong connectionRef,
-                                          ::CORBA::ULong endpointRef)
+  Connection_Handler::disconnect_emitter (const ::Deployment::DeploymentPlan &,
+                                          ::CORBA::ULong,
+                                          ::CORBA::ULong)
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_emitter");
-    this->disconnect_consumer (plan, connectionRef, endpointRef);
   }
 #endif
 
@@ -971,31 +812,56 @@ namespace CIAO
 #endif
 
   void
-  Connection_Handler::connect_local_port (const char *facet_id,
-                                          const char *facet_port,
-                                          const char *receptacle_id,
-                                          const char *receptacle_port,
-                                          const char *connection_name)
+  Connection_Handler::connect_local_port (const ::Deployment::DeploymentPlan & plan,
+                                          const ::Deployment::PlanConnectionDescription &conn,
+                                          ::CORBA::ULong endpointRef,
+                                          const ::Deployment::PlanSubcomponentPortEndpoint &receptacle_endpoint)
   {
     CIAO_TRACE ("Connection_Handler::connect_local_port");
 
+
+    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                    "Connection_Handler::connect_local_port - "
+                    "Connecting connection <%C> on instance <%C>\n",
+                    conn.name.in (),
+                    plan.instance[receptacle_endpoint.instanceRef].name.in ()));
+
+    CORBA::ULong facet_endpointRef = (endpointRef + 1) % 2;
+    if (conn.internalEndpoint.length () != 2 ||
+          conn.internalEndpoint[facet_endpointRef].kind != ::Deployment::Facet)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::connect_local_port - "
+                        "Error: Wrong number of internal endpoints for local connection: "
+                        "expected <2> - found <%d>\n",
+                        conn.internalEndpoint.length ()));
+
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                                "Local connections require exactly 2 internalEndpoints");
+      }
+
+    const ::Deployment::PlanSubcomponentPortEndpoint &facet_endpoint =
+      conn.internalEndpoint[facet_endpointRef];
+
     const char *facet_cont =
-      DEPLOYMENT_STATE::instance ()->instance_to_container (facet_id);
+      DEPLOYMENT_STATE::instance ()->instance_to_container (
+        plan.instance[facet_endpoint.instanceRef].name.in ());
     const char *recep_cont =
-      DEPLOYMENT_STATE::instance ()->instance_to_container (receptacle_id);
+      DEPLOYMENT_STATE::instance ()->instance_to_container (
+        plan.instance[receptacle_endpoint.instanceRef].name.in ());
 
     if (facet_cont && recep_cont &&
         ACE_OS::strcmp (facet_cont, recep_cont) != 0)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::connect_local_port - "
-                        "Ports <%C> and <%C> participate in local facet/receptacle connection, "
+                        "Ports <%C> and <%C> participate in local connection, "
                         "but are installed in differing containers <%C> and <%C>\n",
-                        facet_id,
-                        receptacle_id,
+                        plan.instance[facet_endpoint.instanceRef].name.in (),
+                        plan.instance[receptacle_endpoint.instanceRef].name.in (),
                         facet_cont,
                         recep_cont));
-        throw ::Deployment::InvalidConnection (facet_id,
+        throw ::Deployment::InvalidConnection (plan.instance[facet_endpoint.instanceRef].name.in (),
                                                "Component instance participates in a local connection with "
                                                "a non-local entity.");
       }
@@ -1004,50 +870,74 @@ namespace CIAO
       DEPLOYMENT_STATE::instance ()->fetch_container (facet_cont);
 
     Components::CCMObject_var
-      facet = DEPLOYMENT_STATE::instance ()->fetch_component (facet_id),
-      receptacle = DEPLOYMENT_STATE::instance ()->fetch_component (receptacle_id);
+      facet = DEPLOYMENT_STATE::instance ()->fetch_component (
+          plan.instance[facet_endpoint.instanceRef].name.in ()),
+      receptacle = DEPLOYMENT_STATE::instance ()->fetch_component (
+          plan.instance[receptacle_endpoint.instanceRef].name.in ());
 
     ::Components::Cookie_var cookie = cont->connect_local_facet (facet,
-                                                                 facet_port,
+                                                                 facet_endpoint.portName.in (),
                                                                  receptacle,
-                                                                 receptacle_port);
+                                                                 receptacle_endpoint.portName.in ());
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_local_port - "
                     "Connected local port <%C>:<%C> to <%C>:<%C>\n",
-                    facet_id, facet_port,
-                    receptacle_id, receptacle_port));
+                    plan.instance[facet_endpoint.instanceRef].name.in (),
+                    facet_endpoint.portName.in (),
+                    plan.instance[receptacle_endpoint.instanceRef].name.in (),
+                    receptacle_endpoint.portName.in ()));
 
     CONNECTION_INFO conn_info = CONNECTION_INFO (cookie._retn (),
                                                  ::Components::CCMObject::_duplicate (receptacle.in ()));
-    this->insert_cookie (connection_name, conn_info);
+    this->insert_cookie (conn.name.in (), conn_info);
   }
 
   void
-  Connection_Handler::disconnect_local_port (const char *facet_id,
-                                             const char *facet_port,
-                                             const char *receptacle_id,
-                                             const char *receptacle_port,
-                                             const char *connection_name)
+  Connection_Handler::disconnect_local_port (const ::Deployment::DeploymentPlan & plan,
+                                            const ::Deployment::PlanConnectionDescription &conn,
+                                            ::CORBA::ULong endpointRef,
+                                            const ::Deployment::PlanSubcomponentPortEndpoint &receptacle_endpoint)
   {
     CIAO_TRACE ("Connection_Handler::disconnect_local_port");
 
+
+    CORBA::ULong facet_endpointRef = (endpointRef + 1) % 2;
+    if (conn.internalEndpoint.length () != 2 ||
+        conn.internalEndpoint[facet_endpointRef].kind != ::Deployment::Facet)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::disconnect_local_port - "
+                        "Error: Wrong number of internal endpoints for local "
+                        "connection: expected <2> - found <%d>\n",
+                        conn.internalEndpoint.length ()));
+
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                                "Local connections require exactly 2 "
+                                                "internalEndpoints");
+
+      }
+    const ::Deployment::PlanSubcomponentPortEndpoint &facet_endpoint =
+      conn.internalEndpoint[facet_endpointRef];
+
     const char *facet_cont =
-      DEPLOYMENT_STATE::instance ()->instance_to_container (facet_id);
+      DEPLOYMENT_STATE::instance ()->instance_to_container (
+        plan.instance[facet_endpoint.instanceRef].name.in ());
     const char *recep_cont =
-      DEPLOYMENT_STATE::instance ()->instance_to_container (receptacle_id);
+      DEPLOYMENT_STATE::instance ()->instance_to_container (
+        plan.instance[receptacle_endpoint.instanceRef].name.in ());
 
     if (facet_cont && recep_cont &&
         ACE_OS::strcmp (facet_cont, recep_cont) != 0)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::disconnect_local_port - "
-                        "Ports <%C> and <%C> participate in local facet/receptacle connection, "
+                        "Ports <%C> and <%C> participate in local connection, "
                         "but are installed in differing containers <%C> and <%C>\n",
-                        facet_id,
-                        receptacle_id,
+                        plan.instance[facet_endpoint.instanceRef].name.in (),
+                        plan.instance[receptacle_endpoint.instanceRef].name.in (),
                         facet_cont,
                         recep_cont));
-        throw ::Deployment::InvalidConnection (facet_id,
+        throw ::Deployment::InvalidConnection (plan.instance[facet_endpoint.instanceRef].name.in (),
                                                "Component instance participates in a local connection with "
                                                "a non-local entity.");
       }
@@ -1056,23 +946,27 @@ namespace CIAO
       DEPLOYMENT_STATE::instance ()->fetch_container (facet_cont);
 
     Components::CCMObject_var
-      facet = DEPLOYMENT_STATE::instance ()->fetch_component (facet_id),
-      receptacle = DEPLOYMENT_STATE::instance ()->fetch_component (receptacle_id);
+      facet = DEPLOYMENT_STATE::instance ()->fetch_component (
+        plan.instance[facet_endpoint.instanceRef].name.in ()),
+      receptacle = DEPLOYMENT_STATE::instance ()->fetch_component (
+        plan.instance[receptacle_endpoint.instanceRef].name.in ());
 
     cont->disconnect_local_facet (
-                               this->get_cookie (connection_name),
+                               this->get_cookie (conn.name.in ()),
                                facet,
-                               facet_port,
+                               facet_endpoint.portName.in (),
                                receptacle,
-                               receptacle_port);
+                               receptacle_endpoint.portName.in ());
 
-    this->remove_cookie (connection_name);
+    this->remove_cookie (conn.name.in ());
 
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::disconnect_local_port - "
                     "Disconnected local port <%C>:<%C> to <%C>:<%C>\n",
-                    facet_id, facet_port,
-                    receptacle_id, receptacle_port));
+                    plan.instance[facet_endpoint.instanceRef].name.in (),
+                    facet_endpoint.portName.in (),
+                    plan.instance[receptacle_endpoint.instanceRef].name.in (),
+                    receptacle_endpoint.portName.in ()));
   }
 
   bool
@@ -1192,4 +1086,30 @@ namespace CIAO
       }
     return ::Components::CCMObject::_duplicate (ret.in ());
   }
+
+  ::CORBA::ULong
+  Connection_Handler::retrieve_endpoint (const ::Deployment::PlanConnectionDescription &conn)
+  {
+    if (conn.internalEndpoint.length () == 0)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::retrieve_endpoint - "
+                        "Connection <%C> lacks an internalEndpoint.\n",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                       "No internal endpoint for connection\n");
+      }
+    if (conn.internalEndpoint.length () > 1)
+      {
+        for (CORBA::ULong i = 0;
+             i < conn.internalEndpoint.length ();
+             ++i)
+          {
+            if (!conn.internalEndpoint[i].provider)
+              return i;
+          }
+      }
+    return 0;
+  }
+
 }

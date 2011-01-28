@@ -10,6 +10,7 @@
 #define CONNECTION_HANDLER_H
 
 #include "dance/Deployment/Deployment_DeploymentPlanC.h"
+#include "ciao/Containers/Container_BaseC.h"
 #include "ccm/CCM_ObjectC.h"
 
 #include <map>
@@ -91,17 +92,15 @@ namespace CIAO
                               ::CORBA::ULong endpoint);
 #endif
 
-    void connect_local_port (const char *facet_id,
-                             const char *facet_port,
-                             const char *receptacle_id,
-                             const char *receptacle_port,
-                             const char *connection_name);
+    void connect_local_port (const ::Deployment::DeploymentPlan & plan,
+                            const ::Deployment::PlanConnectionDescription &conn,
+                            ::CORBA::ULong endpointRef,
+                            const ::Deployment::PlanSubcomponentPortEndpoint &receptacle_endpoint);
 
-    void disconnect_local_port (const char *facet_id,
-                                const char *facet_port,
-                                const char *receptacle_id,
-                                const char *receptacle_port,
-                                const char *connection_name);
+    void disconnect_local_port (const ::Deployment::DeploymentPlan & plan,
+                                const ::Deployment::PlanConnectionDescription &conn,
+                                ::CORBA::ULong endpointRef,
+                                const ::Deployment::PlanSubcomponentPortEndpoint &receptacle_endpoint);
 
     void connect_non_local_receptacle (const ::Deployment::DeploymentPlan & plan,
                                        ::CORBA::ULong connectionRef,
@@ -117,6 +116,8 @@ namespace CIAO
                               const ::Deployment::PlanSubcomponentPortEndpoint &endpoint);
 
     bool is_local_connection (const ::Deployment::PlanConnectionDescription &conn);
+
+    ::CORBA::ULong retrieve_endpoint (const ::Deployment::PlanConnectionDescription &conn);
 
     typedef std::pair < ::Components::Cookie_var,
                         ::Components::CCMObject_var> CONNECTION_INFO;

@@ -202,7 +202,17 @@ namespace CIAO
                         "Successfully created datareader.\n"));
         }
 
-      ccm_dds_dr->enable ();
+      DDS_ReturnCode_t retcode = ccm_dds_dr->enable ();
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DDS_Subscriber_i::create_datareader- "
+                        "Error: Unable to enable the datareader: <%C>.\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          delete ccm_dds_drl;
+          throw ::CORBA::INTERNAL ();
+        }
+
       ::DDS::DataReader_var reader = DDS_TypeSupport_i::create_datareader (
                                                                 ccm_dds_dr,
                                                                 this->dp_.in (),
@@ -288,7 +298,17 @@ namespace CIAO
         {
           ccm_dds_drl->set_dds_entity (reader.in ());
         }
-      ccm_dds_dr->enable ();
+      DDS_ReturnCode_t retcode = ccm_dds_dr->enable ();
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DDS_Subscriber_i::create_datareader_with_profile <%C>- "
+                        "Error: Unable to enable the datareader: <%C>\n",
+                        qos_profile,
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          delete ccm_dds_drl;
+          throw ::CORBA::INTERNAL ();
+        }
       return reader._retn ();
     }
 
