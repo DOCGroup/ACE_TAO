@@ -2,7 +2,6 @@
 
 #include "tao/ObjectKey_Table.h"
 #include "tao/ORB_Core.h"
-#include "tao/Refcounted_ObjectKey.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ObjectKey_Table.inl"
