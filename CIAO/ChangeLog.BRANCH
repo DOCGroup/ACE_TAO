@@ -1,3 +1,25 @@
+Fri Jan 28 16:29:59 UTC 2011  Martin Corino  <corino_m@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/ami4ccm/examples/Quoter:
+        * connectors/ami4ccm/examples/Quoter/Base:
+        * connectors/ami4ccm/examples/Quoter/Base/Quoter.idl:
+        * connectors/ami4ccm/examples/Quoter/Base/Quoter.mpc:
+        * connectors/ami4ccm/examples/Quoter/Client:
+        * connectors/ami4ccm/examples/Quoter/Client/Quoter_Client.idl:
+        * connectors/ami4ccm/examples/Quoter/Client/Quoter_Client.mpc:
+        * connectors/ami4ccm/examples/Quoter/Client/Quoter_Client_exec.h:
+        * connectors/ami4ccm/examples/Quoter/Client/Quoter_Client_exec.cpp:
+        * connectors/ami4ccm/examples/Quoter/Producer:
+        * connectors/ami4ccm/examples/Quoter/Producer/Quoter_Producer.idl:
+        * connectors/ami4ccm/examples/Quoter/Producer/Quoter_Producer.mpc:
+        * connectors/ami4ccm/examples/Quoter/Producer/Quoter_Producer_exec.h:
+        * connectors/ami4ccm/examples/Quoter/Producer/Quoter_Producer_exec.cpp:
+        * connectors/ami4ccm/examples/Quoter/descriptors:
+        * connectors/ami4ccm/examples/Quoter/descriptors/Plan.cdp:
+        * connectors/ami4ccm/examples/Quoter/descriptors/run_test.pl:
+          Added Quoter example based on the latest AMI4CCM spec.
+
 Fri Jan 28 14:33:42 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Connector_Servant_Impl_Base.h:
