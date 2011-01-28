@@ -60,29 +60,29 @@ int box_test1 (BoxT *valuebox, UT val1, UT val2)
     OBV_VERITY ( &valuebox_clone->_boxed_inout () != &valuebox->_boxed_inout () );
 
     // but values should be equal
-    OBV_VERITY ( valuebox_clone->_value () == valuebox->_value () );
+    OBV_VERITY (ACE::is_equal (valuebox_clone->_value (), valuebox->_value ()));
 
     // Check that modifier is working.
     valuebox_clone->_value ( val2 );
-    OBV_VERITY ( valuebox_clone->_value () != valuebox->_value () );
+    OBV_VERITY (!ACE::is_equal (valuebox_clone->_value (), valuebox->_value ()));
 
     // use operator=
     *valuebox = val2;
-    OBV_VERITY ( valuebox_clone->_value () == valuebox->_value () );
+    OBV_VERITY (ACE::is_equal (valuebox_clone->_value (), valuebox->_value ()));
 
     // Check that _value and _boxed_in are the same.
-    OBV_VERITY ( valuebox_clone->_value () == valuebox_clone->_boxed_in () );
-    OBV_VERITY ( valuebox->_value () == valuebox->_boxed_in () );
+    OBV_VERITY (ACE::is_equal (valuebox_clone->_value (), valuebox_clone->_boxed_in ()));
+    OBV_VERITY (ACE::is_equal (valuebox->_value (), valuebox->_boxed_in ()));
 
     // Used _boxed_inout to change the value
-    OBV_VERITY ( valuebox->_value () != val1 );
+    OBV_VERITY (!ACE::is_equal (valuebox->_value (), val1));
     valuebox->_boxed_inout () = val1;
-    OBV_VERITY ( valuebox->_value () == val1 );
+    OBV_VERITY (ACE::is_equal (valuebox->_value (), val1));
 
     // Use _boxed_out to access the value
-    OBV_VERITY ( valuebox_clone->_value () != val1 );
+    OBV_VERITY (!ACE::is_equal (valuebox_clone->_value (), val1));
     valuebox_clone->_boxed_out () = val1;
-    OBV_VERITY ( valuebox_clone->_value () == val1 );
+    OBV_VERITY (ACE::is_equal (valuebox_clone->_value (), val1));
 
     // Test _copy_value
     CORBA::ValueBase *copy = valuebox->_copy_value ();
@@ -100,10 +100,10 @@ int box_test1 (BoxT *valuebox, UT val1, UT val2)
       }
     else
       {
-        OBV_VERITY ( down->_value () == val1 );
+        OBV_VERITY (ACE::is_equal (down->_value (), val1));
         down->_value ( val2 );
-        OBV_VERITY ( down->_value () != valuebox->_value () );
-         OBV_VERITY ( down->_value () == val2 );
+        OBV_VERITY (!ACE::is_equal (down->_value (), valuebox->_value ()));
+        OBV_VERITY (ACE::is_equal (down->_value (), val2));
       }
 
     CORBA::remove_ref (copy);

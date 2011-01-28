@@ -113,7 +113,8 @@ namespace CIAO
                                   ::CORBA::ULong endpointRef,
                                   const ::CORBA::Any & provided_reference);
 
-    void disconnect_non_local (const ::Deployment::PlanConnectionDescription &conn);
+    void disconnect_non_local (const ::Deployment::PlanConnectionDescription &conn,
+                              const ::Deployment::PlanSubcomponentPortEndpoint &endpoint);
 
     bool is_local_connection (const ::Deployment::PlanConnectionDescription &conn);
 

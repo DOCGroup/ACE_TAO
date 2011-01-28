@@ -1,3 +1,82 @@
+Fri Jan 28 11:21:05 CET 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.0.1 released.
+
+Tue Jan 25 11:01:57 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.h:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Use the proper endpoint to disconnect a non local connection.
+          Also catch a transient exception because of the fact that dance shuts
+          down the locality managers simultaniously.
+
+        * connectors/dds4ccm/tests/TwoTopicsDifferentNs/Connector/Connector.mpc:
+          Removed after and lib declarations.
+
+Tue Jan 25 10:27:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Catch extra exceptions since dance shuts down the locality managers
+          simultaniously.
+
+Mon Jan 24 14:51:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/docs/AMI4CCM-explanation.odt:
+        * connectors/ami4ccm/docs/AMI4CCM-spec.odt:
+        * connectors/ami4ccm/docs/RFP.odt:
+          Removed these files, RFP is formally published by the OMG and a
+          draft initial submission is now available which replaces our
+          draft specifications
+
+Mon Jan 24 14:13:36 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.cpp:
+          Don't need to throw an exception when the executor seems nil.
+          Optimized logging.
+
+Sun Jan 23 18:08:59 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds4ccm_stub.mpc:
+        * connectors/dds4ccm/idl/ndds/ndds_stub.mpc:
+          Attempt to fix install warnings in windows
+
+Fri Jan 21 15:47:13 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+          Updated for the upcoming release.
+
+Fri Jan 21 14:09:13 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/ndds_stub.mpb:
+          Typcode instead of anytypecode was sufficient.
+
+        * connectors/dds4ccm/impl/logger/dds4ccm_logger.mpc:
+          reverted last change.
+
+Fri Jan 21 13:40:56 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/ndds_stub.mpb:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.mpc:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.mpc:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Sender/I2C_Shapes_Sender.mpc:
+        * connectors/dds4ccm/impl/logger/dds4ccm_logger.mpc:
+          Resolved link issues on static builds.
+
+Fri Jan 21 10:33:20 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/DAnCE/PartialShutdown/Base/PartialShutdown.mpc:
+          No use to not to build Partial_lem_gen because of ccm_noevents
+
+Fri Jan 21 09:26:08 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_lem_stub.mpc:
+          Resolved issues regarding to non-dds builds.
+
+Thu Jan 20 15:20:04 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/ndds.mpb:
+          Resolves compile issues related to non-dds builds
+
 Thu Jan 20 11:42:53 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.
