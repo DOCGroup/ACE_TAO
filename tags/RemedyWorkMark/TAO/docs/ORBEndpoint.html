@@ -1,0 +1,648 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+
+<!-- $Id$ -->
+
+<html>
+  <head>
+    <title>-ORBListenEndpoints Details</title>
+    <!-- Changed by: , 12-Jun-2002 -->
+  </head>
+
+  <body text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+    <h1><A HREF="Options.html#-ORBListenEndpoints">-ORBListenEndpoints</A> Details</h1>
+    <P>
+    <UL>
+      <LI><A HREF="#Overview">Overview</A></LI>
+      <LI><A HREF="#Options">Endpoint-Specific Options</A></LI>
+      <LI><A HREF="#IIOP">IIOP Endpoints</A></LI>
+      <LI><A HREF="#SHMIOP">SHMIOP Endpoints</A></LI>
+      <LI><A HREF="#UIOP">UIOP Endpoints</A></LI>
+      <LI><A HREF="#DIOP">DIOP Endpoints</A></LI>
+      <LI><A HREF="#SSLIOP">SSLIOP Endpoints</A></LI>
+    </UL>
+
+    <hr>
+    <P><h2><A NAME="Overview">Overview</A></h2>
+      Tells the ORB to listen for requests on the interface specified
+      by <I><EM>endpoint</EM></I>.  Endpoints are specified using a
+      URL style format.  An endpoint has the form:
+    <blockquote><CODE>
+        protocol://V.v@addr1,...,W.w@addrN
+      </CODE></blockquote>
+    where <CODE>V.v</CODE> and <CODE>W.w</CODE> are optional protcol
+    versions for each address.  An example of an IIOP endpoint is:
+    <blockquote><CODE>
+        iiop://<I><EM>hostname</EM></I>:<I><EM>port</EM></I>
+      </CODE></blockquote>
+    Sets of endpoints may be specified using multiple
+    <CODE>-ORBListenEndpoints</CODE> options or by delimiting endpoints with
+    a semi-colon (;).  For example:
+    <blockquote><CODE>
+        -ORBListenEndpoints iiop://localhost:9999 -ORBListenEndpoints uiop:///tmp/mylocalsock -ORBListenEndpoints shmiop://10002
+      </CODE></blockquote>
+    is equivalent to:
+    <blockquote><CODE>
+        -ORBListenEndpoints 'iiop://localhost:9999;uiop:///tmp/mylocalsock;shmiop://10002'
+      </CODE></blockquote>
+    Notice the single quotes (') in the latter option specification.
+    Single quotes are needed to prevent the shell from interpreting
+    text after the semi-colon as another command to run.
+    <P>
+      If an endpoint is specified without an <CODE>addr</CODE> such as
+      the following:
+    <blockquote><CODE>
+        -ORBListenEndpoints uiop:// -ORBListenEndpoints shmiop://
+      </CODE></blockquote>
+    then a default endpoint will be created for the specified protocol.
+    <P>
+      This is a server side option.
+
+    <hr>
+    <P>
+    <h2><A NAME="Options">Endpoint-Specific Options</A></h2>
+    <P>
+      The <CODE>-ORBListenEndpoints</CODE> options can accept
+      endpoint-specific options.  Specifically, such options will only
+      apply to the endpoint for which they were specified.
+    <P>
+      An endpoint-specific option is used as follows:
+    <BLOCKQUOTE>
+      <CODE>
+        -ORBListenEndpoints iiop://foo:1234/option=value
+      </CODE>
+    </BLOCKQUOTE>
+    <P>
+      Additional options can be specified by separating each option
+      with an ampersand '<CODE>&amp;</CODE>' as follows:
+    <BLOCKQUOTE>
+      <CODE>
+        -ORBListenEndpoints 'iiop://foo:1234/option1=value1&option2=value2'
+      </CODE>
+    </BLOCKQUOTE>
+    <P>
+      Notice that the address and the endpoint-specific options are
+      separated by a forward slash '<CODE>/</CODE>' in this case,
+      i.e. for IIOP endpoints.  This character may differ for other
+      types of pluggable protocol endpoints.  For example, UIOP
+      endpoint-specifc options are separated from the address by a
+      vertical bar '<CODE>|</CODE>'.  Also note that when using more
+      than option, quotes should be used to prevent the shell from
+      interpreting the ampersand '<CODE>&amp;</CODE>' as a command to
+      tell the shell to backgroup a job.
+
+    <hr>
+    <P>
+    <h2><A NAME="IIOP">IIOP Endpoints</A></h2>
+    TAO's IIOP pluggable protocol utilizes TCP/IP as its underlying
+    transport mechanism.
+    <P>
+    <h3>IIOP Endpoint Overview</h3>
+    <P>
+      IIOP endpoints in TAO have the form:
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints iiop://V.v@hostname1:port1,...,W.w@hostname2:port2
+        </CODE>
+    </BLOCKQUOTE>
+    <P>
+      Where "<CODE>V.v</CODE>" and "<CODE>W.w</CODE>" are the IIOP
+      protocol versions associated with the given address
+      (hostname:port pair).  Currently supported versions are
+      <CODE>1.0</CODE>, <CODE>1.1</CODE>, and <CODE>1.2</CODE>.
+
+    <P>
+      Options are separated from the addresses by a forward slash
+      '<CODE>/</CODE>'.  For instance, if an IIOP endpoint should have
+      a property foobar of 50 associated with it, then the following
+      endpoint specification could be used
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints iiop://hostname:port/foobar=50
+        </CODE>
+    </BLOCKQUOTE>
+    <P>
+    <h3>IIOP Address Format</h3>
+    <P>
+      IIOP addresses are comprised of a hostname (or an IP address)
+      and a TCP port the server should listen on.  The hostname is
+      used to select which network interface to set up the endpoint
+      on.  It is <STRONG>not</STRONG> used to set the hostname that
+      goes into the generated IOR.  This is especially useful if the
+      endpoint should be setup on a specific network interface other
+      than the default network interface.
+    <P>
+      Suppose a host has the following network interfaces:
+    <UL>
+      <LI>eth0: foo1.bar.baz <FONT COLOR=RED>(DEFAULT)</FONT></LI>
+      <LI>eth1: foo2.bar.baz</LI>
+    </UL>
+    <P>
+      To set up an endpoint on the second network interface "eth1,"
+      the following endpoint specification could be used:
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints iiop://foo2
+        </CODE>
+    </BLOCKQUOTE>
+    or:
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints iiop://foo2.bar.baz
+        </CODE>
+    </BLOCKQUOTE>
+    <P>
+      TAO will attempt to ensure that the fully qualified domain name is
+      embedded in the IOR.
+    <P>
+      In the above example, an available port will be chosen by TAO
+      (actually the operating system kernel), which will then be
+      placed into the IOR.
+    <P>
+      To set up an endpoint on a specific port, simply use an endpoint
+      of the form:
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints iiop://foo2:1234
+        </CODE>
+    </BLOCKQUOTE>
+    <P>
+      where <CODE>1234</CODE> is the TCP port the endpoint will be
+      opened on.  In this case, an endpoint will be opened on the
+      network interface associated with the hostname <CODE>foo2</CODE>
+      on port <CODE>1234</CODE>.
+    <P>
+      Port <I>names</I> are also accepted.  For example, suppose a
+      UNIX installation has a service called "my_protocol" associated
+      with port 1234 in the service database in
+      <CODE>/etc/services</CODE>, then the following would cause an
+      endpoint to be opened on the port associated with that service:
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints iiop://foo2:my_protocol
+        </CODE>
+    </BLOCKQUOTE>
+    <P>
+      Port numbers range from <CODE>0</CODE> (causes port to be chosen
+      by operating system) to <CODE>65355</CODE>.  Port numbers less
+      than <CODE>1024</CODE> on UNIX systems are considered
+      privileged, and require super-user privileges to access them.
+      Also be aware that some ports may already be in use by other
+      applications.
+    <P>
+      Suppose an endpoint should be created on each network
+      interface.  To do so, simply omit the address from the endpoint
+      specification as follows:
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints iiop://
+        </CODE>
+    </BLOCKQUOTE>
+    <P>
+      In this case, an endpoint will be set up on each network
+      interface detected by TAO.  The port for each opened endpoint
+      will be chosen automatically.  The chosen port will be the same
+      for all endpoints.  Each endpoint will be represented in
+      generated IOR as a separate profile.
+    <P>
+      Note that network interface detection only work on platforms
+      that support this feature.  If network interface detection isn't
+      supported, then the default network interface will be chosen.
+    <P>
+      Now suppose that an endpoint should be created on each detected
+      network interface, but with a specific port.  This can be
+      achieved by using an endpoint specification of the form:
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints iiop://:1234
+        </CODE>
+    </BLOCKQUOTE>
+    <P>
+      This will create endpoints on each detected network interface,
+      each with the TCP port <CODE>1234</CODE>.  Notice that there is
+      a colon '<CODE>:</CODE>' preceeding the port number
+      <CODE>1234</CODE>.  That colon is necessary to make TAO
+      interpret <CODE>1234</CODE> as a port.  Without the colon, TAO
+      would interpret <CODE>1234</CODE> as a hostname associated with
+      a given network interface.
+
+    <P>
+    <P>
+      The hostname part of an endpoint can also be specified as a literal
+      IP address in 'dotted decimal address' form for IPv4 addresses:
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints iiop://192.168.10.24:1234
+        </CODE>
+    </BLOCKQUOTE>
+
+      For IPv6 addresses a special form is required to specify decimal IP
+      addresses since the decimal separator for IPv6 addresses is identical
+      to the separator used for port numbers; i.e. a colon (':').
+      To be able to distinguish an endpoint specification for host 01ef::1
+      and port 123 and one for host 01ef::1:123 and no port number IPv6
+      decimal addresses need to enclosed by square brackets ('[' and ']'):
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints iiop://[01ef::1]:123
+          -ORBListenEndpoints iiop://[01ef::1:123]
+        </CODE>
+    </BLOCKQUOTE>
+
+      <B>NOTE:</B>
+      Since IPv6 endpoint are supported only for GIOP/IIOP versions >= 1.2
+      it is <FONT color='RED'>illegal</FONT> to combine version numbers
+      &lt; 1.2 and IPv6 decimal addresses:
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints iiop://1.1@[01ef::1]:123 <B><FONT color='RED'>--> ILLEGAL</FONT></B>
+        </CODE>
+    </BLOCKQUOTE>
+    <P>
+    <h3>IIOP Endpoint-Specific Options</h3>
+    <P>
+    TAO supports the following endpoint-specific options that apply only
+    to IIOP endpoints:
+
+      <TABLE BORDER="2" CELLSPACING="2" CELLPADDING= "0">
+        <TR>
+          <TH>Option</TH>
+          <TH>Availability</TH>
+          <TH>Description</TH>
+        </TR>
+        <TR>
+          <TD>
+            <CODE>portspan</CODE>
+          </TD>
+          <TD>
+            <CODE>TAO 1.1.15</CODE>
+          </TD>
+          <TD>
+            The <CODE>portspan</CODE> option specifies that an IIOP endpoint
+            should be opened on the first available port within a
+            specified span of port numbers, beginning with a specified
+            initial port.  This option is useful when one or more servers
+            may be restricted to using ports within a given range.  The
+            intention is that the behavior should be similar to using
+            ephemeral ports except within a restricted user-defined
+            range.
+            <P>
+            The format for <CODE>ORBListenEndpoints</CODE> with the
+            <CODE>portspan</CODE> option is:
+            <BLOCKQUOTE>
+              <CODE>-ORBListenEndpoints iiop://[</CODE><I>hostname</I><CODE>]:</CODE><I
+>initialPort</I><CODE>/portspan=</CODE><I>span</I>
+            </BLOCKQUOTE>
+            where <I>initialPort</I> is the initial port number in the
+            range of allowable ports, and <I>span</I> is an integer
+            value indicating the size of the span of allowable ports.
+            Valid values for <I>initialPort</I> include any valid port
+            number.  Valid values for <I>span</I> are in the
+            range <CODE>1</CODE> to <CODE>65535</CODE>.  The
+            <I>hostname</I> (in <CODE>[ ]</CODE>)is optional.
+            <P>
+            The server's ORB will attempt to create a listening endpoint
+            beginning with the initial port.  If that fails, it will try
+            the next port in the range.  It will continue to try each
+            port in the range until it
+            is able to successfully open one for listening or until it                      has exhausted the range
+            <CODE>[initialPort:initialPort+span-1]</CODE> at which point it                 fails with a <CODE>CORBA::BAD_PARAM</CODE> system exception.
+          </TD>
+        </TR>
+        <TR>
+          <TD>
+            <CODE>hostname_in_ior</CODE>
+          </TD>
+          <TD>
+            <CODE>TAO 1.2.4</CODE>
+          </TD>
+          <TD>
+            The <CODE>hostname_in_ior</CODE> option allows one to
+            specify the hostname that is inserted into the generated
+            IOR.  This option overrides the default (local) hostnames
+            that TAO normally inserts.  This can be useful in
+            environments where the hostname in use is one whose IP
+            address changes dynamically.
+            <P>
+            The format for <CODE>ORBListenEndpoints</CODE> with the
+            <CODE>hostname_in_ior</CODE> option is:
+            <BLOCKQUOTE>
+              <CODE>-ORBListenEndpoints iiop://[</CODE><I>local_hostname</I><CODE>]:</CODE><I
+>port</I><CODE>/hostname_in_ior=</CODE><I>overridden_hostname</I>
+            </BLOCKQUOTE>
+            where <I>local_hostname</I> and <I>port</I> are specified
+            as normal, and <I>overridden_hostname</I> is the hostname
+            that should be put into generated IORs.
+            </TD>
+        </TR>
+        <TR>
+          <TD>
+            <CODE>reuse_addr</CODE>
+          </TD>
+          <TD>
+            <CODE>TAO 1.4.8</CODE>
+          </TD>
+          <TD>
+            Available in IIOP & SSLIOP the <CODE>reuse_addr</CODE> option allows one to
+            set the SO_REUSEADDR socket option on an endpoint. Doing so bypasses
+	    the TCP TIME_WAIT and can be used to open an endpoint
+	    on a port still in TIME_WAIT state. Use caution using this option. Its not
+	    recommended for the general use-case. Setting
+	    SO_REUSEADDR has been observed to cause unexpected side-effects on some
+	    platforms (e.g. Solaris 5.7 x86 allows programs run as same or different
+	    users to bind to the same port when SO_REUSEADDR is set by all users).
+            <P>
+            The format for <CODE>ORBListenEndpoints</CODE> with the
+            <CODE>reuse_addr</CODE> option is:
+            <BLOCKQUOTE>
+              <CODE>-ORBListenEndpoints iiop://[</CODE><I>local_hostname</I><CODE>]:</CODE><I
+>port</I><CODE>/reuse_addr=[0|1]</CODE>
+            </BLOCKQUOTE>
+            </TD>
+        </TR>
+      </TABLE>
+
+    <P>
+    <h3>IIOP Endpoint Examples</h3>
+    <P>
+      Here are some additional examples of IIOP endoints:
+    <UL>
+      <LI><CODE>-ORBListenEndpoints iiop://1.0@foo1:0</CODE>
+      <LI><CODE>-ORBListenEndpoints iiop://1.0@foo:0,1.1@bar,baz:3456</CODE>
+      <LI><CODE>-ORBListenEndpoints iiop://1.0@foo:0,1.1@bar,baz:3456/foobar=300</CODE></LI>
+      <LI><CODE>-ORBListenEndpoints iiop:///foobar=2</CODE> <FONT COLOR=RED>(notice three slashes "<CODE>///</CODE>")</FONT>
+      <LI><CODE>-ORBListenEndpoints iiop://:2020/foobar=12345</CODE>
+      <LI><CODE>-ORBListenEndpoints iiop://1.1@</CODE>
+      <LI><CODE>-ORBListenEndpoints iiop://1.1@:1234</CODE>
+      <LI><CODE>-ORBListenEndpoints iiop://1.1@,1.0@:1234,1.1@</CODE>
+      <LI><CODE>-ORBListenEndpoints iiop://1.1@foo:2020/portspan=30</CODE>
+      <LI><CODE>-ORBListenEndpoints iiop://foo:2020 -ORBListenEndpoints iiop://foo:10020 </CODE> </CODE>
+    </UL>
+
+    <hr>
+
+    <P>
+    <h2><A NAME="SHMIOP">SHMIOP Endpoints</A></h2>
+    TAO's SHMIOP pluggable protocol utilizes shared memory as its
+    underlying transport mechanism.
+    <P>
+    <h3>SHMIOP Endpoint Overview</h3>
+    <P>
+      SHMIOP endpoints in TAO have the similar form to IIOP endpoints:
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints shmiop://V.v@port1,...,W.w@port2
+        </CODE>
+    </BLOCKQUOTE>
+    <P>
+      Where "<CODE>V.v</CODE>" and "<CODE>W.w</CODE>" are the SHMIOP
+      protocol versions associated with the given address
+      (port).  Currently supported versions are <CODE>1.0</CODE>,
+      <CODE>1.1</CODE>, and <CODE>1.2</CODE>.
+
+    <h3>SHMIOP Address Format</h3>
+    <P>
+      SHMIOP addresses are comprised of a port number that the server
+      should listen on.
+    <P>
+      Port numbers range from <CODE>0</CODE> (causes port to be chosen
+      by operating system) to <CODE>65335</CODE>.  Port numbers less
+      than <CODE>1024</CODE> on UNIX systems are considered
+      privileged, and require super-user privileges to access them.
+      Also be aware that some ports may already be in use by other
+      applications.
+    <P>
+      To have TAO automatically choose an address for a given SHMIOP
+      endpoint, simply omit the address from the endpoint
+      specification as follows:
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints shmiop://
+        </CODE>
+    </BLOCKQUOTE>
+    <P>
+      In this case, an SHMIOP endpoint will be set up on a port chosen
+      by TAO.
+
+    <P>
+    <h3>SHMIOP Endpoint Examples</h3>
+    <P>
+      Here are some additional examples of SHMIOP endoints:
+    <UL>
+      <LI><CODE>-ORBListenEndpoints shmiop://1.0@0</CODE>
+      <LI><CODE>-ORBListenEndpoints shmiop://1.0@0,3456</CODE>
+      <LI><CODE>-ORBListenEndpoints shmiop://1.0@0,3456/foobar=300</CODE></LI>
+      <LI><CODE>-ORBListenEndpoints shmiop:///foobar=2</CODE> <FONT COLOR=RED>(notice three slashes "<CODE>///</CODE>")</FONT>
+      <LI><CODE>-ORBListenEndpoints shmiop://2020/foobar=12345</CODE>
+      <LI><CODE>-ORBListenEndpoints shmiop://1.1@</CODE>
+      <LI><CODE>-ORBListenEndpoints shmiop://1.1@1234</CODE>
+      <LI><CODE>-ORBListenEndpoints shmiop://1.1@,1.0@1234,1.1@</CODE>
+    </UL><p>
+
+    You <font color="red">must specify the hostname</font>, however,
+    when using SHMIOP with <a href="INS.html">Interoperable Naming
+    Service</a> as you would with IIOP.  This is because SHMIOP uses
+    the hostname to determine the validity of an endpoint.  That is,
+    it will not try to connect to a remote SHMIOP endpoint locally.
+    For examples:<p>
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBInitRef MyService=corbaloc:shmiop:1.1@hostname:port/service_name
+        </CODE>
+    </BLOCKQUOTE>
+
+    <hr>
+
+    <P>
+    <h2><A NAME="UIOP">UIOP Endpoints</A></h2>
+    TAO's UIOP pluggable protocol utilizes local IPC (aka UNIX domain
+    sockets) as its underlying transport mechanism.
+    <P>
+    <h3>UIOP Endpoint Overview</h3>
+    <P>
+      UIOP endpoints in TAO have the form:
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints uiop://V.v@rendezvous_point1,...,W.w@rendezvous_point2
+        </CODE>
+    </BLOCKQUOTE>
+    <P>
+      Where "<CODE>V.v</CODE>" and "<CODE>W.w</CODE>" are the UIOP
+      protocol versions associated with the given rendezvous point.
+      Currently supported versions are <CODE>1.0</CODE> and
+      <CODE>1.1</CODE>.
+
+    <P>
+      Options are separated from the addresses by a vertical bar
+      '<CODE>|</CODE>'.  For instance, if an IIOP endpoint should have
+      a property foobar of 50 associated with it, then the following
+      endpoint specification could be used
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints 'uiop://1.0@/tmp/my_rendezvous_point|foobar=50'
+        </CODE>
+    </BLOCKQUOTE>
+    <P>
+      Notice that the endpoint is quoted to prevent the shell from
+      interpreting the vertical bar '<CODE>|</CODE>' as the shell
+      "pipe" character.
+    <P>
+    <h3>UIOP Address Format</h3>
+    <P>
+      UIOP addresses are comprised of a rendezvous point the server
+      should listen on.  The rendezvous point is generally the
+      <I>full</I> path to the desired UNIX domain socket filename.
+      Relative paths can be used, their use is discourages.  The
+      maximum length of the rendezvous point is 108 characters, as
+      dictated by the POSIX.1g specification for local IPC rendezvous
+      points.  TAO will truncate any rendezvous point name longer than
+      108 characters.
+    <P>
+      An UIOP endpoint with a rendezvous point with an <I>absolute</I>
+      path could be:
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints uiop:///tmp/foobar
+        </CODE>
+    </BLOCKQUOTE>
+    In this example, the optional protocol version and
+    endpoint-specific options have been omitted.  The rendezvous point
+    <CODE>/tmp/foobar</CODE> will be created, in this case.
+    <P>
+      An UIOP endpoint with a rendezvous point with a <I>relative</I>
+      path could be:
+    <BLOCKQUOTE>
+      <P>
+        <CODE>-ORBListenEndpoints uiop://foobar</CODE> <FONT COLOR=RED>(DISCOURAGED)</FONT>
+    </BLOCKQUOTE>
+    <P>
+      Again, rendezvous points with relative paths are discouraged
+      since it is possible that other rendezvous points with the same
+      basename exist on a given system, giving rise to potential
+      ambiguities.
+    <P>
+      To make TAO choose a rendezvous point automatically, simply omit
+      the rendezvous point from the endpoint specification as follows:
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints uiop://
+        </CODE>
+    </BLOCKQUOTE>
+    <P>
+      This will cause an endpoint to be setup in system temporary
+      directory.  Rendezvous points chosen by TAO are prepended with
+      "<CODE>TAO</CODE>."  TAO will always choose rendezvous points
+      with absolute paths.
+
+    <P>
+    <h3>UIOP Endpoint Examples</h3>
+    <P>
+      Here are some additional examples of UIOP endoints:
+    <UL>
+      <LI><CODE>-ORBListenEndpoints uiop://1.0@/tmp/foo1</CODE>
+      <LI><CODE>-ORBListenEndpoints uiop://1.0@/tmp/foo,1.1@/home/bar/baz</CODE>
+      <LI><CODE>-ORBListenEndpoints 'uiop://1.1@/tmp/bar|foobar=300'</CODE></LI>
+      <LI><CODE>-ORBListenEndpoints 'uiop://|foobar=2'</CODE>
+      <LI><CODE>-ORBListenEndpoints uiop://1.1@</CODE>
+      <LI><CODE>-ORBListenEndpoints uiop://1.1@,1.0@/tmp/foo,1.1@</CODE>
+    </UL>
+    <hr>
+
+
+    <P>
+    <h2><A NAME="DIOP">DIOP Endpoints</A></h2>
+    TAO's DIOP pluggable protocol utilizes UDP sockets instead TCP
+    sockets (IIOP) as its underlying transport mechanism.  This
+    protocol supports unreliable datagram communication, which has
+    certain <A
+    HREF="../examples/PluggableUDP/DIOP/README">limitations</A>.
+    <P>
+    <h3>DIOP Endpoint Overview</h3>
+    <P>
+      Since DIOP endpoints in TAO have the same form as
+      <A HREF="#IIOP">IIOP</A> endpoints, a detailed description is
+      therefore omitted. DIOP has no support for endpoint-specific
+      options.
+    <P>
+      We recommend explicitly setting port numbers for endpoints
+      since TAO does not support automatic selection of free endpoints for
+      UDP sockets.  Instead, the ORB will try to use the same default port
+      number in every case.
+
+    <h3>DIOP Endpoint Examples</h3>
+    <P>
+      Here are some additional examples of DIOP endoints:
+    <UL>
+      <LI><CODE>-ORBListenEndpoints diop://1.0@foo1:2345</CODE>
+      <LI><CODE>-ORBListenEndpoints diop://1.1@:1234</CODE>
+    </UL>
+
+    <hr>
+    <P>
+    <h2><A NAME="SSLIOP">SSLIOP Endpoints</A></h2>
+    TAO's SSLIOP pluggable protocol facilitates CORBA request
+    invocation over TLS (formerly known as SSL), and is a drop-in
+    replacement for the <A HREF="#IIOP">IIOP</A> pluggable protocol.
+    <P>
+      The SSLIOP pluggable protocol will actually create two
+      endpoints: one which is meant to accept plain IIOP requests, and
+      another meant to accept SSLIOP requests.  As security measure,
+      IIOP requests will be rejected by default unless the server is
+      configured to accept them (See the
+      <A HREF="Security/SSLIOP-USAGE.html">SSLIOP documentation</A> for
+      additional details).
+    <P>
+    <h3>SSLIOP Endpoint Format</h3>
+    <P>
+      SSLIOP endpoints basically have the same format as
+      <A HREF="#IIOP">IIOP</A> endpoints.  The only difference between
+      the two is that SSLIOP endpoints accept an additional option
+      that allows one to select the port which will accept TLS
+      requests.  To make a server open a SSLIOP endpoint on a specific
+      port use the <CODE>ssl_port</CODE> endpoint option:
+
+    <UL>
+      <LI><CODE>-ORBListenEndpoints iiop://foo:1234/ssl_port=1235</CODE>
+    </UL>
+
+    In this case, an <A HREF="#IIOP">IIOP</A> endpoint would be opened
+    on port <CODE>1234</CODE> and a SSLIOP endpoint on port
+    <CODE>1235</CODE>.  If no <CODE>ssl_port</CODE> option is
+    supplied, a port will automatically be chosen in the same way a
+    port is automatically chosen for an <A HREF="#IIOP">IIOP</A>
+    endpoint.
+
+    <P>
+      Note that the protocol label in the above example is
+      <CODE>iiop</CODE>, <EM>not</EM> <code>ssliop</code>.
+      Regardless, a SSLIOP endpoint will be opened if the SSLIOP
+      pluggable protocol was loaded.  Furthermore, the
+      <CODE>ssl_port</CODE> endpoint option is only valid if the
+      SSLIOP pluggable protocol is used.
+
+    <hr>
+
+    <address><a href="mailto:ossama@dre.vanderbilt.edu">Ossama Othman</a></address>
+<!-- Created: Thu May 18 08:37:25 PDT 2000 -->
+<!-- hhmts start -->
+Last modified: Fri Jun 11 16:51:59 PDT 2004
+<!-- hhmts end -->
+  </body>
+</html>

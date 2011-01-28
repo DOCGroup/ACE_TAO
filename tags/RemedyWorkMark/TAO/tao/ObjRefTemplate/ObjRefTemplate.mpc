@@ -1,0 +1,73 @@
+//$Id$
+project(*idl) : tao_versioning_idl_defaults, install {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -Gp -Gd -SS -Sorb -GX \
+                -Wb,export_macro=TAO_ORT_Export \
+                -Wb,export_include=tao/ObjRefTemplate/ort_export.h \
+                -Wb,include_guard=TAO_OBJREF_TEMPLATE_SAFE_INCLUDE \
+                -Wb,safe_include=tao/ObjRefTemplate/ObjectReferenceTemplate.h \
+                -iC tao/ObjRefTemplate
+    idlflags -= -Sa -St
+    ObjectReferenceTemplate.pidl
+  }
+
+  IDL_Files {
+    idlflags += -SS -Sorb -GX -Sci \
+                -Wb,export_macro=TAO_ORT_Export \
+                -Wb,export_include=tao/ObjRefTemplate/ort_export.h \
+                -Wb,unique_include=tao/ObjRefTemplate/ObjectReferenceTemplate.h \
+                -iC tao/ObjRefTemplate
+    ObjectReferenceTemplate_include.pidl
+  }
+
+  IDL_Files {
+    idlflags += -Gp -Gd -SS -GA -Sorb  \
+                -Wb,export_macro=TAO_ORT_Export \
+                -Wb,export_include=tao/ObjRefTemplate/ort_export.h \
+                -iC tao/ObjRefTemplate
+    idlflags -= -Sa -St
+    Default_ORT.pidl
+  }
+
+  specific {
+    install_dir = tao/ObjRefTemplate
+  }
+}
+
+project(ObjRefTemplate) : valuetype, portableserver, install, tao_output, taoidldefaults {
+  after       += *idl
+  sharedname   = TAO_ObjRefTemplate
+  dynamicflags += TAO_ORT_BUILD_DLL
+
+  Source_Files {
+    *.cpp
+    ObjectReferenceTemplateC.cpp
+    ObjectReferenceTemplate_includeC.cpp
+    Default_ORTC.cpp
+    Default_ORTA.cpp
+  }
+
+  Header_Files {
+    *.h
+    ObjectReferenceTemplateC.h
+    ObjectReferenceTemplateS.h
+    ObjectReferenceTemplateA.h
+    ObjectReferenceTemplate_includeC.h
+    ObjectReferenceTemplate_includeS.h
+    ObjectReferenceTemplate_includeA.h
+    Default_ORTC.h
+    Default_ORTS.h
+    Default_ORTA.h
+  }
+
+  Inline_Files {
+    *.inl
+    Default_ORTC.inl
+    ObjectReferenceTemplateC.inl
+  }
+
+  specific {
+    install_dir = tao/ObjRefTemplate
+  }
+}

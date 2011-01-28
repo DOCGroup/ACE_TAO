@@ -1,0 +1,15 @@
+// $Id$
+
+#include "tao/LongSeq.pidl"
+
+valuetype MyEvent
+{
+  public string name;
+  public long kind;
+  private CORBA::LongSeq payload;
+
+  void dump();
+  long size();
+  void add_long(in long n);
+};
+

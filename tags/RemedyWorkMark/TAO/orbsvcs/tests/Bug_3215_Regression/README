@@ -1,0 +1,55 @@
+// $Id$
+
+N.B. This test is a rip off of the bug #2287 regression test. The only significant change is that after throwing an
+initial location forward perm back to the client, redirecting it to the same server, the server then starts throwing transients up to (or indeed past) the expiration time. At this poin the client ORB should cease retrying and report the transient to the application.
+
+This was instead causing infinite retries of the forwarded IOR taking us past the expiration time and a seg fault after this expiration time.
+
+__Regression Output__
+
+sm@beatrice:~/tmp/ACE_wrappers/TAO/orbsvcs/tests/Bug_NNNN_Regression> ./run_test.pl
+On [re-]invocation #1 throwing a ForwardRequest back to the client
+On re-invocation #1000 throwing a TRANSIENT back to the client
+On re-invocation #2000 throwing a TRANSIENT back to the client
+On re-invocation #3000 throwing a TRANSIENT back to the client
+On re-invocation #4000 throwing a TRANSIENT back to the client
+On re-invocation #5000 throwing a TRANSIENT back to the client
+The expiration time has now passed !! The next exception must NOT prompt reinvocation.
+Expiration time  : 134214167846110410
+Time now         : 134214167846112890
+On re-invocation #5140 throwing a TRANSIENT back to the client
+ERROR: <client> exited with coredump from signal 11 : SEGV
+ERROR: client returned 255
+ERROR: server timedout
+ERROR: server returned -1
+
+__Successful Output__
+
+sm@beatrice:~/tmp/ACE_wrappers/TAO/orbsvcs/tests/Bug_NNNN_Regression> ./run_test.pl
+On [re-]invocation #1 throwing a ForwardRequest back to the client
+On re-invocation #1000 throwing a TRANSIENT back to the client
+On re-invocation #2000 throwing a TRANSIENT back to the client
+On re-invocation #3000 throwing a TRANSIENT back to the client
+On re-invocation #4000 throwing a TRANSIENT back to the client
+On re-invocation #5000 throwing a TRANSIENT back to the client
+The expiration time has now passed !! The next exception must NOT prompt reinvocation.
+Expiration time  : 134214184616960030
+Time now         : 134214184616961330
+On re-invocation #5056 throwing a TRANSIENT back to the client
+Client catches a TRANSIENT, as expected. No problem !
+Test passed !!!
+(1705|3075533024) server - event loop finished
+
+The below is the original documentation for the bug #2287 test between []'s for reference:
+
+[This test provides regression coverage for bugzilla #2287.
+
+See http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2287 for more.
+
+The server installs a server request interceptor and persistent servant and writes out an IOGR for itself.
+The client installs client side FT support and invokes the method "throw_location_forward" on the IOGR.
+The server request interceptor detects invocations of this method and in response either:
+a/ Throws a location forward back to the original IOGR if cannot determine (from the expiration_time member of the FT request service context) thatthe client must have despatched the request after the expiration time.
+b/ Allows the request to be completed if it can determine absolutely that the request was despatched after the expiration time. This indicates a regression to the client.
+
+A successful outcome is if the client stops following the location forwards once it detects that the expiration time has passed, and a TRANSIENT system exception is recived in the application code.]

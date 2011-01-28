@@ -1,0 +1,27 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef RECEIVER_IDL
+#define RECEIVER_IDL
+
+#include "Connector/ReadGet_Test_Connector.idl"
+#include "Base/ReadGet_Starter.idl"
+
+module ReadGet_Test
+{
+  component Receiver
+  {
+    port QueryConditionTestConnector::DDS_Get get_port;
+
+    port QueryConditionTestConnector::DDS_Read read_port;
+
+    provides ReadGetStarter reader_start;
+    uses ReadGetRestarter writer_restart;
+  };
+};
+
+#endif

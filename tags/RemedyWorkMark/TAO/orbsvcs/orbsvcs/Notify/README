@@ -1,0 +1,51 @@
+README,v 1.5 2000/12/07 05:56:27 pradeep Exp
+
+README for the Notification Service
+-----------------------------------
+
+Implementation notes
+--------------------
+
+Here is a brief description of the MT options for the Notify Service.
+The motivation for adding these "knobs" is give the user a chance to
+fine tune his/her thread requirements in the Service at its
+bottlenecks. These bottlenecks are at filter evaluation and in the two
+way push to consumers. These are the points at which the Event Channel
+has to interact with remote objects whose implementation is unknown to
+the Event Channel. e.g. if a consumer decided to execute a tight loop
+in its push method, it would block the entire event channel if it was
+single threaded. By deploying a thread pool to perform dispatching
+events to consumers - we can alleviate this problem.
+
+[Also read the $TAO_ROOT/orbsvcs/Notify_Service/README for a proper
+description of how to specify these parameters.]
+
+-DispatchingThreads
+Consider a Notify service running with just one thread, namely the main.
+In this case when the event channel dispatches an event to a consumer (by
+calling its push method) all other consumers will be blocked, waiting for
+their push methods to be invoked. To decouple the consumers from one
+another we can deploy dispatching threads using this option.
+
+
+-SourceThreads
+Deploys a thread pool after event receipt from the supplier.  All subsequent
+notification channel processing can happen on this thread and the original
+publishing push() can be ended.  Separates server side processing of the 
+event from the supplier's publication.
+
+
+Usage:
+-----
+Use the $TAO_ROOT/orbsvcs/Notify_Service to register a ChannelFactory with the
+Naming Service.See the README for more details.
+
+Examples:
+--------
+The $TAO_ROOT/orbsvcs/examples/Notify/Filter example shows how to using
+filtering.
+
+The $TAO_ROOT/orbsvcs/examples/Notify/Subscribe example shows how consumers
+can subscribe only to the required event types.
+
+send comments/suggestions to Pradeep Gore <pradeep@cs.wustl.edu>

@@ -1,0 +1,178 @@
+// -*- MPC -*-
+// $Id$
+
+project(CosTrading_IDL) : orbsvcslib, orbsvcs_output, install, tao_versioning_idl_defaults {
+  custom_only = 1
+  idlflags   += -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h
+
+  IDL_Files {
+    CosTrading.idl
+    CosTradingRepos.idl
+    CosTradingDynamic.idl
+  }
+}
+
+
+project(CosTrading) : orbsvcslib, orbsvcs_output, install {
+  sharedname   = TAO_CosTrading
+  dynamicflags += TAO_TRADING_BUILD_DLL
+  tagchecks   += Trader
+  after       += CosTrading_IDL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    CosTradingC.cpp
+    CosTradingReposC.cpp
+    CosTradingDynamicC.cpp
+  }
+
+  Header_Files {
+    CosTradingC.h
+    CosTradingReposC.h
+    CosTradingDynamicC.h
+    Trader/trading_export.h
+  }
+
+  Inline_Files {
+    CosTradingC.inl
+    CosTradingReposC.inl
+    CosTradingDynamicC.inl
+  }
+
+  Template_Files {
+  }
+
+  // explicit Resource_Files to avoid including _Skel & _Serv rc files.
+  Resource_Files {
+    CosTrading.rc
+  }
+
+  Pkgconfig_Files {
+    TAO_CosTrading.pc.in
+  }
+}
+
+
+project(CosTrading_Skel) : orbsvcslib, orbsvcs_output, install, trading, portableserver {
+  sharedname   = TAO_CosTrading_Skel
+  dynamicflags += TAO_TRADING_SKEL_BUILD_DLL
+  tagchecks   += Trader
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    CosTradingS.cpp
+    CosTradingReposS.cpp
+    CosTradingDynamicS.cpp
+  }
+
+  Header_Files {
+    CosTradingS.h
+    CosTradingReposS.h
+    CosTradingDynamicS.h
+    Trader/trading_skel_export.h
+  }
+
+  Inline_Files {
+    CosTradingS.inl
+    CosTradingReposS.inl
+    CosTradingDynamicS.inl
+  }
+
+  Template_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_CosTrading_Skel.pc.in
+  }
+}
+
+
+project(CosTrading_Serv) : orbsvcslib, orbsvcs_output, install, trading_skel, dynamicany, svc_utils, utils, iortable {
+  sharedname   = TAO_CosTrading_Serv
+  dynamicflags += TAO_TRADING_SERV_BUILD_DLL
+  tagchecks   += Trader
+  pch_header   =
+  pch_source   =
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Trader
+  }
+
+  Header_Files {
+    Trader/trading_serv_export.h
+  }
+
+  Inline_Files {
+    Trader
+  }
+
+  Template_Files {
+    Trader
+  }
+
+  Pkgconfig_Files {
+    TAO_CosTrading_Serv.pc.in
+  }
+
+  verbatim(gnuace, local) {
+    Trader/Constraint_l.cpp: Trader/constraint.l
+    "	@echo 'INFORMATION: Potentially outdated $@'"
+    "	@echo '             either touch(1) the file or explicitly'"
+    "	@echo '             generate it using:'"
+    "	@echo '    make -f GNUmakefile.CosTrading_Serv Constraint_l'"
+
+    .PHONY: Constraint_l
+    Constraint_l:
+    "	echo '#define YY_NO_UNPUT' > Trader/Constraint_l.cpp"
+    "	$(LEX) -L -t Trader/constraint.l | \\"
+    "	sed -e 's/ NULL/ 0/g' \\"
+    "	    -e 's/int offset /size_t offset /g' \\"
+    "	    -e 's/isatty/ACE_OS::isatty/g' \\"
+    "	    -e 's/YY_BREAK break;/YY_BREAK ACE_NOTREACHED (break;)/g' \\"
+    "	    -e 's/ECHO/TAO_TRADER_ECHO/' \\"
+    "	    -e 's/\\$$Hea''der.*\\$$/$$I''d$$/' \\"
+    "	    -e 's@#include <stdio\.h>@#include \"ace/os_include/os_stdio.h\"@' \\"
+    "	    -e 's@#include <unistd\.h>@#include \"ace/OS_NS_unistd.h\"@' \\"
+    "	    -e '/#include </d' \\"
+    "	>> Trader/Constraint_l.cpp"
+    "	(cd Trader; patch < Constraint_l.cpp.diff)"
+
+    Trader/Constraint_y.cpp: Trader/constraint.y
+    "	@echo 'INFORMATION: Potentially outdated $@'"
+    "	@echo '             either touch(1) the file or explicitly'"
+    "	@echo '             generate it using:'"
+    "	@echo '    make -f GNUmakefile.CosTrading_Serv Constraint_y'"
+
+    .PHONY: Constraint_y
+    Constraint_y:
+    "	yacc -l -d Trader/constraint.y"
+    "	sed -e 's/	/        /g' \\"
+    "	    -e 's/int newsize, i/size_t newsize, i/g' \\"
+    "	    -e 's/static  *int  *yygrowstack();/ /g' \\"
+    "	    -e 's/  *$$\/\/g' \\"
+    "	    -e 's/\|\| defined(__GNUC__)/|| defined(__GNUC__) || defined (WIN32) || defined (__HP_aCC)/g' \\"
+    "	    -e 's/memcpy/ACE_OS::memcpy/g' \\"
+    "	    -e 's/getenv/ACE_OS::getenv/g' \\"
+    "	    -e 's/free/ACE_OS::free/g' \\"
+    "	    -e 's/malloc/ACE_OS::malloc/g' \\"
+    "	    -e 's/realloc/ACE_OS::realloc/g' < y.tab.c > Trader/Constraint_y.cpp"
+    "	echo TAO_END_VERSIONED_NAMESPACE_DECL >> Trader/Constraint_y.cpp"
+    "	echo '\/\/ $$I''d$$' > Trader/Constraint_Tokens.h"
+    "	echo '' >> Trader/Constraint_Tokens.h"
+    "	echo '#ifndef CONSTRAINT_TOKEN_H' >> Trader/Constraint_Tokens.h"
+    "	echo '#define CONSTRAINT_TOKEN_H' >> Trader/Constraint_Tokens.h"
+    "	echo '#include /**/ \"ace/pre.h\"' >> Trader/Constraint_Tokens.h"
+    "	echo '' >> Trader/Constraint_Tokens.h"
+    "	cat y.tab.h >> Trader/Constraint_Tokens.h"
+    "	echo '#include /**/ \"ace/post.h\"' >> Trader/Constraint_Tokens.h"
+    "	echo '#endif /* CONSTRAINT_TOKEN_H */' >> Trader/Constraint_Tokens.h"
+    "	$(RM) y.tab.h y.tab.c"
+  }
+}

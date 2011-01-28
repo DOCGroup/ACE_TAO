@@ -1,0 +1,31 @@
+// -*- IDL -*-
+
+/**
+ * @file ORBInitializer.pidl
+ *
+ * $Id$
+ *
+ * @brief ORBInitializer part of the PortableInterceptor part of the CORBA
+ * spec
+ */
+
+#ifndef _ORB_INITIALIZER_PIDL
+#define _ORB_INITIALIZER_PIDL
+
+#include "tao/PI/ORBInitInfo.pidl"
+
+module PortableInterceptor {
+
+  typeprefix PortableInterceptor "omg.org";
+
+//  local interface ORBInitInfo;
+
+  local interface ORBInitializer
+  {
+    void pre_init (in ORBInitInfo info);
+    void post_init (in ORBInitInfo info);
+  };
+
+};
+
+#endif  /* _ORB_INITIALIZER_PIDL */

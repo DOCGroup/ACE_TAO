@@ -1,0 +1,20 @@
+// -*- MPC -*-
+// $Id$
+
+project (CIAO_NDDS_skel) : install, ndds_lem_stub, ciaolib_with_idl, ciao_output, taolib, portableserver, ciao_servant {
+  includes += $(CIAO_ROOT)/connectors
+
+  dynamicflags += NDDS_SKEL_BUILD_DLL
+  IDL_Files {
+  }
+
+  Header_Files {
+    ndds_dcpsS.h
+    ndds_dcps_i_handleS.h
+  }
+
+  Source_Files {
+    ndds_dcpsS.cpp
+    ndds_dcps_i_handleS.cpp
+  }
+}

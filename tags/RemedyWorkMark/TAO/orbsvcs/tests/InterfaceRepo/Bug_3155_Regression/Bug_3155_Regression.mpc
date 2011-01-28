@@ -1,0 +1,14 @@
+// -*- MPC -*-
+// $Id$
+
+project(*test_idl): taoexe, ifr_client {
+  exename = test_idl
+  includes += $(TAO_ROOT)/include
+
+  Source_Files {
+    test_idl.cpp
+  }
+
+  IDL_Files {
+  }
+}

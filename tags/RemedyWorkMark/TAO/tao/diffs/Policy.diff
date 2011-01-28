@@ -1,0 +1,55 @@
+--- orig/PolicyC.h	2005-04-08 10:17:37.633795200 +0200
++++ PolicyC.h	2005-04-08 10:17:41.709656000 +0200
+@@ -331,6 +331,15 @@
+
+     virtual const char* _interface_repository_id (void) const;
+     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
++
++    // Handcrafted
++    // ****************************************************************
++    virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &);
++    virtual CORBA::Boolean _tao_decode (TAO_InputCDR &);
++    virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
++    virtual TAO_Policy_Scope _tao_scope (void) const;
++    // ****************************************************************
++
+   private:
+     TAO::Collocation_Proxy_Broker *the_TAO_Policy_Proxy_Broker_;
+
+--- orig/PolicyC.cpp	2005-04-08 10:17:37.633795200 +0200
++++ PolicyC.cpp	2005-04-08 10:17:41.719670400 +0200
+@@ -953,6 +953,34 @@
+   );
+ }
+
++// Hand crafted.
++//
++// ****************************************************************
++CORBA::Boolean
++CORBA::Policy::_tao_encode (TAO_OutputCDR &)
++{
++  return false;
++}
++
++CORBA::Boolean
++CORBA::Policy::_tao_decode (TAO_InputCDR &)
++{
++  return false;
++}
++
++TAO_Cached_Policy_Type
++CORBA::Policy::_tao_cached_type (void) const
++{
++  return TAO_CACHED_POLICY_UNCACHED;
++}
++
++TAO_Policy_Scope
++CORBA::Policy::_tao_scope (void) const
++{
++  return TAO_POLICY_DEFAULT_SCOPE;
++}
++// ****************************************************************
++
+ // TAO_IDL - Generated from
+ // be\be_visitor_interface/cdr_op_cs.cpp:63
+

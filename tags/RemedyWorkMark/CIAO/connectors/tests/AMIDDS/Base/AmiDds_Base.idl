@@ -1,0 +1,30 @@
+// $Id$
+
+/**
+ * @file AmiDds_Base.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef AMIDDS_BASE_IDL
+#define AMIDDS_BASE_IDL
+
+#pragma ciao lem "Base/AmiDds_BaseE.idl"
+#pragma ciao ami4ccm interface "AmiDds::MyFoo"
+#pragma ciao lem "Base/AmiDds_BaseAE.idl"
+#pragma ciao ami4ccm idl "Base/AmiDds_BaseA.idl"
+
+module AmiDds
+{
+  exception InternalError
+    {
+      long id;
+      string error_string;
+    };
+  // Sender/Receiver interface used by ami4ccm functionality
+  interface MyFoo
+    {
+      void hello (out long answer)
+      raises (InternalError);
+    };
+};
+#endif

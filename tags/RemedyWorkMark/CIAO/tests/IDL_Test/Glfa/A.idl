@@ -1,0 +1,8 @@
+// $Id$
+#ifndef A_IDL
+#define A_IDL
+
+interface A
+{};
+
+#endif

@@ -1,0 +1,12 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  // With gnuace, when install_this_target = 1 (see install_bin or install_lib)
+  // files listed as InstallData_Files { ... } will be installed to the "data"
+  // location for the system (such as /usr/local/share/INST_DIR).
+  // The target sub-directory can be modified by setting MPC's "gendir" option.
+  Define_Custom(InstallData) {
+    automatic = 0
+  }
+}

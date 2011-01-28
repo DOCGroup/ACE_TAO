@@ -1,0 +1,7 @@
+// $Id$
+project : taobaseidldefaults {
+  idlflags += -I$(DANCE_ROOT) 
+
+  Modify_Custom (IDL) {
+  }
+}
