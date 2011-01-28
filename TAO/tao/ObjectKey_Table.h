@@ -86,7 +86,7 @@ namespace TAO
    * will do that if our instrumentation shows the need for it.
    *
    */
-  class ObjectKey_Table : private ACE_Copy_Disabled
+  class TAO_Export ObjectKey_Table : private ACE_Copy_Disabled
   {
   public:
     /// Default Constructor and destructor..

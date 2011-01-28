@@ -1253,9 +1253,7 @@ be_visitor_receptacle_desc::visit_uses (be_uses *node)
 
   os_ << be_nl_2;
 
-  bool gen_guard = is_multiple;
-
-  if (gen_guard)
+  if (is_multiple)
     {
       os_ << "{" << be_idt_nl
           << "ACE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
@@ -1265,18 +1263,35 @@ be_visitor_receptacle_desc::visit_uses (be_uses *node)
           << "                  0);" << be_nl_2;
     }
 
+  if (!is_multiple)
+    {
+      os_ << obj->full_name () << "_var ciao_"
+          << port_name << " = " << be_idt_nl
+          << "this->context_->get_connection_"
+          << port_name << " ();" << be_uidt_nl;
+    }
+
   os_ << "::CIAO::Servant::describe_"
       << (is_multiple ? "multiplex" : "simplex")
       << "_receptacle<" << be_idt_nl
-      << "::" << obj->full_name () << "_var> (" << be_idt_nl
+      << "::" << obj->full_name () << "> (" << be_idt_nl
       << "\"" << port_name << "\"," << be_nl
-      << "\"" << obj->repoID () << "\"," << be_nl
-      << "this->context_->ciao_uses_"
-      << port_name << "_," << be_nl
-      << "safe_retval," << be_nl
+      << "\"" << obj->repoID () << "\"," << be_nl;
+
+  if (is_multiple)
+    {
+      os_ << "this->context_->ciao_uses_"
+          << port_name << "_," << be_nl;
+    }
+  else
+    {
+      os_  << "ciao_" << port_name << ".in (), " << be_nl;
+    }
+
+  os_ << "safe_retval," << be_nl
       << slot_++ << "UL);" << be_uidt << be_uidt;
 
-  if (gen_guard)
+  if (is_multiple)
     {
       os_ << be_uidt_nl
           << "}";
