@@ -1,0 +1,20 @@
+//
+// $Id$
+//
+module StructTest {
+
+  struct MyStruct {
+    octet MyOctet;
+    unsigned long MyLong;
+  };
+
+  typedef MyStruct MyStructAlias;
+
+  union MyUnion switch (boolean) {
+  case TRUE :
+    unsigned short MyShort;
+  };
+
+  typedef MyUnion MyUnionAlias;
+
+};

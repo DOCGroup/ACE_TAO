@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<ace:ACE_Svc_Conf xmlns="http://ace.doc.wustl.edu/svcconf" xmlns:ace="http://ace.doc.wustl.edu/svcconf">
+<static id="ACE_Service_Manager">
+  <params>-d</params>
+  <params>-p 4911</params>
+</static>
+
+<dynamic id="Test_Task" type="service_object"> &#65; &amp;lt;
+  <initializer path="CCM_App" init="_make_Test_Task">
+    <params>-p 3000</params>
+  </initializer>
+</dynamic>
+
+<ace:streamdef>
+  <dynamic id="CCM_App" type="stream" status="active">
+    <initializer path="CCM_App" init="make_stream"/>
+  </dynamic>
+  <module>
+    <dynamic id="Device_Adapter" type="module">
+      <initializer path="CCM_App" init="make_da"/>
+    </dynamic>
+    <dynamic id="Event_Analyzer" type="module">
+      <initializer path="CCM_App" init="make_ea"/>
+    </dynamic>
+    <dynamic id="Multicast_Router" type="module">
+      <initializer path="CCM_App" init="make_mr">
+        <params>-p</params>
+        <params>3001</params>
+      </initializer>
+    </dynamic>
+  </module>
+</ace:streamdef>
+
+<stream id="CCM_App">
+  <module>
+    <remove id="Device_Adapter"/>
+    <!-- <remove id="Event_Analyzer"/> -->
+    <!-- <remove id="Multicast_Router"/> -->
+    <![CDATA[Only a text string.
+Do you &amp;expect something more?]]>
+  </module>
+</stream>
+
+<!-- remove CCM_App -->
+<remove id="Test_&amp;Task&#x65;bc"/>
+</ace:ACE_Svc_Conf>

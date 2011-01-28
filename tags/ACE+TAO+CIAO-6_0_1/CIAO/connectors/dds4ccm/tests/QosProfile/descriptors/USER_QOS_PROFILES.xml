@@ -1,0 +1,37 @@
+<dds xsi:noNamespaceSchemaLocation="c:/ndds/ndds.4.4d/scripts/../resource/rtiddsgen/../qos_profiles_4.4d/schema/rti_dds_qos_profiles.xsd" version="4.4d">
+  <qos_library name="QosProfile_Library">
+    <qos_profile name="QosProfile_Profile" is_default_qos="true">
+      <datawriter_qos>
+        <reliability>
+          <kind>RELIABLE_RELIABILITY_QOS</kind>
+          <max_blocking_time>
+            <sec>10</sec>
+            <nanosec>0</nanosec>
+          </max_blocking_time>
+        </reliability>
+        <durability>
+          <kind>TRANSIENT_DURABILITY_QOS</kind>
+        </durability>
+        <history>
+          <kind>KEEP_ALL_HISTORY_QOS</kind>
+        </history>
+        <protocol>
+          <rtps_reliable_writer>
+            <max_heartbeat_retries>10</max_heartbeat_retries>
+          </rtps_reliable_writer>
+        </protocol>
+      </datawriter_qos>
+      <datareader_qos>
+        <reliability>
+          <kind>RELIABLE_RELIABILITY_QOS</kind>
+        </reliability>
+        <history>
+          <kind>KEEP_ALL_HISTORY_QOS</kind>
+        </history>
+        <durability>
+          <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+        </durability>
+      </datareader_qos>
+    </qos_profile>
+  </qos_library>
+</dds>

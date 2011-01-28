@@ -1,0 +1,37 @@
+//$Id$
+project(*idl) : tao_versioning_idl_defaults, install {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -SS -Sci -Sorb \
+                -Wb,export_macro=TAO_TypeCodeFactory_Export \
+                -Wb,export_include=tao/TypeCodeFactory/typecodefactory_export.h \
+                -iC tao/TypeCodeFactory
+    idlflags -= -Sa -St
+    TypeCodeFactory.pidl
+  }
+
+  specific {
+    install_dir = tao/TypeCodeFactory
+  }
+}
+
+project(TypeCodeFactory) : taolib, tao_output, install, ifr_client, taoidldefaults {
+  after += *idl
+  sharedname   = TAO_TypeCodeFactory
+  dynamicflags += TAO_TYPECODEFACTORY_BUILD_DLL
+
+  Source_Files {
+    *.cpp
+    TypeCodeFactoryC.cpp
+  }
+
+  Header_Files {
+    *.h
+    TypeCodeFactoryC.h
+    TypeCodeFactoryS.h
+  }
+
+  specific {
+    install_dir = tao/TypeCodeFactory
+  }
+}
