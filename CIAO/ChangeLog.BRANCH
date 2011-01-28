@@ -1,3 +1,13 @@
+Fri Jan 28 14:33:42 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Connector_Servant_Impl_Base.h:
+        * ciao/Servants/Connector_Servant_Impl_Utils_T.cpp:
+          Updated because of changes in generated code
+
+        * tests/CIF/Events/client.cpp:
+        * tests/CIF/Receptacle/client.cpp:
+          Fixed memory leaks in test code
+
 Thu Jan 27 14:13:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Hello/descriptors/svc_em.conf:
