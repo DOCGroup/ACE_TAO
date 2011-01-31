@@ -261,6 +261,8 @@ public:
   void forwarded_on_exception (bool forwarded);
   bool forwarded_on_exception () const;
 
+  TAO_SYNCH_MUTEX& profile_lock () const;
+
 protected:
 
   /// Destructor is to be called only through _decr_refcnt() to

@@ -1,3 +1,15 @@
+Mon Jan 31 08:47:49 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerORBInitializer.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicy_i.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+          Cleanup of not used stuff
+
+        * tao/Stub.h:
+        * tao/Stub.inl:
+          Readded profile_lock(), used by FT
+
 Fri Jan 28 14:26:35 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/context_svh.cpp:

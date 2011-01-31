@@ -5,6 +5,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+ACE_INLINE
+TAO_SYNCH_MUTEX&
+TAO_Stub::profile_lock () const
+{
+  return this->profile_lock_;
+}
+
 ACE_INLINE void
 TAO_Stub::reset_base (void)
 {
