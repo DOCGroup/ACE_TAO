@@ -281,13 +281,15 @@ be_visitor_context_svs::visit_emits (be_emits *node)
       << node_->local_name () << "_Context::disconnect_"
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "if ( ::CORBA::is_nil (this->ciao_emits_"
-      << port_name << "_consumer_.in ()))" << be_idt_nl
+      << "::" << fname << "Consumer_var ciao_emits_" << port_name << " =" << be_idt_nl
+      << "this->ciao_emits_" << port_name << "_consumer_._retn ();" << be_uidt_nl
+      << "if ( ::CORBA::is_nil (ciao_emits_"
+      << port_name << ".in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::NoConnection ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "return this->ciao_emits_" << port_name
-      << "_consumer_._retn ();" << be_uidt_nl
+      << "return ciao_emits_" << port_name
+      << "._retn ();" << be_uidt_nl
       << "}";
 
   return 0;
