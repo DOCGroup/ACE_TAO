@@ -180,7 +180,7 @@ be_visitor_servant_svh::visit_provides (be_provides *node)
 int
 be_visitor_servant_svh::visit_uses (be_uses *node)
 {
-  if (node->uses_type ()->is_local ())
+  if (node->uses_type ()->is_local () || be_global->gen_lwccm ())
     {
       return 0;
     }
@@ -233,7 +233,7 @@ be_visitor_servant_svh::visit_uses (be_uses *node)
 int
 be_visitor_servant_svh::visit_publishes (be_publishes *node)
 {
-  if(!be_global->gen_noeventccm ())
+  if(!be_global->gen_noeventccm () && !be_global->gen_lwccm ())
     {
       const char *obj_name = node->publishes_type ()->full_name ();
       const char *port_name = node->local_name ()->get_string ();
@@ -256,7 +256,7 @@ be_visitor_servant_svh::visit_publishes (be_publishes *node)
 int
 be_visitor_servant_svh::visit_emits (be_emits *node)
 {
-   if(!be_global->gen_noeventccm ())
+   if(!be_global->gen_noeventccm () && !be_global->gen_lwccm ())
     {
       const char *obj_name = node->emits_type ()->full_name ();
       const char *port_name = node->local_name ()->get_string ();
@@ -352,9 +352,12 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
       os_ << be_uidt_nl
           << "};";
 
-      os_ << be_nl_2
-          << "virtual ::" << obj_name << "Consumer_ptr" << be_nl
-          << "get_consumer_" << port_name << " (void);";
+      if (!be_global->gen_lwccm ())
+        {
+          os_ << be_nl_2
+              << "virtual ::" << obj_name << "Consumer_ptr" << be_nl
+              << "get_consumer_" << port_name << " (void);";
+        }
 
       os_ << be_uidt_nl << be_nl
           << "private:" << be_idt_nl;
