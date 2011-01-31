@@ -1,3 +1,8 @@
+Mon Jan 31 13:45:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+          Layout change in generated code
+
 Mon Jan 31 11:38:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/context_svs.cpp:
