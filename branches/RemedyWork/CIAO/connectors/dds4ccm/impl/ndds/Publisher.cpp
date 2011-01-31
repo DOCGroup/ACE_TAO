@@ -85,16 +85,6 @@ namespace CIAO
         {
           ccm_dds_dwl->set_dds_entity (retval.in ());
         }
-      DDS_ReturnCode_t retcode = ccm_dds_dw->enable ();
-      if (retcode != DDS_RETCODE_OK)
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_Publisher_i::create_datawriter - "
-                        "Error: Unable to enable the datawriter: <%C>\n",
-                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
-          delete ccm_dds_dwl;
-          throw ::CORBA::INTERNAL ();
-        }
       return retval._retn ();
     }
 
@@ -162,17 +152,6 @@ namespace CIAO
       if (ccm_dds_dwl)
         {
           ccm_dds_dwl->set_dds_entity (retval.in ());
-        }
-      DDS_ReturnCode_t retcode = ccm_dds_dw->enable ();
-      if (retcode != DDS_RETCODE_OK)
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_Publisher_i::create_datawriter_with_profile <%C> - "
-                        "Error: Unable to enable the datawriter: <%C>\n",
-                        qos_profile,
-                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
-          delete ccm_dds_dwl;
-          throw ::CORBA::INTERNAL ();
         }
       return retval._retn ();
     }

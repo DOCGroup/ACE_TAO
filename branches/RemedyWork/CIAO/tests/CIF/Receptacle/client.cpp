@@ -531,7 +531,6 @@ test_get_named_receptacles (::Components::Receptacles_ptr rec)
 #endif
 
 
-#if !defined (CCM_LW)
 int
 test_multiple_facets (::Components::Receptacles_ptr rec,
                                ::CORBA::Object_ptr facet)
@@ -583,7 +582,6 @@ test_multiple_facets (::Components::Receptacles_ptr rec,
                         "Test passed!\n"));
   return 0;
 }
-#endif
 
 #if !defined (CCM_LW)
 int

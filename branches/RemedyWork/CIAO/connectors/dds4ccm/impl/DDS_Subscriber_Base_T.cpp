@@ -73,6 +73,16 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::c
                                           ::DDS::DataReaderListener::_nil (),
                                           0);
         }
+      ::DDS::ReturnCode_t retcode = dr->enable ();
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DDS_Subscriber_Base_T::configuration_complete - "
+                        "Error: Unable to enable the datareader: <%C>.\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CORBA::INTERNAL ();
+        }
+
       this->condition_manager_.set_dds_entity (dr.in ());
       this->dds_read_->set_dds_reader (dr.in (),
                                        &this->condition_manager_);
