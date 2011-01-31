@@ -282,7 +282,7 @@ be_visitor_context_svs::visit_emits (be_emits *node)
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl
       << "::" << fname << "Consumer_var ciao_emits_" << port_name << " =" << be_idt_nl
-      << "this->ciao_emits_" << port_name << "_consumer_._retn ();" << be_uidt_nl
+      << "this->ciao_emits_" << port_name << "_consumer_._retn ();" << be_uidt_nl << be_nl
       << "if ( ::CORBA::is_nil (ciao_emits_"
       << port_name << ".in ()))" << be_idt_nl
       << "{" << be_idt_nl
@@ -337,7 +337,7 @@ be_visitor_context_svs::gen_uses_simplex (AST_Type *obj,
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl
       << "::" << fname << "_var ciao_uses_" << port_name << " =" << be_idt_nl
-      << "this->ciao_uses_" << port_name << "_._retn ();" << be_uidt_nl
+      << "this->ciao_uses_" << port_name << "_._retn ();" << be_uidt_nl << be_nl
       << "if ( ::CORBA::is_nil (ciao_uses_"
       << port_name << ".in ()))" << be_idt_nl
       << "{" << be_idt_nl

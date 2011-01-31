@@ -1,3 +1,11 @@
+Mon Jan 31 15:12:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+          Layout changes
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Throw an exception when we can't allocate any memory anymore
+
 Mon Jan 31 14:45:24 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:

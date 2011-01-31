@@ -778,10 +778,10 @@ be_visitor_servant_svs::gen_publishes_top (void)
           << "{" << be_idt_nl
           << "::Components::PublisherDescriptions *retval = 0;"
           << be_nl
-          << "ACE_NEW_RETURN (retval," << be_nl
-          << "                ::Components::PublisherDescriptions,"
+          << "ACE_NEW_THROW_EX (retval," << be_nl
+          << "                  ::Components::PublisherDescriptions,"
           << be_nl
-          << "                0);" << be_nl_2
+          << "                  ::CORBA::NO_MEMORY ());" << be_nl_2
           << "::Components::PublisherDescriptions_var "
           << "safe_retval = retval;" << be_nl
           << "safe_retval->length (" << this->node_->n_publishes ()
@@ -885,10 +885,10 @@ be_visitor_servant_svs::gen_uses_top (void)
           << "{" << be_idt_nl
           << "::Components::ReceptacleDescriptions * retval = 0;"
           << be_nl
-          << "ACE_NEW_RETURN (retval," << be_nl
-          << "                ::Components::ReceptacleDescriptions,"
+          << "ACE_NEW_THROW_EX (retval," << be_nl
+          << "                  ::Components::ReceptacleDescriptions,"
           << be_nl
-          << "                0);" << be_nl
+          << "                  ::CORBA::NO_MEMORY ());" << be_nl
           << "::Components::ReceptacleDescriptions_var "
           << "safe_retval = retval;" << be_nl
           << "safe_retval->length (" << nuses
@@ -1006,10 +1006,10 @@ be_visitor_servant_svs::gen_get_all_emitters (void)
       << "{" << be_idt_nl
       << "::Components::EmitterDescriptions *retval = 0;"
       << be_nl
-      << "ACE_NEW_RETURN (retval," << be_nl
-      << "                ::Components::EmitterDescriptions,"
+      << "ACE_NEW_THROW_EX (retval," << be_nl
+      << "                  ::Components::EmitterDescriptions,"
       << be_nl
-      << "                0);" << be_nl_2
+      << "                  ::CORBA::NO_MEMORY ());" << be_nl_2
       << "::Components::EmitterDescriptions_var "
       << "safe_retval = retval;" << be_nl
       << "safe_retval->length (" << this->node_->n_emits ()
