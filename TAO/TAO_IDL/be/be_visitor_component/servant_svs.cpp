@@ -643,6 +643,11 @@ be_visitor_servant_svs::gen_provides_top (void)
       return;
     }
 
+  ACE_CString comp_sname_str (
+    ScopeAsDecl (node_->defined_in ())->full_name ());
+  const char *global = (comp_sname_str == "" ? "" : "::");
+  ACE_CString sname_str (ScopeAsDecl (node_->defined_in ())->full_name ());
+
   os_ << be_nl_2
       << "/// CIAO-specific." << be_nl
       << "::CORBA::Object_ptr" << be_nl
@@ -654,6 +659,17 @@ be_visitor_servant_svs::gen_provides_top (void)
   os_ << "if (name == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
+      << "}" << be_uidt << be_nl_2;
+
+  os_ << "::" << sname_str << global << "CCM_" << node_->original_local_name ()
+      << "_var executor = " << be_idt_nl
+      << "::" << sname_str << global << "CCM_" << node_->original_local_name ()
+      << "::_duplicate (this->executor_.in ());" << be_uidt << be_nl_2;
+
+  os_ << "if ( ::CORBA::is_nil (executor.in ()))"
+      << be_idt_nl
+      << "{"<< be_idt_nl
+      << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
       << "}" << be_uidt;
 
   be_visitor_facet_executor_block feb_visitor (this->ctx_);
@@ -1106,7 +1122,7 @@ be_visitor_facet_executor_block::visit_provides (
       << "if (ACE_OS::strcmp (name, \"" << port_name
       << "\") == 0)" << be_idt_nl
       << "{" << be_idt_nl
-      << "return this->executor_->get_" << port_name
+      << "return executor->get_" << port_name
       << " ();" << be_uidt_nl
       << "}" << be_uidt;
 
