@@ -306,10 +306,9 @@ be_visitor_context_svs::gen_uses_simplex (AST_Type *obj,
       << node_->local_name () << "_Context::get_connection_"
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "return" << be_idt_nl
-      << "::" << fname << "::_duplicate (" << be_idt_nl
+      << "return ::" << fname << "::_duplicate (" << be_idt_nl
       << "this->ciao_uses_" << port_name << "_.in ());"
-      << be_uidt << be_uidt << be_uidt_nl
+      << be_uidt << be_uidt_nl
       << "}";
 
   os_ << be_nl_2
