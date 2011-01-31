@@ -1,3 +1,10 @@
+Mon Jan 31 14:45:24 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Reduced amount of methods in the servant with LwCCM, this should
+          reduce the footprint heavily with LwCCM again
+
 Mon Jan 31 13:45:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/context_svs.cpp:
