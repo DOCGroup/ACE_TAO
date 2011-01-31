@@ -29,7 +29,6 @@ be_visitor_servant_svs::visit_component (be_component *node)
   // This visitor is spawned by be_visitor_component_svh,
   // which already does a check for imported node, so none
   // is needed here.
-
   node_ = node;
 
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
@@ -868,7 +867,7 @@ be_visitor_servant_svs::gen_uses_top (void)
 
       if (nuses > 0UL)
         {
-          be_visitor_receptacle_desc rd_visitor (this->ctx_);
+          be_visitor_receptacle_desc rd_visitor (this->ctx_, this->node_);
 
           if (rd_visitor.visit_component_scope (node_) == -1)
             {
@@ -1230,10 +1229,13 @@ be_visitor_disconnect_block::visit_uses (be_uses *node)
 // ======================================================
 
 be_visitor_receptacle_desc::be_visitor_receptacle_desc (
-      be_visitor_context *ctx)
+      be_visitor_context *ctx,
+      be_component *node)
   : be_visitor_component_scope (ctx),
-    slot_ (0UL)
+    slot_ (0UL),
+    comp_ (node)
 {
+  node_ = node;
 }
 
 be_visitor_receptacle_desc::~be_visitor_receptacle_desc (
@@ -1253,15 +1255,10 @@ be_visitor_receptacle_desc::visit_uses (be_uses *node)
 
   os_ << be_nl_2;
 
-  if (is_multiple)
-    {
-      os_ << "{" << be_idt_nl
-          << "ACE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
-          << "                  mon," << be_nl
-          << "                  this->context_->"
-          << port_name << "_lock_," << be_nl
-          << "                  0);" << be_nl_2;
-    }
+  ACE_CString sname_str (comp_->full_name ());
+  const char *sname = sname_str.c_str ();
+
+  const char *global = (sname_str == "" ? "" : "::");
 
   if (!is_multiple)
     {
@@ -1270,32 +1267,34 @@ be_visitor_receptacle_desc::visit_uses (be_uses *node)
           << "this->context_->get_connection_"
           << port_name << " ();" << be_uidt_nl;
     }
+  else
+    {
+      os_ << "::" << sname << global << port_name << "Connections_var ciao_"
+          << port_name << " = " << be_idt_nl
+          << "this->context_->get_connections_"
+          << port_name << " ();" << be_uidt_nl;
+    }
 
   os_ << "::CIAO::Servant::describe_"
       << (is_multiple ? "multiplex" : "simplex")
-      << "_receptacle<" << be_idt_nl
-      << "::" << obj->full_name () << "> (" << be_idt_nl
-      << "\"" << port_name << "\"," << be_nl
-      << "\"" << obj->repoID () << "\"," << be_nl;
+      << "_receptacle<" << be_idt_nl;
 
-  if (is_multiple)
+  if (!is_multiple)
     {
-      os_ << "this->context_->ciao_uses_"
-          << port_name << "_," << be_nl;
+      os_ << "::" << obj->full_name () << "> (" << be_idt_nl;
     }
   else
     {
-      os_  << "ciao_" << port_name << ".in (), " << be_nl;
+      os_ << "::" << sname << global << port_name << "Connections> (" << be_idt_nl;
     }
+
+  os_ << "\"" << port_name << "\"," << be_nl
+      << "\"" << obj->repoID () << "\"," << be_nl;
+
+  os_  << "ciao_" << port_name << ".in (), " << be_nl;
 
   os_ << "safe_retval," << be_nl
       << slot_++ << "UL);" << be_uidt << be_uidt;
-
-  if (is_multiple)
-    {
-      os_ << be_uidt_nl
-          << "}";
-    }
 
   return 0;
 }

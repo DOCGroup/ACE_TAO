@@ -180,7 +180,7 @@ be_visitor_context_svh::visit_uses (be_uses *node)
     }
 
   os_ << be_uidt_nl << be_nl
-      << "protected:" << be_idt_nl;
+      << "private:" << be_idt_nl;
 
   if (is_multiple)
     {
@@ -229,7 +229,7 @@ be_visitor_context_svh::visit_publishes (be_publishes *node)
       << "::Components::Cookie * ck);" << be_uidt;
 
   os_ << be_uidt_nl << be_nl
-      << "protected:" << be_idt_nl;
+      << "private:" << be_idt_nl;
 
   os_ << "typedef std::map<ptrdiff_t," << be_nl
       << "                 ::" << obj_name

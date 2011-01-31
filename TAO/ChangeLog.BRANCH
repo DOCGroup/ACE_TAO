@@ -1,3 +1,10 @@
+Mon Jan 31 09:55:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be_include/be_visitor_component/servant_svs.h:
+          Fixed race condition in generated code
+
 Mon Jan 31 08:47:49 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_ServerORBInitializer.h:
