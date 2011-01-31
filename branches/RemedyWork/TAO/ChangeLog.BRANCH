@@ -1,3 +1,8 @@
+Mon Jan 31 11:23:52 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Fixed race condition in generated code
+
 Mon Jan 31 10:29:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_home/home_svs.cpp:
