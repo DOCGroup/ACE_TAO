@@ -1,3 +1,8 @@
+Mon Jan 31 18:58:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+          Throw correct exception
+
 Mon Jan 31 18:19:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/context_svs.cpp:
