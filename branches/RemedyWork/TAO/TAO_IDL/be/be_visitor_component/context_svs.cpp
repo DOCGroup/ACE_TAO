@@ -263,7 +263,7 @@ be_visitor_context_svs::visit_emits (be_emits *node)
       << "{" << be_idt_nl
       << "if ( ::CORBA::is_nil (c))" << be_idt_nl
       << "{" << be_idt_nl
-      << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
+      << "throw ::Components::InvalidConnection ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "if (! ::CORBA::is_nil (this->ciao_emits_"
       << port_name << "_consumer_.in ()))" << be_idt_nl
