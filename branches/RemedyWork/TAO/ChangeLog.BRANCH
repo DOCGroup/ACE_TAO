@@ -1,3 +1,9 @@
+Mon Jan 31 18:19:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+          Fixed several race conditions, possible memory leaks and incorrect
+          logic
+
 Mon Jan 31 15:12:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/context_svs.cpp:
