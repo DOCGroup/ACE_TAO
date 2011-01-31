@@ -1,3 +1,20 @@
+Mon Jan 31 09:13:12 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.cpp:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Sender/I2C_Shapes_Sender.cpp:
+
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+          Need to enable the datareader/datawriter since this is removed from
+          the create_datareader/create_datawriter methods in the C++ wrapper
+
+        * tests/CIF/Receptacle/client.cpp:
+          Always run test_multiple_facets.
+
 Fri Jan 28 17:41:28 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Deployment/Handlers/Connection_Handler.h:
