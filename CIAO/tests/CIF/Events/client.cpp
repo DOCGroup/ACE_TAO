@@ -582,7 +582,7 @@ test_connect_consumer_invalid_connection (::Components::Events_ptr source,
                                 consumer.in ());
       ACE_ERROR ((LM_ERROR, "Events test_connect_consumer_invalid_connection - "
                             "Error: No InvalidConnection exception received.\n"));
-      disconnect_consumer (source, "emit_do_something");
+      disconnect_consumer (source, "emit_do_something_else");
     }
   catch (const ::Components::InvalidName &)
     {

@@ -1,3 +1,8 @@
+Tue Feb  1 13:44:52 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Events/client.cpp:
+          In case no exception is caught, disconnect the correct consumer
+
 Tue Feb  1 12:52:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Connector_Servant_Impl_Base.h:
