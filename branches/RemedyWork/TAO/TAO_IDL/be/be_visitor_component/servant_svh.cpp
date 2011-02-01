@@ -393,7 +393,7 @@ be_visitor_servant_svh::gen_non_type_specific (void)
           << "disconnect (const char * name, ::Components::Cookie * ck);";
     }
 
-  if (!be_global->gen_lwccm ())
+  if (!be_global->gen_lwccm () && this->node_->n_uses () != 0)
     {
       os_ << be_nl_2
           << "virtual ::Components::ReceptacleDescriptions *"
@@ -407,15 +407,21 @@ be_visitor_servant_svh::gen_non_type_specific (void)
   if (!be_global->gen_lwccm () && !is_connector &&
       !be_global->gen_noeventccm ())
     {
-      os_ << be_nl_2
-          << "virtual ::Components::PublisherDescriptions *"
-          << be_nl
-          << "get_all_publishers (void);";
+      if (this->node_->n_publishes () != 0UL)
+        {
+          os_ << be_nl_2
+              << "virtual ::Components::PublisherDescriptions *"
+              << be_nl
+              << "get_all_publishers (void);";
+        }
 
-      os_ << be_nl_2
-          << "virtual ::Components::EmitterDescriptions *"
-          << be_nl
-          << "get_all_emitters (void);";
+      if (this->node_->n_emits () != 0UL)
+        {
+          os_ << be_nl_2
+              << "virtual ::Components::EmitterDescriptions *"
+              << be_nl
+              << "get_all_emitters (void);";
+        }
     }
 
   /// If the node is a connector or the events must be disabled, event sources

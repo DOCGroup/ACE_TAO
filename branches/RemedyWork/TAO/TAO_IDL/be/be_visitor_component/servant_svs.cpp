@@ -769,7 +769,7 @@ be_visitor_servant_svs::gen_publishes_top (void)
           << "}";
     }
 
-  if (!be_global->gen_lwccm () && !be_global->gen_noeventccm ())
+  if (!be_global->gen_lwccm () && !be_global->gen_noeventccm () && this->node_->n_publishes () != 0)
     {
       os_ << be_nl_2
           << "::Components::PublisherDescriptions *" << be_nl
@@ -876,7 +876,7 @@ be_visitor_servant_svs::gen_uses_top (void)
           << "}";
     } // nuses > 0UL
 
-  if (!be_global->gen_lwccm ())
+  if (!be_global->gen_lwccm () && nuses > 0)
     {
       os_ << be_nl_2
           << "::Components::ReceptacleDescriptions *" << be_nl
@@ -888,7 +888,7 @@ be_visitor_servant_svs::gen_uses_top (void)
           << "ACE_NEW_THROW_EX (retval," << be_nl
           << "                  ::Components::ReceptacleDescriptions,"
           << be_nl
-          << "                  ::CORBA::NO_MEMORY ());" << be_nl
+          << "                  ::CORBA::NO_MEMORY ());" << be_nl_2
           << "::Components::ReceptacleDescriptions_var "
           << "safe_retval = retval;" << be_nl
           << "safe_retval->length (" << nuses
@@ -994,7 +994,7 @@ be_visitor_servant_svs::gen_emits_top (void)
 void
 be_visitor_servant_svs::gen_get_all_emitters (void)
 {
-  if (be_global->gen_lwccm () || be_global->gen_noeventccm () )
+  if (be_global->gen_lwccm () || be_global->gen_noeventccm () || this->node_->n_emits () == 0UL)
     {
       return;
     }
