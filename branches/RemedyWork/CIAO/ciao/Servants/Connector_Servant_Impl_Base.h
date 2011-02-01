@@ -50,7 +50,7 @@ namespace CIAO
     void describe_multiplex_receptacle (
         const char *port_name,
         const char *port_type_repo_id,
-        std::map<ptrdiff_t, typename T::_var_type> &objrefs,
+        const T &objrefs,
         ::Components::ReceptacleDescriptions_var &descriptions,
         CORBA::ULong slot);
   } /* Servant */

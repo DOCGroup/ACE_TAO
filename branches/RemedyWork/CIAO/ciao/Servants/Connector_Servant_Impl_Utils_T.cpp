@@ -50,7 +50,7 @@ namespace CIAO
   Servant::describe_multiplex_receptacle (
     const char *port_name,
     const char *port_type_repo_id,
-    std::map<ptrdiff_t, typename T::_var_type> &objrefs,
+    const T &objrefs,
     ::Components::ReceptacleDescriptions_var &descriptions,
     CORBA::ULong slot)
   {
@@ -66,32 +66,19 @@ namespace CIAO
     elem->name (port_name);
     elem->type_id (port_type_repo_id);
     elem->is_multiple (true);
-    elem->connections ().length (objrefs.size ());
+    elem->connections ().length (objrefs.length ());
 
-    CORBA::ULong seq_slot = 0UL;
-    ::Components::ConnectionDescription *conn = 0;
-
-    typedef typename std::map<ptrdiff_t, typename T::_var_type>::const_iterator
-      CONST_ITERATOR;
-
-    for (CONST_ITERATOR iter = objrefs.begin ();
-         iter != objrefs.end ();
-         ++iter, ++seq_slot)
+    for (CORBA::ULong i = 0UL; i < objrefs.length (); ++i)
       {
+        ::Components::ConnectionDescription *conn = 0;
         ACE_NEW_THROW_EX (conn,
                           ::OBV_Components::ConnectionDescription,
                           CORBA::NO_MEMORY ());
         ::Components::ConnectionDescription_var safe_conn = conn;
 
-        ::Components::Cookie_var key_cookie;
-
-        ACE_NEW_THROW_EX (key_cookie,
-                          CIAO::Cookie_Impl (iter->first),
-                          CORBA::NO_MEMORY ());
-
-        conn->ck (key_cookie.in ());
-        conn->objref (iter->second.in ());
-        elem->connections ()[seq_slot] = safe_conn._retn ();
+        safe_conn->ck (objrefs[i].ck.in ());
+        safe_conn->objref (objrefs[i].objref);
+        elem->connections ()[i] = safe_conn._retn ();
       }
 
     descriptions[slot] = safe_elem._retn ();
