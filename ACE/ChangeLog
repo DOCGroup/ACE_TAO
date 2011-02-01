@@ -1,3 +1,9 @@
+Tue Feb  1 14:28:18 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/String_Base.cpp (operator+=): Add a temporary for the return
+          value to quiet an IBM XL C++ 10 optimizer warning about returning
+          the address of a temporary. No, I'm not kidding.
+
 Fri Jan 28 13:39:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/ACE-bug-process.html:
