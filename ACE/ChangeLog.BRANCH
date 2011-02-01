@@ -1,3 +1,19 @@
+Tue Feb  1 15:24:47 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Cache_Map_Manager_T.cpp:
+        * ace/Cached_Connect_Strategy_T.cpp:
+        * ace/Hash_Cache_Map_Manager_T.inl:
+        * ace/Hash_Cache_Map_Manager_T.cpp:
+          Removed ACE_T1/ACE_T2, this improves doxygen documentation
+
+        * ace/Guard_T.h:
+        * ace/Asynch_IO_Impl.h:
+          Doxygen fixes
+        * etc/ace.doxygen:
+
+        * ace/Hash_Cache_Map_Manager_T.h:
+          Removed not needed define
+
 Thu Jan 27 08:34:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Condition_T.h:
