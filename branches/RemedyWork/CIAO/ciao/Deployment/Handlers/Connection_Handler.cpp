@@ -141,10 +141,6 @@ namespace CIAO
           case Deployment::EventPublisher:
             this->connect_publisher (plan, c_id, endpoint, provided_reference);
             break;
-
-          case Deployment::EventConsumer:
-            this->connect_consumer (plan, c_id, endpoint, provided_reference);
-            break;
 #endif
           default:
             CIAO_ERROR (1, (LM_ERROR, CLINFO
@@ -210,10 +206,6 @@ namespace CIAO
 
           case Deployment::EventPublisher:
             this->disconnect_publisher (plan, c_id, endpoint);
-            break;
-
-          case Deployment::EventConsumer:
-            this->disconnect_consumer (plan, c_id, endpoint);
             break;
 #endif
           default:
@@ -559,32 +551,6 @@ namespace CIAO
 
 #if !defined (CCM_NOEVENT)
   void
-  Connection_Handler::connect_consumer (const ::Deployment::DeploymentPlan & plan,
-                                        ::CORBA::ULong connectionRef,
-                                        ::CORBA::ULong endpointRef,
-                                        const ::CORBA::Any &)
-  {
-    CIAO_TRACE ("Connection_Handler::connect_consumer");
-
-    const ::Deployment::PlanConnectionDescription &conn =
-      plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
-
-    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                    "Connection_Handler::connect_consumer - "
-                    "Connecting connection <%C> on instance <%C>\n",
-                    conn.name.in (),
-                    plan.instance[endpoint.instanceRef].name.in ()));
-
-    throw ::Deployment::InvalidConnection (conn.name.in (),
-                                           "ExternalReference connection of consumers "
-                                           "currently unsupported.\n");
-  }
-#endif
-
-#if !defined (CCM_NOEVENT)
-  void
   Connection_Handler::connect_emitter (const ::Deployment::DeploymentPlan & plan,
                                        ::CORBA::ULong connectionRef,
                                        ::CORBA::ULong endpointRef,
@@ -770,44 +736,6 @@ namespace CIAO
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_emitter");
-  }
-#endif
-
-#if !defined (CCM_NOEVENT)
-  void
-  Connection_Handler::disconnect_consumer (const ::Deployment::DeploymentPlan &plan,
-                                           ::CORBA::ULong connectionRef,
-                                           ::CORBA::ULong endpointRef)
-
-  {
-    CIAO_TRACE ("Connection_Handler::disconnect_consumer");
-
-    const ::Deployment::PlanConnectionDescription &conn =
-      plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
-
-    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                "Connection_Handler::disconnect_consumer - "
-                "Disconnecting connection <%C> on instance <%C>. "
-                "Portname: [%C]\n",
-                conn.name.in (),
-                plan.instance[endpoint.instanceRef].name.in (),
-                endpoint.portName. in ()));
-
-    if (conn.internalEndpoint.length () == 0)
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::disconnect_event_port - "
-                        "Error: Expected internal endpoints for connection <%C>\n",
-                        conn.name.in ()));
-        throw ::Deployment::InvalidConnection (conn.name.in (),
-                                               "Expected internal endpoints.");
-      }
-    ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
-
-    ::Components::EventConsumerBase_var safe_temp =
-      obj->disconnect_consumer (endpoint.portName.in ());
   }
 #endif
 

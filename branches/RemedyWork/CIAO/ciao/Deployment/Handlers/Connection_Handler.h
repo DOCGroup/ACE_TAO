@@ -58,13 +58,6 @@ namespace CIAO
                           const ::CORBA::Any & provided_reference);
 #endif
 
-#if !defined (CCM_NOEVENT)
-    void connect_consumer (const ::Deployment::DeploymentPlan & plan,
-                             ::CORBA::ULong connectionRef,
-                             ::CORBA::ULong endpoint,
-                             const ::CORBA::Any & provided_reference);
-#endif
-
     void disconnect_facet (const ::Deployment::DeploymentPlan & plan,
                            ::CORBA::ULong connectionRef,
                            ::CORBA::ULong endpoint);
@@ -84,12 +77,6 @@ namespace CIAO
     void disconnect_emitter (const ::Deployment::DeploymentPlan & plan,
                              ::CORBA::ULong connectionRef,
                              ::CORBA::ULong endpoint);
-#endif
-
-#if !defined (CCM_NOEVENT)
-    void disconnect_consumer (const ::Deployment::DeploymentPlan & plan,
-                              ::CORBA::ULong connectionRef,
-                              ::CORBA::ULong endpoint);
 #endif
 
     void connect_local_port (const ::Deployment::DeploymentPlan & plan,
