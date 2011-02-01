@@ -207,6 +207,23 @@ namespace CIAO
 #endif
 
 #if !defined (CCM_LW)
+  ::Components::ReceptacleDescriptions *
+  Connector_Servant_Impl_Base::get_all_receptacles (void)
+  {
+    CIAO_TRACE ("Connector_Servant_Impl_Base::get_all_receptacles (void)");
+
+    ::Components::ReceptacleDescriptions * retval = 0;
+    ACE_NEW_THROW_EX (retval,
+                      ::Components::ReceptacleDescriptions,
+                      ::CORBA::NO_MEMORY ());
+    ::Components::ReceptacleDescriptions_var safe_retval = retval;
+    safe_retval->length (0UL);
+
+    return safe_retval._retn ();
+  }
+#endif
+
+#if !defined (CCM_LW)
   ::Components::PrimaryKeyBase *
   Connector_Servant_Impl_Base::get_primary_key (void)
   {
@@ -270,7 +287,15 @@ namespace CIAO
   ::Components::EmitterDescriptions *
   Connector_Servant_Impl_Base::get_all_emitters (void)
   {
-    return 0;
+    ::Components::EmitterDescriptions *retval = 0;
+    ACE_NEW_THROW_EX (retval,
+                      ::Components::EmitterDescriptions,
+                      ::CORBA::NO_MEMORY ());
+
+    ::Components::EmitterDescriptions_var safe_retval = retval;
+    safe_retval->length (0UL);
+
+    return safe_retval._retn ();
   }
 #endif
 
@@ -323,7 +348,15 @@ namespace CIAO
   ::Components::PublisherDescriptions *
   Connector_Servant_Impl_Base::get_all_publishers (void)
   {
-    return 0;
+    ::Components::PublisherDescriptions *retval = 0;
+    ACE_NEW_THROW_EX (retval,
+                      ::Components::PublisherDescriptions,
+                      ::CORBA::NO_MEMORY ());
+
+    ::Components::PublisherDescriptions_var safe_retval = retval;
+    safe_retval->length (0UL);
+
+    return safe_retval._retn ();
   }
 #endif
 

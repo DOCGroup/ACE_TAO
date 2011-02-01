@@ -102,6 +102,10 @@ namespace CIAO
 #endif
 
 #if !defined (CCM_LW)
+    virtual ::Components::ReceptacleDescriptions * get_all_receptacles (void);
+#endif
+
+#if !defined (CCM_LW)
     virtual ::Components::PrimaryKeyBase * get_primary_key (void);
 #endif
 
