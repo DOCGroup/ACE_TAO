@@ -1,3 +1,9 @@
+Tue Feb  1 10:04:07 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Connector_Servant_Impl_Base.h:
+        * ciao/Servants/Connector_Servant_Impl_Utils_T.cpp:
+          Updated describe_multiplex
+
 Mon Jan 31 09:13:12 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.cpp:
