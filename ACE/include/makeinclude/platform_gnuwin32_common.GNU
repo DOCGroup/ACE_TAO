@@ -59,6 +59,8 @@ ifeq ($(threads),1)
   CFLAGS += -mthreads
 endif # threads
 
+CFLAGS += -Wall -W
+
 CFLAGS += $(MODEL_FLAGS)
 
 EXEEXT = .exe
@@ -100,51 +102,10 @@ PLATFORM_WX_LDFLAGS   ?= $(shell wx-config --ldflags)
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-ifeq ($(GXX_4_OR_BETTER),1)
-  ifeq ($(findstring $(CXX_MINOR_VERSION),5 6 7 8 9),$(CXX_MINOR_VERSION))
-    GXX_4_5_OR_BETTER:=1
-  endif
-endif
-GXX_4_5_OR_BETTER?=0
+SHLIBBUILD = $(DLLTOOL) --dllname $@ --output-lib $@.a $(VSHOBJS) && \
+  $(SOLINK.cc) -Wl,--enable-auto-image-base -Wl,--out-implib,$@.a \
+  -shared -o $@ $(LDFLAGS) $(VSHOBJS) $(ACE_SHLIBS) $(LIBS)
 
-CMDSEP ?= ;
-ifeq ($(GXX_4_5_OR_BETTER),1)
-SHLIBBUILD = \
-  $(RM) $(VSHDIR)/$@.def.old $(VSHDIR)/$@.def $(CMDSEP) \
-  $(DLLTOOL) --no-export-all --output-def $(VSHDIR)/$@.def --dllname $@ \
-    $(VSHOBJS) \
-  && $(SOLINK.cc) -Wl,--enable-auto-image-base -Wl,--out-implib,$@.a \
-    -shared -o $@ $(LDFLAGS) -Wl,$(VSHDIR)/$@.def \
-    $(VSHOBJS) $(ACE_SHLIBS) $(LIBS)
-else
-# The sed below is to strip comments on the .def file,
-# to workaround to a bug in ld.
-SHLIBBUILD = \
-  $(RM) $(VSHDIR)/$@.def.old $(VSHDIR)/$@.def $(CMDSEP) \
-  $(DLLTOOL) --export-all --output-def $(VSHDIR)/$@.def --dllname $@ \
-    $(VSHOBJS) \
-  && mv $(VSHDIR)/$@.def $(VSHDIR)/$@.def.old \
-  && sed "s/;.*$$//g" < $(VSHDIR)/$@.def.old > $(VSHDIR)/$@.def \
-  && $(SOLINK.cc) -Wl,--enable-auto-image-base -Wl,--out-implib,$@.a \
-    -shared -o $@ $(LDFLAGS) -Wl,$(VSHDIR)/$@.def \
-    $(VSHOBJS) $(ACE_SHLIBS) $(LIBS)
-endif
 PRELIB  = @true
-
-ifeq ($(GXX_4_OR_BETTER), 1)
-  no_attributes ?= 1
-  wall ?= 1
-else
-  no_attributes ?= 0
-  wall ?= 0
-endif
-
-ifeq ($(no_attributes), 1)
-  CFLAGS += -Wno-attributes
-endif
-
-ifeq ($(wall),1)
-  CFLAGS += -Wall -W
-endif
 
 CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
