@@ -1,3 +1,9 @@
+Wed Feb  2 09:03:24 UTC 2011  Martin Corino  <corino_m@remedy.nl>
+
+        * connectors/ami4ccm/examples/Quoter/Client/Quoter_Client.mpc:
+        * connectors/ami4ccm/examples/Quoter/Producer/Quoter_Producer.mpc:
+          Fixed fuzz errors.
+
 Tue Feb  1 15:00:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Deployment/Handlers/Connection_Handler.h:
