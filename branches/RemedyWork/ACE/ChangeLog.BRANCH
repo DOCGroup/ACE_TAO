@@ -1,3 +1,11 @@
+Wed Feb  2 11:22:13 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace.doxygen:
+          Added more macros
+
+        * ace/config-doxygen.h:
+          Removed this file, not needed for doxygen
+
 Tue Feb  1 15:24:47 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Cache_Map_Manager_T.cpp:
