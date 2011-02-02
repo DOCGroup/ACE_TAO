@@ -272,43 +272,6 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
         if (curarg < argc)
             this->wchar_codeset_parameters_.add_translator (argv[curarg]);
       }
-
-    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 ACE_TEXT("-ORBConnectionCachingStrategy")) == 0)
-      {
-        ++curarg;
-
-        // @todo: This needs to be removed after a few betas. The
-        // note is being written during 1.2.3 timeframe.
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) This option would be deprecated\n")
-                    ACE_TEXT ("(%P|%t) Please use -ORBConnectionPurgingStrategy ")
-                    ACE_TEXT ("instead\n")));
-
-        if (curarg < argc)
-          {
-            ACE_TCHAR* name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name,
-                                    ACE_TEXT ("lru")) == 0)
-              this->connection_purging_type_ =
-                TAO_Resource_Factory::LRU;
-            else if (ACE_OS::strcasecmp (name,
-                                         ACE_TEXT ("lfu")) == 0)
-              this->connection_purging_type_ =
-                TAO_Resource_Factory::LFU;
-            else if (ACE_OS::strcasecmp (name,
-                                         ACE_TEXT ("fifo")) == 0)
-              this->connection_purging_type_ =
-                TAO_Resource_Factory::FIFO;
-            else if (ACE_OS::strcasecmp (name,
-                                         ACE_TEXT ("null")) == 0)
-              this->connection_purging_type_ =
-                  TAO_Resource_Factory::NOOP;
-            else
-              this->report_option_value_error (ACE_TEXT ("-ORBConnectionCachingStrategy"), name);
-          }
-      }
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_TEXT("-ORBConnectionPurgingStrategy")) == 0)
       {
