@@ -281,11 +281,11 @@ namespace CIAO_Quoter_Client_Impl
         return;
       }
     }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception& /*ex*/)
     {
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT ("ERROR Client - StockManagerReplyHandler : get_quote threw unexpected exception\n")));
     }
-    ACE_DEBUG ((LM_ERROR,
-                ACE_TEXT ("ERROR Client - StockManagerReplyHandler : get_quote threw unexpected exception\n")));
   }
 
   extern "C" QUOTER_CLIENT_EXEC_Export ::Components::EnterpriseComponent_ptr
