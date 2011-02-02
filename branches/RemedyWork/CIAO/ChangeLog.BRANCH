@@ -1,3 +1,8 @@
+Wed Feb  2 09:08:26 UTC 2011  Martin Corino  <corino_m@remedy.nl>
+
+        * connectors/ami4ccm/examples/Quoter/Client/Quoter_Client_exec.cpp:
+          Fixed compile problem.
+
 Wed Feb  2 09:03:24 UTC 2011  Martin Corino  <corino_m@remedy.nl>
 
         * connectors/ami4ccm/examples/Quoter/Client/Quoter_Client.mpc:
