@@ -1,3 +1,14 @@
+Wed Feb  2 14:28:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CSD_Framework/CSD_Default_Servant_Dispatcher.cpp:
+        * tao/CSD_Framework/CSD_POA.h:
+        * tao/ORB_Core.h:
+        * tao/Object.h:
+        * tao/PortableServer/Regular_POA.h:
+        * tao/PortableServer/Servant_Dispatcher.h:
+        * tao/Transport_Mux_Strategy.h:
+          Layout/doxygen changes
+
 Wed Feb  2 12:31:51 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/orbconf.h:

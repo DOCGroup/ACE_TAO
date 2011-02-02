@@ -47,8 +47,7 @@ public:
                    ACE_Lock &lock,
                    TAO_SYNCH_MUTEX &thread_lock,
                    TAO_ORB_Core &orb_core,
-                   TAO_Object_Adapter *object_adapter
-                  );
+                   TAO_Object_Adapter *object_adapter);
 
   virtual ~TAO_Regular_POA (void);
 
