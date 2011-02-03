@@ -1,3 +1,15 @@
+Thu Feb  3 12:46:15 UTC 2011  Martin Corino  <corino_m@remedy.nl>
+
+        * TAO_IDL/be/be_union.cpp:
+          Fixed problem with generated ostream (gen_ostream=1) op code in
+          case of Array type member in union.
+
+        * TAO_IDL/driver/drv_args.cpp:
+          Fixed incorrectly reported defaults for anonymous type switches.
+
+        * tests/IDL_Test/union.idl:
+          Added IDL constructs to test the fix above.
+
 Fri Jan 28 11:21:05 CET 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO version 2.0.1 released.
