@@ -13,8 +13,6 @@ endif
 
 no_hidden_visibility ?= 1
 
-GNUWIN32_CXX_VERSION := $(shell $(CXX) -dumpversion)
-
 winsock2 ?= 1
 debug ?= 1
 optimize ?= 1
@@ -38,13 +36,8 @@ DLLTOOL = ${COMPARCH}dlltool
 
 RC_OUTPUT_FLAG = -o
 
-ifeq (2.9,$(findstring 2.9,$(GNUWIN32_CXX_VERSION)))
-  cpumodelflag ?= 1
-  tunemodelflag ?= 0
-else
-  cpumodelflag ?= 0
-  tunemodelflag ?= 1
-endif
+cpumodelflag ?= 0
+tunemodelflag ?= 1
 
 ifeq ($(tunemodelflag),1)
   MODEL_FLAGS += -mtune=$(TCPU)
@@ -70,10 +63,10 @@ DLD     = $(CXX)
 LD      = $(CXX)
 
 ifeq ($(mingw32),1)
-ifeq ($(winsock2),1)
-LIBS    += -lws2_32 -lmswsock
-endif
-LIBS    += -lwsock32 -lnetapi32
+  ifeq ($(winsock2),1)
+    LIBS += -lws2_32 -lmswsock
+  endif
+  LIBS += -lwsock32 -lnetapi32
 endif
 
 OCFLAGS += -O3
