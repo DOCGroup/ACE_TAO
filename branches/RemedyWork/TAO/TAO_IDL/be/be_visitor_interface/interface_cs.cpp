@@ -69,9 +69,20 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "TAO::Objref_Traits<" << node->name () << ">::release ("
           << be_idt << be_idt_nl
           << node->name () << "_ptr p)" << be_uidt << be_uidt_nl
-          << "{" << be_idt_nl
-          << "::CORBA::release (p);" << be_uidt_nl
-          << "}";
+          << "{" << be_idt_nl;
+
+      // Workaround for broken HP V7.4-004 on OpenVMS IA83
+      if (node->has_mixed_parentage ())
+        {
+          *os << "::CORBA::AbstractBase_ptr abs = p;" << be_nl
+              << "::CORBA::release (abs);" << be_uidt_nl;
+        }
+      else
+        {
+          *os << "::CORBA::release (p);" << be_uidt_nl;
+        }
+
+      *os << "}";
 
       *os << be_nl_2
           << node->name () << "_ptr" << be_nl
@@ -90,14 +101,14 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "{" << be_idt_nl
           << "return ";
 
-          if (node->is_abstract () || c != 0)
-            {
-              *os << "cdr << p;";
-            }
-          else
-            {
-              *os << "::CORBA::Object::marshal (p, cdr);";
-            }
+      if (node->is_abstract () || c != 0)
+        {
+          *os << "cdr << p;";
+        }
+      else
+        {
+          *os << "::CORBA::Object::marshal (p, cdr);";
+        }
 
       *os << be_uidt_nl
           << "}";

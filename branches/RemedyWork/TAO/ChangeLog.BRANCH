@@ -1,3 +1,8 @@
+Thu Feb  3 09:23:31 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+          Added workaround for broken HP C++ V7.4-004 on OpenVMS IA64 V8.3
+
 Wed Feb  2 14:28:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CSD_Framework/CSD_Default_Servant_Dispatcher.cpp:
