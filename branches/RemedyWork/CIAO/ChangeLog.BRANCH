@@ -1,3 +1,8 @@
+Thu Feb  3 15:07:22 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/DAnCE/ExecutionManager-Deployments/PublishConnectionExplicitHome_NS.cdp:
+          Added more test cases.
+
 Thu Feb  3 13:23:41 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Deployment/Handlers/Connection_Handler.h:
