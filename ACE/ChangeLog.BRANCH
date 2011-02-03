@@ -1,3 +1,12 @@
+Thu Feb  3 09:54:32 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-qnx-rtp.h:
+          Just one file for qnx, pre 6.2 support is already removed
+
+        * ace/config-qnx-rtp-62x.h:
+        * ace/config-qnx-rtp-pre62x.h:
+          Removed these files.
+
 Wed Feb  2 11:22:13 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ace.doxygen:
