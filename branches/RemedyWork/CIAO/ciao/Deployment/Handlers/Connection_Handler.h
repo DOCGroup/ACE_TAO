@@ -113,7 +113,7 @@ namespace CIAO
                                   const ::CORBA::Any & provided_reference);
 
     void disconnect_non_local (const ::Deployment::PlanConnectionDescription &conn,
-                              const ::Deployment::PlanSubcomponentPortEndpoint &endpoint);
+                               const char * port_name);
 
     bool is_local_connection (const ::Deployment::PlanConnectionDescription &conn);
 

@@ -1,3 +1,9 @@
+Thu Feb  3 13:23:41 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.h:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Optimized disconnect_non_local. Portname should be provided.
+
 Thu Feb  3 12:44:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Base/CIAO_Properties.idl:

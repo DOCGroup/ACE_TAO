@@ -768,20 +768,20 @@ namespace CIAO
       }
     else
       {
-        this->disconnect_non_local (conn, receptacle_endpoint);
+        this->disconnect_non_local (conn, conn.externalReference[0].portName.in ());
       }
   }
 
   void
   Connection_Handler::disconnect_non_local (const ::Deployment::PlanConnectionDescription &conn,
-                                            const ::Deployment::PlanSubcomponentPortEndpoint &endpoint)
+                                            const char * port_name)
   {
     CIAO_TRACE ("Connection_Handler::disconnect_non_local");
 
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
     ::CORBA::Object_var safe_tmp =
-      obj->disconnect (endpoint.portName.in (),
-                       this->get_cookie (conn.name.in ()));
+      obj->disconnect (port_name,
+                      this->get_cookie (conn.name.in ()));
     this->remove_cookie (conn.name.in ());
   }
 
@@ -813,7 +813,7 @@ namespace CIAO
       }
     else
       {
-        this->disconnect_non_local (conn, receptacle_endpoint);
+        this->disconnect_non_local (conn, receptacle_endpoint.portName.in ());
       }
   }
 
