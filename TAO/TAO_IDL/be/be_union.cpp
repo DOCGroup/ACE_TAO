@@ -154,9 +154,14 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
 
       *os << "strm << ";
 
+      be_type *ub_ft = be_type::narrow_from_decl (ub->field_type ());
+      AST_Decl::NodeType ub_nt = ub_ft->node_type ();
+      // catch anonymous Array member types
+      bool ub_use_underscore = ub_nt == AST_Decl::NT_array;
+
       ub->gen_member_ostream_operator (os,
                                        instance_name.c_str (),
-                                       use_underscore,
+                                       ub_use_underscore,
                                        true);
 
       *os << ";" << be_nl
