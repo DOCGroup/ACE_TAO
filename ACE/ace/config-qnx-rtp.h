@@ -129,6 +129,7 @@
 #define ACE_LACKS_WCSICMP
 #define ACE_LACKS_WCSNICMP
 #define ACE_LACKS_WCSDUP
+
 // The default value of FD_SETSIZE is 32, but actually x86 NTO
 // supports by default at least 1000 descriptors in fd_set.
 #if defined( FD_SETSIZE )

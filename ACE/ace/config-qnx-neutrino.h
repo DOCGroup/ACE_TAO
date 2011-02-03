@@ -10,20 +10,6 @@
 #define _POSIX_C_SOURCE 199506
 #define _QNX_SOURCE
 
-// These constants are in i386-nto/include/limits.h, but egcs
-// picks up its own limits.h instead:
-#define _POSIX_NAME_MAX     14      /*  Max bytes in a filename             */
-#define _POSIX_PATH_MAX     256     /*  Num. bytes in pathname (excl. NULL) */
-
-#if defined(__OPTIMIZE__)
-# if defined(__X86__)
-    // string.h can't be used by ACE with __OPTIMIZE__.
-#   undef __OPTIMIZE__
-#   include <string.h>
-#   define __OPTIMIZE__
-# endif /* __X86__ */
-#endif /* __OPTIMIZE__ */
-
 // The following defines the Neutrino compiler.
 // gcc should know to call g++ as necessary
 #ifdef __GNUC__
@@ -33,15 +19,6 @@
 #endif
 
 #include "ace/config-g++-common.h"
-
-// /usr/nto/include/float.h defines
-//  FLT_MAX_EXP 127
-//  DBL_MAX_EXP 1023
-//  ace expects 128 & 1024 respectively
-//  to set the following macros in ace/Basic_Types.h
-//  These macros are:
-// #define ACE_SIZEOF_DOUBLE   8
-// #define ACE_SIZEOF_FLOAT    4
 
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
