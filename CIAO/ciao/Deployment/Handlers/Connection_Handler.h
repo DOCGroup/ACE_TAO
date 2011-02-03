@@ -52,6 +52,13 @@ namespace CIAO
 #endif
 
 #if !defined (CCM_NOEVENT)
+  void connect_consumer (const ::Deployment::DeploymentPlan & plan,
+                         ::CORBA::ULong connectionRef,
+                         ::CORBA::ULong endpointRef,
+                         const ::CORBA::Any & provided_reference);
+#endif
+
+#if !defined (CCM_NOEVENT)
     void connect_emitter (const ::Deployment::DeploymentPlan & plan,
                           ::CORBA::ULong connectionRef,
                           ::CORBA::ULong endpoint,
@@ -71,6 +78,12 @@ namespace CIAO
     void disconnect_publisher (const ::Deployment::DeploymentPlan & plan,
                                ::CORBA::ULong connectionRef,
                                ::CORBA::ULong endpoint);
+#endif
+
+#if !defined (CCM_NOEVENT)
+    void disconnect_consumer (const ::Deployment::DeploymentPlan & plan,
+                              ::CORBA::ULong connectionRef,
+                              ::CORBA::ULong endpoint);
 #endif
 
 #if !defined (CCM_NOEVENT)

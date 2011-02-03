@@ -134,6 +134,10 @@ namespace CIAO
             this->connect_receptacle (plan, c_id, endpoint, provided_reference);
             break;
 #if !defined (CCM_NOEVENT)
+          case Deployment::EventConsumer:
+            this->connect_consumer (plan, c_id, endpoint, provided_reference);
+            break;
+
           case Deployment::EventEmitter:
             this->connect_emitter (plan, c_id, endpoint, provided_reference);
             break;
@@ -151,9 +155,16 @@ namespace CIAO
 
           }
       }
-    catch (const ::Deployment::InvalidConnection &)
+    catch (const ::Deployment::InvalidConnection &ex)
       {
-        // pass through
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::connect_instance - "
+                        "Caught InvalidConnection exception whilst "
+                        "connecting <%C>: %C. Reason: %C\n",
+                        conn.name.in (),
+                        ex.name.in (),
+                        ex.reason.in ()));
+
         throw;
       }
     catch (CORBA::Exception &ex)
@@ -200,6 +211,10 @@ namespace CIAO
             this->disconnect_receptacle (plan, c_id, endpoint);
             break;
 #if !defined (CCM_NOEVENT)
+          case Deployment::EventConsumer:
+            this->disconnect_consumer (plan, c_id, endpoint);
+            break;
+
           case Deployment::EventEmitter:
             this->disconnect_emitter (plan, c_id, endpoint);
             break;
@@ -315,6 +330,10 @@ namespace CIAO
   {
     CIAO_TRACE ("Connection_Handler::connect_non_local_facet");
 
+
+    // provided_reference is a receptacle. We need to call 'connect' on this reference
+    // and pass the facet.
+
     const ::Deployment::PlanConnectionDescription &conn =
       plan.connection[connectionRef];
     const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
@@ -417,6 +436,8 @@ namespace CIAO
                                                     const ::CORBA::Any & provided_reference)
   {
     CIAO_TRACE ("Component_Handler_i::connect_non_local_receptacle");
+
+    //provided_reference is a facet. We need to pass this reference to the receptacle, using the connect method
 
     const ::Deployment::PlanConnectionDescription &conn =
       plan.connection[connectionRef];
@@ -551,12 +572,109 @@ namespace CIAO
 
 #if !defined (CCM_NOEVENT)
   void
+  Connection_Handler::connect_consumer (const ::Deployment::DeploymentPlan & plan,
+                                        ::CORBA::ULong connectionRef,
+                                        ::CORBA::ULong endpointRef,
+                                        const ::CORBA::Any & provided_reference)
+  {
+    CIAO_TRACE ("Connection_Handler::connect_consumer");
+
+    // provided_reference is an emitter
+
+    const ::Deployment::PlanConnectionDescription &conn =
+      plan.connection[connectionRef];
+    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
+      conn.internalEndpoint[endpointRef];
+
+    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                   "Connection_Handler::connect_consumer - "
+                   "Connecting connection <%C> on instance <%C>\n",
+                   conn.name.in (),
+                   plan.instance[endpoint.instanceRef].name.in ()));
+
+    if (conn.externalReference.length () == 0)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::connect_consumer - "
+                        "Error: Expected external reference endpoint for connection <%C>",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                               "Expected external reference connection.");
+      }
+
+    ::CORBA::Object_var obj;
+
+    if (!(provided_reference >>= CORBA::Any::to_object  (obj)) ||
+        CORBA::is_nil (obj.in ()))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::connect_consumer - "
+                        "Unable to extract provided reference to CORBA::Object\n",
+                        plan.connection[connectionRef].name.in ()));
+        throw ::Deployment::InvalidConnection (plan.connection[connectionRef].name.in (),
+                                               "Unable to extract provided reference to CORBA Object.");
+      }
+
+    ::Components::CCMObject_var emitter =
+      ::Components::CCMObject::_narrow (obj.in ());
+
+    if (::CORBA::is_nil (emitter.in ()))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::connect_consumer - "
+                        "Error: Unable to fetch emitter component for connection <%C>\n",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                               "Unable to get reference to the emitter.");
+      }
+
+    //find the consumer.
+    ::Components::CCMObject_var consumer_provider =
+        DEPLOYMENT_STATE::instance ()->fetch_component (plan.instance[endpoint.instanceRef].name.in ());
+
+    if (CORBA::is_nil (consumer_provider))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::connect_consumer - "
+                        "While connecting <%C>:"
+                        "Providing component not deployed.",
+                        plan.connection[connectionRef].name.in ()));
+        throw ::Deployment::InvalidConnection (plan.connection[connectionRef].name.in (),
+                                               "Providing component not deployed.");
+      }
+
+    CORBA::Object_var consumer =
+      consumer_provider->get_consumer (endpoint.portName.in ());
+
+    ::Components::EventConsumerBase_var event = ::Components::EventConsumerBase::_narrow (consumer.in ());
+
+    emitter->connect_consumer (conn.externalReference[0].portName.in (),
+                               event.in ());
+
+    CIAO_DEBUG (5, (LM_INFO, CLINFO
+                    "Connection_Handler::connect_consumer - "
+                    "Connection <%C> successfully established.\n",
+                    conn.name.in ()));
+
+    ::Components::Cookie_var nil_cookie;
+
+    CONNECTION_INFO conn_info = CONNECTION_INFO (nil_cookie._retn (),
+                                                 ::Components::CCMObject::_duplicate (emitter.in ()));
+    this->insert_cookie (conn.name.in (), conn_info);
+  }
+#endif
+
+#if !defined (CCM_NOEVENT)
+  void
   Connection_Handler::connect_emitter (const ::Deployment::DeploymentPlan & plan,
                                        ::CORBA::ULong connectionRef,
                                        ::CORBA::ULong endpointRef,
                                        const ::CORBA::Any & provided_reference)
   {
     CIAO_TRACE ("Connection_Handler::connect_emitter");
+
+    // provided_reference is a consumer.
+    // We need to pass this to the emitter, using the connect_consumer
 
     const ::Deployment::PlanConnectionDescription &conn =
       plan.connection[connectionRef];
@@ -581,7 +699,6 @@ namespace CIAO
         throw ::Deployment::InvalidConnection (plan.connection[connectionRef].name.in (),
                                                "Unable to extract provided reference to CORBA Object.");
       }
-
     Components::EventConsumerBase_var event =
       Components::EventConsumerBase::_unchecked_narrow (consumer);
 
@@ -597,6 +714,17 @@ namespace CIAO
                         plan.connection[connectionRef].name.in ()));
         throw ::Deployment::InvalidConnection (conn.name.in (),
                                                "Emitting component not deployed.");
+      }
+
+    if (CORBA::is_nil (event))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::connect_emitter - "
+                        "While connecting <%C>:"
+                        "Consuming component not deployed.",
+                        plan.connection[connectionRef].name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                               "Consumer component not deployed.");
       }
 
     emitter->connect_consumer (endpoint.portName.in (),
@@ -728,14 +856,54 @@ namespace CIAO
   }
 #endif
 
+
 #if !defined (CCM_NOEVENT)
   void
-  Connection_Handler::disconnect_emitter (const ::Deployment::DeploymentPlan &,
-                                          ::CORBA::ULong,
-                                          ::CORBA::ULong)
+  Connection_Handler::disconnect_consumer (const ::Deployment::DeploymentPlan &plan,
+                                          ::CORBA::ULong connectionRef,
+                                          ::CORBA::ULong endpointRef)
+
+  {
+    CIAO_TRACE ("Connection_Handler::disconnect_consumer");
+
+    const ::Deployment::PlanConnectionDescription &conn =
+      plan.connection[connectionRef];
+    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
+      conn.internalEndpoint[endpointRef];
+
+    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                "Connection_Handler::disconnect_consumer - "
+                "Disconnecting connection <%C> on instance <%C>. "
+                "Portname: [%C]\n",
+                conn.name.in (),
+                plan.instance[endpoint.instanceRef].name.in (),
+                endpoint.portName. in ()));
+
+    if (conn.internalEndpoint.length () == 0)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::disconnect_event_port - "
+                        "Error: Expected internal endpoints for connection <%C>\n",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                              "Expected internal endpoints.");
+      }
+    ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
+
+    ::Components::EventConsumerBase_var safe_temp =
+      obj->disconnect_consumer (endpoint.portName.in ());
+  }
+#endif
+
+#if !defined (CCM_NOEVENT)
+  void
+  Connection_Handler::disconnect_emitter (const ::Deployment::DeploymentPlan & plan,
+                                          ::CORBA::ULong connectionRef,
+                                          ::CORBA::ULong endpointRef)
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_emitter");
+    this->disconnect_consumer (plan, connectionRef, endpointRef);
   }
 #endif
 
