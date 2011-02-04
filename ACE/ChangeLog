@@ -1,3 +1,8 @@
+Fri Feb  4 20:04:13 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * tests/OS_Test.cpp:
+          Use ACE::is_inequal() instead of ACE::is_equal().
+
 Fri Feb  4 20:02:28 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/ACE.h:
