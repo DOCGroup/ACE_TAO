@@ -35,32 +35,32 @@ namespace CIAO
 
   private:
     void connect_facet (const ::Deployment::DeploymentPlan & plan,
-                        ::CORBA::ULong connectionRef,
+                        const ::Deployment::PlanConnectionDescription &conn,
                         ::CORBA::ULong endpoint,
                         const ::CORBA::Any & provided_reference);
 
     void connect_receptacle (const ::Deployment::DeploymentPlan & plan,
-                             ::CORBA::ULong connectionRef,
+                             const ::Deployment::PlanConnectionDescription &conn,
                              ::CORBA::ULong endpoint,
                              const ::CORBA::Any & provided_reference);
 
 #if !defined (CCM_NOEVENT)
     void connect_publisher (const ::Deployment::DeploymentPlan & plan,
-                            ::CORBA::ULong connectionRef,
+                            const ::Deployment::PlanConnectionDescription &conn,
                             ::CORBA::ULong endpoint,
                             const ::CORBA::Any & provided_reference);
 #endif
 
 #if !defined (CCM_NOEVENT)
   void connect_consumer (const ::Deployment::DeploymentPlan & plan,
-                         ::CORBA::ULong connectionRef,
+                         const ::Deployment::PlanConnectionDescription &conn,
                          ::CORBA::ULong endpointRef,
                          const ::CORBA::Any & provided_reference);
 #endif
 
 #if !defined (CCM_NOEVENT)
     void connect_emitter (const ::Deployment::DeploymentPlan & plan,
-                          ::CORBA::ULong connectionRef,
+                          const ::Deployment::PlanConnectionDescription &conn,
                           ::CORBA::ULong endpoint,
                           const ::CORBA::Any & provided_reference);
 #endif
@@ -93,9 +93,9 @@ namespace CIAO
 #endif
 
     void connect_local_port (const ::Deployment::DeploymentPlan & plan,
-                            const ::Deployment::PlanConnectionDescription &conn,
-                            ::CORBA::ULong endpointRef,
-                            const ::Deployment::PlanSubcomponentPortEndpoint &receptacle_endpoint);
+                             const ::Deployment::PlanConnectionDescription &conn,
+                             ::CORBA::ULong endpointRef,
+                             const ::Deployment::PlanSubcomponentPortEndpoint &receptacle_endpoint);
 
     void disconnect_local_port (const ::Deployment::DeploymentPlan & plan,
                                 const ::Deployment::PlanConnectionDescription &conn,
@@ -103,12 +103,12 @@ namespace CIAO
                                 const ::Deployment::PlanSubcomponentPortEndpoint &receptacle_endpoint);
 
     void connect_non_local_receptacle (const ::Deployment::DeploymentPlan & plan,
-                                       ::CORBA::ULong connectionRef,
+                                       const ::Deployment::PlanConnectionDescription &conn,
                                        ::CORBA::ULong endpoint,
                                        const ::CORBA::Any & provided_reference);
 
     void connect_non_local_facet (const ::Deployment::DeploymentPlan & plan,
-                                  ::CORBA::ULong connectionRef,
+                                  const ::Deployment::PlanConnectionDescription &conn,
                                   ::CORBA::ULong endpointRef,
                                   const ::CORBA::Any & provided_reference);
 
