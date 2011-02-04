@@ -342,10 +342,6 @@
     <constrainedInstance xmi:idref="SimplePublisherHomeInstance" />
     <constrainedInstance xmi:idref="SimplePublisherComponentInstance" />
     <constrainedInstance xmi:idref="SimplePublisherComponentInstanceReverse" />
-  </localityConstraint>
-
-  <localityConstraint>
-    <constraint>SameProcess</constraint>
     <constrainedInstance xmi:idref="SimpleConsumerHomeInstance" />
     <constrainedInstance xmi:idref="SimpleConsumerComponentInstance" />
   </localityConstraint>
