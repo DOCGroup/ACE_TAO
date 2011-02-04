@@ -55,6 +55,11 @@ LDFLAGS += -Wl,--enable-auto-import
 
 PWD=$(subst \,/,$(shell pwd))
 
+ifeq ($(winsock2),1)
+  LIBS += -lws2_32 -lmswsock
+endif
+LIBS += -lwsock32 -lnetapi32
+
 PLATFORM_SSL_LIBS ?= -lssl32 -leay32
 
 ifeq (cmd,$(findstring cmd,$(SHELL)))
