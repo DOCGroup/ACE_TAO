@@ -1,3 +1,10 @@
+Fri Feb  4 10:42:01 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.h:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Optimizing. Passing the connection instead of the connectionRef
+          to the underlying methods.
+
 Fri Feb  4 10:02:10 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Interceptors/Deployment_Interceptors.h:
