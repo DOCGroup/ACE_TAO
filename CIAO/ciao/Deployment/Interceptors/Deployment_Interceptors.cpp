@@ -11,7 +11,7 @@
 
 namespace CIAO
 {
-  // Implementation skeleton constructor
+  /// Implementation skeleton constructor
   CIAO_StoreReferences_i::CIAO_StoreReferences_i (void)
   {
     this->orb_ = DAnCE::PLUGIN_MANAGER::instance ()->get_orb ();
@@ -26,7 +26,7 @@ namespace CIAO
       }
   }
 
-  // Implementation skeleton destructor
+  /// Implementation skeleton destructor
   CIAO_StoreReferences_i::~CIAO_StoreReferences_i (void)
   {
   }
@@ -121,12 +121,12 @@ namespace CIAO
       }
   }
 
-  // Implementation skeleton constructor
+  /// Implementation skeleton constructor
   CIAO_ReferenceLookup_i::CIAO_ReferenceLookup_i (void)
   {
   }
 
-  // Implementation skeleton destructor
+  /// Implementation skeleton destructor
   CIAO_ReferenceLookup_i::~CIAO_ReferenceLookup_i (void)
   {
   }
@@ -136,14 +136,12 @@ namespace CIAO
                                        ::CORBA::ULong,
                                        ::CORBA::Any &)
   {
-    // Add your implementation here
   }
 
   void CIAO_ReferenceLookup_i::post_connect (const ::Deployment::DeploymentPlan &,
                                              ::CORBA::ULong,
                                              const ::CORBA::Any &)
   {
-    // Add your implementation here
   }
 
   void

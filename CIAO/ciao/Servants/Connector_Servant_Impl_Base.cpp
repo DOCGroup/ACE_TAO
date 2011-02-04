@@ -33,6 +33,8 @@ namespace CIAO
 
     try
     {
+      PortableServer::POA_var port_poa =
+        this->container_->the_port_POA ();
       // Removing Facets
       for (FacetTable::const_iterator iter =
              this->facet_table_.begin ();
@@ -40,11 +42,9 @@ namespace CIAO
            ++iter)
         {
           PortableServer::ObjectId_var facet_id =
-            this->container_->the_port_POA ()->reference_to_id (
-              iter->second);
+            port_poa->reference_to_id (iter->second);
 
-          this->container_->the_port_POA ()->deactivate_object (
-            facet_id);
+          port_poa->deactivate_object (facet_id);
 
           CIAO::Servant_Activator_var sa =
             this->container_->ports_servant_activator ();
@@ -477,7 +477,7 @@ namespace CIAO
   Connector_Servant_Impl_Base::_default_POA (void)
   {
     CIAO_TRACE("Connector_Servant_Impl_Base::_default_POA (void)");
-    return PortableServer::POA::_duplicate (container_->the_POA ());
+    return container_->the_POA ();
   }
 
   ::CORBA::Object_ptr

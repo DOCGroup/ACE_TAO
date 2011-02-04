@@ -69,8 +69,10 @@ namespace CIAO
   {
     CIAO_TRACE ("Home_Servant_Impl<>::remove_component");
 
+    PortableServer::POA_var poa =
+      this->container_->the_POA ();
     PortableServer::ObjectId_var oid =
-      this->container_->the_POA ()->reference_to_id (comp);
+      poa->reference_to_id (comp);
 
     Components::CCMObject_var ccm_obj_var = Components::CCMObject::_nil ();
     if (objref_map_.find (oid.in (), ccm_obj_var) != 0)
