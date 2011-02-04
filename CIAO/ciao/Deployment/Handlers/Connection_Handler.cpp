@@ -527,10 +527,10 @@ namespace CIAO
                     conn.name.in (),
                     plan.instance[endpoint.instanceRef].name.in ()));
 
-    ::CORBA::Object_var consumer;
+    ::CORBA::Object_var provided;
 
-    if (!(provided_reference >>= CORBA::Any::to_object  (consumer)) ||
-        CORBA::is_nil (consumer.in ()))
+    if (!(provided_reference >>= CORBA::Any::to_object  (provided)) ||
+        CORBA::is_nil (provided.in ()))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::connect_publisher - "
@@ -540,8 +540,40 @@ namespace CIAO
                                                "Unable to extract provided reference to CORBA Object.");
       }
 
-    Components::EventConsumerBase_var event =
-      Components::EventConsumerBase::_unchecked_narrow (consumer);
+    Components::EventConsumerBase_var event;
+    if (conn.externalReference.length () == 0)
+      {
+        event = Components::EventConsumerBase::_unchecked_narrow (provided);
+      }
+    else
+      {
+        ::Components::CCMObject_var consumer = ::Components::CCMObject::_narrow (provided.in ());
+
+        if (CORBA::is_nil (consumer.in ()))
+          {
+            CIAO_ERROR (1, (LM_ERROR, CLINFO
+                            "Connection_Handler::connect_publisher - "
+                            "Unable to extract provided reference to Components::CCMObject\n",
+                            plan.connection[connectionRef].name.in ()));
+            throw ::Deployment::InvalidConnection (plan.connection[connectionRef].name.in (),
+                                                  "Unable to extract provided reference to "
+                                                  "Components::CCMObject.");
+          }
+        ::CORBA::Object_var event_obj = consumer->get_consumer (conn.externalReference[0].portName.in ());
+        event = ::Components::EventConsumerBase::_narrow (event_obj.in ());
+      }
+
+    if (CORBA::is_nil (event.in ()))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::connect_publisher - "
+                        "Unable to extract provided reference to "
+                        "Components::EventConsumerBase\n",
+                        plan.connection[connectionRef].name.in ()));
+        throw ::Deployment::InvalidConnection (plan.connection[connectionRef].name.in (),
+                                               "Unable to extract provided reference to "
+                                               "Components::EventConsumerBase.");
+      }
 
     ::Components::CCMObject_var publisher =
         DEPLOYMENT_STATE::instance ()->fetch_component (plan.instance[endpoint.instanceRef].name.in ());

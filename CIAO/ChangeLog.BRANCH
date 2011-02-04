@@ -1,3 +1,9 @@
+Fri Feb  4 07:37:59 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+        * tests/DAnCE/ExecutionManager-Deployments/PublishConnectionExplicitHome_NS.cdp:
+          The connect_publisher is able to handle external consumers.
+
 Thu Feb  3 15:07:22 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/DAnCE/ExecutionManager-Deployments/PublishConnectionExplicitHome_NS.cdp:

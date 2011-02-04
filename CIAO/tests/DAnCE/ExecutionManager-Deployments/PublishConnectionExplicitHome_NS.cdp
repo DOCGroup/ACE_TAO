@@ -175,17 +175,6 @@
         </value>
       </value>
     </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SimplePublisherComponent</string>
-        </value>
-      </value>
-    </configProperty>
   </instance>
 
   <instance xmi:id="SimpleConsumerHomeInstance">
@@ -213,9 +202,20 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleConsumerComponent</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
-  <connection>
+  <!--connection>
     <name>TestConnection</name>
     <internalEndpoint>
       <portName>hello_publishes</portName>
@@ -229,6 +229,22 @@
       <kind>EventConsumer</kind>
       <instance xmi:idref="SimpleConsumerComponentInstance" />
     </internalEndpoint>
+  </connection-->
+
+  <connection>
+    <name>TestConnection</name>
+    <internalEndpoint>
+      <portName>hello_publishes</portName>
+      <provider>false</provider>
+      <kind>EventPublisher</kind>
+      <instance xmi:idref="SimplePublisherComponentInstance" />
+    </internalEndpoint>
+    <externalReference>
+      <location>corbaname:rir:/NameService#SimpleConsumerComponent</location>
+      <provider>true</provider>
+      <portName>hello_consumes</portName>
+      <supportedType>Meaningless</supportedType>
+    </externalReference>
   </connection>
 
   <!-- Artifacts declarations -->
