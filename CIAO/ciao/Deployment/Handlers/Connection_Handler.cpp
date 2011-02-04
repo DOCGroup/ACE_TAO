@@ -795,15 +795,6 @@ namespace CIAO
   {
     CIAO_TRACE ("Connection_Handler::disconnect_publisher");
 
-    if (conn.internalEndpoint.length () == 0)
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::disconnect_event_port - "
-                        "Error: Expected internal endpoints for connection <%C>\n",
-                        conn.name.in ()));
-        throw ::Deployment::InvalidConnection (conn.name.in (),
-                                               "Expected internal endpoints.");
-      }
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
 
     ::Components::EventConsumerBase_var safe_temp =
@@ -821,15 +812,6 @@ namespace CIAO
   {
     CIAO_TRACE ("Connection_Handler::disconnect_consumer");
 
-    if (conn.internalEndpoint.length () == 0)
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::disconnect_event_port - "
-                        "Error: Expected internal endpoints for connection <%C>\n",
-                        conn.name.in ()));
-        throw ::Deployment::InvalidConnection (conn.name.in (),
-                                              "Expected internal endpoints.");
-      }
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
 
     ::Components::EventConsumerBase_var safe_temp =
