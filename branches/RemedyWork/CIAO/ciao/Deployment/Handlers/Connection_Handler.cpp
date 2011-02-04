@@ -117,33 +117,66 @@ namespace CIAO
   {
     CIAO_TRACE ("Connection_Handler::connect_instance");
 
-    const ::Deployment::PlanConnectionDescription &conn = plan.connection[c_id];
+    const ::Deployment::PlanConnectionDescription &conn =
+      plan.connection[c_id];
 
     CORBA::ULong endpointRef = this->retrieve_endpoint (conn);
 
+    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
+      conn.internalEndpoint[endpointRef];
+
+    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                    "Connection_Handler::connect_instance - "
+                    "Connecting connection <%C> on instance <%C>\n",
+                    conn.name.in (),
+                    plan.instance[endpoint.instanceRef].name.in ()));
     try
       {
         switch (conn.internalEndpoint[endpointRef].kind)
           {
+
           case Deployment::Facet:
-            this->connect_facet (plan, conn, endpointRef, provided_reference);
+
+            if (this->is_local_connection (conn))
+              {
+                this->connect_local_port (plan, conn, endpointRef, endpoint);
+              }
+            else
+              {
+                this->connect_non_local_facet (plan,
+                                              conn,
+                                              endpoint,
+                                              provided_reference);
+              }
             break;
 
           case Deployment::SimplexReceptacle:
           case Deployment::MultiplexReceptacle:
-            this->connect_receptacle (plan, conn, endpointRef, provided_reference);
+
+            if (this->is_local_connection (conn))
+              {
+                this->connect_local_port (plan, conn, endpointRef, endpoint);
+              }
+            else
+              {
+                this->connect_non_local_receptacle (plan,
+                                                    conn,
+                                                    endpoint,
+                                                    provided_reference);
+              }
             break;
+
 #if !defined (CCM_NOEVENT)
           case Deployment::EventConsumer:
-            this->connect_consumer (plan, conn, endpointRef, provided_reference);
+            this->connect_consumer (plan, conn, endpoint, provided_reference);
             break;
 
           case Deployment::EventEmitter:
-            this->connect_emitter (plan, conn, endpointRef, provided_reference);
+            this->connect_emitter (plan, conn, endpoint, provided_reference);
             break;
 
           case Deployment::EventPublisher:
-            this->connect_publisher (plan, conn, endpointRef, provided_reference);
+            this->connect_publisher (plan, conn, endpoint, provided_reference);
             break;
 #endif
           default:
@@ -194,33 +227,60 @@ namespace CIAO
   {
     CIAO_TRACE ("Connection_Handler::disconnect_instance");
 
-    const ::Deployment::PlanConnectionDescription &conn = plan.connection[c_id];
+    const ::Deployment::PlanConnectionDescription &conn =
+      plan.connection[c_id];
 
-    CORBA::ULong endpoint = this->retrieve_endpoint (conn);
+    CORBA::ULong endpointRef = this->retrieve_endpoint (conn);
+
+    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
+      conn.internalEndpoint[endpointRef];
+
+    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                    "Connection_Handler::disonnect_instance - "
+                    "Disconnecting connection <%C> on instance <%C>\n",
+                    conn.name.in (),
+                    plan.instance[endpoint.instanceRef].name.in ()));
 
     try
       {
-        switch (conn.internalEndpoint[endpoint].kind)
+        switch (conn.internalEndpoint[endpointRef].kind)
           {
           case Deployment::Facet:
-            this->disconnect_facet (plan, c_id, endpoint);
+
+            if (this->is_local_connection (conn))
+              {
+                this->disconnect_local_port (plan, conn, endpointRef, endpoint);
+              }
+            else
+              {
+                //only because of the receptacle is an external endpoint
+                this->disconnect_non_local (conn, conn.externalReference[0].portName.in ());
+              }
             break;
 
           case Deployment::SimplexReceptacle:
           case Deployment::MultiplexReceptacle:
-            this->disconnect_receptacle (plan, c_id, endpoint);
+
+            if (this->is_local_connection (conn))
+              {
+                this->disconnect_local_port (plan, conn, endpointRef, endpoint);
+              }
+            else
+              {
+                this->disconnect_non_local (conn, endpoint.portName.in ());
+              }
             break;
 #if !defined (CCM_NOEVENT)
           case Deployment::EventConsumer:
-            this->disconnect_consumer (plan, c_id, endpoint);
+            this->disconnect_consumer (conn, endpoint);
             break;
 
           case Deployment::EventEmitter:
-            this->disconnect_emitter (plan, c_id, endpoint);
+            this->disconnect_emitter (conn, endpoint);
             break;
 
           case Deployment::EventPublisher:
-            this->disconnect_publisher (plan, c_id, endpoint);
+            this->disconnect_publisher (conn, endpoint);
             break;
 #endif
           default:
@@ -291,39 +351,9 @@ namespace CIAO
   }
 
   void
-  Connection_Handler::connect_facet (const ::Deployment::DeploymentPlan & plan,
-                                     const ::Deployment::PlanConnectionDescription &conn,
-                                     ::CORBA::ULong endpointRef,
-                                     const ::CORBA::Any & provided_reference)
-  {
-    CIAO_TRACE ("Connection_Handler::connect_facet");
-
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
-
-    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                    "Connection_Handler::connect_facet - "
-                    "Connecting connection <%C> on instance <%C>\n",
-                    conn.name.in (),
-                    plan.instance[endpoint.instanceRef].name.in ()));
-
-    if (this->is_local_connection (conn))
-      {
-        this->connect_local_port (plan, conn, endpointRef, endpoint);
-      }
-    else
-      {
-        this->connect_non_local_facet (plan,
-                                       conn,
-                                       endpointRef,
-                                       provided_reference);
-      }
-  }
-
-  void
   Connection_Handler::connect_non_local_facet (const ::Deployment::DeploymentPlan & plan,
                                                const ::Deployment::PlanConnectionDescription &conn,
-                                               ::CORBA::ULong endpointRef,
+                                               const ::Deployment::PlanSubcomponentPortEndpoint &endpoint,
                                                const ::CORBA::Any & provided_reference)
   {
     CIAO_TRACE ("Connection_Handler::connect_non_local_facet");
@@ -331,9 +361,6 @@ namespace CIAO
 
     // provided_reference is a receptacle. We need to call 'connect' on this reference
     // and pass the facet.
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
-
     if (conn.externalReference.length () == 0)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
@@ -393,47 +420,14 @@ namespace CIAO
   }
 
   void
-  Connection_Handler::connect_receptacle (const ::Deployment::DeploymentPlan & plan,
-                                          const ::Deployment::PlanConnectionDescription &conn,
-                                          ::CORBA::ULong endpointRef,
-                                          const ::CORBA::Any & provided_reference)
-  {
-    CIAO_TRACE ("Component_Handler_i::connect_receptacle");
-
-    const ::Deployment::PlanSubcomponentPortEndpoint &receptacle_endpoint =
-      conn.internalEndpoint[endpointRef];
-
-    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                    "Connection_Handler::connect_receptacle - "
-                    "Connecting connection <%C> on instance <%C>\n",
-                    conn.name.in (),
-                    plan.instance[receptacle_endpoint.instanceRef].name.in ()));
-
-    if (this->is_local_connection (conn))
-      {
-        this->connect_local_port (plan, conn, endpointRef, receptacle_endpoint);
-      }
-    else
-      {
-        this->connect_non_local_receptacle (plan,
-                                            conn,
-                                            endpointRef,
-                                            provided_reference);
-      }
-  }
-
-  void
   Connection_Handler::connect_non_local_receptacle (const ::Deployment::DeploymentPlan & plan,
                                                     const ::Deployment::PlanConnectionDescription &conn,
-                                                    ::CORBA::ULong endpointRef,
+                                                    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint,
                                                     const ::CORBA::Any & provided_reference)
   {
     CIAO_TRACE ("Component_Handler_i::connect_non_local_receptacle");
 
     //provided_reference is a facet. We need to pass this reference to the receptacle, using the connect method
-
-    const ::Deployment::PlanSubcomponentPortEndpoint &receptacle_endpoint =
-      conn.internalEndpoint[endpointRef];
 
     ::CORBA::Object_var provided;
 
@@ -472,7 +466,7 @@ namespace CIAO
       }
 
     ::Components::CCMObject_var receptacle =
-        DEPLOYMENT_STATE::instance ()->fetch_component (plan.instance[receptacle_endpoint.instanceRef].name.in ());
+        DEPLOYMENT_STATE::instance ()->fetch_component (plan.instance[endpoint.instanceRef].name.in ());
 
     if (CORBA::is_nil (receptacle.in ()))
       {
@@ -481,12 +475,12 @@ namespace CIAO
                         "While connecting <%C>:"
                         "Receptacle component <%C> not deployed.\n",
                         conn.name.in (),
-                        plan.instance[receptacle_endpoint.instanceRef].name.in ()));
+                        plan.instance[endpoint.instanceRef].name.in ()));
         throw ::Deployment::InvalidConnection (conn.name.in (),
                                                "Receptacle component not deployed.");
       }
 
-    ::Components::Cookie_var cookie = receptacle->connect (receptacle_endpoint.portName.in (),
+    ::Components::Cookie_var cookie = receptacle->connect (endpoint.portName.in (),
                                                            provided.in ());
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_non_local_receptacle - "
@@ -502,13 +496,10 @@ namespace CIAO
   void
   Connection_Handler::connect_publisher (const ::Deployment::DeploymentPlan & plan,
                                          const ::Deployment::PlanConnectionDescription &conn,
-                                         ::CORBA::ULong endpointRef,
+                                         const ::Deployment::PlanSubcomponentPortEndpoint &endpoint,
                                          const ::CORBA::Any & provided_reference)
   {
     CIAO_TRACE ("Connection_Handler::connect_publisher");
-
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
 
     CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                     "Connection_Handler::connect_publisher - "
@@ -595,15 +586,12 @@ namespace CIAO
   void
   Connection_Handler::connect_consumer (const ::Deployment::DeploymentPlan & plan,
                                         const ::Deployment::PlanConnectionDescription &conn,
-                                        ::CORBA::ULong endpointRef,
+                                        const ::Deployment::PlanSubcomponentPortEndpoint &endpoint,
                                         const ::CORBA::Any & provided_reference)
   {
     CIAO_TRACE ("Connection_Handler::connect_consumer");
 
     // provided_reference is an emitter or a publisher.
-
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
 
     CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                    "Connection_Handler::connect_consumer - "
@@ -716,16 +704,13 @@ namespace CIAO
   void
   Connection_Handler::connect_emitter (const ::Deployment::DeploymentPlan & plan,
                                        const ::Deployment::PlanConnectionDescription &conn,
-                                       ::CORBA::ULong endpointRef,
+                                       const ::Deployment::PlanSubcomponentPortEndpoint &endpoint,
                                        const ::CORBA::Any & provided_reference)
   {
     CIAO_TRACE ("Connection_Handler::connect_emitter");
 
     // provided_reference is a consumer.
     // We need to pass this to the emitter, using the connect_consumer
-
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
 
     CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                     "Connection_Handler::connect_emitter - "
@@ -790,35 +775,6 @@ namespace CIAO
 #endif
 
   void
-  Connection_Handler::disconnect_facet (const ::Deployment::DeploymentPlan &plan,
-                                        ::CORBA::ULong connectionRef,
-                                        ::CORBA::ULong endpointRef)
-
-  {
-    CIAO_TRACE ("Connection_Handler::disconnect_facet");
-
-    const ::Deployment::PlanConnectionDescription &conn =
-      plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &receptacle_endpoint =
-      conn.internalEndpoint[endpointRef];
-
-    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                    "Connection_Handler::disconnect_facet - "
-                    "Disconnecting connection <%C> on instance <%C>\n",
-                    conn.name.in (),
-                    plan.instance[receptacle_endpoint.instanceRef].name.in ()));
-
-    if (this->is_local_connection (conn))
-      {
-        this->disconnect_local_port (plan, conn, endpointRef, receptacle_endpoint);
-      }
-    else
-      {
-        this->disconnect_non_local (conn, conn.externalReference[0].portName.in ());
-      }
-  }
-
-  void
   Connection_Handler::disconnect_non_local (const ::Deployment::PlanConnectionDescription &conn,
                                             const char * port_name)
   {
@@ -831,59 +787,13 @@ namespace CIAO
     this->remove_cookie (conn.name.in ());
   }
 
-  void
-  Connection_Handler::disconnect_receptacle (const ::Deployment::DeploymentPlan &plan,
-                                             ::CORBA::ULong connectionRef,
-                                             ::CORBA::ULong endpointRef)
-
-  {
-    CIAO_TRACE ("Connection_Handler::disconnect_receptacle");
-
-    const ::Deployment::PlanConnectionDescription &conn =
-      plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &receptacle_endpoint =
-      conn.internalEndpoint[endpointRef];
-
-    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                    "Connection_Handler::disconnect_receptacle - "
-                    "Disconnecting connection <%C> on instance <%C>\n",
-                    conn.name.in (),
-                    plan.instance[receptacle_endpoint.instanceRef].name.in ()));
-
-    if (this->is_local_connection (conn))
-      {
-        this->disconnect_local_port (plan,
-                                     conn,
-                                     endpointRef,
-                                     receptacle_endpoint);
-      }
-    else
-      {
-        this->disconnect_non_local (conn, receptacle_endpoint.portName.in ());
-      }
-  }
-
 #if !defined (CCM_NOEVENT)
   void
-  Connection_Handler::disconnect_publisher (const ::Deployment::DeploymentPlan &plan,
-                                            ::CORBA::ULong connectionRef,
-                                            ::CORBA::ULong endpointRef)
+  Connection_Handler::disconnect_publisher (const ::Deployment::PlanConnectionDescription &conn,
+                                            const ::Deployment::PlanSubcomponentPortEndpoint &endpoint)
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_publisher");
-
-    const ::Deployment::PlanConnectionDescription &conn =
-      plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
-
-    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                "Connection_Handler::disconnect_publisher - "
-                "Disconnecting connection <%C> on instance <%C>. "
-                "Portname: [%C]\n",
-                conn.name.in (),
-                plan.instance[endpoint.instanceRef].name.in (),
-                endpoint.portName. in ()));
 
     if (conn.internalEndpoint.length () == 0)
       {
@@ -905,25 +815,11 @@ namespace CIAO
 
 #if !defined (CCM_NOEVENT)
   void
-  Connection_Handler::disconnect_consumer (const ::Deployment::DeploymentPlan &plan,
-                                          ::CORBA::ULong connectionRef,
-                                          ::CORBA::ULong endpointRef)
+  Connection_Handler::disconnect_consumer (const ::Deployment::PlanConnectionDescription &conn,
+                                           const ::Deployment::PlanSubcomponentPortEndpoint &endpoint)
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_consumer");
-
-    const ::Deployment::PlanConnectionDescription &conn =
-      plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
-
-    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                "Connection_Handler::disconnect_consumer - "
-                "Disconnecting connection <%C> on instance <%C>. "
-                "Portname: [%C]\n",
-                conn.name.in (),
-                plan.instance[endpoint.instanceRef].name.in (),
-                endpoint.portName. in ()));
 
     if (conn.internalEndpoint.length () == 0)
       {
@@ -943,13 +839,12 @@ namespace CIAO
 
 #if !defined (CCM_NOEVENT)
   void
-  Connection_Handler::disconnect_emitter (const ::Deployment::DeploymentPlan & plan,
-                                          ::CORBA::ULong connectionRef,
-                                          ::CORBA::ULong endpointRef)
+  Connection_Handler::disconnect_emitter (const ::Deployment::PlanConnectionDescription &conn,
+                                          const ::Deployment::PlanSubcomponentPortEndpoint &endpoint)
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_emitter");
-    this->disconnect_consumer (plan, connectionRef, endpointRef);
+    this->disconnect_consumer (conn, endpoint);
   }
 #endif
 

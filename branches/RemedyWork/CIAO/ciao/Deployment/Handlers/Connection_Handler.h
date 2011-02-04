@@ -34,62 +34,41 @@ namespace CIAO
                               ::CORBA::ULong c_id);
 
   private:
-    void connect_facet (const ::Deployment::DeploymentPlan & plan,
-                        const ::Deployment::PlanConnectionDescription &conn,
-                        ::CORBA::ULong endpoint,
-                        const ::CORBA::Any & provided_reference);
-
-    void connect_receptacle (const ::Deployment::DeploymentPlan & plan,
-                             const ::Deployment::PlanConnectionDescription &conn,
-                             ::CORBA::ULong endpoint,
-                             const ::CORBA::Any & provided_reference);
 
 #if !defined (CCM_NOEVENT)
     void connect_publisher (const ::Deployment::DeploymentPlan & plan,
                             const ::Deployment::PlanConnectionDescription &conn,
-                            ::CORBA::ULong endpoint,
+                            const ::Deployment::PlanSubcomponentPortEndpoint &endpoint,
                             const ::CORBA::Any & provided_reference);
 #endif
 
 #if !defined (CCM_NOEVENT)
   void connect_consumer (const ::Deployment::DeploymentPlan & plan,
                          const ::Deployment::PlanConnectionDescription &conn,
-                         ::CORBA::ULong endpointRef,
+                         const ::Deployment::PlanSubcomponentPortEndpoint &endpoint,
                          const ::CORBA::Any & provided_reference);
 #endif
 
 #if !defined (CCM_NOEVENT)
     void connect_emitter (const ::Deployment::DeploymentPlan & plan,
                           const ::Deployment::PlanConnectionDescription &conn,
-                          ::CORBA::ULong endpoint,
+                          const ::Deployment::PlanSubcomponentPortEndpoint &endpoint,
                           const ::CORBA::Any & provided_reference);
 #endif
 
-    void disconnect_facet (const ::Deployment::DeploymentPlan & plan,
-                           ::CORBA::ULong connectionRef,
-                           ::CORBA::ULong endpoint);
-
-
-    void disconnect_receptacle (const ::Deployment::DeploymentPlan & plan,
-                                ::CORBA::ULong connectionRef,
-                                ::CORBA::ULong endpoint);
-
 #if !defined (CCM_NOEVENT)
-    void disconnect_publisher (const ::Deployment::DeploymentPlan & plan,
-                               ::CORBA::ULong connectionRef,
-                               ::CORBA::ULong endpoint);
+    void disconnect_publisher (const ::Deployment::PlanConnectionDescription &conn,
+                               const ::Deployment::PlanSubcomponentPortEndpoint &endpoint);
 #endif
 
 #if !defined (CCM_NOEVENT)
-    void disconnect_consumer (const ::Deployment::DeploymentPlan & plan,
-                              ::CORBA::ULong connectionRef,
-                              ::CORBA::ULong endpoint);
+    void disconnect_consumer (const ::Deployment::PlanConnectionDescription &conn,
+                              const ::Deployment::PlanSubcomponentPortEndpoint &endpoint);
 #endif
 
 #if !defined (CCM_NOEVENT)
-    void disconnect_emitter (const ::Deployment::DeploymentPlan & plan,
-                             ::CORBA::ULong connectionRef,
-                             ::CORBA::ULong endpoint);
+    void disconnect_emitter (const ::Deployment::PlanConnectionDescription &conn,
+                             const ::Deployment::PlanSubcomponentPortEndpoint &endpoint);
 #endif
 
     void connect_local_port (const ::Deployment::DeploymentPlan & plan,
@@ -104,12 +83,12 @@ namespace CIAO
 
     void connect_non_local_receptacle (const ::Deployment::DeploymentPlan & plan,
                                        const ::Deployment::PlanConnectionDescription &conn,
-                                       ::CORBA::ULong endpoint,
+                                       const ::Deployment::PlanSubcomponentPortEndpoint &endpoint,
                                        const ::CORBA::Any & provided_reference);
 
     void connect_non_local_facet (const ::Deployment::DeploymentPlan & plan,
                                   const ::Deployment::PlanConnectionDescription &conn,
-                                  ::CORBA::ULong endpointRef,
+                                  const ::Deployment::PlanSubcomponentPortEndpoint &endpoint,
                                   const ::CORBA::Any & provided_reference);
 
     void disconnect_non_local (const ::Deployment::PlanConnectionDescription &conn,
