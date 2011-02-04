@@ -27,8 +27,9 @@ ifeq ($(shared_libs), 1)
 endif
 
 ifeq ($(debug),0)
-CFLAGS += -DNDEBUG
+  CFLAGS += -DNDEBUG
 endif
+
 CC      = ${COMPARCH}gcc
 CXX     = ${COMPARCH}g++
 RC      = ${COMPARCH}windres
@@ -39,22 +40,13 @@ RC_OUTPUT_FLAG = -o
 cpumodelflag ?= 0
 tunemodelflag ?= 1
 
-ifeq ($(tunemodelflag),1)
-  MODEL_FLAGS += -mtune=$(TCPU)
-endif
-
-ifeq ($(cpumodelflag),1)
-  MODEL_FLAGS += -mcpu=$(TCPU)
-endif
-
 CFLAGS += -Wpointer-arith
+
 ifeq ($(threads),1)
   CFLAGS += -mthreads
 endif # threads
 
 CFLAGS += -Wall -W
-
-CFLAGS += $(MODEL_FLAGS)
 
 EXEEXT = .exe
 
@@ -68,7 +60,7 @@ AR         = ${COMPARCH}ar
 ARFLAGS    = rsuv
 RANLIB     = ${COMPARCH}ranlib
 SOEXT      = dll
-SOFLAGS    += $(MODEL_FLAGS) $(CPPFLAGS)
+SOFLAGS    += $(CPPFLAGS)
 SOBUILD    = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 
 PLATFORM_FL_CPPFLAGS  ?=
@@ -94,4 +86,5 @@ SHLIBBUILD = $(DLLTOOL) --dllname $@ --output-lib $@.a $(VSHOBJS) && \
 
 PRELIB  = @true
 
-CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
+CCFLAGS += $(CFLAGS) $(FLAGS_C_CC) $(TEMPLATES_FLAG)
+
