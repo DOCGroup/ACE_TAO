@@ -55,13 +55,6 @@ LDFLAGS += -Wl,--enable-auto-import
 
 PWD=$(subst \,/,$(shell pwd))
 
-ifeq ($(winsock2),1)
-  LIBS += -lws2_32 -lmswsock
-endif
-LIBS += -lwsock32 -lnetapi32
-
-PLATFORM_SSL_LIBS ?= -lssl32 -leay32
-
 ifeq (cmd,$(findstring cmd,$(SHELL)))
   CMDSEP = &
   vxworks_ntbuild = 1
@@ -71,5 +64,13 @@ ifeq (cmd,$(findstring cmd,$(SHELL)))
 endif
 
 include $(ACE_ROOT)/include/makeinclude/platform_gnuwin32_common.GNU
+
+PLATFORM_SSL_LIBS ?= -lssl32 -leay32
+
+ifeq ($(winsock2),1)
+  LIBS += -lws2_32 -lmswsock
+endif
+
+LIBS += -lwsock32 -lnetapi32
 
 PRELIB:=
