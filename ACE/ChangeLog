@@ -1,3 +1,9 @@
+Fri Feb  4 19:51:33 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * examples/APG/ThreadManagement/Async_Cancel.cpp:
+          Removed legary HP-UX workaround. This should fix
+          "statement is unreachable" warning on HP-UX builds.
+
 Fri Feb  4 18:35:52 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_gnuwin32_common.GNU:
