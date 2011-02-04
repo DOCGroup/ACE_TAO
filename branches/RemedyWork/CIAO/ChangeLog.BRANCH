@@ -1,3 +1,10 @@
+Fri Feb  4 08:55:34 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Determine whether provided reference is an emitter or a publisher.
+          Call subscribe in case a publisher is provided, connect_consumer when
+          an emitter is provided.
+
 Fri Feb  4 07:37:59 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Deployment/Handlers/Connection_Handler.cpp:

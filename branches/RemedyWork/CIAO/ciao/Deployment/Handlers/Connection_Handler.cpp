@@ -611,7 +611,7 @@ namespace CIAO
   {
     CIAO_TRACE ("Connection_Handler::connect_consumer");
 
-    // provided_reference is an emitter
+    // provided_reference is an emitter or a publisher.
 
     const ::Deployment::PlanConnectionDescription &conn =
       plan.connection[connectionRef];
@@ -647,10 +647,10 @@ namespace CIAO
                                                "Unable to extract provided reference to CORBA Object.");
       }
 
-    ::Components::CCMObject_var emitter =
+    ::Components::CCMObject_var other_endpoint =
       ::Components::CCMObject::_narrow (obj.in ());
 
-    if (::CORBA::is_nil (emitter.in ()))
+    if (::CORBA::is_nil (other_endpoint.in ()))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::connect_consumer - "
@@ -680,18 +680,47 @@ namespace CIAO
 
     ::Components::EventConsumerBase_var event = ::Components::EventConsumerBase::_narrow (consumer.in ());
 
-    emitter->connect_consumer (conn.externalReference[0].portName.in (),
-                               event.in ());
-
+    //check if we're dealing with a emitter or a publisher
+    ::Components::Cookie_var cookie;
+    try
+      {
+        ::Components::NameList_var names;
+        ACE_NEW_THROW_EX (names,
+                          ::Components::NameList,
+                          CORBA::NO_MEMORY ());
+        names->length (1);
+        (*names)[0] = CORBA::string_dup (conn.externalReference[0].portName.in ());
+        ::Components::PublisherDescriptions_var pds =
+          other_endpoint->get_named_publishers (names);
+        if (pds->length () == 1)
+          {
+            cookie = other_endpoint->subscribe (conn.externalReference[0].portName.in (),
+                                                event.in ());
+          }
+        else
+          {
+            CIAO_ERROR (1, (LM_ERROR, CLINFO
+                            "Connection_Handler::connect_consumer - "
+                            "While connecting <%C>:"
+                            "Providing component not deployed.",
+                            plan.connection[connectionRef].name.in ()));
+            throw ::Deployment::InvalidConnection (plan.connection[connectionRef].name.in (),
+                                                  "Providing component not deployed.");
+          }
+      }
+    catch (const ::Components::InvalidName &)
+      {
+        // we assume it's an emitter
+        other_endpoint->connect_consumer (conn.externalReference[0].portName.in (),
+                                          event.in ());
+      }
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_consumer - "
                     "Connection <%C> successfully established.\n",
                     conn.name.in ()));
 
-    ::Components::Cookie_var nil_cookie;
-
-    CONNECTION_INFO conn_info = CONNECTION_INFO (nil_cookie._retn (),
-                                                 ::Components::CCMObject::_duplicate (emitter.in ()));
+    CONNECTION_INFO conn_info = CONNECTION_INFO (cookie._retn (),
+                                                 ::Components::CCMObject::_duplicate (other_endpoint.in ()));
     this->insert_cookie (conn.name.in (), conn_info);
   }
 #endif
