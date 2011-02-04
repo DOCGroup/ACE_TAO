@@ -1,11 +1,11 @@
 // $Id$
+
 /**
  * @file Deployment_Interceptors.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
  * Initial deployment interceptors for use in DAnCE.
  */
-
 #ifndef DEPLOYMENT_INTERCEPTORS_H
 #define DEPLOYMENT_INTERCEPTORS_H
 
@@ -25,11 +25,10 @@ namespace CIAO
     : public virtual DAnCE::DeploymentInterceptor_Base
   {
   public:
-    // Constructor
-
+    /// Constructor
     CIAO_StoreReferences_i (void);
 
-    // Destructor
+    /// Destructor
     virtual ~CIAO_StoreReferences_i (void);
 
     virtual void pre_install (::Deployment::DeploymentPlan & plan,
@@ -51,10 +50,10 @@ namespace CIAO
     : public virtual DAnCE::DeploymentInterceptor_Base
   {
   public:
-    // Constructor
+    /// Constructor
     CIAO_ReferenceLookup_i (void);
 
-    // Destructor
+    /// Destructor
     virtual ~CIAO_ReferenceLookup_i (void);
 
     virtual

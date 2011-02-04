@@ -1,3 +1,18 @@
+Fri Feb  4 10:02:10 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.h:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+        * ciao/Base/Server_init.h:
+          Doxygen changes
+
+        * ciao/Containers/Container_Base_T.h:
+        * ciao/Containers/Container_Base_T.cpp:
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+        * ciao/Servants/Home_Servant_Impl_T.cpp:
+        * ciao/Servants/Servant_Impl_Base.cpp:
+          Changed the_POA and the_port_POA to follow the IDL to C++ refcounting
+          rules
+
 Fri Feb  4 09:38:59 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/DAnCE/Components/SimpleEmitter_exec.cpp:

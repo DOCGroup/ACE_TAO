@@ -22,19 +22,21 @@ namespace CIAO
   {
     CIAO_TRACE("Servant_Impl_Base::remove (void)");
 #if !defined (CCM_NOEVENT)
+
     try
     {
+      PortableServer::POA_var port_poa =
+        this->container_->the_port_POA ();
+
       for (ConsumerTable::const_iterator iter =
              this->consumer_table_.begin ();
            iter != this->consumer_table_.end ();
            ++iter)
         {
           PortableServer::ObjectId_var cons_id =
-            this->container_->the_port_POA ()->reference_to_id (
-              iter->second);
+            port_poa->reference_to_id (iter->second);
 
-          this->container_->the_port_POA ()->deactivate_object (
-            cons_id);
+          port_poa->deactivate_object (cons_id);
 
           CIAO::Servant_Activator_var sa =
             this->container_->ports_servant_activator ();
