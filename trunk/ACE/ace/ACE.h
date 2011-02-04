@@ -664,6 +664,14 @@ namespace ACE
     return !((a < b) || (a > b));
   }
 
+  /// Helper to avoid comparing floating point values with !=
+  /// (uses < and > operators).
+  template <typename T>
+  bool is_inequal (const T& a, const T& b)
+  {
+    return !is_equal (a, b);
+  }
+
   /// Hex conversion utility.
   extern ACE_Export ACE_TCHAR nibble2hex (u_int n);
 
