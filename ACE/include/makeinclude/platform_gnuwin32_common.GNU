@@ -19,6 +19,9 @@ optimize ?= 1
 threads ?= 1
 pipes ?= 1
 
+cpumodelflag ?= 0
+tunemodelflag ?= 1
+
 # When building shared libraries
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
@@ -30,38 +33,34 @@ ifeq ($(debug),0)
   CFLAGS += -DNDEBUG
 endif
 
-CC      = ${COMPARCH}gcc
-CXX     = ${COMPARCH}g++
-RC      = ${COMPARCH}windres
-DLLTOOL = ${COMPARCH}dlltool
-
-RC_OUTPUT_FLAG = -o
-
-cpumodelflag ?= 0
-tunemodelflag ?= 1
-
-CFLAGS += -Wpointer-arith
-
 ifeq ($(threads),1)
   CFLAGS += -mthreads
 endif # threads
 
-CFLAGS += -Wall -W
+CC      = ${COMPARCH}gcc
+CXX     = ${COMPARCH}g++
+RC      = ${COMPARCH}windres
+DLLTOOL = ${COMPARCH}dlltool
+AR      = ${COMPARCH}ar
+RANLIB  = ${COMPARCH}ranlib
 
-EXEEXT = .exe
-
+CFLAGS  += -Wall -W -Wpointer-arith
 DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)
-
 OCFLAGS += -O3
-PIC        =
-AR         = ${COMPARCH}ar
-ARFLAGS    = rsuv
-RANLIB     = ${COMPARCH}ranlib
-SOEXT      = dll
-SOFLAGS    += $(CPPFLAGS)
-SOBUILD    = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
+PIC     =
+ARFLAGS = rsuv
+SOEXT   = dll
+EXEEXT  = .exe
+SOFLAGS += $(CPPFLAGS)
+RC_OUTPUT_FLAG = -o
+
+SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
+
+SHLIBBUILD = $(DLLTOOL) --dllname $@ --output-lib $@.a $(VSHOBJS) && \
+  $(SOLINK.cc) -Wl,--enable-auto-image-base -Wl,--out-implib,$@.a \
+  -shared -o $@ $(LDFLAGS) $(VSHOBJS) $(ACE_SHLIBS) $(LIBS)
 
 PLATFORM_FL_CPPFLAGS  ?=
 PLATFORM_FL_LIBS      ?= -lfltk -lfltk_forms -lfltk_gl -lfltk_images
@@ -80,11 +79,6 @@ PLATFORM_WX_LDFLAGS   ?= $(shell wx-config --ldflags)
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-SHLIBBUILD = $(DLLTOOL) --dllname $@ --output-lib $@.a $(VSHOBJS) && \
-  $(SOLINK.cc) -Wl,--enable-auto-image-base -Wl,--out-implib,$@.a \
-  -shared -o $@ $(LDFLAGS) $(VSHOBJS) $(ACE_SHLIBS) $(LIBS)
-
 PRELIB  = @true
 
 CCFLAGS += $(CFLAGS) $(FLAGS_C_CC) $(TEMPLATES_FLAG)
-
