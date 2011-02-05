@@ -1,3 +1,30 @@
+Sat Feb  5 13:49:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix_g++.GNU:
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+        * include/makeinclude/platform_hpux_gcc.GNU:
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/platform_linux_icc.GNU:
+        * include/makeinclude/platform_linux_pgi.GNU:
+        * include/makeinclude/platform_linux_suncc.GNU:
+        * include/makeinclude/platform_lynxos.GNU:
+        * include/makeinclude/platform_macosx.GNU:
+        * include/makeinclude/platform_macosx_common.GNU:
+        * include/makeinclude/platform_macosx_icc.GNU:
+        * include/makeinclude/platform_macosx_panther.GNU:
+        * include/makeinclude/platform_netbsd.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+        * include/makeinclude/platform_sunos5_g++.GNU:
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+        * include/makeinclude/platform_win32_dmc.GNU:
+        * include/makeinclude/platform_win32_icc.GNU:
+        * include/makeinclude/platform_win32_interix.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Cleanup, removed old template flags
+
 Thu Feb  3 13:05:13 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-qnx-neutrino.h:

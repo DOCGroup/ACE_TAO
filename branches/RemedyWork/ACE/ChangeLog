@@ -1,27 +1,3 @@
-Sat Feb  5 13:49:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ace/Base_Thread_Adapter.h:
-        * ace/FIFO_Recv_Msg.cpp:
-        * ace/OS_NS_netdb.cpp:
-        * ace/OS_NS_sys_shm.h:
-        * ace/README:
-        * ace/SOCK_Dgram_Bcast.cpp:
-        * ace/TSS_Adapter.cpp:
-        * ace/TSS_T.cpp:
-        * ace/Time_Value.cpp:
-        * ace/config-macosx.h:
-        * ace/config-netbsd.h:
-        * ace/config-openbsd.h:
-        * ace/config-qnx.h:
-        * ace/config-tandem-nsk-mips-v3.h:
-        * ace/config-win32-borland.h:
-        * ace/config-win32-interix.h:
-
-        * ace/os_include/os_signal.h:
-
-        * ace/os_include/sys/os_select.h:
-
-
 Fri Jan 28 13:39:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/ACE-bug-process.html:
