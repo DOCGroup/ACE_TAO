@@ -117,9 +117,6 @@
 #  DLD          Name of dynamic linker
 #  LD           Name of linker
 #  IDL          Name of the CORBA IDL compiler
-#  TEMPLATES_FLAG
-#               Flag to pass to the compiler to control the instantiation of
-# 		templates.
 #  INSBIN       Binary (executable) installation directory
 #  INSINC       Include file installation directory
 #  INSMAN       Manpage installation directory
@@ -917,7 +914,6 @@ PTDIRS ?=
 PRELINK ?=
 POSTLINK ?=
 PURELINK ?=
-TEMPLATES_FLAG ?=
 MVCMD ?=
 
 COMPILE.c       = $(CC) $(CFLAGS) $(CPPFLAGS) -c

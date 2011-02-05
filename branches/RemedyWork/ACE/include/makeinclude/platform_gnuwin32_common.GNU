@@ -147,4 +147,4 @@ ifeq ($(wall),1)
   CFLAGS += -Wall -W
 endif
 
-CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
+CCFLAGS += $(CFLAGS)

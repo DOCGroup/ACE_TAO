@@ -89,7 +89,7 @@ PRELIB          = @true
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
+CCFLAGS         += $(CFLAGS)
 
 ifeq ($(CXX_MAJOR_VERSION), 3)
   LDFLAGS       += -L/usr/lib/thread

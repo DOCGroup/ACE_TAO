@@ -161,8 +161,6 @@ ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
   endif # compat4 requested
 endif # CC 5.0 or later
 
-CCFLAGS         += $(TEMPLATES_FLAG)
-
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
 
