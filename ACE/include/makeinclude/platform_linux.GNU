@@ -101,7 +101,7 @@ else
 endif
 
 CFLAGS  += $(FLAGS_C_CC)
-CCFLAGS += $(FLAGS_C_CC) $(TEMPLATES_FLAG)
+CCFLAGS += $(FLAGS_C_CC)
 
 # Added line below to support "Executable Shared Object" files (as
 # needed by the service configurator).

@@ -298,11 +298,6 @@ else
 endif
 endif
 endif
-
-# TEMPLATES_FLAG is set by platform_g++_common.GNU
-ifneq ($(TEMPLATES_FLAG),) # If specified, add it to the CCFLAGS
-  CPPFLAGS += $(TEMPLATES_FLAG)
-endif
 endif  # TOOL_FAMILY == gnu
 
 ifeq ("$(TOOL_FAMILY)","diab")
