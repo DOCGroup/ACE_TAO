@@ -35,7 +35,6 @@
 
 // Run the thread entry point for the ACE_Thread_Adapter.  This must
 // be an extern "C" to make certain compilers happy...
-
 extern "C" ACE_Export ACE_THR_FUNC_RETURN ACE_THREAD_ADAPTER_NAME (void *args);
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
