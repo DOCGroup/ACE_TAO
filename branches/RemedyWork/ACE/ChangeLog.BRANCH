@@ -1,3 +1,8 @@
+Sun Feb  7 19:35:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Added gprof for compiling for gprof, gcov for compiling with gcov
+
 Sat Feb  5 13:49:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_aix_g++.GNU:

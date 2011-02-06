@@ -42,6 +42,15 @@ ifneq ($(TCPU),)
   endif
 endif
 
+ifeq ($(gprof),1)
+  FLAGS_C_CC += -pg
+  LDFLAGS += -pg
+endif
+
+ifeq ($(gcov),1)
+  FLAGS_C_CC += -fprofile-arcs -ftest-coverage
+endif
+
 ifeq ($(CXX),insure)
   # insure does not pass through the -dumpversion option.
   CXX_FOR_VERSION_TEST ?= g++
