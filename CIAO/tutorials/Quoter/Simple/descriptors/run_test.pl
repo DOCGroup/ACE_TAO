@@ -267,7 +267,7 @@ else {
     print "Error starting Stock Distributor";
 }
 
-print "We're done. Stop the application now by invoking the plan_launcher again";
+print "We're done. Stop the application now by invoking the plan_launcher again\n";
 sleep (5);
 
 # Invoke executor - stop the application -.

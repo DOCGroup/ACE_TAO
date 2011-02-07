@@ -81,11 +81,11 @@ if (defined $opt_p) {
 }
 
 if (defined $opt_l) {
-    $lib_paths = "libpaths += $opt_l";
+    $lib_paths = 'libpaths += ' . "$opt_l";
 }
 
 if (defined $opt_o) {
-    $lib_out = "libout = $opt_o";
+    $lib_out = 'libout = ' . "$opt_o";
 }
 
 if (defined $opt_c) {
