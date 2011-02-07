@@ -6,20 +6,22 @@
 
 namespace CIAO
 {
-    const char * kind_as_string (const ::Deployment::CCMComponentPortKind & kind)
+  const char * kind_as_string (const ::Deployment::CCMComponentPortKind & kind)
     {
+#define DEPLOYMENT_KIND_AS_STRING(X) case X: return #X
       switch (kind)
         {
-          case ::Deployment::Facet: return "Deployment::Facet";
-          case ::Deployment::SimplexReceptacle: return "Deployment::SimplexReceptacle";
-          case ::Deployment::MultiplexReceptacle: return "Deployment::MultiplexReceptacle";
-          case ::Deployment::EventEmitter: return "Deployment::EventEmitter";
-          case ::Deployment::EventPublisher: return "Deployment::EventPublisher";
-          case ::Deployment::EventConsumer: return "Deployment::EventConsumer";
-          case ::Deployment::ExtendedPort: return "Deployment::ExtendedPort";
-          case ::Deployment::MirrorPort: return "Deployment::MirrorPort";
+          DEPLOYMENT_KIND_AS_STRING (Deployment::Facet);
+          DEPLOYMENT_KIND_AS_STRING (Deployment::SimplexReceptacle);
+          DEPLOYMENT_KIND_AS_STRING (Deployment::MultiplexReceptacle);
+          DEPLOYMENT_KIND_AS_STRING (Deployment::EventEmitter);
+          DEPLOYMENT_KIND_AS_STRING (Deployment::EventPublisher);
+          DEPLOYMENT_KIND_AS_STRING (Deployment::EventConsumer);
+          DEPLOYMENT_KIND_AS_STRING (Deployment::ExtendedPort);
+          DEPLOYMENT_KIND_AS_STRING (Deployment::MirrorPort);
         }
       return "***Unknown enum value, deployment kind as string";
+#undef DEPLOYMENT_KIND_AS_STRING
     }
 
   void
@@ -839,8 +841,16 @@ namespace CIAO
 
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
 
-    ::Components::EventConsumerBase_var safe_temp =
-      obj->disconnect_consumer (endpoint.portName.in ());
+    if (conn.externalEndpoint.length () == 0)
+      {
+        ::Components::EventConsumerBase_var safe_temp =
+          obj->disconnect_consumer (endpoint.portName.in ());
+      }
+    else
+      {
+        ::Components::EventConsumerBase_var safe_temp =
+          obj->disconnect_consumer (conn.externalEndpoint[0].portName.in ());
+      }
   }
 #endif
 
