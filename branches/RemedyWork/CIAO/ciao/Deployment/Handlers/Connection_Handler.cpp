@@ -684,37 +684,25 @@ namespace CIAO
 
     //check if we're dealing with a emitter or a publisher
     ::Components::Cookie_var cookie;
-    try
+    if (this->is_publisher (conn.externalReference[0].portName.in (),
+                            conn.name.in (),
+                            other_endpoint.in ()))
       {
-        ::Components::NameList_var names;
-        ACE_NEW_THROW_EX (names,
-                          ::Components::NameList,
-                          CORBA::NO_MEMORY ());
-        names->length (1);
-        (*names)[0] = CORBA::string_dup (conn.externalReference[0].portName.in ());
-        ::Components::PublisherDescriptions_var pds =
-          other_endpoint->get_named_publishers (names);
-        if (pds->length () == 1)
-          {
-            cookie = other_endpoint->subscribe (conn.externalReference[0].portName.in (),
+        cookie = other_endpoint->subscribe (conn.externalReference[0].portName.in (),
                                                 event.in ());
-          }
-        else
-          {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO
-                            "Connection_Handler::connect_consumer - "
-                            "While connecting <%C>:"
-                            "Providing component not deployed.",
-                            conn.name.in ()));
-            throw ::Deployment::InvalidConnection (conn.name.in (),
-                                                  "Providing component not deployed.");
-          }
+        CIAO_DEBUG (5, (LM_DEBUG, CLINFO
+                        "Connection_Handler::connect_consumer - "
+                        "Succesfully subscribed to %C\n",
+                        conn.externalReference[0].portName.in ()));
       }
-    catch (const ::Components::InvalidName &)
+    else
       {
-        // we assume it's an emitter
         other_endpoint->connect_consumer (conn.externalReference[0].portName.in (),
                                           event.in ());
+        CIAO_DEBUG (5, (LM_DEBUG, CLINFO
+                        "Connection_Handler::connect_consumer - "
+                        "Succesfully connected to %C\n",
+                        conn.externalReference[0].portName.in ()));
       }
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_consumer - "
@@ -827,6 +815,7 @@ namespace CIAO
     ::Components::EventConsumerBase_var safe_temp =
       obj->unsubscribe (endpoint.portName.in (),
                         this->get_cookie (conn.name.in ()));
+    this->remove_cookie (conn.name.in ());
   }
 #endif
 
@@ -841,16 +830,58 @@ namespace CIAO
 
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
 
-    if (conn.externalEndpoint.length () == 0)
+    try
       {
-        ::Components::EventConsumerBase_var safe_temp =
-          obj->disconnect_consumer (endpoint.portName.in ());
+        if (this->get_cookie (conn.name.in ()) == 0)
+          { //emitter
+            ::Components::EventConsumerBase_var safe_temp =
+              obj->disconnect_consumer (endpoint.portName.in ());
+          }
+        else
+          { //publisher
+            ::Components::EventConsumerBase_var safe_temp;
+            if (conn.externalReference[0].provider)
+              { // if the external reference is a provider, it's a consumer.
+                // we need the publishers port name to unsubsribe
+                safe_temp = obj->unsubscribe (endpoint.portName.in (),
+                                this->get_cookie (conn.name.in ()));
+              }
+            else
+              {
+                safe_temp = obj->unsubscribe (conn.externalReference[0].portName.in (),
+                                this->get_cookie (conn.name.in ()));
+              }
+          }
       }
-    else
+    // it could be that the emmitter or publisher is already shut down. In that
+    // case we got a COMM_FAILURE or a TRANSIENT exception.
+    catch (const ::CORBA::OBJECT_NOT_EXIST &)
       {
-        ::Components::EventConsumerBase_var safe_temp =
-          obj->disconnect_consumer (conn.externalEndpoint[0].portName.in ());
+        CIAO_DEBUG (2, (LM_WARNING, CLINFO
+                    "Connection_Handler::disconnect_consumer - "
+                    "Caught OBJECT_NOT_EXIST exception during disconnecting %C\n",
+                    conn.name.in ()));
       }
+    catch (const ::CORBA::COMM_FAILURE &)
+      {
+        CIAO_DEBUG (2, (LM_WARNING, CLINFO
+                    "Connection_Handler::disconnect_consumer - "
+                    "Caught COMM_FAILURE exception during disconnecting %C\n",
+                    conn.name.in ()));
+      }
+    catch (const ::CORBA::TRANSIENT &)
+      {
+        CIAO_DEBUG (2, (LM_WARNING, CLINFO
+                    "Connection_Handler::disconnect_consumer - "
+                    "Caught TRANSIENT exception during disconnecting %C\n",
+                    conn.name.in ()));
+      }
+    catch (const ::CORBA::Exception &ex)
+      {
+        ex._tao_print_exception ("Connection_Handler::disconnect_consumer");
+      }
+    // still need to remove the cookie.
+    this->remove_cookie (conn.name.in ());
   }
 #endif
 
@@ -1170,4 +1201,40 @@ namespace CIAO
     return 0;
   }
 
+  bool
+  Connection_Handler::is_publisher (const char * name,
+                                    const char * connection_name,
+                                    ::Components::CCMObject_ptr other_endpoint)
+  {
+    try
+      {
+        ::Components::NameList_var names;
+        ACE_NEW_THROW_EX (names,
+                          ::Components::NameList,
+                          CORBA::NO_MEMORY ());
+        names->length (1);
+        (*names)[0] = CORBA::string_dup (name);
+        ::Components::PublisherDescriptions_var pds =
+          other_endpoint->get_named_publishers (names);
+        if (pds->length () == 1)
+          {
+            return true;
+          }
+        else
+          {
+            CIAO_ERROR (1, (LM_ERROR, CLINFO
+                            "Connection_Handler::is_publisher - "
+                            "While connecting <%C>:"
+                            "Providing component not deployed.",
+                            connection_name));
+            throw ::Deployment::InvalidConnection (connection_name,
+                                                  "Providing component not deployed.");
+          }
+      }
+    catch (const ::Components::InvalidName &)
+      {
+        // we assume it's an emitter
+      }
+    return false;
+  }
 }
