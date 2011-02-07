@@ -35,6 +35,7 @@ namespace CIAO
     {
       PortableServer::POA_var port_poa =
         this->container_->the_port_POA ();
+
       // Removing Facets
       for (FacetTable::const_iterator iter =
              this->facet_table_.begin ();
