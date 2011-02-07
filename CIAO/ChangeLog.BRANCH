@@ -1,3 +1,16 @@
+Mon Feb  7 13:54:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+          No ACE_Reactor as input parameter for ccm_activate in TopicBase_Connector.
+          ccm_activate in TopicBase_Connector now determines his own
+          reactor. Therefor changed the reactor method to throw an exception
+          when the returned reactor seems nil (while it shouldn't).
+          Optimized logging regarding late binding.
+
 Mon Feb  7 12:07:13 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Deployment/Handlers/Connection_Handler.h:
