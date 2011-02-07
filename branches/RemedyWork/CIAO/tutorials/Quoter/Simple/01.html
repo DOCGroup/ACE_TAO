@@ -204,17 +204,18 @@
   command:</span></p>
 
   <p class='c19'><span class="c18">generate_component_mpc.pl
-  &ndash;n Stock_Base</span></p>
+  Stock_Base &ndash;n &ndash;l ../lib &ndash;o ../lib</span></p>
 
   <p class='c21'><span class='c20'>The command above will generate
   a <i>Stock_Base.mpc</i> file that contains two projects
   <i>Stock_Base_stub</i> and <i>Stock_Base_skel</i> for the Stub
   and Servant code respectively. The MPC file should look like
   <a href="Stock_Base/Stock_Base.mpc">this</a>.<br/>
-  Mind that "libout" and "libpaths" are added. This is done to make
-  the compilation of this example easier and at runtime, all deliveralbes
-  are in one directory. Beware that you need to add this
-  directory to your system path when running the executables (see page 4).
+  Mind that "-o" (library output) and "-l" (path to libraries) are added.
+  This is done to make the compilation of this example easier and at
+  runtime, all deliveralbes are in one directory. Beware that you need to
+  add this directory to your system path when running the executables
+  (see page 4).
   </span></p>
 
   <p class='c14'><span class='c1'>Component Design:</span></p>
@@ -241,8 +242,9 @@
   <i>Quoter/Distributor</i> <span>&nbsp;</span>sub-directory, type
   the following command</span></p>
 
-  <p class="c28"><span class="c27">generate_component_mpc.pl -p
-  Stock_Base -c StockDistributorDriver StockDistributor</span></p>
+  <p class="c28"><span class="c27">generate_component_mpc.pl
+  StockDistributor -p Stock_Base &ndash;c StockDistributorDriver
+  &ndash;o ../lib &ndash;l ../lib</span></p>
 
   <p class='c31'><span class='c20'>The command above takes a few
   optional parameters. The -p option indicates that the <span class=
@@ -273,8 +275,7 @@
   "c5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
   <span class='c20'>The generated</span> <span class='c20'>MPC file
   should look like <a href=
-  "Distributor/StockDistributor.mpc">this</a>. Both "libout" and "libpaths"
-  are added again.
+  "Distributor/StockDistributor.mpc">this</a>.
   </span></p>
 
   <p class='c40'><span class='c1'>Broker:</span></p>
@@ -298,8 +299,8 @@
   command:</span></p>
 
   <p class='c43'><span class="c42"><span class=
-  "c27">generate_component_mpc.pl -p Stock_Base -c
-  StockBrokerDriver StockBroker</span></span></p>
+  "c27">generate_component_mpc.pl StockBroker -p Stock_Base &ndash;c
+  StockBrokerDriver &ndash;o ../lib &ndash;l ../lib</span></span></p>
 
   <p class='c31'><span class='c20'><span class="c32">The command
   above takes a few optional parameter. The -p option states that
@@ -330,8 +331,7 @@
   "c5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
   <span class='c20'><span class="c32">The generated</span>
   <span class="c32">MPC file should look like</span> <a href=
-  "Broker/StockBroker.mpc">this</a>. Both "libout" and "libpaths"
-  are added again.</span></p>
+  "Broker/StockBroker.mpc">this</a>.</span></p>
 
   <p class='c45'><span class='c1'><br />
   <b>Note:</b></span></p>

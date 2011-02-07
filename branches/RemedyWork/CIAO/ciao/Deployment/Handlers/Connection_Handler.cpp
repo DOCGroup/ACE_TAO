@@ -6,6 +6,22 @@
 
 namespace CIAO
 {
+    const char * kind_as_string (const ::Deployment::CCMComponentPortKind & kind)
+    {
+      switch (kind)
+        {
+          case ::Deployment::Facet: return "Deployment::Facet";
+          case ::Deployment::SimplexReceptacle: return "Deployment::SimplexReceptacle";
+          case ::Deployment::MultiplexReceptacle: return "Deployment::MultiplexReceptacle";
+          case ::Deployment::EventEmitter: return "Deployment::EventEmitter";
+          case ::Deployment::EventPublisher: return "Deployment::EventPublisher";
+          case ::Deployment::EventConsumer: return "Deployment::EventConsumer";
+          case ::Deployment::ExtendedPort: return "Deployment::ExtendedPort";
+          case ::Deployment::MirrorPort: return "Deployment::MirrorPort";
+        }
+      return "***Unknown enum value, deployment kind as string";
+    }
+
   void
   Connection_Handler::provide_endpoint_reference (const ::Deployment::DeploymentPlan & plan,
                                                   ::CORBA::ULong connectionRef,
@@ -127,7 +143,8 @@ namespace CIAO
 
     CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                     "Connection_Handler::connect_instance - "
-                    "Connecting connection <%C> on instance <%C>\n",
+                    "Connecting %C connection <%C> on instance <%C>\n",
+                    CIAO::kind_as_string (conn.internalEndpoint[endpointRef].kind),
                     conn.name.in (),
                     plan.instance[endpoint.instanceRef].name.in ()));
     try
@@ -193,7 +210,8 @@ namespace CIAO
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::connect_instance - "
                         "Caught InvalidConnection exception whilst "
-                        "connecting <%C>: %C. Reason: %C\n",
+                        "connecting %C connection <%C>: %C. Reason: %C\n",
+                        CIAO::kind_as_string (conn.internalEndpoint[endpointRef].kind),
                         conn.name.in (),
                         ex.name.in (),
                         ex.reason.in ()));
@@ -204,7 +222,8 @@ namespace CIAO
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::connect_instance - "
-                        "Caught CORBA exception whilst connecting <%C>: %C\n",
+                        "Caught CORBA exception whilst connecting %C connection <%C>: %C\n",
+                        CIAO::kind_as_string (conn.internalEndpoint[endpointRef].kind),
                         conn.name.in (),
                         ex._info ().c_str ()));
         throw ::Deployment::InvalidConnection (conn.name.in (),
@@ -214,7 +233,8 @@ namespace CIAO
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::connect_instance - "
-                        "Caught C++ exception whilst connecting <%C>\n",
+                        "Caught C++ exception whilst connecting %C connection <%C>\n",
+                        CIAO::kind_as_string (conn.internalEndpoint[endpointRef].kind),
                         conn.name.in ()));
         throw ::Deployment::InvalidConnection (conn.name.in (),
                                                "Unknown C++ Exception");
@@ -236,8 +256,9 @@ namespace CIAO
       conn.internalEndpoint[endpointRef];
 
     CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                    "Connection_Handler::disonnect_instance - "
-                    "Disconnecting connection <%C> on instance <%C>\n",
+                    "Connection_Handler::disconnect_instance - "
+                    "Disconnecting %C connection <%C> on instance <%C>\n",
+                    CIAO::kind_as_string (conn.internalEndpoint[endpointRef].kind),
                     conn.name.in (),
                     plan.instance[endpoint.instanceRef].name.in ()));
 
@@ -306,7 +327,8 @@ namespace CIAO
       {
         CIAO_DEBUG (2, (LM_WARNING, CLINFO
                         "Connection_Handler::disconnect_instance - "
-                        "Caught COMM_FAILURE exception whilst disconnecting <%C>\n",
+                        "Caught COMM_FAILURE exception whilst disconnecting %C connection <%C>\n",
+                        CIAO::kind_as_string (conn.internalEndpoint[endpointRef].kind),
                         conn.name.in ()));
         throw ::Deployment::InvalidConnection (conn.name.in (),
                                                ex._info ().c_str ());
@@ -315,7 +337,8 @@ namespace CIAO
       {
         CIAO_DEBUG (2, (LM_WARNING, CLINFO
                         "Connection_Handler::disconnect_instance - "
-                        "Caught OBJECT_NOT_EXIST exception whilst disconnecting <%C>\n",
+                        "Caught OBJECT_NOT_EXIST exception whilst disconnecting %C connection <%C>\n",
+                        CIAO::kind_as_string (conn.internalEndpoint[endpointRef].kind),
                         conn.name.in ()));
         throw ::Deployment::InvalidConnection (conn.name.in (),
                                                ex._info ().c_str ());
@@ -324,7 +347,8 @@ namespace CIAO
       {
         CIAO_DEBUG (2, (LM_WARNING, CLINFO
                         "Connection_Handler::disconnect_instance - "
-                        "Caught TRANSIENT exception whilst disconnecting <%C>\n",
+                        "Caught TRANSIENT exception whilst disconnecting %C connection <%C>\n",
+                        CIAO::kind_as_string (conn.internalEndpoint[endpointRef].kind),
                         conn.name.in ()));
         throw ::Deployment::InvalidConnection (conn.name.in (),
                                                ex._info ().c_str ());
@@ -333,7 +357,8 @@ namespace CIAO
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::disconnect_instance - "
-                        "Caught CORBA exception whilst disconnecting <%C>: %C\n",
+                        "Caught CORBA exception whilst disconnecting %C connection <%C>: %C\n",
+                        CIAO::kind_as_string (conn.internalEndpoint[endpointRef].kind),
                         conn.name.in (),
                         ex._info ().c_str ()));
         throw ::Deployment::InvalidConnection (conn.name.in (),
