@@ -1,3 +1,8 @@
+Mon Feb  7 18:14:19 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Resolved compile error on windows.
+
 Mon Feb  7 13:54:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:

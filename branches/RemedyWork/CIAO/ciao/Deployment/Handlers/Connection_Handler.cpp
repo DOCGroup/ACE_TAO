@@ -2,6 +2,7 @@
 #include "Connection_Handler.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "dance/Deployment/Deployment_InvalidConnectionC.h"
+#include "ccm/CCM_EventsC.h"
 #include "CIAO_State.h"
 
 namespace CIAO
