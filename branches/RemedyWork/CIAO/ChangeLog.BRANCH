@@ -1,3 +1,12 @@
+Tue Feb  8 13:32:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/PublisherListener.cpp:
+          Layout changes
+
+        * bin/valgrind_nodedaemon.py:
+          Removed this file, not used and very old
+
 Tue Feb  8 10:25:20 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Deployment/Handlers/Connection_Handler.cpp:
