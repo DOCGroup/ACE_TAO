@@ -114,4 +114,3 @@ Hash_Table::find (List_Node *item,
     }
 }
 
-#endif /* ACE_HAS_GPERF */
