@@ -25,10 +25,6 @@
 #include "ace/OS_TLI.h"
 #include "ace/Truncate.h"
 
-#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
-extern "C" int maxFiles;
-#endif /* ACE_VXWORKS */
-
 #if !defined (__ACE_INLINE__)
 #include "ace/ACE.inl"
 #endif /* __ACE_INLINE__ */
@@ -2811,8 +2807,6 @@ ACE::max_handles (void)
 
 #if defined (_SC_OPEN_MAX)
   return ACE_OS::sysconf (_SC_OPEN_MAX);
-#elif defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
-  return maxFiles;
 #elif defined (FD_SETSIZE)
   return FD_SETSIZE;
 #else

@@ -68,7 +68,7 @@ public:
   void decode (const void *data);
 
   /// Encode state of the active key into @a data.  @a data must be as
-  /// big as the value returned from <size>.
+  /// big as the value returned from size().
   void encode (void *data) const;
 
   /// Compare keys.
