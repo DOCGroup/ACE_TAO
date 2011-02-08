@@ -35,11 +35,6 @@
 #  include /**/ <sys/param.h>
 #endif /* ACE_LACKS_SYS_PARAM_H */
 
-// On VxWorks 5.5.1 _POSIX_TIMER_MAX is defined in time.h
-#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
-#  include /**/ <time.h>
-#endif /* ACE_VXWORKS */
-
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"
@@ -102,7 +97,7 @@ extern "C"
 #  define ACE_IOV_MAX IOV_MAX
 #endif /* ACE_IOV_MAX */
 
-#if defined (ACE_VXWORKS) && ((ACE_VXWORKS >= 0x620) && (ACE_VXWORKS <= 0x670)) && !defined (__RTP__)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670) && !defined (__RTP__)
 #  if defined (PIPE_BUF) && (PIPE_BUF == -1)
 #    undef PIPE_BUF
 #  endif

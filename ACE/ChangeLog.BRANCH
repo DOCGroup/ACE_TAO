@@ -1,3 +1,13 @@
+Tue Feb  8 20:44:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_dirent.h:
+        * ace/os_include/os_fcntl.h:
+        * ace/os_include/os_limits.h:
+        * ace/os_include/os_netdb.h:
+        * ace/os_include/os_stdio.h:
+        * ace/os_include/sys/os_time.h:
+          Removed support for deprecated VxWorks versions
+
 Tue Feb  8 19:14:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/Misc/notification.cpp:
