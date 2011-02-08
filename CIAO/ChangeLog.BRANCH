@@ -1,3 +1,15 @@
+Tue Feb  8 09:14:17 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * CIAO_TAO_DAnCE.mwc:
+          Reverted last changes.
+
+        * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/Latency_Sender.cpp:
+        * connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender_exec.h:
+        * connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender_exec.cpp:
+          Checking the number of unexpected_status callbacks. In order to get the
+          same results on dds4ccm and plain dds, a publisher listener has been added
+          to the plain dds test.
+
 Mon Feb  7 18:14:19 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Deployment/Handlers/Connection_Handler.cpp:
