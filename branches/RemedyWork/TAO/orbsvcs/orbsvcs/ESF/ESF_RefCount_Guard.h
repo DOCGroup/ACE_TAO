@@ -33,7 +33,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * The system can then execute the operation without any risk of
  * having the underlying object destroyed.  The advantage of using
  * a reference count is that no mutex or lock needs to be held
- * while the operation is beign executed.
+ * while the operation is being executed.
  */
 template<class T>
 class TAO_ESF_RefCount_Guard

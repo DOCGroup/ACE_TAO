@@ -56,7 +56,7 @@ CORBA::Environment::~Environment (void)
   this->clear ();
 
   // If previous is 0 then this is the first Environment, allocated
-  // with the ORB, it shouldn't try to pop because the ORB is beign
+  // with the ORB, it shouldn't try to pop because the ORB is being
   // destroyed also.
   if (this->previous_ != 0)
     TAO_ORB_Core_instance ()->default_environment (this->previous_);
