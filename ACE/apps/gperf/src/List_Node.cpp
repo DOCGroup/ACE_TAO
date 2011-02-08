@@ -24,11 +24,6 @@
  */
 
 #include "List_Node.h"
-
-
-
-#if defined (ACE_HAS_GPERF)
-
 #include "Vectors.h"
 #include "ace/OS_NS_ctype.h"
 
@@ -131,4 +126,3 @@ List_Node::~List_Node (void)
   delete [] this->keysig;
 }
 
-#endif /* ACE_HAS_GPERF */
