@@ -41,6 +41,7 @@ ifeq (11.0,$(findstring 11.0,$(CXX_VERSION)))
 endif
 ifeq (12.0,$(findstring 12.0,$(CXX_VERSION)))
   CPPFLAGS += -std=c++0x
+  no_hidden_visibility ?= 0
 endif
 
 no_hidden_visibility ?= 1
@@ -98,7 +99,7 @@ ifeq ($(shared_libs), 1)
   ifneq ($static_libs_only), 1)
     LDFLAGS += -Wl,-E
     ifneq ($(no_hidden_visibility),1)
-      CCFLAGS += -fvisibility=hidden
+      CCFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
     else
       CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
     endif # no_hidden_visibility

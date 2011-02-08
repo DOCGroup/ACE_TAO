@@ -1,3 +1,12 @@
+Tue Feb  8 20:47:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          Intel C++ 12 has support for visibility
+
+        * include/makeinclude/rules.bin.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Removed support for Chorus
+
 Tue Feb  8 20:44:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_dirent.h:
