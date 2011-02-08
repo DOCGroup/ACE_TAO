@@ -33,10 +33,10 @@ public:
   virtual void ccm_passivate (void);
   virtual void ccm_remove (void);
   virtual void register_type (::DDS::DomainParticipant_ptr participant,
-                                      const char * typesupport_name);
-  virtual
-  void unregister_type    (::DDS::DomainParticipant_ptr participant,
                               const char * typesupport_name);
+  virtual
+  void unregister_type (::DDS::DomainParticipant_ptr participant,
+                        const char * typesupport_name);
 
 
 protected:
