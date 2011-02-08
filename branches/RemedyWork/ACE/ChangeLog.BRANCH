@@ -1,3 +1,13 @@
+Tue Feb  8 19:11:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Atomic_Op_Test.cpp:
+        * tests/Dirent_Test.cpp:
+        * tests/SSL/SSL_Asynch_Stream_Test.cpp:
+        * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
+        * tests/Thread_Manager_Test.cpp:
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp:
+          Removed old support for chorus and vxworks 5.5
+
 Tue Feb  8 13:37:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:

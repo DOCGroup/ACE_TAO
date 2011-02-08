@@ -31,16 +31,11 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/SString.h"
 
-#if (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
-#  define TEST_DIR "log"
-#  define TEST_ENTRY ".."
+#if defined (ACE_HAS_TCHAR_DIRENT)
+#  define TEST_ENTRY ACE_TEXT ("run_test.lst")
 #else
-#  if defined (ACE_HAS_TCHAR_DIRENT)
-#    define TEST_ENTRY ACE_TEXT ("run_test.lst")
-#  else
-#    define TEST_ENTRY "run_test.lst"
-#  endif /* ACE_HAS_TCHAR_DIRENT */
-#endif /* ACE_VXWORKS < 0x600 */
+#  define TEST_ENTRY "run_test.lst"
+#endif /* ACE_HAS_TCHAR_DIRENT */
 
 // Directory to scan - we need to figure it out based on environment.
 static ACE_TString TestDir;
@@ -219,31 +214,11 @@ dirent_count (const ACE_TCHAR *dir_path,
               int recursion_level)
 {
 #if !defined (ACE_LACKS_CHDIR)
-
-# if (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
-  // VxWorks only allows full paths (incl. device spec if applicable) to be specified
-  ACE_TCHAR full_path[MAXPATHLEN];
-  if (ACE_OS::getcwd (full_path, sizeof(full_path)) == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("getcwd: failed\n")),
-                      -1);
-  if ((ACE_OS::strlen (full_path) + 1 + ACE_OS::strlen (dir_path)) >= sizeof(full_path))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("getcwd: too long\n")),
-                      -1);
-  ACE_OS::strcat (ACE_OS::strcat (full_path, "/"), dir_path);
-  if (ACE_OS::chdir (full_path) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("chdir: %p\n"),
-                       full_path),
-                      -1);
-# else
   if (ACE_OS::chdir (dir_path) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("chdir: %p\n"),
                        dir_path),
                       -1);
-# endif
 #else
   ACE_UNUSED_ARG (dir_path);
 #endif /* !ACE_LACKS_CHDIR */
