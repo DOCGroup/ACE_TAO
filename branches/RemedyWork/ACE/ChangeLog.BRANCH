@@ -1,3 +1,11 @@
+Tue Feb  8 20:52:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.cpp:
+          Removed support for deprecated VxWorks versions
+
+        * ace/Active_Map_Manager.h:
+          Doxygen changes
+
 Tue Feb  8 20:47:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_icc.GNU:
