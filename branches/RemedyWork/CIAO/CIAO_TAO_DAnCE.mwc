@@ -19,9 +19,7 @@ workspace {
   $(DANCE_ROOT)
   connectors/ami4ccm/ami4ccm
   connectors/dds4ccm/idl
-  connectors/dds4ccm/idl/ndds
   connectors/dds4ccm/impl
-  connectors/dds4ccm/impl/ndds
   exclude {
     $(DANCE_ROOT)/tests
   }
