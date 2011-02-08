@@ -30,10 +30,6 @@
 #include "Util_Thread.h"
 #include "Timer.h"
 
-#if defined (CHORUS_MVME)
-#include "pccTimer.h"
-#endif /* CHORUS_MVME */
-
 #if defined (VME_DRIVER)
 #include <hostLib.h>
 extern "C" STATUS vmeDrv (void);
