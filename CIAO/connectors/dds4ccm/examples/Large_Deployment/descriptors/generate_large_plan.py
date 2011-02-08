@@ -1,4 +1,5 @@
 #!/usr/bin/python
+#$Id$
 import sys, os, math
 
 sys.path.append (os.getenv ("DANCE_ROOT") + "/bin")
