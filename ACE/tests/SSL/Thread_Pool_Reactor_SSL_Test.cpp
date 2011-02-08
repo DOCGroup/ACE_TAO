@@ -66,21 +66,14 @@ static const ACE_TCHAR *rendezvous = ACE_TEXT ("127.0.0.1:10010");
 // Total number of server threads.
 static size_t svr_thrno = ACE_MAX_THREADS;
 
-#if defined (CHORUS) // Add platforms that can't handle too many
-                     // connection simultaneously here.
-#define ACE_LOAD_FACTOR /2
-#else
-#define ACE_LOAD_FACTOR
-#endif
-
 // Total number of client threads.
-static size_t cli_thrno = ACE_MAX_THREADS ACE_LOAD_FACTOR;
+static size_t cli_thrno = ACE_MAX_THREADS;
 
 // Total connection attemps of a client thread.
-static size_t cli_conn_no = ACE_MAX_ITERATIONS ACE_LOAD_FACTOR;
+static size_t cli_conn_no = ACE_MAX_ITERATIONS;
 
 // Total requests a client thread sends.
-static size_t cli_req_no = ACE_MAX_THREADS ACE_LOAD_FACTOR;
+static size_t cli_req_no = ACE_MAX_THREADS;
 
 // Delay before a thread sending the next request (in msec.)
 static int req_delay = 50;

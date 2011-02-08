@@ -199,7 +199,7 @@ int test (const ACE_TCHAR* type, int iterations)
   if (foo != 0)
     {
       ++retval;
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Substraction failed\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Subtraction failed\n")));
     }
 
   return retval;
