@@ -835,6 +835,10 @@ namespace CIAO
       {
         if (this->get_cookie (conn.name.in ()) == 0)
           { //emitter
+            CIAO_DEBUG (5, (LM_DEBUG, CLINFO
+                            "Connection_Handler::disconnect_consumer - "
+                            "Disconnecting %C on the emitter.\n",
+                            endpoint.portName.in ()));
             ::Components::EventConsumerBase_var safe_temp =
               obj->disconnect_consumer (endpoint.portName.in ());
           }
@@ -844,13 +848,21 @@ namespace CIAO
             if (conn.externalReference[0].provider)
               { // if the external reference is a provider, it's a consumer.
                 // we need the publishers port name to unsubsribe
+                CIAO_DEBUG (5, (LM_DEBUG, CLINFO
+                                "Connection_Handler::disconnect_consumer - "
+                                "Disconnecting %C on the publisher.\n",
+                                endpoint.portName.in ()));
                 safe_temp = obj->unsubscribe (endpoint.portName.in (),
-                                this->get_cookie (conn.name.in ()));
+                                              this->get_cookie (conn.name.in ()));
               }
             else
               {
+                CIAO_DEBUG (5, (LM_DEBUG, CLINFO
+                                "Connection_Handler::disconnect_consumer - "
+                                "Disconnecting %C on the publisher.\n",
+                                conn.externalReference[0].portName.in ()));
                 safe_temp = obj->unsubscribe (conn.externalReference[0].portName.in (),
-                                this->get_cookie (conn.name.in ()));
+                                              this->get_cookie (conn.name.in ()));
               }
           }
       }
