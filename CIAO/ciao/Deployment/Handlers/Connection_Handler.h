@@ -98,8 +98,6 @@ namespace CIAO
 
     ::CORBA::ULong retrieve_endpoint (const ::Deployment::PlanConnectionDescription &conn);
 
-    bool is_publisher (const char * name, const char * connection_name, ::Components::CCMObject_ptr other_endpoint);
-
     typedef std::pair < ::Components::Cookie_var,
                         ::Components::CCMObject_var> CONNECTION_INFO;
     typedef std::map <std::string,

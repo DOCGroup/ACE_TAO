@@ -2,7 +2,6 @@
 #include "Connection_Handler.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "dance/Deployment/Deployment_InvalidConnectionC.h"
-#include "ccm/CCM_EventsC.h"
 #include "CIAO_State.h"
 
 namespace CIAO
@@ -683,20 +682,9 @@ namespace CIAO
 
     ::Components::EventConsumerBase_var event = ::Components::EventConsumerBase::_narrow (consumer.in ());
 
-    //check if we're dealing with a emitter or a publisher
+    //assume it's an emitter.
     ::Components::Cookie_var cookie;
-    if (this->is_publisher (conn.externalReference[0].portName.in (),
-                            conn.name.in (),
-                            other_endpoint.in ()))
-      {
-        cookie = other_endpoint->subscribe (conn.externalReference[0].portName.in (),
-                                                event.in ());
-        CIAO_DEBUG (5, (LM_DEBUG, CLINFO
-                        "Connection_Handler::connect_consumer - "
-                        "Succesfully subscribed to %C\n",
-                        conn.externalReference[0].portName.in ()));
-      }
-    else
+    try
       {
         other_endpoint->connect_consumer (conn.externalReference[0].portName.in (),
                                           event.in ());
@@ -705,6 +693,17 @@ namespace CIAO
                         "Succesfully connected to %C\n",
                         conn.externalReference[0].portName.in ()));
       }
+    catch (const ::Components::InvalidName &)
+      {
+        // we now assume it's a publisher
+        cookie = other_endpoint->subscribe (conn.externalReference[0].portName.in (),
+                                            event.in ());
+        CIAO_DEBUG (5, (LM_DEBUG, CLINFO
+                        "Connection_Handler::connect_consumer - "
+                        "Succesfully subscribed to %C\n",
+                        conn.externalReference[0].portName.in ()));
+      }
+
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_consumer - "
                     "Connection <%C> successfully established.\n",
@@ -1206,42 +1205,5 @@ namespace CIAO
           }
       }
     return 0;
-  }
-
-  bool
-  Connection_Handler::is_publisher (const char * name,
-                                    const char * connection_name,
-                                    ::Components::CCMObject_ptr other_endpoint)
-  {
-    try
-      {
-        ::Components::NameList_var names;
-        ACE_NEW_THROW_EX (names,
-                          ::Components::NameList,
-                          CORBA::NO_MEMORY ());
-        names->length (1);
-        (*names)[0] = CORBA::string_dup (name);
-        ::Components::PublisherDescriptions_var pds =
-          other_endpoint->get_named_publishers (names);
-        if (pds->length () == 1)
-          {
-            return true;
-          }
-        else
-          {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO
-                            "Connection_Handler::is_publisher - "
-                            "While connecting <%C>:"
-                            "Providing component not deployed.",
-                            connection_name));
-            throw ::Deployment::InvalidConnection (connection_name,
-                                                  "Providing component not deployed.");
-          }
-      }
-    catch (const ::Components::InvalidName &)
-      {
-        // we assume it's an emitter
-      }
-    return false;
   }
 }
