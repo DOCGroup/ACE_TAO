@@ -182,9 +182,9 @@ Refcounted_Auto_Ptr_Test: !ACE_FOR_TAO
 Reference_Counted_Event_Handler_Test -d 0
 Refcounted_Event_Handler_Test_DevPoll:
 Reverse_Lock_Test
-RW_Process_Mutex_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
+RW_Process_Mutex_Test: !VxWorks !ACE_FOR_TAO !PHARLAP !Cygwin
 Sendfile_Test: !QNX !NO_NETWORK !VxWorks !LabVIEW_RT
-Signal_Test: !VxWorks63 !VxWorks64 !VxWorks65
+Signal_Test: !VxWorks63 !VxWorks64 !VxWorks65 !Cygwin
 SOCK_Connector_Test: !NO_NETWORK
 SOCK_Netlink_Test: !ACE_FOR_TAO
 SOCK_Send_Recv_Test: !NO_NETWORK
