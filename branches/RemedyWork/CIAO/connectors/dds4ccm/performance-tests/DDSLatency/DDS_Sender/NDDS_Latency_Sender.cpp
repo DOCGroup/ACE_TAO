@@ -34,6 +34,8 @@ ACE_UINT64 clock_overhead_;
 RTIClock *timer = 0;
 LatencyTest * instance_ = 0;
 
+ACE_UINT64 unexpected_count_ = 0;
+
 LatencyTestDataWriter * test_data_writer_ = 0;
 
 const char * lib_name_  = 0;
@@ -53,6 +55,75 @@ public:
 class DummyListener: public DDSDataReaderListener
 {
 };
+
+// since this one is also created in the dds4ccm wrapper, we need
+// to create one here as well.
+class DummyPublisherListener :
+  public DDSPublisherListener
+{
+public:
+  virtual void on_offered_deadline_missed (
+                        DDSDataWriter* writer,
+                        const DDS_OfferedDeadlineMissedStatus& status);
+  virtual void on_liveliness_lost(
+                        DDSDataWriter* writer,
+                        const DDS_LivelinessLostStatus& status);
+  virtual void on_offered_incompatible_qos(
+                        DDSDataWriter* writer,
+                        const DDS_OfferedIncompatibleQosStatus& status);
+  virtual void on_publication_matched(
+                        DDSDataWriter* writer,
+                        const DDS_PublicationMatchedStatus& status);
+  virtual void on_reliable_writer_cache_changed(
+                        DDSDataWriter* writer,
+                        const DDS_ReliableWriterCacheChangedStatus& status);
+  virtual void on_reliable_reader_activity_changed (
+                        DDSDataWriter* writer,
+                        const DDS_ReliableReaderActivityChangedStatus& status);
+};
+
+void DummyPublisherListener::on_offered_deadline_missed (
+                        DDSDataWriter* /*writer*/,
+                        const DDS_OfferedDeadlineMissedStatus& /*status*/)
+{
+  ACE_DEBUG ((LM_DEBUG, "on_offered_deadline_missed\n"));
+  ++unexpected_count_;
+}
+
+void DummyPublisherListener::on_liveliness_lost(
+                        DDSDataWriter* /*writer*/,
+                        const DDS_LivelinessLostStatus& /*status*/)
+{
+  ++unexpected_count_;
+}
+
+void DummyPublisherListener::on_offered_incompatible_qos(
+                        DDSDataWriter* /*writer*/,
+                        const DDS_OfferedIncompatibleQosStatus& /*status*/)
+{
+  ++unexpected_count_;
+}
+
+void DummyPublisherListener::on_publication_matched(
+                        DDSDataWriter* /*writer*/,
+                        const DDS_PublicationMatchedStatus& /*status*/)
+{
+  ++unexpected_count_;
+}
+
+void DummyPublisherListener::on_reliable_writer_cache_changed(
+                        DDSDataWriter* /*writer*/,
+                        const DDS_ReliableWriterCacheChangedStatus& /*status*/)
+{
+  ++unexpected_count_;
+}
+
+void DummyPublisherListener::on_reliable_reader_activity_changed (
+                        DDSDataWriter* /*writer*/,
+                        const DDS_ReliableReaderActivityChangedStatus& /*status*/)
+{
+  ++unexpected_count_;
+}
 
 void
 split_qos (const char * qos)
@@ -359,6 +430,8 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
   ::DDS::Topic * send_topic = 0;
   ::DDS::DataWriter * data_writer = 0;
   ::DDS::DataWriter * dum_data_writer = 0;
+  DummyPublisherListener * pub_listener = 0;
+  ::DDS::Publisher * pub = 0;
 
   ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), domain_id_);
   domain_id_ = id;
@@ -419,13 +492,31 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create topic.\n")));
         goto clean_exit;
     }
-    /* Create the data writer using the default publisher */
-    data_writer = participant->create_datawriter_with_profile(
-                                                          send_topic,
-                                                          lib_name_,
-                                                          prof_name_,
-                                                          0,
-                                                          DDS_STATUS_MASK_NONE);
+
+    pub_listener = new DummyPublisherListener ();
+    pub = participant->create_publisher_with_profile (
+                                            lib_name_,
+                                            prof_name_,
+                                            0,
+                                            DDS_STATUS_MASK_NONE);
+
+    if (!pub) {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create publisher.\n")));
+        goto clean_exit;
+    }
+
+    /* Create the data writer using the publisher */
+    data_writer = pub->create_datawriter_with_profile(
+                                            send_topic,
+                                            lib_name_,
+                                            prof_name_,
+                                            pub_listener,
+                                            DDS_OFFERED_DEADLINE_MISSED_STATUS |
+                                            DDS_OFFERED_INCOMPATIBLE_QOS_STATUS |
+                                            DDS_RELIABLE_WRITER_CACHE_CHANGED_STATUS |
+                                            DDS_RELIABLE_READER_ACTIVITY_CHANGED_STATUS |
+                                            DDS_LIVELINESS_LOST_STATUS |
+                                            DDS_PUBLICATION_MATCHED_STATUS);
     if (!data_writer)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data writer.\n")));
@@ -542,6 +633,8 @@ clean_exit:
                               number_of_msg_,
                               read_write_str));
       }
+    ACE_DEBUG ((LM_DEBUG, "\tNumber of unexpected events : %u\n",
+                  unexpected_count_));
     if (participant)
       {
         retcode = participant->delete_contained_entities ();
@@ -560,6 +653,7 @@ clean_exit:
       }
     delete [] datalen_range_;
     delete [] duration_times_;
+    delete pub_listener;
     return main_result;
 }
 
