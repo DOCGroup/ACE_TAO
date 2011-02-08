@@ -1,3 +1,5 @@
+# $Id$
+
 from templet import stringfunction
 
 @stringfunction
