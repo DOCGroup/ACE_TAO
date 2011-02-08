@@ -1,1 +1,2 @@
+# $Id$
 import generator
