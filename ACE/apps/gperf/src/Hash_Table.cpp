@@ -24,11 +24,6 @@
  */
 
 #include "Hash_Table.h"
-
-
-
-#if defined (ACE_HAS_GPERF)
-
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"

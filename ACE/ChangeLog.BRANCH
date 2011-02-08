@@ -1,3 +1,22 @@
+Tue Feb  8 10:40:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * src/Bool_Array.h:
+        * src/Bool_Array.cpp:
+        * src/Gen_Perf.h:
+        * src/Hash_Table.h:
+        * src/Hash_Table.cpp:
+        * src/Iterator.h:
+        * src/Iterator.cpp:
+        * src/Key_List.h:
+        * src/Key_List.cpp:
+        * src/List_Node.h:
+        * src/Options.h:
+        * src/Options.cpp:
+        * src/Vectors.h:
+        * src/Vectors.cpp:
+        * src/gperf.cpp:
+          Removed checks for ACE_HAS_GPERF, just always compile this executable.
+
 Tue Feb  8 10:21:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/IOStream_T.h:

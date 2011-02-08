@@ -31,8 +31,6 @@
 #include "Bool_Array.h"
 #include "ace/Copy_Disabled.h"
 
-#if defined (ACE_HAS_GPERF)
-
 /*
  * Provides high-level routines to manipulate the keyword list
  * structures the code generation output.
@@ -80,5 +78,4 @@ private:
   Bool_Array char_search;
 };
 
-#endif /* ACE_HAS_GPERF */
 #endif /* GEN_PERF_H */

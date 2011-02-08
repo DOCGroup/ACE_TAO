@@ -34,8 +34,6 @@
 
 #include "Options.h"
 
-#if defined (ACE_HAS_GPERF)
-
 /**
  * Efficient lookup table abstraction implemented as a "Generation
  * Number" Array.
@@ -72,5 +70,4 @@ private:
   unsigned long size_;
 };
 
-#endif /* ACE_HAS_GPERF */
 #endif /* BOOL_ARRAY_H */
