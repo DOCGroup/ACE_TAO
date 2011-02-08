@@ -831,39 +831,33 @@ namespace CIAO
 
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
 
+    ::Components::EventConsumerBase_var safe_temp;
     try
       {
+        const char * name (0);
+        if (conn.externalReference[0].provider)
+          { // determine the port name of the publisher or emitter.
+            name = endpoint.portName.in ();
+          }
+        else
+          {
+            name = conn.externalReference[0].portName.in ();
+          }
         if (this->get_cookie (conn.name.in ()) == 0)
           { //emitter
             CIAO_DEBUG (5, (LM_DEBUG, CLINFO
                             "Connection_Handler::disconnect_consumer - "
                             "Disconnecting %C on the emitter.\n",
-                            endpoint.portName.in ()));
-            ::Components::EventConsumerBase_var safe_temp =
-              obj->disconnect_consumer (endpoint.portName.in ());
+                            name));
+            safe_temp = obj->disconnect_consumer (name);
           }
         else
           { //publisher
-            ::Components::EventConsumerBase_var safe_temp;
-            if (conn.externalReference[0].provider)
-              { // if the external reference is a provider, it's a consumer.
-                // we need the publishers port name to unsubsribe
-                CIAO_DEBUG (5, (LM_DEBUG, CLINFO
-                                "Connection_Handler::disconnect_consumer - "
-                                "Disconnecting %C on the publisher.\n",
-                                endpoint.portName.in ()));
-                safe_temp = obj->unsubscribe (endpoint.portName.in (),
-                                              this->get_cookie (conn.name.in ()));
-              }
-            else
-              {
-                CIAO_DEBUG (5, (LM_DEBUG, CLINFO
-                                "Connection_Handler::disconnect_consumer - "
-                                "Disconnecting %C on the publisher.\n",
-                                conn.externalReference[0].portName.in ()));
-                safe_temp = obj->unsubscribe (conn.externalReference[0].portName.in (),
-                                              this->get_cookie (conn.name.in ()));
-              }
+            CIAO_DEBUG (5, (LM_DEBUG, CLINFO
+                            "Connection_Handler::disconnect_consumer - "
+                            "Disconnecting %C on the publisher.\n",
+                            name));
+            safe_temp = obj->unsubscribe (name, this->get_cookie (conn.name.in ()));
           }
       }
     // it could be that the emmitter or publisher is already shut down. In that
