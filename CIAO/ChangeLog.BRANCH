@@ -1,3 +1,9 @@
+Tue Feb  8 09:27:58 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/Latency_Sender.cpp:
+        * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/NDDS_Latency_Sender.cpp:
+          Listening on the right entity. 
+
 Tue Feb  8 09:14:17 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * CIAO_TAO_DAnCE.mwc:

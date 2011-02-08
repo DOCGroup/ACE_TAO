@@ -534,13 +534,8 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
     pub = participant->create_publisher_with_profile (
                                             lib_name_,
                                             prof_name_,
-                                            pub_listener,
-                                            DDS_OFFERED_DEADLINE_MISSED_STATUS |
-                                            DDS_OFFERED_INCOMPATIBLE_QOS_STATUS |
-                                            DDS_RELIABLE_WRITER_CACHE_CHANGED_STATUS |
-                                            DDS_RELIABLE_READER_ACTIVITY_CHANGED_STATUS |
-                                            DDS_LIVELINESS_LOST_STATUS |
-                                            DDS_PUBLICATION_MATCHED_STATUS);
+                                            0,
+                                            DDS_STATUS_MASK_NONE);
 
     if (!pub) {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create publisher.\n")));
@@ -548,10 +543,11 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
     }
 
     /* Create the data writer using the publisher */
-    data_writer = pub->create_datawriter_with_profile(send_topic,
-                                                      lib_name_,
-                                                      prof_name_,
-                                                      pub_listener,
+    data_writer = pub->create_datawriter_with_profile(
+                                            send_topic,
+                                            lib_name_,
+                                            prof_name_,
+                                            pub_listener,
                                             DDS_OFFERED_DEADLINE_MISSED_STATUS |
                                             DDS_OFFERED_INCOMPATIBLE_QOS_STATUS |
                                             DDS_RELIABLE_WRITER_CACHE_CHANGED_STATUS |
