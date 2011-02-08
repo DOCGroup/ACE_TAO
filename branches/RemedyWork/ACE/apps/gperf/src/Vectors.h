@@ -32,8 +32,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_GPERF)
-
 // Do not change these values wantonly since GPERF depends on them..
 #define ACE_ASCII_SIZE 128
 #define ACE_EBCDIC_SIZE 256
@@ -60,5 +58,4 @@ public:
   static int asso_values[ACE_STANDARD_CHARACTER_SET_SIZE];
 };
 
-#endif /* ACE_HAS_GPERF */
 #endif /* VECTORS_H */

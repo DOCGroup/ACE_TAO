@@ -24,11 +24,6 @@
  */
 
 #include "Iterator.h"
-
-
-
-#if defined (ACE_HAS_GPERF)
-
 #include "ace/OS_NS_ctype.h"
 
 /// Constructor for Iterator.
@@ -104,5 +99,3 @@ Iterator::operator() (void)
       return end;
     }
 }
-
-#endif /* ACE_HAS_GPERF */

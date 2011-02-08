@@ -24,11 +24,6 @@
  */
 
 #include "Key_List.h"
-
-
-
-#if defined (ACE_HAS_GPERF)
-
 #include "Hash_Table.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Auto_Ptr.h"
@@ -1959,4 +1954,3 @@ Key_List::max_key_length (void)
   return max_key_len;
 }
 
-#endif /* ACE_HAS_GPERF */

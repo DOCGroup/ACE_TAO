@@ -35,8 +35,6 @@
 #include "Options.h"
 #include "ace/Copy_Disabled.h"
 
-#if defined (ACE_HAS_GPERF)
-
 /**
  * Provides an Iterator that expands and decodes a control string
  * containing digits and ranges, returning an integer every time the
@@ -80,5 +78,4 @@ private:
   int lo_bound;
 };
 
-#endif /* ACE_HAS_GPERF */
 #endif /* ITERATOR_H */
