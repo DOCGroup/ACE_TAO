@@ -1,3 +1,13 @@
+Tue Feb  8 13:35:35 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/generate_component_mpc.pl:
+          Optimized reading the command line options.
+          Added -e option, meaning that events are uses within the
+          components.
+
+        * tutorials/Quoter/Simple/01.html:
+          Changed regarding generate_component script.
+
 Tue Feb  8 13:32:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
