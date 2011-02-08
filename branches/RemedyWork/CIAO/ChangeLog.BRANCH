@@ -1,3 +1,9 @@
+Tue Feb  8 14:15:09 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.h:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Resolve issues regarding lw ccm.
+
 Tue Feb  8 13:35:35 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * bin/generate_component_mpc.pl:
