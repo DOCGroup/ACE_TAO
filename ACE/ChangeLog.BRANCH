@@ -1,3 +1,10 @@
+Tue Feb  8 13:37:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+        * bin/sets-manager.py:
+        * bin/svn_props.py:
+          Check py files for Id
+
 Tue Feb  8 10:40:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * src/Bool_Array.h:
