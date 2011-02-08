@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+# $Id$
 """ This script implements branching and tagging in the DOC group
 repository, and automates the process of creating sets. """
 
