@@ -4,13 +4,13 @@
 project(Stock_Base_StockDistributor_idl_gen) : componentidldefaults, avoids_ccm_noevent {
   custom_only = 1
   
-    idlflags += -Wb,stub_export_macro=STOCKDISTRIBUTOR_STUB_Export \
-                -Wb,stub_export_include=StockDistributor_stub_export.h \
-                -Wb,skel_export_macro=STOCKDISTRIBUTOR_SVNT_Export \
-                -Wb,skel_export_include=StockDistributor_svnt_export.h \
-                -Wb,exec_export_macro=STOCKDISTRIBUTOR_EXEC_Export \
-                -Wb,exec_export_include=StockDistributor_exec_export.h \
-                -Gxhex -Gxhsk -Gxhst
+  idlflags += -Wb,stub_export_macro=STOCKDISTRIBUTOR_STUB_Export \
+              -Wb,stub_export_include=StockDistributor_stub_export.h \
+              -Wb,skel_export_macro=STOCKDISTRIBUTOR_SVNT_Export \
+              -Wb,skel_export_include=StockDistributor_svnt_export.h \
+              -Wb,exec_export_macro=STOCKDISTRIBUTOR_EXEC_Export \
+              -Wb,exec_export_include=StockDistributor_exec_export.h \
+              -Gxhex -Gxhsk -Gxhst
 
   IDL_Files {
     StockDistributor.idl
@@ -54,7 +54,7 @@ project(Stock_Base_StockDistributor_lem_stub) : ccm_svnt, avoids_ccm_noevent {
   }
 }
 
-project(Stock_Base_StockDistributor_stub) : ccm_stub , avoids_ccm_noevent {
+project(Stock_Base_StockDistributor_stub) : ccm_stub, avoids_ccm_noevent {
   after += Stock_Base_StockDistributor_idl_gen Stock_Base_stub Stock_Base_lem_stub
   libs  += Stock_Base_stub Stock_Base_lem_stub
   libpaths += ../lib
@@ -104,13 +104,13 @@ project(Stock_Base_StockDistributor_exec) : ciao_executor, avoids_ccm_noevent {
 }
 
 
-project(Stock_Base_StockDistributor_svnt) : ciao_servant , avoids_ccm_noevent  {
+project(Stock_Base_StockDistributor_svnt) : ciao_servant, avoids_ccm_noevent  {
   after      += Stock_Base_skel, Stock_Base_lem_stub  Stock_Base_StockDistributor_lem_stub
   sharedname  = StockDistributor_svnt
   libs       += StockDistributor_stub StockDistributor_lem_stub  \
                 Stock_Base_skel \
                 Stock_Base_stub \
-        Stock_Base_lem_stub
+                Stock_Base_lem_stub
   libpaths += ../lib
   libout = ../lib
   dynamicflags += STOCKDISTRIBUTOR_SVNT_BUILD_DLL

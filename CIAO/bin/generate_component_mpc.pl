@@ -81,7 +81,7 @@ if (defined $options{p}) {
     $svr_plibs ='\
                 '."$options{p}".'_skel \
                 '."$options{p}".'_stub \
-        '."$options{p}".'_lem_stub';
+                '."$options{p}".'_lem_stub';
 }
 else {
     $svr_plibs = "";
@@ -194,23 +194,23 @@ project('."$unique_prefix"."$com_name".'_exec) : ciao_executor' . "$base_projs" 
 ';
     $cli_idlflags =
 '
-    idlflags += -Wb,stub_export_macro='."$UCOM_NAME".'_STUB_Export \
-                -Wb,stub_export_include='."$com_name".'_stub_export.h \
-                -Wb,skel_export_macro='."$UCOM_NAME"."$USVR_SUFFIX".'_Export \
-                -Wb,skel_export_include='."$com_name"."$svr_suffix".'_export.h \
-                -Wb,exec_export_macro='."$UCOM_NAME".'_EXEC_Export \
-                -Wb,exec_export_include='."$com_name".'_exec_export.h \
-                -Gxhex -Gxhsk -Gxhst'
+  idlflags += -Wb,stub_export_macro='."$UCOM_NAME".'_STUB_Export \
+              -Wb,stub_export_include='."$com_name".'_stub_export.h \
+              -Wb,skel_export_macro='."$UCOM_NAME"."$USVR_SUFFIX".'_Export \
+              -Wb,skel_export_include='."$com_name"."$svr_suffix".'_export.h \
+              -Wb,exec_export_macro='."$UCOM_NAME".'_EXEC_Export \
+              -Wb,exec_export_include='."$com_name".'_exec_export.h \
+              -Gxhex -Gxhsk -Gxhst'
 ;
 }
 else {
   $cli_idlflags =
 '
-    idlflags += -Wb,stub_export_macro='."$UCOM_NAME".'_STUB_Export \
-                -Wb,stub_export_include='."$com_name".'_stub_export.h \
-                -Wb,skel_export_macro='."$UCOM_NAME"."$USVR_SUFFIX".'_Export \
-                -Wb,skel_export_include='."$com_name"."$svr_suffix".'_export.h \
-                -Gxhex -Gxhsk -Gxhst'
+  idlflags += -Wb,stub_export_macro='."$UCOM_NAME".'_STUB_Export \
+              -Wb,stub_export_include='."$com_name".'_stub_export.h \
+              -Wb,skel_export_macro='."$UCOM_NAME"."$USVR_SUFFIX".'_Export \
+              -Wb,skel_export_include='."$com_name"."$svr_suffix".'_export.h \
+              -Gxhex -Gxhsk -Gxhst'
   ;
 }
 
@@ -269,7 +269,7 @@ project('."$unique_prefix"."$com_name".'_idl_gen) : componentidldefaults' . "$ba
   }
 }
 '."$lem_gen".'
-project('."$unique_prefix"."$com_name".'_stub) : '."$cli_base ". "$base_projs" . '{
+project('."$unique_prefix"."$com_name".'_stub) : '."$cli_base". "$base_projs" . '{
   after += '."$unique_prefix"."$com_name".'_idl_gen '."$stub_depend".'
   libs  += '."$stub_depend"."
   $lib_paths"."
@@ -295,7 +295,7 @@ project('."$unique_prefix"."$com_name".'_stub) : '."$cli_base ". "$base_projs" .
 }
 '."$component_def".'
 
-project('."$unique_prefix"."$com_name"."$svr_suffix".') : '."$svr_base ". "$base_projs" . ' {
+project('."$unique_prefix"."$com_name"."$svr_suffix".') : '."$svr_base". "$base_projs" . ' {
   after      += '."$svr_p_after "."$svr_after".' '."$unique_prefix"."$com_name".'_lem_stub'.'
   sharedname  = '."$com_name"."$svr_suffix".'
   libs       += '."$svr_libs $svr_plibs
