@@ -1,3 +1,14 @@
+Wed Feb  9 12:53:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Size.h:
+        * ace/Lib_Find.h:
+        * ace/Local_Name_Space_T.h:
+        * ace/Lock.h:
+        * ace/Message_Block.h:
+        * ace/Name_Space.h:
+        * ace/Naming_Context.h:
+          Doxygen changes
+
 Tue Feb  8 20:52:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ACE.cpp:

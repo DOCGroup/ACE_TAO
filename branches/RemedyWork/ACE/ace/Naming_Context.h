@@ -126,7 +126,7 @@ public:
   /**
    * Overwrite the value or type of an existing name in a
    * ACE_Naming_Context or bind a new name to the context, if it
-   * didn't exist yet. (Wide charcter strings interface).
+   * didn't exist yet. (Wide character strings interface).
    */
   int rebind (const ACE_NS_WString &name_in,
               const ACE_NS_WString &value_in,
@@ -135,13 +135,13 @@ public:
   /**
    * Overwrite the value or type of an existing name in a
    * ACE_Naming_Context or bind a new name to the context, if it
-   * didn't exist yet. ( charcter strings interface)
+   * didn't exist yet. ( character strings interface)
    */
   int rebind (const char *name_in,
               const char *value_in,
               const char *type_in = "");
 
-  /// Delete a name from a ACE_Naming_Context (Wide charcter strings
+  /// Delete a name from a ACE_Naming_Context (Wide character strings
   /// Interface).
   int unbind (const ACE_NS_WString &name_in);
 
