@@ -1,3 +1,26 @@
+Wed Feb  9 13:31:39 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/tao_strategies.doxygen:
+          Improved doxygen generation
+
+        * examples/Load_Balancing/Load_Balancer_i.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Endpoint.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+        * orbsvcs/tests/Bug_2615_Regression/Test.idl:
+        * tao/MProfile.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/Strategies/COIOP_Acceptor.h:
+        * tao/Strategies/COIOP_Endpoint.h:
+        * tao/Strategies/DIOP_Acceptor.h:
+        * tao/Strategies/DIOP_Endpoint.h:
+        * tao/Strategies/SCIOP_Acceptor.h:
+        * tao/Strategies/SCIOP_Endpoint.h:
+        * tao/Strategies/SHMIOP_Endpoint.h:
+        * tao/Strategies/UIOP_Endpoint.h:
+          Fixed typos and doxygen warnings
+
 Tue Feb  8 19:04:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/RTCORBA/Activity/README:

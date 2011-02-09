@@ -231,7 +231,7 @@ Object_Group_i::unbind (const char * id)
 {
   ACE_CString member_id (id);
 
-  // Code below works iff list and hash map states are consistent,
+  // Code below works if list and hash map states are consistent,
   // which is the case unless the system experienced major problems,
   // e.g., ran out of memory ...
 
