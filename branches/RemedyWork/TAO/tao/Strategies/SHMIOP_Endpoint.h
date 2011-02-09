@@ -103,7 +103,7 @@ public:
   /// ownership of this string.
   const char *host (void) const;
 
-  /// Copy the string <h> into <host_> and return the resulting pointer.
+  /// Copy the string @a h into <host_> and return the resulting pointer.
   /// This object maintains ownership of this string.
   const char *host (const char *h);
 
