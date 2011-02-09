@@ -1,3 +1,9 @@
+Wed Feb  9 08:41:00 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Moved some settings from CFLAGS to CPPFLAGS and
+          FLAGS_C_CC.
+
 Wed Feb  9 08:25:29 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_cygwin32.GNU:
