@@ -1,20 +1,6 @@
 # -*- Makefile -*-
 # $Id$
 
-# Choose your target CPU (by default we set it to pentiumpro. In your
-# platform_macros.GNU file you can override this to pentium, i486 or i386
-#
-TCPU ?= pentiumpro
-
-# Cygwin/MinGW doesn't allow to add the version number of ACE to the dll name
-# because ace.dll.6.0.1 isn't a valid dll name
-versioned_so = 0
-
-# Disable auto-import warnings. The Cygwin/MinGW linker has a problem with imports
-# See https://sourceforge.net/tracker/?func=detail&atid=102435&aid=683455&group_id=2435
-# for the details why to do this.
-LDFLAGS += -Wl,--enable-auto-import
-
 ifneq ($(mingw32),1)
   ifneq ($(cygwin32),1)
     fail := \
@@ -24,6 +10,23 @@ ifneq ($(mingw32),1)
           exit 1)
   endif
 endif
+
+# Choose your target CPU (by default we set it to pentiumpro. In your
+# platform_macros.GNU file you can override this to pentium, i486 or i386
+TCPU ?= pentiumpro
+
+# Cygwin/MinGW doesn't allow to add the version number of ACE to the dll name
+# because ace.dll.6.0.1 isn't a valid dll name
+versioned_so = 0
+
+# Cygwin/MinGW doesn't have rwho
+rwho = 0
+
+# Disable auto-import warnings. The Cygwin/MinGW linker has a problem
+# with imports
+# See https://sourceforge.net/tracker/?func=detail&atid=102435&aid=683455&group_id=2435
+# for the details why to do this.
+LDFLAGS += -Wl,--enable-auto-import
 
 no_hidden_visibility ?= 1
 
