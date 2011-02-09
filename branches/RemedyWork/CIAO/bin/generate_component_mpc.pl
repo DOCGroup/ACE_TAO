@@ -74,7 +74,7 @@ else {
 
 $USVR_SUFFIX = uc $svr_suffix;
 
-if ($options{p}) {
+if (defined $options{p}) {
     $stub_depend = "$options{p}".'_stub';
     $lib_depend = "$options{p}".'_skel '."$options{p}".'_stub';
 
@@ -88,18 +88,18 @@ else {
 
 $unique_prefix = "";
 
-if ($options{u}) {
-    $unique_prefix = "$options{u}" . "_";
+if (defined $options{u}) {
+    $unique_prefix = "$options{u}" . '_';
 }
-elsif ($options{p}) {
-    $unique_prefix = "$options{p}" . "_";
+elsif (defined $options{p}) {
+    $unique_prefix = "$options{p}" . '_';
 }
 
-if ($options{p}) {
+if (defined $options{p}) {
     $svr_p_after = "$options{p}".'_skel';
 }
 
-if ($options{c}) {
+if (defined $options{c}) {
     $client_def =
 'project ('."$unique_prefix"."$options{c}".') : ccm_stub, valuetype' . "$base_projs" . ' {
   exename = '."$options{c}".'
@@ -123,7 +123,6 @@ if ($options{c}) {
 ';
 }
 
-if (!$options{n}) {
     $lem_gen =
 '
 project('."$unique_prefix"."$com_name".'_lem_gen) : ciaoidldefaults' . "$base_projs" . '{
@@ -164,12 +163,13 @@ project('."$unique_prefix"."$com_name".'_lem_stub) : ccm_svnt' . "$base_projs" .
 }
 ';
 
+if (!defined $options{n}) {
     $component_def =
 '
 project('."$unique_prefix"."$com_name".'_exec) : ciao_executor' . "$base_projs" . '{
-  after   += '."$unique_prefix"."$com_name".'_lem_stub '."$unique_prefix"."$com_name".'_stub
+  after   += '. "$options{p}" . '_lem_stub ' . "$unique_prefix"."$com_name".'_lem_stub '."$unique_prefix"."$com_name".'_stub
   sharedname = '."$com_name".'_exec
-  libs += '."$com_name".'_stub '."$com_name".'_lem_stub '."$stub_depend
+  libs += '."$options{p}" . '_lem_stub ' . "$com_name".'_stub '."$com_name".'_lem_stub '."$stub_depend
   $lib_paths"."
   $lib_out".'
   dynamicflags += '."$UCOM_NAME".'_EXEC_BUILD_DLL
@@ -190,17 +190,27 @@ project('."$unique_prefix"."$com_name".'_exec) : ciao_executor' . "$base_projs" 
   }
 }
 ';
-}
-
-$cli_idlflags =
-  'idlflags += -Wb,stub_export_macro='."$UCOM_NAME".'_STUB_Export \
-              -Wb,stub_export_include='."$com_name".'_stub_export.h \
-              -Wb,skel_export_macro='."$UCOM_NAME"."$USVR_SUFFIX".'_Export \
-              -Wb,skel_export_include='."$com_name"."$svr_suffix".'_export.h \
-              -Wb,exec_export_macro='."$UCOM_NAME".'_EXEC_Export \
-              -Wb,exec_export_include='."$com_name".'_exec_export.h \
-              -Gxhex -Gxhsk -Gxhst'
+    $cli_idlflags =
+'
+    idlflags += -Wb,stub_export_macro='."$UCOM_NAME".'_STUB_Export \
+                -Wb,stub_export_include='."$com_name".'_stub_export.h \
+                -Wb,skel_export_macro='."$UCOM_NAME"."$USVR_SUFFIX".'_Export \
+                -Wb,skel_export_include='."$com_name"."$svr_suffix".'_export.h \
+                -Wb,exec_export_macro='."$UCOM_NAME".'_EXEC_Export \
+                -Wb,exec_export_include='."$com_name".'_exec_export.h \
+                -Gxhex -Gxhsk -Gxhst'
 ;
+}
+else {
+  $cli_idlflags =
+'
+    idlflags += -Wb,stub_export_macro='."$UCOM_NAME".'_STUB_Export \
+                -Wb,stub_export_include='."$com_name".'_stub_export.h \
+                -Wb,skel_export_macro='."$UCOM_NAME"."$USVR_SUFFIX".'_Export \
+                -Wb,skel_export_include='."$com_name"."$svr_suffix".'_export.h \
+                -Gxhex -Gxhsk -Gxhst'
+  ;
+}
 
 $cli_base = "ccm_stub";
 $svr_base = "ciao_servant";
@@ -208,7 +218,7 @@ $svr_after = "";
 
 $svr_libs = "$com_name".'_stub '. "$com_name".'_lem_stub ';
 
-if ($options{n}) {
+if (defined $options{n}) {
     $svr_after = "$unique_prefix"."$com_name".'_stub';
 
     $svr_libs = "$com_name".'_stub

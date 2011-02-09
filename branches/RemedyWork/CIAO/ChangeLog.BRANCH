@@ -1,3 +1,11 @@
+Wed Feb  9 07:12:33 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/generate_component_mpc.pl:
+          Optimized reading command line parameters.
+
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Improved disconnect_emitter.
+
 Tue Feb  8 14:15:09 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Deployment/Handlers/Connection_Handler.h:

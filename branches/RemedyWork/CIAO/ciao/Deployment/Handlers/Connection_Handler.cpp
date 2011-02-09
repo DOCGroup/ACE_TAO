@@ -898,7 +898,9 @@ namespace CIAO
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_emitter");
-    this->disconnect_consumer (conn, endpoint);
+    ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
+    obj->disconnect_consumer (endpoint.portName.in ());
+    this->remove_cookie (conn.name.in ());
   }
 #endif
 
