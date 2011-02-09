@@ -4,10 +4,7 @@
 # This file should allow to build ACE for mingw32 with mingw tools.
 #
 
-mingw32 ?= 1
-
-# MinGW doesn't have rwho
-rwho ?= 0
+mingw32 = 1
 
 # MinGW has wfmo and registry
 wfmo ?= 1
@@ -24,6 +21,7 @@ ifeq (cmd,$(findstring cmd,$(SHELL)))
   MKDIR_NTSYTLE = 1
   ACE_MKDIR = mkdir
   ECHO_BLANK_LINE = cmd /c echo.
+  PRELIB:=
 endif
 
 include $(ACE_ROOT)/include/makeinclude/platform_gnuwin32_common.GNU
@@ -35,5 +33,3 @@ ifeq ($(winsock2),1)
 endif
 
 LIBS += -lwsock32 -lnetapi32
-
-PRELIB:=
