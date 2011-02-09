@@ -878,7 +878,7 @@ TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub)
   // proxy broker if required.
   stub->is_collocated (true);
 
-  // Return 0 (success) iff we found a servant.
+  // Return 0 (success) if we found a servant.
   return ! sb;
 }
 

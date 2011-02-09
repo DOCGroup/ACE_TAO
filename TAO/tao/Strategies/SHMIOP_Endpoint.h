@@ -87,7 +87,7 @@ public:
   virtual TAO_Endpoint *duplicate (void);
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
-  /// endpoints are equivalent iff their port and host are the same.
+  /// endpoints are equivalent if their port and host are the same.
   CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
 
   /// Return a hash value for this object.
