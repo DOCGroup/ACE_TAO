@@ -125,7 +125,8 @@ PREDEFINED            = __ACE_INLINE__ \
                         ACE_END_VERSIONED_NAMESPACE_DECL \
                         TAO_BEGIN_VERSIONED_NAMESPACE_DECL \
                         TAO_END_VERSIONED_NAMESPACE_DECL \
-                        ACE_INLINE
+                        ACE_INLINE=inline \
+                        TAO_HAS_TRANSPORT_CURRENT=1
 EXPAND_AS_DEFINED     = ACE_UNIMPLEMENTED_FUNC \
                         ACE_CACHE_MAP_MANAGER
 
