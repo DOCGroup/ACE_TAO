@@ -1,3 +1,13 @@
+Wed Feb  9 15:12:59 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/tao_pi.doxygen:
+        * etc/tao_pi_server.doxygen:
+        * etc/tao_rtcorba.doxygen:
+        * etc/tao_rtportableserver.doxygen:
+        * etc/tao_transportcurrent.doxygen:
+        * etc/tao_ziop.doxygen:
+          Set some defines to get more documentation
+
 Wed Feb  9 13:31:39 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/tao_strategies.doxygen:
