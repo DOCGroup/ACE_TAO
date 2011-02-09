@@ -1,3 +1,16 @@
+Wed Feb  9 12:27:18 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/generate_component_mpc.pl:
+          Fixed some layout issues in the generated MPC code.
+
+        * tutorials/Quoter/Simple/01.html:
+          Added additional information regarding generate_component_mpc.
+
+        * tutorials/Quoter/Simple/Broker/StockBroker.mpc:
+        * tutorials/Quoter/Simple/Distributor/StockDistributor.mpc:
+        * tutorials/Quoter/Simple/Stock_Base/Stock_Base.mpc:
+          Regenerated.
+
 Wed Feb  9 09:43:20 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * bin/generate_component_mpc.pl:
