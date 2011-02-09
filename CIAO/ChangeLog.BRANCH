@@ -1,3 +1,11 @@
+Wed Feb  9 09:43:20 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/generate_component_mpc.pl:
+        * tutorials/Quoter/Simple/Broker/StockBroker.mpc:
+        * tutorials/Quoter/Simple/Distributor/StockDistributor.mpc:
+          Resolved unresolved externals on windows when the generated mpc
+          files are run on windows.
+
 Wed Feb  9 09:18:28 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * bin/generate_component_mpc.pl:

@@ -76,12 +76,12 @@ else {
 $USVR_SUFFIX = uc $svr_suffix;
 
 if (defined $options{p}) {
-    $stub_depend = "$options{p}".'_stub';
-    $lib_depend = "$options{p}".'_skel '."$options{p}".'_stub';
+    $stub_depend = "$options{p}".'_stub ' . "$options{p}".'_lem_stub';
 
     $svr_plibs ='\
                 '."$options{p}".'_skel \
-                '."$options{p}".'_stub';
+                '."$options{p}".'_stub \
+        '."$options{p}".'_lem_stub';
 }
 else {
     $svr_plibs = "";
@@ -96,8 +96,9 @@ elsif (defined $options{p}) {
     $unique_prefix = "$options{p}" . "_";
 }
 
+$svr_p_after = "";
 if (defined $options{p}) {
-    $svr_p_after = "$options{p}".'_skel';
+  $svr_p_after = "$options{p}".'_skel, ' . "$options{p}" . '_lem_stub';
 }
 
 if (defined $options{c}) {
