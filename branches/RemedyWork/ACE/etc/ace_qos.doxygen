@@ -133,7 +133,7 @@ EXPAND_AS_DEFINED     = ACE_UNIMPLEMENTED_FUNC \
 # Configuration::additions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/libace-doc/ACE.tag=..
+TAGFILES              = html/libace-doc/ACE.tag=.. html/libace-doc/ssl/ACE_SSL.tag=..
 GENERATE_TAGFILE      = html/libace-doc/QoS/ACE_QoS.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
