@@ -47,11 +47,11 @@ ifeq ($(shared_libs), 1)
 endif
 
 ifeq ($(debug),0)
-  CFLAGS += -DNDEBUG
+  CPPFLAGS += -DNDEBUG
 endif
 
 ifeq ($(threads),1)
-  CFLAGS += -mthreads
+  FLAGS_C_CC += -mthreads
 endif # threads
 
 CC      = ${COMPARCH}gcc
@@ -61,15 +61,15 @@ DLLTOOL = ${COMPARCH}dlltool
 AR      = ${COMPARCH}ar
 RANLIB  = ${COMPARCH}ranlib
 
-CFLAGS  += -Wall -W -Wpointer-arith
-DCFLAGS += -g
-DLD     = $(CXX)
-LD      = $(CXX)
-OCFLAGS += -O3
-PIC     =
-ARFLAGS = rsuv
-SOEXT   = dll
-EXEEXT  = .exe
+FLAGS_C_CC += -Wall -W -Wpointer-arith
+DCFLAGS    += -g
+DLD        = $(CXX)
+LD         = $(CXX)
+OCFLAGS    += -O3
+PIC        =
+ARFLAGS    = rsuv
+SOEXT      = dll
+EXEEXT     = .exe
 SOFLAGS += $(CPPFLAGS)
 RC_OUTPUT_FLAG = -o
 
@@ -96,6 +96,6 @@ PLATFORM_WX_LDFLAGS   ?= $(shell wx-config --ldflags)
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-PRELIB  = @true
+PRELIB = @true
 
 CCFLAGS += $(CFLAGS) $(FLAGS_C_CC) $(TEMPLATES_FLAG)
