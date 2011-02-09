@@ -1,3 +1,11 @@
+Wed Feb  9 13:45:47 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/Acceptor_Impl.cpp:
+          Fixed unnecessary initialization of a default reactor that was done
+          through a call to ACE_Reactor::instance() as the default parameter
+          to the constructor of ACE_Accept_Strategy (base of
+          TAO_Accept_Strategy).
+
 Thu Feb  3 16:32:53 UTC 2011  Martin Corino  <corino_m@remedy.nl>
 
         * TAO_IDL/be/be_union.cpp:
