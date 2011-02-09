@@ -264,7 +264,7 @@ if ($status == 0) {
     sleep (2);
 }
 else {
-    print "Error starting Stock Distributor";
+    print "Error starting Stock Distributor\n";
 }
 
 print "We're done. Stop the application now by invoking the plan_launcher again\n";

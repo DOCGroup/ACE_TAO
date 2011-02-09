@@ -49,6 +49,7 @@ if (defined $options{l}) {
 
 if (defined $options{o}) {
     $lib_out = 'libout = ' . "$options{o}";
+    $exe_out = 'exeout = ' . "$options{o}";
 }
 
 if (defined $options{b}) {
@@ -89,10 +90,10 @@ else {
 $unique_prefix = "";
 
 if (defined $options{u}) {
-    $unique_prefix = "$options{u}" . '_';
+    $unique_prefix = "$options{u}" . "_";
 }
 elsif (defined $options{p}) {
-    $unique_prefix = "$options{p}" . '_';
+    $unique_prefix = "$options{p}" . "_";
 }
 
 if (defined $options{p}) {
@@ -106,7 +107,7 @@ if (defined $options{c}) {
   after += '."$unique_prefix"."$com_name".'_stub
   libs  += '."$com_name".'_stub '."$stub_depend"."
   $lib_paths"."
-  $lib_out".'
+  $exe_out".'
   IDL_Files {
   }
 
