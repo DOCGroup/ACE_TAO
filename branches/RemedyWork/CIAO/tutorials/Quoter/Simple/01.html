@@ -182,6 +182,21 @@
   "c5">&nbsp;&nbsp;&nbsp;&nbsp;</span></span> <span class=
   'c4'>$ACE_ROOT/MPC/<a href="../../../../../../MPC/docs/README">README</a></span></h3>
 
+  <h3 class="Section1 c11"><span class='c10'>&middot;<span class=
+  "c5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
+  <span class='c4'>In the beginning of this tutorial, we're using a
+  perl scripts which creates the MPC files for you. This script is
+  called <span class="c42">generate_component_mpc.pl</span>
+  and is located in $CIAO_ROOT/bin.</span></h3>
+
+  <h3 class="Section1 c11"><span class='c10'>&middot;<span class=
+  "c5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
+  <span class='c4'>To understand the meaning of different parameters
+  passed to <span class="c42">generate_component_mpc.pl</span>
+  <span class='c4'>type the following command:<br/>
+  <span class="c42">generate_component_mpc.pl -h</span><br />
+  <br /></span></span></h3>
+
   <p class='c14'><span class='c1'>Interface Design:</span></p>
 
   <p class='c17'><span class='c15'>&middot;<span class=
@@ -245,7 +260,7 @@
   the following command</span></p>
 
   <p class="c28"><span class="c27">generate_component_mpc.pl
-  -p Stock_Base &ndash;c StockDistributorDriver
+  &ndash;e &ndash;p Stock_Base &ndash;c StockDistributorDriver
   &ndash;o ../lib &ndash;l ../lib StockDistributor</span></p>
 
   <p class='c31'><span class='c20'>The command above takes a few
@@ -301,8 +316,9 @@
   command:</span></p>
 
   <p class='c43'><span class="c42"><span class="c27">
-  generate_component_mpc.pl -p Stock_Base &ndash;c
-  StockBrokerDriver &ndash;o ../lib &ndash;l ../lib StockBroker</span></span></p>
+  generate_component_mpc.pl &ndash;e &ndash;p Stock_Base
+  &ndash;c StockBrokerDriver &ndash;o ../lib &ndash;l ../lib
+  StockBroker</span></span></p>
 
   <p class='c31'><span class='c20'><span class="c32">The command
   above takes a few optional parameter. The -p option states that
@@ -334,19 +350,6 @@
   <span class='c20'><span class="c32">The generated</span>
   <span class="c32">MPC file should look like</span> <a href=
   "Broker/StockBroker.mpc">this</a>.</span></p>
-
-  <p class='c45'><span class='c1'><br />
-  <b>Note:</b></span></p>
-
-  <p class='c45'><span class='c1'>To understand the meaning of
-  different parameters passed to</span> <span class=
-  "c42">generate_component_mpc.pl</span><span class='c20'>click
-  <a href="../../../generate_component_mpc.html">here</a> or type
-  the</span> <span class='c1'>following command:</span></p>
-
-  <p class='c45'><span class="c42">generate_component_mpc.pl
-  -h</span><span class='c1'><br />
-  <br /></span></p>
 
   <p class='c46'><span class='c1'><a href=
   "index.html">Previous</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
