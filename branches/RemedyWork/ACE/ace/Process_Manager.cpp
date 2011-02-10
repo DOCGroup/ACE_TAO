@@ -917,7 +917,7 @@ ACE_Process_Manager::wait (pid_t pid,
           for (ACE_Countdown_Time time_left (&tmo); ; time_left.update ())
             {
               pid = ACE_OS::waitpid (-1, status, WNOHANG);
-#   if defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600)
+#   if defined (ACE_VXWORKS)
               if (pid > 0 || (pid == ACE_INVALID_PID && errno != EINTR))
 #   else
                 if (pid > 0 || pid == ACE_INVALID_PID)
