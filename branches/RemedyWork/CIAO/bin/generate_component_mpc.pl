@@ -98,7 +98,7 @@ elsif (defined $options{p}) {
 
 $svr_p_after = "";
 if (defined $options{p}) {
-  $svr_p_after = "$options{p}".'_skel, ' . "$options{p}" . '_lem_stub';
+  $svr_p_after = "$options{p}".'_skel ' . "$options{p}" . '_lem_stub';
 }
 
 if (defined $options{c}) {
