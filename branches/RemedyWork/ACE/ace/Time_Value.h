@@ -250,7 +250,7 @@ public:
   /// Subtract @a tv to this.
   ACE_Time_Value &operator -= (const ACE_Time_Value &tv);
 
-  /// Substract @a tv to this.
+  /// Subtract @a tv to this.
   ACE_Time_Value &operator -= (time_t tv);
 
   /**
