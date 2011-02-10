@@ -128,7 +128,6 @@ Client_i::init (int argc, ACE_TCHAR *argv[])
         this->ts_->thread_count_ =
           ACE_OS::atoi (this->argv_[i+1]);
     }
-  PCCTIMER_INIT;
   return 0;
 }
 
