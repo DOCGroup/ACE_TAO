@@ -28,7 +28,7 @@ qos ?= 1
 # See https://sourceforge.net/tracker/?func=detail&atid=102435&aid=683455&group_id=2435
 # for the details why to do this.
 LDFLAGS += -Wl,--enable-auto-import
-CPPFLAGS += -DACE_HAS_CEGCC 
+CPPFLAGS += -DACE_HAS_CEGCC
 
 CPPFLAGS += -D_WIN32_WCE=$(ACE_CE_VER) -DUNICODE -D_UNICODE -D_WINDOWS -DCEVER -DWIN32 -D_WINSOCKAPI_
 RCFLAGS += -D_WIN32_WCE=$(ACE_CE_VER) -DUNICODE -D_UNICODE -D_WINDOWS -DCEVER -DWIN32 -D_WINSOCKAPI_ -D_WIN32_IE=0x0500
@@ -36,8 +36,7 @@ RCFLAGS += -D_WIN32_WCE=$(ACE_CE_VER) -DUNICODE -D_UNICODE -D_WINDOWS -DCEVER -D
 cpumodelflag=0
 tunemodelflag=0
 
-COMPARCH ?= i386-mingw32ce-
-#COMPARCH ?= arm-wince-mingw32ce-
+CROSS_COMPILE ?= i386-mingw32ce-
 
 LIBS += -lcoredll -lmingw32 -lmingwex -lws2 -lsupc++ -liphlpapi
 
