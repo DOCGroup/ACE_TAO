@@ -37,25 +37,12 @@
 #   endif /*ACE_VXWORKS */
 # endif /* ACE_HAS_GETIFADDRS */
 
-#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600)
-#include /**/ <inetLib.h>
-#include /**/ <netinet/in_var.h>
-#if defined (ACE_HAS_IPV6)
-#include /**/ <ifLib.h>
-extern "C" {
-  extern struct in_ifaddr* in_ifaddr;
-  extern LIST_HEAD(in_ifaddrhashhead, in_ifaddr) *in_ifaddrhashtbl;
-}
-#endif /* ACE_HAS_IPV6 */
-#include "ace/OS_NS_stdio.h"
-#endif /* ACE_VXWORKS < 0x600 */
-
-#if defined (ACE_VXWORKS) && ((ACE_VXWORKS >= 0x630) && (ACE_VXWORKS <= 0x670)) && defined (__RTP__) && defined (ACE_HAS_IPV6)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670) && defined (__RTP__) && defined (ACE_HAS_IPV6)
 const struct in6_addr in6addr_any = IN6ADDR_ANY_INIT;
 const struct in6_addr in6addr_nodelocal_allnodes = IN6ADDR_NODELOCAL_ALLNODES_INIT;
 const struct in6_addr in6addr_linklocal_allnodes = IN6ADDR_LINKLOCAL_ALLNODES_INIT;
 const struct in6_addr in6addr_linklocal_allrouters = IN6ADDR_LINKLOCAL_ALLROUTERS_INIT;
-#endif /* ACE_VXWORKS >= 0x630 && <= 0x670 && __RTP__ && ACE_HAS_IPV6 */
+#endif /* ACE_VXWORKS <= 0x670 && __RTP__ && ACE_HAS_IPV6 */
 
 #if defined (ACE_HAS_WINCE)
 #include /**/ <iphlpapi.h>
@@ -1094,64 +1081,7 @@ get_ip_interfaces_aix (size_t &count,
   return 0;
 }
 
-#elif defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600) && !defined (ACE_HAS_VXWORKS551_MEDUSA)
-int
-get_ip_interfaces_vxworks_lt600 (size_t &count,
-                                 ACE_INET_Addr *&addrs)
-{
-  count = 0;
-  // Loop through each address structure
-
-# if defined (ACE_HAS_IPV6) && defined (TAILQ_ENTRY)
-#   define ia_next ia_link.tqe_next
-# endif /* TAILQ_ENTRY */
-
-  for (struct in_ifaddr* ia = in_ifaddr; ia != 0; ia = ia->ia_next)
-    {
-      ++count;
-    }
-
-  // Now create and initialize output array.
-  ACE_NEW_RETURN (addrs,
-                  ACE_INET_Addr[count],
-                  -1); // caller must free
-  count = 0;
-  for (struct in_ifaddr* ia = in_ifaddr; ia != 0; ia = ia->ia_next)
-    {
-      struct ifnet* ifp = ia->ia_ifa.ifa_ifp;
-      if (ifp != 0)
-        {
-          // Get the current interface name
-          char interface[64];
-          ACE_OS::sprintf(interface, "%s%d", ifp->if_name, ifp->if_unit);
-
-          // Get the address for the current interface
-          char address [INET_ADDR_LEN];
-          STATUS status = ifAddrGet(interface, address);
-
-          if (status == OK)
-            {
-              // Concatenate a ':' at the end. This is because in
-              // ACE_INET_Addr::string_to_addr, the ip_address is
-              // obtained using ':' as the delimiter. Since, using
-              // ifAddrGet(), we just get the IP address, I am adding
-              // a ":" to get with the general case.
-              ACE_OS::strcat (address, ":");
-              addrs[count].set (address);
-            }
-          else
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("ACE::get_ip_interface failed\n")
-                                 ACE_TEXT ("Couldnt get the IP Address\n")),
-                                 -1);
-            }
-          ++count;
-        }
-    }
-  return 0;
-}
-#endif // ACE_WIN32 || ACE_HAS_GETIFADDRS || __hpux || _AIX || ACE_VXWORKS < 0x600
+#endif // ACE_WIN32 || ACE_HAS_GETIFADDRS || __hpux || _AIX
 
 
 // return an array of all configured IP interfaces on this host, count
@@ -1174,8 +1104,6 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
   return get_ip_interfaces_hpux (count, addrs);
 #elif defined (_AIX)
   return get_ip_interfaces_aix (count, addrs);
-#elif defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600) && !defined (ACE_HAS_VXWORKS551_MEDUSA)
-  return get_ip_interfaces_vxworks_lt600 (count, addrs);
 #elif (defined (__unix) || defined (__unix__) || defined (ACE_OPENVMS) || (defined (ACE_VXWORKS) && !defined (ACE_HAS_GETIFADDRS)) || defined (ACE_HAS_RTEMS)) && !defined (ACE_LACKS_NETWORKING)
   // COMMON (SVR4 and BSD) UNIX CODE
 
