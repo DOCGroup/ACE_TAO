@@ -29,14 +29,14 @@ CFLAGS  += $(FLAGS_C_CC)
 
 CC              ?= gcc
 CXX             ?= g++
-CFLAGS          += -Wall -Wpointer-arith 
+CFLAGS          += -Wall -Wpointer-arith
 
 DCFLAGS         += -g
 DLD				= $(CXX)
 LD				= $(CXX)
 #LIBS += -lstdc++.6 -lSystem -lSystemStubs
 
-OCFLAGS		   += -O2 
+OCFLAGS		   += -O2
 RANLIB          = ranlib
 SOEXT			= dylib
 SOFLAGS		   += -dynamiclib
@@ -51,7 +51,7 @@ else
 endif
 
 LDFLAGS         += -flat_namespace
-CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
+CCFLAGS         += $(CFLAGS)
 
 ifeq ($(universal),1)
   CFLAGS += -arch i386 -arch ppc
