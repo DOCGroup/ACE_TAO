@@ -77,18 +77,18 @@ public:
   /**
    * Overwrite the value or type of an existing name in a
    * ACE_Remote_Name_Space or bind a new name to the context, if it
-   * didn't exist yet. (Wide charcter strings interface).
+   * didn't exist yet. (Wide character strings interface).
    */
   virtual int rebind (const ACE_NS_WString &name_in,
                       const ACE_NS_WString &value_in,
                       const char *type_in = "");
 
-  /// Delete a name from a ACE_Remote_Name_Space (Wide charcter strings
+  /// Delete a name from a ACE_Remote_Name_Space (Wide character strings
   /// Interface).
   virtual int unbind (const ACE_NS_WString &name_in);
 
   /// Get value and type of a given name binding (Wide chars).  The
-  /// caller is responsible for deleting both <value_out> and <type_out>!
+  /// caller is responsible for deleting both @a value_out and @a type_out!
   virtual int resolve (const ACE_NS_WString &name_in,
                        ACE_NS_WString &value_out,
                        char *&type_out);
