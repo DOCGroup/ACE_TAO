@@ -1,3 +1,12 @@
+Thu Feb 10 09:59:48 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/generate_component_mpc.pl:
+          Fixed the afters for the servants.
+
+        * tutorials/Quoter/Simple/Broker/StockBroker.mpc:
+        * tutorials/Quoter/Simple/Distributor/StockDistributor.mpc:
+          Regenerated using the latest generate_component_mpc
+
 Wed Feb  9 12:27:18 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * bin/generate_component_mpc.pl:

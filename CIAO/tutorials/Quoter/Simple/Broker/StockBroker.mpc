@@ -3,7 +3,7 @@
 
 project(Stock_Base_StockBroker_idl_gen) : componentidldefaults, avoids_ccm_noevent {
   custom_only = 1
-
+  
   idlflags += -Wb,stub_export_macro=STOCKBROKER_STUB_Export \
               -Wb,stub_export_include=StockBroker_stub_export.h \
               -Wb,skel_export_macro=STOCKBROKER_SVNT_Export \
@@ -105,7 +105,7 @@ project(Stock_Base_StockBroker_exec) : ciao_executor, avoids_ccm_noevent {
 
 
 project(Stock_Base_StockBroker_svnt) : ciao_servant, avoids_ccm_noevent  {
-  after      += Stock_Base_skel, Stock_Base_lem_stub  Stock_Base_StockBroker_lem_stub
+  after      += Stock_Base_skel Stock_Base_lem_stub  Stock_Base_StockBroker_lem_stub
   sharedname  = StockBroker_svnt
   libs       += StockBroker_stub StockBroker_lem_stub  \
                 Stock_Base_skel \
@@ -114,7 +114,7 @@ project(Stock_Base_StockBroker_svnt) : ciao_servant, avoids_ccm_noevent  {
   libpaths += ../lib
   libout = ../lib
   dynamicflags += STOCKBROKER_SVNT_BUILD_DLL
-
+  
   IDL_Files {
   }
 

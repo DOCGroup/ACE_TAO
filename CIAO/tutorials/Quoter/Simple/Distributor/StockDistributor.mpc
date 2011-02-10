@@ -105,7 +105,7 @@ project(Stock_Base_StockDistributor_exec) : ciao_executor, avoids_ccm_noevent {
 
 
 project(Stock_Base_StockDistributor_svnt) : ciao_servant, avoids_ccm_noevent  {
-  after      += Stock_Base_skel, Stock_Base_lem_stub  Stock_Base_StockDistributor_lem_stub
+  after      += Stock_Base_skel Stock_Base_lem_stub  Stock_Base_StockDistributor_lem_stub
   sharedname  = StockDistributor_svnt
   libs       += StockDistributor_stub StockDistributor_lem_stub  \
                 Stock_Base_skel \
