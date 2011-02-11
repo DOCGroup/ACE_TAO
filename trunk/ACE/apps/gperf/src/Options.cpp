@@ -24,11 +24,6 @@
  */
 
 #include "Options.h"
-
-
-
-#if defined (ACE_HAS_GPERF)
-
 #include "ace/Get_Opt.h"
 #include "Iterator.h"
 #include "ace/OS_NS_stdio.h"
@@ -848,4 +843,3 @@ Options::total_switches (void)
   return total_switches_;
 }
 
-#endif /* ACE_HAS_GPERF */

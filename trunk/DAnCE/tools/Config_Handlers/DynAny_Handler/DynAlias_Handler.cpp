@@ -23,7 +23,7 @@ namespace DAnCE
     {
       try
         {
-          CORBA::TypeCode_ptr tc;
+          CORBA::TypeCode_var tc;
 
           if (req_tc)
             tc = req_tc;
@@ -135,7 +135,7 @@ namespace DAnCE
 
           //          return retval._retn ();
         }
-      catch (DynamicAny::DynAny::InvalidValue)
+      catch (const DynamicAny::DynAny::InvalidValue&)
         {
           DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Invalid value provided in XML when trying to ")
                       ACE_TEXT ("initialize an instance of enumerated type %s\n"),
@@ -160,9 +160,8 @@ namespace DAnCE
     }
 
     void
-    DynAlias_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn)
+    DynAlias_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr)
     {
-      ACE_UNUSED_ARG (dyn);
       DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Extracting Enums not yet supported\n")));
     }
 
@@ -175,18 +174,16 @@ namespace DAnCE
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Did not find expected alias type description, tk_kind may be wrong."));
         }
 
-
-      // @@ Leak this guy onto the heap to avoid a compile problem.
-      CORBA::TypeCode_ptr tc =
+      CORBA::TypeCode_var tc =
         DYNANY_HANDLER->orb ()->create_alias_tc
         (ACE_TEXT_ALWAYS_CHAR (type.alias ().typeId ().c_str ()),
          ACE_TEXT_ALWAYS_CHAR (type.alias ().name ().c_str ()),
          DYNANY_HANDLER->create_typecode (type.alias ().elementType ()));
 
       DYNANY_HANDLER->register_typecode (type.alias ().typeId (),
-                                         tc);
+                                         tc.in ());
 
-      return tc;
+      return tc._retn ();
     }
 
   }

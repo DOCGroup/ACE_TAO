@@ -36,9 +36,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * function...  It performs automatic acquisition and release of
  * a parameterized synchronization object ACE_LOCK.
  *
- * The <ACE_LOCK> class given as an actual parameter must provide, at
- * the very least the <acquire>, <tryacquire>, <release>, and
- * <remove> methods.
+ * The ACE_LOCK class given as an actual parameter must provide, at
+ * the very least the acquire(), tryacquire(), release(), and
+ * remove() methods.
  *
  * @warning A successfully constructed ACE_Guard does NOT mean that the
  * lock was acquired!  It is the caller's responsibility, after

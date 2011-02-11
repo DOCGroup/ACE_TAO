@@ -119,8 +119,6 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   , use_local_memory_pool_ (false)
 #endif
   , cached_connection_lock_type_ (TAO_THREAD_LOCK)
-  , object_key_table_lock_type_ (TAO_THREAD_LOCK)
-  , corba_object_lock_type_ (TAO_THREAD_LOCK)
   , flushing_strategy_type_ (TAO_LEADER_FOLLOWER_FLUSHING)
   , char_codeset_parameters_ ()
   , wchar_codeset_parameters_ ()
@@ -274,43 +272,6 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
         if (curarg < argc)
             this->wchar_codeset_parameters_.add_translator (argv[curarg]);
       }
-
-    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 ACE_TEXT("-ORBConnectionCachingStrategy")) == 0)
-      {
-        ++curarg;
-
-        // @todo: This needs to be removed after a few betas. The
-        // note is being written during 1.2.3 timeframe.
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) This option would be deprecated\n")
-                    ACE_TEXT ("(%P|%t) Please use -ORBConnectionPurgingStrategy ")
-                    ACE_TEXT ("instead\n")));
-
-        if (curarg < argc)
-          {
-            ACE_TCHAR* name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name,
-                                    ACE_TEXT ("lru")) == 0)
-              this->connection_purging_type_ =
-                TAO_Resource_Factory::LRU;
-            else if (ACE_OS::strcasecmp (name,
-                                         ACE_TEXT ("lfu")) == 0)
-              this->connection_purging_type_ =
-                TAO_Resource_Factory::LFU;
-            else if (ACE_OS::strcasecmp (name,
-                                         ACE_TEXT ("fifo")) == 0)
-              this->connection_purging_type_ =
-                TAO_Resource_Factory::FIFO;
-            else if (ACE_OS::strcasecmp (name,
-                                         ACE_TEXT ("null")) == 0)
-              this->connection_purging_type_ =
-                  TAO_Resource_Factory::NOOP;
-            else
-              this->report_option_value_error (ACE_TEXT ("-ORBConnectionCachingStrategy"), name);
-          }
-      }
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_TEXT("-ORBConnectionPurgingStrategy")) == 0)
       {
@@ -393,52 +354,6 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               }
             else
               this->report_option_value_error (ACE_TEXT("-ORBConnectionCacheLock"), name);
-          }
-      }
-    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 ACE_TEXT("-ORBObjectKeyTableLock")) == 0)
-      {
-        ++curarg;
-        if (curarg < argc)
-          {
-            ACE_TCHAR* name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name,
-                                    ACE_TEXT("thread")) == 0)
-              this->object_key_table_lock_type_ = TAO_THREAD_LOCK;
-            else if (ACE_OS::strcasecmp (name,
-                                         ACE_TEXT("null")) == 0)
-              {
-                // @@ Bug 940 :This is a sort of hack now. We need to put
-                // this in a common place once we get the common
-                // switch that is documented in bug 940...
-                this->object_key_table_lock_type_ = TAO_NULL_LOCK;
-              }
-            else
-              this->report_option_value_error (ACE_TEXT("-ORBObjectKeyTableLock"), name);
-          }
-      }
-    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 ACE_TEXT("-ORBCorbaObjectLock")) == 0)
-      {
-        ++curarg;
-        if (curarg < argc)
-          {
-            ACE_TCHAR* name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name,
-                                    ACE_TEXT("thread")) == 0)
-              this->corba_object_lock_type_ = TAO_THREAD_LOCK;
-            else if (ACE_OS::strcasecmp (name,
-                                         ACE_TEXT("null")) == 0)
-              {
-                // @@ Bug 940 :This is a sort of hack now. We need to put
-                // this in a common place once we get the common
-                // switch that is documented in bug 940...
-                this->corba_object_lock_type_ = TAO_NULL_LOCK;
-              }
-            else
-              this->report_option_value_error (ACE_TEXT("-ORBCorbaObjectLock"), name);
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -1068,56 +983,6 @@ TAO_Default_Resource_Factory::locked_transport_cache (void)
     return 0;
 
   return 1;
-}
-
-
-ACE_Lock *
-TAO_Default_Resource_Factory::create_object_key_table_lock (void)
-{
-  ACE_Lock *the_lock = 0;
-
-  if (this->object_key_table_lock_type_ == TAO_NULL_LOCK)
-    ACE_NEW_RETURN (the_lock,
-                    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>,
-                    0);
-  else
-    ACE_NEW_RETURN (the_lock,
-                    ACE_Lock_Adapter<TAO_SYNCH_MUTEX>,
-                    0);
-
-  return the_lock;
-}
-
-ACE_Lock *
-TAO_Default_Resource_Factory::create_corba_object_lock (void)
-{
-  ACE_Lock *the_lock = 0;
-
-  if (this->corba_object_lock_type_ == TAO_NULL_LOCK)
-    ACE_NEW_RETURN (the_lock,
-                    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>,
-                    0);
-  else
-    ACE_NEW_RETURN (the_lock,
-                    ACE_Lock_Adapter<TAO_SYNCH_MUTEX>,
-                    0);
-
-  return the_lock;
-}
-
-TAO_Configurable_Refcount
-TAO_Default_Resource_Factory::create_corba_object_refcount (void)
-{
-  switch (this->corba_object_lock_type_)
-    {
-      case TAO_NULL_LOCK:
-        return TAO_Configurable_Refcount (
-                       TAO_Configurable_Refcount::TAO_NULL_LOCK);
-      case TAO_THREAD_LOCK:
-      default:
-        return TAO_Configurable_Refcount (
-                       TAO_Configurable_Refcount::TAO_THREAD_LOCK);
-    }
 }
 
 TAO_Flushing_Strategy *

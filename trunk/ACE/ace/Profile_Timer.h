@@ -101,14 +101,14 @@ private:
   ACE_Profile_Timer::Rusage last_usage_;
 
 #if defined (ACE_HAS_PRUSAGE_T)
-  /// Substract two timestructs and store their difference.
+  /// Subtract two timestructs and store their difference.
   void subtract (timespec_t &tdiff, timespec_t &t0, timespec_t &t1);
 
   /// I/O handle for /proc file system.
   ACE_HANDLE proc_handle_;
 
 #elif defined (ACE_HAS_GETRUSAGE)
-  /// Substract two timestructs and store their difference.
+  /// Subtract two timestructs and store their difference.
   void subtract (timeval &tdiff,
                  timeval &t0,
                  timeval &t1);

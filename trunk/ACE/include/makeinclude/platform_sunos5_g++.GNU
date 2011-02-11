@@ -58,7 +58,7 @@ include $(ACE_ROOT)/include/makeinclude/platform_sunos5_common.GNU
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 CFLAGS  += $(FLAGS_C_CC)
-CCFLAGS += $(FLAGS_C_CC) $(TEMPLATES_FLAG)
+CCFLAGS += $(FLAGS_C_CC)
 
 # Make sure we resolve all symbols at link time, see bugzilla 2710
 LDFLAGS         += -z now

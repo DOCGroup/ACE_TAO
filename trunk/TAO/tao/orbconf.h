@@ -143,18 +143,9 @@ const size_t TAO_DEFAULT_OBJECT_REF_TABLE_SIZE = 256;
 const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
 
-
 // The default size of TAO's server active object map.
 #if !defined (TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE)
-# if defined (TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE)
-//
-// TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE is deprecated. Please use
-// TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE.
-//
-#  define TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE
-# else
-#  define TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE 64
-# endif /* TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE */
+# define TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE 64
 #endif /* ! TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE */
 
 // The default size of TAO's server poa map.
@@ -835,11 +826,6 @@ enum TAO_Policy_Scope
 #   define TAO_MIN_IPV6_IIOP_MINOR 2
 # endif /* TAO_MIN_IPV6_IIOP_MINOR */
 #endif /* ACE_HAS_IPV6 */
-
-// @todo this needs to be deprecated. Use TAO_MAXBUFSIZE instead.
-#if !defined (TAO_CONNECTION_HANDLER_STACK_BUF_SIZE)
-#   define TAO_CONNECTION_HANDLER_STACK_BUF_SIZE 1024
-#endif /*TAO_CONNECTION_HANDLER_STACK_BUF_SIZE */
 
 // By default TAO generate the OMG standard profile components
 // (ORB_TYPE and CODE_SETS)

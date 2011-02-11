@@ -1,14 +1,14 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -n Stock_Base -l ../lib -o ../lib"
+// This file is generated with "generate_component_mpc.pl -ne -l ../lib -o ../lib Stock_Base"
 
 project(Stock_Base_idl_gen) : componentidldefaults, avoids_ccm_noevent {
   custom_only = 1
+  
   idlflags += -Wb,stub_export_macro=STOCK_BASE_STUB_Export \
               -Wb,stub_export_include=Stock_Base_stub_export.h \
               -Wb,skel_export_macro=STOCK_BASE_SKEL_Export \
               -Wb,skel_export_include=Stock_Base_skel_export.h \
-              -Wb,exec_export_macro=STOCK_BASE_EXEC_Export \
-              -Wb,exec_export_include=Stock_Base_exec_export.h
+              -Gxhex -Gxhsk -Gxhst
 
   IDL_Files {
     Stock_Base.idl
@@ -16,31 +16,55 @@ project(Stock_Base_idl_gen) : componentidldefaults, avoids_ccm_noevent {
 }
 
 project(Stock_Base_lem_gen) : ciaoidldefaults, avoids_ccm_noevent {
-  custom_only = 1
   after += Stock_Base_idl_gen
-  idlflags += \
-              -Wb,export_macro=STOCK_BASE_EXEC_Export \
-              -Wb,export_include=Stock_Base_exec_export.h
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=STOCK_BASE_LEM_STUB_Export \
+              -Wb,stub_export_include=Stock_Base_lem_stub_export.h \
+              -SS -Gxhst
 
   IDL_Files {
     Stock_BaseE.idl
   }
 }
 
-project(Stock_Base_stub) : ccm_stub, avoids_ccm_noevent   {
-  after += Stock_Base_lem_gen
-  libs  +=
+project(Stock_Base_lem_stub) : ccm_svnt, avoids_ccm_noevent {
+  after += Stock_Base_lem_gen Stock_Base_stub 
+  libs  +=  Stock_Base_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = Stock_Base_lem_stub
+  dynamicflags += STOCK_BASE_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Stock_BaseEC.cpp
+  }
+
+  Header_Files {
+    Stock_BaseEC.h
+    Stock_Base_lem_stub_export.h
+  }
+
+  Inline_Files {
+    Stock_BaseEC.inl
+  }
+}
+
+project(Stock_Base_stub) : ccm_stub, avoids_ccm_noevent {
+  after += Stock_Base_idl_gen 
+  libs  += 
   libpaths += ../lib
   libout = ../lib
   sharedname = Stock_Base_stub
-  dynamicflags += STOCK_BASE_STUB_BUILD_DLL STOCK_BASE_EXEC_BUILD_DLL
+  dynamicflags += STOCK_BASE_STUB_BUILD_DLL
 
   IDL_Files {
   }
 
   Source_Files {
     Stock_BaseC.cpp
-    Stock_BaseEC.cpp
   }
 
   Header_Files {
@@ -54,15 +78,15 @@ project(Stock_Base_stub) : ccm_stub, avoids_ccm_noevent   {
 }
 
 
-project(Stock_Base_skel) : ciao_executor, avoids_ccm_noevent   {
+project(Stock_Base_skel) : ciao_executor, avoids_ccm_noevent  {
   after      +=  Stock_Base_stub Stock_Base_lem_stub
   sharedname  = Stock_Base_skel
   libs       += Stock_Base_stub
-
+ 
   libpaths += ../lib
   libout = ../lib
   dynamicflags += STOCK_BASE_SKEL_BUILD_DLL
-
+  
   IDL_Files {
   }
 

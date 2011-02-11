@@ -202,7 +202,6 @@ namespace CIAO
                         "Successfully created datareader.\n"));
         }
 
-      ccm_dds_dr->enable ();
       ::DDS::DataReader_var reader = DDS_TypeSupport_i::create_datareader (
                                                                 ccm_dds_dr,
                                                                 this->dp_.in (),
@@ -288,7 +287,6 @@ namespace CIAO
         {
           ccm_dds_drl->set_dds_entity (reader.in ());
         }
-      ccm_dds_dr->enable ();
       return reader._retn ();
     }
 

@@ -53,7 +53,7 @@ namespace CIAO_Simple_SimpleNilFacetProvider_Impl
   // Port operations.
 
   ::Simple::CCM_Trigger_ptr
-  SimpleNilFacetProvider_exec_i::get_trig ()
+  SimpleNilFacetProvider_exec_i::get_trig_provides ()
   {
     ACE_TRACE ("SimpleNilFacetProvider_exec_i::get_trig ()");
     return ::Simple::CCM_Trigger::_nil ();

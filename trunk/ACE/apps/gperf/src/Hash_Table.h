@@ -36,8 +36,6 @@
 #include "List_Node.h"
 #include "ace/Copy_Disabled.h"
 
-#if defined (ACE_HAS_GPERF)
-
 /**
  * Hash table used to check for duplicate keyword entries.
  *
@@ -69,5 +67,4 @@ private:
   int collisions_;
 };
 
-#endif /* ACE_HAS_GPERF */
 #endif /* HASH_TABLE_H */

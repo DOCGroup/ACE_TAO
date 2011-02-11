@@ -62,15 +62,6 @@ ACE_Sched_Params::priority_max(ACE_SCHED_FIFO,ACE_SCOPE_THREAD)
 ACE_THR_PRI_FIFO_DEF + 25
 #endif /* ! __Lynx__ */
 
-#if defined (CHORUS_MVME)
-#define PCCTIMER_INIT {int pTime;/*Initialize the PCC timer chip */pccTimerInit ();\
-if (pccTimer (PCC2_TIMER1_START, &pTime) != K_OK)\
-ACE_DEBUG ((LM_DEBUG,"pccTimer has a pending benchmark\n"));\
-}
-#else /* !CHORUS_MVME */
-#define PCCTIMER_INIT
-#endif /* !CHORUS_MVME */
-
 #if defined (VXWORKS) && defined (FORCE_ARGS)
 static char *force_argv[]=
 {

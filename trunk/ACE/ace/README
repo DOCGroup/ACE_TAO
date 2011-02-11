@@ -353,8 +353,6 @@ ACE_USES_IPV4_IPV6_MIGRATION            Enable IPv6 support in ACE on
                                         turned on by default.
 ACE_HAS_IPV6_V6ONLY                     Platform supports the IPPROTO_IPV6
                                         level IPV6_V6ONLY socket option.
-ACE_HAS_IRIX62_THREADS                  Platform supports the very odd
-                                        IRIX 6.2 threads...
 ACE_HAS_NONSTATIC_OBJECT_MANAGER        Causes the ACE_Object_Manager
                                         instance to be created in main
                                         (int, char *[]), instead of as
@@ -482,9 +480,6 @@ ACE_HAS_PTHREADS                        Platform supports POSIX
                                         one.  Also may need some
                                         ACE_HAS_... thing for
                                         extensions.
-ACE_HAS_PTHREADS_DRAFT4                 Platform's 'Pthreads' is .4a draft 4
-ACE_HAS_PTHREADS_DRAFT6                 Platform's 'Pthreads' is .4a draft 6
-ACE_HAS_PTHREADS_DRAFT7                 Platform's 'Pthreads' is .1c draft 7
 ACE_HAS_PTHREADS_STD                    Platform supports POSIX.1c-1995 threads
                                         (This is the final standard
                                         Pthreads).
@@ -694,9 +689,6 @@ ACE_HAS_UCONTEXT_T                      Platform supports ucontext_t
 ACE_HAS_UNION_WAIT                      The wait() system call takes a
                                         (union wait *) rather than int
                                         *
-ACE_HAS_UNIXWARE_SVR4_SIGNAL_T          Has inconsistent SVR4 signal
-                                        stuff, but not the same as the
-                                        other platforms
 ACE_HAS_VALGRIND                        Running with valgrind
 ACE_HAS_VERBOSE_NOTSUP                  Prints out console message in
                                         ACE_NOTSUP.  Useful for

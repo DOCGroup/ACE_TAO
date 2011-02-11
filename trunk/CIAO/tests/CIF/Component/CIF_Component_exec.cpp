@@ -239,6 +239,15 @@ namespace CIAO_CIF_CIF_User_Impl
   }
 #endif
 
+#if  !defined (CCM_NOEVENT)
+  void
+  CIF_User_exec_i::push_consume_do_something_else (
+    ::CIF::DoSomethingElse * /* ev */)
+  {
+    /* Your code here. */
+  }
+#endif
+
   ::CORBA::Short
   CIF_User_exec_i::user_id (void)
   {

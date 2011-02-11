@@ -33,6 +33,9 @@ namespace CIAO
 
     try
     {
+      PortableServer::POA_var port_poa =
+        this->container_->the_port_POA ();
+
       // Removing Facets
       for (FacetTable::const_iterator iter =
              this->facet_table_.begin ();
@@ -40,11 +43,9 @@ namespace CIAO
            ++iter)
         {
           PortableServer::ObjectId_var facet_id =
-            this->container_->the_port_POA ()->reference_to_id (
-              iter->second);
+            port_poa->reference_to_id (iter->second);
 
-          this->container_->the_port_POA ()->deactivate_object (
-            facet_id);
+          port_poa->deactivate_object (facet_id);
 
           CIAO::Servant_Activator_var sa =
             this->container_->ports_servant_activator ();
@@ -207,6 +208,23 @@ namespace CIAO
 #endif
 
 #if !defined (CCM_LW)
+  ::Components::ReceptacleDescriptions *
+  Connector_Servant_Impl_Base::get_all_receptacles (void)
+  {
+    CIAO_TRACE ("Connector_Servant_Impl_Base::get_all_receptacles (void)");
+
+    ::Components::ReceptacleDescriptions * retval = 0;
+    ACE_NEW_THROW_EX (retval,
+                      ::Components::ReceptacleDescriptions,
+                      ::CORBA::NO_MEMORY ());
+    ::Components::ReceptacleDescriptions_var safe_retval = retval;
+    safe_retval->length (0UL);
+
+    return safe_retval._retn ();
+  }
+#endif
+
+#if !defined (CCM_LW)
   ::Components::PrimaryKeyBase *
   Connector_Servant_Impl_Base::get_primary_key (void)
   {
@@ -270,7 +288,15 @@ namespace CIAO
   ::Components::EmitterDescriptions *
   Connector_Servant_Impl_Base::get_all_emitters (void)
   {
-    return 0;
+    ::Components::EmitterDescriptions *retval = 0;
+    ACE_NEW_THROW_EX (retval,
+                      ::Components::EmitterDescriptions,
+                      ::CORBA::NO_MEMORY ());
+
+    ::Components::EmitterDescriptions_var safe_retval = retval;
+    safe_retval->length (0UL);
+
+    return safe_retval._retn ();
   }
 #endif
 
@@ -323,7 +349,15 @@ namespace CIAO
   ::Components::PublisherDescriptions *
   Connector_Servant_Impl_Base::get_all_publishers (void)
   {
-    return 0;
+    ::Components::PublisherDescriptions *retval = 0;
+    ACE_NEW_THROW_EX (retval,
+                      ::Components::PublisherDescriptions,
+                      ::CORBA::NO_MEMORY ());
+
+    ::Components::PublisherDescriptions_var safe_retval = retval;
+    safe_retval->length (0UL);
+
+    return safe_retval._retn ();
   }
 #endif
 
@@ -444,7 +478,7 @@ namespace CIAO
   Connector_Servant_Impl_Base::_default_POA (void)
   {
     CIAO_TRACE("Connector_Servant_Impl_Base::_default_POA (void)");
-    return PortableServer::POA::_duplicate (container_->the_POA ());
+    return container_->the_POA ();
   }
 
   ::CORBA::Object_ptr

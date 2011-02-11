@@ -35,8 +35,6 @@
 #include "Options.h"
 #include "ace/Copy_Disabled.h"
 
-#if defined (ACE_HAS_GPERF)
-
 /**
  * Data and function members for defining values and operations of
  * a list node.
@@ -80,5 +78,4 @@ public:
   int slot;
 };
 
-#endif /* ACE_HAS_GPERF */
 #endif /* LIST_NODE_H */

@@ -9,20 +9,6 @@
 #define _POSIX_C_SOURCE 199506
 #define _QNX_SOURCE
 
-// These constants are in i386-nto/include/limits.h, but egcs
-// picks up its own limits.h instead:
-#define _POSIX_NAME_MAX     14      /*  Max bytes in a filename             */
-#define _POSIX_PATH_MAX     256     /*  Num. bytes in pathname (excl. NULL) */
-
-#if defined(__OPTIMIZE__)
-# if defined(__X86__)
-    // string.h can't be used by ACE with __OPTIMIZE__.
-#   undef __OPTIMIZE__
-#   include <string.h>
-#   define __OPTIMIZE__
-# endif /* __X86__ */
-#endif /* __OPTIMIZE__ */
-
 // The following defines the Neutrino compiler.
 // gcc should know to call g++ as necessary
 #ifdef __GNUC__

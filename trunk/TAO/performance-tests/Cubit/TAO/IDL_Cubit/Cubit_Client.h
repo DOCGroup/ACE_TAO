@@ -57,7 +57,7 @@ public:
 
 private:
   int func (u_int i);
-  // Simple function that returns the substraction of 117 from the
+  // Simple function that returns the subtraction of 117 from the
   // parameter.
 
   int read_ior (const ACE_TCHAR *filename);

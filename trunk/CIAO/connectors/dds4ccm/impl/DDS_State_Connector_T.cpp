@@ -418,21 +418,9 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_ccm_activate (voi
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_ccm_activate");
 
-  ACE_Reactor* reactor = 0;
+  ACE_Reactor *reactor = this->reactor ();
 
-#if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-  reactor = this->reactor ();
-
-  if (!reactor)
-    {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                    "DDS_State_Connector_T::ccm_activate - "
-                    "No reactor to perform required context switch.\n"));
-      throw ::CORBA::INTERNAL ();
-    }
-#endif
-
-  TopicBaseConnector::ccm_activate (reactor);
+  TopicBaseConnector::ccm_activate ();
 
   if (this->observable_obtained_)
     {

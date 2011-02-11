@@ -85,7 +85,16 @@ be_visitor_operation_svs::gen_op_body (be_operation *node)
   os_ << be_nl
       << "{" << be_idt_nl;
 
-  os_ << "if ( ::CORBA::is_nil (this->executor_.in ()))"
+  ACE_CString sname_str (ScopeAsDecl (scope_->defined_in ())->full_name ());
+  const char *global = (sname_str == "" ? "" : "::");
+
+  os_ << "::" << sname_str << global << "CCM_" << scope_->original_local_name ()
+      << "_var executor = " << be_idt_nl
+      << "::" << sname_str << global << "CCM_" << scope_->original_local_name ()
+      << "::_duplicate (this->executor_.in ());" << be_uidt
+      << be_nl_2;
+
+  os_ << "if ( ::CORBA::is_nil (executor.in ()))"
       << be_idt_nl
       << "{"<< be_idt_nl
       << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
@@ -98,7 +107,7 @@ be_visitor_operation_svs::gen_op_body (be_operation *node)
       os_ << "return ";
     }
 
-  os_ << "this->executor_->" << node->local_name () << " (";
+  os_ << "executor->" << node->local_name () << " (";
 
   if (node->argument_count () == 0)
     {

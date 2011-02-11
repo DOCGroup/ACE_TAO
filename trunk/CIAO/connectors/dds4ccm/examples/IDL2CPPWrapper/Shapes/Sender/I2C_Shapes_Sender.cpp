@@ -82,6 +82,11 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
                                       0);
 
       TypedDataWriter::_var_type shapes_dw = TypedDataWriter::_narrow (dw.in ());
+      if (shapes_dw->enable () != DDS_RETCODE_OK)
+        {
+          ACE_ERROR ((LM_ERROR, "ACE_TMAIN - Unable to enable the datawriter.\n"));
+          throw ::CORBA::INTERNAL ();
+        }
       write (shapes_dw);
     }
   catch (::CORBA::Exception &e)

@@ -580,7 +580,7 @@ Activate POA manager</span><br style="font-family: monospace;">
 PortableServer::POAManager_var poa_manager =</span><br
  style="font-family: monospace;">
 <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-root_poa-&gt;the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);</span><br
+root_poa-&gt;the_POAManager ();</span><br
  style="font-family: monospace;">
 <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 ACE_TRY_CHECK;</span><small><span style="font-weight: bold;">(Highlighted
@@ -588,7 +588,7 @@ files are manually added to the generated mpc file)</span></small><br
  style="font-family: monospace;">
 <br style="font-family: monospace;">
 <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-poa_manager-&gt;activate (ACE_ENV_SINGLE_ARG_PARAMETER);</span><br
+poa_manager-&gt;activate ();</span><br
  style="font-family: monospace;">
 <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 ACE_TRY_CHECK;</span><br style="font-family: monospace;">

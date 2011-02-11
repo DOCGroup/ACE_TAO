@@ -54,7 +54,7 @@ namespace CIAO_Simple_SimplePublisher_Impl
     ACE_TRACE ("SimplePublisher_exec_i::ccm_activate ()");
 #if !defined (CCM_NOEVENT)
     ::Simple::Hello_var hello = new OBV_Simple::Hello ("Test successful, hello from SimplePublisher_exec_i");
-    this->context_->push_hello_ (hello._retn ());
+    this->context_->push_hello_publishes (hello.in ());
 #endif
     // Your code here.
   }

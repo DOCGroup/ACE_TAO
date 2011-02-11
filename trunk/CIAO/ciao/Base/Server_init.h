@@ -4,7 +4,7 @@
  * @file Server_init.h
  *
  * Initializing CIAO Server side ORB, if they need to.
- * I'm also puting some utilities functions here.
+ * I'm also putting some utilities functions here.
  *
  * @author Nanbor Wang <nanbor@cs.wustl.edu>
  * @author Gan Deng <dengg@dre.vanderbilt.edu>

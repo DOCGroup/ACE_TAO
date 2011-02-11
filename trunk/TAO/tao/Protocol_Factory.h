@@ -64,7 +64,7 @@ public:
   /**
    * Some protocols should not create a default endpoint unless the
    * user specifies a -ORBEndpoint option. For example, local IPC
-   * (aka UNIX domain sockets) is unable to remove the rendesvouz
+   * (aka UNIX domain sockets) is unable to remove the rendezvous
    * point if the server crashes.  For those protocols it is better to
    * create the endpoint only if the user requests one.
    */

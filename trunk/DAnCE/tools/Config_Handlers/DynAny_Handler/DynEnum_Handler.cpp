@@ -23,7 +23,7 @@ namespace DAnCE
     {
       try
         {
-          CORBA::TypeCode_ptr tc;
+          CORBA::TypeCode_var tc;
 
           if (req_tc)
             tc = req_tc;
@@ -75,7 +75,7 @@ namespace DAnCE
     {
       if (!type.enum_p ())
         {
-          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("ERROR: Enum type descriptioin required")));
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("ERROR: Enum type description required")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Did not find expected enum type description, tk_kind may be wrong."));
         }
 
@@ -91,16 +91,15 @@ namespace DAnCE
           members[index++] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ((*i)->c_str ()));
         }
 
-      // @@ Leak this guy onto the heap to avoid a compile problem.
-      CORBA::TypeCode_ptr tc =
+      CORBA::TypeCode_var tc =
         DYNANY_HANDLER->orb ()->create_enum_tc (ACE_TEXT_ALWAYS_CHAR (type.enum_ ().typeId ().c_str ()),
                                                 ACE_TEXT_ALWAYS_CHAR (type.enum_ ().name ().c_str ()),
                                                 members);
 
       DYNANY_HANDLER->register_typecode ((type.enum_ ().typeId ()),
-                                         tc);
+                                         tc.in ());
 
-      return tc;
+      return tc._retn ();
     }
 
   }

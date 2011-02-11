@@ -11,7 +11,7 @@ module Simple
   component SimpleConsumer
   {
 #if !defined (CCM_NOEVENT)
-    consumes Hello hello_;
+    consumes Hello hello_consumes;
 #endif
   };
 

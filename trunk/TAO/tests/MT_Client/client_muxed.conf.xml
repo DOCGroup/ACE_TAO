@@ -2,5 +2,5 @@
 <!-- Converted from ./tests/MT_Client/client_muxed.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
  <!--  $Id$ -->
- <static id="Client_Strategy_Factory" params="-ORBProfileLock null -ORBClientConnectionHandler MT  -ORBTransportMuxStrategy MUXED"/>
+ <static id="Client_Strategy_Factory" params="-ORBClientConnectionHandler MT  -ORBTransportMuxStrategy MUXED"/>
 </ACE_Svc_Conf>

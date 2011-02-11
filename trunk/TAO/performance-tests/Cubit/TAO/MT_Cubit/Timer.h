@@ -50,12 +50,6 @@ private:
   // This is the granularity of the timing of the CORBA requests. A
   // value of 5 represents that we will take time every 5 requests,
   // instead of the default of every request (1).
-
-#if defined (CHORUS_MVME)
-  // Variables for the pccTimer.
-  int pstartTime_;
-  int pstopTime_;
-#endif /* CHORUS_MVME */
 };
 
 #endif /* _MT_CUBIT_TIMER_H */

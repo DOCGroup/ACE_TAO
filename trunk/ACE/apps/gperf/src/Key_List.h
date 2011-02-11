@@ -28,8 +28,6 @@
 
 #include "Options.h"
 
-#if defined (ACE_HAS_GPERF)
-
 #include "List_Node.h"
 #include "Vectors.h"
 #include "ace/Copy_Disabled.h"
@@ -173,5 +171,4 @@ private:
   static int determined_[ACE_STANDARD_CHARACTER_SET_SIZE];
 };
 
-#endif /* ACE_HAS_GPERF */
 #endif /* KEY_LIST_H */

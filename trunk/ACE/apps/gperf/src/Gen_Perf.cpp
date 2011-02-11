@@ -24,11 +24,6 @@
  */
 
 #include "Gen_Perf.h"
-
-
-
-#if defined (ACE_HAS_GPERF)
-
 #include "Vectors.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_time.h"
@@ -472,4 +467,3 @@ Gen_Perf::~Gen_Perf (void)
   delete [] this->union_set;
 }
 
-#endif /* ACE_HAS_GPERF */

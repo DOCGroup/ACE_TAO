@@ -56,7 +56,7 @@ namespace CIAO_Simple_SimpleLocalProvider_Impl
   // Port operations.
 
   ::Simple::CCM_LocalTrigger_ptr
-  SimpleLocalProvider_exec_i::get_trig ()
+  SimpleLocalProvider_exec_i::get_trig_provides ()
   {
     ACE_TRACE ("SimpleLocalProvider_exec_i::get_trig ()");
     return new Trigger_exec_i (this->triggered_);

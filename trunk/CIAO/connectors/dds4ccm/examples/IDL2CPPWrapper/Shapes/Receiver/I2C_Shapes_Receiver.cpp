@@ -76,6 +76,11 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
                                       0);
 
       TypedDataReader::_var_type shapes_dr = TypedDataReader::_narrow (dr.in ());
+      if (shapes_dr->enable () != DDS_RETCODE_OK)
+        {
+          ACE_ERROR ((LM_ERROR, "ACE_TMAIN - Unable to enable the datareader.\n"));
+          throw ::CORBA::INTERNAL ();
+        }
       read (shapes_dr.in ());
     }
   catch (::CORBA::Exception &e)

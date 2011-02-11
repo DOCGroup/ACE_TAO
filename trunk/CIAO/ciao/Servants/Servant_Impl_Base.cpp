@@ -22,19 +22,21 @@ namespace CIAO
   {
     CIAO_TRACE("Servant_Impl_Base::remove (void)");
 #if !defined (CCM_NOEVENT)
+
     try
     {
+      PortableServer::POA_var port_poa =
+        this->container_->the_port_POA ();
+
       for (ConsumerTable::const_iterator iter =
              this->consumer_table_.begin ();
            iter != this->consumer_table_.end ();
            ++iter)
         {
           PortableServer::ObjectId_var cons_id =
-            this->container_->the_port_POA ()->reference_to_id (
-              iter->second);
+            port_poa->reference_to_id (iter->second);
 
-          this->container_->the_port_POA ()->deactivate_object (
-            cons_id);
+          port_poa->deactivate_object (cons_id);
 
           CIAO::Servant_Activator_var sa =
             this->container_->ports_servant_activator ();
@@ -193,30 +195,28 @@ namespace CIAO
       const ::Components::NameList & names)
   {
     CIAO_TRACE("Servant_Impl_Base::get_named_emitters");
-    ::Components::EmitterDescriptions_var retval;
+    ::Components::EmitterDescriptions *retval = 0;
     ACE_NEW_THROW_EX (retval,
                       ::Components::EmitterDescriptions,
                       ::CORBA::NO_MEMORY ());
 
-    retval->length (names.length ());
-    ::CORBA::ULong count = 0UL;
+    ::Components::EmitterDescriptions_var safe_retval = retval;
+    const ::CORBA::ULong len = names.length ();
+    safe_retval->length (len);
 
-    for (::CORBA::ULong name = 0UL;
-         name < names.length ();
-         ++name)
+    for (::CORBA::ULong i = 0UL; i < len; ++i)
       {
         ::Components::EmitterDescription * desc =
-          this->lookup_emitter_description (names[name].in ());
+          this->lookup_emitter_description (names[i].in ());
         if (desc)
           {
-            retval[count++] = desc;
+            safe_retval[i] = desc;
           }
         else
           {
             throw ::Components::InvalidName ();
           }
       }
-    ::Components::EmitterDescriptions_var safe_retval = retval;
     return safe_retval._retn ();
   }
 #endif
@@ -377,10 +377,12 @@ namespace CIAO
         if (::ACE_OS::strcmp (publisher_name, publisher_desc->name ()) == 0)
           {
             ::Components::PublisherDescription *pd = 0;
-
             ACE_NEW_THROW_EX (pd,
                               ::OBV_Components::PublisherDescription (),
                               CORBA::NO_MEMORY ());
+            pd->name (publisher_desc->name ());
+            pd->type_id (publisher_desc->type_id ());
+            pd->consumers (publisher_desc->consumers ());
             ::Components::PublisherDescription_var safe = pd;
             return safe._retn ();
           }
@@ -416,7 +418,13 @@ namespace CIAO
             ACE_NEW_THROW_EX (ed,
                               ::OBV_Components::EmitterDescription (),
                               CORBA::NO_MEMORY ());
-            ::Components::EmitterDescription_var safe = ed;
+
+            ed->name (emitter_desc->name ());
+            ed->type_id (emitter_desc->type_id ());
+            ed->consumer (emitter_desc->consumer());
+
+           ::Components::EmitterDescription_var safe = ed;
+
             return safe._retn ();
           }
       }

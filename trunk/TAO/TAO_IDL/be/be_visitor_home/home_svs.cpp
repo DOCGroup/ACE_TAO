@@ -145,9 +145,23 @@ be_visitor_home_svs::visit_factory (be_factory *node)
       const char *comp_lname = comp_->local_name ()->get_string ();
       const char *global = (comp_sname_str == "" ? "" : "::");
 
+      ACE_CString sname_str (ScopeAsDecl (node_->defined_in ())->full_name ());
+
+      os_ << "::" << sname_str << global << "CCM_" << node_->original_local_name ()
+          << "_var executor = " << be_idt_nl
+          << "::" << sname_str << global << "CCM_" << node_->original_local_name ()
+          << "::_duplicate (this->executor_.in ());" << be_uidt
+          << be_nl_2;
+
+      os_ << "if ( ::CORBA::is_nil (executor.in ()))"
+          << be_idt_nl
+          << "{"<< be_idt_nl
+          << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
+
       os_ << "::Components::EnterpriseComponent_var _ciao_ec ="
           << be_idt_nl
-          << "this->executor_->" << node->local_name () << " (";
+          << "executor->" << node->local_name () << " (";
 
       if (node->argument_count () > 0)
         {

@@ -38,26 +38,26 @@ namespace CIAO
 #if !defined (CCM_LW)
   namespace Servant
   {
-    template<typename T_var>
+    template<typename T>
     void describe_simplex_receptacle (
         const char *port_name,
         const char *port_type_repo_id,
-        T_var &connection,
+        typename T::_ptr_type connection,
         ::Components::ReceptacleDescriptions_var &descriptions,
         CORBA::ULong slot);
 
-    template<typename T_var>
+    template<typename T>
     void describe_multiplex_receptacle (
         const char *port_name,
         const char *port_type_repo_id,
-        std::map<ptrdiff_t, T_var> &objrefs,
+        const T &objrefs,
         ::Components::ReceptacleDescriptions_var &descriptions,
         CORBA::ULong slot);
   } /* Servant */
 #endif
 
   /**
-   * @class Servant_Impl_Base
+   * @class Connector_Servant_Impl
    *
    * @brief Non-template base class for Connector_Servant_Impl.
    *
@@ -99,6 +99,10 @@ namespace CIAO
 
 #if !defined (CCM_LW)
     virtual ::Components::FacetDescriptions * get_all_facets (void);
+#endif
+
+#if !defined (CCM_LW)
+    virtual ::Components::ReceptacleDescriptions * get_all_receptacles (void);
 #endif
 
 #if !defined (CCM_LW)
