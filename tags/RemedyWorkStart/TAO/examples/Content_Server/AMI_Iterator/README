@@ -1,0 +1,97 @@
+This program illustrates how to implement a simple client and server
+using CORBA, IIOP, and asynchronous method invocations (AMI).  Client
+applications can use this service to download and display files from a
+CORBA server on the network.  The core functionality of this program
+is as follows:
+
+        * Client applications will use an iterator in conjunction with AMI
+          to download and display files from multiple CORBA server one
+          ``chunk'' at a time simultaneously, without requiring
+          multiple threads.  This design will help improve the memory
+          management overhead on the client and server.
+
+        * Operations in the IDL interface will use exceptions to propagate
+          problems back to clients.
+
+        * The CORBA Naming Service is used to bind and resolve object
+          references, rather than using a file.
+    
+The client program performs the following activities:
+          
+        1. From the command-line, it reads the name of the pathname
+           you want to download.  It then initializes the client-side
+           ORB and uses resolve_initial_references() to obtain a
+           reference to a Naming Service (which must be running). This
+           object reference is then downcast via _narrow() to an
+           object reference for a CosNaming::NamingContext interface,
+           which is then used to resolve the object reference that the
+           server bound earlier.  After narrowing this to the Server
+           interface, the get_iterator() operation is called via the
+           object reference to obtain the Chunk_Iterator, which is
+           used to download the file.
+          
+        2. The client invokes the sendc_next_chunk() method on the
+           iterator, passing in the offset and the object reference to
+           the client's reply handler.  Only one pending call at a
+           time per-server.  To relax this constraint would require
+           some type of offset parameter to the next_chunk() callback
+           to perform reassembly if chunks for the same file arrived
+           out of order.
+          
+        3. When next_chunk() returns a chunk of the file, the contents
+           are written into a temporary file created in your a cache
+           (e.g., /tmp/yourloginname) on the local host.  Then, an
+           external viewer is spawned to display the file.  The type
+           of viewer to spawn is determined by examining the the
+           content_type_ metadata returned by the server.
+       
+The example can be run as follows:
+
+	1. Start the Name Service:
+
+		$ NameService -o /tmp/ns.ior
+
+	2. Start the SMI Content Server:
+
+		$ server -ORBInitRef NameService=file:///tmp/ns.ior
+
+	3. Request a file using the client:
+
+		$ client -ORBInitRef NameService=file:///tmp/ns.ior \
+		~/foo.jpg ~/bar.jpg
+
+This example can service multiple file requests.
+
+----------------------------------------
+
+The server output should look like the following:
+
+$ ./server -ORBInitRef NameService=file:///tmp/ns.ior
+Bound <Iterator_Factory> to <IOR:010000002400000049444c3a57653625f5365727665722f4974657261746f725f466163746f72793a312e300001000000000000007c000000010102001400000076616c696e6f12722e6563652e7563692e65647500f39600001b00000014010f00525354bd9d4e39a6ac03000000000001000000010000000003000000000000000800000001000000004f4154010000001400000001ad85e4001000100000000000901010000000000004f41540400000001ac0000> in Name Service.
+Accepting requests.
+Received request for file: </home/myhome/foo.jpg>
+Sending chunk 1 at offset <0> of size <8192>
+Received request for file: </home/myhome/bar.jpg>
+Sending chunk 2 at offset <8192> of size <8192>
+Sending chunk 1 at offset <0> of size <8192>
+Sending chunk 3 at offset <16384> of size <8192>
+Sending chunk 4 at offset <24576> of size <8192>
+Sending chunk 2 at offset <8192> of size <8192>
+Sending chunk 5 at offset <32768> of size <4573>
+Sending chunk 3 at offset <16384> of size <8192>
+Sending chunk 4 at offset <24576> of size <8192>
+Sending chunk 5 at offset <32768> of size <6997>
+
+Notice that requests for chunks of data from two separate files occur
+in the above run.
+
+----------------------------------------
+
+The client output should look similar to:
+
+$ ./client -ORBInitRef NameService=file:///tmp/ns.ior ~/foo.jpg ~/bar.jpg
+Wrote retrieved data to file </tmp/ace-file-nBqLM2>
+Spawned viewer <xv> with PID <11134>.
+Wrote retrieved data to file </tmp/ace-file-MKURUU>
+Spawned viewer <xv> with PID <11135>.
+

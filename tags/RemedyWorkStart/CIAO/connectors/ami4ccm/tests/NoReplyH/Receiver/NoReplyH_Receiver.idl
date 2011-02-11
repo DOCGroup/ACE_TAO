@@ -1,0 +1,18 @@
+// $Id$
+
+#ifndef NOREPLYH_RECEIVER_IDL
+#define NOREPLYH_RECEIVER_IDL
+
+#include <Components.idl>
+
+#include "Base/NoReplyH.idl"
+
+module NoReplyH
+{
+  component Receiver
+  {
+    /// Provides
+    provides MyFoo do_my_foo;
+  };
+};
+#endif

@@ -1,0 +1,69 @@
+//$Id$
+project (*idl): tao_versioning_idl_defaults, install {
+  custom_only = 1
+  idlflags += -Gp -Gd -GA \
+                      -Wb,export_macro=TAO_Monitor_Export \
+                      -Wb,export_include=tao/Monitor/Monitor_export.h \
+                      -iC tao/Monitor
+  IDL_Files {
+    idlflags += -Wb,unique_include=tao/Monitor/Monitor.h -SS -Sci
+    Monitor_include.pidl
+  }
+
+  IDL_Files {
+   idlflags += -Wb,include_guard=TAO_MONITOR_SAFE_INCLUDE \
+     -Wb,safe_include=tao/Monitor/Monitor.h -Ssi
+    Monitor.pidl
+  }
+
+  IDL_Files {
+   idlflags -= -Sa -St
+   idlflags += -SS -Wb,include_guard=TAO_MONITOR_SAFE_INCLUDE \
+     -Wb,safe_include=tao/Monitor/Monitor.h
+    Monitor_Types.pidl
+  }
+
+  specific {
+    install_dir = tao/Monitor
+  }
+}
+
+project (TAO_Monitor): portableserver, install, taoidldefaults, ace_mc, tao_output {
+  after       += *idl
+  sharedname   = TAO_Monitor
+  dynamicflags += TAO_MONITOR_BUILD_DLL
+
+  Source_Files {
+    *.cpp
+    Monitor_includeC.cpp
+    MonitorC.cpp
+    Monitor_TypesC.cpp
+    MonitorA.cpp
+    MonitorS.cpp
+    Monitor_includeA.cpp
+    Monitor_TypesA.cpp
+  }
+
+  Header_Files {
+    *.h
+    Monitor_includeC.h
+    Monitor_includeS.h
+    Monitor_includeA.h
+    MonitorC.h
+    MonitorS.h
+    MonitorA.h
+    Monitor_TypesC.h
+    Monitor_TypesS.h
+    Monitor_TypesA.h
+  }
+
+  Inline_Files {
+    *.inl
+    MonitorC.inl
+    Monitor_TypesC.inl
+  }
+
+  specific {
+    install_dir = tao/Monitor
+  }
+}

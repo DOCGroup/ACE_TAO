@@ -1,0 +1,99 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.1//EN" [
+  <!ENTITY applname "tao_catior">
+  <!ENTITY man_tao_orb_options "<citerefentry><refentrytitle>TAO_ORB_Options</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
+  <!ENTITY man_tao_cosnaming "<citerefentry><refentrytitle>tao_cosnaming</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
+  <!ENTITY tao_cosnaming "<application>tao_cosnaming</application>">
+  <!ENTITY seealso "&man_tao_orb_options;, &man_tao_cosnaming;">
+]>
+<!-- This file was written by Marek Brudka <mbrudka@aster.pl>   -->
+<!-- on September 2010 for the Debian GNU/Linux operating system.             -->
+<!-- It is mainly a plain text to DocBook conversion of the USAGE file. -->
+
+<refentry>
+  <refmeta>
+    <refentrytitle>TAO_CatIOR</refentrytitle>
+    <manvolnum>1</manvolnum>
+  </refmeta>
+  <refnamediv>
+    <refname>&applname;</refname>
+    <refpurpose>Stringified IOR decoder and viewer.</refpurpose>
+  </refnamediv>
+  <refsynopsisdiv>
+    <title>SYNOPSIS</title>
+    <cmdsynopsis>
+      <command>&applname;</command>
+      <group><arg>-ORBoptions</arg></group>
+      <arg>-f <replaceable>file</replaceable></arg>  
+      <arg>-n <replaceable>name</replaceable></arg>  
+    </cmdsynopsis>
+  </refsynopsisdiv>
+  <refsect1>
+    <title>DESCRIPTION</title>
+    <para>
+      &applname; takes in a <filename>file</filename> which contains the IOR and will then output the
+encoded information to stdout. 
+    </para>
+    <para>
+    Details of stringified IOR are described for example in page 33 of
+    <ulink
+      url="http://www.omg.org/spec/CORBA/3.1/Interoperability/PDF">OMG CORBA specification, Part 2: Interoperability, v3.1.</ulink>.
+    </para>
+    <para>
+     Examples of IOR can be found in <filename>/usr/share/doc/tao-utils/</filename> directory.
+    </para>
+  </refsect1>
+  <refsect1>
+    <title>OPTIONS</title>
+      <variablelist>
+	<varlistentry>
+	<term><parameter>-ORBoptions</parameter></term>
+	<listitem>
+	  <para>
+	    The program follows the usual TAO ORB command line syntax. See
+	    &man_tao_orb_options;.
+	  </para>
+      </listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><parameter>-f</parameter> <replaceable>filename</replaceable></term>
+	<listitem>
+	  <para>
+	    Takes in a <filename>file</filename> which contains the IOR and will then output the
+	    encoded information to stdout.
+          </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><parameter>-n</parameter> <replaceable>named</replaceable></term>
+	<listitem>
+	  <para>
+	    Displays decoded IOR of the <replaceable>named</replaceable> object registered at NamingService.
+          </para>
+	</listitem>
+      </varlistentry>
+      </variablelist>
+  </refsect1>
+  <refsect1>
+    <title>EXAMPLES</title>
+      <variablelist>
+      <varlistentry>
+	<term>&applname; -f <filename>/usr/share/doc/tao-utils/test/test1.ior</filename></term>
+	<listitem>
+	  <para>
+	    Displays decoded IOR from <filename>/usr/share/doc/tao-utils/test/test1.ior</filename>.
+	  </para>
+	</listitem>
+	</varlistentry>
+      </variablelist>
+  </refsect1>
+  <refsect1>
+    <title>SEE ALSO</title>
+    <para>&seealso;</para>
+  </refsect1>
+  <refsect1>
+    <title>AUTHOR</title>
+    <para>Jeff Hopper<email>&lt;jrhopper@cts.com&gt;</email> </para>
+    <para>Jason Cohen<email>&lt;jcohen@atl.lmco.com&gt;</email> </para>
+  </refsect1>
+
+</refentry>

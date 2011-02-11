@@ -1,0 +1,12 @@
+README
+
+In order to use dds4ccm correctly, you must first create a PICML
+model of the dds4ccm IDL files that can be used as a GME library 
+(called a PICML library from this point forward) for an project 
+that uses dds4ccm. The PICML library for dds4ccm needs to be created
+only once and each time the IDL changes. To create the dds4ccm 
+PICML library, please execute steps:
+
+%> cd $CIAO_ROOT
+%> idl_to_picml -x dds4ccm -r connectors/dds4ccm/idl
+%> mv dds4ccm.xme connectors/dds4ccm/models

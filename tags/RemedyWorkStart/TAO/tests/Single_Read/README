@@ -1,0 +1,18 @@
+This is a stress test for TAO's "single read" feature. This test sends
+different sized octet sequences as one-way calls to the server. The
+server should not lose any of the calls. The client and server can be
+started like this
+
+$ server -o filename
+$ client -k file://filename -d <data_bytes> -i <iterations>
+
+The client first sends an octet sequnce of size data_bytes, then
+follows that with octet sequence of size 10 times more and follows
+that with an octet sequnce of size 10 times less than <data_bytes>
+size. This sequence of data pushing is done <iterations>
+times. Preferably <data_bytes> should be a multiple of 10 with a
+minimum value of 10.
+
+TO_DO
+----
+Make this test a multi-threaded one.

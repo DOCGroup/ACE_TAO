@@ -1,0 +1,75 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    anonymous.idl
+//
+// = DESCRIPTION
+//    This file contains examples of IDL code that has
+//    caused problems in the past for the TAO IDL
+//    compiler. This test is to make sure the problems
+//    stay fixed.
+//
+// = AUTHORS
+//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+//
+// ============================================================================
+
+// Normal typedef'd sequence
+module Not_Anon
+{
+  typedef sequence<short> short_seq;
+};
+
+// Array is typedef'd, but sequence is not
+module Half_Anon
+{
+  typedef sequence<char> char_seq_array[14];
+  typedef sequence<unsigned long, 18> bd_ulong_seq_array[17];
+  typedef sequence<unsigned short> ushort_seq_array[12];
+  typedef sequence<unsigned short, 7> bd_ushort_seq_array[11];
+};
+
+module All_Anon
+{
+  // Tests generation of unique template parameter type
+  // names when identical bounded strings are used
+  // repeatedly as parameters and/or return types.
+  interface anon_bd_string_test
+  {
+    const long test_string_size = 25;
+
+    string<test_string_size> TestFunc ();
+    string<test_string_size> TestFunc2 ();
+    string<test_string_size> TestFunc3 ();
+    string<test_string_size> TestFunc23 ();
+
+    void TestFunc4 (in string<test_string_size> inarg);
+    void TestFunc41 (in string<test_string_size> inarg);
+    void TestFunc42 (in string<test_string_size> inarg);
+    void TestFunc43 (in string<test_string_size> inarg);
+  };
+
+  // Neither array nor sequence are typedef'd.
+  exception Nested_Anon
+  {
+    sequence<float> float_seq_array[6];
+    sequence<float> another_fsa[6];
+    long long_array_1[6];
+    long long_array_2[6];
+  };
+};
+
+// An anonymous string of the same bound will be found in
+// another IDL file not included in this one (typedef.idl).
+// The typecode for the anonymous string should not give us
+// 'already found' link errors.
+module Second
+{
+  typedef string<32> SecondString;
+};
+

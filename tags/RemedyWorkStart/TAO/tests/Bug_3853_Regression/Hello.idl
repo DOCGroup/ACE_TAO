@@ -1,0 +1,11 @@
+//
+// $Id$
+//
+module Demo
+{
+  interface HelloWorld
+  {
+    void sayHello(in string msg);
+    oneway void shutdown();
+  };
+};

@@ -1,0 +1,14 @@
+// $Id$
+
+#if !defined (CCM_HOMEEXECUTORBASE_IDL)
+#define CCM_HOMEEXECUTORBASE_IDL
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  local interface HomeExecutorBase
+  {
+  };
+};
+#endif /* CCM_HOMEEXECUTORBASE_IDL */

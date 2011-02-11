@@ -1,0 +1,53 @@
+//$Id$
+project(*idl) : taolib_with_idl, tao_versioning_idl_defaults, install {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -Wb,export_include=tao/TransportCurrent/Transport_Current_Export.h \
+                -Wb,export_macro=TAO_Transport_Current_Export \
+                -iC tao/TransportCurrent -I./TransportCurrent -SS -Sci
+    idlflags -= -Sa -St
+
+    TC.idl
+  }
+
+  specific {
+    install_dir = tao/TransportCurrent
+  }
+}
+
+project(TC) : taolib_with_idl, tao_output, taoidldefaults, install, interceptors, pi {
+  after += *idl
+  requires    += transport_current
+  sharedname   = TAO_TC
+  dynamicflags += TAO_TRANSPORT_CURRENT_BUILD_DLL
+
+  Source_Files {
+    Current_Impl.cpp
+    Current_Loader.cpp
+    Current_ORBInitializer_Base.cpp
+    TCC.cpp
+  }
+
+  Header_Files {
+    Current_Impl.h
+    Current_Loader.h
+    Current_ORBInitializer.h
+    Current_ORBInitializer_Base.h
+    Transport_Current.h
+    Transport_Current_Export.h
+    TCC.h
+    TCS.h
+  }
+
+  IDL_Files {
+  }
+
+  Template_Files {
+    Current_ORBInitializer.cpp
+  }
+
+  specific {
+    install_dir = tao/TransportCurrent
+  }
+}
+

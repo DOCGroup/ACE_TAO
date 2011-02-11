@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef DELREPLYH_SENDER_IDL
+#define DELREPLYH_SENDER_IDL
+
+#include <Components.idl>
+
+#include "Base/DelReplyH.idl"
+
+#pragma ciao ami4ccm receptacle "DelReplyH::Sender::run_my_foo"
+
+module DelReplyH
+{
+  component Sender
+  {
+    /// For synchronous invocation
+    uses MyFoo run_my_foo;
+  };
+};
+
+#endif

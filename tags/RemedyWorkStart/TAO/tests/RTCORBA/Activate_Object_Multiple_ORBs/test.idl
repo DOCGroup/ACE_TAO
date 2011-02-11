@@ -1,0 +1,6 @@
+// $Id$
+
+module Arch_Idl {
+  interface Monitorable {
+  };
+};

@@ -1,0 +1,57 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  idlflags    += -Wb,skel_export_macro=Diamond_Export \
+                 -Wb,stub_export_macro=MY_Stub_Export \
+                 -Wb,skel_export_include=diamond_export.h \
+                 -Wb,stub_export_include=stub_export.h \
+                 -Gd -St -Sa
+  IDL_Files {
+    Diamond.idl
+  }
+  custom_only = 1
+}
+
+project(*Test_Stub): taolib_with_idl {
+  after += *idl
+
+  sharedname   = Collocation_Test_Stub
+  dynamicflags += MY_STUB_BUILD_DLL
+
+  Source_Files {
+    DiamondC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Diamond) : taolib_with_idl, portableserver {
+  after       += *idl *Test_Stub
+  after       += Collocation_Test_Stub
+
+  sharedname   = Collocation_Diamond
+  dynamicflags += DIAMOND_BUILD_DLL
+
+  libs        += Collocation_Test_Stub
+
+  Source_Files {
+    Diamond_i.cpp
+    DiamondS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Server) : taoserver, strategies {
+  after   += *Test_Stub *Diamond
+  libs    += Collocation_Test_Stub Collocation_Diamond
+  exename  = Collocation
+  IDL_Files {
+  }
+
+  Source_Files {
+    Collocation_Tester.cpp
+    Collocation.cpp
+  }
+}
