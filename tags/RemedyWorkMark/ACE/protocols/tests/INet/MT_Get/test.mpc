@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(MT_Get) : aceexe, inet {
-  exename = mt_get
-  Source_Files {
-    Main.cpp
-  }
-}
