@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file Proxy_RW_Test_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef PROXY_RW_TEST_CONNECTOR_IDL_
+#define PROXY_RW_TEST_CONNECTOR_IDL_
+
+#include <Components.idl>
+#include <ccm_dds.idl>
+
+#include "Base/Proxy_RW_Test_Base.idl"
+
+#pragma ciao lem "Connector/Proxy_RW_Test_ConnectorE.idl"
+
+module Proxy_RW_Test
+{
+  module ::CCM_DDS::Typed < ::ProxyReadWriteTest, ::ProxyReadWriteTestSeq> ProxyReadWriteTestConnector;
+};
+
+#endif /* Reader_Test_CONNECTOR_IDL_ */

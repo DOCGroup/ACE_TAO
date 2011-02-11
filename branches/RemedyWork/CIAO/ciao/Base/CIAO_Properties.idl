@@ -1,0 +1,30 @@
+/**
+ * @file CIAO_Properties.idl
+ * @author William R. Otte
+ * $Id$
+ * Standardizes names of config values used by CIAO.
+ */
+
+#ifndef CIAO_PROPERTIES_IDL
+#define CIAO_PROPERTIES_IDL
+
+module CIAO
+{
+  module Deployment
+  {
+    const string SVNT_ENTRYPT = "edu.vanderbilt.dre.CIAO.ServantEntrypoint";
+    const string SVNT_ARTIFACT = "edu.vanderbilt.dre.CIAO.ServantArtifact";
+    const string EXEC_ARTIFACT = "edu.vanderbilt.dre.CIAO.ExecutorArtifact";
+    const string COMPONENT_FACTORY = "component factory";
+    const string HOME_FACTORY = "home factory";
+    const string COMPONENT_HOME = "edu.vanderbilt.dre.CIAO.ComponentHomeId";
+    const string CONTAINER_ID = "edu.vanderbilt.dre.CIAO.ContainerId";
+
+    const string CCM_CONTAINER = "edu.dre.vanderbilt.dre.CCM.Container";
+    const string CCM_HOME = "edu.dre.vanderbilt.dre.CCM.Home";
+    const string CCM_COMPONENT = "edu.dre.vanderbilt.dre.CCM.Component";
+    const string CCM_HOMEDCOMPONENT = "edu.dre.vanderbilt.dre.CCM.HomedComponent";
+    const string CCM_CONNECTOR = "edu.dre.vanderbilt.dre.CCM.Connector";
+  };
+};
+#endif /* CIAO_PROPERTIES_IDL */

@@ -1,0 +1,21 @@
+// -*- IDL -*-
+/**
+ *  @file Messaging_SyncScope.pidl
+ *
+ *  $Id$
+ */
+#ifndef TAO_MESSAGING_SYNCSCOPE_PIDL
+#define TAO_MESSAGING_SYNCSCOPE_PIDL
+
+#pragma prefix "omg.org"
+
+module Messaging
+{
+  typedef short SyncScope;
+  const SyncScope SYNC_NONE           = 0;
+  const SyncScope SYNC_WITH_TRANSPORT = 1;
+  const SyncScope SYNC_WITH_SERVER    = 2;
+  const SyncScope SYNC_WITH_TARGET    = 3;
+};
+
+#endif /* TAO_MESSAGING_SYNCSCOPE_PIDL */

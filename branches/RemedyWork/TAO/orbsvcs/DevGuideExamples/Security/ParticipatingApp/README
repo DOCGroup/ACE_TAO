@@ -1,0 +1,47 @@
+TAO Security
+
+DevGuideExamples/Security/ParticipatingApp/README
+
+This directory contains an illustration of a security
+aware application that accepts secured and unsecured
+requests and provides access to certain operations
+only for secured requests.
+
+This example uses a single set of service configuration
+files and takes a single path through the application
+code.
+
+For simplicity, the pass phrases have been stripped from the
+private keys included with these examples in the 1.2a release.
+This *should not* be construed as a recommended practice.  Instead,
+OCI strongly recommends that the security requirements of each
+real-world application be evaluated carefully and that appropriate
+procedures and practice be established accordingly.  Private keys
+without pass phrase protection are easily compromised and may
+allow an unauthorized party to masquerade as an authorized system
+user.
+
+Prior to running the server in these examples, the SSL_CERT_FILE
+environment variable must be set, e.g.,
+	# /bin/bash
+	export SSL_CERT_FILE=cacert.pem
+or
+	rem Windows
+	set SSL_CERT_FILE=cacert.pem
+
+To run the server:
+	./MessengerServer -ORBSvcConf server.conf
+
+To run the client:
+	./MessengerClient -ORBSvcConf client.conf
+
+
+-----------------------------------------
+Files: DevGuideExamples/Security/ParticipatingApp
+
+Messenger.idl		- Messenger interface definition.
+Messenger_i.h		- Messenger servant class definition.
+Messenger_i.cpp		- Messenger servant implementation.
+MessengerServer.cpp	- MessengerServer process main.
+MessengerClient.cpp	- MessengerClient process main.
+
