@@ -78,7 +78,7 @@ private:
   /// argv list.
   void align_wchar_with_char (void);
 
-  /// Clean up removed (comsumed) argv entries and reset the pass flags.
+  /// Clean up removed (consumed) argv entries and reset the pass flags.
   void cleanup (void);
 #endif  // ACE_USES_WCHAR
 

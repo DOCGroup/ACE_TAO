@@ -270,7 +270,7 @@ TAO_MProfile::remove_profiles (const TAO_MProfile *pfiles)
 CORBA::Boolean
 TAO_MProfile::is_equivalent (const TAO_MProfile *rhs)
 {
-  // Two profile lists are equivalent iff at least one of the profiles
+  // Two profile lists are equivalent if at least one of the profiles
   // from the first list is_equivalent to at least one of the profiles
   // from the second list!!
   for (TAO_PHandle h1 = 0; h1 < this->last_; ++h1)

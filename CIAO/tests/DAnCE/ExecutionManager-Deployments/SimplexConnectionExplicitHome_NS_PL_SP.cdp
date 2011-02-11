@@ -248,7 +248,7 @@
   <connection>
     <name>TestConnection</name>
    <internalEndpoint>
-      <portName>trig</portName>
+      <portName>trig_provides</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="SimpleProviderComponentInstance" />
@@ -256,7 +256,7 @@
     <externalReference>
       <location>corbaname:rir:/NameService#SimpleUserComponent</location>
       <provider>false</provider>
-      <portName>trig</portName>
+      <portName>trig_uses</portName>
       <supportedType>Meaningless</supportedType>
     </externalReference>
   </connection>
@@ -264,7 +264,7 @@
   <connection>
     <name>TestConnectionReverse</name>
     <internalEndpoint>
-      <portName>trig</portName>
+      <portName>trig_uses</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="SimpleUserComponentInstanceReverse" />
@@ -272,7 +272,7 @@
     <externalReference>
       <location>corbaname:rir:/NameService#SimpleProviderComponent</location>
       <provider>true</provider>
-      <portName>trig</portName>
+      <portName>trig_provides</portName>
       <supportedType>Meaningless</supportedType>
     </externalReference>
   </connection>

@@ -43,4 +43,4 @@ PLATFORM_X11_LDFLAGS=-L/usr/X11R6/lib
 #
 #include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
+CCFLAGS         += $(CFLAGS)

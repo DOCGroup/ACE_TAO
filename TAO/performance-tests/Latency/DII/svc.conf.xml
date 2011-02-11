@@ -5,6 +5,6 @@
  <!--  $Id$ -->
  <!--  -->
  <static id="Advanced_Resource_Factory" params="-ORBReactorMaskSignals 0 -ORBInputCDRAllocator null -ORBReactorType select_st -ORBConnectionCacheLock null"/>
- <static id="Server_Strategy_Factory" params="-ORBPOALock null -ORBAllowReactivationOfSystemids 0"/>
- <static id="Client_Strategy_Factory" params="-ORBProfileLock null -ORBClientConnectionHandler RW"/>
+ <static id="Server_Strategy_Factory" params="-ORBAllowReactivationOfSystemids 0"/>
+ <static id="Client_Strategy_Factory" params="-ORBClientConnectionHandler RW"/>
 </ACE_Svc_Conf>

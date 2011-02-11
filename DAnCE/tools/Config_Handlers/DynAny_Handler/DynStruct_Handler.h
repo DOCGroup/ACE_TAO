@@ -29,7 +29,6 @@ namespace DAnCE
     /**
      * @class DynStruct_Handler
      * @brief Translates structs specified in deployment plans into Dynamic Anys
-     *
      */
     class DynStruct_Handler
     {
@@ -42,7 +41,6 @@ namespace DAnCE
 
       static CORBA::TypeCode_ptr create_typecode (const DataType &type);
     };
-
   }
 }
 

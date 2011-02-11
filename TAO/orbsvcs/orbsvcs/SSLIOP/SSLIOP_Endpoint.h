@@ -234,7 +234,7 @@ namespace TAO
       /**
        * Return true if this endpoint is equivalent to @param
        * other_endpoint.
-       * Two synthetic endpoints are equivalent iff their iiop counterparts are
+       * Two synthetic endpoints are equivalent if their iiop counterparts are
        * equivalent, and, if both have non-zero ssl ports, their ssl
        * ports are the same.
        */

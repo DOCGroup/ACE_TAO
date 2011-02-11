@@ -2,7 +2,7 @@
  * @file CIAO_Properties.idl
  * @author William R. Otte
  * $Id$
- * Standardizes names of configvalues used by CIAO.
+ * Standardizes names of config values used by CIAO.
  */
 
 #ifndef CIAO_PROPERTIES_IDL
@@ -19,7 +19,6 @@ module CIAO
     const string HOME_FACTORY = "home factory";
     const string COMPONENT_HOME = "edu.vanderbilt.dre.CIAO.ComponentHomeId";
     const string CONTAINER_ID = "edu.vanderbilt.dre.CIAO.ContainerId";
-    const string REGISTER_NAMING = "edu.vanderbilt.dre.CIAO.RegisterNaming";
 
     const string CCM_CONTAINER = "edu.dre.vanderbilt.dre.CCM.Container";
     const string CCM_HOME = "edu.dre.vanderbilt.dre.CCM.Home";

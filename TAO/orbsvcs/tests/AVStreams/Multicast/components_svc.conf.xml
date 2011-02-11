@@ -4,7 +4,7 @@
  <!--  $Id$ -->
  <!--  -->
  <!-- static Advanced_Resource_Factory "-ORBReactorType select_st  -ORBInputCDRAllocator null  -ORBConnectionCacheLock null" -->
- <!-- static Server_Strategy_Factory "-ORBPOALock null -ORBAllowReactivationOfSystemids 0" -->
- <!-- static Client_Strategy_Factory "-ORBProfileLock null -ORBClientConnectionHandler ST" -->
+ <!-- static Server_Strategy_Factory "-ORBAllowReactivationOfSystemids 0" -->
+ <!-- static Client_Strategy_Factory "-ORBClientConnectionHandler ST" -->
  <static id="Advanced_Resource_Factory" params="-ORBReactorType select_mt"/>
 </ACE_Svc_Conf>

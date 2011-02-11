@@ -38,12 +38,8 @@
 #include "Globals.h"
 #include "Timer.h"
 
-#if defined (CHORUS_MVME)
-# include "pccTimer.h"
-#endif /* CHORUS_MVME */
-
 // FUZZ: disable check_for_math_include
-#if !defined (__KCC) && !defined (__xlC__)
+#if !defined (__xlC__)
     // Some plaforms define an exception structure in math.h...
 # if defined (__GNUG__)
     // And some compilers have this workaround.  Disable it with this

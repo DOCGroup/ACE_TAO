@@ -36,7 +36,7 @@ namespace DAnCE
     /**
     * @class Any_Handler
     *
-    * @brief Handler class for <ComponentInterfaceDescription> types.
+    * @brief Handler class for ComponentInterfaceDescription types.
     *
     * This class defines handler methods to map values from
     * XSC Any objects, parsed from the descriptor files, to the
@@ -52,7 +52,7 @@ namespace DAnCE
 
       DynamicAny::DynAny_ptr  extract_into_dynany (const DataType &type,
                                                    const DataValue &value,
-                                                   CORBA::TypeCode_ptr = 0);
+                                                   CORBA::TypeCode_ptr = CORBA::TypeCode::_nil ());
 
       Any extract_from_dynany (const CORBA::Any &any);
 

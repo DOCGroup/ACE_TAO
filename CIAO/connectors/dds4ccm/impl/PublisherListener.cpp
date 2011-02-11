@@ -81,7 +81,6 @@ namespace CIAO
         }
     }
 
-
     void
     PublisherListener::on_offered_deadline_missed (
       ::DDS::DataWriter_ptr the_Writer,
@@ -141,7 +140,6 @@ namespace CIAO
                         ACE_TEXT ("No error listener connected\n")));
         }
     }
-
 
     void
     PublisherListener::on_offered_incompatible_qos (
@@ -209,7 +207,6 @@ namespace CIAO
         }
     }
 
-
     void
     PublisherListener::on_liveliness_lost (
       ::DDS::DataWriter_ptr the_Writer,
@@ -224,7 +221,6 @@ namespace CIAO
 
       this->on_unexpected_status (the_Writer, ::DDS::LIVELINESS_LOST_STATUS);
     }
-
 
     void
     PublisherListener::on_publication_matched (
@@ -247,7 +243,6 @@ namespace CIAO
     }
 
     #if (CIAO_DDS4CCM_NDDS==1)
-
     void
     PublisherListener::on_reliable_writer_cache_changed (
       ::DDS::DataWriter_ptr the_Writer,
@@ -281,7 +276,6 @@ namespace CIAO
       this->on_unexpected_status (the_Writer, ::DDS::RELIABLE_WRITER_CACHE_CHANGED_STATUS);
     }
 
-
     void
     PublisherListener::on_reliable_reader_activity_changed (
       ::DDS::DataWriter_ptr the_Writer,
@@ -303,7 +297,6 @@ namespace CIAO
     }
     #endif
 
-
     ::DDS::StatusMask
     PublisherListener::get_mask (
       ::CCM_DDS::ConnectorStatusListener_ptr error_listener)
@@ -314,13 +307,13 @@ namespace CIAO
           DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
         {
           mask = ::DDS::OFFERED_DEADLINE_MISSED_STATUS |
-                ::DDS::OFFERED_INCOMPATIBLE_QOS_STATUS |
+                 ::DDS::OFFERED_INCOMPATIBLE_QOS_STATUS |
     #if (CIAO_DDS4CCM_NDDS==1)
-                ::DDS::RELIABLE_WRITER_CACHE_CHANGED_STATUS |
-                ::DDS::RELIABLE_READER_ACTIVITY_CHANGED_STATUS |
+                 ::DDS::RELIABLE_WRITER_CACHE_CHANGED_STATUS |
+                 ::DDS::RELIABLE_READER_ACTIVITY_CHANGED_STATUS |
     #endif
-                ::DDS::LIVELINESS_LOST_STATUS |
-                ::DDS::PUBLICATION_MATCHED_STATUS;
+                 ::DDS::LIVELINESS_LOST_STATUS |
+                 ::DDS::PUBLICATION_MATCHED_STATUS;
         }
 
       if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)

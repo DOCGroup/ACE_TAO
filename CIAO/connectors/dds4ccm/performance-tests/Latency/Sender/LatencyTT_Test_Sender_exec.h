@@ -103,7 +103,8 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
       ::LatencyTT_Test::CCM_Sender_Context_ptr ctx,
       Sender_exec_i &callback,
       Atomic_Boolean &matched,
-      int number_of_subscribers);
+      int number_of_subscribers,
+      Atomic_Long &unexpected_count);
     virtual ~connector_status_exec_i (void);
 
     //@{
@@ -139,6 +140,7 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
     Sender_exec_i &callback_;
     Atomic_Boolean &matched_;
     int number_of_subscribers_;
+    Atomic_Long &unexpected_count_;
   };
 
   /**
@@ -241,6 +243,7 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
     ACE_UINT64* duration_times_;
     ::CORBA::Short* datalen_range_;
     ::CORBA::Long _clock_overhead_;
+    Atomic_Long unexpected_count_;
 
     //@}
 

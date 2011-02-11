@@ -1,3 +1,33 @@
+Fri Feb 11 11:16:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Sun Jan 23 19:27:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tools/Config_Handlers/DynAny_Handler/DataType_Handler.h:
+                * tools/Config_Handlers/DynAny_Handler/DataType_Handler.cpp:
+                * tools/Config_Handlers/DynAny_Handler/DynAlias_Handler.cpp:
+                * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.h:
+                * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+                * tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.h:
+                * tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp:
+                * tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp:
+                * tools/Config_Handlers/DynAny_Handler/DynStruct_Handler.h:
+                * tools/Config_Handlers/DynAny_Handler/DynStruct_Handler.cpp:
+                  Fixed valgrind leaks, layout changes, use DANCE_ERROR
+
+        Fri Jan 21 15:43:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp:
+                  Fixed typo in comment
+
+                * tools/Config_Handlers/DynAny_Handler/DynStruct_Handler.cpp:
+                  Postfix increment
+
+        === end changelog ===
+
 Fri Jan 28 11:21:05 CET 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE version 1.0.1 released.

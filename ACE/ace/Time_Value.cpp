@@ -213,13 +213,13 @@ ACE_Time_Value::normalize (bool saturate)
       this->tv_.tv_usec += ACE_ONE_SECOND_IN_USECS;
     }
   // tv_sec in qnxnto is unsigned
-#if !defined ( __QNXNTO__)
+#if !defined ( __QNX__)
   else if (this->tv_.tv_sec < 0 && this->tv_.tv_usec > 0)
     {
       ++this->tv_.tv_sec;
       this->tv_.tv_usec -= ACE_ONE_SECOND_IN_USECS;
     }
-#endif /* __QNXNTO__  */
+#endif /* __QNX__  */
 }
 
 

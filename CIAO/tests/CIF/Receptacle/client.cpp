@@ -2,17 +2,27 @@
 
 #include "Common/CIF_Common.h"
 
+#include <vector>
+
 //============================================================
 // connect
 //============================================================
 ::Components::Cookie *
 connect (::Components::Receptacles_ptr rec,
-         ::CORBA::Object_ptr facet)
+         ::CORBA::Object_ptr facet,
+         bool multiple = false)
 {
   ::Components::Cookie_var ck;
   try
     {
-      ck = rec->connect ("use_cif_foo", facet);
+      if (multiple)
+        {
+          ck = rec->connect ("use_multiple_foo", facet);
+        }
+      else
+        {
+          ck = rec->connect ("use_cif_foo", facet);
+        }
     }
   catch (const ::Components::InvalidName &)
     {
@@ -46,12 +56,20 @@ connect (::Components::Receptacles_ptr rec,
 //============================================================
 ::CORBA::Object_ptr
 disconnect (::Components::Receptacles_ptr rec,
-            ::Components::Cookie * ck)
+            ::Components::Cookie * ck,
+            bool multiple = false)
 {
   ::CORBA::Object_var obj;
   try
     {
-      obj = rec->disconnect ("use_cif_foo", ck);
+      if (multiple)
+        {
+          obj = rec->disconnect ("use_multiple_foo", ck);
+        }
+      else
+        {
+          obj = rec->disconnect ("use_cif_foo", ck);
+        }
     }
   catch (const ::Components::InvalidName &)
     {
@@ -98,8 +116,62 @@ test_connect_disconnect (::Components::Receptacles_ptr rec,
                             "disconnect test passed !\n"));
       return 0;
     }
-  else
-    return 1;
+  return 1;
+}
+
+//============================================================
+// test_connect_disconnect
+//============================================================
+int
+test_cookie_required_exception (::Components::Receptacles_ptr rec,
+                                ::CORBA::Object_ptr facet)
+{
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_cookie_required_exception - "
+                        "Start test\n"));
+  int ret = 0;
+  ::Components::Cookie_var ck1 = connect (rec, facet, true);
+  ::Components::Cookie_var ck2 = connect (rec, facet, true);
+
+  ::CORBA::Object_var obj;
+
+  try
+    {
+      obj = rec->disconnect ("use_multiple_foo", 0);
+      ACE_ERROR ((LM_ERROR, "Receptacle test_cookie_required_exception - "
+                            "Error: No exception during disconnect\n"));
+      ++ret;
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_cookie_required_exception - "
+                            "Error: InvalidName "
+                            "exception during disconnect\n"));
+      ++ret;
+    }
+  catch (const ::Components::InvalidConnection &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_cookie_required_exception - "
+                            "Error: InvalidConnection "
+                            "exception during disconnect\n"));
+      ++ret;
+    }
+  catch (const ::Components::CookieRequired &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Receptacle test_cookie_required_exception - "
+                            "Received expected CookieRequired "
+                            "exception during disconnect\n"));
+    }
+  catch (const ::Components::NoConnection &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle test_cookie_required_exception - "
+                            "Error: NoConnection "
+                            "exception during disconnect\n"));
+      ++ret;
+    }
+  //need to disconnect properly
+  obj = disconnect (rec, ck1.in (), true);
+  obj = disconnect (rec, ck2.in (), true);
+  return ret;
 }
 
 //============================================================
@@ -339,7 +411,7 @@ test_get_named_receptacles (::Components::Receptacles_ptr rec)
                     ::Components::NameList,
                     ::CORBA::NO_MEMORY ());
   one_name->length (1);
-  (*one_name)[0] = ::CORBA::string_dup ("use_cif_foo");
+  (*one_name)[0] = ::CORBA::string_dup ("use_cif_derived_foo");
 
   try
     {
@@ -459,47 +531,57 @@ test_get_named_receptacles (::Components::Receptacles_ptr rec)
 #endif
 
 
-#if !defined (CCM_LW)
 int
-test_exceeded_limit_exception (::Components::Receptacles_ptr rec,
+test_multiple_facets (::Components::Receptacles_ptr rec,
                                ::CORBA::Object_ptr facet)
 {
+  std::vector < ::Components::Cookie_var > cookies;
   try
     {
       for (CORBA::ULong i = 0UL;
-           i < 100;
+           i < 5;
            ++i)
         {
-          rec->connect ("use_multiple_foo", facet);
+          ::Components::Cookie_var tmp =
+            rec->connect ("use_multiple_foo", facet);
+          cookies.push_back (tmp._retn ());
+          ACE_DEBUG ((LM_DEBUG, "Receptacle test_multiple_facets - "
+                                "%d receptacle(s) connected\n",
+                                i + 1));
+        }
+      for (CORBA::ULong i = 0UL;
+           i < 5;
+           ++i)
+        {
+          CORBA::Object_var objref = disconnect (rec, cookies[i].in (), true);
+          ACE_DEBUG ((LM_DEBUG, "Receptacle test_multiple_facets - "
+                                "Disconnected receptacle %d\n",
+                                i + 1));
         }
     }
   catch (const ::Components::ExceededConnectionLimit &)
     {
-      ACE_ERROR ((LM_ERROR, "Receptacle test_exceeded_limit_exception - "
-                            "Expected ExceededConnectionLimit "
-                            "exception received\n"));
-       ACE_DEBUG ((LM_DEBUG, "Receptacle test_exceeded_limit_exception - "
-                             "Test passed!\n"));
-      return 0;
+      ACE_ERROR ((LM_ERROR, "Receptacle test_multiple_facets - "
+                            "Error: ExceededConnectionLimit "
+                            "exception caught\n"));
+      return 1;
     }
   catch (const ::CORBA::Exception &ex)
     {
-      ex._tao_print_exception ("test_exceeded_limit_exception");
+      ex._tao_print_exception ("test_multiple_facets");
       return 1;
     }
   catch (...)
     {
-      ACE_ERROR ((LM_ERROR, "Receptacle test_exceeded_limit_exception - "
+      ACE_ERROR ((LM_ERROR, "Receptacle test_multiple_facets - "
                             "Error: exception during invocation of "
-                            "test_exceeded_limit_exception.\n"));
+                            "test_multiple_facets.\n"));
       return 1;
     }
-  ACE_ERROR ((LM_ERROR, "Receptacle test_exceeded_limit_exception - "
-                        "Error: Did not received the expected "
-                        "ExceededConnectionLimit exception!\n"));
-  return 1;
+  ACE_DEBUG ((LM_DEBUG, "Receptacle test_multiple_facets - "
+                        "Test passed!\n"));
+  return 0;
 }
-#endif
 
 #if !defined (CCM_LW)
 int
@@ -527,7 +609,7 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "Receptacle get_all_ports - "
+          ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_all_ports - "
                                 "Expected number of Facets found\n"));
         }
 #if !defined (CCM_NOEVENT)
@@ -548,13 +630,13 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
               ::ACE_OS::strcmp (rds[i]->name (), "use_multiple_foo") == 0 ||
               ::ACE_OS::strcmp (rds[i]->name (), "use_cif_derived_foo") == 0)
             {
-              ACE_DEBUG ((LM_DEBUG, "Receptacle get_all_ports - "
+              ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_all_ports - "
                                     "Correct receptacledescription found <%C>\n",
                                     rds[i]->name ()));
             }
           else
             {
-              ACE_ERROR ((LM_ERROR, "Receptacle get_all_ports - "
+              ACE_ERROR ((LM_ERROR, "Receptacle test_get_all_ports - "
                                     "Error Incorrect receptacledescription found <%C>\n",
                                     rds[i]->name ()));
               ++ret;
@@ -563,17 +645,17 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
 
       ::Components::ConsumerDescriptions cds;
       cds = cpd->consumers ();
-      if (cds.length () != 1)
+      if (cds.length () != 2)
         {
-          ACE_ERROR ((LM_ERROR, "Receptacle get_all_ports - "
+          ACE_ERROR ((LM_ERROR, "Receptacle test_get_all_ports - "
                                 "Error: Unexpected number of consumers found:  "
-                                "expected <1> - received <%d>\n",
+                                "expected <2> - received <%d>\n",
                                 cds.length ()));
           ++ret;
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "Receptacle get_all_ports - "
+          ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_all_ports - "
                                 "Expected number of Consumers found\n"));
         }
 
@@ -581,14 +663,14 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
       eds = cpd->emitters ();
       if (eds.length () != 0)
         {
-          ACE_ERROR ((LM_ERROR, "Receptacle get_all_ports - "
+          ACE_ERROR ((LM_ERROR, "Receptacle test_get_all_ports - "
                                 "Error: Found Emitters while not  "
                                 "configured\n"));
           ++ret;
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "Receptacle get_all_ports - "
+          ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_all_ports - "
                                 "Expected number of Emitters found\n"));
         }
 
@@ -596,26 +678,26 @@ test_get_all_ports (::Components::CCMObject_ptr cmp)
       pds = cpd->publishers ();
       if (pds.length () != 0)
         {
-          ACE_ERROR ((LM_ERROR, "Receptacle get_all_ports - "
+          ACE_ERROR ((LM_ERROR, "Receptacle test_get_all_ports - "
                                 "Error: Found Publishers while not  "
                                 "configured\n"));
           ++ret;
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "Receptacle get_all_ports - "
+          ACE_DEBUG ((LM_DEBUG, "Receptacle test_get_all_ports - "
                                 "Expected number of Publishers found\n"));
         }
 #endif
     }
   catch (const ::CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Receptacle get_all_ports");
+      ex._tao_print_exception ("Receptacle test_get_all_ports");
       return 1;
     }
   catch (...)
     {
-      ACE_ERROR ((LM_ERROR, "Receptacle get_all_ports - "
+      ACE_ERROR ((LM_ERROR, "Receptacle test_get_all_ports - "
                             "Error: Unexpected exception caught.\n"));
       return 1;
     }
@@ -673,13 +755,13 @@ test_get_all_consumers (::Components::CCMObject_ptr cmp)
     {
       ::Components::ConsumerDescriptions_var cds;
       cds = cmp->get_all_consumers ();
-      if (cds->length () != 1)
+      if (cds->length () != 2)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                             "Receptacle test_get_all_consumers - "
                             "Error: get_all_consumers returned an "
                             "unexpected number of consumers: "
-                            "expected <1> - received <%d>\n",
+                            "expected <2> - received <%d>\n",
                             cds->length ()),
                             1);
         }
@@ -716,7 +798,7 @@ test_get_named_consumers (::Components::CCMObject_ptr cmp)
                         ::Components::NameList,
                         ::CORBA::NO_MEMORY ());
       one_name->length (1);
-      (*one_name)[0] = ::CORBA::string_dup ("consume_do_something");
+      (*one_name)[0] = ::CORBA::string_dup ("consume_do_something_else");
       cds = cmp->get_named_consumers (one_name);
       if (cds->length () != 1)
         {
@@ -800,6 +882,9 @@ run_test (::Components::Receptacles_ptr rec,
       ret += test_connect_disconnect (rec, facet);
 
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_cookie_required_exception (rec, facet);
+
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_invalid_name_exception (rec, facet);
 
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
@@ -808,8 +893,8 @@ run_test (::Components::Receptacles_ptr rec,
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_invalid_connection_exception (rec);
 
-      //ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
-      //ret += test_exceeded_limit_exception (rec, facet);
+      ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
+      ret += test_multiple_facets (rec, facet);
 
 #if !defined (CCM_LW)
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
@@ -917,17 +1002,17 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
     }
 
   ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
-  ACE_DEBUG ((LM_DEBUG, "SUMMARY : \n"));
+  ACE_DEBUG ((LM_DEBUG, "SUMMARY : "));
   if (ret != 0)
     {
-      ACE_ERROR ((LM_ERROR, "\tReceptacle main - "
-              " %d error(s) found during tests.\n",
+      ACE_ERROR ((LM_ERROR, "Receptacle main - "
+              " %d error(s) found during tests.\n\n",
               ret));
     }
   else
     {
-      ACE_ERROR ((LM_ERROR, "\tReceptacle main - "
-              " No problems found during tests.\n"));
+      ACE_ERROR ((LM_ERROR, "Receptacle main - "
+              " No problems found during tests.\n\n"));
     }
   return ret;
 }

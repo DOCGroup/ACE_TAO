@@ -26,11 +26,6 @@
  */
 
 #include "Gen_Perf.h"
-
-
-
-#if defined (ACE_HAS_GPERF)
-
 #include "Options.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdio.h"
@@ -70,13 +65,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     tm->tm_sec);
   return status;
 }
-#else  /* ! ACE_HAS_GPERF */
-int
-ACE_TMAIN (int, ACE_TCHAR *[])
-{
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "gperf is not operational because "
-                     "ACE_HAS_GPERF was not enabled for the build\n"),
-                    1);
-}
-#endif /* ! ACE_HAS_GPERF */

@@ -1,3 +1,5 @@
+# $Id$
+
 """A lightweight python templating engine.  Templet version 2 beta.
 
 Supports two templating idioms:

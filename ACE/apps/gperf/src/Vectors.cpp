@@ -25,14 +25,8 @@
 
 #include "Vectors.h"
 
-
-
-#if defined (ACE_HAS_GPERF)
-
 /// Counts occurrences of each key set character.
 int Vectors::occurrences[ACE_STANDARD_CHARACTER_SET_SIZE];
 
 /// Value associated with each character.
 int Vectors::asso_values[ACE_STANDARD_CHARACTER_SET_SIZE];
-
-#endif /* ACE_HAS_GPERF */

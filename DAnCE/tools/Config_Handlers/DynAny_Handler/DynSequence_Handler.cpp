@@ -23,7 +23,7 @@ namespace DAnCE
                                               const DataValue &value,
                                               CORBA::TypeCode_ptr req_tc)
     {
-      CORBA::TypeCode_ptr tc;
+      CORBA::TypeCode_var tc;
       if (req_tc)
         tc = req_tc;
       else
@@ -93,7 +93,7 @@ namespace DAnCE
 
         case TCKind::tk_char_l:
         case TCKind::tk_wchar_l:
-          // special case where value iterataor multiplicity should be one, and should
+          // special case where value iterator multiplicity should be one, and should
           // represent a string, each character of which becomes a element of the sequence.
 
         case TCKind::tk_sequence_l:
@@ -122,9 +122,8 @@ namespace DAnCE
     }
 
     void
-    DynSequence_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn)
+    DynSequence_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr)
     {
-      ACE_UNUSED_ARG (dyn);
       DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Extracting Sequences not yet supported\n")));
     }
 
@@ -133,29 +132,22 @@ namespace DAnCE
     {
       if (!type.sequence_p ())
         {
-          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("ERROR: Sequence type descriptioin required")));
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("ERROR: Sequence type description required")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Expected <sequence> element, incorrect tc_kind."));
         }
 
-      CORBA::TypeCode_ptr etc =
+      CORBA::TypeCode_var etc =
         DYNANY_HANDLER->create_typecode (type.sequence ().elementType ());
 
       CORBA::ULong bound (0);
       if (type.sequence ().bound_p ())
         bound = type.sequence ().bound ();
 
-      // @@ Leak this guy onto the heap to avoid a compile problem.
-      CORBA::TypeCode_ptr tc =
-        DYNANY_HANDLER->orb ()->create_sequence_tc (bound,
-                                                    etc);
+      CORBA::TypeCode_var tc =
+        DYNANY_HANDLER->orb ()->create_sequence_tc (bound, etc);
 
-      // Sequences don't have names.
-      //      DYNANY_HANDLER->register_typecode (type.sequence_ ().typeId (),
-      //                                   tc);
-
-      return tc;
+      return tc._retn ();
     }
-
   }
 }
 

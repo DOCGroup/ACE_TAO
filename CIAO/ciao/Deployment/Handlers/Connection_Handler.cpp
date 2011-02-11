@@ -6,6 +6,24 @@
 
 namespace CIAO
 {
+  const char * kind_as_string (const ::Deployment::CCMComponentPortKind & kind)
+    {
+#define DEPLOYMENT_KIND_AS_STRING(X) case X: return #X
+      switch (kind)
+        {
+          DEPLOYMENT_KIND_AS_STRING (Deployment::Facet);
+          DEPLOYMENT_KIND_AS_STRING (Deployment::SimplexReceptacle);
+          DEPLOYMENT_KIND_AS_STRING (Deployment::MultiplexReceptacle);
+          DEPLOYMENT_KIND_AS_STRING (Deployment::EventEmitter);
+          DEPLOYMENT_KIND_AS_STRING (Deployment::EventPublisher);
+          DEPLOYMENT_KIND_AS_STRING (Deployment::EventConsumer);
+          DEPLOYMENT_KIND_AS_STRING (Deployment::ExtendedPort);
+          DEPLOYMENT_KIND_AS_STRING (Deployment::MirrorPort);
+        }
+      return "***Unknown enum value, deployment kind as string";
+#undef DEPLOYMENT_KIND_AS_STRING
+    }
+
   void
   Connection_Handler::provide_endpoint_reference (const ::Deployment::DeploymentPlan & plan,
                                                   ::CORBA::ULong connectionRef,
@@ -92,8 +110,8 @@ namespace CIAO
                         "Caught CORBA Exception <%C> while fetching reference for "
                         "connection <%C>\n",
                         ex._info ().c_str (),
-                        plan.connection[connectionRef].name.in ()));
-        throw ::Deployment::InvalidConnection (plan.connection[connectionRef].name.in (),
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                ex._info ().c_str ());
 
       }
@@ -102,8 +120,8 @@ namespace CIAO
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::provide_endpoint_reference - "
                         "Caught unknown C++ exception on instance %C",
-                        plan.connection[connectionRef].name.in ()));
-        throw ::Deployment::InvalidConnection (plan.connection[connectionRef].name.in (),
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                "Unknown C++ exception whilst establishing "
                                                "connection");
       }
@@ -117,88 +135,110 @@ namespace CIAO
   {
     CIAO_TRACE ("Connection_Handler::connect_instance");
 
-    const ::Deployment::PlanConnectionDescription &conn = plan.connection[c_id];
-    const char *name = conn.name.in ();
+    const ::Deployment::PlanConnectionDescription &conn =
+      plan.connection[c_id];
 
-    if (conn.internalEndpoint.length () == 0)
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::connect_instance - "
-                        "Connection <%C> lacks an internalEndpoint.\n",
-                        name));
-        throw ::Deployment::InvalidConnection (name,
-                                       "No internal endpoint for connection\n");
-      }
+    CORBA::ULong endpointRef = this->retrieve_endpoint (conn);
 
-    CORBA::ULong endpoint (0);
+    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
+      conn.internalEndpoint[endpointRef];
 
-    if (conn.internalEndpoint.length () > 1)
-      {
-        for (CORBA::ULong i = 0;
-             i < conn.internalEndpoint.length ();
-             ++i)
-          {
-            if (!conn.internalEndpoint[i].provider)
-              endpoint = i;
-          }
-      }
-
+    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                    "Connection_Handler::connect_instance - "
+                    "Connecting %C connection <%C> on instance <%C>\n",
+                    CIAO::kind_as_string (conn.internalEndpoint[endpointRef].kind),
+                    conn.name.in (),
+                    plan.instance[endpoint.instanceRef].name.in ()));
     try
       {
-        switch (conn.internalEndpoint[endpoint].kind)
+        switch (conn.internalEndpoint[endpointRef].kind)
           {
+
           case Deployment::Facet:
-            this->connect_facet (plan, c_id, endpoint, provided_reference);
+
+            if (this->is_local_connection (conn))
+              {
+                this->connect_local_port (plan, conn, endpointRef, endpoint);
+              }
+            else
+              {
+                this->connect_non_local_facet (plan,
+                                              conn,
+                                              endpoint,
+                                              provided_reference);
+              }
             break;
 
           case Deployment::SimplexReceptacle:
           case Deployment::MultiplexReceptacle:
-            this->connect_receptacle (plan, c_id, endpoint, provided_reference);
+
+            if (this->is_local_connection (conn))
+              {
+                this->connect_local_port (plan, conn, endpointRef, endpoint);
+              }
+            else
+              {
+                this->connect_non_local_receptacle (plan,
+                                                    conn,
+                                                    endpoint,
+                                                    provided_reference);
+              }
             break;
+
 #if !defined (CCM_NOEVENT)
+          case Deployment::EventConsumer:
+            this->connect_consumer (plan, conn, endpoint, provided_reference);
+            break;
+
           case Deployment::EventEmitter:
-            this->connect_emitter (plan, c_id, endpoint, provided_reference);
+            this->connect_emitter (plan, conn, endpoint, provided_reference);
             break;
 
           case Deployment::EventPublisher:
-            this->connect_publisher (plan, c_id, endpoint, provided_reference);
-            break;
-
-          case Deployment::EventConsumer:
-            this->connect_consumer (plan, c_id, endpoint, provided_reference);
+            this->connect_publisher (plan, conn, endpoint, provided_reference);
             break;
 #endif
           default:
             CIAO_ERROR (1, (LM_ERROR, CLINFO
                             "Connection_Handler::connect_instance - "
                             "Unsupported port type.\n"));
-            throw ::Deployment::InvalidConnection (name,
+            throw ::Deployment::InvalidConnection (conn.name.in (),
                                                    "Unsupported port type");
 
           }
       }
-    catch (const ::Deployment::InvalidConnection &)
+    catch (const ::Deployment::InvalidConnection &ex)
       {
-        // pass through
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::connect_instance - "
+                        "Caught InvalidConnection exception whilst "
+                        "connecting %C connection <%C>: %C. Reason: %C\n",
+                        CIAO::kind_as_string (conn.internalEndpoint[endpointRef].kind),
+                        conn.name.in (),
+                        ex.name.in (),
+                        ex.reason.in ()));
+
         throw;
       }
     catch (CORBA::Exception &ex)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::connect_instance - "
-                        "Caught CORBA exception whilst connecting <%C>: %C\n",
-                        name,
+                        "Caught CORBA exception whilst connecting %C connection <%C>: %C\n",
+                        CIAO::kind_as_string (conn.internalEndpoint[endpointRef].kind),
+                        conn.name.in (),
                         ex._info ().c_str ()));
-        throw ::Deployment::InvalidConnection (name,
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                ex._info ().c_str ());
       }
     catch (...)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::connect_instance - "
-                        "Caught C++ exception whilst connecting <%C>\n",
-                        name));
-        throw ::Deployment::InvalidConnection (name,
+                        "Caught C++ exception whilst connecting %C connection <%C>\n",
+                        CIAO::kind_as_string (conn.internalEndpoint[endpointRef].kind),
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                "Unknown C++ Exception");
       }
   }
@@ -209,86 +249,68 @@ namespace CIAO
   {
     CIAO_TRACE ("Connection_Handler::disconnect_instance");
 
-    const ::Deployment::PlanConnectionDescription &conn = plan.connection[c_id];
-    const char *name = conn.name.in ();
+    const ::Deployment::PlanConnectionDescription &conn =
+      plan.connection[c_id];
 
-    if (conn.internalEndpoint.length () == 0)
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::disconnect_instance - "
-                        "Connection <%C> lacks an internalEndpoint.\n",
-                        name));
-        throw ::Deployment::InvalidConnection (name,
-                                       "No internal endpoint for connection\n");
-      }
+    CORBA::ULong endpointRef = this->retrieve_endpoint (conn);
 
-    CORBA::ULong endpoint (0);
+    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
+      conn.internalEndpoint[endpointRef];
 
-    if (conn.internalEndpoint.length () > 1)
-      {
-        for (CORBA::ULong i = 0;
-             i < conn.internalEndpoint.length ();
-             ++i)
-          {
-            if (!this->is_local_connection (conn))
-              {
-                if (!conn.internalEndpoint[i].provider)
-                  {
-                    endpoint = i;
-                    break;
-                  }
-              }
-            else
-              {
-                if (conn.internalEndpoint[i].kind == Deployment::EventEmitter ||
-                    conn.internalEndpoint[i].kind == Deployment::EventPublisher ||
-                    conn.internalEndpoint[i].kind == Deployment::EventConsumer)
-                  {
-                    if (!conn.internalEndpoint[i].provider)
-                      {
-                        endpoint = i;
-                        break;
-                      }
-                  }
-                else if (conn.internalEndpoint[i].provider)
-                  {
-                    endpoint = i;
-                    break;
-                  }
-              }
-          }
-      }
+    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                    "Connection_Handler::disconnect_instance - "
+                    "Disconnecting %C connection <%C> on instance <%C>\n",
+                    CIAO::kind_as_string (conn.internalEndpoint[endpointRef].kind),
+                    conn.name.in (),
+                    plan.instance[endpoint.instanceRef].name.in ()));
 
     try
       {
-        switch (conn.internalEndpoint[endpoint].kind)
+        switch (conn.internalEndpoint[endpointRef].kind)
           {
           case Deployment::Facet:
-            this->disconnect_facet (plan, c_id, endpoint);
+
+            if (this->is_local_connection (conn))
+              {
+                this->disconnect_local_port (plan, conn, endpointRef, endpoint);
+              }
+            else
+              {
+                //only because of the receptacle is an external endpoint
+                this->disconnect_non_local (conn, conn.externalReference[0].portName.in ());
+              }
             break;
 
           case Deployment::SimplexReceptacle:
           case Deployment::MultiplexReceptacle:
-            this->disconnect_receptacle (plan, c_id, endpoint);
+
+            if (this->is_local_connection (conn))
+              {
+                this->disconnect_local_port (plan, conn, endpointRef, endpoint);
+              }
+            else
+              {
+                this->disconnect_non_local (conn, endpoint.portName.in ());
+              }
             break;
 #if !defined (CCM_NOEVENT)
+          case Deployment::EventConsumer:
+            this->disconnect_consumer (conn, endpoint);
+            break;
+
           case Deployment::EventEmitter:
-            this->disconnect_emitter (plan, c_id, endpoint);
+            this->disconnect_emitter (conn, endpoint);
             break;
 
           case Deployment::EventPublisher:
-            this->disconnect_publisher (plan, c_id, endpoint);
-            break;
-
-          case Deployment::EventConsumer:
-            this->disconnect_consumer (plan, c_id, endpoint);
+            this->disconnect_publisher (conn, endpoint);
             break;
 #endif
           default:
             CIAO_ERROR (1, (LM_ERROR, CLINFO
                             "Connection_Handler::disconnect_instance - "
                             "Unsupported port type.\n"));
-            throw ::Deployment::InvalidConnection (name,
+            throw ::Deployment::InvalidConnection (conn.name.in (),
                                                    "Unsupported port type");
 
           }
@@ -307,34 +329,41 @@ namespace CIAO
       {
         CIAO_DEBUG (2, (LM_WARNING, CLINFO
                         "Connection_Handler::disconnect_instance - "
-                        "Caught COMM_FAILURE exception whilst disconnecting\n"));
-        throw ::Deployment::InvalidConnection (name,
+                        "Caught COMM_FAILURE exception whilst disconnecting %C connection <%C>\n",
+                        CIAO::kind_as_string (conn.internalEndpoint[endpointRef].kind),
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                ex._info ().c_str ());
       }
     catch (const CORBA::OBJECT_NOT_EXIST &ex)
       {
         CIAO_DEBUG (2, (LM_WARNING, CLINFO
                         "Connection_Handler::disconnect_instance - "
-                        "Caught OBJECT_NOT_EXIST exception whilst disconnecting\n"));
-        throw ::Deployment::InvalidConnection (name,
+                        "Caught OBJECT_NOT_EXIST exception whilst disconnecting %C connection <%C>\n",
+                        CIAO::kind_as_string (conn.internalEndpoint[endpointRef].kind),
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                ex._info ().c_str ());
       }
     catch (const CORBA::TRANSIENT &ex)
       {
         CIAO_DEBUG (2, (LM_WARNING, CLINFO
                         "Connection_Handler::disconnect_instance - "
-                        "Caught TRANSIENT exception whilst disconnecting\n"));
-        throw ::Deployment::InvalidConnection (name,
+                        "Caught TRANSIENT exception whilst disconnecting %C connection <%C>\n",
+                        CIAO::kind_as_string (conn.internalEndpoint[endpointRef].kind),
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                ex._info ().c_str ());
       }
     catch (CORBA::Exception &ex)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::disconnect_instance - "
-                        "Caught CORBA exception whilst disconnecting <%C>: %C\n",
-                        name,
+                        "Caught CORBA exception whilst disconnecting %C connection <%C>: %C\n",
+                        CIAO::kind_as_string (conn.internalEndpoint[endpointRef].kind),
+                        conn.name.in (),
                         ex._info ().c_str ()));
-        throw ::Deployment::InvalidConnection (name,
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                ex._info ().c_str ());
       }
     catch (...)
@@ -342,78 +371,23 @@ namespace CIAO
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::disconnect_instance - "
                         "Caught C++ exception whilst disconnecting <%C>\n",
-                        name));
-        throw ::Deployment::InvalidConnection (name,
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                "Unknown C++ Exception");
       }
   }
 
   void
-  Connection_Handler::connect_facet (const ::Deployment::DeploymentPlan & plan,
-                                     ::CORBA::ULong connectionRef,
-                                     ::CORBA::ULong endpointRef,
-                                     const ::CORBA::Any & provided_reference)
-  {
-    CIAO_TRACE ("Connection_Handler::connect_facet");
-
-    const ::Deployment::PlanConnectionDescription &conn =
-      plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
-
-    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                    "Connection_Handler::connect_facet - "
-                    "Connecting connection <%C> on instance <%C>\n",
-                    conn.name.in (),
-                    plan.instance[endpoint.instanceRef].name.in ()));
-
-    if (this->is_local_connection (conn))
-      {
-        CORBA::ULong other_endpointRef = (endpointRef + 1) % 2;
-        if (conn.internalEndpoint.length () == 2 &&
-            (conn.internalEndpoint[other_endpointRef].kind == ::Deployment::MultiplexReceptacle ||
-             conn.internalEndpoint[other_endpointRef].kind == ::Deployment::SimplexReceptacle))
-          {
-            const ::Deployment::PlanSubcomponentPortEndpoint &other_endpoint =
-              conn.internalEndpoint[other_endpointRef];
-            this->connect_local_port (plan.instance[endpoint.instanceRef].name.in (),
-                                      endpoint.portName.in (),
-                                      plan.instance[other_endpoint.instanceRef].name.in (),
-                                      other_endpoint.portName.in (),
-                                      conn.name.in ());
-            return;
-          }
-        else
-          {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO
-                            "Connection_Handler::connect_facet - "
-                            "Error: Wrong number of internal endpoints for local facet connection: "
-                            "expected <2> - found <%d>\n",
-                            conn.internalEndpoint.length ()));
-
-            throw ::Deployment::InvalidConnection (conn.name.in (),
-                                                   "Local facet connections require exactly 2 internalEndpoints");
-          }
-      }
-    this->connect_non_local_facet (plan,
-                                    connectionRef,
-                                    endpointRef,
-                                    provided_reference);
-  }
-
-  void
   Connection_Handler::connect_non_local_facet (const ::Deployment::DeploymentPlan & plan,
-                                               ::CORBA::ULong connectionRef,
-                                               ::CORBA::ULong endpointRef,
+                                               const ::Deployment::PlanConnectionDescription &conn,
+                                               const ::Deployment::PlanSubcomponentPortEndpoint &endpoint,
                                                const ::CORBA::Any & provided_reference)
   {
     CIAO_TRACE ("Connection_Handler::connect_non_local_facet");
 
-    const ::Deployment::PlanConnectionDescription &conn =
-      plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
 
+    // provided_reference is a receptacle. We need to call 'connect' on this reference
+    // and pass the facet.
     if (conn.externalReference.length () == 0)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
@@ -436,8 +410,8 @@ namespace CIAO
                         "While connecting <%C>:"
                         "Provided reference for connection where primary is Facet must be "
                         "non-nil.\n",
-                        plan.connection[connectionRef].name.in ()));
-        throw ::Deployment::InvalidConnection (plan.connection[connectionRef].name.in (),
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                "Provided reference for connection where primary is Facet must "
                                                "be non-nil.");
 
@@ -452,8 +426,8 @@ namespace CIAO
                         "Connection_Handler::connect_non_local_facet - "
                         "While connecting <%C>:"
                         "Providing component not deployed.",
-                        plan.connection[connectionRef].name.in ()));
-        throw ::Deployment::InvalidConnection (plan.connection[connectionRef].name.in (),
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                "Providing component not deployed.");
       }
 
@@ -473,68 +447,14 @@ namespace CIAO
   }
 
   void
-  Connection_Handler::connect_receptacle (const ::Deployment::DeploymentPlan & plan,
-                                          ::CORBA::ULong connectionRef,
-                                          ::CORBA::ULong endpointRef,
-                                          const ::CORBA::Any & provided_reference)
-  {
-    CIAO_TRACE ("Component_Handler_i::connect_receptacle");
-
-    const ::Deployment::PlanConnectionDescription &conn =
-      plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
-
-    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                    "Connection_Handler::connect_receptacle - "
-                    "Connecting connection <%C> on instance <%C>\n",
-                    conn.name.in (),
-                    plan.instance[endpoint.instanceRef].name.in ()));
-
-    if (this->is_local_connection (conn))
-      {
-        CORBA::ULong other_endpointRef = (endpointRef + 1) % 2;
-        if (conn.internalEndpoint.length () == 2 &&
-            (conn.internalEndpoint[other_endpointRef].kind == ::Deployment::Facet))
-          {
-            const ::Deployment::PlanSubcomponentPortEndpoint &other_endpoint =
-              conn.internalEndpoint[other_endpointRef];
-            this->connect_local_port (plan.instance[other_endpoint.instanceRef].name.in (),
-                                      other_endpoint.portName.in (),
-                                      plan.instance[endpoint.instanceRef].name.in (),
-                                      endpoint.portName.in (),
-                                      conn.name.in ());
-            return;
-          }
-        else
-          {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO
-                            "Connection_Handler::connect_receptacle - "
-                            "Error: Wrong number of internal endpoints for local receptacle connection: "
-                            "expected <2> - found <%d>\n",
-                            conn.internalEndpoint.length ()));
-            throw ::Deployment::InvalidConnection (conn.name.in (),
-                                                   "Local receptacle connections require exactly 2 internalEndpoints");
-          }
-      }
-    this->connect_non_local_receptacle (plan,
-                                        connectionRef,
-                                        endpointRef,
-                                        provided_reference);
-  }
-
-  void
   Connection_Handler::connect_non_local_receptacle (const ::Deployment::DeploymentPlan & plan,
-                                                    ::CORBA::ULong connectionRef,
-                                                    ::CORBA::ULong endpointRef,
+                                                    const ::Deployment::PlanConnectionDescription &conn,
+                                                    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint,
                                                     const ::CORBA::Any & provided_reference)
   {
     CIAO_TRACE ("Component_Handler_i::connect_non_local_receptacle");
 
-    const ::Deployment::PlanConnectionDescription &conn =
-      plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
+    //provided_reference is a facet. We need to pass this reference to the receptacle, using the connect method
 
     ::CORBA::Object_var provided;
 
@@ -543,8 +463,8 @@ namespace CIAO
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::connect_non_local_receptacle - "
                         "Unable to extract provided reference to CORBA::Object\n",
-                        plan.connection[connectionRef].name.in ()));
-        throw ::Deployment::InvalidConnection (plan.connection[connectionRef].name.in (),
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                "Unable to extract provided reference to CORBA Object.");
       }
 
@@ -581,9 +501,9 @@ namespace CIAO
                         "Connection_Handler::connect_non_local_receptacle - "
                         "While connecting <%C>:"
                         "Receptacle component <%C> not deployed.\n",
-                        plan.connection[connectionRef].name.in (),
+                        conn.name.in (),
                         plan.instance[endpoint.instanceRef].name.in ()));
-        throw ::Deployment::InvalidConnection (plan.connection[connectionRef].name.in (),
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                "Receptacle component not deployed.");
       }
 
@@ -602,16 +522,11 @@ namespace CIAO
 #if !defined (CCM_NOEVENT)
   void
   Connection_Handler::connect_publisher (const ::Deployment::DeploymentPlan & plan,
-                                         ::CORBA::ULong connectionRef,
-                                         ::CORBA::ULong endpointRef,
+                                         const ::Deployment::PlanConnectionDescription &conn,
+                                         const ::Deployment::PlanSubcomponentPortEndpoint &endpoint,
                                          const ::CORBA::Any & provided_reference)
   {
     CIAO_TRACE ("Connection_Handler::connect_publisher");
-
-    const ::Deployment::PlanConnectionDescription &conn =
-      plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
 
     CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                     "Connection_Handler::connect_publisher - "
@@ -619,21 +534,53 @@ namespace CIAO
                     conn.name.in (),
                     plan.instance[endpoint.instanceRef].name.in ()));
 
-    ::CORBA::Object_var consumer;
+    ::CORBA::Object_var provided;
 
-    if (!(provided_reference >>= CORBA::Any::to_object  (consumer)) ||
-        CORBA::is_nil (consumer.in ()))
+    if (!(provided_reference >>= CORBA::Any::to_object  (provided)) ||
+        CORBA::is_nil (provided.in ()))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::connect_publisher - "
                         "Unable to extract provided reference to CORBA::Object\n",
-                        plan.connection[connectionRef].name.in ()));
-        throw ::Deployment::InvalidConnection (plan.connection[connectionRef].name.in (),
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                "Unable to extract provided reference to CORBA Object.");
       }
 
-    Components::EventConsumerBase_var event =
-      Components::EventConsumerBase::_unchecked_narrow (consumer);
+    Components::EventConsumerBase_var event;
+    if (conn.externalReference.length () == 0)
+      {
+        event = Components::EventConsumerBase::_unchecked_narrow (provided);
+      }
+    else
+      {
+        ::Components::CCMObject_var consumer = ::Components::CCMObject::_narrow (provided.in ());
+
+        if (CORBA::is_nil (consumer.in ()))
+          {
+            CIAO_ERROR (1, (LM_ERROR, CLINFO
+                            "Connection_Handler::connect_publisher - "
+                            "Unable to extract provided reference to Components::CCMObject\n",
+                            conn.name.in ()));
+            throw ::Deployment::InvalidConnection (conn.name.in (),
+                                                  "Unable to extract provided reference to "
+                                                  "Components::CCMObject.");
+          }
+        ::CORBA::Object_var event_obj = consumer->get_consumer (conn.externalReference[0].portName.in ());
+        event = ::Components::EventConsumerBase::_narrow (event_obj.in ());
+      }
+
+    if (CORBA::is_nil (event.in ()))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::connect_publisher - "
+                        "Unable to extract provided reference to "
+                        "Components::EventConsumerBase\n",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                               "Unable to extract provided reference to "
+                                               "Components::EventConsumerBase.");
+      }
 
     ::Components::CCMObject_var publisher =
         DEPLOYMENT_STATE::instance ()->fetch_component (plan.instance[endpoint.instanceRef].name.in ());
@@ -644,7 +591,7 @@ namespace CIAO
                         "Connection_Handler::connect_publisher - "
                         "While connecting <%C>:"
                         "Publishing component not deployed.",
-                        plan.connection[connectionRef].name.in ()));
+                        conn.name.in ()));
         throw ::Deployment::InvalidConnection (conn.name.in (),
                                                "Publisher component not deployed.");
       }
@@ -665,42 +612,120 @@ namespace CIAO
 #if !defined (CCM_NOEVENT)
   void
   Connection_Handler::connect_consumer (const ::Deployment::DeploymentPlan & plan,
-                                        ::CORBA::ULong connectionRef,
-                                        ::CORBA::ULong endpointRef,
-                                        const ::CORBA::Any &)
+                                        const ::Deployment::PlanConnectionDescription &conn,
+                                        const ::Deployment::PlanSubcomponentPortEndpoint &endpoint,
+                                        const ::CORBA::Any & provided_reference)
   {
     CIAO_TRACE ("Connection_Handler::connect_consumer");
 
-    const ::Deployment::PlanConnectionDescription &conn =
-      plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
+    // provided_reference is an emitter or a publisher.
 
     CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                    "Connection_Handler::connect_consumer - "
-                    "Connecting connection <%C> on instance <%C>\n",
-                    conn.name.in (),
-                    plan.instance[endpoint.instanceRef].name.in ()));
+                   "Connection_Handler::connect_consumer - "
+                   "Connecting connection <%C> on instance <%C>\n",
+                   conn.name.in (),
+                   plan.instance[endpoint.instanceRef].name.in ()));
 
-    throw ::Deployment::InvalidConnection (conn.name.in (),
-                                           "ExternalReference connection of consumers "
-                                           "currently unsupported.\n");
+    if (conn.externalReference.length () == 0)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::connect_consumer - "
+                        "Error: Expected external reference endpoint for connection <%C>",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                               "Expected external reference connection.");
+      }
+
+    ::CORBA::Object_var obj;
+
+    if (!(provided_reference >>= CORBA::Any::to_object  (obj)) ||
+        CORBA::is_nil (obj.in ()))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::connect_consumer - "
+                        "Unable to extract provided reference to CORBA::Object\n",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                               "Unable to extract provided reference to CORBA Object.");
+      }
+
+    ::Components::CCMObject_var other_endpoint =
+      ::Components::CCMObject::_narrow (obj.in ());
+
+    if (::CORBA::is_nil (other_endpoint.in ()))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::connect_consumer - "
+                        "Error: Unable to fetch emitter component for connection <%C>\n",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                               "Unable to get reference to the emitter.");
+      }
+
+    //find the consumer.
+    ::Components::CCMObject_var consumer_provider =
+        DEPLOYMENT_STATE::instance ()->fetch_component (plan.instance[endpoint.instanceRef].name.in ());
+
+    if (CORBA::is_nil (consumer_provider))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::connect_consumer - "
+                        "While connecting <%C>:"
+                        "Providing component not deployed.",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                               "Providing component not deployed.");
+      }
+
+    CORBA::Object_var consumer =
+      consumer_provider->get_consumer (endpoint.portName.in ());
+
+    ::Components::EventConsumerBase_var event = ::Components::EventConsumerBase::_narrow (consumer.in ());
+
+    //assume it's an emitter.
+    ::Components::Cookie_var cookie;
+    try
+      {
+        other_endpoint->connect_consumer (conn.externalReference[0].portName.in (),
+                                          event.in ());
+        CIAO_DEBUG (5, (LM_DEBUG, CLINFO
+                        "Connection_Handler::connect_consumer - "
+                        "Succesfully connected to %C\n",
+                        conn.externalReference[0].portName.in ()));
+      }
+    catch (const ::Components::InvalidName &)
+      {
+        // we now assume it's a publisher
+        cookie = other_endpoint->subscribe (conn.externalReference[0].portName.in (),
+                                            event.in ());
+        CIAO_DEBUG (5, (LM_DEBUG, CLINFO
+                        "Connection_Handler::connect_consumer - "
+                        "Succesfully subscribed to %C\n",
+                        conn.externalReference[0].portName.in ()));
+      }
+
+    CIAO_DEBUG (5, (LM_INFO, CLINFO
+                    "Connection_Handler::connect_consumer - "
+                    "Connection <%C> successfully established.\n",
+                    conn.name.in ()));
+
+    CONNECTION_INFO conn_info = CONNECTION_INFO (cookie._retn (),
+                                                 ::Components::CCMObject::_duplicate (other_endpoint.in ()));
+    this->insert_cookie (conn.name.in (), conn_info);
   }
 #endif
 
 #if !defined (CCM_NOEVENT)
   void
   Connection_Handler::connect_emitter (const ::Deployment::DeploymentPlan & plan,
-                                       ::CORBA::ULong connectionRef,
-                                       ::CORBA::ULong endpointRef,
+                                       const ::Deployment::PlanConnectionDescription &conn,
+                                       const ::Deployment::PlanSubcomponentPortEndpoint &endpoint,
                                        const ::CORBA::Any & provided_reference)
   {
     CIAO_TRACE ("Connection_Handler::connect_emitter");
 
-    const ::Deployment::PlanConnectionDescription &conn =
-      plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
+    // provided_reference is a consumer.
+    // We need to pass this to the emitter, using the connect_consumer
 
     CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                     "Connection_Handler::connect_emitter - "
@@ -716,11 +741,10 @@ namespace CIAO
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::connect_emitter - "
                         "Unable to extract provided reference to CORBA::Object\n",
-                        plan.connection[connectionRef].name.in ()));
-        throw ::Deployment::InvalidConnection (plan.connection[connectionRef].name.in (),
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
                                                "Unable to extract provided reference to CORBA Object.");
       }
-
     Components::EventConsumerBase_var event =
       Components::EventConsumerBase::_unchecked_narrow (consumer);
 
@@ -733,9 +757,20 @@ namespace CIAO
                         "Connection_Handler::connect_emitter - "
                         "While connecting <%C>:"
                         "Emitting component not deployed.",
-                        plan.connection[connectionRef].name.in ()));
+                        conn.name.in ()));
         throw ::Deployment::InvalidConnection (conn.name.in (),
                                                "Emitting component not deployed.");
+      }
+
+    if (CORBA::is_nil (event))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::connect_emitter - "
+                        "While connecting <%C>:"
+                        "Consuming component not deployed.",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                               "Consumer component not deployed.");
       }
 
     emitter->connect_consumer (endpoint.portName.in (),
@@ -755,246 +790,171 @@ namespace CIAO
 #endif
 
   void
-  Connection_Handler::disconnect_facet (const ::Deployment::DeploymentPlan &plan,
-                                        ::CORBA::ULong connectionRef,
-                                        ::CORBA::ULong endpointRef)
-
-  {
-    CIAO_TRACE ("Connection_Handler::disconnect_facet");
-
-    const ::Deployment::PlanConnectionDescription &conn =
-      plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
-
-    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                    "Connection_Handler::disconnect_facet - "
-                    "Disconnecting connection <%C> on instance <%C>\n",
-                    conn.name.in (),
-                    plan.instance[endpoint.instanceRef].name.in ()));
-
-    if (this->is_local_connection (conn))
-      {
-        CORBA::ULong other_endpointRef = (endpointRef + 1) % 2;
-        if (conn.internalEndpoint.length () == 2 &&
-            (conn.internalEndpoint[other_endpointRef].kind == ::Deployment::MultiplexReceptacle ||
-             conn.internalEndpoint[other_endpointRef].kind == ::Deployment::SimplexReceptacle))
-          {
-            const ::Deployment::PlanSubcomponentPortEndpoint &other_endpoint =
-              conn.internalEndpoint[other_endpointRef];
-
-
-            this->disconnect_local_port (plan.instance[endpoint.instanceRef].name.in (),
-                                      endpoint.portName.in (),
-                                      plan.instance[other_endpoint.instanceRef].name.in (),
-                                      other_endpoint.portName.in (),
-                                      conn.name.in ());
-            return;
-          }
-        else
-          {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO
-                            "Connection_Handler::disconnect_facet - "
-                            "Error: Wrong number of internal endpoints for local facet "
-                            "connection: expected <2> - found <%d>\n",
-                            conn.internalEndpoint.length ()));
-
-            throw ::Deployment::InvalidConnection (conn.name.in (),
-                                                   "Local facet connections require exactly 2 "
-                                                   "internalEndpoints");
-          }
-      }
-    this->disconnect_non_local (conn, endpoint);
-  }
-
-  void
   Connection_Handler::disconnect_non_local (const ::Deployment::PlanConnectionDescription &conn,
-                                            const ::Deployment::PlanSubcomponentPortEndpoint &endpoint)
+                                            const char * port_name)
   {
     CIAO_TRACE ("Connection_Handler::disconnect_non_local");
 
-    if (conn.internalEndpoint.length () == 0)
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::disconnect_non_local - "
-                        "Error: Expected internal endpoints for connection <%C>\n",
-                        conn.name.in ()));
-        throw ::Deployment::InvalidConnection (conn.name.in (),
-                                               "Expected internal endpoints.");
-      }
-
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
     ::CORBA::Object_var safe_tmp =
-      obj->disconnect (endpoint.portName.in (),
-                       this->get_cookie (conn.name.in ()));
+      obj->disconnect (port_name,
+                      this->get_cookie (conn.name.in ()));
     this->remove_cookie (conn.name.in ());
-  }
-
-  void
-  Connection_Handler::disconnect_receptacle (const ::Deployment::DeploymentPlan &plan,
-                                             ::CORBA::ULong connectionRef,
-                                             ::CORBA::ULong endpointRef)
-
-  {
-    CIAO_TRACE ("Connection_Handler::disconnect_receptacle");
-
-    const ::Deployment::PlanConnectionDescription &conn =
-      plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
-
-    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                    "Connection_Handler::disconnect_receptacle - "
-                    "Disconnecting connection <%C> on instance <%C>\n",
-                    conn.name.in (),
-                    plan.instance[endpoint.instanceRef].name.in ()));
-    if (this->is_local_connection (conn))
-      {
-        CORBA::ULong other_endpointRef = (endpointRef + 1) % 2;
-        if (conn.internalEndpoint.length () == 2 &&
-            conn.internalEndpoint[other_endpointRef].kind == ::Deployment::Facet)
-          {
-            const ::Deployment::PlanSubcomponentPortEndpoint &other_endpoint =
-              conn.internalEndpoint[other_endpointRef];
-
-
-            this->disconnect_local_port (plan.instance[endpoint.instanceRef].name.in (),
-                                      endpoint.portName.in (),
-                                      plan.instance[other_endpoint.instanceRef].name.in (),
-                                      other_endpoint.portName.in (),
-                                      conn.name.in ());
-            return;
-          }
-        else
-          {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO
-                            "Connection_Handler::disconnect_receptacle - "
-                            "Error: Wrong number of internal endpoints for local receptacle "
-                            "connection: expected <2> - found <%d>\n",
-                            conn.internalEndpoint.length ()));
-
-            throw ::Deployment::InvalidConnection (conn.name.in (),
-                                                   "Local receptacle connections require exactly 2 "
-                                                   "internalEndpoints");
-          }
-      }
-    this->disconnect_non_local (conn, endpoint);
   }
 
 #if !defined (CCM_NOEVENT)
   void
-  Connection_Handler::disconnect_publisher (const ::Deployment::DeploymentPlan &plan,
-                                            ::CORBA::ULong connectionRef,
-                                            ::CORBA::ULong endpointRef)
+  Connection_Handler::disconnect_publisher (const ::Deployment::PlanConnectionDescription &conn,
+                                            const ::Deployment::PlanSubcomponentPortEndpoint &endpoint)
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_publisher");
 
-    const ::Deployment::PlanConnectionDescription &conn =
-      plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
-
-    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                "Connection_Handler::disconnect_publisher - "
-                "Disconnecting connection <%C> on instance <%C>. "
-                "Portname: [%C]\n",
-                conn.name.in (),
-                plan.instance[endpoint.instanceRef].name.in (),
-                endpoint.portName. in ()));
-
-    if (conn.internalEndpoint.length () == 0)
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::disconnect_event_port - "
-                        "Error: Expected internal endpoints for connection <%C>\n",
-                        conn.name.in ()));
-        throw ::Deployment::InvalidConnection (conn.name.in (),
-                                               "Expected internal endpoints.");
-      }
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
 
     ::Components::EventConsumerBase_var safe_temp =
       obj->unsubscribe (endpoint.portName.in (),
                         this->get_cookie (conn.name.in ()));
+    this->remove_cookie (conn.name.in ());
   }
 #endif
 
-#if !defined (CCM_NOEVENT)
-  void
-  Connection_Handler::disconnect_emitter (const ::Deployment::DeploymentPlan &,
-                                          ::CORBA::ULong,
-                                          ::CORBA::ULong)
-
-  {
-    CIAO_TRACE ("Connection_Handler::disconnect_emitter");
-  }
-#endif
 
 #if !defined (CCM_NOEVENT)
   void
-  Connection_Handler::disconnect_consumer (const ::Deployment::DeploymentPlan &plan,
-                                           ::CORBA::ULong connectionRef,
-                                           ::CORBA::ULong endpointRef)
+  Connection_Handler::disconnect_consumer (const ::Deployment::PlanConnectionDescription &conn,
+                                           const ::Deployment::PlanSubcomponentPortEndpoint &endpoint)
 
   {
     CIAO_TRACE ("Connection_Handler::disconnect_consumer");
 
-    const ::Deployment::PlanConnectionDescription &conn =
-      plan.connection[connectionRef];
-    const ::Deployment::PlanSubcomponentPortEndpoint &endpoint =
-      conn.internalEndpoint[endpointRef];
-
-    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                "Connection_Handler::disconnect_consumer - "
-                "Disconnecting connection <%C> on instance <%C>. "
-                "Portname: [%C]\n",
-                conn.name.in (),
-                plan.instance[endpoint.instanceRef].name.in (),
-                endpoint.portName. in ()));
-
-    if (conn.internalEndpoint.length () == 0)
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::disconnect_event_port - "
-                        "Error: Expected internal endpoints for connection <%C>\n",
-                        conn.name.in ()));
-        throw ::Deployment::InvalidConnection (conn.name.in (),
-                                               "Expected internal endpoints.");
-      }
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
 
-    ::Components::EventConsumerBase_var safe_temp =
-      obj->disconnect_consumer (endpoint.portName.in ());
+    ::Components::EventConsumerBase_var safe_temp;
+    try
+      {
+        const char * name (0);
+        if (conn.externalReference[0].provider)
+          { // determine the port name of the publisher or emitter.
+            name = endpoint.portName.in ();
+          }
+        else
+          {
+            name = conn.externalReference[0].portName.in ();
+          }
+        if (this->get_cookie (conn.name.in ()) == 0)
+          { //emitter
+            CIAO_DEBUG (5, (LM_DEBUG, CLINFO
+                            "Connection_Handler::disconnect_consumer - "
+                            "Disconnecting %C on the emitter.\n",
+                            name));
+            safe_temp = obj->disconnect_consumer (name);
+          }
+        else
+          { //publisher
+            CIAO_DEBUG (5, (LM_DEBUG, CLINFO
+                            "Connection_Handler::disconnect_consumer - "
+                            "Disconnecting %C on the publisher.\n",
+                            name));
+            safe_temp = obj->unsubscribe (name, this->get_cookie (conn.name.in ()));
+          }
+      }
+    // it could be that the emmitter or publisher is already shut down. In that
+    // case we got a COMM_FAILURE or a TRANSIENT exception.
+    catch (const ::CORBA::OBJECT_NOT_EXIST &)
+      {
+        CIAO_DEBUG (2, (LM_WARNING, CLINFO
+                    "Connection_Handler::disconnect_consumer - "
+                    "Caught OBJECT_NOT_EXIST exception during disconnecting %C\n",
+                    conn.name.in ()));
+      }
+    catch (const ::CORBA::COMM_FAILURE &)
+      {
+        CIAO_DEBUG (2, (LM_WARNING, CLINFO
+                    "Connection_Handler::disconnect_consumer - "
+                    "Caught COMM_FAILURE exception during disconnecting %C\n",
+                    conn.name.in ()));
+      }
+    catch (const ::CORBA::TRANSIENT &)
+      {
+        CIAO_DEBUG (2, (LM_WARNING, CLINFO
+                    "Connection_Handler::disconnect_consumer - "
+                    "Caught TRANSIENT exception during disconnecting %C\n",
+                    conn.name.in ()));
+      }
+    catch (const ::CORBA::Exception &ex)
+      {
+        ex._tao_print_exception ("Connection_Handler::disconnect_consumer");
+      }
+    // still need to remove the cookie.
+    this->remove_cookie (conn.name.in ());
+  }
+#endif
+
+#if !defined (CCM_NOEVENT)
+  void
+  Connection_Handler::disconnect_emitter (const ::Deployment::PlanConnectionDescription &conn,
+                                          const ::Deployment::PlanSubcomponentPortEndpoint &endpoint)
+
+  {
+    CIAO_TRACE ("Connection_Handler::disconnect_emitter");
+    ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
+    obj->disconnect_consumer (endpoint.portName.in ());
+    this->remove_cookie (conn.name.in ());
   }
 #endif
 
   void
-  Connection_Handler::connect_local_port (const char *facet_id,
-                                          const char *facet_port,
-                                          const char *receptacle_id,
-                                          const char *receptacle_port,
-                                          const char *connection_name)
+  Connection_Handler::connect_local_port (const ::Deployment::DeploymentPlan & plan,
+                                          const ::Deployment::PlanConnectionDescription &conn,
+                                          ::CORBA::ULong endpointRef,
+                                          const ::Deployment::PlanSubcomponentPortEndpoint &receptacle_endpoint)
   {
     CIAO_TRACE ("Connection_Handler::connect_local_port");
 
+
+    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                    "Connection_Handler::connect_local_port - "
+                    "Connecting connection <%C> on instance <%C>\n",
+                    conn.name.in (),
+                    plan.instance[receptacle_endpoint.instanceRef].name.in ()));
+
+    CORBA::ULong facet_endpointRef = (endpointRef + 1) % 2;
+    if (conn.internalEndpoint.length () != 2 ||
+          conn.internalEndpoint[facet_endpointRef].kind != ::Deployment::Facet)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::connect_local_port - "
+                        "Error: Wrong number of internal endpoints for local connection: "
+                        "expected <2> - found <%d>\n",
+                        conn.internalEndpoint.length ()));
+
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                                "Local connections require exactly 2 internalEndpoints");
+      }
+
+    const ::Deployment::PlanSubcomponentPortEndpoint &facet_endpoint =
+      conn.internalEndpoint[facet_endpointRef];
+
     const char *facet_cont =
-      DEPLOYMENT_STATE::instance ()->instance_to_container (facet_id);
+      DEPLOYMENT_STATE::instance ()->instance_to_container (
+        plan.instance[facet_endpoint.instanceRef].name.in ());
     const char *recep_cont =
-      DEPLOYMENT_STATE::instance ()->instance_to_container (receptacle_id);
+      DEPLOYMENT_STATE::instance ()->instance_to_container (
+        plan.instance[receptacle_endpoint.instanceRef].name.in ());
 
     if (facet_cont && recep_cont &&
         ACE_OS::strcmp (facet_cont, recep_cont) != 0)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::connect_local_port - "
-                        "Ports <%C> and <%C> participate in local facet/receptacle connection, "
+                        "Ports <%C> and <%C> participate in local connection, "
                         "but are installed in differing containers <%C> and <%C>\n",
-                        facet_id,
-                        receptacle_id,
+                        plan.instance[facet_endpoint.instanceRef].name.in (),
+                        plan.instance[receptacle_endpoint.instanceRef].name.in (),
                         facet_cont,
                         recep_cont));
-        throw ::Deployment::InvalidConnection (facet_id,
+        throw ::Deployment::InvalidConnection (plan.instance[facet_endpoint.instanceRef].name.in (),
                                                "Component instance participates in a local connection with "
                                                "a non-local entity.");
       }
@@ -1003,50 +963,74 @@ namespace CIAO
       DEPLOYMENT_STATE::instance ()->fetch_container (facet_cont);
 
     Components::CCMObject_var
-      facet = DEPLOYMENT_STATE::instance ()->fetch_component (facet_id),
-      receptacle = DEPLOYMENT_STATE::instance ()->fetch_component (receptacle_id);
+      facet = DEPLOYMENT_STATE::instance ()->fetch_component (
+          plan.instance[facet_endpoint.instanceRef].name.in ()),
+      receptacle = DEPLOYMENT_STATE::instance ()->fetch_component (
+          plan.instance[receptacle_endpoint.instanceRef].name.in ());
 
     ::Components::Cookie_var cookie = cont->connect_local_facet (facet,
-                                                                 facet_port,
+                                                                 facet_endpoint.portName.in (),
                                                                  receptacle,
-                                                                 receptacle_port);
+                                                                 receptacle_endpoint.portName.in ());
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_local_port - "
                     "Connected local port <%C>:<%C> to <%C>:<%C>\n",
-                    facet_id, facet_port,
-                    receptacle_id, receptacle_port));
+                    plan.instance[facet_endpoint.instanceRef].name.in (),
+                    facet_endpoint.portName.in (),
+                    plan.instance[receptacle_endpoint.instanceRef].name.in (),
+                    receptacle_endpoint.portName.in ()));
 
     CONNECTION_INFO conn_info = CONNECTION_INFO (cookie._retn (),
                                                  ::Components::CCMObject::_duplicate (receptacle.in ()));
-    this->insert_cookie (connection_name, conn_info);
+    this->insert_cookie (conn.name.in (), conn_info);
   }
 
   void
-  Connection_Handler::disconnect_local_port (const char *facet_id,
-                                             const char *facet_port,
-                                             const char *receptacle_id,
-                                             const char *receptacle_port,
-                                             const char *connection_name)
+  Connection_Handler::disconnect_local_port (const ::Deployment::DeploymentPlan & plan,
+                                            const ::Deployment::PlanConnectionDescription &conn,
+                                            ::CORBA::ULong endpointRef,
+                                            const ::Deployment::PlanSubcomponentPortEndpoint &receptacle_endpoint)
   {
     CIAO_TRACE ("Connection_Handler::disconnect_local_port");
 
+
+    CORBA::ULong facet_endpointRef = (endpointRef + 1) % 2;
+    if (conn.internalEndpoint.length () != 2 ||
+        conn.internalEndpoint[facet_endpointRef].kind != ::Deployment::Facet)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::disconnect_local_port - "
+                        "Error: Wrong number of internal endpoints for local "
+                        "connection: expected <2> - found <%d>\n",
+                        conn.internalEndpoint.length ()));
+
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                                "Local connections require exactly 2 "
+                                                "internalEndpoints");
+
+      }
+    const ::Deployment::PlanSubcomponentPortEndpoint &facet_endpoint =
+      conn.internalEndpoint[facet_endpointRef];
+
     const char *facet_cont =
-      DEPLOYMENT_STATE::instance ()->instance_to_container (facet_id);
+      DEPLOYMENT_STATE::instance ()->instance_to_container (
+        plan.instance[facet_endpoint.instanceRef].name.in ());
     const char *recep_cont =
-      DEPLOYMENT_STATE::instance ()->instance_to_container (receptacle_id);
+      DEPLOYMENT_STATE::instance ()->instance_to_container (
+        plan.instance[receptacle_endpoint.instanceRef].name.in ());
 
     if (facet_cont && recep_cont &&
         ACE_OS::strcmp (facet_cont, recep_cont) != 0)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::disconnect_local_port - "
-                        "Ports <%C> and <%C> participate in local facet/receptacle connection, "
+                        "Ports <%C> and <%C> participate in local connection, "
                         "but are installed in differing containers <%C> and <%C>\n",
-                        facet_id,
-                        receptacle_id,
+                        plan.instance[facet_endpoint.instanceRef].name.in (),
+                        plan.instance[receptacle_endpoint.instanceRef].name.in (),
                         facet_cont,
                         recep_cont));
-        throw ::Deployment::InvalidConnection (facet_id,
+        throw ::Deployment::InvalidConnection (plan.instance[facet_endpoint.instanceRef].name.in (),
                                                "Component instance participates in a local connection with "
                                                "a non-local entity.");
       }
@@ -1055,23 +1039,27 @@ namespace CIAO
       DEPLOYMENT_STATE::instance ()->fetch_container (facet_cont);
 
     Components::CCMObject_var
-      facet = DEPLOYMENT_STATE::instance ()->fetch_component (facet_id),
-      receptacle = DEPLOYMENT_STATE::instance ()->fetch_component (receptacle_id);
+      facet = DEPLOYMENT_STATE::instance ()->fetch_component (
+        plan.instance[facet_endpoint.instanceRef].name.in ()),
+      receptacle = DEPLOYMENT_STATE::instance ()->fetch_component (
+        plan.instance[receptacle_endpoint.instanceRef].name.in ());
 
     cont->disconnect_local_facet (
-                               this->get_cookie (connection_name),
+                               this->get_cookie (conn.name.in ()),
                                facet,
-                               facet_port,
+                               facet_endpoint.portName.in (),
                                receptacle,
-                               receptacle_port);
+                               receptacle_endpoint.portName.in ());
 
-    this->remove_cookie (connection_name);
+    this->remove_cookie (conn.name.in ());
 
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::disconnect_local_port - "
                     "Disconnected local port <%C>:<%C> to <%C>:<%C>\n",
-                    facet_id, facet_port,
-                    receptacle_id, receptacle_port));
+                    plan.instance[facet_endpoint.instanceRef].name.in (),
+                    facet_endpoint.portName.in (),
+                    plan.instance[receptacle_endpoint.instanceRef].name.in (),
+                    receptacle_endpoint.portName.in ()));
   }
 
   bool
@@ -1190,5 +1178,34 @@ namespace CIAO
                                                "Stored CCM object seems nil");
       }
     return ::Components::CCMObject::_duplicate (ret.in ());
+  }
+
+  ::CORBA::ULong
+  Connection_Handler::retrieve_endpoint (const ::Deployment::PlanConnectionDescription &conn)
+  {
+    if (conn.internalEndpoint.length () == 0)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::retrieve_endpoint - "
+                        "Connection <%C> lacks an internalEndpoint.\n",
+                        conn.name.in ()));
+        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                       "No internal endpoint for connection\n");
+      }
+    // When two internal endpoints defined, get the 'consuming' endpoint
+    // (Publisher, Emitter, Receptacle).
+    // In case the the 'consuming' endpoint is external, we need to connect,
+    // using the providing endpoint. Therfor returning nil.
+    if (conn.internalEndpoint.length () > 1)
+      {
+        for (CORBA::ULong i = 0;
+             i < conn.internalEndpoint.length ();
+             ++i)
+          {
+            if (!conn.internalEndpoint[i].provider)
+              return i;
+          }
+      }
+    return 0;
   }
 }

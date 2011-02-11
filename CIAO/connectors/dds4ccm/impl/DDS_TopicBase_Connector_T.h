@@ -29,14 +29,14 @@ public:
   virtual void key_fields (const ::DDS::StringSeq & key_fields);
 
   virtual void configuration_complete (void);
-  virtual void ccm_activate (ACE_Reactor* reactor);
+  virtual void ccm_activate (void);
   virtual void ccm_passivate (void);
   virtual void ccm_remove (void);
   virtual void register_type (::DDS::DomainParticipant_ptr participant,
-                                      const char * typesupport_name);
-  virtual
-  void unregister_type    (::DDS::DomainParticipant_ptr participant,
                               const char * typesupport_name);
+  virtual
+  void unregister_type (::DDS::DomainParticipant_ptr participant,
+                        const char * typesupport_name);
 
 
 protected:

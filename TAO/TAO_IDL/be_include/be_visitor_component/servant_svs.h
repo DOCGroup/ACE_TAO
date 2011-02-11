@@ -134,7 +134,8 @@ class be_visitor_receptacle_desc
   : public be_visitor_component_scope
 {
 public:
-  be_visitor_receptacle_desc (be_visitor_context *ctx);
+  be_visitor_receptacle_desc (be_visitor_context *ctx,
+                              be_component *node);
 
   ~be_visitor_receptacle_desc (void);
 
@@ -142,6 +143,7 @@ public:
 
 private:
   ACE_CDR::ULong slot_;
+  be_component *comp_;
 };
 
 // ======================================================

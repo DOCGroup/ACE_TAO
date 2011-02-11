@@ -7,9 +7,9 @@ ifeq ($(insure),1)
 else
   ifneq ($(CROSS_COMPILE),)
     # Build using the cross-tools
-    CC  = ${CROSS_COMPILE}gcc
-    CXX = ${CROSS_COMPILE}g++
-    AR  = ${CROSS_COMPILE}ar
+    CC  = ${CROSS_COMPILE}gcc{$CROSS_COMPILE_POSTFIX}
+    CXX = ${CROSS_COMPILE}g++{$CROSS_COMPILE_POSTFIX}
+    AR  = ${CROSS_COMPILE}ar{$CROSS_COMPILE_POSTFIX}
     # Cross-linker requires this for linked in shared libs that depend
     # themselves on other shared libs (not directly linked in)
     LDFLAGS += -Wl,-rpath-link,$(ACE_ROOT)/lib
@@ -40,6 +40,15 @@ ifneq ($(TCPU),)
   ifeq ($(archmodelflag),1)
     FLAGS_C_CC += -march=$(TCPU)
   endif
+endif
+
+ifeq ($(gprof),1)
+  FLAGS_C_CC += -pg
+  LDFLAGS += -pg
+endif
+
+ifeq ($(gcov),1)
+  FLAGS_C_CC += -fprofile-arcs -ftest-coverage
 endif
 
 ifeq ($(CXX),insure)

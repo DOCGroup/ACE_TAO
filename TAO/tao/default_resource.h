@@ -176,9 +176,6 @@ public:
   virtual int purge_percentage (void) const;
   virtual int max_muxed_connections (void) const;
   virtual ACE_Lock *create_cached_connection_lock (void);
-  virtual ACE_Lock *create_object_key_table_lock (void);
-  virtual TAO_Configurable_Refcount create_corba_object_refcount (void);
-  virtual ACE_Lock *create_corba_object_lock (void);
   virtual int locked_transport_cache (void);
   virtual TAO_Flushing_Strategy *create_flushing_strategy (void);
   virtual TAO_Connection_Purging_Strategy *create_purging_strategy (void);
@@ -236,7 +233,7 @@ protected:
   /// limit
   int max_muxed_connections_;
 
-  /// If <0> then we create reactors with signal handling disabled.
+  /// If 0 then we create reactors with signal handling disabled.
   int reactor_mask_signals_;
 
   /**
@@ -290,12 +287,6 @@ private:
   /// Type of lock used by the cached connector.
   Lock_Type cached_connection_lock_type_;
 
-  /// Type of lock used by the corba object.
-  Lock_Type object_key_table_lock_type_;
-
-  /// Type of lock used by the corba object.
-  Lock_Type corba_object_lock_type_;
-
   enum Flushing_Strategy_Type
   {
     TAO_LEADER_FOLLOWER_FLUSHING,
@@ -306,8 +297,8 @@ private:
   /// Type of flushing strategy configured
   Flushing_Strategy_Type flushing_strategy_type_;
 
-  // Initialization options. To be used later when creating a codeset
-  // manager instance (s)
+  /// Initialization options. To be used later when creating a codeset
+  /// manager instance (s)
   TAO_Codeset_Parameters char_codeset_parameters_;
   TAO_Codeset_Parameters wchar_codeset_parameters_;
 

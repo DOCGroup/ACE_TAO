@@ -22,19 +22,19 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-namespace DAnCE{
+namespace DAnCE
+{
+  namespace Config_Handlers
+  {
 
-  namespace Config_Handlers{
-
-  /*
+  /**
    * @class DataType_Handler
    *
-   * @brief Handler class for <ComponentPortDescription> types.
+   * @brief Handler class for ComponentPortDescription types.
    *
    * This class defines handler methods to map values from
    * XSC objects, parsed from the descriptor files, to the
    * corresponding CORBA IDL type for the schema element.
-   *
    */
 
    class DataType_Handler{
@@ -44,15 +44,14 @@ namespace DAnCE{
       DataType_Handler (void);
       virtual ~DataType_Handler (void);
 
-      ////This method takes a <CIAO::Config_Handlers::DataType>
-      ///and returns the corresponding CORBA::TypeCode.
+      /// This method takes a CIAO::Config_Handlers::DataType
+      /// and returns the corresponding CORBA::TypeCode.
       static void
       data_type (CORBA::TypeCode_ptr& type,
-                    const DataType& desc);
+                 const DataType& desc);
 
       static DataType data_type (const CORBA::TypeCode_ptr& type);
     };
-
  }
 }
 

@@ -6,5 +6,5 @@
  <!--  Please see $TAO_ROOT/docs/Options.html for details on these options. -->
  <!--  -->
  <static id="Advanced_Resource_Factory" params="-ORBReactorType select_st -ORBInputCDRAllocator null -ORBConnectionCacheLock null"/>
- <static id="Client_Strategy_Factory" params="-ORBProfileLock null -ORBClientConnectionHandler RW"/>
+ <static id="Client_Strategy_Factory" params="-ORBClientConnectionHandler RW"/>
 </ACE_Svc_Conf>

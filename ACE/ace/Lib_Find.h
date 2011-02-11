@@ -101,10 +101,10 @@ namespace ACE
   extern ACE_Export size_t strrepl (char *s, char search, char replace);
 
   /**
-   * Splits string <s> into pieces separated by the string <token>.
-   * <next_start> is an opaque cookie handed back by the call to store
+   * Splits string @a s into pieces separated by the string @a token.
+   * @a next_start is an opaque cookie handed back by the call to store
    * its state for the next invocation, thus making it re-entrant.
-   * This operates very similar to Perl's <split> function except that
+   * This operates very similar to Perl's @c split function except that
    * it returns pieces one at a time instead of into an array.
    */
   extern ACE_Export char *strsplit_r (char *s,

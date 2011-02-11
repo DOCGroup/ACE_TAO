@@ -7,11 +7,7 @@
 #include "Common.h"
 
 #include "ace/Null_Mutex.h"
-
-//#include "tao/ORB.h"
 #include "tao/IFR_Client/IFR_BasicC.h"
-//#include "tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h"
-
 #include "tao/AnyTypeCode/Struct_TypeCode.h"
 
 namespace DAnCE
@@ -35,7 +31,7 @@ namespace DAnCE
     {
       try
         {
-          CORBA::TypeCode_ptr tc;
+          CORBA::TypeCode_var tc;
 
           if (req_tc)
             tc = req_tc;
@@ -60,7 +56,7 @@ namespace DAnCE
               values[pos].id = ACE_TEXT_ALWAYS_CHAR ((*i)->name ().c_str ());
               values[pos].value = DYNANY_HANDLER->extract_into_dynany (*dt_map[(*i)->name ()],
                                                                        (*i)->value ());
-              pos++;
+              ++pos;
             }
 
           retval->set_members_as_dyn_any (values);
@@ -82,9 +78,8 @@ namespace DAnCE
 
 
     void
-    DynStruct_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn)
+    DynStruct_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr)
     {
-      ACE_UNUSED_ARG (dyn);
       DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Extracting Structs not yet supported\n")));
     }
 
@@ -112,16 +107,14 @@ namespace DAnCE
           ++pos;
         }
 
-      // @@ Leak this guy onto the heap to avoid a compile problem.
-      CORBA::TypeCode_ptr tc =
+      CORBA::TypeCode_var tc =
         DYNANY_HANDLER->orb ()->create_struct_tc (ACE_TEXT_ALWAYS_CHAR (rid.c_str ()),
                                                   ACE_TEXT_ALWAYS_CHAR (name.c_str ()),
                                                   members);
 
-      DYNANY_HANDLER->register_typecode (type.struct_ ().typeId (),
-                                         tc);
+      DYNANY_HANDLER->register_typecode (type.struct_ ().typeId (), tc.in ());
 
-      return tc;
+      return tc._retn ();
     }
   }
 }

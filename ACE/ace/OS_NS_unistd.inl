@@ -23,7 +23,7 @@
 #  include "ace/os_include/os_unistd.h"
 #endif /* ACE_HAS_ACCESS_EMULATION */
 
-#if defined (ACE_VXWORKS) && (((ACE_VXWORKS >= 0x620) && (ACE_VXWORKS <= 0x680)) || defined (ACE_HAS_VXWORKS551_MEDUSA))
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x680)
 #  if defined (__RTP__)
 #    include "ace/os_include/os_strings.h"
 #  else
@@ -274,7 +274,7 @@ ACE_OS::execv (const char *path,
 
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32)
-# if defined (__BORLANDC__) /* VSB */
+# if defined (__BORLANDC__)
   return ::execv (path, argv);
 # elif defined (__MINGW32__)
   return ::_execv (path, (char *const *) argv);
@@ -304,7 +304,7 @@ ACE_OS::execve (const char *path,
 
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32)
-# if defined (__BORLANDC__) /* VSB */
+# if defined (__BORLANDC__)
   return ::execve (path, argv, envp);
 # elif defined (__MINGW32__)
   return ::_execve (path, (char *const *) argv, (char *const *) envp);
@@ -332,7 +332,7 @@ ACE_OS::execvp (const char *file,
 
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32)
-# if defined (__BORLANDC__) /* VSB */
+# if defined (__BORLANDC__)
   return ::execvp (file, argv);
 # elif defined (__MINGW32__)
   return ::_execvp (file, (char *const *) argv);

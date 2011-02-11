@@ -100,12 +100,14 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
         ::LatencyTT_Test::CCM_Sender_Context_ptr ctx,
         Sender_exec_i &callback,
         Atomic_Boolean &matched,
-        int number_of_subscribers)
+        int number_of_subscribers,
+        Atomic_Long &unexpected_count)
     : ciao_context_ (
         ::LatencyTT_Test::CCM_Sender_Context::_duplicate (ctx))
       , callback_ (callback)
       , matched_ (matched)
       , number_of_subscribers_ (number_of_subscribers)
+      , unexpected_count_(unexpected_count)
   {
   }
 
@@ -154,6 +156,7 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
   connector_status_exec_i::on_unexpected_status (::DDS::Entity_ptr the_entity,
   ::DDS::StatusKind status_kind)
   {
+    ++this->unexpected_count_;
     if (! ::CORBA::is_nil (the_entity) &&
         status_kind == DDS::PUBLICATION_MATCHED_STATUS)
       {
@@ -204,6 +207,7 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
       , duration_times_ (0)
       , datalen_range_ (0)
       , _clock_overhead_ (0)
+      , unexpected_count_ (0)
   {
     ACE_NEW_THROW_EX (this->ticker_,
                       WriteTicker (*this),
@@ -532,7 +536,8 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
             this->ciao_context_.in (),
             *this,
             this->matched_,
-            this->number_of_sub_),
+            this->number_of_sub_,
+            this->unexpected_count_),
           ::CCM_DDS::CCM_ConnectorStatusListener::_nil ());
 
           this->ciao_connector_status_ = tmp;
@@ -670,6 +675,8 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
                                this->nr_of_runs_,
                                this->number_of_msg_, sec));
       }
+    ACE_DEBUG ((LM_DEBUG, "\tNumber of unexpected events : %u\n",
+                  this->unexpected_count_.value ()));
   }
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

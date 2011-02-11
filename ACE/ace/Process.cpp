@@ -24,12 +24,10 @@
 #include "ace/Vector_T.h"
 #include "ace/Tokenizer_T.h"
 
-#if defined (ACE_VXWORKS) && (ACE_VXWORKS > 0x600) && defined (__RTP__)
+#if defined (ACE_VXWORKS) && defined (__RTP__)
 # include <rtpLib.h>
 # include <taskLib.h>
 #endif
-
-
 
 // This function acts as a signal handler for SIGCHLD. We don't really want
 // to do anything with the signal - it's just needed to interrupt a sleep.
@@ -255,7 +253,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
   }
 
   return this->child_id_;
-#elif (defined (ACE_VXWORKS) && (ACE_VXWORKS > 0x600)) && defined (__RTP__)
+#elif defined (ACE_VXWORKS) && defined (__RTP__)
   if (ACE_BIT_ENABLED (options.creation_flags (),
                        ACE_Process_Options::NO_EXEC))
     ACE_NOTSUP_RETURN (ACE_INVALID_PID);
@@ -1325,7 +1323,7 @@ ACE_Process_Options::command_line_argv (void)
       do
         command_line_argv_[x] = parser.next ();
       while (command_line_argv_[x] != 0
-             // substract one for the ending zero.
+             // subtract one for the ending zero.
              && ++x < max_command_line_args_ - 1);
 
       command_line_argv_[x] = 0;

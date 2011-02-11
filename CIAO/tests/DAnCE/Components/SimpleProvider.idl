@@ -10,7 +10,7 @@ module Simple
 {
   component SimpleProvider
   {
-    provides Trigger trig;
+    provides Trigger trig_provides;
   };
 
   home SimpleProviderHome manages SimpleProvider

@@ -119,13 +119,13 @@ namespace CIAO
 
     switch (y)
       {
-      case Container_Types::COMPONENT_t:
-      case Container_Types::HOME_t:
-        svnt = this->component_poa_->reference_to_servant (objref);
-        break;
-      default:
-        svnt = this->facet_cons_poa_->reference_to_servant (objref);
-        break;
+        case Container_Types::COMPONENT_t:
+        case Container_Types::HOME_t:
+          svnt = this->component_poa_->reference_to_servant (objref);
+          break;
+        default:
+          svnt = this->facet_cons_poa_->reference_to_servant (objref);
+          break;
       }
 
     PortableServer::ObjectId_var oid;
@@ -135,13 +135,13 @@ namespace CIAO
   template <typename BASE>
   void
   Container_i<BASE>::prepare_installation (const char *entity,
-                                        const char *primary_artifact,
-                                        const char *entry_point,
-                                        const char *servant_artifact,
-                                        const char *servant_entrypoint,
-                                        const char *name,
-                                        ACE_DLL &executor_dll,
-                                        ACE_DLL &servant_dll)
+                                           const char *primary_artifact,
+                                           const char *entry_point,
+                                           const char *servant_artifact,
+                                           const char *servant_entrypoint,
+                                           const char *name,
+                                           ACE_DLL &executor_dll,
+                                           ACE_DLL &servant_dll)
   {
     CIAO_TRACE ("Container_i::prepare_installation");
 
@@ -223,8 +223,8 @@ namespace CIAO
       }
 
     if (executor_dll.open (ACE_TEXT_CHAR_TO_TCHAR (primary_artifact),
-                            ACE_DEFAULT_SHLIB_MODE,
-                            false) != 0)
+                           ACE_DEFAULT_SHLIB_MODE,
+                           false) != 0)
       {
         const ACE_TCHAR* error = executor_dll.error ();
 
@@ -245,10 +245,10 @@ namespace CIAO
         CIAO_DEBUG (9,
                     (LM_TRACE,
                       CLINFO
-                    "Container_i::prepare_installation <%C> - "
-                    "Executor DLL [%C] successfully opened\n",
-                     entity,
-                     primary_artifact));
+                      "Container_i::prepare_installation <%C> - "
+                      "Executor DLL [%C] successfully opened\n",
+                       entity,
+                       primary_artifact));
       }
 
     if (servant_dll.open (ACE_TEXT_CHAR_TO_TCHAR (servant_artifact),
@@ -405,6 +405,9 @@ namespace CIAO
           }
         catch (...)
           {
+            CIAO_ERROR (1, (LM_ERROR, CLINFO
+                            "Container_i::activate_component - "
+                            "Caught unknown while retrieving servant\n"));
             throw InvalidComponent ();
           }
 
@@ -479,6 +482,9 @@ namespace CIAO
           }
         catch (...)
           {
+            CIAO_ERROR (1, (LM_ERROR, CLINFO
+                            "Container_i::passivate_component - "
+                            "Caught unknown while retrieving servant\n"));
             throw InvalidComponent ();
           }
 
@@ -640,14 +646,14 @@ namespace CIAO
   PortableServer::POA_ptr
   Container_i<BASE>::the_POA (void)
   {
-    return this->component_poa_.in ();
+    return ::PortableServer::POA::_duplicate (this->component_poa_.in ());
   }
 
   template <typename BASE>
   PortableServer::POA_ptr
   Container_i<BASE>::the_port_POA (void)
   {
-    return this->facet_cons_poa_.in ();
+    return ::PortableServer::POA::_duplicate (this->facet_cons_poa_.in ());
   }
 
   template <typename BASE>
@@ -975,7 +981,7 @@ namespace CIAO
   ::CORBA::Object_ptr
   Container_i<BASE>::get_objref (PortableServer::Servant p)
   {
-    return this->the_POA ()->servant_to_reference (p);
+    return this->component_poa_->servant_to_reference (p);
   }
 
   template <typename BASE>

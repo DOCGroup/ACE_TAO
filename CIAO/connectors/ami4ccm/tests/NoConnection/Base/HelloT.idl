@@ -1,0 +1,25 @@
+// $Id$
+
+#ifndef HELLO_T_IDL
+#define HELLO_T_IDL
+
+#pragma ciao lem "Base/HelloTE.idl"
+#pragma ciao ami4ccm interface "HelloT::MyFoo"
+#pragma ciao lem "Base/HelloTAE.idl"
+#pragma ciao ami4ccm idl "Base/HelloTA.idl"
+
+module HelloT
+{
+  // Sender/Receiver interface
+  interface MyFoo
+    {
+      void hello (out string answer);
+
+      attribute short rw_attrib;
+
+      readonly attribute short ro_attrib;
+    };
+};
+
+#endif
+

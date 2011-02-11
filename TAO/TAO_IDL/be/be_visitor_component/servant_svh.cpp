@@ -28,7 +28,6 @@ be_visitor_servant_svh::visit_component (be_component *node)
   // This visitor is spawned by be_visitor_component_svh,
   // which already does a check for imported node, so none
   // is needed here.
-
   node_ = node;
 
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
@@ -181,7 +180,7 @@ be_visitor_servant_svh::visit_provides (be_provides *node)
 int
 be_visitor_servant_svh::visit_uses (be_uses *node)
 {
-  if (node->uses_type ()->is_local ())
+  if (node->uses_type ()->is_local () || be_global->gen_lwccm ())
     {
       return 0;
     }
@@ -234,7 +233,7 @@ be_visitor_servant_svh::visit_uses (be_uses *node)
 int
 be_visitor_servant_svh::visit_publishes (be_publishes *node)
 {
-  if(!be_global->gen_noeventccm ())
+  if(!be_global->gen_noeventccm () && !be_global->gen_lwccm ())
     {
       const char *obj_name = node->publishes_type ()->full_name ();
       const char *port_name = node->local_name ()->get_string ();
@@ -257,7 +256,7 @@ be_visitor_servant_svh::visit_publishes (be_publishes *node)
 int
 be_visitor_servant_svh::visit_emits (be_emits *node)
 {
-   if(!be_global->gen_noeventccm ())
+   if(!be_global->gen_noeventccm () && !be_global->gen_lwccm ())
     {
       const char *obj_name = node->emits_type ()->full_name ();
       const char *port_name = node->local_name ()->get_string ();
@@ -353,9 +352,12 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
       os_ << be_uidt_nl
           << "};";
 
-      os_ << be_nl_2
-          << "virtual ::" << obj_name << "Consumer_ptr" << be_nl
-          << "get_consumer_" << port_name << " (void);";
+      if (!be_global->gen_lwccm ())
+        {
+          os_ << be_nl_2
+              << "virtual ::" << obj_name << "Consumer_ptr" << be_nl
+              << "get_consumer_" << port_name << " (void);";
+        }
 
       os_ << be_uidt_nl << be_nl
           << "private:" << be_idt_nl;
@@ -391,7 +393,7 @@ be_visitor_servant_svh::gen_non_type_specific (void)
           << "disconnect (const char * name, ::Components::Cookie * ck);";
     }
 
-  if (!be_global->gen_lwccm ())
+  if (!be_global->gen_lwccm () && this->node_->n_uses () != 0)
     {
       os_ << be_nl_2
           << "virtual ::Components::ReceptacleDescriptions *"
@@ -405,15 +407,21 @@ be_visitor_servant_svh::gen_non_type_specific (void)
   if (!be_global->gen_lwccm () && !is_connector &&
       !be_global->gen_noeventccm ())
     {
-      os_ << be_nl_2
-          << "virtual ::Components::PublisherDescriptions *"
-          << be_nl
-          << "get_all_publishers (void);";
+      if (this->node_->n_publishes () != 0UL)
+        {
+          os_ << be_nl_2
+              << "virtual ::Components::PublisherDescriptions *"
+              << be_nl
+              << "get_all_publishers (void);";
+        }
 
-      os_ << be_nl_2
-          << "virtual ::Components::EmitterDescriptions *"
-          << be_nl
-          << "get_all_emitters (void);";
+      if (this->node_->n_emits () != 0UL)
+        {
+          os_ << be_nl_2
+              << "virtual ::Components::EmitterDescriptions *"
+              << be_nl
+              << "get_all_emitters (void);";
+        }
     }
 
   /// If the node is a connector or the events must be disabled, event sources

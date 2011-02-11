@@ -45,6 +45,9 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::late_binded (
       ACE_OS::strlen (topic_name) > 0 &&
       ACE_OS::strlen (this->topic_name_.in ()) == 0)
     {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                    ACE_TEXT ("DDS_TopicBase_Connector_T::late_binded - ")
+                    ACE_TEXT ("Topic %C is late binded.\n"), topic_name));
       DDS_TopicBase_Connector_T::topic_name (topic_name);
       return true;
     }
@@ -54,6 +57,9 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::late_binded (
     }
   else
     {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                    ACE_TEXT ("DDS_TopicBase_Connector_T::late_binded - ")
+                    ACE_TEXT ("Topic %C is not late binded.\n"), topic_name));
       DDS_TopicBase_Connector_T::topic_name (topic_name);
     }
   return false;
@@ -85,11 +91,12 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::configuration_complete 
 
 template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
 void
-DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_activate (ACE_Reactor* reactor)
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_activate (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_activate");
   BaseConnector::ccm_activate ();
 
+  ACE_Reactor *reactor = this->reactor ();
   this->activate_topic (reactor,
                         this->topic_.in (),
                         this->topiclistener_.inout ());

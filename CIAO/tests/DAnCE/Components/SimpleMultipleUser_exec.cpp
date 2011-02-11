@@ -53,8 +53,8 @@ namespace CIAO_Simple_SimpleMultipleUser_Impl
   {
     ACE_TRACE ("SimpleMultipleUser_exec_i::ccm_activate ()");
 
-    ::Simple::SimpleMultipleUser::trigConnections_var conns =
-        this->context_->get_connections_trig ();
+    ::Simple::SimpleMultipleUser::trig_uses_mConnections_var conns =
+        this->context_->get_connections_trig_uses_m ();
 
     ACE_DEBUG ((LM_NOTICE, "SimpleMultipleUser_exec_i::ccm_activate - "
                  "Got %u connections to my receptacle\n",

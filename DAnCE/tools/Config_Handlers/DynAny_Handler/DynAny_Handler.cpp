@@ -29,7 +29,7 @@ namespace DAnCE
 
       if (CORBA::is_nil (daf_.in ()))
         {
-          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Unable to narrow Dynamic Any factory\n")));
+          DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Unable to narrow Dynamic Any factory\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Unable to narrow DynAny factory"));
         }
     }
@@ -177,7 +177,7 @@ namespace DAnCE
         case TCKind::tk_component_l:
         case TCKind::tk_home_l:
         case TCKind::tk_event_l:
-          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Type not supported\n")));
+          DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Type not supported\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
         }
 
@@ -256,7 +256,7 @@ namespace DAnCE
         case CORBA::tk_TypeCode:
         case ::CORBA::tk_null:
         default:
-          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("DynAny_Handler: I have no idea how to perform a referse mapping.\n")));
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("DynAny_Handler: I have no idea how to perform a reverse mapping.\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("reverse mapping for this type not supported"));
         }
 #endif

@@ -234,13 +234,13 @@
   <connection>
     <name>TestConnection</name>
     <internalEndpoint>
-      <portName>hello_</portName>
+      <portName>hello_publishes</portName>
       <provider>false</provider>
       <kind>EventPublisher</kind>
       <instance xmi:idref="SimplePublisherComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>hello_</portName>
+      <portName>hello_consumes</portName>
       <provider>true</provider>
       <kind>EventConsumer</kind>
       <instance xmi:idref="SimpleConsumerComponentInstance" />
@@ -249,13 +249,13 @@
   <connection>
     <name>TestConnection2</name>
     <internalEndpoint>
-      <portName>hello_</portName>
+      <portName>hello_publishes</portName>
       <provider>false</provider>
       <kind>EventPublisher</kind>
       <instance xmi:idref="SimplePublisherComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>hello_</portName>
+      <portName>hello_consumes</portName>
       <provider>true</provider>
       <kind>EventConsumer</kind>
       <instance xmi:idref="SimpleConsumerComponentInstance2" />

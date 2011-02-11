@@ -20,6 +20,7 @@ public:
 
     ::Components::Navigation_ptr get_navigation_interface (void);
     ::Components::Receptacles_ptr get_receptacle_interface (void);
+    ::Components::Events_ptr get_events_interface (bool source);
     ::CORBA::Object_ptr get_provider_cmp (void);
     ::CORBA::Object_ptr get_user_cmp (void);
 

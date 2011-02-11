@@ -402,13 +402,8 @@ run_main (int, ACE_TCHAR *[])
   thr_mgr->kill_grp (grp_id,
                      SIGINT);
 #elif !defined (ACE_HAS_PTHREADS_DRAFT4) && !defined(ACE_LACKS_PTHREAD_KILL)
-#if defined (CHORUS)
-  ACE_TEST_ASSERT (thr_mgr->kill_grp (grp_id,
-                                 SIGTHREADKILL) != -1);
-#else
   ACE_TEST_ASSERT (thr_mgr->kill_grp (grp_id,
                                  SIGINT) != -1);
-#endif /* CHORUS */
 #else
   if (thr_mgr->kill_grp (grp_id,
                          SIGINT) == -1)
