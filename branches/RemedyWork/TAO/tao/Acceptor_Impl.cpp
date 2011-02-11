@@ -193,7 +193,8 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::TAO_Accept_Strategy (TAO_ORB_Core *orb_core)
-  : orb_core_ (orb_core)
+  : ACCEPT_STRATEGY_BASE (orb_core->reactor ())
+  , orb_core_ (orb_core)
 {
 }
 
