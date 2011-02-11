@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ciao, acelib {
-  after += CIAO_Logger
-  libs  += CIAO_Logger
-}
