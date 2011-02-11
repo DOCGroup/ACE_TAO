@@ -1,3 +1,353 @@
+Fri Feb 11 11:16:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Wed Feb  9 15:12:59 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * etc/tao_pi.doxygen:
+                * etc/tao_pi_server.doxygen:
+                * etc/tao_rtcorba.doxygen:
+                * etc/tao_rtportableserver.doxygen:
+                * etc/tao_transportcurrent.doxygen:
+                * etc/tao_ziop.doxygen:
+                  Set some defines to get more documentation
+
+        Wed Feb  9 13:31:39 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * etc/tao_strategies.doxygen:
+                  Improved doxygen generation
+
+                * examples/Load_Balancing/Load_Balancer_i.cpp:
+                * orbsvcs/orbsvcs/HTIOP/HTIOP_Endpoint.h:
+                * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.h:
+                * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.h:
+                * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+                * orbsvcs/tests/Bug_2615_Regression/Test.idl:
+                * tao/MProfile.cpp:
+                * tao/PortableServer/Object_Adapter.cpp:
+                * tao/Strategies/COIOP_Acceptor.h:
+                * tao/Strategies/COIOP_Endpoint.h:
+                * tao/Strategies/DIOP_Acceptor.h:
+                * tao/Strategies/DIOP_Endpoint.h:
+                * tao/Strategies/SCIOP_Acceptor.h:
+                * tao/Strategies/SCIOP_Endpoint.h:
+                * tao/Strategies/SHMIOP_Endpoint.h:
+                * tao/Strategies/UIOP_Endpoint.h:
+                  Fixed typos and doxygen warnings
+
+        Tue Feb  8 19:04:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * examples/RTCORBA/Activity/README:
+                * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+                * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+                * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+                * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+                * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp:
+                * orbsvcs/orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h:
+                * orbsvcs/orbsvcs/ESF/ESF_RefCount_Guard.h:
+                * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+                * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+                * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
+                * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
+                * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h:
+                * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+                * performance-tests/Cubit/TAO/MT_Cubit/Globals.h:
+                * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+                * performance-tests/Cubit/TAO/MT_Cubit/Timer.h:
+                * performance-tests/Cubit/TAO/MT_Cubit/Timer.cpp:
+                * performance-tests/Cubit/TAO/MT_Cubit/client.h:
+                * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+                * tao/Environment.cpp:
+                  Fixed typos and removed old Chorus support
+
+        Thu Feb  3 09:23:31 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+                  Added workaround for broken HP C++ V7.4-004 on OpenVMS IA64 V8.3
+
+        Wed Feb  2 14:28:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/CSD_Framework/CSD_Default_Servant_Dispatcher.cpp:
+                * tao/CSD_Framework/CSD_POA.h:
+                * tao/ORB_Core.h:
+                * tao/Object.h:
+                * tao/PortableServer/Regular_POA.h:
+                * tao/PortableServer/Servant_Dispatcher.h:
+                * tao/Transport_Mux_Strategy.h:
+                  Layout/doxygen changes
+
+        Wed Feb  2 12:31:51 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/orbconf.h:
+                  Removed deprecated macros
+
+        Wed Feb  2 11:44:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/default_resource.cpp:
+                  Removed support for deprecated -ORBConnectionCachingStrategy
+
+        Tue Feb  1 12:52:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                  Don't generate empty methods
+
+        Tue Feb  1 12:30:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+                  Fixed race condition in generated code
+
+        Mon Jan 31 18:58:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+                  Throw correct exception
+
+        Mon Jan 31 18:19:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+                  Fixed several race conditions, possible memory leaks and incorrect
+                  logic
+
+        Mon Jan 31 15:12:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+                  Layout changes
+
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                  Throw an exception when we can't allocate any memory anymore
+
+        Mon Jan 31 14:45:24 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                  Reduced amount of methods in the servant with LwCCM, this should
+                  reduce the footprint heavily with LwCCM again
+
+        Mon Jan 31 13:45:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+                  Layout change in generated code
+
+        Mon Jan 31 11:38:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+                  Fixed race condition in generated code
+
+        Mon Jan 31 11:23:52 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                  Fixed race condition in generated code
+
+        Mon Jan 31 10:29:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+                  Fixed race condition in generated code
+
+        Mon Jan 31 09:55:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                * TAO_IDL/be_include/be_visitor_component/servant_svs.h:
+                  Fixed race condition in generated code
+
+        Mon Jan 31 08:47:49 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * orbsvcs/orbsvcs/FaultTolerance/FT_ServerORBInitializer.h:
+                * orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicy_i.h:
+                * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+                * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+                  Cleanup of not used stuff
+
+                * tao/Stub.h:
+                * tao/Stub.inl:
+                  Readded profile_lock(), used by FT
+
+        Fri Jan 28 14:26:35 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                  First step in not letting the generate servant use context members
+                  directly, this causes all kind race conditions in a MT situation.
+                  More changes need to be made between the servant and the context.
+
+                * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+
+                * tao/ObjectKey_Table.h:
+                  Added export macro again, needed for strategies
+
+                * tao/operation_details.h:
+                * tao/Objref_VarOut_T.h:
+                  Doxygen changes
+
+                * tao/On_Demand_Fragmentation_Strategy.h:
+                  Doxygen change, use ACE_Copy_Disabled
+
+        Thu Jan 27 11:29:03 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * docs/Options.html:
+                * tao/ORB_Core.cpp:
+                * tao/ObjectKey_Table.h:
+                * tao/ObjectKey_Table.inl:
+                * tao/ObjectKey_Table.cpp:
+                * tao/Resource_Factory.h:
+                * tao/Resource_Factory.cpp:
+                * tao/default_resource.h:
+                * tao/default_resource.cpp:
+                  Removed -ORBObjectKeyTableLock, tricky option and this removed a few
+                  virtual method calls. Also use inlining as much as possible
+
+        Thu Jan 27 10:46:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/DLL_Parser.cpp:
+                * tao/IORTable/Table_Adapter.h:
+                * tao/IORTable/Table_Adapter.cpp:
+                * tao/Object.h:
+                * tao/ObjectKey_Table.h:
+                * tao/PortableServer/Non_Servant_Upcall.cpp:
+                * tao/PortableServer/Object_Adapter.h:
+                * tao/PortableServer/Object_Adapter.inl:
+                * tao/PortableServer/Object_Adapter.cpp:
+                * tao/PortableServer/Root_POA.cpp:
+                * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+                * tao/PortableServer/Servant_Upcall.cpp:
+                * tao/Server_Strategy_Factory.h:
+                * tao/Server_Strategy_Factory.cpp:
+                * tao/default_resource.h:
+                * tao/default_server.h:
+                * tao/default_server.cpp:
+                  Removed -ORBPOALock support, disabling the lock in a MT situation is
+                  very risky and causes race conditions. By removing this support
+                  we remove several virtual calls from the critical path which
+                  gives a better performance in the regular callpath.
+
+                * DevGuideExamples/Multithreading/Reactive/svc.conf:
+                * docs/Options.html:
+                * docs/configurations.html:
+                * examples/AMH/Sink_Server/st_server.conf:
+                * examples/AMH/Sink_Server/st_server.conf.xml:
+                * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/svc.conf.xml:
+                * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/svc.conf:
+                * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/svc.conf.xml:
+                * orbsvcs/tests/AVStreams/Latency/svc.conf:
+                * orbsvcs/tests/AVStreams/Latency/svc.conf.xml:
+                * orbsvcs/tests/AVStreams/Multicast/components_svc.conf:
+                * orbsvcs/tests/AVStreams/Multicast/components_svc.conf.xml:
+                * orbsvcs/tests/Bug_2377_Regression/svc.conf:
+                * orbsvcs/tests/Bug_2925_Regression/svc.conf:
+                * orbsvcs/tests/EC_MT_Mcast/svc.conf:
+                * performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf:
+                * performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf.xml:
+                * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
+                * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.xml:
+                * performance-tests/Cubit/TAO/IDL_Cubit/svc.st_server.conf:
+                * performance-tests/Cubit/TAO/IDL_Cubit/svc.st_server.conf.xml:
+                * performance-tests/Cubit/TAO/IDL_Cubit/svc.zero_lock.conf:
+                * performance-tests/Cubit/TAO/IDL_Cubit/svc.zero_lock.conf.xml:
+                * performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
+                * performance-tests/Cubit/TAO/MT_Cubit/svc.conf.xml:
+                * performance-tests/Latency/Collocation/svc.conf:
+                * performance-tests/Latency/DII/svc.conf:
+                * performance-tests/Latency/DII/svc.conf.xml:
+                * performance-tests/Latency/DSI/svc.conf:
+                * performance-tests/Latency/DSI/svc.conf.xml:
+                * performance-tests/Latency/Deferred/svc.conf:
+                * performance-tests/Latency/Deferred/svc.conf.xml:
+                * performance-tests/Latency/Single_Threaded/svc.conf:
+                * performance-tests/Latency/Single_Threaded/svc.conf.xml:
+                * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf:
+                * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf.xml:
+                * performance-tests/Sequence_Latency/DII/svc.conf:
+                * performance-tests/Sequence_Latency/DII/svc.conf.xml:
+                * performance-tests/Sequence_Latency/DSI/svc.conf:
+                * performance-tests/Sequence_Latency/DSI/svc.conf.xml:
+                * performance-tests/Sequence_Latency/Deferred/svc.conf:
+                * performance-tests/Sequence_Latency/Deferred/svc.conf.xml:
+                * performance-tests/Sequence_Latency/Single_Threaded/svc.conf:
+                * performance-tests/Sequence_Latency/Single_Threaded/svc.conf.xml:
+                * performance-tests/Throughput/svc.conf:
+                * performance-tests/Throughput/svc.conf.xml:
+                * tests/Bug_3163_Regression/server.conf:
+                * tests/Bug_3647_Regression/svc.conf:
+                * tests/CSD_Collocation/svc.conf:
+                * tests/CSD_Collocation/svc.conf.xml:
+                * tests/Collocation/svc.conf:
+                * tests/Collocation/svc.conf.xml:
+                * tests/Smart_Proxies/Collocation/svc.conf:
+                * tests/Smart_Proxies/Collocation/svc.conf.xml:
+                  Removed -ORBPOALock, got removed
+
+        Wed Jan 26 15:20:42 UTC 2011  Martin Corino  <corino_m@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+                  Added exception in case AMI facet not connected.
+
+        Wed Jan 26 13:51:51 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/Client_Strategy_Factory.h:
+                * tao/Messaging/AMH_Response_Handler.cpp:
+                * tao/Object.h:
+                * tao/Object.cpp:
+                * tao/Profile.h:
+                * tao/Profile.inl:
+                * tao/Resource_Factory.h:
+                * tao/Stub.inl:
+                * tao/Stub.cpp:
+                * tao/Valuetype/AbstractBase.h:
+                * tao/Valuetype/AbstractBase.cpp:
+                  Simplified refcounting and use more inlining
+
+                * tao/tao.mpc:
+                  Updated
+
+                * tao/Configurable_Refcount.h:
+                * tao/Configurable_Refcount.inl:
+                * tao/Configurable_Refcount.cpp:
+                  Removed these files, not used anymore
+
+        Wed Jan 26 13:39:14 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/Client_Strategy_Factory.h:
+                * tao/Client_Strategy_Factory.cpp:
+                * tao/Configurable_Refcount.h:
+                * tao/Configurable_Refcount.inl:
+                * tao/Object.inl:
+                * tao/Object.cpp:
+                * tao/Profile.cpp:
+                * tao/Resource_Factory.h:
+                * tao/Resource_Factory.cpp:
+                * tao/Valuetype/AbstractBase.cpp:
+                * tao/default_client.h:
+                * tao/default_client.cpp:
+                * tao/default_resource.h:
+                * tao/default_resource.cpp:
+                  Simplified refcounts, this improves the runtime performance of TAO
+
+        Wed Jan 26 10:44:30 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+                  Fixed race condition in the disconnect
+
+                * tao/SystemException.cpp:
+                  Layout change
+
+        Tue Jan 25 14:01:47 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+                  Layout change
+
+                * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+                  Fixed race condition in generated code
+
+        Tue Jan 25 13:04:28 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                  Throw an InvalidConnection exception when an EventConsumerBase can't
+                  be narrowed to a type specific Event.
+
+        === end changelog ===
+
 Wed Feb  9 13:45:47 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/Acceptor_Impl.cpp:
