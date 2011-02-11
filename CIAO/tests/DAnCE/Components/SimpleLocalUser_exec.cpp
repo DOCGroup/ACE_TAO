@@ -53,7 +53,7 @@ namespace CIAO_Simple_SimpleLocalUser_Impl
   {
     ACE_TRACE ("SimpleLocalUser_exec_i::ccm_activate ()");
 
-    ::Simple::LocalTrigger_var trig (this->context_->get_connection_trig ());
+    ::Simple::LocalTrigger_var trig (this->context_->get_connection_trig_uses ());
 
     if (CORBA::is_nil (trig.in ()))
       {

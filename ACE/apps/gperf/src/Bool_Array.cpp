@@ -27,11 +27,6 @@
 
 #include "Bool_Array.h"
 #include "ace/OS_NS_string.h"
-
-
-
-#if defined (ACE_HAS_GPERF)
-
 #include "ace/OS_Memory.h"
 
 // Prints out debugging diagnostics.
@@ -106,5 +101,3 @@ Bool_Array::reset (void)
                     "done\n"));
     }
 }
-
-#endif /* ACE_HAS_GPERF */

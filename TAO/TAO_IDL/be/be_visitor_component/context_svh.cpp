@@ -28,7 +28,6 @@ be_visitor_context_svh::visit_component (be_component *node)
   // This visitor is spawned by be_visitor_component_svh,
   // which already does a check for imported node, so none
   // is needed here.
-
   node_ = node;
 
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
@@ -56,11 +55,11 @@ be_visitor_context_svh::visit_component (be_component *node)
       << "{" << be_nl
       << "public:" << be_idt_nl;
 
-  os_ << "// Allow the servant to access our state." << be_nl
+  os_ << "/// Allow the servant to access our state." << be_nl
       << "friend class " << lname << "_Servant;"
       << be_nl_2;
 
-  os_ << "// Some useful typedefs." << be_nl
+  os_ << "/// Some useful typedefs." << be_nl
       << "typedef" << be_nl
       << "::CIAO::" << be_global->ciao_container_type ()
       << "_Context_Impl<" << be_idt << be_idt_nl
@@ -101,11 +100,13 @@ be_visitor_context_svh::visit_component (be_component *node)
   os_ << "virtual ~" << lname << "_Context (void);";
 
   os_ << be_nl_2
-      << "// Operations for " << lname
+      << "/** @name Operations and members for " << lname
       << " receptacles and event sources,"
       << be_nl
-      << "// defined in " << global << sname
-      << "::CCM_" << lname << "_Context.";
+      << " * defined in " << global << sname
+      << "::CCM_" << lname << "_Context." << be_nl << " */"
+      << be_nl
+      << "//@{";
 
   if (this->visit_component_scope (node) == -1)
     {
@@ -117,7 +118,9 @@ be_visitor_context_svh::visit_component (be_component *node)
                         -1);
     }
 
-  os_ << be_uidt_nl
+  os_ << be_nl
+      << "//@}"
+      << be_uidt_nl
       << "};";
 
   return 0;
@@ -177,11 +180,11 @@ be_visitor_context_svh::visit_uses (be_uses *node)
     }
 
   os_ << be_uidt_nl << be_nl
-      << "protected:" << be_idt_nl;
+      << "private:" << be_idt_nl;
 
   if (is_multiple)
     {
-      os_ << "// Multiplex " << port_name << " connection." << be_nl
+      os_ << "/// Multiplex " << port_name << " connection." << be_nl
           << "typedef std::map<ptrdiff_t," << be_nl
           << "                 ::"
           << obj_name << "_var>" << be_idt_nl
@@ -193,7 +196,7 @@ be_visitor_context_svh::visit_uses (be_uses *node)
     }
   else
     {
-      os_ << "// Simplex " << port_name << " connection." << be_nl
+      os_ << "/// Simplex " << port_name << " connection." << be_nl
           << "::" << obj_name << "_var" << be_nl
           << "ciao_uses_" << port_name << "_;";
     }
@@ -226,7 +229,7 @@ be_visitor_context_svh::visit_publishes (be_publishes *node)
       << "::Components::Cookie * ck);" << be_uidt;
 
   os_ << be_uidt_nl << be_nl
-      << "protected:" << be_idt_nl;
+      << "private:" << be_idt_nl;
 
   os_ << "typedef std::map<ptrdiff_t," << be_nl
       << "                 ::" << obj_name

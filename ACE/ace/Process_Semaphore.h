@@ -71,14 +71,14 @@ public:
   int release (void);
 
   /**
-   * Acquire semaphore ownership.  This calls <acquire> and is only
+   * Acquire semaphore ownership.  This calls acquire() and is only
    * here to make the ACE_Process_Semaphore interface consistent
    * with the other synchronization APIs.
    */
   int acquire_read (void);
 
   /**
-   * Acquire semaphore ownership.  This calls <acquire> and is only
+   * Acquire semaphore ownership.  This calls acquire() and is only
    * here to make the ACE_Process_Semaphore interface consistent
    * with the other synchronization APIs.
    */
@@ -86,7 +86,7 @@ public:
 
   /**
    * Conditionally acquire semaphore (i.e., won't block).  This calls
-   * <tryacquire> and is only here to make the ACE_Process_Semaphore
+   * tryacquire() and is only here to make the ACE_Process_Semaphore
    * interface consistent with the other synchronization APIs.
    * Returns -1 on failure.  If we "failed" because someone else
    * already had the lock, @c errno is set to @c EBUSY.
@@ -95,7 +95,7 @@ public:
 
   /**
    * Conditionally acquire semaphore (i.e., won't block).  This calls
-   * <tryacquire> and is only here to make the ACE_Process_Semaphore
+   * tryacquire() and is only here to make the ACE_Process_Semaphore
    * interface consistent with the other synchronization APIs.
    * Returns -1 on failure.  If we "failed" because someone else
    * already had the lock, @c errno is set to @c EBUSY.
@@ -138,7 +138,7 @@ template <class T> class ACE_Malloc_Lock_Adapter_T;
  * @brief Template specialization of ACE_Malloc_Lock_Adapter_T for
  * ACE_Process_Semaphore.
  *
- * This is needed since the ctor for ACE_Process_Semaphore doesn't match
+ * This is needed since the constructor for ACE_Process_Semaphore doesn't match
  * the standard form used by other lock strategy classes.
  */
 template<>

@@ -23,13 +23,6 @@
 #include "tao/LocalObject.h"
 #include "orbsvcs/FaultTolerance/FT_ServerORB_export.h"
 
-// This is to remove "inherits via dominance" warnings from MSVC.
-// MSVC is being a little too paranoid.
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// RTCORBA ORB initializer.
@@ -54,10 +47,6 @@ private:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 

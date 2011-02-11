@@ -258,14 +258,8 @@
 
   <connection>
     <name>TestConnection</name>
-<!--    <internalEndpoint>
-      <portName>trig</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="SimpleProviderComponentInstance" />
-    </internalEndpoint> -->
     <internalEndpoint>
-      <portName>trig</portName>
+      <portName>trig_uses_m</portName>
       <provider>false</provider>
       <kind>MultiplexReceptacle</kind>
       <instance xmi:idref="SimpleMultipleUserComponentInstance" />
@@ -273,21 +267,15 @@
     <externalReference>
       <location>corbaname:rir:/NameService#SimpleProviderComponent</location>
       <provider>true</provider>
-      <portName>trig</portName>
+      <portName>trig_provides</portName>
       <supportedType>Meaningless</supportedType>
     </externalReference>
   </connection>
 
   <connection>
     <name>TestConnection_2</name>
-<!--    <internalEndpoint>
-      <portName>trig</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="SimpleProviderComponentInstance" />
-    </internalEndpoint> -->
     <internalEndpoint>
-      <portName>trig</portName>
+      <portName>trig_uses_m</portName>
       <provider>false</provider>
       <kind>MultiplexReceptacle</kind>
       <instance xmi:idref="SimpleMultipleUserComponentInstance" />
@@ -295,7 +283,7 @@
     <externalReference>
       <location>corbaname:rir:/NameService#SimpleProviderComponent</location>
       <provider>true</provider>
-      <portName>trig</portName>
+      <portName>trig_provides</portName>
       <supportedType>Meaningless</supportedType>
     </externalReference>
   </connection>
@@ -303,7 +291,7 @@
   <connection>
     <name>TestConnectionReverse</name>
     <internalEndpoint>
-      <portName>trig</portName>
+      <portName>trig_provides</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="SimpleProviderComponentInstance" />
@@ -311,7 +299,7 @@
     <externalReference>
       <location>corbaname:rir:/NameService#SimpleMultipleUserComponentReverse</location>
       <provider>false</provider>
-      <portName>trig</portName>
+      <portName>trig_uses_m</portName>
       <supportedType>Meaningless</supportedType>
     </externalReference>
   </connection>
@@ -319,7 +307,7 @@
   <connection>
     <name>TestConnectionReverse_2</name>
     <internalEndpoint>
-      <portName>trig</portName>
+      <portName>trig_provides</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="SimpleProviderComponentInstance" />
@@ -327,7 +315,7 @@
     <externalReference>
       <location>corbaname:rir:/NameService#SimpleMultipleUserComponentReverse</location>
       <provider>false</provider>
-      <portName>trig</portName>
+      <portName>trig_uses_m</portName>
       <supportedType>Meaningless</supportedType>
     </externalReference>
   </connection>

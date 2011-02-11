@@ -34,8 +34,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_GPERF)
-
 /// Enumerate the potential debugging Options.
 enum Option_Type
 {
@@ -190,5 +188,4 @@ private:
 /// Global option coordinator for the entire program.
 extern Options option;
 
-#endif /* ACE_HAS_GPERF */
 #endif /* OPTIONS_H */

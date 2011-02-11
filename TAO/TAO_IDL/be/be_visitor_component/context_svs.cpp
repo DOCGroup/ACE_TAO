@@ -149,7 +149,7 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "{" << be_idt_nl
       << "if ( ::CORBA::is_nil (c))" << be_idt_nl
       << "{" << be_idt_nl
-      << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
+      << "throw ::Components::InvalidConnection ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
   os_ << "ptrdiff_t const ptr = reinterpret_cast<ptrdiff_t> (c);"
@@ -163,11 +163,18 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "                  0);";
 
   os_ << be_nl_2
+      << "::" << fname << "Consumer_var ciao_var = " << be_idt_nl
+      << "::" << fname << "Consumer::_duplicate (c);" << be_uidt << be_nl_2
+      << "std::pair<" << tao_cg->upcase (port_name) <<"_TABLE::iterator, bool> ret =" << be_idt_nl
       << "this->ciao_publishes_" << port_name
-      << "_[ptr] =" << be_nl
-      << "  ::" << fname << "Consumer::_duplicate (c);";
-
-  os_ << be_uidt_nl
+      << "_.insert (" << be_idt_nl << tao_cg->upcase (port_name)
+      << "_TABLE::value_type (ptr, ciao_var.in ()));"
+      << be_uidt << be_uidt_nl
+      << "if (!ret.second)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "throw ::Components::AlreadyConnected ();" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "ciao_var._retn ();" << be_uidt_nl
       << "}";
 
   os_ << be_nl
@@ -263,7 +270,7 @@ be_visitor_context_svs::visit_emits (be_emits *node)
       << "{" << be_idt_nl
       << "if ( ::CORBA::is_nil (c))" << be_idt_nl
       << "{" << be_idt_nl
-      << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
+      << "throw ::Components::InvalidConnection ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "if (! ::CORBA::is_nil (this->ciao_emits_"
       << port_name << "_consumer_.in ()))" << be_idt_nl
@@ -281,13 +288,15 @@ be_visitor_context_svs::visit_emits (be_emits *node)
       << node_->local_name () << "_Context::disconnect_"
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "if ( ::CORBA::is_nil (this->ciao_emits_"
-      << port_name << "_consumer_.in ()))" << be_idt_nl
+      << "::" << fname << "Consumer_var ciao_emits_" << port_name << " =" << be_idt_nl
+      << "this->ciao_emits_" << port_name << "_consumer_._retn ();" << be_uidt_nl << be_nl
+      << "if ( ::CORBA::is_nil (ciao_emits_"
+      << port_name << ".in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::NoConnection ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "return this->ciao_emits_" << port_name
-      << "_consumer_._retn ();" << be_uidt_nl
+      << "return ciao_emits_" << port_name
+      << "._retn ();" << be_uidt_nl
       << "}";
 
   return 0;
@@ -304,10 +313,9 @@ be_visitor_context_svs::gen_uses_simplex (AST_Type *obj,
       << node_->local_name () << "_Context::get_connection_"
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "return" << be_idt_nl
-      << "::" << fname << "::_duplicate (" << be_idt_nl
+      << "return ::" << fname << "::_duplicate (" << be_idt_nl
       << "this->ciao_uses_" << port_name << "_.in ());"
-      << be_uidt << be_uidt << be_uidt_nl
+      << be_uidt << be_uidt_nl
       << "}";
 
   os_ << be_nl_2
@@ -316,14 +324,14 @@ be_visitor_context_svs::gen_uses_simplex (AST_Type *obj,
       << port_name << " (" << be_idt_nl
       << "::" << fname << "_ptr c)" << be_uidt_nl
       << "{" << be_idt_nl
+      << "if ( ::CORBA::is_nil (c))" << be_idt_nl
+      << "{" << be_idt_nl
+      << "throw ::Components::InvalidConnection ();" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
       << "if (! ::CORBA::is_nil (this->ciao_uses_"
       << port_name << "_.in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::AlreadyConnected ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "if ( ::CORBA::is_nil (c))" << be_idt_nl
-      << "{" << be_idt_nl
-      << "throw ::Components::InvalidConnection ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "this->ciao_uses_" << port_name << "_ =" << be_idt_nl
       << "::" << fname << "::_duplicate (c);"
@@ -335,13 +343,15 @@ be_visitor_context_svs::gen_uses_simplex (AST_Type *obj,
       << node_->local_name () << "_Context::disconnect_"
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "if ( ::CORBA::is_nil (this->ciao_uses_"
-      << port_name << "_.in ()))" << be_idt_nl
+      << "::" << fname << "_var ciao_uses_" << port_name << " =" << be_idt_nl
+      << "this->ciao_uses_" << port_name << "_._retn ();" << be_uidt_nl << be_nl
+      << "if ( ::CORBA::is_nil (ciao_uses_"
+      << port_name << ".in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::NoConnection ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "return this->ciao_uses_" << port_name
-      << "_._retn ();" << be_uidt_nl
+      << "return ciao_uses_" << port_name
+      << "._retn ();" << be_uidt_nl
       << "}";
 }
 
@@ -418,11 +428,18 @@ be_visitor_context_svs::gen_uses_multiplex (
       << "                  0);";
 
   os_ << be_nl_2
+      << "::" << fname << "_var ciao_var = " << be_idt_nl
+      << "::" << fname << "::_duplicate (c);" << be_uidt << be_nl_2
+      << "std::pair<" << tao_cg->upcase (port_name) <<"_TABLE::iterator, bool> ret =" << be_idt_nl
       << "this->ciao_uses_" << port_name
-      << "_[ptr] =" << be_nl
-      << "  ::" << fname << "::_duplicate (c);";
-
-  os_ << be_uidt_nl
+      << "_.insert (" << be_idt_nl << tao_cg->upcase (port_name)
+      << "_TABLE::value_type (ptr, ciao_var.in ()));"
+      << be_uidt << be_uidt_nl
+      << "if (!ret.second)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "throw ::Components::AlreadyConnected ();" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "ciao_var._retn ();" << be_uidt_nl
       << "}";
 
   os_ << be_nl_2
@@ -465,17 +482,14 @@ be_visitor_context_svs::gen_uses_multiplex (
       << "_TABLE::iterator iter =" << be_idt_nl
       << "this->ciao_uses_" << port_name
       << "_.find (key);" << be_uidt_nl << be_nl
-      << "if (iter == this->ciao_uses_" << port_name
+      << "if (iter != this->ciao_uses_" << port_name
       << "_.end ())" << be_idt_nl
       << "{" << be_idt_nl
-      << "throw ::Components::InvalidConnection ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
       << "retv = iter->second;" << be_nl
       << "n = this->ciao_uses_" << port_name
-      << "_.erase (key);";
-
-  os_ << be_uidt_nl
-      << "}";
+      << "_.erase (key);" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "}" << be_uidt;
 
   os_ << be_nl_2
       << "if (n != 1UL)" << be_idt_nl

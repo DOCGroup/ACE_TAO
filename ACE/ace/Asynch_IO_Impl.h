@@ -81,7 +81,7 @@ public:
 
   /**
    * POSIX4 real-time signal number to be used for the
-   * operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
+   * operation. signal_number ranges from SIGRTMIN to SIGRTMAX. By
    * default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
    * on non-POSIX4 systems and returns 0.
    */

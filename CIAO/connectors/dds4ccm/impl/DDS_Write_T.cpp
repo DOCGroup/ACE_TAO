@@ -57,8 +57,18 @@ DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_c
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Write_T::configuration_complete - "
                         "Error: Proxy returned a nil datawriter.\n"));
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          throw ::CORBA::INTERNAL ();
         }
+      ::DDS::ReturnCode_t retcode = dwv_tmp->enable ();
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DDS_Write_T::configuration_complete - "
+                        "Error: Unable to enable the datawriter: <%C>\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CORBA::INTERNAL ();
+        }
+
       this->dds_write_->set_dds_writer (dwv_tmp.in ());
       this->ccm_data_writer_->set_dds_entity (dwv_tmp.in ());
     }
@@ -98,7 +108,7 @@ DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove (
         }
       else
         {
-          throw ::CCM_DDS::InternalError (retcode, 0);
+          throw ::CORBA::INTERNAL ();
         }
     }
 }

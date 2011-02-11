@@ -34,20 +34,18 @@ CORBA::Object::~Object (void)
 {
   if (this->protocol_proxy_)
     (void) this->protocol_proxy_->_decr_refcnt ();
-
-  delete this->object_init_lock_;
 }
 
 CORBA::Object::Object (TAO_Stub * protocol_proxy,
                        CORBA::Boolean collocated,
                        TAO_Abstract_ServantBase * servant,
                        TAO_ORB_Core *orb_core)
-  : is_local_ (false)
+  : refcount_ (1)
+    , is_local_ (false)
     , is_evaluated_ (true)
     , ior_ (0)
     , orb_core_ (orb_core)
     , protocol_proxy_ (protocol_proxy)
-    , object_init_lock_ (0)
 {
   /// This constructor should not be called when the protocol proxy is
   /// null ie. when the object is a LocalObject. Assert that
@@ -56,12 +54,6 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
 
   if (this->orb_core_ == 0)
     this->orb_core_ = this->protocol_proxy_->orb_core ();
-
-  this->object_init_lock_ =
-    this->orb_core_->resource_factory ()->create_corba_object_lock ();
-
-  this->refcount_ =
-    this->orb_core_->resource_factory ()->create_corba_object_refcount ();
 
   // Set the collocation marker on the stub. This may not be news to it.
   // This may also change the stub's object proxy broker.
@@ -73,18 +65,13 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
 
 CORBA::Object::Object (IOP::IOR *ior,
                        TAO_ORB_Core *orb_core)
-  : is_local_ (false)
+  : refcount_ (1)
+    , is_local_ (false)
     , is_evaluated_ (false)
     , ior_ (ior)
     , orb_core_ (orb_core)
     , protocol_proxy_ (0)
-    , object_init_lock_ (0)
 {
-  this->object_init_lock_ =
-    this->orb_core_->resource_factory ()->create_corba_object_lock ();
-
-  this->refcount_ =
-    this->orb_core_->resource_factory ()->create_corba_object_refcount ();
 }
 
 // Too lazy to do this check in every method properly! This is useful
@@ -92,7 +79,7 @@ CORBA::Object::Object (IOP::IOR *ior,
 #define TAO_OBJECT_IOR_EVALUATE \
 if (!this->is_evaluated_) \
   { \
-    ACE_GUARD (ACE_Lock , mon, *this->object_init_lock_); \
+    ACE_GUARD (TAO_SYNCH_MUTEX , mon, this->object_init_lock_); \
       if (!this->is_evaluated_) \
         CORBA::Object::tao_object_initialize (this); \
   }
@@ -100,7 +87,7 @@ if (!this->is_evaluated_) \
 #define TAO_OBJECT_IOR_EVALUATE_RETURN \
 if (!this->is_evaluated_) \
   { \
-    ACE_GUARD_RETURN (ACE_Lock , mon, *this->object_init_lock_, 0); \
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX , mon, this->object_init_lock_, 0); \
     if (!this->is_evaluated_) \
       CORBA::Object::tao_object_initialize (this); \
   }
@@ -108,16 +95,16 @@ if (!this->is_evaluated_) \
 void
 CORBA::Object::_add_ref (void)
 {
-  this->refcount_.increment ();
+  ++this->refcount_;
 }
 
 void
 CORBA::Object::_remove_ref (void)
 {
-  if (this->refcount_.decrement () != 0)
-    return;
-
-  delete this;
+  if (--this->refcount_ == 0)
+    {
+      delete this;
+    }
 }
 
 CORBA::ULong

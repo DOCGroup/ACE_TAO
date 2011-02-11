@@ -45,7 +45,7 @@ ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads
 
-CCFLAGS += $(CFLAGS) $(IMPLICIT_TEMPLATES_FLAG) -ip
+CCFLAGS += $(CFLAGS) -ip
 DCFLAGS += -g -debug full
 DLD     = $(CXX)
 LD      = $(CXX)

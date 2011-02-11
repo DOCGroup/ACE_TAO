@@ -39,9 +39,6 @@ class ACE_Allocator;
                               CACHING_STRATEGY, \
                               ATTRIBUTES>
 
-// For linkers that cant grok long names.
-#define ACE_Hash_Cache_Map_Manager AHCMM
-
  /**
   * @class ACE_Hash_Cache_Map_Manager
   *
@@ -189,7 +186,6 @@ class ACE_Hash_Cache_Map_Manager : public ACE_CACHE_MAP_MANAGER
   int unbind (CACHE_ENTRY *entry);
 
 protected:
-
   /// Base class.
   typedef ACE_CACHE_MAP_MANAGER ACE_HCMM_BASE;
 };

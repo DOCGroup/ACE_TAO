@@ -49,7 +49,7 @@ namespace CIAO_Simple_SimpleProvider_Impl
     // Port operations.
 
     virtual ::Simple::CCM_Trigger_ptr
-    get_trig ();
+    get_trig_provides ();
 
     // Operations from Components::SessionComponent
 

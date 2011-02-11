@@ -98,7 +98,18 @@ namespace CIAO
                     "Successfully created a DDSPublisher\n",
                     qos_profile));
 
-      ccm_dds_pub->enable ();
+      DDS_ReturnCode_t retcode = ccm_dds_pub->enable ();
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                       "DDS_DomainParticipant_i"
+                       "::create_publisher_with_profile <%C> - "
+                       "Error: Unable to create Publisher: <%C>\n",
+                       qos_profile,
+                       ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          delete ccm_dds_pl;
+          throw ::CORBA::INTERNAL ();
+        }
       return retval._retn ();
     }
 
@@ -149,7 +160,17 @@ namespace CIAO
                     "DDS_DomainParticipant_i::create_publisher - "
                     "Successfully created a DDSPublisher\n"));
 
-      ccm_dds_pub->enable ();
+      DDS_ReturnCode_t retcode = ccm_dds_pub->enable ();
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                       "DDS_DomainParticipant_i"
+                       "::create_publisher - "
+                       "Error: Unable to enable the Publisher: <%C>\n",
+                       ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          delete ccm_dds_pl;
+          throw ::CORBA::INTERNAL ();
+        }
       return retval._retn ();
     }
 
@@ -252,7 +273,17 @@ namespace CIAO
                     "Successfully created a DDSSubscriber\n",
                     qos_profile));
 
-      ccm_dds_sub->enable ();
+      DDS_ReturnCode_t retcode = ccm_dds_sub->enable ();
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DDS_DomainParticipant_i::create_subscriber_with_profile <%C> - "
+                        "Error: Unable to enable the DDSSubscriber: <%C>\n",
+                        qos_profile,
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          delete ccm_dds_sl;
+          throw ::CORBA::INTERNAL ();
+        }
       return retval._retn ();
     }
 
@@ -304,7 +335,16 @@ namespace CIAO
                     "DDS_DomainParticipant_i::create_subscriber - "
                     "Successfully created a DDSSubscriber\n"));
 
-      ccm_dds_sub->enable ();
+      DDS_ReturnCode_t retcode = ccm_dds_sub->enable ();
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DDS_DomainParticipant_i::create_subscriber - "
+                        "Error: Unable to enable the DDSSubscriber: <%C>\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          delete ccm_dds_sl;
+          throw ::CORBA::INTERNAL ();
+        }
       return retval._retn ();
     }
 

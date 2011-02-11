@@ -99,7 +99,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Collocated_Invocation.cpp
     Collocation_Proxy_Broker.cpp
     Collocation_Resolver.cpp
-    Configurable_Refcount.cpp
     Connect_Strategy.cpp
     Connection_Handler.cpp
     Connection_Purging_Strategy.cpp

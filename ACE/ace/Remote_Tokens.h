@@ -42,7 +42,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * distributed token operations.  It is similar to the
  * ACE_Token_Proxy.
  * @todo
- * Distributed sleep_hooks have not been implemented.  <owner_id>
+ * Distributed sleep_hooks have not been implemented. <owner_id>
  * is not implemented.
  */
 class ACE_Export ACE_Remote_Token_Proxy : public ACE_Token_Proxy

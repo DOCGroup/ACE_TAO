@@ -193,7 +193,7 @@ TAO_EC_ProxyPushConsumer::deactivate (void)
   catch (const CORBA::Exception&)
     {
       // Exceptions here should not be propagated.  They usually
-      // indicate that an object is beign disconnected twice, or some
+      // indicate that an object is being disconnected twice, or some
       // race condition, but not a fault that the user needs to know
       // about.
     }

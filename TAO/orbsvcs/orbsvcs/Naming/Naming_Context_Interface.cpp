@@ -332,7 +332,7 @@ TAO_Naming_Context::to_url_is_alnum_or_punctuation (char c)
   if (ACE_OS::ace_isalnum (c))
     return 1;
 
-  // NON US-ASCII charcters excluding those in this array are the
+  // NON US-ASCII characters excluding those in this array are the
   // characters that need to be escaped
   static char non_escaped_punctuation[] =
     { ';', '/', ':', '?', '@', '=', '+', '$', ',', '-',

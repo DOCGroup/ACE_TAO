@@ -56,10 +56,6 @@ namespace CIAO
     virtual void fini (void);
 
     /// Get component's POA.
-    /**
-     * This operation does *NOT* increase the reference count of the
-     * POA. Look at the const qualifier in the method.
-     */
     virtual PortableServer::POA_ptr the_POA (void);
     virtual PortableServer::POA_ptr the_port_POA (void);
 

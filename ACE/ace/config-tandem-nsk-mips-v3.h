@@ -417,7 +417,7 @@ typedef enum CMA_T_SCHED_POLICY {
 #if defined(USE_EXPLICIT_EXPORT)
 #define ACE_LACKS_INLINE_FUNCTIONS
 
-#define ACE_HAS_CUSTOM_EXPORT_MACROS
+#define ACE_HAS_CUSTOM_EXPORT_MACROS 1
 #define ACE_Proper_Export_Flag export$
 #define ACE_Proper_Import_Flag import$
 #define ACE_EXPORT_SINGLETON_DECLARATION(T) template class export$ T

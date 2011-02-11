@@ -181,7 +181,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
       // Silently skip link interfaces
       if (ifr->ifr_addr.sa_family == AF_LINK)
         continue;
-#endif /* __QNX__ */
+#endif /* __QNX__ || ACE_VXWORKS */
       // Compare host ip address with interface ip address.
       if (host_name)
         {

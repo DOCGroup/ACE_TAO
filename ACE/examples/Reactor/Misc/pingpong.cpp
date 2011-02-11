@@ -43,12 +43,10 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_unistd.h"
-#if defined (ACE_WIN32) || defined (CHORUS)
+#if defined (ACE_WIN32)
 #  include "ace/Barrier.h"
 #  include "ace/Thread.h"
 #endif
-
-
 
 class Ping_Pong : public ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>
 {
@@ -211,10 +209,8 @@ run_svc (ACE_HANDLE handle)
   if (reactor.register_handler (callback,
                                 ACE_Event_Handler::READ_MASK
                                 | ACE_Event_Handler::WRITE_MASK) == -1
-#if !defined (CHORUS)
       || reactor.register_handler (SIGINT,
                                    callback) == -1
-#endif /* CHORUS */
       || reactor.schedule_timer (callback,
                                  0,
                                  SHUTDOWN_TIME) == -1)
@@ -234,7 +230,7 @@ run_svc (ACE_HANDLE handle)
                   ACE_TEXT ("handle_events")));
 }
 
-#if defined (ACE_WIN32) || defined (CHORUS)
+#if defined (ACE_WIN32)
 static ACE_Barrier barrier (3);
 
 static void *
@@ -272,7 +268,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Pipe pipe (handles);
   //FUZZ: enable check_for_lack_ACE_OS
 
-#if defined (ACE_WIN32) || defined (CHORUS)
+#if defined (ACE_WIN32)
   if (ACE_Thread::spawn (ACE_THR_FUNC (worker),
                          (void *) handles[0],
                          THR_DETACHED) == -1

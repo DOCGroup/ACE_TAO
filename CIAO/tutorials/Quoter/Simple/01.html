@@ -182,6 +182,27 @@
   "c5">&nbsp;&nbsp;&nbsp;&nbsp;</span></span> <span class=
   'c4'>$ACE_ROOT/MPC/<a href="../../../../../../MPC/docs/README">README</a></span></h3>
 
+  <h3 class="Section1 c11"><span class='c10'>&middot;<span class=
+  "c5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
+  <span class='c4'>In the beginning of this tutorial, we're using a
+  perl scripts which creates the MPC files for you. This script is
+  called <span class="c42">generate_component_mpc.pl</span>
+  and is located in $CIAO_ROOT/bin.</span></h3>
+
+  <h3 class="Section1 c11"><span class='c10'>&middot;<span class=
+  "c5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
+  <span class='c4'>When running this script, please use the full
+  path to the CIAO bin directory instead of $CIAO_ROOT/bin on Linux or
+  %CIAO_ROOT%\bin on Windows.</span></h3>
+
+  <h3 class="Section1 c11"><span class='c10'>&middot;<span class=
+  "c5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
+  <span class='c4'>To understand the meaning of different parameters
+  passed to <span class="c42">generate_component_mpc.pl</span>
+  <span class='c4'>type the following command:<br/>
+  <span class="c42">generate_component_mpc.pl -h</span><br />
+  <br /></span></span></h3>
+
   <p class='c14'><span class='c1'>Interface Design:</span></p>
 
   <p class='c17'><span class='c15'>&middot;<span class=
@@ -204,17 +225,20 @@
   command:</span></p>
 
   <p class='c19'><span class="c18">generate_component_mpc.pl
-  &ndash;n Stock_Base</span></p>
+  &ndash;n &ndash;e &ndash;l ../lib &ndash;o ../lib Stock_Base</span></p>
 
   <p class='c21'><span class='c20'>The command above will generate
   a <i>Stock_Base.mpc</i> file that contains two projects
   <i>Stock_Base_stub</i> and <i>Stock_Base_skel</i> for the Stub
-  and Servant code respectively. The MPC file should look like
-  <a href="Stock_Base/Stock_Base.mpc">this</a>.<br/>
-  Mind that "libout" and "libpaths" are added. This is done to make
-  the compilation of this example easier and at runtime, all deliveralbes
-  are in one directory. Beware that you need to add this
-  directory to your system path when running the executables (see page 4).
+  and Servant code respectively. Since we're using events in this
+  tutorial, we need to add &ndash;e to the command line.
+  The MPC file should look like <a href="Stock_Base/Stock_Base.mpc">
+  this</a>.<br/>
+  Mind that "-o" (library output) and "-l" (path to libraries) are added.
+  This is done to make the compilation of this example easier and at
+  runtime, all deliveralbes are in one directory. Beware that you need to
+  add this directory to your system path when running the executables
+  (see page 4).
   </span></p>
 
   <p class='c14'><span class='c1'>Component Design:</span></p>
@@ -241,8 +265,9 @@
   <i>Quoter/Distributor</i> <span>&nbsp;</span>sub-directory, type
   the following command</span></p>
 
-  <p class="c28"><span class="c27">generate_component_mpc.pl -p
-  Stock_Base -c StockDistributorDriver StockDistributor</span></p>
+  <p class="c28"><span class="c27">generate_component_mpc.pl
+  &ndash;e &ndash;p Stock_Base &ndash;c StockDistributorDriver
+  &ndash;o ../lib &ndash;l ../lib StockDistributor</span></p>
 
   <p class='c31'><span class='c20'>The command above takes a few
   optional parameters. The -p option indicates that the <span class=
@@ -273,8 +298,7 @@
   "c5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
   <span class='c20'>The generated</span> <span class='c20'>MPC file
   should look like <a href=
-  "Distributor/StockDistributor.mpc">this</a>. Both "libout" and "libpaths"
-  are added again.
+  "Distributor/StockDistributor.mpc">this</a>.
   </span></p>
 
   <p class='c40'><span class='c1'>Broker:</span></p>
@@ -297,9 +321,10 @@
   <i>Quoter/Broker</i> sub-directory, type the following
   command:</span></p>
 
-  <p class='c43'><span class="c42"><span class=
-  "c27">generate_component_mpc.pl -p Stock_Base -c
-  StockBrokerDriver StockBroker</span></span></p>
+  <p class='c43'><span class="c42"><span class="c27">
+  generate_component_mpc.pl &ndash;e &ndash;p Stock_Base
+  &ndash;c StockBrokerDriver &ndash;o ../lib &ndash;l ../lib
+  StockBroker</span></span></p>
 
   <p class='c31'><span class='c20'><span class="c32">The command
   above takes a few optional parameter. The -p option states that
@@ -330,21 +355,7 @@
   "c5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
   <span class='c20'><span class="c32">The generated</span>
   <span class="c32">MPC file should look like</span> <a href=
-  "Broker/StockBroker.mpc">this</a>. Both "libout" and "libpaths"
-  are added again.</span></p>
-
-  <p class='c45'><span class='c1'><br />
-  <b>Note:</b></span></p>
-
-  <p class='c45'><span class='c1'>To understand the meaning of
-  different parameters passed to</span> <span class=
-  "c42">generate_component_mpc.pl</span><span class='c20'>click
-  <a href="../../../generate_component_mpc.html">here</a> or type
-  the</span> <span class='c1'>following command:</span></p>
-
-  <p class='c45'><span class="c42">generate_component_mpc.pl
-  -h</span><span class='c1'><br />
-  <br /></span></p>
+  "Broker/StockBroker.mpc">this</a>.</span></p>
 
   <p class='c46'><span class='c1'><a href=
   "index.html">Previous</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

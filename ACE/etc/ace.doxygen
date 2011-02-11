@@ -138,11 +138,23 @@ PREDEFINED            = __ACE_INLINE__= \
                         ACE_INLINE=inline \
                         ACE_NAMESPACE_INLINE_FUNCTION=inline \
                         ACE_Export= \
-                        ACE_HAS_THREADS=
+                        ACE_HAS_THREADS= \
+                        ACE_HAS_AIO_CALLS= \
+                        ACE_WIN32= \
+                        ACE_HAS_WIN32_OVERLAPPED_IO= \
+                        ACE_HAS_ATM= \
+                        ACE_HAS_IPV6= \
+                        ACE_HAS_ATM= \
+                        ACE_HAS_DEV_POLL= \
+                        ACE_HAS_ICMP_SUPPORT=1 \
+                        ACE_HAS_TOKENS_LIBRARY= \
+                        ACE_HAS_WCHAR= \
+                        ACE_HAS_LOG_MSG_NT_EVENT_LOG= \
+                        ACE_HAS_TLI= \
+                        ACE_HAS_POSITION_INDEPENDENT_POINTERS=1 \
+                        ACE_HAS_MONITOR_FRAMEWORK=1
 EXPAND_AS_DEFINED     = ACE_UNIMPLEMENTED_FUNC \
-                        ACE_CACHE_MAP_MANAGER \
-                        ACE_T1 \
-                        ACE_T2
+                        ACE_CACHE_MAP_MANAGER
 
 #---------------------------------------------------------------------------
 # Configuration::additions related to external references

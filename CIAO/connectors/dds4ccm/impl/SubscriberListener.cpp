@@ -286,9 +286,9 @@ namespace CIAO
           DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
         {
           mask = ::DDS::REQUESTED_INCOMPATIBLE_QOS_STATUS |
-              ::DDS::SAMPLE_REJECTED_STATUS |
-               ::DDS::LIVELINESS_CHANGED_STATUS |
-                ::DDS::SUBSCRIPTION_MATCHED_STATUS;
+                 ::DDS::SAMPLE_REJECTED_STATUS |
+                 ::DDS::LIVELINESS_CHANGED_STATUS |
+                 ::DDS::SUBSCRIPTION_MATCHED_STATUS;
         }
 
       if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)

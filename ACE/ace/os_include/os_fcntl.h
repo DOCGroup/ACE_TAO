@@ -31,11 +31,6 @@
 # include /**/ <fcntl.h>
 #endif /* !ACE_LACKS_FCNTL_H */
 
-#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
-// for creat(), open()
-#  include /**/ <ioLib.h>
-#endif /* ACE_VXWORKS */
-
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"

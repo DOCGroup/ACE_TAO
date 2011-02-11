@@ -1,6 +1,13 @@
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.1 and CIAO-1.0.2
 =======================================================
 
+. Generate servant code for facets and receptacles is now thread safe, the
+  code for consumers/publishers/emitters still have some thread safety issues
+  and a possible deadlock
+
+. Improved disconnect of connections in general and extended our test suite
+  for that
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.0 and CIAO-1.0.1
 =======================================================
 

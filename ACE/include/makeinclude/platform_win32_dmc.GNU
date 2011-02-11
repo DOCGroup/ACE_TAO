@@ -35,7 +35,7 @@ SOBUILD    = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 
 PRELIB  = @true
 
-CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
+CCFLAGS += $(CFLAGS)
 
 # Dmc doesn't have rwho
 rwho = 0

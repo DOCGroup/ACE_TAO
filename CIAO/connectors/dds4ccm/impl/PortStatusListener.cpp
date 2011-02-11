@@ -188,7 +188,7 @@ namespace CIAO
           DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
         {
           mask = ::DDS::REQUESTED_DEADLINE_MISSED_STATUS |
-              ::DDS::SAMPLE_LOST_STATUS;
+                 ::DDS::SAMPLE_LOST_STATUS;
         }
 
       if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)

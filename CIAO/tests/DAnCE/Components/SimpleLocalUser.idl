@@ -10,7 +10,7 @@ module Simple
 {
   component SimpleLocalUser
   {
-    uses LocalTrigger trig;
+    uses LocalTrigger trig_uses;
   };
 
   home SimpleLocalUserHome manages SimpleLocalUser

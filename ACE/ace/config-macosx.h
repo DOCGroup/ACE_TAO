@@ -51,6 +51,8 @@
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_RWLOCK_T
 
+#define ACE_HAS_SIOCGIFCONF
+
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 

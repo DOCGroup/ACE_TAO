@@ -702,8 +702,8 @@ is <code>0</code>. This option is disabled (<code>0</code>) by default.</td>
         specifies the third lane of that thread pool.  Note that
         <code>0</code> should be used for the lane when specifying
         endpoints for thread pools without lanes. <code>*:*</code>
-	can be used to specify all pools and lanes, <code>1:*</code> means 
- 	all lanes from pool <code>1</code>, and <code>*:1</code> 
+	can be used to specify all pools and lanes, <code>1:*</code> means
+ 	all lanes from pool <code>1</code>, and <code>*:1</code>
         means lane <code>1</code> from all pools.
 
         <p>Sets of endpoints may be specified using multiple
@@ -890,54 +890,54 @@ Repository</a>. </td>
       <tr>
         <td><code>-ORBDaemon</code></td>
         <td>Specifies that the ORB should <em>daemonize</em> itself, <em>i.e.</em>,
-run as a background process. Note, that this changes the working directory to 
+run as a background process. Note, that this changes the working directory to
 be the root directory "/". This especially affects relative paths specified at the command line.
 This option is only meaningful on OS platforms that support daemonization.</td>
       </tr>
       <tr>
         <td><code>-ORBForwardInvocationOnObjectNotExist</code> <em>boolean (0|1)</em></td>
-        <td>If this option is 1, the ORB forwards the request to next available profile when 
-        receiving OBJECT_NOT_EXIST exception reply. The default value is <CODE>0</CODE>  
-        which means the request is not forwarded upon OBJECT_NOT_EXIST exception.  
+        <td>If this option is 1, the ORB forwards the request to next available profile when
+        receiving OBJECT_NOT_EXIST exception reply. The default value is <CODE>0</CODE>
+        which means the request is not forwarded upon OBJECT_NOT_EXIST exception.
         </td>
       </tr>
       <tr>
         <td><code>-ORBForwardOnceOnObjectNotExist</code> <em>boolean (0|1)</em></td>
-        <td>If this option is 1, the ORB forwards the request if it 
+        <td>If this option is 1, the ORB forwards the request if it
         receives OBJECT_NOT_EXIST exception reply. If it receives one of the exceptions
        (OBJECT_NOT_EXIST, COMM_FAILURE, TRANSIENT, INV_OBJREF) during forwarding,
-        the request is not forwarded again and exception is propagated to the client 
-        code. The default value is <CODE>0</CODE> which means the request 
-        is not forwarded upon OBJECT_NOT_EXIST exception.  
+        the request is not forwarded again and exception is propagated to the client
+        code. The default value is <CODE>0</CODE> which means the request
+        is not forwarded upon OBJECT_NOT_EXIST exception.
         </td>
       </tr>
       <tr>
         <td><code>-ORBForwardOnceOnCommFailure</code> <em>boolean (0|1)</em></td>
-        <td>If this option is 1, the ORB forwards the request if it 
+        <td>If this option is 1, the ORB forwards the request if it
         receives COMM_FAILURE exception reply. If it receives one of the exceptions
         (OBJECT_NOT_EXIST, COMM_FAILURE, TRANSIENT, INV_OBJREF) during forwarding,
         the request is not forwarded again and exception is propagated to the client
-        code. The default value is <CODE>0</CODE> which means the request is not forwarded upon 
+        code. The default value is <CODE>0</CODE> which means the request is not forwarded upon
         COMM_FAILURE exception.
         </td>
       </tr>
       <tr>
         <td><code>-ORBForwardOnceOnTransient</code> <em>boolean (0|1)</em></td>
-        <td>If this option is 1, the ORB forwards the request if it 
+        <td>If this option is 1, the ORB forwards the request if it
         receives TRANSIENT exception reply. If it receives one of the exceptions
        (OBJECT_NOT_EXIST, COMM_FAILURE, TRANSIENT, INV_OBJREF) during forwarding,
-        the request is not forwarded again and exception is propagated to the client 
-        code. The default value is <CODE>0</CODE> which means the request 
+        the request is not forwarded again and exception is propagated to the client
+        code. The default value is <CODE>0</CODE> which means the request
         is not forwarded upon TRANSIENT exception.
         </td>
       </tr>
       <tr>
         <td><code>-ORBForwardOnceOnInvObjref</code> <em>boolean (0|1)</em></td>
-        <td>If this option is 1, the ORB forwards the request if it 
+        <td>If this option is 1, the ORB forwards the request if it
         receives INV_OBJREF exception reply. If it receives one of the exceptions
        (OBJECT_NOT_EXIST, COMM_FAILURE, TRANSIENT, INV_OBJREF) during forwarding,
-        the request is not forwarded again and exception is propagated to the client 
-        code. The default value is <CODE>0</CODE> which means the request 
+        the request is not forwarded again and exception is propagated to the client
+        code. The default value is <CODE>0</CODE> which means the request
         is not forwarded upon INV_OBJREF exception.
         </td>
       </tr>
@@ -1159,32 +1159,6 @@ lock to be used by the Connection Cache. Possible values for lock type
 are <code>thread</code>, which specifies that an inter-thread mutex is
 used to guarantee exclusive access, and <code>null</code>, which
 specifies that no locking be performed. The default is thread. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBCorbaObjectLock</code> <em>locktype</em></td>
-        <td><a name="-ORBCorbaObjectLock"></a> Specify the type of lock
-to be used by CORBA::Object. The lock is needed within the CORBA object
-to synchronize the state when the same object is shared by multiple
-threads. Possible values for lock type are <code>thread</code>, which
-specifies that an inter-thread mutex is used to guarantee exclusive
-access, and <code>null</code>, which specifies that no locking be
-performed. The default is thread. The <code>null</code> lock option is
-useful when there is only one thread in the system. This option can be
-used to minimize the amount of memory consumed by the locks in
-applications where locks are not needed. The memory growth problem gets
-particularly exacerbated for applications dealing with hundreds and
-thousands of objects. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBObjectKeyTableLock</code> <em>locktype</em></td>
-        <td><a name="-ORBObjectKeyTableLock"></a> Specify the type of
-lock to be used by the ObjectKey table. ObjectKey table keeps track of
-the ObjectKeys that are generated and made available through IORs. The
-table manages the life time of the object keys within the ORB through a
-reference counting mechanism. Possible values for lock type are <code>thread</code>,
-which specifies that an inter-thread mutex is used to guarantee
-exclusive access, and <code>null</code>, which specifies that no
-locking be performed. The default is thread. </td>
       </tr>
       <tr>
         <td><code>-ORBFlushingStrategy</code> <em>type</em></td>
@@ -1520,14 +1494,6 @@ any logical-OR combination of <code>THR_DETACHED</code>, <code>THR_BOUND</code>,
         <code>THR_NEW_LWP</code>, <code>THE_SUSPENDED</code>. The
 default is <code>THR_BOUND | THR_DETACHED</code> . </td>
       </tr>
-      <tr>
-        <td><code>-ORBPOALock</code> <em>lock type</em></td>
-        <td><a name="-ORBPOALock"></a>Specify the type of lock to be
-used for POA accesses. Possible values for <em>lock type</em> are <code>thread</code>,
-which specifies that an inter-thread mutex is used to guarantee
-exclusive access, and <code>null</code>, which specifies that no
-locking be performed. The default is <code>thread</code>.</td>
-      </tr>
     </tbody>
   </table>
   </p>
@@ -1560,15 +1526,6 @@ file.</p>
       <tr>
         <th>Option</th>
         <th>Description</th>
-      </tr>
-      <tr>
-        <td><code><a name="#-ORBProfileLock">-ORBProfileLock</a></code>
-        <em>which</em></td>
-        <td>Specify the kind of synchronization primitive for the
-Profiles. Default is <em>thread</em>, which means that a regular
-thread mutex is used. The second option is <em>null</em>, which means
-a null lock is used. This makes sense in case of optimizations and is
-allowed when no forwarding is used or only a single threaded client. </td>
       </tr>
       <tr>
         <td><code>-ORBClientConnectionHandler</code> <em>MT | ST | RW

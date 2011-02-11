@@ -1,16 +1,16 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -p Stock_Base -c StockDistributorDriver StockDistributor -l ../lib -o ../lib"
+// This file is generated with "generate_component_mpc.pl -e -p Stock_Base -l ../lib -o ../lib -c StockDistributorDriver StockDistributor"
 
 project(Stock_Base_StockDistributor_idl_gen) : componentidldefaults, avoids_ccm_noevent {
-  after += Stock_Base_idl_gen
   custom_only = 1
-  idlflags +=  \
-              -Wb,stub_export_macro=STOCKDISTRIBUTOR_STUB_Export \
+  
+  idlflags += -Wb,stub_export_macro=STOCKDISTRIBUTOR_STUB_Export \
               -Wb,stub_export_include=StockDistributor_stub_export.h \
               -Wb,skel_export_macro=STOCKDISTRIBUTOR_SVNT_Export \
               -Wb,skel_export_include=StockDistributor_svnt_export.h \
               -Wb,exec_export_macro=STOCKDISTRIBUTOR_EXEC_Export \
-              -Wb,exec_export_include=StockDistributor_exec_export.h
+              -Wb,exec_export_include=StockDistributor_exec_export.h \
+              -Gxhex -Gxhsk -Gxhst
 
   IDL_Files {
     StockDistributor.idl
@@ -29,9 +29,9 @@ project(Stock_Base_StockDistributor_lem_gen) : ciaoidldefaults, avoids_ccm_noeve
   }
 }
 
-project(Stock_Base_StockDistributor_lem_stub) : ccm_svnt, avoids_ccm_noevent   {
-  after += Stock_Base_StockDistributor_lem_gen Stock_Base_StockDistributor_stub Stock_Base_stub
-  libs  += Stock_Base_stub StockDistributor_stub
+project(Stock_Base_StockDistributor_lem_stub) : ccm_svnt, avoids_ccm_noevent {
+  after += Stock_Base_StockDistributor_lem_gen Stock_Base_StockDistributor_stub Stock_Base_stub Stock_Base_lem_stub
+  libs  += Stock_Base_stub Stock_Base_lem_stub StockDistributor_stub
   libpaths += ../lib
   libout = ../lib
   sharedname = StockDistributor_lem_stub
@@ -54,9 +54,9 @@ project(Stock_Base_StockDistributor_lem_stub) : ccm_svnt, avoids_ccm_noevent   {
   }
 }
 
-project(Stock_Base_StockDistributor_stub) : ccm_stub, avoids_ccm_noevent   {
-  after += Stock_Base_StockDistributor_idl_gen Stock_Base_stub
-  libs  += Stock_Base_stub
+project(Stock_Base_StockDistributor_stub) : ccm_stub, avoids_ccm_noevent {
+  after += Stock_Base_StockDistributor_idl_gen Stock_Base_stub Stock_Base_lem_stub
+  libs  += Stock_Base_stub Stock_Base_lem_stub
   libpaths += ../lib
   libout = ../lib
   sharedname = StockDistributor_stub
@@ -79,10 +79,10 @@ project(Stock_Base_StockDistributor_stub) : ccm_stub, avoids_ccm_noevent   {
   }
 }
 
-project(Stock_Base_StockDistributor_exec) : ciao_executor, avoids_ccm_noevent   {
-  after   += Stock_Base_StockDistributor_lem_stub Stock_Base_StockDistributor_stub
+project(Stock_Base_StockDistributor_exec) : ciao_executor, avoids_ccm_noevent {
+  after   += Stock_Base_lem_stub Stock_Base_StockDistributor_lem_stub Stock_Base_StockDistributor_stub
   sharedname = StockDistributor_exec
-  libs += StockDistributor_stub StockDistributor_lem_stub Stock_Base_stub
+  libs += Stock_Base_lem_stub StockDistributor_stub StockDistributor_lem_stub Stock_Base_stub Stock_Base_lem_stub
   libpaths += ../lib
   libout = ../lib
   dynamicflags += STOCKDISTRIBUTOR_EXEC_BUILD_DLL
@@ -104,16 +104,17 @@ project(Stock_Base_StockDistributor_exec) : ciao_executor, avoids_ccm_noevent   
 }
 
 
-project(Stock_Base_StockDistributor_svnt) : ciao_servant, avoids_ccm_noevent   {
-  after      += Stock_Base_skel  Stock_Base_StockDistributor_lem_stub
+project(Stock_Base_StockDistributor_svnt) : ciao_servant, avoids_ccm_noevent  {
+  after      += Stock_Base_skel Stock_Base_lem_stub  Stock_Base_StockDistributor_lem_stub
   sharedname  = StockDistributor_svnt
   libs       += StockDistributor_stub StockDistributor_lem_stub  \
                 Stock_Base_skel \
-                Stock_Base_stub
+                Stock_Base_stub \
+                Stock_Base_lem_stub
   libpaths += ../lib
   libout = ../lib
   dynamicflags += STOCKDISTRIBUTOR_SVNT_BUILD_DLL
-
+  
   IDL_Files {
   }
 
@@ -133,10 +134,10 @@ project(Stock_Base_StockDistributor_svnt) : ciao_servant, avoids_ccm_noevent   {
   }
 }
 
-project (Stock_Base_StockDistributorDriver) : ccm_stub, valuetype , avoids_ccm_noevent  {
+project (Stock_Base_StockDistributorDriver) : ccm_stub, valuetype, avoids_ccm_noevent  {
   exename = StockDistributorDriver
   after += Stock_Base_StockDistributor_stub
-  libs  += StockDistributor_stub Stock_Base_stub
+  libs  += StockDistributor_stub Stock_Base_stub Stock_Base_lem_stub
   libpaths += ../lib
   exeout = ../lib
   IDL_Files {

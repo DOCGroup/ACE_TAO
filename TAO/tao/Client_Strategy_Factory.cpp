@@ -9,18 +9,6 @@ TAO_Client_Strategy_Factory::~TAO_Client_Strategy_Factory (void)
 {
 }
 
-ACE_Lock *
-TAO_Client_Strategy_Factory::create_profile_lock (void)
-{
-  return 0;
-}
-
-TAO_Configurable_Refcount
-TAO_Client_Strategy_Factory::create_profile_refcount (void)
-{
-  return TAO_Configurable_Refcount (TAO_Configurable_Refcount::TAO_NULL_LOCK);
-}
-
 TAO_Transport_Mux_Strategy *
 TAO_Client_Strategy_Factory::create_transport_mux_strategy (TAO_Transport *)
 {

@@ -164,7 +164,7 @@ Cubit_Client::Cubit_Client (int shutdown)
 {
 }
 
-// Simple function that returns the substraction of 117 from the
+// Simple function that returns the subtraction of 117 from the
 // parameter.
 
 int

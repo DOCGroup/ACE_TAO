@@ -31,7 +31,7 @@ namespace CIAO_Simple_SimpleConsumer_Impl
     // Port operations.
 #if  !defined (CCM_NOEVENT)
     virtual void
-    push_hello_ (
+    push_hello_consumes (
       ::Simple::Hello *ev);
 #endif
     // Operations from Components::SessionComponent

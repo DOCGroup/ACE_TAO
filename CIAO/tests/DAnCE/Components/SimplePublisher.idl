@@ -11,7 +11,7 @@ module Simple
   component SimplePublisher
   {
 #if !defined (CCM_NOEVENT)
-    publishes Hello hello_;
+    publishes Hello hello_publishes;
 #endif
   };
 

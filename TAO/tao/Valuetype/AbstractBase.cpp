@@ -18,6 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::AbstractBase::AbstractBase (void)
   : is_objref_ (false)
+  , refcount_ (1)
   , is_collocated_ (false)
   , servant_ (0)
   , equivalent_obj_ (CORBA::Object::_nil ())
@@ -26,6 +27,7 @@ CORBA::AbstractBase::AbstractBase (void)
 
 CORBA::AbstractBase::AbstractBase (const CORBA::AbstractBase &rhs)
   : is_objref_ (rhs.is_objref_)
+  , refcount_ (1)
   , is_collocated_ (rhs.is_collocated_)
   , servant_ (rhs.servant_)
   , equivalent_obj_ (CORBA::Object::_nil ())
@@ -35,12 +37,6 @@ CORBA::AbstractBase::AbstractBase (const CORBA::AbstractBase &rhs)
       // Need to duplicate equivalent obj only if it's objref.
       this->equivalent_obj_ =
         CORBA::Object::_duplicate (rhs.equivalent_obj_.in ());
-
-      if (!CORBA::is_nil (this->equivalent_obj_.in ()))
-        {
-          this->refcount_ = this->equivalent_obj_->orb_core ()->
-            resource_factory ()->create_corba_object_refcount ();
-        }
     }
 }
 
@@ -48,18 +44,11 @@ CORBA::AbstractBase::AbstractBase (TAO_Stub * protocol_proxy,
                                    CORBA::Boolean collocated,
                                    TAO_Abstract_ServantBase * servant)
   : is_objref_ (true)
+  , refcount_ (1)
   , is_collocated_ (collocated)
   , servant_ (servant)
   , equivalent_obj_ (this->create_object (protocol_proxy))
 {
-  if (this->is_objref_)
-    {
-      if (!CORBA::is_nil (this->equivalent_obj_.in ()))
-        {
-          this->refcount_ = this->equivalent_obj_->orb_core ()->
-            resource_factory ()->create_corba_object_refcount ();
-        }
-    }
 }
 
 CORBA::AbstractBase::~AbstractBase (void)
@@ -69,7 +58,7 @@ CORBA::AbstractBase::~AbstractBase (void)
 void
 CORBA::AbstractBase::_add_ref (void)
 {
-  this->refcount_.increment ();
+  ++this->refcount_;
 
   // This is required by the C++ Mapping 1.2.
   if (this->is_objref_)
@@ -88,14 +77,14 @@ CORBA::AbstractBase::_remove_ref (void)
       CORBA::release (this->equivalent_obj_.in ());
     }
 
-  if (this->refcount_.decrement () != 0)
-    return;
+  if (--this->refcount_ == 0)
+    {
+      // If this object is going to be deleted here then the reference to
+      // equivalent_obj_ that it owned is already released a few lines above.
+      this->equivalent_obj_._retn ();
 
-  // If this object is going to be deleted here then the reference to
-  // equivalent_obj_ that it owned is already released a few lines above.
-  this->equivalent_obj_._retn ();
-
-  delete this;
+      delete this;
+    }
 }
 
 void

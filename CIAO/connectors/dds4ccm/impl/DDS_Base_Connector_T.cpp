@@ -199,6 +199,7 @@ DDS_Base_Connector_T<CCM_TYPE>::reactor (void)
 
   ACE_Reactor* reactor = 0;
 
+#if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
   ::CORBA::Object_var ccm_object = this->context_->get_CCM_object();
   if (!::CORBA::is_nil (ccm_object.in ()))
     {
@@ -206,9 +207,16 @@ DDS_Base_Connector_T<CCM_TYPE>::reactor (void)
       if (!::CORBA::is_nil (orb.in ()))
         {
           reactor = orb->orb_core ()->reactor ();
+          if (!reactor)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                            "DDS_Event_Connector_T::ccm_activate - "
+                            "No reactor to perform required context switch.\n"));
+              throw ::CORBA::INTERNAL ();
+            }
         }
     }
-
+#endif
   return reactor;
 }
 
