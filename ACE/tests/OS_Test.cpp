@@ -1146,7 +1146,7 @@ ceilf_test (void)
   for (size_t i = 0 ; i < sizeof (values) / sizeof (float) ; i++)
     {
       result = ACE_OS::ceil (values [i]);
-      if (!ACE::is_equal(result, results[i]))
+      if (ACE::is_inequal(result, results[i]))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("ceilf error: input %.1F, output %1F, expected %1F\n"),
@@ -1174,7 +1174,7 @@ floorf_test (void)
   for (size_t i = 0 ; i < sizeof (values) / sizeof (float) ; i++)
     {
       result = ACE_OS::floor (values [i]);
-      if (!ACE::is_equal(result, results[i]))
+      if (ACE::is_inequal(result, results[i]))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("floorf error: input %.1F, output %1F, expected %1F\n"),
@@ -1200,7 +1200,7 @@ ceil_test (void)
   for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; i++)
     {
       result = ACE_OS::ceil (values [i]);
-      if (!ACE::is_equal(result, results[i]))
+      if (ACE::is_inequal(result, results[i]))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("ceil error: input %.1F, output %1F, expected %1F\n"),
@@ -1228,7 +1228,7 @@ floor_test (void)
   for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; i++)
     {
       result = ACE_OS::floor (values [i]);
-      if (!ACE::is_equal(result, results[i]))
+      if (ACE::is_inequal(result, results[i]))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("floor error: input %.1F, output %1F, expected %1F\n"),
@@ -1256,7 +1256,7 @@ ceill_test (void)
   for (size_t i = 0 ; i < sizeof (values) / sizeof (long double) ; i++)
     {
       result = ACE_OS::ceil (values [i]);
-      if (!ACE::is_equal(result, results[i]))
+      if (ACE::is_inequal(result, results[i]))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("ceil error: input %.1F, output %1F, expected %1F\n"),
@@ -1284,7 +1284,7 @@ floorl_test (void)
   for (size_t i = 0 ; i < sizeof (values) / sizeof (long double) ; i++)
     {
       result = ACE_OS::floor (values [i]);
-      if (!ACE::is_equal(result, results[i]))
+      if (ACE::is_inequal(result, results[i]))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("floor error: input %.1F, output %1F, expected %1F\n"),

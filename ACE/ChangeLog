@@ -1,3 +1,85 @@
+Wed Feb  9 08:41:00 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Moved some settings from CFLAGS to CPPFLAGS and
+          FLAGS_C_CC.
+
+Wed Feb  9 08:25:29 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_cygwin32.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+        * include/makeinclude/platform_mingw32.GNU:
+          Moved some common settings from Cygwin/MinGW config files to
+          platform_gnuwin32_common.GNU. Some cleanups.
+
+Tue Feb  8 14:52:43 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * tests/run_test.lst:
+          Disabled two tests on Cygwin.
+
+Tue Feb  8 13:17:55 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_cygwin32.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+        * include/makeinclude/platform_mingw32.GNU:
+          Moved some common setting from Cygwin/MinGW config files to
+          platform_gnuwin32_common.GNU.
+
+Fri Feb  4 20:04:13 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * tests/OS_Test.cpp:
+          Use ACE::is_inequal() instead of ACE::is_equal().
+
+Fri Feb  4 20:02:28 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/ACE.h:
+          Added a simple helper ACE::is_inequal() which compares inequality of
+          two objects without using operator!=. This is useful for comparing
+          floating point values.
+
+Fri Feb  4 19:51:33 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * examples/APG/ThreadManagement/Async_Cancel.cpp:
+          Removed legacy HP-UX workaround. This should fix
+          "statement is unreachable" warning on HP-UX builds.
+
+Fri Feb  4 18:35:52 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Another cleanup.
+
+Fri Feb  4 13:58:44 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Fixed to use {cpu,tune}modelflag settings in platform_g++_common.GNU
+
+Fri Feb  4 12:21:23 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_mingw32.GNU:
+          Fix for previous commit.
+
+Fri Feb  4 12:13:43 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+        * include/makeinclude/platform_mingw32.GNU:
+          Moved MinGW specific settings to platform_mingw32.GNU
+
+Thu Feb  3 12:26:23 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          More cleanups
+
+Wed Feb  2 11:13:29 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Cleanup.
+
+Tue Feb  1 14:28:18 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/String_Base.cpp (operator+=): Add a temporary for the return
+          value to quiet an IBM XL C++ 10 optimizer warning about returning
+          the address of a temporary. No, I'm not kidding.
+
 Fri Jan 28 13:39:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/ACE-bug-process.html:
