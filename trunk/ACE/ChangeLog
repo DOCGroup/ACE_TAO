@@ -1,7 +1,13 @@
+Sat Feb 12 09:13:41 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/Gateway/Gateway/Options.h:
+        * apps/JAWS2/JAWS/Cache_Object.h:
+          Reordered includes to fix compile errors with inline enabled
+
 Fri Feb 11 20:25:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-      * include/makeinclude/platform_g++_common.GNU:
-        Fixed cross compile
+        * include/makeinclude/platform_g++_common.GNU:
+          Fixed cross compile
 
 Fri Feb 11 11:16:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 

@@ -24,9 +24,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/svc_export.h"
+#include "ace/Thread_Mutex.h"
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Synch_Traits.h"
-#include "ace/Thread_Mutex.h"
 
 class ACE_Svc_Export Options
 {
