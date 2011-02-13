@@ -17,11 +17,11 @@
 
 #include "tao/GIOP_Fragmentation_Strategy.h"
 #include "ace/CDR_Base.h"
+#include "ace/Copy_Disabled.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -44,7 +44,6 @@ class TAO_On_Demand_Fragmentation_Strategy
     private ACE_Copy_Disabled
 {
 public:
-
   /// Constructor.
   TAO_On_Demand_Fragmentation_Strategy (TAO_Transport * transport,
                                         ACE_CDR::ULong max_message_size);
