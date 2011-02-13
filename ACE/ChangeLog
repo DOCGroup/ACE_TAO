@@ -1,3 +1,8 @@
+Sun Feb 13 13:31:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Makefile.am:
+          Removed file that got removed
+
 Sat Feb 12 09:13:41 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/Gateway/Gateway/Options.h:
