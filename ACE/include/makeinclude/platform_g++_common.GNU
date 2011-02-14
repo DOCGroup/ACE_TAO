@@ -130,6 +130,18 @@ endif # GNU_LD
 
 ifeq ($(no_strict_aliasing), 1)
   CCFLAGS += -fno-strict-aliasing
+else
+  ifneq ($(no_strict_aliasing), 0)
+    # if not explicitly disabled enable suppression of strict-aliasing checks by default
+    # for GCC >= 4.4; these checks and the resulting warnings are very controversial and
+    # popular opinion on the web seems to be that it brings little practical value and a
+    # lot of pain to attempt to solve code issues and the best way to deal is to suppress
+    ifeq ($(GXX_4_OR_BETTER), 1)
+      ifneq ($(findstring $(CXX_MAJOR_VERSION).$(CXX_MINOR_VERSION),4.1 4.2 4.3),$(CXX_MAJOR_VERSION).$(CXX_MINOR_VERSION))
+        CCFLAGS += -fno-strict-aliasing
+      endif
+    endif
+  endif
 endif
 
 ifeq ($(shared_libs), 1)
