@@ -59,7 +59,8 @@ public:
   virtual CORBA::Long initialize_collocated_object (TAO_Stub *stub);
 
 private:
-  static ACE_Lock * create_lock (bool enable_locking, TAO_SYNCH_MUTEX &l);
+  static ACE_Lock * create_lock (TAO_SYNCH_MUTEX &l);
+
   /// Helper method to find an object bound in the table.
   bool find_object (TAO::ObjectKey &key,
                     CORBA::Object_out forward_to);
@@ -71,7 +72,6 @@ private:
   TAO_IOR_Table_Impl_var root_;
 
   bool closed_;
-  bool enable_locking_;
   TAO_SYNCH_MUTEX thread_lock_;
   ACE_Lock *lock_;
 };
