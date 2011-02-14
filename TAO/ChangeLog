@@ -1,3 +1,10 @@
+Mon Feb 14 11:18:49 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Profile.h:
+        * tao/Profile.inl:
+        * tao/Profile.cpp:
+          Committed back these files, also didn't break ImR
+
 Mon Feb 14 11:04:26 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:
