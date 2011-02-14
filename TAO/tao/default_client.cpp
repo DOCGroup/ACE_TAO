@@ -22,7 +22,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
-  : transport_mux_strategy_ (TAO_MUXED_TMS)
+  : profile_lock_type_ (TAO_THREAD_LOCK)
+  , transport_mux_strategy_ (TAO_MUXED_TMS)
   , wait_strategy_ (TAO_WAIT_ON_LEADER_FOLLOWER)
   , connect_strategy_ (TAO_LEADER_FOLLOWER_CONNECT)
   , rd_table_size_ (TAO_RD_TABLE_SIZE)
@@ -68,10 +69,51 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
   for (curarg = 0; curarg < argc && argv[curarg]; ++curarg)
     {
       if (ACE_OS::strcasecmp (argv[curarg],
-                              ACE_TEXT("-ORBClientConnectionHandler")) == 0
-          ||
-          ACE_OS::strcasecmp (argv[curarg],
-                              ACE_TEXT("-ORBWaitStrategy")) == 0)
+                              ACE_TEXT("-ORBProfileLock")) == 0)
+        {
+        curarg++;
+        if (curarg < argc)
+          {
+            ACE_TCHAR* name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name,
+                                    ACE_TEXT("thread")) == 0)
+              this->profile_lock_type_ = TAO_THREAD_LOCK;
+            else if (ACE_OS::strcasecmp (name,
+                                         ACE_TEXT("null")) == 0)
+              this->profile_lock_type_ = TAO_NULL_LOCK;
+            else
+              this->report_option_value_error (ACE_TEXT("-ORBProfileLock"), name);
+          }
+        }
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT("-ORBIIOPProfileLock")) == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("WARNING: The -ORBIIOPProfileLock option")
+                      ACE_TEXT (" is deprecated and will be removed.\n")
+                      ACE_TEXT ("         Please use -ORBProfileLock instead\n")));
+          curarg++;
+          if (curarg < argc)
+            {
+              ACE_TCHAR* name = argv[curarg];
+
+              if (ACE_OS::strcasecmp (name,
+                                      ACE_TEXT("thread")) == 0)
+                this->profile_lock_type_ = TAO_THREAD_LOCK;
+              else if (ACE_OS::strcasecmp (name,
+                                           ACE_TEXT("null")) == 0)
+                this->profile_lock_type_ = TAO_NULL_LOCK;
+              else
+                this->report_option_value_error (ACE_TEXT("-ORBIIOPProfileLock"), name);
+            }
+        }
+
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT("-ORBClientConnectionHandler")) == 0
+               ||
+               ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT("-ORBWaitStrategy")) == 0)
         {
           curarg++;
           if (curarg < argc)
@@ -198,6 +240,47 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
 
     }
   return 0;
+}
+
+ACE_Lock *
+TAO_Default_Client_Strategy_Factory::create_profile_lock (void)
+{
+  ACE_Lock *the_lock = 0;
+
+  switch (this->profile_lock_type_)
+    {
+      case TAO_NULL_LOCK:
+        {
+          ACE_NEW_RETURN (the_lock,
+                          ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
+                          0);
+          break;
+        }
+      case TAO_THREAD_LOCK:
+        {
+          ACE_NEW_RETURN (the_lock,
+                          ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (),
+                          0);
+          break;
+        }
+    }
+
+  return the_lock;
+}
+
+TAO_Configurable_Refcount
+TAO_Default_Client_Strategy_Factory::create_profile_refcount (void)
+{
+  switch (this->profile_lock_type_)
+    {
+    case TAO_NULL_LOCK:
+      return TAO_Configurable_Refcount (
+                     TAO_Configurable_Refcount::TAO_NULL_LOCK);
+    case TAO_THREAD_LOCK:
+    default:
+      return TAO_Configurable_Refcount (
+                     TAO_Configurable_Refcount::TAO_THREAD_LOCK);
+    }
 }
 
 /// Create the correct client transport muxing strategy.

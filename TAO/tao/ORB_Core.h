@@ -821,7 +821,7 @@ public:
   TAO_Valuetype_Adapter *valuetype_adapter (void);
 
 #if !defined(CORBA_E_MICRO)
-  /// Value factory operations  (CORBA 2.3 ptc/98-10-05 Ch. 4.2 p.4-7)
+  // Value factory operations  (CORBA 2.3 ptc/98-10-05 Ch. 4.2 p.4-7)
   CORBA::ValueFactory register_value_factory (
     const char *repository_id,
     CORBA::ValueFactory factory);
@@ -862,7 +862,7 @@ public:
   /// gets called at initialization.
   void request_dispatcher (TAO_Request_Dispatcher *rd);
 
-  /// Call the libraries to handover the validators if they haven't
+  /// Call the libraries to handover the validators if they havent
   /// registered yet with the list of validators.
   void load_policy_validators (TAO_Policy_Validator &validator);
 
@@ -919,7 +919,7 @@ protected:
   ~TAO_ORB_Core (void);
 
   /// Initialize the guts of the ORB Core.  It is intended that this be
-  /// called by CORBA::ORB_init().
+  /// called by <CORBA::ORB_init>.
   int init (int &argc, char *argv[]);
 
   /// Final termination hook, typically called by CORBA::ORB's

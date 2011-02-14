@@ -185,6 +185,12 @@ TAO_Root_POA::outstanding_requests (void) const
   return this->outstanding_requests_;
 }
 
+ACE_INLINE void
+TAO_Root_POA::outstanding_requests (CORBA::ULong new_outstanding_requests)
+{
+  this->outstanding_requests_ = new_outstanding_requests;
+}
+
 ACE_INLINE CORBA::ULong
 TAO_Root_POA::increment_outstanding_requests (void)
 {
