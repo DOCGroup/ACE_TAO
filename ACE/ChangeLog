@@ -1,3 +1,11 @@
+Mon Feb 14 20:20:11 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Lock_Adapter_T.inl:
+
+          Constructor moved from .cpp to .inl in
+          Wed Jan 26 13:53:27 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+          requires #include in the .inl as well.
+
 Mon Feb 14 09:42:38 UTC 2011  Martin Corino  <corino_m@remedy.nl>
 
         * include/makeinclude/platform_g++_common.GNU:
