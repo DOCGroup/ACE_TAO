@@ -19,12 +19,17 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_FT_Service_Callbacks::TAO_FT_Service_Callbacks (TAO_ORB_Core *orb_core)
 
-  : orb_core_ (orb_core)
+  : orb_core_ (orb_core),
+    profile_lock_ (0)
 {
+  this->profile_lock_ =
+    this->orb_core_->client_factory ()->create_profile_lock ();
 }
 
 TAO_FT_Service_Callbacks::~TAO_FT_Service_Callbacks (void)
 {
+  // Delete the memeory for the lock
+  delete this->profile_lock_;
 }
 
 CORBA::Boolean
@@ -198,7 +203,7 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_pt
   sc.context_id = IOP::FT_GROUP_VERSION;
 
   if (service_context.get_context (sc) == 0)
-      return false;
+      return false; /* false */
 
   IOP::TaggedComponent tc;
   tc.tag = IOP::TAG_FT_GROUP;
@@ -208,9 +213,9 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_pt
   if (stub->forward_profiles ())
     {
       // set lock, as forward_profiles might be deleted concurrently
-      ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+      ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                                 guard,
-                                stub->profile_lock (),
+                                *stub->profile_lock (),
                                 0));
 
       // even now, the forward profiles might have been deleted in the meanwhile
@@ -229,9 +234,9 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_pt
 
       if (tagged_components.get_component (tc) == 0)
         // releasing lock
-        return false;
+        return false; /* false */
 
-      return true;
+      return true; /* true */
 
       // releasing lock
     }

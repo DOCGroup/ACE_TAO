@@ -53,6 +53,8 @@ public:
 
   // = Check Client_Strategy_Factory.h for the documentation of the
   //   following methods.
+  virtual ACE_Lock* create_profile_lock (void);
+  virtual TAO_Configurable_Refcount create_profile_refcount (void);
   virtual TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport);
   virtual ACE_Lock *create_transport_mux_strategy_lock (void);
   virtual int reply_dispatcher_table_size (void) const;
@@ -72,6 +74,9 @@ private:
     TAO_NULL_LOCK,
     TAO_THREAD_LOCK
   };
+
+  /// the lock type for forwarding IIOP Profile
+  Lock_Type profile_lock_type_;
 
   enum Transport_Mux_Strategy
   {

@@ -143,8 +143,10 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
     persistent_poa_name_map_ (0),
     transient_poa_map_ (0),
     orb_core_ (orb_core),
+    enable_locking_ (orb_core_.server_factory ()->enable_poa_locking ()),
     thread_lock_ (),
-    lock_ (TAO_Object_Adapter::create_lock (thread_lock_)),
+    lock_ (TAO_Object_Adapter::create_lock (enable_locking_,
+                                            thread_lock_)),
     reverse_lock_ (*lock_),
     non_servant_upcall_condition_ (thread_lock_),
     non_servant_upcall_in_progress_ (0),
@@ -308,11 +310,26 @@ TAO_Object_Adapter::~TAO_Object_Adapter (void)
 
 /* static */
 ACE_Lock *
-TAO_Object_Adapter::create_lock (TAO_SYNCH_MUTEX &thread_lock)
+TAO_Object_Adapter::create_lock (int enable_locking,
+                                 TAO_SYNCH_MUTEX &thread_lock)
 {
+#if defined (ACE_HAS_THREADS)
+  if (enable_locking)
+    {
+      ACE_Lock *the_lock = 0;
+      ACE_NEW_RETURN (the_lock,
+                      ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (thread_lock),
+                      0);
+      return the_lock;
+    }
+#else
+  ACE_UNUSED_ARG (enable_locking);
+  ACE_UNUSED_ARG (thread_lock);
+#endif /* ACE_HAS_THREADS */
+
   ACE_Lock *the_lock = 0;
   ACE_NEW_RETURN (the_lock,
-                  ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (thread_lock),
+                  ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
                   0);
   return the_lock;
 }
@@ -878,7 +895,7 @@ TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub)
   // proxy broker if required.
   stub->is_collocated (true);
 
-  // Return 0 (success) if we found a servant.
+  // Return 0 (success) iff we found a servant.
   return ! sb;
 }
 
@@ -1155,7 +1172,8 @@ TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete (void)
   // Check if a non-servant upcall is in progress.  If a non-servant
   // upcall is in progress, wait for it to complete.  Unless of
   // course, the thread making the non-servant upcall is this thread.
-  while (this->non_servant_upcall_in_progress_ &&
+  while (this->enable_locking_ &&
+         this->non_servant_upcall_in_progress_ &&
          ! ACE_OS::thr_equal (this->non_servant_upcall_thread_,
                               ACE_OS::thr_self ()))
     {

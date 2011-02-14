@@ -21,7 +21,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Null_Mutex.h"
-#include "ace/Copy_Disabled.h"
 
 #include "tao/Object_KeyC.h"
 #include /**/ "tao/Versioned_Namespace.h"
@@ -76,7 +75,7 @@ namespace TAO
    * @note This class uses the ACE_RB_Tree to maintain the table of
    * ObjectKeys. The RB_Tree has good insertion and lookup
    * properties. Its Iteration properties are not that good, but we
-   * don't need to do much iteration unless we are closing down the
+   * dont need to do much iteration unless we are closing down the
    * table.
    *
    * @note The reasons to use RB_Tree are its good dynamic
@@ -86,13 +85,17 @@ namespace TAO
    * will do that if our instrumentation shows the need for it.
    *
    */
-  class TAO_Export ObjectKey_Table : private ACE_Copy_Disabled
+  class TAO_Export ObjectKey_Table
   {
   public:
     /// Default Constructor and destructor..
     ObjectKey_Table (void);
 
     ~ObjectKey_Table (void);
+
+    /// Initialize method that sets up the underlying lock and other
+    /// related stuff.
+    int init (TAO_ORB_Core *orb);
 
     /// Iterates and unbinds the contents of the table.
     int destroy (void);
@@ -119,14 +122,19 @@ namespace TAO
     int unbind_i (Refcounted_ObjectKey *&key);
 
   private:
-    /// Some useful typedefs.
+    void operator= (const ObjectKey_Table &);
+    ObjectKey_Table (const ObjectKey_Table &);
+
+  private:
+
+    // Some useful typedefs.
     typedef ACE_RB_Tree<TAO::ObjectKey,
                         TAO::Refcounted_ObjectKey *,
                         TAO::Less_Than_ObjectKey,
                         ACE_Null_Mutex> TABLE;
 
     /// Lock for the table.
-    TAO_SYNCH_MUTEX lock_;
+    ACE_Lock *lock_;
 
     /// Table that contains the data
     TABLE table_;
@@ -134,10 +142,6 @@ namespace TAO
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__ACE_INLINE__)
-# include "tao/ObjectKey_Table.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

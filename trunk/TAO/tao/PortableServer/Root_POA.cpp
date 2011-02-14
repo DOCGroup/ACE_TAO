@@ -1197,12 +1197,13 @@ TAO_Root_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
 void
 TAO_Root_POA::wait_for_completions (CORBA::Boolean wait_for_completion)
 {
-  while (wait_for_completion &&
+  while (this->object_adapter ().enable_locking_ &&
+         wait_for_completion &&
          this->outstanding_requests_ > 0)
     {
-      this->wait_for_completion_pending_ = true;
+      this->wait_for_completion_pending_ = 1;
 
-      int const result = this->outstanding_requests_condition_.wait ();
+      int result = this->outstanding_requests_condition_.wait ();
       if (result == -1)
         {
           throw ::CORBA::OBJ_ADAPTER ();
