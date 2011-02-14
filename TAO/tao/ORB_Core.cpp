@@ -1262,6 +1262,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
   ssf->open (this);
 
+  // Open the ObjectKey_Table
+  (void) this->object_key_table_.init (this);
+
   // Obtain the timeout value for the thread-per-connection model
   this->thread_per_connection_use_timeout_ =
     ssf->thread_per_connection_timeout (this->thread_per_connection_timeout_);
@@ -1276,7 +1279,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else
         {
           this->thread_per_connection_use_timeout_ = 1;
-          int const milliseconds =
+          int milliseconds =
             ACE_OS::atoi (TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT);
           // Use a temporary to obtain automatic normalization.
           this->thread_per_connection_timeout_ =

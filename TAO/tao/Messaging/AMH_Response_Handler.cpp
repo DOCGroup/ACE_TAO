@@ -296,18 +296,18 @@ TAO_AMH_Response_Handler::_tao_rh_send_location_forward (CORBA::Object_ptr fwd,
 void
 TAO_AMH_Response_Handler::_remove_ref (void)
 {
-  if (--this->refcount_ == 0)
-    {
-      if (this->allocator_)
-        {
-          TAO::TAO_Buffer_Allocator<TAO_AMH_Response_Handler, TAO_AMH_BUFFER_ALLOCATOR> allocator (this->allocator_);
+  if (this->refcount_.decrement () > 0)
+    return;
 
-          allocator.release (this);
-        }
-      else
-        {
-          delete this;
-        }
+  if (this->allocator_)
+    {
+      TAO::TAO_Buffer_Allocator<TAO_AMH_Response_Handler, TAO_AMH_BUFFER_ALLOCATOR> allocator (this->allocator_);
+
+      allocator.release (this);
+    }
+  else
+    {
+      delete this;
     }
 }
 

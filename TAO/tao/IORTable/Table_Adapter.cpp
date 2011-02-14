@@ -23,8 +23,10 @@ TAO_Table_Adapter::TAO_Table_Adapter (TAO_ORB_Core &orb_core)
   :  orb_core_ (orb_core),
      root_ (),
      closed_ (true),
+     enable_locking_ (orb_core_.server_factory ()->enable_poa_locking ()),
      thread_lock_ (),
-     lock_ (TAO_Table_Adapter::create_lock (thread_lock_))
+     lock_ (TAO_Table_Adapter::create_lock (enable_locking_,
+                                            thread_lock_))
 {
 }
 
@@ -35,11 +37,26 @@ TAO_Table_Adapter::~TAO_Table_Adapter (void)
 
 /* static */
 ACE_Lock *
-TAO_Table_Adapter::create_lock (TAO_SYNCH_MUTEX &thread_lock)
+TAO_Table_Adapter::create_lock (bool enable_locking,
+                                TAO_SYNCH_MUTEX &thread_lock)
 {
+#if defined (ACE_HAS_THREADS)
+  if (enable_locking)
+    {
+      ACE_Lock *the_lock = 0;
+      ACE_NEW_RETURN (the_lock,
+                      ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (thread_lock),
+                      0);
+      return the_lock;
+    }
+#else
+  ACE_UNUSED_ARG (enable_locking);
+  ACE_UNUSED_ARG (thread_lock);
+#endif /* ACE_HAS_THREADS */
+
   ACE_Lock *the_lock = 0;
   ACE_NEW_RETURN (the_lock,
-                  ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (thread_lock),
+                  ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
                   0);
   return the_lock;
 }

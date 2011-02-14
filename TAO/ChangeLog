@@ -1,3 +1,60 @@
+Mon Feb 14 10:44:30 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+        * tao/Client_Strategy_Factory.h:
+        * tao/Client_Strategy_Factory.cpp:
+        * tao/Configurable_Refcount.h:
+        * tao/Configurable_Refcount.inl:
+        * tao/Configurable_Refcount.cpp:
+        * tao/IORTable/Table_Adapter.h:
+        * tao/IORTable/Table_Adapter.cpp:
+        * tao/Messaging/AMH_Response_Handler.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        * tao/Object.h:
+        * tao/Object.inl:
+        * tao/Object.cpp:
+        * tao/ObjectKey_Table.h:
+        * tao/ObjectKey_Table.cpp:
+        * tao/On_Demand_Fragmentation_Strategy.h:
+        * tao/PortableServer/Non_Servant_Upcall.cpp:
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/Object_Adapter.inl:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Root_POA.h:
+        * tao/PortableServer/Root_POA.inl:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        * tao/PortableServer/Servant_Upcall.cpp:
+        * tao/Profile.h:
+        * tao/Profile.inl:
+        * tao/Profile.cpp:
+        * tao/Refcounted_ObjectKey.inl:
+        * tao/Refcounted_ObjectKey.cpp:
+        * tao/Resource_Factory.h:
+        * tao/Resource_Factory.cpp:
+        * tao/Server_Strategy_Factory.h:
+        * tao/Server_Strategy_Factory.cpp:
+        * tao/Stub.h:
+        * tao/Stub.inl:
+        * tao/Stub.cpp:
+        * tao/Transport_Mux_Strategy.h:
+        * tao/Valuetype/AbstractBase.h:
+        * tao/Valuetype/AbstractBase.cpp:
+        * tao/default_client.h:
+        * tao/default_client.cpp:
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+        * tao/default_server.h:
+        * tao/default_server.cpp:
+        * tao/tao.mpc:
+        * tao/ObjectKey_Table.inl:
+          Reverted the changes to TAO/tao from the commit of last friday.
+          The ImR example Combined_Service broke and I am not in the position
+          to analyze the exact failure at this moment. Will reapply the
+          changes asap when I have time to analyze this
+
 Fri Feb 11 11:16:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.

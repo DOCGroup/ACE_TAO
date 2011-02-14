@@ -23,12 +23,12 @@ CORBA::is_nil<> (CORBA::Object_ptr obj)
 
 ACE_INLINE
 CORBA::Object::Object (int)
-  : refcount_ (1),
-    is_local_ (true),
+  : is_local_ (true),
     is_evaluated_ (true),
     ior_ (),
     orb_core_ (0),
-    protocol_proxy_ (0)
+    protocol_proxy_ (0),
+    object_init_lock_ (0)
 {
 }
 

@@ -10,6 +10,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : activate_server_connections_ (0),
     thread_flags_ (THR_BOUND | THR_DETACHED),
+    poa_lock_type_ (TAO_THREAD_LOCK),
     thread_per_connection_use_timeout_ (-1)
 {
 }
@@ -17,6 +18,19 @@ TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
 TAO_Default_Server_Strategy_Factory::~TAO_Default_Server_Strategy_Factory (void)
 {
   // Perform appropriate cleanup.
+}
+
+int
+TAO_Default_Server_Strategy_Factory::enable_poa_locking (void)
+{
+  switch (this->poa_lock_type_)
+    {
+    case TAO_NULL_LOCK:
+      return 0;
+    case TAO_THREAD_LOCK:
+    default:
+      return 1;
+    }
 }
 
 int
@@ -304,6 +318,24 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                 TAO_LINEAR;
             else
               this->report_option_value_error (ACE_TEXT("-ORBUniqueidPolicyReverseDemuxStrategy"), name);
+          }
+      }
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 ACE_TEXT("-ORBPOALock")) == 0)
+      {
+        ++curarg;
+        if (curarg < argc)
+          {
+            ACE_TCHAR* name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name,
+                                    ACE_TEXT("thread")) == 0)
+              this->poa_lock_type_ = TAO_THREAD_LOCK;
+            else if (ACE_OS::strcasecmp (name,
+                                         ACE_TEXT("null")) == 0)
+              this->poa_lock_type_ = TAO_NULL_LOCK;
+            else
+              this->report_option_value_error (ACE_TEXT("-ORBPOALock"), name);
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
