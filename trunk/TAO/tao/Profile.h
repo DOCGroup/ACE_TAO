@@ -24,7 +24,7 @@
 #include "tao/GIOP_Message_Version.h"
 #include "tao/Refcounted_ObjectKey.h"
 #include "tao/Service_Callbacks.h"
-#include "tao/Configurable_Refcount.h"
+#include "ace/Atomic_Op.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;
@@ -54,7 +54,6 @@ namespace CORBA
 class TAO_Export TAO_Profile
 {
 public:
-
   /// Constructor
   TAO_Profile (CORBA::ULong tag,
                TAO_ORB_Core *orb_core,
@@ -383,7 +382,7 @@ private:
   TAO_MProfile* forward_to_;
 
   /// Number of outstanding references to this object.
-  TAO_Configurable_Refcount refcount_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
 
   /// A lock that protects creation of the tagged profile
   TAO_SYNCH_MUTEX tagged_profile_lock_;
