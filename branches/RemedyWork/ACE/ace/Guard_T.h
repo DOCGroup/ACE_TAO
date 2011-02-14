@@ -72,11 +72,11 @@ public:
   ACE_Guard (ACE_LOCK &l);
 
   /// Implicitly and automatically acquire (or try to acquire) the
-  /// lock.  If @a block is non-0 then <acquire> the <ACE_LOCK>, else
-  /// <tryacquire> it.
+  /// lock.  If @a block is non-0 then acquire() the <ACE_LOCK>, else
+  /// tryacquire() it.
   ACE_Guard (ACE_LOCK &l, bool block);
 
-  /// Initialise the guard without implicitly acquiring the lock. The
+  /// Initialize the guard without implicitly acquiring the lock. The
   /// @a become_owner parameter indicates whether the guard should release
   /// the lock implicitly on destruction. The @a block parameter is
   /// ignored and is used here to disambiguate with the preceding
