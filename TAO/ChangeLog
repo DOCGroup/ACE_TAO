@@ -1,7 +1,16 @@
+Mon Feb 14 12:23:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/AMH_Response_Handler.cpp:
+        * tao/Object.h:
+        * tao/Object.inl:
+        * tao/Object.cpp:
+          Committed back these files, also didn't break ImR
+
 Mon Feb 14 12:03:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Refcounted_ObjectKey.inl:
         * tao/Refcounted_ObjectKey.cpp:
+          Committed back these files, also didn't break ImR
 
 Mon Feb 14 11:47:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
