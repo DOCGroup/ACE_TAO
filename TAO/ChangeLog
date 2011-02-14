@@ -1,3 +1,8 @@
+Mon Feb 14 12:03:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Refcounted_ObjectKey.inl:
+        * tao/Refcounted_ObjectKey.cpp:
+
 Mon Feb 14 11:47:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IORTable/Table_Adapter.h:
