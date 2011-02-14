@@ -1702,6 +1702,9 @@ run_test (::Components::Events_ptr source,
 
       ACE_DEBUG ((LM_DEBUG, "\n\n===============================\n"));
       ret += test_consumers_of_publishers (source, sink);
+#else
+  ACE_UNUSED_ARG (sink);
+  ACE_UNUSED_ARG (source);
 #endif
 
     }
