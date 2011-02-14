@@ -1,3 +1,11 @@
+Mon Feb 14 11:04:26 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+        * tao/ObjectKey_Table.h:
+        * tao/ObjectKey_Table.inl:
+        * tao/ObjectKey_Table.cpp:
+          Reapplied changes, didn't break ImR example
+
 Mon Feb 14 10:44:30 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
