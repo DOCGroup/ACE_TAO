@@ -150,7 +150,7 @@ namespace CORBA
   private:
 
     /// Number of outstanding references to this object.
-    TAO_Configurable_Refcount refcount_;
+    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
 
     CORBA::Boolean is_collocated_;
     TAO_Abstract_ServantBase *servant_;
