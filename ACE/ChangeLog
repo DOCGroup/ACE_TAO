@@ -1,3 +1,11 @@
+Mon Feb 14 09:42:38 UTC 2011  Martin Corino  <corino_m@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Added change to enable suppression of strict-aliasing checks
+          (-fno-strict-aliasing) by default for GCC >= 4.4.
+          Default behaviour can be suppressed by explicitly setting
+          no_strict_aliasing=0 in platform_macros.GNU.
+
 Sun Feb 13 13:31:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Makefile.am:
