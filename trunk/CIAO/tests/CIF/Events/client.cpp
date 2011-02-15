@@ -1,7 +1,7 @@
 // $Id$
 
-#include Common/CIF_Common.h
-#include Component/CIF_ComponentC.h
+#include "Common/CIF_Common.h"
+#include "Component/CIF_ComponentC.h"
 
 #include <ccm/CCM_EventsC.h>
 
