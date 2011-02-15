@@ -1,3 +1,8 @@
+Tue Feb 15 10:11:12 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Events/client.cpp:
+          Added quotes.
+
 Tue Feb 15 10:07:30 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Events/client.cpp:
