@@ -22,7 +22,6 @@ pipes ?= 1
 CC              = gcc
 CXX             = g++
 
-CFLAGS          += -W -Wall -Wpointer-arith
 DCFLAGS         += -g
 RET = $(shell test $(OSVERSION) -ge 300000 && printf 1)
 ifneq ($(RET),1)

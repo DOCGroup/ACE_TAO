@@ -12,7 +12,6 @@ pipes ?= 1
 CC              = gcc
 CXX		= g++
 
-CFLAGS          += -W -Wall -Wpointer-arith
 DCFLAGS         += -g
 LDFLAGS		+= -Wl,-rpath $(ACE_ROOT)/lib
 DLD             = $(CXX)

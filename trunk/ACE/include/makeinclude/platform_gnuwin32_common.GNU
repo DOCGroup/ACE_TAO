@@ -61,7 +61,6 @@ DLLTOOL = ${COMPARCH}dlltool
 AR      = ${COMPARCH}ar
 RANLIB  = ${COMPARCH}ranlib
 
-FLAGS_C_CC += -Wall -W -Wpointer-arith
 DCFLAGS    += -g
 DLD        = $(CXX)
 LD         = $(CXX)

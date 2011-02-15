@@ -25,7 +25,7 @@ endif #debug
 CC      ?= gcc
 CXX     ?= g++
 
-CFLAGS  += -pipe -W -Wall -Wpointer-arith
+CFLAGS  += -pipe
 
 DLD     = $(CXX)
 LD      = $(CXX)

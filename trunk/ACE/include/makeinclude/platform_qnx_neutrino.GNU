@@ -11,7 +11,6 @@ pipes ?= 1
 CC      ?= i386-nto-gcc
 CXX     ?= i386-nto-g++
 
-CFLAGS  += -W -Wall -Wpointer-arith
 DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)
