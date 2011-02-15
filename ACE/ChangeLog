@@ -1,3 +1,10 @@
+Tue Feb 15 20:00:34 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+        * include/makeinclude/platform_qnx_neutrino.GNU:
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
+          Removed TEMPLATES_FLAG which is no longer used.
+
 Tue Feb 15 14:40:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Monitor_Control/Monitor_Group.cpp:
