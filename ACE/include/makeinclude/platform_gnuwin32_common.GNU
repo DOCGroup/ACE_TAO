@@ -98,4 +98,4 @@ include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 PRELIB = @true
 
-CCFLAGS += $(CFLAGS) $(FLAGS_C_CC) $(TEMPLATES_FLAG)
+CCFLAGS += $(CFLAGS) $(FLAGS_C_CC)
