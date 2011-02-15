@@ -40,8 +40,7 @@ ifeq (no,$(RTEMS_HAS_NETWORKING))
  CCFLAGS += -DACE_LACKS_NETWORKING
 endif
 
-CFLAGS          += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
-CCFLAGS         += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
+CFLAGS          += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
 DCFLAGS         += -g
 DCCFLAGS        += -g
 DLD             = $(LD)
@@ -52,3 +51,4 @@ LDFLAGS         += -Wl,--allow-multiple-definition -B$(RTEMS_MAKEFILE_PATH)/lib 
 OCFLAGS         += -O
 PIC             =
 
+CCFLAGS += $(CFLAGS) $(FLAGS_C_CC)

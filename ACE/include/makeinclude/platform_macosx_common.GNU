@@ -50,7 +50,7 @@ else
 endif
 
 LDFLAGS         += -flat_namespace
-CCFLAGS         += $(CFLAGS)
+CCFLAGS         += $(CFLAGS) $(FLAGS_C_CC)
 
 ifeq ($(universal),1)
   CFLAGS += -arch i386 -arch ppc

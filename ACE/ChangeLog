@@ -1,3 +1,22 @@
+Tue Feb 15 20:39:49 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_aix_g++.GNU:
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_hpux_gcc.GNU:
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/platform_lynxos.GNU:
+        * include/makeinclude/platform_macosx.GNU:
+        * include/makeinclude/platform_macosx_common.GNU:
+        * include/makeinclude/platform_macosx_panther.GNU:
+        * include/makeinclude/platform_netbsd.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+        * include/makeinclude/platform_qnx_neutrino.GNU:
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+        * include/makeinclude/platform_win32_interix.GNU:
+          Make sure FLAGS_C_CC is added to CCFLAGS.
+
 Tue Feb 15 20:20:36 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_freebsd.GNU:
