@@ -29,7 +29,6 @@ CFLAGS  += $(FLAGS_C_CC)
 
 CC              ?= gcc
 CXX             ?= g++
-CFLAGS          += -Wall -Wpointer-arith
 
 DCFLAGS         += -g
 DLD				= $(CXX)

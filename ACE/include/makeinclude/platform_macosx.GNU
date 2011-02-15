@@ -14,7 +14,7 @@ with_ld = macosx
 
 CC              = gcc
 CXX             = g++
-CFLAGS          += -Wall -Wpointer-arith -Wno-long-double -I/sw/include
+CFLAGS          += -Wno-long-double -I/sw/include
 
 DCFLAGS         += -g
 DLD             = libtool

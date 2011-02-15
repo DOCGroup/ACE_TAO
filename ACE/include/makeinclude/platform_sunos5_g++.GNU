@@ -29,7 +29,6 @@ endif # ! i86pc
 
 CC              = gcc
 CXX             = g++
-FLAGS_C_CC      += -W -Wall -Wpointer-arith
 
 ifeq ($(threads),1)
   CPPFLAGS      += -D_REENTRANT
