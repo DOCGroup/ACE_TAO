@@ -30,4 +30,4 @@ PRELIB  = @true
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-CCFLAGS += $(CFLAGS)
+CCFLAGS += $(CFLAGS) $(FLAGS_C_CC)
