@@ -31,4 +31,4 @@ SOBUILD = -o $(VSHDIR)$*.dylib $<
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 LDFLAGS         += -flat_namespace -undefined warning
-CCFLAGS         += $(CFLAGS)
+CCFLAGS         += $(CFLAGS) $(FLAGS_C_CC)

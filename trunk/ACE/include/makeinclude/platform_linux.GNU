@@ -1,9 +1,6 @@
 # -*- Makefile -*-
 # $Id$
 
-# According to Bryon G. Rigg <bgrigg@opus.bcbnet.com>, this file
-# should allow ACE to be built on Linux.
-
 include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 
 ifeq ($(insure),0)
