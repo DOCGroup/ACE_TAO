@@ -1,3 +1,8 @@
+Tue Feb 15 14:40:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Monitor_Control/Monitor_Group.cpp:
+          Fixed warning
+
 Mon Feb 14 20:20:11 UTC 2011  Adam Mitz  <mitza@ociweb.com>
 
         * ace/Lock_Adapter_T.inl:
