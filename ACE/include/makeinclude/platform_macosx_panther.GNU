@@ -12,7 +12,7 @@ pipes ?= 1
 
 CC              = gcc
 CXX             = g++
-CFLAGS          += -Wall -Wpointer-arith -Wno-long-double
+CFLAGS          += -Wno-long-double
 
 DCFLAGS         += -g
 DLD             = libtool

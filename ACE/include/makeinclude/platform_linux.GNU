@@ -41,7 +41,6 @@ ifeq (4.1.1-3mdk, $(findstring 4.1.1-3mdk,$(CXX_FULL_VERSION)))
   gcc_template_instantiation_visibility ?= 1
 endif
 
-FLAGS_C_CC += -W -Wall -Wpointer-arith
 ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads
