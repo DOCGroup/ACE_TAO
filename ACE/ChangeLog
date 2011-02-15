@@ -1,3 +1,8 @@
+Tue Feb 15 20:46:01 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_aix_g++.GNU:
+          Removed "-W -Wall" from CFLAGS.
+
 Tue Feb 15 20:39:49 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_aix_g++.GNU:
