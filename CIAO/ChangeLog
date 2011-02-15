@@ -1,3 +1,8 @@
+Tue Feb 15 09:20:07 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          One dds test should now run again
+
 Mon Feb 14 08:35:26 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Events/client.cpp:
