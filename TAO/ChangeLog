@@ -1,3 +1,9 @@
+Tue Feb 15 13:53:16 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/PortableServer/Active_Object_Map.cpp:
+          Fixed unsafe code that crashes server if servant is 0. It's visible
+          only when debug logging is on.
+
 Mon Feb 14 12:23:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/AMH_Response_Handler.cpp:
