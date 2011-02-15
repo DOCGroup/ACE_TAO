@@ -1001,7 +1001,7 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - TAO_System_Id_With_Unique_Id_Strategy::"
                   "bind_using_system_id: type=%C, id=%C\n",
-                  servant->_repository_id (),
+                  servant != 0 ? servant->_repository_id () : "(null)",
                   hex_idstr.c_str()
                   ));
     }
@@ -1055,7 +1055,7 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - TAO_System_Id_With_Multiple_Id_Strategy::"
                   "bind_using_system_id: type=%C, id=%C\n",
-                  servant->_repository_id (),
+                  servant != 0 ? servant->_repository_id () : "(null)",
                   hex_idstr.c_str()
                   ));
     }
