@@ -1,3 +1,4 @@
+# -*- Makefile -*-
 # $Id$
 
 # platform_freebsd.GNU
@@ -7,13 +8,7 @@
 ##  flags for threads.
 OSVERSION := $(shell sysctl -n kern.osreldate)
 
-## GNU make does not support boolean conditional expressions
-## so we have to use a dummy RET variable.
-RET = $(shell test $(OSVERSION) -ge 200000 && printf 1)
-ifeq ($(RET),1)
-versioned_so = 1
-endif
-
+versioned_so ?= 1
 threads ?= 1
 debug ?= 1
 optimize ?= 1
@@ -23,10 +18,6 @@ CC              = gcc
 CXX             = g++
 
 DCFLAGS         += -g
-RET = $(shell test $(OSVERSION) -ge 300000 && printf 1)
-ifneq ($(RET),1)
-  LDFLAGS       += -Wl,-rpath $(ACE_ROOT)/lib
-endif
 DLD             = $(CXX)
 LD              = $(CXX)
 OCFLAGS         += -O2
@@ -42,24 +33,22 @@ PRELIB = @echo
 ## Set the correct compiler flags for pthreads.  This
 ## test is copied from /usr/ports/Mk/bsd.port.mk
 ifeq ($(threads),1)
-RET = $(shell test $(OSVERSION) -lt 500016 && printf 1)
-ifeq ($(RET),1)
-  PTHREAD_CPPFLAGS = -D_THREAD_SAFE
-  PTHREAD_LIBS   = -pthread
-else
-  RET = $(shell test $(OSVERSION) -lt 502102 && printf 1)
+  RET = $(shell test $(OSVERSION) -lt 500016 && printf 1)
   ifeq ($(RET),1)
-  PTHREAD_LIBS   = -lc_r
+    PTHREAD_CPPFLAGS = -D_THREAD_SAFE
+    PTHREAD_LIBS   = -pthread
   else
-  PTHREAD_LIBS   = -lpthread
-  endif
-endif # RET
-
-CPPFLAGS  += $(PTHREAD_CPPFLAGS)
-LIBS += $(PTHREAD_LIBS)
-
+    RET = $(shell test $(OSVERSION) -lt 502102 && printf 1)
+    ifeq ($(RET),1)
+      PTHREAD_LIBS   = -lc_r
+    else
+      PTHREAD_LIBS   = -lpthread
+    endif
+  endif # RET
+  CPPFLAGS  += $(PTHREAD_CPPFLAGS)
+  LIBS += $(PTHREAD_LIBS)
 else
-CPPFLAGS += -DACE_MT_SAFE=0
+  CPPFLAGS += -DACE_MT_SAFE=0
 endif # threads
 
 PLATFORM_XT_CPPFLAGS=
