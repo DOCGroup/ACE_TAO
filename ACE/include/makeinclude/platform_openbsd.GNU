@@ -1,9 +1,9 @@
+# -*- Makefile -*-
 # $Id$
 
 # platform_openbsd.GNU
 
-versioned_so = 1
-
+versioned_so ?= 1
 debug ?= 1
 optimize ?= 1
 threads ?= 1
@@ -13,10 +13,8 @@ CC              = gcc
 CXX		= g++
 
 DCFLAGS         += -g
-LDFLAGS		+= -Wl,-rpath $(ACE_ROOT)/lib
 DLD             = $(CXX)
 LD		= $(CXX)
-LIBS            +=
 OCFLAGS         += -O2
 PIC             = -fpic
 AR              = ar
@@ -29,7 +27,7 @@ PRELIB = @echo
 
 ifeq ($(threads),1)
   LDFLAGS       += -pthread
-  CFLAGS        += -D_THREAD_SAFE -DACE_HAS_THREADS
+  CPPFLAGS      += -D_THREAD_SAFE -DACE_HAS_THREADS
 endif # threads
 
 PLATFORM_X11_CPPFLAGS=-I/usr/X11R6/include
