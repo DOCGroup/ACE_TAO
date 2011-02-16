@@ -1,3 +1,9 @@
+Wed Feb 16 12:41:59 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Moved some setting from CFLAGS to CPPFLAGS
+          and FLAGS_C_CC.
+
 Wed Feb 16 09:12:53 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_openbsd.GNU:

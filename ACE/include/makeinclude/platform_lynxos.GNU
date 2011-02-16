@@ -43,7 +43,7 @@ pipes ?= 1
 threads ?= 1
 
 ifeq ($(threads),1)
-  CFLAGS  += -mthreads
+  FLAGS_C_CC += -mthreads
   SOFLAGS += -mthreads
 endif
 
@@ -52,15 +52,15 @@ ifeq ($(rpc),1)
 endif
 
 ifeq ($(shared_libs),1)
-  CPPFLAGS += -DACE_HAS_SVR4_DYNAMIC_LINKING
-  CFLAGS   += -mshared
-  SOFLAGS  += -mshared
-  LIBS     += -ldl
+  CPPFLAGS   += -DACE_HAS_SVR4_DYNAMIC_LINKING
+  FLAGS_C_CC += -mshared
+  SOFLAGS    += -mshared
+  LIBS       += -ldl
   ifeq ($(CROSS-COMPILE),1)
-    LDFLAGS += -Wl,-rpath-link,$(ACE_ROOT)/lib
+    LDFLAGS  += -Wl,-rpath-link,$(ACE_ROOT)/lib
   endif
 else
-  LIBS     += -lnetinet -lnsl
+  LIBS       += -lnetinet -lnsl
 endif
 
 ifeq (5.0.0,$(VERSION))
@@ -71,7 +71,7 @@ CC              = gcc
 CXX             = g++
 PIC             = -fPIC
 CFLAGS          += -fsigned-char $(PIC)
-CFLAGS          += -DACE_LYNXOS_MAJOR=$(LYNXOS_MAJOR) -DACE_LYNXOS_MINOR=$(LYNXOS_MINOR)
+CPPFLAGS        += -DACE_LYNXOS_MAJOR=$(LYNXOS_MAJOR) -DACE_LYNXOS_MINOR=$(LYNXOS_MINOR)
 DCFLAGS         += -g
 DLD             = $(CXX)
 LD              = $(CXX)
