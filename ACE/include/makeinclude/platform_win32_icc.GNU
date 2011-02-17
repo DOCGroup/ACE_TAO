@@ -1,3 +1,4 @@
+# -*- Makefile -*-
 # $Id$
 
 # debug = 1

@@ -11,9 +11,6 @@ else
   CXX_FOR_VERSION_TEST ?= g++
 endif
 
-# fix this
-pipes ?= 1
-
 CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
 CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
 
