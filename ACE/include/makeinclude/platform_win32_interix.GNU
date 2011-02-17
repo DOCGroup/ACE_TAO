@@ -1,3 +1,4 @@
+# -*- Makefile -*-
 # $Id$
 
 # platform_win32_interix.GNU
@@ -7,7 +8,6 @@ versioned_so ?= 0
 debug ?= 1
 optimize ?= 1
 threads ?= 1
-pipes ?= 1
 
 CC              = gcc
 CXX             = g++

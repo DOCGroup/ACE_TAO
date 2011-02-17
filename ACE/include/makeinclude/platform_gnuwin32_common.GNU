@@ -34,7 +34,6 @@ winsock2 ?= 1
 debug ?= 1
 optimize ?= 1
 threads ?= 1
-pipes ?= 1
 
 cpumodelflag ?= 0
 tunemodelflag ?= 1

@@ -1,4 +1,6 @@
+# -*- Makefile -*-
 # $Id$
+
 # platform_macosx.GNU
 # support for Mac OS X 10.4 (Tiger)
 # By default, this uses the default compiler selected using gcc_select.
@@ -22,10 +24,6 @@ ifeq (,$(no_hidden_visibility))
 endif
 
 with_ld = macosx
-
-pipes ?= 1
-
-CFLAGS  += $(FLAGS_C_CC)
 
 CC              ?= gcc
 CXX             ?= g++

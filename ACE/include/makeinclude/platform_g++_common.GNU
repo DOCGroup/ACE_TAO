@@ -201,4 +201,6 @@ ifeq ($(minimaltoc),1)
   FLAGS_C_CC += -mminimal-toc
 endif
 
+pipes ?= 1
+
 FLAGS_C_CC += -Wall -W -Wpointer-arith

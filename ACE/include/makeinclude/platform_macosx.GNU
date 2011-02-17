@@ -1,4 +1,6 @@
+# -*- Makefile -*-
 # $Id$
+
 # platform_macosx.GNU
 # support for Mac OS X 10.2 (jaguar), 10.3 (panther)
 # Note: /sw/lib & /sw/include are inserted for the convience of Fink
@@ -9,7 +11,6 @@ threads ?= 1
 debug ?= 1
 optimize ?= 0
 versioned_so ?= 0
-pipes ?= 1
 with_ld = macosx
 
 CC              = gcc
