@@ -1,4 +1,3 @@
-11-promote-QtResource-to-qt4.dpatch
 15-fix-lzo-flags.dpatch
 20-versioned_libs.dpatch
 34-bts386713.dpatch
