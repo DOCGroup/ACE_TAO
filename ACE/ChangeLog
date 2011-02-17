@@ -1,3 +1,11 @@
+Thu Feb 17 08:20:57 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Added $(FLAGS_C_CC) to compile and link rules.
+
+        * include/makeinclude/platform_linux.GNU:
+          Removed CFLAGS+=$(FLAGS_C_CC) and CCFLAGS+=$(FLAGS_C_CC)
+
 Wed Feb 16 12:41:59 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_lynxos.GNU:
