@@ -96,9 +96,6 @@ else
   OCCFLAGS ?= -O3
 endif
 
-CFLAGS  += $(FLAGS_C_CC)
-CCFLAGS += $(FLAGS_C_CC)
-
 # Added line below to support "Executable Shared Object" files (as
 # needed by the service configurator).
 # Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
