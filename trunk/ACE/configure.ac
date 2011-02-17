@@ -491,10 +491,10 @@ AC_CHECK_HEADER([dlfcn.h],
      case "$host_os" in
      darwin*)
 	AC_DEFINE([ACE_LD_SEARCH_PATH],
-		  [ACE_LIB_TEXT ("DYLD_LIBRARY_PATH")],
+		  [ACE_TEXT ("DYLD_LIBRARY_PATH")],
 		  [Define to environment variable used for DLL search path])
 	AC_DEFINE([ACE_DLL_SUFFIX],
-		  [ACE_LIB_TEXT (".dylib")],
+		  [ACE_TEXT (".dylib")],
 		  [Define to DLL file suffix])
 	;;
      esac
