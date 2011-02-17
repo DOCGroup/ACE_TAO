@@ -3,43 +3,40 @@
 ##
 ## All lines beginning with `## DP:' are a description of the patch.
 ## DP: Set MPC base dir directly, no need to fix the tests performed by ACE 
-## DP: because there is no Debian/VMS (yeat :-)
+## DP: because there is no Debian/VMS (yet :-)
 
 @DPATCH@
-
-diff -rupd ACE_wrappers.orig/bin/mpc.pl ACE_wrappers/bin/mpc.pl
---- ACE_wrappers.orig/bin/mpc.pl	2009-11-23 01:19:57.000000000 +0100
-+++ ACE_wrappers/bin/mpc.pl	2009-11-24 00:24:27.000000000 +0100
-@@ -20,13 +20,7 @@ use FindBin;
+--- ACE_wrappers.orig/bin/mpc.pl	2010-03-08 16:38:06.000000000 +0100
++++ ACE_wrappers/bin/mpc.pl	2010-12-22 15:04:58.478119377 +0100
+@@ -20,13 +20,7 @@
  use File::Spec;
  use File::Basename;
  
--my($basePath) = $FindBin::RealBin;
--my($baseName) = $FindBin::RealScript;
+-my($basePath) = (defined $FindBin::RealBin ? $FindBin::RealBin :
+-                                             File::Spec->rel2abs(dirname($0)));
 -if ($^O eq 'VMS') {
 -  $basePath = File::Spec->rel2abs(dirname($0)) if ($basePath eq '');
 -  $basePath = VMS::Filespec::unixify($basePath);
 -}
 -$basePath .= '/MakeProjectCreator';
-+my($basePath) = '/usr/share/ace/bin/MakeProjectCreator';
++my($basePath) = '/usr/lib/ace/bin/MakeProjectCreator';
  
  my($mpcroot) = $ENV{MPC_ROOT};
  my($mpcpath) = (defined $mpcroot ? $mpcroot :
-diff -rupd ACE_wrappers.orig/bin/mwc.pl ACE_wrappers/bin/mwc.pl
---- ACE_wrappers.orig/bin/mwc.pl	2009-11-23 01:19:57.000000000 +0100
-+++ ACE_wrappers/bin/mwc.pl	2009-11-24 00:23:44.000000000 +0100
-@@ -20,13 +20,7 @@ use FindBin;
+--- ACE_wrappers.orig/bin/mwc.pl	2010-03-08 16:38:06.000000000 +0100
++++ ACE_wrappers/bin/mwc.pl	2010-12-22 15:05:34.150111643 +0100
+@@ -20,13 +20,7 @@
  use File::Spec;
  use File::Basename;
  
--my($basePath) = $FindBin::RealBin;
--my($baseName) = $FindBin::RealScript;
+-my($basePath) = (defined $FindBin::RealBin ? $FindBin::RealBin :
+-                                             File::Spec->rel2abs(dirname($0)));
 -if ($^O eq 'VMS') {
 -  $basePath = File::Spec->rel2abs(dirname($0)) if ($basePath eq '');
 -  $basePath = VMS::Filespec::unixify($basePath);
 -}
 -$basePath .= '/MakeProjectCreator';
-+my($basePath) = '/usr/share/ace/bin/MakeProjectCreator';
++my($basePath) = '/usr/lib/ace/bin/MakeProjectCreator';
  
  my($mpcroot) = $ENV{MPC_ROOT};
  my($mpcpath) = (defined $mpcroot ? $mpcroot :
