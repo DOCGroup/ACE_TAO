@@ -1,3 +1,9 @@
+Thu Feb 17 15:21:30 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/PortableServer/Active_Object_Map.cpp:
+          Another change to almost the same code. Now I found memory leaks
+          during logging.
+
 Tue Feb 16 11:15:00 UTC 2011  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:

@@ -508,12 +508,15 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
   if (result == 0 && TAO_debug_level > 7)
     {
       CORBA::String_var idstr (PortableServer::ObjectId_to_string (user_id));
+      CORBA::String_var repository_id (
+          servant ? servant->_repository_id () : 0);
       ACE_CString hex_idstr;
       hexstring (hex_idstr, idstr.in (), user_id.length ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - TAO_Unique_Id_Strategy::bind_using_user_id: type=%C, id=%C\n",
-                  servant ? servant->_repository_id () : "(null)",
+                  "TAO (%P|%t) - TAO_Unique_Id_Strategy::"
+                  "bind_using_user_id: type=%C, id=%C\n",
+                  repository_id.in (),
                   hex_idstr.c_str()
                   ));
     }
@@ -700,12 +703,15 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (
   if (result == 0 && TAO_debug_level > 7)
     {
       CORBA::String_var idstr (PortableServer::ObjectId_to_string (user_id));
+      CORBA::String_var repository_id (
+          servant ? servant->_repository_id () : 0);
       ACE_CString hex_idstr;
       hexstring (hex_idstr, idstr.in (), user_id.length ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - TAO_Multiple_Id_Strategy::bind_using_user_id: type=%C, id=%C\n",
-                  servant != 0 ? servant->_repository_id () : "(null)",
+                  "TAO (%P|%t) - TAO_Multiple_Id_Strategy::"
+                  "bind_using_user_id: type=%C, id=%C\n",
+                  repository_id.in (),
                   hex_idstr.c_str()
                   ));
     }
@@ -995,13 +1001,15 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (
     {
       CORBA::String_var idstr (
           PortableServer::ObjectId_to_string (entry->user_id_));
+      CORBA::String_var repository_id (
+          servant ? servant->_repository_id () : 0);
       ACE_CString hex_idstr;
       hexstring (hex_idstr, idstr.in (), entry->user_id_.length ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - TAO_System_Id_With_Unique_Id_Strategy::"
                   "bind_using_system_id: type=%C, id=%C\n",
-                  servant != 0 ? servant->_repository_id () : "(null)",
+                  repository_id.in (),
                   hex_idstr.c_str()
                   ));
     }
@@ -1049,13 +1057,15 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (
     {
       CORBA::String_var idstr (
           PortableServer::ObjectId_to_string (entry->user_id_));
+      CORBA::String_var repository_id (
+          servant ? servant->_repository_id () : 0);
       ACE_CString hex_idstr;
       hexstring (hex_idstr, idstr.in (), entry->user_id_.length ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - TAO_System_Id_With_Multiple_Id_Strategy::"
                   "bind_using_system_id: type=%C, id=%C\n",
-                  servant != 0 ? servant->_repository_id () : "(null)",
+                  repository_id.in (),
                   hex_idstr.c_str()
                   ));
     }
