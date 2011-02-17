@@ -1,3 +1,26 @@
+Thu Feb 17 19:26:57 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Added pipes ?= 1
+
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/platform_lynxos.GNU:
+        * include/makeinclude/platform_macosx.GNU:
+        * include/makeinclude/platform_macosx_common.GNU:
+        * include/makeinclude/platform_macosx_panther.GNU:
+        * include/makeinclude/platform_netbsd.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+        * include/makeinclude/platform_qnx_neutrino.GNU:
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+        * include/makeinclude/platform_sunos5_g++.GNU:
+        * include/makeinclude/platform_win32_dmc.GNU:
+        * include/makeinclude/platform_win32_icc.GNU:
+        * include/makeinclude/platform_win32_interix.GNU:
+          Removed setting of pipes variable.
+          It now set in platform_g++_common.GNU.
+
 Thu Feb 17 18:53:07 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_aix_g++.GNU:

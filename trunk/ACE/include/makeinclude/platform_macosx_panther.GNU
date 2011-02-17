@@ -1,4 +1,6 @@
+# -*- Makefile -*-
 # $Id$
+
 # platform_macosx.GNU
 # support for Mac OS X 10.3 (Panther)
 
@@ -7,8 +9,6 @@ debug ?= 1
 optimize ?= 0
 versioned_so ?= 0
 with_ld = macosx
-
-pipes ?= 1
 
 CC              = gcc
 CXX             = g++

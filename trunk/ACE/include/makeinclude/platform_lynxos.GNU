@@ -1,5 +1,6 @@
+# -*- Makefile -*-
 # $Id$
-#
+
 # LynxOS with g++.  Defaults to LynxOS Version 4.0.0.  For Version 4.2.0,
 # for example, add "VERSION=4.2.0" to your make invocation.
 
@@ -39,7 +40,6 @@ PLATFORM_TK_LDFLAGS=$(PLATFORM_X11_LDFLAGS)
 shared_libs ?= 1
 optimize ?= 1
 debug ?= 1
-pipes ?= 1
 threads ?= 1
 
 ifeq ($(threads),1)
