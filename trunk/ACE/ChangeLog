@@ -1,3 +1,11 @@
+Thu Feb 17 08:35:31 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+        * include/makeinclude/platform_lynxos.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+          Removed CCFLAGS += $(CFLAGS) $(FLAGS_C_CC)
+
 Thu Feb 17 08:20:57 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/wrapper_macros.GNU:
