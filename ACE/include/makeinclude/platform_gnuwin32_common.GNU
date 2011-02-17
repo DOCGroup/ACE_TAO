@@ -96,5 +96,3 @@ PLATFORM_WX_LDFLAGS   ?= $(shell wx-config --ldflags)
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 PRELIB = @true
-
-CCFLAGS += $(CFLAGS) $(FLAGS_C_CC)
