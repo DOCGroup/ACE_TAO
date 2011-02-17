@@ -1,3 +1,9 @@
+Thu Feb 17 18:36:48 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Replaced ACE_LIB_TEXT with ACE_TEXT, thanks to Andrew Hill
+          <lists at thefrog dot net> for reporting this
+
 Thu Feb 17 08:35:31 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_freebsd.GNU:
