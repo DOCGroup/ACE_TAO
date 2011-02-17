@@ -190,13 +190,13 @@ endif # static_libs
 
 #### Set up the build ACE version in case the platform_macros.GNU wants it.
 ifeq (cmd,$(findstring cmd,$(SHELL)))
-ACE_MAJOR_VERSION := $(shell awk "/ACE_MAJOR_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
-ACE_MINOR_VERSION := $(shell awk "/ACE_MINOR_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
-ACE_BETA_VERSION := $(shell awk "/ACE_BETA_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
+  ACE_MAJOR_VERSION := $(shell awk "/ACE_MAJOR_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
+  ACE_MINOR_VERSION := $(shell awk "/ACE_MINOR_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
+  ACE_BETA_VERSION := $(shell awk "/ACE_BETA_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
 else
-ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
-ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
-ACE_BETA_VERSION := $(shell awk '/ACE_BETA_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+  ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+  ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+  ACE_BETA_VERSION := $(shell awk '/ACE_BETA_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
 endif
 
 ACE_VERSION = $(ACE_MAJOR_VERSION).$(ACE_MINOR_VERSION).$(ACE_BETA_VERSION)
@@ -281,7 +281,7 @@ IDL_SERVER_TINL_EXT ?= S_T.inl
 IDL_SERVER_TSRC_EXT ?= S_T.cpp
 
 ifeq (default,$(origin LEX))
-LEX = flex
+  LEX = flex
 endif
 
 EXEEXT ?=
@@ -446,7 +446,7 @@ endif
 # NOTE: VLDLIBS is defined below, in case it is overridden for static-
 #       or shared-only builds.
 ifeq (default,$(origin YACC))
-YACC = bison
+  YACC = bison
 endif
 
 #----------------------------------------------------------------------------
@@ -832,8 +832,7 @@ pipes ?= 0
 # of intermediate files. This can be disabled by setting pipes to 0 in the
 # platform_macros.GNU file.
 ifeq ($(pipes),1)
-   CFLAGS += -pipe
-   CCFLAGS += -pipe
+   FLAGS_C_CC += -pipe
 endif # pipes
 
 # RMCast is turned on by default
@@ -915,27 +914,27 @@ POSTLINK ?=
 PURELINK ?=
 MVCMD ?=
 
-COMPILE.c       = $(CC) $(CFLAGS) $(CPPFLAGS) -c
-COMPILE.cc      = $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) -c
+COMPILE.c       = $(CC) $(CFLAGS) $(FLAGS_C_CC) $(CPPFLAGS) -c
+COMPILE.cc      = $(CXX) $(CCFLAGS) $(FLAGS_C_CC) $(CPPFLAGS) $(PTDIRS) -c
 RC ?=
 
 COMPILE.rc      = $(RC) $(RCFLAGS)
 COMPILE-NO_DASH_G.cc = `echo $(COMPILE.cc) | sed 's/-g //'`
 # 960905 Marius Kjeldahl <marius@funcom.com>
 # Added the line below to be used for compiling executable shared objects
-COMPILEESO.cc   = $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
+COMPILEESO.cc   = $(CXX) $(CCFLAGS) $(FLAGS_C_CC) $(CPPFLAGS) $(PTDIRS)
 
 ifeq ($(LINK.c),override)
   LINK.c  = $(LINK.c.override)
 else
-  LINK.c  = $(PURELINK) $(PRELINK) $(LD) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) \
+  LINK.c  = $(PURELINK) $(PRELINK) $(LD) $(CFLAGS) $(FLAGS_C_CC) $(CPPFLAGS) $(LDFLAGS) \
             $(LDLIBS) $(LIBS)
 endif # LINK.c.override
 
 ifeq ($(LINK.cc),override)
   LINK.cc = $(LINK.cc.override)
 else
-  LINK.cc = $(PURELINK) $(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
+  LINK.cc = $(PURELINK) $(PRELINK) $(LD) $(CCFLAGS) $(FLAGS_C_CC) $(CPPFLAGS) $(PTDIRS)
 endif # LINK.cc.override
 
 ifeq ($(SOLINK.cc),override)
