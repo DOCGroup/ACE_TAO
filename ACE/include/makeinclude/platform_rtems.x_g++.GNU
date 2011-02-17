@@ -1,5 +1,6 @@
+# -*- Makefile -*-
 # $Id$
-#
+
 # RTEMS 4.6.6 and later with GNU g++.
 
 CROSS-COMPILE = 1
@@ -50,5 +51,3 @@ LD              = $(CXX)
 LDFLAGS         += -Wl,--allow-multiple-definition -B$(RTEMS_MAKEFILE_PATH)/lib -Wl,-Ttext,0x00100000
 OCFLAGS         += -O
 PIC             =
-
-CCFLAGS += $(CFLAGS) $(FLAGS_C_CC)

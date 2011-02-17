@@ -1,3 +1,4 @@
+# -*- Makefile -*-
 # $Id$
 #
 # QNX/RTP hosted, using GCC
@@ -42,7 +43,3 @@ PRELIB  = @true
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-CCFLAGS += $(CFLAGS)
-
-CFLAGS  += $(FLAGS_C_CC)
-CCFLAGS += $(FLAGS_C_CC) 
