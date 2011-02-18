@@ -1,3 +1,10 @@
+Fri Feb 18 22:20:42 UTC 2011  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * ace/Functor_String.h:
+        * ace/Functor_String.inl:
+
+          Specialized the string functors for std::string.
+
 Fri Feb 18 13:37:44 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_lynxos.GNU:
