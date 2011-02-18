@@ -70,7 +70,7 @@ endif
 CC              = gcc
 CXX             = g++
 PIC             = -fPIC
-CFLAGS          += -fsigned-char $(PIC)
+CFLAGS          += $(PIC)
 CPPFLAGS        += -DACE_LYNXOS_MAJOR=$(LYNXOS_MAJOR) -DACE_LYNXOS_MINOR=$(LYNXOS_MINOR)
 DCFLAGS         += -g
 DLD             = $(CXX)
