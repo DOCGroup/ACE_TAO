@@ -70,7 +70,6 @@ endif
 CC              = gcc
 CXX             = g++
 PIC             = -fPIC
-CFLAGS          += $(PIC)
 CPPFLAGS        += -DACE_LYNXOS_MAJOR=$(LYNXOS_MAJOR) -DACE_LYNXOS_MINOR=$(LYNXOS_MINOR)
 DCFLAGS         += -g
 DLD             = $(CXX)
@@ -79,7 +78,7 @@ OCFLAGS         += -O2
 AR              = ar
 ARFLAGS         = ruv
 RANLIB          = @true
-SOFLAGS         += $(CPPFLAGS) -shared
+SOFLAGS         += -shared
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
                   $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
 PRELIB          = @true
