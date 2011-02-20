@@ -73,7 +73,7 @@ ifeq ($(optimize),1)
   SOFLAGS += -Wl,-O3
 endif
 
-SOFLAGS += $(CPPFLAGS) -shared
+SOFLAGS += -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
           $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
 PRELIB  = @true
