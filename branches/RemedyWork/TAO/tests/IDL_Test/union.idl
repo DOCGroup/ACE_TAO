@@ -86,17 +86,6 @@ module UnionDiscTest
     };
 };
 
-// AnyUnion
-enum AnyUnionEnum {
-  ANYUNIONENUM2
-};
-
-union MyAnyUnion switch (AnyUnionEnum) {
-  case ANYUNIONENUM2:
-    any my_any;
-};
-
-
 // Nested unions
 
 enum disc1
