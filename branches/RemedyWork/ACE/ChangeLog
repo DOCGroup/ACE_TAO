@@ -1,31 +1,3 @@
-Mon Feb 14 18:02:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ace/Guard_T.h:
-        * ace/OS_NS_Thread.h:
-        * ace/OS_NS_Thread.inl:
-        * ace/OS_NS_Thread.cpp:
-        * ace/TSS_Adapter.h:
-        * ace/TSS_Adapter.cpp:
-        * ace/TSS_T.cpp:
-        * ace/config-qnx.h:
-        * ace/config-win32-borland.h:
-
-        * ace/os_include/os_signal.h:
-
-        * apps/Gateway/Gateway/Options.h:
-
-        * apps/JAWS2/JAWS/Cache_Object.h:
-        * apps/JAWS2/JAWS/Cache_Object.cpp:
-
-        * include/makeinclude/platform_qnx_gcc.GNU:
-
-        * rpmbuild/ace-tao.spec:
-
-        * include/makeinclude/platform_qnx_neutrino.GNU:
-        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
-
-          Removed these files.
-
 Fri Feb 11 11:16:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.

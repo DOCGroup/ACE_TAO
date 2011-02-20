@@ -232,13 +232,7 @@ ACE_TSS_Emulation::next_key (ACE_thread_key_t &key)
        // Loop through all possible keys and check whether a key is free
        for ( ;counter < ACE_TSS_THREAD_KEYS_MAX; counter++)
          {
-            ACE_thread_key_t localkey;
-#  if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
-              ACE_OS::memset (&localkey, 0, sizeof (ACE_thread_key_t));
-              ACE_OS::memcpy (&localkey, &counter_, sizeof (u_int));
-#  else
-              localkey = counter;
-#  endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
+            ACE_thread_key_t localkey = counter;
             // If the key is not set as used, we can give out this key, if not
             // we have to search further
             if (tss_keys_used_->is_set(localkey) == 0)
@@ -397,20 +391,6 @@ ACE_TSS_Info::ACE_TSS_Info (void)
   ACE_OS_TRACE ("ACE_TSS_Info::ACE_TSS_Info");
 }
 
-# if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
-static inline bool operator== (const ACE_thread_key_t &lhs,
-                               const ACE_thread_key_t &rhs)
-{
-  return ! ACE_OS::memcmp (&lhs, &rhs, sizeof (ACE_thread_key_t));
-}
-
-static inline bool operator!= (const ACE_thread_key_t &lhs,
-                               const ACE_thread_key_t &rhs)
-{
-  return ! (lhs == rhs);
-}
-# endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
-
 // Check for equality.
 bool
 ACE_TSS_Info::operator== (const ACE_TSS_Info &info) const
@@ -466,9 +446,8 @@ ACE_TSS_Keys::find (const u_int key, u_int &word, u_int &bit)
 int
 ACE_TSS_Keys::test_and_set (const ACE_thread_key_t key)
 {
-  ACE_KEY_INDEX (key_index, key);
   u_int word, bit;
-  find (key_index, word, bit);
+  find (key, word, bit);
 
   if (ACE_BIT_ENABLED (key_bit_words_[word], 1 << bit))
     {
@@ -484,9 +463,8 @@ ACE_TSS_Keys::test_and_set (const ACE_thread_key_t key)
 int
 ACE_TSS_Keys::test_and_clear (const ACE_thread_key_t key)
 {
-  ACE_KEY_INDEX (key_index, key);
   u_int word, bit;
-  find (key_index, word, bit);
+  find (key, word, bit);
 
   if (word < ACE_WORDS && ACE_BIT_ENABLED (key_bit_words_[word], 1 << bit))
     {
@@ -502,9 +480,8 @@ ACE_TSS_Keys::test_and_clear (const ACE_thread_key_t key)
 int
 ACE_TSS_Keys::is_set (const ACE_thread_key_t key) const
 {
-  ACE_KEY_INDEX (key_index, key);
   u_int word, bit;
-  find (key_index, word, bit);
+  find (key, word, bit);
 
   return word < ACE_WORDS ? ACE_BIT_ENABLED (key_bit_words_[word], 1 << bit) : 0;
 }
@@ -810,7 +787,7 @@ ACE_TSS_Cleanup::thread_exit (void)
       }
 
     // remove the in_use bit vector last
-    ACE_KEY_INDEX (use_index, this->in_use_);
+    u_int use_index = this->in_use_;
     ACE_TSS_Info & info = this->table_[use_index];
     destructor[d_count] = 0;
     tss_obj[d_count] = 0;
@@ -852,7 +829,7 @@ ACE_TSS_Cleanup::insert (ACE_thread_key_t key,
   ACE_OS_TRACE ("ACE_TSS_Cleanup::insert");
   ACE_TSS_CLEANUP_GUARD
 
-  ACE_KEY_INDEX (key_index, key);
+  u_int key_index = key;
   ACE_ASSERT (key_index < ACE_DEFAULT_THREAD_KEYS);
   if (key_index < ACE_DEFAULT_THREAD_KEYS)
     {
@@ -873,7 +850,7 @@ ACE_TSS_Cleanup::free_key (ACE_thread_key_t key)
 {
   ACE_OS_TRACE ("ACE_TSS_Cleanup::free_key");
   ACE_TSS_CLEANUP_GUARD
-  ACE_KEY_INDEX (key_index, key);
+  u_int key_index = key;
   if (key_index < ACE_DEFAULT_THREAD_KEYS)
     {
       return remove_key (this->table_ [key_index]);
@@ -923,7 +900,7 @@ ACE_TSS_Cleanup::thread_detach_key (ACE_thread_key_t key)
   {
     ACE_TSS_CLEANUP_GUARD
 
-    ACE_KEY_INDEX (key_index, key);
+    u_int key_index = key;
     ACE_ASSERT (key_index < sizeof(this->table_)/sizeof(this->table_[0])
         && this->table_[key_index].key_ == key);
     ACE_TSS_Info &info = this->table_ [key_index];
@@ -979,7 +956,7 @@ ACE_TSS_Cleanup::thread_use_key (ACE_thread_key_t key)
       ACE_TSS_CLEANUP_GUARD
 
       // Retrieve the key's ACE_TSS_Info and increment its thread_count_.
-      ACE_KEY_INDEX (key_index, key);
+      u_int key_index = key;
       ACE_TSS_Info &key_info = this->table_ [key_index];
 
       ACE_ASSERT (key_info.key_in_use ());

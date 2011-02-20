@@ -6,33 +6,29 @@ inline ?= 1
 debug ?= 1
 optimize ?= 0
 threads ?= 1
+pipes ?= 1
+
 CCFLAGS += -fexceptions
 LDFLAGS += -fexceptions
 
 ifeq ($(inline),1)
-  CCFLAGS += -finline-functions
+CCFLAGS += -finline-functions
 else
-  CCFLAGS += -fno-inline
+CCFLAGS += -fno-inline
 endif # inline
 
-ifeq ($(debug),1)
-	DCFLAGS += -gdwarf-2
-else # debug excludes optimize due to g++ internal compiler error
-  ifeq ($(optimize),1)
-	OCFLAGS += -O3
-  endif #optimize
-endif #debug
-CC      ?= gcc
-CXX     ?= g++
+DCFLAGS  += -ggdb
+DCCFLAGS += -ggdb
 
-CFLAGS  += -pipe -W -Wall -Wpointer-arith
+ifeq ($(optimize),1)
+OCFLAGS += -O3
+endif #optimize
 
-DLD     = $(CXX)
-LD      = $(CXX)
+CFLAGS  += -W -Wall -Wpointer-arith
+
 LIBS    += -lsocket -lstdc++ -lm
 
 PIC     = -fPIC
-AR      ?= ar
 ARFLAGS = ruv
 SOFLAGS += $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
@@ -42,7 +38,7 @@ PRELIB  = @true
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
+
+CCFLAGS += $(CFLAGS) $(FLAGS_C_CC)
 
 CFLAGS  += $(FLAGS_C_CC)
-CCFLAGS += $(FLAGS_C_CC) 
