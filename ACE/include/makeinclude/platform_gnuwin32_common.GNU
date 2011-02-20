@@ -64,11 +64,9 @@ DCFLAGS    += -g
 DLD        = $(CXX)
 LD         = $(CXX)
 OCFLAGS    += -O3
-PIC        =
 ARFLAGS    = rsuv
 SOEXT      = dll
 EXEEXT     = .exe
-SOFLAGS += $(CPPFLAGS)
 RC_OUTPUT_FLAG = -o
 
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<

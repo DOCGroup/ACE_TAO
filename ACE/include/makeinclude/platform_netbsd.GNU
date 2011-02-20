@@ -24,7 +24,7 @@ AR              = ar
 ARFLAGS         = ruv
 RANLIB          = ranlib
 
-SOFLAGS += $(CPPFLAGS) -shared
+SOFLAGS += -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so  $<
 PRELIB = @echo
 
