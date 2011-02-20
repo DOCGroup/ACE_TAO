@@ -17,6 +17,7 @@
 
 /* begin standard C headers. */
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 
 /* end standard C headers. */
 

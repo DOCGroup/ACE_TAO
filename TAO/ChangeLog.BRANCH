@@ -1,3 +1,13 @@
+Sun Feb 20 18:57:46 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+          Added missing include
+
+        * tests/IDL_Test/IDL_Test.mpc:
+        * tests/IDL_Test/anyunion.idl:
+        * tests/IDL_Test/union.idl:
+          Moved union with any to its own file because RTI DDS 4.5d now gives
+          an error when using an union with an Any
 
 Local Variables:
 mode: change-log

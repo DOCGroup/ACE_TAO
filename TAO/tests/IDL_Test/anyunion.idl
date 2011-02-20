@@ -1,0 +1,30 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    anyunion.idl
+//
+// = DESCRIPTION
+//    This file contains examples of IDL code that has
+//    caused problems in the past for the TAO IDL
+//    compiler. This test is to make sure the problems
+//    stay fixed.
+//
+// = AUTHORS
+//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+//
+// ============================================================================
+
+// AnyUnion
+enum AnyUnionEnum {
+  ANYUNIONENUM2
+};
+
+union MyAnyUnion switch (AnyUnionEnum) {
+  case ANYUNIONENUM2:
+    any my_any;
+};
