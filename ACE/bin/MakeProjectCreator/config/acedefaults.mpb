@@ -30,26 +30,20 @@ project: ipv6, vc_warnings, build_files, test_files, svc_conf_files, ace_unicode
 
 }
 
-feature(exceptions) {
-  specific(cdt6) {
-    macros += ACE_HAS_EXCEPTIONS
-  }
-}
-
 feature(ace_inline) {
-  specific(cdt6) {
+  specific(cdt6,cdt7) {
     macros += __ACE_INLINE__
   }
 }
 
 feature(!ace_inline) {
-  specific(cdt6) {
+  specific(cdt6,cdt7) {
     macros += ACE_NO_INLINE
   }
 }
 
 feature(!threads) {
-  specific(cdt6) {
+  specific(cdt6,cdt7) {
     macros += ACE_MT_SAFE=0
     // and without threads we must remove support for AIO.
     macros -= ACE_HAS_AIO_CALLS

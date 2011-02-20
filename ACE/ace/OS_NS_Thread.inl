@@ -58,8 +58,7 @@ ACE_INLINE
 ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
 ACE_TSS_Emulation::tss_destructor (const ACE_thread_key_t key)
 {
-  ACE_KEY_INDEX (key_index, key);
-  return tss_destructor_ [key_index];
+  return tss_destructor_ [key];
 }
 
 ACE_INLINE
@@ -67,16 +66,13 @@ void
 ACE_TSS_Emulation::tss_destructor (const ACE_thread_key_t key,
                                    ACE_TSS_DESTRUCTOR destructor)
 {
-  ACE_KEY_INDEX (key_index, key);
-  tss_destructor_ [key_index] = destructor;
+  tss_destructor_ [key] = destructor;
 }
 
 ACE_INLINE
 void *&
 ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
 {
-  ACE_KEY_INDEX (key_index, key);
-
 #    if defined (ACE_HAS_VXTHREADS)
     /* If someone wants tss_base make sure they get one.  This
        gets used if someone spawns a VxWorks task directly, not
@@ -97,7 +93,7 @@ ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
       }
 #    endif /* ACE_HAS_VXTHREADS */
 
-  return tss_base ()[key_index];
+  return tss_base ()[key];
 }
 
 #endif /* ACE_HAS_TSS_EMULATION */
