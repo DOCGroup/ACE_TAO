@@ -1,3 +1,13 @@
+Sun Feb 20 11:04:02 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/platform_netbsd.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+        * include/makeinclude/platform_win32_interix.GNU:
+          Removed CPPFLAGS from SOFLAGS.
+
 Sat Feb 19 09:07:32 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_lynxos.GNU:
