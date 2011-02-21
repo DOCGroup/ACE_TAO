@@ -1,3 +1,7 @@
+Mon Feb 21 16:19:49 EST 2011  Steve Huston  <shuston@riverace.com>
+
+	* ACE version 6.0a released.
+
 Tue Feb  1 14:28:18 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * ace/String_Base.cpp (operator+=): Add a temporary for the return
