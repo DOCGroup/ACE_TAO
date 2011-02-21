@@ -36,7 +36,7 @@ additional details.])
 
 dnl Require GNU Autoconf 2.58 or better.  Previous versions did not
 dnl correctly support HP-UX.
-AC_PREREQ(2.61)
+AC_PREREQ(2.59)
 
 dnl Autoconf explicitly forbids patterns containing "_AC_".  This causes
 dnl a problem when using MPC to generate the Automake ".am" files since
