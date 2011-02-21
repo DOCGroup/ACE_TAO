@@ -29,23 +29,8 @@ SOFLAGS += -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB = @echo
 
-## Set the correct compiler flags for pthreads.  This
-## test is copied from /usr/ports/Mk/bsd.port.mk
 ifeq ($(threads),1)
-  RET = $(shell test $(OSVERSION) -lt 500016 && printf 1)
-  ifeq ($(RET),1)
-    PTHREAD_CPPFLAGS = -D_THREAD_SAFE
-    PTHREAD_LIBS   = -pthread
-  else
-    RET = $(shell test $(OSVERSION) -lt 502102 && printf 1)
-    ifeq ($(RET),1)
-      PTHREAD_LIBS   = -lc_r
-    else
-      PTHREAD_LIBS   = -lpthread
-    endif
-  endif # RET
-  CPPFLAGS  += $(PTHREAD_CPPFLAGS)
-  LIBS += $(PTHREAD_LIBS)
+  LIBS += -lpthread
 else
   CPPFLAGS += -DACE_MT_SAFE=0
 endif # threads
