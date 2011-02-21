@@ -25,7 +25,7 @@ namespace Indentation
 
   public:
     virtual
-    ~Buffer () throw () {}
+    ~Buffer () { }
 
   public:
     typedef
