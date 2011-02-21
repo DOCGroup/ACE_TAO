@@ -1,5 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from ./tests/AMI/exclusive.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <static id="Client_Strategy_Factory" params="-ORBTransportMuxStrategy EXCLUSIVE -ORBclientconnectionhandler ST"/>
-</ACE_Svc_Conf>
