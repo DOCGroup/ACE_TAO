@@ -1,0 +1,246 @@
+
+# $Id$
+#
+# This is the list of tests that need to be run by run_test.pl.
+# Each line has its own test, and a test can be followed by a
+# list of platforms it runs or does not run on.
+#
+# Example: Foo_Test: !linux
+# Example: Bar_Test:
+# Example: Baz_Test: Win32 !Borland
+#
+# Foo_Test runs on all configurations except for linux
+#
+# Bar_Test runs on all configurations
+#
+# Baz_Test only runs on Win32 configurations but not on Borland
+# configurations.
+
+ACE_Init_Test: MSVC
+ACE_Test
+Aio_Platform_Test
+Arg_Shifter_Test
+ARGV_Test
+Array_Map_Test
+Atomic_Op_Test
+Auto_Event_Test
+Auto_IncDec_Test
+Barrier_Test
+Based_Pointer_Test: !STATIC !ACE_FOR_TAO !PHARLAP
+Basic_Types_Test
+Bound_Ptr_Test: !ACE_FOR_TAO
+Buffer_Stream_Test
+Bug_1576_Regression_Test
+Bug_1890_Regression_Test
+Bug_2368_Regression_Test: ALL !DISABLED
+Bug_2434_Regression_Test
+Bug_2497_Regression_Test
+Bug_2540_Regression_Test
+Bug_2609_Regression_Test: !ST !ACE_FOR_TAO
+Bug_2610_Regression_Test: !ST !ACE_FOR_TAO !FIXED_BUGS_ONLY
+Bug_2659_Regression_Test: !ST !VxWorks64 !VxWorks65
+Bug_2653_Regression_Test: !ST
+Bug_2740_Regression_Test: !ST
+Bug_2772_Regression_Test: !ST !FIXED_BUGS_ONLY
+Bug_2815_Regression_Test
+Bug_2820_Regression_Test
+Bug_2980_Regression_Test: !STATIC !Win32 !VxWorks !WCHAR
+Bug_3102_Regression_Test
+Bug_3319_Regression_Test
+Bug_3334_Regression_Test: !STATIC
+Bug_3432_Regression_Test
+Bug_3500_Regression_Test
+Bug_3505_Regression_Test
+Bug_3532_Regression_Test
+Bug_3539_Regression_Test
+Bug_3541_Regression_Test
+Bug_3673_Regression_Test
+Bug_3709_Regression_Test: !LabVIEW_RT
+Bug_3710_Regression_Test
+Bug_3729_Regression_Test:
+Bug_3744_Regression_Test: !FIXED_BUGS_ONLY
+Bug_3758_Regression_Test: !FIXED_BUGS_ONLY
+Bug_3878_Regression_Test
+Bug_3911_Regression_Test: !FIXED_BUGS_ONLY !ACE_FOR_TAO
+CDR_Array_Test: !ACE_FOR_TAO
+CDR_File_Test: !ACE_FOR_TAO
+CDR_Test
+Cache_Map_Manager_Test
+Cached_Accept_Conn_Test: !ACE_FOR_TAO !LabVIEW_RT
+Cached_Allocator_Test: !ACE_FOR_TAO
+Cached_Conn_Test: !ACE_FOR_TAO !LabVIEW_RT
+Capabilities_Test: !ACE_FOR_TAO
+Codecs_Test: !NO_CODECS !ACE_FOR_TAO
+Collection_Test
+Compiler_Features_01_Test
+Compiler_Features_02_Test
+Compiler_Features_03_Test
+Compiler_Features_04_Test
+Compiler_Features_05_Test
+Compiler_Features_06_Test
+Compiler_Features_07_Test
+Compiler_Features_09_Test
+Compiler_Features_11_Test
+Compiler_Features_12_Test
+Compiler_Features_13_Test
+Compiler_Features_14_Test
+Config_Test: !LynxOS !VxWorks !ACE_FOR_TAO
+Conn_Test: !ACE_FOR_TAO
+DLL_Test: !Unicos !STATIC !KCC_Linux
+DLList_Test: !ACE_FOR_TAO
+Date_Time_Test: !ACE_FOR_TAO
+Dev_Poll_Reactor_Test: !nsk !ST
+Dirent_Test: !VxWorks_RTP !LabVIEW_RT
+Dynamic_Priority_Test
+Dynamic_Test
+Enum_Interfaces_Test: !NO_NETWORK
+Env_Value_Test: !WinCE !LabVIEW_RT
+FIFO_Test: !ACE_FOR_TAO
+Framework_Component_Test: !STATIC !nsk
+Future_Set_Test: !nsk !ACE_FOR_TAO
+Future_Test: !nsk !ACE_FOR_TAO
+Get_Opt_Test
+Handle_Set_Test: !ACE_FOR_TAO
+Hash_Map_Bucket_Iterator_Test
+Hash_Map_Manager_Test
+Hash_Multi_Map_Manager_Test
+High_Res_Timer_Test: !ACE_FOR_TAO
+NDDS_Timer_Test: NDDS
+INET_Addr_Test: !NO_NETWORK
+IOStream_Test
+Integer_Truncate_Test
+Intrusive_Auto_Ptr_Test
+Lazy_Map_Manager_Test
+Log_Msg_Test: !ACE_FOR_TAO
+Log_Msg_Backend_Test: !ACE_FOR_TAO
+Log_Thread_Inheritance_Test: !ST
+Logging_Strategy_Test: !LynxOS !STATIC !ST
+Manual_Event_Test
+MEM_Stream_Test: !VxWorks !nsk !ACE_FOR_TAO !PHARLAP !QNX !LynxOS
+MM_Shared_Memory_Test: !Unicos !VxWorks !nsk !ACE_FOR_TAO
+MT_NonBlocking_Connect_Test: !ST
+MT_Reactor_Timer_Test
+MT_Reactor_Upcall_Test: !nsk
+MT_Reference_Counted_Event_Handler_Test: !OpenVMS_IA64Crash
+MT_Reference_Counted_Notify_Test
+MT_SOCK_Test: !LynxOS
+Malloc_Test: !VxWorks !LynxOS !ACE_FOR_TAO !PHARLAP
+Map_Manager_Test: !ACE_FOR_TAO
+Map_Test: !ACE_FOR_TAO
+Max_Default_Port_Test: !ST
+Mem_Map_Test: !Unicos !VxWorks !nsk !ACE_FOR_TAO
+Memcpy_Test: !ACE_FOR_TAO
+Message_Block_Test: !ACE_FOR_TAO
+Message_Queue_Notifications_Test
+Message_Queue_Test: !ACE_FOR_TAO
+Message_Queue_Test_Ex: !ACE_FOR_TAO
+Multicast_Test: !ST !NO_MCAST !nsk !LynxOS !LabVIEW_RT
+Multihomed_INET_Addr_Test: !ACE_FOR_TAO
+Naming_Test: !NO_OTHER !LynxOS !Unicos !VxWorks !nsk !ACE_FOR_TAO !PHARLAP
+Network_Adapters_Test: !ACE_FOR_TAO
+New_Fail_Test: ALL !DISABLED
+NonBlocking_Conn_Test
+Notification_Queue_Unit_Test
+Notify_Performance_Test: !nsk !ACE_FOR_TAO
+OS_Test
+Object_Manager_Test
+Object_Manager_Flipping_Test
+Obstack_Test
+OrdMultiSet_Test
+Pipe_Test: !PHARLAP !VxWorks
+Priority_Buffer_Test
+Priority_Reactor_Test: !ACE_FOR_TAO
+Priority_Task_Test: !Unicos
+Proactor_Scatter_Gather_Test: !VxWorks !nsk !ACE_FOR_TAO
+Proactor_Test: !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
+Proactor_Timer_Test: !VxWorks !nsk !ACE_FOR_TAO
+Proactor_UDP_Test: !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
+Process_Env_Test: !VxWorks !PHARLAP
+Process_Test: !VxWorks !ACE_FOR_TAO !PHARLAP !Win32
+Process_Manager_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
+Process_Manual_Event_Test: !HPUX !VxWorks !ACE_FOR_TAO !PHARLAP
+Process_Mutex_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
+Process_Semaphore_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
+RB_Tree_Test
+Bug_3332_Regression_Test
+Reactor_Dispatch_Order_Test
+Reactor_Dispatch_Order_Test_Dev_Poll:
+Reactor_Exceptions_Test
+Reactor_Fairness_Test: !FIXED_BUGS_ONLY
+Reactor_Notify_Test: !ST !ACE_FOR_TAO
+Reactor_Notification_Queue_Test
+Reactor_Performance_Test: !ACE_FOR_TAO
+Reactor_Registration_Test
+Reactor_Remove_Resume_Test
+Reactor_Remove_Resume_Test_Dev_Poll:
+Reactor_Timer_Test: !ACE_FOR_TAO
+Reactors_Test
+Reader_Writer_Test
+Recursive_Condition_Test: !ST
+Recursive_Mutex_Test: !ST
+Refcounted_Auto_Ptr_Test: !ACE_FOR_TAO
+Reference_Counted_Event_Handler_Test -d 0
+Refcounted_Event_Handler_Test_DevPoll:
+Reverse_Lock_Test
+RW_Process_Mutex_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
+Sendfile_Test: !QNX !NO_NETWORK !VxWorks !LabVIEW_RT
+Signal_Test: !VxWorks63 !VxWorks64 !VxWorks65
+SOCK_Connector_Test: !NO_NETWORK
+SOCK_Netlink_Test: !ACE_FOR_TAO
+SOCK_Send_Recv_Test: !NO_NETWORK
+SOCK_Test: !NO_NETWORK
+SPIPE_Test: !nsk !ACE_FOR_TAO
+SString_Test: !ACE_FOR_TAO
+Stack_Trace_Test:
+SV_Shared_Memory_Test: !MSVC !Unicos !VxWorks !RH_7.1 !nsk !ACE_FOR_TAO
+Semaphore_Test: !ACE_FOR_TAO
+Service_Config_Test: !STATIC
+Missing_Svc_Conf_Test: !STATIC
+Service_Config_Stream_Test: !STATIC !FIXED_BUGS_ONLY
+Sigset_Ops_Test
+Simple_Message_Block_Test
+Singleton_Test
+Svc_Handler_Test: !ACE_FOR_TAO
+TP_Reactor_Test: !ACE_FOR_TAO
+TSS_Test
+TSS_Static_Test
+Task_Test
+Task_Ex_Test
+Thread_Attrs_Test
+Thread_Manager_Test: !Unicos
+Thread_Mutex_Test
+Thread_Pool_Reactor_Resume_Test: !NO_OTHER !ST
+Thread_Pool_Reactor_Test: !NO_OTHER
+Thread_Pool_Test
+Thread_Creation_Threshold_Test
+Time_Service_Test: !STATIC !DISABLED !missing_netsvcs TOKEN !Unicos
+Time_Value_Test
+Timeprobe_Test
+Timer_Cancellation_Test
+Timer_Queue_Reference_Counting_Test
+Timer_Queue_Test: !ACE_FOR_TAO
+Token_Strategy_Test: !ST !nsk
+Tokens_Test: MSVC !DISABLED TOKEN !Unicos
+UPIPE_SAP_Test: !nsk !ACE_FOR_TAO
+Unbounded_Set_Test
+Upgradable_RW_Test: !ACE_FOR_TAO
+Vector_Test
+WFMO_Reactor_Test: !nsk
+INET_Addr_Test_IPV6: !nsk
+Max_Default_Port_Test_IPV6: !nsk
+Multicast_Test_IPV6: !NO_MCAST !nsk
+Multihomed_INET_Addr_Test_IPV6: !nsk !ACE_FOR_TAO
+Proactor_Test_IPV6: !nsk !ACE_FOR_TAO !BAD_AIO
+SOCK_Send_Recv_Test_IPV6
+SOCK_Dgram_Test: !NO_NETWORK
+SOCK_Dgram_Bcast_Test: !ACE_FOR_TAO
+SOCK_SEQPACK_SCTP_Test: !MSVC !nsk !ACE_FOR_TAO
+SOCK_Test_IPv6: !nsk
+Process_Strategy_Test: !VxWorks !LynxOS !ACE_FOR_TAO !PHARLAP
+Recursive_Condition_Bug_Test: !ST
+UnloadLibACE: !STATIC !WinCE !LabVIEW_RT
+UUID_Test: !NO_UUID !ACE_FOR_TAO
+Wild_Match_Test
+SSL/Bug_2912_Regression_Test: SSL !ACE_FOR_TAO !BAD_AIO
+SSL/SSL_Asynch_Stream_Test: SSL !ACE_FOR_TAO !BAD_AIO
+SSL/Thread_Pool_Reactor_SSL_Test: SSL
