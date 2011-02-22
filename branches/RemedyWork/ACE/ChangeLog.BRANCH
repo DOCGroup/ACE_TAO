@@ -1,3 +1,9 @@
+Tue Feb 22 13:21:35 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Reactor.h:
+        * ace/WFMO_Reactor.h:
+          Doxygen updates
+
 Sun Feb 20 12:47:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.h:
