@@ -1,3 +1,9 @@
+Wed Feb 23 08:12:47 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+          Added some flags. Minor cleanups.
+
 Tue Feb 22 12:17:51 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/index.html:
