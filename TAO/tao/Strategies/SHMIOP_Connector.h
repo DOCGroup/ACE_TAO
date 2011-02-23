@@ -83,7 +83,7 @@ public:
 
   typedef ACE_Connect_Strategy<TAO_SHMIOP_Connection_Handler,
                                ACE_MEM_CONNECTOR>
-          TAO_SHMIOP_CONNECT_STRATEGY ;
+          TAO_SHMIOP_CONNECT_STRATEGY;
 
   typedef ACE_Strategy_Connector<TAO_SHMIOP_Connection_Handler,
                                  ACE_MEM_CONNECTOR>

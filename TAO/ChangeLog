@@ -1,3 +1,21 @@
+Wed Feb 23 10:34:17 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/Connector_Impl.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Connector.h:
+        * tao/Strategies/UIOP_Connector.cpp:
+        * tao/Strategies/SHMIOP_Connector.h:
+        * tao/Strategies/UIOP_Connector.h:
+        * tao/Strategies/SCIOP_Connector.h:
+        * tao/Strategies/SHMIOP_Connector.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+          Fixed use of ACE default reactor on the client side. TAO has own
+          reactor associated with ORB which can be used instead of the default
+          one.
+
 Thu Feb 17 15:21:30 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/PortableServer/Active_Object_Map.cpp:
