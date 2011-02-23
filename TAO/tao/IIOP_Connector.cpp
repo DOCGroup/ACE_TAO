@@ -89,7 +89,7 @@ TAO_IIOP_Connector::~TAO_IIOP_Connector (void)
 TAO_IIOP_Connector::TAO_IIOP_Connector (void)
   : TAO_Connector (IOP::TAG_INTERNET_IOP)
   , connect_strategy_ ()
-  , base_connector_ ()
+  , base_connector_ (0)
 {
 }
 
