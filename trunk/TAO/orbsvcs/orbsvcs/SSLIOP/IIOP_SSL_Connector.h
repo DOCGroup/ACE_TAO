@@ -63,7 +63,7 @@ namespace TAO
 
     typedef ACE_Connect_Strategy<IIOP_SSL_Connection_Handler,
                                  ACE_SOCK_CONNECTOR>
-            CONNECT_STRATEGY ;
+            CONNECT_STRATEGY;
 
     typedef ACE_Strategy_Connector<IIOP_SSL_Connection_Handler,
                                    ACE_SOCK_CONNECTOR>
