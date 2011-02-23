@@ -829,7 +829,7 @@ ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::open
   else if (this->creation_strategy_ == 0)
     {
       ACE_NEW_RETURN (this->creation_strategy_,
-                      CREATION_STRATEGY,
+                      CREATION_STRATEGY (0, r),
                       -1);
       this->delete_creation_strategy_ = true;
     }
@@ -887,7 +887,8 @@ ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::ACE_Strategy_Connecto
  ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> *conn_s,
  ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
  int flags)
-  : creation_strategy_ (0),
+  : base_type (reactor),
+    creation_strategy_ (0),
     delete_creation_strategy_ (false),
     connect_strategy_ (0),
     delete_connect_strategy_ (false),
