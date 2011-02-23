@@ -8,26 +8,28 @@
 ##  flags for threads.
 OSVERSION := $(shell sysctl -n kern.osreldate)
 
-versioned_so ?= 1
-threads ?= 1
 debug ?= 1
 optimize ?= 1
+threads ?= 1
+versioned_so ?= 1
 
 CC              = gcc
 CXX             = g++
 
+AR              = ar
+ARFLAGS         = ruv
+CPPFLAGS        += -I/usr/local/include
 DCFLAGS         += -g
 DLD             = $(CXX)
 LD              = $(CXX)
+LDFLAGS         += -L/usr/local/lib
 OCFLAGS         += -O2
 PIC             = -fpic
-AR              = ar
-ARFLAGS         = ruv
+PRELIB          = @true
 RANLIB          = ranlib
+SOFLAGS         += -shared
 
-SOFLAGS += -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
-PRELIB = @echo
 
 ifeq ($(threads),1)
   LIBS += -lpthread
@@ -35,24 +37,24 @@ else
   CPPFLAGS += -DACE_MT_SAFE=0
 endif # threads
 
-PLATFORM_XT_CPPFLAGS=
-PLATFORM_XT_LIBS=-lXt
-PLATFORM_XT_LDFLAGS=
+PLATFORM_X11_CPPFLAGS = -I/usr/X11R6/include
+PLATFORM_X11_LIBS = -lX11
+PLATFORM_X11_LDFLAGS = -L/usr/X11R6/lib
 
-PLATFORM_FL_CPPFLAGS=
-PLATFORM_FL_LIBS=-lfltk -lfltk_forms -lfltk_gl
-PLATFORM_FL_LDFLAGS=
+PLATFORM_XT_CPPFLAGS =
+PLATFORM_XT_LIBS = -lXt
+PLATFORM_XT_LDFLAGS =
 
-PLATFORM_X11_CPPFLAGS=-I/usr/X11R6/include
-PLATFORM_X11_LIBS=-lX11
-PLATFORM_X11_LDFLAGS=-L/usr/X11R6/lib
+PLATFORM_FL_CPPFLAGS =
+PLATFORM_FL_LIBS = -lfltk -lfltk_forms -lfltk_gl
+PLATFORM_FL_LDFLAGS =
 
-PLATFORM_GL_CPPFLAGS=-I/usr/X11R6/include
-PLATFORM_GL_LIBS    =-lGL
-PLATFORM_GL_LDFLAGS =-L/usr/X11R6/lib
+PLATFORM_GL_CPPFLAGS = -I/usr/X11R6/include
+PLATFORM_GL_LIBS = -lGL
+PLATFORM_GL_LDFLAGS = -L/usr/X11R6/lib
 
-PLATFORM_GTK_CPPFLAGS=$(shell gtk-config --cflags)
-PLATFORM_GTK_LIBS    =$(shell gtk-config --libs)
+PLATFORM_GTK_CPPFLAGS = $(shell gtk-config --cflags)
+PLATFORM_GTK_LIBS = $(shell gtk-config --libs)
 PLATFORM_GTK_LDFLAGS =
 
 PLATFORM_FOX_CPPFLAGS ?= -I/usr/include/fox
@@ -67,10 +69,7 @@ PLATFORM_TCL_CPPFLAGS=$(shell . /usr/local/lib/tcl8.*/tclConfig.sh && echo -n $$
 PLATFORM_TCL_LIBS=$(shell . /usr/local/lib/tcl8.*/tclConfig.sh && echo -n $$TCL_LIB_FLAG)
 PLATFORM_TCL_LDFLAGS=
 
-CPPFLAGS+=-I/usr/local/include
-LDFLAGS+=-L/usr/local/lib
-
-# Test for template instantiation, add to SOFLAGS if SONAME set,
+# Test for template instantiation, add to versioned_so if versioned_so set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
