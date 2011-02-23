@@ -21,22 +21,6 @@ endif # ! LynxOS
 LYNXOS_MAJOR = $(shell echo $(VERSION) | awk -F. '{print $$1;}')
 LYNXOS_MINOR = $(shell echo $(VERSION) | awk -F. '{print $$2;}')
 
-PLATFORM_XT_CPPFLAGS=
-PLATFORM_XT_LIBS=-lXm -lXt
-PLATFORM_XT_LDFLAGS=
-
-PLATFORM_X11_CPPFLAGS=
-PLATFORM_X11_LIBS=-lXp -lXpm -lXmu -lXext -lX11 -lSM -lICE
-PLATFORM_X11_LDFLAGS=
-
-PLATFORM_TCL_CPPFLAGS=$(shell . /usr/lib/tclConfig.sh && echo -n $$TCL_INC_DIR $$TCL_DEFS)
-PLATFORM_TCL_LIBS=-ltcl8.0
-PLATFORM_TCL_LDFLAGS=
-
-PLATFORM_TK_CPPFLAGS=$(shell . /usr/lib/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS) $(PLATFORM_X11_CPPFLAGS)
-PLATFORM_TK_LIBS=-ltk8.0 $(PLATFORM_XT_LIBS) $(PLATFORM_X11_LIBS)
-PLATFORM_TK_LDFLAGS=$(PLATFORM_X11_LDFLAGS)
-
 shared_libs ?= 1
 optimize ?= 1
 debug ?= 1
@@ -83,14 +67,26 @@ SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
                   $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
 PRELIB          = @true
 
+PLATFORM_XT_CPPFLAGS=
+PLATFORM_XT_LIBS=-lXm -lXt
+PLATFORM_XT_LDFLAGS=
+
+PLATFORM_X11_CPPFLAGS=
+PLATFORM_X11_LIBS=-lXp -lXpm -lXmu -lXext -lX11 -lSM -lICE
+PLATFORM_X11_LDFLAGS=
+
+PLATFORM_TCL_CPPFLAGS=$(shell . /usr/lib/tclConfig.sh && echo -n $$TCL_INC_DIR $$TCL_DEFS)
+PLATFORM_TCL_LIBS=-ltcl8.0
+PLATFORM_TCL_LDFLAGS=
+
+PLATFORM_TK_CPPFLAGS=$(shell . /usr/lib/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS) $(PLATFORM_X11_CPPFLAGS)
+PLATFORM_TK_LIBS=-ltk8.0 $(PLATFORM_XT_LIBS) $(PLATFORM_X11_LIBS)
+PLATFORM_TK_LDFLAGS=$(PLATFORM_X11_LDFLAGS)
+
 # Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-ifeq ($(CXX_MAJOR_VERSION), 3)
-  LDFLAGS       += -L/usr/lib/thread
-endif
 
 # To save much disk space, strip all executables.  Comment the
 # following line out if you want to debug.  Or, add "POSTLINK="
