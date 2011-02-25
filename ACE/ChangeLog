@@ -1,3 +1,11 @@
+Fri Feb 25 12:19:58 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-lite.h: Adjust the __SUNPRO_CC version checks to include
+          Sun Studio 12.2. Thanks to Henk Jan Priester <hjpriester@gmail.com>
+          for this fix.
+
+        * THANKS: Added Henk Jan Priester to the thank-you list.
+
 Wed Feb 23 10:24:02 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/Connector.cpp:
