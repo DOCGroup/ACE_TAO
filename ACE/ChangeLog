@@ -1,3 +1,10 @@
+Sat Feb 26 07:24:33 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_netbsd.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+          Added missing DCCFLAGS and OCCFLAGS.
+
 Fri Feb 25 12:19:58 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * ace/config-lite.h: Adjust the __SUNPRO_CC version checks to include
