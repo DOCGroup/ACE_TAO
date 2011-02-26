@@ -1,3 +1,8 @@
+Sat Feb 26 07:31:41 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Added missing DCCFLAGS and OCCFLAGS.
+
 Sat Feb 26 07:24:33 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_freebsd.GNU:
