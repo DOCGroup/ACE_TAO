@@ -1,14 +1,22 @@
+Sat Feb 26 14:24:07 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * MPC/config/pi.mpb:
+        
+          Reverting the earlier change. There are some libraries that
+          partially depend on PI, and so they can tolerate not having
+          interceptors and still function. For example TAO_Strategies.
+
 Sat Feb 26 03:27:16 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * MPC/config/endpointpolicy.mpb:
         * MPC/config/pi.mpb:
-        
-          Ensure that projects that depend on these do not get built in 
-          minimim, compact, or micro configurations. 
+
+          Ensure that projects that depend on these do not get built in
+          minimim, compact, or micro configurations.
 
         * bin/tao_orb_tests.lst:
         * bin/tao_other_tests.lst:
-        
+
           Do not attept to run the tests that don't get built by the above
           build restrictions.
 
