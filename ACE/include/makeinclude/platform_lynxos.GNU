@@ -53,19 +53,23 @@ endif
 
 CC              = gcc
 CXX             = g++
-PIC             = -fPIC
+
+AR              = ar
+ARFLAGS         = ruv
 CPPFLAGS        += -DACE_LYNXOS_MAJOR=$(LYNXOS_MAJOR) -DACE_LYNXOS_MINOR=$(LYNXOS_MINOR)
 DCFLAGS         += -g
+DCCFLAGS        += $(DCFLAGS)
 DLD             = $(CXX)
 LD              = $(CXX)
 OCFLAGS         += -O2
-AR              = ar
-ARFLAGS         = ruv
+OCCFLAGS        = $(OCFLAGS)
+PIC             = -fPIC
+PRELIB          = @true
 RANLIB          = @true
 SOFLAGS         += -shared
+
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
                   $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
-PRELIB          = @true
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXm -lXt
