@@ -1,3 +1,17 @@
+Sat Feb 26 03:27:16 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * MPC/config/endpointpolicy.mpb:
+        * MPC/config/pi.mpb:
+        
+          Ensure that projects that depend on these do not get built in 
+          minimim, compact, or micro configurations. 
+
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+        
+          Do not attept to run the tests that don't get built by the above
+          build restrictions.
+
 Wed Feb 23 10:34:17 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/Connector_Impl.cpp:
