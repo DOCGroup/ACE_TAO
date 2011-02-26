@@ -443,10 +443,10 @@ TAO/DevGuideExamples/LocalObjects/Messenger/run_test.pl:
 TAO/DevGuideExamples/LocalObjects/ServantLocator/run_test.pl: !MINIMUM !CORBA_E_MICRO !CORBA_E_COMPACT
 TAO/DevGuideExamples/Messaging/AMIcallback/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO
 TAO/DevGuideExamples/Messaging/RelativeRoundtripTimeout/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO
-TAO/DevGuideExamples/PortableInterceptors/Auth/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
-TAO/DevGuideExamples/PortableInterceptors/IOR/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
-TAO/DevGuideExamples/PortableInterceptors/PICurrent/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
-TAO/DevGuideExamples/PortableInterceptors/SimpleCodec/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/DevGuideExamples/PortableInterceptors/Auth/run_test.pl:  !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS
+TAO/DevGuideExamples/PortableInterceptors/IOR/run_test.pl:  !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS
+TAO/DevGuideExamples/PortableInterceptors/PICurrent/run_test.pl:  !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS
+TAO/DevGuideExamples/PortableInterceptors/SimpleCodec/run_test.pl:  !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS
 TAO/DevGuideExamples/RTCORBA/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !STATIC
 TAO/DevGuideExamples/SmartProxies/run_test.pl: !NO_SMARTPROXIES !NO_MESSAGING !CORBA_E_MICRO
 TAO/DevGuideExamples/Multithreading/Reactive/run_test.pl: !STATIC !MINIMUM !LynxOS
