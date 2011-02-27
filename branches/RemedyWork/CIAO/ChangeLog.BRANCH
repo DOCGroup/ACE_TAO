@@ -1,3 +1,8 @@
+Sun Feb 27 19:33:07 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.idl:
+          Removed comment, sequence can now be independent of the topic, but
+          to our idea it should be in the same namespace
 
 Local Variables:
 mode: change-log
