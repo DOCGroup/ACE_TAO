@@ -100,7 +100,8 @@ namespace CIAO_Shapes_Receiver_comp_Impl
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
-    get_info_out_status (void);//@}
+    get_info_out_status (void);
+    //@}
 
     //@{
     /** Operations from Components::SessionComponent. */
