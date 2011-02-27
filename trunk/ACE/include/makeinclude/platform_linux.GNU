@@ -35,10 +35,6 @@ ifeq (4.1.1-3mdk, $(findstring 4.1.1-3mdk,$(CXX_FULL_VERSION)))
   gcc_template_instantiation_visibility ?= 1
 endif
 
-ifeq ($(threads),1)
-    CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
-endif # threads
-
 ifeq ($(buildbits),32)
   FLAGS_C_CC += -m32
   LDFLAGS    += -m32
@@ -64,7 +60,8 @@ LD       = $(CXX)
 LIBS     += -ldl
 
 ifeq ($(threads),1)
-  LIBS += -lpthread
+  CPPFLAGS  += $(PLATFORM_AIO_SUPPORT)
+  FLAGS_C_CC += -pthread
   # look for the rt library in the usual places
   LIBS += $(shell test "`ls -L /usr/lib*/librt.so* /lib*/librt.so*`" && echo -lrt)
 endif
