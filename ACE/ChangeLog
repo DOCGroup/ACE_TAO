@@ -1,3 +1,9 @@
+Mon Feb 28 13:31:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/index.html:
+        * html/index.html:
+          Mention DAnCE
+
 Mon Feb 28 13:18:53 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * bin/make_release.py:
