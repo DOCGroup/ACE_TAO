@@ -153,10 +153,6 @@
 /* Platform contains <poll.h> */
 #define ACE_HAS_POLL 1
 
-/* Platform supports "position-independent" features provided by
-   ACE_Based_Pointer<>. */
-#define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
-
 /* Platform supports POSIX getpwnam_r() function */
 #define ACE_HAS_POSIX_GETPWNAM_R 1
 
