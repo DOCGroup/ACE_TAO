@@ -205,10 +205,6 @@
 // Compiler/platform supports poll().
 #define ACE_HAS_POLL
 
-/* Platform supports "position-independent" features provided by
-   ACE_Based_Pointer<>. */
-#define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
-
 /* Platform supports POSIX getpwnam_r() function */
 #define ACE_HAS_POSIX_GETPWNAM_R 1
 
