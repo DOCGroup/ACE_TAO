@@ -1,7 +1,15 @@
+Mon Feb 28 14:31:52 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * TAO_IDL/ast/ast_home.cpp:
+        * TAO_IDL/ast/ast_valuetype_fwd.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+          Fixed memory leaks in tao_idl.
+
 Sat Feb 26 14:24:07 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * MPC/config/pi.mpb:
-        
+
           Reverting the earlier change. There are some libraries that
           partially depend on PI, and so they can tolerate not having
           interceptors and still function. For example TAO_Strategies.
