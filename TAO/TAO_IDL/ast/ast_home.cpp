@@ -185,44 +185,7 @@ AST_Home::destroy (void)
       this->pd_primary_key = 0;
     }
 
-  // We have to go through these conniptions to destroy
-  // a home because its decls (for which there are no
-  // copy constructors) are assigned to the scope
-  // of the equivalent interface, which will destroy
-  // them. But we still have to destroy the containers
-  // for those references, which may be private or
-  // protected.
-
-  delete [] this->inherits ();
-  delete [] this->inherits_flat ();
-
-  delete [] this->pd_decls;
-  this->pd_decls = 0;
-  this->pd_decls_allocated = 0;
-  this->pd_decls_used = 0;
-
-  delete [] this->pd_referenced;
-  this->pd_referenced = 0;
-  this->pd_referenced_allocated = 0;
-  this->pd_referenced_used = 0;
-
-  // These are stored by copying the Identifier.
-  for (long i = 0; i < this->pd_name_referenced_used; ++i)
-    {
-      this->pd_name_referenced[i]->destroy ();
-      delete this->pd_name_referenced[i];
-      this->pd_name_referenced[i] = 0;
-    }
-
-  delete [] this->pd_name_referenced;
-  this->pd_name_referenced = 0;
-  this->pd_name_referenced_allocated = 0;
-  this->pd_name_referenced_used = 0;
-
-  // Skip AST_Interface, since the home's decls
-  // are added to the equivalent interface, and
-  // they should get destroyed there.
-  this->AST_Type::destroy ();
+  this->AST_Interface::destroy ();
 }
 
 void
