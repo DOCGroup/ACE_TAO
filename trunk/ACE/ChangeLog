@@ -1,3 +1,16 @@
+Mon Feb 28 21:05:59 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-WinCE.h:
+        * ace/config-cygwin32.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-kfreebsd.h:
+        * ace/config-lynxos.h:
+        * ace/config-netbsd.h:
+        * ace/config-openbsd.h:
+        * ace/config-win32-interix.h:
+          No need to define ACE_HAS_POSITION_INDEPENDENT_POINTERS since it
+          is default setting.
+
 Mon Feb 28 20:29:59 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * examples/ASX/Event_Server/Event_Server/Event_Analyzer.cpp:
