@@ -1,3 +1,12 @@
+Mon Feb 28 18:10:19 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix_ibm.GNU: Remove the -qfuncsect
+          option from CCFLAGS; it caused an occasional odd problem and the
+          only reason it was added (Jul 17 2002) was to try and remove
+          duplicate symbol diagnostics from template instantiations.
+          Thanks to Phil Mesnier for raising this issue and identifying
+          the fix.
+
 Mon Feb 28 13:31:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/index.html:
