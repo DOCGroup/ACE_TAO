@@ -24,10 +24,6 @@
 // Make sure we source in the OS version.
 #include <osreldate.h>
 
-#if !defined (__ACE_INLINE__)
-# define __ACE_INLINE__
-#endif /* ! __ACE_INLINE__ */
-
 #if (__FreeBSD_version < 220000)
 # if defined (ACE_HAS_THREADS)
 #  error Threads are not supported.
