@@ -1,3 +1,11 @@
+Mon Feb 28 20:29:59 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * examples/ASX/Event_Server/Event_Server/Event_Analyzer.cpp:
+        * examples/ASX/UPIPE_Event_Server/Event_Analyzer.cpp: Replaced the
+          name "mod_name" with "module_name" to avoid a clash with macro
+          defined in /usr/include/sys/stropts.h encountered when optimized
+          build was done.
+
 Mon Feb 28 18:10:19 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_aix_ibm.GNU: Remove the -qfuncsect
