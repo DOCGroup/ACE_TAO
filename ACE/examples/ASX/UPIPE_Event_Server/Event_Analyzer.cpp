@@ -62,14 +62,14 @@ Event_Analyzer::fini (void)
 int
 Event_Analyzer::info (ACE_TCHAR **strp, size_t length) const
 {
-  const ACE_TCHAR *mod_name = this->name ();
+  const ACE_TCHAR *module_name = this->name ();
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (mod_name)) == 0)
+  if (*strp == 0 && (*strp = ACE_OS::strdup (module_name)) == 0)
     return -1;
   else
-    ACE_OS::strncpy (*strp, mod_name, length);
+    ACE_OS::strncpy (*strp, module_name, length);
 
-  return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (mod_name));
+  return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (module_name));
 }
 
 #endif /* ACE_HAS_THREADS */
