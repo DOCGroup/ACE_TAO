@@ -1,3 +1,9 @@
+Tue Mar  1 11:31:55 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_linux.GNU:
+          Fixed setting of CC and CXX variables (conditional assignment
+          doesn't work in this case).
+
 Tue Mar  1 07:35:43 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_linux.GNU:
