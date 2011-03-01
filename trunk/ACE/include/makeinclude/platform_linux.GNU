@@ -4,8 +4,8 @@
 include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 
 ifeq ($(insure),0)
-  CC  ?= gcc
-  CXX ?= g++
+  CC  = gcc
+  CXX = g++
   CXX_FOR_VERSION_TEST ?= $(CXX)
 else
   CXX_FOR_VERSION_TEST ?= g++
