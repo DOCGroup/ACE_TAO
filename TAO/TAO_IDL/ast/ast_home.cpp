@@ -175,6 +175,40 @@ AST_Home::primary_key (void) const
 }
 
 void
+AST_Home::transfer_scope_elements (AST_Interface *dst)
+{
+  for (UTL_ScopeActiveIterator src_iter (this, UTL_Scope::IK_decls);
+       ! src_iter.is_done ();
+       src_iter.next ())
+    {
+      AST_Decl *d = src_iter.item ();
+
+      Identifier *local_id = 0;
+      ACE_NEW (local_id,
+               Identifier (d->local_name ()->get_string ()));
+      UTL_ScopedName *last_segment = 0;
+      ACE_NEW (last_segment,
+               UTL_ScopedName (local_id,
+                               0));
+      UTL_ScopedName *full_name =
+        static_cast<UTL_ScopedName *> (dst->name ()->copy ());
+      full_name->nconc (last_segment);
+
+      d->set_name (full_name);
+      dst->add_to_scope (d);
+      d->set_defined_in (dst);
+    }
+
+  // Zero decls so that they are not cleaned twice.
+  long const end = this->pd_decls_used;
+  for (long i = 0; i < end; ++i)
+    {
+      this->pd_decls[i] = 0;
+      --this->pd_decls_used;
+    }
+}
+
+void
 AST_Home::destroy (void)
 {
   // If it's a param holder, it was created on the fly.

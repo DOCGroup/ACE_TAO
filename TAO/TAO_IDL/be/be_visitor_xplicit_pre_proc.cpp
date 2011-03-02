@@ -37,6 +37,7 @@
 #include "utl_namelist.h"
 #include "utl_labellist.h"
 #include "utl_exprlist.h"
+#include "utl_exceptlist.h"
 
 #include "fe_obv_header.h"
 #include "nr_extern.h"
@@ -146,7 +147,11 @@ be_visitor_xplicit_pre_proc::visit_operation (be_operation *node)
                                 false),
                   -1);
 
-  home_op->be_add_exceptions (node->exceptions ());
+  UTL_ExceptList *excep_list = node->exceptions ();
+  if (0 != excep_list)
+    {
+      home_op->be_add_exceptions (excep_list->copy ());
+    }
 
   idl_global->scopes ().top ()->add_to_scope (home_op);
   idl_global->scopes ().push (home_op);
@@ -967,4 +972,3 @@ be_visitor_xplicit_pre_proc::xplicit_iface_rel_name (AST_Decl *d)
 
   return 0;
 }
-
