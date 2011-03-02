@@ -60,11 +60,9 @@ LD       = $(CXX)
 LIBS     += -ldl
 
 ifeq ($(threads),1)
-  CPPFLAGS  += $(PLATFORM_AIO_SUPPORT)
   FLAGS_C_CC += -pthread
   SOFLAGS += -pthread
-  # look for the rt library in the usual places
-  LIBS += $(shell test "`ls -L /usr/lib*/librt.so* /lib*/librt.so*`" && echo -lrt)
+  LIBS += -lrt
 endif
 
 ifeq ($(optimize),1)

@@ -50,6 +50,12 @@
 # endif /* ACE_HAS_POSIX_SEM */
 #endif /* !ACE_LACKS_LINUX_NPTL */
 
+// AIO support pulls in the rt library, which pulls in the pthread
+// library.  Disable AIO in single-threaded builds.
+#if !defined (ACE_HAS_THREADS)
+#  undef ACE_HAS_AIO_CALLS
+#endif
+
 // First the machine specific part
 
 #if defined (__powerpc__) || defined (__x86_64__)
@@ -180,10 +186,6 @@
 #ifndef ACE_HAS_POSIX_REALTIME_SIGNALS
 # define ACE_HAS_POSIX_REALTIME_SIGNALS
 #endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
-
-#ifndef ACE_HAS_AIO_CALLS
-# define ACE_HAS_AIO_CALLS
-#endif /* ACE_HAS_AIO_CALLS */
 
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 #define ACE_HAS_VFWPRINTF

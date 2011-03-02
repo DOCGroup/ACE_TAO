@@ -1,3 +1,11 @@
+Wed Mar  2 12:42:58 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux-common.h:
+        * ace/config-linux.h:
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/platform_linux_common.GNU:
+          Simplified setting of ACE_HAS_AIO_CALLS.
+
 Tue Mar  1 11:31:55 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_linux.GNU:
