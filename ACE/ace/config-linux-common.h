@@ -73,9 +73,6 @@
 // Then glibc/libc5 specific parts
 
 #if defined(__GLIBC__)
-# if (__GLIBC__  < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 1)
-#   define ACE_HAS_NONCONST_SETRLIMIT
-# endif
 # if (__GLIBC__  < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 3)
 #   define ACE_HAS_RUSAGE_WHO_ENUM enum __rusage_who
 #   define ACE_HAS_RLIMIT_RESOURCE_ENUM enum __rlimit_resource
@@ -115,18 +112,8 @@
 #   define ACE_LACKS_MSG_ACCRIGHTS
 #endif /* ! __GLIBC__ */
 
-// Don't define _LARGEFILE64_SOURCE in ACE to make llseek() or
-// lseek64() prototype visible.  ACE shouldn't depend on feature test
-// macros to make prototypes visible.
-#if __GLIBC__ > 1
-#  if __GLIBC_MINOR__ == 0
-#    define ACE_HAS_LLSEEK
-#    define ACE_LACKS_LLSEEK_PROTOTYPE
-#  else  /* __GLIBC_MINOR__ > 0 */
-#    define ACE_HAS_LSEEK64
-#    define ACE_LACKS_LSEEK64_PROTOTYPE
-#  endif
-#endif /* __GLIBC__ > 1 */
+#define ACE_HAS_LSEEK64
+//#define ACE_LACKS_LSEEK64_PROTOTYPE
 
 #define ACE_HAS_P_READ_WRITE
 // Use ACE's alternate cuserid() implementation since the use of the
@@ -203,11 +190,7 @@
 #  define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 #endif /* ! ACE_DEFAULT_BASE_ADDR */
 
-// Compiler/platform supports alloca().
-// Although ACE does have alloca() on this compiler/platform combination, it is
-// disabled by default since it can be dangerous.  Uncomment the following line
-// if you ACE to use it.
-//#define ACE_HAS_ALLOCA
+#define ACE_HAS_ALLOCA
 
 // Compiler/platform has <alloca.h>
 #define ACE_HAS_ALLOCA_H
@@ -222,9 +205,7 @@
 #define ACE_HAS_BSWAP_16
 #define ACE_HAS_BSWAP_32
 
-#if defined __GNUC__ && __GNUC__ >= 2
-# define ACE_HAS_BSWAP_64
-#endif
+#define ACE_HAS_BSWAP_64
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
@@ -351,9 +332,7 @@
 # include "ace/config-posix-nonetworking.h"
 #else
 # define ACE_HAS_NETLINK
-# if (__GLIBC__  > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ > 2)
-#   define ACE_HAS_GETIFADDRS
-# endif
+# define ACE_HAS_GETIFADDRS
 #endif
 
 #if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO)
