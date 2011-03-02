@@ -54,6 +54,7 @@ Coordinator::shutdown_all_peers (void)
       try
         {
           (*i)->shutdown ();
+          (*i) = Test::Peer::_nil ();
         }
       catch (const CORBA::Exception& ex)
         {

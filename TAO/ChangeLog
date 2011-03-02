@@ -1,3 +1,15 @@
+Wed Mar  2 16:02:01 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/Synch_Queued_Message.cpp:
+          Fixed leak of contents in synch queued message. Thanks to
+          Chris Galli <christian dot galli at gmail dot com> for providing
+          this fix. It fixes bug#3825.
+
+        * tests/Big_Oneways/server.cpp:
+        * tests/Big_Oneways/Session.cpp:
+        * tests/Big_Oneways/Coordinator.cpp:
+          Fixed leaks local to this test.
+
 Wed Mar  2 14:50:02 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * TAO_IDL/include/ast_home.h:

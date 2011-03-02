@@ -87,6 +87,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (coordinator_impl,
                       Coordinator (peer_count),
                       1);
+      PortableServer::ServantBase_var coordinator_owner (coordinator_impl);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (coordinator_impl);
@@ -134,6 +135,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (session_control_impl,
                       Session_Control (peer_count),
                       1);
+      PortableServer::ServantBase_var session_control_owner (session_control_impl);
 
       PortableServer::ObjectId_var idu =
         root_poa->activate_object (session_control_impl);
