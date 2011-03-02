@@ -1,3 +1,15 @@
+Wed Mar  2 14:50:02 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * TAO_IDL/include/ast_home.h:
+        * TAO_IDL/ast/ast_home.cpp:
+          Added a function that transfers elements from home to interface and
+          zeros those elements in home. This is necessary for correct cleanup.
+
+        * TAO_IDL/be/be_visitor_xplicit_pre_proc.cpp:
+          Added copying of exception list for operations defined in home
+          when it needs to create an Explicit interface. This is also for
+          cleanup.
+
 Mon Feb 28 14:31:52 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * TAO_IDL/ast/ast_home.cpp:
