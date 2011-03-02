@@ -1,3 +1,12 @@
+Wed Mar  2 19:22:23 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+        * tao/Stub.h:
+        * tao/Stub.inl:
+        * tao/Stub.cpp:
+          Applied changes reverted on Mon Feb 14, didn't break the ImR example
+
 Wed Mar  2 16:02:01 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/Synch_Queued_Message.cpp:
