@@ -1,3 +1,8 @@
+Wed Mar  2 14:56:28 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+          Made use of transfer_scope_elements() defined in ast_home.
+
 Tue Feb 15 10:11:12 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Events/client.cpp:
