@@ -24,7 +24,10 @@ TAO_Synch_Queued_Message::TAO_Synch_Queued_Message (
 
 TAO_Synch_Queued_Message::~TAO_Synch_Queued_Message (void)
 {
-
+  if (this->own_contents_ && this->contents_ != 0)
+    {
+      ACE_Message_Block::release (this->contents_);
+    }
 }
 
 const ACE_Message_Block *
