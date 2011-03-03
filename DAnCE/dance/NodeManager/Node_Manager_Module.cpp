@@ -53,7 +53,7 @@ DAnCE_NodeManager_Module::SOptions::SOptions(void)
     locality_config_("")
 {
   ACE_Env_Value<const ACE_TCHAR *> dance_env (ACE_TEXT ("DANCE_ROOT"),
-					      ACE_TEXT (""));
+                                              ACE_TEXT (""));
   node_config_ = ACE_TEXT_ALWAYS_CHAR (dance_env);
   node_config_ += "/bin/nodemanager.localityconfig";
 }
@@ -478,7 +478,7 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
                                                    this->root_poa_.in (),
                                                    this->installer_.in (),
                                                    ACE_TEXT_ALWAYS_CHAR (node_name.c_str()),
-						   this->options_.node_config_,
+                                                   this->options_.node_config_,
                                                    properties),
                           CORBA::Object::_nil ());
           DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
