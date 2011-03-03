@@ -1,3 +1,9 @@
+Thu Mar  3 05:05:20 UTC 2011  William R. Otte  <r._w@local>
+
+        * tools/Config_Handlers/Any_Handler.cpp:
+
+          Catch CORBA exceptions to give better error message.
+
 Thu Mar  3 05:04:29 UTC 2011  William R. Otte  <r._w@local>
 
         * docs/LocalityManager-Plugins.txt:
