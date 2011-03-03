@@ -26,6 +26,12 @@
 #if defined (_WIN64) || defined (WIN64)
 #  define ACE_WIN64
 
+// MPC template adds _AMD64_ but user projects not generated using MPC
+// may want to use _AMD64_ as well. Ensure it's there in all cases.
+#  ifndef _AMD64_
+#    define _AMD64_
+#  endif
+
 // Use 64-bit file offsets by default in the WIN64 case, similar to
 // what 64-bit UNIX systems do.
 //

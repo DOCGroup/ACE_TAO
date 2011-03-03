@@ -1,3 +1,8 @@
+Thu Mar  3 15:49:52 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-win32-common.h: Ensure that _AMD64_ is defined for
+          both MPC and non-MPC projects built for 64-bit Windows.
+
 Thu Mar  3 12:22:30 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao.spec:
