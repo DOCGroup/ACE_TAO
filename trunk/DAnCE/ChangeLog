@@ -1,3 +1,10 @@
+Thu Mar  3 05:10:34 UTC 2011  William R. Otte  <r._w@local>
+
+        * dance/NodeManager/NodeManager_Impl.h:
+        * dance/NodeManager/Node_Manager_Module.cpp:
+
+          Fuzz.
+
 Thu Mar  3 05:08:23 UTC 2011  William R. Otte  <r._w@local>
 
         * dance/NodeManager/NodeManager_Impl.cpp:
