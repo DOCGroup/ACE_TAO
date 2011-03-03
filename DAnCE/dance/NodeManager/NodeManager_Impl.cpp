@@ -7,6 +7,7 @@
 
 #include "dance/DAnCE_PropertiesC.h"
 #include "dance/LocalityManager/Scheduler/Plugin_Manager.h"
+#include "dance/LocalityManager/Handler/Plugin_Conf.h"
 
 #ifdef GEN_OSTREAM_OPS
 #include <iostream>
@@ -19,6 +20,7 @@ namespace DAnCE
                                      PortableServer::POA_ptr poa,
                                      DAnCE::ArtifactInstallation_ptr installer,
                                      const char* name,
+				     std::string config_file,
                                      const PROPERTY_MAP &properties)
     : orb_ (CORBA::ORB::_duplicate (orb)),
       poa_ (PortableServer::POA::_duplicate (poa)),
@@ -42,26 +44,21 @@ namespace DAnCE
     ::DAnCE::Utility::build_property_sequence (prop, properties);
     PLUGIN_MANAGER::instance ()->set_configuration (prop);
     PLUGIN_MANAGER::instance ()->set_orb (this->orb_);
+    
+    Plugin_Configurator conf;
 
-    Plugin_Manager::IH_DEPS deps;
-    CORBA::String_var safe_type =
-      PLUGIN_MANAGER::instance ()->register_installation_handler (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Locality_Handler"),
-                                                                  ACE_TEXT_CHAR_TO_TCHAR ("create_Locality_Handler"),
-                                                                  deps);
-
-    if (this->properties_.find (DAnCE::LOCALITY_BESTEFFORT) == 0)
-      PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
-                                                         ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Best_Effort"));
+    if (config_file.c_str ())
+      {
+	DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+			 ACE_TEXT ("NodeManager_Impl::NodeManager_Impl - ")
+			 ACE_TEXT ("Loading plugin file <%C>\n"),
+			 config_file.c_str ()));
+	conf.load_from_text_file (ACE_TEXT_CHAR_TO_TCHAR (config_file.c_str ()));
+      }
     else
-      PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
-                                                         ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Standard_Error"));
-
-    PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_SHS_Interceptors"),
-                                                       ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_SHS_Interceptor"));
-    DANCE_DEBUG (8, (LM_INFO, DLINFO
-                     ACE_TEXT("NodeApplication_Impl::NodeApplication_Impl - ")
-                     ACE_TEXT("Plugin loaded\n")));
-
+      DANCE_ERROR (3, (LM_WARNING, DLINFO
+		       ACE_TEXT ("NodeManager_Impl::NodeManager_Impl - ")
+		       ACE_TEXT ("Warning: No plugin configuration file found.\n")));
   }
 
   NodeManager_Impl::~NodeManager_Impl()
