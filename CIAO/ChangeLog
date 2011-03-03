@@ -1,3 +1,8 @@
+Thu Mar  3 14:26:13 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao_dds4ccm.doxygen:
+          Ignore DDS_ as prefix
+
 Thu Mar  3 05:03:44 UTC 2011  William R. Otte  <r._w@local>
 
         * tests/DAnCE/LocalityManager/UnexpectedShutdown/nodemanager-besteffort.lconfig:
