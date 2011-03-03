@@ -1,3 +1,10 @@
+Thu Mar  3 05:06:20 UTC 2011  William R. Otte  <r._w@local>
+
+        * dance/NodeManager/Node_Manager_Module.h:
+        * dance/NodeManager/Node_Manager_Module.cpp:
+
+          Removed --best-effort as a command line option.
+
 Thu Mar  3 05:05:20 UTC 2011  William R. Otte  <r._w@local>
 
         * tools/Config_Handlers/Any_Handler.cpp:
