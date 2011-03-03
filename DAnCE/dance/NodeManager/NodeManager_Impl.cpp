@@ -20,7 +20,7 @@ namespace DAnCE
                                      PortableServer::POA_ptr poa,
                                      DAnCE::ArtifactInstallation_ptr installer,
                                      const char* name,
-				     std::string config_file,
+                                     std::string config_file,
                                      const PROPERTY_MAP &properties)
     : orb_ (CORBA::ORB::_duplicate (orb)),
       poa_ (PortableServer::POA::_duplicate (poa)),
@@ -49,16 +49,16 @@ namespace DAnCE
 
     if (config_file.c_str ())
       {
-	DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-			 ACE_TEXT ("NodeManager_Impl::NodeManager_Impl - ")
-			 ACE_TEXT ("Loading plugin file <%C>\n"),
-			 config_file.c_str ()));
-	conf.load_from_text_file (ACE_TEXT_CHAR_TO_TCHAR (config_file.c_str ()));
+        DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+                         ACE_TEXT ("NodeManager_Impl::NodeManager_Impl - ")
+                         ACE_TEXT ("Loading plugin file <%C>\n"),
+                         config_file.c_str ()));
+        conf.load_from_text_file (ACE_TEXT_CHAR_TO_TCHAR (config_file.c_str ()));
       }
     else
       DANCE_ERROR (3, (LM_WARNING, DLINFO
-		       ACE_TEXT ("NodeManager_Impl::NodeManager_Impl - ")
-		       ACE_TEXT ("Warning: No plugin configuration file found.\n")));
+                       ACE_TEXT ("NodeManager_Impl::NodeManager_Impl - ")
+                       ACE_TEXT ("Warning: No plugin configuration file found.\n")));
   }
 
   NodeManager_Impl::~NodeManager_Impl()
