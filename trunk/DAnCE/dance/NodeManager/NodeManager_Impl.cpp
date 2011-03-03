@@ -44,7 +44,7 @@ namespace DAnCE
     ::DAnCE::Utility::build_property_sequence (prop, properties);
     PLUGIN_MANAGER::instance ()->set_configuration (prop);
     PLUGIN_MANAGER::instance ()->set_orb (this->orb_);
-    
+
     Plugin_Configurator conf;
 
     if (config_file.c_str ())

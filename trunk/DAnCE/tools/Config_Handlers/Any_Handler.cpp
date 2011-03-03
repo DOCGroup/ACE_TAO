@@ -45,7 +45,7 @@ namespace DAnCE
                            ACE_TEXT ("Caught CORBA Exception while extracting into ")
                            ACE_TEXT ("dynany: %C\n"),
                            ex._info ().c_str ()));
-          throw Config_Error (ACE_TEXT (""), 
+          throw Config_Error (ACE_TEXT (""),
                               ACE_TEXT ("CORBA Exception while extracting into dynany\n"));
         }
       catch (Config_Error &ex)
