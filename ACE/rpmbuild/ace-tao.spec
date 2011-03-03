@@ -146,11 +146,6 @@ BuildRequires: fox16-devel
 %endif
 
 %if %{?_with_xt:1}%{!?_with_xt:0}
-# The xorg package naming scheme changed, use specific files for now.
-# old -> BuildRequires: xorg-x11-devel
-# new -> BuildRequires: libX11-devel
-# BuildRequires: %{_libdir}/libX11.so
-# BuildRequires: %{_libdir}/libXt.so
 %define xt_pac ace-xtreactor
 %define tao_xt_pac tao-xtresource
 %endif
@@ -894,8 +889,8 @@ EOF
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 qt = 1
 gl = 1
-ace_qtreactor = 1
-tao_qtresource = 1
+ace_qt4reactor = 1
+tao_qt4resource = 1
 EOF
 %endif
 
@@ -1238,8 +1233,6 @@ for i in `cat allhdrs.list`; do
         echo '%{_includedir}/'${i/TAO\/orbsvcs\/} >> tao-headers.tmp
         ;;
     *)
-        # mkdir -p `dirname %{buildroot}%{_includedir}/$i`
-        # $INSTHDR $i %{buildroot}%{_includedir}/$i
         echo $i
         ;;
     esac
@@ -1976,19 +1969,10 @@ fi
 
 %files -n ace-devel -f ace-devel-files.list
 %defattr(-,root,root,-)
-%{_libdir}/libACE.so
-%{_libdir}/libACE_ETCL_Parser.so
-%{_libdir}/libACE_ETCL.so
 %{_libdir}/libACE_HTBP.so
-%{_libdir}/libACE_Monitor_Control.so
-%{_libdir}/libACE_RMCast.so
-%{_libdir}/libACE_TMCast.so
 %{_libdir}/libACE_SSL.so
-%{_libdir}/libACE_INet.so
-%{_libdir}/libACE_INet_SSL.so
 %dir %{_datadir}/ace
 %{_datadir}/ace/include
-%{_datadir}/ace/include/makeinclude
 %{_datadir}/ace/bin
 %{_datadir}/ace/ace
 %{_datadir}/ace/lib
@@ -2262,6 +2246,7 @@ fi
 %files -n tao -f tao-svc-so.list
 %defattr(-,root,root,-)
 %{_datadir}/tao
+%exclude %{_datadir}/tao/MPC
 
 %{_libdir}/libTAO*.so.%{TAOVERSO}
 
@@ -2286,9 +2271,9 @@ fi
 
 # ---------------- tao-devel ----------------
 
-# NOTE - Some of the TAO service modules need to be found by dlopen at
-# runtime.  Currently this means these specific .so files need to be
-# shipped in the runtime package instead of the devel package.
+# NOTE - Some of the TAO service modules need to be found by dlopen() at
+# runtime. Currently this means these specific .so files need to be
+# shipped in the runtime package instead of the development package.
 
 %files -n tao-devel -f tao-devel-files.list
 %defattr(-,root,root,-)

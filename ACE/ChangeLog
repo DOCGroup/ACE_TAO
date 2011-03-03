@@ -1,3 +1,9 @@
+Thu Mar  3 12:22:30 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Further improvements to this file, thanks to Glenn Zickert
+          <gzickert at comcast dot net> for reporting these
+
 Wed Mar  2 20:56:42 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-linux-common.h:
