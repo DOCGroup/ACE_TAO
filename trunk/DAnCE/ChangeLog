@@ -1,3 +1,16 @@
+Thu Mar  3 03:44:35 UTC 2011  William R. Otte  <r._w@local>
+
+        * bin/nodemanager.localityconfig:
+        * dance/NodeManager/NodeManager_Impl.h:
+        * dance/NodeManager/NodeManager_Impl.cpp:
+        * dance/NodeManager/Node_Manager_Module.h:
+        * dance/NodeManager/Node_Manager_Module.cpp:
+
+          Removed --best-effort and integrated localityconfig based configuration
+          to the NodeManager.  Default configuration read from
+          DANCE_ROOT/docs/nodemanager.localityconfig, alternates may be
+          supplied with the --node-config command line option.
+
 Mon Feb 28 13:22:16 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * rules.dance.GNU:

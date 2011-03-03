@@ -35,6 +35,7 @@ namespace DAnCE
                       PortableServer::POA_ptr poa,
                       DAnCE::ArtifactInstallation_ptr installer,
                       const char* name,
+		      std::string config_file,
                       const PROPERTY_MAP &options);
 
     virtual ~NodeManager_Impl();

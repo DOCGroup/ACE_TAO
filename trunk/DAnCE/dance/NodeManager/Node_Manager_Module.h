@@ -33,6 +33,8 @@
 #include "dance/DAnCE_Utility.h"
 #include "dance/DAnCE_ArtifactInstallationC.h"
 
+#include <string>
+
 namespace DAnCE
 {
   class NodeManager_Impl;
@@ -83,7 +85,8 @@ class DAnCE_NodeManager_Module
     const ACE_TCHAR * instance_nc_;
     unsigned int threads_;
     bool best_effort_;
-    const ACE_TCHAR * locality_config_;
+    std::string locality_config_;
+    std::string node_config_;
     SOptions();
   };
 
