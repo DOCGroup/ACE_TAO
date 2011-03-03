@@ -3,7 +3,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-
+#include "ace/Env_Value_T.h"
 #include "tao/StringSeqC.h"
 #include "tao/IORTable/IORTable.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
@@ -51,8 +51,12 @@ DAnCE_NodeManager_Module::SOptions::SOptions(void)
     domain_nc_ (0),
     instance_nc_ (0),
     best_effort_ (false),
-    locality_config_ (0)
+    locality_config_("")
 {
+  ACE_Env_Value<const ACE_TCHAR *> dance_env (ACE_TEXT ("DANCE_ROOT"),
+					      ACE_TEXT (""));
+  node_config_ = ACE_TEXT_ALWAYS_CHAR (dance_env);
+  node_config_ += "/bin/nodemanager.localityconfig";
 }
 
 DAnCE_NodeManager_Module::DAnCE_NodeManager_Module (void)
@@ -89,6 +93,7 @@ DAnCE_NodeManager_Module::usage (void)
     "\t--instance-nc [NC]\t Default naming context for instance registration directives. No argument indicates Domain NC.\n"
     "\t--best-effort\t\t Instruct the node manager and the default behavior for locality managers to be best effort.\n"
     "\t--locality-config\t\t Provide a locality configuration file that is passed to all spawned locality managers.\n"
+    "\t--node-config\t\t Provide a locality configuration file used to initialize the NodeManager.\n"
     "\t-h|help\t\t\t print this help message\n";
 }
 
@@ -116,6 +121,7 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
   get_opts.long_option (ACE_TEXT("best-effort"), ACE_Get_Opt::NO_ARG);
   get_opts.long_option (ACE_TEXT("help"), 'h', ACE_Get_Opt::NO_ARG);
   get_opts.long_option (ACE_TEXT("instance-nc"), ACE_Get_Opt::ARG_REQUIRED);
+  get_opts.long_option (ACE_TEXT("node-config"), ACE_Get_Opt::ARG_REQUIRED);
 
   int c;
   while ( (c = get_opts ()) != -1)
@@ -196,7 +202,15 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
               DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
                                ACE_TEXT("Using locality configuration file <%s>\n"),
                                get_opts.opt_arg ()));
-              this->options_.locality_config_ = get_opts.opt_arg ();
+              this->options_.locality_config_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
+            }
+          else if (ACE_OS::strcmp (get_opts.long_option (),
+                                   ACE_TEXT("node-config")) == 0)
+            {
+              DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+                               ACE_TEXT("Using locality configuration file for node: <%s>\n"),
+                               get_opts.opt_arg ()));
+              this->options_.node_config_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
             }
           else if (ACE_OS::strcmp (get_opts.long_option (),
                                    ACE_TEXT("best-effort")) == 0)
@@ -474,6 +488,7 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
                                                    this->root_poa_.in (),
                                                    this->installer_.in (),
                                                    ACE_TEXT_ALWAYS_CHAR (node_name.c_str()),
+						   this->options_.node_config_,
                                                    properties),
                           CORBA::Object::_nil ());
           DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
@@ -607,10 +622,10 @@ DAnCE_NodeManager_Module::create_nm_properties (DAnCE::Utility::PROPERTY_MAP &pr
     val <<= CORBA::Any::from_string (CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (this->options_.server_args_)),0);
     props.bind (DAnCE::LOCALITY_ARGUMENTS, val);
   }
-  if (this->options_.locality_config_)
+  if (this->options_.locality_config_ != "")
     {
       CORBA::Any val;
-      val <<= CORBA::Any::from_string (CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (this->options_.locality_config_)), 0);
+      val <<= CORBA::Any::from_string (CORBA::string_dup (this->options_.locality_config_.c_str ()), 0);
       props.bind (DAnCE::DANCE_LM_CONFIGFILE, val);
     }
   if (this->options_.instance_nc_)
