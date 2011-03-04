@@ -1,3 +1,8 @@
+Fri Mar  4 12:39:39 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          Fixed linking problems.
+
 Thu Mar  3 15:49:52 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * ace/config-win32-common.h: Ensure that _AMD64_ is defined for

@@ -61,7 +61,7 @@ endif
 
 CFLAGS  += -w1
 ifeq ($(threads),1)
-    CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
+    CPPFLAGS  += -D_REENTRANT
 endif # threads
 
 CCFLAGS += $(CFLAGS) -ip
@@ -72,9 +72,7 @@ LIBS    += -ldl
 
 ifeq ($(threads),1)
   LIBS += -lpthread
-  ifeq (-DACE_HAS_AIO_CALLS,$(PLATFORM_AIO_SUPPORT))
-    LIBS += -lrt
-  endif
+  LIBS += -lrt
 endif
 
 OCFLAGS += -O3
@@ -116,4 +114,3 @@ ifeq ($(threads),1)
        PRELIB = @true
     endif # ! PRELIB
 endif
-
