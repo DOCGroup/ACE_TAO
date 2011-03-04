@@ -58,6 +58,7 @@ project(*IDL): taoserver, messaging, gen_ostream {
     including.idl
     sequence.idl
     union.idl
+    anyunion.idl
   }
 
   IDL_Files {
@@ -99,6 +100,8 @@ project(*DLL): taoidldefaults, taolib, messaging {
     anonymousA.cpp
     anonymousC.cpp
     anonymousS.cpp
+    anyunionC.cpp
+    anyunionS.cpp
     arrayC.cpp
     arrayS.cpp
     array_anon_nestedC.cpp
