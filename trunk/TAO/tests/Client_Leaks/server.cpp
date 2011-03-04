@@ -56,7 +56,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Process_Factory *process_factory_impl;
+      Process_Factory *process_factory_impl = 0;
       ACE_NEW_RETURN (process_factory_impl,
                       Process_Factory (orb.in ()),
                       1);

@@ -43,6 +43,7 @@ TAO_Stub::TAO_Stub (const char *repository_id,
   , forward_profiles_ (0)
   , forward_profiles_perm_ (0)
   , profile_in_use_ (0)
+  , profile_lock_ptr_ (0)
   , profile_success_ (false)
   , refcount_ (1)
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -73,6 +74,9 @@ TAO_Stub::TAO_Stub (const char *repository_id,
   // Cache the ORB pointer to respond faster to certain queries.
   this->orb_ = CORBA::ORB::_duplicate (this->orb_core_->orb ());
 
+  this->profile_lock_ptr_ =
+    this->orb_core_->client_factory ()->create_profile_lock ();
+
   this->base_profiles (profiles);
 }
 
@@ -93,6 +97,8 @@ TAO_Stub::~TAO_Stub (void)
       this->profile_in_use_ = 0;
     }
 
+  delete this->profile_lock_ptr_;
+
 #if (TAO_HAS_CORBA_MESSAGING == 1)
   delete this->policies_;
 #endif
@@ -108,9 +114,9 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
 {
   // we assume that the profile_in_use_ is being
   // forwarded!  Grab the lock so things don't change.
-  ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
+  ACE_MT (ACE_GUARD (ACE_Lock,
                      guard,
-                     this->profile_lock_));
+                     *this->profile_lock_ptr_));
 
   if (permanent_forward)
     {
@@ -150,9 +156,9 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
 {
   // We are creating the IOR info. Let us not be disturbed. So grab a
   // lock.
-  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                             guard,
-                            this->profile_lock_,
+                            *this->profile_lock_ptr_,
                             -1));
 
   IOP::IOR *tmp_info = 0;
@@ -218,7 +224,7 @@ TAO_Stub::object_key (void) const
     {
       // Double-checked
       // FUZZ: disable check_for_ACE_Guard
-      ACE_Guard<TAO_SYNCH_MUTEX> obj (this->profile_lock_);
+      ACE_Guard<ACE_Lock> obj (*this->profile_lock_ptr_);
       // FUZZ: enable check_for_ACE_Guard
 
       if (obj.locked () != 0 &&  this->forward_profiles_ != 0)
@@ -511,9 +517,9 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
     }
   else
     {
-      ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+      ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                                 guard,
-                                this->profile_lock_,
+                                *this->profile_lock_ptr_,
                                 0));
 
       ACE_ASSERT(this->forward_profiles_ !=0);
@@ -542,6 +548,19 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
     }
 
   return (CORBA::Boolean) cdr.good_bit ();
+}
+
+void
+TAO_Stub::_incr_refcnt (void)
+{
+  ++this->refcount_;
+}
+
+void
+TAO_Stub::_decr_refcnt (void)
+{
+  if (--this->refcount_ == 0)
+    delete this;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

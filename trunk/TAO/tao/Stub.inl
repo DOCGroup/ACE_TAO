@@ -1,16 +1,10 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "tao/ORB_Core.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-ACE_INLINE
-TAO_SYNCH_MUTEX&
-TAO_Stub::profile_lock () const
-{
-  return this->profile_lock_;
-}
 
 ACE_INLINE void
 TAO_Stub::reset_base (void)
@@ -21,6 +15,12 @@ TAO_Stub::reset_base (void)
   this->set_profile_in_use_i (base_profiles_.get_next ());
 }
 
+
+ACE_INLINE ACE_Lock*
+TAO_Stub::profile_lock (void) const
+{
+  return this->profile_lock_ptr_;
+}
 
 ACE_INLINE void
 TAO_Stub::reset_forward (void)
@@ -53,9 +53,9 @@ TAO_Stub::reset_profiles_i (void)
 ACE_INLINE void
 TAO_Stub::reset_profiles (void)
 {
-  ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
+  ACE_MT (ACE_GUARD (ACE_Lock,
                      guard,
-                     this->profile_lock_));
+                     *this->profile_lock_ptr_));
   this->reset_profiles_i ();
 }
 
@@ -156,9 +156,9 @@ TAO_Stub::next_profile_i (void)
 ACE_INLINE TAO_Profile *
 TAO_Stub::next_profile (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                             guard,
-                            this->profile_lock_,
+                            *this->profile_lock_ptr_,
                             0));
   return this->next_profile_i ();
 }
@@ -184,9 +184,9 @@ TAO_Stub::valid_profile (void) const
 ACE_INLINE TAO_Profile *
 TAO_Stub::base_profiles (const TAO_MProfile &mprofiles)
 {
-  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                             guard,
-                            this->profile_lock_,
+                            *this->profile_lock_ptr_,
                             0));
 
   // first reset things so we start from scratch!
@@ -204,9 +204,9 @@ TAO_Stub::base_profiles (const TAO_MProfile &mprofiles)
 ACE_INLINE CORBA::Boolean
 TAO_Stub::next_profile_retry (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                             guard,
-                            this->profile_lock_,
+                            *this->profile_lock_ptr_,
                             0));
 
   if (this->profile_success_ && this->forward_profiles_)
@@ -347,20 +347,6 @@ bool TAO_Stub::forwarded_on_exception () const
   return forwarded_on_exception_.value ();
 }
 
-ACE_INLINE
-void
-TAO_Stub::_incr_refcnt (void)
-{
-  ++this->refcount_;
-}
-
-ACE_INLINE
-void
-TAO_Stub::_decr_refcnt (void)
-{
-  if (--this->refcount_ == 0)
-    delete this;
-}
 
 // ---------------------------------------------------------------
 
