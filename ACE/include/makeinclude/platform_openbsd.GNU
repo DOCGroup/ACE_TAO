@@ -29,8 +29,8 @@ SOFLAGS         += -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 
 ifeq ($(threads),1)
-  LDFLAGS       += -pthread
-  CPPFLAGS      += -D_THREAD_SAFE -DACE_HAS_THREADS
+  FLAGS_C_CC += -pthread
+  SOFLAGS += -pthread
 endif # threads
 
 PLATFORM_X11_CPPFLAGS = -I/usr/X11R6/include

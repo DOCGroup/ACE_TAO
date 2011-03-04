@@ -1,3 +1,12 @@
+Fri Mar  4 14:54:49 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_signal.h:
+          OpenBSD needs os_pthread.h to pick up pthread_sigmask().
+
+        * ace/config-openbsd.h:
+        * include/makeinclude/platform_openbsd.GNU:
+          Cleanup.
+
 Fri Mar  4 12:39:39 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_linux_icc.GNU:
