@@ -9,12 +9,7 @@
 #include /**/ "ace/pre.h"
 
 // Platform specific directives
-// gcc defines __OpenBSD__ automatically for us.
 #include <sys/param.h>
-
-#if defined (ACE_HAS_THREADS)
-# include /**/ <pthread.h>
-#endif /* ACE_HAS_THREADS */
 
 #include "ace/config-posix.h"
 
@@ -25,37 +20,6 @@
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
-
-
-#if defined (ACE_HAS_THREADS)
-
-# if !defined (_THREAD_SAFE)
-#  define _THREAD_SAFE
-# endif /* _THREAD_SAFE */
-
-// And they're even POSIX pthreads
-# if !defined (ACE_MT_SAFE)
-#  define ACE_MT_SAFE 1
-# endif /* ! ACE_MT_SAFE */
-
-
-// Check if pthreads and native exceptions are being used together.
-// This causes SEGVs to tbe thrown somewhat randomly for some
-// reason.  According to newsgroup postings, it appears to be an
-// OpenBSD or gcc bug.
-# if defined (ACE_USES_NATIVE_EXCEPTIONS)
-#  error "OpenBSD pthreads and native exceptions currently do not work.  See OpenBSD bug #1750"
-# endif /* ACE_USES_NATIVE_EXCEPTIONS */
-
-#else
-// OpenBSD really has readdir_r () in single threaded mode,
-// but the #ifdefs in OS.i select one with the wrong parameter
-// sets if the ACE_HAS_POSIX_STD isn't defined (which is defined
-// when ACE_HAS_THREADS is defined.)
-# define ACE_LACKS_READDIR_R
-
-#endif /* ACE_HAS_THREADS */
-
 
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_3_PARAM_READDIR_R
