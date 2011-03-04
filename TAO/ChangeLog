@@ -1,3 +1,20 @@
+Fri Mar  4 09:38:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+          Reverted changes related to Stub.*, these changes break the ImR
+          example
+
+        * tao/Stub.h:
+        * tao/Stub.inl:
+        * tao/Stub.cpp:
+          Reverted, these changes break the ImR example
+
+        * tests/Client_Leaks/README:
+        * tests/Client_Leaks/child.cpp:
+        * tests/Client_Leaks/server.cpp:
+          Initialize pointers to 0
+
 Wed Mar  2 19:22:23 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
