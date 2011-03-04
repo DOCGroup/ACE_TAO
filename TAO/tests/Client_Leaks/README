@@ -2,14 +2,14 @@
 
 @page Client Leaks Test README File
 
-	On TAO-1.1.12 the ORB was leaking handles on the client-side.
+On TAO-1.1.12 the ORB was leaking handles on the client-side.
 This test creates multiple servers trying to force a fault or
 exception if the resources are still leaked.
 
-	To run the test use the run_test.pl script:
+To run the test use the run_test.pl script:
 
 $ ./run_test.pl
 
-	the script returns 0 if the test was successful.
+the script returns 0 if the test was successful.
 
 */
