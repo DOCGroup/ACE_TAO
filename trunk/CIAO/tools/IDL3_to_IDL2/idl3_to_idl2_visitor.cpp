@@ -273,7 +273,7 @@ idl3_to_idl2_visitor::visit_uses (AST_Uses *node)
           << impl_name << " objref;" << be_nl
           << "Components::Cookie ck;" << be_uidt_nl
           << "};" << be_nl << be_nl
-          << "typedef sequence<" << ext_port_name
+          << "typedef sequence< " << ext_port_name
           << "Connection> " << ext_port_name << "Connections;"
           << be_nl << be_nl;
 
