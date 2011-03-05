@@ -759,7 +759,7 @@ int
 basic_visitor::visit_sequence (AST_Sequence *node)
 {
   // Keep output statements separate because of side effects.
-  *os << "sequence<";
+  *os << "sequence< ";
   *os << this->type_name (node->base_type ());
 
   if (!node->unbounded ())
