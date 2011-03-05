@@ -1,3 +1,11 @@
+Sat Mar  5 12:27:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+          Override all topic_name methods to resolve Intel C++ warnings
+
 Sat Mar  5 09:31:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/IDL3_to_IDL2/basic_visitor.cpp:
