@@ -72,6 +72,7 @@ public:
   //@}
 
   virtual void topic_name (const char * topic_name);
+  virtual char *topic_name (void);
 
   virtual void configuration_complete (void);
   virtual void ccm_activate (void);
