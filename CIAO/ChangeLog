@@ -1,3 +1,9 @@
+Sat Mar  5 09:31:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+          Generate space after sequence< to silence Intel C++ warnings
+
 Thu Mar  3 14:26:13 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ciao_dds4ccm.doxygen:
