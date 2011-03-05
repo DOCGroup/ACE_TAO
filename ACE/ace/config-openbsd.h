@@ -2,24 +2,21 @@
 // $Id$
 
 // The following configuration file is designed to work for OpenBSD
-// platforms using GNU g++.
 
 #ifndef ACE_CONFIG_H
-# define ACE_CONFIG_H
+#define ACE_CONFIG_H
 #include /**/ "ace/pre.h"
+
+#if !defined (ACE_MT_SAFE)
+#  define ACE_MT_SAFE 1
+#endif
 
 // Platform specific directives
 #include <sys/param.h>
 
 #include "ace/config-posix.h"
 
-#if !defined (__ACE_INLINE__)
-# define __ACE_INLINE__
-#endif /* !__ACE_INLINE__ */
-
-#if defined (__GNUG__)
-# include "ace/config-g++-common.h"
-#endif /* __GNUG__ */
+#include "ace/config-g++-common.h"
 
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_3_PARAM_READDIR_R

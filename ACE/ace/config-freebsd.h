@@ -11,10 +11,10 @@
 #  define ACE_MT_SAFE 1
 #endif
 
-#include "ace/config-posix.h"
-
 // Make sure we source in the OS version.
 #include <osreldate.h>
+
+#include "ace/config-posix.h"
 
 #include "ace/config-g++-common.h"
 

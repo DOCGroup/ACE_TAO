@@ -65,9 +65,6 @@
 
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #   define ACE_MT(X) X
-#   if !defined (_REENTRANT)
-#     define _REENTRANT
-#   endif /* _REENTRANT */
 # else
 #   define ACE_MT(X)
 # endif /* ACE_MT_SAFE */
