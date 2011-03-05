@@ -52,14 +52,6 @@
 // functions).
 #define ACE_HAS_REENTRANT_FUNCTIONS
 
-#if (__GLIBC__ < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 1)
-   // Older versions of glibc lacked reentrant netdb functions
-#  define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
-
-   // glibc < 2.1 lacks pthread_attr_setstacksize()
-#  define ACE_LACKS_PTHREAD_ATTR_SETSTACKSIZE
-#endif /* (__GLIBC__ < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 1) */
-
 // uses ctime_r & asctime_r with only two parameters vs. three
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #endif /* __GLIBC__ */
