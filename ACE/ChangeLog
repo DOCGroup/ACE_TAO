@@ -1,3 +1,8 @@
+Sat Mar  5 07:16:12 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux.h:
+          Removed some GLIBC 2.1 related settings.
+
 Fri Mar  4 16:00:26 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-freebsd.h:
