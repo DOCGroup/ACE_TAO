@@ -1,3 +1,11 @@
+Sat Mar  5 12:14:27 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/gnuace.features:
+          Set qt4 instead of qt to default 1
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Also don't use strict aliasing with gcc 4.2/4.3
+
 Sat Mar  5 07:16:12 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-linux.h:
