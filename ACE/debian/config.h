@@ -4,7 +4,7 @@
 #define ACE_CONFIG_H_INCLUDED
 #ifdef __FreeBSD_kernel__
 #include "config-kfreebsd.h"
-#else // assume linux 
+#else // assume linux
 /*
  * Macros that were enabled in Debian are stored here.
  *
