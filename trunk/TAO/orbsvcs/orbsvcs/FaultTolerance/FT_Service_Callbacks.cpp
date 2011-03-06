@@ -197,7 +197,7 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_pt
   sc.context_id = IOP::FT_GROUP_VERSION;
 
   if (service_context.get_context (sc) == 0)
-      return false; /* false */
+      return false;
 
   IOP::TaggedComponent tc;
   tc.tag = IOP::TAG_FT_GROUP;
@@ -207,7 +207,7 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_pt
   if (stub->forward_profiles ())
     {
       // set lock, as forward_profiles might be deleted concurrently
-      ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+      ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                                 guard,
                                 *stub->profile_lock (),
                                 0));
@@ -228,9 +228,9 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_pt
 
       if (tagged_components.get_component (tc) == 0)
         // releasing lock
-        return false; /* false */
+        return false;
 
-      return true; /* true */
+      return true;
 
       // releasing lock
     }
