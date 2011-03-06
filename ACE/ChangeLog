@@ -1,3 +1,14 @@
+Sun Mar  6 09:20:22 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/INET_Addr_Test.cpp:
+        * tests/Multihomed_INET_Addr_Test.cpp:
+          Fixed gcc 4.5 warnings
+
+        * tests/Log_Thread_Inheritance_Test.cpp:
+        * tests/MT_Reference_Counted_Notify_Test.cpp:
+        * tests/NDDS_Timer_Test.cpp:
+          Zapped some empty lines
+
 Sat Mar  5 17:31:08 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-freebsd.h:

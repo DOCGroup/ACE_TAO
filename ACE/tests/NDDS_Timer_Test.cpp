@@ -24,8 +24,6 @@
 #include <ndds/ndds_cpp.h>
 #include <ndds/clock/clock_highResolution.h>
 
-
-
 static
 u_int
 check (const time_t interval, const time_t measured)

@@ -24,11 +24,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_arpa_inet.h"
 
-int run_main (int argc, ACE_TCHAR *argv[])
+int run_main (int, ACE_TCHAR *[])
 {
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-
   ACE_START_TEST (ACE_TEXT ("Multihomed_INET_Addr_Test"));
 
   int status = 0;     // Innocent until proven guilty
@@ -62,6 +59,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   {
     struct in_addr addrv4;
+    ACE_OS::memset ((void *) &addrv4, 0, sizeof addrv4);
     ACE_OS::inet_pton (AF_INET, primary_dotted_decimal, &addrv4);
     ACE_OS::memcpy (&primary_addr32, &addrv4, sizeof (primary_addr32));
     primary_addr32 = ACE_NTOHL(primary_addr32);
@@ -69,6 +67,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   for (i = 0; i < num_secondaries; ++i) {
     struct in_addr addrv4;
+    ACE_OS::memset ((void *) &addrv4, 0, sizeof addrv4);
     ACE_OS::inet_pton (AF_INET, secondary_dotted_decimals[i], &addrv4);
     ACE_OS::memcpy (&secondary_addr32[i], &addrv4, sizeof (primary_addr32));
     secondary_addr32[i] = ACE_NTOHL(secondary_addr32[i]);
