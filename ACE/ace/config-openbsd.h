@@ -18,6 +18,12 @@
 
 #include "ace/config-g++-common.h"
 
+#if defined (ACE_HAS_THREADS)
+#  if !defined (_THREAD_SAFE)
+#    define _THREAD_SAFE
+#  endif /* _THREAD_SAFE */
+#endif
+
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_3_PARAM_READDIR_R
 #define ACE_HAS_3_PARAM_WCSTOK
@@ -147,12 +153,12 @@
 
 // OpenBSD 3.6
 #if (OpenBSD < 200411)
-# define ACE_USES_ASM_SYMBOL_IN_DLSYM
+#  define ACE_USES_ASM_SYMBOL_IN_DLSYM
 #endif
 
 // ucontext_t is in OpenBSD 3.5 and later.
 #if (OpenBSD >= 200405)
-# define ACE_HAS_UCONTEXT_T
+#  define ACE_HAS_UCONTEXT_T
 #endif /* OpenBSD >= 200405 */
 
 // Lacks perfect filtering, must bind group address.
