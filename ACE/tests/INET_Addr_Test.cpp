@@ -78,6 +78,7 @@ int run_main (int, ACE_TCHAR *[])
   for (int i=0; ipv4_addresses[i] != 0; i++)
     {
       struct in_addr addrv4;
+      ACE_OS::memset ((void *) &addrv4, 0, sizeof addrv4);
       ACE_UINT32 addr32;
 
       ACE_OS::inet_pton (AF_INET, ipv4_addresses[i], &addrv4);

@@ -28,8 +28,6 @@
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
 
-
-
 #if defined (ACE_HAS_THREADS)
 
 static int test_select_reactor = 1;
