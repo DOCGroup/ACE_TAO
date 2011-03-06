@@ -1,3 +1,8 @@
+Sun Mar  6 13:50:09 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-openbsd.h:
+          Define _THREAD_SAFE.
+
 Sun Mar  6 09:20:22 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/INET_Addr_Test.cpp:
