@@ -27,34 +27,21 @@
 // And they're even POSIX pthreads (LinuxThreads implementation)
 #define ACE_HAS_PTHREADS
 
-// On linux this is part of pthreads
-#  if (defined _POSIX_C_SOURCE && (_POSIX_C_SOURCE - 0) >= 199309L)
-#    if !defined (ACE_HAS_CLOCK_GETTIME)
-#      if !defined(__PGI)
-#        define ACE_HAS_CLOCK_GETTIME
-#      endif /* __PGI */
-#      define ACE_HAS_CLOCK_SETTIME
-#    endif  /* !ACE_HAS_CLOCK_GETTIME */
-#  endif  /* _POSIX_C_SOURCE >= 199309L */
+#define ACE_HAS_CLOCK_GETTIME
+#define ACE_HAS_CLOCK_SETTIME
 
-#if !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
-#  define ACE_LACKS_RWLOCK_T
-#else
-#  define ACE_HAS_RECURSIVE_MUTEXES
-#endif  /* !ACE_HAS_PTHREADS_UNIX98_EXT */
+#define ACE_HAS_RECURSIVE_MUTEXES
 
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE     // jcej 12/22/96         #2
 
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS    // JCEJ 1/7-8/96
 
-#if defined(__GLIBC__)
 // Platform supports reentrant functions (i.e., all the POSIX *_r
 // functions).
 #define ACE_HAS_REENTRANT_FUNCTIONS
 
 // uses ctime_r & asctime_r with only two parameters vs. three
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
-#endif /* __GLIBC__ */
 #endif  /* ACE_MT_SAFE */
 
 #include /**/ "ace/post.h"
