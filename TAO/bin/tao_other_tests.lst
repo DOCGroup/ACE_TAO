@@ -179,7 +179,8 @@ TAO/orbsvcs/tests/Security/MT_SSLIOP/run_test.pl: !ST SSL !STATIC !DISABLE_INTER
 TAO/orbsvcs/tests/Security/MT_IIOP_SSL/run_test.pl: !ST SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 #Bug 1647. run_test_harsh.pl takes 5 minutes; but there aren't many SSL builds !VxWorks !VxWorks_RTP !LabVIEW_RT
 TAO/orbsvcs/tests/Security/MT_SSLIOP/run_test_harsh.pl: !ST SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
-TAO/orbsvcs/tests/Security/Crash_Test/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/orbsvcs/tests/Security/Crash_Test/run_test.pl: SSL !QUICK !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/orbsvcs/tests/Security/Crash_Test/run_test.pl -quick: SSL QUICK !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/orbsvcs/tests/Security/InsecureReferences/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/orbsvcs/tests/Security/EndpointPolicy/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/orbsvcs/tests/Security/Null_Cipher/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO

@@ -8,7 +8,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*security client): taoclient, anytypecode, ssl {
+project(*security client): taoclient {
   after += *idl
   Source_Files {
     TX_ObjectC.cpp
@@ -18,7 +18,7 @@ project(*security client): taoclient, anytypecode, ssl {
   }
 }
 
-project(*security server): taoserver, ssl {
+project(*security server): taoserver {
   after += *idl
   Source_Files {
     TX_Object_i.cpp

@@ -30,7 +30,6 @@ my $server_iorfile = $server->LocalFile ($iorbase);
 my $client1_iorfile = $client1->LocalFile ($iorbase);
 my $client2_iorfile = $client2->LocalFile ($iorbase);
 my $client3_iorfile = $client3->LocalFile ($iorbase);
-
 $server->DeleteFile($iorbase);
 $client1->DeleteFile($iorbase);
 $client2->DeleteFile($iorbase);
@@ -75,6 +74,11 @@ $CL3 = $client3->CreateProcess ("client",
 local $start_time = time();
 local $max_running_time = 500; # < 10 minutes
 local $elapsed = time() - $start_time;
+
+if ($ARGV[0] eq '-quick')  {
+    $elapsed = 0;
+    $max_running_time = 1;
+}
 
 while($status == 0 && $elapsed < $max_running_time){
 
@@ -250,5 +254,10 @@ while($status == 0 && $elapsed < $max_running_time){
 
     $elapsed = time() - $start_time;
 }
+
+$server->DeleteFile($iorbase);
+$client1->DeleteFile($iorbase);
+$client2->DeleteFile($iorbase);
+$client3->DeleteFile($iorbase);
 
 exit $status;

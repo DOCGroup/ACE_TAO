@@ -51,9 +51,10 @@ TAO::SSLIOP::Accept_Strategy::accept_svc_handler (handler_type * svc_handler)
       // close() method resets it.
       ACE_Errno_Guard error (errno);
 
-      // Close down handler to avoid memory leaks.
-      svc_handler->close (0);
+      // It doesn't make sense to close the handler since it didn't open.
+      svc_handler->transport ()->remove_reference ();
 
+      // #REFCOUNT# is zero at this point.
       return -1;
     }
   else

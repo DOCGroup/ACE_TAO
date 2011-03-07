@@ -514,8 +514,6 @@ TAO::SSLIOP::Connector::ssliop_connect (
 
             }
         }
-
-      safe_handler.release ();
     }
   else
     {
