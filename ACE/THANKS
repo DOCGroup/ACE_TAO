@@ -411,7 +411,7 @@ Andrew Harbick <aharbick at opentext dot com>
 Pavel Motuzenko <p_motuzenko at hotmail dot com>
 Ross J. Lillie <lillie at rsch dot comm dot mot dot com>
 Sam Hauer <shauer at nmo dot gtegsc dot com>
-Frank J. Hodum <fhodum at dctd dot saic dot com>
+Frank J. Hodum <FRANK.J.HODUM at saic dot com>
 David Miron <dxm at crapper dot dsto dot defence dot gov dot au>
 Anton van Straaten <anton at appsolutions dot com>
 Joe Covalesky <joe at nowsol dot com>
@@ -2346,6 +2346,8 @@ Helmut BÃ¶ing
 Andrew Hill <lists at thefrog dot net>
 Henk Jan Priester <hjpriester at gmail dot com>
 Glenn Zickert <gzickert at comcast dot net>
+Chris Galli <christian dot galli at gmail dot com> 
+Laura Autón García <darklulu+ace at gmail dot com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
