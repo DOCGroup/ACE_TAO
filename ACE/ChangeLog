@@ -1,3 +1,10 @@
+Sun Mar  6 14:49:04 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ACE-INSTALL.html: Update this document to explain how to use the
+          "make install" step for MinGW.  Thanks to Laura Autón García
+          <darklulu+ace at gmail dot com> for contributing this
+          description.
+
 Mon Mar  7 09:38:57 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/SSL/SSL_Context.cpp:
@@ -993,6 +1000,10 @@ Mon Dec 27 20:32:33 UTC 2010  Adam Mitz  <mitza@ociweb.com>
         * include/makeinclude/platform_linux.GNU:
 
           Set LD_RPATH_FLAGS to enable DT_RUNPATH in the ELF headers.
+
+Sat Dec 25 15:52:56 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * Merry Christmas and Peace on Earth.
 
 Tue Dec 21 09:57:54 UTC 2010  Olli Savia  <ops@iki.fi>
 
