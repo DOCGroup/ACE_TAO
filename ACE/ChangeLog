@@ -1,3 +1,13 @@
+Mon Mar  7 09:38:57 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/SSL/SSL_Context.cpp:
+        * ace/SSL/SSL_Initializer.cpp:
+        * ace/SSL/SSL_Initializer.h:
+          Added SSL initializer which is a part of the fix for bug#3418.
+          The initializer if used does correct SSL cleanup. Moved SSL context
+          singleton cleanup from ACE_SSL_Context::ssl_library_fini() to
+          the initializer.
+
 Sun Mar  6 20:53:26 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-linux.h:
