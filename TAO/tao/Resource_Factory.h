@@ -24,7 +24,6 @@
 
 #include /**/ "tao/Versioned_Namespace.h"
 #include "tao/Basic_Types.h"
-#include "tao/Configurable_Refcount.h"
 
 #include "ace/Service_Object.h"
 #include "ace/Unbounded_Set.h"
@@ -225,15 +224,6 @@ public:
   /// Should the transport cache have a lock or not? Return 1 if the
   /// transport cache needs to be locked  else return 0
   virtual int locked_transport_cache (void);
-
-  /// Creates a lock needed for the table that stores the object keys.
-  virtual ACE_Lock *create_object_key_table_lock (void);
-
-  /// Creates the lock for the CORBA Object
-  virtual ACE_Lock *create_corba_object_lock (void);
-
-  /// Creates the configurable refcount for the CORBA Object
-  virtual TAO_Configurable_Refcount create_corba_object_refcount (void);
 
   /// Creates the flushing strategy.  The new instance is owned by the
   /// caller.

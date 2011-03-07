@@ -675,8 +675,6 @@ protected:
 
   static CORBA::ULong root_key_type_length (void);
 
-  void outstanding_requests (CORBA::ULong new_outstanding_requests);
-
   CORBA::ULong increment_outstanding_requests (void);
 
   CORBA::ULong decrement_outstanding_requests (void);

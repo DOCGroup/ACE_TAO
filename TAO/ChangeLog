@@ -1,3 +1,37 @@
+Mon Mar  7 09:32:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Client_Strategy_Factory.h:
+        * tao/Client_Strategy_Factory.cpp:
+        * tao/ORB_Core.h:
+        * tao/PortableServer/Non_Servant_Upcall.cpp:
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/Object_Adapter.inl:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Root_POA.h:
+        * tao/PortableServer/Root_POA.inl:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        * tao/PortableServer/Servant_Upcall.cpp:
+        * tao/Resource_Factory.h:
+        * tao/Resource_Factory.cpp:
+        * tao/Server_Strategy_Factory.h:
+        * tao/Server_Strategy_Factory.cpp:
+        * tao/Stub.cpp:
+        * tao/Transport_Mux_Strategy.h:
+        * tao/default_client.h:
+        * tao/default_client.cpp:
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+        * tao/default_server.h:
+        * tao/default_server.cpp:
+        * tao/tao.mpc:
+          Reapplied the changes reverted on Mon Feb 14 10:44:30
+
+        * tao/Configurable_Refcount.h:
+        * tao/Configurable_Refcount.inl:
+        * tao/Configurable_Refcount.cpp:
+          Removed these files.
+
 Mon Mar  7 09:10:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:

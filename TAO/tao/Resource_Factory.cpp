@@ -196,25 +196,6 @@ TAO_Resource_Factory::locked_transport_cache (void)
   return 0;
 }
 
-ACE_Lock *
-TAO_Resource_Factory::create_object_key_table_lock (void)
-{
-  return 0;
-}
-
-ACE_Lock *
-TAO_Resource_Factory::create_corba_object_lock (void)
-{
-  return 0;
-}
-
-TAO_Configurable_Refcount
-TAO_Resource_Factory::create_corba_object_refcount (void)
-{
-  return TAO_Configurable_Refcount (
-                    TAO_Configurable_Refcount::TAO_NULL_LOCK);
-}
-
 int
 TAO_Resource_Factory::load_default_protocols (void)
 {
