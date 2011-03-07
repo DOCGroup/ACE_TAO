@@ -1,3 +1,8 @@
+Tue Jan 25 15:17:58 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * bin/MakeProjectCreator/config/acemfcexe.mpb: The SubSystem value
+          for "Windows" on VC10 is "Windows", not "2" as it is for VC8-9.
+
 Mon Feb 28 20:29:59 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * examples/ASX/Event_Server/Event_Server/Event_Analyzer.cpp:
