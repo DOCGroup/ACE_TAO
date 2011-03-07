@@ -118,8 +118,8 @@ public:
 
   /// @param format must be of the form "VARIABLE=VALUE".  There can not be
   /// any spaces between VARIABLE and the equal sign.
-  int setenv (const ACE_TCHAR *format,
-              ...);
+  int setenv (const ACE_TCHAR *format, ...)
+    ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3);
 
   /**
    * Set a single environment variable, @a variable_name.  Since
@@ -131,7 +131,8 @@ public:
    */
   int setenv (const ACE_TCHAR *variable_name,
               const ACE_TCHAR *format,
-              ...);
+              ...)
+    ACE_GCC_FORMAT_ATTRIBUTE (printf, 3, 4);
 
   /// Same as above with argv format.  @a envp must be null terminated.
   int setenv (ACE_TCHAR *envp[]);

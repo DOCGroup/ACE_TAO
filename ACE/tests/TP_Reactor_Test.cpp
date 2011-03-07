@@ -766,7 +766,7 @@ Sender::Sender (Connector* connector, size_t index)
   if (connector_ != 0)
     connector_->on_new_sender (*this);
 
-  ACE_OS::sprintf (send_buf_ ,data);
+  ACE_OS::sprintf (send_buf_, "%s", data);
 }
 
 
