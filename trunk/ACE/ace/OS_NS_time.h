@@ -234,7 +234,8 @@ namespace ACE_OS
   size_t strftime (char *s,
                    size_t maxsize,
                    const char *format,
-                   const struct tm *timeptr);
+                   const struct tm *timeptr)
+    ACE_GCC_FORMAT_ATTRIBUTE (strftime, 3, 0);
 
   /**
    * strptime wrapper. Note that the struct @a tm will always be set to

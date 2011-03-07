@@ -1,3 +1,16 @@
+Mon Mar  7 16:14:33 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/config-g++-common.h:
+        * ace/OS_NS_stdio.h:
+        * ace/Process.h:
+        * ace/OS_NS_time.h:
+          Added format GCC __attribute__ to printf-like functions.
+
+        * tests/TP_Reactor_Test.cpp:
+        * apps/gperf/src/Options.cpp:
+        * examples/APG/Threads/Message_Blocks.cpp:
+          Fixed warnings from incorrect use of printf format.
+
 Sun Mar  6 14:49:04 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ACE-INSTALL.html: Update this document to explain how to use the
