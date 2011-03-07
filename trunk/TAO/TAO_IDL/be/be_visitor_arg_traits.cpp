@@ -687,7 +687,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
       size_t bound_length = num_digits + 1;
       char* bound_string = 0;
       ACE_NEW_RETURN (bound_string, char[bound_length], -1) ;
-      ACE_OS::sprintf (bound_string, "%lu", bound);
+      ACE_OS::sprintf (bound_string, "%u", bound);
 
       size_t cat_length = ACE_OS::strlen (alias->local_name ()->get_string ()) +
                           ACE_OS::strlen (bound_string) +

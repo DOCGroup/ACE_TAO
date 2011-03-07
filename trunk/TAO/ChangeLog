@@ -1,3 +1,15 @@
+Mon Mar  7 16:19:40 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be_include/be_helper.h:
+          Fixed warnings from incorrect use of printf format.
+
 Mon Mar  7 09:44:39 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
