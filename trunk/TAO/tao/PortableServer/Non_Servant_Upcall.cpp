@@ -78,10 +78,8 @@ namespace TAO
                 }
             }
 
-          // If locking is enabled.
-          if (this->object_adapter_.enable_locking_)
-            // Wakeup all waiting threads.
-            this->object_adapter_.non_servant_upcall_condition_.broadcast ();
+          // Wakeup all waiting threads.
+          this->object_adapter_.non_servant_upcall_condition_.broadcast ();
         }
     }
   }

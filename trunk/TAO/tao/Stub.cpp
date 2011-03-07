@@ -74,8 +74,7 @@ TAO_Stub::TAO_Stub (const char *repository_id,
   // Cache the ORB pointer to respond faster to certain queries.
   this->orb_ = CORBA::ORB::_duplicate (this->orb_core_->orb ());
 
-  this->profile_lock_ptr_ =
-    this->orb_core_->client_factory ()->create_profile_lock ();
+  this->profile_lock_ptr_ = new ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ();
 
   this->base_profiles (profiles);
 }
