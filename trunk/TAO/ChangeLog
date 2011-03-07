@@ -1,3 +1,35 @@
+Mon Mar  7 09:44:39 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+          Fixed leaks in ACE_SSL library. This is a part of the fix
+          for bug#3418.
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.cpp:
+          Fixed other leaks in TAO_SSLIOP that I found during the work
+          on bug#3418.
+
+        * orbsvcs/tests/Security/Bug_1107_Regression/Bug_1107_Regression.mpc:
+        * orbsvcs/tests/Security/Big_Request/Big_Request.mpc:
+          Removed unnecessary libraries from dependencies.
+
+        * orbsvcs/tests/Security/InsecureReferences/test.cpp:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/server.cpp:
+        * orbsvcs/tests/Security/Bug_1107_Regression/client.cpp:
+        * orbsvcs/tests/Security/Crash_Test/server.cpp:
+        * orbsvcs/tests/Security/ssliop_CSD/MessengerClient.cpp:
+        * orbsvcs/tests/Security/BiDirectional/client.cpp:
+        * orbsvcs/tests/Security/BiDirectional/server.cpp:
+        * orbsvcs/tests/Security/MT_SSLIOP/server.cpp:
+        * orbsvcs/tests/Security/Big_Request/client.cpp:
+          Fixed memory leaks local to these tests.
+
+        * orbsvcs/tests/Security/Crash_Test/run_test.pl:
+        * bin/tao_other_tests.lst:
+          Extended the test script so that it supports now QUICK config.
+          This test could run for a very long time which is not necessary
+          in setups like valgrind.
+
 Mon Mar  7 09:32:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Client_Strategy_Factory.h:

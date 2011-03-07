@@ -141,9 +141,13 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   // underlying SSL library (e.g. OpenSSL), which occurs when an
   // ACE_SSL_Context is instantiated.
 
+  // This directive processing initializes ACE_SSL_Context as well
+  // as registers ACE_SSL for correct cleanup.
+  ACE_Service_Config::process_directive (
+    ACE_STATIC_SERVICE_DIRECTIVE ("ACE_SSL_Initializer", ""));
+
   // The code is cleaner this way anyway.
   ACE_SSL_Context * ssl_ctx = ACE_SSL_Context::instance ();
-  ACE_ASSERT (ssl_ctx != 0);
 
   size_t session_id_len =
     (sizeof session_id_context_ >= SSL_MAX_SSL_SESSION_ID_LENGTH)

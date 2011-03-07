@@ -10,7 +10,7 @@
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 const char *cert_file = "cacert.pem";
 
-void
+int
 insecure_invocation_test (CORBA::ORB_ptr orb,
                           CORBA::Object_ptr obj)
 {
@@ -46,7 +46,7 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
                   "nil.\n",
                   ior));
 
-      throw CORBA::INTERNAL ();
+      return 1;
     }
 
   try
@@ -61,17 +61,17 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
                   "(%P|%t) Received CORBA::NO_PERMISSION from "
                   "server, as expected.\n"));
 
-      return;
+      return 0;
     }
 
   ACE_ERROR ((LM_ERROR,
               "(%P|%t) ERROR: CORBA::NO_PERMISSION was not thrown.\n"
               "(%P|%t) ERROR: It should have been thrown.\n"));
 
-  throw CORBA::INTERNAL ();
+  return 1;
 }
 
-void
+int
 secure_invocation_test (CORBA::Object_ptr object)
 {
   Foo::Bar_var server =
@@ -84,13 +84,15 @@ secure_invocation_test (CORBA::Object_ptr object)
                   "nil.\n",
                   ior));
 
-      throw CORBA::INTERNAL ();
+      return 1;
     }
 
   // This invocation should return successfully.
   server->baz ();
 
   server->shutdown ();
+
+  return 0;
 }
 
 int
@@ -111,7 +113,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Usage:  %s "
-                           "-k <ior> "
+                           "-k <ior>"
                            "\n",
                            argv [0]),
                           -1);
@@ -123,6 +125,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  int status = 0;
   bool set_cert_file = true;
   try
     {
@@ -162,37 +165,40 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           // then result in a CORBA::NO_PERMISSION exception.
           //
           // The server is not shutdown by this test.
-          insecure_invocation_test (orb.in (), object.in ());
+          status = insecure_invocation_test (orb.in (), object.in ());
         }
 
       // This test uses the default secure SSLIOP settings to securely
       // invoke a method on the server.  No exception should occur.
       //
       // The server *is* shutdown by this test.
-      if (!set_cert_file)
-        ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
-      secure_invocation_test (object.in ());
-      if (!set_cert_file)
-        ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
+      try
+        {
+          status = secure_invocation_test (object.in ());
+        }
+      catch (CORBA::Exception const &ex)
+        {
+          if (set_cert_file)
+            {
+              ex._tao_print_exception ("Caught unexpected exception "
+                                       "(probable failure):");
+              status = 1;
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Caught an exception as expected due "
+                          "to the SSL_CERT_FILE environment "
+                          "variable not being set.\n"));
+            }
+        }
 
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
-      if (set_cert_file)
-        {
-          ex._tao_print_exception ("Caught unexpected exception "
-                                   "(probable failure):");
-          return 1;
-        }
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG, "Caught an excep. as expected due "
-                                "to the SSL_CERT_FILE environment "
-                                "variable\nnot being set.\n"));
-          return 0;
-        }
+      ex._tao_print_exception ("Exception in main:");
+      return 1;
     }
 
   ACE_DEBUG ((LM_DEBUG,
