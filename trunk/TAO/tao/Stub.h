@@ -118,7 +118,7 @@ public:
 
   /// Return the Profile lock. This lock can be used at places where
   /// profiles need to be edited.
-  TAO_SYNCH_MUTEX *profile_lock (void) const;
+  ACE_Lock *profile_lock (void) const;
 
   /// Manage the base (non-forwarded) profiles.
   /// Returns a pointer to the profile_in_use object.  This object
@@ -369,7 +369,7 @@ protected:
   TAO_Profile *profile_in_use_;
 
   /// Mutex to protect access to the forwarding profile.
-  TAO_SYNCH_MUTEX* profile_lock_;
+  ACE_Lock* profile_lock_ptr_;
 
   /// Have we successfully talked to the forward profile yet?
   CORBA::Boolean profile_success_;
@@ -403,8 +403,9 @@ protected:
    */
   CORBA::Boolean const collocation_opt_;
 
-  /// True if forwarding request upon some specific exceptions
-  /// (e.g. OBJECT_NOT_EXIST) already happened.
+
+  // True if forwarding request upon some specific exceptions
+  // (e.g. OBJECT_NOT_EXIST) already happened.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, bool> forwarded_on_exception_;
 };
 
