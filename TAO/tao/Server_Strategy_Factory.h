@@ -101,9 +101,6 @@ public:
    */
   virtual int open (TAO_ORB_Core* orb_core);
 
-  /// Enable POA locking?
-  virtual int enable_poa_locking (void);
-
   /// Are server connections active (i.e. run in their own thread)
   virtual int activate_server_connections (void);
 
