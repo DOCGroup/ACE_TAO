@@ -687,7 +687,8 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   if (TAO_debug_level > 9)
     {
       char buf[48];
-      ACE_OS::sprintf (buf, "Transport[%d] recv", transport->id ());
+      ACE_OS::sprintf (buf, "Transport[%d] recv",
+                       static_cast<int> (transport->id ()));
       //due to alignment data block has an offset which needs to be corrected
       this->dump_msg (buf,
                       reinterpret_cast <u_char *> (db->base () + rd_pos - TAO_GIOP_MESSAGE_HEADER_LEN),
@@ -801,7 +802,8 @@ TAO_GIOP_Message_Base::process_reply_message (
   if (TAO_debug_level > 9)
     {
       char buf[48];
-      ACE_OS::sprintf (buf, "Transport[%d] recv", params.transport_->id ());
+      ACE_OS::sprintf (buf, "Transport[%d] recv",
+                       static_cast<int> (params.transport_->id ()));
       this->dump_msg (buf,
                       reinterpret_cast <u_char *> (db->base () + rd_pos - TAO_GIOP_MESSAGE_HEADER_LEN),
                       db->size ()  + rd_pos - TAO_GIOP_MESSAGE_HEADER_LEN);

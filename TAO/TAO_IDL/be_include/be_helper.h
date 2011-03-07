@@ -159,7 +159,8 @@ public:
   int nl (void);
 
   /// "printf" style variable argument print
-  int print (const char *format, ...);
+  int print (const char *format, ...)
+    ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3);
 
   /// Generate a #if !defined, #defined macro
   int gen_ifdef_macro (const char *flat_name,
@@ -216,7 +217,6 @@ protected:
 
   /// Used to set tab spaces.
   ACE_CString tab_unit_str_;
-  const char *tab_unit_;
 };
 
 #endif // if !defined
