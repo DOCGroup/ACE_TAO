@@ -202,9 +202,6 @@ ACE_SSL_Context::ssl_library_fini (void)
   --ssl_library_init_count;
   if (ssl_library_init_count == 0)
     {
-      // Explicitly close the singleton
-      ACE_Unmanaged_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::close();
-
       ::ERR_free_strings ();
       ::EVP_cleanup ();
 
@@ -216,7 +213,6 @@ ACE_SSL_Context::ssl_library_fini (void)
 
       delete [] this->locks_;
       this->locks_ = 0;
-
 #endif  /* ACE_HAS_THREADS */
     }
 }
@@ -645,8 +641,8 @@ ACE_SSL_Context::dh_params (const char *file_name,
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 
-template ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX> *
-  ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::singleton_;
+template ACE_Unmanaged_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX> *
+  ACE_Unmanaged_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::singleton_;
 
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
 
