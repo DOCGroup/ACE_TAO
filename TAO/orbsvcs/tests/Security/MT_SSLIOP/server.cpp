@@ -161,6 +161,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       worker.thr_mgr ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
