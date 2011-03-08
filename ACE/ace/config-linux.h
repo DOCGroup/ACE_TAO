@@ -9,6 +9,10 @@
 #define ACE_CONFIG_LINUX_H
 #include /**/ "ace/pre.h"
 
+#if !defined (ACE_MT_SAFE)
+#  define ACE_MT_SAFE 1
+#endif
+
 #define ACE_PLATFORM_CONFIG config-linux.h
 
 #include "ace/config-linux-common.h"
