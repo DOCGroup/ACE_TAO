@@ -493,6 +493,10 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 #define ACE_HAS_TEMPLATE_TYPEDEFS
 #endif
 
+#ifndef ACE_GCC_FORMAT_ATTRIBUTE
+# define ACE_GCC_FORMAT_ATTRIBUTE(TYPE, STR_INDEX, FIRST_INDEX)
+#endif
+
 #ifndef ACE_DEPRECATED
 # define ACE_DEPRECATED
 #endif
