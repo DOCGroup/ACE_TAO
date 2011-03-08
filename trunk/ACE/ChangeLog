@@ -1,3 +1,8 @@
+Tue Mar  8 15:36:34 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux.h:
+          Put back accidentally removed MT_SAFE define.
+
 Tue Mar  8 10:31:41 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/config-macros.h:
