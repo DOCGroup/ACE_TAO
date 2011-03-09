@@ -342,13 +342,13 @@ int ACE_Scheduler_Factory::dump_schedule
       if (file == 0)
           return -1;
     }
-  ACE_OS::fprintf (file, header);
+  ACE_OS::fprintf (file, "%s", header);
 
   // Indicate anomalies encountered during scheduling.
 
-  ACE_OS::fprintf(file, (anomalies.length () > 0
-                         ? start_anomalies_found
-                         : start_anomalies_none));
+  ACE_OS::fprintf(file, "%s", (anomalies.length () > 0
+                               ? start_anomalies_found
+                               : start_anomalies_none));
 
   for (i = 0; i < anomalies.length (); ++i)
     {
@@ -388,7 +388,7 @@ int ACE_Scheduler_Factory::dump_schedule
     }
 
   // Print out operation QoS info.
-  ACE_OS::fprintf (file, start_infos);
+  ACE_OS::fprintf (file, "%s", start_infos);
 
   for (i = 0;
        i < infos.length ();
@@ -437,9 +437,9 @@ int ACE_Scheduler_Factory::dump_schedule
   ACE_OS::fprintf(file, "\n");
 
   if (infos.length () > 0)
-    ACE_OS::fprintf (file, end_infos);
+    ACE_OS::fprintf (file, "%s", end_infos);
   else
-    ACE_OS::fprintf (file, end_infos_empty);
+    ACE_OS::fprintf (file, "%s", end_infos_empty);
 
   // Print out banner indicating which dependencies are dumped.
   if (dump_disabled_dependencies)
@@ -452,7 +452,7 @@ int ACE_Scheduler_Factory::dump_schedule
     }
 
   // Print out operation dependency info.
-  ACE_OS::fprintf (file, start_dependencies);
+  ACE_OS::fprintf (file, "%s", start_dependencies);
 
   for (i = 0;
        i < dependencies.length ();
@@ -484,13 +484,13 @@ int ACE_Scheduler_Factory::dump_schedule
   ACE_OS::fprintf (file, "\n");
 
   if (dependencies.length () > 0)
-    ACE_OS::fprintf (file, end_dependencies);
+    ACE_OS::fprintf (file, "%s", end_dependencies);
   else
-    ACE_OS::fprintf (file, end_dependencies_empty);
+    ACE_OS::fprintf (file, "%s", end_dependencies_empty);
 
 
   // Print out queue configuration info.
-  ACE_OS::fprintf (file, start_configs);
+  ACE_OS::fprintf (file, "%s", start_configs);
 
   for (i = 0;
        i < configs.length ();
@@ -512,11 +512,11 @@ int ACE_Scheduler_Factory::dump_schedule
   ACE_OS::fprintf (file, "\n");
 
   if (configs.length () > 0)
-    ACE_OS::fprintf (file, end_configs);
+    ACE_OS::fprintf (file, "%s", end_configs);
   else
-    ACE_OS::fprintf (file, end_configs_empty);
+    ACE_OS::fprintf (file, "%s", end_configs_empty);
 
-  ACE_OS::fprintf (file, footer);
+  ACE_OS::fprintf (file, "%s", footer);
   ACE_OS::fclose (file);
   return 0;
 }
