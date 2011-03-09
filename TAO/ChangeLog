@@ -1,3 +1,10 @@
+Wed Mar  9 14:55:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Server_Strategy_Factory.h:
+        * tao/Server_Strategy_Factory.cpp:
+          Made all methods except the destructor pure virtual, this is an
+          abstract base class
+
 Wed Mar  9 14:27:31 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Client_Strategy_Factory.h:
