@@ -457,7 +457,7 @@ endif
 depend.local: $(MAKEFILE) idl_stubs.local
 	@$(RM) $(DEPENDENCY_FILE).old
 	@cp $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old
-	$(DEPGEN_ENV) $(DEPGEN) -A $(DEPEND_CMD_ARGS) -e config.h -f $(DEPENDENCY_FILE) \
+	$(DEPGEN_ENV) $(DEPGEN) -A $(DEPEND_CMD_ARGS) -f $(DEPENDENCY_FILE) \
 	$(CPPFLAGS) -t gnu -DMAKEDEPEND $(CCFLAGS) $(LSRC) $(SRC) $(PSRC)
 	@if cmp -s $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old ;\
 	then echo "GNUmakefile dependencies unchanged." ;\

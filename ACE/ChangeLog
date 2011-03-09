@@ -1,3 +1,10 @@
+Wed Mar  9 16:22:26 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/rules.local.GNU:
+
+          Removed "-e config.h" from the depgen.pl invocation, we do want
+          dependencies included from config.h to be considered.
+
 Wed Mar  9 10:38:39 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/Service_Object.cpp:
