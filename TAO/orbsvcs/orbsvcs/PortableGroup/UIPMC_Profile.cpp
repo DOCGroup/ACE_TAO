@@ -550,7 +550,8 @@ TAO_UIPMC_Profile::to_string (void)
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
   ACE_OS::sprintf (buf,
-                   "corbaloc:%s:%c.%c@%c.%c-%s-%u",
+                   "corbaloc:%s:%c.%c@%c.%c-%s-"
+                   ACE_UINT64_FORMAT_SPECIFIER_ASCII,
                    ::the_prefix,
                    digits [this->version_.major],
                    digits [this->version_.minor],
@@ -562,7 +563,7 @@ TAO_UIPMC_Profile::to_string (void)
   if (this->has_ref_version_)
     {
       ACE_OS::sprintf (&buf[ACE_OS::strlen (buf)],
-                       "-%u",
+                       "-" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
                        this->ref_version_);
     }
 

@@ -510,7 +510,11 @@ int FTClientMain::next_replica (void)
   }
   else
   {
-    ACE_OS::fprintf (stderr, "***OUT_OF_REPLICAS*** %d\n", this->replica_pos_);
+    ACE_OS::fprintf (stderr,
+                     "***OUT_OF_REPLICAS*** "
+                     ACE_SIZE_T_FORMAT_SPECIFIER_ASCII
+                     "\n",
+                     this->replica_pos_);
   }
   return result;
 }

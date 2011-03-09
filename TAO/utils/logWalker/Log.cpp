@@ -126,7 +126,7 @@ Log::get_host (long pid)
         default:
           {
             char ext[10];
-            ACE_OS::sprintf(ext,"_%d",numprocs+1);
+            ACE_OS::sprintf(ext,"_" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII,numprocs+1);
             ACE_CString a2 = alias_ + ext;
             hp->proc_name(a2);
           }

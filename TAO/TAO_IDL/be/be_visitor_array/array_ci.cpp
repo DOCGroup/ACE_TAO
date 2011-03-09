@@ -179,7 +179,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
                       '\0',
                       NAMEBUFSIZE);
       ACE_OS::sprintf (buf,
-                       "_%d",
+                       "_" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
                        node->dims ()[i]->ev ()->u.ulval);
       unique += buf;
     }
