@@ -1,3 +1,21 @@
+Wed Mar  9 19:14:01 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h: Re-added OS.h due to popular demand. It's been slimmed down
+          from its pre-ACE 6 days, now including primarily the OS_NS_*.h files
+          which can be disabled by setting the preprocessor macro
+          DO_NOT_INCLUDE_OS_H before including OS.h.
+          This file is here to maintain backwards build compatibility with
+          older ACE versions. Using it will slow your compile time over
+          simply including the requisite OS_NS_*.h file(s).
+
+        * bin/fuzz.pl: Added a new test check_for_include_OS_h to be sure no
+          source within ACE includes ace/OS.h.
+
+        * tests/OS_Test.cpp: Added #include "ace/OS.h" to be sure that it
+          at least compiles.
+
+        * NEWS: Note that OS.h is back.
+
 Wed Mar  9 16:22:26 UTC 2011  Adam Mitz  <mitza@ociweb.com>
 
         * include/makeinclude/rules.local.GNU:

@@ -2073,6 +2073,42 @@ sub check_for_ORB_init ()
     }
 }
 
+# This test checks for the presence of an include for ace/OS.h
+# which should never occur. Only user code is allowed to include OS.h.
+sub check_for_include_OS_h ()
+{
+    print "Running the OS.h inclusion check\n";
+    foreach $file (@files_h, @files_cpp, @files_inl) {
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                if (/^\s*#\s*include\s*<[(ace)|(TAO)|(CIAO)]\/.*>/) {
+                    print_error ("$file:$.: include <ace\/..> used");
+                    ++$bad_occurance;
+                }
+                if (/FUZZ\: disable check_for_include_OS_h/) {
+                    $disable = 1;
+                    next;
+                }
+                elsif (/FUZZ\: enable check_for_include_OS_h/) {
+                    $disable = 0;
+                    next;
+                }
+                else {
+                    if (/^\s*#\s*include\s*"ace\/OS.h"/) {
+                        print_error ("$file:$.: include ace/OS.h used");
+                    }
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
 ##############################################################################
 
 use vars qw/$opt_c $opt_d $opt_h $opt_l $opt_t $opt_m/;
@@ -2125,7 +2161,8 @@ if (!getopts ('cdhl:t:mv') || $opt_h) {
            check_for_refcountservantbase
            check_for_TAO_Local_RefCounted_Object
            check_for_ORB_init
-           check_for_trailing_whitespace\n";
+           check_for_trailing_whitespace
+           check_for_include_OS_h\n";
     exit (1);
 }
 
@@ -2199,6 +2236,7 @@ check_for_long_file_names () if ($opt_l >= 1);
 check_for_improper_main_declaration () if ($opt_l >= 1);
 check_for_TAO_Local_RefCounted_Object () if ($opt_l >= 1);
 check_for_ORB_init () if ($opt_l >= 1);
+check_for_include_OS_h () if ($opt_l >= 1);
 
 print "\nfuzz.pl - $errors error(s), $warnings warning(s)\n";
 
