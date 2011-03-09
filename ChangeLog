@@ -1,3 +1,13 @@
+Wed Mar  9 19:14:01 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h: Re-added OS.h due to popular demand. It's been slimmed down
+          from its pre-ACE 6 days, now including primarily the OS_NS_*.h files
+          which can be disabled by setting the preprocessor macro
+          DO_NOT_INCLUDE_OS_H before including OS.h.
+          This file is here to maintain backwards build compatibility with
+          older ACE versions. Using it will slow your compile time over
+          simply including the requisite OS_NS_*.h file(s).
+
 Tue Jan 25 15:17:58 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * bin/MakeProjectCreator/config/acemfcexe.mpb: The SubSystem value
