@@ -100,7 +100,7 @@ namespace FTAPP
     /**
      * sequence number applied to created IOGRs
      */
-    unsigned long iogr_seq_;
+    size_t iogr_seq_;
 
     /**
      * prefix for names

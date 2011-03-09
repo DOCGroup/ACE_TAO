@@ -989,7 +989,7 @@ Catior_i::cat_octet_seq (const char *object_name,
       if (!stream.read_octet (anOctet))
         return false;
 
-      ACE_OS::snprintf (buf, bufsize, "%02.2x ", anOctet);
+      ACE_OS::snprintf (buf, bufsize, "%2.2x ", anOctet);
       buffer_ += buf;
       objKey[i] = (char) anOctet;
     }
@@ -1110,7 +1110,9 @@ Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
   for ( ; index < c_ccslen; ++index)
     {
       // CodesetId for char
-      ACE_OS::snprintf (buf, bufsize, "\t%u) ", index + 1L);
+      ACE_OS::snprintf (buf, bufsize,
+                        "\t" ACE_UINT32_FORMAT_SPECIFIER_ASCII ") ",
+                        index + 1);
       buffer_ += buf;
       displayHex (stream);
     }
@@ -1137,7 +1139,9 @@ Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
   //  Loop through and display them
   for (index = 0; index < w_ccslen; ++index)
     {
-      ACE_OS::snprintf (buf, bufsize, "\t %u) ", index + 1L);
+      ACE_OS::snprintf (buf, bufsize,
+                        "\t " ACE_UINT32_FORMAT_SPECIFIER_ASCII ") ",
+                        index + 1);
       buffer_ += buf;
       displayHex (stream);
     }
@@ -1170,7 +1174,9 @@ Catior_i::cat_tagged_components (TAO_InputCDR& stream)
 
       indent ();
       ACE_OS::snprintf (buf, bufsize,
-                        "The component <%d> ID is ", i+1, tag);
+                        "The component <" ACE_UINT32_FORMAT_SPECIFIER_ASCII
+                        "> ID is " ACE_UINT32_FORMAT_SPECIFIER_ASCII,
+                        i+1, tag);
       buffer_ += buf;
 
       if (tag == IOP::TAG_ORB_TYPE) {
@@ -1273,7 +1279,7 @@ Catior_i::cat_profile_helper (TAO_InputCDR& stream,
     {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
-                        "detected new v%d.%d %C profile that catior cannot decode\n",
+                        "detected new v%d.%d %s profile that catior cannot decode\n",
                         iiop_version_major,
                         iiop_version_minor,
                         protocol);
@@ -1626,7 +1632,7 @@ Catior_i::cat_nsk_profile_helper (TAO_InputCDR& stream,
     {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
-                        "detected new v%d.%d %C profile that catior cannot decode",
+                        "detected new v%d.%d %s profile that catior cannot decode",
                         iiop_version_major,
                         iiop_version_minor,
                         protocol);

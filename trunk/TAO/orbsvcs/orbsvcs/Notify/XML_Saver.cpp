@@ -37,7 +37,7 @@ namespace TAO_Notify
   {
     ACE_OS::snprintf(file_path, MAXPATHLEN, ACE_TEXT("%s.%3.3d"),
       this->base_name_.c_str (),
-      nfile);
+      static_cast<int> (nfile));
   }
 
   void

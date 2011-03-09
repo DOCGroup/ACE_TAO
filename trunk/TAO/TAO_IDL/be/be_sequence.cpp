@@ -204,7 +204,7 @@ be_sequence::gen_name (void)
     {
       char ulval_str [NAMEBUFSIZE];
       ACE_OS::sprintf (ulval_str,
-                       "_%u",
+                       "_" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
                        this->max_size ()->ev ()->u.ulval);
       ACE_OS::strcat (namebuf,
                       ulval_str);
@@ -465,7 +465,8 @@ be_sequence::instance_name ()
       else
         {
           ACE_OS::sprintf (namebuf,
-                           "_TAO_bounded_object_reference_sequence_%s_%u",
+                           "_TAO_bounded_object_reference_sequence_%s_"
+                           ACE_UINT32_FORMAT_SPECIFIER_ASCII,
                            prim_type->local_name ()->get_string (),
                            this->max_size ()->ev ()->u.ulval);
         }
@@ -481,7 +482,8 @@ be_sequence::instance_name ()
       else
         {
           ACE_OS::sprintf (namebuf,
-                           "_TAO_bounded_valuetype_sequence_%s_%u",
+                           "_TAO_bounded_valuetype_sequence_%s_"
+                           ACE_UINT32_FORMAT_SPECIFIER_ASCII,
                            prim_type->local_name ()->get_string (),
                            this->max_size ()->ev ()->u.ulval);
         }
@@ -539,9 +541,10 @@ be_sequence::instance_name ()
       else
         {
           ACE_OS::sprintf (namebuf,
-                           "_TAO_bounded_value_sequence_%s_%u",
-                            prim_type->local_name ()->get_string (),
-                            this->max_size ()->ev ()->u.ulval);
+                           "_TAO_bounded_value_sequence_%s_"
+                           ACE_UINT32_FORMAT_SPECIFIER_ASCII,
+                           prim_type->local_name ()->get_string (),
+                           this->max_size ()->ev ()->u.ulval);
         }
 
       break;
@@ -826,7 +829,7 @@ be_sequence::compute_tc_name (void)
   char bound[30] = { 0 };
 
   ACE_OS::sprintf (bound,
-                   "_%u",
+                   "_" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
                    this->max_size ()->ev ()->u.ulval);
 
   ACE_CString local_tc_name =
