@@ -1,3 +1,9 @@
+Wed Mar  9 11:06:52 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp:
+          Fixed use of types in printf format.
+
 Sat Mar  5 12:27:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Event_Connector_T.h:
