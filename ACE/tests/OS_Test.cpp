@@ -15,6 +15,10 @@
 
 #include "test_config.h"
 #include "ace/ACE.h"
+//FUZZ: disable check_for_include_OS_h
+#include "ace/OS.h"
+//FUZZ: enable check_for_include_OS_h
+
 #include "ace/OS_NS_math.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
