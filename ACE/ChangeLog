@@ -1,3 +1,12 @@
+Wed Mar  9 10:38:39 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Service_Object.cpp:
+          Fixed incorrect arguments for the provided format.
+
+        * ace/Process.h:
+          Reverted my change from 'Mon Mar  7 16:14:33 UTC 2011'. GCC cannot
+          check formats in wide strings.
+
 Tue Mar  8 15:36:34 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-linux.h:

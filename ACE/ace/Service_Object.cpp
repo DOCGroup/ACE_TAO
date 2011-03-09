@@ -36,9 +36,9 @@ ACE_Service_Type::dump (void) const
   // the generated C++ code.
   ACE_OS::fprintf(stderr,
                   "// [ST] dump, this=%p, name=%s, type=%p, so=%p, active=%d\n",
-                  this,
+                  static_cast<void const *> (this),
                   this->name_,
-                  this->type_,
+                  static_cast<void const *> (this->type_),
                   (this->type_ != 0) ? this->type_->object () : 0,
                   this->active_);
 
