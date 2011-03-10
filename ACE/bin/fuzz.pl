@@ -2083,10 +2083,6 @@ sub check_for_include_OS_h ()
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                if (/^\s*#\s*include\s*<[(ace)|(TAO)|(CIAO)]\/.*>/) {
-                    print_error ("$file:$.: include <ace\/..> used");
-                    ++$bad_occurance;
-                }
                 if (/FUZZ\: disable check_for_include_OS_h/) {
                     $disable = 1;
                     next;
@@ -2095,8 +2091,12 @@ sub check_for_include_OS_h ()
                     $disable = 0;
                     next;
                 }
+                elsif ($disable == 0 and /^\s*#\s*include\s*<[(ace)|(TAO)|(CIAO)]\/.*>/) {
+                    print_error ("$file:$.: include <ace\/..> used");
+                    ++$bad_occurance;
+                }
                 else {
-                    if (/^\s*#\s*include\s*"ace\/OS.h"/) {
+                    if ($disable == 0 and /^\s*#\s*include\s*"ace\/OS.h"/) {
                         print_error ("$file:$.: include ace/OS.h used");
                     }
                 }
