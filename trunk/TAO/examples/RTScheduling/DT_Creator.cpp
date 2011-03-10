@@ -213,7 +213,7 @@ DT_Creator::register_synch_obj (void)
   ACE_Time_Value timestamp = ACE_OS::gettimeofday ();
 
   char buf [BUFSIZ];
-  ACE_OS::sprintf(buf, "%lu", timestamp.sec ());
+  ACE_OS::sprintf(buf, "%lu", static_cast<unsigned long> (timestamp.sec ()));
   synch_name += buf;
 
   name [0].id =
@@ -471,12 +471,13 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current)
 
       if (dt_list_ [i]->start_time () != 0 &&
           (elapsed_time.sec () < dt_list_[i]->start_time ()))
-  {
-    time_t suspension_time = dt_list_[i]->start_time () - elapsed_time.sec ();
-    ACE_OS::sprintf (buf, "suspension_time = %lu\n", suspension_time);
-    log [log_index++] = ACE_OS::strdup (buf);
-    yield (suspension_time, dt_list_[i]);
-  }
+        {
+          time_t suspension_time = dt_list_[i]->start_time () - elapsed_time.sec ();
+          ACE_OS::sprintf (buf, "suspension_time = %lu\n",
+                           static_cast<unsigned long> (suspension_time));
+          log [log_index++] = ACE_OS::strdup (buf);
+          yield (suspension_time, dt_list_[i]);
+        }
 
       sched_param = this->sched_param (dt_list_ [i]->importance ());
       dt_list_ [i]->activate_task (current,
