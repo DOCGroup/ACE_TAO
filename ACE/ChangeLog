@@ -1,3 +1,9 @@
+Thu Mar 10 11:04:08 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux-common.h:
+        * include/makeinclude/platform_linux_suncc.GNU:
+          Sun Studio related updates.
+
 Thu Mar 10 10:37:44 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/OS_NS_netdb.inl:
