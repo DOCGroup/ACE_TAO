@@ -243,7 +243,7 @@ TAO_OutStream::gen_ifndef_string (const char *fname,
       extension = fname;
     }
 
-  ACE_OS::sprintf (macro_name, prefix);
+  ACE_OS::sprintf (macro_name, "%s", prefix);
 
   size_t offset = ACE_OS::strlen (prefix);
 
