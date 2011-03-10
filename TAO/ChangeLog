@@ -1,3 +1,8 @@
+Thu Mar 10 11:26:47 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * tao/ZIOP/ZIOP.cpp:
+          Use ACE::is_equal() to compare floating point values.
+
 Thu Mar 10 10:54:34 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * TAO_IDL/be/be_interface.cpp:
