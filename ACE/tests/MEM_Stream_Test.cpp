@@ -186,9 +186,9 @@ run_client (u_short port,
 
   ACE_TCHAR buf[MAXPATHLEN];
 
-  for (ssize_t cntr = 0; cntr < NUMBER_OF_ITERATIONS; cntr ++)
+  for (size_t cntr = 0; cntr < NUMBER_OF_ITERATIONS; cntr ++)
     {
-      ACE_OS::sprintf (buf, ACE_TEXT ("Iteration ")ACE_SSIZE_T_FORMAT_SPECIFIER,
+      ACE_OS::sprintf (buf, ACE_TEXT ("Iteration ")ACE_SIZE_T_FORMAT_SPECIFIER,
                        cntr);
 
       ssize_t slen = (ACE_OS::strlen (buf) + 1) * sizeof (ACE_TCHAR);
