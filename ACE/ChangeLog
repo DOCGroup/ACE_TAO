@@ -1,3 +1,8 @@
+Thu Mar 10 11:41:15 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/MEM_Stream_Test.cpp:
+          Fixed printf warning on MinGW.
+
 Thu Mar 10 11:04:08 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-linux-common.h:
