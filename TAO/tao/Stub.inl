@@ -16,10 +16,10 @@ TAO_Stub::reset_base (void)
 }
 
 
-ACE_INLINE ACE_Lock*
+ACE_INLINE const TAO_SYNCH_MUTEX&
 TAO_Stub::profile_lock (void) const
 {
-  return this->profile_lock_ptr_;
+  return this->profile_lock_;
 }
 
 ACE_INLINE void
@@ -53,9 +53,9 @@ TAO_Stub::reset_profiles_i (void)
 ACE_INLINE void
 TAO_Stub::reset_profiles (void)
 {
-  ACE_MT (ACE_GUARD (ACE_Lock,
+  ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
                      guard,
-                     *this->profile_lock_ptr_));
+                     this->profile_lock_));
   this->reset_profiles_i ();
 }
 
@@ -156,9 +156,9 @@ TAO_Stub::next_profile_i (void)
 ACE_INLINE TAO_Profile *
 TAO_Stub::next_profile (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             guard,
-                            *this->profile_lock_ptr_,
+                            this->profile_lock_,
                             0));
   return this->next_profile_i ();
 }
@@ -184,9 +184,9 @@ TAO_Stub::valid_profile (void) const
 ACE_INLINE TAO_Profile *
 TAO_Stub::base_profiles (const TAO_MProfile &mprofiles)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             guard,
-                            *this->profile_lock_ptr_,
+                            this->profile_lock_,
                             0));
 
   // first reset things so we start from scratch!
@@ -204,9 +204,9 @@ TAO_Stub::base_profiles (const TAO_MProfile &mprofiles)
 ACE_INLINE CORBA::Boolean
 TAO_Stub::next_profile_retry (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             guard,
-                            *this->profile_lock_ptr_,
+                            this->profile_lock_,
                             0));
 
   if (this->profile_success_ && this->forward_profiles_)
