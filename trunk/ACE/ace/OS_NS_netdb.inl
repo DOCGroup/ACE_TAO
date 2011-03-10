@@ -143,6 +143,7 @@ ACE_OS::gethostbyaddr_r (const char *addr,
   else
     return (struct hostent *) 0;
 #   elif defined (ACE_VXWORKS)
+  ACE_UNUSED_ARG (h_errnop);
   // VxWorks 6.x has a threadsafe gethostbyaddr() which returns a heap-allocated
   // data structure which needs to be freed with hostentFree()
   //FUZZ: disable check_for_lack_ACE_OS
@@ -333,6 +334,7 @@ ACE_OS::gethostbyname_r (const char *name,
   else
     return (struct hostent *) 0;
 #   elif defined (ACE_VXWORKS)
+  ACE_UNUSED_ARG (h_errnop);
   // VxWorks 6.x has a threadsafe gethostbyname() which returns a heap-allocated
   // data structure which needs to be freed with hostentFree()
   //FUZZ: disable check_for_lack_ACE_OS

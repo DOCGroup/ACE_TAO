@@ -1,3 +1,16 @@
+Thu Mar 10 10:37:44 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/OS_NS_netdb.inl:
+        * ace/Stack_Trace.cpp:
+          Fixed warnings on VxWorks.
+
+        * ace/ACE.cpp:
+          Added a cast for a type that is expected by printf to be long.
+
+        * examples/Timer_Queue/Custom_Handler.cpp:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp:
+          Added casts for arguments to printf as it expects unsigned long.
+
 Thu Mar 10 08:29:30 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
