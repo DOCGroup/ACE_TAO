@@ -25,9 +25,9 @@
 #  define ACE_HAS_PTHREADS_UNIX98_EXT
 #endif /* _XOPEN_SOURCE - 0 >= 500 */
 
-#if !defined (ACE_LACKS_LINUX_NPTL)
-
 # include "ace/config-posix.h"
+
+#if !defined (ACE_LACKS_LINUX_NPTL)
 
   // Temporary fix because NPTL kernels do have shm_open but there is a problem
   // with shm_open/shm_unlink pairing in ACE which needs to be fixed when I have time.

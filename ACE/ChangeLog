@@ -1,3 +1,11 @@
+Thu Mar 10 07:31:51 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux-common.h:
+          Include config-posix.h on non-NPTL platforms as well.
+
+        * ace/config-linux.h:
+          Compile fixes for single thread build.
+
 Wed Mar  9 19:14:01 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h: Re-added OS.h due to popular demand. It's been slimmed down
