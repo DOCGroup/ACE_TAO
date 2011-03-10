@@ -1,3 +1,11 @@
+Thu Mar 10 13:08:17 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+        * tao/Stub.h:
+        * tao/Stub.inl:
+        * tao/Stub.cpp:
+          Made the profile_lock now a regular member mutex
+
 Thu Mar 10 11:41:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Stub.h:
