@@ -205,7 +205,9 @@
 #define ACE_HAS_BSWAP_16
 #define ACE_HAS_BSWAP_32
 
-#define ACE_HAS_BSWAP_64
+#if defined (__GNUC__)
+#  define ACE_HAS_BSWAP_64
+#endif
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
