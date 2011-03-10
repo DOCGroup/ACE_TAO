@@ -14,13 +14,7 @@
 #include <param.h>
 #undef __FREEBSDCODE__
 
-#if ! defined (__ACE_INLINE__)
-# define __ACE_INLINE__
-#endif /* ! __ACE_INLINE__ */
-
-#if defined (__GNUG__)
-# include "ace/config-g++-common.h"
-#endif /* __GNUG__ */
+#include "ace/config-g++-common.h"
 
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
@@ -75,6 +69,7 @@
 #define ACE_HAS_POSIX_NONBLOCK
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
+#define ACE_HAS_REENTRANT_FUNCTIONS
 #define ACE_HAS_SCANDIR
 #define ACE_HAS_SIGACTION_CONSTP2
 #define ACE_HAS_SIGINFO_T
@@ -104,7 +99,9 @@
 #define ACE_LACKS_MADVISE
 #define ACE_LACKS_MKSTEMP_PROTOTYPE
 #define ACE_LACKS_MKTEMP_PROTOTYPE
+#define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 #define ACE_LACKS_PUTENV_PROTOTYPE
+#define ACE_LACKS_PWD_REENTRANT_FUNCTIONS /*fixme */
 #define ACE_LACKS_REALPATH
 #define ACE_LACKS_RLIMIT_NOFILE
 #define ACE_LACKS_RWLOCK_T
@@ -113,10 +110,10 @@
 #define ACE_LACKS_SETEUID
 #define ACE_LACKS_SIGINFO_H
 #define ACE_LACKS_STRPTIME
+#define ACE_LACKS_SUSECONDS_T
 #define ACE_LACKS_SWAB_PROTOTYPE
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_LACKS_UCONTEXT_H
-#define ACE_LACKS_SUSECONDS_T
 
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0)
 #define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
@@ -130,7 +127,6 @@
 
 #if ACE_MT_SAFE == 1
   // Platform supports threads.
-# define ACE_HAS_PTHREADS
 # define ACE_HAS_PTHREADS_STD
 # define ACE_HAS_PTHREADS_UNIX98_EXT
 # define ACE_HAS_PTHREAD_GETCONCURRENCY
