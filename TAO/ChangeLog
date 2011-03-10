@@ -1,3 +1,9 @@
+Thu Mar 10 10:54:34 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * examples/RTScheduling/DT_Creator.cpp:
+          Added casts to types expected by printf format.
+
 Wed Mar  9 14:55:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Server_Strategy_Factory.h:
