@@ -207,9 +207,9 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_pt
   if (stub->forward_profiles ())
     {
       // set lock, as forward_profiles might be deleted concurrently
-      ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+      ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                                 guard,
-                                *stub->profile_lock (),
+                                const_cast <TAO_SYNCH_MUTEX&>(stub->profile_lock ()),
                                 0));
 
       // even now, the forward profiles might have been deleted in the meanwhile
