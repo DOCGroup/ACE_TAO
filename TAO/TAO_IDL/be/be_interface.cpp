@@ -1098,7 +1098,7 @@ be_interface::gen_operation_table (const char *flat_name,
                          "%s%d.%d.%s.gperf",
                          idl_global->temp_dir (),
                          ACE_OS::rand_r (seed),
-                         ACE_OS::getpid (),
+                         static_cast<int> (ACE_OS::getpid ()),
                          flat_name);
 
         // QNX can't handle individual file names (path components)
