@@ -95,7 +95,8 @@ namespace DAnCE
     {
       char buf[16];
       ACE_CString id (this->node_);
-      ACE_OS::snprintf (buf, sizeof (buf), "-%u", this);
+      // This code only generates unique id.
+      ACE_OS::snprintf (buf, sizeof (buf), "-%p", this);
       id += buf;
       return id;
     }

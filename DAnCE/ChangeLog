@@ -1,3 +1,8 @@
+Thu Mar 10 09:16:00 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tools/Split_Plan/Locality_Splitter.cpp:
+          Fixed warning from incorrect use of printf format.
+
 Thu Mar  3 12:31:50 UTC 2011  William R. Otte  <r._w@local>
 
         * dance/NodeManager/NodeManager_Impl.cpp:
