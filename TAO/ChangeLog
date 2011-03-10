@@ -1,3 +1,14 @@
+Thu Mar 10 11:41:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Stub.h:
+          Doxygen changes
+
+        * tao/Stub.cpp:
+          Explicitly retrieve the client_strategy factory in the constructor in
+          order to force a load of it at this point. Not doing it here leads
+          to the situation in the ImR combined example that we want to load
+          it later and than get a deadlock
+
 Thu Mar 10 11:26:47 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * tao/ZIOP/ZIOP.cpp:

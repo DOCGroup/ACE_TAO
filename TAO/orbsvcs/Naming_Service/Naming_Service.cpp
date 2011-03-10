@@ -6,10 +6,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 
-
-
 // Default Constructor.
-
 TAO_Naming_Service::TAO_Naming_Service (void)
   : time_ (0)
 {
