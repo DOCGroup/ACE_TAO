@@ -1,3 +1,8 @@
+Thu Mar 10 16:42:09 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace.mpc: Add OS.h to the Headers to be installed. Thanks to
+          Phil Mesnier for pointing this out.
+
 Wed Mar  9 19:14:01 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h: Re-added OS.h due to popular demand. It's been slimmed down
