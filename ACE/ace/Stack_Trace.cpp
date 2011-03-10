@@ -197,7 +197,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
 
 // See memEdrLib.c in VxWorks RTP sources for an example of stack tracing.
 
-static STATUS ace_vx_rtp_pc_validate (INSTR *pc, TRC_OS_CTX *pOsCtx)
+static STATUS ace_vx_rtp_pc_validate (INSTR *pc, TRC_OS_CTX *)
 {
   return ALIGNED (pc, sizeof (INSTR)) ? OK : ERROR;
 }
@@ -262,7 +262,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
           size_t len = ACE_OS::strlen (this->buf_);
           size_t space = SYMBUFSIZ - len - 1;
           char *cursor = this->buf_ + len;
-          size_t written = ACE_OS::snprintf (cursor, space, "%x %s",
+          size_t written = ACE_OS::snprintf (cursor, space, "%p %s",
                                              prevFn, fnName);
           cursor += written;
           space -= written;
