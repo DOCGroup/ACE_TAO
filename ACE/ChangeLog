@@ -1,3 +1,8 @@
+Thu Mar 10 08:29:30 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          Added some feature defines.
+
 Thu Mar 10 07:31:51 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-linux-common.h:
