@@ -399,13 +399,12 @@ protected:
   /**
    * This should be the same value as cached in the ORB_Core. The
    * reason for caching this helps our generated code, notably the
-   * stubs to be decoubled from ORB_Core. Please do not move it away.
+   * stubs to be decoupled from ORB_Core. Please do not move it away.
    */
   CORBA::Boolean const collocation_opt_;
 
-
-  // True if forwarding request upon some specific exceptions
-  // (e.g. OBJECT_NOT_EXIST) already happened.
+  /// True if forwarding request upon some specific exceptions
+  /// (e.g. OBJECT_NOT_EXIST) already happened.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, bool> forwarded_on_exception_;
 };
 
@@ -434,7 +433,6 @@ public:
 
 protected:
   TAO_Stub *p_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

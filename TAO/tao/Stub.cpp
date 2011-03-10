@@ -76,6 +76,11 @@ TAO_Stub::TAO_Stub (const char *repository_id,
 
   this->profile_lock_ptr_ = new ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ();
 
+  // Explicit trigger the loading of the client strategy factory at this moment.
+  // Not doing it here could lead to a problem loading it later on during
+  // an upcall
+  (void) this->orb_core_->client_factory ();
+
   this->base_profiles (profiles);
 }
 
