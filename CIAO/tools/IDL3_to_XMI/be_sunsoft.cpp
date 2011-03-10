@@ -21,8 +21,7 @@ TAO_SunSoft_OutStream::~TAO_SunSoft_OutStream (void)
 TAO_OutStream &
 TAO_SunSoft_OutStream::print (Identifier *id)
 {
-  ACE_OS::fprintf (this->fp_,
-                   id->get_string ());
+  ACE_OS::fprintf (this->fp_, "%s", id->get_string ());
 
   return *this;
 }

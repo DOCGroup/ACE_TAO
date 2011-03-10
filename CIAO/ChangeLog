@@ -1,3 +1,11 @@
+Thu Mar 10 11:23:32 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tools/IDL3_to_IDL2/be_sunsoft.cpp:
+        * tools/IDL3_to_IDL2/be_helper.cpp:
+        * tools/IDL3_to_XMI/be_sunsoft.cpp:
+        * tools/IDL3_to_XMI/be_helper.cpp:
+          Fixed warnings in the use of printf format.
+
 Wed Mar  9 11:06:52 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
