@@ -415,6 +415,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Null_Mutex.h
     Null_Semaphore.h
     Numeric_Limits.h
+    OS.h
     OS_Memory.h
     OS_NS_macros.h
     OS_Thread_Adapter.h
