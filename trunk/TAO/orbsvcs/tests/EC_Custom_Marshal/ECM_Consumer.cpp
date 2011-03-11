@@ -247,7 +247,7 @@ Driver::push_consumer (void* /* consumer_cookie */,
         {
           ECM_IDLData::Point& p = info.trajectory[j];
           if (static_cast<CORBA::ULong>(p.x) != j ||
-	      static_cast<CORBA::ULong>(p.y) != j*j)
+              static_cast<CORBA::ULong>(p.y) != j*j)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "invalid data in trajectory[%d] = (%f,%f)\n",
@@ -408,4 +408,3 @@ void
 Test_Consumer::disconnect_push_consumer (void)
 {
 }
-
