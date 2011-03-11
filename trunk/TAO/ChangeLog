@@ -1,3 +1,9 @@
+Fri Mar 11 14:04:14 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+          Use ACE::is_equal() to compare floating point values.
+
 Thu Mar 10 13:08:17 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
