@@ -246,7 +246,8 @@ Driver::push_consumer (void* /* consumer_cookie */,
       for (CORBA::ULong j = 0; j < n; ++j)
         {
           ECM_IDLData::Point& p = info.trajectory[j];
-          if (p.x != j || p.y != j*j)
+          if (static_cast<CORBA::ULong>(p.x) != j ||
+	      static_cast<CORBA::ULong>(p.y) != j*j)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "invalid data in trajectory[%d] = (%f,%f)\n",
