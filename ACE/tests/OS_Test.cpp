@@ -648,6 +648,35 @@ snprintf_test (void)
 }
 
 static int
+getpwnam_r_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing getpwnam_r\n")));
+
+  int result = 0;
+
+  struct passwd pwd;
+  struct passwd *pwd_ptr;
+  char buf[1024];
+
+  if (ACE_OS::getpwnam_r (getlogin (),
+                          &pwd,
+                          buf,
+                          sizeof (buf),
+                          &pwd_ptr) != 0)
+    {
+      result = 1;
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("getpwnam_r() failed\n")));
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" User '%s' has uid=%d and gid=%d\n"),
+                  pwd_ptr->pw_name, pwd_ptr->pw_uid, pwd_ptr->pw_gid));
+    }
+
+  return result;
+}
+
+static int
 ctime_r_test (void)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ctime_r\n")));
@@ -1345,6 +1374,9 @@ run_main (int, ACE_TCHAR *[])
   if ((result = snprintf_test ()) != 0)
     status = result;
 #endif /* !ACE_LACKS_VSNPRINTF || ACE_HAS_TRIO */
+
+  if ((result = getpwnam_r_test ()) != 0)
+    status = result;
 
   if ((result = ctime_r_test ()) != 0)
     status = result;

@@ -1,3 +1,28 @@
+Fri Mar 11 12:09:00 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_pwd.h:
+        * ace/OS_NS_pwd.inl:
+          Rewrote getpwnam_r(). Changed API to conform POSIX.
+          Fixes Bug #3952.
+
+        * ace/config-aix-5.x.h:
+        * ace/config-cygwin32.h:
+        * ace/config-freebsd.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-kfreebsd.h:
+        * ace/config-linux.h:
+        * ace/config-lynxos.h:
+        * ace/config-netbsd.h:
+        * ace/config-openbsd.h:
+        * ace/config-openvms.h:
+        * ace/config-rtems.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-win32-interix.h:
+          Config changes due getpwnam_r() rewrite and API change.
+
+        * tests/OS_Test.cpp:
+          Added atest for getpwnam_r().
+
 Thu Mar 10 16:42:30 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/fuzz.pl:

@@ -282,12 +282,6 @@
 #  define ACE_HAS_CHARPTR_SHMDT
 #endif
 
-// Platform has posix getpwnam_r
-#if (defined (_POSIX_C_SOURCE) && _POSIX_C_SOURCE - 0 >= 199506L) || \
-    defined(_POSIX_PTHREAD_SEMANTICS)
-# define ACE_HAS_POSIX_GETPWNAM_R
-#endif /* _POSIX_C_SOURCE || _POSIX_PTHREAD_SEMANTICS */
-
 #if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 1)
 #if defined (_REENTRANT) || \
  (defined (_POSIX_C_SOURCE) && (_POSIX_C_SOURCE - 0 >= 199506L)) || \
