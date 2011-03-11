@@ -1,3 +1,8 @@
+Fri Mar 11 14:11:54 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+          Fix for previous commit. Use ACE::is_inequal().
+
 Fri Mar 11 14:04:14 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
