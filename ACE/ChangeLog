@@ -1,3 +1,8 @@
+Fri Mar 11 16:30:16 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * apps/JAWS/server/HTTP_Request.cpp:
+          Fixed compile error due getpwnam_r() changes.
+
 Fri Mar 11 12:24:43 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * tests/OS_Test.cpp:
