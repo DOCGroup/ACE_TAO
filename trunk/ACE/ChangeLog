@@ -1,3 +1,10 @@
+Fri Mar 11 20:07:05 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/config-openbsd.h:
+          Attempted to fix warnings about wrong format for size_t type
+          on OpenBSD same as this works on NetBSD. It appears that %u is
+          too little for size_t, let's try %lu.
+
 Fri Mar 11 16:30:16 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * apps/JAWS/server/HTTP_Request.cpp:

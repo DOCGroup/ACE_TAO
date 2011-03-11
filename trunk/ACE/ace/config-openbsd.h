@@ -168,6 +168,9 @@
 // It seems as if most other OSs detect this and just report an error.
 #define ACE_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE
 
+#define ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII  "%ld"
+#define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%lu"
+
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_H */
