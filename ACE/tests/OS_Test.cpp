@@ -650,9 +650,10 @@ snprintf_test (void)
 static int
 getpwnam_r_test (void)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing getpwnam_r\n")));
-
   int result = 0;
+
+#if !defined (ACE_LACKS_PWD_FUNCTIONS)
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing getpwnam_r\n")));
 
   struct passwd pwd;
   struct passwd *pwd_ptr;
@@ -672,6 +673,7 @@ getpwnam_r_test (void)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" User '%s' has uid=%d and gid=%d\n"),
                   pwd_ptr->pw_name, pwd_ptr->pw_uid, pwd_ptr->pw_gid));
     }
+#endif
 
   return result;
 }

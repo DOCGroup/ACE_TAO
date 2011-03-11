@@ -1,3 +1,8 @@
+Fri Mar 11 12:24:43 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * tests/OS_Test.cpp:
+          Compile fix for platforms that lack pwd-functions.
+
 Fri Mar 11 12:09:00 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_pwd.h:
