@@ -1,3 +1,9 @@
+Fri Mar 11 20:31:17 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+          Removed tabs
+
 Fri Mar 11 14:11:54 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
