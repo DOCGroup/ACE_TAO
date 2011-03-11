@@ -979,7 +979,7 @@ visit_div (TAO_Binary_Constraint* boolean_div)
           break;
         case TAO_DOUBLE:
           right_isnt_zero =
-            ACE::is_equal (static_cast<CORBA::Double>
+            ACE::is_inequal (static_cast<CORBA::Double>
 	       (*dynamic_cast<TAO_Literal_Constraint*> (right)), 0.0);
           break;
         }
