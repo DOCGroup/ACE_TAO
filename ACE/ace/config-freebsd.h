@@ -160,7 +160,6 @@ enum schedparam_policy {
 
 #if (__FreeBSD_version < 501000)
 # define ACE_LACKS_STDINT_H
-# define ACE_LACKS_PWD_REENTRANT_FUNCTIONS
 #endif
 
 #if (__FreeBSD_version >= 501000)

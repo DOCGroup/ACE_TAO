@@ -53,10 +53,12 @@ namespace ACE_OS
   struct passwd *getpwnam (const char *user);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  struct passwd *getpwnam_r (const char *name,
-                             struct passwd *pwent,
-                             char *buffer,
-                             int buflen);
+  int getpwnam_r (const char *name,
+                  struct passwd *pwd,
+                  char *buffer,
+                  size_t bufsize,
+                  struct passwd **result);
+
   ACE_NAMESPACE_INLINE_FUNCTION
   void setpwent (void);
   //@}
