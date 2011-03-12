@@ -1,3 +1,9 @@
+Sat Mar 12 09:26:56 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux-common.h:
+        * ace/config-linux.h:
+          Disable clock_{get,set}time() for single thread build.
+
 Fri Mar 11 20:07:05 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/config-openbsd.h:
