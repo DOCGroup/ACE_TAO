@@ -52,7 +52,10 @@
 
 // AIO support pulls in the rt library, which pulls in the pthread
 // library.  Disable AIO in single-threaded builds.
-#if !defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS)
+#  define ACE_HAS_CLOCK_GETTIME
+#  define ACE_HAS_CLOCK_SETTIME
+#else
 #  undef ACE_HAS_AIO_CALLS
 #endif
 
