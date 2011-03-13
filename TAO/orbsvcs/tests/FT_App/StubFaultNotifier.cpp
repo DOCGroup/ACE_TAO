@@ -182,7 +182,8 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
   this->factory_ = ::FT::FaultDetectorFactory::_narrow(obj.in ());
   if (CORBA::is_nil(this->factory_.in ()))
   {
-    ACE_OS::fprintf (stderr, "Can't resolve Detector Factory IOR %s\n", this->detector_ior_);
+    ACE_OS::fprintf (stderr, "Can't resolve Detector Factory IOR %s\n",
+                     ACE_TEXT_ALWAYS_CHAR (this->detector_ior_));
     result = -1;
   }
   if (result == 0)

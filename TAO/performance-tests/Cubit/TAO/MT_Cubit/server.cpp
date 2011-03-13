@@ -178,7 +178,7 @@ Server::activate_high_servant (void)
 
   ACE_OS::sprintf (orbendpoint,
                    "-ORBEndpoint %s ",
-                   GLOBALS::instance ()->endpoint);
+                   ACE_TEXT_ALWAYS_CHAR (GLOBALS::instance ()->endpoint));
 
   char *high_second_argv[] =
     {orbendpoint,

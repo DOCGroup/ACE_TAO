@@ -79,7 +79,7 @@ int TestTask::svc()
       ACE_ERROR_RETURN ((LM_ERROR,
                           "Cannot open output file for writing IOR: ns.ior\n"),
                           1);
-    ACE_OS::fprintf (output_file, "%s", ACE_TEXT_CHAR_TO_TCHAR (namingServiceA_.ior ()));
+    ACE_OS::fprintf (output_file, "%s", namingServiceA_.ior ());
     ACE_OS::fclose (output_file);
 
     // Get reference to Root POA

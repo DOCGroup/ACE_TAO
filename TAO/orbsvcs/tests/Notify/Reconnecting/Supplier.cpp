@@ -232,7 +232,8 @@ Supplier_Main::parse_args (int argc, ACE_TCHAR *argv[])
     }
     else
     {
-      ACE_OS::fprintf(stderr, "Unrecognized argument: %s\n", argv[narg]);
+      ACE_OS::fprintf(stderr, "Unrecognized argument: %s\n",
+                      ACE_TEXT_ALWAYS_CHAR (argv[narg]));
       usage (stderr);
       result = -1;
     }
