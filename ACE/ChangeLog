@@ -1,3 +1,17 @@
+Sun Mar 13 09:37:13 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Service_Object.cpp:
+        * ace/Naming_Context.cpp:
+        * performance-tests/UDP/udp_test.cpp:
+        * performance-tests/SCTP/Options_Manager.cpp:
+        * apps/gperf/src/Options.cpp:
+        * apps/JAWS/clients/Blobby/Blob_Handler.cpp:
+        * examples/Log_Msg/test_callback.cpp:
+        * examples/IPC_SAP/FILE_SAP/client.cpp:
+        * examples/Service_Configurator/IPC-tests/client/broadcast_client_test.cpp:
+          Fixed compile warnings from incorrect use of ACE_TCHAR* type in
+          printf in wchar builds.
+
 Sat Mar 12 09:26:56 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-linux-common.h:

@@ -437,7 +437,7 @@ Client::run (void)
       for (; *cmd; cmd++)
         ACE_OS::fprintf (sumfp,
                          "%s ",
-                         *cmd);
+                         ACE_TEXT_ALWAYS_CHAR (*cmd));
       ACE_OS::fprintf (sumfp,
                        "\n");
 
