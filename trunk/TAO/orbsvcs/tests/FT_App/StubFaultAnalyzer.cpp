@@ -115,7 +115,8 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb)
   this->factory_ = ::FT::FaultDetectorFactory::_narrow(detector_obj.in ());
   if (CORBA::is_nil(this->factory_.in ()))
   {
-    ACE_OS::fprintf (stderr, "Can't resolve Detector Factory IOR %s\n", this->detector_ior_);
+    ACE_OS::fprintf (stderr, "Can't resolve Detector Factory IOR %s\n",
+                     ACE_TEXT_ALWAYS_CHAR (this->detector_ior_));
     result = -1;
   }
 
@@ -125,7 +126,8 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb)
   this->notifier_ = ::FT::FaultNotifier::_narrow(not_obj.in ());
   if (CORBA::is_nil(this->notifier_.in ()))
   {
-    ACE_OS::fprintf (stderr, "Can't resolve Notifier IOR %s\n", this->notifier_ior_);
+    ACE_OS::fprintf (stderr, "Can't resolve Notifier IOR %s\n",
+                     ACE_TEXT_ALWAYS_CHAR (this->notifier_ior_));
     result = -1;
   }
 

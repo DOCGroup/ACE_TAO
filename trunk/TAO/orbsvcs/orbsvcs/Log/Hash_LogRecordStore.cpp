@@ -466,10 +466,12 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::TimeT from_time,
 #endif
 
   if (how_many >= 0)
-    ACE_OS::sprintf (constraint, "time >= %s", uint64_formating);
+    ACE_OS::sprintf (constraint, "time >= %s",
+                     ACE_TEXT_ALWAYS_CHAR (uint64_formating));
   else
     {
-      ACE_OS::sprintf (constraint, "time < %s", uint64_formating);
+      ACE_OS::sprintf (constraint, "time < %s",
+                       ACE_TEXT_ALWAYS_CHAR (uint64_formating));
       how_many = -(how_many);
     }
 

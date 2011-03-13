@@ -91,7 +91,9 @@ TAO_HTTP_Reader::send_request (void)
     ACE_ERROR_RETURN((LM_ERROR,"TAO (%P|%t) - HTTP_Reader::send_request, request too large!"), -1);
 
   // Create a message to send to the server requesting retrieval of the file
-  int const len = ACE_OS::sprintf (mesg, "%s %s %s", request_prefix_, filename_, request_suffix_);
+  int const len = ACE_OS::sprintf (mesg, "%s %s %s", request_prefix_,
+                                   ACE_TEXT_ALWAYS_CHAR (filename_),
+                                   request_suffix_);
 
   // Send the message to server
   if (peer ().send_n (mesg, len) != len)
