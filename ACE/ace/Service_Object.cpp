@@ -37,7 +37,7 @@ ACE_Service_Type::dump (void) const
   ACE_OS::fprintf(stderr,
                   "// [ST] dump, this=%p, name=%s, type=%p, so=%p, active=%d\n",
                   static_cast<void const *> (this),
-                  this->name_,
+                  ACE_TEXT_ALWAYS_CHAR (this->name_),
                   static_cast<void const *> (this->type_),
                   (this->type_ != 0) ? this->type_->object () : 0,
                   this->active_);

@@ -78,7 +78,7 @@ Logger::log (ACE_Log_Record &log_record)
                     log_record.msg_data ()));
       else
         ACE_OS::printf ("Recursive Logger callback = %s",
-                        log_record.msg_data ());
+                        ACE_TEXT_ALWAYS_CHAR (log_record.msg_data ()));
     }
   else
     {
@@ -94,7 +94,7 @@ Logger::log (ACE_Log_Record &log_record)
                         verbose_msg));
           else
             ACE_OS::printf ("Recursive Logger callback = %s",
-                            verbose_msg);
+                            ACE_TEXT_ALWAYS_CHAR (verbose_msg));
         }
     }
 
