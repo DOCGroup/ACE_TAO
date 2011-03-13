@@ -81,7 +81,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       1);
 
   ACE_OS::printf ("read back :%s\n",
-                  readback);
+                  ACE_TEXT_ALWAYS_CHAR (readback));
 
   if (cli_file.close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

@@ -100,7 +100,7 @@ Options::print_options (void)
 
   for (i = 0; i < argc_; i++)
     ACE_OS::printf ("%s ",
-                    argv_[i]);
+                    ACE_TEXT_ALWAYS_CHAR (argv_[i]));
 
   ACE_OS::printf (" */");
 }
