@@ -662,7 +662,7 @@ getpwnam_r_test (void)
   const char* login = getlogin ();
   if (login == 0)
     login = "root";
-  
+
   if (ACE_OS::getpwnam_r (login,
                           &pwd,
                           buf,
