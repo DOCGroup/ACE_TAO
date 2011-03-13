@@ -1,3 +1,25 @@
+Sun Mar 13 10:00:13 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/tests/Bug_2800_Regression/nsmain.cpp:
+        * orbsvcs/tests/Miop/McastHello/server.cpp:
+        * orbsvcs/tests/Bug_3673_Regression/nsmain.cpp:
+        * orbsvcs/tests/Notify/lib/Task_Stats.cpp:
+        * orbsvcs/tests/Notify/Reconnecting/Supplier.cpp:
+        * orbsvcs/tests/FT_App/FT_Client.cpp:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.cpp:
+        * orbsvcs/tests/FT_App/StubFaultAnalyzer.cpp:
+        * tao/HTTP_Handler.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp:
+        * examples/Kokyu_dsrt_schedulers/Task_Stats.cpp:
+        * examples/RTScheduling/Task_Stats.cpp:
+        * examples/RTCORBA/Activity/Task_Stats.cpp:
+          Fixed compile warnings from incorrect use of ACE_TCHAR* type in
+          printf in wchar builds.
+
 Fri Mar 11 20:31:17 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
