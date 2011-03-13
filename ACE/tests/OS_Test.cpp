@@ -659,7 +659,11 @@ getpwnam_r_test (void)
   struct passwd *pwd_ptr;
   char buf[1024];
 
-  if (ACE_OS::getpwnam_r (getlogin (),
+  const char* login = getlogin ();
+  if (login == 0)
+    login = "root";
+  
+  if (ACE_OS::getpwnam_r (login,
                           &pwd,
                           buf,
                           sizeof (buf),
