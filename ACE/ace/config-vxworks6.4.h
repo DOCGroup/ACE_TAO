@@ -48,7 +48,7 @@
 #elif defined (__DCC__)
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1
 # define ACE_TEMPLATES_REQUIRE_SOURCE
-#else  /* ! __GNUG__ && ! ghs && !__DCC__ */
+#else  /* ! __GNUG__ && !__DCC__ */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #    error unsupported compiler on VxWorks
 #  endif  /* __cplusplus */

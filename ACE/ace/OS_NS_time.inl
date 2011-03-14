@@ -207,10 +207,6 @@ ACE_OS::difftime (time_t t1, time_t t0)
 }
 #endif /* ! ACE_LACKS_DIFFTIME */
 
-#if defined (ghs) && defined (ACE_HAS_PENTIUM) && !defined (ACE_WIN32)
-  extern "C" ACE_hrtime_t ACE_GETHRTIME_NAME ();
-#endif /* ghs && ACE_HAS_PENTIUM */
-
 ACE_INLINE ACE_hrtime_t
 ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 {

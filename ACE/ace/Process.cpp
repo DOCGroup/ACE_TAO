@@ -517,13 +517,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
           }
         else
           {
-# if defined (ghs)
-            // GreenHills 1.8.8 (for VxWorks 5.3.x) can't compile this
-            // code.  Processes aren't supported on VxWorks anyways.
-            ACE_NOTSUP_RETURN (ACE_INVALID_PID);
-# else
             result = ACE_OS::execve (procname, procargv, procenv);
-# endif /* ghs */
           }
         if (result == -1)
           {
