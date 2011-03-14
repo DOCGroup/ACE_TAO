@@ -65,7 +65,7 @@ write_ior_to_file (CORBA::ORB_ptr orb,
   char filename[BUFSIZ];
   ACE_OS::sprintf (filename,
                    "%s_%d",
-                   ior_output_file,
+                   ACE_TEXT_ALWAYS_CHAR (ior_output_file),
                    ior_count++);
 
   FILE *output_file =
