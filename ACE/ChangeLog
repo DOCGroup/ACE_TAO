@@ -1,3 +1,9 @@
+Mon Mar 14 18:58:40 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-sunos5.5.h:
+          Define _POSIX_PTHREAD_SEMANTICS if it not already set.
+          Hopefully fixes getpwnam_r() problems.
+
 Mon Mar 14 11:01:41 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-openvms.h:
