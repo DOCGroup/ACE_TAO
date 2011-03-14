@@ -342,8 +342,7 @@ libACE_la_SOURCES = \
   WIN32_Proactor.cpp \
   XML_Svc_Conf.cpp \
   XTI_ATM_Mcast.cpp \
-  ace_wchar.cpp \
-  gethrtime.cpp
+  ace_wchar.cpp
 
 libACE_la_LDFLAGS = \
  -release @ACE_VERSION_NAME@

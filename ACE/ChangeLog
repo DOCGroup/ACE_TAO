@@ -1,3 +1,33 @@
+Mon Mar 14 08:16:33 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_time.h:
+        * ace/OS_NS_time.inl:
+        * ace/OS_NS_time.cpp:
+          Removed ghs method
+
+        * ace/Guard_T.h:
+          Doxygen change
+
+        * ace/OS_NS_sys_utsname.cpp:
+        * ace/Process.cpp:
+        * ace/Process_Manager.cpp:
+        * ace/WFMO_Reactor.cpp:
+        * ace/config-sunos5.5.h:
+        * ace/config-sunos5.7.h:
+        * ace/config-vxworks6.4.h:
+        * ace/config-win32-msvc.h:
+          Removed ghs workaround
+
+        * tests/Multihomed_INET_Addr_Test.cpp:
+          Layout change
+
+        * ace/gethrtime.cpp:
+          Removed this file, ghs is not supported anymore a long time
+
+        * ace/ace.mpc:
+        * ace/Makefile.am:
+          Removed gethrtime.cpp
+
 Sun Mar 13 10:32:34 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * tests/OS_Test.cpp (test_getpwnam_r):
@@ -178,7 +208,7 @@ Mon Mar  7 16:14:33 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 Sun Mar  6 14:49:04 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ACE-INSTALL.html: Update this document to explain how to use the
-          "make install" step for MinGW.  Thanks to Laura Autón García
+          "make install" step for MinGW.  Thanks to Laura Autï¿½n Garcï¿½a
           <darklulu+ace at gmail dot com> for contributing this
           description.
 

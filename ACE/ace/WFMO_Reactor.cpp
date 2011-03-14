@@ -1952,7 +1952,6 @@ ACE_WFMO_Reactor::dispatch_handles (DWORD wait_status)
     {
       const bool ok = (
 #if ! defined(__BORLANDC__) \
-    && !defined (ghs) \
     && !defined (__MINGW32__) \
     && !defined (_MSC_VER)
                  // wait_status is unsigned in Borland, Green Hills,

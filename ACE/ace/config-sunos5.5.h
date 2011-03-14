@@ -125,33 +125,11 @@
 #   endif /* _REENTRANT */
 # endif /* !ACE_MT_SAFE */
 
-#elif defined (ghs)
-
-# if !defined (ACE_MT_SAFE) || ACE_MT_SAFE != 0
-    // ACE_MT_SAFE is #defined below, for all compilers.
-#   if !defined (_REENTRANT)
-    /* If you want to disable threading, comment out the following
-       line.  Or, add -DACE_MT_SAFE=0 to your CFLAGS, e.g., using
-       make threads=0. */
-#     define _REENTRANT
-#   endif /* _REENTRANT */
-# endif /* !ACE_MT_SAFE */
-
-# define ACE_CONFIG_INCLUDE_GHS_COMMON
-# include "ace/config-ghs-common.h"
-
-  // To avoid warning about inconsistent declaration between Sun's
-  // stdlib.h and Green Hills' ctype.h.
-# include <stdlib.h>
-
-  // IOStream_Test never halts with Green Hills 1.8.9.
-# define ACE_LACKS_ACE_IOSTREAM
-
-#else  /* ! __SUNPRO_CC && ! __GNUG__  && ! ghs */
+#else  /* ! __SUNPRO_CC && ! __GNUG__ */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #    error unsupported compiler in ace/config-sunos5.5.h
 #  endif /* __cplusplus */
-#endif /* ! __SUNPRO_CC && ! __GNUG__  && ! ghs */
+#endif /* ! __SUNPRO_CC && ! __GNUG__ */
 
 #if !defined (__ACE_INLINE__)
 // @note If you have link problems with undefined inline template

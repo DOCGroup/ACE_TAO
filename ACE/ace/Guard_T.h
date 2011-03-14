@@ -72,8 +72,8 @@ public:
   ACE_Guard (ACE_LOCK &l);
 
   /// Implicitly and automatically acquire (or try to acquire) the
-  /// lock.  If @a block is non-0 then <acquire> the <ACE_LOCK>, else
-  /// <tryacquire> it.
+  /// lock.  If @a block is non-0 then acquire() the ACE_LOCK, else
+  /// tryacquire() it.
   ACE_Guard (ACE_LOCK &l, bool block);
 
   /// Initialise the guard without implicitly acquiring the lock. The
