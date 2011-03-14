@@ -1,3 +1,12 @@
+Mon Mar 14 20:17:48 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/RTCORBA/Priority_Inversion_With_Bands/server.cpp:
+        * tests/RTCORBA/Bug_3643_Regression/server.cpp:
+        * tests/RTCORBA/Thread_Pool/server.cpp:
+        * tests/RTCORBA/Dynamic_Thread_Pool/server.cpp:
+          Fixed compile warnings from incorrect use of ACE_TCHAR* type in
+          printf in wchar builds.
+
 Sun Mar 13 10:00:13 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
