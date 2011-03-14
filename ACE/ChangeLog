@@ -1,3 +1,8 @@
+Mon Mar 14 11:01:41 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-openvms.h:
+          Removed ACE_HAS_NONSTD_GETPWNAM_R.
+
 Mon Mar 14 08:16:33 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_time.h:
