@@ -224,12 +224,6 @@ namespace ACE_OS
   int nanosleep (const struct timespec *requested,
                  struct timespec *remaining = 0);
 
-# if defined (ACE_HAS_POWERPC_TIMER) && defined (ghs)
-  extern ACE_Export
-  void readPPCTimeBase (u_long &most,
-                        u_long &least);
-# endif /* ACE_HAS_POWERPC_TIMER && ghs */
-
   ACE_NAMESPACE_INLINE_FUNCTION
   size_t strftime (char *s,
                    size_t maxsize,

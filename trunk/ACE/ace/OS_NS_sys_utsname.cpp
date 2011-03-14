@@ -78,11 +78,7 @@ ACE_OS::uname (ACE_utsname *name)
       char processor[bufsize] = "Unknown";
       char subtype[bufsize] = "Unknown";
 
-#   if defined (ghs)
-    WORD arch = sinfo.u.s.wProcessorArchitecture;
-#   else
     WORD arch = sinfo.wProcessorArchitecture;
-#   endif
 
       switch (arch)
         {

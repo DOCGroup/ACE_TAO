@@ -78,7 +78,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Functor.cpp
     Functor_String.cpp
     Get_Opt.cpp
-    gethrtime.cpp
     Handle_Ops.cpp
     Handle_Set.cpp
     Hashable.cpp
