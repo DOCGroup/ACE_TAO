@@ -27,20 +27,13 @@
 // Some SunOS releases define _POSIX_PTHREAD_SEMANTICS automatically.
 // We need to be check if the user has manually defined the macro before
 // including <sys/feature_tests.h>.
-#if defined (_POSIX_PTHREAD_SEMANTICS)
-# define ACE_HAS_POSIX_PTHREAD_SEMANTICS
+#if !defined (_POSIX_PTHREAD_SEMANTICS)
+# define _POSIX_PTHREAD_SEMANTICS
 #endif /* _POSIX_PTHREAD_SEMANTICS */
 
 // Before we do anything, we should include <sys/feature_tests.h> to
 // ensure that things are set up properly.
 #include <sys/feature_tests.h>
-
-// Some SunOS releases define _POSIX_PTHREAD_SEMANTICS automatically.
-// We need to undef if the macro is set and not defined by the user.
-#if defined (_POSIX_PTHREAD_SEMANTICS) && \
- !defined (ACE_HAS_POSIX_PTHREAD_SEMANTICS)
-# undef _POSIX_PTHREAD_SEMANTICS
-#endif /* _POSIX_PTHREAD_SEMANTICS && !ACE_HAS_POSIX_PTHREAD_SEMANTICS */
 
 // Sun has the posix defines so let this file sort out what Sun delivers
 #include "ace/config-posix.h"
