@@ -169,9 +169,6 @@
 /* Define to 1 if platform has POSIX threads */
 #define ACE_HAS_PTHREADS 1
 
-/* Platform supports POSIX.1c-1995 threads */
-#define ACE_HAS_PTHREADS_STD 1
-
 /* Platform has the UNIX98 extensions to Pthreads (rwlocks) */
 #define ACE_HAS_PTHREADS_UNIX98_EXT 1
 
