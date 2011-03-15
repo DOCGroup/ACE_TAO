@@ -570,7 +570,7 @@ testOrderlyInstantiation (int , ACE_TCHAR *[])
 // To do this, we need a native thread entry and, thus, it needs special care
 // for each platform type. Feel free to add more platforms as needed here and
 // in main() where the test is called.
-#if defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_PTHREADS_STD)
+#if defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_PTHREADS)
 #  if defined (ACE_HAS_WTHREADS)
 extern "C" unsigned int __stdcall
 #  else
@@ -664,7 +664,7 @@ testNonACEThread ()
       WaitForSingleObject (thr_h, INFINITE);
       CloseHandle (thr_h);
     }
-#elif defined (ACE_HAS_PTHREADS_STD)
+#elif defined (ACE_HAS_PTHREADS)
   pthread_t thr_id;
   int status = pthread_create (&thr_id, 0, nonacethreadentry, &log_msg_attrs);
   if (status != 0)
@@ -699,7 +699,7 @@ testNonACEThread ()
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Non-ACE thread lookup test completed\n")));
 }
-#endif /* ACE_HAS_WTHREADS || ACE_HAS_PTHREADS_STD */
+#endif /* ACE_HAS_WTHREADS || ACE_HAS_PTHREADS */
 
 int
 run_main (int argc, ACE_TCHAR *argv[])
@@ -713,7 +713,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   testUnloadingACELoggingStrategy (argc, argv);
   testLimits (argc, argv);
   testrepository (argc, argv);
-#if defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_PTHREADS_STD)
+#if defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_PTHREADS)
   testNonACEThread();
 #endif
 

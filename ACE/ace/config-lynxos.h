@@ -126,7 +126,6 @@
 
 #if ACE_MT_SAFE == 1
   // Platform supports threads.
-# define ACE_HAS_PTHREADS_STD
 # define ACE_HAS_PTHREADS_UNIX98_EXT
 # define ACE_HAS_PTHREAD_GETCONCURRENCY
 # define ACE_HAS_PTHREAD_SETCONCURRENCY
