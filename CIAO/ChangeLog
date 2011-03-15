@@ -1,3 +1,14 @@
+Tue Mar 15 14:12:35 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/README:
+          Fixed typo
+
+        * docs/releasenotes/index.html:
+        * docs/releasenotes/switch.html:
+        * examples/Display/README.html:
+        * examples/Hello/step-by-step.html:
+          Updated email address
+
 Fri Mar 11 10:10:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Connectors.graffle:
