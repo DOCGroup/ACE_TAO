@@ -1,3 +1,11 @@
+Tue Mar 15 19:47:01 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_string.h:
+        * ace/OS_NS_string.inl:
+        * ace/OS_NS_string.cpp:
+          Rearranged strtok_r() code to eliminate macro
+          ACE_HAS_REENTRANT_FUNCTIONS.
+
 Tue Mar 15 19:29:59 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-sunos5.5.h:
