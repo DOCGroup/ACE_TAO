@@ -1,3 +1,10 @@
+Tue Mar 15 19:29:59 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-sunos5.5.h:
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+          Moved _POSIX_PTHREAD_SEMANTICS definition from config file to
+          command line.
+
 Mon Mar 14 18:58:40 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-sunos5.5.h:

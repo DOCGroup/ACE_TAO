@@ -24,13 +24,6 @@
 // SunOS 5.5 does not provide getloadavg()
 #define ACE_LACKS_GETLOADAVG
 
-// Some SunOS releases define _POSIX_PTHREAD_SEMANTICS automatically.
-// We need to be check if the user has manually defined the macro before
-// including <sys/feature_tests.h>.
-#if !defined (_POSIX_PTHREAD_SEMANTICS)
-# define _POSIX_PTHREAD_SEMANTICS
-#endif /* _POSIX_PTHREAD_SEMANTICS */
-
 // Before we do anything, we should include <sys/feature_tests.h> to
 // ensure that things are set up properly.
 #include <sys/feature_tests.h>

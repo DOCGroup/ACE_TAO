@@ -225,7 +225,7 @@ ifeq (C++ 5.10,$(findstring C++ 5.10,$(CC_VERSION)))
 endif
 
 LDFLAGS         += -xildoff
-
+CPPFLAGS        += -D_POSIX_PTHREAD_SEMANTICS
 OCFLAGS         += -xO4
 PIC             = -KPIC
 AR              = CC
