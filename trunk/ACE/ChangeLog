@@ -1,3 +1,12 @@
+Wed Mar 16 14:00:26 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_time.cpp:
+          Rearranged localtime_r() code to eliminate macro
+          ACE_HAS_REENTRANT_FUNCTIONS.
+
+        * ace/config-win32-mingw.h:
+          Added ACE_LACKS_STRTOK_R ACE_LACKS_LOCALTIME_R.
+
 Wed Mar 16 13:49:11 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ICMP_Socket.cpp:
