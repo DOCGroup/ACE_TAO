@@ -1,3 +1,10 @@
+Wed Mar 16 06:27:59 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+          Check features against ACE_HAS_PTHREADS instead of
+          ACE_HAS_PTHREADS_STD.
+
 Mon Mar 14 20:17:48 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/RTCORBA/Priority_Inversion_With_Bands/server.cpp:

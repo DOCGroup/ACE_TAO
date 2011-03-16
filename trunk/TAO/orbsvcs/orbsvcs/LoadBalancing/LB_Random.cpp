@@ -7,9 +7,9 @@
 #include "ace/OS_NS_time.h"
 #include "ace/os_include/os_netdb.h"
 
-#ifdef ACE_HAS_PTHREADS_STD
+#ifdef ACE_HAS_PTHREADS
 static pthread_once_t tao_lb_once_control = PTHREAD_ONCE_INIT;
-#endif  /* ACE_HAS_PTHREADS_STD */
+#endif  /* ACE_HAS_PTHREADS */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -141,12 +141,12 @@ TAO_LB_Random::_tao_next_member (
 void
 TAO_LB_Random::init (void)
 {
-#ifdef ACE_HAS_PTHREADS_STD
+#ifdef ACE_HAS_PTHREADS
   (void) ::pthread_once (&::tao_lb_once_control,
                          ::tao_lb_random_init_routine);
 #else
   ::tao_lb_random_init_routine ();
-#endif  /* ACE_HAS_PTHREADS_STD */
+#endif  /* ACE_HAS_PTHREADS */
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
