@@ -480,9 +480,6 @@ ACE_HAS_PTHREADS                        Platform supports POSIX
                                         one.  Also may need some
                                         ACE_HAS_... thing for
                                         extensions.
-ACE_HAS_PTHREADS_STD                    Platform supports POSIX.1c-1995 threads
-                                        (This is the final standard
-                                        Pthreads).
 ACE_HAS_PTHREADS_UNIX98_EXT             Platform has the UNIX98 extensions to
                                         Pthreads (rwlocks)
 ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP  Platform has
