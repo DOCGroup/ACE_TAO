@@ -1,3 +1,7 @@
+Wed Mar 16 12:08:36 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-7.h: New config for AIX 7.
+
 Wed Mar 16 09:00:45 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-linux-common.h:
