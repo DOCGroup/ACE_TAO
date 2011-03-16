@@ -1,3 +1,9 @@
+Wed Mar 16 00:41:46 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/schema/Basic_Deployment_Data.xsd:
+
+          Extended DataValue content model to allow for zero length sequences.
+
 Thu Mar 10 09:16:00 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tools/Split_Plan/Locality_Splitter.cpp:
