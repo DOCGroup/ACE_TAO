@@ -1,3 +1,11 @@
+Wed Mar 16 14:27:15 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_pwd.inl:
+        * ace/config-lynxos.h:
+          Renamed ACE_HAS_NONSTD_GETPWNAM_R to ACE_HAS_LYNXOS4_GETPWNAM_R
+          since LynxOS 4.x is the only platform that has nonstandard
+          getpwnam_r() implementation.
+
 Wed Mar 16 14:12:56 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-win32-msvc-7.h:

@@ -51,10 +51,12 @@ ACE_OS::getpwnam_r (const char *name,
   ACE_UNUSED_ARG (bufsize);
   ACE_UNUSED_ARG (result);
   ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_NONSTD_GETPWNAM_R)
+#elif defined (ACE_HAS_LYNXOS4_GETPWNAM_R)
   if (::getpwnam_r (pwd, const_cast<char*>(name), buffer, bufsize) == -1)
-    return -1;
-
+    {
+      *result = 0;
+      return -1;
+    }
   *result = pwd;
   return 0;
 #else
