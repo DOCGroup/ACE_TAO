@@ -1,3 +1,7 @@
+Wed Mar 16 12:08:36 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-7.h: New config for AIX 7.
+
 Mon Feb 28 20:29:59 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * examples/ASX/Event_Server/Event_Server/Event_Analyzer.cpp:
