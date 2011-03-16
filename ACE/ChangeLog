@@ -1,3 +1,8 @@
+Wed Mar 16 09:00:45 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux-common.h:
+          Fixed format specifiers for 64bit PPC
+
 Wed Mar 16 06:26:54 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/README:
