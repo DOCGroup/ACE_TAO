@@ -296,7 +296,7 @@
 # define ACE_HAS_STRBUF_T
 #endif
 
-#if defined (__ia64) || defined(__alpha) || defined (__x86_64__)
+#if defined (__ia64) || defined(__alpha) || defined (__x86_64__) || defined(__powerpc64__)
 // On 64 bit platforms, the "long" type is 64-bits.  Override the
 // default 32-bit platform-specific format specifiers appropriately.
 # define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%lu"
