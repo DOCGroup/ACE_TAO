@@ -1,3 +1,12 @@
+Wed Mar 16 00:39:40 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/Bug_3769_Regression/Foo.idl:
+        * tests/Bug_3769_Regression/Foo_exec.h:
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+        * tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+          Extended the test to include a sequence of zero length. 
+
 Tue Mar 15 14:12:35 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Latency/descriptors/README:

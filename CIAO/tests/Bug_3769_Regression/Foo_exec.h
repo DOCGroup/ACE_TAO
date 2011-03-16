@@ -95,7 +95,17 @@ namespace CIAO_Foo_Impl
 
     virtual void
     my_short_sequence (
-      const ::short_sequence & my_short_sequence);
+      const ::short_sequence & my_empty_sequence);
+
+    virtual ::short_sequence *
+    my_empty_sequence (void);
+
+    // TAO_IDL - Generated from
+    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+
+    virtual void
+    my_empty_sequence (
+      const ::short_sequence & my_empty_sequence);
 
     // TAO_IDL - Generated from
     // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
@@ -206,6 +216,7 @@ namespace CIAO_Foo_Impl
       my_float_,
       my_double_,
       my_short_sequence_,
+      my_empty_sequence_,
       my_long_sequence_,
       my_float_sequence_,
       my_double_sequence_,

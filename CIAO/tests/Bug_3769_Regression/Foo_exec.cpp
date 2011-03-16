@@ -15,6 +15,7 @@ namespace CIAO_Foo_Impl
       my_float_ (false),
       my_double_ (false),
       my_short_sequence_ (false),
+      my_empty_sequence_ (false),
       my_long_sequence_ (false),
       my_float_sequence_ (false),
       my_double_sequence_ (false),
@@ -137,6 +138,26 @@ namespace CIAO_Foo_Impl
         my_short_sequence_ = false;
         ACE_ERROR ((LM_ERROR, "ERROR: my_short_sequence[2] != 13, it is %d\n", my_short_sequence[2]));
       }
+  }
+
+  ::short_sequence *
+  Foo_exec_i::my_empty_sequence (void)
+  {
+    /* Your code here. */
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_empty_sequence (
+    const ::short_sequence & my_empty_sequence)
+  {
+    if(my_empty_sequence.length() != 0)
+    {
+      ACE_ERROR ((LM_ERROR, "ERROR: my_empty_sequence does not have the correct length\n"));
+      return;
+    }
+
+    my_empty_sequence_ = true;
   }
 
   ::long_sequence *
@@ -511,6 +532,7 @@ namespace CIAO_Foo_Impl
           my_float_ &&
           my_double_ &&
           my_short_sequence_ &&
+          my_empty_sequence_ &&
           my_long_sequence_ &&
           my_float_sequence_ &&
           my_double_sequence_ &&
