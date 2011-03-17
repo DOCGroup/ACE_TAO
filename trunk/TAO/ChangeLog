@@ -1,3 +1,9 @@
+Thu Mar 17 09:45:43 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.h:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+          Fixes due to ACE rand_r() changes.
+
 Thu Mar 17 09:43:12 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/tests/Event/Basic/Observer.h:
