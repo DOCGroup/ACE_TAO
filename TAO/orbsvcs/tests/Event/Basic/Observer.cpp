@@ -44,7 +44,7 @@ EC_Master::run (int argc, ACE_TCHAR* argv[])
       // test.
       ACE_High_Res_Timer::calibrate ();
 
-      this->seed_ = static_cast<ACE_RANDR_TYPE> (ACE_OS::time (0));
+      this->seed_ = static_cast<unsigned int> (ACE_OS::time (0));
 
       this->initialize_orb_and_poa (argc, argv);
 
@@ -61,7 +61,7 @@ EC_Master::run (int argc, ACE_TCHAR* argv[])
       {
         for (int i = 0; i != this->n_channels_; ++i)
           {
-            ACE_OS::rand_r (this->seed_);
+            ACE_OS::rand_r (&this->seed_);
             ACE_NEW_RETURN (this->channels_[i],
                             EC_Observer (this,
                                          this->seed_,
@@ -209,7 +209,7 @@ EC_Master::channel (int i) const
 // ****************************************************************
 
 EC_Observer::EC_Observer (EC_Master *master,
-                          ACE_RANDR_TYPE seed,
+                          unsigned int seed,
                           CORBA::ORB_ptr orb,
                           PortableServer::POA_ptr root_poa,
                           int id)
@@ -340,7 +340,7 @@ EC_Observer::connect_consumer (
       this->EC_Driver::connect_consumer (consumer_admin, i);
       return;
     }
-  unsigned int x = ACE_OS::rand_r (this->seed_);
+  unsigned int x = ACE_OS::rand_r (&this->seed_);
   if (x < RAND_MAX / 8)
     this->EC_Driver::connect_consumer (consumer_admin, i);
 }
@@ -349,7 +349,7 @@ void
 EC_Observer::consumer_push (void*,
                             const RtecEventComm::EventSet&)
 {
-  unsigned int x = ACE_OS::rand_r (this->seed_);
+  unsigned int x = ACE_OS::rand_r (&this->seed_);
   if (x < (RAND_MAX / 64))
     {
       if (this->verbose ())
