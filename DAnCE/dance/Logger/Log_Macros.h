@@ -17,6 +17,29 @@
 
 extern DAnCE_Logger_Export unsigned int DAnCE_debug_level;
 
+// Defines for logging levels
+
+/// Used for errors that cause the fatal shutdown of any portion
+/// of the infrastructure. 
+#define DANCE_LOG_EMERGENCY            0
+/// Used for deployment errors at the point the error
+/// exits the process in question, or when a decision is made to 
+/// cause the deployment to fail. 
+#define DANCE_LOG_TERMINAL_ERROR       1
+/// Used for non-fatal deployment errors that do not cause deployment
+/// failure. 
+#define DANCE_LOG_NONFATAL_ERROR       2
+/// Used to log detailed error information at the point of failure
+#define DANCE_LOG_ERROR                3
+/// used to indicate that a 
+#define DANCE_LOG_WARNING              4
+#define DANCE_LOG_MAJOR_EVENT          5
+#define DANCE_LOG_MINOR_EVENT          6
+#define DANCE_LOG_EVENT_TRACE          7
+#define DANCE_LOG_MAJOR_DEBUG_INFO     8
+#define DANCE_LOG_TRACE                9
+#define DANCE_LOG_DETAILED_TRACE     10
+
 // By default tracing is turned off.
 #if !defined (DANCE_NTRACE)
 #  define DANCE_NTRACE 1
