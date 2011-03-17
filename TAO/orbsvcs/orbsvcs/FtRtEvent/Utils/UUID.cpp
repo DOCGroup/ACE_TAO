@@ -119,7 +119,7 @@ UUID::to_string (char  *string_rep) const
 void
 UUID::create (unsigned char *buffer)
 {
-  static ACE_RANDR_TYPE seed;
+  static unsigned int seed;
 
   if (seed == 0) seed = ACE_OS::getpid();
 
@@ -129,8 +129,8 @@ UUID::create (unsigned char *buffer)
     // initialize the node
     if (ACE_OS::getmacaddress(&node.mac_address) == -1)
     {
-      node.rand_node.rand1 = ACE_OS::rand_r(seed);
-      node.rand_node.rand2 = (unsigned short) ACE_OS::rand_r(seed);
+      node.rand_node.rand1 = ACE_OS::rand_r(&seed);
+      node.rand_node.rand2 = (unsigned short) ACE_OS::rand_r(&seed);
     }
   }
 
@@ -160,7 +160,7 @@ UUID::create (unsigned char *buffer)
   buffer[7] = (unsigned char) (((timestamp >> 56) & 0x0f) + 0x10);
 
   ACE_UINT16  clockSequence = static_cast<
-    ACE_UINT16> (ACE_OS::rand_r(seed) & 0x2ff);
+    ACE_UINT16> (ACE_OS::rand_r(&seed) & 0x2ff);
 
   buffer[8] = (unsigned char) ((clockSequence >> 8) & 0x1f);
   buffer[9] = (unsigned char) (clockSequence & 0x1f);
