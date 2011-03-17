@@ -34,9 +34,6 @@
 // Sun has the wrong prototype for sendmsg.
 #define ACE_HAS_NONCONST_SENDMSG
 
-// The SunOS 5.x version of rand_r is inconsistent with the header files...
-#define ACE_HAS_BROKEN_RANDR
-
 // Platform supports system configuration information.
 #define ACE_HAS_SYS_SYSTEMINFO_H
 #define ACE_HAS_SYSV_SYSINFO
