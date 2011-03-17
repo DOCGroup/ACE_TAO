@@ -61,7 +61,7 @@ public:
   // The thread entry point.
 
 private:
-  void perform_iteration (ACE_RANDR_TYPE &seed,
+  void perform_iteration (unsigned int *seed,
                           CORBA::PolicyList_var &policies,
                           CORBA::PolicyManager_ptr policy_manager,
                           CORBA::PolicyCurrent_ptr policy_current);
@@ -138,7 +138,7 @@ Manipulation::Manipulation (CORBA::ORB_ptr orb,
 }
 
 void
-Manipulation::perform_iteration (ACE_RANDR_TYPE &seed,
+Manipulation::perform_iteration (unsigned int *seed,
                                  CORBA::PolicyList_var &policies,
                                  CORBA::PolicyManager_ptr policy_manager,
                                  CORBA::PolicyCurrent_ptr policy_current)
@@ -279,11 +279,11 @@ Manipulation::svc (void)
   try
     {
 #ifndef ACE_LACKS_LONGLONG_T
-      ACE_RANDR_TYPE seed =
-        static_cast<ACE_RANDR_TYPE> (ACE_OS::gethrtime ());
+      unsigned int seed =
+        static_cast<unsigned int> (ACE_OS::gethrtime ());
 #else
-      ACE_RANDR_TYPE seed =
-        static_cast<ACE_RANDR_TYPE> (ACE_OS::gethrtime().lo());
+      unsigned int seed =
+        static_cast<unsigned int> (ACE_OS::gethrtime().lo());
 #endif
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("ORBPolicyManager");
@@ -300,7 +300,7 @@ Manipulation::svc (void)
       for (int i = 0; i != this->niterations_; ++i)
         {
           CORBA::PolicyList_var policies;
-          this->perform_iteration (seed,
+          this->perform_iteration (&seed,
                                    policies,
                                    policy_manager.in (),
                                    policy_current.in ());
