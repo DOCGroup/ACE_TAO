@@ -631,10 +631,11 @@ namespace DAnCE
 
       try
         {
-          DANCE_DEBUG (DANCE_LOG_MINOR_EVENT, (LM_TRACE, DLINFO
-                           ACE_TEXT ("DAnCE_LocalityActivator_i::remove_locality_manager - ")
-                           ACE_TEXT ("Calling shutdown () on LocalityManager %C\n"),
-                           info->uuid_.c_str ()));
+          DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                       (LM_TRACE, DLINFO
+                        ACE_TEXT ("DAnCE_LocalityActivator_i::remove_locality_manager - ")
+                        ACE_TEXT ("Calling shutdown on LocalityManager %C\n"),
+                        info->uuid_.c_str ()));
           info->status_ = Server_Info::TERMINATE_REQUESTED;
           server->shutdown ();
         }
