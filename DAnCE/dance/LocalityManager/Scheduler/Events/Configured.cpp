@@ -46,15 +46,17 @@ namespace DAnCE
   {
     DANCE_TRACE ("Instance_Configured::invoke");
 
-    DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Instance_Configured::invoke - ")
-                      ACE_TEXT ("Invoking instance_configured on handler for type <%C>\n"),
-                      this->instance_type_.c_str ()));
+    DANCE_DEBUG (DANCE_LOG_TRACE,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT ("Instance_Configured::invoke - ")
+                  ACE_TEXT ("Invoking instance_configured on handler for type <%C>\n"),
+                  this->instance_type_.c_str ()));
     handler->instance_configured (this->plan_,
                                   this->instanceRef_);
-    DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Instance_Configured::invoke - ")
-                      ACE_TEXT ("instance_configured completed\n")));
+    DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT ("Instance_Configured::invoke - ")
+                  ACE_TEXT ("instance_configured completed\n")));
   }
 
 

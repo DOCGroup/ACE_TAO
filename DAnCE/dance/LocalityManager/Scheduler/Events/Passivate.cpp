@@ -48,16 +48,18 @@ namespace DAnCE
   {
     DANCE_TRACE ("Passivate_Instance::invoke");
 
-    DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Passivate_Instance::invoke - ")
-                      ACE_TEXT ("Invoking passivate_instance on handler for type <%C>\n"),
-                      this->instance_type_.c_str ()));
+    DANCE_DEBUG (DANCE_LOG_TRACE,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT ("Passivate_Instance::invoke - ")
+                  ACE_TEXT ("Invoking passivate_instance on handler for type <%C>\n"),
+                  this->instance_type_.c_str ()));
     handler->passivate_instance (this->plan_,
                                  this->instanceRef_,
                                  this->ref_);
-    DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Passivate_Instance::invoke - ")
-                      ACE_TEXT ("passivate_instance completed\n")));
+    DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT ("Passivate_Instance::invoke - ")
+                  ACE_TEXT ("passivate_instance completed\n")));
   }
 
 

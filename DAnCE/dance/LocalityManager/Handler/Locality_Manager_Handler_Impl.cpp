@@ -71,20 +71,22 @@ namespace DAnCE
       std::ostringstream plan_stream;
       plan_stream << plan << std::endl;
 
-      DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                        ACE_TEXT ("Locality_Handler_i::install_instance - ")
-                        ACE_TEXT ("Deploying instance %u of plan %C\n"),
-                        instanceRef,
-                        plan_stream.str ().c_str ()));
+      DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
+                   (LM_TRACE, DLINFO
+                    ACE_TEXT ("Locality_Handler_i::install_instance - ")
+                    ACE_TEXT ("Deploying instance %u of plan %C\n"),
+                    instanceRef,
+                    plan_stream.str ().c_str ()));
     }
 #endif /* GEN_OSTREAM_OPS */
 
     if (plan.instance.length () <= instanceRef)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Locality_Handler_i::install_instance - ")
-                         ACE_TEXT ("Invalid instance reference %u provided ")
-                         ACE_TEXT ("to install_instance\n"),
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Locality_Handler_i::install_instance - ")
+                      ACE_TEXT ("Invalid instance reference %u provided ")
+                      ACE_TEXT ("to install_instance\n"),
                       instanceRef));
         throw ::Deployment::PlanError (plan.UUID.in (),
                                        "Invalid instance reference");
@@ -95,11 +97,12 @@ namespace DAnCE
 
     if (plan.implementation.length () <= idd.implementationRef)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Locality_Handler_i::install_instance - ")
-                         ACE_TEXT ("Invalid implementation reference %u provided ")
-                         ACE_TEXT ("to install_instance\n"),
-                         idd.implementationRef));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Locality_Handler_i::install_instance - ")
+                      ACE_TEXT ("Invalid implementation reference %u provided ")
+                      ACE_TEXT ("to install_instance\n"),
+                      idd.implementationRef));
         throw ::Deployment::PlanError (plan.UUID.in (),
                                        "Invalid Implementation reference");
       }
@@ -107,10 +110,11 @@ namespace DAnCE
     const ::Deployment::MonolithicDeploymentDescription &mdd =
       plan.implementation[idd.implementationRef];
 
-    DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Locality_Handler_i::install_instance - ")
-                      ACE_TEXT ("Starting installation of instance <%C>\n"),
-                      idd.name.in ()));
+    DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT ("Locality_Handler_i::install_instance - ")
+                  ACE_TEXT ("Starting installation of instance <%C>\n"),
+                  idd.name.in ()));
 
     CORBA::ULong allprops_len =
       idd.configProperty.length () + mdd.execParameter.length () + 1;
@@ -121,10 +125,11 @@ namespace DAnCE
     Utility::append_properties (allprops,
                                 idd.configProperty);
 
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                     ACE_TEXT ("Locality_Handler_i::install_instance - ")
-                     ACE_TEXT ("Passing %u properties to activator\n"),
-                     allprops.length ()));
+    DANCE_DEBUG (DANCE_LOG_TRACE,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT ("Locality_Handler_i::install_instance - ")
+                  ACE_TEXT ("Passing %u properties to activator\n"),
+                  allprops.length ()));
 
     ::DAnCE::LocalityManager_var lm_ref =
         this->activator_->create_locality_manager (plan,
@@ -133,9 +138,10 @@ namespace DAnCE
 
     if (CORBA::is_nil (lm_ref))
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Locality_Handler_i::install_instance - ")
-                         ACE_TEXT ("Received nil reference from LocalityActivator\n")));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Locality_Handler_i::install_instance - ")
+                      ACE_TEXT ("Received nil reference from LocalityActivator\n")));
         throw ::Deployment::StartError (idd.name.in (),
                                         "Received nil object reference for "
                                         "LocalityManager from Activator\n");
@@ -154,10 +160,11 @@ namespace DAnCE
     if (!(instance_reference >>= lm_ref) ||
         CORBA::is_nil (lm_ref))
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Locality_Handler_i::remove_instance - "),
-                         ACE_TEXT ("Unable to extract valid LocalityManager ")
-                         ACE_TEXT ("reference from parameter\n")));
+        DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Locality_Handler_i::remove_instance - "),
+                      ACE_TEXT ("Unable to extract valid LocalityManager ")
+                      ACE_TEXT ("reference from parameter\n")));
       }
     this->activator_->remove_locality_manager (lm_ref);
   }
@@ -192,33 +199,39 @@ namespace DAnCE
 
     Utility::get_property_value (DAnCE::LOCALITY_EXECUTABLE,
                                  pmap, cs_path);
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Locality_Handler_i - ")
+    DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                 (LM_DEBUG, DLINFO ACE_TEXT("Locality_Handler_i - ")
                      ACE_TEXT("Component server path: %C\n"), cs_path));
     Utility::get_property_value (DAnCE::LOCALITY_ARGUMENTS,
                                  pmap, cs_args);
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Locality_Handler_i - ")
-                     ACE_TEXT("Component server arguments: %C\n"), cs_args));
+    DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                 (LM_DEBUG, DLINFO ACE_TEXT("Locality_Handler_i - ")
+                  ACE_TEXT("Component server arguments: %C\n"), cs_args));
     Utility::get_property_value (DAnCE::LOCALITY_TIMEOUT,
                                  pmap, spawn);
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Locality_Handler_i - ")
-                     ACE_TEXT("Spawn delay: %u\n"), spawn));
+    DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                 (LM_DEBUG, DLINFO ACE_TEXT("Locality_Handler_i - ")
+                  ACE_TEXT("Spawn delay: %u\n"), spawn));
     Utility::get_property_value (DAnCE::LOCALITY_MULTITHREAD,
                                  pmap, multithread);
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Locality_Handler_i - ")
-                     ACE_TEXT("Threading: %C\n"),
-                     multithread ? "Multi" : "Single"));
+    DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                 (LM_DEBUG, DLINFO ACE_TEXT("Locality_Handler_i - ")
+                  ACE_TEXT("Threading: %C\n"),
+                  multithread ? "Multi" : "Single"));
 
     Utility::get_property_value (DAnCE::ENTITY_POA,
                                  pmap, poa);
 
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Locality_Handler_i - ")
-                     ACE_TEXT("Threading: %C\n"),
-                     multithread ? "Multi" : "Single"));
+    DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                 (LM_DEBUG, DLINFO ACE_TEXT("Locality_Handler_i - ")
+                  ACE_TEXT("Threading: %C\n"),
+                  multithread ? "Multi" : "Single"));
 
     CORBA::ORB_var orb = DAnCE::PLUGIN_MANAGER::instance ()->get_orb ();
 
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Locality_Handler_i - ")
-                     ACE_TEXT("Spawning Locality handler\n")));
+    DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                 (LM_TRACE, DLINFO ACE_TEXT("Locality_Handler_i - ")
+                  ACE_TEXT("Spawning Locality handler\n")));
 
     ACE_NEW_THROW_EX (this->activator_,
                       DAnCE_LocalityActivator_i (spawn,

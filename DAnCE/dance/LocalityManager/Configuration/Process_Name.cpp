@@ -71,15 +71,14 @@ namespace DAnCE
             << safe_error.get ();
         std::string message = str.str ();
 
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Process_Name::configure - %C\n"),
-                         message.c_str ()));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Process_Name::configure - %C\n"),
+                      message.c_str ()));
 
         throw ::Deployment::StartError (prop.name.in (),
                                         message.c_str ());
       }
-
-    std::cerr << "***********setting process name to " << pname.in () << std::endl;
 
     return;
 #endif

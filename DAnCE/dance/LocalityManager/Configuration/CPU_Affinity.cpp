@@ -40,9 +40,10 @@ namespace DAnCE
 
     if (! (prop.value >>= CORBA::Any::to_string (affinity, 0)))
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("CPU_Affinity::configure - ")
-                         ACE_TEXT ("Unable to extract CPU affinity string")));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("CPU_Affinity::configure - ")
+                      ACE_TEXT ("Unable to extract CPU affinity string")));
         throw ::Deployment::StartError (prop.name.in (),
                                         "Unable to extract CPU affinity string");
       }
@@ -63,17 +64,19 @@ namespace DAnCE
 
         if (i >= 0)
           {
-            DANCE_DEBUG (7, (LM_DEBUG, DLINFO
-                             ACE_TEXT ("CPU_Affinity::configure - ")
-                             ACE_TEXT ("Toggling affinity for CPU %i\n"),
-                             i));
+            DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                         (LM_DEBUG, DLINFO
+                          ACE_TEXT ("CPU_Affinity::configure - ")
+                          ACE_TEXT ("Toggling affinity for CPU %i\n"),
+                          i));
             CPU_SET (i, &mask);
           }
         else
           {
-            DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("CPU_Affinity::configure - ")
-                         ACE_TEXT ("All affinity values should be greater than 0")));
+            DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                         (LM_ERROR, DLINFO
+                          ACE_TEXT ("CPU_Affinity::configure - ")
+                          ACE_TEXT ("All affinity values should be greater than 0")));
             throw ::Deployment::StartError (prop.name.in (),
                                             "All affinity values should be greater than 0");
           }
@@ -94,9 +97,10 @@ namespace DAnCE
             << safe_error.get ();
         std::string message = str.str ();
 
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("CPU_Affinity::configure - %C\n"),
-                         message.c_str ()));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("CPU_Affinity::configure - %C\n"),
+                      message.c_str ()));
 
         throw ::Deployment::StartError (prop.name.in (),
                                         message.c_str ());

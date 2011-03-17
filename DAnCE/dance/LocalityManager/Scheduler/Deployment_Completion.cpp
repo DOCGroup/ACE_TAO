@@ -47,16 +47,17 @@ namespace DAnCE
 
         if (retval == -1)
           {
-            DANCE_ERROR (2, (LM_ERROR, DLINFO
+            DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO
                              ACE_TEXT ("Deployment_Completion::wait_on_completion - ")
                              ACE_TEXT ("Timed out waiting on event completion\n")));
             return false;
           }
       }
 
-    DANCE_DEBUG (8, (LM_DEBUG, DLINFO
-                     ACE_TEXT ("Deployment_Completion::wait_on_completion - ")
-                     ACE_TEXT ("All events completed\n")));
+    DANCE_DEBUG (DANCE_LOG_TRACE,
+                 (LM_DEBUG, DLINFO
+                  ACE_TEXT ("Deployment_Completion::wait_on_completion - ")
+                  ACE_TEXT ("All events completed\n")));
 
     return true;
   }
@@ -93,4 +94,3 @@ namespace DAnCE
     return true;
   }
 }
-

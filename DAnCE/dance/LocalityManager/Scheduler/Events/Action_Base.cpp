@@ -27,18 +27,20 @@ namespace DAnCE
   int
   Action_Base::call (void)
   {
-    DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Action_Base::call - ")
-                      ACE_TEXT ("Entering Action_Base\n")));
+    DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT ("Action_Base::call - ")
+                  ACE_TEXT ("Entering Action_Base\n")));
 
     try
       {
         const Plugin_Manager::INTERCEPTORS &interceptors =
           PLUGIN_MANAGER::instance ()->fetch_interceptors ();
 
-        DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                          ACE_TEXT ("Action_Base::call - ")
-                          ACE_TEXT ("Invoking pre-install interceptors\n")));
+        DANCE_DEBUG (DANCE_LOG_TRACE,
+                     (LM_TRACE, DLINFO
+                      ACE_TEXT ("Action_Base::call - ")
+                      ACE_TEXT ("Invoking pre-install interceptors\n")));
         for (Plugin_Manager::INTERCEPTORS::const_iterator i = interceptors.begin ();
              i != interceptors.end ();
              ++i)
@@ -67,29 +69,32 @@ namespace DAnCE
           }
         catch (CORBA::UserException &ex)
           {
-            DANCE_ERROR (3, (LM_ERROR, DLINFO
-                             ACE_TEXT ("Action_Base::call - ")
-                             ACE_TEXT ("Caught CORBA UserException while processing instance ")
-                             ACE_TEXT ("<%C>\n"),
-                             this->name_.c_str ()));
+            DANCE_ERROR (DANCE_LOG_ERROR,
+                         (LM_ERROR, DLINFO
+                          ACE_TEXT ("Action_Base::call - ")
+                          ACE_TEXT ("Caught CORBA UserException while processing instance ")
+                          ACE_TEXT ("<%C>\n"),
+                          this->name_.c_str ()));
             this->instance_excep_ = DAnCE::Utility::create_any_from_user_exception (ex);
           }
         catch (CORBA::SystemException &ex)
           {
-            DANCE_ERROR (3, (LM_ERROR, DLINFO
-                             ACE_TEXT ("Action_Base::call - ")
-                             ACE_TEXT ("Caught CORBA SystemException while processing instance ")
-                             ACE_TEXT ("<%C>\n"),
-                             this->name_.c_str ()));
+            DANCE_ERROR (DANCE_LOG_ERROR,
+                         (LM_ERROR, DLINFO
+                          ACE_TEXT ("Action_Base::call - ")
+                          ACE_TEXT ("Caught CORBA SystemException while processing instance ")
+                          ACE_TEXT ("<%C>\n"),
+                          this->name_.c_str ()));
             this->instance_excep_ = DAnCE::Utility::create_any_from_exception (ex);
           }
         catch (...)
           {
-            DANCE_ERROR (3, (LM_ERROR, DLINFO
-                             ACE_TEXT ("Action_Base::call - ")
-                             ACE_TEXT ("Caught C++ exception while processing instance ")
-                             ACE_TEXT ("<%C>\n"),
-                             this->name_.c_str ()));
+            DANCE_ERROR (DANCE_LOG_ERROR,
+                         (LM_ERROR, DLINFO
+                          ACE_TEXT ("Action_Base::call - ")
+                          ACE_TEXT ("Caught C++ exception while processing instance ")
+                          ACE_TEXT ("<%C>\n"),
+                          this->name_.c_str ()));
 
             this->create_unexpected_exception (this->name_,
                                                "Caught unknown C++ exception from install");
@@ -98,7 +103,7 @@ namespace DAnCE
         Event_Result result (this->name_, this->instance_excep_.ptr () != 0);
         if (!interceptors.empty ())
           {
-            DANCE_DEBUG (10, (LM_TRACE, DLINFO
+            DANCE_DEBUG (DANCE_LOG_TRACE, (LM_TRACE, DLINFO
                               ACE_TEXT ("Action_Base::call - ")
                               ACE_TEXT ("Invoking post-action interceptors\n")));
             for (Plugin_Manager::INTERCEPTORS::const_iterator i = interceptors.begin ();
@@ -113,34 +118,38 @@ namespace DAnCE
           }
         else
           {
-            DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                              ACE_TEXT ("Action_Base::call - ")
-                              ACE_TEXT ("No post-install interceptors; directly propagating result\n")));
+            DANCE_DEBUG (DANCE_LOG_ERROR,
+                         (LM_TRACE, DLINFO
+                          ACE_TEXT ("Action_Base::call - ")
+                          ACE_TEXT ("No post-install interceptors; directly propagating result\n")));
             if (result.exception_)
               result.contents_ = this->instance_excep_._retn ();
             else
               this->create_valid_result (result);
           }
 
-        DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                          ACE_TEXT ("Action_Base::call - ")
-                          ACE_TEXT ("Signaling result for instance <%C>\n"),
-                          this->name_.c_str ()));
+        DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
+                     (LM_TRACE, DLINFO
+                      ACE_TEXT ("Action_Base::call - ")
+                      ACE_TEXT ("Signaling result for instance <%C>\n"),
+                      this->name_.c_str ()));
         this->holder_.set (result);
       }
     catch (CORBA::UserException &ex)
       {
-        DANCE_ERROR (3, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Action_Base::call - ")
-                         ACE_TEXT ("CORBA UserException propagated from interceptors for instance ")
-                         ACE_TEXT ("<%C>\n"),
-                         this->name_.c_str ()));
+        DANCE_ERROR (DANCE_LOG_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Action_Base::call - ")
+                      ACE_TEXT ("CORBA UserException propagated from interceptors for instance ")
+                      ACE_TEXT ("<%C>\n"),
+                      this->name_.c_str ()));
 
         Event_Result result (this->name_, true);
 
-        try {
-          result.contents_ = DAnCE::Utility::create_any_from_user_exception (ex);
-        }
+        try
+          {
+            result.contents_ = DAnCE::Utility::create_any_from_user_exception (ex);
+          }
         catch (...) { }
 
         this->holder_.set (result);
@@ -148,11 +157,12 @@ namespace DAnCE
       }
     catch (CORBA::SystemException &ex)
       {
-        DANCE_ERROR (3, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Action_Base::call - ")
-                         ACE_TEXT ("CORBA SystemException propagated from interceptors for instance ")
-                         ACE_TEXT ("<%C>\n"),
-                         this->name_.c_str ()));
+        DANCE_ERROR (DANCE_LOG_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Action_Base::call - ")
+                      ACE_TEXT ("CORBA SystemException propagated from interceptors for instance ")
+                      ACE_TEXT ("<%C>\n"),
+                      this->name_.c_str ()));
 
         Event_Result result (this->name_, true);
 
