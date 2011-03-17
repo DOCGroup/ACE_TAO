@@ -1,3 +1,18 @@
+Thu Mar 17 07:32:34 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdlib.h:
+        * ace/OS_NS_stdlib.inl:
+        * ace/OS_NS_stdlib.cpp:
+          Changed rand_r() API to conform POSIX.
+
+        * ace/config-freebsd.h:
+        * ace/config-openbsd.h:
+        * ace/config-openvms.h:
+        * ace/config-rtems.h:
+        * ace/config-vxworks6.4.h:
+        * ace/config-win32-common.h:
+          Added/removed some defines due to chage above.
+
 Thu Mar 17 07:20:50 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-WinCE.h:
