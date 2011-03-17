@@ -46,7 +46,7 @@ public:
   ~Application_Simulator (void);
   // Destructor, releases any memory left behind.
 
-  void upcall (ACE_RANDR_TYPE& seed);
+  void upcall (unsigned int* seed);
   // Simulate an upcall. The class allocates some memory and then
   // releases some memory too, the amount of memory allocated and the
   // number of allocations is random.
@@ -76,7 +76,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int max_arguments = 16;
   int max_argument_size = 1024;
   int quiet = 0;
-  ACE_RANDR_TYPE seed = static_cast<ACE_RANDR_TYPE> (ACE_OS::time(0));
+  unsigned int seed = static_cast<unsigned int> (ACE_OS::time(0));
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("tn:f:m:s:a:b:r:q"));
   int opt;
@@ -151,13 +151,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int* argument_sizes;
   ACE_NEW_RETURN (argument_sizes, int[max_arguments], 1);
 
-  int n = ACE_OS::rand_r (seed) % max_arguments + 1;
+  int n = ACE_OS::rand_r (&seed) % max_arguments + 1;
   for (int k = 0; k < n; ++k)
-    argument_sizes[k] = ACE_OS::rand_r (seed) % max_argument_size + 1;
+    argument_sizes[k] = ACE_OS::rand_r (&seed) % max_argument_size + 1;
 
   for (int i = 0; i < iterations; ++i)
     {
-      simulator.upcall (seed);
+      simulator.upcall (&seed);
 
       // @@ TODO this is the place to put the other allocators.
       ACE_High_Res_Timer cdr_encoding;
@@ -225,7 +225,7 @@ Application_Simulator::~Application_Simulator (void)
 }
 
 void
-Application_Simulator::upcall (ACE_RANDR_TYPE& seed)
+Application_Simulator::upcall (unsigned int* seed)
 {
   for (char** i = this->buffers_;
        i != this->buffers_ + this->max_fragments_;
