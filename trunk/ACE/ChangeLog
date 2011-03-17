@@ -1,3 +1,12 @@
+Thu Mar 17 07:51:20 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/README:
+        * ace/config-sunos5.4-g++.h:
+        * ace/config-sunos5.4-sunc++-4.x.h:
+        * ace/os_include/os_stdlib.h:
+        * tests/randomize.h:
+          Removed references to unused ACE_RANDR_TYPE.
+
 Thu Mar 17 07:32:34 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_stdlib.h:
