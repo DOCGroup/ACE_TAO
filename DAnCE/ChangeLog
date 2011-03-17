@@ -1,3 +1,15 @@
+Thu Mar 17 01:34:33 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/LocalityManager/Daemon/Locality_Manager.cpp:
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * dance/LocalityManager/Daemon/Locality_Manager_Task.cpp:
+
+          Updated to use new log level macros. 
+        
+        * dance/Logger/Log_Macros.h:
+
+          New log level macros. 
+
 Wed Mar 16 00:41:46 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/schema/Basic_Deployment_Data.xsd:
