@@ -1,3 +1,9 @@
+Thu Mar 17 09:43:12 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/tests/Event/Basic/Observer.h:
+        * orbsvcs/tests/Event/Basic/Observer.cpp:
+          Fixes due to ACE rand_r() changes.
+
 Thu Mar 17 09:36:47 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * tests/OctetSeq/client.cpp:
