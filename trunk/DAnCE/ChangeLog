@@ -1,3 +1,13 @@
+Thu Mar 17 04:48:06 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Logger/Log_Macros.h:
+
+          Updated log level descriptions, added DANCE_LOG_TRACE macro.
+
+        * NEWS:
+
+          Noted logging changes.
+
 Thu Mar 17 03:19:34 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/LocalityManager/Configuration/CPU_Affinity.cpp:
