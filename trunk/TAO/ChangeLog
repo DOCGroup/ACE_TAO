@@ -1,3 +1,10 @@
+Thu Mar 17 09:32:45 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * tests/Nested_Upcall_Crash/Server_Peer.h:
+        * tests/Nested_Upcall_Crash/Server_Peer.cpp:
+        * tests/Nested_Upcall_Crash/server.cpp:
+          Fixes due to ACE rand_r() changes.
+
 Thu Mar 17 09:29:59 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * tests/CDR/allocator.cpp:
