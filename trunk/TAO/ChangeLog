@@ -1,3 +1,8 @@
+Thu Mar 17 09:29:59 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * tests/CDR/allocator.cpp:
+          Fixes due to ACE rand_r() changes.
+
 Thu Mar 17 08:19:02 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * TAO_IDL/be/be_codegen.cpp:
