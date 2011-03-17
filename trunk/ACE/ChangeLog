@@ -1,3 +1,8 @@
+Thu Mar 17 07:20:50 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-WinCE.h:
+          Added ACE_LACKS_STRTOK_R.
+
 Thu Mar 17 04:58:19 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/config-macosx-lion.h:
