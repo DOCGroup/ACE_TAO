@@ -46,15 +46,17 @@ namespace DAnCE
   {
     DANCE_TRACE ("Disconnect_Instance::invoke");
 
-    DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Disconnect_Instance::invoke - ")
-                      ACE_TEXT ("Invoking disconnect_instance on handler\n")));
+    DANCE_DEBUG (DANCE_LOG_TRACE,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT ("Disconnect_Instance::invoke - ")
+                  ACE_TEXT ("Invoking disconnect_instance on handler\n")));
 
     handler->disconnect_instance (this->plan_, this->connectionRef_);
 
-    DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Disconnect_Instance::invoke - ")
-                      ACE_TEXT ("disconnect_instance successful completed\n")));
+    DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT ("Disconnect_Instance::invoke - ")
+                  ACE_TEXT ("disconnect_instance successful completed\n")));
   }
 
 

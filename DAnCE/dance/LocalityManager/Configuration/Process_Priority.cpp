@@ -31,9 +31,10 @@ namespace DAnCE
 
     if (!(prop.value >>= prio))
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Process_Priority::configure - ")
-                         ACE_TEXT ("Unable to extract priority value from config property\n")));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Process_Priority::configure - ")
+                      ACE_TEXT ("Unable to extract priority value from config property\n")));
         throw ::Deployment::PlanError (prop.name.in (),
                                        "Unable to extract priority value from config property.");
       }
@@ -55,9 +56,10 @@ namespace DAnCE
             << safe_error;
         std::string message = str.str ();
 
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Process_Priority::configure - %C\n"),
-                         message.c_str ()));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Process_Priority::configure - %C\n"),
+                      message.c_str ()));
 
         throw ::Deployment::StartError (prop.name.in (),
                                         message.c_str ());

@@ -1,14 +1,42 @@
+Thu Mar 17 03:19:34 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/LocalityManager/Configuration/CPU_Affinity.cpp:
+        * dance/LocalityManager/Configuration/Process_Name.cpp:
+        * dance/LocalityManager/Configuration/Process_Priority.cpp:
+        * dance/LocalityManager/Handler/Config_Handler_Impl.cpp:
+        * dance/LocalityManager/Handler/Inst_Handler_Impl.cpp:
+        * dance/LocalityManager/Handler/Interceptor_Handler_Impl.cpp:
+        * dance/LocalityManager/Handler/LocalityActivator_Impl.cpp:
+        * dance/LocalityManager/Handler/Locality_Manager_Handler_Impl.cpp:
+        * dance/LocalityManager/Handler/Plugin_Conf.cpp:
+        * dance/LocalityManager/Interceptors/Best_Effort.cpp:
+        * dance/LocalityManager/Interceptors/Standard_Error.cpp:
+        * dance/LocalityManager/Scheduler/Deployment_Completion.cpp:
+        * dance/LocalityManager/Scheduler/Deployment_Scheduler.cpp:
+        * dance/LocalityManager/Scheduler/Events/Action_Base.cpp:
+        * dance/LocalityManager/Scheduler/Events/Configured.cpp:
+        * dance/LocalityManager/Scheduler/Events/Connect.cpp:
+        * dance/LocalityManager/Scheduler/Events/Disconnect.cpp:
+        * dance/LocalityManager/Scheduler/Events/Endpoint.cpp:
+        * dance/LocalityManager/Scheduler/Events/Install.cpp:
+        * dance/LocalityManager/Scheduler/Events/Passivate.cpp:
+        * dance/LocalityManager/Scheduler/Events/Remove.cpp:
+        * dance/LocalityManager/Scheduler/Events/Start.cpp:
+        * dance/LocalityManager/Scheduler/Plugin_Manager.cpp:
+
+          Updated to new log level macros.
+
 Thu Mar 17 01:34:33 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/LocalityManager/Daemon/Locality_Manager.cpp:
         * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
         * dance/LocalityManager/Daemon/Locality_Manager_Task.cpp:
 
-          Updated to use new log level macros. 
-        
+          Updated to use new log level macros.
+
         * dance/Logger/Log_Macros.h:
 
-          New log level macros. 
+          New log level macros.
 
 Wed Mar 16 00:41:46 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 

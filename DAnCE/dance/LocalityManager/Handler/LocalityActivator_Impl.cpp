@@ -46,10 +46,11 @@ namespace DAnCE
     {
       DANCE_TRACE("DAnCE_LocalityActivator_i::locaity_manager_callback");
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                       ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
-                       ACE_TEXT ("Received callback from LocalityManager %C\n"),
-                   server_UUID));
+      DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                   (LM_TRACE, DLINFO
+                    ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
+                    ACE_TEXT ("Received callback from LocalityManager %C\n"),
+                    server_UUID));
 
       Server_Info *info = 0;
 
@@ -61,10 +62,11 @@ namespace DAnCE
         for (SERVER_INFOS::iterator i  (this->server_infos_.begin ());
              i != this->server_infos_.end (); ++i)
           {
-            DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                             ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
-                             ACE_TEXT ("Comparing %C with %C\n"),
-                             (*i)->uuid_.c_str (), server_UUID));
+            DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
+                         (LM_TRACE, DLINFO
+                          ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
+                          ACE_TEXT ("Comparing %C with %C\n"),
+                          (*i)->uuid_.c_str (), server_UUID));
             if ((*i)->uuid_ == server_UUID)
               {
                 info = (*i).get ();
@@ -74,47 +76,52 @@ namespace DAnCE
 
       if (!info)
         {
-          DANCE_ERROR (1, (LM_WARNING, DLINFO
-                           ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
-                           ACE_TEXT ("Received callback from LocalityManager %C, which doesn't belong to me.\n"),
-                      server_UUID));
+          DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                       (LM_WARNING, DLINFO
+                        ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
+                        ACE_TEXT ("Received callback from LocalityManager %C, which doesn't belong to me.\n"),
+                        server_UUID));
           throw ::CORBA::BAD_PARAM ();
         }
 
       if (info->status_ == Server_Info::ACTIVE)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
-                           ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
-                           ACE_TEXT ("Received callback from LocalityManager %C, ")
-                           ACE_TEXT ("which has already been configured.\n"),
-                       server_UUID));
+          DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                       (LM_ERROR, DLINFO
+                        ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
+                        ACE_TEXT ("Received callback from LocalityManager %C, ")
+                        ACE_TEXT ("which has already been configured.\n"),
+                        server_UUID));
           throw ::CORBA::BAD_INV_ORDER ();
         }
 
       if (!CORBA::is_nil (info->ref_))
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
-                           ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
-                           ACE_TEXT ("Received callback from LocalityManager %C, ")
-                           ACE_TEXT ("which has already called back.\n"),
-                       server_UUID));
+          DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                       (LM_ERROR, DLINFO
+                        ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
+                        ACE_TEXT ("Received callback from LocalityManager %C, ")
+                        ACE_TEXT ("which has already called back.\n"),
+                        server_UUID));
           throw ::CORBA::BAD_INV_ORDER ();
         }
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                       ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
-                       ACE_TEXT ("Received callback from LocalityManager %C\n"),
-                   server_UUID));
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                   (LM_TRACE, DLINFO
+                    ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
+                    ACE_TEXT ("Received callback from LocalityManager %C\n"),
+                    server_UUID));
 
       info->ref_ = ::DAnCE::LocalityManager::_duplicate (serverref);
 
       this->create_properties (*info, config);
 
       // @@TODO: May want to print out configvalues here.
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                       ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
-                       ACE_TEXT ("Generated %u Properties for LocalityManager %C\n"),
-                       config->length (), server_UUID));
+      DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                   (LM_DEBUG, DLINFO
+                    ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
+                    ACE_TEXT ("Generated %u Properties for LocalityManager %C\n"),
+                    config->length (), server_UUID));
     }
 
     void
@@ -122,10 +129,11 @@ namespace DAnCE
     {
       DANCE_TRACE ("DAnCE_LocalityActivator_i::configuration_complete");
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                       ACE_TEXT ("DAnCE_LocalityActivator_i::configuration_complete - ")
-                       ACE_TEXT ("Received configuration_complete from LocalityManager %C\n"),
-                       server_UUID));
+      DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                   (LM_TRACE, DLINFO
+                    ACE_TEXT ("DAnCE_LocalityActivator_i::configuration_complete - ")
+                    ACE_TEXT ("Received configuration_complete from LocalityManager %C\n"),
+                    server_UUID));
 
       try
         {
@@ -148,30 +156,33 @@ namespace DAnCE
 
           if (!info)
             {
-              DANCE_ERROR (1, (LM_WARNING, DLINFO
-                               ACE_TEXT ("DAnCE_LocalityActivator_i::configuration_complete - ")
-                               ACE_TEXT ("Received configuration_complete from LocalityManager %C, which doesn't belong to me.\n"),
-                               server_UUID));
+              DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                           (LM_WARNING, DLINFO
+                            ACE_TEXT ("DAnCE_LocalityActivator_i::configuration_complete - ")
+                            ACE_TEXT ("Received configuration_complete from LocalityManager %C, which doesn't belong to me.\n"),
+                            server_UUID));
               throw ::CORBA::BAD_PARAM ();
             }
 
           if (info->status_ == Server_Info::ACTIVE)
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO
-                               ACE_TEXT ("DAnCE_LocalityActivator_i::configuration_complete - ")
-                               ACE_TEXT ("Received configuration_complete from LocalityManager %C, ")
-                               ACE_TEXT ("which has already been completed.\n"),
+              DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                           (LM_ERROR, DLINFO
+                            ACE_TEXT ("DAnCE_LocalityActivator_i::configuration_complete - ")
+                            ACE_TEXT ("Received configuration_complete from LocalityManager %C, ")
+                            ACE_TEXT ("which has already been completed.\n"),
                            server_UUID));
               throw ::CORBA::BAD_INV_ORDER ();
             }
 
           if (CORBA::is_nil (info->ref_.in ()))
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO
-                               ACE_TEXT ("DAnCE_LocalityActivator_i::configuration_complete - ")
-                               ACE_TEXT ("Received configuration_complete from LocalityManager %C, ")
-                               ACE_TEXT ("which has not called back.\n"),
-                           server_UUID));
+              DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                           (LM_ERROR, DLINFO
+                            ACE_TEXT ("DAnCE_LocalityActivator_i::configuration_complete - ")
+                            ACE_TEXT ("Received configuration_complete from LocalityManager %C, ")
+                            ACE_TEXT ("which has not called back.\n"),
+                            server_UUID));
               throw ::CORBA::BAD_INV_ORDER ();
             }
 
@@ -184,10 +195,11 @@ namespace DAnCE
         }
       catch (...)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
-                           ACE_TEXT ("DAnCE_LocalityActivator_i::configuration_complete - ")
-                           ACE_TEXT ("Caught unknown exception while processing ")
-                           ACE_TEXT ("configuration_complete\n")));
+          DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                       (LM_ERROR, DLINFO
+                        ACE_TEXT ("DAnCE_LocalityActivator_i::configuration_complete - ")
+                        ACE_TEXT ("Caught unknown exception while processing ")
+                        ACE_TEXT ("configuration_complete\n")));
           throw;
         }
     }
@@ -203,19 +215,21 @@ namespace DAnCE
                                                 instanceRef,
                                                 config.length () + 1));
 
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                       ACE_TEXT ("DAnCE_LocalityActivator_i::create_locality_manager - ")
-                       ACE_TEXT ("Received %u config properties\n"),
-                       config.length ()));
+      DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                   (LM_DEBUG, DLINFO
+                    ACE_TEXT ("DAnCE_LocalityActivator_i::create_locality_manager - ")
+                    ACE_TEXT ("Received %u config properties\n"),
+                    config.length ()));
 
       DAnCE::Utility::build_property_map (*server->cmap_, config);
 
       ACE_CString cmd_options = this->construct_command_line (*server);
 
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                       ACE_TEXT ("DAnCE_LocalityActivator_i::create_locality_manager - ")
-                       ACE_TEXT ("LocalityManager arguments: %C\n"),
-                   cmd_options.c_str ()));
+      DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                   (LM_DEBUG, DLINFO
+                    ACE_TEXT ("DAnCE_LocalityActivator_i::create_locality_manager - ")
+                    ACE_TEXT ("LocalityManager arguments: %C\n"),
+                    cmd_options.c_str ()));
 
       {
         ACE_GUARD_THROW_EX ( TAO_SYNCH_MUTEX,
@@ -225,10 +239,11 @@ namespace DAnCE
         server_infos_.insert (server);
       }
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                       ACE_TEXT ("DAnCE_LocalityActivator_i::create_locality_manager - ")
-                       ACE_TEXT ("Attempting to spawn LocalityManager with UUID %C\n"),
-                       server->uuid_.c_str ()));
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                   (LM_TRACE, DLINFO
+                    ACE_TEXT ("DAnCE_LocalityActivator_i::create_locality_manager - ")
+                    ACE_TEXT ("Attempting to spawn LocalityManager with UUID %C\n"),
+                    server->uuid_.c_str ()));
 
       // Now we need to get a copy of the one that was inserted...
       pid_t const pid = this->spawn_locality_manager (new Server_Child_Handler (server),
@@ -243,19 +258,21 @@ namespace DAnCE
           CORBA::ULong t;
           if (val >>= t)
             {
-              DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                               ACE_TEXT ("DAnCE_LocalityActivator_i::create_locality_manager - ")
-                               ACE_TEXT ("Using provided non-default server timeout of %u\n"), t));
+              DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                           (LM_DEBUG, DLINFO
+                            ACE_TEXT ("DAnCE_LocalityActivator_i::create_locality_manager - ")
+                            ACE_TEXT ("Using provided non-default server timeout of %u\n"), t));
               timeout = ACE_Time_Value (t);
             }
           else
             {
-              DANCE_ERROR (1, (LM_WARNING, DLINFO
-                               ACE_TEXT ("DAnCE_LocalityActivator_i::create_locality_manager - ")
-                               ACE_TEXT ("Failed to extract provided non-default server timeout ")
-                               ACE_TEXT ("from property '%C', ")
-                               ACE_TEXT ("falling back to default timeout of %u\n"),
-                               this->spawn_delay_));
+              DANCE_ERROR (DANCE_LOG_MAJOR_DEBUG_INFO,
+                           (LM_WARNING, DLINFO
+                            ACE_TEXT ("DAnCE_LocalityActivator_i::create_locality_manager - ")
+                            ACE_TEXT ("Failed to extract provided non-default server timeout ")
+                            ACE_TEXT ("from property '%C', ")
+                            ACE_TEXT ("falling back to default timeout of %u\n"),
+                            this->spawn_delay_));
             }
         }
 
@@ -266,10 +283,11 @@ namespace DAnCE
 
       server->pid_ = pid; // register pid of successfully started lm processkate
 
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                       ACE_TEXT ("DAnCE_LocalityActivator_i::create_locality_manager - ")
-                       ACE_TEXT ("LocalityManager %C successfully spawned and configured!\n"),
-                       server->uuid_.c_str ()));
+      DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                   (LM_DEBUG, DLINFO
+                    ACE_TEXT ("DAnCE_LocalityActivator_i::create_locality_manager - ")
+                    ACE_TEXT ("LocalityManager %C successfully spawned and configured!\n"),
+                    server->uuid_.c_str ()));
 
       return ::DAnCE::LocalityManager::_duplicate (server->ref_.in ());
     }
@@ -287,18 +305,20 @@ namespace DAnCE
       if (server.cmap_->find (DAnCE::LOCALITY_UUID, val) == 0)
         {
           // Nodeapplication has requested a custom uuid
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                           ACE_TEXT ("DAnCE_LocalityActivator_i::construct_command_line - ")
-                           ACE_TEXT ("Using provided UUID\n")));
+          DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
+                       (LM_TRACE, DLINFO
+                        ACE_TEXT ("DAnCE_LocalityActivator_i::construct_command_line - ")
+                        ACE_TEXT ("Using provided UUID\n")));
           const char *uuid = 0;
           val >>= uuid;
           server.uuid_ = uuid;
         }
       else
         {
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                           ACE_TEXT ("DAnCE_LocalityActivator_i::construct_command_line - ")
-                           ACE_TEXT ("Using generated UUID\n")));
+          DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
+                       (LM_TRACE, DLINFO
+                        ACE_TEXT ("DAnCE_LocalityActivator_i::construct_command_line - ")
+                        ACE_TEXT ("Using generated UUID\n")));
           ACE_Utils::UUID uuid;
           ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
           server.uuid_ = *uuid.to_string ();
@@ -309,7 +329,7 @@ namespace DAnCE
           const char *args = 0;
           val >>= args;
 
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO
+          DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE, (LM_TRACE, DLINFO
                            ACE_TEXT ("DAnCE_LocalityActivator_i::construct_command_line - ")
                            ACE_TEXT ("Adding provided server arguments %C\n"), args));
 
@@ -323,7 +343,7 @@ namespace DAnCE
           const char *args = 0;
           val >>= args;
 
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO
+          DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE, (LM_TRACE, DLINFO
                            ACE_TEXT ("DAnCE_LocalityActivator_i::construct_command_line - ")
                            ACE_TEXT ("Adding provided locality configuration file %C\n"), args));
 
@@ -332,10 +352,11 @@ namespace DAnCE
           cmd_options += ' ';
         }
 
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                       ACE_TEXT ("DAnCE_LocalityActivator_i::construct_command_line - ")
-                       ACE_TEXT ("Creating component server")
-                       ACE_TEXT (" with UUID %C\n"), server.uuid_.c_str ()));
+      DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                   (LM_DEBUG, DLINFO
+                    ACE_TEXT ("DAnCE_LocalityActivator_i::construct_command_line - ")
+                    ACE_TEXT ("Creating component server")
+                    ACE_TEXT (" with UUID %C\n"), server.uuid_.c_str ()));
 
       cmd_options += " -u ";
       cmd_options += server.uuid_;
@@ -361,16 +382,18 @@ namespace DAnCE
       if (si.cmap_->find (DAnCE::LOCALITY_EXECUTABLE, val) == 0)
         {
           val >>= path;
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("DAnCE_LocalityActivator_i::spawn_locality_manager - ")
-                           ACE_TEXT ("Using provided component server executable: %C\n"),
-                           path));
+          DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                       (LM_DEBUG, DLINFO
+                        ACE_TEXT ("DAnCE_LocalityActivator_i::spawn_locality_manager - ")
+                        ACE_TEXT ("Using provided component server executable: %C\n"),
+                        path));
         }
       else
         {
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("DAnCE_LocalityActivator_i::spawn_locality_manager - ")
-                           ACE_TEXT ("Using default component server executable\n")));
+          DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                       (LM_DEBUG, DLINFO
+                        ACE_TEXT ("DAnCE_LocalityActivator_i::spawn_locality_manager - ")
+                        ACE_TEXT ("Using default component server executable\n")));
         }
 
       ACE_Process_Options options (true,
@@ -380,7 +403,7 @@ namespace DAnCE
                                 cmd_line.c_str (),
                                 ior.in ()) != 0)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO
                            ACE_TEXT ("Failed to create commandline\n")));
           throw Deployment::StartError ("locality_manager",
                                         "Failed to create command line for server");
@@ -400,10 +423,11 @@ namespace DAnCE
               newpath += path;
               options.setenv (ACE_TEXT("PATH"), ACE_TEXT_CHAR_TO_TCHAR (newpath.c_str ()));
 
-              DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                              ACE_TEXT ("DAnCE_LocalityActivator_i::spawn_locality_manager - ")
-                              ACE_TEXT ("configured customized PATH environment: %C\n"),
-                              newpath.c_str ()));
+              DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                           (LM_TRACE, DLINFO
+                            ACE_TEXT ("DAnCE_LocalityActivator_i::spawn_locality_manager - ")
+                            ACE_TEXT ("configured customized PATH environment: %C\n"),
+                            newpath.c_str ()));
             }
         }
 
@@ -419,18 +443,20 @@ namespace DAnCE
               newpath += path;
               options.setenv (ACE_LD_SEARCH_PATH, ACE_TEXT_CHAR_TO_TCHAR (newpath.c_str ()));
 
-              DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                              ACE_TEXT ("DAnCE_LocalityActivator_i::spawn_locality_manager - ")
-                              ACE_TEXT ("configured customized %s environment: %C\n"),
-                              ACE_LD_SEARCH_PATH,
-                              newpath.c_str ()));
+              DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                           (LM_TRACE, DLINFO
+                            ACE_TEXT ("DAnCE_LocalityActivator_i::spawn_locality_manager - ")
+                            ACE_TEXT ("configured customized %s environment: %C\n"),
+                            ACE_LD_SEARCH_PATH,
+                            newpath.c_str ()));
             }
         }
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                       ACE_TEXT ("DAnCE_LocalityActivator_i::spawn_locality_manager - ")
-                       ACE_TEXT ("Spawning process, command line is %s\n"),
-                   options.command_line_buf ()));
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                   (LM_TRACE, DLINFO
+                    ACE_TEXT ("DAnCE_LocalityActivator_i::spawn_locality_manager - ")
+                    ACE_TEXT ("Spawning process, command line is %s\n"),
+                    options.command_line_buf ()));
 
       pid_t const pid = this->process_manager_.spawn (options,
                                                       exit_handler);
@@ -440,16 +466,18 @@ namespace DAnCE
           // clean up as in this case the handler did not get registered
           delete exit_handler;
 
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
-                           ACE_TEXT ("Failed to spawn a LocalityManager process\n")));
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_ERROR, DLINFO
+                        ACE_TEXT ("Failed to spawn a LocalityManager process\n")));
           throw Deployment::StartError ("locality_manager",
                                         "Failed to spawn process");
         }
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                       ACE_TEXT ("DAnCE_LocalityActivator_i::spawn_locality_manager - ")
-                       ACE_TEXT ("Process successfully spawned with pid %u\n"),
-                   pid));
+      DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                   (LM_TRACE, DLINFO
+                    ACE_TEXT ("DAnCE_LocalityActivator_i::spawn_locality_manager - ")
+                    ACE_TEXT ("Process successfully spawned with pid %u\n"),
+                    pid));
       return pid;
     }
 
@@ -486,10 +514,11 @@ namespace DAnCE
 
           if (si.status_ == Server_Info::TERMINATED)
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO
-                               ACE_TEXT ("DAnCE_LocalityActivator_i::single_threaded_wait_for_callback - ")
-                               ACE_TEXT ("Startup failed for LocalityManager %C; process exited before activation.\n"),
-                               si.uuid_.c_str ()));
+              DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                           (LM_ERROR, DLINFO
+                            ACE_TEXT ("DAnCE_LocalityActivator_i::single_threaded_wait_for_callback - ")
+                            ACE_TEXT ("Startup failed for LocalityManager %C; process exited before activation.\n"),
+                            si.uuid_.c_str ()));
               throw ::Deployment::StartError ("locality_manager",
                                               "Failed to startup LocalityManager");
             }
@@ -501,10 +530,11 @@ namespace DAnCE
 
           if (timeout == ACE_Time_Value::zero)
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO
-                               ACE_TEXT ("DAnCE_LocalityActivator_i::single_threaded_wait_for_callback - ")
-                               ACE_TEXT ("Timed out while waiting for LocalityManager %C to call back.\n"),
-                               si.uuid_.c_str ()));
+              DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                           (LM_ERROR, DLINFO
+                            ACE_TEXT ("DAnCE_LocalityActivator_i::single_threaded_wait_for_callback - ")
+                            ACE_TEXT ("Timed out while waiting for LocalityManager %C to call back.\n"),
+                            si.uuid_.c_str ()));
               throw ::Deployment::StartError ("locality_manager",
                                               "Timed out waiting for LocalityManager");
             }
@@ -528,20 +558,22 @@ namespace DAnCE
         {
           if (si.condition_.wait (&timeout) == -1)
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO
-                              ACE_TEXT ("DAnCE_LocalityActivator_i::multi_threaded_wait_for_callback - ")
-                              ACE_TEXT ("Timed out while waiting for LocalityManager %C to call back.\n"),
-                              si.uuid_.c_str ()));
+              DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                           (LM_ERROR, DLINFO
+                            ACE_TEXT ("DAnCE_LocalityActivator_i::multi_threaded_wait_for_callback - ")
+                            ACE_TEXT ("Timed out while waiting for LocalityManager %C to call back.\n"),
+                            si.uuid_.c_str ()));
               throw Deployment::StartError ("locality_manager",
                                             "timed out waiting for callback");
             }
 
           if (si.status_ == Server_Info::TERMINATED)
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO
-                               ACE_TEXT ("DAnCE_LocalityActivator_i::multi_threaded_wait_for_callback - ")
-                               ACE_TEXT ("Startup failed for LocalityManager %C; process exited before activation.\n"),
-                               si.uuid_.c_str ()));
+              DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                           (LM_ERROR, DLINFO
+                            ACE_TEXT ("DAnCE_LocalityActivator_i::multi_threaded_wait_for_callback - ")
+                            ACE_TEXT ("Startup failed for LocalityManager %C; process exited before activation.\n"),
+                            si.uuid_.c_str ()));
               throw ::Deployment::StartError ("locality_manager",
                                               "Failed to startup LocalityManager");
             }
@@ -579,25 +611,27 @@ namespace DAnCE
 
       if (!info)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
-                           ACE_TEXT ("DAnCE_LocalityActivator_i::remove_locality_manager - ")
-                           ACE_TEXT ("Failed to find equivalent LocalityManager under my management.\n")));
+          DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                       (LM_ERROR, DLINFO
+                        ACE_TEXT ("DAnCE_LocalityActivator_i::remove_locality_manager - ")
+                        ACE_TEXT ("Failed to find equivalent LocalityManager under my management.\n")));
           throw ::Deployment::StopError ("locality manager",
                                          "unable to stop locality manager");
         }
 
       if (info->status_ == Server_Info::TERMINATED)
         {
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("DAnCE_LocalityActivator_i::remove_locality_manager - ")
-                           ACE_TEXT ("Locality Manager with UUID <%C> already terminated\n"),
-                           info->uuid_.c_str ()));
+          DANCE_DEBUG (DANCE_LOG_WARNING,
+                       (LM_DEBUG, DLINFO
+                        ACE_TEXT ("DAnCE_LocalityActivator_i::remove_locality_manager - ")
+                        ACE_TEXT ("Locality Manager with UUID <%C> already terminated\n"),
+                        info->uuid_.c_str ()));
           return;
         }
 
       try
         {
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO
+          DANCE_DEBUG (DANCE_LOG_MINOR_EVENT, (LM_TRACE, DLINFO
                            ACE_TEXT ("DAnCE_LocalityActivator_i::remove_locality_manager - ")
                            ACE_TEXT ("Calling shutdown () on LocalityManager %C\n"),
                            info->uuid_.c_str ()));
@@ -606,16 +640,18 @@ namespace DAnCE
         }
       catch (::Deployment::StopError &)
         {
-          DANCE_ERROR (1, (LM_WARNING, DLINFO
-                           ACE_TEXT ("DAnCE_LocalityActivator_i::remove_locality_manager - ")
-                           ACE_TEXT ("Received RemoveFailure exception from LocalityManager %C\n"),
-                           info->uuid_.c_str ()));
+          DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                       (LM_WARNING, DLINFO
+                        ACE_TEXT ("DAnCE_LocalityActivator_i::remove_locality_manager - ")
+                        ACE_TEXT ("Received RemoveFailure exception from LocalityManager %C\n"),
+                        info->uuid_.c_str ()));
         }
 
-      DANCE_DEBUG (6, (LM_INFO, DLINFO
-                       ACE_TEXT ("DAnCE_LocalityActivator_i::remove_locality_manager - ")
-                       ACE_TEXT ("LocalityManager %C successfully shut down.\n"),
-                       info->uuid_.c_str ()));
+      DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                   (LM_INFO, DLINFO
+                    ACE_TEXT ("DAnCE_LocalityActivator_i::remove_locality_manager - ")
+                    ACE_TEXT ("LocalityManager %C successfully shut down.\n"),
+                    info->uuid_.c_str ()));
     }
 
     void
@@ -623,12 +659,13 @@ namespace DAnCE
       const Server_Info &info,
       Deployment::Properties_out config)
     {
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                       ACE_TEXT ("DAnCE_LocalityActivator_i::create_properties - ")
-                       ACE_TEXT ("Creating property sequence for LocalityManager <%C> with ")
-                       ACE_TEXT ("length %u\n"),
-                       info.uuid_.c_str (),
-                       info.cmap_->current_size ()));
+      DANCE_DEBUG (DANCE_LOG_TRACE,
+                   (LM_DEBUG, DLINFO
+                    ACE_TEXT ("DAnCE_LocalityActivator_i::create_properties - ")
+                    ACE_TEXT ("Creating property sequence for LocalityManager <%C> with ")
+                    ACE_TEXT ("length %u\n"),
+                    info.uuid_.c_str (),
+                    info.cmap_->current_size ()));
 
       if (info.cmap_->current_size () == 0) return;
 
@@ -660,8 +697,9 @@ namespace DAnCE
     int DAnCE_LocalityActivator_i::Server_Child_Handler::handle_close (
         ACE_HANDLE, ACE_Reactor_Mask)
     {
-      DANCE_DEBUG (9, (LM_DEBUG, DLINFO
-                       ACE_TEXT ("DAnCE_LocalityActivator_i::Server_Child_Handler::handle_close\n")));
+      DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
+                   (LM_DEBUG, DLINFO
+                    ACE_TEXT ("DAnCE_LocalityActivator_i::Server_Child_Handler::handle_close\n")));
 
       delete this;  // clean us up
       return 0;
@@ -670,12 +708,13 @@ namespace DAnCE
     int DAnCE_LocalityActivator_i::Server_Child_Handler::handle_exit (
         ACE_Process *proc)
     {
-      DANCE_DEBUG (5, (LM_INFO, DLINFO
-                       ACE_TEXT ("DAnCE_LocalityActivator_i::Server_Child_Handler::handle_exit")
-                       ACE_TEXT (" - Locality Manager UUID %C, pid=%d: %d\n"),
-                       this->server_info_->uuid_.c_str (),
-                       int (proc->getpid ()),
-                       int (proc->exit_code ()) ));
+      DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                   (LM_INFO, DLINFO
+                    ACE_TEXT ("DAnCE_LocalityActivator_i::Server_Child_Handler::handle_exit")
+                    ACE_TEXT (" - Locality Manager UUID %C, pid=%d: %d\n"),
+                    this->server_info_->uuid_.c_str (),
+                    int (proc->getpid ()),
+                    int (proc->exit_code ()) ));
 
       // this method is guarenteed to be called synchronously
       // so we can safely call anything we like
@@ -683,9 +722,10 @@ namespace DAnCE
       // Check if the termination was requested, log an error if not.
       if (this->server_info_->status_  != Server_Info::TERMINATE_REQUESTED)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
-                           ACE_TEXT ("DAnCE_LocalityActivator_i::Server_Child_Handler::handle_exit - ")
-                           ACE_TEXT ("Error: Unexpected locality shutdown.\n")));
+          DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                       (LM_ERROR, DLINFO
+                        ACE_TEXT ("DAnCE_LocalityActivator_i::Server_Child_Handler::handle_exit - ")
+                        ACE_TEXT ("Error: Unexpected locality shutdown.\n")));
 
           const DAnCE::Plugin_Manager::INTERCEPTORS &interceptors =
             PLUGIN_MANAGER::instance ()->fetch_interceptors ();
