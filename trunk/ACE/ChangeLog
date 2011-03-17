@@ -11,7 +11,7 @@ Thu Mar 17 07:32:34 UTC 2011  Olli Savia  <ops@iki.fi>
         * ace/config-rtems.h:
         * ace/config-vxworks6.4.h:
         * ace/config-win32-common.h:
-          Added/removed some defines due to chage above.
+          Added/removed some defines due to change above.
 
 Thu Mar 17 07:20:50 UTC 2011  Olli Savia  <ops@iki.fi>
 
