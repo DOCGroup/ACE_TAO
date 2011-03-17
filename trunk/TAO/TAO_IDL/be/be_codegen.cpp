@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    be_codegen.cpp
@@ -3552,7 +3551,7 @@ TAO_CodeGen::make_rand_extension (char * const t)
       // selection to work for EBCDIC, as well.
       do
         {
-          r = static_cast<ACE_TCHAR> (coefficient * ACE_OS::rand_r (seed));
+          r = static_cast<ACE_TCHAR> (coefficient * ACE_OS::rand_r (&seed));
         }
       while (!ACE_OS::ace_isalnum (r));
 
