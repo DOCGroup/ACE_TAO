@@ -1,3 +1,8 @@
+Thu Mar 17 08:19:02 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          More fixes due to ACE rand_r() changes.
+
 Thu Mar 17 08:12:47 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * TAO_IDL/be/be_codegen.cpp:
