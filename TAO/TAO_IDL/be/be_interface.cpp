@@ -1091,13 +1091,13 @@ be_interface::gen_operation_table (const char *flat_name,
         // obscure chance of even this arriving at colliding filenames
         // on multiprocessor machines when the IDL compiler was run at
         // exactly the same time.
-        ACE_RANDR_TYPE seed =
-          (static_cast<ACE_RANDR_TYPE> (ACE_OS::time())
-           + static_cast<ACE_RANDR_TYPE> (ACE_OS::getpid ()));
+        unsigned int seed =
+          (static_cast<unsigned int> (ACE_OS::time())
+           + static_cast<unsigned int> (ACE_OS::getpid ()));
         ACE_OS::sprintf (temp_file,
                          "%s%d.%d.%s.gperf",
                          idl_global->temp_dir (),
-                         ACE_OS::rand_r (seed),
+                         ACE_OS::rand_r (&seed),
                          static_cast<int> (ACE_OS::getpid ()),
                          flat_name);
 
