@@ -423,7 +423,7 @@ test_performance (ACE_Timer_Queue *tq,
 
   randomize (times,
              max_iterations,
-             static_cast<ACE_RANDR_TYPE> (ACE_OS::time (0L)));
+             static_cast<unsigned int> (ACE_OS::time (0L)));
 
   // Test the amount of time required to randomly cancel all the
   // timers.

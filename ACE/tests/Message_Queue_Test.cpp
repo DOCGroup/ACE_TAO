@@ -123,7 +123,7 @@ Counting_Test_Producer::svc (void)
   // correct.
   // Also, to be sure there's not just 1 producer and 1 consumer pinging
   // back and forth, make the producers randomly delay between blocks.
-  ACE_OS::srand (static_cast<ACE_RANDR_TYPE> (ACE_OS::time ()));
+  ACE_OS::srand (static_cast<unsigned int> (ACE_OS::time ()));
   int multiple = ACE_OS::rand () % 10;
   int delay_ms = (ACE_OS::rand () % 10) / 2;
   // The delay usually causes the test to time out in the automated
@@ -213,10 +213,10 @@ Counting_Test_Consumer::svc (void)
   // a calculated number of blocks then stop; the test checker will determine
   // if the number consumed plus the number remaining is correct for the
   // number produced.
-  ACE_RANDR_TYPE seed = static_cast<ACE_RANDR_TYPE> (ACE_OS::time ());
+  unsigned int seed = static_cast<ACE_RANDR_TYPE> (ACE_OS::time ());
 
-  int multiple = ACE_OS::rand_r (seed) % 10;
-  int delay_ms = ACE_OS::rand_r (seed) % 10;
+  int multiple = ACE_OS::rand_r (&seed) % 10;
+  int delay_ms = ACE_OS::rand_r (&seed) % 10;
   // The delay usually causes the test to time out in the automated
   // regression testing. I just left it here in case it's needed someday.
   delay_ms = 0;

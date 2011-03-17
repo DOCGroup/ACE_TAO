@@ -1,3 +1,10 @@
+Thu Mar 17 21:13:36 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * tests/Message_Queue_Test.cpp:
+        * tests/Timer_Queue_Test.cpp:
+        * tests/randomize.h:
+          Fixes due to ACE rand_r() changes.
+
 Thu Mar 17 15:03:52 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * include/makeinclude/platform_macosx_lion.GNU:

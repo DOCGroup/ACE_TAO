@@ -66,7 +66,7 @@ namespace
     {
       size_t const index =
         static_cast<size_t> (
-          this->coefficient_ * ACE_OS::rand_r (this->seed_));
+          this->coefficient_ * ACE_OS::rand_r (&this->seed_));
 
       // Swap rather than assign so that we don't lose the original
       // value.
