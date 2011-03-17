@@ -131,7 +131,6 @@
 # define ACE_LACKS_SETSCHED
 # define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 # define ACE_LACKS_UCONTEXT_H
-# define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
 
 enum schedparam_policy {
         SCHED_RR,
