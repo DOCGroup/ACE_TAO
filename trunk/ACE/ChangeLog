@@ -1,3 +1,11 @@
+Thu Mar 17 04:58:19 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/config-macosx-lion.h:
+        * include/makeinclude/platform_macosx_lion.GNU:
+        * include/makeinclude/platform_macosx_snowleopard.GNU:
+
+          Updated to Mac config/platform files.
+
 Thu Mar 17 04:55:30 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/fuzz.pl:
