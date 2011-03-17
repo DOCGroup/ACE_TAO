@@ -50,16 +50,18 @@ namespace DAnCE
   {
     DANCE_TRACE ("Endpoint_Reference::invoke");
 
-    DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Endpoint_Reference::invoke - ")
-                      ACE_TEXT ("Invoking provide_endpoint_reference on handler\n")));
+    DANCE_DEBUG (DANCE_LOG_TRACE,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT ("Endpoint_Reference::invoke - ")
+                  ACE_TEXT ("Invoking provide_endpoint_reference on handler\n")));
 
     handler->provide_endpoint_reference (this->plan_,
                                          this->connectionRef_,
                                          this->ref_.out ());
-    DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Endpoint_Reference::invoke - ")
-                      ACE_TEXT ("provide_endpoint_reference successful completed\n")));
+    DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT ("Endpoint_Reference::invoke - ")
+                  ACE_TEXT ("provide_endpoint_reference successful completed\n")));
   }
 
 

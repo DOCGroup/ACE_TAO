@@ -22,8 +22,9 @@ namespace DAnCE
 
     if (!file)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plugin_Configurator::load_from_text_file - ")
-                         ACE_TEXT("Error: Provided with nil filename\n")));
+        DANCE_ERROR (DANCE_LOG_ERROR,
+                     (LM_ERROR, DLINFO ACE_TEXT("Plugin_Configurator::load_from_text_file - ")
+                      ACE_TEXT("Error: Provided with nil filename\n")));
         return;
       }
 
@@ -31,9 +32,10 @@ namespace DAnCE
 
     if (!inf)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Plugin_Configurator::load_from_text_file - ")
-                         ACE_TEXT("Fail to open plugin data file: <%s>\n"),
-                         file));
+        DANCE_ERROR (DANCE_LOG_ERROR,
+                     (LM_ERROR, DLINFO ACE_TEXT("Plugin_Configurator::load_from_text_file - ")
+                      ACE_TEXT("Fail to open plugin data file: <%s>\n"),
+                      file));
         return;
       }
 
@@ -61,20 +63,22 @@ namespace DAnCE
 
                 if (tokens.size () != 3)
                   {
-                    DANCE_ERROR (1, (LM_ERROR, DLINFO
-                                    ACE_TEXT ("Plugin_Configurator::load_from_text_file - ")
-                                    ACE_TEXT ("Skipping line <%C>, wrong format.  Got %u tokens instead of 3\n"),
-                                    string,
-                                    tokens.size ()));
+                    DANCE_ERROR (DANCE_LOG_ERROR,
+                                 (LM_ERROR, DLINFO
+                                  ACE_TEXT ("Plugin_Configurator::load_from_text_file - ")
+                                  ACE_TEXT ("Skipping line <%C>, wrong format.  Got %u tokens instead of 3\n"),
+                                  string,
+                                  tokens.size ()));
                   }
                 else
                   {
-                    DANCE_DEBUG (7, (LM_DEBUG, DLINFO
-                                    ACE_TEXT ("Plugin_Configurator::load_from_text_file - ")
-                                    ACE_TEXT ("Attempting to load plugin of type <%C>, artifact <%C>, entrypoint <%C>\n"),
-                                    tokens[0].c_str (),
-                                    tokens[1].c_str (),
-                                    tokens[2].c_str ()));
+                    DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                                 (LM_DEBUG, DLINFO
+                                  ACE_TEXT ("Plugin_Configurator::load_from_text_file - ")
+                                  ACE_TEXT ("Attempting to load plugin of type <%C>, artifact <%C>, entrypoint <%C>\n"),
+                                  tokens[0].c_str (),
+                                  tokens[1].c_str (),
+                                  tokens[2].c_str ()));
 
 
                     if (ACE_OS::strcmp (tokens[0].c_str (),
@@ -100,10 +104,11 @@ namespace DAnCE
                       }
                     else
                       {
-                        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                                        ACE_TEXT ("Plugin_Configurator::load_from_text_file - ")
-                                        ACE_TEXT ("Skipping line <%C>, bad type name\n"),
-                                        string));
+                        DANCE_ERROR (DANCE_LOG_ERROR,
+                                     (LM_ERROR, DLINFO
+                                      ACE_TEXT ("Plugin_Configurator::load_from_text_file - ")
+                                      ACE_TEXT ("Skipping line <%C>, bad type name\n"),
+                                      string));
                       }
                   }
               }
@@ -131,10 +136,11 @@ namespace DAnCE
       {
         if (plan.instance[i].implementationRef >= plan.implementation.length ())
           {
-            DANCE_ERROR (1, (LM_ERROR, DLINFO
-                             ACE_TEXT ("Plugin_Configurator::deploy_plan - ")
-                             ACE_TEXT ("Invalid implementationRef for instance <%C>\n"),
-                             plan.instance[i].name.in ()));
+            DANCE_ERROR (DANCE_LOG_ERROR,
+                         (LM_ERROR, DLINFO
+                          ACE_TEXT ("Plugin_Configurator::deploy_plan - ")
+                          ACE_TEXT ("Invalid implementationRef for instance <%C>\n"),
+                          plan.instance[i].name.in ()));
             continue;
           }
 
