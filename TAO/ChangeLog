@@ -1,3 +1,8 @@
+Thu Mar 17 09:36:47 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * tests/OctetSeq/client.cpp:
+          Fixes due to ACE rand_r() changes.
+
 Thu Mar 17 09:35:07 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * tests/Policies/Manipulation.cpp:
