@@ -1,3 +1,8 @@
+Thu Mar 17 09:48:53 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * examples/Shared_Malloc/test_malloc.cpp:
+          Fixes due to ACE rand_r() changes.
+
 Thu Mar 17 07:51:20 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/README:
