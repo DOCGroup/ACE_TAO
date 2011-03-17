@@ -10,7 +10,7 @@
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
-ACE_RANDR_TYPE seed = 0;
+unsigned int seed = 0;
 int verbose = 0;
 
 int
@@ -94,7 +94,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (seed == 0)
         {
-          seed = static_cast<ACE_RANDR_TYPE> (ACE_OS::time (0));
+          seed = static_cast<unsigned int> (ACE_OS::time (0));
           ACE_DEBUG ((LM_DEBUG, "Seed value is %d\n", seed));
         }
 
@@ -104,20 +104,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       for (int i = 0; i != niterations; ++i)
         {
-          CORBA::ULong r = ACE_OS::rand_r (seed);
+          CORBA::ULong r = ACE_OS::rand_r (&seed);
           Test::Index idx = (r % nelements);
 
           if (i % 100 == 0)
             {
               for (int j = 0; j != nelements; ++j)
                 {
-                  CORBA::ULong r = ACE_OS::rand_r (seed);
+                  CORBA::ULong r = ACE_OS::rand_r (&seed);
                   CORBA::ULong l = r % maxsize;
                   elements[j].length (l);
                   CORBA::Double token = 0;
                   for (CORBA::ULong k = 0; k != l; ++k)
                     {
-                      r = ACE_OS::rand_r (seed);
+                      r = ACE_OS::rand_r (&seed);
                       elements[j][k] = (r % 128);
                       token += r;
                     }
