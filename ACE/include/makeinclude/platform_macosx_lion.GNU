@@ -1,4 +1,7 @@
-# $Id$
+
+ssl=0
+
+INSLIB?=$(ACE_ROOT)/lib
 
 ifeq ($(buildbits),32)
   FLAGS_C_CC += -m32
@@ -13,7 +16,6 @@ ifeq ($(buildbits),universal)
   LDFLAGS    += -arch i386 -arch x86_64
 endif
 
-PLATFORM_NDDS_FLAGS="-ppPath cpp-4.2 -I."
+PLATFORM_NDDS_FLAGS=-ppPath cpp-4.2 -I.
 
 include $(ACE_ROOT)/include/makeinclude/platform_macosx_common.GNU
-
