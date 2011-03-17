@@ -1640,6 +1640,30 @@ sub check_for_generated_headers()
     }
 }
 
+sub check_for_numeric_dance_log()
+{
+    print "Running check for numeric flags in DAnCE\n";
+
+    foreach $file (@files_inl, @files_cpp, @files_h) {
+        if (open (FILE, $file)) {
+            while (<FILE>) {
+                # look for debug statements
+                if (m/DANCE_DEBUG\s*\(\s*\d*\s*,/) {
+                    print_warning ("$file:$.: Found numeric log level in debug statement");
+                }
+                if (m/DANCE_ERROR\s*\(\s*\d\s*,/) {
+                    print_warning ("$file:$.: Found numeric log level in error statement");
+                }
+            }
+
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
 # Make sure ACE_[OS_]TRACE matches the function/method
 sub check_for_bad_ace_trace()
 {
@@ -2237,6 +2261,7 @@ check_for_improper_main_declaration () if ($opt_l >= 1);
 check_for_TAO_Local_RefCounted_Object () if ($opt_l >= 1);
 check_for_ORB_init () if ($opt_l >= 1);
 check_for_include_OS_h () if ($opt_l >= 1);
+check_for_numeric_dance_log () if ($opt_l >= 6);
 
 print "\nfuzz.pl - $errors error(s), $warnings warning(s)\n";
 
