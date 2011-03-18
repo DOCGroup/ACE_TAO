@@ -18,19 +18,19 @@
 
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
-# define ACE_MT_SAFE 1
+#  define ACE_MT_SAFE 1
 #endif
 
 #include "ace/config-posix.h"
 
 #if defined (__x86__)
-# define ACE_HAS_PENTIUM
+#  define ACE_HAS_PENTIUM
 #elif defined (__powerpc__)
-  // It looks like the default stack size is 15000.
-  // ACE's Recursive_Mutex_Test needs more.
-# define ACE_NEEDS_HUGE_THREAD_STACKSIZE 65536
-  // This doesn't work on LynxOS 3.0.0, because it resets the TimeBaseRegister.
-  // # define ACE_HAS_POWERPC_TIMER
+   // It looks like the default stack size is 15000.
+   // ACE's Recursive_Mutex_Test needs more.
+#  define ACE_NEEDS_HUGE_THREAD_STACKSIZE 65536
+   // This doesn't work on LynxOS 3.0.0, because it resets the TimeBaseRegister.
+   // # define ACE_HAS_POWERPC_TIMER
 #endif /* __x86__ || __powerpc__ */
 
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
@@ -68,6 +68,10 @@
 #define ACE_HAS_NONCONST_WRITEV
 #define ACE_HAS_POSIX_NONBLOCK
 #define ACE_HAS_POSIX_TIME
+#define ACE_HAS_PTHREADS_UNIX98_EXT
+#define ACE_HAS_PTHREAD_GETCONCURRENCY
+#define ACE_HAS_PTHREAD_SETCONCURRENCY
+#define ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_HAS_REENTRANT_FUNCTIONS
 #define ACE_HAS_SCANDIR
@@ -90,6 +94,7 @@
 #define ACE_HAS_SYS_FILIO_H
 #define ACE_HAS_SYS_SOCKIO_H
 #define ACE_HAS_TERMIOS
+#define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 
 #define ACE_LACKS_ALPHASORT_PROTOTYPE
@@ -100,6 +105,7 @@
 #define ACE_LACKS_MKSTEMP_PROTOTYPE
 #define ACE_LACKS_MKTEMP_PROTOTYPE
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
+#define ACE_LACKS_PTHREAD_ATTR_SETSTACK
 #define ACE_LACKS_PUTENV_PROTOTYPE
 #define ACE_LACKS_REALPATH
 #define ACE_LACKS_RLIMIT_NOFILE
@@ -111,6 +117,7 @@
 #define ACE_LACKS_STRPTIME
 #define ACE_LACKS_SUSECONDS_T
 #define ACE_LACKS_SWAB_PROTOTYPE
+#define ACE_LACKS_THREAD_PROCESS_SCOPING
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_LACKS_UCONTEXT_H
 
@@ -124,38 +131,25 @@
 // LynxOS has poll.h but it is unusable since implementation is not provided
 #define ACE_LACKS_POLL_H
 
-#if ACE_MT_SAFE == 1
-  // Platform supports threads.
-# define ACE_HAS_PTHREADS_UNIX98_EXT
-# define ACE_HAS_PTHREAD_GETCONCURRENCY
-# define ACE_HAS_PTHREAD_SETCONCURRENCY
-# define ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE
-# define ACE_HAS_THREAD_SPECIFIC_STORAGE
-# define ACE_LACKS_PTHREAD_ATTR_SETSTACK
-# define ACE_LACKS_THREAD_PROCESS_SCOPING
-# if ACE_LYNXOS_MAJOR == 4 && ACE_LYNXOS_MINOR == 0
-#   define ACE_LACKS_SETDETACH
-#   define ACE_LACKS_PTHREAD_ATTR_SETSTACKADDR
-# endif
-#endif /* ACE_MT_SAFE */
-
 #if ACE_LYNXOS_MAJOR == 4 && ACE_LYNXOS_MINOR == 0
-# define ACE_LACKS_GETOPT_PROTOTYPE
-# define ACE_LACKS_INET_ATON_PROTOTYPE
-# define ACE_LACKS_REGEX_H
-# define ACE_LACKS_STRCASECMP_PROTOTYPE
-# define ACE_LACKS_STRNCASECMP_PROTOTYPE
-# define ACE_LACKS_SYS_SELECT_H
+#  define ACE_LACKS_GETOPT_PROTOTYPE
+#  define ACE_LACKS_INET_ATON_PROTOTYPE
+#  define ACE_LACKS_PTHREAD_ATTR_SETSTACKADDR
+#  define ACE_LACKS_REGEX_H
+#  define ACE_LACKS_SETDETACH
+#  define ACE_LACKS_STRCASECMP_PROTOTYPE
+#  define ACE_LACKS_STRNCASECMP_PROTOTYPE
+#  define ACE_LACKS_SYS_SELECT_H
 #endif
 
 #if (ACE_LYNXOS_MAJOR > 4) || (ACE_LYNXOS_MAJOR == 4 && ACE_LYNXOS_MINOR >= 2)
 // LynxOS 4.2 additons
-# define ACE_HAS_POSIX_SEM_TIMEOUT
-# define ACE_HAS_MUTEX_TIMEOUTS
+#  define ACE_HAS_POSIX_SEM_TIMEOUT
+#  define ACE_HAS_MUTEX_TIMEOUTS
 #endif
 
 #if (ACE_LYNXOS_MAJOR >=5)
-// LynxOS 5.0 Additons
+// LynxOS 5.0
 #  define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 #  define ACE_HAS_NONCONST_INET_ADDR
 #  define ACE_LACKS_INET_ATON_PROTOTYPE
@@ -165,7 +159,7 @@
 #  define ACE_LACKS_SYS_SEM_H
 #  define ACE_SYS_SIGLIST __sys_siglist
 #else
-// LynxOS 5.0 Removals
+// LynxOS 4.x
 #  define ACE_HAS_LYNXOS4_SIGNALS
 #  define ACE_HAS_LYNXOS4_GETPWNAM_R
 #  define ACE_HAS_SEMUN
@@ -181,8 +175,9 @@
 #endif
 
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
-# define ACE_HAS_BROKEN_THREAD_KEYFREE
+#  define ACE_HAS_BROKEN_THREAD_KEYFREE
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 
 #include /**/ "ace/post.h"
+
 #endif /* ACE_CONFIG_H */
