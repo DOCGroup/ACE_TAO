@@ -1,3 +1,8 @@
+Fri Mar 18 05:10:32 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * tests/Message_Queue_Test.cpp:
+          Fixes due to ACE rand_r() changes.
+
 Thu Mar 17 21:13:36 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * tests/Message_Queue_Test.cpp:

@@ -213,7 +213,7 @@ Counting_Test_Consumer::svc (void)
   // a calculated number of blocks then stop; the test checker will determine
   // if the number consumed plus the number remaining is correct for the
   // number produced.
-  unsigned int seed = static_cast<ACE_RANDR_TYPE> (ACE_OS::time ());
+  unsigned int seed = static_cast<unsigned int> (ACE_OS::time ());
 
   int multiple = ACE_OS::rand_r (&seed) % 10;
   int delay_ms = ACE_OS::rand_r (&seed) % 10;
