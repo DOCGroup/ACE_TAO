@@ -21,7 +21,6 @@ endif # ! LynxOS
 LYNXOS_MAJOR = $(shell echo $(VERSION) | awk -F. '{print $$1;}')
 LYNXOS_MINOR = $(shell echo $(VERSION) | awk -F. '{print $$2;}')
 
-shared_libs ?= 1
 optimize ?= 1
 debug ?= 1
 threads ?= 1
@@ -43,12 +42,10 @@ ifeq ($(shared_libs),1)
   ifeq ($(CROSS-COMPILE),1)
     LDFLAGS  += -Wl,-rpath-link,$(ACE_ROOT)/lib
   endif
-else
-  LIBS       += -lnetinet -lnsl
 endif
 
 ifeq (5.0.0,$(VERSION))
-  LIBS    += -lbsd
+  LIBS    += -lnetinet
 endif
 
 CC              = gcc
