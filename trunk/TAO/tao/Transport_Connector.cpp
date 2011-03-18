@@ -888,6 +888,23 @@ TAO_Connector::wait_for_connection_completion (
   return true;
 }
 
+void
+TAO_Connector::cleanup_pending (TAO_Transport *&the_winner,
+                                TAO_Transport **transport,
+                                unsigned int count)
+{
+  // It is possible that we have more than one connection that happened
+  // to complete, or that none completed. Therefore we need to traverse
+  // the list and ensure that all of the losers are closed.
+  for (unsigned int i = 0; i < count; i++)
+    {
+      if (transport[i] != the_winner)
+        this->check_connection_closure (transport[i]->connection_handler());
+      // since we are doing this on may connections, the result isn't
+      // particularly important.
+    }
+}
+
 bool
 TAO_Connector::wait_for_connection_completion (
     TAO::Profile_Transport_Resolver *r,
@@ -949,16 +966,7 @@ TAO_Connector::wait_for_connection_completion (
           }
     }
 
-  // It is possible that we have more than one connection that happened
-  // to complete, or that none completed. Therefore we need to traverse
-  // the list and ensure that all of the losers are closed.
-  for (unsigned int i = 0; i < count; i++)
-    {
-      if (transport[i] != the_winner)
-        this->check_connection_closure (transport[i]->connection_handler());
-      // since we are doing this on may connections, the result isn't
-      // particularly important.
-    }
+  this->cleanup_pending (the_winner, transport, count);
 
   // In case of errors.
   if (the_winner == 0)

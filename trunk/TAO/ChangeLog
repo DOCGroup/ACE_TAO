@@ -1,3 +1,19 @@
+Fri Mar 18 19:52:21 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Connector.cpp:
+        * tao/Transport_Connector.h:
+        * tao/Transport_Connector.cpp:
+
+          Fix for the parallel connect strategy. While processing a list
+          of endpoints, it is possible that one successfully connects
+          quickly enough that the rest of the list does not need to be
+          evaluated. In that case, the cleanup logic was not being
+          evaluated, leaving the base connector to hold on to stale
+          nonblocking connection handlers. At best these are unused
+          objects that linger until the connector is shutdown, and at
+          worst they can eventually connect, leading to unnecessary
+          network resource consumption.
+
 Thu Mar 17 09:55:03 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.cpp:
