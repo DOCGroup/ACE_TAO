@@ -173,8 +173,6 @@ ACE_HAS_NONRECURSIVE_MUTEXES            In addition to recursive mutexes,
                                         platform has non-recursive ones also.
 ACE_HAS_RECV_TIMEDWAIT                  Platform has the MIT pthreads
                                         APIs for
-ACE_HAS_RECVFROM_TIMEDWAIT              timed send/recv operations
-ACE_HAS_RECVMSG_TIMEDWAIT
 ACE_HAS_RLIMIT_RESOURCE_ENUM            Platform has enum instead of
                                         int for first argument to
                                         ::{get,set}rlimit ().  The
@@ -201,19 +199,12 @@ ACE_SCANDIR_CMP_USES_CONST_VOIDPTR      The OS's scandir() comparator function
                                                           const void*).
 ACE_SCANDIR_SEL_LACKS_CONST             The OS's scandir() selector function
                                         is int (*selector)(ACE_DIRENT*)
-ACE_HAS_SEND_TIMEDWAIT
-ACE_HAS_SENDTO_TIMEDWAIT
-ACE_HAS_SENDMSG_TIMEDWAIT
 ACE_HAS_STDARG_THR_DEST                 Platform has void (*)(...)
                                         prototype for
                                         pthread_key_create()
                                         destructor (e.g., LynxOS).
 ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS     Platform/compiler supports
                                         Win32 structural exceptions
-ACE_HAS_READ_TIMEDWAIT
-ACE_HAS_READV_TIMEDWAIT
-ACE_HAS_WRITE_TIMEDWAIT
-ACE_HAS_WRITEV_TIMEDWAIT
 ACE_HAS_4_4BSD_SENDMSG_RECVMSG          Platform has BSD 4.4
                                         sendmsg()/recvmsg() APIs.
 ACE_HAS_P_READ_WRITE                    Platform has pread() and
