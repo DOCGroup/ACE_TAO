@@ -187,6 +187,15 @@ protected:
       TAO_LF_Multi_Event *mev,
       ACE_Time_Value *timeout);
 
+  /// For a parallel connection attempt, any pending connection attempts
+  /// present when the connection completes needs to be cleaned up. In
+  /// some cases this happens before wait_for_connection_completion needs
+  /// to be called, so the clean up logic is separated out here.
+  void cleanup_pending (
+      TAO_Transport *&the_winner,
+      TAO_Transport **transport,
+      unsigned int count);
+
   /// See if a new connection is allowed
   bool new_connection_is_ok (size_t busy_count);
 
