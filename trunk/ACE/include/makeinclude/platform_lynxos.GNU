@@ -65,9 +65,6 @@ PRELIB          = @true
 RANLIB          = @true
 SOFLAGS         += -shared
 
-SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
-                  $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
-
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXm -lXt
 PLATFORM_XT_LDFLAGS=
