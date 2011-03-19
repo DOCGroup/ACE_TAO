@@ -1,3 +1,8 @@
+Sat Mar 19 06:17:54 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * examples/APG/ThreadSafety/Tokens.cpp:
+          Fixes due to ACE rand_r() changes.
+
 Fri Mar 18 05:21:08 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
