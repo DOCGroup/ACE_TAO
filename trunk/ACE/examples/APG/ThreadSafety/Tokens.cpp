@@ -53,7 +53,7 @@ void
 HA_Device_Repository::internal_do (Device *device)
 {
   ACE_UNUSED_ARG (device);    // Real code would use this.
-  ACE_Time_Value tv (0, ACE_OS::rand_r (this->seed_) % 10000);
+  ACE_Time_Value tv (0, ACE_OS::rand_r (&this->seed_) % 10000);
   timespec_t t  = (timespec_t)tv;
   ACE_OS::nanosleep (&t);
 }
