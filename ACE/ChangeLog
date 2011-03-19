@@ -1,3 +1,11 @@
+Sat Mar 19 14:57:04 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          Improved support for LynxOS 4.2 and 5.0.
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Removed unused SOBUILD variable.
+
 Sat Mar 19 06:17:54 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * examples/APG/ThreadSafety/Tokens.cpp:
