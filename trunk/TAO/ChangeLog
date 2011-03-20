@@ -1,3 +1,10 @@
+Sun Mar 20 13:45:05 UTC 2011  Martin Corino  <corino_m@remedy.nl>
+
+        * tao/DynamicInterface/Server_Request.cpp:
+          Fixed problem with handling GIOP::LocateRequest type requests.
+          For this type of request the incoming CDR stream does not exist
+          and the reply should be deferred.
+
 Fri Mar 18 19:52:21 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Connector.cpp:
