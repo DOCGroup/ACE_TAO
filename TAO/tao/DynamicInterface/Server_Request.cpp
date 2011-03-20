@@ -97,13 +97,18 @@ CORBA::ServerRequest::arguments (CORBA::NVList_ptr &list)
     // Save params for later use when marshaling the reply.
     this->params_ = list;
 
-    this->params_->_tao_incoming_cdr (*this->orb_server_request_.incoming (),
-                                      CORBA::ARG_IN | CORBA::ARG_INOUT,
-                                      this->lazy_evaluation_);
+    // in the case of a GIOP::LocateRequest there is no incoming CDR stream
+    // so skip any attempt to decode arguments (now or later)
+    if (this->orb_server_request_.incoming () != 0)
+    {
+      this->params_->_tao_incoming_cdr (*this->orb_server_request_.incoming (),
+                                        CORBA::ARG_IN | CORBA::ARG_INOUT,
+                                        this->lazy_evaluation_);
 
-    // Pass this alignment back to the TAO_ServerRequest.
-    this->orb_server_request_.dsi_nvlist_align (
-                                  this->params_->_tao_target_alignment ());
+      // Pass this alignment back to the TAO_ServerRequest.
+      this->orb_server_request_.dsi_nvlist_align (
+                                    this->params_->_tao_target_alignment ());
+    }
   }
 }
 
@@ -239,7 +244,12 @@ CORBA::ServerRequest::dsi_marshal (void)
       }
   }
 
-  this->orb_server_request_.tao_send_reply ();
+  // in case a deferred_reply is specified (like for GIOP::LocateRequest)
+  // do not send a reply here
+  if (this->orb_server_request_.deferred_reply ())
+  {
+    this->orb_server_request_.tao_send_reply ();
+  }
 }
 
 void
