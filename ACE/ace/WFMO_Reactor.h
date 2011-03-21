@@ -128,21 +128,21 @@ public:
     ACE_Event_Handler *event_handler_;
 
     /// The I/O handle related to the Event_Handler.  This entry is
-    /// only valid if the <io_entry_> flag is true.
+    /// only valid if the io_entry_ flag is true.
     ACE_HANDLE io_handle_;
 
     /**
      * This is the set of events that the Event_Handler is
-     * interested in. This entry is only valid if the <io_entry_> flag
+     * interested in. This entry is only valid if the io_entry_ flag
      * is true.
      */
     long network_events_;
 
     /**
-     * This flag indicates that <WFMO_Reactor> created the event on
+     * This flag indicates that WFMO_Reactor created the event on
      * behalf of the user. Therefore we need to clean this up when the
-     * Event_Handler removes itself from <WFMO_Reactor>.  This entry
-     * is only valid if the <io_entry_> flag is true.
+     * Event_Handler removes itself from WFMO_Reactor.  This entry
+     * is only valid if the io_entry_ flag is true.
      */
     bool delete_event_;
 
@@ -150,8 +150,8 @@ public:
     bool delete_entry_;
 
     /**
-     * These are the masks related to <handle_close> for the
-     * Event_Handler.  This is only valid when <delete_entry_> is
+     * These are the masks related to handle_close() for the
+     * Event_Handler.  This is only valid when delete_entry_ is
      * set.
      */
     ACE_Reactor_Mask close_masks_;
@@ -302,7 +302,7 @@ public:
   /// Destructor.
   virtual ~ACE_WFMO_Reactor_Handler_Repository (void);
 
-  /// Initialize the repository of the approriate @a size.
+  /// Initialize the repository of the appropriate @a size.
   int open (size_t size);
 
   /// Close down the handler repository.
@@ -561,7 +561,7 @@ public:
 
   /**
    * Get the maximum number of times that the
-   * <ACE_WFMO_Reactor_Notify::handle_input> method will iterate and
+   * ACE_WFMO_Reactor_Notify::handle_input() method will iterate and
    * dispatch the ACE_Event_Handlers that are passed in via the
    * notify queue before breaking out of its
    * <ACE_Message_Queue::dequeue> loop.
@@ -592,7 +592,7 @@ private:
    */
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 
-  /// An auto event is used so that we can <signal> it to wakeup one
+  /// An auto event is used so that we can signal() it to wakeup one
   /// thread up (e.g., when the <notify> method is called).
   ACE_Auto_Event wakeup_one_thread_;
 
