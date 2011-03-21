@@ -1,7 +1,18 @@
+Mon Mar 21 17:27:15 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+        * tests/Bug_3942_Regression/Bug_3942_Regression.cpp:
+        * tests/Bug_3942_Regression/Bug_3942_Regression.mpc:
+        * tests/Bug_3942_Regression/Foo.idl:
+        * tests/Bug_3942_Regression/run_test.pl:
+
+          Adding regression test for bug 3942, not yet fixed.
+
 Mon Mar 21 10:34:42 UTC 2011  Martin Corino  <corino_m@remedy.nl>
 
         * tao/DynamicInterface/Server_Request.cpp:
-					Fixed typo in fix for deffered_reply() check.
+
+          Fixed typo in fix for deffered_reply() check.
 
 Sun Mar 20 13:45:05 UTC 2011  Martin Corino  <corino_m@remedy.nl>
 
