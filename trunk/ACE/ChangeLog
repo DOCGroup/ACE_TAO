@@ -1,3 +1,20 @@
+Mon Mar 21 12:48:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/INET_Addr.cpp:
+        * ace/OS_NS_netdb.h:
+        * ace/OS_NS_netdb.inl:
+        * ace/OS_NS_netdb.cpp:
+        * ace/OS_NS_pwd.h:
+        * ace/Ping_Socket.h:
+        * ace/Process.cpp:
+        * ace/ace_wchar.h:
+        * ace/os_include/os_signal.h:
+        * ace/os_include/os_stdio.h:
+          Cleanup, removed lot of old VxWorks code not needed anymore
+
+        * include/makeinclude/platform_sunos5_common.GNU:
+          Add to the correct make flags
+
 Sat Mar 19 15:01:11 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-linux-common.h:

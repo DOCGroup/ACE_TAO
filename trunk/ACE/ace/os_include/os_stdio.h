@@ -37,9 +37,6 @@
 #  include /**/ <ioLib.h>
 // for remCurIdGet()
 #  include /**/ <remLib.h>
-#  if defined (__RTP__) && (ACE_VXWORKS <= 0x650)
-#    define L_cuserid       _PARM_L_cuserid
-#  endif
 #endif /* ACE_VXWORKS */
 
 // Place all additions (especially function declarations) within extern "C" {}

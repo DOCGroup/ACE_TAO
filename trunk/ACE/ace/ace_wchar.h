@@ -148,10 +148,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Wide_To_Ascii
 {
 public:
-  /// Ctor must take a wchar string.
+  /// Constructor must take a wchar string.
   ACE_Wide_To_Ascii (const wchar_t *s);
 
-  /// Dtor will free up the memory.
+  /// Destructor will free up the memory.
   ~ACE_Wide_To_Ascii (void);
 
   /// Return the internal char* representation.
@@ -186,10 +186,10 @@ private:
 class ACE_Ascii_To_Wide
 {
 public:
-  /// Ctor must take a wchar string.
+  /// Constructor must take a wchar string.
   ACE_Ascii_To_Wide (const char *s);
 
-  /// Dtor will free up the memory.
+  /// Destructor will free up the memory.
   ~ACE_Ascii_To_Wide (void);
 
   /// Return the internal wchar* representation.
