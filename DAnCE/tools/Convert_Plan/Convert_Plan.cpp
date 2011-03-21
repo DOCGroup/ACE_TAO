@@ -10,28 +10,35 @@
 #include "dance/Logger/Logger_Service.h"
 #include "Convert_Plan_Impl.h"
 
-
 const ACE_TCHAR *input_filename = 0;
 const ACE_TCHAR *output_filename = 0;
+
 void
 usage (void)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("usage: dance_split_plan [options]\n")
-              ACE_TEXT ("Converts a provided plan to CDR.  If no output file is nominated, ")
-              ACE_TEXT ("the input XML plan will be validated against schema and the program will exit\n")
+  DANCE_TRACE ("usage");
+  ACE_DEBUG ((
+    LM_DEBUG, ACE_TEXT ("usage: dance_split_plan [options]\n")
+              ACE_TEXT ("Converts a provided plan to CDR.  ")
+              ACE_TEXT ("If no output file is nominated, ")
+              ACE_TEXT ("the input XML plan will be validated")
+              ACE_TEXT ("against schema and the program will exit\n")
               ACE_TEXT ("\t-x <plan>\t\tXML Encoded input plan\n")
-              ACE_TEXT ("\t-o <file>\t\tOutput destination for converted plan\n")
+              ACE_TEXT ("\t-o <file>\t\tOutput destination for ")
+              ACE_TEXT ("converted plan\n")
               ));
 }
 
 bool
 parse_args (int argc, ACE_TCHAR *argv [])
 {
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("dance_split_plan options: ")));
+  DANCE_TRACE ("parse_args");
+  DANCE_DEBUG (DANCE_LOG_TRACE,
+    (LM_TRACE, DLINFO ACE_TEXT ("dance_split_plan options: ")));
 
   for (int i = 0; i < argc; ++i)
     {
-      DANCE_DEBUG (9, (LM_TRACE, ACE_TEXT("\t%s\n"), argv[i]));
+      DANCE_DEBUG (DANCE_LOG_TRACE, (LM_TRACE, ACE_TEXT("\t%s\n"), argv[i]));
     }
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("x:o:h"), 0);
@@ -76,15 +83,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 
   try
     {
-      DAnCE::Logger_Service
-        * dlf = ACE_Dynamic_Service<DAnCE::Logger_Service>::instance ("DAnCE_Logger");
+      DAnCE::Logger_Service * dlf =
+        ACE_Dynamic_Service<DAnCE::Logger_Service>::instance ("DAnCE_Logger");
 
       if (dlf)
         {
           dlf->init (argc, argv);
         }
 
-      DANCE_DEBUG (6, (LM_TRACE, DLINFO
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE, DLINFO
                        ACE_TEXT("Convert_Plan - initializing ORB\n")));
 
       // Need an ORB for the Config handlers
@@ -97,17 +104,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 
       if (!input_filename)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan - ")
-                           ACE_TEXT ("No input filename provided\n")));
+          DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan - ")
+            ACE_TEXT ("No input filename provided\n")));
           return -1;
         }
 
-      auto_ptr <Deployment::DeploymentPlan> plan (DAnCE::Convert_Plan::read_xml_plan (input_filename));
+      auto_ptr <Deployment::DeploymentPlan> plan (
+        DAnCE::Convert_Plan::read_xml_plan (input_filename));
 
       if (!plan.get ())
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan - ")
-                           ACE_TEXT ("Unable to load an XML based plan\n")));
+          DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR,
+            DLINFO ACE_TEXT ("Convert_Plan - ")
+            ACE_TEXT ("Unable to load an XML based plan\n")));
           return -1;
         }
 
@@ -115,16 +125,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   {
     std::ostringstream plan_stream;
     plan_stream << *plan << std::endl;
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO "Convert_Plan - Input plan: %C\n",
+    DANCE_DEBUG (DANCE_LOG_TRACE, (LM_TRACE,
+      DLINFO "Convert_Plan - Input plan: %C\n",
                   plan_stream.str ().c_str ()));
   }
 #endif /* GEN_OSTREAM_OPS */
 
       if (!output_filename)
         {
-          DANCE_DEBUG (2, (LM_DEBUG, DLINFO ACE_TEXT ("Convert_Plan - ")
-                           ACE_TEXT ("XML Input file validated correctly with no ")
-                           ACE_TEXT ("output file specifed, exiting\n")));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG,
+            DLINFO ACE_TEXT ("Convert_Plan - ")
+                   ACE_TEXT ("XML Input file validated correctly with no ")
+                   ACE_TEXT ("output file specifed, exiting\n")));
           return 0;
         }
 
@@ -132,22 +144,26 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     }
   catch (const ::Deployment::PlanError &ex)
     {
-      DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Convert_Plan - ")
-                                       ACE_TEXT ("Config error while parsing plan ")
-                       ACE_TEXT ("<%C>, <%C>\n"),
-                       ex.name.in (),
-                       ex.reason.in ()));
+      DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+        (LM_ERROR, ACE_TEXT ("Convert_Plan - ")
+        ACE_TEXT ("Config error while parsing plan ")
+        ACE_TEXT ("<%C>, <%C>\n"),
+        ex.name.in (),
+        ex.reason.in ()));
       retval = -1;
     }
   catch (const CORBA::Exception &ex)
     {
+      // another one of these. This is probably printing something outside of
+      // our logging level framework
       ex._tao_print_exception ("Convert_Plan");
       retval = -1;
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Convert_Plan - ")
-                       ACE_TEXT ("error: unknown c++ exception\n")));
+      DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+        (LM_ERROR, ACE_TEXT ("Convert_Plan - ")
+        ACE_TEXT ("error: unknown c++ exception\n")));
       retval = -1;
     }
 

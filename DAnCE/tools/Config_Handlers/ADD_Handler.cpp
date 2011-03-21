@@ -16,6 +16,7 @@ namespace DAnCE
                                                ::Deployment::ArtifactDeploymentDescriptions &dest)
       {
         DANCE_TRACE("ADD_Handler::atrifact_deployment_descrs");
+
         deploymentPlan::artifact_const_iterator aci_e =
           src.end_artifact ();
         dest.length (src.count_artifact ());
@@ -91,9 +92,9 @@ namespace DAnCE
           }
         else
           {
-            DANCE_DEBUG (1, (LM_ERROR,
+            DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR, (LM_ERROR,
                         "(%P|%t) Warning: ADD %s has no idref.\n",
- ACE_TEXT_ALWAYS_CHAR (                        src.name ().c_str ())));
+                        ACE_TEXT_ALWAYS_CHAR (src.name ().c_str ())));
           }
 
 #if 0

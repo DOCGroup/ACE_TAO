@@ -20,7 +20,7 @@ const ACE_TCHAR *input_filename = 0;
 void
 usage (void)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("usage: dance_artifact_installation [options]\n")
+  ACE_ERROR ((LM_DEBUG, ACE_TEXT ("usage: dance_artifact_installation [options]\n")
               ACE_TEXT ("Reads a deployment plan (XML or CDR) and installs any described artifacts\n")
               ACE_TEXT ("\t-c <plan>\t\tCDR Encoded input plan\n")
               ACE_TEXT ("\t-x <plan>\t\tXML Encoded input plan\n")
@@ -30,11 +30,14 @@ usage (void)
 bool
 parse_args (int argc, ACE_TCHAR *argv [])
 {
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("dance_artifact_installation options: ")));
+  DANCE_TRACE ("parse_args");
+
+  DANCE_DEBUG (DANCE_LOG_TRACE,
+    (LM_TRACE, DLINFO ACE_TEXT ("dance_artifact_installation options: ")));
 
   for (int i = 0; i < argc; ++i)
     {
-      DANCE_DEBUG (9, (LM_TRACE, ACE_TEXT("\t%s\n"), argv[i]));
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE, ACE_TEXT("\t%s\n"), argv[i]));
     }
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("c:x:h"), 0);
@@ -70,7 +73,9 @@ parse_args (int argc, ACE_TCHAR *argv [])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
+  // since this file is disabled by default, I guess
   DANCE_DISABLE_TRACE ();
+  DANCE_TRACE ("ACE_TMAIN");
 
   int retval = 0;
 
@@ -108,7 +113,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
           dhihs->init (argc, argv);
         }
 
-      DANCE_DEBUG (6, (LM_TRACE, DLINFO
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE, DLINFO
                        ACE_TEXT("dance_artifact_installation - initializing ORB\n")));
 
       // Need an ORB for the Config handlers
@@ -132,9 +137,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 
       if (plan.get () == 0)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("dance_artifact_installation - ")
-                           ACE_TEXT ("Unable to convert provided plan into IDL representation\n")));
-          return 0;
+          DANCE_ERROR_RETURN (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR, DLINFO ACE_TEXT ("dance_artifact_installation - ")
+            ACE_TEXT ("Unable to convert provided plan into IDL representation\n"))
+            // @will   changed this to use DANCE_ERROR_RETURN and am still
+            //         returning 0 rather than a real error code
+            , 0);
         }
 
       // instantiate artifact installation service
@@ -159,12 +167,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     }
   catch (const CORBA::Exception &ex)
     {
+      // @will I'm not as familiar with CORBA exceptions, but this appears
+      //       to take control out of our hands for error logging
+      //       this file doesn't seem to be included in default projects
+      //       is this even an issue?
       ex._tao_print_exception ("dance_artifact_installation");
       retval = 1;
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, "dance_artifact_installation - error: unknown c++ exception\n"));
+      DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+        (LM_ERROR,
+           "dance_artifact_installation - error: unknown c++ exception\n"));
       retval = 1;
     }
 

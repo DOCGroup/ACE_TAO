@@ -24,6 +24,7 @@ namespace DAnCE
       , idl_dp_ (0)
       , retval_ (true)
     {
+      DANCE_TRACE("DP_Handler::constructor");
       if (!this->resolve_plan (dp))
         throw;
     }
@@ -33,6 +34,7 @@ namespace DAnCE
         idl_dp_ (0),
         retval_ (0)
     {
+      DANCE_TRACE("DP_Handler::constructor");
       if (!this->build_xsc (plan))
         throw;
     }
@@ -40,11 +42,13 @@ namespace DAnCE
     DP_Handler::~DP_Handler (void)
       throw ()
     {
+      DANCE_TRACE("DP_Handler::destructor");
     }
 
     deploymentPlan const *
     DP_Handler::xsc (void) const
     {
+      DANCE_TRACE("DP_Handler::xsc const");
       if (this->retval_ && this->xsc_dp_.get () != 0)
         return this->xsc_dp_.get ();
 
@@ -54,6 +58,7 @@ namespace DAnCE
     deploymentPlan *
     DP_Handler::xsc (void)
     {
+      DANCE_TRACE("DP_Handler::xsc");
       if (this->retval_ && this->xsc_dp_.get () != 0)
         return this->xsc_dp_.release ();
 
@@ -63,6 +68,7 @@ namespace DAnCE
     ::Deployment::DeploymentPlan const *
     DP_Handler::plan (void) const
     {
+      DANCE_TRACE("DP_Handler::plan const");
       if (this->retval_ && this->idl_dp_.get () != 0)
         return this->idl_dp_.get ();
 
@@ -72,6 +78,7 @@ namespace DAnCE
     ::Deployment::DeploymentPlan *
     DP_Handler::plan (void)
     {
+      DANCE_TRACE("DP_Handler::plan");
       if (this->retval_ && this->idl_dp_.get () != 0)
         return this->idl_dp_.release ();
 
@@ -92,30 +99,34 @@ namespace DAnCE
       if (xsc_dp.label_p ())
         {
           this->idl_dp_->label =
-            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (xsc_dp.label ().c_str ()));
+            CORBA::string_dup (
+              ACE_TEXT_ALWAYS_CHAR (xsc_dp.label ().c_str ()));
         }
 
       // Read in the UUID, if present
       if (xsc_dp.UUID_p ())
         {
           this->idl_dp_->UUID =
-            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR  (xsc_dp.UUID ().c_str ()));
+            CORBA::string_dup (
+              ACE_TEXT_ALWAYS_CHAR  (xsc_dp.UUID ().c_str ()));
         }
 
       // Similar thing for dependsOn
-      for (deploymentPlan::dependsOn_const_iterator dstart = xsc_dp.begin_dependsOn ();
+      for (deploymentPlan::dependsOn_const_iterator dstart
+                  = xsc_dp.begin_dependsOn ();
             dstart != xsc_dp.end_dependsOn ();
             ++dstart)
         {
           CORBA::ULong len = this->idl_dp_->dependsOn.length ();
           this->idl_dp_->dependsOn.length (len + 1);
           ID_Handler::get_ImplementationDependency (*(*dstart),
-                                                    this->idl_dp_->dependsOn [len]);
+            this->idl_dp_->dependsOn [len]);
 
         }
 
       // ... An the property stuff
-      for (deploymentPlan::infoProperty_const_iterator pstart = xsc_dp.begin_infoProperty ();
+      for (deploymentPlan::infoProperty_const_iterator pstart
+                  = xsc_dp.begin_infoProperty ();
             pstart != xsc_dp.end_infoProperty ();
             ++pstart)
         {
@@ -125,38 +136,40 @@ namespace DAnCE
           this->idl_dp_->infoProperty.length (len + 1);
 
           Property_Handler::handle_property (*(*pstart),
-                                              this->idl_dp_->infoProperty [len]);
+                            this->idl_dp_->infoProperty [len]);
         }
 
       // Read in the realizes, if present
       if (xsc_dp.realizes_p ())
         {
           CCD_Handler::component_interface_descr (
-                                                  xsc_dp.realizes (),
-                                                  this->idl_dp_->realizes);
+                            xsc_dp.realizes (),
+                            this->idl_dp_->realizes);
         }
 
       ADD_Handler::artifact_deployment_descrs (xsc_dp,
-                                                this->idl_dp_->artifact);
+                            this->idl_dp_->artifact);
 
       MDD_Handler::mono_deployment_descriptions (xsc_dp,
-                                                  this->idl_dp_->implementation);
+                            this->idl_dp_->implementation);
 
       IDD_Handler::instance_deployment_descrs (xsc_dp,
-                                                this->idl_dp_->instance);
+                            this->idl_dp_->instance);
 
       this->idl_dp_->connection.length (xsc_dp.count_connection ());
       std::for_each (xsc_dp.begin_connection (),
                       xsc_dp.end_connection (),
                       PCD_Functor (this->idl_dp_->connection));
 
-      this->idl_dp_->localityConstraint.length (xsc_dp.count_localityConstraint ());
+      this->idl_dp_->localityConstraint.length (
+        xsc_dp.count_localityConstraint ());
 
       std::for_each (xsc_dp.begin_localityConstraint (),
                       xsc_dp.end_localityConstraint (),
                       PL_Functor (this->idl_dp_->localityConstraint));
 
-      //PCD_Handler::get_PlanConnectionDescription (xsc_dp, this->idl_dp_->connection);
+      //PCD_Handler::get_PlanConnectionDescription (xsc_dp,
+      // this->idl_dp_->connection);
 
       return true;
     }
@@ -180,14 +193,16 @@ namespace DAnCE
       // Read in the label, if present, since minoccurs = 0
       if (plan.label != 0)
         {
-          XMLSchema::string< ACE_TCHAR > i(ACE_TEXT_CHAR_TO_TCHAR (plan.label));
+          XMLSchema::string< ACE_TCHAR > i (
+            ACE_TEXT_CHAR_TO_TCHAR (plan.label));
           this->xsc_dp_->label(i);
         }
 
       // Read in the UUID, if present
       if (plan.UUID != 0)
         {
-          XMLSchema::string< ACE_TCHAR > j(ACE_TEXT_CHAR_TO_TCHAR(plan.UUID));
+          XMLSchema::string< ACE_TCHAR > j (
+            ACE_TEXT_CHAR_TO_TCHAR(plan.UUID));
           this->xsc_dp_->UUID(j);
         }
 
@@ -197,7 +212,8 @@ namespace DAnCE
             j < len;
             ++j)
         {
-          //this->xsc_dp_->add_dependsOn(ID_Handler::impl_dependency(plan.dependsOn[j]));
+          //this->xsc_dp_->add_dependsOn(ID_Handler::
+          //impl_dependency(plan.dependsOn[j]));
         }
 
       // ... And the property stuff
@@ -209,23 +225,27 @@ namespace DAnCE
           if (ACE_OS::strcmp (plan.infoProperty[q].name.in (),
                               "CIAOServerResources") == 0)
             {
-              DANCE_DEBUG (1, (LM_ERROR,
-                          "(%P|%t) DP_Handler: Dumping of ServerResources not currently supported."));
+              DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR, (LM_ERROR,
+                          "(%P|%t) DP_Handler: Dumping of ServerResources"\
+                          " not currently supported."));
               continue;
             }
 
-          //this->xsc_dp_->add_infoProperty (Property_Handler::get_property (plan.infoProperty[q]));
+          //this->xsc_dp_->add_infoProperty (Property_Handler::
+          // get_property (plan.infoProperty[q]));
         }
 
 
       // We are assuming there is a realizes for the moment
-      // @@ We may want to change this at a later date by creating a sequence of
-      // @@ ComponentInterfaceDescriptions in the DeploymentPlan in ../dance/Deployment/Deployment_Data.idl
+      // @@ We may want to change this at a later date
+      // @@ by creating a sequence of
+      // @@ ComponentInterfaceDescriptions in the DeploymentPlan
+      // @@ in ../dance/Deployment/Deployment_Data.idl
       // @@ so we can check for length
       this->xsc_dp_->realizes(CCD_Handler::component_interface_descr(plan.realizes));
       if (!this->xsc_dp_->realizes_p())
         {
-          DANCE_DEBUG (1, (LM_ERROR,
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR,
                       "(%P|%t) DP_Handler: "
                       "Error parsing Component Interface Descriptor."));
           return false;
@@ -237,7 +257,8 @@ namespace DAnCE
           k < len;
           k++)
         {
-          //this->xsc_dp_->add_artifact (ADD_Handler::artifact_deployment_descr (plan.artifact[k]));
+          //this->xsc_dp_->add_artifact
+          //(ADD_Handler::artifact_deployment_descr (plan.artifact[k]));
         }
 
       //Take care of the implementation(s) if they exist
@@ -246,7 +267,8 @@ namespace DAnCE
           l < len;
           l++)
         {
-          //this->xsc_dp_->add_implementation (MDD_Handler::mono_deployment_description (plan.implementation[l]));
+          //this->xsc_dp_->add_implementation
+          //(MDD_Handler::mono_deployment_description (plan.implementation[l]));
         }
 
       //Ditto for the instance(s)
@@ -255,14 +277,16 @@ namespace DAnCE
           m < len;
           m++)
         {
-          //this->xsc_dp_->add_instance (IDD_Handler::instance_deployment_descr (plan.instance[m]));
+          //this->xsc_dp_->add_instance
+          //(IDD_Handler::instance_deployment_descr (plan.instance[m]));
         }
 
       //Finally, take care of the Connection Planning
       len = plan.connection.length();
       for(size_t n = 0; n < len; n++)
         {
-          //this->xsc_dp_->add_connection (PCD_Handler::get_PlanConnectionDescription (plan.connection[n]));
+          //this->xsc_dp_->add_connection
+          //(PCD_Handler::get_PlanConnectionDescription (plan.connection[n]));
         }
 
       retval_ = true;

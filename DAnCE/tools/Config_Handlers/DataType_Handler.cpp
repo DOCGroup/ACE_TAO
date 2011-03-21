@@ -11,9 +11,11 @@ namespace DAnCE
 
     DataType_Handler::DataType_Handler (void)
     {
+      DANCE_TRACE("DataType_Handler::constructor");
     }
     DataType_Handler::~DataType_Handler (void)
     {
+      DANCE_TRACE("DataType_Handler::destructor");
     }
 
     ///This method takes a <DAnCE::Config_Handlers::DataType>
@@ -100,7 +102,9 @@ namespace DAnCE
           break;
 
         default:
-          DANCE_DEBUG (1, (LM_ERROR, "DataType_Handler::data_type, Invalid typecode in any\n"));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR,
+            "DataType_Handler::data_type, Invalid typecode in any\n"));
           throw 1;
         }
 
@@ -170,7 +174,8 @@ namespace DAnCE
         case CORBA::tk_TypeCode:
           return DataType (TCKind::tk_TypeCode);
         default:
-          DANCE_DEBUG (1, (LM_ERROR, "DataType_Handler::data_type, Invalid typecode\n"));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR, "DataType_Handler::data_type, Invalid typecode\n"));
           throw 1;
         }
       throw 1;

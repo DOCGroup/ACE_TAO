@@ -20,23 +20,30 @@ char split_type = 'N';
 void
 usage (void)
 {
+  DANCE_TRACE ("usage");
+
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("usage: dance_split_plan [options]\n")
-              ACE_TEXT ("Applies the split plan algorithm and saves the result to")
+              ACE_TEXT ("Applies the split plan algorithm and saves the"\
+                        "result to")
               ACE_TEXT ("CDR encoded plans\n")
               ACE_TEXT ("\t-c <plan>\t\tCDR Encoded input plan\n")
               ACE_TEXT ("\t-x <plan>\t\tXML Encoded input plan\n")
-              ACE_TEXT ("\t-t <split type>\t\tType of split to perform; N=node (default), L=locality\n")
+              ACE_TEXT ("\t-t <split type>\t\tType of split to perform; "\
+                        "N=node (default), L=locality\n")
               ));
 }
 
 bool
 parse_args (int argc, ACE_TCHAR *argv [])
 {
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("dance_split_plan options: ")));
+  DANCE_TRACE ("parse_args");
+
+  DANCE_DEBUG (DANCE_LOG_TRACE,
+    (LM_TRACE, DLINFO ACE_TEXT ("dance_split_plan options: ")));
 
   for (int i = 0; i < argc; ++i)
     {
-      DANCE_DEBUG (9, (LM_TRACE, ACE_TEXT("\t%s\n"), argv[i]));
+      DANCE_DEBUG (DANCE_LOG_TRACE, (LM_TRACE, ACE_TEXT("\t%s\n"), argv[i]));
     }
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("c:x:t:h"), 0);
@@ -61,7 +68,8 @@ parse_args (int argc, ACE_TCHAR *argv [])
           split_type = *ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           if (split_type != 'N' && split_type != 'L')
             {
-              DANCE_ERROR (1, (LM_ERROR, ACE_TEXT("Invalid split type specified.\n")));
+              DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                (LM_ERROR, ACE_TEXT("Invalid split type specified.\n")));
               split_type = 'N';
             }
           break;
@@ -88,14 +96,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   try
     {
       DAnCE::Logger_Service
-        * dlf = ACE_Dynamic_Service<DAnCE::Logger_Service>::instance ("DAnCE_Logger");
+        * dlf = ACE_Dynamic_Service<DAnCE::Logger_Service>::instance (
+          "DAnCE_Logger");
 
       if (dlf)
         {
           dlf->init (argc, argv);
         }
 
-      DANCE_DEBUG (6, (LM_TRACE, DLINFO
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE, DLINFO
                        ACE_TEXT("PlanLauncher - initializing ORB\n")));
 
       // Need an ORB for the Config handlers
@@ -110,17 +119,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 
       if (!cdr_encoded_)
         {
-          plan.reset (DAnCE::Convert_Plan::read_xml_plan (ACE_TEXT_CHAR_TO_TCHAR (input_filename)));
+          plan.reset (DAnCE::Convert_Plan::read_xml_plan (
+            ACE_TEXT_CHAR_TO_TCHAR (input_filename)));
         }
       else
         {
-          plan.reset (DAnCE::Convert_Plan::read_cdr_plan (ACE_TEXT_CHAR_TO_TCHAR (input_filename)));
+          plan.reset (DAnCE::Convert_Plan::read_cdr_plan (
+            ACE_TEXT_CHAR_TO_TCHAR (input_filename)));
         }
 
       if (plan.get () == 0)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Split_Plan - ")
-                           ACE_TEXT ("Unable to convert provided plan into IDL representation\n")));
+          DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR, DLINFO ACE_TEXT ("Split_Plan - ")
+            ACE_TEXT ("Unable to convert provided plan into IDL"\
+                      "representation\n")));
           return 0;
         }
 
@@ -129,20 +142,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
           DAnCE::Split_Plan<DAnCE::Node_Splitter> split;
           split.split_plan (*plan);
 
-          for (DAnCE::Split_Plan<DAnCE::Node_Splitter>::TSubPlanIterator iter_plans = split.plans ().begin();
+          for (DAnCE::Split_Plan<DAnCE::Node_Splitter>::TSubPlanIterator
+                 iter_plans = split.plans ().begin();
               iter_plans != split.plans ().end();
               ++iter_plans)
             {
               ACE_CString label ((*iter_plans).int_id_.label.in ());
-              DANCE_DEBUG (3, (LM_DEBUG, DLINFO ACE_TEXT ("Split_Plan - ")
+              DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                (LM_DEBUG, DLINFO ACE_TEXT ("Split_Plan - ")
                               ACE_TEXT ("Writing sub plan : %C\n"),
                               label.c_str ()));
 
               ACE_CString name ((*iter_plans).ext_id_);
               name += "-";
               name += input_filename;
-              DAnCE::Convert_Plan::write_cdr_plan (ACE_TEXT_CHAR_TO_TCHAR (name.c_str ()),
-                                                   (*iter_plans).int_id_);
+              DAnCE::Convert_Plan::write_cdr_plan (
+                ACE_TEXT_CHAR_TO_TCHAR (name.c_str ()),
+                (*iter_plans).int_id_);
             }
         }
       else
@@ -150,20 +166,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
           DAnCE::Split_Plan<DAnCE::Locality_Splitter> split;
           split.split_plan (*plan);
 
-          for (DAnCE::Split_Plan<DAnCE::Locality_Splitter>::TSubPlanIterator iter_plans = split.plans ().begin();
+          for (DAnCE::Split_Plan<DAnCE::Locality_Splitter>::TSubPlanIterator
+                 iter_plans = split.plans ().begin();
               iter_plans != split.plans ().end();
               ++iter_plans)
             {
               ACE_CString label ((*iter_plans).int_id_.label.in ());
-              DANCE_DEBUG (3, (LM_DEBUG, DLINFO ACE_TEXT ("Split_Plan - ")
+              DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                (LM_DEBUG, DLINFO ACE_TEXT ("Split_Plan - ")
                               ACE_TEXT ("Writing sub plan : %C\n"),
                               label.c_str ()));
 
               ACE_CString name ((*iter_plans).ext_id_);
               name += "-";
               name += input_filename;
-              DAnCE::Convert_Plan::write_cdr_plan (ACE_TEXT_CHAR_TO_TCHAR (name.c_str ()),
-                                                   (*iter_plans).int_id_);
+              DAnCE::Convert_Plan::write_cdr_plan (
+                ACE_TEXT_CHAR_TO_TCHAR (name.c_str ()),
+                (*iter_plans).int_id_);
             }
         }
     }
@@ -174,7 +193,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Split_Plan - error: unknown c++ exception\n")));
+      DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+        (LM_ERROR, ACE_TEXT ("Split_Plan - error: unknown c++ exception\n")));
       retval = -1;
     }
 
