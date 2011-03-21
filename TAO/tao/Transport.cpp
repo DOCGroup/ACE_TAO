@@ -713,7 +713,7 @@ int
 TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
                                      ACE_Time_Value *max_wait_time)
 {
-  // Dont clone now.. We could be sent in one shot!
+  // Don't clone now.. We could be sent in one shot!
   TAO_Synch_Queued_Message synch_message (mb, this->orb_core_);
 
   synch_message.push_back (this->head_, this->tail_);
