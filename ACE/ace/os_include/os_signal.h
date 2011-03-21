@@ -42,10 +42,6 @@
 #  endif /* ACE_LACKS_SIGINFO_H */
 #endif /* ACE_HAS_SIGINFO_T */
 
-#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620) && !defined (__RTP__)
-#  include /**/ <sigLib.h>
-#endif /* ACE_VXWORKS */
-
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"

@@ -42,8 +42,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if !(defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYADDR))
-
 ACE_INLINE struct hostent *
 ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 {
@@ -85,10 +83,6 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 #   endif /* ACE_HAS_NONCONST_GETBY */
 # endif /* !ACE_LACKS_GETHOSTBYADDR */
 }
-
-#endif
-
-#if !(defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYADDR))
 
 ACE_INLINE struct hostent *
 ACE_OS::gethostbyaddr_r (const char *addr,
@@ -234,10 +228,6 @@ ACE_OS::gethostbyaddr_r (const char *addr,
 # endif /* ACE_LACKS_GETHOSTBYADDR_R */
 }
 
-#endif
-
-#if !(defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME))
-
 ACE_INLINE struct hostent *
 ACE_OS::gethostbyname (const char *name)
 {
@@ -273,10 +263,6 @@ ACE_OS::gethostbyname (const char *name)
 #   endif /* ACE_HAS_NONCONST_GETBY */
 # endif /* !ACE_LACKS_GETHOSTBYNAME */
 }
-
-#endif
-
-#if !(defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME))
 
 ACE_INLINE struct hostent *
 ACE_OS::gethostbyname_r (const char *name,
@@ -424,8 +410,6 @@ ACE_OS::gethostbyname_r (const char *name,
   //FUZZ: enable check_for_lack_ACE_OS
 # endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) */
 }
-
-#endif
 
 ACE_INLINE struct hostent *
 ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
