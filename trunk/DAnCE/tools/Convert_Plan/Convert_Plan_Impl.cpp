@@ -13,17 +13,24 @@ namespace DAnCE
   Deployment::DeploymentPlan *
   Convert_Plan::read_xml_plan (const ACE_TCHAR *filename)
   {
+    DANCE_TRACE ("Convert_Plan::read_xml_plan");
+
     if (!filename)
       {
-        DANCE_ERROR (2, (LM_WARNING, DLINFO ACE_TEXT ("Convert_Plan::read_xml_plan - ")
+        DANCE_ERROR (DANCE_LOG_WARNING, (LM_WARNING,
+          DLINFO ACE_TEXT ("Convert_Plan::read_xml_plan - ")
                          ACE_TEXT ("Passed a null pointer, returning.\n")));
       }
 
     DAnCE::Config_Handlers::XML_File_Intf xml_intf (filename);
-    xml_intf.add_search_path (ACE_TEXT("ACE_ROOT"), ACE_TEXT("/docs/schema/"));
-    xml_intf.add_search_path (ACE_TEXT("TAO_ROOT"), ACE_TEXT("/docs/schema/"));
-    xml_intf.add_search_path (ACE_TEXT("CIAO_ROOT"), ACE_TEXT("/docs/schema/"));
-    xml_intf.add_search_path (ACE_TEXT("DANCE_ROOT"), ACE_TEXT("/docs/schema/"));
+    xml_intf.add_search_path (
+      ACE_TEXT("ACE_ROOT"), ACE_TEXT("/docs/schema/"));
+    xml_intf.add_search_path (
+      ACE_TEXT("TAO_ROOT"), ACE_TEXT("/docs/schema/"));
+    xml_intf.add_search_path (
+      ACE_TEXT("CIAO_ROOT"), ACE_TEXT("/docs/schema/"));
+    xml_intf.add_search_path (
+      ACE_TEXT("DANCE_ROOT"), ACE_TEXT("/docs/schema/"));
 
     try
       {
@@ -31,18 +38,22 @@ namespace DAnCE
       }
     catch (const DAnCE::Config_Handlers::Config_Error &ex)
       {
-        throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (ex.name_.c_str ()),
-                                       ACE_TEXT_ALWAYS_CHAR (ex.error_.c_str ()));
+        throw ::Deployment::PlanError (
+          ACE_TEXT_ALWAYS_CHAR (ex.name_.c_str ()),
+          ACE_TEXT_ALWAYS_CHAR (ex.error_.c_str ()));
       }
   }
 
   Deployment::DeploymentPlan *
   Convert_Plan::read_cdr_plan (const ACE_TCHAR *filename)
   {
+    DANCE_TRACE ("Convert_Plan::read_cdr_plan");
+
     if (!filename)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan::read_cdr_plan - ")
-                         ACE_TEXT ("Passed a null pointer, returning.\n")));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR,
+          DLINFO ACE_TEXT ("Convert_Plan::read_cdr_plan - ")
+          ACE_TEXT ("Passed a null pointer, returning.\n")));
         return 0;
       }
 
@@ -50,9 +61,10 @@ namespace DAnCE
 
     if (!file)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan::read_cdr_plan - ")
-                         ACE_TEXT ("Error: Unable to open file for reading %s\n"),
-                         filename));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+          (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan::read_cdr_plan - ")
+           ACE_TEXT ("Error: Unable to open file for reading %s\n"),
+           filename));
         return 0;
       }
 
@@ -61,8 +73,9 @@ namespace DAnCE
 
     if (n == 0)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan::read_cdr_plan - ")
-                         ACE_TEXT ("Byte order not written to file\n")));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR,
+          DLINFO ACE_TEXT ("Convert_Plan::read_cdr_plan - ")
+          ACE_TEXT ("Byte order not written to file\n")));
         ACE_OS::fclose (file);
         return 0;
       }
@@ -72,7 +85,8 @@ namespace DAnCE
 
     if (n == 0)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan::read_cdr_plan - ")
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+          (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan::read_cdr_plan - ")
                          ACE_TEXT ("Plan size not written to file\n")));
         ACE_OS::fclose (file);
         return 0;
@@ -80,8 +94,9 @@ namespace DAnCE
 
     if (byte_order != ACE_CDR_BYTE_ORDER)
       {
-        DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("Convert_Plan::read_cdr_plan - ")
-                         ACE_TEXT ("Plan appears encoded in a different endian.\n")));
+        DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_DEBUG,
+          DLINFO ACE_TEXT ("Convert_Plan::read_cdr_plan - ")
+          ACE_TEXT ("Plan appears encoded in a different endian.\n")));
         ACE_CDR::swap_4 (reinterpret_cast<char *> (&bufsize),
                          reinterpret_cast<char *> (&bufsize));
       }
@@ -104,8 +119,9 @@ namespace DAnCE
 
     if (n != bufsize)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan_Impl::read_cdr_plan - read %u bytes ")
-                         ACE_TEXT ("instead of %u bytes\n"), n, bufsize));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR,
+          DLINFO ACE_TEXT ("Convert_Plan_Impl::read_cdr_plan - read %u bytes")
+                 ACE_TEXT (" instead of %u bytes\n"), n, bufsize));
         return 0;
       }
 
@@ -116,11 +132,12 @@ namespace DAnCE
     TAO_InputCDR input_cdr (&mb);
     input_cdr.reset_byte_order ((int) byte_order);
 
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("Convert_Plan_Impl::read_cdr_plan - ")
-                     ACE_TEXT ("Reading file %s in %s endian format with size %u\n"),
-                     filename,
-                     ACE_CDR_BYTE_ORDER ? ACE_TEXT("little") : ACE_TEXT("big"),
-                     bufsize));
+    DANCE_DEBUG (DANCE_LOG_TRACE, (LM_TRACE,
+      DLINFO ACE_TEXT ("Convert_Plan_Impl::read_cdr_plan - ")
+             ACE_TEXT ("Reading file %s in %s endian format with size %u\n"),
+             filename,
+             ACE_CDR_BYTE_ORDER ? ACE_TEXT("little") : ACE_TEXT("big"),
+             bufsize));
 
 
     Deployment::DeploymentPlan *retval = 0;
@@ -129,8 +146,9 @@ namespace DAnCE
 
     if (!(input_cdr >> *retval))
       {
-        DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Convert_Plan_Impl::read_cdr_plan - ")
-                         ACE_TEXT ("Failed to demarshal plan\n")));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+          (LM_ERROR, ACE_TEXT ("Convert_Plan_Impl::read_cdr_plan - ")
+                     ACE_TEXT ("Failed to demarshal plan\n")));
         delete retval;
         return 0;
       }
@@ -140,11 +158,16 @@ namespace DAnCE
   }
 
   bool
-  Convert_Plan::write_cdr_plan (const ACE_TCHAR *output_filename, Deployment::DeploymentPlan &plan)
+  Convert_Plan::read_cdr_plan (const ACE_TCHAR *output_filename,
+                               Deployment::DeploymentPlan &plan)
   {
+    DANCE_TRACE ("Convert_Plan::read_cdr_plan");
+
     if (!output_filename)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan_Impl::write_cdr_plan - passed nil file name\n")));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR,
+          DLINFO ACE_TEXT ("Convert_Plan_Impl::write_cdr_plan - passed"\
+                           "nil file name\n")));
         return false;
       }
 
@@ -156,7 +179,9 @@ namespace DAnCE
 
         if (file == 0)
           {
-            DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan_Impl::write_cdr_plan - failed to open file %s\n"),
+            DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR,
+              DLINFO ACE_TEXT ("Convert_Plan_Impl::write_cdr_plan - "\
+                               "failed to open file %s\n"),
                              output_filename));
             return false;
           }
@@ -169,11 +194,13 @@ namespace DAnCE
         ACE_UINT32 cdr_length (output_cdr.total_length ());
         n += ACE_OS::fwrite (&cdr_length, 1, sizeof (cdr_length), file);
 
-        DANCE_DEBUG (9, (LM_TRACE, DLINFO  ACE_TEXT ("Convert_Plan_Impl::write_cdr_plan - ")
-                         ACE_TEXT ("Writing plan to file %s in %s endian format and length %u\n"),
-                         output_filename,
-                         ACE_CDR_BYTE_ORDER ? ACE_TEXT("little") : ACE_TEXT("big"),
-                         cdr_length));
+        DANCE_DEBUG (DANCE_LOG_TRACE, (LM_TRACE,
+          DLINFO ACE_TEXT ("Convert_Plan_Impl::write_cdr_plan - ")
+            ACE_TEXT ("Writing plan to file %s in %s endian format"\
+                      " and length %u\n"),
+            output_filename,
+            ACE_CDR_BYTE_ORDER ? ACE_TEXT("little") : ACE_TEXT("big"),
+            cdr_length));
 
         // Now write the IDL structure.
         for (const ACE_Message_Block *output_mb = output_cdr.begin ();
@@ -188,18 +215,22 @@ namespace DAnCE
 
         ACE_OS::fclose (file);
 
-        size_t total_size = sizeof (byte_order) + sizeof (cdr_length) + cdr_length;
+        size_t total_size =
+          sizeof (byte_order) + sizeof (cdr_length) + cdr_length;
         if (n != total_size)
           {
-            DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Convert_Plan::write_cdr_plan - ")
-                             ACE_TEXT ("Error: Unexpected number of bytes written: %u instead of %u\n"),
+            DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR, (
+              LM_ERROR, ACE_TEXT ("Convert_Plan::write_cdr_plan - ")
+              ACE_TEXT ("Error: Unexpected number of bytes written:"\
+                        "%u instead of %u\n"),
                              n, total_size));
           }
       }
     else
       {
-        DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Convert_Plan::write_cdr_plan - ")
-                         ACE_TEXT ("Failed to mashal deployment plan\n")));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR,
+          ACE_TEXT ("Convert_Plan::write_cdr_plan - ")
+          ACE_TEXT ("Failed to mashal deployment plan\n")));
         return false;
       }
 

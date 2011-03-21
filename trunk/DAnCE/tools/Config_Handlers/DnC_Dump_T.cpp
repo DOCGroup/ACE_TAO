@@ -7,6 +7,15 @@
 #include "Dump_Obj.h"
 #include "dance/Logger/Log_Macros.h"
 
+// James Edmondson <james.r.edmondson@vanderbilt.edu> note:
+// All of the dumps in this file had log levels of 1, which in our Log_Macros
+// indicates a terminal error. Ideally, I would think these should take
+// a parameter to indicate the log level to assume, rather than assuming
+// the worst. Although dumps tend to happen when a fatal error has
+// occurred, it can also be a debugging tool. Not sure if I agree with
+// them being terminal error prints, but perhaps this is something
+// we can discuss
+
 namespace Deployment
 {
   namespace DnC_Dump_T
@@ -18,7 +27,8 @@ namespace Deployment
     dump_ref (const char* caption, REFERENCE& ref,
               const char* root, DATA_TYPE CLASS::*data)
     {
-      DANCE_DEBUG (1, (LM_DEBUG, "%s%s:\n",
+      DANCE_TRACE("DnC_Dump_T::dump_ref");
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "%s%s:\n",
                   Dump_Obj::indent(), caption));
 
       const CORBA::Any &val = Dump_Obj::desc (root);
@@ -30,7 +40,7 @@ namespace Deployment
       const ROOT &root_obj = *t;
 
       int value = ref;
-      DANCE_DEBUG (1, (LM_DEBUG, "%s%s.name: %s\n",
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "%s%s.name: %s\n",
                   Dump_Obj::indent(), caption,
                   (root_obj.*data)[value].name.in()));
     }
@@ -42,9 +52,10 @@ namespace Deployment
     dump_ref_seq (const char* caption, SEQUENCE& seq,
                   const char* root, DATA_TYPE CLASS::*data)
     {
-      DANCE_DEBUG (1, (LM_DEBUG,
-                  "%s%s:\n",
-                  Dump_Obj::indent(), caption));
+      DANCE_TRACE("DnC_Dump_T::dump_ref_seq");
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "%s%s:\n",
+           Dump_Obj::indent(), caption));
 
       CORBA::Any val;
       val <<= root;
@@ -59,9 +70,10 @@ namespace Deployment
 
           const ROOT &root_obj = *t;
           int value = seq[i];
-          DANCE_DEBUG (1, (LM_DEBUG, "%s%s[%d].name: %s\n",
-                      Dump_Obj::indent(), caption, i,
-                      (root_obj.*data)[value].name.in()));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_DEBUG, "%s%s[%d].name: %s\n",
+               Dump_Obj::indent(), caption, i,
+               root_obj.*data)[value].name.in()));
         }
     }
 
@@ -70,6 +82,7 @@ namespace Deployment
     void
     dump_sequence (const char* caption, const SEQUENCE &seq)
     {
+      DANCE_TRACE("DnC_Dump_T::dump_sequence");
       CORBA::ULong size = seq.length ();
 
       if (size != 0)
@@ -78,8 +91,9 @@ namespace Deployment
 
           for (CORBA::ULong i = 0; i < size; ++i)
             {
-              DANCE_DEBUG (1, (LM_DEBUG, "%s%s %d:\n", Dump_Obj::indent(),
-                          caption, i));
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+                (LM_DEBUG, "%s%s %d:\n", Dump_Obj::indent(),
+                   caption, i));
               DnC_Dump::dump (seq[i]);
             }
         }

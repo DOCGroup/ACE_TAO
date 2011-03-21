@@ -21,6 +21,8 @@ namespace DAnCE
                                           const DataValue &value,
                                           CORBA::TypeCode_ptr req_tc)
     {
+      DANCE_TRACE("DynEnum_Handler::extract_into_dynany");
+
       try
         {
           CORBA::TypeCode_var tc;
@@ -33,23 +35,28 @@ namespace DAnCE
           // Make the actual DynEnum
           DynamicAny::DynAny_var temp =
             DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
-          DynamicAny::DynEnum_var retval = DynamicAny::DynEnum::_narrow (temp.in ());
+          DynamicAny::DynEnum_var retval = DynamicAny::DynEnum::_narrow (
+            temp.in ());
 
-          retval->set_as_string (ACE_TEXT_ALWAYS_CHAR ((*value.begin_enum ())->c_str ()));
+          retval->set_as_string (ACE_TEXT_ALWAYS_CHAR ((
+            *value.begin_enum ())->c_str ()));
 
           return retval._retn ();
         }
       catch (DynamicAny::DynAny::InvalidValue)
         {
-          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Invalid value provided in XML when trying to ")
-                      ACE_TEXT ("initialize an instance of enumerated type %s\n"),
-                      type.enum_ ().typeId ().c_str ()));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR,
+              ACE_TEXT ("Invalid value provided in XML when trying to ")
+              ACE_TEXT ("initialize an instance of enumerated type %s\n"),
+              type.enum_ ().typeId ().c_str ()));
           throw Config_Error (type.enum_ ().typeId (),
                               ACE_TEXT ("Invalid value provided in XML"));
         }
       catch (Config_Error &ex)
         {
-          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("DynEnum_Handler caught Config_Error\n")));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR, ACE_TEXT ("DynEnum_Handler caught Config_Error\n")));
           if (type.enum_p ())
             ex.add_name (type.enum_ ().typeId ());
 
@@ -57,7 +64,8 @@ namespace DAnCE
         }
       catch (...)
         {
-          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("DynEnum_Handler caught unknown exception\n")));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR, ACE_TEXT ("DynEnum_Handler caught unknown exception\n")));
           throw Config_Error (type.enum_ ().typeId (),
                               ACE_TEXT ("Unknown exception"));
         }
@@ -66,17 +74,25 @@ namespace DAnCE
     void
     DynEnum_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn)
     {
+      DANCE_TRACE("DynEnum_Handler::extract_out_of_dynany");
+
       ACE_UNUSED_ARG (dyn);
-      DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Extracting Enums not yet supported\n")));
+      DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR,
+        (LM_ERROR, ACE_TEXT ("Extracting Enums not yet supported\n")));
     }
 
     CORBA::TypeCode_ptr
     DynEnum_Handler::create_typecode (const DataType &type)
     {
+      DANCE_TRACE("DynEnum_Handler::create_typecode");
+
       if (!type.enum_p ())
         {
-          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("ERROR: Enum type description required")));
-          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Did not find expected enum type description, tk_kind may be wrong."));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR, ACE_TEXT ("ERROR: Enum type description required")));
+          throw Config_Error (ACE_TEXT (""),
+            ACE_TEXT ("Did not find expected enum type description,"\
+                      "tk_kind may be wrong."));
         }
 
       // Construct TypeCode for the enum
@@ -88,13 +104,15 @@ namespace DAnCE
            i != type.enum_ ().end_member ();
            ++i)
         {
-          members[index++] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ((*i)->c_str ()));
+          members[index++] = CORBA::string_dup (
+            ACE_TEXT_ALWAYS_CHAR ((*i)->c_str ()));
         }
 
       CORBA::TypeCode_var tc =
-        DYNANY_HANDLER->orb ()->create_enum_tc (ACE_TEXT_ALWAYS_CHAR (type.enum_ ().typeId ().c_str ()),
-                                                ACE_TEXT_ALWAYS_CHAR (type.enum_ ().name ().c_str ()),
-                                                members);
+        DYNANY_HANDLER->orb ()->create_enum_tc (
+          ACE_TEXT_ALWAYS_CHAR (type.enum_ ().typeId ().c_str ()),
+          ACE_TEXT_ALWAYS_CHAR (type.enum_ ().name ().c_str ()),
+          members);
 
       DYNANY_HANDLER->register_typecode ((type.enum_ ().typeId ()),
                                          tc.in ());

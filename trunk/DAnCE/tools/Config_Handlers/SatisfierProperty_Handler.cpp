@@ -15,10 +15,12 @@ namespace DAnCE
 
     SatisfierProperty_Handler::SatisfierProperty_Handler (void)
     {
+      DANCE_TRACE("SatisfierProperty_Handler::constructor");
     }
 
     SatisfierProperty_Handler::~SatisfierProperty_Handler (void)
     {
+      DANCE_TRACE("SatisfierProperty_Handler::destructor");
     }
 
     void
@@ -57,8 +59,10 @@ namespace DAnCE
           break;
 
         default:
-          DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Unknown SatisfierPropertyKind\n")));
-          throw Config_Error (desc.name (), ACE_TEXT ("Unknown SatisfierPropertyKind"));
+          DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR, ACE_TEXT ("Unknown SatisfierPropertyKind\n")));
+          throw Config_Error (desc.name (),
+            ACE_TEXT ("Unknown SatisfierPropertyKind"));
 
         }
 

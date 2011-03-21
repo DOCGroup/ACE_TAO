@@ -1,3 +1,47 @@
+Mon Mar 21 11:07:19 UTC 2011  James Edmondson  <james.r.edmondson@vanderbilt.edu>
+
+        - Applied formatting for 80 columns where possible
+        - Added DANCE_TRACE to all functions so we have the option
+          to turn them off and on.
+        - Applied macros from dance\Logger\Log_Macros.h to replace
+          numbers with appropriate log levels
+
+        * tools/Artifact_Installation/Artifact_Installation_exec.cpp
+        * tools/Artifact_Installation/Artifact_Installation_Impl.cpp
+        * tools/Artifact_Installation/Installation_Repository_Manager.cpp
+        * tools/Config_Handlers/ADD_Handler.cpp
+        * tools/Config_Handlers/Any_Handler.cpp
+        * tools/Config_Handlers/CPD_Handler.cpp
+        * tools/Config_Handlers/DataType_Handler.cpp
+        * tools/Config_Handlers/DnC_Dump.cpp
+        * tools/Config_Handlers/DnC_Dump_T.cpp
+        * tools/Config_Handlers/DP_Handler.cpp
+        * tools/Config_Handlers/Dump_Obj.cpp
+        * tools/Config_Handlers/DynAny_Handler/DataType_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynAlias_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynStruct_Handler.cpp
+        * tools/Config_Handlers/IDD_Handler.cpp
+        * tools/Config_Handlers/MDD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/SID_Handler.cpp
+        * tools/Config_Handlers/PSPE_Handler.cpp
+        * tools/Config_Handlers/SatisfierProperty_Handler.cpp
+        * tools/Config_Handlers/XML_File_Intf.cpp
+        * tools/Convert_Plan/Convert_Plan.cpp
+        * tools/Convert_Plan/Convert_Plan_Impl.cpp
+        * tools/Split_Plan/Locality_Splitter.cpp
+        * tools/Split_Plan/Split_Plan.cpp
+        * tools/Split_Plan/Split_Plan_exec.cpp
+        * tools/System_Health/Daemon/SHS_Daemon.cpp
+        * tools/System_Health/Daemon/SHS_Daemon_Impl.cpp
+        * tools/System_Health/Interceptors/SHS_CORBA_Transport.cpp
+
+
 Thu Mar 17 15:07:19 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/LocalityManager/Handler/LocalityActivator_Impl.cpp:
