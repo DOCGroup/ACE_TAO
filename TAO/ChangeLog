@@ -1,3 +1,8 @@
+Mon Mar 21 10:34:42 UTC 2011  Martin Corino  <corino_m@remedy.nl>
+
+        * tao/DynamicInterface/Server_Request.cpp:
+					Fixed typo in fix for deffered_reply() check.
+
 Sun Mar 20 13:45:05 UTC 2011  Martin Corino  <corino_m@remedy.nl>
 
         * tao/DynamicInterface/Server_Request.cpp:
