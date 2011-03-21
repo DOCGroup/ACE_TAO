@@ -1,3 +1,9 @@
+Mon Mar 21 18:15:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Stub.inl:
+        * tao/Stub.cpp:
+          Moved refcount manipulate methods inline
+
 Mon Mar 21 17:27:15 UTC 2011  Adam Mitz  <mitza@ociweb.com>
 
         * bin/tao_orb_tests.lst:

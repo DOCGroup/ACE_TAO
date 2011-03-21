@@ -347,6 +347,20 @@ bool TAO_Stub::forwarded_on_exception () const
   return forwarded_on_exception_.value ();
 }
 
+ACE_INLINE
+void
+TAO_Stub::_incr_refcnt (void)
+{
+  ++this->refcount_;
+}
+
+ACE_INLINE
+void
+TAO_Stub::_decr_refcnt (void)
+{
+  if (--this->refcount_ == 0)
+    delete this;
+}
 
 // ---------------------------------------------------------------
 
