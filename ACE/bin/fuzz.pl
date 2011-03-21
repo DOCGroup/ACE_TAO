@@ -95,7 +95,20 @@ sub find_files ()
 #
 sub store_file ($)
 {
+    my $dir = $File::Find::dir;
     my $name = shift;
+
+    # check to see if we are checking generated directories
+    if ($dir =~ /.*(lib|bin|Debug|Release).*$/) {
+        return;
+    }
+
+    # generated files should be similarly ignored. This is not an
+    # exhaustive list but should be
+    if ($name =~ /(C.cpp|C.inl|C.h|S.cpp|S.inl|S.h|_export.h)$/) {
+        return;
+    }
+
     if ($name =~ /\.(c|cc|cpp|cxx|tpp)$/i) {
         push @files_cpp, ($name);
     }
