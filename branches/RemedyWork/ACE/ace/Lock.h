@@ -73,14 +73,14 @@ public:
   /**
    * Block until the thread acquires a read lock.  If the locking
    * mechanism doesn't support read locks then this just calls
-   * <acquire>.  Returns -1 on failure.
+   * acquire().  Returns -1 on failure.
    */
   virtual int acquire_read (void) = 0;
 
   /**
    * Block until the thread acquires a write lock.  If the locking
    * mechanism doesn't support read locks then this just calls
-   * <acquire>.  Returns -1 on failure.
+   * acquire().  Returns -1 on failure.
    */
   virtual int acquire_write (void) = 0;
 
