@@ -72,6 +72,7 @@ public:
     TAO_REACTIVE_CONNECT,
     TAO_LEADER_FOLLOWER_CONNECT
   };
+
   /// Return the selected connection strategy option.
   virtual Connect_Strategy connect_strategy (void) const = 0;
 
