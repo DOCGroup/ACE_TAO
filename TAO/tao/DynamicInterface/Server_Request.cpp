@@ -246,7 +246,7 @@ CORBA::ServerRequest::dsi_marshal (void)
 
   // in case a deferred_reply is specified (like for GIOP::LocateRequest)
   // do not send a reply here
-  if (this->orb_server_request_.deferred_reply ())
+  if (!this->orb_server_request_.deferred_reply ())
   {
     this->orb_server_request_.tao_send_reply ();
   }
