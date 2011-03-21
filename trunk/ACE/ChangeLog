@@ -1,3 +1,10 @@
+Mon Mar 21 20:40:36 UTC 2011  James Edmondson  <james.r.edmondson@vanderbilt.edu>
+
+        * bin/fuzz.pl:
+          Commented out lines that may be used for debugging the 
+          trace error checker
+
+
 Mon Mar 21 20:18:52 UTC 2011  James Edmondson  <james.r.edmondson@vanderbilt.edu>
 
         * bin/fuzz.pl:
