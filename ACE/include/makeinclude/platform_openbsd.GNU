@@ -6,7 +6,6 @@
 debug ?= 1
 optimize ?= 1
 threads ?= 1
-versioned_so ?= 1
 
 CC              = gcc
 CXX             = g++
@@ -26,9 +25,8 @@ PRELIB          = @true
 RANLIB          = ranlib
 SOFLAGS         += -shared
 
-SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
-
 ifeq ($(threads),1)
+  CPPFLAGS += -D_THREAD_SAFE
   FLAGS_C_CC += -pthread
   SOFLAGS += -pthread
 endif # threads
