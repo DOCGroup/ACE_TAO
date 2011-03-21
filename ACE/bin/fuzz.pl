@@ -1691,7 +1691,7 @@ sub check_for_bad_ace_trace()
                     $function = $1;
                 }
 
-                print "TRACE_CHECK. Class = $class\n";
+                # print "TRACE_CHECK. Class = $class\n";
 
                 # Look for TRACE statements
                 if (m/ACE_OS_TRACE\s*\(\s*\"(.*)\"/
@@ -1706,13 +1706,13 @@ sub check_for_bad_ace_trace()
                         $class = $1;
                     }
 
-                    print "TRACE_CHECK. Found a trace. Class = $class\n";
+                    # print "TRACE_CHECK. Found a trace. Class = $class\n";
 
                     if ($class =~ m/([^\s^\&^\*]*)\s*$/) {
                         $class = $1;
                     }
 
-                    print "TRACE_CHECK. Augmenting class. Class = $class\n";
+                    # print "TRACE_CHECK. Augmenting class. Class = $class\n";
 
                     if ($trace !~ m/\Q$function\E/
                         || ($trace =~ m/\:\:/ && !($trace =~ m/\Q$class\E/ && $trace =~ m/\Q$function\E/))) {
