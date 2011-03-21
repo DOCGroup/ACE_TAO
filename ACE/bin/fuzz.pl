@@ -95,19 +95,7 @@ sub find_files ()
 #
 sub store_file ($)
 {
-    my $dir = $File::Find::dir;
     my $name = shift;
-
-    # check to see if we are checking generated directories
-    if ($dir =~ /.*(lib|bin|Debug|Release).*$/) {
-        return;
-    }
-
-    # generated files should be similarly ignored. This is not an
-    # exhaustive list but should be
-    if ($name =~ /(C.cpp|C.inl|C.h|S.cpp|S.inl|S.h|_export.h)$/) {
-        return;
-    }
 
     if ($name =~ /\.(c|cc|cpp|cxx|tpp)$/i) {
         push @files_cpp, ($name);
@@ -1703,6 +1691,8 @@ sub check_for_bad_ace_trace()
                     $function = $1;
                 }
 
+                print "TRACE_CHECK. Class = $class\n";
+
                 # Look for TRACE statements
                 if (m/ACE_OS_TRACE\s*\(\s*\"(.*)\"/
                     || m/ACE_TRACE\s*\(\s*\"(.*)\"/
@@ -1716,9 +1706,13 @@ sub check_for_bad_ace_trace()
                         $class = $1;
                     }
 
+                    print "TRACE_CHECK. Found a trace. Class = $class\n";
+
                     if ($class =~ m/([^\s^\&^\*]*)\s*$/) {
                         $class = $1;
                     }
+
+                    print "TRACE_CHECK. Augmenting class. Class = $class\n";
 
                     if ($trace !~ m/\Q$function\E/
                         || ($trace =~ m/\:\:/ && !($trace =~ m/\Q$class\E/ && $trace =~ m/\Q$function\E/))) {

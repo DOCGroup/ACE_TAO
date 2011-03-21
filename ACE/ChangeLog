@@ -1,3 +1,9 @@
+Mon Mar 21 20:18:52 UTC 2011  James Edmondson  <james.r.edmondson@vanderbilt.edu>
+
+        * bin/fuzz.pl:
+          Reverted previous changes
+
+
 Mon Mar 21 19:07:52 UTC 2011  James Edmondson  <james.r.edmondson@vanderbilt.edu>
 
         * bin/fuzz.pl:
