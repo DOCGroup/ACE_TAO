@@ -55,8 +55,9 @@ namespace DAnCE
           break;
 
         default:
-          DANCE_DEBUG (1, (LM_ERROR, "Invalid port type in connection %s\n",
-                      desc.name ().c_str ()));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR, "Invalid port type in connection %s\n",
+             desc.name ().c_str ()));
           throw 1;
         }
 
@@ -136,8 +137,9 @@ namespace DAnCE
           break;
 
         default:
-          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT("Invalid port kind in connection %C\n"),
-                      name.c_str ()));
+          DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR,
+            (LM_ERROR, ACE_TEXT("Invalid port kind in connection %C\n"),
+            name.c_str ()));
         }
 
       for (CORBA::ULong i = 0; i < src.supportedType.length (); ++i)

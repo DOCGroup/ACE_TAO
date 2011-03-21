@@ -44,7 +44,8 @@ namespace DAnCE
       IdRef xid;
       xid.idref (str.c_str ());
 
-      return SubcomponentPortEndpoint (ACE_TEXT_CHAR_TO_TCHAR (src.portName.in ()),
+      return SubcomponentPortEndpoint (
+        ACE_TEXT_CHAR_TO_TCHAR (src.portName.in ()),
                                        xid);
     }
       };
@@ -165,7 +166,8 @@ namespace DAnCE
       DANCE_TRACE("APM_Handler::get_apm");
 
       toconfig.name = ACE_TEXT_ALWAYS_CHAR ( desc.name ().c_str ());
-      toconfig.externalName = ACE_TEXT_ALWAYS_CHAR ( desc.externalName ().c_str ());
+      toconfig.externalName =
+        ACE_TEXT_ALWAYS_CHAR (desc.externalName ().c_str ());
 
       toconfig.delegatesTo.length (desc.count_delegatesTo ());
       SEQ_HAND_GCC_BUG_WORKAROUND (SPR_Handler::handle_spr,
@@ -181,8 +183,9 @@ namespace DAnCE
     {
       DANCE_TRACE("APM_Handler::get_apm - reverse");
 
-      AssemblyPropertyMapping retval (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
-                                      ACE_TEXT_CHAR_TO_TCHAR (src.externalName.in ()));
+      AssemblyPropertyMapping retval (
+        ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
+        ACE_TEXT_CHAR_TO_TCHAR (src.externalName.in ()));
 #if 0
       for (CORBA::ULong i = 0; i < src.delegatesTo.length (); ++i)
         retval.add_delegatesTo (SPR_Handler::get_spr (src.delegatesTo[i]));
@@ -197,8 +200,9 @@ namespace DAnCE
                  APM_Handler::handle_apm > APM_Functor;
 
       void
-      CAD_Handler::component_assem_descr (const ComponentAssemblyDescription &desc,
-                                          ::Deployment::ComponentAssemblyDescription &toconfig)
+      CAD_Handler::component_assem_descr (
+        const ComponentAssemblyDescription &desc,
+        ::Deployment::ComponentAssemblyDescription &toconfig)
       {
         DANCE_TRACE("CAD_Handler::component_assem_descr");
 
@@ -227,7 +231,8 @@ namespace DAnCE
       }
 
       ComponentAssemblyDescription
-      CAD_Handler::component_assem_descr (const ::Deployment::ComponentAssemblyDescription &/*src*/)
+      CAD_Handler::component_assem_descr (
+        const ::Deployment::ComponentAssemblyDescription &/*src*/)
       {
         DANCE_TRACE("CAD_Handler::component_assem_descr - reverse");
 
@@ -241,7 +246,8 @@ namespace DAnCE
           retval.add_connection (ACD_Handler::get_acd (src.connection[i]));
 
         for (CORBA::ULong i = 0; i < src.externalProperty.length (); ++i)
-          retval.add_externalProperty (APM_Handler::get_apm (src.externalProperty[i]));
+          retval.add_externalProperty (
+            APM_Handler::get_apm (src.externalProperty[i]));
 #endif
         return retval;
 
@@ -250,6 +256,8 @@ namespace DAnCE
       ComponentAssemblyDescription *
       CAD_Handler::resolve_cad (const char *)
       {
+        DANCE_TRACE("CAD_Handler::resolve_cad");
+
         /*      xercesc::DOMDocument *dom =
                 this->xml_helper_->create_dom (uri);
 

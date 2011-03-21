@@ -19,10 +19,13 @@ namespace DAnCE
       : file_ (file),
         idl_dp_ (0)
     {
+      DANCE_TRACE("XML_File_Intf::constructor");
     }
 
     XML_File_Intf::~XML_File_Intf (void)
     {
+      DANCE_TRACE("XML_File_Intf::destructor");
+
       XML_Helper::XML_HELPER.terminate_parser ();
     }
 
@@ -36,29 +39,34 @@ namespace DAnCE
           if (!XML_Helper::XML_HELPER.is_initialized ())
             return false;
 
-          DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
+          DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+            (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
                        ACE_TEXT ("Constructing DOM\n")));
           XERCES_CPP_NAMESPACE::DOMDocument *dom =
             XML_Helper::XML_HELPER.create_dom ((file));
 
           if (dom == 0)
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
+              DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
                            ACE_TEXT ("Failed to open file %s\n"), file));
               return false;
             }
 
           XERCES_CPP_NAMESPACE::DOMElement *foo = dom->getDocumentElement ();
-          DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
+          DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+            (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
                        ACE_TEXT ("DOMElement pointer: %u\n"), foo));
 
-          DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
-                       ACE_TEXT ("Parsing XML file with XSC\n")));
+          DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE,
+            DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
+            ACE_TEXT ("Parsing XML file with XSC\n")));
           deploymentPlan dp =
             DAnCE::Config_Handlers::reader::DeploymentPlan (dom);
 
-          DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
-                       ACE_TEXT ("Processing using config handlers\n")));
+          DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE,
+            DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
+            ACE_TEXT ("Processing using config handlers\n")));
           DP_Handler dp_handler (dp);
 
           this->idl_dp_.reset (dp_handler.plan ());
@@ -68,9 +76,10 @@ namespace DAnCE
         }
       catch (CORBA::Exception &ex)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
-                           ACE_TEXT ("CORBA Exception whilst parsing XML into IDL\n"),
-                           ex._info ().c_str ()));
+          DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
+            ACE_TEXT ("CORBA Exception whilst parsing XML into IDL\n"),
+            ex._info ().c_str ()));
           throw Config_Error (this->file_,
                               ex._info ().c_str ());
         }
@@ -80,10 +89,11 @@ namespace DAnCE
         }
       catch (...)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
-                      ACE_TEXT ("Unexpected exception whilst parsing XML into IDL.\n")));
+          DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
+            ACE_TEXT ("Unexpected exception whilst parsing XML into IDL.\n")));
           throw Config_Error (this->file_,
-                              ACE_TEXT ("Unexpected C++ exception whilst parsing XML"));
+            ACE_TEXT ("Unexpected C++ exception whilst parsing XML"));
         }
 
       return false;
@@ -99,28 +109,33 @@ namespace DAnCE
           if (!XML_Helper::XML_HELPER.is_initialized ())
             return false;
 
-          DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_domain - ")
+          DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE,
+            DLINFO ACE_TEXT ("XML_File_Intf::read_process_domain - ")
                        ACE_TEXT ("Constructing DOM\n")));
           XERCES_CPP_NAMESPACE::DOMDocument *dom =
             XML_Helper::XML_HELPER.create_dom ((file));
 
           if (dom == 0)
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::read_process_domain - ")
+              DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::read_process_domain - ")
                            ACE_TEXT ("Failed to open file %s\n"), file));
               return false;
             }
 
           XERCES_CPP_NAMESPACE::DOMElement *foo = dom->getDocumentElement ();
-          DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_domain - ")
+          DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+            (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_domain - ")
                        ACE_TEXT ("DOMElement pointer: %u\n"), foo));
 
-          DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_domain - ")
+          DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE,
+            DLINFO ACE_TEXT ("XML_File_Intf::read_process_domain - ")
                        ACE_TEXT ("Parsing XML file with XSC\n")));
           Domain dp =
             DAnCE::Config_Handlers::reader::domain (dom);
 
-          DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_domain - ")
+          DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE,
+            DLINFO ACE_TEXT ("XML_File_Intf::read_process_domain - ")
                        ACE_TEXT ("Processing using config handlers\n")));
           DD_Handler dp_handler (dp);
 
@@ -131,7 +146,8 @@ namespace DAnCE
         }
       catch (CORBA::Exception &ex)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
+          DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
                            ACE_TEXT ("CORBA Exception whilst parsing XML into IDL\n"),
                            ex._info ().c_str ()));
           throw Config_Error (this->file_,
@@ -143,7 +159,8 @@ namespace DAnCE
         }
       catch (...)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
+          DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
                       ACE_TEXT ("Unexpected exception whilst parsing XML into IDL.\n")));
           throw Config_Error (this->file_,
                               ACE_TEXT ("Unexpected C++ exception whilst parsing XML"));
@@ -156,6 +173,7 @@ namespace DAnCE
     XML_File_Intf::get_plan (void)
     {
       DANCE_TRACE("get_plan");
+
       if (this->idl_dp_.get () == 0 && !this->read_process_plan (this->file_.c_str ()))
         return 0;
 
@@ -166,6 +184,7 @@ namespace DAnCE
     XML_File_Intf::release_plan (void)
     {
       DANCE_TRACE("XML_File_Intf::get_plan");
+
       if (this->idl_dp_.get () == 0 && !this->read_process_plan (this->file_.c_str ()))
         return 0;
       return this->idl_dp_.release ();
@@ -175,6 +194,7 @@ namespace DAnCE
     XML_File_Intf::get_domain (void)
     {
       DANCE_TRACE("get_domain");
+
       if (this->idl_domain_.get () == 0 && !this->read_process_domain (this->file_.c_str ()))
         return 0;
 
@@ -185,6 +205,7 @@ namespace DAnCE
     XML_File_Intf::release_domain (void)
     {
       DANCE_TRACE("XML_File_Intf::get_domain");
+
       if (this->idl_domain_.get () == 0 && !this->read_process_domain (this->file_.c_str ()))
         return 0;
       return this->idl_domain_.release ();
@@ -194,6 +215,8 @@ namespace DAnCE
     XML_File_Intf::add_search_path (const ACE_TCHAR *environment,
                                     const ACE_TCHAR *relpath)
     {
+      DANCE_TRACE("XML_File_Intf::add_search_path");
+
       XML_Helper::XML_HELPER.get_resolver ().get_resolver ().add_path (environment, relpath);
     }
 

@@ -12,7 +12,10 @@ namespace Deployment
   Dump_Obj::Dump_Obj(const char* caption)
     : desc_()
   {
-    DANCE_DEBUG (1, (LM_DEBUG, "%C%C:\n", indent_.c_str(), caption));
+    DANCE_TRACE ("Dump_Obj::constructor");
+
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+      (LM_DEBUG, "%C%C:\n", indent_.c_str(), caption));
     indent_.append("  ");
   }
 
@@ -21,7 +24,9 @@ namespace Deployment
                       CORBA::Any &val)
     : desc_(caption)
   {
-    DANCE_DEBUG (1, (LM_DEBUG, "%C%C:\n",
+    DANCE_TRACE ("Dump_Obj::constructor");
+
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "%C%C:\n",
                 indent_.c_str(),
                 caption));
 
@@ -29,9 +34,9 @@ namespace Deployment
 
     if (desc_map_.find (std::string (caption)) != desc_map_.end())
       {
-        DANCE_DEBUG (1, (LM_DEBUG, "DnC_Dump.cpp:Dump_Obj - \
-                          The item with name %C is already in \
-                          the node map.\n", caption));
+        DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "DnC_Dump.cpp:Dump_Obj -"\
+                          " The item with name %C is already in" \
+                          " the node map.\n", caption));
         throw Node_Exist();
       }
     else
@@ -42,6 +47,8 @@ namespace Deployment
 
   Dump_Obj::~Dump_Obj()
   {
+    DANCE_TRACE ("Dump_Obj::destructor");
+
     indent_.erase(indent_.size() - 2, 2);
     if (desc_.size() != 0)
       {
@@ -51,8 +58,9 @@ namespace Deployment
           }
         else
           {
-            DANCE_DEBUG (1, (LM_DEBUG, "DnC_Dump.cpp:Dump_Obj - \
-                        The item with name %C is not in the node map.\n",
+            DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+              (LM_DEBUG, "DnC_Dump.cpp:Dump_Obj -"\
+                        " The item with name %C is not in the node map.\n",
                         desc_.c_str()));
             throw Node_Not_Exist();
           }

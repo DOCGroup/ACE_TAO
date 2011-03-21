@@ -57,7 +57,8 @@ namespace DAnCE
         retval.add_resourceType (src.resourceType[i].in ());
 
       for (CORBA::ULong i = 0; i < src.property.length (); ++i)
-        retval.add_property (SatisfierProperty_Handler::get_sat_property (src.property[i]));
+        retval.add_property (SatisfierProperty_Handler::get_sat_property (
+          src.property[i]));
 #endif
       return retval;
     }
@@ -162,7 +163,8 @@ namespace DAnCE
       retval.componentPort (ACE_TEXT_CHAR_TO_TCHAR (src.componentPort.in ()));
 #if 0
       for (CORBA::ULong i = 0; i < src.property.length (); ++i)
-        retval.add_property (Property_Handler::get_property (src.property[i]));
+        retval.add_property (
+          Property_Handler::get_property (src.property[i]));
 #endif
       return retval;
     }
@@ -185,7 +187,8 @@ namespace DAnCE
              desc.end_nodeExecParameter (),
              Property_Functor (toconfig.nodeExecParameter));
 
-      toconfig.componentExecParameter.length (desc.count_componentExecParameter ());
+      toconfig.componentExecParameter.length (
+        desc.count_componentExecParameter ());
       std::for_each (desc.begin_componentExecParameter (),
              desc.end_componentExecParameter (),
              Property_Functor (toconfig.componentExecParameter));
@@ -246,8 +249,8 @@ namespace DAnCE
 
       void
       CID_Handler::component_impl_descr (
-                                         const ComponentImplementationDescription &desc,
-                                         ::Deployment::ComponentImplementationDescription &toconfig)
+        const ComponentImplementationDescription &desc,
+        ::Deployment::ComponentImplementationDescription &toconfig)
       {
         DANCE_TRACE ("CID_Handler::component_impl_descr");
 
@@ -269,7 +272,9 @@ namespace DAnCE
           toconfig.UUID = ACE_TEXT_ALWAYS_CHAR ( cid->UUID ().c_str ());
 
         if (cid->implements_p ())
-          { // MAJO: We should be able to assume this exists, fix broken interpeters..
+          {
+            // MAJO: We should be able to assume this exists,
+            //fix broken interpeters..
             Comp_Intf_Descr_Handler::comp_intf_descr (cid->implements (),
                                                       toconfig.implements);
           }
@@ -287,7 +292,9 @@ namespace DAnCE
                      toconfig.monolithicImpl[0]);
           }
         else
-          throw Plan_Error (ACE_TEXT ("ComponentImplementationDescription must have either assemblyImpl or monolithicImpl"));
+          throw Plan_Error (
+            ACE_TEXT ("ComponentImplementationDescription must have either"\
+                      "assemblyImpl or monolithicImpl"));
 
         // configProperty
         toconfig.configProperty.length (cid->count_configProperty ());
@@ -307,10 +314,12 @@ namespace DAnCE
         // dependsOn
         toconfig.dependsOn.length (cid->count_dependsOn ());
         CORBA::ULong pos = 0;
-        for (ComponentImplementationDescription::dependsOn_const_iterator i = cid->begin_dependsOn ();
+        for (ComponentImplementationDescription::dependsOn_const_iterator i =
+               cid->begin_dependsOn ();
              i != cid->end_dependsOn ();
              ++i)
-          toconfig.dependsOn[pos++].requiredType = ACE_TEXT_ALWAYS_CHAR ( (*i)->requiredType ().c_str ());
+          toconfig.dependsOn[pos++].requiredType =
+            ACE_TEXT_ALWAYS_CHAR ( (*i)->requiredType ().c_str ());
 
         // infoProperty
         toconfig.infoProperty.length (cid->count_infoProperty ());
@@ -321,7 +330,8 @@ namespace DAnCE
       }
 
       ComponentImplementationDescription
-      CID_Handler::component_impl_descr (const Deployment::ComponentImplementationDescription& src)
+      CID_Handler::component_impl_descr (
+        const Deployment::ComponentImplementationDescription& src)
       {
         DANCE_TRACE ("CID_Handler::component_impl_descr - reverse");
 
@@ -331,36 +341,44 @@ namespace DAnCE
         retval.UUID (ACE_TEXT_CHAR_TO_TCHAR (src.UUID.in ()));
 
         {
-          retval.implements (Comp_Intf_Descr_Handler::comp_intf_descr (src.implements));
+          retval.implements (Comp_Intf_Descr_Handler::comp_intf_descr (
+            src.implements));
         }
 
         if (src.assemblyImpl.length () == 1)
           {
-            retval.assemblyImpl (CAD_Handler::component_assem_descr (src.assemblyImpl[0]));
+            retval.assemblyImpl (CAD_Handler::component_assem_descr (
+              src.assemblyImpl[0]));
           }
         else if (src.monolithicImpl.length () == 1)
           {
-            retval.monolithicImpl (MID_Handler::get_mid (src.monolithicImpl[0]));
+            retval.monolithicImpl (MID_Handler::get_mid (
+              src.monolithicImpl[0]));
           }
         else
-          DANCE_ERROR (1, (LM_WARNING, "Warning: ComponentImplementationDescription lacks "
-                         "either a required assemblyImpl or monolithicImpl, or has too many"));
+          DANCE_ERROR (DANCE_LOG_WARNING,
+            (LM_WARNING, "Warning: ComponentImplementationDescription lacks "
+                         "either a required assemblyImpl or monolithicImpl, "\
+                         "or has too many"));
 #if 0
         for (CORBA::ULong i = 0; i < src.configProperty.length (); ++i)
           {
             retval.add_configProperty (
-                                       Property_Handler::get_property (src.configProperty[i]));
+                                       Property_Handler::get_property (
+                                         src.configProperty[i]));
           }
 
         for (CORBA::ULong i = 0; i < src.dependsOn.length (); ++i)
           {
-            retval.add_dependsOn (ImplementationDependency (src.dependsOn[i].requiredType.in ()));
+            retval.add_dependsOn (ImplementationDependency (
+              src.dependsOn[i].requiredType.in ()));
           }
 
         for (CORBA::ULong i = 0; i < src.infoProperty.length (); ++i)
           {
             retval.add_infoProperty (
-                                     Property_Handler::get_property (src.infoProperty[i]));
+                                     Property_Handler::get_property (
+                                       src.infoProperty[i]));
           }
 #endif
         return retval;
@@ -381,7 +399,8 @@ namespace DAnCE
             (reader::componentImplementationDescription (dom));
         }
         catch (...) {
-          throw Parse_Error (ACE_TEXT ("Unable to create XSC structure for CID"));
+          throw Parse_Error (
+            ACE_TEXT ("Unable to create XSC structure for CID"));
         }
       }
     }
