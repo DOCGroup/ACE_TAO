@@ -1,7 +1,16 @@
+Mon Mar 21 19:07:52 UTC 2011  James Edmondson  <james.r.edmondson@vanderbilt.edu>
+
+        * bin/fuzz.pl:
+          Stopped fuzz.pl from looking into lib/bin/Debug/Release
+          Stopped fuzz.pl from considering *C.* and *S.* generated files
+          Stopped fuzz.pl from considering *_export.h
+
+
 Mon Mar 21 19:02:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * html/Stats/index.shtml:
           Playstation xampler results are not available anymore
+
 
 Mon Mar 21 16:10:05 UTC 2011  Olli Savia  <ops@iki.fi>
 
