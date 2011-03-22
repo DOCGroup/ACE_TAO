@@ -158,10 +158,10 @@ namespace DAnCE
   }
 
   bool
-  Convert_Plan::read_cdr_plan (const ACE_TCHAR *output_filename,
+  Convert_Plan::write_cdr_plan (const ACE_TCHAR *output_filename,
                                Deployment::DeploymentPlan &plan)
   {
-    DANCE_TRACE ("Convert_Plan::read_cdr_plan");
+    DANCE_TRACE ("Convert_Plan::write_cdr_plan");
 
     if (!output_filename)
       {
