@@ -26,7 +26,8 @@ DomainApplicationManager_Impl::~DomainApplicationManager_Impl()
 {
   DANCE_TRACE( "DomainApplicationManager_Impl::~DomainApplicationManager_Impl()");
 
-  DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+  DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+               (LM_DEBUG, DLINFO
                 ACE_TEXT("DomainApplicationManager_Impl::~DomainApplicationManager_Impl - ")
                 ACE_TEXT("Deleting %u applications for plan %C\n"),
                 this->running_app_.size(),
@@ -37,12 +38,15 @@ DomainApplicationManager_Impl::~DomainApplicationManager_Impl()
       Deployment::DomainApplication_var app =
         Deployment::DomainApplication::_narrow (this->poa_->servant_to_reference (p));
       PortableServer::ObjectId_var id = this->poa_->reference_to_id (app);
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_impl::~DomainApplicationManager_impl - ")
-                   ACE_TEXT("deactivating DomainApplication[%@] object...\n"),
-                   p));
+      DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                   (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_impl::~DomainApplicationManager_impl - ")
+                    ACE_TEXT("deactivating DomainApplication[%@] object...\n"),
+                    p));
       this->poa_->deactivate_object (id);
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("DomainApplicationManager_impl::~DomainApplicationManager_impl - ")
-                   ACE_TEXT("deleting DomainApplication.\n")));
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                   (LM_DEBUG, DLINFO
+                    ACE_TEXT("DomainApplicationManager_impl::~DomainApplicationManager_impl - ")
+                    ACE_TEXT("deleting DomainApplication.\n")));
       this->running_app_.pop_back();
       delete p;
     }
@@ -60,7 +64,8 @@ DomainApplicationManager_Impl::startLaunch (
 
   try
     {
-      DANCE_DEBUG (6, (LM_TRACE, DLINFO
+      DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                   (LM_TRACE, DLINFO
                     ACE_TEXT("DomainApplicationManager_Impl::startLaunch - ")
                     ACE_TEXT("Creating DomainApplication for plan %C\n"),
                     this->getPlanUUID ()));
@@ -73,7 +78,8 @@ DomainApplicationManager_Impl::startLaunch (
                                                 this->node_ids_),
                         CORBA::NO_MEMORY());
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                   (LM_TRACE, DLINFO
                     ACE_TEXT("DomainApplicationManager_Impl::startLaunch - ")
                     ACE_TEXT("Successfully created DomainApplication for plan %C\n"),
                     this->getPlanUUID ()));
@@ -86,7 +92,8 @@ DomainApplicationManager_Impl::startLaunch (
 
       app->startLaunch (configProperty, slch);
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO
+      DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                   (LM_TRACE, DLINFO
                     ACE_TEXT("DomainApplicationManager_Impl::startLaunch - ")
                     ACE_TEXT("DomainApplication startLaunch has been called\n")));
     }
@@ -111,18 +118,21 @@ DomainApplicationManager_Impl::finish_startLaunch (
   DomainApplication_Impl *da_servant,
   const ::Deployment::Connections & providedReference)
 {
-  DANCE_DEBUG (6, (LM_NOTICE, DLINFO
-                   ACE_TEXT("DomainApplicationManager_Impl::finish_startLaunch - ")
-                   ACE_TEXT("DomainApplication[%u] for plan %C created %u provided references.\n"),
-                   this->running_app_.size (),
-                   this->getPlanUUID (),
-                   providedReference.length ()));
+  DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+               (LM_NOTICE, DLINFO
+                ACE_TEXT("DomainApplicationManager_Impl::finish_startLaunch - ")
+                ACE_TEXT("DomainApplication[%u] for plan %C created %u provided references.\n"),
+                this->running_app_.size (),
+                this->getPlanUUID (),
+                providedReference.length ()));
 
   PortableServer::ObjectId_var id = this->poa_->activate_object (da_servant);
   this->running_app_.push_back(da_servant);
 
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::finish_startLaunch - ")
-              ACE_TEXT("DomainApplication was successfully activated.\n")));
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+               (LM_TRACE, DLINFO
+                ACE_TEXT("DomainApplicationManager_Impl::finish_startLaunch - ")
+                ACE_TEXT("DomainApplication was successfully activated.\n")));
 
   CORBA::Object_var ref = this->poa_->id_to_reference (id.in());
   _tao_rh->startLaunch (Deployment::DomainApplication::_narrow (ref.in ()), providedReference);
@@ -133,9 +143,10 @@ DomainApplicationManager_Impl::fail_startLaunch (
   ::Deployment::AMH_ApplicationManagerResponseHandler_ptr _tao_rh,
   CORBA::Exception* local_ex)
 {
-  DANCE_DEBUG (6, (LM_NOTICE, DLINFO
-                   ACE_TEXT("DomainApplicationManager_Impl::fail_startLaunch for plan %C called\n"),
-                   this->getPlanUUID ()));
+  DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+               (LM_NOTICE, DLINFO
+                ACE_TEXT("DomainApplicationManager_Impl::fail_startLaunch for plan %C called\n"),
+                this->getPlanUUID ()));
 
   ::Deployment::AMH_ApplicationManagerExceptionHolder amh_exholder (local_ex);
   _tao_rh->startLaunch_excep (&amh_exholder);
@@ -157,11 +168,12 @@ DomainApplicationManager_Impl::destroyApplication (
             Deployment::DomainApplication::_narrow (this->poa_->servant_to_reference (p));
           if (application->_is_equivalent (app.in()))
             {
-              DANCE_DEBUG (6, (LM_TRACE, DLINFO
-                           ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
-                           ACE_TEXT("destroying DomainApplication[%u] for plan %C\n"),
-                           i,
-                           this->getPlanUUID ()));
+              DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                           (LM_TRACE, DLINFO
+                            ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
+                            ACE_TEXT("destroying DomainApplication[%u] for plan %C\n"),
+                            i,
+                            this->getPlanUUID ()));
 
               // create completion handler
               DestroyApplicationCompletionHandler* dach_ptr = 0;
@@ -174,9 +186,10 @@ DomainApplicationManager_Impl::destroyApplication (
 
               // deactivate servant
               PortableServer::ObjectId_var id = this->poa_->reference_to_id (application);
-              DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                           ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
-                           ACE_TEXT("deactivating application object\n")));
+              DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                           (LM_TRACE, DLINFO
+                            ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
+                            ACE_TEXT("deactivating application object\n")));
               this->poa_->deactivate_object (id);
               // remove registration
               for (TApplications::size_type j = i + 1; j < this->running_app_.size(); ++j)
@@ -185,9 +198,10 @@ DomainApplicationManager_Impl::destroyApplication (
                 }
               this->running_app_.pop_back();
 
-              DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                           ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
-                           ACE_TEXT("deleting application object\n")));
+              DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                           (LM_TRACE, DLINFO
+                            ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
+                            ACE_TEXT("deleting application object\n")));
 
               // remove default ref so servant will be deleted when
               // var in DestroyApplicationCompletionHandler gets destructed
@@ -203,10 +217,11 @@ DomainApplicationManager_Impl::destroyApplication (
     }
   catch (CORBA::Exception& ex)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
-                  ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
-                  ACE_TEXT("Propagating StopError for CORBA exception caught here: %C\n"),
-                  ex._info ().c_str ()));
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
+                    ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
+                    ACE_TEXT("Propagating StopError for CORBA exception caught here: %C\n"),
+                    ex._info ().c_str ()));
       CORBA::Exception* local_ex = new Deployment::StopError(this->getPlanUUID (),
                                                              ex._info ().c_str ());
       ::Deployment::AMH_ApplicationManagerExceptionHolder amh_exholder (local_ex);
@@ -214,18 +229,20 @@ DomainApplicationManager_Impl::destroyApplication (
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
-                  ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
-                  ACE_TEXT("Propagating StopError for unknown exception caught here\n")));
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
+                    ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
+                    ACE_TEXT("Propagating StopError for unknown exception caught here\n")));
       CORBA::Exception* stop_ex = new Deployment::StopError(this->getPlanUUID (),
                                                             "unknown exception");
       ::Deployment::AMH_ApplicationManagerExceptionHolder amh_exholder (stop_ex);
       _tao_rh->destroyApplication_excep (&amh_exholder);
     }
 
-  DANCE_ERROR (1, (LM_ERROR, DLINFO
-              ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
-              ACE_TEXT("Provided application reference unknown\n")));
+  DANCE_ERROR (DANCE_LOG_ERROR,
+               (LM_ERROR, DLINFO
+                ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
+                ACE_TEXT("Provided application reference unknown\n")));
   CORBA::Exception* stop_ex = new Deployment::StopError(this->getPlanUUID (),
                                                         "domain application reference unknown");
   ::Deployment::AMH_ApplicationManagerExceptionHolder amh_exholder (stop_ex);
@@ -236,7 +253,7 @@ void
 DomainApplicationManager_Impl::getApplications (
     ::Deployment::AMH_DomainApplicationManagerResponseHandler_ptr _tao_rh)
 {
-  DANCE_TRACE ( "DomainApplicationManager_Impl::getApplications ()");
+  DANCE_TRACE ("DomainApplicationManager_Impl::getApplications ()");
 
   try
     {
@@ -254,10 +271,11 @@ DomainApplicationManager_Impl::getApplications (
             Deployment::DomainApplication::_narrow (ref.in ());
         }
 
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("DomainApplicationManager_impl::getApplications - ")
-                  ACE_TEXT("Returning %u running applications for plan %C\n"),
-                  running_app->length (),
-                  this->getPlanUUID ()));
+      DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                   (LM_DEBUG, DLINFO ACE_TEXT("DomainApplicationManager_impl::getApplications - ")
+                    ACE_TEXT("Returning %u running applications for plan %C\n"),
+                    running_app->length (),
+                    this->getPlanUUID ()));
       _tao_rh->getApplications (running_app);
       return;
     }
@@ -289,9 +307,11 @@ DomainApplicationManager_Impl::getPlan (
                         CORBA::NO_MEMORY());
       Deployment::DeploymentPlan_var plan (plan_ptr);
 
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("DomainApplicationManager_impl::getApplications - ")
-                  ACE_TEXT("Returning plan %C\n"),
-                  this->getPlanUUID ()));
+      DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                   (LM_DEBUG, DLINFO
+                    ACE_TEXT("DomainApplicationManager_impl::getApplications - ")
+                    ACE_TEXT("Returning plan %C\n"),
+                    this->getPlanUUID ()));
 
       _tao_rh->getPlan (plan);
       return;
@@ -330,10 +350,11 @@ DomainApplicationManager_Impl::preparePlan(DAM_CompletionHandler* completion_han
       split_plan.split_plan (this->plan_);
       Split_Plan<Node_Splitter>::TSubPlans &sub_plans = split_plan.plans ();
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
-                                        ACE_TEXT("Plan %C successfully split. %u nodes to prepare.\n"),
-                                        this->getPlanUUID (),
-                                        sub_plans.current_size ()));
+      DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                   (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
+                    ACE_TEXT("Plan %C successfully split. %u nodes to prepare.\n"),
+                    this->getPlanUUID (),
+                    sub_plans.current_size ()));
 
       // create completion counter
       DAM_NM_ReplyHandlerImpl::Counter* _cp = 0;
@@ -356,7 +377,8 @@ DomainApplicationManager_Impl::preparePlan(DAM_CompletionHandler* completion_han
               // If NodeManager not found throw StartError exception
               if (CORBA::is_nil (nm.in ()))
                 {
-                  DANCE_ERROR (1, (LM_ERROR, DLINFO
+                  DANCE_ERROR (DANCE_LOG_ERROR,
+                               (LM_ERROR, DLINFO
                                 ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
                                 ACE_TEXT("Deployment::StartError exception. NodeManager %C cannot be found\n"),
                                 (*iter_plans).ext_id_.c_str()));
@@ -381,21 +403,24 @@ DomainApplicationManager_Impl::preparePlan(DAM_CompletionHandler* completion_han
                   ::Deployment::AMI_NodeManagerHandler::_narrow (ref.in ());
 
               // Calling preparePlan for node, specified in current sub plan
-              DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
-                          ACE_TEXT("Calling preparePlan on node %C\n"),
-                          (*iter_plans).ext_id_.c_str()));
+              DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                           (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
+                            ACE_TEXT("Calling preparePlan on node %C\n"),
+                            (*iter_plans).ext_id_.c_str()));
 
               nm->sendc_preparePlan (dam_nm_handler.in (),
                                     (*iter_plans).int_id_,
                                     Deployment::ResourceCommitmentManager::_nil());
 
-              DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
-                          ACE_TEXT("preparePlan on node %C has been called\n"),
-                          (*iter_plans).ext_id_.c_str()));
+              DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                           (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
+                            ACE_TEXT("preparePlan on node %C has been called\n"),
+                            (*iter_plans).ext_id_.c_str()));
             }
           catch (CORBA::Exception &ex)
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO
+              DANCE_ERROR (DANCE_LOG_ERROR,
+                           (LM_ERROR, DLINFO
                             ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
                             ACE_TEXT("Caught a CORBA exception handling node %C : %C\n"),
                             (*iter_plans).ext_id_.c_str(),
@@ -412,7 +437,8 @@ DomainApplicationManager_Impl::preparePlan(DAM_CompletionHandler* completion_han
             }
           catch (...)
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO
+              DANCE_ERROR (DANCE_LOG_ERROR,
+                           (LM_ERROR, DLINFO
                             ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
                             ACE_TEXT("Caught unknown exception handling node %C\n"),
                             (*iter_plans).ext_id_.c_str()));
@@ -429,14 +455,16 @@ DomainApplicationManager_Impl::preparePlan(DAM_CompletionHandler* completion_han
     }
   catch (Deployment::StartError &e)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
                     ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
                     ACE_TEXT("Propagating StartError exception caught here\n")));
       throw e;
     }
   catch (CORBA::Exception &ex)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
                     ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
                     ACE_TEXT("Caught a CORBA exception, propagating StartError: %C\n"),
                     ex._info ().c_str ()));
@@ -445,19 +473,23 @@ DomainApplicationManager_Impl::preparePlan(DAM_CompletionHandler* completion_han
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
                     ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
                     ACE_TEXT("Caught unknown exception.  Propagating StartError\n")));
       throw ::Deployment::StartError (this->plan_.UUID.in (),
                                       "Unknown C++ exception");
     }
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::preparePlan - finished\n")));
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+               (LM_TRACE, DLINFO
+                ACE_TEXT("DomainApplicationManager_Impl::preparePlan - finished\n")));
 }
 
 void
 DomainApplicationManager_Impl::destroyManager (DAM_CompletionHandler* completion_handler)
 {
-  DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+  DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+               (LM_DEBUG, DLINFO
                 ACE_TEXT("DomainApplicationManager_Impl::destroyManager - ")
                 ACE_TEXT("Destroying %u applications for plan %C\n"),
                 this->running_app_.size (),
@@ -486,18 +518,23 @@ DomainApplicationManager_Impl::destroyManager (DAM_CompletionHandler* completion
                   Deployment::DomainApplication_var app =
                     Deployment::DomainApplication::_narrow (this->poa_->servant_to_reference (p));
                   PortableServer::ObjectId_var id = this->poa_->reference_to_id (app);
-                  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_impl::destroyManager - ")
-                              ACE_TEXT("deactivating DomainApplication[%@] object...\n"),
-                              p));
+                  DANCE_TRACE_LOG (DANCE_LOG_TRACE,
+                                   (LM_TRACE, DLINFO
+                                    ACE_TEXT("DomainApplicationManager_impl::destroyManager - ")
+                                    ACE_TEXT("deactivating DomainApplication[%@] object...\n"),
+                                    p));
                   this->poa_->deactivate_object (id);
-                  DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("DomainApplicationManager_impl::destroyManager - ")
+                  DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                               (LM_DEBUG, DLINFO
+                                ACE_TEXT("DomainApplicationManager_impl::destroyManager - ")
                               ACE_TEXT("calling destroyApplication for DomainApplication[%@].\n"),
-                              p));
+                                p));
                   p->destroyApplication (da_ch_ptr);
                 }
               catch (CORBA::Exception &ex)
                 {
-                  DANCE_ERROR (1, (LM_ERROR, DLINFO
+                  DANCE_ERROR (DANCE_LOG_ERROR,
+                               (LM_ERROR, DLINFO
                                 ACE_TEXT("DomainApplicationManager_Impl::destroyManager - ")
                                 ACE_TEXT("Caught a CORBA exception for DomainApplication[%@]: %C\n"),
                                 p,
@@ -513,7 +550,8 @@ DomainApplicationManager_Impl::destroyManager (DAM_CompletionHandler* completion
                 }
               catch (...)
                 {
-                  DANCE_ERROR (1, (LM_ERROR, DLINFO
+                  DANCE_ERROR (DANCE_LOG_ERROR,
+                               (LM_ERROR, DLINFO
                                 ACE_TEXT("DomainApplicationManager_Impl::destroyManager - ")
                                 ACE_TEXT("Caught unknown exception for DomainApplication[%@].\n"),
                                 p));
@@ -534,14 +572,16 @@ DomainApplicationManager_Impl::destroyManager (DAM_CompletionHandler* completion
     }
   catch (Deployment::StopError &e)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
                     ACE_TEXT("DomainApplicationManager_Impl::destroyManager - ")
                     ACE_TEXT("Propagating StopError exception caught here\n")));
       throw e;
     }
   catch (CORBA::Exception &ex)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
                     ACE_TEXT("DomainApplicationManager_Impl::destroyManager - ")
                     ACE_TEXT("Caught a CORBA exception, propagating StopError: %C\n"),
                     ex._info ().c_str ()));
@@ -550,19 +590,23 @@ DomainApplicationManager_Impl::destroyManager (DAM_CompletionHandler* completion
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
                     ACE_TEXT("DomainApplicationManager_Impl::destroyManager - ")
                     ACE_TEXT("Caught unknown exception.  Propagating StopError\n")));
       throw ::Deployment::StopError (this->plan_.UUID.in (),
                                      "Unknown C++ exception");
     }
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::destroyManager - finished\n")));
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+               (LM_TRACE, DLINFO
+                ACE_TEXT("DomainApplicationManager_Impl::destroyManager - finished\n")));
 }
 
 void
 DomainApplicationManager_Impl::finishDestroyManager (const DAM_CompletionHandler_AutoPtr& ch_ptr)
 {
-  DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+  DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+               (LM_DEBUG, DLINFO
                 ACE_TEXT("DomainApplicationManager_Impl::finishDestroyManager - ")
                 ACE_TEXT("Destroying %u node managers for plan %C\n"),
                 this->sub_app_mgr_.current_size (),
@@ -605,16 +649,18 @@ DomainApplicationManager_Impl::finishDestroyManager (const DAM_CompletionHandler
                   ::Deployment::AMI_NodeManagerHandler::_narrow (ref.in ());
 
               // Calling destroyManager for node
-              DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::finishDestroyManager - ")
-                          ACE_TEXT("Calling destroyManager on node manager for node %C\n"),
-                          node_id.c_str ()));
+              DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                           (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::finishDestroyManager - ")
+                            ACE_TEXT("Calling destroyManager on node manager for node %C\n"),
+                            node_id.c_str ()));
 
               (*iter).int_id_->sendc_destroyManager (dam_nm_handler.in (),
                                                     (*iter).ext_id_.in());
             }
             catch (CORBA::Exception &ex)
               {
-                DANCE_ERROR (1, (LM_ERROR, DLINFO
+                DANCE_ERROR (DANCE_LOG_ERROR,
+                             (LM_ERROR, DLINFO
                               ACE_TEXT("DomainApplicationManager_Impl::finishDestroyManager - ")
                               ACE_TEXT("Caught a CORBA exception attempting to call destroyManager on node %C: %C\n"),
                               node_id.c_str (),
@@ -631,7 +677,8 @@ DomainApplicationManager_Impl::finishDestroyManager (const DAM_CompletionHandler
               }
             catch (...)
               {
-                DANCE_ERROR (1, (LM_ERROR, DLINFO
+                DANCE_ERROR (DANCE_LOG_ERROR,
+                             (LM_ERROR, DLINFO
                               ACE_TEXT("DomainApplicationManager_Impl::finishDestroyManager - ")
                               ACE_TEXT("Caught unknown exception attempting to call destroyManager on node %C\n"),
                               node_id.c_str ()));
@@ -645,13 +692,15 @@ DomainApplicationManager_Impl::finishDestroyManager (const DAM_CompletionHandler
                 // continue to next node
               }
 
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::finishDestroyManager - ")
-                      ACE_TEXT("destroyManager has been called on node manager\n")));
+          DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                       (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::finishDestroyManager - ")
+                        ACE_TEXT("destroyManager has been called on node manager\n")));
         }
     }
   catch (Deployment::StopError &e)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
                     ACE_TEXT("DomainApplicationManager_Impl::finishDestroyManager - ")
                     ACE_TEXT("Propagating StopError exception caught here\n")));
       CORBA::Exception* local_ex = e._tao_duplicate ();
@@ -659,7 +708,8 @@ DomainApplicationManager_Impl::finishDestroyManager (const DAM_CompletionHandler
     }
   catch (CORBA::Exception &ex)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
                     ACE_TEXT("DomainApplicationManager_Impl::finishDestroyManager - ")
                     ACE_TEXT("Caught a CORBA exception, propagating StopError: %C\n"),
                     ex._info ().c_str ()));
@@ -667,12 +717,15 @@ DomainApplicationManager_Impl::finishDestroyManager (const DAM_CompletionHandler
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
                     ACE_TEXT("DomainApplicationManager_Impl::finishDestroyManager - ")
                     ACE_TEXT("Caught unknown exception.  Propagating StopError\n")));
       ch_ptr->handle_exception (new ::Deployment::StopError ());
     }
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::finishDestroyManager - finished\n")));
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+               (LM_TRACE, DLINFO
+                ACE_TEXT("DomainApplicationManager_Impl::finishDestroyManager - finished\n")));
 }
 
 DAM_NM_ReplyHandlerImpl::Counter::Counter (
@@ -688,10 +741,11 @@ DAM_NM_ReplyHandlerImpl::Counter::Counter (
 void
 DAM_NM_ReplyHandlerImpl::Counter::on_all_completed ()
 {
-  DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-              ACE_TEXT("DAM_NM_ReplyHandlerImpl::Counter::on_all_completed - ")
-              ACE_TEXT("Successfully completed operation for plan: %C\n"),
-              this->dam_servant_->getPlanUUID ()));
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+               (LM_DEBUG, DLINFO
+                ACE_TEXT("DAM_NM_ReplyHandlerImpl::Counter::on_all_completed - ")
+                ACE_TEXT("Successfully completed operation for plan: %C\n"),
+                this->dam_servant_->getPlanUUID ()));
 
   this->em_ch_ptr_->handle_completion (dam_servant_.in ());
 }
@@ -699,11 +753,12 @@ DAM_NM_ReplyHandlerImpl::Counter::on_all_completed ()
 void
 DAM_NM_ReplyHandlerImpl::Counter::on_all_completed_with_failure ()
 {
-  DANCE_ERROR (1, (LM_ERROR, DLINFO
-              ACE_TEXT("DAM_NM_ReplyHandlerImpl::Counter::on_all_completed_with_failure - ")
-              ACE_TEXT("%u errors for plan: %C\n"),
-              this->fail_count (),
-              this->dam_servant_->getPlanUUID ()));
+  DANCE_ERROR (DANCE_LOG_ERROR,
+               (LM_ERROR, DLINFO
+                ACE_TEXT("DAM_NM_ReplyHandlerImpl::Counter::on_all_completed_with_failure - ")
+                ACE_TEXT("%u errors for plan: %C\n"),
+                this->fail_count (),
+                this->dam_servant_->getPlanUUID ()));
 
   std::ostringstream err;
   err << this->fail_count () << " errors executing operation:\n";
@@ -753,13 +808,16 @@ void DAM_NM_ReplyHandlerImpl::leaveDomain_excep (
 void DAM_NM_ReplyHandlerImpl::preparePlan (
   ::Deployment::NodeApplicationManager_ptr nam)
 {
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAM_NM_ReplyHandlerImpl::preparePlan - ")
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+               (LM_TRACE, DLINFO
+                ACE_TEXT("DAM_NM_ReplyHandlerImpl::preparePlan - ")
                 ACE_TEXT("Finished preparePlan on node %C\n"),
                 this->node_id_.c_str()));
 
   if (CORBA::is_nil (nam))
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
                     ACE_TEXT("DAM_NM_ReplyHandlerImpl::preparePlan - ")
                     ACE_TEXT("PreparePlan failed for node %C, returning a nil ")
                     ACE_TEXT("NodeApplicationManager pointer.\n"),
@@ -773,7 +831,8 @@ void DAM_NM_ReplyHandlerImpl::preparePlan (
     }
   else
     {
-      DANCE_DEBUG (8, (LM_INFO, DLINFO
+      DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                   (LM_INFO, DLINFO
                     ACE_TEXT("DAM_NM_ReplyHandlerImpl::preparePlan - ")
                     ACE_TEXT("Sucessfully prepared node %C for deployment\n"),
                     this->node_id_.c_str()));
@@ -798,7 +857,9 @@ void DAM_NM_ReplyHandlerImpl::preparePlan (
 void DAM_NM_ReplyHandlerImpl::preparePlan_excep (
   ::Messaging::ExceptionHolder * excep_holder)
 {
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAM_NM_ReplyHandlerImpl::preparePlan_excep - ")
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+               (LM_TRACE, DLINFO
+                ACE_TEXT("DAM_NM_ReplyHandlerImpl::preparePlan_excep - ")
                 ACE_TEXT("Finished preparePlan on node %C\n"),
                 this->node_id_.c_str()));
 
@@ -810,7 +871,8 @@ void DAM_NM_ReplyHandlerImpl::preparePlan_excep (
     }
   catch (Deployment::StartError &ex)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
                     ACE_TEXT("DAM_NM_ReplyHandlerImpl::preparePlan_excep - ")
                     ACE_TEXT("StartError exception caught for node %C.\n"),
                     this->node_id_.c_str()));
@@ -818,7 +880,8 @@ void DAM_NM_ReplyHandlerImpl::preparePlan_excep (
     }
   catch (CORBA::Exception &ex)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
                     ACE_TEXT("DAM_NM_ReplyHandlerImpl::preparePlan_excep - ")
                     ACE_TEXT("Caught a CORBA exception for node %C: %C\n"),
                     this->node_id_.c_str(),
@@ -827,7 +890,8 @@ void DAM_NM_ReplyHandlerImpl::preparePlan_excep (
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
                     ACE_TEXT("DAM_NM_ReplyHandlerImpl::preparePlan_excep - ")
                     ACE_TEXT("Caught unknown exception for node %C.\n"),
                     this->node_id_.c_str()));
@@ -847,9 +911,10 @@ void DAM_NM_ReplyHandlerImpl::preparePlan_excep (
 
 void DAM_NM_ReplyHandlerImpl::destroyManager (void)
 {
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAM_NM_ReplyHandlerImpl::destroyApplication called.\n")));
+  DANCE_TRACE ("DAM_NM_ReplyHandlerImpl::destroyManager");
 
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO
+  DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+               (LM_TRACE, DLINFO
                 ACE_TEXT("DAM_NM_ReplyHandlerImpl::destroyApplication - ")
                 ACE_TEXT("Plan %C node %C node application manager destroy succeeded\n"),
                 this->dam_servant_->getPlanUUID (),
@@ -865,10 +930,11 @@ void DAM_NM_ReplyHandlerImpl::destroyManager (void)
 void DAM_NM_ReplyHandlerImpl::destroyManager_excep (
   ::Messaging::ExceptionHolder * excep_holder)
 {
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                   ACE_TEXT("DAM_NM_ReplyHandlerImpl::destroyApplication_excep called for plan %C node %C"),
-                   this->dam_servant_->getPlanUUID (),
-                   this->node_id_.c_str ()));
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+               (LM_TRACE, DLINFO
+                ACE_TEXT("DAM_NM_ReplyHandlerImpl::destroyApplication_excep called for plan %C node %C"),
+                this->dam_servant_->getPlanUUID (),
+                this->node_id_.c_str ()));
 
   std::ostringstream err;
   err << this->node_id_.c_str () << " - destroyApplication raised ";
@@ -878,14 +944,16 @@ void DAM_NM_ReplyHandlerImpl::destroyManager_excep (
     }
   catch (Deployment::StopError &ex)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
                     ACE_TEXT("DAM_NM_ReplyHandlerImpl::destroyApplication_excep - ")
                     ACE_TEXT("StopError exception caught.\n")));
       err << "StopError : " << ex.name.in () << "." << ex.reason.in ();
     }
   catch (CORBA::Exception &ex)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
                     ACE_TEXT("DAM_NM_ReplyHandlerImpl::destroyApplication_excep - ")
                     ACE_TEXT("Caught a CORBA exception: %C\n"),
                     ex._info ().c_str ()));
@@ -893,7 +961,8 @@ void DAM_NM_ReplyHandlerImpl::destroyManager_excep (
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
                     ACE_TEXT("DAM_NM_ReplyHandlerImpl::destroyApplication_excep - ")
                     ACE_TEXT("Caught unknown exception.\n")));
       err << "unknown exception";
@@ -983,11 +1052,12 @@ void
 DomainApplicationManager_Impl::DestroyManagerCompletionHandler::handle_completion (
     DomainApplication_Impl *da_servant)
 {
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                   ACE_TEXT("DomainApplicationManager_Impl::DestroyManagerCompletionHandler::handle_completion - ")
-                   ACE_TEXT("Finished destroyApplication on DomainApplication[%@] for plan %C\n"),
-                   da_servant,
-                   this->dam_servant_->getPlanUUID ()));
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+               (LM_TRACE, DLINFO
+                ACE_TEXT("DomainApplicationManager_Impl::DestroyManagerCompletionHandler::handle_completion - ")
+                ACE_TEXT("Finished destroyApplication on DomainApplication[%@] for plan %C\n"),
+                da_servant,
+                this->dam_servant_->getPlanUUID ()));
 
   try
     {
@@ -995,9 +1065,10 @@ DomainApplicationManager_Impl::DestroyManagerCompletionHandler::handle_completio
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
-                  ACE_TEXT("DomainApplicationManager_Impl::DestroyManagerCompletionHandler::handle_completion - ")
-                  ACE_TEXT("UNEXPECTED exception while decrementing servant reference\n")));
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
+                    ACE_TEXT("DomainApplicationManager_Impl::DestroyManagerCompletionHandler::handle_completion - ")
+                    ACE_TEXT("UNEXPECTED exception while decrementing servant reference\n")));
     }
 
   // mark of application
@@ -1008,7 +1079,8 @@ void
 DomainApplicationManager_Impl::DestroyManagerCompletionHandler::handle_exception (
     CORBA::Exception* local_ex)
 {
-  DANCE_ERROR (1, (LM_ERROR, DLINFO
+  DANCE_ERROR (DANCE_LOG_ERROR,
+               (LM_ERROR, DLINFO
                 ACE_TEXT("DomainApplicationManager_Impl::DestroyManagerCompletionHandler::handle_exception - ")
                 ACE_TEXT("CORBA exception %C for destroyApplication on domain application for plan %C\n"),
                 local_ex->_info ().c_str (),
@@ -1037,10 +1109,11 @@ DomainApplicationManager_Impl::DestroyManagerCompletionHandler::on_all_completed
 void
 DomainApplicationManager_Impl::DestroyManagerCompletionHandler::on_all_completed_with_failure ()
 {
-  DANCE_ERROR (1, (LM_ERROR, DLINFO
-              ACE_TEXT("DomainApplicationManager_Impl::DestroyManagerCompletionHandler::on_all_completed_with_failure - ")
-              ACE_TEXT("%u errors destroying domain applications\n"),
-              this->fail_count_i ()));
+  DANCE_ERROR (DANCE_LOG_ERROR,
+               (LM_ERROR, DLINFO
+                ACE_TEXT("DomainApplicationManager_Impl::DestroyManagerCompletionHandler::on_all_completed_with_failure - ")
+                ACE_TEXT("%u errors destroying domain applications\n"),
+                this->fail_count_i ()));
 
   std::ostringstream err;
   err << this->fail_count () << " errors destroying domain applications:\n";
@@ -1068,16 +1141,19 @@ DomainApplicationManager_Impl::DestroyApplicationCompletionHandler::DestroyAppli
 void DomainApplicationManager_Impl::DestroyApplicationCompletionHandler::handle_completion (
     DomainApplication_Impl * /*da_servant*/)
 {
-  DANCE_DEBUG (8, (LM_INFO, DLINFO
-      ACE_TEXT("DomainApplicationManager_Impl::DestroyApplicationCompletionHandler::handle_completion - ")
-      ACE_TEXT("finished\n")));
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+               (LM_INFO, DLINFO
+                ACE_TEXT("DomainApplicationManager_Impl::DestroyApplicationCompletionHandler::handle_completion - ")
+                ACE_TEXT("finished\n")));
   dam_rh_->destroyApplication ();
 }
 
 void DomainApplicationManager_Impl::DestroyApplicationCompletionHandler::handle_exception (
     CORBA::Exception* local_ex)
 {
-  DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("ExecutionManager_Impl::DestroyManagerCompletionHandler::handle_exception - ")
+  DANCE_ERROR (DANCE_LOG_ERROR,
+               (LM_ERROR,
+                DLINFO ACE_TEXT("ExecutionManager_Impl::DestroyManagerCompletionHandler::handle_exception - ")
                 ACE_TEXT("propagating exception\n")));
   ::Deployment::AMH_ApplicationManagerExceptionHolder amh_exholder (local_ex);
   dam_rh_->destroyApplication_excep (&amh_exholder);

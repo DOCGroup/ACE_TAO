@@ -114,11 +114,13 @@ usage(const ACE_TCHAR*)
 bool
 parse_args(int argc, ACE_TCHAR *argv[], Options &options)
 {
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("PL options : \"")));
+  DANCE_TRACE_LOG (DANCE_LOG_TRACE,
+                   (LM_TRACE, DLINFO
+                    ACE_TEXT("PL options : \"")));
 
   for (int i = 0; i < argc; ++i)
     {
-      DANCE_DEBUG (9, (LM_TRACE, "\t%s\n", argv[i]));
+      DANCE_TRACE_LOG (DANCE_LOG_TRACE, (LM_TRACE, "\t%s\n", argv[i]));
     }
 
   ACE_Get_Opt get_opt(argc, argv,
@@ -147,7 +149,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
           if (get_opt.opt_arg () == 0)
             {
               options.em_ior_ = ACE_TEXT ("corbaname:rir:/NameService#ExecutionManager");
-              DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+              DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO, (LM_DEBUG, DLINFO
                                ACE_TEXT ("Plan_Launcher::parse_args - ")
                                ACE_TEXT ("Defaulting to NameService lookup")
                                ACE_TEXT ("of ExecutionManager\n")));
@@ -155,7 +157,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
           else
             {
               options.em_ior_ = get_opt.opt_arg ();
-              DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+              DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO, (LM_DEBUG, DLINFO
                                ACE_TEXT ("Plan_Launcher::parse_args - ")
                                ACE_TEXT ("Using ExecutionManager IOR: %s\n"),
                                options.em_ior_));
@@ -165,7 +167,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
         case 'n':
           options.nm_ior_ = get_opt.opt_arg ();
           options.output_ = true;
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+          DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO, (LM_DEBUG, DLINFO
                            ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("Using NodeManager IOR: %s\n"),
                            options.nm_ior_));
@@ -173,7 +175,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
 
         case 'x':
           options.xml_plan_ = get_opt.opt_arg ();
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+          DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO, (LM_DEBUG, DLINFO
                            ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("Using XML plan: %s\n"),
                            options.xml_plan_));
@@ -181,7 +183,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
 
         case 'c':
           options.cdr_plan_ = get_opt.opt_arg ();
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+          DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO, (LM_DEBUG, DLINFO
                            ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("Using CDR plan: %s\n"),
                            options.cdr_plan_));
@@ -189,7 +191,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
 
         case 'u':
           options.uuid_ = get_opt.opt_arg ();
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+          DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO, (LM_DEBUG, DLINFO
                            ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("Using UUID: %s\n"),
                            options.uuid_));
@@ -197,7 +199,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
 
         case 'm':
           options.am_ior_ = get_opt.opt_arg ();
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+          DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO, (LM_DEBUG, DLINFO
                            ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("Using ApplicationManager IOR %s\n"),
                            options.am_ior_));
@@ -205,7 +207,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
 
         case 'a':
           options.app_ior_ = get_opt.opt_arg ();
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+          DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO, (LM_DEBUG, DLINFO
                            ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("Application IOR: %s\n"),
                            options.app_ior_));
@@ -213,28 +215,28 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
 
         case 'l':
           options.mode_ = Options::LAUNCH;
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+          DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO, (LM_DEBUG, DLINFO
                            ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("Launching nominated plan\n")));
           break;
 
         case 's':
           options.mode_ = Options::TEARDOWN;
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+          DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO, (LM_DEBUG, DLINFO
                            ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("Tearing down nominated plan\n")));
           break;
 
         case 'f':
           options.force_ = true;
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+          DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO, (LM_DEBUG, DLINFO
                            ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("Not stopping teardown on errors\n")));
           break;
 
         case 'o':
           options.output_ = true;
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+          DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO, (LM_DEBUG, DLINFO
                            ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("IOR files will be output to ")
                            ACE_TEXT ("the current working directory\n")));
@@ -242,7 +244,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
           if (get_opt.opt_arg () != 0)
             {
               options.output_prefix_ = get_opt.opt_arg ();
-              DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+              DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO, (LM_DEBUG, DLINFO
                                ACE_TEXT ("Plan_Launcher::parse_args - ")
                                ACE_TEXT ("Storing user-provided output ")
                                ACE_TEXT ("postfix <%s>\n"),
@@ -253,7 +255,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
 
         case 'q':
           options.quiet_ = true;
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+          DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO, (LM_DEBUG, DLINFO
                            ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("Plan_Launcher will hide all ouput")
                            ACE_TEXT ("messages.\n")));
@@ -273,8 +275,9 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
   if ((!options.em_ior_ && !options.nm_ior_) ||
       (options.em_ior_ && options.nm_ior_))
     {
-      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_launcher::parse_args - ")
-                  ACE_TEXT ("Error: Must specify either EM IOR or NM IOR\n")));
+      DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                   (LM_ERROR, DLINFO ACE_TEXT ("Plan_launcher::parse_args - ")
+                    ACE_TEXT ("Error: Must specify either EM IOR or NM IOR\n")));
       return false;
     }
 
@@ -283,10 +286,11 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
       ((!options.xml_plan_ && !options.cdr_plan_) ||
        (options.xml_plan_ && options.cdr_plan_)))
     {
-      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::parse_args - ")
-                  ACE_TEXT ("Error: Launching plans requires ")
-                  ACE_TEXT ("exactly one type of plan (CDR/XML) be ")
-                  ACE_TEXT ("specified.\n")));
+      DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                   (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::parse_args - ")
+                    ACE_TEXT ("Error: Launching plans requires ")
+                    ACE_TEXT ("exactly one type of plan (CDR/XML) be ")
+                    ACE_TEXT ("specified.\n")));
       return false;
     }
 
@@ -308,9 +312,10 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
            )
       )
     {
-      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::parse_args - ")
-                  ACE_TEXT ("Invalid set of plan identification ")
-                  ACE_TEXT ("as required for teardown\n")));
+      DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                   (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::parse_args - ")
+                    ACE_TEXT ("Invalid set of plan identification ")
+                    ACE_TEXT ("as required for teardown\n")));
       return false;
     }
 
@@ -348,11 +353,12 @@ launch_plan (const Options &opts,
         uuid_safe (pl_base->launch_plan (*plan, app_mgr.out () , app.out ()));
       ACE_CString uuid = uuid_safe.in ();
 
-      DANCE_DEBUG (2, (LM_NOTICE, DLINFO
-                       ACE_TEXT ("Plan_Launcher::launch_plan - ")
-                       ACE_TEXT ("Successfully deployed plan ")
-                       ACE_TEXT ("with UUID: <%C>\n"),
-                       uuid.c_str ()));
+      DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                   (LM_NOTICE, DLINFO
+                    ACE_TEXT ("Plan_Launcher::launch_plan - ")
+                    ACE_TEXT ("Successfully deployed plan ")
+                    ACE_TEXT ("with UUID: <%C>\n"),
+                    uuid.c_str ()));
 
       if (!opts.output_)
         return 0;
@@ -367,18 +373,20 @@ launch_plan (const Options &opts,
       am_output += ACE_TEXT ("_AM.ior");
       app_output += ACE_TEXT ("_APP.ior");
 
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                       ACE_TEXT ("Plan_Launcher::launch_plan - ")
-                       ACE_TEXT ("Writing Application Manager IOR to <%s>\n"),
-                       am_output.c_str ()));
+      DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                   (LM_DEBUG, DLINFO
+                    ACE_TEXT ("Plan_Launcher::launch_plan - ")
+                    ACE_TEXT ("Writing Application Manager IOR to <%s>\n"),
+                    am_output.c_str ()));
       CORBA::String_var tmp = orb->object_to_string (app_mgr.in ());
       write_IOR (am_output.c_str (),
                  tmp.in ());
 
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                       ACE_TEXT ("Plan_Launcher::launch_plan - ")
-                       ACE_TEXT ("Writing Application IOR to <%s>\n"),
-                       am_output.c_str ()));
+      DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                   (LM_DEBUG, DLINFO
+                    ACE_TEXT ("Plan_Launcher::launch_plan - ")
+                    ACE_TEXT ("Writing Application IOR to <%s>\n"),
+                    am_output.c_str ()));
 
       tmp = orb->object_to_string (app.in ());
       write_IOR (app_output.c_str (),
@@ -389,19 +397,22 @@ launch_plan (const Options &opts,
     {
       if (!opts.quiet_)
         {
-          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
-                      ACE_TEXT ("Deployment failed, exception: %C\n"),
-                      ex.ex_.c_str ()));
+          DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                       (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
+                        ACE_TEXT ("Deployment failed, exception: %C\n"),
+                        ex.ex_.c_str ()));
         }
+
       return 1;
     }
   catch (const CORBA::Exception &ex)
     {
       if (!opts.quiet_)
         {
-          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
-                      ACE_TEXT ("Deployment failed, caught CORBA exception %C\n"),
-                      ex._info ().c_str ()));
+          DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                       (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
+                        ACE_TEXT ("Deployment failed, caught CORBA exception %C\n"),
+                        ex._info ().c_str ()));
         }
       return 1;
     }
@@ -409,9 +420,10 @@ launch_plan (const Options &opts,
     {
       if (!opts.quiet_)
         {
-          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
-                      ACE_TEXT ("Deployment failed, ")
-                      ACE_TEXT ("caught unknown C++ exception\n")));
+          DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                       (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
+                        ACE_TEXT ("Deployment failed, ")
+                        ACE_TEXT ("caught unknown C++ exception\n")));
         }
       return 1;
     }
@@ -434,10 +446,11 @@ teardown_plan (const Options &opts,
       CORBA::Object_var app;
       if (opts.am_ior_ && opts.app_ior_)
         {
-          DANCE_DEBUG (3, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                           ACE_TEXT ("Tearing down plan with explicitly ")
-                           ACE_TEXT ("nominated App and AM IORs.\n")));
+          DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                       (LM_DEBUG, DLINFO
+                        ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                        ACE_TEXT ("Tearing down plan with explicitly ")
+                        ACE_TEXT ("nominated App and AM IORs.\n")));
           am = orb->string_to_object (opts.am_ior_);
           app = orb->string_to_object (opts.app_ior_);
         }
@@ -456,10 +469,11 @@ teardown_plan (const Options &opts,
 
           if (!em_launcher)
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO
-                               ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                               ACE_TEXT ("Error: Attempting UUID lookup on non")
-                               ACE_TEXT ("-EM managed plan not supported\n")));
+              DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                           (LM_ERROR, DLINFO
+                            ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                            ACE_TEXT ("Error: Attempting UUID lookup on non")
+                            ACE_TEXT ("-EM managed plan not supported\n")));
               return 1;
             }
 
@@ -467,16 +481,18 @@ teardown_plan (const Options &opts,
                                            am.out (),
                                            app.out ()))
             {
-              DANCE_DEBUG (3, (LM_DEBUG, DLINFO
-                               ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                               ACE_TEXT ("Tearing down plan with UUID %C\n"),
-                               uuid.c_str ()));
+              DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                           (LM_DEBUG, DLINFO
+                            ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                            ACE_TEXT ("Tearing down plan with UUID %C\n"),
+                            uuid.c_str ()));
             }
           else
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO
-                               ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                               ACE_TEXT ("Error: Lookup by UUID failed\n")));
+              DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                           (LM_ERROR, DLINFO
+                            ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                            ACE_TEXT ("Error: Lookup by UUID failed\n")));
               return 1;
             }
         }
@@ -489,7 +505,7 @@ teardown_plan (const Options &opts,
         {
           if (!opts.quiet_)
             {
-              ACE_ERROR ((LM_ERROR, DLINFO
+              DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO
                         ACE_TEXT ("Plan_Launcher::teardown_plan - ")
                         ACE_TEXT ("Application Teardown failed, exception: %C\n"),
                         ex.ex_.c_str ()));
@@ -500,7 +516,7 @@ teardown_plan (const Options &opts,
         {
           if (!opts.quiet_)
             {
-              ACE_ERROR ((LM_ERROR, DLINFO
+              DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO
                           ACE_TEXT ("Plan_Launcher::teardown_plan - ")
                           ACE_TEXT ("Application Teardown failed, ")
                           ACE_TEXT ("caught CORBA exception %C\n"),
@@ -512,7 +528,7 @@ teardown_plan (const Options &opts,
         {
           if (!opts.quiet_)
             {
-              ACE_ERROR ((LM_ERROR, DLINFO
+              DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO
                           ACE_TEXT ("Plan_Launcher::teardown_plan - ")
                           ACE_TEXT ("Application Teardown failed, ")
                           ACE_TEXT ("caught unknown C++ exception\n")));
@@ -527,7 +543,7 @@ teardown_plan (const Options &opts,
     {
       if (!opts.quiet_)
         {
-          ACE_ERROR ((LM_ERROR, DLINFO
+          DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO
                       ACE_TEXT ("Plan_Launcher::teardown_plan - ")
                       ACE_TEXT ("Teardown failed, exception: %C\n"),
                       ex.ex_.c_str ()));
@@ -538,7 +554,7 @@ teardown_plan (const Options &opts,
     {
       if (!opts.quiet_)
         {
-          ACE_ERROR ((LM_ERROR, DLINFO
+          DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO
                       ACE_TEXT ("Plan_Launcher::teardown_plan - ")
                       ACE_TEXT ("Teardown failed, caught CORBA exception %C\n"),
                       ex._info ().c_str ()));
@@ -549,7 +565,7 @@ teardown_plan (const Options &opts,
     {
       if (!opts.quiet_)
         {
-          ACE_ERROR ((LM_ERROR, DLINFO
+          DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO
                       ACE_TEXT ("Plan_Launcher::teardown_plan - ")
                       ACE_TEXT ("Teardown failed, ")
                       ACE_TEXT ("caught unknown C++ exception\n")));
@@ -593,8 +609,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           dlf->init (argc, argv);
         }
 
-      DANCE_DEBUG (6, (LM_TRACE, DLINFO
-                       ACE_TEXT("PlanLauncher - initializing ORB\n")));
+      DANCE_TRACE_LOG (DANCE_LOG_TRACE,
+                       (LM_TRACE, DLINFO
+                        ACE_TEXT("PlanLauncher - initializing ORB\n")));
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
@@ -621,7 +638,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             {
               if (!options.quiet_)
                 {
-                  ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
+                  DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
                               ACE_TEXT ("Unable to resolve ")
                               ACE_TEXT ("ExecutionManager reference <%s>\n"),
                               options.em_ior_));
@@ -649,7 +666,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             {
               if (!options.quiet_)
                 {
-                  ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
+                  DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
                               ACE_TEXT ("Unable to resolve ")
                               ACE_TEXT ("NodeManager reference <%s>\n"),
                               options.em_ior_));
@@ -667,8 +684,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Deployment::DeploymentPlan_var dp;
 
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("Plan_Launcher - ")
-                       ACE_TEXT ("Parsing deployment plan\n")));
+      DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                   (LM_DEBUG, DLINFO ACE_TEXT ("Plan_Launcher - ")
+                    ACE_TEXT ("Parsing deployment plan\n")));
       if (options.cdr_plan_)
         {
           dp = DAnCE::Convert_Plan::read_cdr_plan (options.cdr_plan_);
@@ -676,7 +694,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             {
               if (!options.quiet_)
                 {
-                  ACE_ERROR ((LM_ERROR, DLINFO
+                  DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO
                               ACE_TEXT ("PlanLauncher - ")
                               ACE_TEXT ("Error: Unable to read ")
                               ACE_TEXT ("in CDR plan\n")));
@@ -692,7 +710,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             {
               if (!options.quiet_)
                 {
-                  ACE_ERROR ((LM_ERROR, DLINFO
+                  DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO
                               ACE_TEXT ("PlanLauncher - Error: ")
                               ACE_TEXT ("Unable to read in XML plan\n")));
                 }
@@ -714,7 +732,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         default:
           if (!options.quiet_)
             {
-              ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher -")
+              DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher -")
                           ACE_TEXT ("Mode not yet supported\n")));
             }
           break;
@@ -725,7 +743,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       if (!options.quiet_)
         {
-          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("PlanLauncher - ")
+          DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO ACE_TEXT ("PlanLauncher - ")
                       ACE_TEXT ("Error in plan: <%C>, <%C>\n"),
                       ex.name.in (),
                       ex.reason.in ()));
@@ -736,7 +754,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       if (!options.quiet_)
         {
-          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("PlanLauncher - ")
+          DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO ACE_TEXT ("PlanLauncher - ")
                       ACE_TEXT ("Error: %C.\n"), e.ex_.c_str()));
         }
       retval = 1;
@@ -745,7 +763,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       if (!options.quiet_)
         {
-          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ( "PlanLauncher - ")
+          DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO ACE_TEXT ( "PlanLauncher - ")
                       ACE_TEXT ("Error: %C\n"), ex._info ().c_str ()));
         }
       retval = 1;
@@ -754,8 +772,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       if (!options.quiet_)
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("PlanLauncher - ")
-                      ACE_TEXT ("Error: Unknown exception.\n")));
+          DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                       (LM_ERROR, ACE_TEXT ("PlanLauncher - ")
+                        ACE_TEXT ("Error: Unknown exception.\n")));
         }
       retval = 1;
     }

@@ -29,7 +29,7 @@ NodeApplicationManager_Impl::NodeApplicationManager_Impl (CORBA::ORB_ptr orb,
 {
   DANCE_TRACE ("NodeApplicationManager_Impl::NodeApplicationManager_Impl");
 
-  DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_DEBUG, DLINFO
                ACE_TEXT(" NodeApplicationManager_Impl::NodeApplicationManager_Impl - ")
                ACE_TEXT("Initializing for node '%C' starting...\n"),
                node_name.c_str()));
@@ -37,9 +37,10 @@ NodeApplicationManager_Impl::NodeApplicationManager_Impl (CORBA::ORB_ptr orb,
   PROPERTY_MAP::const_iterator i = properties.begin ();
   while (!i.done ())
     {
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                    ACE_TEXT("NodeApplicationManager_Impl::NodeApplicationManager_Impl - ")
-                    ACE_TEXT("Binding value for property %C\n"), i->key ().c_str ()));
+      DANCE_TRACE_LOG (DANCE_LOG_DETAILED_TRACE,
+                       (LM_DEBUG, DLINFO
+                        ACE_TEXT("NodeApplicationManager_Impl::NodeApplicationManager_Impl - ")
+                        ACE_TEXT("Binding value for property %C\n"), i->key ().c_str ()));
       this->properties_.bind (i->key (), i->item ());
       i.advance ();
     }
@@ -56,16 +57,19 @@ NodeApplicationManager_Impl::NodeApplicationManager_Impl (CORBA::ORB_ptr orb,
         }
       catch (const CORBA::Exception &e)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
+          DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                       (LM_ERROR, DLINFO
                         ACE_TEXT("NodeApplicationManager_Impl::NodeApplicationManager_Impl - ")
                         ACE_TEXT("Unable to resolve the instance naming context:%C\n"),
                         e._info ().c_str ()));
         }
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+      DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                   (LM_DEBUG, DLINFO
                     ACE_TEXT("NodeApplicationManager_Impl::NodeApplicationManager_Impl - ")
                     ACE_TEXT("Successfully resolved the instance naming context.\n")));
     }
-  else DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+  else DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                    (LM_DEBUG, DLINFO
                      ACE_TEXT("NodeApplicationManager_Impl::NodeApplicationManager_Impl - ")
                      ACE_TEXT("No instance NC was provided\n")));
 }
@@ -106,7 +110,8 @@ NodeApplicationManager_Impl::~NodeApplicationManager_Impl()
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
+      DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                   (LM_ERROR, DLINFO
                     ACE_TEXT("NodeApplicationManager_Impl::~NodeApplicationManager_Impl - ")
                     ACE_TEXT("Caught exception in NodeApplicationManager destructor\n")));
     }
@@ -117,18 +122,20 @@ NodeApplicationManager_Impl::preparePlan (const Deployment::DeploymentPlan& plan
 {
   DANCE_TRACE ("NodeApplicationManager_Impl::preparePlan");
 
-  DANCE_DEBUG (4, (LM_TRACE, DLINFO
-                   ACE_TEXT("NodeApplicationManager_impl::preparePlan - ")
-                   ACE_TEXT("Performing locality split on plan %C.\n"),
-                   plan.UUID.in ()));
+  DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+               (LM_TRACE, DLINFO
+                ACE_TEXT("NodeApplicationManager_impl::preparePlan - ")
+                ACE_TEXT("Performing locality split on plan %C.\n"),
+                plan.UUID.in ()));
 
   this->split_plan_.split_plan (plan);
 
-  DANCE_DEBUG (4, (LM_TRACE, DLINFO
-                   ACE_TEXT("NodeApplicationManager_impl::preparePlan - ")
-                   ACE_TEXT("Plan %C successfully split into %u localities.\n"),
-                   plan.UUID.in (),
-                   this->split_plan_.plans ().current_size ()));
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+               (LM_TRACE, DLINFO
+                ACE_TEXT("NodeApplicationManager_impl::preparePlan - ")
+                ACE_TEXT("Plan %C successfully split into %u localities.\n"),
+                plan.UUID.in (),
+                this->split_plan_.plans ().current_size ()));
 
   // initialize installer
   this->installer_->initialize ();
@@ -145,11 +152,12 @@ NodeApplicationManager_Impl::preparePlan (const Deployment::DeploymentPlan& plan
       ::Deployment::DeploymentPlan &sub_plan = (*itplan).int_id_;
       LocalitySplitter::TSubPlanKey &sub_plan_key = (*itplan).ext_id_;
 
-      DANCE_DEBUG (4, (LM_TRACE, DLINFO
-                      ACE_TEXT("NodeApplicationManager_impl::preparePlan - ")
-                      ACE_TEXT("Installing %u artifacts for locality %C.\n"),
-                      sub_plan.artifact.length (),
-                      sub_plan.UUID.in ()));
+      DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                   (LM_TRACE, DLINFO
+                    ACE_TEXT("NodeApplicationManager_impl::preparePlan - ")
+                    ACE_TEXT("Installing %u artifacts for locality %C.\n"),
+                    sub_plan.artifact.length (),
+                    sub_plan.UUID.in ()));
 
       // install artifacts
       for (CORBA::ULong i=0;
@@ -277,10 +285,11 @@ NodeApplicationManager_Impl::preparePlan (const Deployment::DeploymentPlan& plan
   // (does *not* cleanup install registry; just signals end of install actions)
   this->installer_->clear ();
 
-  DANCE_DEBUG (4, (LM_TRACE, DLINFO
-                   ACE_TEXT("NodeApplicationManager_impl::preparePlan - ")
-                   ACE_TEXT("Finished preparing plan %C.\n"),
-                   plan.UUID.in ()));
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+               (LM_TRACE, DLINFO
+                ACE_TEXT("NodeApplicationManager_impl::preparePlan - ")
+                ACE_TEXT("Finished preparing plan %C.\n"),
+                plan.UUID.in ()));
 }
 
 Deployment::Application_ptr
@@ -290,8 +299,9 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &prop,
   DANCE_TRACE ("NodeApplicationManager_Impl::startLaunch");
 
   // Creating NodeApplication object
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
-               ACE_TEXT("Initializing NodeApplication\n")));
+  DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+               (LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
+                ACE_TEXT("Initializing NodeApplication\n")));
   ACE_NEW_THROW_EX (this->application_,
                     NodeApplication_Impl (this->orb_.in(),
                                           this->poa_.in(),
@@ -300,21 +310,24 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &prop,
                                           this->properties_),
                     CORBA::NO_MEMORY ());
 
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                   ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
-                   ACE_TEXT("Instructing NodeApplication to prepare locality managers.\n")));
+  DANCE_DEBUG (DANCE_LOG_TRACE,
+               (LM_TRACE, DLINFO
+                ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
+                ACE_TEXT("Instructing NodeApplication to prepare locality managers.\n")));
 
   this->application_->prepare_instances (this->split_plan_.plans ());
 
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                   ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
-                   ACE_TEXT("Instructing NodeApplication to start launch localities.\n")));
+  DANCE_DEBUG (DANCE_LOG_TRACE,
+               (LM_TRACE, DLINFO
+                ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
+                ACE_TEXT("Instructing NodeApplication to start launch localities.\n")));
 
   this->application_->start_launch_instances (prop, providedReference);
 
-  DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-               ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
-               ACE_TEXT("Activating NodeApplication servant\n")));
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+               (LM_DEBUG, DLINFO
+                ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
+                ACE_TEXT("Activating NodeApplication servant\n")));
 
   PortableServer::ObjectId_var as_id =
     this->poa_->activate_object (this->application_);
@@ -324,9 +337,10 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &prop,
 
   if (CORBA::is_nil (app))
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO,
-                       "NodeApplicationManager_Impl::startLaunch - ",
-                       "NodeApplication servant failed to activate\n"));
+      DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                   (LM_ERROR, DLINFO,
+                    "NodeApplicationManager_Impl::startLaunch - ",
+                    "NodeApplication servant failed to activate\n"));
       throw ::Deployment::StartError ("NodeApplication",
                                       "Activation failure");
     }
@@ -342,9 +356,10 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
   {
     if (!application->_is_equivalent (this->poa_->servant_to_reference (this->application_)))
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                     ACE_TEXT("NodeApplicationManager_Impl::destroyApplication - ")
-                     ACE_TEXT("application is equivalent to current application\n")));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT("NodeApplicationManager_Impl::destroyApplication - ")
+                      ACE_TEXT("application is equivalent to current application\n")));
         throw ::Deployment::StopError("NodeApplicationManager",
                                       "Wrong application passed to destroyApplication");
       }
@@ -367,15 +382,18 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
     }
   catch (const CORBA::UserException &e)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
-                   ACE_TEXT("NodeApplicationManager_Impl::destroyApplication failed with UserException %C(%C) \"%C\"\n"),
-                   e._name(), e._rep_id(), e._info().c_str()));
+      DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                   (LM_ERROR, DLINFO
+                    ACE_TEXT("NodeApplicationManager_Impl::destroyApplication failed ")
+                    ACE_TEXT ("with UserException %C(%C) \"%C\"\n"),
+                    e._name(), e._rep_id(), e._info().c_str()));
       throw Deployment::StopError(e._name(), e._info().c_str());
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
-                       ACE_TEXT("NodeApplicationManager_Impl::destroyApplication failed with unknown exception.\n")));
+      DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, DLINFO
+                       ACE_TEXT("NodeApplicationManager_Impl::destroyApplication failed ")
+                       ACE_TEXT("with unknown exception.\n")));
       throw Deployment::StopError("NodeApplicatoinManager", "Unknown C++ exception in destroyApplication");
     }
 }
