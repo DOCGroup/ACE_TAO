@@ -1,3 +1,19 @@
+Tue Mar 22 15:40:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_ifaddrs.h:
+          New wrapper file
+
+        * ace/OS_NS_stdlib.inl:
+        * ace/config-WinCE.h:
+          Added new define to not check for OS in OS_NS_ file
+
+        * ace/Sock_Connect.cpp:
+          use new os_ifaddrs.h wrapper
+
+        * tests/Dirent_Test.cpp:
+        * tests/Test_Output.cpp:
+          Cleanup
+
 Tue Mar 22 09:24:54 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-openbsd.h:
