@@ -109,8 +109,8 @@ namespace Deployment
                                       "Domain",
                                       &Domain::node);
 #endif /*if 0*/
-    ::Deployment::DnC_Dump_T::dump_sequence ("property",
-                                             sr.property);
+    ::Deployment::DnC_Dump_T::::Deployment::DnC_Dump_T::dump_sequence ("property",
+                   sr.property);
   }
 
   // Resource
@@ -120,8 +120,8 @@ namespace Deployment
     Dump_Obj dump_obj("Resource");
     dump ("name", resource.name);
     dump ("resourceType", resource.resourceType);
-    ::Deployment::DnC_Dump_T::dump_sequence ("property",
-                                             resource.property);
+    ::Deployment::DnC_Dump_T::::Deployment::DnC_Dump_T::dump_sequence ("property",
+                   resource.property);
   }
 
   // Node
