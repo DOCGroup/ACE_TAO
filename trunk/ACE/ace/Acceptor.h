@@ -193,9 +193,9 @@ protected:
   virtual int accept_svc_handler (SVC_HANDLER *svc_handler);
 
   /**
-   * Bridge method for activating a {svc_handler} with the appropriate
+   * Bridge method for activating a @a svc_handler with the appropriate
    * concurrency strategy.  The default behavior of this method is to
-   * activate the SVC_HANDLER by calling its {open} method (which
+   * activate the SVC_HANDLER by calling its open() method (which
    * allows the SVC_HANDLER to define its own concurrency strategy).
    * However, subclasses can override this strategy to do more
    * sophisticated concurrency activations (such as making the

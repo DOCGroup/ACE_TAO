@@ -133,7 +133,7 @@
 // You must link with the multi threaded libraries. Add -tWM to your
 // compiler options
 #  error You must link against multi-threaded libraries when using ACE (check your project settings)
-# endif /* !_MT && !ACE_HAS_WINCE */
+# endif /* !__MT__ */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
 #if (__BORLANDC__ < 0x620)
