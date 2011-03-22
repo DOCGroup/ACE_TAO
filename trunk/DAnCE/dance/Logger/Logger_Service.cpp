@@ -67,9 +67,8 @@ namespace DAnCE
         ACE_NEW_THROW_EX (output_stream,
                           ofstream (),
                           CORBA::NO_MEMORY (
-                            CORBA::SystemException::_tao_minor_code (
-                              0,
-                              ENOMEM),
+                            CORBA::SystemException::_tao_minor_code (0,
+                                                                     ENOMEM),
                             CORBA::COMPLETED_NO));
 
         output_stream->open (ACE_TEXT_ALWAYS_CHAR (this->filename_.c_str ()),

@@ -21,42 +21,42 @@ extern DAnCE_Logger_Export unsigned int DAnCE_debug_level;
 
 /// Used for errors that cause the fatal shutdown of any portion
 /// of the infrastructure.
-#define DANCE_LOG_EMERGENCY            0
+#define DANCE_LOG_EMERGENCY            1
 /// Used for deployment errors at the point the error
 /// exits the process in question, or when a decision is made to
 /// cause the deployment to fail.
-#define DANCE_LOG_TERMINAL_ERROR       1
+#define DANCE_LOG_TERMINAL_ERROR       2
 /// Used for non-fatal deployment errors that do not cause deployment
 /// failure.
-#define DANCE_LOG_NONFATAL_ERROR       2
+#define DANCE_LOG_NONFATAL_ERROR       3
 /// Used to log detailed error information at the point of failure
-#define DANCE_LOG_ERROR                3
+#define DANCE_LOG_ERROR                4
 /// used to indicate that a questionable situation that doesn't cause
 /// deployment failure, but can cause undefined conditions.
-#define DANCE_LOG_WARNING              4
+#define DANCE_LOG_WARNING              5
 /// Used to indicate that a ``significant'' deployment event has completed.
 /// A 'major' event will depend heavily on the context in which it
 /// occurs.  Major will include instance deployments/teardowns,
 /// process spawns, etc.
-#define DANCE_LOG_MAJOR_EVENT          5
+#define DANCE_LOG_MAJOR_EVENT          6
 /// Used to inficate a ``minor'' deployment event has completed.
 /// Minor events will usually change the state of a deployed instance,
 /// e.g. lifecycle changes (passivation, configuration complete),
 /// interceptor invocations, etc.
-#define DANCE_LOG_MINOR_EVENT          6
+#define DANCE_LOG_MINOR_EVENT          7
 /// Used to trace significant actions within major/minor events.  This
 /// will usually include starts for major/minor events.
-#define DANCE_LOG_EVENT_TRACE          7
+#define DANCE_LOG_EVENT_TRACE          8
 /// Used to display important configuration information that impacts
 /// the deployment process.
-#define DANCE_LOG_MAJOR_DEBUG_INFO     8
+#define DANCE_LOG_MAJOR_DEBUG_INFO     9
 /// The following two statements are used to closely trace the
 /// execution of DAnCE code.  If in doubt, a message should go into
 /// these categories.  The difference between a TRACE and a
 /// DETAILED_TRACE will be largely a judgement call.  These messages
-/// should be emitted using DANCE_LOG_TRACE (X, Y).
-#define DANCE_LOG_TRACE                9
-#define DANCE_LOG_DETAILED_TRACE     10
+/// should be emitted using DANCE_TRACE_LOG (X, Y).
+#define DANCE_LOG_TRACE                10
+#define DANCE_LOG_DETAILED_TRACE       11
 
 // By default tracing is turned off.
 #if !defined (DANCE_NTRACE)
@@ -119,8 +119,8 @@ extern DAnCE_Logger_Export unsigned int DAnCE_debug_level;
       } \
   } while (0)
 # endif
-# if !defined (DANCE_LOG_TRACE)
-#  define DANCE_LOG_TRACE(L, X) \
+# if !defined (DANCE_TRACE_LOG)
+#  define DANCE_TRACE_LOG(L, X) \
   do { \
     if (DAnCE_debug_level >= L) \
       { \
