@@ -332,12 +332,13 @@ write_IOR (const ACE_TCHAR * ior_file_name, const char* ior)
   return false;
 }
 
-int launch_plan (const Options &opts,
-                 DAnCE::Plan_Launcher_Base *pl_base,
-                 const ::Deployment::DeploymentPlan *plan,
-                 CORBA::ORB_ptr orb)
+int
+launch_plan (const Options &opts,
+             DAnCE::Plan_Launcher_Base *pl_base,
+             const ::Deployment::DeploymentPlan *plan,
+             CORBA::ORB_ptr orb)
 {
-  DANCE_TRACE ("Plan_Launcher::launch_plan");
+  DANCE_TRACE ("launch_plan");
 
   try
     {
@@ -418,12 +419,13 @@ int launch_plan (const Options &opts,
   return 0;
 }
 
-int teardown_plan (const Options &opts,
-                   DAnCE::Plan_Launcher_Base *pl_base,
-                   const ::Deployment::DeploymentPlan *plan,
-                   CORBA::ORB_ptr orb)
+int
+teardown_plan (const Options &opts,
+               DAnCE::Plan_Launcher_Base *pl_base,
+               const ::Deployment::DeploymentPlan *plan,
+               CORBA::ORB_ptr orb)
 {
-  DANCE_TRACE ("Plan_Launcher::teardown_plan");
+  DANCE_TRACE ("teardown_plan");
 
   int rc = 0;
   try

@@ -299,7 +299,7 @@ DAnCE_TargetManager_Module::init (CORBA::ORB_ptr orb,
 void
 DAnCE_TargetManager_Module::create_poas (void)
 {
-  DANCE_TRACE("DAnCE_Target_Manager_Module::create_poas");
+  DANCE_TRACE("DAnCE_TargetManager_Module::create_poas");
   // Get reference to Root POA.
   DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE_TargetManager_Module::create_poas - ")
                 ACE_TEXT ("Resolving root POA\n")));

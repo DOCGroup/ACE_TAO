@@ -12,7 +12,7 @@
 #include "Deployment/Deployment_DataC.h"
 #include "Deployment/Deployment_ResourceCommitmentManagerC.h"
 #include "DAnCE/TargetManager/TargetManagerC.h"
-#include "ace/streams.h"
+#include "ace/iosfwd.h"
 #include "ace/FILE_IO.h"
 #include "ace/FILE_Connector.h"
 #include "ace/FILE_Addr.h"
