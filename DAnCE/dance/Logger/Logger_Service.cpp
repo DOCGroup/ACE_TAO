@@ -9,13 +9,13 @@
 #include "ace/Arg_Shifter.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-// Needed to set ACE_LOG_MSG::msg_ostream()
+
 // FUZZ: disable check_for_streams_include
 #  include "ace/streams.h"
 #endif /* !ACE_LACKS_IOSTREAM_TOTALLY */
 
 namespace DAnCE
-  {
+{
   Logger_Service::Logger_Service (void)
     : filename_ (ACE_TEXT("")),
       trace_ (false)
@@ -67,9 +67,9 @@ namespace DAnCE
         ACE_NEW_THROW_EX (output_stream,
                           ofstream (),
                           CORBA::NO_MEMORY (
-                            CORBA::SystemException::_tao_minor_code (0,
-                                                                     ENOMEM),
-                            CORBA::COMPLETED_NO));
+                                            CORBA::SystemException::_tao_minor_code (0,
+                                                                                     ENOMEM),
+                                            CORBA::COMPLETED_NO));
 
         output_stream->open (ACE_TEXT_ALWAYS_CHAR (this->filename_.c_str ()),
                              ios::out | ios::app);
@@ -99,15 +99,15 @@ namespace DAnCE
       {
         const ACE_TCHAR *current_arg = 0;
         if (0 != (current_arg =
-                       arg_shifter.get_the_parameter
-                       (ACE_TEXT ("-DAnCELogLevel"))))
+                  arg_shifter.get_the_parameter
+                  (ACE_TEXT ("-DAnCELogLevel"))))
           {
             DAnCE_debug_level = ACE_OS::atoi (current_arg);
 
             arg_shifter.consume_arg ();
           }
         else if (0 == arg_shifter.cur_arg_strncasecmp
-            (ACE_TEXT ("-DAnCETraceEnable")))
+                 (ACE_TEXT ("-DAnCETraceEnable")))
           {
             this->trace_ = true;
 

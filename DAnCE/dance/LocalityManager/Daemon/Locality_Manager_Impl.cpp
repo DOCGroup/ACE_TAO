@@ -18,8 +18,6 @@
 #include "dance/LocalityManager/Scheduler/Events/Passivate.h"
 #include "dance/LocalityManager/Scheduler/Events/Disconnect.h"
 
-using DAnCE::Utility::extract_and_throw_exception;
-
 namespace DAnCE
 {
   // Implementation skeleton constructor
@@ -285,13 +283,13 @@ namespace DAnCE
           }
 
         if (event.exception_ &&
-            !(extract_and_throw_exception < Deployment::StartError >
+            !(DAnCE::Utility::extract_and_throw_exception < Deployment::StartError >
               (event.contents_.in ()) ||
-              extract_and_throw_exception < Deployment::InvalidProperty >
+              DAnCE::Utility::extract_and_throw_exception < Deployment::InvalidProperty >
               (event.contents_.in ()) ||
-              extract_and_throw_exception < Deployment::InvalidNodeExecParameter >
+              DAnCE::Utility::extract_and_throw_exception < Deployment::InvalidNodeExecParameter >
               (event.contents_.in ()) ||
-              extract_and_throw_exception < Deployment::InvalidComponentExecParameter >
+              DAnCE::Utility::extract_and_throw_exception < Deployment::InvalidComponentExecParameter >
               (event.contents_.in ()))
             )
           {
@@ -404,9 +402,9 @@ namespace DAnCE
           }
 
         if (event.exception_ &&
-            !(extract_and_throw_exception < Deployment::StartError >
+            !(DAnCE::Utility::extract_and_throw_exception < Deployment::StartError >
               (event.contents_.in ()) ||
-              extract_and_throw_exception < Deployment::InvalidProperty >
+              DAnCE::Utility::extract_and_throw_exception < Deployment::InvalidProperty >
               (event.contents_.in ())))
           {
             DANCE_ERROR (DANCE_LOG_ERROR,
@@ -576,9 +574,9 @@ namespace DAnCE
           }
 
         if (event.exception_ &&
-            !(extract_and_throw_exception < Deployment::StartError >
+            !(DAnCE::Utility::extract_and_throw_exception < Deployment::StartError >
               (event.contents_.in ()) ||
-              extract_and_throw_exception < Deployment::InvalidConnection >
+              DAnCE::Utility::extract_and_throw_exception < Deployment::InvalidConnection >
               (event.contents_.in ()))
             )
           {
@@ -657,7 +655,7 @@ namespace DAnCE
           }
 
         if (event.exception_ &&
-            !(extract_and_throw_exception < Deployment::StartError >
+            !(DAnCE::Utility::extract_and_throw_exception < Deployment::StartError >
               (event.contents_.in ()))
             )
           {
@@ -792,9 +790,9 @@ namespace DAnCE
           }
 
         if (event.exception_ &&
-            !(extract_and_throw_exception < Deployment::StartError >
+            !(DAnCE::Utility::extract_and_throw_exception < Deployment::StartError >
               (event.contents_.in ()) ||
-              extract_and_throw_exception < Deployment::InvalidConnection >
+              DAnCE::Utility::extract_and_throw_exception < Deployment::InvalidConnection >
               (event.contents_.in ()))
             )
           {
@@ -890,7 +888,7 @@ namespace DAnCE
           }
 
         if (event.exception_ &&
-            !(extract_and_throw_exception < Deployment::StartError >
+            !(DAnCE::Utility::extract_and_throw_exception < Deployment::StartError >
               (event.contents_.in ()))
             )
           {
@@ -994,7 +992,7 @@ namespace DAnCE
           }
 
         if (event.exception_ &&
-            !(extract_and_throw_exception < Deployment::StopError >
+            !(DAnCE::Utility::extract_and_throw_exception < Deployment::StopError >
               (event.contents_.in ()))
             )
           {
@@ -1090,7 +1088,7 @@ namespace DAnCE
           }
 
         if (event.exception_ &&
-            !(extract_and_throw_exception < Deployment::StopError >
+            !(DAnCE::Utility::extract_and_throw_exception < Deployment::StopError >
               (event.contents_.in ()))
             )
           {

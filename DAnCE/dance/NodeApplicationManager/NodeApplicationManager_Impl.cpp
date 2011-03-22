@@ -1,7 +1,7 @@
 // $Id$
 
 
-#include "ace/streams.h"
+#include "ace/iosfwd.h"
 #include "dance/Logger/Log_Macros.h"
 
 #include "NodeApplicationManager_Impl.h"

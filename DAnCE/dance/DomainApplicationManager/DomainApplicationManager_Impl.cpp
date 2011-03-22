@@ -56,7 +56,7 @@ DomainApplicationManager_Impl::startLaunch (
     ::Deployment::AMH_ApplicationManagerResponseHandler_ptr _tao_rh,
     const ::Deployment::Properties & configProperty)
 {
-  DANCE_TRACE( "DomainApplicationManager_impl::startLaunch");
+  DANCE_TRACE("DomainApplicationManager_Impl::startLaunch");
 
   try
     {
