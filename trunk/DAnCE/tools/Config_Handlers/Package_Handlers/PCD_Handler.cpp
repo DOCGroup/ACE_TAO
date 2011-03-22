@@ -14,8 +14,6 @@
 
 #include <memory>
 
-using DAnCE::XML::XStr;
-
 namespace DAnCE
 {
   namespace Config_Handlers
@@ -35,9 +33,10 @@ namespace DAnCE
             throw Parse_Error (error);
           }
 
-        XStr root = dom->getDocumentElement ()->getTagName ();
+        DAnCE::XML::XStr root = dom->getDocumentElement ()->getTagName ();
 
-        if (root == XStr (ACE_TEXT ("Deployment:topLevelPackageDescription")))
+        if (root == DAnCE::XML::XStr (
+                    ACE_TEXT ("Deployment:topLevelPackageDescription")))
           {
             TopLevelPackageDescription tpd;
 
@@ -46,7 +45,8 @@ namespace DAnCE
             PCD_Handler::package_config (*(*tpd.begin_package ()),
                                          toconfig);
           }
-        else if (root == XStr (ACE_TEXT ("Deployment:packageConfiguration")))
+        else if (root == DAnCE::XML::XStr (
+          ACE_TEXT ("Deployment:packageConfiguration")))
           {
             PackageConfiguration pcd;
             pcd = reader::packageConfiguration (dom);
@@ -54,7 +54,8 @@ namespace DAnCE
           }
         else
           {
-            std::string error ("Invliad file passed to package_config, has base ");
+            std::string error (
+              "Invliad file passed to package_config, has base ");
 
             char *croot = xercesc::XMLString::transcode (root);
 
@@ -62,7 +63,8 @@ namespace DAnCE
 
             delete [] croot;
 
-            throw Plan_Error (ACE_TEXT ("Invalid file passed to package_config, had base"));
+            throw Plan_Error (ACE_TEXT (
+              "Invalid file passed to package_config, had base"));
           }
       }
 
