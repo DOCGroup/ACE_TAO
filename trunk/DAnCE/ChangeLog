@@ -1,3 +1,23 @@
+Tue Mar 22 13:26:13 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * dance/Logger/Logger_Service.cpp:
+        * dance/NodeApplication/NodeApplication_Impl.cpp:
+        * dance/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * dance/NodeManager/NodeManager_Impl.cpp:
+        * dance/NodeManager/Node_Manager_Module.cpp:
+        * dance/Plan_Launcher/Plan_Launcher.cpp:
+        * dance/RepositoryManager/RepositoryManager.cpp:
+        * dance/RepositoryManager/Repository_Manager_Module.cpp:
+        * dance/RepositoryManager/ZIP_Wrapper.h:
+        * dance/TargetManager/ResourceCommitmentManager.cpp:
+        * dance/TargetManager/Target_Manager_Module.cpp:
+        * tests/TargetManager/CmpClient.cpp:
+        * tools/Artifact_Installation/Artifact_Installation_Impl.h:
+
+          Fuzz.
+
 Tue Mar 22 11:33:04 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/DnC_Dump.cpp:

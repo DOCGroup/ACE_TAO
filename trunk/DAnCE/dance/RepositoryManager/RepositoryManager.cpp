@@ -18,7 +18,7 @@
 
 #include "RepositoryManager_Impl.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/streams.h"
+#include "ace/iosfwd.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"

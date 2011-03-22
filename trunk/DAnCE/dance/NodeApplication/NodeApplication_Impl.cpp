@@ -3,7 +3,7 @@
 
 #include "ace/OS_Memory.h"
 
-#include "ace/streams.h"
+#include "ace/iosfwd.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/Object.h"
 #include "tao/ORB.h"
