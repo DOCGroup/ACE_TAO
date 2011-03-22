@@ -8,7 +8,7 @@
 #include "ace/OS_NS_sys_stat.h"
 
 long
-Session::tao_version_ = 160;
+Session::tao_version_ = 200;
 
 Session::Session (void)
 {
@@ -27,13 +27,22 @@ Session::~Session (void)
     }
 }
 
-void
+bool
 Session::set_tao_version (ACE_TCHAR *str)
 {
   if (ACE_OS::strncmp(str, ACE_TEXT("1.5"), 3)== 0)
     tao_version_ = 150;
   else if (ACE_OS::strncmp (str, ACE_TEXT("1.6"), 3) == 0)
     tao_version_ = 160;
+  else if (ACE_OS::strncmp (str, ACE_TEXT("1.7"), 3) == 0)
+    tao_version_ = 170;
+  else if (ACE_OS::strncmp (str, ACE_TEXT("1.8"), 3) == 0)
+    tao_version_ = 180;
+  else if (ACE_OS::strncmp (str, ACE_TEXT("2.0"), 3) == 0)
+    tao_version_ = 200;
+  else 
+    return false;
+  return true;
 }
 
 long

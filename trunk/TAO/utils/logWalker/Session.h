@@ -31,7 +31,7 @@ public:
   HostProcess *find_host (ACE_CString &endpoint, bool server);
   void reconcile (void);
 
-  static void set_tao_version (ACE_TCHAR *str);
+  static bool set_tao_version (ACE_TCHAR *str);
   static long tao_version (void);
   void alternate_address (const char *string);
   void default_service (const char *string);

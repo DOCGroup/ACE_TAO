@@ -107,6 +107,18 @@ parse_manifest (Session &session, ACE_TCHAR *filename)
     }
 }
 
+void
+print_help (void)
+{
+  ACE_DEBUG ((LM_DEBUG, "tao_logWalker recongizes the following arguments\n"));
+  ACE_DEBUG ((LM_DEBUG, "-o <filename> - write all output to specified file\n"));
+  ACE_DEBUG ((LM_DEBUG, "-d <directory> - create separate output files, one per log, and put them in specified directory.\n   Either -o or -d may be set but not both. Default output to stdout.\n"));
+  ACE_DEBUG ((LM_DEBUG, "-m <manifest> - Take inputs from named manifest file\n"));
+  ACE_DEBUG ((LM_DEBUG, "-t <1.5 .. 2.0>  - set source TAO version, default 2.0\n"));
+  ACE_DEBUG ((LM_DEBUG, "-a <name=address> - bind an alias to a host address.\n   Repeat as many times as necessary.\n"));
+  ACE_DEBUG ((LM_DEBUG, "-p <service=address> - bind a service such as Naming to a specific endpoint address\n"));
+}
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
@@ -144,8 +156,11 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
         }
       if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-t")) == 0)
         {
-          Session::set_tao_version (argv[++i]);
-          continue;
+          if (Session::set_tao_version (argv[++i]))
+            continue;
+          else
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT("TAO version must be 1.5, 1.6, 1.7, 1.8, or 2.0 \n")), 0);
         }
       if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-a")) == 0)
         {
@@ -156,6 +171,11 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
         {
           session.default_service (ACE_TEXT_ALWAYS_CHAR (argv[++i]));
           continue;
+        }
+      if (argv[i][0] == ACE_TEXT('-'))
+        {
+          print_help ();
+          return 0;
         }
 
       Log log(session);

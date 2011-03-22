@@ -53,6 +53,7 @@ private:
   static void parse_exclusive_tms (Log *this_, char *line, size_t offset);
   static void parse_process_parsed_msgs (Log *this_, char *line, size_t offset);
   static void parse_wait_for_event (Log *this_, char *line, size_t offset);
+  static void parse_wait_on_read (Log *this_, char *line, size_t offset);
   static void parse_cleanup_queue (Log *this_, char *line, size_t offset);
   static void parse_close_connection (Log *this_, char *line, size_t offset);
   static void parse_begin_connection (Log *this_, char *line, size_t offset);
