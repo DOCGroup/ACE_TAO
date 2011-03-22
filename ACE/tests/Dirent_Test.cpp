@@ -301,21 +301,12 @@ dirent_count (const ACE_TCHAR *dir_path,
               ++dir_count;
 
 #if !defined (ACE_LACKS_CHDIR)
-# if (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
-              // Move back to parent directory.
-              if (ACE_OS::chdir (full_path) == -1)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("chdir: %p\n"),
-                                   full_path),
-                                  -1);
-# else
               // Move back up a level.
               if (ACE_OS::chdir (ACE_TEXT ("..")) == -1)
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("chdir: %p\n"),
                                    dir_path),
                                   -1);
-# endif
 #endif /* !ACE_LACKS_CHDIR */
             }
           break;

@@ -53,6 +53,7 @@
 // the information using getenv.
 #define ACE_DEFAULT_LD_SEARCH_PATH ACE_TEXT (".\\;\\windows")
 
+#define ACE_LACKS_ABORT
 #define ACE_LACKS_FCNTL_H
 #define ACE_LACKS_SYS_TYPES_H
 #define ACE_LACKS_GETCWD
