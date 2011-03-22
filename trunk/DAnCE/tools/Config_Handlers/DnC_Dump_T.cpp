@@ -73,7 +73,7 @@ namespace Deployment
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_DEBUG, "%s%s[%d].name: %s\n",
              Dump_Obj::indent(), caption, i,
-             root_obj.*data)[value].name.in());
+             (root_obj.*data)[value].name.in()));
         }
     }
 
