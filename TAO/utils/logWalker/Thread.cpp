@@ -34,6 +34,14 @@ Thread::pending_peer (void) const
 }
 
 void
+Thread::handle_request (void)
+{
+  this->encounters_++;
+  if (this->pending_.size() > 1)
+    this->nested_++;
+}
+
+void 
 Thread::enter_wait (PeerProcess *pp)
 {
   this->pending_.push (pp);

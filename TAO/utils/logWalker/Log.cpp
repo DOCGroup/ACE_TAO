@@ -108,30 +108,30 @@ Log::get_host (long pid)
   size_t numprocs = this->procs_.size();
   hp = new HostProcess (this->origin_,pid);
   this->procs_.insert_tail(hp);
-  if (this->alias_.length() > 0)
+  ACE_CString &procname = this->alias_.length() > 0 ? 
+    this->alias_ : this->origin_;
+  switch (numprocs)
     {
-      switch (numprocs)
-        {
-        case 0:
-          hp->proc_name(alias_);
-          break;
-        case 1:
-          {
-            ACE_CString a2 = alias_ + "_1";
-            HostProcess *first;
-            if (this->procs_.get(first) == 0)
-              first->proc_name(a2);
-          }
-          //fallthru
-        default:
-          {
-            char ext[10];
-            ACE_OS::sprintf(ext,"_" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII,numprocs+1);
-            ACE_CString a2 = alias_ + ext;
-            hp->proc_name(a2);
-          }
-        }
+    case 0:
+      hp->proc_name(procname);
+      break;
+    case 1:
+      {
+        ACE_CString a2 = procname + "_1";
+        HostProcess *first;
+        if (this->procs_.get(first) == 0)
+          first->proc_name(a2);
+      }
+      //fallthru
+    default:
+      {
+        char ext[10];
+        ACE_OS::sprintf(ext,"_" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII,numprocs+1);
+        ACE_CString a2 = procname + ext;
+        hp->proc_name(a2);
+      }
     }
+ 
   this->session_.add_process(hp);
   return hp;
 }
@@ -248,12 +248,11 @@ Log::parse_dump_msg (Log *this_, char *line, size_t offset)
       return;
     }
 
-//   if (mode < 2)
-//     thr->enter_wait(pp);
   Invocation::GIOP_Buffer *target = 0;
   switch (mode)
     {
     case 1: { // receiving request
+      thr->handle_request();
       Invocation *inv = pp->new_invocation (rid,thr);
       if (inv == 0)
         {
@@ -267,6 +266,8 @@ Log::parse_dump_msg (Log *this_, char *line, size_t offset)
       break;
     }
     case 0: // sending request
+      thr->enter_wait(pp); 
+      // fall through.
     case 3: { // receiving reply
       Invocation *inv = pp->find_invocation(rid, thr->active_handle());
       if (inv == 0)
@@ -278,6 +279,13 @@ Log::parse_dump_msg (Log *this_, char *line, size_t offset)
         }
       inv->init (line, offset, thr);
       target = inv->octets(mode == 0);
+      if (target == 0 && mode == 3)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%d: could not map invocation to target for req_id %d\n",
+                      offset, rid));
+          return;
+        }
 //       if (mode == 3)
 //         thr->exit_wait(pp, offset);
       break;
@@ -463,8 +471,22 @@ Log::parse_wait_for_event (Log *this_, char *line, size_t offset)
 
   if (done)
     thr->exit_wait(pp, offset);
-  else
-    thr->enter_wait(pp);
+//   else
+//     thr->enter_wait(pp);
+}
+
+void
+Log::parse_wait_on_read (Log *this_, char *line, size_t offset)
+{
+  long pid = 0;
+  long tid = 0;
+  this_->get_pid_tid(pid,tid,line);
+
+  HostProcess *hp = this_->get_host(pid);
+  Thread *thr = hp == 0 ? 0 : hp->find_thread (tid);
+  PeerProcess *pp = thr->incoming();
+  
+  thr->exit_wait (pp, offset);
 }
 
 void
@@ -687,6 +709,7 @@ Log::parse_line (char *line, size_t offset)
       { "Exclusive_TMS::request_id", parse_exclusive_tms },
       { "process_parsed_messages", parse_process_parsed_msgs },
       { "wait_for_event", parse_wait_for_event },
+      { "Wait_On_Read", parse_wait_on_read },
       { "::cleanup_queue, byte_count", parse_cleanup_queue },
       { "close_connection_eh", parse_close_connection },
       { "IIOP_Connector::begin_connection, to ", parse_begin_connection },
