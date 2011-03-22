@@ -1,3 +1,9 @@
+Tue Mar 22 11:33:04 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/DnC_Dump.cpp:
+
+          Fix compile errors.
+
 Tue Mar 22 11:32:08 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/Logger/Log_Macros.h:
