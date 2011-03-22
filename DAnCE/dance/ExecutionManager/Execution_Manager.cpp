@@ -24,37 +24,46 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           dlf->init (argc, argv);
         }
 
-      DANCE_DEBUG (6, (LM_TRACE, DLINFO
-                    ACE_TEXT("ExecutionManager - initializing ORB\n")));
+      DANCE_TRACE_LOG (DANCE_LOG_TRACE,
+                       (LM_TRACE, DLINFO
+                        ACE_TEXT("ExecutionManager - initializing ORB\n")));
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      DANCE_DEBUG (6, (LM_TRACE, DLINFO
-                   ACE_TEXT("ExecutionManager - initializing module instance\n")));
+      DANCE_TRACE_LOG (DANCE_LOG_TRACE,
+                       (LM_TRACE, DLINFO
+                        ACE_TEXT("ExecutionManager - initializing module instance\n")));
 
       DAnCE_ExecutionManager_Module em;
       CORBA::Object_var obj = em.init (orb.in (), argc, argv);
 
       if (!CORBA::is_nil (obj.in ()))
         {
-          DANCE_DEBUG (6, (LM_TRACE, DLINFO
-                    ACE_TEXT("ExecutionManager - running ORB\n")));
+          DANCE_TRACE_LOG (DANCE_LOG_TRACE,
+                           (LM_TRACE, DLINFO
+                            ACE_TEXT("ExecutionManager - running ORB\n")));
           orb->run ();
         }
 
-      DANCE_DEBUG (6, (LM_TRACE, DLINFO
-                    ACE_TEXT("ExecutionManager - destroying ORB\n")));
+      DANCE_TRACE_LOG (DANCE_LOG_TRACE,
+                       (LM_TRACE, DLINFO
+                        ACE_TEXT("ExecutionManager - destroying ORB\n")));
 
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("ExecutionManager");
+      DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                   (LM_EMERGENCY, DLINFO
+                    "ExecutionManager - Caught CORBA Exception: %C\n",
+                    ex._info ().c_str ()));
       retval = -1;
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, "ExecutionManager - Error: Unknown exception.\n"));
+      DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                   (LM_ERROR,
+                    "ExecutionManager - Error: Unknown exception.\n"));
       retval = -1;
     }
 

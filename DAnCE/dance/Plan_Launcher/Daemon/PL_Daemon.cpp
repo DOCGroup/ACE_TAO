@@ -27,12 +27,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           dlf->init (argc, argv);
         }
 
-      DANCE_DEBUG (6, (LM_TRACE, DLINFO
+      DANCE_TRACE_LOG (DANCE_LOG_TRACE, (LM_TRACE, DLINFO
                     ACE_TEXT("PL_Daemon - initializing ORB\n")));
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      DANCE_DEBUG (6, (LM_TRACE, DLINFO
+      DANCE_TRACE_LOG (DANCE_LOG_TRACE, (LM_TRACE, DLINFO
                        ACE_TEXT("PL_Daemon - initializing module instance\n")));
 
 
@@ -50,7 +50,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       policies.length (2);
       try
         {
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("PL_Daemon - ")
+          DANCE_TRACE_LOG (DANCE_LOG_TRACE, (LM_TRACE, DLINFO ACE_TEXT("PL_Daemon - ")
                            ACE_TEXT("before creating the \"Managers\" POA.\n")));
 
           policies[0] = poa->create_id_assignment_policy (PortableServer::USER_ID);
@@ -84,19 +84,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->run ();
 
-      DANCE_DEBUG (6, (LM_TRACE, DLINFO
-                       ACE_TEXT("PL_Daemon - destroying ORB\n")));
+      DANCE_TRACE_LOG (DANCE_LOG_TRACE, (LM_TRACE, DLINFO
+                                         ACE_TEXT("PL_Daemon - destroying ORB\n")));
 
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("PL_Daemon");
+      DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                   (LM_EMERGENCY, DLINFO
+                    "PL_Daemon - Error - CORBA Exception :%C\n",
+                    ex._info ().c_str ()));
       retval = -1;
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, "PL_Daemon - Error: Unknown exception.\n"));
+      DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                   (LM_ERROR, "PL_Daemon - Error: Unknown exception.\n"));
       retval = -1;
     }
 
