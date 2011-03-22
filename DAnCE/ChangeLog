@@ -1,12 +1,20 @@
+Tue Mar 22 11:32:08 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Logger/Log_Macros.h:
+        * dance/Logger/Log_Macros.cpp:
+        * dance/Logger/Logger_Service.cpp:
+
+          Reworked log levels to start at 1 by default.
+
 Tue Mar 22 06:32:47 UTC 2011  James Edmondson  <james.r.edmondson@vanderbilt.edu>
 
         * tools/Config_Handlers/DnC_Dump.cpp:
 
-          removed using namespace 
+          removed using namespace
 
         * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
 
-          removed using namespace 
+          removed using namespace
 
 Mon Mar 21 11:07:19 UTC 2011  James Edmondson  <james.r.edmondson@vanderbilt.edu>
 
