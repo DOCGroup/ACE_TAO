@@ -40,7 +40,9 @@ namespace DAnCE
 
       if (!filename)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Node_Locator::process_cdd - ")
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_ERROR, DLINFO
+                        ACE_TEXT("Node_Locator::process_cdd - ")
                         ACE_TEXT("Error: Provided with nil filename\n")));
           return false;
         }
@@ -51,7 +53,9 @@ namespace DAnCE
 
       if (!plan)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Node_Locator::process_cdd - ")
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_ERROR, DLINFO
+                        ACE_TEXT("Node_Locator::process_cdd - ")
                         ACE_TEXT("Error: Processing file <%C>\n"), filename));
           return false;
         }
@@ -65,10 +69,11 @@ namespace DAnCE
                                     plan->node[i].resource,
                                     resource))
              {
-               DANCE_ERROR (1, (LM_ERROR,
-                                DLINFO ACE_TEXT("Node_Locator::process_cdd - ")
-                                ACE_TEXT("Error: Resource <%C> not found.\n"),
-                                DAnCE::NODE_RESOURCE_TYPE));
+               DANCE_ERROR (DANCE_LOG_ERROR,
+                            (LM_ERROR,
+                             DLINFO ACE_TEXT("Node_Locator::process_cdd - ")
+                             ACE_TEXT("Error: Resource <%C> not found.\n"),
+                             DAnCE::NODE_RESOURCE_TYPE));
                return false;
              }
           const ACE_TCHAR *val = 0;
@@ -76,10 +81,11 @@ namespace DAnCE
                                                               resource.property,
                                                               val))
             {
-              DANCE_ERROR (1, (LM_ERROR,
-                               DLINFO ACE_TEXT("Node_Locator::process_cdd - ")
-                              ACE_TEXT("Error: Property <%C> not found.\n"),
-                              DAnCE::NODE_IOR));
+              DANCE_ERROR (DANCE_LOG_ERROR,
+                           (LM_ERROR,
+                            DLINFO ACE_TEXT("Node_Locator::process_cdd - ")
+                            ACE_TEXT("Error: Property <%C> not found.\n"),
+                            DAnCE::NODE_IOR));
               return false;
 
             }
@@ -90,7 +96,7 @@ namespace DAnCE
 
           ACE_CString destination (plan->node[i].name);
 
-          DANCE_DEBUG (8,
+          DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
                       (LM_INFO, DLINFO ACE_TEXT("Node_Locator::process_cdd - ")
                        ACE_TEXT("Storing IOR %C for destination %C\n"),
                        ior.c_str (), destination.c_str ()));
@@ -106,7 +112,9 @@ namespace DAnCE
   {
     DANCE_TRACE ("Node_Locator::resolve_ior");
 
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Node_Locator::resolve_ior - ")
+    DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                 (LM_DEBUG, DLINFO
+                  ACE_TEXT("Node_Locator::resolve_ior - ")
                   ACE_TEXT("Resolving ior %C for destination %C\n"),
                   ior, name));
 
@@ -116,7 +124,8 @@ namespace DAnCE
 
     if (CORBA::is_nil (nm.in ()))
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Node_Locator::resolve_ior - ")
+        DANCE_ERROR (DANCE_LOG_ERROR,
+                     (LM_ERROR, DLINFO ACE_TEXT("Node_Locator::resolve_ior - ")
                       ACE_TEXT("Error: Unable to retrieve reference for destination ")
                       ACE_TEXT("%C and ior %C\n"),
                       name, ior));
@@ -139,7 +148,8 @@ namespace DAnCE
 
     if (CORBA::is_nil (this->nc_.in ()))
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Node_Locator::ns_lookup - ")
+        DANCE_ERROR (DANCE_LOG_ERROR,
+                     (LM_ERROR, DLINFO ACE_TEXT("Node_Locator::ns_lookup - ")
                       ACE_TEXT("Nameservice lookup of %C failed because there is no naming service.\n"),
                       nodename));
         return ::Deployment::NodeManager::_nil ();
@@ -159,7 +169,8 @@ namespace DAnCE
 
         if (CORBA::is_nil (nm.in ()))
           {
-            DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Node_Locator::ns_lookup - ")
+            DANCE_ERROR (DANCE_LOG_ERROR,
+                         (LM_ERROR, DLINFO ACE_TEXT("Node_Locator::ns_lookup - ")
                           ACE_TEXT("Unable to narrow provided reference for node %C\n"),
                           nodename));
           }
@@ -168,13 +179,15 @@ namespace DAnCE
       }
     catch (const CORBA::Exception &e)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Node_Locator::ns_lookup - ")
+        DANCE_ERROR (DANCE_LOG_ERROR,
+                     (LM_ERROR, DLINFO ACE_TEXT("Node_Locator::ns_lookup - ")
                       ACE_TEXT("Caught CORBA exception while looking up name %C:%C\n"),
                       nodename, e._info ().c_str ()));
       }
     catch (...)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Node_Locator::ns_lookup - ")
+        DANCE_ERROR (DANCE_LOG_ERROR,
+                     (LM_ERROR, DLINFO ACE_TEXT("Node_Locator::ns_lookup - ")
                       ACE_TEXT("Caught unexpected exception while looking up name %C\n"),
                       nodename));
       }
@@ -189,10 +202,11 @@ namespace DAnCE
   {
     DANCE_TRACE ("Node_Locator::get_resource_value<const char *>");
 
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                     ACE_TEXT("Node_Locator::get_resource_value - ")
-                     ACE_TEXT("Finding resource for type '%C'\n"),
-                     type));
+    DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT("Node_Locator::get_resource_value - ")
+                  ACE_TEXT("Finding resource for type '%C'\n"),
+                  type));
 
     for (CORBA::ULong i = 0; i < resources.length (); ++i)
       {
@@ -202,20 +216,22 @@ namespace DAnCE
             if (ACE_OS::strcmp (type,
                                  resources[i].resourceType[k]) == 0)
               {
-                DANCE_DEBUG (9, (LM_TRACE, DLINFO,
-                             ACE_TEXT("Node_Locator::get_resource_value - ")
-                             ACE_TEXT("Found resource for type '%C'\n"),
-                             type));
+                DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                             (LM_TRACE, DLINFO,
+                              ACE_TEXT("Node_Locator::get_resource_value - ")
+                              ACE_TEXT("Found resource for type '%C'\n"),
+                              type));
 
                 val = resources[i];
                 return true;
               }
           }
         }
-      DANCE_ERROR (1, (LM_WARNING, DLINFO
-                       ACE_TEXT("Node_Locator::get_resource_value - ")
-                       ACE_TEXT("Failed to extract resource for %C\n"),
-                       type));
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_WARNING, DLINFO
+                    ACE_TEXT("Node_Locator::get_resource_value - ")
+                    ACE_TEXT("Failed to extract resource for %C\n"),
+                    type));
       return false;
     }
 

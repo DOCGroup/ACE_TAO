@@ -1,7 +1,29 @@
+Tue Mar 22 18:54:09 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/DAnCE_Utility.cpp:
+        * dance/DAnCE_Utility.tpp:
+        * dance/DomainApplication/Domain_Application_Impl.cpp:
+        * dance/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * dance/DomainApplicationManager/Node_Locator.cpp:
+        * dance/ExecutionManager/ExecutionManager_Impl.cpp:
+        * dance/ExecutionManager/ExecutionManager_Module.cpp:
+        * dance/ExecutionManager/Execution_Manager.cpp:
+        * dance/NodeApplication/NodeApplication_Impl.cpp:
+        * dance/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * dance/NodeManager/NodeManager_Impl.cpp:
+        * dance/NodeManager/Node_Manager.cpp:
+        * dance/NodeManager/Node_Manager_Module.cpp:
+        * dance/Plan_Launcher/Daemon/PL_Daemon.cpp:
+        * dance/Plan_Launcher/EM_Launcher.cpp:
+        * dance/Plan_Launcher/Plan_Launcher.cpp:
+        * dance/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+
+          Converted to new logging macros.
+
 Tue Mar 22 15:00:28 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tools/Convert_Plan/Convert_Plan_Impl.cpp:
-        
+
           Another compile error fix.
 
 Tue Mar 22 14:33:54 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
