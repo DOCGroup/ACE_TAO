@@ -1,3 +1,11 @@
+Tue Mar 22 21:09:14 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Acceptor.h:
+          Doxygen change
+
+        * ace/config-win32-borland.h:
+          Updated comment
+
 Tue Mar 22 15:40:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_ifaddrs.h:
