@@ -1,3 +1,9 @@
+Tue Mar 22 09:24:54 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-openbsd.h:
+          Added back ACE_LACKS_SETSCHED. OpenBSD does not provide
+          implementation.
+
 Tue Mar 22 09:18:44 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
