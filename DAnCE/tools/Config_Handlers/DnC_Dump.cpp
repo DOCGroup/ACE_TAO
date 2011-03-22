@@ -16,7 +16,6 @@
 // them being terminal error prints, but perhaps this is something
 // we can discuss
 
-using namespace ::Deployment::DnC_Dump_T;
 namespace Deployment
 {
   void
@@ -105,12 +104,12 @@ namespace Deployment
     dump ("name", sr.name);
     dump ("resourceType", sr.resourceType);
 #if 0
-    dump_ref_seq<Deployment::Domain> ("nodeRef",
+    ::Deployment::DnC_Dump_T::dump_ref_seq<Deployment::Domain> ("nodeRef",
                                       sr.nodeRef,
                                       "Domain",
                                       &Domain::node);
 #endif /*if 0*/
-    dump_sequence ("property",
+    ::Deployment::DnC_Dump_T::::Deployment::DnC_Dump_T::dump_sequence ("property",
                    sr.property);
   }
 
@@ -121,7 +120,7 @@ namespace Deployment
     Dump_Obj dump_obj("Resource");
     dump ("name", resource.name);
     dump ("resourceType", resource.resourceType);
-    dump_sequence ("property",
+    ::Deployment::DnC_Dump_T::::Deployment::DnC_Dump_T::dump_sequence ("property",
                    resource.property);
   }
 
@@ -134,7 +133,7 @@ namespace Deployment
     dump ("label", node.label);
 
 #if (_MSC_VER)
-    dump_ref_seq<Deployment::Domain> (
+    ::Deployment::DnC_Dump_T::dump_ref_seq<Deployment::Domain> (
                                       "sharedResourceRef",
                                       node.sharedResourceRef,
                                       "Domain",
@@ -142,14 +141,14 @@ namespace Deployment
 #endif
 
 #if (_MSC_VER)
-    dump_ref_seq<Deployment::Domain> (
+    ::Deployment::DnC_Dump_T::dump_ref_seq<Deployment::Domain> (
                                       "connectionRef",
                                       node.connectionRef,
                                       "Domain",
                                       &Domain::interconnect);
 #endif
 
-    dump_sequence ("resource",
+    ::Deployment::DnC_Dump_T::dump_sequence ("resource",
                    node.resource);
 
   }
@@ -163,20 +162,20 @@ namespace Deployment
     dump ("label", conn.label);
 
 #if (_MSC_VER)
-    dump_ref_seq<Deployment::Domain> (
+    ::Deployment::DnC_Dump_T::dump_ref_seq<Deployment::Domain> (
                                       "connectionRef",
                                       conn.connectionRef,
                                       "Domain",
                                       &Domain::bridge);
 #endif
 #if (_MSC_VER)
-    dump_ref_seq<Deployment::Domain> (
+    ::Deployment::DnC_Dump_T::dump_ref_seq<Deployment::Domain> (
                                       "connectRef",
                                       conn.connectRef,
                                       "Domain",
                                       &Domain::node);
 #endif
-    dump_sequence ("resource",
+    ::Deployment::DnC_Dump_T::dump_sequence ("resource",
                    conn.resource);
   }
 
@@ -190,14 +189,14 @@ namespace Deployment
     dump ("label", bridge.label);
 
 #if (_MSC_VER)
-    dump_ref_seq<Deployment::Domain> (
+    ::Deployment::DnC_Dump_T::dump_ref_seq<Deployment::Domain> (
                                       "connectRef",
                                       bridge.connectRef,
                                       "Domain",
                                       &Domain::interconnect);
 #endif
 
-    dump_sequence ("resource", bridge.resource);
+    ::Deployment::DnC_Dump_T::dump_sequence ("resource", bridge.resource);
   }
 
   void DnC_Dump::dump (const ::Deployment::Domain &domain)
@@ -214,16 +213,16 @@ namespace Deployment
     dump ("label",
           domain.label);
 
-    dump_sequence ("sharedResource",
+    ::Deployment::DnC_Dump_T::dump_sequence ("sharedResource",
                    domain.sharedResource);
-    dump_sequence ("node",
+    ::Deployment::DnC_Dump_T::dump_sequence ("node",
                    domain.node);
-    dump_sequence ("interconnect",
+    ::Deployment::DnC_Dump_T::dump_sequence ("interconnect",
                    domain.interconnect);
-    dump_sequence ("bridge",
+    ::Deployment::DnC_Dump_T::dump_sequence ("bridge",
                    domain.bridge);
 
-    dump_sequence ("infoProperty",
+    ::Deployment::DnC_Dump_T::dump_sequence ("infoProperty",
                    domain.infoProperty);
   }
 
@@ -416,10 +415,10 @@ namespace Deployment
     dump ("specificType", cid.specificType);
     dump ("supportedType", cid.supportedType);
     dump ("idlFile", cid.idlFile);
-    dump_sequence ("configProperty", cid.configProperty);
-    dump_sequence ("port", cid.port);
-    dump_sequence ("property", cid.property);
-    dump_sequence ("infoProperty", cid.infoProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("configProperty", cid.configProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("port", cid.port);
+    ::Deployment::DnC_Dump_T::dump_sequence ("property", cid.property);
+    ::Deployment::DnC_Dump_T::dump_sequence ("infoProperty", cid.infoProperty);
   }
 
   // Requirement
@@ -431,7 +430,7 @@ namespace Deployment
 
     dump ("resourceType", req.resourceType);
     dump ("name", req.name);
-    dump_sequence ("property", req.property);
+    ::Deployment::DnC_Dump_T::dump_sequence ("property", req.property);
   }
 
   // MonolithicDeploymentDescription
@@ -445,12 +444,12 @@ namespace Deployment
     dump ("source", mdd.source);
 
 #if (_MSC_VER)
-    dump_ref_seq<Deployment::DeploymentPlan> ("artifactRef", mdd.artifactRef,
+    ::Deployment::DnC_Dump_T::dump_ref_seq<Deployment::DeploymentPlan> ("artifactRef", mdd.artifactRef,
                                               "DeploymentPlan",
                                               &DeploymentPlan::artifact);
 #endif
-    dump_sequence ("execParameter", mdd.execParameter);
-    dump_sequence ("deployRequirement", mdd.deployRequirement);
+    ::Deployment::DnC_Dump_T::dump_sequence ("execParameter", mdd.execParameter);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployRequirement", mdd.deployRequirement);
   }
 
   // ResourceUsageKind
@@ -497,7 +496,7 @@ namespace Deployment
     dump ("resourceName", irdd.resourceName);
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG,
       "%sresourceValue:\n", Dump_Obj::indent()));
-    dump_sequence ("property",  irdd.property);
+    ::Deployment::DnC_Dump_T::dump_sequence ("property",  irdd.property);
   }
 
   // InstanceDeploymentDescription
@@ -517,9 +516,9 @@ namespace Deployment
                                           "DeploymentPlan",
                                           &DeploymentPlan::implementation);
 #endif
-    dump_sequence ("configProperty", idd.configProperty);
-    dump_sequence ("deployedResource", idd.deployedResource);
-    dump_sequence ("deployedSharedResource", idd.deployedSharedResource);
+    ::Deployment::DnC_Dump_T::dump_sequence ("configProperty", idd.configProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployedResource", idd.deployedResource);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployedSharedResource", idd.deployedSharedResource);
   }
 
   // ComponentExternalPortEndpoint
@@ -599,7 +598,7 @@ namespace Deployment
     dump ("resourceName", crdd.resourceName);
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
       (LM_DEBUG, "%sresourceValue:\n", Dump_Obj::indent()));
-    dump_sequence ("properties", crdd.property);
+    ::Deployment::DnC_Dump_T::dump_sequence ("properties", crdd.property);
   }
 
   // PlanConnectionDescription
@@ -610,11 +609,11 @@ namespace Deployment
 
     dump ("name", pcd.name);
     dump ("source", pcd.source);
-    dump_sequence ("deployRequirement", pcd.deployRequirement);
-    dump_sequence ("externalEndpoint", pcd.externalEndpoint);
-    dump_sequence ("internalEndpoint", pcd.internalEndpoint);
-    dump_sequence ("externalReference", pcd.externalReference);
-    dump_sequence ("deployedResource", pcd.deployedResource);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployRequirement", pcd.deployRequirement);
+    ::Deployment::DnC_Dump_T::dump_sequence ("externalEndpoint", pcd.externalEndpoint);
+    ::Deployment::DnC_Dump_T::dump_sequence ("internalEndpoint", pcd.internalEndpoint);
+    ::Deployment::DnC_Dump_T::dump_sequence ("externalReference", pcd.externalReference);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployedResource", pcd.deployedResource);
   }
 
   // PlanSubcomponentPropertyReference
@@ -641,7 +640,7 @@ namespace Deployment
     dump ("name", ppm.name);
     dump ("source", ppm.source);
     dump ("externalName", ppm.externalName);
-    dump_sequence ("delegatesTo", ppm.delegatesTo);
+    ::Deployment::DnC_Dump_T::dump_sequence ("delegatesTo", ppm.delegatesTo);
   }
 
   // ImplementationDependency
@@ -663,7 +662,7 @@ namespace Deployment
     dump ("resourceName", rdd.resourceName);
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
       (LM_DEBUG, "%sresourceValue:\n", Dump_Obj::indent()));
-    dump_sequence ("properties", rdd.property);
+    ::Deployment::DnC_Dump_T::dump_sequence ("properties", rdd.property);
   }
 
   // ArtifactDeploymentDescription
@@ -676,9 +675,9 @@ namespace Deployment
     dump ("location", add.location);
     dump ("node", add.node);
     dump ("source", add.source);
-    dump_sequence ("execParameter", add.execParameter);
-    dump_sequence ("deployRequirement", add.deployRequirement);
-    dump_sequence ("deployedResource", add.deployedResource);
+    ::Deployment::DnC_Dump_T::dump_sequence ("execParameter", add.execParameter);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployRequirement", add.deployRequirement);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployedResource", add.deployedResource);
   }
 
   void DnC_Dump::dump(const Deployment::DeploymentPlan &plan)
@@ -692,13 +691,13 @@ namespace Deployment
     dump ("label", plan.label);
     dump ("UUID", plan.UUID);
     dump (plan.realizes);
-    dump_sequence ("implementation", plan.implementation);
-    dump_sequence ("instance", plan.instance);
-    //dump_sequence ("connection", plan.connection);
-    dump_sequence ("externalProperty", plan.externalProperty);
-    dump_sequence ("dependsOn", plan.dependsOn);
-    dump_sequence ("artifact", plan.artifact);
-    dump_sequence ("infoProperty", plan.infoProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("implementation", plan.implementation);
+    ::Deployment::DnC_Dump_T::dump_sequence ("instance", plan.instance);
+    //::Deployment::DnC_Dump_T::dump_sequence ("connection", plan.connection);
+    ::Deployment::DnC_Dump_T::dump_sequence ("externalProperty", plan.externalProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("dependsOn", plan.dependsOn);
+    ::Deployment::DnC_Dump_T::dump_sequence ("artifact", plan.artifact);
+    ::Deployment::DnC_Dump_T::dump_sequence ("infoProperty", plan.infoProperty);
   }
 
   // ComponentPackageReference
@@ -720,10 +719,10 @@ namespace Deployment
     Dump_Obj dump_obj("SubcomponentInstantiationDescription");
 
     dump ("name", sid.name);
-    //    dump_sequence ("basePackage", sid.package);
-    dump_sequence ("configProperty", sid.configProperty);
-    dump_sequence ("selectRequirement", sid.selectRequirement);
-    //    dump_sequence ("reference", sid.reference);
+    //    ::Deployment::DnC_Dump_T::dump_sequence ("basePackage", sid.package);
+    ::Deployment::DnC_Dump_T::dump_sequence ("configProperty", sid.configProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("selectRequirement", sid.selectRequirement);
+    //    ::Deployment::DnC_Dump_T::dump_sequence ("reference", sid.reference);
   }
 
   // SubcomponentPortEndpoint
@@ -752,10 +751,10 @@ namespace Deployment
     Dump_Obj dump_obj("AssemblyConnectionDescription");
 
     dump ("name", acd.name);
-    dump_sequence ("deployRequirement", acd.deployRequirement);
-    dump_sequence ("externalEndpoint", acd.externalEndpoint);
-    dump_sequence ("internalEndpoint", acd.internalEndpoint);
-    dump_sequence ("externalReference", acd.externalReference);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployRequirement", acd.deployRequirement);
+    ::Deployment::DnC_Dump_T::dump_sequence ("externalEndpoint", acd.externalEndpoint);
+    ::Deployment::DnC_Dump_T::dump_sequence ("internalEndpoint", acd.internalEndpoint);
+    ::Deployment::DnC_Dump_T::dump_sequence ("externalReference", acd.externalReference);
   }
 
   // SubcomponentPropertyReference
@@ -786,7 +785,7 @@ namespace Deployment
 
     dump ("name", apm.name);
     dump ("externalName", apm.externalName);
-    dump_sequence ("delegatesTo", apm.delegatesTo);
+    ::Deployment::DnC_Dump_T::dump_sequence ("delegatesTo", apm.delegatesTo);
   }
 
   // ComponentAssemblyDescription
@@ -799,9 +798,9 @@ namespace Deployment
     Dump_Obj dump_obj ("ComponentAssemblyDescription",
                        a);
 
-    dump_sequence ("instance", cad.instance);
-    dump_sequence ("connection", cad.connection);
-    dump_sequence ("externalProperty", cad.externalProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("instance", cad.instance);
+    ::Deployment::DnC_Dump_T::dump_sequence ("connection", cad.connection);
+    ::Deployment::DnC_Dump_T::dump_sequence ("externalProperty", cad.externalProperty);
   }
 
   // ImplementationArtifactDescription
@@ -814,10 +813,10 @@ namespace Deployment
     dump ("label", iad.label);
     dump ("UUID", iad.UUID);
     dump ("location", iad.location);
-    dump_sequence ("execParameter", iad.execParameter);
-    dump_sequence ("deployRequirement", iad.deployRequirement);
-    dump_sequence ("dependsOn", iad.dependsOn);
-    dump_sequence ("infoProperty", iad.infoProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("execParameter", iad.execParameter);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployRequirement", iad.deployRequirement);
+    ::Deployment::DnC_Dump_T::dump_sequence ("dependsOn", iad.dependsOn);
+    ::Deployment::DnC_Dump_T::dump_sequence ("infoProperty", iad.infoProperty);
   }
 
   // NamedImplementationArtifact
@@ -836,12 +835,12 @@ namespace Deployment
   {
     Dump_Obj dump_obj("ImplementationRequirement");
 
-    dump_sequence ("resourceUsage", ir.resourceUsage);
+    ::Deployment::DnC_Dump_T::dump_sequence ("resourceUsage", ir.resourceUsage);
     dump ("resourcePort", ir.resourcePort);
     dump ("componentPort", ir.componentPort);
     dump ("resourceType", ir.resourceType);
     dump ("name", ir.name);
-    dump_sequence ("property", ir.property);
+    ::Deployment::DnC_Dump_T::dump_sequence ("property", ir.property);
   }
 
   // MonolithicImplementationDescription
@@ -851,9 +850,9 @@ namespace Deployment
   {
     Dump_Obj dump_obj("MonolithicImplementationDescription");
 
-    //    dump_sequence ("execParameter", mid.execParameter);
-    dump_sequence ("primaryArtifact", mid.primaryArtifact);
-    dump_sequence ("deployRequirement", mid.deployRequirement);
+    //    ::Deployment::DnC_Dump_T::dump_sequence ("execParameter", mid.execParameter);
+    ::Deployment::DnC_Dump_T::dump_sequence ("primaryArtifact", mid.primaryArtifact);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployRequirement", mid.deployRequirement);
   }
 
   void
@@ -863,7 +862,7 @@ namespace Deployment
 
     dump ("name", capability.name);
     DnC_Dump::dump ("resourceType", capability.resourceType);
-    dump_sequence ("property",
+    ::Deployment::DnC_Dump_T::dump_sequence ("property",
                    capability.property);
   }
 
@@ -879,12 +878,12 @@ namespace Deployment
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
       (LM_DEBUG, "%sImplements:\n", Dump_Obj::indent()));
     dump (cid.implements);
-    dump_sequence ("assemblyImpl", cid.assemblyImpl);
-    dump_sequence ("monolithicImpl", cid.monolithicImpl);
-    dump_sequence ("configProperty", cid.configProperty);
-    dump_sequence ("capability", cid.capability);
-    dump_sequence ("dependsOn", cid.dependsOn);
-    dump_sequence ("infoProperty", cid.infoProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("assemblyImpl", cid.assemblyImpl);
+    ::Deployment::DnC_Dump_T::dump_sequence ("monolithicImpl", cid.monolithicImpl);
+    ::Deployment::DnC_Dump_T::dump_sequence ("configProperty", cid.configProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("capability", cid.capability);
+    ::Deployment::DnC_Dump_T::dump_sequence ("dependsOn", cid.dependsOn);
+    ::Deployment::DnC_Dump_T::dump_sequence ("infoProperty", cid.infoProperty);
   }
 
   // PackagedComponentImplementation
@@ -912,9 +911,9 @@ namespace Deployment
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
       (LM_DEBUG, "%srealizes:\n", Dump_Obj::indent ()));
     DnC_Dump::dump (comppkgdesc.realizes); // ComponentInterfaceDescription
-    dump_sequence ("configProperty", comppkgdesc.configProperty);
-    dump_sequence ("implementation", comppkgdesc.implementation);
-    dump_sequence ("infoProperty", comppkgdesc.infoProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("configProperty", comppkgdesc.configProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("implementation", comppkgdesc.implementation);
+    ::Deployment::DnC_Dump_T::dump_sequence ("infoProperty", comppkgdesc.infoProperty);
   }
 
   // PackageConfiguration
@@ -925,11 +924,11 @@ namespace Deployment
 
     dump ("label", pc.label);
     dump ("UUID", pc.UUID);
-    dump_sequence ("specializedConfig", pc.specializedConfig);
-    dump_sequence ("basePackage", pc.basePackage);
-    dump_sequence ("reference", pc.referencedPackage);
-    dump_sequence ("selectRequirement", pc.selectRequirement);
-    dump_sequence ("configProperty", pc.configProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("specializedConfig", pc.specializedConfig);
+    ::Deployment::DnC_Dump_T::dump_sequence ("basePackage", pc.basePackage);
+    ::Deployment::DnC_Dump_T::dump_sequence ("reference", pc.referencedPackage);
+    ::Deployment::DnC_Dump_T::dump_sequence ("selectRequirement", pc.selectRequirement);
+    ::Deployment::DnC_Dump_T::dump_sequence ("configProperty", pc.configProperty);
   }
 
   // Property
