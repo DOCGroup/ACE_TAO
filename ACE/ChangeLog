@@ -1,15 +1,20 @@
+Tue Mar 22 09:18:44 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          Reverted: Mon Mar 21 16:10:05 UTC 2011  Olli Savia  <ops@iki.fi>
+          Put back ACE_LACKS_RLIMIT_NOFILE. The problem with LynxOS 4.2
+          seems to be rlimit.
+
 Mon Mar 21 20:40:36 UTC 2011  James Edmondson  <james.r.edmondson@vanderbilt.edu>
 
         * bin/fuzz.pl:
-          Commented out lines that may be used for debugging the 
+          Commented out lines that may be used for debugging the
           trace error checker
-
 
 Mon Mar 21 20:18:52 UTC 2011  James Edmondson  <james.r.edmondson@vanderbilt.edu>
 
         * bin/fuzz.pl:
           Reverted previous changes
-
 
 Mon Mar 21 19:07:52 UTC 2011  James Edmondson  <james.r.edmondson@vanderbilt.edu>
 
@@ -18,12 +23,10 @@ Mon Mar 21 19:07:52 UTC 2011  James Edmondson  <james.r.edmondson@vanderbilt.edu
           Stopped fuzz.pl from considering *C.* and *S.* generated files
           Stopped fuzz.pl from considering *_export.h
 
-
 Mon Mar 21 19:02:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * html/Stats/index.shtml:
           Playstation xampler results are not available anymore
-
 
 Mon Mar 21 16:10:05 UTC 2011  Olli Savia  <ops@iki.fi>
 
