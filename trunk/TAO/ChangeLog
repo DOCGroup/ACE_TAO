@@ -1,3 +1,12 @@
+Tue Mar 22 21:40:44 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/catior/Catior_i.h:
+        * utils/catior/Catior_i.cpp:
+
+          Add the parsing of TAG_MULTIPLE_COMPONENTS which is still used
+          by some ORBs. Also add the detection of ORB type JacORB to help
+          with the identification of IORs in a heterogeneous environment.
+
 Tue Mar 22 14:31:19 UTC 2011  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Bug_3942_Regression/Bug_3942_Regression.cpp:
