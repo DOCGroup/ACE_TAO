@@ -307,6 +307,10 @@ Catior_i::catior (char const * str)
           {
             continue_decoding = cat_iiop_profile (stream);
           }
+        else if (tag == IOP::TAG_MULTIPLE_COMPONENTS)
+          {
+            continue_decoding = cat_multiple_components (stream);
+          }
         else if (tag == TAO_TAG_SCIOP_PROFILE)
           {
             continue_decoding = cat_sciop_profile (stream);
@@ -540,6 +544,12 @@ Catior_i::cat_tag_orb_type (TAO_InputCDR& stream) {
                          "ORB Type: 0x%x (TIDorbC++)\n", orbtype);
        break;
      }
+  case 0x4a414300:
+    {
+       ACE_OS::snprintf (buf, bufsize,
+                         "ORB Type: 0x%x (JacORB)\n", orbtype);
+       break;
+    }
    default:
      {
        ACE_OS::snprintf (buf, bufsize,
@@ -1489,6 +1499,18 @@ Catior_i::cat_uiop_profile (TAO_InputCDR& stream)
     return false;
 
   return true;
+}
+
+CORBA::Boolean
+Catior_i::cat_multiple_components (TAO_InputCDR& stream)
+{
+  static const size_t bufsize = 512;
+  char buf[bufsize];
+
+  ACE_OS::snprintf (buf, bufsize,
+                    "Multiple Components Profile\n");
+  buffer_ += buf;
+  return cat_tagged_components (stream);
 }
 
 CORBA::Boolean

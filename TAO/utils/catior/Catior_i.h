@@ -44,6 +44,7 @@ private:
   // These methods used to be functions in catior.cpp
   CORBA::Boolean catiiop (char* string);
 
+
   CORBA::Boolean catior (char const* str);
 
   CORBA::Boolean catpoop (char* string);
@@ -74,6 +75,8 @@ private:
   CORBA::Boolean cat_codeset_info (TAO_InputCDR& cdr);
 
   CORBA::Boolean cat_tagged_components (TAO_InputCDR& stream);
+
+  CORBA::Boolean cat_multiple_components (TAO_InputCDR& stream);
 
   CORBA::Boolean cat_profile_helper (TAO_InputCDR& stream,
                                      const char* protocol);
