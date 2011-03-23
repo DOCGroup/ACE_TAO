@@ -255,6 +255,17 @@
     <source/>
     <implementation xmi:idref="SenderComponentImplementation" />
     <configProperty>
+      <name>color</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CYAN</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>rate</name>
       <value>
         <type>
@@ -294,7 +305,7 @@
           <kind>tk_ushort</kind>
         </type>
         <value>
-          <ushort>25</ushort>
+          <ushort>50</ushort>
         </value>
       </value>
     </configProperty>
