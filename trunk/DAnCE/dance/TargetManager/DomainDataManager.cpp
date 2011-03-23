@@ -20,22 +20,27 @@ DAnCE::DomainDataManager::init (CORBA::ORB_ptr orb,
   this->orb_ = CORBA::ORB::_duplicate (orb);
   this->target_mgr_ = ::Deployment::TargetManager::_duplicate(target);
 
-  DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("DAnCE::DomainDataManager::init - ")
+  DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+               (LM_DEBUG, DLINFO ACE_TEXT ("DAnCE::DomainDataManager::init - ")
                 ACE_TEXT ("Parsing initial domain from file %s\n"),
                 domain_name));
 
   DAnCE::Config_Handlers::XML_File_Intf intf (domain_name);
   ::Deployment::Domain* dmn = intf.release_domain ();
 
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE::DomainDataManager::init - ")
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+               (LM_TRACE, DLINFO ACE_TEXT ("DAnCE::DomainDataManager::init - ")
                 ACE_TEXT ("Initial domain successfully parsed\n")));
 #ifdef GEN_OSTREAM_OPS
-  std::ostringstream _stream;
-  _stream << *dmn << std::endl;
+  if (DAnCE_debug_level >= DANCE_LOG_TRACE)
+    {
+      std::ostringstream _stream;
+      _stream << *dmn << std::endl;
 
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO "DAnCE::DomainDataManager::init - "
-                "Contents of Domain: %C\n",
-                _stream.str ().c_str ()));
+      DANCE_TRACE_LOG (DANCE_LOG_TRACE, (LM_TRACE, DLINFO "DAnCE::DomainDataManager::init - "
+                                         "Contents of Domain: %C\n",
+                                         _stream.str ().c_str ()));
+    }
 #endif
 
   current_domain_ = *dmn;
@@ -130,7 +135,7 @@ int DAnCE::DomainDataManager::call_all_node_managers ()
 
 /*  if ( this->deployment_config_.init ("NodeDetails.dat") == -1 )
     {
-      DANCE_ERROR (1, (LM_ERROR,
+      DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR,
                   "TargetM (%P|%t) DomainDataManager.cpp -"
                   "DAnCE::DomainDataManager::call_all_node_managers -"
                   "ERROR while trying to initialize after reading "
@@ -153,7 +158,7 @@ int DAnCE::DomainDataManager::call_all_node_managers ()
         }
       catch (CORBA::Exception&)
         {
-          DANCE_ERROR (1, (LM_ERROR, "DANCE::TM (%P|%t) DomainDataManager.cpp: "
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, "DANCE::TM (%P|%t) DomainDataManager.cpp: "
                       "Error trying to contact NodeManager %s\n",
                       initial_domain_.node[i].name.in ()));
           continue;
@@ -181,7 +186,7 @@ int DAnCE::DomainDataManager::call_all_node_managers ()
             }
           catch (CORBA::Exception& ex)
             {
-              DANCE_ERROR (1, (LM_ERROR , "TM::Error in calling Join Domain==\n"));
+              DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR , "TM::Error in calling Join Domain==\n"));
               ex._tao_print_exception (
                 "Exception caught in ""DomainDataManager::joinDomain");
             }
@@ -359,12 +364,12 @@ void DAnCE::DomainDataManager::commit_release_resource (
       CORBA::Long required_d;
 
       if ((deployed.value >>= required_d) == false)
-        DANCE_ERROR (1, (LM_ERROR, "Failed to extract required amount\n"));
+        DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, "Failed to extract required amount\n"));
 
       CORBA::Long available_d;
 
       if ((available.value >>= available_d) == false)
-        DANCE_ERROR (1, (LM_ERROR, "failed to extract available amount\n"));
+        DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, "failed to extract available amount\n"));
 
       if (available_d >= required_d)
         {
@@ -601,7 +606,7 @@ int DAnCE::DomainDataManager::commit_release_RA (const ::Deployment::ResourceAll
     catch (::Deployment::ResourceCommitmentFailure& ex)
     {
       // catch the exception and add parameters
-      DANCE_ERROR (1, (LM_ERROR, "Caught the Exception in releaseResourceAllocation\n"));
+      DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, "Caught the Exception in releaseResourceAllocation\n"));
       ex.index = i;
       throw ex;
     }
