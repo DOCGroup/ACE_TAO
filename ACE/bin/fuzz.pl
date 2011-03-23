@@ -1641,9 +1641,9 @@ sub check_for_generated_headers()
     }
 }
 
-sub check_for_numeric_dance_log()
+sub check_for_numeric_log()
 {
-    print "Running check for numeric flags in DAnCE\n";
+    print "Running check for numeric flags in DAnCE and DDS4CCM\n";
 
     foreach $file (@files_inl, @files_cpp, @files_h) {
         if (open (FILE, $file)) {
@@ -1657,6 +1657,12 @@ sub check_for_numeric_dance_log()
                 }
                 if (m/DANCE_TRACE_LOG\s*\(\s*\d\s*,/) {
                     print_warning ("$file:$.: Found numeric log level in trace log statement");
+                }
+                if (m/DDS4CCM_DEBUG\s*\(\s*\d*\s*,/) {
+                    print_warning ("$file:$.: Found numeric log level in debug statement");
+                }
+                if (m/DDS4CCM_ERROR\s*\(\s*\d\s*,/) {
+                    print_warning ("$file:$.: Found numeric log level in error statement");
                 }
             }
 
@@ -2270,9 +2276,9 @@ check_for_non_bool_operators () if ($opt_l > 2);
 check_for_long_file_names () if ($opt_l >= 1);
 check_for_improper_main_declaration () if ($opt_l >= 1);
 check_for_TAO_Local_RefCounted_Object () if ($opt_l >= 1);
-check_for_ORB_init () if ($opt_l >= 1);
 check_for_include_OS_h () if ($opt_l >= 1);
-check_for_numeric_dance_log () if ($opt_l >= 3);
+check_for_numeric_log () if ($opt_l >= 3);
+check_for_ORB_init () if ($opt_l >= 1);
 
 print "\nfuzz.pl - $errors error(s), $warnings warning(s)\n";
 
