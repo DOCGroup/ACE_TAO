@@ -1,3 +1,8 @@
+Wed Mar 23 18:36:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Also check numeric log level for dds4ccm
+
 Wed Mar 23 13:17:54 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/fuzz.pl:
