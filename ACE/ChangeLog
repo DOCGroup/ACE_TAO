@@ -1,3 +1,10 @@
+Wed Mar 23 13:17:54 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/fuzz.pl:
+
+          Enabled the numeric dance log check at a lower level so it will
+          run with the fuzz build.
+
 Tue Mar 22 21:09:14 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Acceptor.h:

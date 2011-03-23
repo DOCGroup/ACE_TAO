@@ -1655,6 +1655,9 @@ sub check_for_numeric_dance_log()
                 if (m/DANCE_ERROR\s*\(\s*\d\s*,/) {
                     print_warning ("$file:$.: Found numeric log level in error statement");
                 }
+                if (m/DANCE_TRACE_LOG\s*\(\s*\d\s*,/) {
+                    print_warning ("$file:$.: Found numeric log level in trace log statement");
+                }
             }
 
             close (FILE);
@@ -2269,7 +2272,7 @@ check_for_improper_main_declaration () if ($opt_l >= 1);
 check_for_TAO_Local_RefCounted_Object () if ($opt_l >= 1);
 check_for_ORB_init () if ($opt_l >= 1);
 check_for_include_OS_h () if ($opt_l >= 1);
-check_for_numeric_dance_log () if ($opt_l >= 6);
+check_for_numeric_dance_log () if ($opt_l >= 3);
 
 print "\nfuzz.pl - $errors error(s), $warnings warning(s)\n";
 
