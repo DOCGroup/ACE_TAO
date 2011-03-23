@@ -1,3 +1,9 @@
+Wed Mar 23 19:45:48 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/generate_component_mpc.pl:
+
+          Fix bug that suppressed help message.
+
 Wed Mar 16 00:39:40 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/Bug_3769_Regression/Foo.idl:
@@ -5,7 +11,7 @@ Wed Mar 16 00:39:40 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tests/Bug_3769_Regression/Foo_exec.cpp:
         * tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
 
-          Extended the test to include a sequence of zero length. 
+          Extended the test to include a sequence of zero length.
 
 Tue Mar 15 14:12:35 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
