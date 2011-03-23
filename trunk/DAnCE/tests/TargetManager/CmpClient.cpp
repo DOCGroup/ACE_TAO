@@ -61,7 +61,7 @@ namespace TM_Tester
           break;
         case '?':  // display help for use of the server.
         default:
-          DANCE_ERROR_RETURN (1, (LM_ERROR,
+          DANCE_ERROR_RETURN (DANCE_LOG_EMERGENCY, (LM_ERROR,
                 "usage:  %s\n"
                 "-t <TM_IOR>\n"
                 "-u <host_name in update>\n"
@@ -108,12 +108,12 @@ namespace TM_Tester
       }
       catch(CORBA::NO_IMPLEMENT &)
       {
-        DANCE_ERROR (1, (LM_ERROR ,"Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
+        DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR ,"Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
       }
       catch(CORBA::Exception &)
       {
-        DANCE_ERROR (1, (LM_ERROR ,"Error:TargetManager:CORBA Generic Exception\n"));
-        DANCE_ERROR (1, (LM_ERROR ,"Error:TargetManager:Exception in TargetManager call\n"));
+        DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR ,"Error:TargetManager:CORBA Generic Exception\n"));
+        DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR ,"Error:TargetManager:Exception in TargetManager call\n"));
       }
 
 
@@ -145,14 +145,14 @@ namespace TM_Tester
       }
       catch(const CORBA::NO_IMPLEMENT &)
       {
-        DANCE_ERROR (1, (LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
+        DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
       }
       catch (const ::Deployment::ResourceCommitmentFailure& e)
       {
         resource_available = 0;
-        DANCE_ERROR (1, (LM_ERROR, "TargetManager commitResources ResourceCommitmentFailure Exception\n"));
+        DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, "TargetManager commitResources ResourceCommitmentFailure Exception\n"));
 
-        DANCE_ERROR (1, (LM_ERROR ,
+        DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR ,
               "ResourceCommitmentFailure\n reason=[%C]\n elementName=[%C]\n resourceName=[%C]\n propertyName=[%C]\n",
               e.reason.in (),
               resource_seq[e.index].elementName.in (),
@@ -161,9 +161,9 @@ namespace TM_Tester
       }
       catch(const CORBA::Exception &)
       {
-        DANCE_ERROR (1, (LM_ERROR, "Error:TargetManager:commitResources Exception\n"));
-        DANCE_ERROR (1, (LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
-        DANCE_ERROR (1, (LM_ERROR, "Error:TargetManager:Exception in TargetManager call"));
+        DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, "Error:TargetManager:commitResources Exception\n"));
+        DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
+        DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, "Error:TargetManager:Exception in TargetManager call"));
       }
 
       // Make a call to release resources , if resource < 0
@@ -177,17 +177,17 @@ namespace TM_Tester
       }
       catch(const CORBA::NO_IMPLEMENT &)
       {
-        DANCE_ERROR (1, (LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
+        DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
       }
       catch (const Deployment::ResourceCommitmentFailure&)
       {
-        DANCE_ERROR (1, (LM_ERROR, "Error:TargetManager releaseResources ResourceNotAvailable Exception\n"));
+        DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, "Error:TargetManager releaseResources ResourceNotAvailable Exception\n"));
       }
       catch(const CORBA::Exception &)
       {
-        DANCE_ERROR (1, (LM_ERROR, "Error:TargetManager:releaseResources Exception\n"));
-        DANCE_ERROR (1, (LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
-        DANCE_ERROR (1, (LM_ERROR, "Error:TargetManager:Exception in TargetManager call"));
+        DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, "Error:TargetManager:releaseResources Exception\n"));
+        DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
+        DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, "Error:TargetManager:Exception in TargetManager call"));
       }
 
       // Here make a call on the TM with update domain and node deletion
@@ -210,12 +210,12 @@ namespace TM_Tester
           }
           catch(CORBA::NO_IMPLEMENT &)
           {
-            DANCE_ERROR (1, (LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
+            DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
           }
           catch(CORBA::Exception &)
           {
-            DANCE_ERROR (1, (LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
-            DANCE_ERROR (1, (LM_ERROR, "Error:TargetManager:Exception in UpdateDomain call"));
+            DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
+            DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, "Error:TargetManager:Exception in UpdateDomain call"));
           }
         }
         else
@@ -226,12 +226,12 @@ namespace TM_Tester
           }
           catch(CORBA::NO_IMPLEMENT &)
           {
-            DANCE_ERROR (1, (LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
+            DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
           }
           catch(CORBA::Exception &)
           {
-            DANCE_ERROR (1, (LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
-            DANCE_ERROR (1, (LM_ERROR, "Error:TargetManager:Exception in UpdateDomain call"));
+            DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
+            DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, "Error:TargetManager:Exception in UpdateDomain call"));
           }
         }
       }
@@ -248,12 +248,12 @@ namespace TM_Tester
       }
       catch(CORBA::NO_IMPLEMENT &)
       {
-        DANCE_ERROR (1, (LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
+        DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
       }
       catch(CORBA::Exception &)
       {
-        DANCE_ERROR (1, (LM_ERROR ,"Error:TargetManager:CORBA Generic Exception\n"));
-        DANCE_ERROR (1, (LM_ERROR,  "Error:TargetManager:Exception in TargetManager call\n"));
+        DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR ,"Error:TargetManager:CORBA Generic Exception\n"));
+        DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR,  "Error:TargetManager:Exception in TargetManager call\n"));
       }
 
       // Finally destroy the ORB
@@ -261,7 +261,7 @@ namespace TM_Tester
     }
     catch (CORBA::Exception &)
     {
-      DANCE_ERROR (1, (LM_ERROR,  "Error:TargetManager:CORBA exception raised!\n"));
+      DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR,  "Error:TargetManager:CORBA exception raised!\n"));
     }
     return 0;
   }
