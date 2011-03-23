@@ -98,6 +98,10 @@ namespace CIAO_Shapes_Sender_Impl
     virtual ::CORBA::Boolean resize_shape (void);
 
     virtual void resize_shape (::CORBA::Boolean resize_shape);
+
+    virtual char *color (void);
+
+    virtual void color (const char* color);
     //@}
 
     //@{
@@ -130,6 +134,8 @@ namespace CIAO_Shapes_Sender_Impl
     ::CORBA::UShort max_size_;
 
     ::CORBA::Boolean resize_shape_;
+
+    ::CORBA::String_var color_;
     //@}
 
     //@{

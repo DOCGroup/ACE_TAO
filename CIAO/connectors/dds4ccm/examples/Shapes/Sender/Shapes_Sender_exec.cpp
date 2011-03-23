@@ -63,6 +63,7 @@ namespace CIAO_Shapes_Sender_Impl
       , max_y_ (100)
       , max_size_ (25)
       , resize_shape_ (false)
+      , color_ ("CYAN")
       , x_increasing_ (false)
       , y_increasing_ (false)
       , size_increasing_ (false)
@@ -73,11 +74,6 @@ namespace CIAO_Shapes_Sender_Impl
     ACE_NEW_THROW_EX (this->square_,
                       ShapeType,
                       ::CORBA::NO_MEMORY ());
-
-    this->square_->x = ACE_OS::rand () % this->max_x_;
-    this->square_->y = ACE_OS::rand () % this->max_y_;
-    this->square_->shapesize = max_size_;
-    this->square_->color = CORBA::string_dup("GREEN");
   }
 
   Sender_exec_i::~Sender_exec_i (void)
@@ -293,6 +289,18 @@ namespace CIAO_Shapes_Sender_Impl
     this->resize_shape_ = resize_shape;
   }
 
+  char*
+  Sender_exec_i::color (void)
+  {
+    return ::CORBA::string_dup (this->color_);
+  }
+
+  void
+  Sender_exec_i::color (const char* color)
+  {
+    this->color_ = ::CORBA::string_dup (color);
+  }
+
   // Operations from Components::SessionComponent.
 
   void
@@ -311,6 +319,11 @@ namespace CIAO_Shapes_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
+    // Set the square properties right now
+    this->square_->x = ACE_OS::rand () % this->max_x_;
+    this->square_->y = ACE_OS::rand () % this->max_y_;
+    this->square_->shapesize = this->max_size_;
+    this->square_->color = CORBA::string_dup(this->color_);
   }
 
   void
