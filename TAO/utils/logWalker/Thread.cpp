@@ -41,7 +41,7 @@ Thread::handle_request (void)
     this->nested_++;
 }
 
-void 
+void
 Thread::enter_wait (PeerProcess *pp)
 {
   this->pending_.push (pp);

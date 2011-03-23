@@ -108,7 +108,7 @@ Log::get_host (long pid)
   size_t numprocs = this->procs_.size();
   hp = new HostProcess (this->origin_,pid);
   this->procs_.insert_tail(hp);
-  ACE_CString &procname = this->alias_.length() > 0 ? 
+  ACE_CString &procname = this->alias_.length() > 0 ?
     this->alias_ : this->origin_;
   switch (numprocs)
     {
@@ -131,7 +131,7 @@ Log::get_host (long pid)
         hp->proc_name(a2);
       }
     }
- 
+
   this->session_.add_process(hp);
   return hp;
 }
@@ -266,7 +266,7 @@ Log::parse_dump_msg (Log *this_, char *line, size_t offset)
       break;
     }
     case 0: // sending request
-      thr->enter_wait(pp); 
+      thr->enter_wait(pp);
       // fall through.
     case 3: { // receiving reply
       Invocation *inv = pp->find_invocation(rid, thr->active_handle());
@@ -485,7 +485,7 @@ Log::parse_wait_on_read (Log *this_, char *line, size_t offset)
   HostProcess *hp = this_->get_host(pid);
   Thread *thr = hp == 0 ? 0 : hp->find_thread (tid);
   PeerProcess *pp = thr->incoming();
-  
+
   thr->exit_wait (pp, offset);
 }
 
