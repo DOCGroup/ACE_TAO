@@ -135,10 +135,11 @@ namespace DAnCE
           this->sub_plans_.bind (sub_plan_key, sub_plan);
         }
 
-      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_DEBUG, DLINFO
-                      ACE_TEXT("Split_Plan::split_plan - ")
-                      ACE_TEXT("Selection phase produced %u child plans,"\
-                               "proceeding to copying phase\n"),
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, 
+		   (LM_DEBUG, DLINFO
+		    ACE_TEXT("Split_Plan::split_plan - ")
+		    ACE_TEXT("Selection phase produced %u child plans, ")
+		    ACE_TEXT("proceeding to copying phase\n"),
                       this->sub_plans_.current_size ()));
 
       /*
@@ -321,10 +322,11 @@ namespace DAnCE
                         CORBA::ULong sub_loc_len =
              sub_plan.localityConstraint[j].constrainedInstanceRef.length ();
 
-                        DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE, (LM_TRACE,
-                          DLINFO ACE_TEXT ("Split_Plan::split_plan - ")
-                          ACE_TEXT ("Found matching locality constraint"\
-                                    "%u:%u,")
+                        DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE, 
+			 (LM_TRACE,
+			  DLINFO ACE_TEXT ("Split_Plan::split_plan - ")
+			  ACE_TEXT ("Found matching locality constraint ")
+			  ACE_TEXT ("%u:%u,")
                           ACE_TEXT (" adding to %u:%u as %u\n"),
                           j, k, j, sub_loc_len, index_ins));
 
