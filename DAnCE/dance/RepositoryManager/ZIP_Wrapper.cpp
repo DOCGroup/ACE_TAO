@@ -73,16 +73,18 @@ int ZIP_Wrapper::file_list_info (char* zip_name,
   /* If zipfile could not be opened still, return */
   if (uf==0)
     {
-      DANCE_DEBUG (6, (LM_DEBUG, ACE_TEXT("There is some problem in opening")
-                 ACE_TEXT(" %s or %s.zip using unzOpen\n"), zip_name, zip_name));
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_DEBUG, ACE_TEXT("There is some problem in opening")
+                    ACE_TEXT(" %s or %s.zip using unzOpen\n"), zip_name, zip_name));
       return 1;
     }
   unz_global_info gi;
   /* get information about all the files in zip file*/
   int err = unzGetGlobalInfo(uf, &gi);
   if (err!=UNZ_OK)
-    DANCE_DEBUG (6, (LM_DEBUG, ACE_TEXT("unzGetGlobalInfo failed while trying")
-               ACE_TEXT(" to get global information about zipfile\n"), err));
+    DANCE_ERROR (DANCE_LOG_ERROR,
+                 (LM_DEBUG, ACE_TEXT("unzGetGlobalInfo failed while trying")
+                  ACE_TEXT(" to get global information about zipfile\n"), err));
   /* gi.number_entry corresponds to the number of directory entries
      in the zip file */
   for (uLong i=0;i<gi.number_entry;i++)
@@ -94,9 +96,10 @@ int ZIP_Wrapper::file_list_info (char* zip_name,
                                   sizeof(filename_inzip), 0, 0, 0, 0);
       if (err!=UNZ_OK)
         {
-          DANCE_DEBUG (6, (LM_DEBUG, ACE_TEXT("unzGetCurrentFileInfo failed")
-                               ACE_TEXT(" while trying to get information")
-                               ACE_TEXT(" about current file\n"), err));
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_DEBUG, ACE_TEXT("unzGetCurrentFileInfo failed")
+                        ACE_TEXT(" while trying to get information")
+                        ACE_TEXT(" about current file\n"), err));
           break;
         }
       ZIP_File_Info* next = 0;
@@ -109,10 +112,11 @@ int ZIP_Wrapper::file_list_info (char* zip_name,
           err = unzGoToNextFile(uf);
           if (err!=UNZ_OK)
           {
-            DANCE_DEBUG (6, (LM_DEBUG,
-                       ACE_TEXT(" unzGoToNextFile failed")
-                       ACE_TEXT(" while trying to go to next file\n"),
-                       err));
+            DANCE_ERROR (DANCE_LOG_ERROR,
+                         (LM_DEBUG,
+                          ACE_TEXT(" unzGoToNextFile failed")
+                          ACE_TEXT(" while trying to go to next file\n"),
+                          err));
             break;
           }
         }
@@ -133,7 +137,8 @@ bool ZIP_Wrapper::get_file (char* archive_path, char* filename,
   int j=unzLocateFile(uf, filename, 0);
   if (j==UNZ_END_OF_LIST_OF_FILE)
     {
-      DANCE_DEBUG (6, (LM_DEBUG, ACE_TEXT("File not found in zip archive")));
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_DEBUG, ACE_TEXT("File not found in zip archive")));
       return false;
     }
   else if (j==UNZ_OK)
@@ -141,8 +146,9 @@ bool ZIP_Wrapper::get_file (char* archive_path, char* filename,
       int k=unzOpenCurrentFile(uf);
       if (k!=UNZ_OK)
         {
-          DANCE_DEBUG (6, (LM_DEBUG, ACE_TEXT("Error in opening the current")
-                               ACE_TEXT(" file using unzOpenCurrentFile")));
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_DEBUG, ACE_TEXT("Error in opening the current")
+                        ACE_TEXT(" file using unzOpenCurrentFile")));
           return false;
         }
       else
@@ -188,8 +194,9 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path, bool verbose)
   uf = unzOpen(zip_archive);
   if (uf==0)
     {
-      DANCE_DEBUG (6, (LM_DEBUG,ACE_TEXT("unzOpen failed to open the")
-                 ACE_TEXT(" zipfile\n")));
+      DANCE_EROR (DANCE_LOG_ERROR,
+                  (LM_DEBUG,ACE_TEXT("unzOpen failed to open the")
+                   ACE_TEXT(" zipfile\n")));
       return false;
     }
   //get the name of the archive
@@ -213,14 +220,14 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path, bool verbose)
   int err = unzGetGlobalInfo(uf, &gi);
   if (err!=UNZ_OK)
     {
-      DANCE_DEBUG (6, (LM_DEBUG, ACE_TEXT("unzGetGlobalInfo failed to get global")
+      DANCE_ERROR (DANCE_LOG_ERROR, (LM_DEBUG, ACE_TEXT("unzGetGlobalInfo failed to get global")
                            ACE_TEXT(" information about zipfile\n"), err));
       return false;
     }
   err =unzGoToFirstFile(uf);
   if (err!=UNZ_OK)
     {
-      DANCE_DEBUG (6, (LM_DEBUG,ACE_TEXT("error %d with zipfile in"
+      DANCE_ERROR (DANCE_LOG_ERROR, (LM_DEBUG,ACE_TEXT("error %d with zipfile in"
                  ACE_TEXT(" unzGoToFirstFile\n")), err));
       return false;
     }
@@ -235,9 +242,10 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path, bool verbose)
                                   sizeof(filename_inzip), 0, 0, 0, 0);
       if (err!=UNZ_OK)
         {
-          DANCE_DEBUG (6, (LM_DEBUG, ACE_TEXT("unzGetCurrentFileInfo failed")
-                               ACE_TEXT(" while trying to get information")
-                               ACE_TEXT(" about currentfile\n"), err));
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_DEBUG, ACE_TEXT("unzGetCurrentFileInfo failed")
+                        ACE_TEXT(" while trying to get information")
+                        ACE_TEXT(" about currentfile\n"), err));
           break;
         }
       int direc = checkdir(filename_inzip);
@@ -257,9 +265,10 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path, bool verbose)
           err = unzGoToNextFile(uf);
           if (err!=UNZ_OK)
             {
-              DANCE_ERROR (1, (LM_ERROR,ACE_TEXT("unzGoToNextFile failed")
-                                  ACE_TEXT(" while trying to go to")
-                                  ACE_TEXT(" nextfile\n"), err));
+              DANCE_ERROR (DANCE_LOG_ERROR,
+                           (LM_ERROR,ACE_TEXT("unzGoToNextFile failed")
+                            ACE_TEXT(" while trying to go to")
+                            ACE_TEXT(" nextfile\n"), err));
               break;
             }
         }
@@ -325,8 +334,9 @@ int ZIP_Wrapper::handlethefile (char* filename_inzip, unzFile uf,
   int k = unzOpenCurrentFile(uf);
   if (k!=UNZ_OK)
     {
-      DANCE_ERROR (1, (LM_ERROR,ACE_TEXT("unzOpenCurrentFile failed in"
-                                    " opening the current file")));
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR,ACE_TEXT("unzOpenCurrentFile failed in"
+                                      " opening the current file")));
       return false;
     }
   else
@@ -357,7 +367,7 @@ int ZIP_Wrapper::handlethefile (char* filename_inzip, unzFile uf,
       if (handle == ACE_INVALID_HANDLE)
         {
           unzClose(uf);
-          DANCE_ERROR_RETURN (1, (LM_ERROR,
+          DANCE_ERROR_RETURN (DANCE_LOG_ERROR, (LM_ERROR,
                              ACE_TEXT ("%p\n"),
                              ACE_TEXT ("[uncompress] file creation error")),
                              0);
@@ -366,10 +376,11 @@ int ZIP_Wrapper::handlethefile (char* filename_inzip, unzFile uf,
       if (ACE_OS::write (handle, &(*buffer), file_size) == -1)
         {
           unzClose(uf);
-          DANCE_ERROR_RETURN (1, (LM_ERROR,
-                             ACE_TEXT ("%p\n"),
-                             ACE_TEXT ("[uncompress] file write error")),
-                             0);
+          DANCE_ERROR_RETURN (DANCE_LOG_ERROR,
+                              (LM_ERROR,
+                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("[uncompress] file write error")),
+                              0);
         }
       // Close the file handle
       ACE_OS::close (handle);
