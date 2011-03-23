@@ -1,3 +1,11 @@
+Wed Mar 23 14:04:55 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/TargetManager/DomainDataManager.cpp:
+        * dance/TargetManager/Target_Manager.cpp:
+        * dance/TargetManager/Target_Manager_Module.cpp:
+
+          New logging macros.
+
 Wed Mar 23 13:50:37 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/RepositoryManager/PC_Updater.cpp:
