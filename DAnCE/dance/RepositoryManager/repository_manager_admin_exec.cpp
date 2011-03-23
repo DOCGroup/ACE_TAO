@@ -44,9 +44,11 @@ struct Options
         path_ = tmp.substring (begin, pos - begin);
       else
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Options::Installation::init - ")
-                      ACE_TEXT ("Installation directive missing name and replace parameters, ")
-                      ACE_TEXT ("must have form path,name,replace\n")));
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_ERROR, DLINFO
+                        ACE_TEXT ("Options::Installation::init - ")
+                        ACE_TEXT ("Installation directive missing name and replace parameters, ")
+                        ACE_TEXT ("must have form path,name,replace\n")));
           return false;
         }
 
@@ -58,9 +60,11 @@ struct Options
         name_ = tmp.substring (begin, pos - begin);
       else
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Options::Installation::init - ")
-                      ACE_TEXT ("Installation directive mssing replace parameter, ")
-                      ACE_TEXT ("must have form path,name,replace\n")));
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_ERROR, DLINFO
+                        ACE_TEXT ("Options::Installation::init - ")
+                        ACE_TEXT ("Installation directive mssing replace parameter, ")
+                        ACE_TEXT ("must have form path,name,replace\n")));
           return false;
         }
 
@@ -70,7 +74,7 @@ struct Options
       else if (tmp[begin] == '1') replace_ = true;
       else
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Options::Installation::init - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Options::Installation::init - ")
                       ACE_TEXT ("Replace directive muse be 1 or 0.\n")));
           return false;
         }
@@ -107,7 +111,7 @@ struct Options
         path_ = tmp.substring (begin, pos - begin);
       else
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Options::Creation::init - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Options::Creation::init - ")
                       ACE_TEXT ("Creation directive missing name, base location,  and replace parameters, ")
                       ACE_TEXT ("must have form path,name,base,replace\n")));
           return false;
@@ -121,7 +125,7 @@ struct Options
         name_ = tmp.substring (begin, pos - begin);
       else
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Options::Creation::init - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Options::Creation::init - ")
                       ACE_TEXT ("Creation directive mssing base location and replace parameter, ")
                       ACE_TEXT ("must have form path,name,base,replace\n")));
           return false;
@@ -134,7 +138,7 @@ struct Options
         base_location_ = tmp.substring (begin, pos - begin);
       else
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Options::Creation::init - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Options::Creation::init - ")
                       ACE_TEXT ("Creation directive mssing replace parameter, ")
                       ACE_TEXT ("must have form path,name,base,replace\n")));
           return false;
@@ -146,7 +150,7 @@ struct Options
       else if (tmp[begin] == '1') replace_ = true;
       else
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Options::Creation::init - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Options::Creation::init - ")
                       ACE_TEXT ("Replace directive muse be 1 or 0.\n")));
           return false;
         }
@@ -175,7 +179,8 @@ struct Options
 
   void usage (void)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("usage:\n")
+    DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                 (LM_DEBUG, ACE_TEXT ("usage:\n")
                 ACE_TEXT ("\t-h,--help\t\t\tThis message.\n")
                 ACE_TEXT ("\t-r,--rm-ior <ior>\t\tIOR where the RM instance may be found\n")
                 ACE_TEXT ("\t-i,--install <path>,<name>,<1|0>\tInstall package found at <path> into the RM, with <name>,\n")
@@ -222,7 +227,9 @@ struct Options
             break;
 
           case 'r':
-            DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("Options::parse_args - ")
+            DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                         (LM_DEBUG, DLINFO
+                          ACE_TEXT ("Options::parse_args - ")
                           ACE_TEXT ("Using provided RM IOR: %C\n"),
                           get_opt.opt_arg ()));
             rm_ior_ = get_opt.opt_arg ();
@@ -236,11 +243,13 @@ struct Options
               }
 
             if (inst.replace_)
-              DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("Options::parse_args - ")
+              DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                         (LM_DEBUG, DLINFO
                             ACE_TEXT ("Replacing installed package from path %C with name %C.\n"), inst.path_.c_str (),
                             inst.name_.c_str ()));
             else
-              DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("Options::parse_args - ")
+              DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                         (LM_DEBUG, DLINFO
                             ACE_TEXT ("Installing package from path %C with name %C.\n"), inst.path_.c_str (),
                             inst.name_.c_str ()));
 
@@ -255,13 +264,15 @@ struct Options
               }
 
             if (create.replace_)
-              DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("Options::parse_args - ")
+              DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                         (LM_DEBUG, DLINFO
                             ACE_TEXT ("Replacing installed package from path %C with name %C and base location %C.\n"),
                             create.path_.c_str (),
                             create.name_.c_str (),
                             create.base_location_.c_str ()));
             else
-              DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("Options::parse_args - ")
+              DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                         (LM_DEBUG, DLINFO
                             ACE_TEXT ("Installing new package from path %C with name %C and base location %C.\n"),
                             create.path_.c_str (),
                             create.name_.c_str (),
@@ -271,25 +282,29 @@ struct Options
             break;
 
           case 'u':
-            DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("Options::parse_args - ")
+            DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                         (LM_DEBUG, DLINFO
                           ACE_TEXT ("Removing package with UUID %C\n"), get_opt.opt_arg ()));
             this->uninstall_.insert (get_opt.opt_arg ());
             break;
 
           case 'l':
-            DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("Options::parse_args - ")
+            DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                         (LM_DEBUG, DLINFO
                           ACE_TEXT ("Listing all packages.\n")));
             this->list_ = true;
             break;
 
           case 's':
-            DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("Options::parse_args - ")
+            DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                         (LM_DEBUG, DLINFO
                           ACE_TEXT ("Shutting down the RM instance.\n")));
             this->shutdown_ = true;
             break;
 
           case 'd':
-            DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("Options::parse_args - ")
+            DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                         (LM_DEBUG, DLINFO
                           ACE_TEXT ("Using provided Domain NC: %C\n"),
                           get_opt.opt_arg ()));
             domain_nc_ = get_opt.opt_arg ();
@@ -300,7 +315,7 @@ struct Options
               }
             else
               {
-                DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Options::parse_args - ")
+                DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Options::parse_args - ")
                               ACE_TEXT ("Unknown long option: %C\n"),
                               get_opt.long_option ()));
                 this->usage ();
@@ -330,7 +345,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
           dlf->init (argc, argv);
         }
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO
+      DANCE_TRACE_LOG (DANCE_LOG_TRACE,
+                       (LM_TRACE, DLINFO
                     ACE_TEXT ("Module_main.h - initializing ORB\n")));
 
       CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
@@ -339,7 +355,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
       int const error = options.parse_args (argc, argv);
       if (error == -1)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("repository_manager_admin_exec::main - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("repository_manager_admin_exec::main - ")
                         ACE_TEXT ("Failed to parse command line arguments.\n")));
         }
       else if (error == 1)
@@ -349,7 +365,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       if (options.rm_ior_ == 0)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("repository_manager_admin_exec::main - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("repository_manager_admin_exec::main - ")
                         ACE_TEXT ("No RepositoryManager IOR provided\n")));
           return -1;
         }
@@ -362,7 +378,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       if (CORBA::is_nil (obj))
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("repository_manager_admin_exec::main - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("repository_manager_admin_exec::main - ")
                         ACE_TEXT ("Provided IOR was invalid or could not be narrowed: %s\n"),
                         options.rm_ior_));
           return -1;
@@ -411,17 +427,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
           ::CORBA::StringSeq * packages = admin.list_packages ();
           if (packages == 0)
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("repository_manager_admin_exec::main - ")
+              DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("repository_manager_admin_exec::main - ")
                             ACE_TEXT ("No packages returned from list_packages\n")));
               retval = -1;
             }
 
-          DANCE_DEBUG (6, (LM_EMERGENCY, ACE_TEXT ("Listing %u packages installed on server:\n")));
+          DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                       (LM_EMERGENCY, ACE_TEXT ("Listing %u packages installed on server:\n")));
 
           for (CORBA::ULong i = 0; i < packages->length (); ++i)
             {
-              DANCE_DEBUG (6, (LM_EMERGENCY, "\t%s\n",
-                            (*packages)[i].in ()));
+              DANCE_TRACE_LOG (DANCE_LOG_DETAILED_TRACE, (LM_TRACE, "\t%s\n",
+                                                          (*packages)[i].in ()));
             }
 
           delete packages;
@@ -429,7 +446,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       if (options.shutdown_)
         {
-          DANCE_DEBUG (6, (LM_EMERGENCY, ACE_TEXT ("Shutting down the Repository Manager\n")));
+          DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                       (LM_EMERGENCY, ACE_TEXT ("Shutting down the Repository Manager\n")));
           if (!admin.shutdown ())
             retval = -1;
         }
@@ -438,14 +456,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
     }
   catch (const CORBA::Exception &ex)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("repository_manager_admin_exec::main - ")
+      DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("repository_manager_admin_exec::main - ")
                     ACE_TEXT ("Caught unexpected CORBA Exception: %s\n"),
                     ex._info ().c_str ()));
       return -1;
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("repository_manager_admin_exec::main - ")
+      DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("repository_manager_admin_exec::main - ")
                     ACE_TEXT ("Caught unexpected C++ exception.\n")));
       return -1;
     }

@@ -140,7 +140,7 @@ namespace DAnCE
         ::Deployment::PackageConfiguration_var pc = this->findPackageByName (element.ext_id_.c_str ());
 
         if(!this->add_type (pc, element.ext_id_.c_str ()))
-          DANCE_ERROR (1, (LM_ERROR, "Failed to add the type\n"));
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, "Failed to add the type\n"));
       }
 
     DAnCE::Config_Handlers::XML_Helper::
@@ -194,7 +194,8 @@ namespace DAnCE
     PCEntry *entry = 0;
     if (this->names_.find (ACE_CString (installationName), entry) == 0)
       {
-        DANCE_DEBUG (8, (LM_INFO, DLINFO "RepositoryManagerDaemon_i::installPackage - "
+        DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                     (LM_INFO, DLINFO "RepositoryManagerDaemon_i::installPackage - "
                       "Found package %s already installed.\n"));
         if (!replace)
           throw Deployment::NameExists ();
@@ -220,10 +221,12 @@ namespace DAnCE
     ACE_CString descriptor_dir (path);
     descriptor_dir += "/descriptors/"; //location of the descriptor directory
 
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO "RepositoryManagerDaemon_i::installPackage - "
+    DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                 (LM_DEBUG, DLINFO "RepositoryManagerDaemon_i::installPackage - "
                   "Package Path: %s\n",
                   package_path.c_str ()));
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO "RepositoryManagerDaemon_i::installPackage - "
+    DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                 (LM_DEBUG, DLINFO "RepositoryManagerDaemon_i::installPackage - "
                   "Descriptor path: %s\n",
                   descriptor_dir.c_str ()));
 
@@ -232,7 +235,8 @@ namespace DAnCE
 
     if (ACE_OS::strstr (location, "http://"))
       {
-        DANCE_DEBUG (8, (LM_INFO, DLINFO "RepositoryManagerDaemon_i::installPackage - "
+        DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                     (LM_INFO, DLINFO "RepositoryManagerDaemon_i::installPackage - "
                       "Downloading package over HTTP: %s\n",
                       location));
 
@@ -257,7 +261,8 @@ namespace DAnCE
           }
         catch (...)
           {
-            DANCE_ERROR (1, (LM_ERROR, DLINFO "RepositoryManagerDaemon_i::installPackage - "
+            DANCE_ERROR (DANCE_LOG_ERROR,
+                         (LM_ERROR, DLINFO "RepositoryManagerDaemon_i::installPackage - "
                           "Caught unexpected exception while fetching path %s\n",
                           location));
 
@@ -272,7 +277,8 @@ namespace DAnCE
       }
 
 
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO "RepositoryManagerDaemon_i::installPackage - "
+    DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                 (LM_TRACE, DLINFO "RepositoryManagerDaemon_i::installPackage - "
                   "Uncompressing file %s to directory %s\n",
                   package_path.c_str (),
                   this->install_root_.c_str ()));
@@ -291,7 +297,8 @@ namespace DAnCE
     //if the PackageConfiguration name cannot be found, then there is nothing to install
     if (pc_name == "")
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO "RepositoryManagerDaemon_i::installPackage - "
+        DANCE_ERROR (DANCE_LOG_ERROR,
+                     (LM_ERROR, DLINFO "RepositoryManagerDaemon_i::installPackage - "
                       "Unable to find PC name %s in path %s\n",
                       pc_name.c_str (),
                       package_path.c_str ()));
@@ -340,7 +347,8 @@ namespace DAnCE
 
     if (!updater.update (pc))
       {
-        DANCE_DEBUG (6, (LM_ERROR, DLINFO "[RM] problem updating the PackageConfiguration!\n"));
+        DANCE_ERROR (DANCE_LOG_ERROR,
+                     (LM_ERROR, DLINFO "[RM] problem updating the PackageConfiguration!\n"));
 
         //clean the extracted files
         remove_extracted_package (path.c_str ());
@@ -358,7 +366,7 @@ namespace DAnCE
     //insert the package into the database
     if (this->names_.bind (ACE_CString (installationName), path) == -1)
       {
-        DANCE_ERROR (1, (LM_ERROR,
+        DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR,
                     "[RM] could not bind %s.\n",
                     installationName));
 
@@ -376,7 +384,7 @@ namespace DAnCE
     //ALSO NEED THE UUID here
     if (this->uuids_.bind (ACE_CString (pc->UUID), path) == -1)
       {
-        DANCE_ERROR (1, (LM_ERROR,
+        DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR,
                     "[RM] could not bind %s.\n",
                     ACE_CString (pc->UUID).c_str ()));
 
@@ -396,13 +404,13 @@ namespace DAnCE
 
     //now add the type interface
     if(!this->add_type (pc, installationName))
-      DANCE_ERROR (1, (LM_ERROR, "Failed to add the type\n"));
+      DANCE_ERROR (DANCE_LOG_ERRO, (LM_ERROR, "Failed to add the type\n"));
 
     this->dump ();
 
     this->save ();
 
-    DANCE_DEBUG (8, (LM_INFO,
+    DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT, (LM_INFO,
                 "Installed PackageConfiguration \n\tname: %s \n\tuuid: %s\n",
                 installationName, ACE_CString (pc->UUID).c_str ()));
   }
@@ -494,7 +502,7 @@ namespace DAnCE
 
     if (!updater.update (pc))
       {
-        DANCE_ERROR (1, (LM_ERROR, "[RM] problem updating the PackageConfiguration!\n"));
+        DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, "[RM] problem updating the PackageConfiguration!\n"));
         //clean the extracted files
         remove_extracted_package (path.c_str ());
         //remove the package
@@ -510,7 +518,7 @@ namespace DAnCE
     // Insert the name of the package.
     if (this->names_.bind (ACE_CString (installationName), path) == -1)
       {
-        DANCE_ERROR (1, (LM_ERROR,
+        DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR,
                     "[RM] could not bind %s.\n",
                     installationName));
 
@@ -528,7 +536,7 @@ namespace DAnCE
     // Insert the UUID of the package.
     if (this->uuids_.bind (ACE_CString (pc.UUID), path) == -1)
       {
-        DANCE_ERROR (1, (LM_ERROR,
+        DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR,
                     "[RM] could not bind %s.\n",
                     ACE_CString (pc.UUID).c_str ()));
 
@@ -549,13 +557,14 @@ namespace DAnCE
     //now add the type interface
     //TODO: CHECK if successful
     if(!this->add_type (pc, installationName))
-      DANCE_ERROR (1, (LM_ERROR, "Failed to add the type\n"));
+      DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, "Failed to add the type\n"));
 
     this->dump ();
 
     this->save ();
 
-    DANCE_DEBUG (8, (LM_INFO,
+    DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                 (LM_INFO,
                 "Created PackageConfiguration \n  directory: %s \n  name: %s \n  uuid: %s\n",
                 path.c_str (), installationName, ACE_CString (pc.UUID).c_str ()));
   }
@@ -591,7 +600,8 @@ namespace DAnCE
     if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
       throw CORBA::INTERNAL ();
 
-    DANCE_DEBUG (8, (LM_INFO, "Successfully looked up \'%s\'.\n", name));
+    DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                 (LM_INFO, "Successfully looked up \'%s\'.\n", name));
 
     return pc._retn ();
   }
@@ -627,7 +637,8 @@ namespace DAnCE
     if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
       throw CORBA::INTERNAL ();
 
-    DANCE_DEBUG (8, (LM_INFO, "Successfully looked up %s.\n", UUID));
+    DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                 (LM_INFO, "Successfully looked up %s.\n", UUID));
 
     return pc._retn ();
   }
@@ -714,7 +725,8 @@ namespace DAnCE
         seq[index] = CORBA::string_dup (element.ext_id_.c_str ());
       }
 
-    DANCE_DEBUG (8, (LM_INFO, "The number of packages %d\n", seq->length ()));
+    DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                 (LM_INFO, "The number of packages %d\n", seq->length ()));
 
     return seq._retn ();    //release the underlying CORBA::StringSeq
   }
@@ -757,7 +769,8 @@ namespace DAnCE
         seq[index] = CORBA::string_dup (element.ext_id_.c_str ());
       }
 
-    DANCE_DEBUG (6, (LM_DEBUG, "The number of types: %d\n", num_entries));
+    DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                 (LM_DEBUG, "The number of types: %d\n", num_entries));
 
     return seq._retn ();    //release the underlying CORBA::StringSeq
   }
@@ -783,7 +796,7 @@ namespace DAnCE
     //remove the name association
     if (this->names_.unbind (installationName) == -1)
       {
-        DANCE_ERROR (1, (LM_ERROR,
+        DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR,
                     "Unable to unbind %s.\n",
                     installationName));
         internal_err = true;
@@ -805,20 +818,20 @@ namespace DAnCE
 
     if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
       {
-        DANCE_ERROR (1, (LM_ERROR, "Could not reincarnate PC\n"));
+        DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, "Could not reincarnate PC\n"));
         internal_err = true;
       }
 
     if (this->uuids_.unbind (ACE_CString (pc->UUID)) == -1)
       {
-        DANCE_ERROR (1, (LM_ERROR, "Could not remove UUID\n"));
+        DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, "Could not remove UUID\n"));
         internal_err = true;
       }
 
     //remove the type from the interface map
     if (!this->remove_type (pc, installationName))
       {
-        DANCE_ERROR (1, (LM_ERROR, "Could not remove type\n"));
+        DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, "Could not remove type\n"));
         internal_err = true;
       }
 
@@ -838,7 +851,8 @@ namespace DAnCE
     if (internal_err)
       throw CORBA::INTERNAL ();
     else
-      DANCE_DEBUG (8, (LM_INFO, "Successfully deleted \'%s\'\n", installationName));
+      DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                   (LM_INFO, "Successfully deleted \'%s\'\n", installationName));
 
   }
 
@@ -865,7 +879,7 @@ namespace DAnCE
                                   pcd_name) < 0)
       {
         ACE_OS::chdir (this->cwd_);
-        DANCE_ERROR (1, (LM_ERROR,
+        DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR,
                     "(%P|%t) RepositoryManager: error extracting necessary files\n"));
         throw CORBA::INTERNAL ();
       }
@@ -879,7 +893,7 @@ namespace DAnCE
       }
     catch (...)
       {
-        DANCE_ERROR (1, (LM_ERROR,
+        DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR,
                     "(%P|%t) RepositoryManager: Error parsing the PCD\n"));
 
         //change back the the old working dir
@@ -955,7 +969,7 @@ namespace DAnCE
       }
     catch (...)
       {
-        DANCE_ERROR (1, (LM_ERROR,
+        DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR,
                     "(%P|%t) [RM::retrieve_PC_from_descriptors] Error parsing the PCD\n"));
 
         //change back the the old working dir
@@ -1033,7 +1047,7 @@ namespace DAnCE
                                        const_cast<char*> (inf->name_.c_str ()),
                                        *file))
               {
-                DANCE_ERROR (1, (LM_ERROR,
+                DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR,
                             "[RM::extract_descriptor_files] Unable to retrieve file!\n"));
                 //release the message block chain
                 file->release ();
@@ -1044,7 +1058,7 @@ namespace DAnCE
             //write the file to disk
             if(!RM_Helper::write_to_disk (inf->name_.c_str () + skip_len, *file))
               {
-                DANCE_ERROR (1, (LM_ERROR,
+                DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR,
                             "[RM::extract_descriptor_files] Unable to write out descriptor to disk!\n"));
                 //release the message block chain
                 file->release ();
@@ -1084,7 +1098,7 @@ namespace DAnCE
             //delete disk
             if(remove (inf->name_.c_str () + skip_len))
               {
-                DANCE_ERROR (1, (LM_ERROR,
+                DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR,
                             "[RM::remove_descriptor_files] Unable to remove file from disk!\n"));
                 return_code = 0;
               }
@@ -1194,9 +1208,9 @@ namespace DAnCE
             for (CORBA::ULong i = 0; i < len; ++i)
               {
                 if (this->types_.unbind (ACE_CString (supportedTypes[i]), ACE_CString (name)) != 0)
-                  DANCE_DEBUG (6, (LM_DEBUG, "Could not find type %s with package name %s!\n",
-                              ACE_CString (supportedTypes[i]).c_str (),
-                              name));
+                  DANCE_ERROR (DANCE_LOG_ERROR, (LM_DEBUG, "Could not find type %s with package name %s!\n",
+                                                 ACE_CString (supportedTypes[i]).c_str (),
+                                                 name));
               }
           }
       }
