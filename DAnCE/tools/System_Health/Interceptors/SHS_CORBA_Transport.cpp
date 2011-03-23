@@ -102,10 +102,11 @@ namespace DAnCE
         }
       catch (...)
         {
-          DANCE_ERROR (DANCE_LOG_ERROR, (LM_NOTICE, DLINFO
+          DANCE_ERROR (DANCE_LOG_ERROR,
+	   (LM_NOTICE, DLINFO
             ACE_TEXT ("SHS_CORBA_Transport::configure - ")
-            ACE_TEXT ("Unable to resolve SHS Daemon: Unknown"\
-                      "C++ exception\n")));
+	    ACE_TEXT ("Unable to resolve SHS Daemon: Unknown ")
+	    ACE_TEXT ("C++ exception\n")));
         }
     }
 
@@ -121,10 +122,11 @@ namespace DAnCE
               this->shs_daemon_->update (update);
             }
           else
-            DANCE_DEBUG (DANCE_LOG_ERROR, (LM_TRACE, DLINFO
+            DANCE_DEBUG (DANCE_LOG_ERROR, 
+	     (LM_TRACE, DLINFO
               ACE_TEXT ("SHS_CORBA_Transport::push_event - ")
-              ACE_TEXT ("Unable to publish SHS status update,"\
-                        " nil daemon ref\n")));
+	      ACE_TEXT ("Unable to publish SHS status update, ")
+	      ACE_TEXT (" nil daemon ref\n")));
 
         }
       catch (CORBA::Exception &ex)

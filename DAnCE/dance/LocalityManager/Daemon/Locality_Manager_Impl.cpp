@@ -825,8 +825,9 @@ namespace DAnCE
              ++j)
           {
             DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
-                         (LM_DEBUG, DLINFO "LocalityManager_i::start - "
-                          "Scheduling start for instance %C\n",
+                         (LM_DEBUG, DLINFO 
+			  ACE_TEXT ("LocalityManager_i::start - ")
+                          ACE_TEXT ("Scheduling start for instance %C\n"),
                           plan_.instance[*j].name.in ()));
 
             Start_Instance *event (0);
@@ -927,8 +928,9 @@ namespace DAnCE
              ++j)
           {
             DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
-                         (LM_DEBUG, DLINFO "LocalityManager_i::destroyApplication - "
-                          "Scheduling passivation for instance %C\n",
+                         (LM_DEBUG, DLINFO 
+			  ACE_TEXT ("LocalityManager_i::destroyApplication - ")
+                          ACE_TEXT ("Scheduling passivation for instance %C\n"),
                           this->plan_.instance[*j].name.in ()));
 
             Passivate_Instance *event (0);
