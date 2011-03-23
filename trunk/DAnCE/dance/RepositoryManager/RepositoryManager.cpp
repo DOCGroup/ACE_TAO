@@ -189,7 +189,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     worker.thr_mgr ()->wait ();
 
-    DANCE_DEBUG (6, (LM_DEBUG, "event loop finished\n"));
+    DANCE_TRACE_LOG (DANCE_LOG_TRACE, (LM_DEBUG, "event loop finished\n"));
 
     orb->destroy ();
   }
@@ -231,7 +231,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             DAnCE::RepositoryManager::nthreads = ACE_OS::atoi (get_opts.opt_arg ());
             break;
           case '?':  // display help for use of the server.
-            DANCE_DEBUG (8, (LM_INFO,
+            DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_INFO,
                         ACE_TEXT("usage: %s\n")
                         ACE_TEXT("-o <using ior file>\n")
                         ACE_TEXT("-v <name of naming service>\n")

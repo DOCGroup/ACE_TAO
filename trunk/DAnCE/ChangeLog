@@ -1,3 +1,17 @@
+Wed Mar 23 13:50:37 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/RepositoryManager/PC_Updater.cpp:
+        * dance/RepositoryManager/RepositoryManager.cpp:
+        * dance/RepositoryManager/RepositoryManager_Impl.cpp:
+        * dance/RepositoryManager/Repository_Manager.cpp:
+        * dance/RepositoryManager/Repository_Manager_Module.cpp:
+        * dance/RepositoryManager/URL_Parser.cpp:
+        * dance/RepositoryManager/ZIP_Wrapper.cpp:
+        * dance/RepositoryManager/repository_manager_admin.cpp:
+        * dance/RepositoryManager/repository_manager_admin_exec.cpp:
+
+          New logging macros.
+
 Tue Mar 22 18:54:09 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/DAnCE_Utility.cpp:
