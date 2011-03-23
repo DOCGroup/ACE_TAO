@@ -1,3 +1,11 @@
+Wed Mar 23 03:29:21 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/logWalker/Log.cpp:
+        * utils/logWalker/Session.cpp:
+        * utils/logWalker/Thread.cpp:
+        
+          Unfuzzing.
+
 Tue Mar 22 22:09:09 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/HostProcess.cpp:
@@ -10,7 +18,7 @@ Tue Mar 22 22:09:09 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
         * utils/logWalker/Thread.h:
         * utils/logWalker/Thread.cpp:
         * utils/logWalker/logWalker.cpp:
-        
+
           Incremental improvements to the log walker utility, mostly in
           error reporting, also with thread encounter tracking, and source
           identification.

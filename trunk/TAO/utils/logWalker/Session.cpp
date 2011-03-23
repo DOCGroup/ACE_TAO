@@ -40,7 +40,7 @@ Session::set_tao_version (ACE_TCHAR *str)
     tao_version_ = 180;
   else if (ACE_OS::strncmp (str, ACE_TEXT("2.0"), 3) == 0)
     tao_version_ = 200;
-  else 
+  else
     return false;
   return true;
 }
