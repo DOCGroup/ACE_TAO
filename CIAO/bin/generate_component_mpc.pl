@@ -12,23 +12,34 @@ use Getopt::Std;
 
 $flags = join (" ", @ARGV);
 
-%options=();
+sub VERSION_MESSAGE {
+    my ($output) = shift;
 
-if (!getopts ('henp:o:c:u:b:l:', \%options) || $opt_h) {
-    print "generate_component_mpc.pl [-h] component_name\n";
-    print "\n";
-    print "    -h         print help message explaining various options\n";
-    print "    -p         Dependent component name\n";
-    print "    -l         Dependent component path (libpaths)\n";
-    print "    -o         Component output path (libout)\n";
-    print "    -n         Suppress component make/project\n";
-    print "    -c         Create a client makefile\n";
-    print "    -u         Unique project name prefix (if not defined, name for -p flag will be used). \n";
-    print "    -b         common base project(s) for all generated projects\n";
-    print "    -e         Use events\n";
-    print "\n";
-    print "generate_component_mpc creates and save a minimum mpc file\n";
-    print "called $com_name.mpc that is needed for a single component implementation\n";
+    print $output  "generate_component_mpc.pl [-h] component_name\n";
+    print $output  "\n";
+    print $output  "    -h         print $output  help message explaining various options\n";
+    print $output  "    -p         Dependent component name\n";
+    print $output  "    -l         Dependent component path (libpaths)\n";
+    print $output  "    -o         Component output path (libout)\n";
+    print $output  "    -n         Suppress component make/project\n";
+    print $output  "    -c         Create a client makefile\n";
+    print $output  "    -u         Unique project name prefix (if not defined, name for -p flag will be used). \n";
+    print $output  "    -b         common base project(s) for all generated projects\n";
+    print $output  "    -e         Use events\n";
+    print $output  "\n";
+    print $output  "generate_component_mpc creates and save a minimum mpc file\n";
+    print $output  "called $com_name.mpc that is needed for a single component implementation\n";
+}
+
+%options=();
+$Getopt::Std::STANDARD_HELP_VERSION = true;
+
+if (!getopts ('henp:o:c:u:b:l:', \%options) || defined $options{h}) {
+    VERSION_MESSAGE (STDERR);
+    exit (1);
+}
+
+if (defined $options{help}) {
     exit (1);
 }
 
