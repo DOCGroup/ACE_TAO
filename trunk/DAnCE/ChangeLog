@@ -1,9 +1,19 @@
+Thu Mar 24 00:21:24 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * tests/Parsing/domain.cpp:
+        * tests/Parsing/test.cpp:
+        * tools/Split_Plan/Split_Plan.cpp:
+        * tools/System_Health/Interceptors/SHS_CORBA_Transport.cpp:
+        
+          Defuzzing. I fixed my laptop emacs too.
+
 Wed Mar 23 18:54:04 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
         * tools/Split_Plan/Split_Plan.cpp:
         * tools/System_Health/Interceptors/SHS_CORBA_Transport.cpp:
-        
+
           Fixed scoreboard issues related to split strings on a build
           using wide characters.
 
