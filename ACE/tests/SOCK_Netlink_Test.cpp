@@ -1,22 +1,19 @@
-// $Id$
 
-// ====================================================================//
-//
-// = LIBRARY
-//     tests
-//
-// = FILENAME
-//    SOCK_Netlink_Test.cpp
-//
-// = DESCRIPTION
-//    Tests adding of a secondary IP-address, using linux netlink
-//     sockets.
-//
-// = AUTHOR
-//
-//   Robert Iakobashvili, coroberti@gmail.com
-//
-// ====================================================================//
+//=============================================================================
+/**
+ *  @file    SOCK_Netlink_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Tests adding of a secondary IP-address, using linux netlink
+ *   sockets.
+ *
+ *
+ *  @author Robert Iakobashvili
+ *  @author coroberti@gmail.com
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 
@@ -214,10 +211,10 @@ public:
   //FUZZ: disable check_for_lack_ACE_OS
   // Initialization. Schedules a timer to run start the business.
   //
+  ///FUZZ: enable check_for_lack_ACE_OS
   int open (ACE_Reactor *const reactor,
             char* const ip_slash_mask,
             const char *const if_name);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   // Returns reference to netlink socket. Necessary for reactor.
   virtual ACE_HANDLE get_handle (void) const;
@@ -272,8 +269,8 @@ protected:
   // other cleanup jobs
   virtual int close ();
 
+  ///FUZZ: enable check_for_lack_ACE_OS
   ACE_SOCK_Netlink& socket ();
-  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
 

@@ -1,19 +1,16 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    RW_Process_Mutex_Test.cpp
-//
-// = DESCRIPTION
-//    Tests an <ACE_RW_Process_Mutex> shared between multiple child processes.
-//
-// = AUTHOR
-//    Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    RW_Process_Mutex_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Tests an <ACE_RW_Process_Mutex> shared between multiple child processes.
+ *
+ *
+ *  @author Steve Huston <shuston@riverace.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Process.h"

@@ -1,27 +1,24 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    MT_SOCK_Test.cpp
-//
-// = DESCRIPTION
-//     This is a multi-threaded torture test of the
-//     <ACE_SOCK_Acceptor> and <ACE_SOCK_Connector> classes. The test
-//     forks 30 processes or spawns 30 threads (depending upon the
-//     platform) and then executes client and server allowing them to
-//     connect and exchange data.  Note that most of the connections
-//     will fail since we're overrunning the size of the listen queue
-//     for the acceptor-mode socket.
-//
-// = AUTHOR
-//    Doug Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    MT_SOCK_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a multi-threaded torture test of the
+ *   <ACE_SOCK_Acceptor> and <ACE_SOCK_Connector> classes. The test
+ *   forks 30 processes or spawns 30 threads (depending upon the
+ *   platform) and then executes client and server allowing them to
+ *   connect and exchange data.  Note that most of the connections
+ *   will fail since we're overrunning the size of the listen queue
+ *   for the acceptor-mode socket.
+ *
+ *
+ *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_sys_wait.h"

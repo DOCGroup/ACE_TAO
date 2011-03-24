@@ -1,23 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Recursive_Condition_Test.cpp
-//
-// = DESCRIPTION
-//      This test program validates the functionality of the
-//      ACE_Condition<ACE_Recursive_Thread_Mutex> template
-//      specialization.
-//
-// = AUTHOR
-//    Stephen Howard <stephen.e.howard@lmco.com> and
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Recursive_Condition_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This test program validates the functionality of the
+ *    ACE_Condition<ACE_Recursive_Thread_Mutex> template
+ *    specialization.
+ *
+ *
+ *  @author Stephen Howard <stephen.e.howard@lmco.com> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"

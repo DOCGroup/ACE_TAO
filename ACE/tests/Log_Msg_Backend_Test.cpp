@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Log_Msg_Backend_Test.cpp
-//
-// = DESCRIPTION
-//     This program tests the ACE_Log_Msg class's use of a custom backend,
-//     including its initialization and reset as well as logging information
-//     through the backend.
-//
-// = AUTHOR
-//    Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Log_Msg_Backend_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This program tests the ACE_Log_Msg class's use of a custom backend,
+ *   including its initialization and reset as well as logging information
+ *   through the backend.
+ *
+ *
+ *  @author Steve Huston <shuston@riverace.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 
@@ -33,14 +30,14 @@ public:
     : reset_ (false), open_ (false), close_ (false), log_count_ (0) {}
 
   //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
   virtual int open (const ACE_TCHAR *logger_key);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   virtual int reset (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
   virtual int close (void);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   virtual ssize_t log (ACE_Log_Record &log_record);
 

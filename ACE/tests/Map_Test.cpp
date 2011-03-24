@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Map_Test.cpp
-//
-// = DESCRIPTION
-//     This is a simple test of the <ACE_Map> and illustrates how to
-//     use the forward and reverse iterators.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Map_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a simple test of the <ACE_Map> and illustrates how to
+ *   use the forward and reverse iterators.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "Map_Test.h"

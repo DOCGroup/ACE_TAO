@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Reactor_Registration_Test.cpp
-//
-// = DESCRIPTION
-//    This is a test of registering handlers with the Reactor.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@oomworks.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Reactor_Registration_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This is a test of registering handlers with the Reactor.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@oomworks.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Pipe.h"

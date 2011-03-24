@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Reactor_Performance_Test.cpp
-//
-// = DESCRIPTION
-//    This test is used to time the dispatching mechanisms of the
-//    <ACE_Reactor>s. Both the <ACE_WFMO_Reactor> and
-//    <ACE_Select_Reactor> can be tested.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Reactor_Performance_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This test is used to time the dispatching mechanisms of the
+ *  <ACE_Reactor>s. Both the <ACE_WFMO_Reactor> and
+ *  <ACE_Select_Reactor> can be tested.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "Reactor_Performance_Test.h"

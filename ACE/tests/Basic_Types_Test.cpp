@@ -1,20 +1,16 @@
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Basic_Types_Test.cpp
-//
-// = DESCRIPTION
-//    Checks the #defines in ace/Basic_Types.h, and a few other basics.
-//
-// = AUTHOR
-//    David L. Levine <levine@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Basic_Types_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Checks the #defines in ace/Basic_Types.h, and a few other basics.
+ *
+ *
+ *  @author David L. Levine <levine@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/config-all.h"
 // Don't use the ACE version accessors in class ACE, so that we can

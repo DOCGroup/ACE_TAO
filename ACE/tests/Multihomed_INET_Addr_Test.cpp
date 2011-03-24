@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Multihomed_INET_Addr_Test.cpp
-//
-// = DESCRIPTION
-//     Performs several tests on the Multihomed_ACE_INET_Addr class.
-//     It creates several IPv4 addresses and checks that the
-//     address formed by the class is valid.
-//
-// = AUTHOR
-//    Edward Mulholland (emulholl@atl.lmco.com)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Multihomed_INET_Addr_Test.cpp
+ *
+ *  $Id$
+ *
+ *   Performs several tests on the Multihomed_ACE_INET_Addr class.
+ *   It creates several IPv4 addresses and checks that the
+ *   address formed by the class is valid.
+ *
+ *
+ *  @author Edward Mulholland (emulholl@atl.lmco.com)
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

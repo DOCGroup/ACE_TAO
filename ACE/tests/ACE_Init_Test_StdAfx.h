@@ -1,23 +1,20 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    ACE_Init_Test_StdAfx.h
-//
-// = DESCRIPTION
-//    stdafx.h : include file for standard system include files,
-//    or project specific include files that are used frequently, but
-//    are changed infrequently
-//
-// = AUTHOR
-//    Steve Huston <shuston@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ACE_Init_Test_StdAfx.h
+ *
+ *  $Id$
+ *
+ *  stdafx.h : include file for standard system include files,
+ *  or project specific include files that are used frequently, but
+ *  are changed infrequently
+ *
+ *
+ *  @author Steve Huston <shuston@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef AFX_STDAFX_H__64FDCA02_F7F9_11D2_89B6_00A024CC68DB__INCLUDED_
 #define AFX_STDAFX_H__64FDCA02_F7F9_11D2_89B6_00A024CC68DB__INCLUDED_

@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Process_Test.cpp
-//
-// = DESCRIPTION
-//    Tests ACE_Process file handle inheritance for UNIX-like systems
-//
-// = AUTHOR
-//    Christian Fromme <kaner@strace.org>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Process_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Tests ACE_Process file handle inheritance for UNIX-like systems
+ *
+ *
+ *  @author Christian Fromme <kaner@strace.org>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Process.h"

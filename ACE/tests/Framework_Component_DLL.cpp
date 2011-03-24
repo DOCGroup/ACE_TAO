@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Framework_Component_DLL.cpp
-//
-// = DESCRIPTION
-//   This is a simple server that can be loaded via the ACE
-//   Service Configuration framework and uses the singleton that
-//   also lives in this library.
-//
-// = AUTHOR
-//    Don Hinton <dhinton@ieee.org>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Framework_Component_DLL.cpp
+ *
+ *  $Id$
+ *
+ * This is a simple server that can be loaded via the ACE
+ * Service Configuration framework and uses the singleton that
+ * also lives in this library.
+ *
+ *
+ *  @author Don Hinton <dhinton@ieee.org>
+ */
+//=============================================================================
+
 
 #include "Framework_Component_DLL.h"
 #include "ace/Service_Config.h"

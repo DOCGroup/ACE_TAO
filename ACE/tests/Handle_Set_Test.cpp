@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Handle_Set_Test.cpp
-//
-// = DESCRIPTION
-//      This test illustrates the use of ACE_Handle_Set to maintain a
-//      set of handles. No command line arguments are needed to run
-//      the test.
-//
-// = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Handle_Set_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This test illustrates the use of ACE_Handle_Set to maintain a
+ *    set of handles. No command line arguments are needed to run
+ *    the test.
+ *
+ *
+ *  @author Prashant Jain <pjain@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_stdlib.h"

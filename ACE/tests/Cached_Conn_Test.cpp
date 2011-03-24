@@ -1,24 +1,21 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Cached_Conn_Test.cpp
-//
-// = DESCRIPTION
-//    The test illustrates how the <ACE_Strategy_Connector> works by
-//    showing how you can cache connections on the client using
-//    different caching strategies. Also how connections can be purged
-//    explicitly and implicitly if needed from the connection cache
-//    maintained by the connector.
-//
-// = AUTHOR
-//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Cached_Conn_Test.cpp
+ *
+ *  $Id$
+ *
+ *  The test illustrates how the <ACE_Strategy_Connector> works by
+ *  showing how you can cache connections on the client using
+ *  different caching strategies. Also how connections can be purged
+ *  explicitly and implicitly if needed from the connection cache
+ *  maintained by the connector.
+ *
+ *
+ *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef CACHED_CONNECT_TEST
 #define CACHED_CONNECT_TEST

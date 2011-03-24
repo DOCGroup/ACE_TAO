@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Config_Test.cpp
-//
-// = DESCRIPTION
-//      This is a test that makes sure various classes in
-//      <ACE_Configuration> work correctly.
-//
-// = AUTHOR
-//    Michael Searles <msearles@base16.com>,
-//    Chris Hafey <chafey@stentor.com>, and
-//    Jerry D. Odenwelder Jr. <jerry.o@mindspring.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Config_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a test that makes sure various classes in
+ *    <ACE_Configuration> work correctly.
+ *
+ *
+ *  @author Michael Searles <msearles@base16.com>
+ *  @author Chris Hafey <chafey@stentor.com>
+ *  @author and Jerry D. Odenwelder Jr. <jerry.o@mindspring.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "Config_Test.h"

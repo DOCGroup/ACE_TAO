@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    MT_Reference_Counted_Notify_Test.cpp
-//
-// = DESCRIPTION
-//    This test is used to check reference counting of the event
-//    handlers when it interacts with the reactor notification
-//    mechanism.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@oomworks.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    MT_Reference_Counted_Notify_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This test is used to check reference counting of the event
+ *  handlers when it interacts with the reactor notification
+ *  mechanism.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@oomworks.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"

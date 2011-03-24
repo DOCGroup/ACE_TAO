@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Hash_Map_Bucket_Iterator_Test.cpp
-//
-// = DESCRIPTION
-//     This is a simple test of the <Hash_Map_Bucket_Iterator>.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Hash_Map_Bucket_Iterator_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a simple test of the <Hash_Map_Bucket_Iterator>.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_stdlib.h"

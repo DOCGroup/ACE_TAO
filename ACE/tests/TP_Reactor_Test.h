@@ -1,21 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    TP_Reactor_Test.h
-//
-// = DESCRIPTION
-//    Define class needed for generating templates. IBM C++ requires this to
-//    be in its own file for auto template instantiation.
-//
-// = AUTHOR
-//    Alexander Libman <alibman@ihug.com.au>,<alexl@rumblgroup.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    TP_Reactor_Test.h
+ *
+ *  $Id$
+ *
+ *  Define class needed for generating templates. IBM C++ requires this to
+ *  be in its own file for auto template instantiation.
+ *
+ *
+ *  @author Alexander Libman <alibman@ihug.com.au>
+ *  @author <alexl@rumblgroup.com>
+ */
+//=============================================================================
+
 
 #ifndef ACE_TESTS_TP_REACTOR_TEST_H
 #define ACE_TESTS_TP_REACTOR_TEST_H

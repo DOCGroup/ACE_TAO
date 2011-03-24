@@ -1,26 +1,23 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Object_Manager_Flipping_Test.cpp
-//
-// = DESCRIPTION
+//=============================================================================
+/**
+ *  @file    Object_Manager_Flipping_Test.cpp
+ *
+ *  $Id$
+ *
 
-//    Tests the basic function of the ACE_Service_Config in scenarios
-//    where the ACE_Object_Manager is being
-//    flipped. i.e. ACE::init/ACE::fini() are called in sequence
-//    (which can occur with loading DLLs).  More specifically we test
-//    that the OM correctly controlls the lifecycle of the default SC
-//    instance, which is pointed to by a TSS pointer.
-//
-// = AUTHOR
-//    Iliyan Jeliazkov <iliyan@ociweb.com>
-//
-// ============================================================================
+ *  Tests the basic function of the ACE_Service_Config in scenarios
+ *  where the ACE_Object_Manager is being
+ *  flipped. i.e. ACE::init/ACE::fini() are called in sequence
+ *  (which can occur with loading DLLs).  More specifically we test
+ *  that the OM correctly controlls the lifecycle of the default SC
+ *  instance, which is pointed to by a TSS pointer.
+ *
+ *
+ *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Object_Manager.h"

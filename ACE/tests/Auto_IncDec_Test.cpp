@@ -1,21 +1,18 @@
-// $Id$
 
-//============================================================================
-//
-// = LIBRARY
-//     tests
-//
-// = FILENAME
-//     Auto_IncDec_Test.cpp
-//
-// = DESCRIPTION
-//     This is a simple test of the Auto Increment/Decrement Class in
-//     ACE.
-//
-// = AUTHOR
-//     Edan Ayal <EdanA@cti2.com>
-//
-//============================================================================
+//=============================================================================
+/**
+ *  @file     Auto_IncDec_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a simple test of the Auto Increment/Decrement Class in
+ *   ACE.
+ *
+ *
+ *  @author  Edan Ayal <EdanA@cti2.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Auto_IncDec_T.h"

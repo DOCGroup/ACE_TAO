@@ -1,26 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Recursive_Condition_Bug_Test.cpp
-//
-// = DESCRIPTION
-//      This test program validates the functionality of the
-//      ACE_Condition<ACE_Recursive_Thread_Mutex> template
-//      specialization when combined with the
-//      ACE_Thread_Timer_Queue_Adapter on Win32 and Posix pthreads.
-//      It was added to test for bugs with the ACE_OS recursive
-//      condition implementation.
-//
-// = AUTHOR
-//    Leonid Kvetnyi <leonidk@nice.com> and
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Recursive_Condition_Bug_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This test program validates the functionality of the
+ *    ACE_Condition<ACE_Recursive_Thread_Mutex> template
+ *    specialization when combined with the
+ *    ACE_Thread_Timer_Queue_Adapter on Win32 and Posix pthreads.
+ *    It was added to test for bugs with the ACE_OS recursive
+ *    condition implementation.
+ *
+ *
+ *  @author Leonid Kvetnyi <leonidk@nice.com> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_sys_time.h"

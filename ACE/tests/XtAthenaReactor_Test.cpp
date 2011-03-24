@@ -1,30 +1,27 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    XtReactor_Test.cpp
-//
-// = DESCRIPTION
-//      This is a simple test that illustrates the possibility to integrate
-//      ACE to the X Main Loop. This program uses ACE_XtReactor class to
-//      schedule three additional event sources:
-//      1. Events from button "Stop Test" (registed with XtAddCallback)
-//      2. Events from button "Press Me" (registed with XtAddCallback)
-//      3. Events from X timer (registed with XtAppAddTimeOut)
-//      4. Events from ACE timer (registed with ACE_XtReactor::schedule_timer)
-//      5. Events from the TCP/IP channel using ACE_Acceptor
-//      No command line arguments are needed to run the test.
-//      Programs needs Athena Widgets to be compiled and run.
-//
-// = AUTHOR
-//    Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    XtAthenaReactor_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a simple test that illustrates the possibility to integrate
+ *    ACE to the X Main Loop. This program uses ACE_XtReactor class to
+ *    schedule three additional event sources:
+ *    1. Events from button "Stop Test" (registed with XtAddCallback)
+ *    2. Events from button "Press Me" (registed with XtAddCallback)
+ *    3. Events from X timer (registed with XtAppAddTimeOut)
+ *    4. Events from ACE timer (registed with ACE_XtReactor::schedule_timer)
+ *    5. Events from the TCP/IP channel using ACE_Acceptor
+ *    No command line arguments are needed to run the test.
+ *    Programs needs Athena Widgets to be compiled and run.
+ *
+ *
+ *  @author Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/XtReactor/XtReactor.h"

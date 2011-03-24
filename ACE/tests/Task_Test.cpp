@@ -1,24 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Task_Test.cpp
-//
-// = DESCRIPTION
-//      This test program illustrates how the ACE barrier
-//      synchronization mechanisms work in conjunction with the
-//      <ACE_Task> and the <ACE_Thread_Manager>.  This also illustrates
-//      how the <ACE_Thread_Hook> mechanism works.
-//
-// = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu> and
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Task_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This test program illustrates how the ACE barrier
+ *    synchronization mechanisms work in conjunction with the
+ *    <ACE_Task> and the <ACE_Thread_Manager>.  This also illustrates
+ *    how the <ACE_Thread_Hook> mechanism works.
+ *
+ *
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Task.h"
@@ -49,20 +45,20 @@ public:
                 int n_iterations);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
   virtual int close (u_long flags = 0);
-  //FUZZ: enable check_for_lack_ACE_OS
 
+  /// Iterate <n_iterations> time printing off a message and "waiting"
+  /// for all other threads to complete this iteration.
   virtual int svc (void);
-  // Iterate <n_iterations> time printing off a message and "waiting"
-  // for all other threads to complete this iteration.
 
 private:
+  /// Reference to the tester barrier.  This controls each iteration of
+  /// the tester function running in every thread.
   ACE_Barrier barrier_;
-  // Reference to the tester barrier.  This controls each iteration of
-  // the tester function running in every thread.
 
+  /// Number of iterations to run.
   int n_iterations_;
-  // Number of iterations to run.
 };
 
 ACE_THR_FUNC_RETURN

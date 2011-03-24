@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Process_Manual_Event_Test.cpp
-//
-// = DESCRIPTION
-//    This test verifies the functionality of the <ACE_Manual_Event>
-//    process-shared implementation.
-//
-// = AUTHOR
-//    Martin Corino <mcorino@remedy.nl>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Process_Manual_Event_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This test verifies the functionality of the <ACE_Manual_Event>
+ *  process-shared implementation.
+ *
+ *
+ *  @author Martin Corino <mcorino@remedy.nl>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Process.h"

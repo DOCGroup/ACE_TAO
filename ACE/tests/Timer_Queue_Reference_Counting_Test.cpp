@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Timer_Queue_Reference_Counting_Test.cpp
-//
-// = DESCRIPTION
-//    This test is used to check reference counting of the Event
-//    Handler when it interacts with Timer Queues.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@oomworks.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Timer_Queue_Reference_Counting_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This test is used to check reference counting of the Event
+ *  Handler when it interacts with Timer Queues.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@oomworks.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Get_Opt.h"

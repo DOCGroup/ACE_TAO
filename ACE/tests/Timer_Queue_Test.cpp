@@ -1,27 +1,24 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Timer_Queue_Test.cpp
-//
-// = DESCRIPTION
-//      This is a simple test of <ACE_Timer_Queue> and four of its
-//      subclasses (<ACE_Timer_List>, <ACE_Timer_Heap>,
-//      <ACE_Timer_Wheel>, and <ACE_Timer_Hash>).  The test sets up a
-//      bunch of timers and then adds them to a timer queue. The
-//      functionality of the timer queue is then tested. No command
-//      line arguments are needed to run the test.
-//
-// = AUTHORS
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>,
-//    Prashant Jain <pjain@cs.wustl.edu>, and
-//    Darrell Brunsch <brunsch@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Timer_Queue_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a simple test of <ACE_Timer_Queue> and four of its
+ *    subclasses (<ACE_Timer_List>, <ACE_Timer_Heap>,
+ *    <ACE_Timer_Wheel>, and <ACE_Timer_Hash>).  The test sets up a
+ *    bunch of timers and then adds them to a timer queue. The
+ *    functionality of the timer queue is then tested. No command
+ *    line arguments are needed to run the test.
+ *
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Prashant Jain <pjain@cs.wustl.edu>
+ *  @author and Darrell Brunsch <brunsch@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "randomize.h"
@@ -83,8 +80,8 @@ public:
     return result;
   }
 
+  /// Keeps track of the number of times that <handle_close> is called.
   int close_count_;
-  // Keeps track of the number of times that <handle_close> is called.
 };
 
 
@@ -581,13 +578,15 @@ test_unique_timer_heap_ids (void)
   return;
 }
 
+/**
+ * @class Timer_Queue_Stack
+ *
+ * @brief Keeps track of the <Timer_Queue>s that we're going to test.
+ *
+ * This data structure is organized as a stack to make it easy to implement.
+ */
 class Timer_Queue_Stack
 {
-  // = TITLE
-  //   Keeps track of the <Timer_Queue>s that we're going to test.
-  //
-  // = DESCRIPTION
-  //   This data structure is organized as a stack to make it easy to implement.
 public:
   // = Initialization method
   Timer_Queue_Stack (ACE_Timer_Queue *queue,
@@ -599,14 +598,14 @@ public:
   {}
   // "Push" a new <queue> on the stack of <queue>s.
 
+  /// Pointer to the subclass of <ACE_Timer_Queue> that we're testing.
   ACE_Timer_Queue *queue_;
-  // Pointer to the subclass of <ACE_Timer_Queue> that we're testing.
 
+  /// Name of the Queue that we're testing.
   const ACE_TCHAR *name_;
-  // Name of the Queue that we're testing.
 
+  /// Pointer to the next <Timer_Queue>.
   Timer_Queue_Stack *next_;
-  // Pointer to the next <Timer_Queue>.
 };
 
 int

@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    INET_Addr_Test.cpp
-//
-// = DESCRIPTION
-//     Performs several tests on the ACE_INET_Addr class.  It creates several
-//     IPv4 and IPv6 addresses and checks that the address formed by the
-//     class is valid.
-//
-// = AUTHOR
-//    John Aughey (jha@aughey.com)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    INET_Addr_Test.cpp
+ *
+ *  $Id$
+ *
+ *   Performs several tests on the ACE_INET_Addr class.  It creates several
+ *   IPv4 and IPv6 addresses and checks that the address formed by the
+ *   class is valid.
+ *
+ *
+ *  @author John Aughey (jha@aughey.com)
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

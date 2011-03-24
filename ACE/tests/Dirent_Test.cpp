@@ -1,28 +1,25 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Dirent_Test.cpp
-//
-// = DESCRIPTION
-//     This is a test of the opendir and readdir emulation provided by the
-//     class ACE_Dirent.  It is used to ensure that the emulation code
-//     works properly on platforms that don't support this capability
-//     natively.  As the emulation code is not compiled in other
-//     platforms, this test also ensures that there is no impact to
-//     platforms that natively support directory scanning operations.
-//
-// = AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>,
-//    Zvika Ashani <zvika@aspectusvi.com>,
-//    Rich Newman <RNewman@directv.com>, and
-//    Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Dirent_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a test of the opendir and readdir emulation provided by the
+ *   class ACE_Dirent.  It is used to ensure that the emulation code
+ *   works properly on platforms that don't support this capability
+ *   natively.  As the emulation code is not compiled in other
+ *   platforms, this test also ensures that there is no impact to
+ *   platforms that natively support directory scanning operations.
+ *
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ *  @author Zvika Ashani <zvika@aspectusvi.com>
+ *  @author Rich Newman <RNewman@directv.com>
+ *  @author and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Dirent.h"

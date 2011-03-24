@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Timeprobe_Test.cpp
-//
-// = DESCRIPTION
-//      This is a simple test of ACE Timeprobes.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Timeprobe_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a simple test of ACE Timeprobes.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 //#define ACE_ENABLE_TIMEPROBES
 //#define ACE_MT_TIMEPROBES
