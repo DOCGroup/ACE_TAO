@@ -1,27 +1,24 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    SOCK_SEQPACK_Association_Test.cpp
-//
-// = DESCRIPTION
-//
-//   Tests the methods get_local_addrs and get_remote_addrs of class
-//   ACE_SOCK_SEQPACK_Association.
-//
-//   This is not an automated "one-button" test.  Rather, it prints
-//   some output to a log file, so that an interested human can
-//   inspect the output and get a vague notion of whether or not
-//   the methods are working properly.
-//
-// = AUTHOR
-//    Edward Mulholland (emulholl@atl.lmco.com)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    SOCK_SEQPACK_Association_Test.cpp
+ *
+ *  $Id$
+ *
+ *
+ * Tests the methods get_local_addrs and get_remote_addrs of class
+ * ACE_SOCK_SEQPACK_Association.
+ *
+ * This is not an automated "one-button" test.  Rather, it prints
+ * some output to a log file, so that an interested human can
+ * inspect the output and get a vague notion of whether or not
+ * the methods are working properly.
+ *
+ *
+ *  @author Edward Mulholland (emulholl@atl.lmco.com)
+ */
+//=============================================================================
+
 
 #include "ace/SOCK_SEQPACK_Association.h"
 #include "ace/SOCK_SEQPACK_Connector.h"

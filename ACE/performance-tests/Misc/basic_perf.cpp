@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    performance-tests/Misc
-//
-// = FILENAME
-//    basic_perf.cpp
-//
-// = DESCRIPTION
-//    Times various simple operations.
-//
-//    With Sun C++, use -O2: make CFLAGS="-mt -O2" BIN=basic_perf
-//    -fast seems to produce slower times.
-//
-// = AUTHOR
-//    David Levine
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    basic_perf.cpp
+ *
+ *  $Id$
+ *
+ *  Times various simple operations.
+ *
+ *  With Sun C++, use -O2: make CFLAGS="-mt -O2" BIN=basic_perf
+ *  -fast seems to produce slower times.
+ *
+ *
+ *  @author David Levine
+ */
+//=============================================================================
+
 
 #include "basic_func.h"
 #include "ace/High_Res_Timer.h"

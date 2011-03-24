@@ -1,48 +1,45 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    (none)
-//
-// = FILENAME
-//    context_switch_time.cpp
-//
-// = DESCRIPTION
-//   Program that calculates context switch time between threads.
-//   The Suspend-Resume test is based on the Task Context Switching
-//   measurement approach described in:
-//   Darren Cathey<br>
-//   "RTOS Benchmarking -- All Things Considered . . ."<br>
-//   <a href="http://www.realtime-info.be"><em>Real-Time Magazine</em></a>,
-//      Second Quarter 1993,
-//   <em>reprinted by <a href="http://www.wrs.com/artreqfm.html">Wind River
-//                    Systems</a></em><p>
-//   which in turn is based on Superconducting Super Collider (SSC)
-//   Laboratory Ping Suspend/Resume Task and Suspend/Resume Task benchmarks.
-//   It measures two different times:
-//   1) The time to resume a blocked high priority task, which does
-//      nothing other than block immediately.  A lower priority task
-//      resumes the high priority task, so the elapsed time includes
-//      two context switches, one task suspend, and one task resume.
-//   2) The time to suspend and resume a low priority task that does
-//      nothing.  There is no context switching.  This time is subtracted
-//      from the one described in 1) above, and the result is divided by
-//      two to yield the context switch time.
-//
-//   Notes:
-//   On Solaris 2.5.1, it appears that the lowest context switching times,
-//   at least on a single-CPU machine, are obtained _without_ creating new
-//   LWPs for new threads (THR_NEW_LWP).  The -n option enables the use of
-//   THR_NEW_LWP for testing.
-//
-// = CREATION DATE
-//    17 January 1997
-//
-// = AUTHOR
-//    David L. Levine
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    context_switch_time.cpp
+ *
+ *  $Id$
+ *
+ * Program that calculates context switch time between threads.
+ * The Suspend-Resume test is based on the Task Context Switching
+ * measurement approach described in:
+ * Darren Cathey<br>
+ * "RTOS Benchmarking -- All Things Considered . . ."<br>
+ * <a href="http://www.realtime-info.be"><em>Real-Time Magazine</em></a>,
+ *    Second Quarter 1993,
+ * <em>reprinted by <a href="http://www.wrs.com/artreqfm.html">Wind River
+ *                  Systems</a></em><p>
+ * which in turn is based on Superconducting Super Collider (SSC)
+ * Laboratory Ping Suspend/Resume Task and Suspend/Resume Task benchmarks.
+ * It measures two different times:
+ * 1) The time to resume a blocked high priority task, which does
+ *    nothing other than block immediately.  A lower priority task
+ *    resumes the high priority task, so the elapsed time includes
+ *    two context switches, one task suspend, and one task resume.
+ * 2) The time to suspend and resume a low priority task that does
+ *    nothing.  There is no context switching.  This time is subtracted
+ *    from the one described in 1) above, and the result is divided by
+ *    two to yield the context switch time.
+ *
+ * Notes:
+ * On Solaris 2.5.1, it appears that the lowest context switching times,
+ * at least on a single-CPU machine, are obtained _without_ creating new
+ * LWPs for new threads (THR_NEW_LWP).  The -n option enables the use of
+ * THR_NEW_LWP for testing.
+ *
+ * = CREATION DATE
+ *  17 January 1997
+ *
+ *
+ *  @author David L. Levine
+ */
+//=============================================================================
+
 
 static const char usage [] = "[-? |\n"
                              "       [-c <repeat counter, 0 means forever>]\n"
@@ -665,11 +662,11 @@ public:
 
   ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
 private:
+  /// Mutex used for acquire/release time measurement.
   ACE_Thread_Mutex mutex_;
-  // Mutex used for acquire/release time measurement.
 
+  /// Semaphore used for acquire/release time measurement.
   ACE_Thread_Semaphore sem_;
-  // Semaphore used for acquire/release time measurement.
 
   const ACE_UINT32 iterations_;
 
@@ -747,9 +744,9 @@ public:
 
   virtual int svc ();
 
+  /// Called by other task:  it returns when this task is ready to
+  /// continue
   void ready () { initialized_.acquire (); }
-  // Called by other task:  it returns when this task is ready to
-  // continue
 
   void done ();
 
@@ -763,17 +760,17 @@ private:
   int terminate_;
   ACE_UINT32 iterations_;
 
+  /// Semaphore used to resume the task.
   ACE_Thread_Semaphore &sem_;
-  // Semaphore used to resume the task.
 
+  /// Mutex used to block the task.
   ACE_Thread_Mutex &mutex_;
-  // Mutex used to block the task.
 
+  /// Clock shared between low and high priority tasks.
   ACE_High_Res_Timer &timer_;
-  // Clock shared between low and high priority tasks.
 
+  /// Running total context switch time, nsec.
   ACE_hrtime_t total_time_;
-  // Running total context switch time, nsec.
 
   // Force proper construction of independent instances.
   High_Priority_Synchronized_Task ();
@@ -922,17 +919,17 @@ public:
 private:
   const ACE_UINT32 iterations_;
 
+  /// Used by the low priority thread to resume the high priority thread.
   ACE_Thread_Semaphore sem_;
-  // Used by the low priority thread to resume the high priority thread.
 
+  /// Used by the low priority thread to block the high priority thread.
   ACE_Thread_Mutex mutex_;
-  // Used by the low priority thread to block the high priority thread.
 
+  /// Clock shared between low and high priority tasks.
   ACE_High_Res_Timer timer_;
-  // Clock shared between low and high priority tasks.
 
+  /// The high priority task.
   High_Priority_Synchronized_Task high_;
-  // The high priority task.
 
   ACE_hrtime_t elapsed_time_;
 
