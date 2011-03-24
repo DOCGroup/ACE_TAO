@@ -1,31 +1,28 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Message_Queue_Test.cpp
-//
-// = DESCRIPTION
-//      This is:
-//      0) a test that ensures key ACE_Message_Queue features are
-//         working properly, including timeouts and priorities
-//      1) a simple test of the ACE_Message_Queue that illustrates how to
-//         use the forward and reverse iterators
-//      2) a simple performance measurement test for both single-threaded
-//         (null synch), thread-safe ACE_Message_Queues, and
-//         ACE_Message_Queue_Vx, which wraps VxWorks message queues
-//      3) a test/usage example of ACE_Message_Queue_Vx
-//      4) a test of the message counting in a message queue under load.
-//
-// = AUTHORS
-//    Irfan Pyarali <irfan@cs.wustl.edu>,
-//    David L. Levine <levine@cs.wustl.edu>, and
-//    Douglas C. Schmidt <schmidt@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Message_Queue_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is:
+ *    0) a test that ensures key ACE_Message_Queue features are
+ *       working properly, including timeouts and priorities
+ *    1) a simple test of the ACE_Message_Queue that illustrates how to
+ *       use the forward and reverse iterators
+ *    2) a simple performance measurement test for both single-threaded
+ *       (null synch), thread-safe ACE_Message_Queues, and
+ *       ACE_Message_Queue_Vx, which wraps VxWorks message queues
+ *    3) a test/usage example of ACE_Message_Queue_Vx
+ *    4) a test of the message counting in a message queue under load.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ *  @author David L. Levine <levine@cs.wustl.edu>
+ *  @author and Douglas C. Schmidt <schmidt@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Atomic_Op.h"

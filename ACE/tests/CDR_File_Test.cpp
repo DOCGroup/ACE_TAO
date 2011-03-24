@@ -1,22 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    CDR_File_Test.cpp
-//
-// = DESCRIPTION
-//    Checks the functionality of the ACE CDR streams used for file
-//    I/O.
-//
-// = AUTHORS
-//    Giga Giguashvili <gregoryg@ParadigmGeo.com> and
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    CDR_File_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Checks the functionality of the ACE CDR streams used for file
+ *  I/O.
+ *
+ *
+ *  @author Giga Giguashvili <gregoryg@ParadigmGeo.com> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_Memory.h"
@@ -36,34 +32,37 @@
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
+/**
+ * @class CDR_Test
+ *
+ * @brief Simple class that's used to read and write CDR streams.
+ */
 class CDR_Test
 {
-  // = TITLE
-  //   Simple class that's used to read and write CDR streams.
 
+  /// Output the state of a <CDR_Test> object to the <ostream>.
   friend ostream& operator << (ostream &os, const CDR_Test &t);
-  // Output the state of a <CDR_Test> object to the <ostream>.
 
+  /// Convert the state of this object into an <ACE_OutputCDR>.
   friend void operator << (ACE_OutputCDR &os, const CDR_Test &t);
-  // Convert the state of this object into an <ACE_OutputCDR>.
 
+  /// Convert the <ACE_InputCDR> into the state of this object.
   friend void operator >> (ACE_InputCDR &is, CDR_Test &);
-  // Convert the <ACE_InputCDR> into the state of this object.
 
 public:
+  /// Default constructor.
   CDR_Test (void);
-  // Default constructor.
 
+  /// Constructor.
   CDR_Test (ACE_CDR::Char o,
             ACE_CDR::Short s,
             ACE_CDR::Long w,
             ACE_CDR::ULongLong lw,
             ACE_CDR::Float f,
             ACE_CDR::Double d);
-  // Constructor.
 
+  /// Compare <rhs> for equality with <this>.
   bool operator == (const CDR_Test &rhs) const;
-  // Compare <rhs> for equality with <this>.
 
 private:
   ACE_CDR::Char char_;

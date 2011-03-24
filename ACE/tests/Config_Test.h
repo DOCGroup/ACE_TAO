@@ -1,22 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    ConfigTest.h
-//
-// = DESCRIPTION
-//      This is a test that makes sure the <import_config_as_strings> of
-//      <ACE_Configuration_Heap> class works correctly.
-//
-// = AUTHOR
-//    Michael Searles <msearles@base16.com> and
-//    Jerry D. Odenwelder Jr. <jerry.o@mindspring.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Config_Test.h
+ *
+ *  $Id$
+ *
+ *    This is a test that makes sure the <import_config_as_strings> of
+ *    <ACE_Configuration_Heap> class works correctly.
+ *
+ *
+ *  @author Michael Searles <msearles@base16.com> and Jerry D. Odenwelder Jr. <jerry.o@mindspring.com>
+ */
+//=============================================================================
+
 
 #ifndef __CONFIG_TEST_H
 #define __CONFIG_TEST_H

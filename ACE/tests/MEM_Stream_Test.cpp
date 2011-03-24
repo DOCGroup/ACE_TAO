@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    MEM_Stream_Test.cpp
-//
-// = DESCRIPTION
-//     This is a test of the <ACE_MEM_Acceptor> and
-//     <ACE_MEM_Connector> classes.
-//
-// = AUTHOR
-//    Nanbor Wang <nanbor@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    MEM_Stream_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a test of the <ACE_MEM_Acceptor> and
+ *   <ACE_MEM_Connector> classes.
+ *
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_stdio.h"

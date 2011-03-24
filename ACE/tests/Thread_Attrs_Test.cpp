@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Thread_Attrs_Test.cpp
-//
-// = DESCRIPTION
-//     This test program ensures that attributes set on a thread via the
-//     ACE_Task/ACE_Thread_Manager are honored.
-//
-// = AUTHOR
-//    Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Thread_Attrs_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This test program ensures that attributes set on a thread via the
+ *   ACE_Task/ACE_Thread_Manager are honored.
+ *
+ *
+ *  @author Steve Huston <shuston@riverace.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Task.h"
@@ -44,8 +41,8 @@ public:
   // Check the cancel settings against what is expected then exit.
   virtual int svc (void);
 
+  /// Returns true iff settings match what was requested.
   bool operator! ();
-  // Returns true iff settings match what was requested.
 
 private:
   bool enable_req_;
@@ -133,31 +130,34 @@ Cancel_Check::open (void *)
 }
 
 
+/**
+ * @class Stack_Size_Check
+ *
+ * @brief Defines a task that verifies its stack size.
+ */
 class Stack_Size_Check : public ACE_Task<ACE_MT_SYNCH>
 {
-  // = TITLE
-  //   Defines a task that verifies its stack size.
 
 public:
+  /// Create the thread with specified stack size
   Stack_Size_Check (size_t stack_size);
-  // Create the thread with specified stack size
 
   //FUZZ: disable check_for_lack_ACE_OS
+  /// Spawn the thread
   virtual int open (void * = 0);
-  // Spawn the thread
   //FUZZ: enable check_for_lack_ACE_OS
 
+  /// Check the stack size against what is expected then exit.
   virtual int svc (void);
-  // Check the stack size against what is expected then exit.
 
+  /// Returns true iff failed_ == false.
   bool operator! ();
-  // Returns true iff failed_ == false.
 
 private:
   size_t stack_size_;
 
+  /// Flag indicating the test failed.
   bool failed_;
-  // Flag indicating the test failed.
 };
 
 bool

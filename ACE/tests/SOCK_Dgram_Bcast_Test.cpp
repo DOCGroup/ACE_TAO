@@ -1,26 +1,23 @@
-// $Id$
-// ===========================================================================
-//
-// = LIBRARY
-//     tests
-//
-// = FILENAME
-//    SOCK_Dgram_Bcast_Test.cpp
-//
-// = DESCRIPTION
-//     This simple broadcast test is intended to check if ACE is capable
-//     of sending and receiving broadcasts. In single host environment most
-//     errors related to invalid broadcast initialization will not manifest
-//     themself, because usually broadcast on localhost interface works
-//     correctly. For this reason one should run also this test on two distinct
-//     hosts in single LAN.
-//     Tests that a call to open with an any address binds to the any address
-//     for the protocol passed in.
-//
-// = AUTHOR
-//    Marek Brudka (mbrudka@elka.pw.edu.pl)
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file    SOCK_Dgram_Bcast_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This simple broadcast test is intended to check if ACE is capable
+ *   of sending and receiving broadcasts. In single host environment most
+ *   errors related to invalid broadcast initialization will not manifest
+ *   themself, because usually broadcast on localhost interface works
+ *   correctly. For this reason one should run also this test on two distinct
+ *   hosts in single LAN.
+ *   Tests that a call to open with an any address binds to the any address
+ *   for the protocol passed in.
+ *
+ *
+ *  @author Marek Brudka (mbrudka@elka.pw.edu.pl)
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

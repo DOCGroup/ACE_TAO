@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Collection_Test.cpp
-//
-// = DESCRIPTION
-//     This is a simple test of the ACE collection classes and its
-//     iterators.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Collection_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a simple test of the ACE collection classes and its
+ *   iterators.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 

@@ -1,28 +1,25 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    TkReactor_Test.cpp
-//
-// = DESCRIPTION
-//      This is a simple test that illustrates the possibility to integrate
-//      ACE to the Tk Main Loop. This program uses ACE_TkReactor class to
-//      schedule three additional event sources:
-//      1. Events from button "Stop Test" (registed with Tk_CreateEventHandler)
-//      2. Events from button "Press Me" (registed with Tk_CreateEventHandler)
-//      3. Events from X timer (registed with Tk_CreateTimerHandler)
-//      4. Events from ACE timer (registed with ACE_TkReactor::schedule_timer)
-//      5. Events from the TCP/IP channel using ACE_Acceptor
-//      No command line arguments are needed to run the test.
-//
-// = AUTHOR
-//    Nagarajan Surendran <naga@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    TkReactor_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a simple test that illustrates the possibility to integrate
+ *    ACE to the Tk Main Loop. This program uses ACE_TkReactor class to
+ *    schedule three additional event sources:
+ *    1. Events from button "Stop Test" (registed with Tk_CreateEventHandler)
+ *    2. Events from button "Press Me" (registed with Tk_CreateEventHandler)
+ *    3. Events from X timer (registed with Tk_CreateTimerHandler)
+ *    4. Events from ACE timer (registed with ACE_TkReactor::schedule_timer)
+ *    5. Events from the TCP/IP channel using ACE_Acceptor
+ *    No command line arguments are needed to run the test.
+ *
+ *
+ *  @author Nagarajan Surendran <naga@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 

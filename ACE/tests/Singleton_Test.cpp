@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Singleton_Test.cpp
-//
-// = DESCRIPTION
-//      This is a simple test of ACE Singleton
-//
-// = AUTHOR
-//    Johnny Willemsen  <jwillemsen@remedy.nl>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Singleton_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a simple test of ACE Singleton
+ *
+ *
+ *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Singleton.h"

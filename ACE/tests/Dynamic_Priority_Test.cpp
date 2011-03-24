@@ -1,51 +1,48 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Dynamic_Priority_Test.cpp (based on Priority_Buffer_Test.cpp)
-//
-// = DESCRIPTION
-//    This is a test to verify and illustrate the static and dynamic
-//    priority mechanisms of the <ACE_Message_Queue> class and the
-//    <ACE_Dynamic_Message_Queue> class.  As in the
-//    <Priority_Buffer_Test>, a producer generates messages and
-//    enqueues them, and a consumer dequeues them and checks their
-//    ordering.
-//
-//    In these tests, every effort is made to ensure that there is
-//    plenty of time for the messages to be enqueued and dequeued,
-//    with messages that *should* meet their deadlines actually
-//    meeting them, while messages that should miss their deadlines
-//    are delayed so that they actually miss them.  It is, however,
-//    remotely possible that this test could yield a false negative:
-//    the dynamic queues could work correctly but due to timing
-//    variations the test could indicate failure.
-//
-//    Three message queues are obtained from the message queue
-//    factory, one static, two dynamic (one deadline based, and one
-//    laxity based) and the same supplier behavior is used each time:
-//    the messages are preallocated and their static information
-//    valued, the current time is obtained and deadlines are set, with
-//    half of the messages given late deadlines, and the other half of
-//    the messages given reachable deadlines.  The producer then
-//    immediately enqueues all messages.
-//
-//    Two separate tests are run, one which verifies messages are
-//    correctly ordered my the given queues, and one which generates
-//    performance numbers for the various queues under increasing
-//    numbers of messages.  In the first test, the consumer is passed
-//    the filled queue and a string with the expected order in which
-//    the messages should dequeue.  In the second test, measurements
-//    are made as non-intrusive as possible, with no ordering checks.
-//
-// = AUTHOR
-//    Chris Gill <cdgill@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Dynamic_Priority_Test.cpp (based on Priority_Buffer_Test.cpp)
+ *
+ *  $Id$
+ *
+ *  This is a test to verify and illustrate the static and dynamic
+ *  priority mechanisms of the <ACE_Message_Queue> class and the
+ *  <ACE_Dynamic_Message_Queue> class.  As in the
+ *  <Priority_Buffer_Test>, a producer generates messages and
+ *  enqueues them, and a consumer dequeues them and checks their
+ *  ordering.
+ *
+ *  In these tests, every effort is made to ensure that there is
+ *  plenty of time for the messages to be enqueued and dequeued,
+ *  with messages that *should* meet their deadlines actually
+ *  meeting them, while messages that should miss their deadlines
+ *  are delayed so that they actually miss them.  It is, however,
+ *  remotely possible that this test could yield a false negative:
+ *  the dynamic queues could work correctly but due to timing
+ *  variations the test could indicate failure.
+ *
+ *  Three message queues are obtained from the message queue
+ *  factory, one static, two dynamic (one deadline based, and one
+ *  laxity based) and the same supplier behavior is used each time:
+ *  the messages are preallocated and their static information
+ *  valued, the current time is obtained and deadlines are set, with
+ *  half of the messages given late deadlines, and the other half of
+ *  the messages given reachable deadlines.  The producer then
+ *  immediately enqueues all messages.
+ *
+ *  Two separate tests are run, one which verifies messages are
+ *  correctly ordered my the given queues, and one which generates
+ *  performance numbers for the various queues under increasing
+ *  numbers of messages.  In the first test, the consumer is passed
+ *  the filled queue and a string with the expected order in which
+ *  the messages should dequeue.  In the second test, measurements
+ *  are made as non-intrusive as possible, with no ordering checks.
+ *
+ *
+ *  @author Chris Gill <cdgill@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h" /* Include first to enable ACE_TEST_ASSERT. */
 #include "ace/Message_Queue.h"
@@ -62,23 +59,26 @@
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
 enum Test_Type {BEST, WORST, RANDOM};
 
+/**
+ * @class ArgStruct
+ *
+ * @brief Structure used to pass arguments to test functions.
+ */
 class ArgStruct
 {
-  // = TITLE
-  //   Structure used to pass arguments to test functions.
 public:
 
+  /// message queue to test
   ACE_Message_Queue<ACE_SYNCH> *queue_;
-  // message queue to test
 
+  /// string of characters to indicate message order
   const char *order_string_;
-  // string of characters to indicate message order
 
+  /// array of message blocks to use
   ACE_Message_Block **array_;
-  // array of message blocks to use
 
+  /// expected message count
   u_int expected_count_;
-  // expected message count
 };
 
 // Order in which messages are sent.

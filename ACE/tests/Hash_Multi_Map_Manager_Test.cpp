@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Hash_Multi_Map_Manager_Test.cpp
-//
-// = DESCRIPTION
-//      This test illustrates the use of <ACE_Hash_Multi_Map_Manager> to
-//      maintain a hash table using strings.
-//
-// = AUTHOR
-//    Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Hash_Multi_Map_Manager_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This test illustrates the use of <ACE_Hash_Multi_Map_Manager> to
+ *    maintain a hash table using strings.
+ *
+ *
+ *  @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Hash_Multi_Map_Manager_T.h"

@@ -1,24 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Reactor_Timer_Test.cpp
-//
-// = DESCRIPTION
-//      This is a simple test that illustrates the timer mechanism of
-//      the reactor.  Scheduling timers, resetting timer intervals,
-//      handling expired timers and cancelling scheduled timers are
-//      all exercised in this test.
-//
-// = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt
-//    <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Reactor_Timer_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a simple test that illustrates the timer mechanism of
+ *    the reactor.  Scheduling timers, resetting timer intervals,
+ *    handling expired timers and cancelling scheduled timers are
+ *    all exercised in this test.
+ *
+ *
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Timer_Queue.h"
@@ -37,26 +33,26 @@ static int odd = 0;
 class Time_Handler : public ACE_Event_Handler
 {
 public:
+  /// Default constructor
   Time_Handler ();
-  // Default constructor
 
+  /// Handle the timeout.
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg);
-  // Handle the timeout.
 
+  /// Called when <Time_Handler> is removed.
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
-  // Called when <Time_Handler> is removed.
 
+  /// Return our timer id.
   long timer_id (void) const;
-  // Return our timer id.
 
+  /// Set our timer id;
   void timer_id (long);
-  // Set our timer id;
 
 private:
+  /// Stores the id of this timer.
   long timer_id_;
-  // Stores the id of this timer.
 };
 
 Time_Handler::Time_Handler ()

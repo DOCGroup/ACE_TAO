@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Dynamic_Test.cpp
-//
-// = DESCRIPTION
-//    This tests the ACE_Dynamic class
-//
-// = AUTHORS
-//    Johnny Willemsen  <jwillemsen@remedy.nl>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Dynamic_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This tests the ACE_Dynamic class
+ *
+ *
+ *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

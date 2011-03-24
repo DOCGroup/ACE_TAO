@@ -1,24 +1,21 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Proctor_Timer_Test.cpp
-//
-// = DESCRIPTION
-//      This is a simple test that illustrates the timer mechanism of
-//      the <ACE_Proactor>.  Scheduling timers, handling expired timers and
-//      cancelling scheduled timers are all exercised in this test.
-//
-// = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu>,
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>, and
-//    Miljenko Norsic <Miljenko.Norsic@etk.ericsson.se>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Proactor_Timer_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a simple test that illustrates the timer mechanism of
+ *    the <ACE_Proactor>.  Scheduling timers, handling expired timers and
+ *    cancelling scheduled timers are all exercised in this test.
+ *
+ *
+ *  @author Prashant Jain <pjain@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author and Miljenko Norsic <Miljenko.Norsic@etk.ericsson.se>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Trace.h"
@@ -40,21 +37,21 @@ static int    odd = 0;
 class Time_Handler : public ACE_Handler
 {
 public:
+  /// Default constructor
   Time_Handler ();
-  // Default constructor
 
+  /// Handle the timeout.
   virtual void handle_time_out (const ACE_Time_Value &tv, const void *arg);
-  // Handle the timeout.
 
+  /// Return our timer id.
   long timer_id (void) const;
-  // Return our timer id.
 
+  /// Set our timer id;
   void timer_id (long);
-  // Set our timer id;
 
 private:
+  /// Stores the id of this timer.
   long timer_id_;
-  // Stores the id of this timer.
 };
 
 /*

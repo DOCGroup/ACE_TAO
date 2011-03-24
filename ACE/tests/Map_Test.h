@@ -1,23 +1,20 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Map_Test.h
-//
-// = DESCRIPTION
-//   This file has the class definitions needed for template generation in
-//   Map_Test.cpp.  They have to be in a separate file so AIX xlC can
-//   find them at auto-instantiate time.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Map_Test.h
+ *
+ *  $Id$
+ *
+ * This file has the class definitions needed for template generation in
+ * Map_Test.cpp.  They have to be in a separate file so AIX xlC can
+ * find them at auto-instantiate time.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_TESTS_MAP_TEST_H
 #define ACE_TESTS_MAP_TEST_H
@@ -34,13 +31,15 @@
 // Key data type.
 typedef ACE_Array<char> KEY;
 
+/**
+ * @class Key_Generator
+ *
+ * @brief Defines a key generator.
+ *
+ * This class is used in adapters of maps that do not produce keys.
+ */
 class Key_Generator
 {
-  // = TITLE
-  //     Defines a key generator.
-  //
-  // = DESCRIPTION
-  //     This class is used in adapters of maps that do not produce keys.
 public:
 
   Key_Generator (void)

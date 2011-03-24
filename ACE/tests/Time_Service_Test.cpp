@@ -1,25 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Time_Service_Test
-//
-// = DESCRIPTION
-//    This example tests the Time Service server and clerk
-//    components. The test forks and execs two processes to run both
-//    the clerk and the time server. The clerk and the server
-//    communicate for a short duration after which the main process
-//    kills both the processes. No command line arguments are needed
-//    to run the test.
-//
-// = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Time_Service_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This example tests the Time Service server and clerk
+ *  components. The test forks and execs two processes to run both
+ *  the clerk and the time server. The clerk and the server
+ *  communicate for a short duration after which the main process
+ *  kills both the processes. No command line arguments are needed
+ *  to run the test.
+ *
+ *
+ *  @author Prashant Jain <pjain@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Process.h"

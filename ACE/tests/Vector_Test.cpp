@@ -1,21 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Vector_Test.cpp
-//
-// = DESCRIPTION
-//     This is a simple test of the ACE_Vector class and its iterators.
-//
-// = AUTHOR
-//    Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com> and
-//    Karl-Heinz Wind <wind@itq.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Vector_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a simple test of the ACE_Vector class and its iterators.
+ *
+ *
+ *  @author Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com> and Karl-Heinz Wind <wind@itq.de>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 

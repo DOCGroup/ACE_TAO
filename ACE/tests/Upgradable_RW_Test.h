@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Upgradable_RW_Test.h
-//
-// = DESCRIPTION
-//    This class gets its own header file to work around AIX C++
-//    compiler "features" related to template instantiation...  It is
-//    only used by Upgradable_RW_Test.cpp.
-//
-// = AUTHOR
-//    Michael Kircher <mk1@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Upgradable_RW_Test.h
+ *
+ *  $Id$
+ *
+ *  This class gets its own header file to work around AIX C++
+ *  compiler "features" related to template instantiation...  It is
+ *  only used by Upgradable_RW_Test.cpp.
+ *
+ *
+ *  @author Michael Kircher <mk1@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_TESTS_UPGRADABLE_RW_TEST_H
 #define ACE_TESTS_UPGRADABLE_RW_TEST_H
@@ -37,10 +34,13 @@
 
 class Element;
 
+  /**
+   * @class Element
+   *
+   * @brief The members for the double linked list.
+   */
 class Element
 {
-  // = TITLE
-  //   The members for the double linked list.
   friend class ACE_Double_Linked_List<Element>;
   friend class ACE_Double_Linked_List_Iterator_Base<Element>;
   friend class ACE_Double_Linked_List_Iterator<Element>;
@@ -69,10 +69,13 @@ private:
 
 typedef ACE_Double_Linked_List<Element> Linked_List;
 
+/**
+ * @class Time_Calculation
+ *
+ * @brief class to do time calculations thread safe
+ */
 class Time_Calculation
 {
-  //  = TITLE
-  //     class to do time calculations thread safe
 public:
   Time_Calculation (void)
     : reported_times_ (0)
@@ -82,26 +85,29 @@ public:
     times_.system_time = 0;
   }
 
+  /// take the time of the thread and add it to
   void report_time (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
-  // take the time of the thread and add it to
 
   void print_stats (void);
 
 private:
+  /// add the times incrementally
   ACE_Profile_Timer::ACE_Elapsed_Time times_;
-  // add the times incrementally
 
+  /// protect the time
   ACE_SYNCH_MUTEX mutex_;
-  // protect the time
 
+  /// count how many threads gave me the elapsed_time
   unsigned int reported_times_;
-  // count how many threads gave me the elapsed_time
 };
 
+/**
+ * @class Reader_Task
+ *
+ * @brief A Task for readers
+ */
 class Reader_Task : public ACE_Task_Base
 {
-  //  = TITLE
-  //     A Task for readers
 public:
   Reader_Task (Time_Calculation &time_Calculation,
                ACE_Barrier &barrier)
@@ -113,18 +119,21 @@ public:
   virtual int svc (void);
 
 private:
+  /// keep a reference to the time calculation class
   Time_Calculation &time_Calculation_;
-  // keep a reference to the time calculation class
 
+  /// keep this reference for the barrier, in order
+  /// to allow a "nice" start
   ACE_Barrier &barrier_;
-  // keep this reference for the barrier, in order
-  // to allow a "nice" start
 };
 
+/**
+ * @class Writer_Task
+ *
+ * @brief A Task for wirters.
+ */
 class Writer_Task : public ACE_Task_Base
 {
-  //  = TITLE
-  //     A Task for wirters.
 public:
   Writer_Task (Time_Calculation &time_Calculation,
                ACE_Barrier &barrier)
@@ -136,12 +145,12 @@ public:
   virtual int svc (void);
 
 private:
+  /// keep a reference to the time calculation class
   Time_Calculation &time_Calculation_;
-  // keep a reference to the time calculation class
 
+  /// keep this reference for the barrier, in order
+  /// to allow a "nice" start
   ACE_Barrier &barrier_;
-  // keep this reference for the barrier, in order
-  // to allow a "nice" start
 };
 
 #endif /* ACE_TESTS_UPGRADABLE_RW_TEST_H */

@@ -1,44 +1,40 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests/SSL
-//
-// = FILENAME
-//    Thread_Pool_Reactor_Test.cpp
-//
-// = DESCRIPTION
-//      This program is a torture test of threaded SSL usage. It
-//      is based on the tests/Thread_Pool_Reactor_Test and adds
-//      SSL stuff submitted by Robert Handl <robert.handl@ehpt.com>.
-//      It starts by spawning several server threads waiting to handle
-//      events.  Several other client threads are spawned right after
-//      to initiate connections to server threads.  Each connection
-//      adds a new Svc_Handler into the TP_Reactor and sends out
-//      several "requests" to the server thread.  After the connection
-//      is closed, the Svc_Handler is removed from the TP_Reactor.
-//      Each message is treated as a separate request by the server so
-//      two consecutive requests might be serviced by two different
-//      threads.
-//
-//      Usage: Thread_Pool_Reactor_Test_SSL [-r <hostname:port#>]
-//                [-s <server thr#>] [-c <client thr#>] [-d <delay>]
-//                [-i <client conn attempt#>] [-n <client request# per conn>]
-//
-//      Default value:
-//          <hostname:port#>:       ACE_DEFAULT_RENDEZVOUS
-//          <server thr#>:          ACE_MAX_THREADS
-//          <client thr#>:          ACE_MAX_ITERATIONS
-//          <client conn attempt#>: ACE_MAX_ITERATIONS
-//          <client req# per conn>: ACE_MAX_THREADS
-//          <delay>:                50 usec
-//
-// = AUTHOR
-//      Irfan Pyarali <irfan@cs.wustl.edu> and
-//      Nanbor Wang <nanbor@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Thread_Pool_Reactor_SSL_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This program is a torture test of threaded SSL usage. It
+ *    is based on the tests/Thread_Pool_Reactor_Test and adds
+ *    SSL stuff submitted by Robert Handl <robert.handl@ehpt.com>.
+ *    It starts by spawning several server threads waiting to handle
+ *    events.  Several other client threads are spawned right after
+ *    to initiate connections to server threads.  Each connection
+ *    adds a new Svc_Handler into the TP_Reactor and sends out
+ *    several "requests" to the server thread.  After the connection
+ *    is closed, the Svc_Handler is removed from the TP_Reactor.
+ *    Each message is treated as a separate request by the server so
+ *    two consecutive requests might be serviced by two different
+ *    threads.
+ *
+ *    Usage: Thread_Pool_Reactor_Test_SSL [-r <hostname:port#>]
+ *              [-s <server thr#>] [-c <client thr#>] [-d <delay>]
+ *              [-i <client conn attempt#>] [-n <client request# per conn>]
+ *
+ *    Default value:
+ *        <hostname:port#>:       ACE_DEFAULT_RENDEZVOUS
+ *        <server thr#>:          ACE_MAX_THREADS
+ *        <client thr#>:          ACE_MAX_ITERATIONS
+ *        <client conn attempt#>: ACE_MAX_ITERATIONS
+ *        <client req# per conn>: ACE_MAX_THREADS
+ *        <delay>:                50 usec
+ *
+ *
+ *  @author   Irfan Pyarali <irfan@cs.wustl.edu> and   Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "../test_config.h"
 #include "ace/OS_NS_string.h"

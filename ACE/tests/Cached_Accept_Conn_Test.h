@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Cache_Accept_Conn_Test.h
-//
-// = DESCRIPTION
-//    Define class needed for generating templates. IBM C++ requires this to
-//    be in its own file for auto template instantiation.
-//
-// = AUTHOR
-//    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Cached_Accept_Conn_Test.h
+ *
+ *  $Id$
+ *
+ *  Define class needed for generating templates. IBM C++ requires this to
+ *  be in its own file for auto template instantiation.
+ *
+ *
+ *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_TESTS_CACHED_ACCEPT_CONN_TEST_H
 #define ACE_TESTS_CACHED_ACCEPT_CONN_TEST_H
@@ -109,27 +106,31 @@ class Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTO
 {
 public:
 
+  /// Constructor.
   Accept_Strategy (CACHED_CONNECT_STRATEGY &caching_connect_strategy);
-  // Constructor.
 
+  /**
+   * Initialize the <peer_acceptor_> with <local_addr>.  If the
+   * process runs out of descriptors, the unsed svc_handlers from the
+   * CONNECTION CACHE are removed.
+   */
   int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
             bool restart = false);
-  // Initialize the <peer_acceptor_> with <local_addr>.  If the
-  // process runs out of descriptors, the unsed svc_handlers from the
-  // CONNECTION CACHE are removed.
 
+  /**
+   * The default behavior delegates to the <accept> method of the
+   * PEER_ACCEPTOR. A check is made here for the process running out
+   * of file descriptors. If so, the CONNECTION CACHE is purged of
+   * some idle svc_handlers.
+   */
   int accept_svc_handler (SVC_HANDLER *svc_handler);
-  // The default behavior delegates to the <accept> method of the
-  // PEER_ACCEPTOR. A check is made here for the process running out
-  // of file descriptors. If so, the CONNECTION CACHE is purged of
-  // some idle svc_handlers.
 
 protected:
 
   typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> ACCEPT_STRATEGY_BASE;
 
+  /// Handler for removing cached connections.
   int out_of_sockets_handler (void);
-  // Handler for removing cached connections.
 
   CACHED_CONNECT_STRATEGY &caching_connect_strategy_;
 };

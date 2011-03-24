@@ -1,36 +1,33 @@
-// $Id$
 
-//==========================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Logging_Strategy_Test.cpp
-//
-// = DESCRIPTION
-//     This program tests the <ACE_Logging_Strategy> class in various
-//     ways and also illustrates many of the features of the
-//     <ACE_Log_Msg>.  The test works as follows:
-//     -Load the inserted arguments;
-//     -Remove existent log_files with the file_name specified by the
-//      user;
-//     -Generate 1000 messages to create the DEBUG statements to be
-//      stored in the files;
-//     -Counts the created log_files and if it was specified a maximum
-//      number of log_files, compare and verify if they are the same.
-//     -Verify the order of the files with the order argument.
-//
-//     When Dlls are used, we utilize the dynamic service
-//     configuration mechanism to activate the logging strategy. This
-//     is not a must though, and you may activate the logging strategy
-//     as described in the non-DLL section below under DLL
-//     environments as well.
-//
-// = AUTHOR
-//    Orlando Ribeiro <oribeiro@inescporto.pt>
-//
-//==========================================================================
+//=============================================================================
+/**
+ *  @file    Logging_Strategy_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This program tests the <ACE_Logging_Strategy> class in various
+ *   ways and also illustrates many of the features of the
+ *   <ACE_Log_Msg>.  The test works as follows:
+ *   -Load the inserted arguments;
+ *   -Remove existent log_files with the file_name specified by the
+ *    user;
+ *   -Generate 1000 messages to create the DEBUG statements to be
+ *    stored in the files;
+ *   -Counts the created log_files and if it was specified a maximum
+ *    number of log_files, compare and verify if they are the same.
+ *   -Verify the order of the files with the order argument.
+ *
+ *   When Dlls are used, we utilize the dynamic service
+ *   configuration mechanism to activate the logging strategy. This
+ *   is not a must though, and you may activate the logging strategy
+ *   as described in the non-DLL section below under DLL
+ *   environments as well.
+ *
+ *
+ *  @author Orlando Ribeiro <oribeiro@inescporto.pt>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_stdio.h"

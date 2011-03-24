@@ -1,24 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Priority_Buffer_Test.cpp
-//
-// = DESCRIPTION
-//      This is a simple test to illustrate the priority mechanism of
-//      <ACE_Message_Queue>s. The producer uses an <ACE_Message_Queue>
-//      to enqueue a bunch of messages with different priorities which
-//      are then dequeued by the consumer.
-//
-// = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu> and
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Priority_Buffer_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a simple test to illustrate the priority mechanism of
+ *    <ACE_Message_Queue>s. The producer uses an <ACE_Message_Queue>
+ *    to enqueue a bunch of messages with different priorities which
+ *    are then dequeued by the consumer.
+ *
+ *
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Message_Queue.h"

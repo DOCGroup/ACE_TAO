@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Proactor_Test.h
-//
-// = DESCRIPTION
-//    Define class needed for generating templates. IBM C++ requires this to
-//    be in its own file for auto template instantiation.
-//
-// = AUTHOR
-//    @author Alexander Libman <alibman@baltimore.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Proactor_Test.h
+ *
+ *  $Id$
+ *
+ *  Define class needed for generating templates. IBM C++ requires this to
+ *  be in its own file for auto template instantiation.
+ *
+ *
+ *  @author @author Alexander Libman <alibman@baltimore.com>
+ */
+//=============================================================================
+
 
 #ifndef ACE_TESTS_PROACTOR_TEST_H
 #define ACE_TESTS_PROACTOR_TEST_H
@@ -49,13 +46,13 @@ public:
   void cancel ();
 
 protected:
+  //// This is called when asynchronous <read> operation from the
+  //// socket completes.
   /**
    * @name AIO callback handling
    *
    * These methods are called by the framework
    */
-  /// This is called when asynchronous <read> operation from the
-  /// socket completes.
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
 
   /// This is called when an asynchronous <write> to the socket
@@ -108,11 +105,11 @@ public:
   virtual void addresses (const ACE_INET_Addr& peer,
                           const ACE_INET_Addr& local);
 
+  /// This is called when asynchronous reads from the socket complete
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
-  // This is called when asynchronous reads from the socket complete
 
+  /// This is called when asynchronous writes from the socket complete
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
-  // This is called when asynchronous writes from the socket complete
 
   void cancel (void);
 
