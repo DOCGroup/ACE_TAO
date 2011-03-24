@@ -1,20 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    Connection_Handler.cpp
-//
-// = DESCRIPTION
-//      This test illustrates how to use the Acceptor pattern to
-//      create multiple threads, each running its own Reactor.  You
-//      can connect to this via telnet and keep typing until you enter
-//      '^D'.
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Connection_Handler.cpp
+ *
+ *  $Id$
+ *
+ *    This test illustrates how to use the Acceptor pattern to
+ *    create multiple threads, each running its own Reactor.  You
+ *    can connect to this via telnet and keep typing until you enter
+ *    '^D'.
+ *
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"

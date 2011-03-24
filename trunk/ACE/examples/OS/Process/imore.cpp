@@ -1,26 +1,23 @@
-// ============================================================================
-// $Id$
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    imore.cpp (imore stands for indirect more.)
-//
-// = DESCRIPTION
-//    This program demonstrates how to redirect stdout of a parent
-//    process to the stdin of its child process using either unnamed pipe
-//    or named pipes to relay data to subprocess which runs "more" to
-//    display data on the screen.  Run imore to see how to use this
-//    program.
-//
-//    Unfortunately, on Win32, this program doesn't use any pipe at all because
-//    using pipes confuses MORE.COM on Win32 and it just acts like "cat" on Unix.
-//
-// = AUTHOR
-//    Nanbor Wang <nanbor@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    imore.cpp (imore stands for indirect more.)
+ *
+ *  $Id$
+ *
+ *  This program demonstrates how to redirect stdout of a parent
+ *  process to the stdin of its child process using either unnamed pipe
+ *  or named pipes to relay data to subprocess which runs "more" to
+ *  display data on the screen.  Run imore to see how to use this
+ *  program.
+ *
+ *  Unfortunately, on Win32, this program doesn't use any pipe at all because
+ *  using pipes confuses MORE.COM on Win32 and it just acts like "cat" on Unix.
+ *
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"

@@ -1,28 +1,23 @@
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Timeouts.cpp
-//
-// = DESCRIPTION
-//
-//    This example application shows how to write Reactor event
-//    loops that handle events for some fixed amount of time.
-//
-//    Run this example (without arguments) to see the timers
-//    expire. The order should be:
-//
-//    foo, bar, foo, bar, foo, foo, bar, foo, bar, foo
-//
-// = AUTHOR
-//    Tim Harrison
-//    Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Timeouts.cpp
+ *
+ *  $Id$
+ *
+ *
+ *  This example application shows how to write Reactor event
+ *  loops that handle events for some fixed amount of time.
+ *
+ *  Run this example (without arguments) to see the timers
+ *  expire. The order should be:
+ *
+ *  foo, bar, foo, bar, foo, foo, bar, foo, bar, foo
+ *
+ *
+ *  @author Tim Harrison Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/Reactor.h"
 #include "ace/Service_Config.h"
@@ -30,17 +25,20 @@
 
 
 
+/**
+ * @class Timeout_Handler
+ *
+ * @brief Generic timeout handler.
+ */
 class Timeout_Handler : public ACE_Event_Handler
-// = TITLE
-//     Generic timeout handler.
 {
 public:
   Timeout_Handler (void)
     : count_ (0) {}
 
+    /// Print out when timeouts occur.
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg)
-    // Print out when timeouts occur.
     {
       ACE_UNUSED_ARG(tv);
       ACE_DEBUG ((LM_DEBUG,

@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ACE_wrappers/examples/QOS
-//
-// = FILENAME
-//    Sender_QoS_Event_Handler.cpp
-//
-// = AUTHOR
-//    Vishal Kachroo <vishal@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Sender_QoS_Event_Handler.cpp
+ *
+ *  $Id$
+ *
+ *  @author Vishal Kachroo <vishal@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Sender_QoS_Event_Handler.h"
 #include "ace/Log_Msg.h"

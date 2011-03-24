@@ -1,23 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    APC.cpp
-//
-// = DESCRIPTION
-//
-//    Tests the WFMO_Reactor's ability to handle regular APC
-//    notifications.
-//
-// = AUTHOR
-//
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    APC.cpp
+ *
+ *  $Id$
+ *
+ *
+ *  Tests the WFMO_Reactor's ability to handle regular APC
+ *  notifications.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 

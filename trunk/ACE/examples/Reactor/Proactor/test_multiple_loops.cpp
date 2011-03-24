@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    test_multiple_loops.cpp
-//
-// = DESCRIPTION
-//
-//    This example application shows how to write programs that
-//    combine the Proactor and Reactor event loops. This is possible
-//    only on WIN32 platform.
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_multiple_loops.cpp
+ *
+ *  $Id$
+ *
+ *
+ *  This example application shows how to write programs that
+ *  combine the Proactor and Reactor event loops. This is possible
+ *  only on WIN32 platform.
+ *
+ *
+ *  @author Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/Task.h"
 #include "ace/Proactor.h"
@@ -29,10 +26,13 @@
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
+/**
+ * @class Timeout_Handler
+ *
+ * @brief Generic timeout handler.
+ */
 class Timeout_Handler : public ACE_Handler, public ACE_Event_Handler
 {
-  // = TITLE
-  //     Generic timeout handler.
 
 public:
   Timeout_Handler (void)

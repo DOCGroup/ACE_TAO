@@ -1,22 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Abandoned.cpp
-//
-// = DESCRIPTION
-//
-//    Tests the WFMO_Reactor's ability to handle abandoned mutexes.
-//
-// = AUTHOR
-//
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Abandoned.cpp
+ *
+ *  $Id$
+ *
+ *
+ *  Tests the WFMO_Reactor's ability to handle abandoned mutexes.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 

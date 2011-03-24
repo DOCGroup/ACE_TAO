@@ -1,23 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples/NT_Service
-//
-// = FILENAME
-//    main.cpp
-//
-// = DESCRIPTION
-//    This is the main program - it just hands control off to the
-//    process instance to figure out what to do.  This program only
-//    runs on Win32.
-//
-// = AUTHOR
-//    Gonzalo Diethelm <gonzo@cs.wustl.edu>
-//    and Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    main.cpp
+ *
+ *  $Id$
+ *
+ *  This is the main program - it just hands control off to the
+ *  process instance to figure out what to do.  This program only
+ *  runs on Win32.
+ *
+ *
+ *  @author Gonzalo Diethelm <gonzo@cs.wustl.edu> and Steve Huston <shuston@riverace.com>
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "ntsvc.h"

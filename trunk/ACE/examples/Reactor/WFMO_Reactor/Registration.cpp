@@ -1,37 +1,33 @@
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Registration.cpp
-//
-// = DESCRIPTION
-//
-//    This test application tests a wide range of registration,
-//    suspension, resumption, and removal of events from Reactor.
-//
-//    The application initially registers two events with Reactor. A
-//    auxiliary thread is created to do the signaling on the
-//    events. When the first event is signaled, the event is suspended
-//    from Reactor. The event is then signaled again, but is "lost"
-//    since the handler has been suspended. When the second event is
-//    signal, the first event is resumed and the second is
-//    suspended. When the first event is signaled again, both events
-//    are removed from Reactor.
-//
-//    This test shows off the following features of Reactor:
-//    - Registration
-//    - Suspension
-//    - Resumption
-//    - Removal (while active and while suspended)
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Registration.cpp
+ *
+ *  $Id$
+ *
+ *
+ *  This test application tests a wide range of registration,
+ *  suspension, resumption, and removal of events from Reactor.
+ *
+ *  The application initially registers two events with Reactor. A
+ *  auxiliary thread is created to do the signaling on the
+ *  events. When the first event is signaled, the event is suspended
+ *  from Reactor. The event is then signaled again, but is "lost"
+ *  since the handler has been suspended. When the second event is
+ *  signal, the first event is resumed and the second is
+ *  suspended. When the first event is signaled again, both events
+ *  are removed from Reactor.
+ *
+ *  This test shows off the following features of Reactor:
+ *  - Registration
+ *  - Suspension
+ *  - Resumption
+ *  - Removal (while active and while suspended)
+ *
+ *
+ *  @author Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 
@@ -52,8 +48,8 @@ ACE_Reactor reactor;
 class Simple_Handler : public ACE_Event_Handler
 {
 public:
+  /// Default constructor
   Simple_Handler (void);
-  // Default constructor
 
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   virtual int handle_close (ACE_HANDLE handle,

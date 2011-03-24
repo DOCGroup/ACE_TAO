@@ -1,35 +1,31 @@
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Network_Events.cpp
-//
-// = DESCRIPTION
-//
-//    This application tests Reactor to make sure that it responds
-//    correctly to different kinds of network events.
-//
-//    The test starts off by creating a Network_Listener, that listens
-//    for connections at ACE_DEFAULT_SERVER_PORT. When a client
-//    connects, a Network_Handler is created. Network_Handler reads
-//    messages off the socket and prints them out. This is done until
-//    the remote side shuts down. Multiple clients can connect at the
-//    same time.
-//
-//    Events tested in this example includes ACCEPT, READ, and CLOSE masks.
-//
-//    To run this example, start an instance of this example and
-//    connect to it using telnet (to port
-//    ACE_DEFAULT_SERVER_PORT(20002)).
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Network_Events.cpp
+ *
+ *  $Id$
+ *
+ *
+ *  This application tests Reactor to make sure that it responds
+ *  correctly to different kinds of network events.
+ *
+ *  The test starts off by creating a Network_Listener, that listens
+ *  for connections at ACE_DEFAULT_SERVER_PORT. When a client
+ *  connects, a Network_Handler is created. Network_Handler reads
+ *  messages off the socket and prints them out. This is done until
+ *  the remote side shuts down. Multiple clients can connect at the
+ *  same time.
+ *
+ *  Events tested in this example includes ACCEPT, READ, and CLOSE masks.
+ *
+ *  To run this example, start an instance of this example and
+ *  connect to it using telnet (to port
+ *  ACE_DEFAULT_SERVER_PORT(20002)).
+ *
+ *
+ *  @author Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
@@ -43,8 +39,8 @@
 class Network_Handler : public ACE_Event_Handler
 {
 public:
+  /// Default constructor
   Network_Handler (ACE_SOCK_Stream &s);
-  // Default constructor
 
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_close (ACE_HANDLE handle,
@@ -119,10 +115,10 @@ Network_Handler::handle_close (ACE_HANDLE handle,
 class Network_Listener : public ACE_Event_Handler
 {
 public:
+  /// Default constructor
+  /// Default constructor
   Network_Listener (void);
-  // Default constructor
   ~Network_Listener (void);
-  // Default constructor
 
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_close (ACE_HANDLE handle,

@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    process.cpp
-//
-// = DESCRIPTION
-//    This example tests the <ACE_Process>.  For more info, check the
-//    README file in this directory.
-//
-// = AUTHOR
-//    Tim Harrison <harrison@cs.wustl.edu>.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    process.cpp
+ *
+ *  $Id$
+ *
+ *  This example tests the <ACE_Process>.  For more info, check the
+ *  README file in this directory.
+ *
+ *
+ *  @author Tim Harrison <harrison@cs.wustl.edu>.
+ */
+//=============================================================================
+
 
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_fcntl.h"

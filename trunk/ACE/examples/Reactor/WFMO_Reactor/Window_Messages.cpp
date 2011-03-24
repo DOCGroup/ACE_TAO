@@ -1,23 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Window_Messages.cpp
-//
-// = DESCRIPTION
-//
-//    Tests the Msg_WFMO_Reactor's ability to handle regular events
-//    and window messages.
-//
-// = AUTHOR
-//
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Window_Messages.cpp
+ *
+ *  $Id$
+ *
+ *
+ *  Tests the Msg_WFMO_Reactor's ability to handle regular events
+ *  and window messages.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 

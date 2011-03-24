@@ -1,24 +1,19 @@
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Removals.cpp
-//
-// = DESCRIPTION
-//
-//    Tests the Reactor's ability to handle simultaneous events.  If
-//    you pass anything on the command-line, then each handler
-//    requests to be removed from the Reactor after each event.
-//
-// = AUTHOR
-//    Tim Harrison
-//    Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Removals.cpp
+ *
+ *  $Id$
+ *
+ *
+ *  Tests the Reactor's ability to handle simultaneous events.  If
+ *  you pass anything on the command-line, then each handler
+ *  requests to be removed from the Reactor after each event.
+ *
+ *
+ *  @author Tim Harrison Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 
@@ -30,14 +25,15 @@
 
 
 
+/**
+ * @class Event_Handler
+ *
+ * @brief Generic Event Handler.
+ *
+ * Creates event.  Registers with Reactor.  Signals event.  If
+ * created with -close_down- it returns -1 from handle signal.
+ */
 class Event_Handler : public ACE_Event_Handler
-// = TITLE
-//    Generic Event Handler.
-//
-// = DESCRIPTION
-//
-//    Creates event.  Registers with Reactor.  Signals event.  If
-//    created with -close_down- it returns -1 from handle signal.
 {
 public:
   Event_Handler (int event_number,
@@ -72,14 +68,14 @@ public:
     }
 
 private:
+  /// Our event number.
   int event_number_;
-  // Our event number.
 
+  /// Shall we close down or not.
   int close_down_;
-  // Shall we close down or not.
 
+  /// Signaled to shut down the handler.
   ACE_Event event_;
-  // Signaled to shut down the handler.
 };
 
 int

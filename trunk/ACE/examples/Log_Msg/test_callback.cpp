@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples/Log_Msg
-//
-// = FILENAME
-//    test_callback.cpp
-//
-// = DESCRIPTION
-//     This program tests the <ACE_Log_Msg> class wrt writing to user
-//     defined callback objects.  In particular, it tests to make sure
-//     that nested callbacks don't deadlock.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_callback.cpp
+ *
+ *  $Id$
+ *
+ *   This program tests the <ACE_Log_Msg> class wrt writing to user
+ *   defined callback objects.  In particular, it tests to make sure
+ *   that nested callbacks don't deadlock.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 #include "ace/Log_Msg.h"
@@ -26,26 +23,29 @@
 
 
 
+/**
+ * @class Logger
+ Subclassing from ACE_Log_Msg_Callback means that an instance of
+ * Logger can be a target of a callback.
+ */
 class Logger : public ACE_Log_Msg_Callback
-// Subclassing from ACE_Log_Msg_Callback means that an instance of
-// Logger can be a target of a callback.
 {
 public:
   // Constructor sets whether we're testing "recursive" callback
   // logging!
   Logger (int be_recursive = 1);
 
+  /// Logging callback hook.
   virtual void log (ACE_Log_Record &log_record);
-  // Logging callback hook.
 
   void verbose (int be_verbose);
 
 private:
+  /// Flag for testing verbose logging.
   int verbose_logging_;
-  // Flag for testing verbose logging.
 
+  /// Flag for testing recursive callback logging.
   int recursive_;
-  // Flag for testing recursive callback logging.
 };
 
 void

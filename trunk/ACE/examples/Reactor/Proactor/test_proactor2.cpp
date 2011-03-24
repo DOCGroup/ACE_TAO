@@ -1,24 +1,21 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    test_proactor2.cpp
-//
-// = DESCRIPTION
-//    Alexander Libman <Alibman@baltimore.com> modified
-//    <test_proactor> and made this test. Instead of writing received
-//    data to the file, the receiver sends them back to the
-//    sender,i.e. ACE_Asynch_Write_File wf_  has been changed to
-//    ACE_Asynch_Write_Stream wf_.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu> and Alexander Libman
-//    <Alibman@baltimore.com>.
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_proactor2.cpp
+ *
+ *  $Id$
+ *
+ *  Alexander Libman <Alibman@baltimore.com> modified
+ *  <test_proactor> and made this test. Instead of writing received
+ *  data to the file, the receiver sends them back to the
+ *  sender,i.e. ACE_Asynch_Write_File wf_  has been changed to
+ *  ACE_Asynch_Write_Stream wf_.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu> and Alexander Libman <Alibman@baltimore.com>.
+ */
+//=============================================================================
+
 
 #include "ace/Signal.h"
 
@@ -119,23 +116,23 @@ public:
   ~Receiver (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  /// This is called after the new connection has been accepted.
+  ///FUZZ: enable check_for_lack_ACE_OS
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);
-  // This is called after the new connection has been accepted.
-  //FUZZ: enable check_for_lack_ACE_OS
 
 protected:
   // These methods are called by the framework
 
+  /// This is called when asynchronous <read> operation from the socket
+  /// complete.
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result
                                    &result);
-  // This is called when asynchronous <read> operation from the socket
-  // complete.
 
+  /// This is called when an asynchronous <write> to the file
+  /// completes.
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result
                                     &result);
-  // This is called when an asynchronous <write> to the file
-  // completes.
 
 private:
   int  initiate_read_stream  (void);
@@ -374,9 +371,9 @@ public:
   ~Sender (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
   int open (const ACE_TCHAR *host, u_short port);
   void close ();
-  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_HANDLE handle (void) const;
   void handle (ACE_HANDLE);
@@ -384,30 +381,30 @@ public:
 protected:
 // These methods are called by the freamwork
 
+/// This is called when asynchronous reads from the socket complete
 virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result
 &result);
-// This is called when asynchronous reads from the socket complete
 
+/// This is called when asynchronous writes from the socket complete
 virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result
 &result);
-// This is called when asynchronous writes from the socket complete
 
 private:
 
 int initiate_read_stream (void);
 int initiate_write_stream (void);
 
+/// Network I/O handle
 ACE_SOCK_Stream stream_;
-// Network I/O handle
 
+/// ws (write stream): for writing to the socket
 ACE_Asynch_Write_Stream ws_;
-// ws (write stream): for writing to the socket
 
+/// rs (read file): for reading from the socket
 ACE_Asynch_Read_Stream rs_;
-// rs (read file): for reading from the socket
 
+/// Welcome message
 ACE_Message_Block welcome_message_;
-// Welcome message
 
 MyMutex m_Mtx ;
 long    nIOCount ;

@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples/Web_Crawler
-//
-// = FILENAME
-//    URL_Status.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    URL_Status.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef _URL_STATUS_H
 #define _URL_STATUS_H
@@ -23,9 +20,12 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class URL_Status
+ *
+ */
 class URL_Status
 {
-  // = TITLE
 public:
   enum STATUS_CODE
   {

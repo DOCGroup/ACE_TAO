@@ -1,35 +1,30 @@
-// $Id$
-// ============================================================================
-//
-// = FILENAME
-//     post_completions.cpp
-//
-// = DESCRITPTION
-//     This program demonstrates how to post fake completions to The
-//     Proactor. It also shows the how to specify the particular
-//     real-time signals to post completions. The Real-time signal
-//     based completion strategy is implemented with
-//     ACE_POSIX_SIG_PROACTOR.
-//     (So, it can be used only if both ACE_HAS_AIO_CALLS and
-//     ACE_HAS_POSIX_REALTIME_SIGNALS are defined.)
-//     Since it is faking results, you have to pay by knowing and
-//     using platform-specific implementation objects for Asynchronous
-//     Result classes.
-//     This example shows using an arbitrary result class for faking
-//     completions. You can also use the predefined Result classes for
-//     faking. The factory methods in the Proactor class create the
-//     Result objects.
-//
-// = COMPILATION
-//     make
-//
-// = RUN
-//     ./post_completions
-//
-// = AUTHOR
-//     Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// =====================================================================
+//=============================================================================
+/**
+ *  @file     post_completions.cpp
+ *
+ *  $Id$
+ *
+ *  This program demonstrates how to post fake completions to The
+ *  Proactor. It also shows the how to specify the particular
+ *  real-time signals to post completions. The Real-time signal
+ *  based completion strategy is implemented with
+ *  ACE_POSIX_SIG_PROACTOR.
+ *  (So, it can be used only if both ACE_HAS_AIO_CALLS and
+ *  ACE_HAS_POSIX_REALTIME_SIGNALS are defined.)
+ *  Since it is faking results, you have to pay by knowing and
+ *  using platform-specific implementation objects for Asynchronous
+ *  Result classes.
+ *  This example shows using an arbitrary result class for faking
+ *  completions. You can also use the predefined Result classes for
+ *  faking. The factory methods in the Proactor class create the
+ *  Result objects.
+ *  make
+ *  ./post_completions
+ *
+ *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
@@ -54,14 +49,14 @@ static ACE_Atomic_Op <ACE_SYNCH_MUTEX, size_t> Completions_To_Go;
 #define RESULT_CLASS ACE_WIN32_Asynch_Result
 #endif /* ACE_HAS_AIO_CALLS */
 
+/**
+ * @class My_Result
+ *
+ * @brief Result Object that we will post to the Proactor.
+ *
+ */
 class My_Result : public RESULT_CLASS
 {
-  // = TITLE
-  //
-  //     Result Object that we will post to the Proactor.
-  //
-  // = DESCRIPTION
-  //
 
 public:
   My_Result (ACE_Handler &handler,
@@ -83,14 +78,16 @@ public:
     {}
   // Destructor.
 
+    /**
+     * This is the method that will be called by the Proactor for
+     * dispatching the completion. This method generally calls one of
+     * the call back hood methods defined in the ACE_Handler
+     * class. But, we will just handle the completions here.
+     */
   void complete (size_t,
                  int success,
                  const void *completion_key,
                  u_long error)
-    // This is the method that will be called by the Proactor for
-    // dispatching the completion. This method generally calls one of
-    // the call back hood methods defined in the ACE_Handler
-    // class. But, we will just handle the completions here.
     {
       this->success_ = success;
       this->completion_key_ = completion_key;
@@ -112,40 +109,41 @@ public:
     }
 
 private:
+  /// Sequence number for the result object.
   size_t sequence_number_;
-  // Sequence number for the result object.
 };
 
+/**
+ * @class My_Handler
+ *
+ * @brief Handler class for faked completions.
+ *
+ */
 class My_Handler : public  ACE_Handler
 {
-  // = TITLE
-  //
-  //     Handler class for faked completions.
-  //
-  // = DESCRIPTION
-  //
 
 public:
+  /// Constructor.
   My_Handler (void) {}
-  // Constructor.
 
+  /// Destructor.
   virtual ~My_Handler (void) {}
-  // Destructor.
 };
 
+/**
+ * @class My_Task:
+ *
+ * @brief Contains thread functions which execute event loops. Each
+ * thread waits for a different signal.
+ */
 class My_Task: public ACE_Task <ACE_NULL_SYNCH>
 {
-  // = TITLE
-  //
-  //     Contains thread functions which execute event loops. Each
-  //     thread waits for a different signal.
-  //
 public:
+  /// Constructor.
   My_Task (void) {}
-  // Constructor.
 
+  /// Destructor.
   virtual ~My_Task (void) {}
-  // Destructor.
 
   //FUZZ: disable check_for_lack_ACE_OS
   int open (void *proactor)
@@ -175,8 +173,8 @@ public:
     }
 
 private:
+  /// Proactor for this task.
   ACE_Proactor *proactor_;
-  // Proactor for this task.
 };
 
 int
