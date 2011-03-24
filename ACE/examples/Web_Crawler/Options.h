@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples/Web_Crawler
-//
-// = FILENAME
-//    Options.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Options.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef _OPTIONS_H
 #define _OPTIONS_H
@@ -29,46 +26,48 @@
 class Command_Processor;
 class URL_Visitor;
 
+/**
+ * @class Options
+ *
+ * @brief Maintains the global options.
+ *
+ * This class is converted into a Singleton by the
+ * <ACE_Singleton> template.
+ */
 class Options
 {
-  // = TITLE
-  //   Maintains the global options.
-  //
-  // = DESCRIPTION
-  //   This class is converted into a Singleton by the
-  //   <ACE_Singleton> template.
 public:
+  /// Parse the command-line arguments and initialize the options.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse the command-line arguments and initialize the options.
 
+  /// If non-0 and the link is an HTML file then recursively check all
+  /// links that are embedded in the body of file.
   int recurse (void) const;
-  // If non-0 and the link is an HTML file then recursively check all
-  // links that are embedded in the body of file.
 
+  /// Return the hostname of the initial Web server.
   const ACE_TCHAR *hostname (void) const;
-  // Return the hostname of the initial Web server.
 
+  /// Return the initial URI.
   const ACE_TCHAR *path_name (void) const;
-  // Return the initial URI.
 
+  /// String used to filter out which URLs to validate.
   const ACE_TCHAR *url_filter (void) const;
-  // String used to filter out which URLs to validate.
 
+  /// Are we debugging?
   int debug (void) const;
-  // Are we debugging?
 
+  /// Are we being verbose?
   int verbose (void) const;
-  // Are we being verbose?
 
+  /// Which order? LIFO|FIFO??
   const ACE_TCHAR *order (void) const;
-  // Which order? LIFO|FIFO??
 
+  /// Port #
   int port_no (void) const;
-  // Port #
 
+  /// Return the timeout used to prevent hanging on <recv> and
+  /// <connect> calls to broken servers.
   const ACE_Time_Value *timeout (void) const;
-  // Return the timeout used to prevent hanging on <recv> and
-  // <connect> calls to broken servers.
 
   // = Get/set the <Command_Processor>.
   Command_Processor *command_processor (void) const;
@@ -81,41 +80,41 @@ public:
   // Get the handle_limit.
   int handle_limit (void);
 private:
+  /// Are we recursving.
   int recurse_;
-  // Are we recursving.
 
+  /// Initial Web server name.
   const ACE_TCHAR *hostname_;
-  // Initial Web server name.
 
+  /// Initial URI name.
   const ACE_TCHAR *uri_;
-  // Initial URI name.
 
+  /// Are we debugging?
   int debug_;
-  // Are we debugging?
 
+  /// Are we being verbose?
   int verbose_;
-  // Are we being verbose?
 
+  /// Whether the URLs are traversed in FIFO or LIFO order.
   const ACE_TCHAR *order_;
-  // Whether the URLs are traversed in FIFO or LIFO order.
 
+  /// Timeout on <recv> and <connect> to broken Web servers.
   ACE_Time_Value timeout_;
-  // Timeout on <recv> and <connect> to broken Web servers.
 
+  /// String used to filter out which URLs to validate.
   const ACE_TCHAR *url_filter_;
-  // String used to filter out which URLs to validate.
 
+  /// Pointer to the Command_Processor.
   Command_Processor *command_processor_;
-  // Pointer to the Command_Processor.
 
+  /// Pointer to the <URL_Visitor>.
   URL_Visitor *visitor_;
-  // Pointer to the <URL_Visitor>.
 
+  /// Port no.
   int port_no_;
-  // Port no.
 
+  /// The limit of the number of descriptors to be given for this process.
   int handle_limit_;
-  // The limit of the number of descriptors to be given for this process.
 };
 
 // Typedef an Options Singleton.

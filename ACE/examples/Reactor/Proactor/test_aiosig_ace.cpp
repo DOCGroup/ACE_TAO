@@ -1,43 +1,33 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//     test_aiosig_sig.cpp
-//
-// = DESCRITPTION
-//     This program helps you to test the <aio_*> calls on a
-//     platform.
-//     Before running this test, make sure the platform can
-//     support POSIX <aio_> calls, using ACE_ROOT/tests/Aio_Plaform_Test.cpp
-//
-//     This  program tests the Signal based completion approach which
-//     uses <sigtimedwait> for completion querying.
-//     If this test is successful, ACE_POSIX_SIG_PROACTOR
-//     can be used on this platform.
-//
-//     This program is a ACE version of the
-//     $ACE_ROOT/examples/Reactor/Proactor/test_aiosig.cpp, with
-//     ACE_DEBUGs and Message_Blocks.
-//
-//     This test does the following:
-//     Issue two <aio_read>s.
-//     Assign SIGRTMIN as the notification signal.
-//     Mask these signals from delivery.
-//     Receive this signal by doing <sigtimedwait>.
-//     Wait for two completions (two signals)
-//
-// = COMPILATION
-//     make
-//
-// = RUN
-//     ./test_aiosig_ace
-//
-// = AUTHOR
-//     Programming for the Real World. Bill O. GallMeister.
-//     Modified by Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// =====================================================================
+//=============================================================================
+/**
+ *  @file     test_aiosig_ace.cpp
+ *
+ *  $Id$
+ *
+ *  This program helps you to test the <aio_*> calls on a
+ *  platform.
+ *  Before running this test, make sure the platform can
+ *  support POSIX <aio_> calls, using ACE_ROOT/tests/Aio_Plaform_Test.cpp
+ *  This  program tests the Signal based completion approach which
+ *  uses <sigtimedwait> for completion querying.
+ *  If this test is successful, ACE_POSIX_SIG_PROACTOR
+ *  can be used on this platform.
+ *  This program is a ACE version of the
+ *  $ACE_ROOT/examples/Reactor/Proactor/test_aiosig.cpp, with
+ *  ACE_DEBUGs and Message_Blocks.
+ *  This test does the following:
+ *  Issue two <aio_read>s.
+ *  Assign SIGRTMIN as the notification signal.
+ *  Mask these signals from delivery.
+ *  Receive this signal by doing <sigtimedwait>.
+ *  Wait for two completions (two signals)
+ *  make
+ *  ./test_aiosig_ace
+ *  @author  Programming for the Real World. Bill O. GallMeister.  Modified by Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/Message_Block.h"
 #include "ace/Log_Msg.h"

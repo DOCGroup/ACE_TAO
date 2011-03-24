@@ -1,23 +1,18 @@
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Prerun_State_Changes.cpp
-//
-// = DESCRIPTION
-//
-//    Tests the Reactor's ability to handle state changes before
-//    getting a chance to run.
-//
-// = AUTHOR
-//
-//    Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Prerun_State_Changes.cpp
+ *
+ *  $Id$
+ *
+ *
+ *  Tests the Reactor's ability to handle state changes before
+ *  getting a chance to run.
+ *
+ *
+ *  @author Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/Reactor.h"
 #include "ace/OS_main.h"
@@ -26,10 +21,12 @@
 
 
 
+/**
+ * @class Event_Handler
+ *
+ * @brief Generic Event Handler.
+ */
 class Event_Handler : public ACE_Event_Handler
-// = TITLE
-//    Generic Event Handler.
-//
 {
 public:
   virtual int handle_close (ACE_HANDLE handle, ACE_Reactor_Mask mask)
