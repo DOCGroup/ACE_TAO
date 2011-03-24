@@ -1,3 +1,9 @@
+Thu Mar 24 20:10:55 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/DnC_Dump.cpp:
+
+          Stab at a fix for a compile error.
+
 Thu Mar 24 18:48:45 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/RepositoryManager/RepositoryManager_Impl.cpp:
