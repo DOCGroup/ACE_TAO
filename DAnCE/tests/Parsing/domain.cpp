@@ -42,8 +42,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
     }
   catch (const DAnCE::Config_Handlers::Config_Error &ex)
     {
-      DANCE_ERROR (1, (LM_ERROR, "Caught config error while parsing XML into IDL: %C:%C\n",
-                      ex.name_.c_str (), ex.error_.c_str ()));
+      DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                   (LM_ERROR,
+                    "Caught config error while parsing XML into IDL: %C:%C\n",
+                    ex.name_.c_str (), ex.error_.c_str ()));
     }
   catch (...)
     {
