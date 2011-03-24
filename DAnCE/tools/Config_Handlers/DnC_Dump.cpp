@@ -573,9 +573,10 @@ namespace Deployment
       break;
     }
 #if (_MSC_VER)
-    dump_ref<Deployment::DeploymentPlan> ("instanceRef", pspe.instanceRef,
-                                          "DeploymentPlan",
-                                          &DeploymentPlan::instance);
+    ::Deployment::DnC_Dump_T::dump_ref<Deployment::DeploymentPlan>
+      ("instanceRef", pspe.instanceRef,
+       "DeploymentPlan",
+       &DeploymentPlan::instance);
 #endif
   }
 
