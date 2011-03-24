@@ -1,28 +1,25 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Thread_Pool_Test.cpp
-//
-// = DESCRIPTION
-//     This test program illustrates how the <ACE_Task>
-//     synchronization mechanisms work in conjunction with the
-//     <ACE_Thread_Manager>.  If the <manual> flag is set input comes
-//     from stdin until the user enters a return -- otherwise, the
-//     input is generated automatically.  All worker threads shutdown
-//     when (1) they receive a message block of length 0 or (2) the
-//     queue is deactivated.
-//
-// = AUTHOR
-//    Karlheinz Dorn <Karlheinz.Dorn@med.siemens.de>,
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>, and
-//    Prashant Jain <pjain@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Thread_Pool_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This test program illustrates how the <ACE_Task>
+ *   synchronization mechanisms work in conjunction with the
+ *   <ACE_Thread_Manager>.  If the <manual> flag is set input comes
+ *   from stdin until the user enters a return -- otherwise, the
+ *   input is generated automatically.  All worker threads shutdown
+ *   when (1) they receive a message block of length 0 or (2) the
+ *   queue is deactivated.
+ *
+ *
+ *  @author Karlheinz Dorn <Karlheinz.Dorn@med.siemens.de>
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author and Prashant Jain <pjain@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Task.h"
@@ -39,51 +36,58 @@ static size_t n_iterations = 100;
 // Controls whether the input is generated "manually" or automatically.
 static int manual = 0;
 
+/**
+ * @class Thread_Pool
+ *
+ * @brief Defines a thread pool abstraction based on the <ACE_Task>.
+ */
 class Thread_Pool : public ACE_Task<ACE_MT_SYNCH>
 {
-  // = TITLE
-  //   Defines a thread pool abstraction based on the <ACE_Task>.
 public:
+  /// Create the thread pool containing <n_threads>.
   Thread_Pool (int n_threads);
-  // Create the thread pool containing <n_threads>.
 
+  /// Destructor...
   ~Thread_Pool (void);
-  // Destructor...
 
+  /**
+   * Activate the task's thread pool, produce the messages that are
+   * consumed by the threads in the thread pool, and demonstate how to
+   * shutdown using the <ACE_Message_Queue::deactivate> method.
+   */
   int test_queue_deactivation_shutdown (void);
-  // Activate the task's thread pool, produce the messages that are
-  // consumed by the threads in the thread pool, and demonstate how to
-  // shutdown using the <ACE_Message_Queue::deactivate> method.
 
+  /**
+   * Activate the task's thread pool, produce the messages that are,
+   * produce the messages that are consumed by the threads in the
+   * thread pool, and demonstrate how to shutdown by enqueueing
+   * "empty" messages into the queue.
+   */
   int test_empty_message_shutdown (void);
-  // Activate the task's thread pool, produce the messages that are,
-  // produce the messages that are consumed by the threads in the
-  // thread pool, and demonstrate how to shutdown by enqueueing
-  // "empty" messages into the queue.
 
+  /// Iterate <n_iterations> time printing off a message and "waiting"
+  /// for all other threads to complete this iteration.
   virtual int svc (void);
-  // Iterate <n_iterations> time printing off a message and "waiting"
-  // for all other threads to complete this iteration.
 
+  /// Allows the producer to pass messages to the <Thread_Pool>.
   virtual int put (ACE_Message_Block *mb,
                    ACE_Time_Value *tv = 0);
-  // Allows the producer to pass messages to the <Thread_Pool>.
 
 private:
   //FUZZ: disable check_for_lack_ACE_OS
+  /// Spawn the threads in the pool.
   virtual int open (void * = 0);
-  // Spawn the threads in the pool.
-
-  virtual int close (u_long);
-  // Close hook.
   //FUZZ: enable check_for_lack_ACE_OS
 
-  ACE_Lock_Adapter<ACE_Thread_Mutex> lock_adapter_;
-  // Serialize access to <ACE_Message_Block> reference count, which
-  // will be decremented by multiple threads.
+  /// Close hook.
+  virtual int close (u_long);
 
+  /// Serialize access to <ACE_Message_Block> reference count, which
+  /// will be decremented by multiple threads.
+  ACE_Lock_Adapter<ACE_Thread_Mutex> lock_adapter_;
+
+  /// Number of threads to spawn.
   int n_threads_;
-  // Number of threads to spawn.
 };
 
 Thread_Pool::~Thread_Pool (void)

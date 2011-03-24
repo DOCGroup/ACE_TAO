@@ -1,23 +1,18 @@
 // -*- C++ -*-
 
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Network_Adapters_Test.h
-//
-// = DESCRIPTION
-//    Definitions for Network_Adapters_Test.cpp.
-//
-// = AUTHOR
-//    Robert S. Iakobashvili <roberti@go-WLAN.com> <coroberti@walla.co.il>
-//    Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com> made aceing
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Network_Adapters_Test.h
+ *
+ *  $Id$
+ *
+ *  Definitions for Network_Adapters_Test.cpp.
+ *
+ *
+ *  @author Robert S. Iakobashvili <roberti@go-WLAN.com> <coroberti@walla.co.il> Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com> made aceing
+ */
+//=============================================================================
+
 
 #ifndef ACE_NETWORK_ADAPTERS_TEST_H
 #define ACE_NETWORK_ADAPTERS_TEST_H

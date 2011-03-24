@@ -1,52 +1,50 @@
-// $Id$
 
-//============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    TPReactor_test.cpp
-//
-// = DESCRIPTION
-//    This program illustrates how the <ACE_TP_Reactor> can be used to
-//    implement an application that does various  operations.
-//    usage: TP_Reactor_Test
-//           -n number threads in the TP_Reactor thread pool
-//           -d duplex mode 1 (full-duplex) vs. 0 (half-duplex)
-//           -p port to listen(Server)/connect(Client)
-//           -h host to connect (Client mode)
-//           -s number of sender's instances ( Client mode)
-//           -b run client and server (both modes ) at the same time
-//           -v log level
-//              0 - log all messages
-//              1 - log only errors and unusual cases
-//           -i time to run in seconds
-//           -u show this message
-//
-//     The main differences between Thread_Pool_Reactor_Test.cpp and
-//     this test are:
-//
-//     1. Thread_Pool_Reactor_Test.cpp tests only handle_input()
-//     events on the server, whereas this one tests both handle_input() and
-//     handle_output() on both server and client, i.e., the receiver
-//     and sender are completely event-driven.
-//
-//     2. The receiver and sender in this test can work in full duplex
-//     mode, i.e., input and ouput events are processed independently.
-//     Half-duplex mode (request-reply) is also supported.
-//
-//     This test is therefore a bit more stressful than the
-//     Thread_Pool_Reactor.cpp for the ACE_TP_Reactor since same
-//     thread pool is shared between client and server.
-//
-//     This test is a "twin" of the Proactor_Test.cpp, so it can help for
-//     developers to provide independent of Reactor/Proactor solutions.
-//
-// = AUTHOR
-//      Alexander Libman <alibman@ihug.com.au>,<alexl@rumblgroup.com>
-//
-//============================================================================
+//=============================================================================
+/**
+ *  @file    TP_Reactor_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This program illustrates how the <ACE_TP_Reactor> can be used to
+ *  implement an application that does various  operations.
+ *  usage: TP_Reactor_Test
+ *         -n number threads in the TP_Reactor thread pool
+ *         -d duplex mode 1 (full-duplex) vs. 0 (half-duplex)
+ *         -p port to listen(Server)/connect(Client)
+ *         -h host to connect (Client mode)
+ *         -s number of sender's instances ( Client mode)
+ *         -b run client and server (both modes ) at the same time
+ *         -v log level
+ *            0 - log all messages
+ *            1 - log only errors and unusual cases
+ *         -i time to run in seconds
+ *         -u show this message
+ *
+ *   The main differences between Thread_Pool_Reactor_Test.cpp and
+ *   this test are:
+ *
+ *   1. Thread_Pool_Reactor_Test.cpp tests only handle_input()
+ *   events on the server, whereas this one tests both handle_input() and
+ *   handle_output() on both server and client, i.e., the receiver
+ *   and sender are completely event-driven.
+ *
+ *   2. The receiver and sender in this test can work in full duplex
+ *   mode, i.e., input and ouput events are processed independently.
+ *   Half-duplex mode (request-reply) is also supported.
+ *
+ *   This test is therefore a bit more stressful than the
+ *   Thread_Pool_Reactor.cpp for the ACE_TP_Reactor since same
+ *   thread pool is shared between client and server.
+ *
+ *   This test is a "twin" of the Proactor_Test.cpp, so it can help for
+ *   developers to provide independent of Reactor/Proactor solutions.
+ *
+ *
+ *  @author   Alexander Libman <alibman@ihug.com.au>
+ *  @author <alexl@rumblgroup.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 

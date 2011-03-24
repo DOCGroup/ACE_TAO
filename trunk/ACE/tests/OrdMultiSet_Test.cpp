@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    OrdMultiSet_Test.cpp
-//
-// = DESCRIPTION
-//    This is a simple test of the <ACE_Ordered_MultiSet> and
-//    <ACE_Ordered_MultiSet_Iterator> class templates, instantiating
-//    them with type int.  No command line arguments are needed to run
-//    the test.
-//
-// = AUTHOR
-//    Chris Gill <cdgill@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    OrdMultiSet_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This is a simple test of the <ACE_Ordered_MultiSet> and
+ *  <ACE_Ordered_MultiSet_Iterator> class templates, instantiating
+ *  them with type int.  No command line arguments are needed to run
+ *  the test.
+ *
+ *
+ *  @author Chris Gill <cdgill@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 // Note, for this test the config.h file *must* come first!
 #include "ace/config-all.h"

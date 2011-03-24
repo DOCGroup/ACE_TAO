@@ -1,24 +1,21 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Bug_2653_Regression_Test.cpp
-//
-// = DESCRIPTION
-//    This bug occurs when schedule_wakeup is called for a handle that does
-//    not already have an event handler registered. This can happen quite
-//    legitimately in multithreaded applications where one thread schedules
-//    the wakeup while another thread is handling the closure of the
-//    connection and unregistering.
-//
-// = AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Bug_2653_Regression_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This bug occurs when schedule_wakeup is called for a handle that does
+ *  not already have an event handler registered. This can happen quite
+ *  legitimately in multithreaded applications where one thread schedules
+ *  the wakeup while another thread is handling the closure of the
+ *  connection and unregistering.
+ *
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

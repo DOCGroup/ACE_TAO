@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Reactors_Test.cpp
-//
-// = DESCRIPTION
-//      This is a test that performs a torture test of multiple
-//      <ACE_Reactors> and <ACE_Tasks> in the same process.
-//
-// = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu>,
-//    Detlef Becker <Detlef.Becker@med.siemens.de>, and
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Reactors_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a test that performs a torture test of multiple
+ *    <ACE_Reactors> and <ACE_Tasks> in the same process.
+ *
+ *
+ *  @author Prashant Jain <pjain@cs.wustl.edu>
+ *  @author Detlef Becker <Detlef.Becker@med.siemens.de>
+ *  @author and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Task.h"
@@ -33,9 +30,12 @@ ACE_Thread_Manager *thr_mgr;
 
 static const int MAX_TASKS = 20;
 
+/**
+ * @class Test_Task
+ *
+ * @brief Exercise the tasks.
+ */
 class Test_Task : public ACE_Task<ACE_MT_SYNCH>
-  // = TITLE
-  //    Exercise the tasks.
 {
 public:
   // = Initialization and termination methods.
@@ -44,21 +44,21 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   // = Task hooks.
+  ///FUZZ: enable check_for_lack_ACE_OS
   virtual int open (void *args = 0);
   virtual int close (u_long flags = 0);
   virtual int svc (void);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   // = Event Handler hooks.
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_close (ACE_HANDLE fd,
                             ACE_Reactor_Mask close_mask);
 private:
+  /// Number of iterations handled.
   size_t handled_;
-  // Number of iterations handled.
 
+  /// Number of tasks running.
   static int task_count_;
-  // Number of tasks running.
 };
 
 // Static data member initialization.

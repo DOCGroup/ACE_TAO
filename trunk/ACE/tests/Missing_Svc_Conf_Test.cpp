@@ -1,30 +1,27 @@
-// $Id$
 
-// ==========================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Missing_Svc_Conf_Test.cpp
-//
-// = DESCRIPTION
-//    A test to ensure that service_config::open() returns -1 if it is
-//    fully defaulted, but no default svc.conf file exists. The first
-//    test verifies that open returns -1 with errno ENOENT. A second
-//    test ensures that service_config::open() returns 0 when any
-//    explicit directive is supplied by the command line, regardless
-//    of the existence of default svc.conf.
-//
-//    Presently there is no svc.conf file in the tests directory and
-//    this test relies on that. It is assumed that this will stay
-//    true, since adding a default svc.conf file in this directory my
-//    impact other tests.
-//
-// = AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file    Missing_Svc_Conf_Test.cpp
+ *
+ *  $Id$
+ *
+ *  A test to ensure that service_config::open() returns -1 if it is
+ *  fully defaulted, but no default svc.conf file exists. The first
+ *  test verifies that open returns -1 with errno ENOENT. A second
+ *  test ensures that service_config::open() returns 0 when any
+ *  explicit directive is supplied by the command line, regardless
+ *  of the existence of default svc.conf.
+ *
+ *  Presently there is no svc.conf file in the tests directory and
+ *  this test relies on that. It is assumed that this will stay
+ *  true, since adding a default svc.conf file in this directory my
+ *  impact other tests.
+ *
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "ace/Service_Config.h"
 #include "ace/OS_NS_fcntl.h"

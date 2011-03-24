@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Thread_Mutex_Test.cpp
-//
-// = DESCRIPTION
-//     This test illustrates the functionality of the
-//     ACE_Thread_Mutex. The test acquires and releases mutexes. No
-//     command line arguments are needed to run the test.
-//
-// = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Thread_Mutex_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This test illustrates the functionality of the
+ *   ACE_Thread_Mutex. The test acquires and releases mutexes. No
+ *   command line arguments are needed to run the test.
+ *
+ *
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Thread_Manager.h"

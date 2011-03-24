@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Semaphore Test
-//
-// = DESCRIPTION
-//    This test verifies the functionality of the <ACE_Thread_Semaphore>
-//    implementation.
-//
-// = AUTHOR
-//    Darrell Brunsch <brunsch@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Semaphore_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This test verifies the functionality of the <ACE_Thread_Semaphore>
+ *  implementation.
+ *
+ *
+ *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Thread_Semaphore.h"

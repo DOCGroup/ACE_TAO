@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Pipe_Test.cpp
-//
-// = DESCRIPTION
-//    Tests the construction of multiple pipes in a process.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Pipe_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Tests the construction of multiple pipes in a process.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Pipe.h"

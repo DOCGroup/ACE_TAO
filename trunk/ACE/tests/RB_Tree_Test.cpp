@@ -1,30 +1,27 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    RB_Tree_Test.cpp
-//
-// = DESCRIPTION
-//    This is a test to verify and illustrate the use of the
-//    <ACE_RB_Tree ACE_RB_Tree_Iterator> and
-//    <ACE_RB_Tree_Reverse_Iterator> classes.  Two different key and
-//    item types are used in order to demonstrate specialization of
-//    the <ACE_Less_Than> comparison function object template: int
-//    (for which the native < operator is sufficient), and const char
-//    * (for which < operator semantics must be replaced by strcmp
-//    semantics).  An RB tree for each of the four possible type
-//    parameter permutations over int and const char * is constructed
-//    and filled in, and the resulting order is checked via an
-//    iterator over each.
-//
-// = AUTHOR
-//    Chris Gill <cdgill@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    RB_Tree_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This is a test to verify and illustrate the use of the
+ *  <ACE_RB_Tree ACE_RB_Tree_Iterator> and
+ *  <ACE_RB_Tree_Reverse_Iterator> classes.  Two different key and
+ *  item types are used in order to demonstrate specialization of
+ *  the <ACE_Less_Than> comparison function object template: int
+ *  (for which the native < operator is sufficient), and const char
+ *  * (for which < operator semantics must be replaced by strcmp
+ *  semantics).  An RB tree for each of the four possible type
+ *  parameter permutations over int and const char * is constructed
+ *  and filled in, and the resulting order is checked via an
+ *  iterator over each.
+ *
+ *
+ *  @author Chris Gill <cdgill@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h" /* Include first to enable ACE_TEST_ASSERT. */
 #include "ace/RB_Tree.h"

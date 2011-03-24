@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Reference_Counted_Event_Handler_Test.cpp
-//
-// = DESCRIPTION
-//    This test is used to check reference counting of the Event
-//    Handler when it interacts with the Reactor.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@oomworks.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Reference_Counted_Event_Handler_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This test is used to check reference counting of the Event
+ *  Handler when it interacts with the Reactor.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@oomworks.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Reactor.h"

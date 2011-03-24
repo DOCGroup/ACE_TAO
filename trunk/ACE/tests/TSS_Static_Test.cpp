@@ -1,21 +1,21 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    TSS_Static_Test.cpp
-//
-// = DESCRIPTION
-//     This program tests the interaction between TSS and thread keys
-//     created during static construction.  VxWorks static construction
-//     is quite broken.  This test is designed to test changes to work
-//     around a bug in the VxWorks loader that constructs static objects
-//     multiple times.  It sounds hard to believe, but I've seen it!
-//
-// = AUTHOR
-//    Chad Elliott <elliott_c@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    TSS_Static_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This program tests the interaction between TSS and thread keys
+ *   created during static construction.  VxWorks static construction
+ *   is quite broken.  This test is designed to test changes to work
+ *   around a bug in the VxWorks loader that constructs static objects
+ *   multiple times.  It sounds hard to believe, but I've seen it!
+ *
+ *
+ *  @author Chad Elliott <elliott_c@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/ACE.h"

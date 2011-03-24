@@ -1,43 +1,40 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    QtReactor_Test.cpp
-//
-// = DESCRIPTION
-//    Simple test of QtReactor. Test is intended to verify if QtReactor
-//    correctly cooperates with Qt event loop in typical application. Test
-//    creates a number of timers which send datagrams. These datagrams are
-//    expected by datagram_handlers registered in reactor. Test asynchronously
-//    establishes also a number of loopback tcp connections using ACE_Acceptors
-//    and ACE_Connectors. Socket activities are handled asynchronously to ensure
-//    that reactor does not lose events in traffic transmission. Moreover, test
-//    registers and removes handlers frequently to cover register/remove_handler
-//    method of QtReactor which are known (10/07/2004) to be buggy.
-//
-//    Classes:
-//      QTestApplication     - main qt application running event loop for a
-//                             finite time
-//      Dgram_Handler        - responsible for sending and receiving datagrams as
-//                             well as handling timeouts. Datagrams are sent in
-//                             handle_timeout method.
-//      TCPConnectionHandler - connection handler responsible for sending and
-//                             receiving data using tcp streams.
-//      TCPAcceptorHandler   - acceptor responsible for acceptance and
-//                             registration of connections in HandlersRegister
-//                             class.
-//      HandlersRegister     - register of event_handlers, responsible also for
-//                             the analysis of test results.
-//
-// = AUTHOR
-//    Marek Brudka <mbrudka@elka.pw.edu.pl>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    QtReactor_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Simple test of QtReactor. Test is intended to verify if QtReactor
+ *  correctly cooperates with Qt event loop in typical application. Test
+ *  creates a number of timers which send datagrams. These datagrams are
+ *  expected by datagram_handlers registered in reactor. Test asynchronously
+ *  establishes also a number of loopback tcp connections using ACE_Acceptors
+ *  and ACE_Connectors. Socket activities are handled asynchronously to ensure
+ *  that reactor does not lose events in traffic transmission. Moreover, test
+ *  registers and removes handlers frequently to cover register/remove_handler
+ *  method of QtReactor which are known (10/07/2004) to be buggy.
+ *
+ *  Classes:
+ *    QTestApplication     - main qt application running event loop for a
+ *                           finite time
+ *    Dgram_Handler        - responsible for sending and receiving datagrams as
+ *                           well as handling timeouts. Datagrams are sent in
+ *                           handle_timeout method.
+ *    TCPConnectionHandler - connection handler responsible for sending and
+ *                           receiving data using tcp streams.
+ *    TCPAcceptorHandler   - acceptor responsible for acceptance and
+ *                           registration of connections in HandlersRegister
+ *                           class.
+ *    HandlersRegister     - register of event_handlers, responsible also for
+ *                           the analysis of test results.
+ *
+ *
+ *  @author Marek Brudka <mbrudka@elka.pw.edu.pl>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 
@@ -165,8 +162,8 @@ public:
   virtual int handle_close (ACE_HANDLE handle,ACE_Reactor_Mask close_mask);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
   virtual int open (void * = 0);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   int scheduleSend (ACE_Message_Block *);
   int sendBuffers ();

@@ -1,30 +1,27 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Max_Default_Port_Test.cpp
-//
-// = DESCRIPTION
-//    This is a test for ACE_MAX_DEFAULT_PORT value. The test tests the
-//    highest value of the port number at which an event handler can be
-//    registered and a Connector can be connected to.
-//
-//    Some weird behaviour has been reported on Windows NT (sp 3) when
-//    the port number exceeds 65279 resulting ACE_MAX_DEFAULT_PORT to set
-//    to zero on that platform.
-//
-//    In this test, the event handler is started at the port value
-//    USHRT_MAX and decremented for 'ports_to_test' port values and tested
-//    if the highest port number used agrees with ACE_MAX_DEFAULT_PORT value.
-//
-//
-// = AUTHOR
-//    Chanaka Liyanaarachchi <chanaka@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Max_Default_Port_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This is a test for ACE_MAX_DEFAULT_PORT value. The test tests the
+ *  highest value of the port number at which an event handler can be
+ *  registered and a Connector can be connected to.
+ *
+ *  Some weird behaviour has been reported on Windows NT (sp 3) when
+ *  the port number exceeds 65279 resulting ACE_MAX_DEFAULT_PORT to set
+ *  to zero on that platform.
+ *
+ *  In this test, the event handler is started at the port value
+ *  USHRT_MAX and decremented for 'ports_to_test' port values and tested
+ *  if the highest port number used agrees with ACE_MAX_DEFAULT_PORT value.
+ *
+ *
+ *
+ *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Reactor.h"

@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Naming_Test.cpp
-//
-// = DESCRIPTION
-//      This is a test to illustrate the Naming Services. The test
-//      does binds, rebinds, finds, and unbinds on name bindings using
-//      the local naming context.
-//
-// = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu> and Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Naming_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a test to illustrate the Naming Services. The test
+ *    does binds, rebinds, finds, and unbinds on name bindings using
+ *    the local naming context.
+ *
+ *
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "randomize.h"

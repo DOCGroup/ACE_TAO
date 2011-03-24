@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Refcounted_Event_Handler_Test_DevPoll.cpp
-//
-// = DESCRIPTION
-//    This is a simple test that checks the order of dispatching of
-//    ACE Reactors.  Order should be: timeout, output, and then input.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Refcounted_Event_Handler_Test_DevPoll.cpp
+ *
+ *  $Id$
+ *
+ *  This is a simple test that checks the order of dispatching of
+ *  ACE Reactors.  Order should be: timeout, output, and then input.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

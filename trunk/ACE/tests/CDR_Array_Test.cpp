@@ -1,25 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    CDR_Array_Test.cpp
-//
-// = DESCRIPTION
-//    Checks ACE_OutputCDR::write_XX_array.
-//    Checks ACE_InputCDR::read_XX_array.
-//    Checks operator<< and operator>> for CDR Streams in
-//    each of the basic CDR types.
-//    Gives a measure of the speed of the ACE CDR streams wrt those
-//    operations.
-//
-// = AUTHORS
-//    Cristian Ferretti <cristian_ferretti@yahoo.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    CDR_Array_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Checks ACE_OutputCDR::write_XX_array.
+ *  Checks ACE_InputCDR::read_XX_array.
+ *  Checks operator<< and operator>> for CDR Streams in
+ *  each of the basic CDR types.
+ *  Gives a measure of the speed of the ACE CDR streams wrt those
+ *  operations.
+ *
+ *
+ *  @author Cristian Ferretti <cristian_ferretti@yahoo.com>
+ */
+//=============================================================================
+
 
 // For measuring time, choose your method:
 // Define:

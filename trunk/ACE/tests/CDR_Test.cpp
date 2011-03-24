@@ -1,22 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    CDR_Test.cpp
-//
-// = DESCRIPTION
-//    Checks the functionality of the ACE CDR streams.
-//
-// = AUTHORS
-//    Istvan Buki <istvan.buki@euronet.be> and
-//    Jeff Parsons <parsons@cs.wustl.edu> and
-//    Carlos O'Ryan <coryan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    CDR_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Checks the functionality of the ACE CDR streams.
+ *
+ *
+ *  @author Istvan Buki <istvan.buki@euronet.be> and Jeff Parsons <parsons@cs.wustl.edu> and Carlos O'Ryan <coryan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Get_Opt.h"

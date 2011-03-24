@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Process_Env_Test.cpp
-//
-// = DESCRIPTION
-//      This program tests the limits of the Windows CreateProcess
-//      environment buffer.
-//
-// = AUTHOR
-//    Chad Elliott <elliott_c@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Process_Env_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This program tests the limits of the Windows CreateProcess
+ *    environment buffer.
+ *
+ *
+ *  @author Chad Elliott <elliott_c@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Process.h"

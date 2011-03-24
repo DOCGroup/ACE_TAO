@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    IOStream_Test.cpp
-//
-// = DESCRIPTION
-//    This is a simple test of the IOStream class that illustrates
-//    how to use iostream operations on almost arbitrary I/O classes.
-//
-// = AUTHOR
-//    James CE Johnson <jcej@lads.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    IOStream_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This is a simple test of the IOStream class that illustrates
+ *  how to use iostream operations on almost arbitrary I/O classes.
+ *
+ *
+ *  @author James CE Johnson <jcej@lads.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Thread.h"

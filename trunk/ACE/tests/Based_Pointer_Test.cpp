@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Based_Pointer_Test.cpp
-//
-// = DESCRIPTION
-//    This test check the Based_Pointer and Based_Pointer_repository classes.
-//
-// = AUTHOR
-//    Steve Williams  <steve@telxio>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Based_Pointer_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This test check the Based_Pointer and Based_Pointer_repository classes.
+ *
+ *
+ *  @author Steve Williams  <steve@telxio>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/DLL.h"

@@ -1,25 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    NonBlocking_Conn_Test.cpp
-//
-// = DESCRIPTION
-//    This test checks for the proper working of the following:
-//    - blocking connections
-//    - blocking connections with timeouts
-//    - non-blocking connections
-//    - non-blocking connections without waiting for completions
-//    - non-blocking connections with timeouts
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@oomworks.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    NonBlocking_Conn_Test.h
+ *
+ *  $Id$
+ *
+ *  This test checks for the proper working of the following:
+ *  - blocking connections
+ *  - blocking connections with timeouts
+ *  - non-blocking connections
+ *  - non-blocking connections without waiting for completions
+ *  - non-blocking connections with timeouts
+ *
+ *
+ *  @author Irfan Pyarali <irfan@oomworks.com>
+ */
+//=============================================================================
+
 
 #ifndef NONBLOCKING_CONN_TEST_H
 #define NONBLOCKING_CONN_TEST_H

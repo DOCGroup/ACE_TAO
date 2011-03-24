@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Reactor_Exceptions_Test.cpp
-//
-// = DESCRIPTION
-//      This is a test that makes sure the <ACE_Reactor> works
-//      correctly in the face of C++ exceptions and threads.
-//
-// = AUTHOR
-//    Luca Priorelli <lucapri@mbox.vol.it> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Reactor_Exceptions_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a test that makes sure the <ACE_Reactor> works
+ *    correctly in the face of C++ exceptions and threads.
+ *
+ *
+ *  @author Luca Priorelli <lucapri@mbox.vol.it> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Reactor.h"

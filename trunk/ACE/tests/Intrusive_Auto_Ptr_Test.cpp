@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Intrusive_Auto_Ptr_Test
-//
-// = DESCRIPTION
-//    This test verifies the functionality of the <ACE_Intrusive_Auto_Ptr>
-//    implementation.
-//
-// = AUTHOR
-//    Iliyan Jeliazkov <iliyan@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Intrusive_Auto_Ptr_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This test verifies the functionality of the <ACE_Intrusive_Auto_Ptr>
+ *  implementation.
+ *
+ *
+ *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Intrusive_Auto_Ptr.h"

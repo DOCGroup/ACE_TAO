@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Time_Value_Test.cpp
-//
-// = DESCRIPTION
-//      This is a simple test of ACE_Time_Value.  No command line arguments
-//      are needed to run the test.  It also tests the ACE_U_LongLong class.
-//      Because ACE_U_LongLong is used for ACE_hrtime_t on some platforms,
-//      this seems like a reasonable place to test it.
-//
-// = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu> and David Levine <levine@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Time_Value_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a simple test of ACE_Time_Value.  No command line arguments
+ *    are needed to run the test.  It also tests the ACE_U_LongLong class.
+ *    Because ACE_U_LongLong is used for ACE_hrtime_t on some platforms,
+ *    this seems like a reasonable place to test it.
+ *
+ *
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and David Levine <levine@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 // Note, for this test the config.h file *must* come first!
 #include "ace/config-all.h"

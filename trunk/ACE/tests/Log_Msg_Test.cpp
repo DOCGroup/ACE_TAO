@@ -1,24 +1,21 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Log_Msg_Test.cpp
-//
-// = DESCRIPTION
-//     This program tests the <ACE_Log_Msg> class in various ways and
-//     also illustrates many of the features of the <ACE_Log_Msg> For
-//     instance, this program tests the <ACE_Log_Msg> abstraction wrt
-//     writing to stderr and to a file.  It also tests writing to user
-//     defined callback objects.
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Log_Msg_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This program tests the <ACE_Log_Msg> class in various ways and
+ *   also illustrates many of the features of the <ACE_Log_Msg> For
+ *   instance, this program tests the <ACE_Log_Msg> abstraction wrt
+ *   writing to stderr and to a file.  It also tests writing to user
+ *   defined callback objects.
+ *
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 
@@ -56,21 +53,21 @@ cause_error (void)
 class Logger : public ACE_Log_Msg_Callback
 {
 public:
+  /// Constructor sets whether we're testing "recursive" callback
+  /// logging!
   Logger (bool be_recursive = true);
-  // Constructor sets whether we're testing "recursive" callback
-  // logging!
 
+  /// Logging callback
   void log (ACE_Log_Record &log_record);
-  // Logging callback
 
   void verbose (bool be_verbose);
 
 private:
+  /// Flag for testing verbose logging.
   bool verbose_logging_;
-  // Flag for testing verbose logging.
 
+  /// Flag for testing recursive callback logging.
   bool recursive_;
-  // Flag for testing recursive callback logging.
 };
 
 void
@@ -479,17 +476,17 @@ class Log_Spec_Verify : public ACE_Log_Msg_Callback
 public:
   Log_Spec_Verify (bool be_recursive = true) : fail_ (0), tests_ (0), recursive_ (be_recursive) {};
 
+  /// Logging callback
   void log (ACE_Log_Record &log_record);
-  // Logging callback
 
   int  result ();
 
 private:
+  /// Count how many tests failed.
   int fail_;
-  // Count how many tests failed.
 
+  /// Count how many tests we run
   int tests_;
-  // Count how many tests we run
 
   bool recursive_;
 };
