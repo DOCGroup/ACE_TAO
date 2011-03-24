@@ -1,3 +1,11 @@
+Thu Mar 24 18:48:45 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/RepositoryManager/RepositoryManager_Impl.cpp:
+        * dance/RepositoryManager/Repository_Manager.cpp:
+        * dance/RepositoryManager/ZIP_Wrapper.cpp:
+
+          Compile errors.
+
 Thu Mar 24 00:21:24 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
@@ -5,7 +13,7 @@ Thu Mar 24 00:21:24 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
         * tests/Parsing/test.cpp:
         * tools/Split_Plan/Split_Plan.cpp:
         * tools/System_Health/Interceptors/SHS_CORBA_Transport.cpp:
-        
+
           Defuzzing. I fixed my laptop emacs too.
 
 Wed Mar 23 18:54:04 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>

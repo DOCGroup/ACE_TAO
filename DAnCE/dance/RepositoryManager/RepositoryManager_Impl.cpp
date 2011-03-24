@@ -404,7 +404,7 @@ namespace DAnCE
 
     //now add the type interface
     if(!this->add_type (pc, installationName))
-      DANCE_ERROR (DANCE_LOG_ERRO, (LM_ERROR, "Failed to add the type\n"));
+      DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, "Failed to add the type\n"));
 
     this->dump ();
 

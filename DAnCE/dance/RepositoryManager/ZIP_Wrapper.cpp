@@ -194,9 +194,9 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path, bool verbose)
   uf = unzOpen(zip_archive);
   if (uf==0)
     {
-      DANCE_EROR (DANCE_LOG_ERROR,
-                  (LM_DEBUG,ACE_TEXT("unzOpen failed to open the")
-                   ACE_TEXT(" zipfile\n")));
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_DEBUG,ACE_TEXT("unzOpen failed to open the")
+                    ACE_TEXT(" zipfile\n")));
       return false;
     }
   //get the name of the archive
