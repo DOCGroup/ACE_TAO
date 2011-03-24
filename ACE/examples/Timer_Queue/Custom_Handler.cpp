@@ -1,19 +1,17 @@
-// $Id$
-// ============================================================================
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Custom_Handler.cpp
-//
-// = DESCRIPTION
-//    This is a custom event handler to be used with the thread timer queue
-//    adapter, and its appropriate upcall.
-//
-// = AUTHOR
-//    Alon Diamant <diamant.alon@gmail.com
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Custom_Handler.cpp
+ *
+ *  $Id$
+ *
+ *  This is a custom event handler to be used with the thread timer queue
+ *  adapter, and its appropriate upcall.
+ *
+ *
+ *  @author Alon Diamant <diamant.alon@gmail.com
+ */
+//=============================================================================
+
 
 #include "Custom_Handler.h"
 #include "ace/OS_NS_stdio.h"

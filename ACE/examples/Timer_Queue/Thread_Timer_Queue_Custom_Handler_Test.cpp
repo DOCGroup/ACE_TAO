@@ -1,23 +1,18 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Thread_Timer_Queue_Custom_Handler_Test.cpp
-//
-// = DESCRIPTION
-//      This test exercises the <ACE_Thread_Timer_Queue_Adapter>
-//      using an <ACE_Timer_Heap>. It also demonstrates using a custom handler for
-//      timer events.
-//
-// = AUTHORS
-//    Carlos O'Ryan <coryan@cs.wustl.edu> and
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu> and
-//    Alon Diamant <diamant.alon@gmail.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Thread_Timer_Queue_Custom_Handler_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This test exercises the <ACE_Thread_Timer_Queue_Adapter>
+ *    using an <ACE_Timer_Heap>. It also demonstrates using a custom handler for
+ *    timer events.
+ *
+ *
+ *  @author Carlos O'Ryan <coryan@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu> and Alon Diamant <diamant.alon@gmail.com>
+ */
+//=============================================================================
+
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"

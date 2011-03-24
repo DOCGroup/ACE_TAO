@@ -1,22 +1,18 @@
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Registry_Changes.cpp
-//
-// = DESCRIPTION
-//
-//    This application tests the working of Reactor when users are
-//    interested in monitoring changes in the registry.
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Registry_Changes.cpp
+ *
+ *  $Id$
+ *
+ *
+ *  This application tests the working of Reactor when users are
+ *  interested in monitoring changes in the registry.
+ *
+ *
+ *  @author Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 

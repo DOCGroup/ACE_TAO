@@ -1,36 +1,35 @@
 /* -*- C++ -*- */
 
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Custom_Handler.h
-//
-// = DESCRIPTION
-//    This is a custom event handler to be used with the thread timer queue
-//    adapter, and its appropriate upcall.
-//
-// = AUTHORS
-//    Alon Diamant <diamant.alon@gmail.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Custom_Handler.h
+ *
+ *  $Id$
+ *
+ *  This is a custom event handler to be used with the thread timer queue
+ *  adapter, and its appropriate upcall.
+ *
+ *
+ *  @author Alon Diamant <diamant.alon@gmail.com>
+ */
+//=============================================================================
+
 
 #ifndef _CUSTOM_HANDLER_H_
 #define _CUSTOM_HANDLER_H_
 
 #include "ace/Timer_Queue.h"
 
+/**
+ * @class Custom_Handler
+ *
+ * @brief Custom event handler for the timer queue timeout events.
+ *
+ * The <on_timeout> hook method prints out the current time,
+ * prints the time when this timer expired and deletes "this".
+ */
 class Custom_Handler
 {
-    // = TITLE
-    //     Custom event handler for the timer queue timeout events.
-    //
-    // = DESCRIPTION
-    //     The <on_timeout> hook method prints out the current time,
-    //     prints the time when this timer expired and deletes "this".
 
     public:
 

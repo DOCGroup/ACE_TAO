@@ -1,25 +1,22 @@
-// $Id: test_timeout.cpp
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    test_timeout.cpp
-//
-// = DESCRIPTION
-//
-//    This example application shows how to write event loops that
-//    handle events for some fixed amount of time. Note that any
-//    thread in the Proactor thread pool can call back the handler. On
-//    POSIX4 systems, this test works only with POSIX_SIG_Proactor,
-//    which can work with multiple threads.
-//
-// = AUTHOR
-//    Irfan Pyarali and Alexander Babu Arulanthu
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_timeout.cpp
+ *
+ *  $Id: test_timeout.cpp
+ *
+ *
+ *  This example application shows how to write event loops that
+ *  handle events for some fixed amount of time. Note that any
+ *  thread in the Proactor thread pool can call back the handler. On
+ *  POSIX4 systems, this test works only with POSIX_SIG_Proactor,
+ *  which can work with multiple threads.
+ *
+ *
+ *  @author Irfan Pyarali and Alexander Babu Arulanthu
+ */
+//=============================================================================
+
 
 #include "ace/Proactor.h"
 #include "ace/Task.h"
@@ -34,10 +31,13 @@
   // This only works on Win32 platforms and on Unix platforms supporting
   // POSIX aio calls.
 
+/**
+ * @class Timeout_Handler
+ *
+ * @brief Generic timeout handler.
+ */
 class Timeout_Handler : public ACE_Handler
 {
-  // = TITLE
-  //     Generic timeout handler.
 public:
   Timeout_Handler (void)
     : start_time_ (ACE_OS::gettimeofday ())
@@ -58,11 +58,11 @@ public:
     }
 
 private:
+  /// Number of the timer event.
   ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> count_;
-  // Number of the timer event.
 
+  /// Starting time of the test.
   ACE_Time_Value start_time_;
-  // Starting time of the test.
 };
 
 class Worker : public ACE_Task <ACE_NULL_SYNCH>

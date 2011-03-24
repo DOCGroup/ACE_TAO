@@ -1,22 +1,19 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ===========================================================
-//
-// = LIBRARY
-//    ACE_wrappers/examples/DLL
-//
-// = FILENAME
-//    Newsweek.h
-//
-// = DESCRIPTION
-//    This is a derived class from Magazine which is a magazine
-//    pertaining to news and information.
-//
-// = AUTHOR
-//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  @file    Newsweek.h
+ *
+ *  $Id$
+ *
+ *  This is a derived class from Magazine which is a magazine
+ *  pertaining to news and information.
+ *
+ *
+ *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef NEWSWEEK_H
 #define NEWSWEEK_H
@@ -29,14 +26,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class Newsweek
+ *
+ * @brief This is an derived class of Magazine.
+ *
+ * Polymoriphism is exploited and an object pointer
+ * of Magazine is bound to the Newsweek object at runtime.
+ */
 class Newsweek : public Magazine
 {
-  //= TITLE
-  //   This is an derived class of Magazine.
-  //
-  //= DESCRIPTION
-  //   Polymoriphism is exploited and an object pointer
-  //   of Magazine is bound to the Newsweek object at runtime.
 public:
 
   // This is the abstract class method which describes the magazine.

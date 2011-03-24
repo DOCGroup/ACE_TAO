@@ -1,19 +1,17 @@
-// $Id$
-// ============================================================================
-//
-// = FILENAME
-//    aio_platform_test_c.cpp
-//
-// =  DESCRITPTION
-//     Testing the platform for POSIX Asynchronous I/O. This is the C
-//     version of the  $ACE_ROOT/tests/Aio_Platform_Test.cpp. Useful
-//     to send bug reports.
-//
-// = AUTHOR
-//    Programming for the Real World. Bill O. GallMeister.
-//    Modified by Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// =====================================================================
+//=============================================================================
+/**
+ *  @file    Aio_Platform_Test_C.cpp
+ *
+ *  $Id$
+ *
+ *  Testing the platform for POSIX Asynchronous I/O. This is the C
+ *  version of the  $ACE_ROOT/tests/Aio_Platform_Test.cpp. Useful
+ *  to send bug reports.
+ *
+ *  @author Programming for the Real World. Bill O. GallMeister. Modified by Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 
 #include <unistd.h>

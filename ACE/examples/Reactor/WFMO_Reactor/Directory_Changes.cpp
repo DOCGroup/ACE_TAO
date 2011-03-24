@@ -1,22 +1,18 @@
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Directory_Changes.cpp
-//
-// = DESCRIPTION
-//
-//    This application tests the working of WFMO_Reactor when users
-//    are interested in monitoring changes in the filesystem.
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Directory_Changes.cpp
+ *
+ *  $Id$
+ *
+ *
+ *  This application tests the working of WFMO_Reactor when users
+ *  are interested in monitoring changes in the filesystem.
+ *
+ *
+ *  @author Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 
