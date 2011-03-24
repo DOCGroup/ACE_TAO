@@ -1,3 +1,16 @@
+Thu Mar 24 18:31:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Misc/basic_func.h:
+        * performance-tests/Misc/basic_perf.cpp:
+        * performance-tests/Misc/childbirth_time.cpp:
+        * performance-tests/Misc/context_switch_time.cpp:
+        * performance-tests/Misc/preempt.cpp:
+        * performance-tests/Misc/test_naming.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_Association_Test.cpp:
+        * performance-tests/TCP/tcp_test.cpp:
+        * performance-tests/UDP/udp_test.cpp:
+          Converted to doxygen
+
 Thu Mar 24 13:26:32 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Bounded_Packet_Relay/BPR_Drivers.h:
