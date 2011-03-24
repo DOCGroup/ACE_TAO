@@ -511,10 +511,11 @@ namespace Deployment
     dump ("source", idd.source);
 
 #if (_MSC_VER)
-    dump_ref<Deployment::DeploymentPlan> ("implementationRef",
-                                          idd.implementationRef,
-                                          "DeploymentPlan",
-                                          &DeploymentPlan::implementation);
+    ::Deployment::DnC_Dump_T::dump_ref<Deployment::DeploymentPlan>
+      ("implementationRef",
+       idd.implementationRef,
+       "DeploymentPlan",
+       &DeploymentPlan::implementation);
 #endif
     ::Deployment::DnC_Dump_T::dump_sequence ("configProperty", idd.configProperty);
     ::Deployment::DnC_Dump_T::dump_sequence ("deployedResource", idd.deployedResource);
@@ -625,9 +626,10 @@ namespace Deployment
     dump ("propertyName", pspr.propertyName);
 
 #if (_MSC_VER)
-    dump_ref<Deployment::DeploymentPlan> ("instanceRef", pspr.instanceRef,
-                                          "DeploymentPlan",
-                                          &DeploymentPlan::instance);
+    ::Deployment::DnC_Dump_T::dump_ref<Deployment::DeploymentPlan>
+      ("instanceRef", pspr.instanceRef,
+       "DeploymentPlan",
+       &DeploymentPlan::instance);
 #endif
   }
 
