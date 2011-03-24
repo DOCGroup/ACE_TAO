@@ -43,8 +43,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           orb->run ();
         }
 
-      DANCE_TRACE_LOG (DANCE_LOG_TRACE (LM_TRACE, DLINFO
-                    ACE_TEXT("RepositoryManager - destroying ORB\n")));
+      DANCE_TRACE_LOG (DANCE_LOG_TRACE,
+                       (LM_TRACE, DLINFO
+                        ACE_TEXT("RepositoryManager - destroying ORB\n")));
 
       orb->destroy ();
     }
@@ -53,7 +54,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       DANCE_ERROR (DANCE_LOG_EMERGENCY,
                    (LM_ERROR, DLINFO
                     ACE_TEXT ("Caught CORBA Exception: %C\n"),
-                    ex._info ().c_str ()
+                    ex._info ().c_str ()));
       retval = -1;
     }
   catch (...)
