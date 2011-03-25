@@ -340,11 +340,8 @@ do_test(void)
   return 0;
 }
 
-int run_main (int argc, ACE_TCHAR *argv[])
+int run_main (int, ACE_TCHAR *[])
 {
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-
   ACE_START_TEST (ACE_TEXT ("SOCK_SEQPACK_SCTP_Test"));
 
   //
