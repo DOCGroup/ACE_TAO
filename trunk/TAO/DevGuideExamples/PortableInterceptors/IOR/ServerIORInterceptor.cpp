@@ -24,12 +24,14 @@ ServerIORInterceptor::establish_components (
 
   IOP::TaggedComponent myTag;
 
-  myTag.tag =  tagID;
-  myTag.component_data.length (ACE_OS::strlen(permission) + 1 );
+  myTag.tag = tagID;
+  const CORBA::ULong len =
+    static_cast<CORBA::ULong> (ACE_OS::strlen (permission));
+  myTag.component_data.length (len + 1);
 
   CORBA::Octet *buf = myTag.component_data.get_buffer();
 
-  ACE_OS::memcpy (buf, permission, ACE_OS::strlen(permission) + 1);
+  ACE_OS::memcpy (buf, permission, len + 1);
 
   // add tagged component
   info->add_ior_component (myTag);

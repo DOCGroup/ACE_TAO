@@ -1,9 +1,23 @@
+Fri Mar 25 15:32:09 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * DevGuideExamples/Messaging/AMIcallback/AMIcallback.mpc:
+        * orbsvcs/DevGuideExamples/EventServices/OMG_TypedEC/OMG_TypedEC.mpc:
+        * orbsvcs/DevGuideExamples/Security/ParticipatingApp/ParticipatingApp.mpc:
+        * orbsvcs/DevGuideExamples/Security/PolicyControllingApp/PolicyControllingApp.mpc:
+        * orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/SecurityUnawareApp.mpc:
+
+          Added "after" statements to enable correct parallel builds.
+
+        * DevGuideExamples/PortableInterceptors/IOR/ServerIORInterceptor.cpp:
+
+          Fixed 64-bit warnings.
+
 Wed Mar 23 03:29:21 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/Log.cpp:
         * utils/logWalker/Session.cpp:
         * utils/logWalker/Thread.cpp:
-        
+
           Unfuzzing.
 
 Tue Mar 22 22:09:09 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
