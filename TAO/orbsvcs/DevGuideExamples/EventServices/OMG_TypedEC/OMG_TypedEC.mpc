@@ -12,6 +12,7 @@ project(*Supplier): namingexe, event_skel {
 project(*Consumer): namingexe, event_skel {
   exename   = Consumer
   includes += ../common
+  after    += *Supplier
 
   Source_Files {
     ConsumerMain.cpp
