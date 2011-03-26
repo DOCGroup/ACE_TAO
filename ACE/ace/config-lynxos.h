@@ -167,6 +167,9 @@
 #  define ACE_LACKS_VSNPRINTF
 #  define ACE_LACKS_WCHAR_H
 #  define ACE_SYS_SIGLIST sys_siglist
+#  if !defined (ACE_HAS_THREADS)
+#    undef ACE_HAS_AIO_CALLS
+#  endif
 #else
 // LynxOS 5.0
 #  define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
