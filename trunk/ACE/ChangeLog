@@ -1,3 +1,8 @@
+Sat Mar 26 12:07:59 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          AIO is not available in single thread builds on LynxOS 4.x.
+
 Thu Mar 24 18:59:55 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
