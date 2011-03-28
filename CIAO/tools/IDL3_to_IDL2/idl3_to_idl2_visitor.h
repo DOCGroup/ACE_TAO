@@ -1,21 +1,18 @@
-// $Id$
 
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL3_TO_IDL2_BE_DLL
-//
-// = FILENAME
-//    idl3_to_idl2_visitor.h
-//
-// = DESCRIPTION
-//    Generates equivalent IDL2 from IDL3.
-//
-// = AUTHOR
-//    Jeff Parsons <j.parsons@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    idl3_to_idl2_visitor.h
+ *
+ *  $Id$
+ *
+ *  Generates equivalent IDL2 from IDL3.
+ *
+ *
+ *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_IDL3_TO_IDL2_VISITOR_H
 #define TAO_IDL3_TO_IDL2_VISITOR_H

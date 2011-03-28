@@ -255,7 +255,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
     // this is very hard to test in a controlled environment.
     // When data arrives in DDS, the waiting ends and the
     // Getter starts to read the data. The number of samples
-    // read wil (almost) always be one.
+    // read will (almost) always be one.
     // On the other hand, when the user want to have all the
     // samples in DDS, one shouldn't use the wait method.
     // Since the spec is not clear about this, the test will
@@ -325,7 +325,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
                           fixed->time_out ().nanosec));
     GetterFixed gettertest_info;
     ::CCM_DDS::ReadInfo readinfo;
-    ACE_Time_Value tv = ACE_OS::gettimeofday ();
+    ACE_Time_Value const tv = ACE_OS::gettimeofday ();
     CORBA::Boolean const result = fixed->get_one (gettertest_info, readinfo);
     if (result)
       {

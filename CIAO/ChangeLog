@@ -1,3 +1,26 @@
+Mon Mar 28 07:25:26 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+        * performance-tests/Protocols/Sender/Custom_Network_Priority_Mapping.h:
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.mpc:
+        * tools/IDL3_to_IDL2/basic_visitor.h:
+        * tools/IDL3_to_IDL2/be_global.h:
+        * tools/IDL3_to_IDL2/be_global.cpp:
+        * tools/IDL3_to_IDL2/be_helper.h:
+        * tools/IDL3_to_IDL2/be_helper.cpp:
+        * tools/IDL3_to_IDL2/be_sunsoft.h:
+        * tools/IDL3_to_IDL2/checking_visitor.h:
+        * tools/IDL3_to_IDL2/identifier_helper.h:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h:
+        * tools/IDL3_to_IDL2/idl3p_checking_visitor.h:
+        * tools/IDL3_to_XMI/be_global.h:
+        * tools/IDL3_to_XMI/be_global.cpp:
+        * tools/IDL3_to_XMI/be_helper.cpp:
+        * tools/IDL3_to_XMI/be_sunsoft.h:
+        * tools/IDL3_to_XMI/identifier_helper.h:
+          Converted to doxygen style
+
 Wed Mar 23 19:45:48 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/generate_component_mpc.pl:

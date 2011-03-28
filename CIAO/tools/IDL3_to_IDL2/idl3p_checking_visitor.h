@@ -1,21 +1,20 @@
-// $Id$
 
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL3_TO_IDL2_BE_DLL
-//
-// = FILENAME
-//    idl3p_checking_visitor.h
-//
-// = DESCRIPTION
-//    Header file for visitor that checks modules for the
-//    presence of declarations other than non-code-generating
-//    IDL3+ constructs. Prevents the generation of illegal
-//    empty modules in the *_IDL2 artifact.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    idl3p_checking_visitor.h
+ *
+ *  $Id$
+ *
+ *  Header file for visitor that checks modules for the
+ *  presence of declarations other than non-code-generating
+ *  IDL3+ constructs. Prevents the generation of illegal
+ *  empty modules in the *_IDL2 artifact.
+ *
+ *
+ */
+//=============================================================================
+
 
 #ifndef TAO_IDL3P_CHECKING_VISITOR_H
 #define TAO_IDL3P_CHECKING_VISITOR_H

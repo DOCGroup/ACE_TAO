@@ -1,24 +1,19 @@
 /* -*- c++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_helper.h
-//
-// = DESCRIPTION
-//    Defines the abstract class for outputting the C++ mapping. This is a
-//    helper class to the singleton TAO_CodeGen class
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-//    Improvements by Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_helper.h
+ *
+ *  $Id$
+ *
+ *  Defines the abstract class for outputting the C++ mapping. This is a
+ *  helper class to the singleton TAO_CodeGen class
+ *
+ *
+ *  @author Aniruddha Gokhale Improvements by Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_OUTSTRM_H
 #define TAO_BE_OUTSTRM_H
@@ -73,50 +68,50 @@ extern TAO_IDL3_TO_IDL2_BE_Export const TAO_INDENT be_idt_nl;
 extern TAO_IDL3_TO_IDL2_BE_Export const TAO_UNINDENT be_uidt;
 extern TAO_IDL3_TO_IDL2_BE_Export const TAO_UNINDENT be_uidt_nl;
 
+/**
+ * @class TAO_OutStream
+ *
+ * Defines an interface by which the backend code generator can
+ * print its output to the underlying I/O handle. This is a
+ * helper class that will be used by the TAO_CodeGen
+ * class. However, this is an abstract class and classes that
+ * understand specific front ends must derive from this class.
+ */
 class TAO_IDL3_TO_IDL2_BE_Export TAO_OutStream
 {
-  // =TITLE
-  //   TAO_OutStream
-  //
-  // =DESCRIPTION
-  //    Defines an interface by which the backend code generator can
-  //    print its output to the underlying I/O handle. This is a
-  //    helper class that will be used by the TAO_CodeGen
-  //    class. However, this is an abstract class and classes that
-  //    understand specific front ends must derive from this class.
 public:
+  /// constructor.
   TAO_OutStream (void);
-  // constructor.
 
+  /// destructor.
   virtual ~TAO_OutStream (void);
-  // destructor.
 
+  /// open the underlying low-level handle for output.
   int open (const char *fname);
-  // open the underlying low-level handle for output.
 
 
+  /// Return the underlying lowlevel file pointer.
   FILE *file (void);
-  // Return the underlying lowlevel file pointer.
 
+  /// increment the indentation level and by default actually indent the output
+  /// accordingly
   int incr_indent (unsigned short flag = 1);
-  // increment the indentation level and by default actually indent the output
-  // accordingly
 
+  /// decrease the indentation level and by default actually indent the output
+  /// accordingly
   int decr_indent (unsigned short flag = 1);
-  // decrease the indentation level and by default actually indent the output
-  // accordingly
 
+  /// reset indentation level to 0
   int reset (void);
-  // reset indentation level to 0
 
+  /// indent starting next line
   int indent (void);
-  // indent starting next line
 
+  /// put a newline and indent on the next line
   int nl (void);
-  // put a newline and indent on the next line
 
+  /// "printf" style variable argument print
   int print (const char *format, ...);
-  // "printf" style variable argument print
 
   void gen_ifndef_string (const char *fname,
                           const char *prefix,
@@ -124,34 +119,34 @@ public:
 
   // =overloaded operators
 
+  /// output the char string and return a reference to ourselves
   TAO_OutStream &operator<< (const char *str);
-  // output the char string and return a reference to ourselves
 
+  /// output the integer and return a reference to ourselves
   TAO_OutStream &operator<< (const ACE_CDR::UShort num);
-  // output the integer and return a reference to ourselves
 
+  /// output the integer and return a reference to ourselves
   TAO_OutStream &operator<< (const ACE_CDR::Short num);
-  // output the integer and return a reference to ourselves
 
+  /// output the integer and return a reference to ourselves
   TAO_OutStream &operator<< (const ACE_CDR::ULong num);
-  // output the integer and return a reference to ourselves
 
+  /// output the integer and return a reference to ourselves
   TAO_OutStream &operator<< (const ACE_CDR::Long num);
-  // output the integer and return a reference to ourselves
 
 #if defined (ACE_WIN64)
+  /// output the integer and return a reference to ourselves
   TAO_OutStream &operator<< (const ACE_CDR::ULongLong num);
-  // output the integer and return a reference to ourselves
 
+  /// output the integer and return a reference to ourselves
   TAO_OutStream &operator<< (const ACE_CDR::LongLong num);
-  // output the integer and return a reference to ourselves
 #endif /* ACE_WIN64 */
 
+  /// output the integer and return a reference to ourselves
   TAO_OutStream &operator<< (const unsigned long num);
-  // output the integer and return a reference to ourselves
 
+  /// output the integer and return a reference to ourselves
   TAO_OutStream &operator<< (const long num);
-  // output the integer and return a reference to ourselves
 
   // = MANIPULATORS
 
@@ -170,11 +165,11 @@ public:
   virtual TAO_OutStream &print (AST_Expression *idl) = 0;
 
 protected:
+  /// The underlying low-level I/O handle.
   FILE *fp_;
-  // The underlying low-level I/O handle.
 
+  /// indentation level
   int indent_level_;
-  // indentation level
 };
 
 #endif // if !defined
