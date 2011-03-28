@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    unbounded_string.h
+ *  @file    ub_string.h
  *
  *  $Id$
  *
@@ -11,7 +11,6 @@
  *  @author   Aniruddha Gokhale
  */
 //=============================================================================
-
 
 #ifndef PARAM_TEST_UNBOUNDED_STRING_H
 #define PARAM_TEST_UNBOUNDED_STRING_H

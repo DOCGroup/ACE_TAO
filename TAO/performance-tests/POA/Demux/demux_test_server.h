@@ -4,9 +4,7 @@
  *
  *  $Id$
  *
- *  @file    Server-side demux_test class
- *
- *  $Id$
+ *  Server-side demux_test class
  *
  *  @author Aniruddha Gokhale
  */

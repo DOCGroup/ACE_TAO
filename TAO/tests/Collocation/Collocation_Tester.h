@@ -1,12 +1,11 @@
 
 //=============================================================================
 /**
- *  @file     Collocation_Test.h
+ *  @file     Collocation_Tester.h
  *
  *  $Id$
  *
  *   Server class to perform testing of TAO's collocation mechanism.
- *
  *
  *  @author  Nanbor Wang
  */
@@ -21,8 +20,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-
 
 class Collocation_Test
 {

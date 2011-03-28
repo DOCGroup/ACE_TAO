@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Consumer_Input_Handler.h
+ *  @file    Consumer_Signal_Handler.h
  *
  *  $Id$
  *
