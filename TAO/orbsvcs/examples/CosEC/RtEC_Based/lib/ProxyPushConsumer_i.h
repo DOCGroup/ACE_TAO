@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file   ProxyPushConsumer_i
+ *  @file   ProxyPushConsumer_i.h
  *
  *  $Id$
  *

@@ -1,3 +1,38 @@
+Mon Mar 28 11:12:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushConsumer_i.h:
+        * orbsvcs/examples/RtEC/MCast/Consumer.h:
+        * orbsvcs/examples/RtEC/Schedule/Supplier.h:
+        * orbsvcs/examples/RtEC/Simple/Consumer.h:
+        * orbsvcs/tests/AVStreams/Latency/pong.h:
+        * orbsvcs/tests/AVStreams/Pluggable/server.h:
+        * orbsvcs/tests/Event/Performance/Connect.h:
+        * orbsvcs/tests/Event/Performance/Inversion.h:
+        * orbsvcs/tests/Event/Performance/Latency.h:
+        * orbsvcs/tests/Event/Performance/Throughput.h:
+        * orbsvcs/tests/Event/UDP/AddrServer.h:
+        * orbsvcs/tests/Event/UDP/Consumer.h:
+        * orbsvcs/tests/Event/UDP/Supplier.h:
+        * orbsvcs/tests/Notify/Basic/Sequence.h:
+        * orbsvcs/tests/Notify/Basic/Simple.h:
+        * orbsvcs/tests/Notify/lib/Notify_SequencePushSupplier.h:
+        * orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.h:
+        * orbsvcs/tests/Notify/lib/Options_Parser.h:
+        * orbsvcs/tests/Notify/lib/Peer_T.h:
+        * orbsvcs/tests/Notify/lib/Periodic_Consumer.h:
+        * orbsvcs/tests/Notify/lib/Periodic_Consumer_Command.h:
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier.h:
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier_Command.h:
+          Fuzz fixes
+
+Mon Mar 28 11:05:03 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushConsumer_i.h:
+        * orbsvcs/examples/RtEC/MCast/Consumer.h:
+        * orbsvcs/examples/RtEC/Schedule/Supplier.h:
+        * orbsvcs/examples/RtEC/Simple/Consumer.h:
+          Fuzz fixes
+
 Mon Mar 28 11:02:31 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Callback_Quoter/Supplier_Timer_Handler.h:
