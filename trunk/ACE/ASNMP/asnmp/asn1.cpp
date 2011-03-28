@@ -1,25 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//     asn1.cpp
-//
-// = DESCRIPTION
-//  The Vb class is an encapsulation of the snmp variable binding.
-// This module contains the class definition for the variable binding (VB)
-// class. The VB class is an encapsulation of a SNMP VB. A VB object is
-// composed of one SNMP++ Oid and one SMI value. The Vb class utilizes Oid
-// objects and thus requires the Oid class. To use this class,
-// set oid, value then call valid() to be sure object was constructed correctly.
-//
-// = AUTHOR
-//   S. Waldbusser (assumed)
-//   Michael R MacFaden  mrm@cisco.com - rework & ACE port
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     asn1.cpp
+ *
+ *  $Id$
+ *
+ *  The Vb class is an encapsulation of the snmp variable binding.
+ * This module contains the class definition for the variable binding (VB)
+ * class. The VB class is an encapsulation of a SNMP VB. A VB object is
+ * composed of one SNMP++ Oid and one SMI value. The Vb class utilizes Oid
+ * objects and thus requires the Oid class. To use this class,
+ * set oid, value then call valid() to be sure object was constructed correctly.
+ *
+ *
+ *  @author S. Waldbusser (assumed)Michael R MacFaden  mrm@cisco.com - rework & ACE port
+ */
+//=============================================================================
+
 /**********************************************************************
 // *
    * Abstract Syntax Notation One, ASN.1

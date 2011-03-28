@@ -1,22 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//    get.cpp
-//
-// = DESCRIPTION
-//  Sample application demonstrating synchronous Snmp::get API
-//  to access an SNMP Version 1 agent.
-//
-// = AUTHOR
-//  Peter E. Mellquist original code
-//  Michael R MacFaden mrm@cisco.com rework API/ACE integration
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    get.cpp
+ *
+ *  $Id$
+ *
+ *  Sample application demonstrating synchronous Snmp::get API
+ *  to access an SNMP Version 1 agent.
+ *
+ *
+ */
+//=============================================================================
+
 
 /*===================================================================
   Copyright (c) 1996

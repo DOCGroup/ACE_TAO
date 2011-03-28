@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//     oid.cpp
-//
-// = DESCRIPTION
-//   This module contains the implementation of the oid class. This
-//   includes all protected and public member functions. The oid class
-//   may be compiled stand alone without the use of any other library.
-//
-// = AUTHOR
-//   Peter E Mellquist
-//   Michael R MacFaden  mrm@cisco.com - rework & ACE port
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     oid.cpp
+ *
+ *  $Id$
+ *
+ * This module contains the implementation of the oid class. This
+ * includes all protected and public member functions. The oid class
+ * may be compiled stand alone without the use of any other library.
+ *
+ *
+ *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
+ */
+//=============================================================================
+
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company

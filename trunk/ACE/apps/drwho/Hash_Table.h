@@ -1,28 +1,28 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    drwho
-//
-// = FILENAME
-//    HT_Server.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    HT_Server.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _HASH_TABLE_H
 #define _HASH_TABLE_H
 
 #include "Search_Struct.h"
 
+/**
+ * @class Hash_Table
+ *
+ * @brief Provides a hash function lookup abstraction for friend records.
+ */
 class Hash_Table : public Search_Struct
 {
-  // = TITLE
-  //   Provides a hash function lookup abstraction for friend records.
 public:
   Hash_Table (void);
   virtual ~Hash_Table (void);

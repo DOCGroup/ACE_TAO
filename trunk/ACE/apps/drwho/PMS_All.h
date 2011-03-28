@@ -1,28 +1,28 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    drwho
-//
-// = FILENAME
-//    PMS_All.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    PMS_All.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _PMS_ALL_H
 #define _PMS_ALL_H
 
 #include "PM_Server.h"
 
+/**
+ * @class PMS_All
+ *
+ * @brief Provides the server's lookup table abstraction for `all' users...
+ */
 class PMS_All : public PM_Server
 {
-  // = TITLE
-  //   Provides the server's lookup table abstraction for `all' users...
 public:
   PMS_All (void);
 

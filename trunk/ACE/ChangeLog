@@ -1,3 +1,158 @@
+Mon Mar 28 07:41:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Extended to check for old documentation style
+
+          Converted to doxygen
+        * ASNMP/agent/agent_impl.h:
+        * ASNMP/agent/snmp_agent.h:
+
+        * ASNMP/asnmp/address.cpp:
+        * ASNMP/asnmp/asn1.cpp:
+        * ASNMP/asnmp/counter.cpp:
+        * ASNMP/asnmp/ctr64.cpp:
+        * ASNMP/asnmp/gauge.cpp:
+        * ASNMP/asnmp/integer.cpp:
+        * ASNMP/asnmp/octet.cpp:
+        * ASNMP/asnmp/oid.cpp:
+        * ASNMP/asnmp/pdu.cpp:
+        * ASNMP/asnmp/sagent.cpp:
+        * ASNMP/asnmp/snmp.cpp:
+        * ASNMP/asnmp/target.cpp:
+        * ASNMP/asnmp/timetick.cpp:
+        * ASNMP/asnmp/transaction.cpp:
+        * ASNMP/asnmp/vb.cpp:
+        * ASNMP/asnmp/wpdu.cpp:
+
+        * ASNMP/examples/get/get.cpp:
+        * ASNMP/examples/get/get_async.cpp:
+
+        * ASNMP/examples/next/next.cpp:
+
+        * ASNMP/examples/set/set.cpp:
+
+        * ASNMP/examples/trap/trap.cpp:
+
+        * ASNMP/examples/walk/walk.cpp:
+
+        * ASNMP/tests/Address_Test.cpp:
+        * ASNMP/tests/Counter64_Test.cpp:
+        * ASNMP/tests/Counter_Test.cpp:
+        * ASNMP/tests/Gauge_Test.cpp:
+        * ASNMP/tests/Integer_Test.cpp:
+        * ASNMP/tests/Octet_Test.cpp:
+        * ASNMP/tests/Oid_Test.cpp:
+        * ASNMP/tests/Target_Test.cpp:
+        * ASNMP/tests/Varbind_Test.cpp:
+        * ASNMP/tests/test_config.h:
+
+        * Kokyu/Kokyu_dsrt.h:
+
+        * ace/Codeset_Registry.h:
+        * ace/Codeset_Registry.inl:
+
+        * ace/ETCL/ETCL_l.cpp:
+        * ace/ETCL/ETCL_y.cpp:
+
+        * ace/OS_NS_signal.inl:
+
+        * apps/Gateway/Gateway/Concrete_Connection_Handlers.h:
+        * apps/Gateway/Gateway/Config_Files.h:
+        * apps/Gateway/Gateway/Connection_Handler.h:
+        * apps/Gateway/Gateway/Connection_Handler_Acceptor.h:
+        * apps/Gateway/Gateway/Connection_Handler_Connector.h:
+        * apps/Gateway/Gateway/Consumer_Dispatch_Set.h:
+        * apps/Gateway/Gateway/Event.h:
+        * apps/Gateway/Gateway/Event_Channel.h:
+        * apps/Gateway/Gateway/Event_Forwarding_Discriminator.h:
+        * apps/Gateway/Gateway/File_Parser.h:
+        * apps/Gateway/Gateway/Gateway.h:
+        * apps/Gateway/Gateway/Options.h:
+        * apps/Gateway/Gateway/gatewayd.cpp:
+
+        * apps/Gateway/Peer/Options.h:
+        * apps/Gateway/Peer/Peer.h:
+        * apps/Gateway/Peer/peerd.cpp:
+
+        * apps/JAWS/clients/Blobby/Blob.h:
+        * apps/JAWS/clients/Blobby/Blob_Handler.h:
+        * apps/JAWS/clients/Blobby/Options.h:
+        * apps/JAWS/clients/Blobby/blobby.cpp:
+
+        * apps/JAWS/clients/Caching/ID_Generator.h:
+        * apps/JAWS/clients/Caching/Local_Locator.h:
+        * apps/JAWS/clients/Caching/Locator_Request_Reply.h:
+        * apps/JAWS/clients/Caching/URL_Array_Helper.h:
+        * apps/JAWS/clients/Caching/URL_Locator.h:
+        * apps/JAWS/clients/Caching/URL_Properties.h:
+        * apps/JAWS/clients/Caching/http_client.cpp:
+        * apps/JAWS/clients/Caching/http_handler.h:
+        * apps/JAWS/clients/Caching/http_handler.cpp:
+
+        * apps/JAWS2/JAWS/IO_Handler.h:
+        * apps/JAWS2/JAWS/Jaws_IO.h:
+
+        * apps/drwho/BS_Client.h:
+        * apps/drwho/BS_Server.h:
+        * apps/drwho/Binary_Search.h:
+        * apps/drwho/CM_Client.h:
+        * apps/drwho/CM_Server.h:
+        * apps/drwho/Comm_Manager.h:
+        * apps/drwho/Drwho_Node.h:
+        * apps/drwho/File_Manager.h:
+        * apps/drwho/HT_Client.h:
+        * apps/drwho/HT_Server.h:
+        * apps/drwho/Hash_Table.h:
+        * apps/drwho/Multicast_Manager.h:
+        * apps/drwho/Options.h:
+        * apps/drwho/PMC_All.h:
+        * apps/drwho/PMC_Flo.h:
+        * apps/drwho/PMC_Ruser.h:
+        * apps/drwho/PMC_Usr.h:
+        * apps/drwho/PMS_All.h:
+        * apps/drwho/PMS_Flo.h:
+        * apps/drwho/PMS_Ruser.h:
+        * apps/drwho/PMS_Usr.h:
+        * apps/drwho/PM_Client.h:
+        * apps/drwho/PM_Server.h:
+        * apps/drwho/Protocol_Manager.h:
+        * apps/drwho/Protocol_Record.h:
+        * apps/drwho/Rwho_DB_Manager.h:
+        * apps/drwho/SL_Client.h:
+        * apps/drwho/SL_Server.h:
+        * apps/drwho/SML_Client.h:
+        * apps/drwho/SML_Server.h:
+        * apps/drwho/SMR_Client.h:
+        * apps/drwho/SMR_Server.h:
+        * apps/drwho/SM_Client.h:
+        * apps/drwho/SM_Server.h:
+        * apps/drwho/Search_Struct.h:
+        * apps/drwho/Select_Manager.h:
+        * apps/drwho/Single_Lookup.h:
+        * apps/drwho/client.cpp:
+        * apps/drwho/global.h:
+        * apps/drwho/server.cpp:
+
+        * netsvcs/clients/Tokens/collection/collection.cpp:
+
+        * netsvcs/clients/Tokens/deadlock/deadlock_detection_test.cpp:
+
+        * netsvcs/clients/Tokens/invariant/invariant.cpp:
+
+        * netsvcs/clients/Tokens/manual/manual.cpp:
+
+        * netsvcs/clients/Tokens/mutex/test_mutex.cpp:
+
+        * netsvcs/clients/Tokens/rw_lock/rw_locks.cpp:
+
+        * performance-tests/Synch-Benchmarks/Synch_Lib/Benchmark_Base.h:
+        * performance-tests/Synch-Benchmarks/Synch_Lib/Benchmark_Base.cpp:
+
+        * protocols/tests/HTBP/Send_Recv_Tests/client.cpp:
+        * protocols/tests/HTBP/Send_Recv_Tests/server.cpp:
+
+        * websvcs/lib/URL_Addr.h:
+
 Sat Mar 26 12:07:59 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:

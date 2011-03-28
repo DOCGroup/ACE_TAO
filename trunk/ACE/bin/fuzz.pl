@@ -2003,6 +2003,27 @@ sub check_for_refcountservantbase ()
     }
 }
 
+sub check_for_old_documentation_style ()
+{
+    print "Running documentation style check\n";
+
+    foreach $file (@files_h, @files_cpp, @files_inl) {
+        if (open (FILE, $file)) {
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+
+                if (/\/\/\= TITLE/) {
+                  print_error ("$file:$.: found old documentation style //= TITLE");
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
 sub check_for_TAO_Local_RefCounted_Object ()
 {
     print "Running TAO_Local_RefCounted_Object check\n";
@@ -2279,6 +2300,7 @@ check_for_TAO_Local_RefCounted_Object () if ($opt_l >= 1);
 check_for_include_OS_h () if ($opt_l >= 1);
 check_for_numeric_log () if ($opt_l >= 3);
 check_for_ORB_init () if ($opt_l >= 1);
+check_for_old_documentation_style () if ($opt_l >= 5);
 
 print "\nfuzz.pl - $errors error(s), $warnings warning(s)\n";
 

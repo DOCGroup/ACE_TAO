@@ -1,37 +1,36 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    gateway
-//
-// = FILENAME
-//    Concrete_Connection_Handlers.h
-//
-// = DESCRIPTION
-//    These are all the subclasses of Connection_Handler that define the
-//    appropriate threaded/reactive Consumer/Supplier behavior.
-//
-// = AUTHOR
-//    Doug Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Concrete_Connection_Handlers.h
+ *
+ *  $Id$
+ *
+ *  These are all the subclasses of Connection_Handler that define the
+ *  appropriate threaded/reactive Consumer/Supplier behavior.
+ *
+ *
+ *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef CONCRETE_CONNECTION_HANDLER
 #define CONCRETE_CONNECTION_HANDLER
 
 #include "Connection_Handler.h"
 
+/**
+ * @class Supplier_Handler
+ *
+ * @brief Handles reception of Events from Suppliers.
+ *
+ * Performs framing and error checking on Events.  Intended to
+ * run reactively, i.e., in one thread of control using a
+ * Reactor for demuxing and dispatching.
+ */
 class Supplier_Handler : public Connection_Handler
 {
-  // = TITLE
-  //     Handles reception of Events from Suppliers.
-  //
-  // = DESCRIPTION
-  //     Performs framing and error checking on Events.  Intended to
-  //     run reactively, i.e., in one thread of control using a
-  //     Reactor for demuxing and dispatching.
 public:
   // = Initialization method.
   Supplier_Handler (const Connection_Config_Info &);
@@ -39,113 +38,127 @@ public:
 protected:
   // = All the following methods are upcalls, so they can be protected.
 
+  /// Receive and process peer events.
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
-  // Receive and process peer events.
 
+  /// Receive an event from a Supplier.
   virtual int recv (ACE_Message_Block *&);
-  // Receive an event from a Supplier.
 
+  /**
+   * This delegates to the <Event_Channel> to do the actual
+   * processing.  Typically, it forwards the <event> to its
+   * appropriate Consumer.
+   */
   int process (ACE_Message_Block *event);
-  // This delegates to the <Event_Channel> to do the actual
-  // processing.  Typically, it forwards the <event> to its
-  // appropriate Consumer.
 
+  /// Keep track of event fragment to handle non-blocking recv's from
+  /// Suppliers.
   ACE_Message_Block *msg_frag_;
-  // Keep track of event fragment to handle non-blocking recv's from
-  // Suppliers.
 };
 
+/**
+ * @class Consumer_Handler
+ *
+ * @brief Handles transmission of events to Consumers.
+ *
+ * Performs queueing and error checking.  Intended to run
+ * reactively, i.e., in one thread of control using a Reactor
+ * for demuxing and dispatching.  Also uses a Reactor to handle
+ * flow controlled output connections.
+ */
 class Consumer_Handler : public Connection_Handler
 {
-  // = TITLE
-  //     Handles transmission of events to Consumers.
-  //
-  // = DESCRIPTION
-  //     Performs queueing and error checking.  Intended to run
-  //     reactively, i.e., in one thread of control using a Reactor
-  //     for demuxing and dispatching.  Also uses a Reactor to handle
-  //     flow controlled output connections.
 public:
   // = Initialization method.
   Consumer_Handler (const Connection_Config_Info &);
 
+  /// Send an event to a Consumer (may be queued if necessary).
   virtual int put (ACE_Message_Block *event,
                    ACE_Time_Value * = 0);
-  // Send an event to a Consumer (may be queued if necessary).
 
 protected:
+  /// Finish sending event when flow control conditions abate.
   virtual int handle_output (ACE_HANDLE);
-  // Finish sending event when flow control conditions abate.
 
+  /// Perform a non-blocking put().
   int nonblk_put (ACE_Message_Block *mb);
-  // Perform a non-blocking put().
 
+  /// Send an event to a Consumer.
   virtual ssize_t send (ACE_Message_Block *);
-  // Send an event to a Consumer.
 
+  /// Receive and process shutdowns from a Consumer.
   virtual int handle_input (ACE_HANDLE);
-  // Receive and process shutdowns from a Consumer.
 };
 
+/**
+ * @class Thr_Consumer_Handler
+ *
+ * @brief Runs each <Consumer_Handler> in a separate thread.
+ */
 class Thr_Consumer_Handler : public Consumer_Handler
 {
-  // = TITLE
-  //    Runs each <Consumer_Handler> in a separate thread.
 public:
   Thr_Consumer_Handler (const Connection_Config_Info &);
 
+  /// Initialize the threaded Consumer_Handler object and spawn a new
+  /// thread.
   virtual int open (void *);
-  // Initialize the threaded Consumer_Handler object and spawn a new
-  // thread.
 
+  /// Send a message to a peer.
   virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
-  // Send a message to a peer.
 
 protected:
+  /// Called when Peer shutdown unexpectedly.
   virtual int handle_input (ACE_HANDLE);
-  // Called when Peer shutdown unexpectedly.
 
+  /// Transmit peer messages.
   virtual int svc (void);
-  // Transmit peer messages.
 
+  /**
+   * When thread started, connection become blocked, so no need to use
+   * handle_close to reinitiate the connection_handler, so should
+   * override this function to justify if controlling is in thread or
+   * not. If yes, handle_close do nothing, otherwise, it call parent
+   * handle_close().
+   */
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
-  // When thread started, connection become blocked, so no need to use
-  // handle_close to reinitiate the connection_handler, so should
-  // override this function to justify if controlling is in thread or
-  // not. If yes, handle_close do nothing, otherwise, it call parent
-  // handle_close().
 
 private:
+  /// If the controlling is in thread's svc() or not.
   int in_thread_;
-  // If the controlling is in thread's svc() or not.
 };
 
+/**
+ * @class Thr_Supplier_Handler
+ *
+ * @brief Runs each <Supplier_Handler> in a separate thread.
+ */
 class Thr_Supplier_Handler : public Supplier_Handler
 {
-  // = TITLE
-  //    Runs each <Supplier_Handler> in a separate thread.
 public:
   Thr_Supplier_Handler (const Connection_Config_Info &pci);
 
+  /// Initialize the object and spawn a new thread.
   virtual int open (void *);
-  // Initialize the object and spawn a new thread.
 
 protected:
+  /**
+   * When thread started, connection become blocked, so no need to use
+   * handle_close to reinitiate the connection_handler, so should
+   * override this function to justify if controlling is in thread or
+   * not. If yes, handle_close do nothing, otherwise, it call parent
+   * handle_close().
+   */
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
-  // When thread started, connection become blocked, so no need to use
-  // handle_close to reinitiate the connection_handler, so should
-  // override this function to justify if controlling is in thread or
-  // not. If yes, handle_close do nothing, otherwise, it call parent
-  // handle_close().
 
+  /// Transmit peer messages.
   virtual int svc (void);
-  // Transmit peer messages.
 
 private:
+  /// If the controlling is in thread's svc() or not.
   int in_thread_;
-  // If the controlling is in thread's svc() or not.
 };
 
 #endif /* CONCRETE_CONNECTION_HANDLER */

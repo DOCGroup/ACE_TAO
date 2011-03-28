@@ -1,19 +1,15 @@
 /* -*- c++ -*- */
-// Hey, Emacs!  This is a C++ file!
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   jaws
-//
-// = FILENAME
-//    IO.h
-//
-// = AUTHOR
-//    James Hu
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    IO.h
+ *
+ *  $Id$
+ *
+ *  @author James Hu
+ */
+//=============================================================================
+
 
 #ifndef JAWS_IO_H
 #define JAWS_IO_H
@@ -38,17 +34,17 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 class JAWS_IO_Handler;
 class JAWS_IO_Acceptor;
 
+/**
+ * @class JAWS_IO
+ *
+ * @brief This class defines the abstract interface for an I/O class in
+ * the context of Web-likes servers
+ *
+ * An I/O class should have the following interface. Derived
+ * classes will define the exactly how the I/O will take place
+ * (Asynchronous, Synchronous, Reactive)
+ */
 class JAWS_Export JAWS_IO
-  // = TITLE
-  //
-  //     This class defines the abstract interface for an I/O class in
-  //     the context of Web-likes servers
-  //
-  // = DESCRIPTION
-  //
-  //     An I/O class should have the following interface. Derived
-  //     classes will define the exactly how the I/O will take place
-  //     (Asynchronous, Synchronous, Reactive)
 {
 public:
   JAWS_IO (void);
@@ -61,48 +57,48 @@ public:
 
   // James, please add documentation here.
 
+  /// accept a passive connection
   virtual void accept (JAWS_IO_Handler *ioh,
                        ACE_Message_Block *mb = 0,
                        unsigned int size = 0) = 0;
-  // accept a passive connection
 
+  /// read from the handle size bytes into the message block.
   virtual void read (JAWS_IO_Handler *ioh,
                      ACE_Message_Block *mb,
                      unsigned int size) = 0;
-  // read from the handle size bytes into the message block.
 
+  /// send header, filename, trailer to the handle.
   virtual void transmit_file (JAWS_IO_Handler *ioh,
                               ACE_HANDLE file,
                               const char *header,
                               unsigned int header_size,
                               const char *trailer,
                               unsigned int trailer_size) = 0;
-  // send header, filename, trailer to the handle.
 
+  /// send header, filename, trailer to the handle.
   virtual void transmit_file (JAWS_IO_Handler *ioh,
                               const char *filename,
                               const char *header,
                               unsigned int header_size,
                               const char *trailer,
                               unsigned int trailer_size) = 0;
-  // send header, filename, trailer to the handle.
 
+  /// read data from the handle and store in filename.
   virtual void receive_file (JAWS_IO_Handler *ioh,
                              const char *filename,
                              void *initial_data,
                              unsigned int initial_data_length,
                              unsigned int entire_length) = 0;
-  // read data from the handle and store in filename.
 
+  /// send a confirmation message to the handle.
   virtual void send_confirmation_message (JAWS_IO_Handler *ioh,
                                           const char *buffer,
                                           unsigned int length) = 0;
-  // send a confirmation message to the handle.
 
+  /// send an error message to the handle.
   virtual void send_error_message (JAWS_IO_Handler *ioh,
                                    const char *buffer,
                                    unsigned int length) = 0;
-  // send an error message to the handle.
 
 protected:
   ACE_HANDLE handle_;
@@ -111,12 +107,13 @@ protected:
   JAWS_IO_Acceptor *acceptor_;
 };
 
+/**
+ * @class JAWS_Synch_IO
+ *
+ * @brief This class defines the interface for a Synchronous I/O class.
+ *
+ */
 class JAWS_Export JAWS_Synch_IO : public JAWS_IO
-  // = TITLE
-  //
-  //     This class defines the interface for a Synchronous I/O class.
-  //
-  // = DESCRIPTION
 {
 public:
   JAWS_Synch_IO (void);
@@ -171,12 +168,13 @@ typedef ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>
 // This only works on asynch I/O-capable systems.
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
+/**
+ * @class JAWS_Asynch_IO
+ *
+ * @brief This class defines the interface for a Asynchronous I/O class.
+ *
+ */
 class JAWS_Export JAWS_Asynch_IO : public JAWS_IO
-  // = TITLE
-  //
-  //     This class defines the interface for a Asynchronous I/O class.
-  //
-  // = DESCRIPTION
 {
 public:
   JAWS_Asynch_IO (void);
@@ -242,14 +240,17 @@ protected:
 typedef ACE_Singleton<JAWS_Asynch_IO, ACE_SYNCH_MUTEX>
         JAWS_Asynch_IO_Singleton;
 
+/**
+ * @class JAWS_Asynch2_IO
+ This version of Asynch_IO has a do nothing accept() implementation.
+ */
 class JAWS_Export JAWS_Asynch2_IO : public JAWS_Asynch_IO
 {
-  // This version of Asynch_IO has a do nothing accept() implementation.
 public:
+  /// does nothing
   virtual void accept (JAWS_IO_Handler *ioh,
                        ACE_Message_Block *mb = 0,
                        unsigned int size = 0);
-  // does nothing
 
 };
 
