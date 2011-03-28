@@ -1,3 +1,13 @@
+Mon Mar 28 09:59:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Callback_Quoter/Supplier_Timer_Handler.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_y.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
+        * tests/POA/Loader/Servant_Activator.h:
+        * tests/POA/On_Demand_Loading/Servant_Activator.h:
+        * tests/Param_Test/anyop.cpp:
+          Fuzz fixes
+
 Mon Mar 28 07:58:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Callback_Quoter/Consumer_Signal_Handler.h:

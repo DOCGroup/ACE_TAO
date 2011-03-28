@@ -23,17 +23,17 @@
 #include "tao/PortableServer/ServantActivatorC.h"
 #include "tao/LocalObject.h"
 
+/**
+ * Servant Activator for the test servant.
+ * 
+ * This class associates an unassociated servant with an object in
+ * the POA Active Object Map.
+ */
 class ServantActivator_i :
   public virtual PortableServer::ServantActivator,
   public virtual ::CORBA::LocalObject
 
 {
-  //= TITLE
-  //   Servant Activator for the test servant.
-  //
-  //= DESCRIPTION
-  //   This class associates an unassociated servant with an object in
-  //   the POA Active Object Map.
 public:
   /// Initialization.
   ServantActivator_i (CORBA::ORB_ptr orb);
