@@ -1,3 +1,20 @@
+Mon Mar 28 11:28:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.cpp:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service_i.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+        * orbsvcs/tests/Concurrency/CC_client.cpp:
+        * orbsvcs/tests/Concurrency/CC_tests.cpp:
+        * orbsvcs/tests/HTIOP/AMI/client.cpp:
+        * orbsvcs/tests/tests_svc_loader/tests_svc_loader.cpp:
+        * tests/AMI_Timeouts/timeout_i.cpp:
+        * tests/CodeSets/libs/IBM1047_ISO8859/Wchar_IBM1047_ISO8859_Factory.h:
+        * tests/CodeSets/simple/server.cpp:
+        * tests/NestedUpcall/Triangle_Test/Initiator_i.cpp:
+        * tests/OctetSeq/OctetSeq.cpp:
+        * tests/Param_Test/multdim_array.cpp:
+          Fuzz fixes
+
 Mon Mar 28 11:21:51 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/AMI/FL_Callback/peer.cpp:

@@ -1,12 +1,11 @@
 
 //=============================================================================
 /**
- *  @file    server.cpp
+ *  @file    client.cpp
  *
  *  $Id$
  *
  *  A client which uses the AMI callback model.
- *
  *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
