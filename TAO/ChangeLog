@@ -1,3 +1,33 @@
+Mon Mar 28 11:21:51 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/AMI/FL_Callback/peer.cpp:
+        * examples/Callback_Quoter/Consumer_Handler.cpp:
+        * examples/Callback_Quoter/Consumer_Signal_Handler.cpp:
+        * examples/Event_Comm/Event_Comm_i.cpp:
+        * examples/Event_Comm/consumer.cpp:
+        * examples/Quoter/Factory_Finder.cpp:
+        * examples/Quoter/Factory_Finder_i.cpp:
+        * examples/Quoter/server.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ConsumerAdmin_i.h:
+        * orbsvcs/examples/CosEC/Simple/Consumer.h:
+        * orbsvcs/examples/CosEC/Simple/Supplier.h:
+        * orbsvcs/tests/CosEvent/lib/Counting_Consumer.h:
+        * orbsvcs/tests/CosEvent/lib/Counting_Supplier.h:
+        * performance-tests/POA/Demux/client.cpp:
+        * performance-tests/POA/Demux/server.cpp:
+        * tests/Bug_2935_Regression/sink_i.h:
+        * tests/CSD_Collocation/Collocation_Tester.h:
+        * tests/CodeSets/libs/UTF16_UCS2/UTF16_UCS2_Factory.h:
+        * tests/DSI_Gateway/test_dsi.h:
+        * tests/NestedUpcall/MT_Client_Test/MT_Object_i.h:
+        * tests/NestedUpcall/MT_Client_Test/MT_Object_i.cpp:
+        * tests/NestedUpcall/MT_Client_Test/client.h:
+        * tests/NestedUpcall/MT_Client_Test/local_server.h:
+        * tests/NestedUpcall/MT_Client_Test/server.h:
+        * tests/OBV/Simple/Simple_util.h:
+        * tests/Xt_Stopwatch/Stopwatch_display.h:
+          Fuzz fixes
+
 Mon Mar 28 11:12:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushConsumer_i.h:

@@ -4,15 +4,11 @@
  *
  *  $Id$
  *
- *  @file    client side main program
- *
- *  $Id$
+ *  client side main program
  *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================
-
-
 
 #include "demux_test_client.h"
 #include "tao/debug.h"

@@ -1,18 +1,16 @@
 
 //=============================================================================
 /**
- *  @file    MT_Object_A_i.h
+ *  @file    MT_Object_i.h
  *
  *  $Id$
  *
  *  This class implements the Object A of the
  *  Nested Upcalls - MT Client test
  *
- *
  *  @author Michael Kircher
  */
 //=============================================================================
-
 
 #ifndef MT_OBJECT_IMPL_H
 #  define MT_OBJECT_IMPL_H
@@ -36,7 +34,6 @@ public:
 
   virtual CORBA::Long yadda (CORBA::Long hop_count,
                              MT_Object_ptr partner);
-
 };
 
 #endif /* MT_OBJECT_IMPL_H */
