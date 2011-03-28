@@ -7,9 +7,7 @@
  *
  *  $Id$
  *
- *  @file    constants used by both the server and client
- *
- *  $Id$
+ *  Constants used by both the server and client
  *
  *  @author Aniruddha Gokhale
  */

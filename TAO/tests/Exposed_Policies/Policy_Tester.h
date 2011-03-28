@@ -1,12 +1,11 @@
 //=============================================================================
 /**
- *  @file    Policy_Verifier.h
+ *  @file    Policy_Tester.h
  *
  *  $Id$
  *
  *   This class verifies that the policy are correctly embedded
  *   in the IOR.
- *
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
