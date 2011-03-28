@@ -441,17 +441,10 @@ char *ace_cc_yytext;
 #define INITIAL 0
 //=============================================================================
 /**
- *
- * = LIBRARY
- *    TAO/orbsvcs/tests
- *
  * This is the lex file for the concurrency service script language.
- *
- *
  */
 //=============================================================================
 
- */
 #define ACE_CC_YY_NO_UNPUT 1
 #define ACE_CC_YY_NO_INPUT 1
 #define ACE_CC_YY_ALWAYS_INTERACTIVE 1
