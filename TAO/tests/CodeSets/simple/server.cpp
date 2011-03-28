@@ -2,17 +2,16 @@
 
 //=============================================================================
 /**
- *  @file    client.cpp
+ *  @file    server.cpp
  *
  *  $Id$
  *
- *  A simple client to demonstrate the use of codeset translation
+ *  A simple server to demonstrate the use of codeset translation
  *
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 //=============================================================================
-
 
 // IDL generated header
 #include "simpleS.h"
