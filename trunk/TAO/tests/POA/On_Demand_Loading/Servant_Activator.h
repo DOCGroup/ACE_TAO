@@ -10,7 +10,6 @@
  *   Servant_Manager to activate a servant by loading it and
  *   associates it with an object on-demand.
  *
- *
  *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================
@@ -25,7 +24,7 @@
 
 /**
  * Servant Activator for the test servant.
- * 
+ *
  * This class associates an unassociated servant with an object in
  * the POA Active Object Map.
  */

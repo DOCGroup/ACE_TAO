@@ -2,8 +2,6 @@
 
 #include "AddrServer.h"
 
-
-
 AddrServer::AddrServer (const RtecUDPAdmin::UDP_Addr& addr)
   : addr_ (addr)
 {

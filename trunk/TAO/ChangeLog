@@ -1,3 +1,25 @@
+Mon Mar 28 11:02:31 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Callback_Quoter/Supplier_Timer_Handler.h:
+        * examples/Simple/Simple_util.h:
+        * orbsvcs/LifeCycle_Service/Criteria_Evaluator.h:
+        * orbsvcs/LifeCycle_Service/Factory_Trader.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/EventChannel_i.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushSupplier_i.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/SupplierAdmin_i.h:
+        * orbsvcs/examples/RtEC/Kokyu/Consumer.h:
+        * orbsvcs/examples/RtEC/Kokyu/Supplier.h:
+        * orbsvcs/examples/RtEC/MCast/AddrServer.h:
+        * orbsvcs/examples/RtEC/MCast/AddrServer.cpp:
+        * orbsvcs/examples/RtEC/MCast/Supplier.h:
+        * orbsvcs/examples/RtEC/Schedule/Consumer.h:
+        * orbsvcs/examples/RtEC/Schedule/Consumer.cpp:
+        * orbsvcs/examples/RtEC/Simple/Supplier.h:
+        * orbsvcs/tests/Concurrency/lex.CC_command.cpp:
+        * tests/POA/Loader/Servant_Activator.h:
+        * tests/POA/On_Demand_Loading/Servant_Activator.h:
+          Fuzz fixes
+
 Mon Mar 28 09:59:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Callback_Quoter/Supplier_Timer_Handler.cpp:
