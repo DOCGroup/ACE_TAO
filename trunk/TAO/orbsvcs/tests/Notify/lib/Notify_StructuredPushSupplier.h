@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file   Notify_StructuredPushSupplier
+ *  @file   Notify_StructuredPushSupplier.h
  *
  *  $Id$
  *
@@ -12,7 +12,6 @@
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_NOTIFY_STRUCTUREDPUSHSUPPLIER_H
 #define TAO_NOTIFY_STRUCTUREDPUSHSUPPLIER_H
