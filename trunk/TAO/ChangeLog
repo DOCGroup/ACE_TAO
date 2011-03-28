@@ -1,3 +1,29 @@
+Mon Mar 28 07:58:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Callback_Quoter/Consumer_Signal_Handler.h:
+        * examples/Callback_Quoter/Notifier_i.h:
+        * examples/Callback_Quoter/Supplier_i.h:
+        * examples/Logging/Logging_Test_i.h:
+        * examples/OBV/Simple_util.h:
+        * examples/Persistent_Grid/Persistent_Client.h:
+        * examples/Persistent_Grid/Simple_util.h:
+        * examples/Quoter/Factory_Finder.h:
+        * examples/Quoter/Factory_Finder_i.h:
+        * examples/Quoter/client.h:
+        * examples/Quoter/server.h:
+        * interop-tests/wchar/wchar_reference.h:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.h:
+        * performance-tests/POA/Demux/demux_test_client.h:
+        * performance-tests/POA/Demux/demux_test_macros.h:
+        * performance-tests/POA/Demux/demux_test_server.h:
+        * tests/Alt_Mapping/ub_string.h:
+        * tests/Bug_3683_Regression/Simple_util.h:
+        * tests/Collocation/Collocation_Tester.h:
+        * tests/DSI_AMI_Gateway/test_dsi.h:
+        * tests/Exposed_Policies/Policy_Tester.h:
+        * tests/Param_Test/ub_string.h:
+          Fuzz fixes
+
 Mon Mar 28 07:27:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Converted files below to use doxygen style documentation

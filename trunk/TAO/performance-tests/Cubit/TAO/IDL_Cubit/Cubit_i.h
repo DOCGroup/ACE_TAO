@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    Cubit_Client.h
+ *  @file    Cubit_i.h
  *
  *  $Id$
  *
@@ -9,7 +9,6 @@
  *  @author Sumedh Mungee and Sergio Flores-Gaitan
  */
 //=============================================================================
-
 
 #ifndef _CUBIT_I_H
 #define _CUBIT_I_H

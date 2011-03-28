@@ -7,9 +7,7 @@
  *
  *  $Id$
  *
- *  @file    Definition of the client-side demux_test class
- *
- *  $Id$
+ *  Definition of the client-side demux_test class
  *
  *  @author Aniruddha Gokhale
  */
