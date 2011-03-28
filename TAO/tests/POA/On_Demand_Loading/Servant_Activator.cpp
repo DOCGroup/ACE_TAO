@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO/examples/POA/On_Demand_Loading
-//
-// = FILENAME
-//     Servant_Activator.cpp
-//
-// = DESCRIPTION
-//     Implementation of <ServantActivator_i>, which is used by a POA
-//     with a RETAIN policy.
-//
-// = AUTHOR
-//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     Servant_Activator.cpp
+ *
+ *  $Id$
+ *
+ *   Implementation of <ServantActivator_i>, which is used by a POA
+ *   with a RETAIN policy.
+ *
+ *
+ *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Servant_Activator.h"
 

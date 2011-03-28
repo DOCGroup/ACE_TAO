@@ -1,18 +1,16 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//
-// = FILENAME
-//   Factory_Trader.cpp
-//
-// = DESCRIPTION
-//   Factory Trader for the Generic Factory.
-//
-// = AUTHOR
-//   Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Factory_Trader.cpp
+ *
+ *  $Id$
+ *
+ * Factory Trader for the Generic Factory.
+ *
+ *
+ *  @author Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef FACTORY_TRADER_H
 #define FACTORY_TRADER_H
@@ -28,17 +26,17 @@ public:
   Factory_Trader (int debug_level = 1);
   ~Factory_Trader ();
 
+  /// Add a the Factory type to the repository
   void add_type ();
-  // Add a the Factory type to the repository
 
+  /// export a specific factory
   void _cxx_export (const char * name,
                     const char * location,
                     const char * description,
                     const CORBA::Object_ptr object_ptr);
-  // export a specific factory
 
+  /// query for a specific factory using a constraint
   CORBA::Object_ptr query (const char* constraint);
-  // query for a specific factory using a constraint
 
   static const char * GENERIC_FACTORY_INTERFACE_REPOSITORY_ID;
 private:
@@ -47,8 +45,8 @@ private:
   TAO_Trading_Components_i *trading_Components_ptr_;
   TAO_Support_Attributes_i *support_Attributes_ptr_;
 
+  /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
   int debug_level_;
-  // debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
 };
 
 #endif // FACTORY_TRADER_H

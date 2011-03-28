@@ -1,17 +1,15 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Cubit
-//
-// = FILENAME
-//    Cubit_i.cpp
-//
-// = AUTHOR
-//    Andy Gokhale, Sumedh Mungee and Sergio Flores-Gaitan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Cubit_i.cpp
+ *
+ *  $Id$
+ *
+ *  @author Andy Gokhale
+ *  @author Sumedh Mungee and Sergio Flores-Gaitan
+ */
+//=============================================================================
+
 
 #include "Cubit_Client.h"
 #include "Cubit_i.h"

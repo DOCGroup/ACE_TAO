@@ -1,18 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel examples
-//
-// = FILENAME
-//   Consumer
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Consumer
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef ADDRSERVER_H
 #define ADDRSERVER_H
@@ -20,23 +16,24 @@
 
 #include "orbsvcs/RtecUDPAdminS.h"
 
+/**
+ * @class AddrServer
+ *
+ * @brief A simple AddrServer
+ *
+ * The EC is able to use multiple multicast groups to transmit its
+ * data, the is given control over the mapping between the Event
+ * (type,source) pair and the (ipaddr,port) pair using a
+ * AddrServer.
+ * This class implements a very simple server that simply maps the
+ * <type> component to the <ipaddr> and uses a fixed <port>,
+ * provided at initialization time.
+ */
 class AddrServer : public POA_RtecUDPAdmin::AddrServer
 {
-  // = TITLE
-  //   A simple AddrServer
-  //
-  // = DESCRIPTION
-  //   The EC is able to use multiple multicast groups to transmit its
-  //   data, the is given control over the mapping between the Event
-  //   (type,source) pair and the (ipaddr,port) pair using a
-  //   AddrServer.
-  //   This class implements a very simple server that simply maps the
-  //   <type> component to the <ipaddr> and uses a fixed <port>,
-  //   provided at initialization time.
-  //
 public:
+  /// Constructor
   AddrServer (const RtecUDPAdmin::UDP_Addr& addr);
-  // Constructor
 
   // = The RtecUDPAdmin::AddrServer methods
   virtual void get_addr (const RtecEventComm::EventHeader& header,
@@ -46,8 +43,8 @@ public:
                             RtecUDPAdmin::UDP_Address_out addr);
 
 private:
+  /// The address
   RtecUDPAdmin::UDP_Addr addr_;
-  // The address
 };
 
 #include /**/ "ace/post.h"

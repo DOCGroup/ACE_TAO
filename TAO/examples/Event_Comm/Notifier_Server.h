@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    EventComm
-//
-// = FILENAME
-//    Notifier_Server.h
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Notifier_Server.h
+ *
+ *  $Id$
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef _NOTIFIER_SERVER_H
 #define _NOTIFIER_SERVER_H
@@ -22,47 +19,50 @@
 #include "orbsvcs/CosNamingS.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 
+/**
+ * @class Notifier_Server
+ *
+ * @brief The Notifier Server that handles CORBA operations from
+ * Consumers and Suppliers.
+ */
 class Notifier_Server
 {
-  // = TITLE
-  //    The Notifier Server that handles CORBA operations from
-  //    Consumers and Suppliers.
 public:
   // = Initialization and termination methods.
+  /// Constructor.
   Notifier_Server (void);
-  // Constructor.
 
+  /// Destructor.
   ~Notifier_Server (void);
-  // Destructor.
 
+  /// Initialize the Server state.
  int init (int argc, ACE_TCHAR *argv[]);
-  // Initialize the Server state.
 
+  /// Run the orb.
   int run (void);
-  // Run the orb.
 
+  /// Close the naming service.
   int close (void);
-  // Close the naming service.
 
+  /// Reactor accessor.
   ACE_Reactor *reactor(void);
-  // Reactor accessor.
 
 private:
+  /// Initialises the name server and registers the Notifier server
+  /// object name with the name server.
   int init_naming_service (void);
-  // Initialises the name server and registers the Notifier server
-  // object name with the name server.
 
+  /// The ORB manager.
   TAO_ORB_Manager orb_manager_;
-  // The ORB manager.
 
+  /// Servant for the Notifier interface.
   Notifier_i servant_;
-  // Servant for the Notifier interface.
 
+  /// Naming context for the naming service.
   CosNaming::NamingContext_var naming_context_;
-  // Naming context for the naming service.
 
+  /// helper class for getting access to Naming Service.
   TAO_Naming_Client naming_server_;
-  // helper class for getting access to Naming Service.
 };
 
 #define NOTIFIER_BIND_NAME "Notifier"

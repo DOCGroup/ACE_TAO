@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    ub_str_seq.h
-//
-// = DESCRIPTION
-//     Tests sequences of strings
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ub_str_seq.h
+ *
+ *  $Id$
+ *
+ *   Tests sequences of strings
+ *
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef PARAM_TEST_UNBOUNDED_STRING_SEQUENCE_H
 #define PARAM_TEST_UNBOUNDED_STRING_SEQUENCE_H
@@ -28,51 +25,51 @@
 class Test_String_Sequence
 {
 public:
+  /// ctor
   Test_String_Sequence (void);
-  // ctor
 
+  /// dtor
   ~Test_String_Sequence (void);
-  // dtor
 
+  /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
-  // run the SII test
 
+  /// return operation name
   const char *opname (void) const;
-  // return operation name
 
+  /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
-  // set values for parameters
 
+  /// reset values for CORBA
   int reset_parameters (void);
-  // reset values for CORBA
 
+  /// check if results are valid
   CORBA::Boolean check_validity (void);
-  // check if results are valid
 
+  /// check if results are valid. This is used for DII results
   CORBA::Boolean check_validity (CORBA::Request_ptr req);
-  // check if results are valid. This is used for DII results
 
+  /// print all the values
   void print_values (void);
-  // print all the values
 
+  /// invoke DII request with appropriate exception handling.
   void dii_req_invoke (CORBA::Request *);
-  // invoke DII request with appropriate exception handling.
 
 private:
+  /// operation name
   char *opname_;
-  // operation name
 
+  /// in parameter
   CORBA::StringSeq_var in_;
-  // in parameter
 
+  /// inout parameter
   CORBA::StringSeq_var inout_;
-  // inout parameter
 
+  /// out parameter
   CORBA::StringSeq_var out_;
-  // out parameter
 
+  /// return value
   CORBA::StringSeq_var ret_;
-  // return value
 };
 
 #endif /* PARAM_TEST_UNBOUNDED_STRING_SEQUENCE_H */

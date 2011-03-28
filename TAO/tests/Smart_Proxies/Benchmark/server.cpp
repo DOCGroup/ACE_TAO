@@ -1,20 +1,17 @@
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO/tests/Smart_Proxies/Benchmark
-//
-// = FILENAME
-//     server.cpp
-//
-// = DESCRIPTION
-//     This is the server program that tests TAO's Smart Proxy extension.
-//
-// = AUTHOR
-//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-//=========================================================================
+//=============================================================================
+/**
+ *  @file     server.cpp
+ *
+ *  $Id$
+ *
+ *   This is the server program that tests TAO's Smart Proxy extension.
+ *
+ *
+ *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "testS.h"
 #include "ace/Get_Opt.h"
@@ -32,8 +29,8 @@ public:
   CORBA::Long tickets  (CORBA::Short number);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
   void shutdown  (void);
-  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   CORBA::ORB_var orb_;

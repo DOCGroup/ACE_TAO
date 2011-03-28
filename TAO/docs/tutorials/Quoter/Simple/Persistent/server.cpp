@@ -1,19 +1,19 @@
-// $Id$
 
-//===========================================================================
-//
-// = FILENAME
-//     server.cpp
-//
-// = DESCRIPTION
-//
-//     In this example, a new POA (childPOA) is created and its
-//     policy is set so that it object references are persistent.
-//
-// = AUTHOR
-//     Priyanka Gontla <pgontla@ece.uci.edu>
-//
-//============================================================================
+//=============================================================================
+/**
+ *  @file     server.cpp
+ *
+ *  $Id$
+ *
+ *
+ *   In this example, a new POA (childPOA) is created and its
+ *   policy is set so that it object references are persistent.
+ *
+ *
+ *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
+ */
+//=============================================================================
+
 
 #include "Stock_Factory_i.h"
 #include "ace/streams.h"

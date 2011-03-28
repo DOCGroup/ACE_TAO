@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    helper.h
-//
-// = DESCRIPTION
-//    Defines a helper class that can generate values for the parameters used
-//    for the Param_Test example
-//
-// = AUTHORS
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    helper.h
+ *
+ *  $Id$
+ *
+ *  Defines a helper class that can generate values for the parameters used
+ *  for the Param_Test example
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef HELPER_H
 #define HELPER_H

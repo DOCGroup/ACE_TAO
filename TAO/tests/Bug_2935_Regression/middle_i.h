@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/Simple/time
-//
-// = FILENAME
-//    middle_i.h
-//
-// = DESCRIPTION
-//    This class implements the Time IDL interface.
-//
-// = AUTHOR
-//    Darrell Brunsch <brunsch@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    middle_i.h
+ *
+ *  $Id$
+ *
+ *  This class implements the Time IDL interface.
+ *
+ *
+ *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef MIDDLE_I_H
 #define MIDDLE_I_H
@@ -23,15 +20,16 @@
 #include "ThreeTierC.h"
 #include "ThreeTierS.h"
 
+/**
+ * @class Middle_i:
+ *
+ * @brief ThreeTier Object Implementation as middle
+ *
+ * The middle implementaiton of the ThreeTier interface simply
+ * forwards requests to
+ */
 class Middle_i: public POA_ThreeTier
 {
-  // = TITLE
-  //    ThreeTier Object Implementation as middle
-  //
-  // = DESCRIPTION
-  //    The middle implementaiton of the ThreeTier interface simply
-  //    forwards requests to
-  //
 public:
   Middle_i (CORBA::ORB_ptr orb, ThreeTier_ptr target);
   ~Middle_i ();

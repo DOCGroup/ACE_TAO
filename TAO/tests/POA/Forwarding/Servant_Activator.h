@@ -1,23 +1,19 @@
 // -*- C++ -*-
-// $Id$
 
-// ================================================================
-//
-// = LIBRARY
-//     TAO/examples/POA/Forwarding
-//
-// = FILENAME
-//     Servant_Activator.h
-//
-// = DESCRIPTION
-//     Defines a ServantActivator class, used with a POA having a
-//     RETAIN policy
-//
-// = AUTHOR
-//     Irfan Pyarali
-//     Michael Kircher
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file     Servant_Activator.h
+ *
+ *  $Id$
+ *
+ *   Defines a ServantActivator class, used with a POA having a
+ *   RETAIN policy
+ *
+ *
+ *  @author  Irfan Pyarali  Michael Kircher
+ */
+//=============================================================================
+
 
 #ifndef SERVANT_ACTIVATOR_H
 #define SERVANT_ACTIVATOR_H
@@ -47,14 +43,14 @@ public:
                             CORBA::Boolean cleanup_in_progress,
                             CORBA::Boolean remaining_activations);
 
+  /// Object should be forwarded from now on.
   void forward_requests (void);
-  // Object should be forwarded from now on.
 
 private:
   CORBA::ORB_var orb_;
 
+  /// Location to forward to
   CORBA::Object_var forward_to_;
-  // Location to forward to
 };
 
 #endif /* SERVANT_ACTIVATOR_H */

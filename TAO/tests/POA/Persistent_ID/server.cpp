@@ -1,20 +1,17 @@
-// $Id$
 
-// ================================================================
-//
-// = LIBRARY
-//    TAO/tests/POA/Persistent_ID
-//
-// = FILENAME
-//    server.cpp
-//
-// = DESCRIPTION
-//    In this example of using Persistent IDs.
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ *  In this example of using Persistent IDs.
+ *
+ *
+ *  @author Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "ace/SString.h"
@@ -32,8 +29,8 @@ public:
   void method (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
   void shutdown (void);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   test_ptr create_POA (void);
 

@@ -1,18 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    FactoryFinder_i.cpp
-//
-// = DESCRIPTION
-//    A Factory Finder for the Quoter example. This example conforms
-//    to the CosLifeCycle Factory Finder notion.
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    FactoryFinder_i.cpp
+ *
+ *  $Id$
+ *
+ *  A Factory Finder for the Quoter example. This example conforms
+ *  to the CosLifeCycle Factory Finder notion.
+ *
+ *
+ *  @author Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "Factory_Finder_i.h"
 #include "QuoterC.h"

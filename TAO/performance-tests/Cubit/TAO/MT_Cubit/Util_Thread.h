@@ -1,57 +1,58 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests
-//
-// = FILENAME
-//    Util_Thread.h
-//
-// = AUTHOR
-//    Andy Gokhale, Sumedh Mungee, Sergio Flores-Gaitan and Nagarajan
-//    Surendran.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Util_Thread.h
+ *
+ *  $Id$
+ *
+ *  @author Andy Gokhale
+ *  @author Sumedh Mungee
+ *  @author Sergio Flores-Gaitan and Nagarajan Surendran.
+ */
+//=============================================================================
+
 
 #ifndef UTIL_THREAD_H
 #define UTIL_THREAD_H
 
 #include "Task_Client.h"
 
+/**
+ * @class Util_Thread
+ *
+ * @brief The thread that computes utilization.
+ */
 class Util_Thread : public ACE_Task<ACE_NULL_SYNCH>
 {
-  // = TITLE
-  //     The thread that computes utilization.
 public:
+  /// Constructor.
   Util_Thread (Task_State *,
                ACE_Thread_Manager *thr_mgr);
-  // Constructor.
 
+  /// The thread entry point function.
   virtual int svc (void);
-  // The thread entry point function.
 
+  /// Gets the number of computations the thread was able to perform.
   u_long get_number_of_computations (void);
-  // Gets the number of computations the thread was able to perform.
 
+  /// this is the actual "computation" being performed.
   void computation (void);
-  // this is the actual "computation" being performed.
 
+  /// Indicates whether we're done.
   int done_;
-  // Indicates whether we're done.
 
 private:
+  /// Run the computations.
   int run_computations (void);
-  // Run the computations.
 
+  /// This stores the number of computations performed
+  /// by the Util_Thread so far
   u_long number_of_computations_;
-  // This stores the number of computations performed
-  // by the Util_Thread so far
 
+  /// Pointer to the Task state. Stores the state
+  /// common to the multiple client threads
   Task_State *ts_;
-  // Pointer to the Task state. Stores the state
-  // common to the multiple client threads
 };
 
 #endif /* !defined (UTIL_THREAD_H) */

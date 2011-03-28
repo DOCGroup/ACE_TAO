@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    interop_test/wchar
-//
-// = FILENAME
-//    server.cpp
-//
-// = DESCRIPTION
-//    C++ server side for testing interoperability with wchar data.
-//
-// = AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ *  C++ server side for testing interoperability with wchar data.
+ *
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
 #include "interop_wchar_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"

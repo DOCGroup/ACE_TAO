@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/CDR
-//
-// = FILENAME
-//    basic_types.cpp
-//
-// = DESCRIPTION
-//   Test the basic funcionality of a CDR stream by encoding some
-//   basic types and then decoding them again.
-//
-// = AUTHORS
-//    Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    basic_types.cpp
+ *
+ *  $Id$
+ *
+ * Test the basic funcionality of a CDR stream by encoding some
+ * basic types and then decoding them again.
+ *
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #include "tao/ORB.h"
 #include "tao/debug.h"

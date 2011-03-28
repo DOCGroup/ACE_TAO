@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/PluggableUDP/tests/SimplePerformance
-//
-// = FILENAME
-//    client.cpp
-//
-// = DESCRIPTION
-//    This is the client for the UDP simple performance test.
-//
-// = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *  $Id$
+ *
+ *  This is the client for the UDP simple performance test.
+ *
+ *
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
@@ -61,29 +58,30 @@ parse_args (int argc, ACE_TCHAR *argv[])
 ACE_UINT32 niter = 10;
 ACE_UINT32 SIZE_BLOCK= 256;
 
+/**
+ * @class Client
+ *
+ * @brief Run the client thread
+ *
+ * Use the ACE_Task_Base class to run the client threads.
+ */
 class Client
 {
-  // = TITLE
-  //   Run the client thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run the client threads.
-  //
 public:
+  /// ctor
   Client (Simple_Server_ptr server, ACE_UINT32 niterations);
-  // ctor
 
   virtual ~Client (void) {};
 
+  /// The thread entry point.
   virtual int svc (void);
-  // The thread entry point.
 
 private:
+  /// The server.
   Simple_Server_var server_;
-  // The server.
 
+  /// The number of iterations on each client thread.
   ACE_UINT32 niterations_;
-  // The number of iterations on each client thread.
 };
 
 

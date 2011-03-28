@@ -1,21 +1,18 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
 //=============================================================================
-//
-// = LIBRARY
-//     TAO/examples/POA/Loader
-//
-// = FILENAME
-//     Server_Manager.h
-//
-// = DESCRIPTION
-//     Helper class for the server application.
-//
-// = AUTHOR
-//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
+/**
+ *  @file     Server_Manager.h
+ *
+ *  $Id$
+ *
+ *   Helper class for the server application.
+ *
+ *
+ *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
 //=============================================================================
+
 
 #ifndef SERVER_MANAGER_H
 #define SERVER_MANAGER_H
@@ -23,80 +20,84 @@
 #include "Servant_Activator.h"
 #include "Servant_Locator.h"
 
+/**
+ * @class Server_i
+ *
+ * @brief This class provides the server application with helper methods
+ *
+ * The various methods required by the server application for
+ * utilizing the ServantActivator and ServantLocator interfaces of
+ * the Servant Manager are implemented by this class.  These
+ * include initialisation procedures of the ServantActivator and
+ * ServantLocator, and creation of POAs with emphasis on the
+ * servant retention policy.
+ */
 class Server_i
 {
-  // = TITLE
-  //   This class provides the server application with helper methods
-  //
-  // = DESCRIPTION
-  //   The various methods required by the server application for
-  //   utilizing the ServantActivator and ServantLocator interfaces of
-  //   the Servant Manager are implemented by this class.  These
-  //   include initialisation procedures of the ServantActivator and
-  //   ServantLocator, and creation of POAs with emphasis on the
-  //   servant retention policy.
 public:
   // = Initialization and termination methods.
+  /// Initialisation.
   Server_i (void);
-  // Initialisation.
 
+  /// Destruction.
   ~Server_i (void);
-  // Destruction.
 
+  /// Initialisation of the ORB and poa.
   int init (int argc, ACE_TCHAR **argv);
-  // Initialisation of the ORB and poa.
 
+  /**
+   * This method creates a POA from the root_poa with emphasis being
+   * on the servant_retention_policy which decides the use of the
+   * ServantActivator or ServantLocator interfaces. The
+   * servent_retention_policy value is 1 for the RETAIN policy and 0
+   * for the NONRETAIN policy.
+   */
   PortableServer::POA_ptr create_poa (const char* name,
                                       int servant_retention_policy);
-  // This method creates a POA from the root_poa with emphasis being
-  // on the servant_retention_policy which decides the use of the
-  // ServantActivator or ServantLocator interfaces. The
-  // servent_retention_policy value is 1 for the RETAIN policy and 0
-  // for the NONRETAIN policy.
 
+  /// A ServantActivator object is created and initialised.
   int create_activator (PortableServer::POA_var first_poa);
-  // A ServantActivator object is created and initialised.
 
+  /// A ServantActivator object is created and initialised.
   int create_locator (PortableServer::POA_var second_poa);
-  // A ServantActivator object is created and initialised.
 
+  /// The server is executed.
   int run (void);
-  // The server is executed.
 
 private:
+  /// Parses the input arguments.
   int parse_args (int argc, ACE_TCHAR **argv);
-  // Parses the input arguments.
 
+  /// The IORs are written to a file for future use.
   int write_iors_to_file (const char *first_ior,
                           const char *second_ior);
-  // The IORs are written to a file for future use.
 
+  /// Default ior file.
   ACE_TCHAR *ior_output_file_;
-  // Default ior file.
 
+  /// The orb pointer.
   CORBA::ORB_var orb_;
-  // The orb pointer.
 
+  /// The poa policicies.
   CORBA::PolicyList policies_;
-  // The poa policicies.
 
+  /// The root_poa which is used for cretaing different child poas.
   PortableServer::POA_var root_poa_;
-  // The root_poa which is used for cretaing different child poas.
 
+  /// The poa_manager object.
   PortableServer::POAManager_var poa_manager_;
-  // The poa_manager object.
 
+  /// The object pointer used by the ServantActivator.
   CORBA::Object_var first_test_;
-  // The object pointer used by the ServantActivator.
 
+  /// The object pointer used by the Servant Locator.
   CORBA::Object_var second_test_;
-  // The object pointer used by the Servant Locator.
 
+  /// The servant activator object.
   ServantActivator *servant_activator_;
-  // The servant activator object.
 
+  /// The servant locator object.
   ServantLocator *servant_locator_;
-  // The servant locator object.
 };
 
 #endif /* SERVER_MANAGER_H */

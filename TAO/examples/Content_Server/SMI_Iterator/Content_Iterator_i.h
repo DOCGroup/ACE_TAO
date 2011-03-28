@@ -1,22 +1,19 @@
 // -*- C++ -*-
-// $Id$
 
 
-// ============================================================================
-//
-// = LIBRARY
-//     SMI_ITERATOR
-//
-// = FILENAME
-//     Content_Iterator_i.h
-//
-// = DESCRIPTION
-//     Header file for the Web_Server::Content_Iterator implementation.
-//
-// = AUTHOR
-//     Ossama Othman <ossama@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     Content_Iterator_i.h
+ *
+ *  $Id$
+ *
+ *   Header file for the Web_Server::Content_Iterator implementation.
+ *
+ *
+ *  @author  Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef CONTENT_ITERATOR_I_H
 #define CONTENT_ITERATOR_I_H
@@ -45,39 +42,39 @@ class Content_Iterator_i :
   friend class Iterator_Factory_i;
 public:
 
+  /// Constructor
   Content_Iterator_i (const char *filename, CORBA::ULongLong file_size);
-  // Constructor
 
+  /// Destructor
   ~Content_Iterator_i (void);
-  // Destructor
 
+  /// This operation returns the next <chunk> of the file starting at
+  /// <offset>.  If there are no more bindings, false is returned.
   virtual CORBA::Boolean next_chunk (CORBA::ULongLong offset,
                                      Web_Server::Chunk_Type_out chunk);
-  // This operation returns the next <chunk> of the file starting at
-  // <offset>.  If there are no more bindings, false is returned.
 
+  /// Destroy the iterator.
   virtual void destroy (void);
-  // Destroy the iterator.
 
 private:
 
+  /// Initialize the Content_Iterator.
   int init (void);
-  // Initialize the Content_Iterator.
 
 private:
 
+  /// The Addr representing the requested file.
   ACE_FILE_Addr file_;
-  // The Addr representing the requested file.
 
+  /// Object that handles all IO operations on the requested file.
   ACE_FILE_IO file_io_;
-  // Object that handles all IO operations on the requested file.
 
+  /// The size of the file being iterated over.
   CORBA::ULongLong file_size_;
-  // The size of the file being iterated over.
 
+  /// The number of the current chunk of data being sent.  (Used only
+  /// for debugging purposes.)
   CORBA::ULongLong chunk_index_;
-  // The number of the current chunk of data being sent.  (Used only
-  // for debugging purposes.)
 };
 
 #endif  /* CONTENT_ITERATOR_I_H */

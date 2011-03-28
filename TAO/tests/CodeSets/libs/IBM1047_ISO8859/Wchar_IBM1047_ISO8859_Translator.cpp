@@ -1,22 +1,19 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Wchar_IBM1047_ISO8859_Translator.cpp
-//
-// = DESCRIPTION
-//    Defines the arrays required to convert between ISO8859 (aka
-//    Latin/1) and IBM1047 (aka EBCDIC).
-//
-// = AUTHOR
-//    Mahesh Vedantam (mahesh@ociweb.com)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Wchar_IBM1047_ISO8859_Translator.cpp
+ *
+ *  $Id$
+ *
+ *  Defines the arrays required to convert between ISO8859 (aka
+ *  Latin/1) and IBM1047 (aka EBCDIC).
+ *
+ *
+ *  @author Mahesh Vedantam (mahesh@ociweb.com)
+ */
+//=============================================================================
+
 
 #include "Wchar_IBM1047_ISO8859_Translator.h"
 

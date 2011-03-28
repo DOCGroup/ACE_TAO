@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    ub_wstr_seq.cpp
-//
-// = DESCRIPTION
-//    tests unbounded wide string sequences
-//
-// = AUTHORS
-//      Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ub_wstr_seq.cpp
+ *
+ *  $Id$
+ *
+ *  tests unbounded wide string sequences
+ *
+ *
+ *  @author   Jeff Parsons
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "ub_wstr_seq.h"

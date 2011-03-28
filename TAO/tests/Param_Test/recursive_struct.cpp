@@ -1,20 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    recursive_struct.cpp
-//
-// = DESCRIPTION
-//    test structure that contains a sequence of itself
-//
-// = AUTHORS
-//    Aniruddha Gokhale, Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    recursive_struct.cpp
+ *
+ *  $Id$
+ *
+ *  test structure that contains a sequence of itself
+ *
+ *
+ *  @author Aniruddha Gokhale
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #include "recursive_struct.h"
 

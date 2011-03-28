@@ -1,28 +1,30 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests
-//
-// = FILENAME
-//    cubit_i.h
-//
-// = AUTHOR
-//    Andy Gokhale, Sumedh Mungee, Sergio Flores-Gaitan and Nagarajan Surendran.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    cubit_i.h
+ *
+ *  $Id$
+ *
+ *  @author Andy Gokhale
+ *  @author Sumedh Mungee
+ *  @author Sergio Flores-Gaitan and Nagarajan Surendran.
+ */
+//=============================================================================
+
 
 #ifndef _CUBIT_I_H
 #define _CUBIT_I_H
 
 #include "cubitS.h"
 
+/**
+ * @class Cubit_i
+ *
+ * @brief Cubit implementation class.
+ */
 class Cubit_i : public POA_Cubit
 {
-  // = TITLE
-  //   Cubit implementation class.
 public:
   // = Initialization and termination methods.
   Cubit_i (CORBA::ORB_ptr orb,
@@ -41,16 +43,16 @@ public:
 
   virtual void shutdown (void);
 
+  /// The default POA
   virtual PortableServer::POA_ptr
       _default_POA (void);
-  // The default POA
 
 protected:
+  /// Keep a pointer to the ORB so we can shut it down.
   CORBA::ORB_var orb_;
-  // Keep a pointer to the ORB so we can shut it down.
 
+  /// The default POA..
   PortableServer::POA_var poa_;
-  // The default POA..
 };
 
 #endif /* _CUBIT_I_H */

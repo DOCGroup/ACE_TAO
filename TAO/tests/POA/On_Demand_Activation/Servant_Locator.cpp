@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO/tests/POA/On_Demand_Activation/Servant_Locator
-//
-// = FILENAME
-//     Servant_Locator.cpp
-//
-// = DESCRIPTION
-//     Implementation of ServantLocator class , used with a POA
-//     having a NON_RETAIN policy.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     Servant_Locator.cpp
+ *
+ *  $Id$
+ *
+ *   Implementation of ServantLocator class , used with a POA
+ *   having a NON_RETAIN policy.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "Servant_Locator.h"
 #include "test_i.h"

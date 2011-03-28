@@ -1,21 +1,18 @@
-// $Id$
 
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IFR_BE_DLL
-//
-// = FILENAME
-//    ifr_visitor.h
-//
-// = DESCRIPTION
-//    The Interface Repository administration visitor base class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ifr_visitor.h
+ *
+ *  $Id$
+ *
+ *  The Interface Repository administration visitor base class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_IFR_VISITOR_H
 #define TAO_IFR_VISITOR_H
@@ -28,17 +25,17 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class ifr_visitor
+ *
+ * @brief ifr_visitor.
+ *
+ * Base class for the IfR administration visitors. The methods are
+ * not pure virtual to facilitate the implementation of some
+ * derived visitors that override only a few.
+ */
 class ifr_visitor : public ast_visitor
 {
-  //
-  // = TITLE
-  //    ifr_visitor.
-  //
-  // = DESCRIPTION
-  //    Base class for the IfR administration visitors. The methods are
-  //    not pure virtual to facilitate the implementation of some
-  //    derived visitors that override only a few.
-  //
 public:
   virtual ~ifr_visitor (void);
 
@@ -94,16 +91,16 @@ public:
   virtual int visit_native (AST_Native *node);
   virtual int visit_param_holder (AST_Param_Holder *node);
 
+  /// Accessor for our lock.
   ACE_Lock &lock (void) const;
-  // Accessor for our lock.
 
 protected:
   // Not abstract but we want to force subclassing anyway.
   ifr_visitor (void);
 
 private:
+  /// Lock.
   ACE_Lock *lock_;
-  // Lock.
 };
 
 #endif /* TAO_IFR_VISITOR_H */

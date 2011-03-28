@@ -84,9 +84,7 @@ struct TAO_ACE_CHECK
 
 /**
  * @class TAO_OutStream
- =TITLE
- * TAO_OutStream
- * =DESCRIPTION
+ *
  * Defines an interface by which the backend code generator can
  * print its output to the underlying I/O handle. This is a
  * helper class that will be used by the TAO_CodeGen
@@ -97,7 +95,7 @@ class TAO_OutStream
 {
 public:
 
-  // Enumerated type to indicate the stream type
+  /// Enumerated type to indicate the stream type
   enum STREAM_TYPE
     {
       TAO_CLI_HDR,

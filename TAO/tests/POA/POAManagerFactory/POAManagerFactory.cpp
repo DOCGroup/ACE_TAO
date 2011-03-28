@@ -1,22 +1,19 @@
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO/tests/POA/POAManagerFactory
-//
-// = FILENAME
-//     POAManagerFactory.cpp
-//
-// = DESCRIPTION
-//     This program tests Root_POA::the_POAManagerFactory and
-//     the POAManagerFactory interfaces such as create_POAManager(),
-//     list () and find ().
-//
-// = AUTHOR
-//     Yan Dai
-//
-//=========================================================================
+//=============================================================================
+/**
+ *  @file     POAManagerFactory.cpp
+ *
+ *  $Id$
+ *
+ *   This program tests Root_POA::the_POAManagerFactory and
+ *   the POAManagerFactory interfaces such as create_POAManager(),
+ *   list () and find ().
+ *
+ *
+ *  @author  Yan Dai
+ */
+//=============================================================================
+
 
 #include "tao/ORB.h"
 #include "tao/AnyTypeCode/Any.h"

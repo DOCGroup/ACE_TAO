@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/AMI
-//
-// = FILENAME
-//    server.cpp
-//
-// = DESCRIPTION
-//    Implementation of the server.
-//
-// = AUTHOR
-//    Alexander Babu Arulanthu <alex@cs.wustl.edu>,
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ *  Implementation of the server.
+ *
+ *
+ *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
 
 #include "ami_test_i.h"
 

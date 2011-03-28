@@ -1,21 +1,18 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   Notify_SequencePushConsumer.h
-//
-// = DESCRIPTION
-//   This is a utility class is to be used by clients of the Notification
-//   Service to implement the servant for CosNotifyComm::SequencePushConsumer
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Notify_SequencePushConsumer.h
+ *
+ *  $Id$
+ *
+ * This is a utility class is to be used by clients of the Notification
+ * Service to implement the servant for CosNotifyComm::SequencePushConsumer
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef NOTIFY_SEQUENCEPUSHCONSUMER_H
 #define NOTIFY_SEQUENCEPUSHCONSUMER_H

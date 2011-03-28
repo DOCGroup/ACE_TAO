@@ -1,26 +1,23 @@
-// $Id$
 
-// ================================================================
-//
-// = LIBRARY
-//    TAO/tests/POA/Adapter_Activator
-//
-// = FILENAME
-//    server.cpp
-//
-// = DESCRIPTION
-//    This example is very similar to the Explicit_Activation example
-//    except that the POAs are deleted once the object references have
-//    been created. After this, an adapter activator is install in the
-//    RootPOA to reactivate the POAs on demand.
-//
-//    Similar to the Explicit_Activation, the client for this example
-//    is Generic_Servant.
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ *  This example is very similar to the Explicit_Activation example
+ *  except that the POAs are deleted once the object references have
+ *  been created. After this, an adapter activator is install in the
+ *  RootPOA to reactivate the POAs on demand.
+ *
+ *  Similar to the Explicit_Activation, the client for this example
+ *  is Generic_Servant.
+ *
+ *
+ *  @author Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "test_i.h"
@@ -38,9 +35,9 @@ class reference_counted_test_i :
   public virtual test_i
 {
 public:
+  /// Constructor - takes a POA and a value parameter
   reference_counted_test_i (CORBA::ORB_ptr orb,
                             PortableServer::POA_ptr poa);
-  // Constructor - takes a POA and a value parameter
 };
 
 reference_counted_test_i::reference_counted_test_i (CORBA::ORB_ptr orb,

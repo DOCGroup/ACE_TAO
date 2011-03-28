@@ -1,35 +1,31 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    UTF16_UCS2
-//
-// = FILENAME
-//    UTF16_UCS2_Translator.cpp
-//
-// = DESCRIPTION
-//    Defines the arrays required to convert between UCS-2, a 2 byte wide char
-//    codeset, and UCS-16, aka unicode, a 2-byte codeset. As a bit-pattern
-//    these two should be identical, with the exception that UCS-2 cannot
-//    certain characters that UTF16 can, using escape codepoints.
-//
-//    This translator can be dynamically loaded into TAO at run-time using
-//    a service configurator file with the following contents:
-//
-//    dynamic UTF16_UCS2_Factory Service_Object * UTF16_UCS2:_make_UTF16_UCS2_Factory ()
-//
-//    static Resource_Factory
-//      "-ORBWCharCodesetTranslator UTF16_UCS2_Factory"
-//
-//    This code used UTF16_BOM_Translator as a starting point.
-//
-// = AUTHOR
-//    Iliyan Jeliazkov <jeliazkov_i@ociweb.com>
-//    Byron Harris <harrisb@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    UTF16_UCS2_Translator.cpp
+ *
+ *  $Id$
+ *
+ *  Defines the arrays required to convert between UCS-2, a 2 byte wide char
+ *  codeset, and UCS-16, aka unicode, a 2-byte codeset. As a bit-pattern
+ *  these two should be identical, with the exception that UCS-2 cannot
+ *  certain characters that UTF16 can, using escape codepoints.
+ *
+ *  This translator can be dynamically loaded into TAO at run-time using
+ *  a service configurator file with the following contents:
+ *
+ *  dynamic UTF16_UCS2_Factory Service_Object * UTF16_UCS2:_make_UTF16_UCS2_Factory ()
+ *
+ *  static Resource_Factory
+ *    "-ORBWCharCodesetTranslator UTF16_UCS2_Factory"
+ *
+ *  This code used UTF16_BOM_Translator as a starting point.
+ *
+ *
+ *  @author Iliyan Jeliazkov <jeliazkov_i@ociweb.com> Byron Harris <harrisb@ociweb.com>
+ */
+//=============================================================================
+
 #include "UTF16_UCS2_Translator.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"

@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tao/Codesets/translators/UTF16_UCS2/
-//
-// = FILENAME
-//    UTF16_UCS2_Factory.cpp
-//
-// = DESCRIPTION
-//    A tempate instantiation of the codeset translator factory from TAO.
-//
-// = AUTHORS
-//      Byron Harris <harrisb@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    UTF16_UCS2_Factory.cpp
+ *
+ *  $Id$
+ *
+ *  A tempate instantiation of the codeset translator factory from TAO.
+ *
+ *
+ *  @author   Byron Harris <harrisb@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "UTF16_UCS2_Factory.h"
 

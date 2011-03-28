@@ -1,17 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    Life_Cycle_Service_i.cpp
-//
-// = DESCRIPTION
-//    The implementation of a LifeCycle Service GenericFactory.
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Life_Cycle_Service_i.cpp
+ *
+ *  $Id$
+ *
+ *  The implementation of a LifeCycle Service GenericFactory.
+ *
+ *
+ *  @author Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 

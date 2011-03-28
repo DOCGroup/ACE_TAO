@@ -1,17 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = FILENAME
-//   Consumer.h
-//
-// = DESCRIPTION
-//   Test Consumer reconnect to existing channel/admin/proxy Notification Service
-//
-// = AUTHOR
-//    Dale Wilson <wilson_d@ociweb.com>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Consumer.h
+ *
+ *  $Id$
+ *
+ * Test Consumer reconnect to existing channel/admin/proxy Notification Service
+ *
+ *
+ *  @author Dale Wilson <wilson_d@ociweb.com>
+ */
+//=============================================================================
+
 
 #ifndef RECONNECTNG_CONSUMER_H
 #define RECONNECTNG_CONSUMER_H

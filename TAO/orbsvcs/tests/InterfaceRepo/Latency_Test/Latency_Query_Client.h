@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/tests/InterfaceRepo
-//
-// = FILENAME
-//    Latency_Query_Client.h
-//
-// = DESCRIPTION
-//    This class tests the latency of queries made on the IFR.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Latency_Query_Client.h
+ *
+ *  $Id$
+ *
+ *  This class tests the latency of queries made on the IFR.
+ *
+ *
+ *  @author Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #if !defined (LATENCY_QUERY_CLIENT_H)
 #define LATENCY_QUERY_CLIENT_H
@@ -23,55 +20,57 @@
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/ORB.h"
 
+/**
+ * @class Latency_Query_Client
+ *
+ * @brief Querying IFR Client Implementation
+ *
+ * Class wrapper for a client which queries the Interface Repository.
+ */
 class Latency_Query_Client
 {
-  // = TITLE
-  //     Querying IFR Client Implementation
-  //
-  // = DESCRIPTION
-  //     Class wrapper for a client which queries the Interface Repository.
 public:
+  /// Constructor
   Latency_Query_Client (void);
-  // Constructor
 
+  /// Destructor
   ~Latency_Query_Client (void);
-  // Destructor
 
+  /// Initialize the ORB and get the IFR object reference.
   int init (int argc,
             ACE_TCHAR *argv[]);
-  // Initialize the ORB and get the IFR object reference.
 
+  /// Execute test code.
   int run (void);
-  // Execute test code.
 private:
+  /// Process the command line arguments.
   int parse_args (int argc,
                   ACE_TCHAR *argv[]);
-  // Process the command line arguments.
 
+  /// Put in something to query about.
   int populate_ifr (void);
-  // Put in something to query about.
 
 private:
+  /// Toggle debugging output.
   bool debug_;
-  // Toggle debugging output.
 
+  /// Toggle saving of dump history.
   bool do_dump_history_;
-  // Toggle saving of dump history.
 
+  /// Number of queries in a run.
   CORBA::ULong iterations_;
-  // Number of queries in a run.
 
+  /// Storage of the ORB reference.
   CORBA::ORB_var orb_;
-  // Storage of the ORB reference.
 
+  /// Storage of the IFR reference.
   CORBA::Repository_var repo_;
-  // Storage of the IFR reference.
 
 //  CORBA::AliasDef_var tdef_;
   // Storage of the typedef definition that we will query.
 
+  /// Storage of the attribute definition we will query.
   CORBA::AttributeDef_var attr_;
-  // Storage of the attribute definition we will query.
 };
 
 #endif /* LATENCY_QUERY_CLIENT_H */

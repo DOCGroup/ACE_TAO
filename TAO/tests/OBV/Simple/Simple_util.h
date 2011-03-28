@@ -1,24 +1,18 @@
-//$Id$
 
-// This version of Simple_Util doesn't need to link against orbsvcs
-// On the other hand it has no naming service.
 
-// ============================================================================
-//
-// = LIBRARY
-//
-//    taken from TAO/tests/Simple
-//
-// = FILENAME
-//    Simple_Util.h
-//
-// = DESCRIPTION
-//    The classe define the templates for the client and server.
-//
-// = AUTHOR
-//   Balachandran Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Simple_Util.h
+ *
+ *  $Id$
+ *
+ *  The classe define the templates for the client and server.
+ *
+ *
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_UTIL_H
 #define TAO_UTIL_H
@@ -28,134 +22,138 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
+/**
+ * @class Server
+ *
+ * @brief A set of useful class Templates for using the TAO CORBA
+ * implementation.
+ *
+ * A template server definition. This template can be used by
+ * single server/client projects for defintion of their
+ * server/clients.  See the directories time, bank, echo for
+ * further details of implemenatation.
+ */
 template <class Servant>
 class Server
 {
-  // = TITLE
-  //   A set of useful class Templates for using the TAO CORBA
-  //   implementation.
-  //
-  // = DESCRIPTION
-  //   A template server definition. This template can be used by
-  //   single server/client projects for defintion of their
-  //   server/clients.  See the directories time, bank, echo for
-  //   further details of implemenatation.
 public:
   // = Initialization and termination methods.
 
+  /// Constructor.
   Server (void);
-  // Constructor.
 
+  /// Destructor.
   ~Server (void);
-  // Destructor.
 
+  /// Initialize the Server state - parsing arguments and waiting.
+  /// interface_name is the name used to register the Servant.
   int init (const char *servant_name,
             int argc,
             ACE_TCHAR *argv[]);
-  // Initialize the Server state - parsing arguments and waiting.
-  // interface_name is the name used to register the Servant.
 
+  /// After calling <init>, this method will register the server with
+  /// the TAO Naming Service using the servant_name passed to <init>.
   int register_name (void);
-  // After calling <init>, this method will register the server with
-  // the TAO Naming Service using the servant_name passed to <init>.
 
+  /// Run the orb.
   int run (void);
-  // Run the orb.
 
 protected:
+  /// Servant class
   Servant servant_;
-  // Servant class
 
+  /// name of the servant to be used for TAO Naming Service
   const char *name;
-  // name of the servant to be used for TAO Naming Service
 
+  /// Parses the commandline arguments.
   int parse_args (void);
-  // Parses the commandline arguments.
 
+  /// The ORB manager - a helper class for accessing the POA and
+  /// registering objects.
   TAO_ORB_Manager orb_manager_;
-  // The ORB manager - a helper class for accessing the POA and
-  // registering objects.
 
   // TAO_Naming_Server namingServer;
   // helper class for getting access to Naming Service.
 
+  /// File where the IOR of the server object is stored.
   FILE *ior_output_file_;
-  // File where the IOR of the server object is stored.
 
+  /// Number of command line arguments.
   int argc_;
-  // Number of command line arguments.
 
+  /// The command line arguments.
   ACE_TCHAR **argv_;
-  // The command line arguments.
 };
 
+/**
+ * @class Client
+ *
+ * @brief Template Client class
+ *
+ * A template client implementation for a single server/client
+ * model. The example usage of these usage can be found in the
+ * sub-directories below
+ */
 template <class InterfaceObj, class Var>
 class Client
 {
-  // = TITLE
-  //   Template Client class
-  //
-  // = DESCRIPTION
-  //   A template client implementation for a single server/client
-  //   model. The example usage of these usage can be found in the
-  //   sub-directories below
 public:
 
   // = Initialization and termination methods.
+  /// Constructor.
   Client (void);
-  // Constructor.
 
+  /// Destructor.
   ~Client (void);
-  // Destructor.
 
+  /// Initialize the client communication endpoint with server.
   int init (const char *name,int argc, ACE_TCHAR *argv[]);
-  // Initialize the client communication endpoint with server.
 
+  /// Return the interface object pointer.
   InterfaceObj *operator-> () { return server_.in ();};
-  // Return the interface object pointer.
 
+  /// Returns the shutdown flag.
   int shutdown (void );
-  // Returns the shutdown flag.
 
+  /// Fills in the shutdwon flag.
   void shutdown (int);
-  // Fills in the shutdwon flag.
 
+  /// Initialize naming service
   int obtain_initial_references (void);
-  // Initialize naming service
 
 protected:
+  /// Function to read the server IOR from a file.
   int read_ior (ACE_TCHAR *filename);
-  // Function to read the server IOR from a file.
 
+  /// Parses the arguments passed on the command line.
   int parse_args (void);
-  // Parses the arguments passed on the command line.
 
 //  TAO_Naming_Client namingClient;
   // helper class for getting access to Naming Service.
 
+  /// # of arguments on the command line.
   int argc_;
-  // # of arguments on the command line.
 
+  /// arguments from command line.
   ACE_TCHAR **argv_;
-  // arguments from command line.
 
+  /// IOR of the obj ref of the server.
   ACE_TCHAR *ior_;
-  // IOR of the obj ref of the server.
 
+  /// Name to be usred for the naming service
   char *name_;
-  // Name to be usred for the naming service
 
+  /// Remember our orb.
   CORBA::ORB_var orb_;
-  // Remember our orb.
 
+  /// Server object
   Var server_;
-  // Server object
 
+  /// Flag to use the naming service
   int naming_;
-  // Flag to use the naming service
 
+  /// Flag for shutting down the server
   int shutdown_;
-  // Flag for shutting down the server
 
 };
 

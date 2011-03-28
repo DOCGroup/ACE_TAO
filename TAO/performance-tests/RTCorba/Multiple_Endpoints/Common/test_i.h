@@ -1,34 +1,32 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/TPP
-//
-// = FILENAME
-//   test_i.h
-//
-// = AUTHOR
-//   Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   test_i.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #ifndef TAO_TPP_TEST_I_H
 #define TAO_TPP_TEST_I_H
 
 #include "testS.h"
 
+/**
+ * @class Test_i
+ *
+ * @brief An implementation for the Test interface
+ *
+ * Implements the Test interface in test.idl
+ */
 class RTCORBA_COMMON_Export Test_i : public POA_Test
 {
-  // = TITLE
-  //   An implementation for the Test interface
-  //
-  // = DESCRIPTION
-  //   Implements the Test interface in test.idl
-  //
 public:
+  /// ctor
   Test_i (void);
-  // ctor
 
   // = The Test methods.
   void test_method (CORBA::Long id);
