@@ -5,12 +5,9 @@
  *
  *  $Id$
  *
- *  @brief 
- *
  *  @author Tim Harrison
  */
 //=============================================================================
-
 
 #include "ace/Token_Manager.h"
 #include "ace/Remote_Tokens.h"
@@ -20,8 +17,6 @@
 #include "ace/Token_Invariants.h"
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
-
-
 
 typedef ACE_Token_Invariant_Manager ACE_TOKEN_INVARIANTS;
 
