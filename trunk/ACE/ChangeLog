@@ -1,3 +1,10 @@
+Mon Mar 28 09:58:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/clients/Tokens/deadlock/deadlock_detection_test.cpp:
+        * netsvcs/clients/Tokens/invariant/invariant.cpp:
+        * netsvcs/clients/Tokens/mutex/test_mutex.cpp:
+          Fuzz fixes
+
 Mon Mar 28 07:50:45 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ASNMP/asnmp/vb.cpp:
