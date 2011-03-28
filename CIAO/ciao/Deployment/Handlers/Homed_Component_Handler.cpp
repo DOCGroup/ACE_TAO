@@ -108,7 +108,7 @@ namespace CIAO
     Components::CCMHome_var tmp_home = DEPLOYMENT_STATE::instance ()->fetch_home (tmp);
 
     Components::KeylessCCMHome_var home = Components::KeylessCCMHome::_narrow (tmp_home);
-    if (CORBA::is_nil (home))
+    if (::CORBA::is_nil (home.in ()))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Homed_Component_Handler_i::install_instance - "
@@ -132,8 +132,7 @@ namespace CIAO
         Deployment_Common::create_attribute_configuration (idd.configProperty,
                                                            attr_config);
 
-        container->set_attributes (ref.in (),
-                                   attr_config);
+        container->set_attributes (ref.in (), attr_config);
       }
     catch (const CORBA::Exception &ex)
       {
