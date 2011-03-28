@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    Consumer_Input_Handler.cpp
+ *  @file    Consumer_Handler.cpp
  *
  *  $Id$
  *

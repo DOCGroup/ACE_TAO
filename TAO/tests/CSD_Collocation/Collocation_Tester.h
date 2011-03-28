@@ -1,12 +1,11 @@
 
 //=============================================================================
 /**
- *  @file     Collocation_Test.h
+ *  @file     Collocation_Tester.h
  *
  *  $Id$
  *
  *   Server class to perform testing of TAO's collocation mechanism.
- *
  *
  *  @author  Nanbor Wang
  */

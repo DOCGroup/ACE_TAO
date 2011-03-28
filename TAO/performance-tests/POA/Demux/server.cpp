@@ -4,15 +4,11 @@
  *
  *  $Id$
  *
- *  @file    Server-side driver program
- *
- *  $Id$
+ *  Server-side driver program
  *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================
-
-
 
 #include "demux_test_server.h"
 #include "tao/debug.h"
