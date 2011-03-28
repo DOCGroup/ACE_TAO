@@ -1,22 +1,19 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/tests/AVStreams/Simple
-//
-// = FILENAME
-//    receiver.h
-//
-// = DESCRIPTION
-//    This application receives data from a AV sender and writes it to
-//    a file.
-//
-// = AUTHOR
-//    Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    receiver.h
+ *
+ *  $Id$
+ *
+ *  This application receives data from a AV sender and writes it to
+ *  a file.
+ *
+ *
+ *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/AV/AVStreams_i.h"
@@ -24,17 +21,19 @@
 #include "orbsvcs/AV/Policy.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 
+/**
+ * @class Receiver_Callback
+ *
+ * @brief Application defined callback object.
+ *
+ * AVStreams calls this class when data shows up from a sender.
+ */
 class Receiver_Callback : public TAO_AV_Callback
 {
-  // = TITLE
-  //    Application defined callback object.
-  //
-  // = DESCRIPTION
-  //    AVStreams calls this class when data shows up from a sender.
 public:
 
+  /// Constructor.
   Receiver_Callback (void);
-  // Constructor.
 
   // Method that is called when there is data to be received from a
   // sender.
@@ -47,93 +46,97 @@ public:
   int handle_destroy (void);
 
 private:
+  /// Keeping a count of the incoming frames.
   int frame_count_;
-  // Keeping a count of the incoming frames.
 
+  /// Message block into which data is read from a file and then sent.
   ACE_Message_Block mb_;
-  // Message block into which data is read from a file and then sent.
 };
 
+/**
+ * @class Receiver_StreamEndPoint
+ *
+ * @brief Application defined stream endpoint object.
+ *
+ * AVStreams calls this class during connection setup.
+ */
 class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
-  // = TITLE
-  //    Application defined stream endpoint object.
-  //
-  // = DESCRIPTION
-  //    AVStreams calls this class during connection setup.
 public:
   // Create a receiver application callback.
   int get_callback (const char *flowname,
                     TAO_AV_Callback *&callback);
 
+  /// Set protocol object corresponding to the transport protocol
+  /// chosen.
   int set_protocol_object (const char *flowname,
                            TAO_AV_Protocol_Object *object);
-  // Set protocol object corresponding to the transport protocol
-  // chosen.
 
 
 private:
+  /// Receiver application callback.
   Receiver_Callback callback_;
-  // Receiver application callback.
 };
 
+/**
+ * @class Receiver
+ *
+ * @brief Receiver application class.
+ *
+ * This class receives data from a AV sender and writes it to
+ * a file.
+ */
 class Receiver
 {
-  // = TITLE
-  //    Receiver application class.
-  //
-  // = DESCRIPTION
-  //    This class receives data from a AV sender and writes it to
-  //    a file.
 public:
+  /// Constructor
   Receiver (void);
-  // Constructor
 
+  /// Destructor.
   ~Receiver (void);
-  // Destructor.
 
+  /// Initialize data components.
   int init (int argc,
             ACE_TCHAR *argv[]);
-  // Initialize data components.
 
+  /// Set the protocol object corresponding to the transport protocol chosen.
   void protocol_object (TAO_AV_Protocol_Object *protocol_object);
-  // Set the protocol object corresponding to the transport protocol chosen.
 
+  /// Set the protocol object corresponding to the transport protocol chosen.
   TAO_AV_Protocol_Object * protocol_object (void);
-  // Set the protocol object corresponding to the transport protocol chosen.
 
   FILE * input_file (void);
 
 protected:
+  /// The Naming Service Client.
   TAO_Naming_Client naming_client_;
-  // The Naming Service Client.
 
+  /// The endpoint reactive strategy.
   TAO_AV_Endpoint_Reactive_Strategy_B
   <Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
-  // The endpoint reactive strategy.
 
+  /// Receiver MMDevice.
   TAO_MMDevice *mmdevice_;
-  // Receiver MMDevice.
 
+  /// Rate at which the data will be sent.
   int frame_rate_;
-  // Rate at which the data will be sent.
 
+  /// Protocol object corresponding to the transport protocol selected.
   TAO_AV_Protocol_Object *protocol_object_;
-  // Protocol object corresponding to the transport protocol selected.
 
+  /// File handle of the file read from.
   FILE *input_file_;
-  // File handle of the file read from.
 
+  /// Number of frames sent.
   int frame_count_;
-  // Number of frames sent.
 
+  /// File from which data is read.
   ACE_CString filename_;
-  // File from which data is read.
 
+  /// Method to parse the command line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Method to parse the command line arguments.
 
+  /// Message block into which data is read from a file and then sent.
   ACE_Message_Block mb_;
-  // Message block into which data is read from a file and then sent.
 
 };

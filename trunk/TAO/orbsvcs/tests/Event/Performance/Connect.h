@@ -1,18 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel testsuite
-//
-// = FILENAME
-//   Connect
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Connect
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef EC_CONNECT_H
 #define EC_CONNECT_H
@@ -24,35 +20,35 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class EC_Connect
+ *
+ * @brief Test the EC connection feature
+ *
+ * The EC can be configured to allow re-connection of suppliers
+ * and consumers, this test verifies that:
+ * + The EC does *not* allow connections if the feature is
+ * disabled (the default)
+ * + The EC does allow connections if the feature is enabled
+ * and:
+ * - There are no memory leaks
+ * - Compares the time required for a connection vs a complete
+ * connect/disconnect cycle, specially as the number of
+ * suppliers and consumers increases.
+ */
 class EC_Connect : public EC_Driver
 {
-  //
-  // = TITLE
-  //   Test the EC connection feature
-  //
-  // = DESCRIPTION
-  //   The EC can be configured to allow re-connection of suppliers
-  //   and consumers, this test verifies that:
-  //   + The EC does *not* allow connections if the feature is
-  //     disabled (the default)
-  //   + The EC does allow connections if the feature is enabled
-  //     and:
-  //     - There are no memory leaks
-  //     - Compares the time required for a connection vs a complete
-  //       connect/disconnect cycle, specially as the number of
-  //       suppliers and consumers increases.
-  //
 public:
+  /// Constructor
   EC_Connect (void);
-  // Constructor
 
   // = The EC_Driver methods
   virtual int parse_args (int& argc, ACE_TCHAR* argv[]);
   virtual void print_usage (void);
   virtual void print_args (void) const;
 
+  /// Don't run the suppliers, just test connect and disconnect calls.
   void execute_test (void);
-  // Don't run the suppliers, just test connect and disconnect calls.
 
   virtual void dump_results (void);
 
@@ -78,8 +74,8 @@ private:
   ACE_Throughput_Stats consumer_disconnect_;
   ACE_Throughput_Stats supplier_disconnect_;
 
+  /// What is connected first?
   int order_;
-  // What is connected first?
 };
 
 // ****************************************************************

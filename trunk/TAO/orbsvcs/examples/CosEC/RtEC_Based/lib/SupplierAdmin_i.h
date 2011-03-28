@@ -1,22 +1,20 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO services
-//
-// = FILENAME
-//   SupplierAdmin_i.h
-//
-// = AUTHOR
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// = DESCRIPTION
-//   This has the implementation of the
-//   CosEventChannelAdmin::SupplierAdmin interface.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   SupplierAdmin_i.h
+ *
+ *  $Id$
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ *
+ * This has the implementation of the
+ * CosEventChannelAdmin::SupplierAdmin interface.
+ *
+ *
+ */
+//=============================================================================
+
 
 #ifndef SUPPLIER_ADMIN_I_H
 #define SUPPLIER_ADMIN_I_H
@@ -37,32 +35,32 @@ class TAO_RTEC_COSEC_Export TAO_CosEC_SupplierAdmin_i :
   //   TAO's RtecEventChannelAdmin::SupplierAdmin.
 public:
   // = Initialization and termination methods.
+  /// Constructor.
   TAO_CosEC_SupplierAdmin_i (void);
-  // Constructor.
 
+  /// Destructor.
   ~TAO_CosEC_SupplierAdmin_i (void);
-  // Destructor.
 
+  /// Initializes the SupplierAdmin.  Returns 0 on success, -1 on
+  /// error.
   int init (const RtecEventChannelAdmin::SupplierQOS &supplierqos,
             RtecEventChannelAdmin::SupplierAdmin_ptr rtec_supplieradmin);
-  // Initializes the SupplierAdmin.  Returns 0 on success, -1 on
-  // error.
 
+  /// Returns a new ProxyPushConsumer_ptr.
   virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
     obtain_push_consumer (void);
-  // Returns a new ProxyPushConsumer_ptr.
 
+  /// Returns a new ProxyPullConsumer_ptr.
   virtual CosEventChannelAdmin::ProxyPullConsumer_ptr
     obtain_pull_consumer(void);
-  // Returns a new ProxyPullConsumer_ptr.
 
 private:
+  /// The SupplierQOS specified by the user of this class.
   RtecEventChannelAdmin::SupplierQOS qos_;
-  // The SupplierQOS specified by the user of this class.
 
+  /// The RtecEventChannelAdmin::SupplierAdmin specified by the user of
+  /// this class.
   RtecEventChannelAdmin::SupplierAdmin_var rtec_supplieradmin_;
-  // The RtecEventChannelAdmin::SupplierAdmin specified by the user of
-  // this class.
 };
 
 #include /**/ "ace/post.h"

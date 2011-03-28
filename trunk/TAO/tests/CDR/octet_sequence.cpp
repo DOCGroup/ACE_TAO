@@ -1,22 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/CDR
-//
-// = FILENAME
-//   octet_sequence.cpp
-//
-// = DESCRIPTION
-//   Verifies that reference counting is performed correctly for octet
-//   sequence marshaling.
-//
-// = AUTHORS
-//   Dave Meyer (dmeyer@std.saic.com)
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   octet_sequence.cpp
+ *
+ *  $Id$
+ *
+ * Verifies that reference counting is performed correctly for octet
+ * sequence marshaling.
+ *
+ *
+ *  @author Dave Meyer (dmeyer@std.saic.com)Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "ace/Log_Msg.h"
 

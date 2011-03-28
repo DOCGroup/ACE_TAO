@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/performance-tests/Pluggable
-//
-// = FILENAME
-//    PP_Test_i.cpp
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    PP_Test_i.cpp
+ *
+ *  $Id$
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Constants.h"

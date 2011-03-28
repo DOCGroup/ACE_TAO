@@ -1,17 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = FILENAME
-//   Notify_Test_Client.h
-//
-// = DESCRIPTION
-//   Prototype Test Driver for all the Notify tests.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Notify_Test_Client.h
+ *
+ *  $Id$
+ *
+ * Prototype Test Driver for all the Notify tests.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef NOTIFY_TEST_CLIENT_H
 #define NOTIFY_TEST_CLIENT_H
@@ -25,87 +25,90 @@
 
 class TAO_Notify_Tests_Peer;
 
+/**
+ * @class Notify_Test_Client
+ *
+ * @brief Notify_Test_Client
+ *
+ * Shows how consumers Notify_Test_Client for events.
+ */
 class TAO_NOTIFY_TEST_Export Notify_Test_Client
 {
-  // = TITLE
-  //   Notify_Test_Client
-  // = DESCRIPTION
-  //   Shows how consumers Notify_Test_Client for events.
 
 public:
   // = Initialization and Termination
   Notify_Test_Client (void);
   virtual ~Notify_Test_Client ();
 
+  /// starts the orb and resolves the notify factory via a naming service.
   virtual int init (int argc, ACE_TCHAR *argv []);
-  // starts the orb and resolves the notify factory via a naming service.
 
+  /// Allow the user to override this empty method
   virtual int parse_args (int argc, ACE_TCHAR* argv[]);
-  // Allow the user to override this empty method
 
+  /// Call ORB::run to accept requests.
   int ORB_run (void);
   int ORB_run (ACE_Time_Value& tv);
-  // Call ORB::run to accept requests.
 
+  /// How many clients will call consumer_done.
   void consumer_start (TAO_Notify_Tests_Peer*);
-  // How many clients will call consumer_done.
 
+  /// Callback for clients to unregister themselves.
   void consumer_done (TAO_Notify_Tests_Peer*);
-  // Callback for clients to unregister themselves.
 
+  /// Access the done boolean.
   bool is_done (void) const;
-  // Access the done boolean.
 
+  /// Access the ORB.  This class retains ownership.
   CORBA::ORB_ptr orb (void);
-  // Access the ORB.  This class retains ownership.
 
+  /// Access the Root POA.  This class retains ownership.
   PortableServer::POA_ptr root_poa (void);
-  // Access the Root POA.  This class retains ownership.
 
+  /// Access the Naming Context.  This class retains ownership.
   CosNaming::NamingContext_ptr naming_context (void);
-  // Access the Naming Context.  This class retains ownership.
 
+  /// Access the Notify Factory.  This class retains ownership.
   CosNotifyChannelAdmin::EventChannelFactory_ptr notify_factory (void);
-  // Access the Notify Factory.  This class retains ownership.
 
+  /// Create an Event Channel.  Ownership is passed to the caller.
   CosNotifyChannelAdmin::EventChannel_ptr create_event_channel (
                                               const char* name,
                                               bool resolve
                                             );
-  // Create an Event Channel.  Ownership is passed to the caller.
 
 protected:
+  /// Initializes the ORB.
   int init_ORB (int argc,
                 ACE_TCHAR *argv []);
-  // Initializes the ORB.
 
+  /// Try to get hold of a running naming service.
   void resolve_naming_service (void);
-  // Try to get hold of a running naming service.
 
+  /// Try to resolve the Notify factory from the Naming service.
   void resolve_Notify_factory (void);
-  // Try to resolve the Notify factory from the Naming service.
 
   // = Data Members
+  /// Reference to the root poa.
   PortableServer::POA_var root_poa_;
-  // Reference to the root poa.
 
+  /// The ORB that we use.
   CORBA::ORB_var orb_;
-  // The ORB that we use.
 
+  /// Handle to the name service.
   CosNaming::NamingContext_var naming_context_;
-  // Handle to the name service.
 
+  /// Channel factory.
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
-  // Channel factory.
 
+  /// The group operator between admin-proxy's.
   CosNotifyChannelAdmin::InterFilterGroupOperator ifgop_;
-  // The group operator between admin-proxy's.
 
+  /// Initial qos specified to the factory when creating the EC.
   CosNotification::QoSProperties initial_qos_;
-  // Initial qos specified to the factory when creating the EC.
 
+  /// Initial admin props specified to the factory when creating the EC.
   CosNotification::AdminProperties initial_admin_;
-  // Initial admin props specified to the factory when creating the EC.
 
 private:
   ACE_Atomic_Op< TAO_SYNCH_MUTEX, int > num_clients_;

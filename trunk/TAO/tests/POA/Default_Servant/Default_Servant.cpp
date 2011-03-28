@@ -1,21 +1,18 @@
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO/tests/POA/Default_Servant
-//
-// = FILENAME
-//     Default_Servant.cpp
-//
-// = DESCRIPTION
-//     This program tests the behavior of POA::id_to_servant() and
-//     POA::reference_to_servant() with the use of default servants.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-//=========================================================================
+//=============================================================================
+/**
+ *  @file     Default_Servant.cpp
+ *
+ *  $Id$
+ *
+ *   This program tests the behavior of POA::id_to_servant() and
+ *   POA::reference_to_servant() with the use of default servants.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "testS.h"
 #include "ace/SString.h"

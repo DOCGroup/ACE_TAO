@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpCalls/MT_Client_Test
-//
-// = FILENAME
-//    client.cpp
-//
-// = DESCRIPTION
-//    Start one server thread calling a distant MT Object serveral times,
-//    also starting serveral client threads which call the MT Object too.
-//    The server does nested upcalls.
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *  $Id$
+ *
+ *  Start one server thread calling a distant MT Object serveral times,
+ *  also starting serveral client threads which call the MT Object too.
+ *  The server does nested upcalls.
+ *
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #include "client.h"
 #include "local_server.h"

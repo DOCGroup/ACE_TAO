@@ -1,17 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = FILENAME
-//   Simple_Test.h
-//
-// = DESCRIPTION
-//   Simple test any supplier to any consumer.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Simple_Test.h
+ *
+ *  $Id$
+ *
+ * Simple test any supplier to any consumer.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef NOTIFY_TESTS_SIMPLE_H
 #define NOTIFY_TESTS_SIMPLE_H
@@ -32,8 +32,8 @@ class Simple_Test;
 class Event_AnyPushConsumer : public TAO_Notify_Tests_PushConsumer
 {
 public:
+  /// Contructor.
   Event_AnyPushConsumer (Simple_Test *test_client);
-  // Contructor.
 
   // = PushSupplier methods
   virtual void push (
@@ -49,11 +49,11 @@ protected:
 class Event_AnyPushSupplier : public TAO_Notify_Tests_PushSupplier
 {
 public:
+  /// Constructor.
   Event_AnyPushSupplier (Simple_Test * test_client);
-  // Constructor.
 
+  /// Destructor.
   virtual ~Event_AnyPushSupplier (void);
-  // Destructor.
 
 protected:
   Simple_Test* test_client_;
@@ -71,46 +71,46 @@ public:
   int parse_args (int argc,
                   ACE_TCHAR *argv[]) ;
 
+  /// initialization.
   int init (int argc,
             ACE_TCHAR *argv []);
-  // initialization.
 
+  /// Called when an event is received.
   void on_event_received (void);
-  // Called when an event is received.
 
+  /// Run the test.
   void run_test (void);
-  // Run the test.
 
+  /// End the test.
   void end_test (void);
-  // End the test.
 
+  /// check if we got the expected results.
   int check_results (void);
-  // check if we got the expected results.
 
 protected:
+  /// Create EC
   void create_EC (void);
-  // Create EC
 
+  /// Number of events received so far.
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
-  // Number of events received so far.
 
+  /// Number of events to send
   int event_count_;
-  // Number of events to send
 
+  /// The one channel that we create using the factory.
   CosNotifyChannelAdmin::EventChannel_var ec_;
-  // The one channel that we create using the factory.
 
+  /// The consumer admin used by consumers.
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin_;
-  // The consumer admin used by consumers.
 
+  /// The supplier admin used by suppliers.
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
-  // The supplier admin used by suppliers.
 
+  /// Consumer.
   TAO_Notify_Tests_PushConsumer* consumer_;
-  // Consumer.
 
+  /// Supplier.
   TAO_Notify_Tests_PushSupplier* supplier_;
-  // Supplier.
 
 private:
   friend class Event_AnyPushSupplier;

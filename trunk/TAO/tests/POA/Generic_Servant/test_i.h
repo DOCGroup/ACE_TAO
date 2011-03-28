@@ -1,53 +1,52 @@
-// $Id$
 //=============================================================================
-//
-//
-// = FILENAME
-//     test_i.h
-//
-// = DESCRIPTION
-//     Defines test_i class for the test interface
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
+/**
+ *  @file     test_i.h
+ *
+ *  $Id$
+ *
+ *   Defines test_i class for the test interface
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
 //=============================================================================
+
 
 #include "testS.h"
 
 class GENERIC_SERVANT_Export test_i : public POA_test
 {
 public:
+  /// Constructor - takes a POA and a value parameter
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa);
-  // Constructor - takes a POA and a value parameter
 
+  /// Returns the Default POA of this servant
   PortableServer::POA_ptr _default_POA (void);
-  // Returns the Default POA of this servant
 
+  /// A twoway operation.
   void method (void);
-  // A twoway operation.
 
+  /// A oneway operation.
   void oneway_method (void);
-  // A oneway operation.
 
+  /// A timed twoway operation.
   void timed_method (CORBA::ULong timeout);
-  // A timed twoway operation.
 
+  /// A timed twoway operation.
   void timed_oneway_method (CORBA::ULong timeout);
-  // A timed twoway operation.
 
+  /// Shutdown the ORB
   void shutdown (void);
-  // Shutdown the ORB
 
+  /// Sleep for some time.
   void sleep (CORBA::ULong timeout,
               const char *operation);
-  // Sleep for some time.
 
 protected:
+  /// Our ORB.
   CORBA::ORB_var orb_;
-  // Our ORB.
 
+  /// Our POA.
   PortableServer::POA_var poa_;
-  // Our POA.
 };

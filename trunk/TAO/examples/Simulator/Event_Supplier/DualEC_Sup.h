@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    DualEC_Sup.h
-//
-// = DESCRIPTION
-//   Event supplier for visualization of scheduling behavior, using
-//   arrival and dispatch data logged by an EC dispatch command object
-//
-// = AUTHOR
-//    Chris Gill (cdgill@cs.wustl.edu)
-//
-//    Adapted from the orginal DOVE simulation event supplier written by
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    DualEC_Sup.h
+ *
+ *  $Id$
+ *
+ * Event supplier for visualization of scheduling behavior, using
+ * arrival and dispatch data logged by an EC dispatch command object
+ *
+ *
+ *  @author Chris Gill (cdgill@cs.wustl.edu) Adapted from the orginal DOVE simulation event supplier written by Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef DUALEC_SUP_H
 #define DUALEC_SUP_H
@@ -43,66 +40,71 @@ struct Schedule_Viewer_Data
 };
 
 
+/**
+ * @class DualEC_Supplier
+ *
+ * @brief Event Supplier.
+ *
+ * Reads information out of a file and
+ * feeds it with additional navigation and
+ * weapon data into the dove_supplier, which
+ * is connected to the event channel
+ */
 class DualEC_Supplier
 {
-  // = TITLE
-  //    Event Supplier.
-  //
-  // = DESCRIPTION
-  //    Reads information out of a file and
-  //    feeds it with additional navigation and
-  //    weapon data into the dove_supplier, which
-  //    is connected to the event channel
 public:
 
   DualEC_Supplier (int argc, ACE_TCHAR** argv);
 
   ~DualEC_Supplier (void);
 
+  /// Initialize: set up, resolve ORB services,
+  /// connect the DOVE_Suppliers.
   int init (void);
-  // Initialize: set up, resolve ORB services,
-  // connect the DOVE_Suppliers.
 
+  /// Compute schedule priorities, possibly dump
+  /// data into runtime scheduler header files.
   void compute_schedules (void);
-  // Compute schedule priorities, possibly dump
-  // data into runtime scheduler header files.
 
+  /// here is really something going on,
+  /// here we deliver the messages
   void start_generating_events (void);
-  // here is really something going on,
-  // here we deliver the messages
 
+  /// Load the scheduling information into memory
   void load_schedule_data ();
-  // Load the scheduling information into memory
 
 
 private:
 
+/**
+ * @class Terminator
+ *
+ * Private class that implements a termination servant.
+ */
   class Terminator : public POA_NavWeapTerminator
-    // = DESCRIPTION
-    // Private class that implements a termination servant.
   {
     void shutdown (void);
   };
 
+  /// Run the orb event loop.
   static ACE_THR_FUNC_RETURN run_orb (void *);
-  // Run the orb event loop.
 
+  /// Run navigation event generation thread.
   static ACE_THR_FUNC_RETURN run_nav_thread (void *arg);
-  // Run navigation event generation thread.
 
+  /// Run weapons event generation thread.
   static ACE_THR_FUNC_RETURN run_weap_thread (void *arg);
-  // Run weapons event generation thread.
 
+  /// Create two scheduling service instances, registers
+  /// them with the Naming Service.
   int create_schedulers (void);
-  // Create two scheduling service instances, registers
-  // them with the Naming Service.
 
+  /// Create two event service instances, registers
+  /// them with the Naming Service.
   int create_event_channels (void);
-  // Create two event service instances, registers
-  // them with the Naming Service.
 
+  /// Get command line options.
   unsigned int get_options (int argc, ACE_TCHAR *argv []);
-  // Get command line options.
 
   // Time values to pause before notifying the supplier each time.
   ACE_Time_Value nav_pause_;

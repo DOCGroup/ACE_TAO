@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpCalls/MT_Client_Test
-//
-// = FILENAME
-//    MT_Object_i.cpp
-//
-// = DESCRIPTION
-//    This class implements the Object A  of the
-//    Nested Upcalls - MT Client test.
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    MT_Object_i.cpp
+ *
+ *  $Id$
+ *
+ *  This class implements the Object A  of the
+ *  Nested Upcalls - MT Client test.
+ *
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #include "MT_Object_i.h"
 

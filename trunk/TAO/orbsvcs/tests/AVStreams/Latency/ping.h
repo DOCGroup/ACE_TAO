@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/orbsvcs/tests/AVStreams/Latency
-//
-// = FILENAME
-//   ping.h
-//
-// = AUTHOR
-//   Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   ping.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #ifndef TAO_PING_H
 #define TAO_PING_H
@@ -43,17 +40,17 @@ public:
                             TAO_AV_Callback *&callback);
 
 private:
+  /// The callback object...
   Ping_Recv_Callback callback_;
-  // The callback object...
 };
 
 class Pong_Send_Callback : public TAO_AV_Callback
 {
 public:
 
+  /// Ad-hoc method to send a response outside the context of a
+  /// handle_timeout.
   int send_response (ACE_hrtime_t stamp);
-  // Ad-hoc method to send a response outside the context of a
-  // handle_timeout.
 
   virtual int handle_timeout (void *arg);
   virtual int handle_end_stream (void);

@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    bd_long_seq.h
-//
-// = DESCRIPTION
-//     Tests bounded long sequences
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    bd_long_seq.h
+ *
+ *  $Id$
+ *
+ *   Tests bounded long sequences
+ *
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef PARAM_TEST_BOUNDED_LONG_SEQUENCE_H
 #define PARAM_TEST_BOUNDED_LONG_SEQUENCE_H
@@ -28,51 +25,51 @@
 class Test_Bounded_Long_Sequence
 {
 public:
+  /// ctor
   Test_Bounded_Long_Sequence (void);
-  // ctor
 
+  /// dtor
   ~Test_Bounded_Long_Sequence (void);
-  // dtor
 
+  /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
-  // run the SII test
 
+  /// return operation name
   const char *opname (void) const;
-  // return operation name
 
+  /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
-  // set values for parameters
 
+  /// reset values for CORBA
   int reset_parameters (void);
-  // reset values for CORBA
 
+  /// check if results are valid
   CORBA::Boolean check_validity (void);
-  // check if results are valid
 
+  /// check if results are valid. This is used for DII results
   CORBA::Boolean check_validity (CORBA::Request_ptr req);
-  // check if results are valid. This is used for DII results
 
+  /// print all the values
   void print_values (void);
-  // print all the values
 
+  /// invoke DII request with appropriate exception handling.
   void dii_req_invoke (CORBA::Request *);
-  // invoke DII request with appropriate exception handling.
 
 private:
+  /// operation name
   char *opname_;
-  // operation name
 
+  /// in parameter
   Param_Test::Bounded_Long_Seq_var in_;
-  // in parameter
 
+  /// inout parameter
   Param_Test::Bounded_Long_Seq_var inout_;
-  // inout parameter
 
+  /// out parameter
   Param_Test::Bounded_Long_Seq_var out_;
-  // out parameter
 
+  /// return value
   Param_Test::Bounded_Long_Seq_var ret_;
-  // return value
 };
 
 #endif /* PARAM_TEST_BOUNDED_LONG_SEQUENCE_H */

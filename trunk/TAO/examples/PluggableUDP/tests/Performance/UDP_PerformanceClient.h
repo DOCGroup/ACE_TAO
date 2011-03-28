@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/PluggableUDP/tests/Performance
-//
-// = FILENAME
-//    UDP_PerformanceClient.h
-//
-// = DESCRIPTION
-//    This class implements the client functionality of the UDP test.
-//
-// = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    UDP_PerformanceClient.h
+ *
+ *  $Id$
+ *
+ *  This class implements the client functionality of the UDP test.
+ *
+ *
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
 
 #ifndef UDP_PERFORMANCECLIENT_H
 #define UDP_PERFORMANCECLIENT_H
@@ -37,14 +34,14 @@ class UDP_PerformanceClient
   //
 public:
   // = Initialization and termination methods.
+  /// Constructor
   UDP_PerformanceClient (CORBA::ORB_ptr orb,
                          UDP_ptr udp,
                          UDP_i *udpHandler,
                          ACE_UINT32 burst_messages);
-  // Constructor
 
+  /// Destructor
   virtual ~UDP_PerformanceClient (void);
-  // Destructor
 
 private:
   // Runs in a separate thread.

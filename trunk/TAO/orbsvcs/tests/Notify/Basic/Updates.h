@@ -1,18 +1,18 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = FILENAME
-//   Updates.h
-//
-// = DESCRIPTION
-//   Test to check if <offer_change> and <subscription_change> messages are
-//   received correctly.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Updates.h
+ *
+ *  $Id$
+ *
+ * Test to check if <offer_change> and <subscription_change> messages are
+ * received correctly.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef NOTIFY_TESTS_UPDATES_H
 #define NOTIFY_TESTS_UPDATES_H
@@ -31,12 +31,12 @@ class Updates;
 class Updates_StructuredPushConsumer : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
+  /// Contructor.
   Updates_StructuredPushConsumer (Updates *test_client);
-  // Contructor.
 
+  /// Offer change is conveyed here.
   virtual void offer_change (const CosNotification::EventTypeSeq & added,
                              const CosNotification::EventTypeSeq & removed);
-  // Offer change is conveyed here.
 
 protected:
   Updates * test_client_;
@@ -47,17 +47,17 @@ protected:
 class Updates_StructuredPushSupplier : public TAO_Notify_Tests_StructuredPushSupplier
 {
 public:
+  /// Constructor.
   Updates_StructuredPushSupplier (Updates * test_client);
-  // Constructor.
 
+  /// Destructor.
   virtual ~Updates_StructuredPushSupplier ();
-  // Destructor.
 
+  /// Subscription change is conveyed here.
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed
     );
-  // Subscription change is conveyed here.
 
 protected:
   Updates* test_client_;
@@ -72,11 +72,11 @@ public:
   Updates (void);
   virtual ~Updates ();
 
+  /// initialization.
   int init (int argc, ACE_TCHAR *argv []);
-  // initialization.
 
+  /// Run the test.
   void run_test (void);
-  // Run the test.
 
   /// print_event_types
   void print_event_types (const CosNotification::EventTypeSeq &types);
@@ -88,8 +88,8 @@ public:
   void wait_for_updates (int expected_added, int expected_removed);
 
 protected:
+  /// Create EC
   void create_EC (void);
-  // Create EC
 
   /// Helper to add types.
   void add_type (CosNotification::EventTypeSeq& type_seq, const char* type);
@@ -110,23 +110,23 @@ protected:
   int added_count_;
 
   /// Count of removed updates received
+  /// Check if these are equal to <update_count_> at the end of the test.
   int removed_count_;
-  // Check if these are equal to <update_count_> at the end of the test.
 
+  /// The one channel that we create using the factory.
   CosNotifyChannelAdmin::EventChannel_var ec_;
-  // The one channel that we create using the factory.
 
+  /// The consumer admin used by consumers.
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin_;
-  // The consumer admin used by consumers.
 
+  /// The supplier admin used by suppliers.
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
-  // The supplier admin used by suppliers.
 
+  /// Consumer
   TAO_Notify_Tests_StructuredPushConsumer* consumer_;
-  // Consumer
 
+  /// Supplier
   TAO_Notify_Tests_StructuredPushSupplier* supplier_;
-  // Supplier
 
 private:
   friend class Updates_StructuredPushSupplier;

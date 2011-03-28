@@ -1,23 +1,20 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/ThreeTier
-//
-// = FILENAME
-//    Sink_i.h
-//
-// = DESCRIPTION
-//    This class implements the ThreeTier IDL interface.
-//    It acts as the "end of the line" for tick and tock
-//    requests.
-//
-// = AUTHOR
-//    Dale Wilson <wilsond@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Sink_i.h
+ *
+ *  $Id$
+ *
+ *  This class implements the ThreeTier IDL interface.
+ *  It acts as the "end of the line" for tick and tock
+ *  requests.
+ *
+ *
+ *  @author Dale Wilson <wilsond@ociweb.com>
+ */
+//=============================================================================
+
 
 #ifndef SINK_I_H
 #define SINK_I_H
@@ -31,8 +28,8 @@ public:
   /// @param an initialized ORB
   Sink_i (CORBA::ORB_ptr orb);
 
+  /// Destructor
   ~Sink_i ();
-  // Destructor
 
   bool parse_args (int & argc, ACE_TCHAR * argv[]);
 

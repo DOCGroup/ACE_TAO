@@ -1,24 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/Utils/catior
-//
-// = FILENAME
-//    Catior_i.cpp
-//
-// = DESCRIPTION
-//    Reads stringified IORs and outputs the encoded information.
-//
-// = AUTHORS
-//      Jeff Hopper <jrhopper@cts.com>
-//      SCIOP and Tagged component modifications by:
-//      Jason Cohen, Lockheed Martin ATL <jcohen@atl.lmco.com>
-//      Split into a separate library by:
-//      Chad Elliott <elliott_c@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Catior_i.cpp
+ *
+ *  $Id$
+ *
+ *  Reads stringified IORs and outputs the encoded information.
+ *
+ *
+ *  @author   Jeff Hopper <jrhopper@cts.com>   SCIOP and Tagged component modifications by:   Jason Cohen
+ *  @author Lockheed Martin ATL <jcohen@atl.lmco.com>   Split into a separate library by:   Chad Elliott <elliott_c@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "Catior_i.h"
 #include "tao/Messaging_PolicyValueC.h"

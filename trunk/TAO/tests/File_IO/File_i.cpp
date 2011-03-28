@@ -1,18 +1,18 @@
-// $Id$
 
-//===================================================================
-//
-// = FILENAME
-//     File_i.cpp
-//
-// = DESCRIPTION
-//      Implementation of the File IDL module and the interfaces
-//      Descriptor and System in it.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-//====================================================================
+//=============================================================================
+/**
+ *  @file     File_i.cpp
+ *
+ *  $Id$
+ *
+ *    Implementation of the File IDL module and the interfaces
+ *    Descriptor and System in it.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "File_i.h"
 #include "ace/OS_NS_stdio.h"

@@ -1,26 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    Event_Con.cpp
-//
-// = DESCRIPTION
-//   This demo just tests the basic functionality of the Event Service
-//   One Conumer which inherits from the Rtec Consumer.  One Supplier
-//   with an internal Rtec Consumer and one internal Rtec Supplier.
-//   The internal Supplier is just a demo supplier because the
-//   architecture expects an supplier which has inherited from the
-//   Rtec Supplier.
-//
-// = AUTHOR
-//    originally
-//    David Levine (levine@cs.wustl.edu) and
-//    Tim Harrison (harrison@cs.wustl.edu)
-//    modified
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Event_Con.cpp
+ *
+ *  $Id$
+ *
+ * This demo just tests the basic functionality of the Event Service
+ * One Conumer which inherits from the Rtec Consumer.  One Supplier
+ * with an internal Rtec Consumer and one internal Rtec Supplier.
+ * The internal Supplier is just a demo supplier because the
+ * architecture expects an supplier which has inherited from the
+ * Rtec Supplier.
+ *
+ *
+ *  @author originally David Levine (levine@cs.wustl.edu) and Tim Harrison (harrison@cs.wustl.edu) modified Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "Event_Con.h"
 #include "NavWeapC.h"

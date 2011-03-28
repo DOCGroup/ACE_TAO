@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/AMI
-//
-// = FILENAME
-//    ami_test_i.cpp
-//
-// = DESCRIPTION
-//    Implementation of the AMI Test interface.
-//
-// = AUTHOR
-//    Alexander Babu Arulanthu <alex@cs.wustl.edu>,
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ami_test_i.cpp
+ *
+ *  $Id$
+ *
+ *  Implementation of the AMI Test interface.
+ *
+ *
+ *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
 
 #include "ami_test_i.h"
 #include "tao/debug.h"

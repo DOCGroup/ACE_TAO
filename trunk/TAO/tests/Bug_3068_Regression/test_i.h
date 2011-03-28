@@ -1,18 +1,15 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/BiDirectional
-//
-// = FILENAME
-//   test_i.h
-//
-// = AUTHOR
-//   Balachandran Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   test_i.h
+ *
+ *  $Id$
+ *
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_BIDIRECTIONAL_TEST_I_H
 #define TAO_BIDIRECTIONAL_TEST_I_H
@@ -40,43 +37,46 @@ private:
 };
 
 
+/**
+ * @class Callback_i
+ *
+ * @brief A callback object to the "client"
+ *
+ * To test that the server can call the client on the same
+ * connection that was established by the client
+ */
 class Callback_i : public POA_Callback
 {
-  // = TITLE
-  //   A callback object to the "client"
-  //
-  // = DESCRIPTION
-  //   To test that the server can call the client on the same
-  //   connection that was established by the client
-  //
 public:
+  /// ctor
   Callback_i (CORBA::ORB_ptr orb);
-  // ctor
 
+  /// Safe way to shutdown
   void shutdown ();
-  // Safe way to shutdown
 
+  /// The callback method
   void callback_method (const CORBA::OctetSeq& payload);
-  // The callback method
 
 private:
+  /// The orb
   CORBA::ORB_var orb_;
-  // The orb
 
 };
 
+/**
+ * @class Simple_Server_i
+ *
+ * @brief Simpler Server implementation
+ *
+ * Implements the Simple_Server interface in test.idl
+ * for (int loop = 0; loop < 10; loop++)
+ */
 class Simple_Server_i : public POA_Simple_Server
 {
-  // = TITLE
-  //   Simpler Server implementation
-  //
-  // = DESCRIPTION
-  //   Implements the Simple_Server interface in test.idl
-  //      for (int loop = 0; loop < 10; loop++)
 
 public:
+  /// ctor
   Simple_Server_i (CORBA::ORB_ptr orb, int no_iterations);
-  // ctor
 
   // = The Simple_Server methods.
   void ow_test ();
@@ -88,17 +88,17 @@ public:
   void shutdown ();
 
 private:
+  /// The ORB
   CORBA::ORB_var orb_;
-  // The ORB
 
+  /// Flag to indicate, whether we are ready for a remote call.
   int flag_;
-  // Flag to indicate, whether we are ready for a remote call.
 
+  /// Callback Object
   Caller *caller_;
-  // Callback Object
 
+  /// Number of times the callback needs to be called
   int iterations_;
-  // Number of times the callback needs to be called
   int ow_count_;
 };
 

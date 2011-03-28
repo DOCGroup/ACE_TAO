@@ -1,22 +1,19 @@
 // -*- C++ -*-
-// $Id$
 
 
-// ============================================================================
-//
-// = LIBRARY
-//     AMI_Observer
-//
-// = FILENAME
-//     Push_Iterator_Factory_i.h
-//
-// = DESCRIPTION
-//     Header file for the push Web_Server::Iterator_Factory implementation.
-//
-// = AUTHOR
-//     Ossama Othman <ossama@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     Push_Iterator_Factory_i.h
+ *
+ *  $Id$
+ *
+ *   Header file for the push Web_Server::Iterator_Factory implementation.
+ *
+ *
+ *  @author  Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef PUSH_ITERATOR_FACTORY_I_H
 #define PUSH_ITERATOR_FACTORY_I_H
@@ -51,25 +48,27 @@ class Push_Iterator_Factory_i :
   //    to explicitly use threads at the application level.
 
 public:
+  /**
+   * This registration method passes a <Callback> that the Web server
+   * uses to ``push'' data associated with <pathname> one ``chunk'' at
+   * a time.  The <metadata> reports information about the <pathname>.
+   */
   Web_Server::Metadata_Type *register_callback
     (const char *pathname,
      Web_Server::Callback_ptr client_callback);
-  // This registration method passes a <Callback> that the Web server
-  // uses to ``push'' data associated with <pathname> one ``chunk'' at
-  // a time.  The <metadata> reports information about the <pathname>.
 
+  /// Set the file modification date in the metadata structure.
   int modification_date (ACE_stat *file_status,
                          Web_Server::Metadata_Type &metadata);
-  // Set the file modification date in the metadata structure.
 
+  /// Set the type of file content in the metadata structure.
   int content_type (const char *filename,
                     Web_Server::Metadata_Type &metadata);
-  // Set the type of file content in the metadata structure.
 
 private:
+  /// Reference to the object that is used by the server to push chunks
+  /// of data to the client.
   Web_Server::Callback_var client_callback_;
-  // Reference to the object that is used by the server to push chunks
-  // of data to the client.
 };
 
 #include /**/ "ace/post.h"

@@ -1,39 +1,38 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/tests/AVStreams/Simple
-//
-// = FILENAME
-//    receiver.h
-//
-// = DESCRIPTION
-//    This application receives data from a AV sender and writes it to
-//    a file.
-//
-// = AUTHOR
-//    Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    receiver.h
+ *
+ *  $Id$
+ *
+ *  This application receives data from a AV sender and writes it to
+ *  a file.
+ *
+ *
+ *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Policy.h"
 
+/**
+ * @class Receiver_Callback
+ *
+ * @brief Application defined callback object.
+ *
+ * AVStreams calls this class when data shows up from a sender.
+ */
 class Receiver_Callback : public TAO_AV_Callback
 {
-  // = TITLE
-  //    Application defined callback object.
-  //
-  // = DESCRIPTION
-  //    AVStreams calls this class when data shows up from a sender.
 public:
 
+  /// Constructor.
   Receiver_Callback (void);
-  // Constructor.
 
   // Method that is called when there is data to be received from a
   // sender.
@@ -46,54 +45,58 @@ public:
   int handle_destroy (void);
 
 private:
+  /// Keeping a count of the incoming frames.
   int frame_count_;
-  // Keeping a count of the incoming frames.
 };
 
+/**
+ * @class Receiver_StreamEndPoint
+ *
+ * @brief Application defined stream endpoint object.
+ *
+ * AVStreams calls this class during connection setup.
+ */
 class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
-  // = TITLE
-  //    Application defined stream endpoint object.
-  //
-  // = DESCRIPTION
-  //    AVStreams calls this class during connection setup.
 public:
   // Create a receiver application callback.
   int get_callback (const char *flowname,
                     TAO_AV_Callback *&callback);
 
 private:
+  /// Receiver application callback.
   Receiver_Callback callback_;
-  // Receiver application callback.
 };
 
+/**
+ * @class Receiver
+ *
+ * @brief Receiver application class.
+ *
+ * This class receives data from a AV sender and writes it to
+ * a file.
+ */
 class Receiver
 {
-  // = TITLE
-  //    Receiver application class.
-  //
-  // = DESCRIPTION
-  //    This class receives data from a AV sender and writes it to
-  //    a file.
 public:
+  /// Constructor
   Receiver (void);
-  // Constructor
 
+  /// Destructor.
   ~Receiver (void);
-  // Destructor.
 
+  /// Initialize data components.
   int init (int argc,
             ACE_TCHAR *argv[]);
-  // Initialize data components.
 
 protected:
+  /// The Naming Service Client.
   TAO_Naming_Client naming_client_;
-  // The Naming Service Client.
 
+  /// The endpoint reactive strategy.
   TAO_AV_Endpoint_Reactive_Strategy_B
   <Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
-  // The endpoint reactive strategy.
 
+  /// Receiver MMDevice.
   TAO_MMDevice *mmdevice_;
-  // Receiver MMDevice.
 };

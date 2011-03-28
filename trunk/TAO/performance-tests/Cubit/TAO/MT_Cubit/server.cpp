@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests
-//
-// = FILENAME
-//    server.cpp
-//
-// = AUTHOR
-//    Andy Gokhale,
-//    Sumedh Mungee,
-//    Sergio Flores-Gaitan, and
-//    Nagarajan Surendran
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ *  @author Andy Gokhale
+ *  @author Sumedh Mungee
+ *  @author Sergio Flores-Gaitan
+ *  @author and Nagarajan Surendran
+ */
+//=============================================================================
+
 
 #include "ace/config-all.h"
 

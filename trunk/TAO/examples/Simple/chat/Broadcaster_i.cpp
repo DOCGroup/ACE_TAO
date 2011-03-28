@@ -1,21 +1,18 @@
-// $Id$
 
-// ===========================================================
-//
-// = LIBRARY
-//    TAO/tests/Simple/chat
-//
-// = FILENAME
-//    Broadcaster_i.cpp
-//
-// = DESCRIPTION
-//   Implementation of the Broadcaster_i class. This class is the servant
-//   object for the chat server.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  @file    Broadcaster_i.cpp
+ *
+ *  $Id$
+ *
+ * Implementation of the Broadcaster_i class. This class is the servant
+ * object for the chat server.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Broadcaster_i.h"
 

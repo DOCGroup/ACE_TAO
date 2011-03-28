@@ -1,21 +1,18 @@
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO/tests/POA/POA_Destruction
-//
-// = FILENAME
-//     POA_Destruction.cpp
-//
-// = DESCRIPTION
-//     This program tests the destruction of a POA while there is an
-//     upcall in progress.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-//=========================================================================
+//=============================================================================
+/**
+ *  @file     POA_Destruction.cpp
+ *
+ *  $Id$
+ *
+ *   This program tests the destruction of a POA while there is an
+ *   upcall in progress.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "testS.h"
 

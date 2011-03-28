@@ -1,18 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Cos Event Channel tests
-//
-// = FILENAME
-//   MT_Disconnect.h
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   MT_Disconnect.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef CEC_MT_DISCONNECT_H
 #define CEC_MT_DISCONNECT_H
@@ -27,23 +23,23 @@
 class MTD_Task : public ACE_Task_Base
 {
 public:
+  /// Create the task...
   MTD_Task (CosEventChannelAdmin::EventChannel_ptr ec,
         int use_callbacks);
-  // Create the task...
 
   // = Check the ACE_Task_Base documentation.
   int svc (void);
 
+  /// Run a single iteration of the test
   void run_iteration (void);
-  // Run a single iteration of the test
 
 private:
+  /// The event channel used on the test
   CosEventChannelAdmin::EventChannel_var event_channel;
-  // The event channel used on the test
 
+  /// Does the event channel send any callback messages when a client
+  /// diconnects
   int use_callbacks;
-  // Does the event channel send any callback messages when a client
-  // diconnects
 };
 
 #endif /* EC_DISCONNECT_H */

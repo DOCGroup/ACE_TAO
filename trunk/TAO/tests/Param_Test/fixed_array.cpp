@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    fixed_array.cpp
-//
-// = DESCRIPTION
-//    tests fixed size arrays
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    fixed_array.cpp
+ *
+ *  $Id$
+ *
+ *  tests fixed size arrays
+ *
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "fixed_array.h"

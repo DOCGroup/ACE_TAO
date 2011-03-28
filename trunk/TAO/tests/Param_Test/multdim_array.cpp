@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    multidim_array.cpp
-//
-// = DESCRIPTION
-//    tests multidimensional fixed size arrays
-//
-// = AUTHORS
-//      Bala
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    multidim_array.cpp
+ *
+ *  $Id$
+ *
+ *  tests multidimensional fixed size arrays
+ *
+ *
+ *  @author   Bala
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "multdim_array.h"

@@ -1,17 +1,14 @@
-// $Id$
 
-// ===================================================
-//
-// = LIBRARY
-//   TAO/tests/DSI_Gateway
-//
-// = FILENAME
-//   test_i.h
-//
-// = AUTHOR
-//   Carlos O'Ryan
-//
-// ===================================================
+//=============================================================================
+/**
+ *  @file   test_i.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #ifndef TAO_DSI_GATEWAY_TEST_DSI_H
 #define TAO_DSI_GATEWAY_TEST_DSI_H
@@ -22,25 +19,28 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/ORB.h"
 
+/**
+ * @class DSI_Simple_Server
+ *
+ * @brief DSI Simpler Server implementation
+ *
+ * Implements the DSI/DII gateway.
+ */
 class DSI_Simple_Server : public TAO_DynamicImplementation
 {
-  // = TITLE
-  //   DSI Simpler Server implementation
-  //
-  // = DESCRIPTION
-  //   Implements the DSI/DII gateway.
-  //
 public:
+  /// ctor
   DSI_Simple_Server (CORBA::ORB_ptr orb,
                      CORBA::Object_ptr target,
                      PortableServer::POA_ptr poa);
-  // ctor
 
+  /**
+   * Turns around and calls invoke, but using AMH style handler
+   * = The DynamicImplementation methods.
+   *
+   */
   virtual void _dispatch (TAO_ServerRequest &request,
                           void *context);
-  // Turns around and calls invoke, but using AMH style handler
-  // = The DynamicImplementation methods.
-  //
 
   // we need this because it is a pure virtual method in
   // its parent class
@@ -57,14 +57,14 @@ public:
     );
 
 private:
+  /// The ORB
   CORBA::ORB_var orb_;
-  // The ORB
 
+  /// Target object, forward requests to it...
   CORBA::Object_var target_;
-  // Target object, forward requests to it...
 
+  /// The POA
   PortableServer::POA_var poa_;
-  // The POA
 };
 
 #if defined(__ACE_INLINE__)

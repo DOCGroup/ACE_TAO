@@ -1,18 +1,19 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//   Supplier.h
-//
-// = AUTHOR
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// = DESCRIPTION
-//   Defines a simple Push Supplier.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Supplier.h
+ *
+ *  $Id$
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ *
+ * Defines a simple Push Supplier.
+ *
+ *
+ */
+//=============================================================================
+
 
 #ifndef COSECSUPPLIER_H_
 #define COSECSUPPLIER_H_
@@ -34,41 +35,41 @@ class Supplier : public POA_CosEventComm::PushSupplier,
   //   the CosEC and sends events to it.
 public:
   // = Initializatiopn and termination methods.
+  /// Constructor.
   Supplier ();
-  // Constructor.
 
+  /// This method connects the supplier to the EC.
   void open (CosEventChannelAdmin::EventChannel_ptr event_channel);
-  // This method connects the supplier to the EC.
 
+  /// Disconnect from the EC.
   void close (void);
-  // Disconnect from the EC.
 
   void connect (void);
 
+  /// Disconnect from the EC, but do not forget about it or close it.
   void disconnect (void);
-  // Disconnect from the EC, but do not forget about it or close it.
 
+  /// Send one event.
   void send_event (const CORBA::Any &data);
-  // Send one event.
 
+  /// The POA_CosEventComm::PushSupplier method.
   virtual void disconnect_push_supplier (void);
-  // The POA_CosEventComm::PushSupplier method.
 
+  /// Sends the events to the EC.
   void run (void);
-  // Sends the events to the EC.
 
   // = Multiple methods.
+  /// Parses the command line arguments.
   virtual int parse_args (int argc, ACE_TCHAR *argv []);
-  // Parses the command line arguments.
 private:
+  /// We talk to the EC using this proxy.
   CosEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
-  // We talk to the EC using this proxy.
 
+  /// We talk to the EC using this proxy.
   CosEventChannelAdmin::SupplierAdmin_var supplier_admin_;
-  // We talk to the EC using this proxy.
 
+  /// The number of Events to send to the EC.
   int event_count_;
-  // The number of Events to send to the EC.
 };
 
 #endif /* COSECSUPPLIER_H_ */

@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    options.cpp
-//
-// = DESCRIPTION
-//    Options for the Param_Test application
-//
-// = AUTHORS
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    options.cpp
+ *
+ *  $Id$
+ *
+ *  Options for the Param_Test application
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "options.h"
 #include "tao/debug.h"

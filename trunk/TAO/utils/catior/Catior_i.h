@@ -1,27 +1,21 @@
-// $Id$
 
 #ifndef CATIOR_I_H
 #define CATIOR_I_H
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/Utils/catior
-//
-// = FILENAME
-//    Catior_i.h
-//
-// = DESCRIPTION
-//    Reads stringified IORs and outputs the encoded information.
-//
-// = AUTHORS
-//      Jeff Hopper <jrhopper@cts.com>
-//      SCIOP and Tagged component modifications by:
-//      Jason Cohen, Lockheed Martin ATL <jcohen@atl.lmco.com>
-//      Split into a separate library by:
-//      Chad Elliott <elliott_c@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Catior_i.h
+ *
+ *  $Id$
+ *
+ *  Reads stringified IORs and outputs the encoded information.
+ *
+ *
+ *  @author   Jeff Hopper <jrhopper@cts.com>   SCIOP and Tagged component modifications by:   Jason Cohen
+ *  @author Lockheed Martin ATL <jcohen@atl.lmco.com>   Split into a separate library by:   Chad Elliott <elliott_c@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "catior_export.h"
 #include "ace/String_Base.h"

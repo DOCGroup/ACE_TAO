@@ -1,17 +1,17 @@
-// $Id$
 
-// ================================================================
-//
-// = FILENAME
-//     client.cpp
-//
-// = DESCRIPTION
-//     This is a client that uses buffered oneways.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file     client.cpp
+ *
+ *  $Id$
+ *
+ *   This is a client that uses buffered oneways.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "testC.h"
 #include "tao/Messaging/Messaging.h"

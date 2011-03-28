@@ -1,20 +1,17 @@
-// $Id$
 
-//===========================================================================
-//
-// = LIBRARY
-//     TAO/tests/POA/FindPOA
-//
-// = FILENAME
-//     FindPOA.cpp
-//
-// = DESCRIPTION
-//     This Program tests the find_POA method of a POA.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-//===========================================================================
+//=============================================================================
+/**
+ *  @file     FindPOA.cpp
+ *
+ *  $Id$
+ *
+ *   This Program tests the find_POA method of a POA.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Adapter_Activator.h"

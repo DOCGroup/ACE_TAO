@@ -1,22 +1,19 @@
-// $Id$
 
-// ===========================================================
-//
-// = LIBRARY
-//    TAO/tests/ior_corbaloc/
-//
-// = FILENAME
-//    ior_corbaloc_client_i.cpp
-//
-// = DESCRIPTION
-//    This example implements a simple client which sends a corbaloc:
-//    style url to the server and gets a response from the
-//    server to indicate that the server has received the request.
-//
-// = AUTHORS
-//    Priyanka Gontla <pgontla@ece.uci.edu>
-//
-//============================================================
+//=============================================================================
+/**
+ *  @file    ior_corbaloc_client_i.cpp
+ *
+ *  $Id$
+ *
+ *  This example implements a simple client which sends a corbaloc:
+ *  style url to the server and gets a response from the
+ *  server to indicate that the server has received the request.
+ *
+ *
+ *  @author Priyanka Gontla <pgontla@ece.uci.edu>
+ */
+//=============================================================================
+
 
 #include "ior_corbaloc_client_i.h"
 #include "ace/Get_Opt.h"

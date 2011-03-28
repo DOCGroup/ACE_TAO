@@ -1,21 +1,18 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ===========================================================
-//
-// = LIBRARY
-//    TAO/examples/Callback_Quoter
-//
-// = FILENAME
-//    Notifier.h
-//
-// = DESCRIPTION
-//    Defines the implementation header for the Supplier interface.
-//
-// = AUTHOR
-//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  @file    Notifier.h
+ *
+ *  $Id$
+ *
+ *  Defines the implementation header for the Supplier interface.
+ *
+ *
+ *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef NOTIFIER_I_H
 #define NOTIFIER_I_H
@@ -32,63 +29,67 @@
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"
 
+/**
+ * @class Notifier_i
+ *
+ * @brief Notifier servant class.
+ *
+ * The implementation of the Notifier class, which is the servant
+ * object for the callback quoter server.
+ */
 class Notifier_i : public POA_Notifier
 {
-  // = TITLE
-  //   Notifier servant class.
-  //
-  // = DESCRIPTION
-  //   The implementation of the Notifier class, which is the servant
-  //   object for the callback quoter server.
-  //
 public:
   // = Initialization and termination methods.
+  /// Constructor.
   Notifier_i (void);
-  // Constructor.
 
+  /// Destructor.
   ~Notifier_i (void);
-  // Destructor.
 
+  /// Register a distributed callback handler that is invoked when the
+  /// given stock reaches the desired threshold value.
   virtual void register_callback (const char *stock_name,
                                   CORBA::Long threshold_value,
                                   Callback_Quoter::Consumer_ptr consumer_handler);
-  // Register a distributed callback handler that is invoked when the
-  // given stock reaches the desired threshold value.
 
+  /// Remove the consumer object.
   virtual void unregister_callback (Callback_Quoter::Consumer_ptr consumer_handler);
-  // Remove the consumer object.
 
+  /// Get the market status.
   virtual void market_status (const char *stock_name,
                               CORBA::Long stock_value);
-  // Get the market status.
 
+  /// Get the orb pointer.
   void orb (CORBA::ORB_ptr orb);
-  // Get the orb pointer.
 
+  /// Shutdown the Notifier.
   virtual void shutdown (void);
-  // Shutdown the Notifier.
 
   // CONSUMER_MAP* get_consumer_map_ptr ();
   // Returns the consumer map ptr.
 
   //private:
 public:
+  /// The ORB manager.
   CORBA::ORB_ptr orb_;
-  // The ORB manager.
 
+  /**
+   * @class Consumer_Data
+   *
+   * @brief Saves the Consumer_var and the threshold stock value.
+   */
   class Consumer_Data
   {
-    // = TITLE
-    //   Saves the Consumer_var and the threshold stock value.
   public:
+    /// Comparison operator.
     bool operator== (const Consumer_Data &rhs) const;
-    // Comparison operator.
 
+    /// Stores the consumer object reference.
     Callback_Quoter::Consumer_var consumer_;
-    // Stores the consumer object reference.
 
+    /// Stores the stock threshold value.
     CORBA::Long desired_value_;
-    // Stores the stock threshold value.
   };
 
   typedef ACE_Unbounded_Set<Consumer_Data>
@@ -97,13 +98,13 @@ public:
   typedef ACE_Hash_Map_Manager<ACE_CString, CONSUMERS *, ACE_Null_Mutex>
           CONSUMER_MAP;
 
+  /// This is the hash map with each hash_entry consisting of the stockname
+  /// and an unbounded set of consumer object pointer and the desired stockvalue.
   CONSUMER_MAP consumer_map_;
-  // This is the hash map with each hash_entry consisting of the stockname
-  // and an unbounded set of consumer object pointer and the desired stockvalue.
 
+  ///This marks the exit of the notifier. This should be taken care of
+  /// before the consumer tries to unregister after the notifier quits.
   int notifier_exited_;
-  //This marks the exit of the notifier. This should be taken care of
-  // before the consumer tries to unregister after the notifier quits.
 
 
 };

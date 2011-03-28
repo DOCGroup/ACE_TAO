@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/CodeSets/simple
-//
-// = FILENAME
-//    client.cpp
-//
-// = DESCRIPTION
-//   A simple client to demonstrate the use of codeset translation
-//
-// = AUTHORS
-//      Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *  $Id$
+ *
+ * A simple client to demonstrate the use of codeset translation
+ *
+ *
+ *  @author   Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
 // IDL generated headers
 #include "simpleC.h"
 #include "ace/ace_wchar.h"

@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/Param_Test
-//
-// = FILENAME
-//   except.h
-//
-// = DESCRIPTION
-//   Tests system and user exceptions
-//
-// = AUTHORS
-//   Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   except.h
+ *
+ *  $Id$
+ *
+ * Tests system and user exceptions
+ *
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #ifndef PARAM_TEST_EXCEPTION_H
 #define PARAM_TEST_EXCEPTION_H
@@ -24,54 +21,54 @@
 class Test_Exception
 {
 public:
+  /// ctor
   Test_Exception (void);
-  // ctor
 
+  /// dtor
   ~Test_Exception (void);
-  // dtor
 
+  /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
-  // run the SII test
 
+  /// return operation name
   const char *opname (void) const;
-  // return operation name
 
+  /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
-  // set values for parameters
 
+  /// reset values for CORBA
   int reset_parameters (void);
-  // reset values for CORBA
 
+  /// check if results are valid
   CORBA::Boolean check_validity (void);
-  // check if results are valid
 
+  /// check if results are valid. This is used for DII results
   CORBA::Boolean check_validity (CORBA::Request_ptr req);
-  // check if results are valid. This is used for DII results
 
+  /// print all the values
   void print_values (void);
-  // print all the values
 
+  /// invoke DII request with appropriate exception handling.
   void dii_req_invoke (CORBA::Request *);
-  // invoke DII request with appropriate exception handling.
 
 private:
+  /// operation name
   char *opname_;
-  // operation name
 
+  /// in parameter
   CORBA::ULong in_;
-  // in parameter
 
+  /// inout parameter
   CORBA::ULong inout_;
-  // inout parameter
 
+  /// out parameter
   CORBA::ULong out_;
-  // out parameter
 
+  /// return value
   CORBA::ULong ret_;
-  // return value
 
+  /// Current iterations.
   CORBA::ULong iterations_;
-  // Current iterations.
 };
 
 #endif /* PARAM_TEST_EXCEPTION_H */

@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/Quoter
-//
-// = FILENAME
-//    quoter_client.h
-//
-// = DESCRIPTION
-//    Contains classes that do the work of the client side of the Quoter Test
-//
-// = AUTHORS
-//    Darrell Brunsch
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    quoter_client.h
+ *
+ *  $Id$
+ *
+ *  Contains classes that do the work of the client side of the Quoter Test
+ *
+ *
+ *  @author Darrell Brunsch
+ */
+//=============================================================================
+
 
 #ifndef QUOTER_CLIENT_H
 #define QUOTER_CLIENT_H
@@ -33,76 +30,80 @@
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
 
+/**
+ * @class Quoter_Client
+ *
+ * @brief Quoter_Client
+ *
+ * Does all the work of making the calls on the Quoter server
+ */
 class Quoter_Client
 {
-  // = TITLE
-  //    Quoter_Client
-  //
-  // = DESCRIPTION
-  //    Does all the work of making the calls on the Quoter server
 public:
   // = Constructor and destructor.
   Quoter_Client (void);
   ~Quoter_Client (void);
 
+  /// Execute client example code.
   int run (void);
-  // Execute client example code.
 
+  /// Initialize the client communication endpoint with server.
   int init (int argc, ACE_TCHAR **argv);
-  // Initialize the client communication endpoint with server.
 
 private:
+  /// Remember our orb.
   CORBA::ORB_var orb_;
-  // Remember our orb.
 
+  /// Function to initialize the naming service.
   int init_naming_service (void);
-  // Function to initialize the naming service.
 
+  /// Parses the arguments passed on the command line.
   int parse_args (void);
-  // Parses the arguments passed on the command line.
 
+  /// # of arguments on the command line.
   int argc_;
-  // # of arguments on the command line.
 
+  /// arguments from command line.
   ACE_TCHAR **argv_;
-  // arguments from command line.
 
+  /// Key of factory obj ref.
   char *quoter_factory_key_;
-  // Key of factory obj ref.
 
+  /// Key of the obj ref to be retrieved via the factory.
   char *quoter_key_;
-  // Key of the obj ref to be retrieved via the factory.
 
+  /// Flag to tell server to shutdown.
   int shutdown_;
-  // Flag to tell server to shutdown.
 
+  /// Pointer to a factory finder
   Stock::Quoter_Factory_Finder_var factory_Finder_var_;
-  // Pointer to a factory finder
 
+  /// Pointer to a factory
   Stock::Quoter_Factory_var factory_var_;
-  // Pointer to a factory
 
+  /// Pointer to a generic factory
   CosLifeCycle::GenericFactory_var generic_Factory_var_;
-  // Pointer to a generic factory
 
+  /// Quoter obj ref.
   Stock::Quoter_var quoter_var_;
-  // Quoter obj ref.
 
+  /// Flag to tell if the a Generic Factory is going to be used
+  /// or the LifeCycle Service (0 means Generic Factory, 1 means LCS)
   int useLifeCycleService_;
-  // Flag to tell if the a Generic Factory is going to be used
-  // or the LifeCycle Service (0 means Generic Factory, 1 means LCS)
 
+  /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
   int debug_level_;
-  // debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
 };
 
+/**
+ * @class Quoter_Task
+ *
+ * @brief Quoter_Task
+ *
+ * Task that creates a Quoter_Client and uses it
+ */
 class Quoter_Task : public ACE_Task<ACE_SYNCH>
 {
-  // = TITLE
-  //    Quoter_Task
-  //
-  // = DESCRIPTION
-  //    Task that creates a Quoter_Client and uses it
 public:
   Quoter_Task (int argc, ACE_TCHAR **argv);
 

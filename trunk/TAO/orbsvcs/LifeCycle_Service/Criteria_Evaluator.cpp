@@ -1,17 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    Criteria_Evaluator.cpp
-//
-// = DESCRIPTION
-//    An Evaluator for the CosLifeCycle Criteria
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Criteria_Evaluator.cpp
+ *
+ *  $Id$
+ *
+ *  An Evaluator for the CosLifeCycle Criteria
+ *
+ *
+ *  @author Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "Criteria_Evaluator.h"
 #include "ace/OS_NS_string.h"

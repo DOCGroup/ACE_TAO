@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    array_ci.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Arrays in the client inline.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    array_ci.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Arrays in the client inline.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************************
 //  visitor for array declaration in client inline

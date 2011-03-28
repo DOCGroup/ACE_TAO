@@ -1,20 +1,19 @@
-// $Id$
 
-// ==========================================================================
-// = LIBRARY
-//    TAO/example/POA/POA_BiDir
-//
-// = FILENAME
-//    POA_BiDir.cpp
-//
-// = DESCRIPTION
-//    This program is an extension of $TAO_ROOT/example/POA/NewPOA. In
-//    the many POA's created this example adds a BiDirGIOP policy to
-//    one of the POA's.
-//
-// = AUTHOR
-//    Balachandran Natarajan <bala@cs.wustl.edu>
-// ========================================================================
+//=============================================================================
+/**
+ *  @file    POA_BiDir.cpp
+ *
+ *  $Id$
+ *
+ *  This program is an extension of $TAO_ROOT/example/POA/NewPOA. In
+ *  the many POA's created this example adds a BiDirGIOP policy to
+ *  one of the POA's.
+ *
+ *
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "tao/PortableServer/PortableServer.h"
 

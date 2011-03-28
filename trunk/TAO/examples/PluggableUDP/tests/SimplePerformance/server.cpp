@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/PluggableUDP/tests/SimplePerformance
-//
-// = FILENAME
-//    server.cpp
-//
-// = DESCRIPTION
-//    Implementation of the server running the UDP object.
-//
-// = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ *  Implementation of the server running the UDP object.
+ *
+ *
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
 
 
 #include "ace/Get_Opt.h"

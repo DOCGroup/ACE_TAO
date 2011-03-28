@@ -1,18 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel examples
-//
-// = FILENAME
-//   Consumer
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Consumer
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef CONSUMER_H
 #define CONSUMER_H
@@ -24,38 +20,39 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class Consumer
+ *
+ * @brief Simple consumer object
+ *
+ * This class is a consumer of events.
+ * It simply subscribes to one event type.
+ */
 class Consumer : public POA_RtecEventComm::PushConsumer
 {
-  // = TITLE
-  //   Simple consumer object
-  //
-  // = DESCRIPTION
-  //   This class is a consumer of events.
-  //   It simply subscribes to one event type.
-  //
 public:
+  /// Constructor
   Consumer (bool valuetype);
-  // Constructor
 
+  /// Connect to the Event Channel
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
-  // Connect to the Event Channel
 
+  /// Disconnect from the event channel
   void disconnect (void);
-  // Disconnect from the event channel
 
   // = The RtecEventComm::PushConsumer methods
 
+  /// The skeleton methods.
   virtual void push (const RtecEventComm::EventSet& events);
   virtual void disconnect_push_consumer (void);
-  // The skeleton methods.
 
   CORBA::ULong event_count (void) const;
 private:
+  /// Keep track of the number of events received.
   CORBA::ULong event_count_;
-  // Keep track of the number of events received.
 
+  /// The proxy
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy_;
-  // The proxy
 
   bool valuetype_;
 };
