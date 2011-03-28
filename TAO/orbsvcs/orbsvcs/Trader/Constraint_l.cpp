@@ -419,7 +419,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 //=============================================================================
 /**
- *  @file    constraint.l
+ *  @file    Constraint_l.cpp
  *
  *  $Id$
  *

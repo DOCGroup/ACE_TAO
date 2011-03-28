@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    Life_Cycle_Service_i.cpp
+ *  @file    LifeCycle_Service_i.cpp
  *
  *  $Id$
  *
