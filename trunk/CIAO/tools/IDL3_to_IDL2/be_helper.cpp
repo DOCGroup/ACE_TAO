@@ -1,23 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_helper.cpp
-//
-// = DESCRIPTION
-//   Provides helper classes to print generated code to the output
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-//    Improvements by Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_helper.cpp
+ *
+ *  $Id$
+ *
+ * Provides helper classes to print generated code to the output
+ *
+ *
+ *  @author Aniruddha Gokhale Improvements by Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #include "be_helper.h"
 #include "be_extern.h"

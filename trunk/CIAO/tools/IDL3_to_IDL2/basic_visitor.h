@@ -1,18 +1,17 @@
-// $Id$
 
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL3_TO_IDL2_BE_DLL
-//
-// = FILENAME
-//    basic_visitor.h
-//
-// = DESCRIPTION
-//    Base class for other visitors in this backend.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    basic_visitor.h
+ *
+ *  $Id$
+ *
+ *  Base class for other visitors in this backend.
+ *
+ *
+ */
+//=============================================================================
+
 
 #ifndef TAO_BASIC_VISITOR_H
 #define TAO_BASIC_VISITOR_H
