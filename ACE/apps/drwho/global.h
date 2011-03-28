@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  Here are all the declarations that are needed throughout the program. */
+ *  Here are all the declarations that are needed throughout the program. 
  *
  *
  *  @author Douglas C. Schmidt
