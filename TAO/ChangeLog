@@ -1,3 +1,9 @@
+Mon Mar 28 20:48:40 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Bug_3068_Regression/Bug_3068_Regression.mpc:
+
+          Added "after" statement to enable correct parallel builds.
+
 Mon Mar 28 11:43:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Kokyu_dsrt_schedulers/fp_example/client.cpp:
