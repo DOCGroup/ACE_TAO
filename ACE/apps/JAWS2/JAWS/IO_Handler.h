@@ -2,14 +2,13 @@
 
 //=============================================================================
 /**
- *  @file    IO.h
+ *  @file    IO_Handler.h
  *
  *  $Id$
  *
  *  @author James Hu
  */
 //=============================================================================
-
 
 #ifndef JAWS_IO_HANDLER_H
 #define JAWS_IO_HANDLER_H
@@ -26,7 +25,6 @@
 
 #include "JAWS/Export.h"
 
-// #include "JAWS/IO.h"
 class JAWS_IO;
 class JAWS_Synch_IO;
 class JAWS_Asynch_IO;
