@@ -13,15 +13,6 @@ yyrcsid[] = "$Id$";
 #define YYRECOVERING() (yyerrflag!=0)
 
 #define YYPREFIX "yy"
-//=============================================================================
-/**
-/**/
-/* = LIBRARY*/
-/*    orbsvcs*/
-/* */
- */
-//=============================================================================
-
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
