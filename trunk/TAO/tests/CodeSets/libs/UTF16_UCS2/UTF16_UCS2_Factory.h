@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    UTF16_UCS2_Factory.cpp
+ *  @file    UTF16_UCS2_Factory.h
  *
  *  $Id$
  *
@@ -13,7 +13,6 @@
  *  @author   Byron Harris <harrisb@ociweb.com>
  */
 //=============================================================================
-
 
 #ifndef UTF16_UCS2_FACTORY_H
 #define UTF16_UCS2_FACTORY_H

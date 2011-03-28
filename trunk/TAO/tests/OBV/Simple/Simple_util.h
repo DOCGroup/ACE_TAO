@@ -1,8 +1,6 @@
-
-
 //=============================================================================
 /**
- *  @file    Simple_Util.h
+ *  @file    Simple_util.h
  *
  *  $Id$
  *
@@ -12,7 +10,6 @@
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_UTIL_H
 #define TAO_UTIL_H
