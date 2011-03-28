@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef SERVANT_ACTIVATOR_H
 #define SERVANT_ACTIVATOR_H
 
@@ -27,16 +26,16 @@
 #include "ace/DLL.h"
 #include "ace/Log_Msg.h"
 
+/**
+ * Servant Activator for the test servant.
+ * 
+ * This class associates an unassociated servant with an object in
+ * the POA Active Object Map.
+ */
 class ServantActivator :
   public virtual PortableServer::ServantActivator,
   public virtual ::CORBA::LocalObject
 {
-  //= TITLE
-  //   Servant Activator for the test servant.
-  //
-  //= DESCRIPTION
-  //   This class associates an unassociated servant with an object in
-  //   the POA Active Object Map.
 public:
   /**
    * This typedef is used to typecast the void* obtained when finding
