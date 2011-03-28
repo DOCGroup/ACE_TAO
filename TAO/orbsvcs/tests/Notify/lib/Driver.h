@@ -37,12 +37,6 @@ class TAO_Notify_Tests_Activation_Manager;
  */
 class TAO_Notify_Tests_Worker : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run a server thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run server threads
-  //
 public:
   TAO_Notify_Tests_Worker (void);
   // ctor
@@ -62,14 +56,13 @@ private:
 
 
 
+/**
+ * Run a server thread
+ *
+ * Use the ACE_Task_Base class to run server threads
+ */
 class TAO_Notify_Tests_ORB_Run_Worker : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run a server thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run server threads
-  //
 public:
   TAO_Notify_Tests_ORB_Run_Worker (void);
   // ctor
