@@ -14,14 +14,13 @@ int do_shutdown = 0;
 int enable_dynamic_scheduling = 0;
 int enable_yield = 1;
 
+/**
+ * Run a server thread
+ *
+ * Use the ACE_Task_Base class to run server threads
+ */
 class Worker : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run a server thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run server threads
-  //
 public:
   Worker (CORBA::ORB_ptr orb,
           Simple_Server_ptr server_ptr,

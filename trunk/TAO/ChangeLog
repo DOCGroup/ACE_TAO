@@ -1,3 +1,22 @@
+Mon Mar 28 11:43:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Kokyu_dsrt_schedulers/fp_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/fp_example/server.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/server.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/server.cpp:
+        * orbsvcs/tests/Notify/lib/Driver.h:
+        * tests/Bug_2494_Regression/server.cpp:
+        * tests/Bug_3531_Regression/client.cpp:
+        * tests/Bug_3531_Regression/server.cpp:
+        * tests/Bug_3567_Regression/client.cpp:
+        * tests/Bug_3567_Regression/server.cpp:
+        * tests/File_IO/server.cpp:
+        * tests/MT_Server/server.cpp:
+        * tests/Muxed_GIOP_Versions/server.cpp:
+          Doxygen changes
+
 Mon Mar 28 11:28:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/LifeCycle_Service/LifeCycle_Service.cpp:
