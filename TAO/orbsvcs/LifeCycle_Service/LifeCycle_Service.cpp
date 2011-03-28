@@ -1,17 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    Life_Cycle_Service.cpp
-//
-// = DESCRIPTION
-//    The server for the LifeCycleService of the quoter example.
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Life_Cycle_Service.cpp
+ *
+ *  $Id$
+ *
+ *  The server for the LifeCycleService of the quoter example.
+ *
+ *
+ *  @author Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "LifeCycle_Service.h"
 

@@ -1,22 +1,18 @@
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO/tests/POA/RootPOA
-//
-//
-// = FILENAME
-//     RootPOA.cpp
-//
-// = DESCRIPTION
-//     This program gets the name of the Root POA and prints it out on
-//     the standard output.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-//=========================================================================
+//=============================================================================
+/**
+ *  @file     RootPOA.cpp
+ *
+ *  $Id$
+ *
+ *   This program gets the name of the Root POA and prints it out on
+ *   the standard output.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "tao/PortableServer/PortableServer.h"
 

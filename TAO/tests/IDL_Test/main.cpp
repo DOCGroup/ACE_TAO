@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    main.cpp
-//
-// = DESCRIPTION
-//    We test the pragma prefixes generated in pragma.idl, and
-//    the values of some generated constants in constants.idl.
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    main.cpp
+ *
+ *  $Id$
+ *
+ *  We test the pragma prefixes generated in pragma.idl, and
+ *  the values of some generated constants in constants.idl.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "pragmaS.h"
 #include "unionC.h"

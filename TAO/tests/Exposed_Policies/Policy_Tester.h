@@ -1,21 +1,17 @@
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Exposed_Policies
-//
-// = FILENAME
-//    Policy_Verifier.h
-//
-// = DESCRIPTION
-//     This class verifies that the policy are correctly embedded
-//     in the IOR.
-//
-// = AUTHOR
-//     Angelo Corsaro <corsaro@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Policy_Verifier.h
+ *
+ *  $Id$
+ *
+ *   This class verifies that the policy are correctly embedded
+ *   in the IOR.
+ *
+ *
+ *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef POLICY_TESTER_H_
 #define POLICY_TESTER_H_
@@ -35,8 +31,8 @@ public:
   Policy_Tester (void);
   ~Policy_Tester (void);
 
+  /// Runs the test.
   void run (void);
-  // Runs the test.
 
   int init (int argc,
             ACE_TCHAR *argv[]);

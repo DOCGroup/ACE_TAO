@@ -1,21 +1,17 @@
-// $Id$
 
-// ===========================================================
-//
-//
-// = LIBRARY
-//    TAO/examples/Callback_Quoter
-//
-// = FILENAME
-//    Consumer_Input_Handler.cpp
-//
-// = DESCRIPTION
-//    Implementation of the Consumer_Handler class.
-//
-// = AUTHOR
-//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  @file    Consumer_Input_Handler.cpp
+ *
+ *  $Id$
+ *
+ *  Implementation of the Consumer_Handler class.
+ *
+ *
+ *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Consumer_Handler.h"
 

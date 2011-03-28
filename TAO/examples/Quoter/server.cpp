@@ -1,17 +1,16 @@
-// $Id$
-// ============================================================================
-//
-// = FILENAME
-//    Quoter_Server.cpp
-//
-// = DESCRIPTION
-//    The Server for the Quoter Factory
-//
-// = AUTHOR
-//    Darrell Brunsch (brunsch@cs.wustl.edu)
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Quoter_Server.cpp
+ *
+ *  $Id$
+ *
+ *  The Server for the Quoter Factory
+ *
+ *
+ *  @author Darrell Brunsch (brunsch@cs.wustl.edu) Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "server.h"
 #include "tao/ORB_Core.h"

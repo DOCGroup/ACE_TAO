@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    ub_wstring.cpp
-//
-// = DESCRIPTION
-//    tests unbounded wide strings
-//
-// = AUTHORS
-//      Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ub_wstring.cpp
+ *
+ *  $Id$
+ *
+ *  tests unbounded wide strings
+ *
+ *
+ *  @author   Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "ub_wstring.h"

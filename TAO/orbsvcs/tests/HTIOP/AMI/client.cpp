@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/AMI
-//
-// = FILENAME
-//    server.cpp
-//
-// = DESCRIPTION
-//    A client which uses the AMI callback model.
-//
-// = AUTHOR
-//    Alexander Babu Arulanthu <alex@cs.wustl.edu>,
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ *  A client which uses the AMI callback model.
+ *
+ *
+ *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
 
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Get_Opt.h"
@@ -68,30 +65,31 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
+/**
+ * @class Client
+ *
+ * @brief Run the client thread
+ *
+ * Use the ACE_Task_Base class to run the client threads.
+ */
 class Client : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run the client thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run the client threads.
-  //
 public:
+  /// ctor
   Client (A::AMI_Test_ptr server, int niterations);
-  // ctor
 
+  /// The thread entry point.
   virtual int svc (void);
-  // The thread entry point.
 
   // private:
+  /// Var for the AMI_Test object.
   A::AMI_Test_var ami_test_var_;
-  // Var for the AMI_Test object.
 
+  /// The number of iterations on each client thread.
   int niterations_;
-  // The number of iterations on each client thread.
 
+  /// Var for AMI_AMI_Test_ReplyHandler object.
   A::AMI_AMI_TestHandler_var the_handler_var_;
-  // Var for AMI_AMI_Test_ReplyHandler object.
 };
 
 class Handler : public POA_A::AMI_AMI_TestHandler

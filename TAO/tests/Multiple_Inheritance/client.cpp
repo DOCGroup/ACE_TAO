@@ -1,19 +1,16 @@
-// $Id$
-//
-//===================================================================
-//  = LIBRARY
-//      TAO/tests/Multiple_Inheritance
-//
-//  = FILENAME
-//     client.cpp
-//
-//  = DESCRIPTION
-//      A client program for the Multiple Inheritance module
-//
-//  = AUTHOR
-//     Irfan Pyarali
-//
-//====================================================================
+//=============================================================================
+/**
+ *  @file     client.cpp
+ *
+ *  $Id$
+ *
+ *    A client program for the Multiple Inheritance module
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"

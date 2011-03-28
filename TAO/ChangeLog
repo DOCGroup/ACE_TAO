@@ -1,3 +1,925 @@
+Mon Mar 28 07:27:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Converted files below to use doxygen style documentation
+
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+
+        * TAO_IDL/be_include/be_helper.h:
+
+        * TAO_IDL/be_include/be_visitor_argument/invoke_cs.h:
+
+        * TAO_IDL/be_include/be_visitor_exception/ctor.h:
+        * TAO_IDL/be_include/be_visitor_exception/ctor_assign.h:
+        * TAO_IDL/be_include/be_visitor_exception/exception_ctor.h:
+
+        * TAO_IDL/include/utl_idlist.h:
+
+        * docs/tutorials/Quoter/Simple/Impl-Repo/server.cpp:
+
+        * docs/tutorials/Quoter/Simple/Persistent/server.cpp:
+
+        * examples/AMI/FL_Callback/Peer_i.h:
+        * examples/AMI/FL_Callback/Progress_i.h:
+
+        * examples/Advanced/ch_12/client.cpp:
+        * examples/Advanced/ch_12/icp.h:
+        * examples/Advanced/ch_12/icp.cpp:
+        * examples/Advanced/ch_12/server.h:
+        * examples/Advanced/ch_12/server.cpp:
+
+        * examples/Advanced/ch_18/client.cpp:
+        * examples/Advanced/ch_18/icp.h:
+        * examples/Advanced/ch_18/icp.cpp:
+        * examples/Advanced/ch_18/server.h:
+        * examples/Advanced/ch_18/server.cpp:
+
+        * examples/Advanced/ch_21/client.cpp:
+        * examples/Advanced/ch_21/icp.h:
+        * examples/Advanced/ch_21/icp.cpp:
+        * examples/Advanced/ch_21/server.h:
+        * examples/Advanced/ch_21/server.cpp:
+
+        * examples/Advanced/ch_3/client.cpp:
+        * examples/Advanced/ch_3/server.h:
+        * examples/Advanced/ch_3/server.cpp:
+
+        * examples/Advanced/ch_8_and_10/client.cpp:
+        * examples/Advanced/ch_8_and_10/icp.h:
+        * examples/Advanced/ch_8_and_10/icp.cpp:
+        * examples/Advanced/ch_8_and_10/server.h:
+        * examples/Advanced/ch_8_and_10/server.cpp:
+
+        * examples/Buffered_AMI/client.cpp:
+        * examples/Buffered_AMI/test_i.h:
+
+        * examples/Buffered_Oneways/client.cpp:
+        * examples/Buffered_Oneways/test_i.h:
+
+        * examples/Callback_Quoter/Consumer_Handler.h:
+        * examples/Callback_Quoter/Consumer_Handler.cpp:
+        * examples/Callback_Quoter/Consumer_Input_Handler.h:
+        * examples/Callback_Quoter/Consumer_Input_Handler.cpp:
+        * examples/Callback_Quoter/Consumer_Signal_Handler.h:
+        * examples/Callback_Quoter/Consumer_Signal_Handler.cpp:
+        * examples/Callback_Quoter/Consumer_i.h:
+        * examples/Callback_Quoter/Consumer_i.cpp:
+        * examples/Callback_Quoter/Notifier_Input_Handler.h:
+        * examples/Callback_Quoter/Notifier_Input_Handler.cpp:
+        * examples/Callback_Quoter/Notifier_i.h:
+        * examples/Callback_Quoter/Notifier_i.cpp:
+        * examples/Callback_Quoter/Supplier_Timer_Handler.h:
+        * examples/Callback_Quoter/Supplier_Timer_Handler.cpp:
+        * examples/Callback_Quoter/Supplier_i.h:
+        * examples/Callback_Quoter/Supplier_i.cpp:
+
+        * examples/Content_Server/AMI_Iterator/Content_Iterator_i.h:
+        * examples/Content_Server/AMI_Iterator/Iterator_Factory_i.h:
+        * examples/Content_Server/AMI_Iterator/Iterator_Handler.h:
+
+        * examples/Content_Server/AMI_Observer/Callback_Handler.h:
+        * examples/Content_Server/AMI_Observer/Callback_i.h:
+        * examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.h:
+        * examples/Content_Server/AMI_Observer/Push_Iterator_Handler.h:
+
+        * examples/Content_Server/SMI_Iterator/Content_Iterator_i.h:
+        * examples/Content_Server/SMI_Iterator/Iterator_Factory_i.h:
+
+        * examples/Event_Comm/Consumer_Handler.h:
+        * examples/Event_Comm/Consumer_Input_Handler.h:
+        * examples/Event_Comm/Event_Comm_i.h:
+        * examples/Event_Comm/Notifier_Handler.h:
+        * examples/Event_Comm/Notifier_Server.h:
+        * examples/Event_Comm/Supplier_Input_Handler.h:
+        * examples/Event_Comm/notifier.h:
+        * examples/Event_Comm/supplier.h:
+
+        * examples/Kokyu_dsrt_schedulers/fp_example/test_i.h:
+
+        * examples/Kokyu_dsrt_schedulers/mif_example/test_i.h:
+
+        * examples/Kokyu_dsrt_schedulers/muf_example/test_i.h:
+
+        * examples/Load_Balancing/Identity_Client.h:
+        * examples/Load_Balancing/Identity_Client.cpp:
+        * examples/Load_Balancing/Identity_Server.h:
+        * examples/Load_Balancing/Identity_Server.cpp:
+        * examples/Load_Balancing/Identity_i.h:
+        * examples/Load_Balancing/Identity_i.cpp:
+        * examples/Load_Balancing/Load_Balancer_i.h:
+        * examples/Load_Balancing/Load_Balancer_i.cpp:
+        * examples/Load_Balancing/Load_Balancing_Service.h:
+        * examples/Load_Balancing/Load_Balancing_Service.cpp:
+
+        * examples/Load_Balancing_persistent/Identity_Client.h:
+        * examples/Load_Balancing_persistent/Identity_Client.cpp:
+        * examples/Load_Balancing_persistent/Identity_Server.h:
+        * examples/Load_Balancing_persistent/Identity_i.h:
+        * examples/Load_Balancing_persistent/Identity_i.cpp:
+        * examples/Load_Balancing_persistent/Load_Balancer_i.h:
+        * examples/Load_Balancing_persistent/Load_Balancing_Service.h:
+        * examples/Load_Balancing_persistent/Load_Balancing_Service.cpp:
+
+        * examples/Logging/Logger_i.h:
+        * examples/Logging/Logging_Service_i.h:
+        * examples/Logging/Logging_Test_i.h:
+
+        * examples/OBV/Simple_util.h:
+
+        * examples/OBV/Typed_Events/Client_i.h:
+        * examples/OBV/Typed_Events/Server_i.h:
+
+        * examples/Persistent_Grid/Grid_Client_i.h:
+        * examples/Persistent_Grid/Grid_i.h:
+        * examples/Persistent_Grid/Persistent_Client.h:
+        * examples/Persistent_Grid/Simple_util.h:
+
+        * examples/PluggableUDP/tests/Performance/UDP_PerformanceClient.h:
+        * examples/PluggableUDP/tests/Performance/UDP_i.h:
+        * examples/PluggableUDP/tests/Performance/client.cpp:
+        * examples/PluggableUDP/tests/Performance/server.cpp:
+
+        * examples/PluggableUDP/tests/SimplePerformance/client.cpp:
+        * examples/PluggableUDP/tests/SimplePerformance/server.cpp:
+        * examples/PluggableUDP/tests/SimplePerformance/test_i.h:
+
+        * examples/Quoter/Factory_Finder.h:
+        * examples/Quoter/Factory_Finder.cpp:
+        * examples/Quoter/Factory_Finder_i.h:
+        * examples/Quoter/Factory_Finder_i.cpp:
+        * examples/Quoter/Generic_Factory.h:
+        * examples/Quoter/Generic_Factory.cpp:
+        * examples/Quoter/Generic_Factory_i.h:
+        * examples/Quoter/Generic_Factory_i.cpp:
+        * examples/Quoter/Quoter_i.h:
+        * examples/Quoter/Quoter_i.cpp:
+        * examples/Quoter/client.h:
+        * examples/Quoter/server.h:
+        * examples/Quoter/server.cpp:
+
+        * examples/Simple/Simple_util.h:
+
+        * examples/Simple/bank/AccountManager_i.h:
+        * examples/Simple/bank/Account_i.h:
+        * examples/Simple/bank/Bank_Client_i.h:
+
+        * examples/Simple/chat/Broadcaster_i.h:
+        * examples/Simple/chat/Broadcaster_i.cpp:
+        * examples/Simple/chat/Client_i.h:
+        * examples/Simple/chat/Client_i.cpp:
+        * examples/Simple/chat/Receiver_i.h:
+        * examples/Simple/chat/Receiver_i.cpp:
+        * examples/Simple/chat/Server.h:
+        * examples/Simple/chat/Server_i.h:
+        * examples/Simple/chat/Server_i.cpp:
+        * examples/Simple/chat/client.cpp:
+        * examples/Simple/chat/server.cpp:
+
+        * examples/Simple/echo/Echo_Client_i.h:
+        * examples/Simple/echo/Echo_i.h:
+
+        * examples/Simple/grid/Grid_Client_i.h:
+        * examples/Simple/grid/Grid_i.h:
+
+        * examples/Simple/time-date/Time_Date_Client_i.h:
+        * examples/Simple/time-date/Time_Date_i.h:
+        * examples/Simple/time-date/server.cpp:
+
+        * examples/Simple/time/Time_Client_i.h:
+        * examples/Simple/time/Time_i.h:
+
+        * examples/Simulator/Event_Supplier/DOVE_Supplier.h:
+        * examples/Simulator/Event_Supplier/DOVE_Supplier.cpp:
+        * examples/Simulator/Event_Supplier/DualEC_Sup.h:
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
+        * examples/Simulator/Event_Supplier/Event_Con.h:
+        * examples/Simulator/Event_Supplier/Event_Con.cpp:
+        * examples/Simulator/Event_Supplier/Event_Sup.h:
+        * examples/Simulator/Event_Supplier/Event_Sup.cpp:
+        * examples/Simulator/Event_Supplier/Logging_Sup.h:
+        * examples/Simulator/Event_Supplier/Logging_Sup.cpp:
+
+        * examples/ior_corbaloc/client.cpp:
+        * examples/ior_corbaloc/ior_corbaloc_client_i.h:
+        * examples/ior_corbaloc/ior_corbaloc_client_i.cpp:
+
+        * interop-tests/wchar/client.cpp:
+        * interop-tests/wchar/server.cpp:
+        * interop-tests/wchar/wchar_reference.h:
+        * interop-tests/wchar/wchar_reference.cpp:
+
+        * orbsvcs/IFR_Service/IFR_Service.h:
+        * orbsvcs/IFR_Service/be_global.h:
+        * orbsvcs/IFR_Service/be_global.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.h:
+        * orbsvcs/IFR_Service/ifr_removing_visitor.h:
+        * orbsvcs/IFR_Service/ifr_visitor.h:
+
+        * orbsvcs/LifeCycle_Service/Criteria_Evaluator.h:
+        * orbsvcs/LifeCycle_Service/Criteria_Evaluator.cpp:
+        * orbsvcs/LifeCycle_Service/Factory_Trader.h:
+        * orbsvcs/LifeCycle_Service/Factory_Trader.cpp:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.h:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.cpp:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service_i.h:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service_i.cpp:
+
+        * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
+
+        * orbsvcs/Notify_Service/NT_Notify_Server.cpp:
+
+        * orbsvcs/TAO_Service/TAO_Service.cpp:
+
+        * orbsvcs/Time_Service/Clerk_i.h:
+        * orbsvcs/Time_Service/Server_i.h:
+
+        * orbsvcs/Trading_Service/Trading_Service.h:
+
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.h:
+        * orbsvcs/examples/CosEC/Factory/FactoryDriver.h:
+
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/RtEC_Based_CosEC.h:
+
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ConsumerAdmin_i.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/CosEvent_Utilities.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/EventChannel_i.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushConsumer_i.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushSupplier_i.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/SupplierAdmin_i.h:
+
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Basic.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Consumer.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Supplier.h:
+
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Consumer.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Multiple.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Supplier.h:
+
+        * orbsvcs/examples/CosEC/Simple/Consumer.h:
+        * orbsvcs/examples/CosEC/Simple/Supplier.h:
+
+        * orbsvcs/examples/Notify/Filter/Filter.h:
+
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.h:
+
+        * orbsvcs/examples/RtEC/Kokyu/Consumer.h:
+        * orbsvcs/examples/RtEC/Kokyu/Supplier.h:
+
+        * orbsvcs/examples/RtEC/MCast/AddrServer.h:
+        * orbsvcs/examples/RtEC/MCast/Consumer.h:
+        * orbsvcs/examples/RtEC/MCast/Supplier.h:
+
+        * orbsvcs/examples/RtEC/Schedule/Consumer.h:
+        * orbsvcs/examples/RtEC/Schedule/Supplier.h:
+
+        * orbsvcs/examples/RtEC/Simple/Consumer.h:
+        * orbsvcs/examples/RtEC/Simple/Supplier.h:
+
+        * orbsvcs/examples/Security/SecurityLevel1/SLevel1_Test_i.h:
+
+        * orbsvcs/examples/Security/Send_File/test_i.h:
+
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_y.cpp:
+
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.h:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.h:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.h:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.h:
+
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/receiver.h:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/sender.h:
+
+        * orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.h:
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.h:
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.h:
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.h:
+
+        * orbsvcs/tests/AVStreams/Latency/ping.h:
+        * orbsvcs/tests/AVStreams/Latency/pong.h:
+
+        * orbsvcs/tests/AVStreams/Multiple_Flows/receiver.h:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/sender.h:
+
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.h:
+        * orbsvcs/tests/AVStreams/Pluggable/server.h:
+
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/receiver.h:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/sender.h:
+
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.h:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.h:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.h:
+
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.h:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.h:
+
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.h:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.h:
+
+        * orbsvcs/tests/Bug_2248_Regression/Client_i.h:
+
+        * orbsvcs/tests/Concurrency/CC_client.h:
+        * orbsvcs/tests/Concurrency/CC_client.cpp:
+        * orbsvcs/tests/Concurrency/CC_command.h:
+        * orbsvcs/tests/Concurrency/CC_command.cpp:
+        * orbsvcs/tests/Concurrency/CC_naming_service.h:
+        * orbsvcs/tests/Concurrency/CC_naming_service.cpp:
+        * orbsvcs/tests/Concurrency/CC_test_utils.h:
+        * orbsvcs/tests/Concurrency/CC_test_utils.cpp:
+        * orbsvcs/tests/Concurrency/CC_tests.h:
+        * orbsvcs/tests/Concurrency/CC_tests.cpp:
+        * orbsvcs/tests/Concurrency/lex.CC_command.cpp:
+
+        * orbsvcs/tests/CosEvent/Basic/MT_Disconnect.h:
+        * orbsvcs/tests/CosEvent/Basic/Random.h:
+
+        * orbsvcs/tests/CosEvent/lib/Counting_Consumer.h:
+        * orbsvcs/tests/CosEvent/lib/Counting_Supplier.h:
+
+        * orbsvcs/tests/Event/Performance/Connect.h:
+        * orbsvcs/tests/Event/Performance/Inversion.h:
+        * orbsvcs/tests/Event/Performance/Latency.h:
+        * orbsvcs/tests/Event/Performance/Throughput.h:
+
+        * orbsvcs/tests/Event/UDP/AddrServer.h:
+        * orbsvcs/tests/Event/UDP/Consumer.h:
+        * orbsvcs/tests/Event/UDP/Supplier.h:
+
+        * orbsvcs/tests/FaultTolerance/IOGR/Client_i.h:
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.h:
+        * orbsvcs/tests/FaultTolerance/IOGR/test_i.h:
+
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
+
+        * orbsvcs/tests/HTIOP/AMI/ami_test_i.h:
+        * orbsvcs/tests/HTIOP/AMI/ami_test_i.cpp:
+        * orbsvcs/tests/HTIOP/AMI/client.cpp:
+        * orbsvcs/tests/HTIOP/AMI/server.cpp:
+        * orbsvcs/tests/HTIOP/AMI/simple_client.cpp:
+
+        * orbsvcs/tests/HTIOP/BiDirectional/test_i.h:
+
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.h:
+
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.h:
+
+        * orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Query_Client.h:
+
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.h:
+
+        * orbsvcs/tests/Interoperable_Naming/client.cpp:
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.h:
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
+
+        * orbsvcs/tests/Notify/Basic/AdminProperties.h:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.h:
+        * orbsvcs/tests/Notify/Basic/Events.h:
+        * orbsvcs/tests/Notify/Basic/Filter.h:
+        * orbsvcs/tests/Notify/Basic/IdAssignment.h:
+        * orbsvcs/tests/Notify/Basic/LifeCycle.h:
+        * orbsvcs/tests/Notify/Basic/MultiTypes.h:
+        * orbsvcs/tests/Notify/Basic/Sequence.h:
+        * orbsvcs/tests/Notify/Basic/Simple.h:
+        * orbsvcs/tests/Notify/Basic/Updates.h:
+
+        * orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.h:
+
+        * orbsvcs/tests/Notify/Bug_2415_Regression/Notify_Push_Consumer.h:
+
+        * orbsvcs/tests/Notify/Bug_2561_Regression/Notify_Push_Consumer.h:
+
+        * orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.h:
+
+        * orbsvcs/tests/Notify/MT_Dispatching/Notify_Structured_Push_Consumer.h:
+
+        * orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.h:
+
+        * orbsvcs/tests/Notify/Persistent_Filter/Filter.h:
+
+        * orbsvcs/tests/Notify/Reconnecting/Consumer.h:
+        * orbsvcs/tests/Notify/Reconnecting/Supplier.h:
+
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.h:
+
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.h:
+
+        * orbsvcs/tests/Notify/Structured_Filter/Notify_Push_Consumer.h:
+
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.h:
+
+        * orbsvcs/tests/Notify/lib/Notify_PushConsumer.h:
+        * orbsvcs/tests/Notify/lib/Notify_SequencePushConsumer.h:
+        * orbsvcs/tests/Notify/lib/Notify_SequencePushSupplier.h:
+        * orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.h:
+        * orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.h:
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.h:
+        * orbsvcs/tests/Notify/lib/common.h:
+
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.h:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.h:
+
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.h:
+
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
+
+        * orbsvcs/tests/Property/client.h:
+        * orbsvcs/tests/Property/client.cpp:
+        * orbsvcs/tests/Property/server.h:
+        * orbsvcs/tests/Property/server.cpp:
+
+        * orbsvcs/tests/Security/BiDirectional/test_i.h:
+
+        * orbsvcs/tests/Security/Crash_Test/test_i.h:
+
+        * orbsvcs/tests/Security/MT_IIOP_SSL/Client_Worker.h:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/test_i.h:
+
+        * orbsvcs/tests/Security/MT_SSLIOP/Client_Worker.h:
+        * orbsvcs/tests/Security/MT_SSLIOP/test_i.h:
+
+        * orbsvcs/tests/Security/ssliop_corbaloc/client.h:
+        * orbsvcs/tests/Security/ssliop_corbaloc/client.cpp:
+
+        * orbsvcs/tests/Simple_Naming/client.h:
+        * orbsvcs/tests/Simple_Naming/client.cpp:
+
+        * orbsvcs/tests/Time/Client_i.h:
+
+        * orbsvcs/tests/ior_corbaname/client.cpp:
+        * orbsvcs/tests/ior_corbaname/ior_corbaname_client_i.h:
+        * orbsvcs/tests/ior_corbaname/ior_corbaname_client_i.cpp:
+
+        * orbsvcs/tests/tests_svc_loader/tests_svc_loader.cpp:
+
+        * performance-tests/Anyop/anyop.cpp:
+
+        * performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.h:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.h:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/RTI_IO.h:
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/Timer.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/Util_Thread.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/client.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/cubit_i.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/server.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
+
+        * performance-tests/POA/Demux/client.cpp:
+        * performance-tests/POA/Demux/demux_stats.cpp:
+        * performance-tests/POA/Demux/demux_test_client.h:
+        * performance-tests/POA/Demux/demux_test_client.cpp:
+        * performance-tests/POA/Demux/demux_test_macros.h:
+        * performance-tests/POA/Demux/demux_test_server.h:
+        * performance-tests/POA/Demux/demux_test_server.cpp:
+        * performance-tests/POA/Demux/server.cpp:
+
+        * performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
+
+        * performance-tests/Pluggable/PP_Test_Client.h:
+        * performance-tests/Pluggable/PP_Test_Server.h:
+        * performance-tests/Pluggable/PP_Test_i.h:
+        * performance-tests/Pluggable/PP_Test_i.cpp:
+
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/test_i.h:
+
+        * performance-tests/RTCorba/Oneways/Reliable/test_i.h:
+
+        * tao/IORManipulation/IORManip_Filter.h:
+        * tao/IORManipulation/IORManip_IIOP_Filter.h:
+
+        * tests/AMI_Timeouts/timeout_client.h:
+        * tests/AMI_Timeouts/timeout_i.h:
+        * tests/AMI_Timeouts/timeout_i.cpp:
+
+        * tests/Alt_Mapping/alt_mapping_i.h:
+        * tests/Alt_Mapping/alt_mapping_i.cpp:
+        * tests/Alt_Mapping/client.h:
+        * tests/Alt_Mapping/client.cpp:
+        * tests/Alt_Mapping/driver.h:
+        * tests/Alt_Mapping/driver.cpp:
+        * tests/Alt_Mapping/helper.h:
+        * tests/Alt_Mapping/helper.cpp:
+        * tests/Alt_Mapping/options.h:
+        * tests/Alt_Mapping/options.cpp:
+        * tests/Alt_Mapping/results.h:
+        * tests/Alt_Mapping/results.cpp:
+        * tests/Alt_Mapping/server.cpp:
+        * tests/Alt_Mapping/tests.h:
+        * tests/Alt_Mapping/ub_string.h:
+        * tests/Alt_Mapping/ub_string.cpp:
+        * tests/Alt_Mapping/ub_struct_seq.h:
+        * tests/Alt_Mapping/ub_struct_seq.cpp:
+
+        * tests/BiDirectional/test_i.h:
+
+        * tests/BiDirectional_DelayedUpcall/test_i.h:
+
+        * tests/BiDirectional_MultipleORB/destroy.cpp:
+
+        * tests/BiDirectional_NestedUpcall/test_i.h:
+
+        * tests/Bug_2174_Regression/test_i.h:
+
+        * tests/Bug_2734_Regression/test_i.h:
+
+        * tests/Bug_2935_Regression/middle_i.h:
+        * tests/Bug_2935_Regression/sink_i.h:
+        * tests/Bug_2935_Regression/source_i.h:
+
+        * tests/Bug_3068_Regression/test_i.h:
+
+        * tests/Bug_3683_Regression/Echo_Client_i.h:
+        * tests/Bug_3683_Regression/Echo_i.h:
+        * tests/Bug_3683_Regression/Simple_util.h:
+
+        * tests/CDR/alignment.cpp:
+        * tests/CDR/allocator.cpp:
+        * tests/CDR/basic_types.cpp:
+        * tests/CDR/growth.cpp:
+        * tests/CDR/octet_sequence.cpp:
+        * tests/CDR/tc.cpp:
+
+        * tests/CSD_Collocation/Collocation_Tester.h:
+
+        * tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Factory.h:
+        * tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Factory.cpp:
+        * tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Translator.cpp:
+        * tests/CodeSets/libs/IBM1047_ISO8859/Wchar_IBM1047_ISO8859_Factory.h:
+        * tests/CodeSets/libs/IBM1047_ISO8859/Wchar_IBM1047_ISO8859_Factory.cpp:
+        * tests/CodeSets/libs/IBM1047_ISO8859/Wchar_IBM1047_ISO8859_Translator.cpp:
+
+        * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.cpp:
+
+        * tests/CodeSets/libs/UTF16_UCS2/UTF16_UCS2_Factory.h:
+        * tests/CodeSets/libs/UTF16_UCS2/UTF16_UCS2_Factory.cpp:
+        * tests/CodeSets/libs/UTF16_UCS2/UTF16_UCS2_Translator.cpp:
+
+        * tests/CodeSets/simple/client.cpp:
+        * tests/CodeSets/simple/server.cpp:
+
+        * tests/Collocation/Collocation_Tester.h:
+
+        * tests/DIOP/UDP_Client_i.h:
+        * tests/DIOP/UDP_i.h:
+        * tests/DIOP/client.cpp:
+        * tests/DIOP/server.cpp:
+
+        * tests/DSI_AMI_Gateway/test_dsi.h:
+        * tests/DSI_AMI_Gateway/test_i.h:
+
+        * tests/DSI_Gateway/test_dsi.h:
+        * tests/DSI_Gateway/test_i.h:
+
+        * tests/Explicit_Event_Loop/client.cpp:
+        * tests/Explicit_Event_Loop/server.h:
+        * tests/Explicit_Event_Loop/server.cpp:
+
+        * tests/Exposed_Policies/Counter_i.h:
+        * tests/Exposed_Policies/Policy_Tester.h:
+        * tests/Exposed_Policies/Policy_Verifier.h:
+        * tests/Exposed_Policies/RT_Properties.h:
+
+        * tests/FL_Cube/test_i.h:
+
+        * tests/Faults/ping_i.h:
+        * tests/Faults/test_i.h:
+
+        * tests/File_IO/File_i.h:
+        * tests/File_IO/File_i.cpp:
+        * tests/File_IO/client.cpp:
+
+        * tests/ForwardOnceUponException/test_i.h:
+
+        * tests/ForwardUponObjectNotExist/test_i.h:
+
+        * tests/Forwarding/test_i.h:
+
+        * tests/IDL_Test/main.cpp:
+
+        * tests/InterOp-Naming/INS_i.h:
+        * tests/InterOp-Naming/Server_i.h:
+
+        * tests/Leader_Followers/client.cpp:
+        * tests/Leader_Followers/test_i.h:
+
+        * tests/MProfile/test_i.h:
+
+        * tests/MProfile_Connection_Timeout/test_i.h:
+
+        * tests/MProfile_Forwarding/Servant_Locator.h:
+        * tests/MProfile_Forwarding/Servant_Locator.cpp:
+        * tests/MProfile_Forwarding/test_i.h:
+
+        * tests/MT_Client/test_i.h:
+
+        * tests/MT_Server/test_i.h:
+
+        * tests/Multiple/Collocation_Tester.h:
+        * tests/Multiple/Multiple_Impl.h:
+
+        * tests/Multiple_Inheritance/client.cpp:
+
+        * tests/Muxed_GIOP_Versions/test_i.h:
+
+        * tests/Native_Exceptions/test_i.h:
+
+        * tests/NestedUpcall/MT_Client_Test/MT_Object_i.h:
+        * tests/NestedUpcall/MT_Client_Test/MT_Object_i.cpp:
+        * tests/NestedUpcall/MT_Client_Test/client.h:
+        * tests/NestedUpcall/MT_Client_Test/client.cpp:
+        * tests/NestedUpcall/MT_Client_Test/local_server.h:
+        * tests/NestedUpcall/MT_Client_Test/local_server.cpp:
+        * tests/NestedUpcall/MT_Client_Test/server.h:
+        * tests/NestedUpcall/MT_Client_Test/server.cpp:
+
+        * tests/NestedUpcall/Triangle_Test/Initiator_i.h:
+        * tests/NestedUpcall/Triangle_Test/Initiator_i.cpp:
+        * tests/NestedUpcall/Triangle_Test/Object_A_i.h:
+        * tests/NestedUpcall/Triangle_Test/Object_A_i.cpp:
+        * tests/NestedUpcall/Triangle_Test/Object_B_i.h:
+        * tests/NestedUpcall/Triangle_Test/Object_B_i.cpp:
+        * tests/NestedUpcall/Triangle_Test/initiator.h:
+        * tests/NestedUpcall/Triangle_Test/initiator.cpp:
+        * tests/NestedUpcall/Triangle_Test/server_A.h:
+        * tests/NestedUpcall/Triangle_Test/server_A.cpp:
+        * tests/NestedUpcall/Triangle_Test/server_B.h:
+        * tests/NestedUpcall/Triangle_Test/server_B.cpp:
+
+        * tests/OBV/Any/AnyS_impl.h:
+
+        * tests/OBV/Collocated/Forward/Test_impl.h:
+
+        * tests/OBV/Factory/FactoryS_impl.h:
+
+        * tests/OBV/Forward/Test_impl.h:
+
+        * tests/OBV/Simple/Client_i.h:
+        * tests/OBV/Simple/Server_i.h:
+        * tests/OBV/Simple/Simple_util.h:
+
+        * tests/OBV/TC_Alignment/test_i.h:
+
+        * tests/OBV/Truncatable/TruncatableS_impl.h:
+
+        * tests/OBV/ValueBox/Test_impl.h:
+
+        * tests/ORB_destroy/ORB_destroy.cpp:
+
+        * tests/Object_Loader/Loader.h:
+        * tests/Object_Loader/Test_i.h:
+
+        * tests/OctetSeq/OctetSeq.cpp:
+        * tests/OctetSeq/test_i.h:
+
+        * tests/POA/Adapter_Activator/server.cpp:
+
+        * tests/POA/Bug_2511_Regression/server.cpp:
+
+        * tests/POA/Current/Current.cpp:
+
+        * tests/POA/DSI/client.cpp:
+        * tests/POA/DSI/server.cpp:
+
+        * tests/POA/Default_Servant/Default_Servant.cpp:
+
+        * tests/POA/Default_Servant2/File_i.h:
+        * tests/POA/Default_Servant2/File_i.cpp:
+        * tests/POA/Default_Servant2/client.cpp:
+        * tests/POA/Default_Servant2/server.cpp:
+
+        * tests/POA/Etherealization/Etherealization.cpp:
+
+        * tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.cpp:
+
+        * tests/POA/Explicit_Activation/server.cpp:
+
+        * tests/POA/FindPOA/FindPOA.cpp:
+
+        * tests/POA/Forwarding/Servant_Activator.h:
+        * tests/POA/Forwarding/client.cpp:
+        * tests/POA/Forwarding/server.cpp:
+        * tests/POA/Forwarding/test_i.h:
+
+        * tests/POA/Generic_Servant/test_i.h:
+
+        * tests/POA/Identity/Identity.cpp:
+
+        * tests/POA/Loader/Servant_Activator.h:
+        * tests/POA/Loader/Servant_Activator.cpp:
+        * tests/POA/Loader/Servant_Locator.h:
+        * tests/POA/Loader/Servant_Locator.cpp:
+        * tests/POA/Loader/Server_Manager.h:
+        * tests/POA/Loader/server.cpp:
+
+        * tests/POA/MT_Servant_Locator/MT_Servant_Locator.cpp:
+
+        * tests/POA/Nested_Non_Servant_Upcalls/Nested_Non_Servant_Upcalls.cpp:
+
+        * tests/POA/NewPOA/NewPOA.cpp:
+
+        * tests/POA/Non_Servant_Upcalls/Non_Servant_Upcalls.cpp:
+
+        * tests/POA/Object_Reactivation/Object_Reactivation.cpp:
+
+        * tests/POA/On_Demand_Activation/Servant_Activator.h:
+        * tests/POA/On_Demand_Activation/Servant_Activator.cpp:
+        * tests/POA/On_Demand_Activation/Servant_Locator.h:
+        * tests/POA/On_Demand_Activation/Servant_Locator.cpp:
+        * tests/POA/On_Demand_Activation/server.cpp:
+
+        * tests/POA/On_Demand_Loading/Servant_Activator.h:
+        * tests/POA/On_Demand_Loading/Servant_Activator.cpp:
+        * tests/POA/On_Demand_Loading/Servant_Locator.h:
+        * tests/POA/On_Demand_Loading/Servant_Locator.cpp:
+        * tests/POA/On_Demand_Loading/Servant_Manager.h:
+        * tests/POA/On_Demand_Loading/Servant_Manager.cpp:
+        * tests/POA/On_Demand_Loading/Server_Manager.h:
+        * tests/POA/On_Demand_Loading/server.cpp:
+
+        * tests/POA/POAManagerFactory/POAManagerFactory.cpp:
+
+        * tests/POA/POA_BiDir/POA_BiDir.cpp:
+
+        * tests/POA/POA_Destruction/POA_Destruction.cpp:
+
+        * tests/POA/Persistent_ID/client.cpp:
+        * tests/POA/Persistent_ID/server.cpp:
+
+        * tests/POA/Policies/Policies.cpp:
+
+        * tests/POA/Reference_Counted_Servant/server.cpp:
+
+        * tests/POA/RootPOA/RootPOA.cpp:
+
+        * tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp:
+
+        * tests/POA/TIE/client.cpp:
+        * tests/POA/TIE/server.cpp:
+        * tests/POA/TIE/test_i.h:
+        * tests/POA/TIE/test_i.cpp:
+
+        * tests/POA/wait_for_completion/wait_for_completion.cpp:
+
+        * tests/Param_Test/any.h:
+        * tests/Param_Test/any.cpp:
+        * tests/Param_Test/anyop.cpp:
+        * tests/Param_Test/bd_array_seq.h:
+        * tests/Param_Test/bd_array_seq.cpp:
+        * tests/Param_Test/bd_long_seq.h:
+        * tests/Param_Test/bd_long_seq.cpp:
+        * tests/Param_Test/bd_short_seq.h:
+        * tests/Param_Test/bd_short_seq.cpp:
+        * tests/Param_Test/bd_str_seq.h:
+        * tests/Param_Test/bd_str_seq.cpp:
+        * tests/Param_Test/bd_string.h:
+        * tests/Param_Test/bd_string.cpp:
+        * tests/Param_Test/bd_struct_seq.h:
+        * tests/Param_Test/bd_struct_seq.cpp:
+        * tests/Param_Test/bd_wstr_seq.h:
+        * tests/Param_Test/bd_wstr_seq.cpp:
+        * tests/Param_Test/bd_wstring.h:
+        * tests/Param_Test/bd_wstring.cpp:
+        * tests/Param_Test/big_union.h:
+        * tests/Param_Test/big_union.cpp:
+        * tests/Param_Test/client.h:
+        * tests/Param_Test/client.cpp:
+        * tests/Param_Test/complex_any.h:
+        * tests/Param_Test/complex_any.cpp:
+        * tests/Param_Test/driver.h:
+        * tests/Param_Test/driver.cpp:
+        * tests/Param_Test/except.h:
+        * tests/Param_Test/except.cpp:
+        * tests/Param_Test/fixed_array.h:
+        * tests/Param_Test/fixed_array.cpp:
+        * tests/Param_Test/fixed_struct.h:
+        * tests/Param_Test/fixed_struct.cpp:
+        * tests/Param_Test/helper.h:
+        * tests/Param_Test/helper.cpp:
+        * tests/Param_Test/multdim_array.h:
+        * tests/Param_Test/multdim_array.cpp:
+        * tests/Param_Test/nested_struct.h:
+        * tests/Param_Test/nested_struct.cpp:
+        * tests/Param_Test/objref.h:
+        * tests/Param_Test/objref.cpp:
+        * tests/Param_Test/objref_struct.h:
+        * tests/Param_Test/objref_struct.cpp:
+        * tests/Param_Test/options.h:
+        * tests/Param_Test/options.cpp:
+        * tests/Param_Test/param_test_i.h:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/recursive_struct.h:
+        * tests/Param_Test/recursive_struct.cpp:
+        * tests/Param_Test/recursive_union.h:
+        * tests/Param_Test/recursive_union.cpp:
+        * tests/Param_Test/results.h:
+        * tests/Param_Test/results.cpp:
+        * tests/Param_Test/server.cpp:
+        * tests/Param_Test/short.h:
+        * tests/Param_Test/short.cpp:
+        * tests/Param_Test/small_union.h:
+        * tests/Param_Test/small_union.cpp:
+        * tests/Param_Test/tests.h:
+        * tests/Param_Test/typecode.h:
+        * tests/Param_Test/typecode.cpp:
+        * tests/Param_Test/ub_any_seq.h:
+        * tests/Param_Test/ub_any_seq.cpp:
+        * tests/Param_Test/ub_array_seq.h:
+        * tests/Param_Test/ub_array_seq.cpp:
+        * tests/Param_Test/ub_long_seq.h:
+        * tests/Param_Test/ub_long_seq.cpp:
+        * tests/Param_Test/ub_objref_seq.h:
+        * tests/Param_Test/ub_objref_seq.cpp:
+        * tests/Param_Test/ub_short_seq.h:
+        * tests/Param_Test/ub_short_seq.cpp:
+        * tests/Param_Test/ub_str_seq.h:
+        * tests/Param_Test/ub_str_seq.cpp:
+        * tests/Param_Test/ub_string.h:
+        * tests/Param_Test/ub_string.cpp:
+        * tests/Param_Test/ub_struct_seq.h:
+        * tests/Param_Test/ub_struct_seq.cpp:
+        * tests/Param_Test/ub_wstr_seq.h:
+        * tests/Param_Test/ub_wstr_seq.cpp:
+        * tests/Param_Test/ub_wstring.h:
+        * tests/Param_Test/ub_wstring.cpp:
+        * tests/Param_Test/ulonglong.h:
+        * tests/Param_Test/ulonglong.cpp:
+        * tests/Param_Test/var_array.h:
+        * tests/Param_Test/var_array.cpp:
+        * tests/Param_Test/var_struct.h:
+        * tests/Param_Test/var_struct.cpp:
+
+        * tests/Portable_Interceptors/Benchmark/test_i.h:
+
+        * tests/Portable_Interceptors/Collocated/Dynamic/test_i.h:
+
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/test_i.h:
+
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/test_i.h:
+
+        * tests/QtTests/client.h:
+        * tests/QtTests/test_i.h:
+
+        * tests/RTCORBA/Diffserv/Custom_Network_Priority_Mapping.h:
+
+        * tests/RTCORBA/Policies/Policies.cpp:
+
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp:
+
+        * tests/Single_Read/test_i.h:
+
+        * tests/Smart_Proxies/Benchmark/client.cpp:
+        * tests/Smart_Proxies/Benchmark/server.cpp:
+
+        * tests/Smart_Proxies/On_Demand/client.cpp:
+        * tests/Smart_Proxies/On_Demand/server.cpp:
+
+        * tests/Smart_Proxies/Policy/client.cpp:
+        * tests/Smart_Proxies/Policy/server.cpp:
+
+        * tests/Smart_Proxies/client.cpp:
+        * tests/Smart_Proxies/server.cpp:
+
+        * tests/Strategies/simple_test_i.h:
+
+        * tests/Timed_Buffered_Oneways/client.cpp:
+        * tests/Timed_Buffered_Oneways/test_i.h:
+
+        * tests/Timeout/test_i.h:
+
+        * tests/Xt_Stopwatch/Client.h:
+        * tests/Xt_Stopwatch/Control.h:
+        * tests/Xt_Stopwatch/Stopwatch_display.h:
+        * tests/Xt_Stopwatch/test_i.h:
+        * tests/Xt_Stopwatch/timer.h:
+
+        * utils/catior/Catior_i.h:
+        * utils/catior/Catior_i.cpp:
+
+        * utils/nslist/nsadd.cpp:
+        * utils/nslist/nsdel.cpp:
+
 Fri Mar 25 15:32:09 UTC 2011  Adam Mitz  <mitza@ociweb.com>
 
         * DevGuideExamples/Messaging/AMIcallback/AMIcallback.mpc:

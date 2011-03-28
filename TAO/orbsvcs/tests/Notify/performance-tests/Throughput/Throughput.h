@@ -1,16 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = FILENAME
-//   Throughput.h
-//
-// = DESCRIPTION
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Throughput.h
+ *
+ *  $Id$
+ *
+ *  @brief 
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef NOTIFY_Throughput_H
 #define NOTIFY_Throughput_H
@@ -29,28 +29,29 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @class Worker
+ *
+ * @brief Run a server thread
+ *
+ * Use the ACE_Task_Base class to run server threads
+ */
 class Worker : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run a server thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run server threads
-  //
 public:
+  /// ctor
   Worker (void);
-  // ctor
 
   void orb (CORBA::ORB_ptr orb);
 
+  /// The thread entry point.
   virtual int svc (void);
-  // The thread entry point.
 
   int done_;
 
 private:
+  /// The orb
   CORBA::ORB_var orb_;
-  // The orb
 };
 
 /***************************************************************************/
@@ -61,34 +62,34 @@ class Throughput_StructuredPushConsumer
   : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
+  /// Contructor.
   Throughput_StructuredPushConsumer (Notify_Throughput *test_client);
-  // Contructor.
 
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
         const CosNotification::StructuredEvent & notification
       );
 
+  /// Accumulate the throughput statistics into <throughput>
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
-  // Accumulate the throughput statistics into <throughput>
 
+  /// Accumulate the throughput statistics into <throughput>
   void dump_stats (const ACE_TCHAR* msg, ACE_UINT32 gsf);
-  // Accumulate the throughput statistics into <throughput>
 
 protected:
   Notify_Throughput * test_client_;
 
+  /// Protect internal state
   TAO_SYNCH_MUTEX lock_;
-  // Protect internal state
 
+  /// The timestamp for the first message received
   ACE_hrtime_t throughput_start_;
-  // The timestamp for the first message received
 
+  /// Used for reporting stats
   ACE_Throughput_Stats throughput_;
-  // Used for reporting stats
 
+  /// The number of push() calls
   int push_count_;
-  // The number of push() calls
 };
 
 /***************************************************************************/
@@ -98,32 +99,32 @@ class Throughput_StructuredPushSupplier
     public ACE_Task_Base
 {
 public:
+  /// Constructor.
   Throughput_StructuredPushSupplier (Notify_Throughput * test_client);
-  // Constructor.
 
+  /// Destructor.
   virtual ~Throughput_StructuredPushSupplier ();
-  // Destructor.
 
   // = The ACE_Task_Base methods....
   virtual int svc (void);
 
+  /// Accumulate the throughput statistics into <throughput>
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
-  // Accumulate the throughput statistics into <throughput>
 
+  /// Accumulate the throughput statistics into <throughput>
   void dump_stats (const ACE_TCHAR* msg, ACE_UINT32 gsf);
-  // Accumulate the throughput statistics into <throughput>
 
 protected:
   Notify_Throughput* test_client_;
 
+  /// Count the number of push() calls
   int push_count_;
-  // Count the number of push() calls
 
+  /// The time for the first event sent
   ACE_hrtime_t throughput_start_;
-  // The time for the first event sent
 
+  /// Measure the elapsed time spent while sending the events.
   ACE_Throughput_Stats throughput_;
-  // Measure the elapsed time spent while sending the events.
 };
 
 /***************************************************************************/
@@ -137,79 +138,79 @@ public:
 
   int parse_args(int argc, ACE_TCHAR *argv[]) ;
 
+  /// initialization.
   int init (int argc, ACE_TCHAR *argv []);
-  // initialization.
 
+  /// Run the test.
   void run_test (void);
-  // Run the test.
 
+  /// Peers call this when done.
   void peer_done (void);
-  // Peers call this when done.
 
+  /// check if we got the expected results.
   void dump_results (void);
-  // check if we got the expected results.
 
   Worker worker_;
 protected:
+  /// Create participants.
   void create_EC (void);
-  // Create participants.
 
+  /// is the ec collocated.
   CORBA::Boolean collocated_ec_;
-  // is the ec collocated.
 
+  /// How many bursts we will send from each supplier.
   int burst_count_;
-  // How many bursts we will send from each supplier.
 
+  /// The time between each event burst, in microseconds.
   int burst_pause_;
-  // The time between each event burst, in microseconds.
 
+  /// Number of events to send per supplier in every burst
   int burst_size_;
-  // Number of events to send per supplier in every burst
 
+  /// data size to transmit.
   int payload_size_;
-  // data size to transmit.
 
+  /// the payload.
   char *payload_;
-  // the payload.
 
+  /// Consumer count
   int consumer_count_;
-  // Consumer count
 
+  /// Supplier count
   int supplier_count_;
-  // Supplier count
 
+  /// Number of events received that each consumer expects to see.
   int perconsumer_count_;
-  // Number of events received that each consumer expects to see.
 
+  /// The name of the EC to resolve.
   ACE_CString ec_name_;
-  // The name of the EC to resolve.
 
+  /// The one channel that we create using the factory.
   CosNotifyChannelAdmin::EventChannel_var ec_;
-  // The one channel that we create using the factory.
 
+  /// The consumer admin used by consumers.
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin_;
-  // The consumer admin used by consumers.
 
+  /// The supplier admin used by suppliers.
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
-  // The supplier admin used by suppliers.
 
+  /// Consumers
   Throughput_StructuredPushConsumer** consumers_;
-  // Consumers
 
+  /// Suppliers
   Throughput_StructuredPushSupplier** suppliers_;
-  // Suppliers
 
   int nthreads_;
 
   // = Helpers to signal done.
+  /// how many peers are done.
   int peer_done_count_;
-  // how many peers are done.
 
+  /// The lock to serialize access to members.
   TAO_SYNCH_MUTEX lock_;
-  // The lock to serialize access to members.
 
+  /// exit wait condition
   TAO_SYNCH_CONDITION condition_;
-  // exit wait condition
 private:
   friend class Throughput_StructuredPushSupplier;
   friend class Throughput_StructuredPushConsumer;

@@ -1,26 +1,29 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    alt_mapping_i.h
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    alt_mapping_i.h
+ *
+ *  $Id$
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef ALT_MAPPING_I_H
 #define ALT_MAPPING_I_H
 
 #include "alt_mappingS.h"
 
+/**
+ * @class Alt_Mapping_i
+ *
+ * @brief Alt_Mapping_i
+ *
+ * Implementation of the Alt_Mapping_i test suite.
+ */
 class Alt_Mapping_i : public POA_Alt_Mapping
 {
-  // = TITLE
-  //    Alt_Mapping_i
-  // = DESCRIPTION
-  //    Implementation of the Alt_Mapping_i test suite.
 public:
   Alt_Mapping_i (CORBA::ORB_ptr orb);
 

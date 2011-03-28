@@ -1,22 +1,18 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ===========================================================
-//
-//
-// = LIBRARY
-//    TAO/examples/Callback_Quoter
-//
-// = FILENAME
-//    Consumer_Input_Handler.h
-//
-// = DESCRIPTION
-//    Definition of the Callback_Qouter Consumer Client class, Consumer_Input_Handler.
-//
-// = AUTHOR
-//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  @file    Consumer_Input_Handler.h
+ *
+ *  $Id$
+ *
+ *  Definition of the Callback_Qouter Consumer Client class, Consumer_Input_Handler.
+ *
+ *
+ *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef CONSUMER_INPUT_HANDLER_H
 #define CONSUMER_INPUT_HANDLER_H
@@ -35,31 +31,33 @@
 
 class Consumer_Handler;
 
+/**
+ * @class Consumer_Input_Handler
+ *
+ * @brief Callback Quoter Consumer Client class.
+ *
+ * Connects to the Callback Quoter server and
+ * registers the Consumer object with the it
+ * and receives the stock status from the Notifier.
+ */
 class Consumer_Input_Handler : public ACE_Event_Handler
 {
-  // = TITLE
-  //    Callback Quoter Consumer Client class.
-  //
-  // = DESCRIPTION
-  //    Connects to the Callback Quoter server and
-  //    registers the Consumer object with the it
-  //    and receives the stock status from the Notifier.
 
 public:
+  /// Constructor.
   Consumer_Input_Handler (Consumer_Handler *consumer_handler);
-  // Constructor.
 
+  /// Handle the user input.
   int handle_input (ACE_HANDLE);
-  // Handle the user input.
 
+  /// Registration with the notifier.
   int register_consumer (void);
-  // Registration with the notifier.
 
+  /// Cancelling the registration with the notifier.
   int unregister_consumer (void);
-  // Cancelling the registration with the notifier.
 
+  /// Ends the consumer process.
   int quit_consumer_process (void);
-  // Ends the consumer process.
 
   enum
   {
@@ -85,12 +83,12 @@ public:
   };
 
 protected:
+  /// the destructor.
   ~Consumer_Input_Handler (void);
-  // the destructor.
 
 private:
+  /// The Consumer_Handler object.
   Consumer_Handler *consumer_handler_;
-  // The Consumer_Handler object.
 };
 
 #endif /* CONSUMER_INPUT_HANDLER_H */

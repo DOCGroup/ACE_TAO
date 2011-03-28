@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    bd_array_seq.cpp
-//
-// = DESCRIPTION
-//    tests bounded array sequences
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    bd_array_seq.cpp
+ *
+ *  $Id$
+ *
+ *  tests bounded array sequences
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "bd_array_seq.h"

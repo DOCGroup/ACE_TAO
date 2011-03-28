@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/AMI_Timeouts
-//
-// = FILENAME
-//    timeout_i.h
-//
-// = DESCRIPTION
-//    Implements the CORBA object.
-//
-// = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    timeout_i.h
+ *
+ *  $Id$
+ *
+ *  Implements the CORBA object.
+ *
+ *
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
 
 #ifndef TIMEOUT_I_H
 #define TIMEOUT_I_H

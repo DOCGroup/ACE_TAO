@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    interop_test/wchar
-//
-// = FILENAME
-//    client.cpp
-//
-// = DESCRIPTION
-//    C++ client side for testing interoperability with wchar data.
-//
-// = AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *  $Id$
+ *
+ *  C++ client side for testing interoperability with wchar data.
+ *
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "interop_wcharC.h"
 #include "wchar_reference.h"

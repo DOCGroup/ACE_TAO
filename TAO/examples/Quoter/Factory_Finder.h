@@ -1,17 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    FactoryFinder.h
-//
-// = DESCRIPTION
-//    Server for the Quoter Factory Finder
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    FactoryFinder.h
+ *
+ *  $Id$
+ *
+ *  Server for the Quoter Factory Finder
+ *
+ *
+ *  @author Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 
@@ -25,45 +25,48 @@
 #ifndef QUOTER_FACTORY_FINDER_H
 #define QUOTER_FACTORY_FINDER_H
 
+/**
+ * @class Quoter_Factory_Finder_Server
+ = TILE
+ * Server object for the Quoter Factory Finder
+ */
 class Quoter_Factory_Finder_Server
 {
-  // = TILE
-  //   Server object for the Quoter Factory Finder
 
 public:
+  /// Default constructor
   Quoter_Factory_Finder_Server (void);
-  // Default constructor
 
+  /// Destructor
   ~Quoter_Factory_Finder_Server (void);
-  // Destructor
 
+  /// Initialize the Quoter_Server state - parsing arguments and ...
   int init (int argc, ACE_TCHAR *argv[]);
-  // Initialize the Quoter_Server state - parsing arguments and ...
 
+  /// Run the orb
   int run (void);
-  // Run the orb
 
+  /// parse the passed parameters
   u_int parse_args (void);
-  // parse the passed parameters
 
 private:
+  /// instance of the ORB Manager
   TAO_ORB_Manager orb_manager_;
-  // instance of the ORB Manager
 
+  /// instance of the Quoter Factory Finder
   Quoter_Factory_Finder_i *quoter_Factory_Finder_i_ptr_;
-  // instance of the Quoter Factory Finder
 
+  /// reference to the Quoter naming context
   CosNaming::NamingContext_var quoterNamingContext_var_;
-  // reference to the Quoter naming context
 
+  /// Number of commandline arguments.
   int argc_;
-  // Number of commandline arguments.
 
+  /// commandline arguments.
   ACE_TCHAR **argv_;
-  // commandline arguments.
 
+  /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
   int debug_level_;
-  // debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
 };
 
 #endif /* QUOTER_FACTORY_FINDER_H */

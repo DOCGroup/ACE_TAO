@@ -1,21 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    Event_Sup.cpp
-//
-// = DESCRIPTION
-//   Event Supplier for the flight simulator
-//
-// = AUTHOR
-//    originally
-//    David Levine (levine@cs.wustl.edu) and
-//    Tim Harrison (harrison@cs.wustl.edu)
-//    modified
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Event_Sup.cpp
+ *
+ *  $Id$
+ *
+ * Event Supplier for the flight simulator
+ *
+ *
+ *  @author originally David Levine (levine@cs.wustl.edu) and Tim Harrison (harrison@cs.wustl.edu) modified Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "Event_Sup.h"
 #include "NavWeapC.h"

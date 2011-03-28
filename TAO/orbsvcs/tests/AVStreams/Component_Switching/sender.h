@@ -1,91 +1,98 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/tests/AVStreams/Component_Switching
-//
-// = FILENAME
-//    sender.h
-//
-// = DESCRIPTION
-//    This application reads data from a file and sends it to s
-//    receiver.
-//
-// = AUTHOR
-//    Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    sender.h
+ *
+ *  $Id$
+ *
+ *  This application reads data from a file and sends it to s
+ *  receiver.
+ *
+ *
+ *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Connection_Manager.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 
+/**
+ * @class Signal_Handler
+ TITLE
+ * This class Handles the SIGINT signal through the Reactor.
+ * Useful to gracefully release the process
+ */
 class Signal_Handler : public ACE_Event_Handler
 {
-  // TITLE
-  //   This class Handles the SIGINT signal through the Reactor.
-  //   Useful to gracefully release the process
 
 public:
 
   Signal_Handler (void);
 
+  /// Override this method to implement graceful shutdown.
   int handle_signal(int signum, siginfo_t*,ucontext_t*);
-  // Override this method to implement graceful shutdown.
 
 };
 
 
+/**
+ * @class Sender_Callback
+ *
+ * @brief Defines a class for the sender application callback.
+ *
+ * This class overides the methods of the TAO_AV_Callback so the
+ * AVStreams can make upcalls to the application.
+ */
 class Sender_Callback : public TAO_AV_Callback
 {
-  // = TITLE
-  //    Defines a class for the sender application callback.
-  //
-  // = DESCRIPTION
-  //    This class overides the methods of the TAO_AV_Callback so the
-  //    AVStreams can make upcalls to the application.
 
 public:
 
+  /**
+   */ Called when the sender has finished reading the file and wants
+   */ to close down the connection. Also called when the distributer
+   */ tears down the connection when it switches to a new sender.
+   */
   int handle_destroy (void);
-  /// Called when the sender has finished reading the file and wants
-  /// to close down the connection. Also called when the distributer
-  /// tears down the connection when it switches to a new sender.
 
+  //// Accessor methods for the flowname of the callback
   ACE_CString &flowname (void);
   void flowname (const ACE_CString &flowname);
-  /// Accessor methods for the flowname of the callback
 
 private:
+  //// Flowname of the callback.
   ACE_CString flowname_;
-  /// Flowname of the callback.
 };
 
+/**
+ * @class Sender_StreamEndPoint
+ *
+ * @brief Defines a sender stream endpoint.
+ */
 class Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
-  // = TITLE
-  //    Defines a sender stream endpoint.
 public:
+  //// Create the application callback and return its handle to
+  //// AVStreams for further application callbacks.
   int get_callback (const char *flowname,
                     TAO_AV_Callback *&callback);
-  /// Create the application callback and return its handle to
-  /// AVStreams for further application callbacks.
 
+  //// Set protocol object corresponding to the transport protocol
+  //// chosen.
   int set_protocol_object (const char *flowname,
                            TAO_AV_Protocol_Object *object);
-  /// Set protocol object corresponding to the transport protocol
-  /// chosen.
 
+  //// Perform application specific actions before accepting new
+  //// connections.
   CORBA::Boolean handle_preconnect (AVStreams::flowSpec &flowspec);
-  /// Perform application specific actions before accepting new
-  /// connections.
 
 protected:
+  //// Application callback.
   Sender_Callback callback_;
-  /// Application callback.
 };
 
 typedef TAO_AV_Endpoint_Reactive_Strategy_A
@@ -94,64 +101,66 @@ typedef TAO_AV_Endpoint_Reactive_Strategy_A
            AV_Null_MediaCtrl>
         SENDER_ENDPOINT_STRATEGY;
 
+/**
+ * @class Sender
+ *
+ * @brief Sender Application.
+ *
+ * Class is responsible for streaming (and pacing) data to a
+ * receiver.
+ */
 class Sender
 {
-  /// = TITLE
-  //    Sender Application.
-  //
-  // = DESCRIPTION
-  //    Class is responsible for streaming (and pacing) data to a
-  //    receiver.
 public:
+  //// Constructor
   Sender (void);
-  /// Constructor
 
+  //// Destructor
   ~Sender (void);
-  /// Destructor
 
   void shut_down (void);
 
+  //// Method to initialize the various data components.
   int init (int argc,
             ACE_TCHAR *argv[]);
-  /// Method to initialize the various data components.
 
+  //// Method to pace and send data from a file.
   int pace_data (void);
-  /// Method to pace and send data from a file.
 
+  //// Accessor to the connection manager.
   Connection_Manager &connection_manager (void);
-  /// Accessor to the connection manager.
 
 private:
+  //// Method to parse the command line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  /// Method to parse the command line arguments.
 
+  //// The endpoint strategy used by the sender.
   SENDER_ENDPOINT_STRATEGY endpoint_strategy_;
-  /// The endpoint strategy used by the sender.
 
+  //// The sender MMDevice.
   TAO_MMDevice *sender_mmdevice_;
-  /// The sender MMDevice.
 
+  //// Number of frames sent.
   int frame_count_;
-  /// Number of frames sent.
 
+  //// File from which data is read.
   ACE_CString filename_;
-  /// File from which data is read.
 
+  //// File handle of the file read from.
   FILE *input_file_;
-  /// File handle of the file read from.
 
+  //// Rate at which the data will be sent.
   double frame_rate_;
-  /// Rate at which the data will be sent.
 
+  //// Message block into which data is read from a file and then sent.
   ACE_Message_Block mb_;
-  /// Message block into which data is read from a file and then sent.
 
+  //// Name of this sender.
   ACE_CString sender_name_;
-  /// Name of this sender.
 
+  //// Connection manager.
   Connection_Manager connection_manager_;
-  /// Connection manager.
 
+  //// Reference to the signal handler.
   Signal_Handler signal_handler_;
-  /// Reference to the signal handler.
 };

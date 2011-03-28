@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpCalls/Triangle_Test
-//
-// = FILENAME
-//    Object_A_i.cpp
-//
-// = DESCRIPTION
-//    This class implements the Object A  of the
-//    Nested Upcalls - Triangle test.
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Object_A_i.cpp
+ *
+ *  $Id$
+ *
+ *  This class implements the Object A  of the
+ *  Nested Upcalls - Triangle test.
+ *
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #include "Object_A_i.h"
 #include "tao/ORB_Core.h"

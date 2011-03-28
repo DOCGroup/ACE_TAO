@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    unbounded_string.h
-//
-// = DESCRIPTION
-//     Tests unbounded string
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    unbounded_string.h
+ *
+ *  $Id$
+ *
+ *   Tests unbounded string
+ *
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef PARAM_TEST_UNBOUNDED_STRING_H
 #define PARAM_TEST_UNBOUNDED_STRING_H
@@ -27,51 +24,51 @@
 class Test_Unbounded_String
 {
 public:
+  /// ctor
   Test_Unbounded_String (void);
-  // ctor
 
+  /// dtor
   ~Test_Unbounded_String (void);
-  // dtor
 
+  /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
-  // run the SII test
 
+  /// return operation name
   const char *opname (void) const;
-  // return operation name
 
+  /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
-  // set values for parameters
 
+  /// reset values for CORBA
   int reset_parameters (void);
-  // reset values for CORBA
 
+  /// check if results are valid
   CORBA::Boolean check_validity (void);
-  // check if results are valid
 
+  /// check if results are valid. This is used for DII results
   CORBA::Boolean check_validity (CORBA::Request_ptr req);
-  // check if results are valid. This is used for DII results
 
+  /// print all the values
   void print_values (void);
-  // print all the values
 
+  /// invoke DII request with appropriate exception handling.
   void dii_req_invoke (CORBA::Request *);
-  // invoke DII request with appropriate exception handling.
 
 private:
+  /// operation name
   char *opname_;
-  // operation name
 
+  /// in parameter
   char *in_;
-  // in parameter
 
+  /// inout parameter
   char *inout_;
-  // inout parameter
 
+  /// out parameter
   char *out_;
-  // out parameter
 
+  /// return value
   char *ret_;
-  // return value
 };
 
 #endif /* PARAM_TEST_UNBOUNDED_STRING_H */

@@ -1,25 +1,21 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    NT_Notify_Server.cpp
-//
-//
-// = DESCRIPTION
-//    Driver program that runs the TAO Notification Service as a Windows NT
-//    Service.
-//
-// = AUTHORS
-//    John Tucker <jtucker@infoglide.com>,
-//    Mike Vitalo <mvitalo@infoglide.com>, and
-//    David Robison <drrobison@openroadsconsulting.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    NT_Notify_Server.cpp
+ *
+ *  $Id$
+ *
+ *  Driver program that runs the TAO Notification Service as a Windows NT
+ *  Service.
+ *
+ *
+ *  @author John Tucker <jtucker@infoglide.com>
+ *  @author Mike Vitalo <mvitalo@infoglide.com>
+ *  @author and David Robison <drrobison@openroadsconsulting.com>
+ */
+//=============================================================================
+
 
 #include "ace/Log_Msg.h"
 
@@ -47,10 +43,13 @@ ACE_TMAIN(int, ACE_TCHAR *[])
 // Default for the -i (install) option
 #define DEFAULT_SERVICE_INIT_STARTUP SERVICE_DEMAND_START
 
+/**
+ * @class Options
+ *
+ * @brief Keeps track of the command-line options for this program.
+ */
 class Options
 {
-  // = TITLE
-  //   Keeps track of the command-line options for this program.
 public:
   Options (void);
   ~Options (void);

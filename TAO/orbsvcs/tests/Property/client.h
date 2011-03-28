@@ -1,21 +1,18 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/tests/Property
-//
-// = FILENAME
-//    client.h
-//
-// = DESCRIPTION
-//    Test client for the Property Service.
-//
-// = AUTHORS
-//   Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.h
+ *
+ *  $Id$
+ *
+ *  Test client for the Property Service.
+ *
+ *
+ *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef PROPERTY_CLIENT_H
 #define PROPERTY_CLIENT_H
@@ -33,72 +30,74 @@
 #include "orbsvcs/Property/CosPropertyService_i.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 
+/**
+ * @class Client
+ *
+ * @brief Client for A/V Streams demo.
+ *
+ * Encapsulates client functionality.
+ */
 class Client
 {
-  // = TITLE
-  //    Client for A/V Streams demo.
-  //
-  // = DESCRIPTION
-  //    Encapsulates client functionality.
 public:
+  /// Constructor.
   Client (void);
-  // Constructor.
 
+  /// Initialize the ORB etc, and bind the MMDevices.
   int init (int argc,
             ACE_TCHAR **argv);
-  // Initialize the ORB etc, and bind the MMDevices.
 
+  /// Run the client.  This will call StreamCtrl::bind_devs.
   int run (void);
-  // Run the client.  This will call StreamCtrl::bind_devs.
 
+  /// Testing  the property service methods.
   int property_tester (void);
-  // Testing  the property service methods.
 
 protected:
+  /// Bind to the remote MMDevice.
   int bind_to_remote_mmdevice (int argc,
                                ACE_TCHAR *argv[]);
-  // Bind to the remote MMDevice.
 
   // = Property Testing.
 
+  /// Testing the define property method.
   int test_define_property (void);
-  // Testing the define property method.
 
+  /// Testing the number of properties, currently in the Property Set.
   int test_get_number_of_properties (void);
-  // Testing the number of properties, currently in the Property Set.
 
+  ///Testing get_all_property_names.
   int test_get_all_property_names (void);
-  //Testing get_all_property_names.
 
+  /// Testing get_property_value.
   int test_get_property_value (void);
-  // Testing get_property_value.
 
+  ///Testing get_properties.  Give the names and get their properties.
   int test_get_properties (void);
-  //Testing get_properties.  Give the names and get their properties.
 
+  /// Testing get_all_properties.
   int test_get_all_properties (void);
-  // Testing get_all_properties.
 
+  /// Testing delete_property.
   int test_delete_property (const char *property_name);
-  // Testing delete_property.
 
+  /// Testing delete_properties.
   int test_delete_properties (void);
-  // Testing delete_properties.
 
+  /// Defining a sequence of properties.
   int test_define_properties (void);
-  // Defining a sequence of properties.
 
+  /// Defines properties with various modes.
   int test_define_property_with_mode (void);
-  // Defines properties with various modes.
 
+  /// The ORB manager, handles ORB initialization etc.
   TAO_ORB_Manager manager_;
-  // The ORB manager, handles ORB initialization etc.
 
+  /// The Naming Client handles Naming Service work
   TAO_Naming_Client my_name_client_;
-  // The Naming Client handles Naming Service work
 
+  /// To test propertySetDef interface.
   CosPropertyService::PropertySetDef_var propsetdef_;
-  // To test propertySetDef interface.
 };
 
 #endif /* COSPROPERTYSERVICE_CLIENT_H */

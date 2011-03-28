@@ -1,22 +1,18 @@
-// $Id$
 
-// ================================================================
-//
-// = LIBRARY
-//    utils
-//
-// = FILENAME
-//    nsadd.cpp
-//
-// = DESCRIPTION
-//    Naming Service add utility
-//
-// = AUTHOR
-//     Carlos O'Ryan
-//     enhanced Nov 6, 2002 Paul Caffrey <denginere@hotmail.com>
-//     redone   Jun 21 2006 Simon Massey <sma@prismtech.com>
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file    nsadd.cpp
+ *
+ *  $Id$
+ *
+ *  Naming Service add utility
+ *
+ *
+ *  @author  Carlos O'Ryan  enhanced Nov 6
+ *  @author 2002 Paul Caffrey <denginere@hotmail.com>  redone   Jun 21 2006 Simon Massey <sma@prismtech.com>
+ */
+//=============================================================================
+
 
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Log_Msg.h"

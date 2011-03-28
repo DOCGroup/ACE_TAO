@@ -1,22 +1,19 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Char_IBM1047_ISO8859_Translator.cpp
-//
-// = DESCRIPTION
-//    Defines the arrays required to convert between ISO8859 (aka
-//    Latin/1) and IBM1047 (aka EBCDIC).
-//
-// = AUTHOR
-//    Jim Rogers (jrogers@viasoft.com)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Char_IBM1047_ISO8859_Translator.cpp
+ *
+ *  $Id$
+ *
+ *  Defines the arrays required to convert between ISO8859 (aka
+ *  Latin/1) and IBM1047 (aka EBCDIC).
+ *
+ *
+ *  @author Jim Rogers (jrogers@viasoft.com)
+ */
+//=============================================================================
+
 
 #include "Char_IBM1047_ISO8859_Translator.h"
 #include "ace/OS_Memory.h"

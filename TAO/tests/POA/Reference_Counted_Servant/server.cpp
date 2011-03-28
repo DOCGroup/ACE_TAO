@@ -1,23 +1,20 @@
-// $Id$
 
-// ================================================================
-//
-// = LIBRARY
-//    TAO/tests/POA/Reference_Counted_Servant
-//
-// = FILENAME
-//    server.cpp
-//
-// = DESCRIPTION
-//    This example shows how to use reference counted servants to
-//    automatically manage dynamic memory for servants.
-//    Stubs/Skeletons and client code is available in
-//    ../Generic_Servant.
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ *  This example shows how to use reference counted servants to
+ *  automatically manage dynamic memory for servants.
+ *  Stubs/Skeletons and client code is available in
+ *  ../Generic_Servant.
+ *
+ *
+ *  @author Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "test_i.h"
@@ -34,9 +31,9 @@ class reference_counted_test_i :
   public virtual test_i
 {
 public:
+  /// Constructor - takes a POA and a value parameter
   reference_counted_test_i (CORBA::ORB_ptr orb,
                             PortableServer::POA_ptr poa);
-  // Constructor - takes a POA and a value parameter
 };
 
 reference_counted_test_i::reference_counted_test_i (CORBA::ORB_ptr orb,

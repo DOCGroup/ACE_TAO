@@ -1,22 +1,19 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    WUCS4_UTF16.cpp
-//
-// = DESCRIPTION
-//    Defines the arrays required to convert between UCS-4 a 4 byte wide char
-//    codeset, and UCS-16, aka unicode, a 2-byte codeset.
-//
-// = AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    WUCS4_UTF16.cpp
+ *
+ *  $Id$
+ *
+ *  Defines the arrays required to convert between UCS-4 a 4 byte wide char
+ *  codeset, and UCS-16, aka unicode, a 2-byte codeset.
+ *
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "WUCS4_UTF16.h"
 #include "ace/OS_Memory.h"

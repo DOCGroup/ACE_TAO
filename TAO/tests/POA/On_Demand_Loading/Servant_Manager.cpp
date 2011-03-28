@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO/examples/POA/On_Demand_Loading
-//
-// = FILENAME
-//     Servant_Manager.cpp
-//
-// = DESCRIPTION
-//     Implementation of the helper class for the ServantActivator_i
-//     and the ServantLocator_i.
-//
-// = AUTHOR
-//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     Servant_Manager.cpp
+ *
+ *  $Id$
+ *
+ *   Implementation of the helper class for the ServantActivator_i
+ *   and the ServantLocator_i.
+ *
+ *
+ *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Servant_Manager.h"
 #include "tao/debug.h"

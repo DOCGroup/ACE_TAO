@@ -1,20 +1,17 @@
-//$Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Simple
-//
-// = FILENAME
-//    Simple_Util.h
-//
-// = DESCRIPTION
-//    The classe define the templates for the client and server.
-//
-// = AUTHOR
-//   Balachandran Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Simple_Util.h
+ *
+ *  $Id$
+ *
+ *  The classe define the templates for the client and server.
+ *
+ *
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_UTIL_H
 #define TAO_UTIL_H
@@ -25,108 +22,112 @@
 #include "ace/Read_Buffer.h"
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
 
+/**
+ * @class Server
+ *
+ * @brief A set of useful class Templates for using the TAO CORBA
+ * implementation.
+ *
+ * A template server definition. This template can be used by
+ * single server/client projects for defintion of their
+ * server/clients.  See the directories time, bank, echo for
+ * further details of implemenatation.
+ */
 template <class Servant>
 class Server
 {
-  // = TITLE
-  //   A set of useful class Templates for using the TAO CORBA
-  //   implementation.
-  //
-  // = DESCRIPTION
-  //   A template server definition. This template can be used by
-  //   single server/client projects for defintion of their
-  //   server/clients.  See the directories time, bank, echo for
-  //   further details of implemenatation.
 public:
   // = Initialization and termination methods.
 
+  /// Constructor.
   Server (void);
-  // Constructor.
 
+  /// Destructor.
   ~Server (void);
-  // Destructor.
 
+  /// Initialize the Server state - parsing arguments and waiting.
+  /// interface_name is the name used to register the Servant.
   int init (const char *servant_name,
             int argc,
             ACE_TCHAR *argv[]);
-  // Initialize the Server state - parsing arguments and waiting.
-  // interface_name is the name used to register the Servant.
 
+  /// After calling <init>, this method will register the server with
+  /// the TAO Naming Service using the name passed to this method.
   int register_name (const char *name);
-  // After calling <init>, this method will register the server with
-  // the TAO Naming Service using the name passed to this method.
 
+  /// Run the orb.
   int run (void);
-  // Run the orb.
 
+  /// Ignore this method if you are not testing the InterOperable
+  /// Naming Service.
   int test_for_ins (const char *ior);
-  // Ignore this method if you are not testing the InterOperable
-  // Naming Service.
 
 private:
+  /// Parses the commandline arguments.
   int parse_args (void);
-  // Parses the commandline arguments.
 
+  /// A holder of the servant that does ref counting for him.
   typedef TAO_Intrusive_Ref_Count_Handle<Servant> Servant_var;
   Servant_var servant_;
-  // A holder of the servant that does ref counting for him.
 
+  /// The ORB manager - a helper class for accessing the POA and
+  /// registering objects.
   TAO_ORB_Manager orb_manager_;
-  // The ORB manager - a helper class for accessing the POA and
-  // registering objects.
 
+  /// helper class for getting access to Naming Service.
   TAO_Naming_Client naming_client_;
-  // helper class for getting access to Naming Service.
 
+  /// File where the IOR of the server object is stored.
   ACE_TCHAR *ior_output_file_;
-  // File where the IOR of the server object is stored.
 
+  /// Flag to indicate whether naming service could be used
   int naming_;
-  // Flag to indicate whether naming service could be used
 
+  /// Used test the INS.
   ACE_TCHAR *ins_;
-  // Used test the INS.
 
+  /// Number of command line arguments.
   int argc_;
-  // Number of command line arguments.
 
+  /// The command line arguments.
   ACE_TCHAR **argv_;
-  // The command line arguments.
 };
 
+/**
+ * @class Client
+ *
+ * @brief Template Client class
+ *
+ * A template client implementation for a single server/client
+ * model. The example usage of these usage can be found in the
+ * sub-directories below
+ */
 template <class ServerInterface>
 class Client
 {
-  // = TITLE
-  //   Template Client class
-  //
-  // = DESCRIPTION
-  //   A template client implementation for a single server/client
-  //   model. The example usage of these usage can be found in the
-  //   sub-directories below
 public:
 
   // = Initialization and termination methods.
+  /// Constructor.
   Client (void);
-  // Constructor.
 
+  /// Destructor.
   ~Client (void);
-  // Destructor.
 
+  /// Initialize the client communication endpoint with server.
   int init (const char *name, int argc, ACE_TCHAR *argv[]);
-  // Initialize the client communication endpoint with server.
 
+  /// Return the interface object pointer.
   ServerInterface *operator-> () { return server_.in (); }
-  // Return the interface object pointer.
 
+  /// Returns the shutdown flag.
   int do_shutdown (void);
-  // Returns the shutdown flag.
 
+  /// Fills in the shutdwon flag.
   void do_shutdown (int);
-  // Fills in the shutdwon flag.
 
+  /// Initialize naming service
   int obtain_initial_references (const char *name);
-  // Initialize naming service
 
   CORBA::ORB_ptr orb (void)
     {
@@ -134,36 +135,36 @@ public:
     }
 
 private:
+  /// Function to read the server IOR from a file.
   int read_ior (ACE_TCHAR *filename);
-  // Function to read the server IOR from a file.
 
+  /// Parses the arguments passed on the command line.
   int parse_args (void);
-  // Parses the arguments passed on the command line.
 
+  /// Remember our orb.
   CORBA::ORB_var orb_;
-  // Remember our orb.
 
+  /// helper class for getting access to Naming Service.
   TAO_Naming_Client naming_client_;
-  // helper class for getting access to Naming Service.
 
+  /// # of arguments on the command line.
   int argc_;
-  // # of arguments on the command line.
 
+  /// arguments from command line.
   ACE_TCHAR **argv_;
-  // arguments from command line.
 
+  /// IOR of the obj ref of the server.
   ACE_CString ior_;
-  // IOR of the obj ref of the server.
 
+  /// Server object
   typedef TAO_Intrusive_Ref_Count_Handle<ServerInterface> ServerInterface_var;
   ServerInterface_var server_;
-  // Server object
 
+  /// Flag to use the naming service
   int naming_;
-  // Flag to use the naming service
 
+  /// Flag for shutting down the server
   int do_shutdown_;
-  // Flag for shutting down the server
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

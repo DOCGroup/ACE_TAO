@@ -1,19 +1,17 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/performance-tests/Demux
-//
-// = FILENAME
-//    server.cpp
-//
-//    Server-side driver program
-//
-// = AUTHOR
-//
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ *  @file    Server-side driver program
+ *
+ *  $Id$
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 
 #include "demux_test_server.h"

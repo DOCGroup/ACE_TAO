@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/MT_Server
-//
-// = FILENAME
-//   test_i.h
-//
-// = AUTHOR
-//   Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   test_i.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #ifndef TAO_MT_SERVER_TEST_I_H
 #define TAO_MT_SERVER_TEST_I_H
@@ -20,20 +17,21 @@
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "Task_Stats.h"
 
+/**
+ * @class Simple_Server_i
+ *
+ * @brief Simpler Server implementation
+ *
+ * Implements the Simple_Server interface in test.idl
+ */
 class Simple_Server_i : public POA_Simple_Server
 {
-  // = TITLE
-  //   Simpler Server implementation
-  //
-  // = DESCRIPTION
-  //   Implements the Simple_Server interface in test.idl
-  //
 public:
+  /// ctor
   Simple_Server_i (CORBA::ORB_ptr orb,
                    RTScheduling::Current_ptr current,
                    Task_Stats&,
                    int);
-  // ctor
 
   // = The Simple_Server methods.
   CORBA::Long test_method (CORBA::Long x);
@@ -41,11 +39,11 @@ public:
   void shutdown (void);
 
 private:
+  /// The ORB
   CORBA::ORB_var orb_;
   RTScheduling::Current_var current_;
   Task_Stats& task_stats_;
   int enable_yield_;
-  // The ORB
 };
 
 #if defined(__ACE_INLINE__)

@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/examples/AMI/FL_Callback
-//
-// = FILENAME
-//   Peer_i.h
-//
-// = AUTHOR
-//   Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Peer_i.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #ifndef PEER_I_H
 #define PEER_I_H
@@ -24,8 +21,8 @@ class Peer_i;
 class Peer_Handler_i : public POA_AMI_PeerHandler
 {
 public:
+  /// The peer
   Peer_Handler_i (Peer_i *peer);
-  // The peer
 
   virtual void request (CORBA::Long retval);
 
@@ -36,26 +33,26 @@ public:
   virtual void shutdown (void);
 
 private:
+  /// The real implementation
   Peer_i *peer_;
-  // The real implementation
 };
 
 class Peer_i : public POA_Peer
 {
 public:
+  /// Constructor
   Peer_i (void);
-  // Constructor
 
+  /// Destructor
   virtual ~Peer_i (void);
-  // Destructor
 
   void init (CORBA::ORB_ptr orb,
              Progress_ptr progress,
              const ACE_Time_Value &delay);
 
+  /// Used by the Reply_Handler to indicate that a reply has been
+  /// received.
   void reply (CORBA::Long result);
-  // Used by the Reply_Handler to indicate that a reply has been
-  // received.
 
    // = See test.idl for an explanation of these methods.
   CORBA::Long request (CORBA::Long id);
@@ -66,26 +63,29 @@ public:
   void shutdown (void);
 
 private:
+  /// The reply_handler
   Peer_Handler_i reply_handler_;
-  // The reply_handler
 
+  /// The orb
   CORBA::ORB_var orb_;
-  // The orb
 
+  /// The interface to report back progress.
   Progress_var progress_;
-  // The interface to report back progress.
 
+  /// The delay on each request
   ACE_Time_Value delay_;
-  // The delay on each request
 
+  /// The id assigned by the progress interface
   CORBA::Long id_;
-  // The id assigned by the progress interface
 };
 
+/**
+ * @class Peer_Task
+ *
+ * Run a "start" request on a separate thread.
+ */
 class Peer_Task : public ACE_Task_Base
 {
-  // = DESCRIPTION
-  //   Run a "start" request on a separate thread.
 public:
   Peer_Task (const PeerSet& the_peers,
              CORBA::Long iterations,
@@ -93,24 +93,24 @@ public:
              AMI_PeerHandler_ptr handler,
              CORBA::Long id);
 
+  /// The thread entry point
   virtual int svc (void);
-  // The thread entry point
 
 private:
+  /// The peers
   PeerSet the_peers_;
-  // The peers
 
+  /// The number of iterations
   CORBA::Long iterations_;
-  // The number of iterations
 
+  /// To report progress
   Progress_var progress_;
-  // To report progress
 
+  /// To issue async requests
   AMI_PeerHandler_var handler_;
-  // To issue async requests
 
+  /// Our id
   CORBA::Long id_;
-  // Our id
 };
 
 #endif /* PEER_I_H */

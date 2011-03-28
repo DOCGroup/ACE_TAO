@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO/tests/POA/On_Demand_Activation/Servant_Activator
-//
-// = FILENAME
-//     Servant_Activator.cpp
-//
-// = DESCRIPTION
-//     Implementation of ServantActivator, which is used by a POA with
-//     a RETAIN policy.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     Servant_Activator.cpp
+ *
+ *  $Id$
+ *
+ *   Implementation of ServantActivator, which is used by a POA with
+ *   a RETAIN policy.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "Servant_Activator.h"
 #include "test_i.h"

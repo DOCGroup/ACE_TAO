@@ -1,18 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel examples
-//
-// = FILENAME
-//   Consumer
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Consumer
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef CONSUMER_H
 #define CONSUMER_H
@@ -23,35 +19,36 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class Consumer
+ *
+ * @brief Simple consumer object
+ *
+ * This class is a consumer of events.
+ * It simply registers for one event type.
+ */
 class Consumer : public POA_RtecEventComm::PushConsumer
 {
-  // = TITLE
-  //   Simple consumer object
-  //
-  // = DESCRIPTION
-  //   This class is a consumer of events.
-  //   It simply registers for one event type.
-  //
 public:
+  /// Constructor
   Consumer (void);
-  // Constructor
 
+  /// Run the test
   int run (int argc, ACE_TCHAR* argv[]);
-  // Run the test
 
   // = The RtecEventComm::PushConsumer methods
 
+  /// The skeleton methods.
   virtual void push (const RtecEventComm::EventSet& events);
   virtual void disconnect_push_consumer (void);
-  // The skeleton methods.
 
 private:
+  /// Keep track of the number of events received.
   CORBA::ULong event_count_;
-  // Keep track of the number of events received.
 
+  /// The orb, just a pointer because the ORB does not outlive the
+  /// run() method...
   CORBA::ORB_ptr orb_;
-  // The orb, just a pointer because the ORB does not outlive the
-  // run() method...
 };
 
 #endif /* CONSUMER_H */

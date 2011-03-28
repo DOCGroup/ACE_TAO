@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Concurrency
-//
-// = FILENAME
-//    CC_tests.h
-//
-// = DESCRIPTION
-//      This class implements a number of test objects to test the
-//      concurrency service.
-//
-// = AUTHORS
-//    Torben Worm <tworm@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    CC_tests.h
+ *
+ *  $Id$
+ *
+ *    This class implements a number of test objects to test the
+ *    concurrency service.
+ *
+ *
+ *  @author Torben Worm <tworm@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "CC_tests.h"
 #include "ace/Log_Msg.h"

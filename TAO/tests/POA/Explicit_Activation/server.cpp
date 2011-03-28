@@ -1,20 +1,17 @@
-// $Id$
 
-// ================================================================
-//
-// = LIBRARY
-//    TAO/tests/POA/Explicit_Activation
-//
-// = FILENAME
-//    server.cpp
-//
-// = DESCRIPTION
-//    Explicit creation of servants.
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ *  Explicit creation of servants.
+ *
+ *
+ *  @author Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "ace/SString.h"

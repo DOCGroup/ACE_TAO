@@ -1,17 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    Generic_Factory.cpp
-//
-// = DESCRIPTION
-//    The server for the GenericFactory for the quoter example.
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Generic_Factory.cpp
+ *
+ *  $Id$
+ *
+ *  The server for the GenericFactory for the quoter example.
+ *
+ *
+ *  @author Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "Generic_Factory.h"
 

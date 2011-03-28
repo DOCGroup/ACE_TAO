@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/tests
-//
-// = FILENAME
-//    CC_test_utils.cpp
-//
-// = DESCRIPTION
-//      This class provides a namespace for utility functions for the
-//      concurrency service test.
-//
-// = AUTHORS
-//      Torben Worm <tworm@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    CC_test_utils.cpp
+ *
+ *  $Id$
+ *
+ *    This class provides a namespace for utility functions for the
+ *    concurrency service test.
+ *
+ *
+ *  @author   Torben Worm <tworm@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "CC_test_utils.h"
 #include "CC_naming_service.h"

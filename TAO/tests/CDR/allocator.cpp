@@ -1,25 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/CDR
-//
-// = FILENAME
-//    allocator.cpp
-//
-// = DESCRIPTION
-//   Compares the performance of a TSS allocator, with no locks, to
-//   the global allocator (with locks) even in the abscence of
-//   contention.
-//   The idea behind this test is to measure the predictability of
-//   each allocator, specially under the light of potential
-//   fragmentation in the main allocator.
-//
-// = AUTHORS
-//   Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    allocator.cpp
+ *
+ *  $Id$
+ *
+ * Compares the performance of a TSS allocator, with no locks, to
+ * the global allocator (with locks) even in the abscence of
+ * contention.
+ * The idea behind this test is to measure the predictability of
+ * each allocator, specially under the light of potential
+ * fragmentation in the main allocator.
+ *
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
@@ -29,37 +26,42 @@
 
 #define DEFAULT_BUFFER_SIZE 512
 
+/**
+ * @class Application_Simulator
+ *
+ * Tries to simulate the behavior of an application: it randomly
+ * acquires and releases memory, of variable sizes.
+ * The intention is to produce some level of fragmentation in main
+ * memory.
+ */
 class Application_Simulator
 {
-  // = DESCRIPTION
-  //   Tries to simulate the behavior of an application: it randomly
-  //   acquires and releases memory, of variable sizes.
-  //   The intention is to produce some level of fragmentation in main
-  //   memory.
 
 public:
+  /// Constructor, limits the amount of fragmentation and memory this
+  /// class takes.
   Application_Simulator (int max_fragments,
                     int max_fragment_size);
-  // Constructor, limits the amount of fragmentation and memory this
-  // class takes.
 
+  /// Destructor, releases any memory left behind.
   ~Application_Simulator (void);
-  // Destructor, releases any memory left behind.
 
+  /**
+   * Simulate an upcall. The class allocates some memory and then
+   * releases some memory too, the amount of memory allocated and the
+   * number of allocations is random.
+   */
   void upcall (unsigned int* seed);
-  // Simulate an upcall. The class allocates some memory and then
-  // releases some memory too, the amount of memory allocated and the
-  // number of allocations is random.
 
 private:
+  /// The allocated buffers.
   char** buffers_;
-  // The allocated buffers.
 
+  /// The size of the <buffers_> array.
   int max_fragments_;
-  // The size of the <buffers_> array.
 
+  /// The maximum size of any element of <buffers_>
   int max_fragment_size_;
-  // The maximum size of any element of <buffers_>
 };
 
 int

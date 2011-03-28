@@ -1,18 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel examples
-//
-// = FILENAME
-//   Supplier
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Supplier
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef SUPPLIER_H
 #define SUPPLIER_H
@@ -25,39 +21,40 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class Supplier
+ *
+ * @brief Simple supplier object
+ *
+ * This class is a supplier of events.
+ * It simply publishes one event type, when the perform_push()
+ * method is invoked it pushes the event through the event service
+ */
 class Supplier : public POA_RtecEventComm::PushSupplier
 {
-  // = TITLE
-  //   Simple supplier object
-  //
-  // = DESCRIPTION
-  //   This class is a supplier of events.
-  //   It simply publishes one event type, when the perform_push()
-  //   method is invoked it pushes the event through the event service
-  //
 public:
+  /// Constructor
   Supplier (bool valuetype);
-  // Constructor
 
+  /// Connect to the event channel
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
-  // Connect to the event channel
 
+  /// Disconnect from the event channel
   void disconnect (void);
-  // Disconnect from the event channel
 
+  /// Push a single event
   void perform_push (void);
-  // Push a single event
 
   // = The RtecEventComm::PushSupplier methods
 
+  /// The skeleton methods.
   virtual void disconnect_push_supplier (void);
-  // The skeleton methods.
 
 private:
   void insert_into_any (CORBA::Any& any, Components::EventBase* vb);
 
+  /// The proxy
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy_;
-  // The proxy
 
   bool valuetype_;
 
