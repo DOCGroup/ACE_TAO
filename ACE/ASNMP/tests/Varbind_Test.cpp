@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//    Varbind_Test.cpp
-//
-// = DESCRIPTION
-//  Test all the member functions of the Varbind class.
-//   A varbind is a list of { oids and associated values }
-//
-// = AUTHOR
-//    Michael R. MacFaden <mrm@cisco.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Varbind_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Test all the member functions of the Varbind class.
+ * A varbind is a list of { oids and associated values }
+ *
+ *
+ *  @author Michael R. MacFaden <mrm@cisco.com>
+ */
+//=============================================================================
+
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Copyright 1997 Cisco Systems, Inc.

@@ -1,19 +1,15 @@
 /* -*- c++ -*- */
-// Hey, Emacs!  This is a C++ file!
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   jaws
-//
-// = FILENAME
-//    IO.h
-//
-// = AUTHOR
-//    James Hu
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    IO.h
+ *
+ *  $Id$
+ *
+ *  @author James Hu
+ */
+//=============================================================================
+
 
 #ifndef JAWS_IO_HANDLER_H
 #define JAWS_IO_HANDLER_H
@@ -44,13 +40,14 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Message_Block;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
+/**
+ * @class JAWS_Abstract_IO_Handler
+ *
+ * @brief This class defines the abstract interface for an I/O handler
+ * class in the context of Web-likes servers
+ *
+ */
 class JAWS_Export JAWS_Abstract_IO_Handler
-  // = TITLE
-  //
-  //     This class defines the abstract interface for an I/O handler
-  //     class in the context of Web-likes servers
-  //
-  // = DESCRIPTION
 {
 public:
   virtual ~JAWS_Abstract_IO_Handler (void);
@@ -61,74 +58,74 @@ public:
   virtual void message_block (JAWS_Data_Block *mb) = 0;
   virtual JAWS_Data_Block *message_block (void) = 0;
 
+  /// This method is called by the IO class when new passive connection has
+  /// been established.
   virtual void accept_complete (ACE_HANDLE handle) = 0;
-  // This method is called by the IO class when new passive connection has
-  // been established.
 
+  /// This method is called by the IO class when new passive connection has
+  /// been established.
   virtual void accept_error (void) = 0;
-  // This method is called by the IO class when new passive connection has
-  // been established.
 
 #if 0
+  /// This method is called by the IO class when new active connection has
+  /// been established.
   virtual void connect_complete (ACE_Message_Block *) = 0;
-  // This method is called by the IO class when new active connection has
-  // been established.
 
+  /// This method is called by the IO class when new active connection has
+  /// been established.
   virtual void connect_error (ACE_Message_Block *) = 0;
-  // This method is called by the IO class when new active connection has
-  // been established.
 #endif
 
+  /// This method is called by the IO class when new client data shows
+  /// up.
   virtual void read_complete (ACE_Message_Block *data) = 0;
-  // This method is called by the IO class when new client data shows
-  // up.
 
+  /// This method is called by the IO class when there was an error in
+  /// reading new data from the client.
   virtual void read_error (void) = 0;
-  // This method is called by the IO class when there was an error in
-  // reading new data from the client.
 
+  /// This method is called by the IO class when the requested file has
+  /// been successfully transmitted to the client.
   virtual void transmit_file_complete (void) = 0;
-  // This method is called by the IO class when the requested file has
-  // been successfully transmitted to the client.
 
+  /// This method is called by the IO class when there was an error in
+  /// transmitting the requested file to the client.
   virtual void transmit_file_error (int result) = 0;
-  // This method is called by the IO class when there was an error in
-  // transmitting the requested file to the client.
 
+  /// This method is called by the IO class when the requested file has
+  /// been successfully received from the client.
   virtual void receive_file_complete (void) = 0;
-  // This method is called by the IO class when the requested file has
-  // been successfully received from the client.
 
+  /// This method is called by the IO class when there was an error in
+  /// receiving the requested file from the client.
   virtual void receive_file_error (int result) = 0;
-  // This method is called by the IO class when there was an error in
-  // receiving the requested file from the client.
 
+  /// This method is called by the IO class when there was an error in
+  /// writing data to the client.
   virtual void write_error (void) = 0;
-  // This method is called by the IO class when there was an error in
-  // writing data to the client.
 
+  /// This method is called by the IO class when the confirmation
+  /// message has been delivered to the client.
   virtual void confirmation_message_complete (void) = 0;
-  // This method is called by the IO class when the confirmation
-  // message has been delivered to the client.
 
+  /// This method is called by the IO class when the error message has
+  /// been delivered to the client.
   virtual void error_message_complete (void) = 0;
-  // This method is called by the IO class when the error message has
-  // been delivered to the client.
 
+  /// Returns the factory for this IO handler
   virtual JAWS_IO_Handler_Factory *factory (void) = 0;
-  // Returns the factory for this IO handler
 
+  /// Returns the socket handle for this handler
   virtual ACE_HANDLE handle (void) const = 0;
-  // Returns the socket handle for this handler
 
+  /// Cleans up the handler.
   virtual void done (void) = 0;
-  // Cleans up the handler.
 
+  /// Returns the status of the handler
   virtual int status (void) = 0;
-  // Returns the status of the handler
 
+  /// puts handler in an idle state
   virtual void idle (void) = 0;
-  // puts handler in an idle state
 
   enum { IDLE = 0, IDLE_A = 1,
          ACCEPT_OK = 2, ACCEPT_OK_A = 3,
@@ -140,8 +137,8 @@ public:
          TRANSMIT_OK = 14, TRANSMIT_OK_A = 15,
          TRANSMIT_ERROR = 16, TRANSMIT_ERROR_A = 17,
          RECEIVE_OK = 18, RECEIVE_OK_A = 19,
+  /// The different states of the handler
          RECEIVE_ERROR = 20, RECEIVE_ERROR_A = 21 };
-  // The different states of the handler
 
 };
 
@@ -156,34 +153,34 @@ public:
   JAWS_Asynch_Handler (void);
   virtual ~JAWS_Asynch_Handler (void);
 
+  /// This method will be called when an asynchronous read completes on
+  /// a stream.
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result
                                    &result);
-  // This method will be called when an asynchronous read completes on
-  // a stream.
 
+  /// This method will be called when an asynchronous write completes
+  /// on a stream.
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result
                                     &result);
-  // This method will be called when an asynchronous write completes
-  // on a stream.
 
+  /// This method will be called when an asynchronous transmit file
+  /// completes.
   virtual void handle_transmit_file (const ACE_Asynch_Transmit_File::Result
                                      &result);
-  // This method will be called when an asynchronous transmit file
-  // completes.
 
+  /// This method will be called when an asynchronous accept completes.
   virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
-  // This method will be called when an asynchronous accept completes.
 
   virtual void handler (JAWS_Asynch_IO_Handler *ioh);
   virtual JAWS_Asynch_IO_Handler * handler (void);
 
   virtual void dispatch_handler (void);
 
+  /// Call back entry point for ACE_Asynch_Acceptor
   virtual void open (ACE_HANDLE h, ACE_Message_Block &mb);
-  // Call back entry point for ACE_Asynch_Acceptor
 
+  /// Receives the ACT.
   virtual void act (const void *act_ref);
-  // Receives the ACT.
 
   //virtual ACE_HANDLE handle (void) const;
 
@@ -231,34 +228,34 @@ public:
   virtual JAWS_Data_Block *message_block (void);
 
 protected:
+  /// The state of the handler.
   int status_;
-  // The state of the handler.
 
+  /// This maintains the state of the request.
   JAWS_Data_Block *mb_;
-  // This maintains the state of the request.
 
+  /// The socket handle returned from accept.
   ACE_HANDLE handle_;
-  // The socket handle returned from accept.
 
+  /// This is a reference to the next stage of the pipeline when the IO
+  /// request completes.
   JAWS_Pipeline_Handler *task_;
-  // This is a reference to the next stage of the pipeline when the IO
-  // request completes.
 
+  /// The reference to the handler's factory.
   JAWS_IO_Handler_Factory *factory_;
-  // The reference to the handler's factory.
 };
 
 class JAWS_Export JAWS_IO_Handler_Factory
 {
 public:
+  /// Destructor
   virtual ~JAWS_IO_Handler_Factory (void);
-  // Destructor
 
+  /// This creates a new JAWS_IO_Handler
   virtual JAWS_IO_Handler *create_io_handler (void);
-  // This creates a new JAWS_IO_Handler
 
+  /// This deletes a JAWS_IO_Handler
   virtual void destroy_io_handler (JAWS_IO_Handler *handler);
-  // This deletes a JAWS_IO_Handler
 };
 
 typedef JAWS_IO_Handler JAWS_Synch_IO_Handler;
@@ -272,14 +269,14 @@ typedef ACE_Singleton<JAWS_Synch_IO_Handler_Factory, ACE_SYNCH_MUTEX>
 class JAWS_Export JAWS_Asynch_IO_Handler_Factory : public JAWS_IO_Handler_Factory
 {
 public:
+  /// Destructor
   virtual ~JAWS_Asynch_IO_Handler_Factory (void);
-  // Destructor
 
+  /// This creates a new JAWS_IO_Handler
   virtual JAWS_IO_Handler *create_io_handler (void);
-  // This creates a new JAWS_IO_Handler
 
+  /// This deletes a JAWS_IO_Handler
   virtual void destroy_io_handler (JAWS_IO_Handler *handler);
-  // This deletes a JAWS_IO_Handler
 };
 
 class JAWS_Export JAWS_Asynch_IO_Handler : public JAWS_IO_Handler

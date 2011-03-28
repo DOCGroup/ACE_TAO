@@ -1,26 +1,23 @@
-// $Id$
 
-//============================================================================
-//
-// = LIBRARY
-//    JAWS
-//
-// = FILENAME
-//    blobby.c
-//
-// = DESCRIPTION
-//     Simple client application to illustrate the use of the ACE_Blob class
-//
-//     It reads "length" number of bytes, after skipping offset "offset"
-//     from hostname, port and filename as specified. (if -r specified)
-//
-//     It writes "length" number of bytes, after skipping offset "offset"
-//     to hostname, port and filename as specified (if -w specified)
-//
-// = AUTHOR
-//    Prashant Jain and Sumedh Mungee
-//
-//============================================================================
+//=============================================================================
+/**
+ *  @file    blobby.c
+ *
+ *  $Id$
+ *
+ *   Simple client application to illustrate the use of the ACE_Blob class
+ *
+ *   It reads "length" number of bytes, after skipping offset "offset"
+ *   from hostname, port and filename as specified. (if -r specified)
+ *
+ *   It writes "length" number of bytes, after skipping offset "offset"
+ *   to hostname, port and filename as specified (if -w specified)
+ *
+ *
+ *  @author Prashant Jain and Sumedh Mungee
+ */
+//=============================================================================
+
 
 #include "Options.h"
 #include "ace/OS_main.h"

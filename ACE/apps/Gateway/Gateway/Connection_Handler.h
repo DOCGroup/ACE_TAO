@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    gateway
-//
-// = FILENAME
-//    Connection_Handler.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Connection_Handler.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _CONNECTION_HANDLER
 #define _CONNECTION_HANDLER
@@ -32,25 +29,27 @@
 // Forward declaration.
 class Event_Channel;
 
+/**
+ * @class Connection_Handler
+ *
+ * @brief <Connection_Handler> contains info about connection state and
+ * addressing.
+ *
+ * The <Connection_Handler> classes process events sent to the
+ * Event Channel from Suppliers and forward them to Consumers.
+ */
 class Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
 {
-  // = TITLE
-  //     <Connection_Handler> contains info about connection state and
-  //     addressing.
-  //
-  // = DESCRIPTION
-  //     The <Connection_Handler> classes process events sent to the
-  //     Event Channel from Suppliers and forward them to Consumers.
 public:
+  /// Default constructor (needed to make <ACE_Connector> happy).
   Connection_Handler (void);
-  // Default constructor (needed to make <ACE_Connector> happy).
 
+  /// Real constructor.
   Connection_Handler (const Connection_Config_Info &);
-  // Real constructor.
 
+  /// Initialize and activate a single-threaded <Connection_Handler>
+  /// (called by <ACE_Connector::handle_output>).
   virtual int open (void * = 0);
-  // Initialize and activate a single-threaded <Connection_Handler>
-  // (called by <ACE_Connector::handle_output>).
 
   // = The current state of the Connection_Handler.
   enum State
@@ -96,62 +95,64 @@ public:
   Event_Channel *event_channel (void) const;
 
   // = The total number of bytes sent/received on this proxy.
+  /// Increment count by <bytes>.
+  /// Return the current byte count.
   void total_bytes (size_t bytes);
-  // Increment count by <bytes>.
   size_t total_bytes (void) const;
-  // Return the current byte count.
 
+  /// Perform timer-based Connection_Handler reconnection.
   virtual int handle_timeout (const ACE_Time_Value &, const void *arg);
-  // Perform timer-based Connection_Handler reconnection.
 
+  /// Perform Connection_Handler termination.
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
-  // Perform Connection_Handler termination.
 
 protected:
+  /// Address of peer.
   ACE_INET_Addr remote_addr_;
-  // Address of peer.
 
+  /// Address of us.
   ACE_INET_Addr local_addr_;
-  // Address of us.
 
+  /// The assigned connection ID of this entry.
   CONNECTION_ID connection_id_;
-  // The assigned connection ID of this entry.
 
+  /// The total number of bytes sent/received on this proxy.
   size_t total_bytes_;
-  // The total number of bytes sent/received on this proxy.
 
+  /// The current state of the proxy.
   State state_;
-  // The current state of the proxy.
 
+  /// Amount of time to wait between reconnection attempts.
   long timeout_;
-  // Amount of time to wait between reconnection attempts.
 
+  /// Maximum amount of time to wait between reconnection attempts.
   long max_timeout_;
-  // Maximum amount of time to wait between reconnection attempts.
 
+  /// Indicates which role the proxy plays ('S' == Supplier and 'C' ==
+  /// Consumer).
   char connection_role_;
-  // Indicates which role the proxy plays ('S' == Supplier and 'C' ==
-  // Consumer).
 
+  /// Reference to the <Event_Channel> that we use to forward all
+  /// the events from Consumers and Suppliers.
   Event_Channel *event_channel_;
-  // Reference to the <Event_Channel> that we use to forward all
-  // the events from Consumers and Suppliers.
 };
 
+/**
+ * @class Connection_Handler_Factory
+ *
+ * @brief Creates the appropriate type of <Connection_Handler>.
+ *
+ * <Connection_Handler>s can include <Consumer_Handler>,
+ * <Supplier_Handler>, <Thr_Consumer_Handler>, or
+ * <Thr_Supplier_Handler>).
+ */
 class Connection_Handler_Factory
 {
-  // = TITLE
-  //     Creates the appropriate type of <Connection_Handler>.
-  //
-  // = DESCRIPTION
-  //     <Connection_Handler>s can include <Consumer_Handler>,
-  //     <Supplier_Handler>, <Thr_Consumer_Handler>, or
-  //     <Thr_Supplier_Handler>).
 public:
+  /// Make the appropriate type of <Connection_Handler>, based on the
+  /// <Connection_Config_Info> parameter.
   Connection_Handler *make_connection_handler (const Connection_Config_Info &);
-  // Make the appropriate type of <Connection_Handler>, based on the
-  // <Connection_Config_Info> parameter.
 };
 
 #endif /* _CONNECTION_HANDLER */

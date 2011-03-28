@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    gateway
-//
-// = FILENAME
-//    Config_Files.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Config_Files.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _CONFIG_FILES
 #define _CONFIG_FILES
@@ -23,76 +20,88 @@
 // Forward declaration.
 class Event_Channel;
 
+/**
+ * @class Connection_Config_Info
+ *
+ * @brief Stores connection configuration information.
+ */
 class Connection_Config_Info
-  // = TITLE
-  //     Stores connection configuration information.
 {
 public:
+  /// Connection id for this Connection_Handler.
   ACE_INT32 connection_id_;
-  // Connection id for this Connection_Handler.
 
+  /// Host to connect with.
   char host_[BUFSIZ];
-  // Host to connect with.
 
+  /// Port to connect with.
   u_short remote_port_;
-  // Port to connect with.
 
+  /// 'S' (supplier) or 'C' (consumer).
   char connection_role_;
-  // 'S' (supplier) or 'C' (consumer).
 
+  /// Maximum amount of time to wait for reconnecting.
   ACE_INT32 max_retry_timeout_;
-  // Maximum amount of time to wait for reconnecting.
 
+  /// Our local port number.
   u_short local_port_;
-  // Our local port number.
 
+  /// Priority by which different Consumers and Suppliers should be
+  /// serviced.
   ACE_INT32 priority_;
-  // Priority by which different Consumers and Suppliers should be
-  // serviced.
 
+  /// We just need a place to store this until we can pass it along
+  /// when creating a Connection_Handler.
   Event_Channel *event_channel_;
-  // We just need a place to store this until we can pass it along
-  // when creating a Connection_Handler.
 };
 
+/**
+ * @class Connection_Config_File_Parser
+ *
+ * @brief Parser for the Connection_Handler Connection file.
+ */
 class Connection_Config_File_Parser : public File_Parser<Connection_Config_Info>
-  // = TITLE
-  //     Parser for the Connection_Handler Connection file.
 {
 public:
+  /// Read in a <Connection_Config_Info> entry.
   virtual FPRT::Return_Type read_entry (Connection_Config_Info &entry,
                                         int &line_number);
-  // Read in a <Connection_Config_Info> entry.
 
 };
 
+/**
+ * @class Consumer_Config_Info
+ *
+ * @brief Stores the information in a Consumer Map entry.
+ */
 class Consumer_Config_Info
-  // = TITLE
-  //     Stores the information in a Consumer Map entry.
 {
 public:
+  /// Connection id.
   ACE_INT32 connection_id_;
-  // Connection id.
 
+  /// Message type.
   ACE_INT32 type_;
-  // Message type.
 
+  /// Connection ids for consumers that will be routed information
+  /// containing this <connection_id_>
   ACE_INT32 consumers_[MAX_CONSUMERS];
-  // Connection ids for consumers that will be routed information
-  // containing this <connection_id_>
 
+  /// Total number of these consumers.
   ACE_INT32 total_consumers_;
-  // Total number of these consumers.
 };
 
+/**
+ * @class Consumer_Config_File_Parser
+ *
+ * @brief Parser for the Consumer Map file.
+ */
 class Consumer_Config_File_Parser : public File_Parser<Consumer_Config_Info>
-  // = TITLE
-  //     Parser for the Consumer Map file.
 {
 public:
+  /// Read in a <Consumer_Config_Info> entry.
   virtual FPRT::Return_Type read_entry (Consumer_Config_Info &entry,
                                         int &line_number);
-  // Read in a <Consumer_Config_Info> entry.
 };
 
 #endif /* _CONFIG_FILES */

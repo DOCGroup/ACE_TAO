@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    gateway
-//
-// = FILENAME
-//    peerd.h
-//
-// = DESCRIPTION
-//    Driver for the peer daemon (peerd).  Note that this is
-//    completely generic code due to the Service Configurator
-//    framework!
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    peerd.h
+ *
+ *  $Id$
+ *
+ *  Driver for the peer daemon (peerd).  Note that this is
+ *  completely generic code due to the Service Configurator
+ *  framework!
+ *
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #include "ace/OS_NS_unistd.h"
 #include "Peer.h"

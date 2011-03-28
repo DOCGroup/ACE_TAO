@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    apps/JAWS/clients/Caching
-//
-// = FILENAME
-//    http_client.cpp
-//
-// = DESCRIPTION
-//    This is a very simple client.  It accepts URLs from a prompt, and
-//    will try to fetch them.  Also accepts shell escapes.
-//
-// = AUTHOR
-//    James Hu
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    http_client.cpp
+ *
+ *  $Id$
+ *
+ *  This is a very simple client.  It accepts URLs from a prompt, and
+ *  will try to fetch them.  Also accepts shell escapes.
+ *
+ *
+ *  @author James Hu
+ */
+//=============================================================================
+
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"

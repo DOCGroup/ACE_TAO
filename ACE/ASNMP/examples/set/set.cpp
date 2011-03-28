@@ -1,22 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//    set.cpp
-//
-// = DESCRIPTION
-//  Sample application demonstrating synchronous Snmp::set API
-//  to update an oid in an SNMP Version 1 agent.
-//
-// = AUTHOR
-//  Peter E. Mellquist original code
-//  Michael R MacFaden mrm@cisco.com rework API/ACE integration
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    set.cpp
+ *
+ *  $Id$
+ *
+ *  Sample application demonstrating synchronous Snmp::set API
+ *  to update an oid in an SNMP Version 1 agent.
+ *
+ *
+ */
+//=============================================================================
+
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company

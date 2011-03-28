@@ -1,15 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-// = FILENAME
-//    test_config.h
-//
-// = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu>, Tim Harrison
-//    <harrison@cs.wustl.edu>, and David Levine <levine@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_config.h
+ *
+ *  $Id$
+ *
+ *  @author Prashant Jain <pjain@cs.wustl.edu>
+ *  @author Tim Harrison <harrison@cs.wustl.edu>
+ *  @author and David Levine <levine@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_TEST_CONFIG_H
 #define ACE_TEST_CONFIG_H

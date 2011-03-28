@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    gateway
-//
-// = FILENAME
-//    Event.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Event.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef EVENT_H
 #define EVENT_H
@@ -70,17 +67,19 @@ enum
   // A subscription to <Suppliers> managed by the <Event_Channel>.
 };
 
+/**
+ * @class Event_Key
+ *
+ * @brief Address used to identify the source/destination of an event.
+ *
+ * This is really a "processing descriptor" that is used to
+ * decouple the processing, filtering, and forwarding logic of
+ * the Event Channel from the format of the data.  The
+ * <connection_id_> and <type_> fields are copied from the
+ * <Event_Header> class below.
+ */
 class Event_Key
 {
-  // = TITLE
-  //     Address used to identify the source/destination of an event.
-  //
-  // = DESCRIPTION
-  //     This is really a "processing descriptor" that is used to
-  //     decouple the processing, filtering, and forwarding logic of
-  //     the Event Channel from the format of the data.  The
-  //     <connection_id_> and <type_> fields are copied from the
-  //     <Event_Header> class below.
 public:
   Event_Key (CONNECTION_ID cid = -1,
              ACE_INT32 type = 0,
@@ -97,25 +96,27 @@ public:
       && this->type_ == event_addr.type_;
   }
 
+  /// Unique connection identifier that denotes a particular
+  /// Connection_Handler.
   CONNECTION_ID connection_id_;
-  // Unique connection identifier that denotes a particular
-  // Connection_Handler.
 
+  /// Event type, e.g., <ROUTING_EVENT> or <SUBSCRIPTION_EVENT>.
   ACE_INT32 type_;
-  // Event type, e.g., <ROUTING_EVENT> or <SUBSCRIPTION_EVENT>.
 
+  /// Event priority.
   ACE_INT32 priority_;
-  // Event priority.
 };
 
+/**
+ * @class Event_Header
+ *
+ * @brief Fixed sized header.
+ *
+ * This is designed to have a sizeof (16) to avoid alignment
+ * problems on most platforms.
+ */
 class Event_Header
 {
-  // = TITLE
-  //     Fixed sized header.
-  //
-  // = DESCRIPTION
-  //     This is designed to have a sizeof (16) to avoid alignment
-  //     problems on most platforms.
 public:
   enum
   {
@@ -151,43 +152,49 @@ public:
   }
   // Encode from host byte order to network byte order.
 
+  /// Length of the data_ payload, in bytes.
   ACE_INT32 len_;
-  // Length of the data_ payload, in bytes.
 
+  /// Unique connection identifier that denotes a particular
+  /// Connection_Handler.
   CONNECTION_ID connection_id_;
-  // Unique connection identifier that denotes a particular
-  // Connection_Handler.
 
+  /// Event type, e.g., <ROUTING_EVENT> or <SUBSCRIPTION_EVENT>.
   ACE_INT32 type_;
-  // Event type, e.g., <ROUTING_EVENT> or <SUBSCRIPTION_EVENT>.
 
+  /// Event priority.
   ACE_INT32 priority_;
-  // Event priority.
 };
 
+/**
+ * @class Event
+ *
+ * @brief Variable-sized event (data_ may be variable-sized between
+ * 0 and MAX_PAYLOAD_SIZE).
+ */
 class Event
 {
-  // = TITLE
-  //    Variable-sized event (data_ may be variable-sized between
-  //    0 and MAX_PAYLOAD_SIZE).
 public:
+  /// The maximum size of an Event.
   enum { MAX_PAYLOAD_SIZE = 1024 };
-  // The maximum size of an Event.
 
   Event () : header_ (0, -1, 0, 0) {};
 
+  /// Event header.
   Event_Header header_;
-  // Event header.
 
+  /// Event data.
   char data_[MAX_PAYLOAD_SIZE];
-  // Event data.
 };
 
+/**
+ * @class Subscription
+ *
+ * @brief Allows Consumers to subscribe to be routed information
+ * arriving from a particular Supplier connection id.
+ */
 class Subscription
 {
-  // = TITLE
-  //     Allows Consumers to subscribe to be routed information
-  //     arriving from a particular Supplier connection id.
 public:
   void decode (void)
     {
@@ -211,15 +218,15 @@ public:
     }
   // Encode from host byte order to network byte order.
 
+  /// Connection id.
   ACE_INT32 connection_id_;
-  // Connection id.
 
+  /// Connection ids for consumers that will be routed information
+  /// containing this <connection_id_>
   ACE_INT32 consumers_[MAX_CONSUMERS];
-  // Connection ids for consumers that will be routed information
-  // containing this <connection_id_>
 
+  /// Total number of these consumers.
   ACE_INT32 total_consumers_;
-  // Total number of these consumers.
 };
 
 #endif /* EVENT_H */
