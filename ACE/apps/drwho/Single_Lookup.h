@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    drwho
-//
-// = FILENAME
-//    Single_Lookup.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Single_Lookup.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _SINGLE_LOOKUP_H
 #define _SINGLE_LOOKUP_H
@@ -20,10 +17,13 @@
 #include "Options.h"
 #include "Search_Struct.h"
 
+/**
+ * @class Single_Lookup
+ *
+ * Provides the client's single user lookup table abstraction.
+ */
 class Single_Lookup : public Search_Struct
 {
-  // = DESCRIPTION
-  //   Provides the client's single user lookup table abstraction.
 public:
   Single_Lookup (const char *usr_name);
   virtual ~Single_Lookup (void);

@@ -1,28 +1,28 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    drwho
-//
-// = FILENAME
-//    Protocol_Record.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Protocol_Record.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _PROTOCOL_RECORD_H
 #define _PROTOCOL_RECORD_H
 
 #include "Drwho_Node.h"
 
+/**
+ * @class Protocol_Record
+ *
+ * @brief Stores information about a single friend's status.
+ */
 class Protocol_Record
 {
-  // = TITLE
-  //   Stores information about a single friend's status.
 
 public:
   Protocol_Record (void);

@@ -1,21 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//    snmp.cpp
-//
-// = DESCRIPTION
-//   The basic SNMPv1 API - blocking version using UDP/IPv4 transport
-//   and addressing.
-//
-// = AUTHOR
-//   Peter E Mellquist class design/orig code
-//   Michael R MacFaden  mrm@cisco.com / rework API, use ACE facilities
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    snmp.cpp
+ *
+ *  $Id$
+ *
+ * The basic SNMPv1 API - blocking version using UDP/IPv4 transport
+ * and addressing.
+ *
+ *
+ *  @author Peter E Mellquist class design/orig codeMichael R MacFaden  mrm@cisco.com / rework API
+ *  @author use ACE facilities
+ */
+//=============================================================================
+
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company

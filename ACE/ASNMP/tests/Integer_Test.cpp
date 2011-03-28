@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Integer_Test.cpp
-//
-// = DESCRIPTION
-//  Test all the member functions of the Integer class. An Object
-//  representing an ASN.1 Integer64 SMI 32 bit Integer SYNTAX.
-//
-// = AUTHOR
-//    Michael R. MacFaden <mrm@cisco.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Integer_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Test all the member functions of the Integer class. An Object
+ *  representing an ASN.1 Integer64 SMI 32 bit Integer SYNTAX.
+ *
+ *
+ *  @author Michael R. MacFaden <mrm@cisco.com>
+ */
+//=============================================================================
+
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Copyright 1997 Cisco Systems, Inc.
 

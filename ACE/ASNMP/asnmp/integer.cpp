@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//     integer.cpp
-//
-// = DESCRIPTION
-//   Class implemtation for SMI Integer classes.
-//
-// = AUTHOR
-//   Jeff Meyer
-//   Michael R MacFaden  mrm@cisco.com - rework & ACE port
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     integer.cpp
+ *
+ *  $Id$
+ *
+ * Class implemtation for SMI Integer classes.
+ *
+ *
+ *  @author Jeff MeyerMichael R MacFaden  mrm@cisco.com - rework & ACE port
+ */
+//=============================================================================
+
 /*===================================================================
 
   Copyright (c) 1996

@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Counter_Test.cpp
-//
-// = DESCRIPTION
-//  Test all the member functions of the Counter class. An Object
-//  representing an ASN.1 Counter SMI COUNTER SYNTAX.
-// = AUTHOR
-//    Michael R. MacFaden <mrm@cisco.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Counter_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Test all the member functions of the Counter class. An Object
+ *  representing an ASN.1 Counter SMI COUNTER SYNTAX.
+ *
+ *  @author Michael R. MacFaden <mrm@cisco.com>
+ */
+//=============================================================================
+
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Copyright 1997 Cisco Systems, Inc.
 

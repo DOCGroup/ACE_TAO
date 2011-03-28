@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    collection.cpp
-//
-// = DESCRIPTION
-//     Shows how applications can use the ACE_Token_Collection
-//     utility.  This example creates three collections and spawns a
-//     thread to operate on each.  The threads use the collective
-//     acquire, renew, and release features of ACE_Token_Collection.
-//
-// = AUTHOR
-//    Tim Harrison
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    collection.cpp
+ *
+ *  $Id$
+ *
+ *   Shows how applications can use the ACE_Token_Collection
+ *   utility.  This example creates three collections and spawns a
+ *   thread to operate on each.  The threads use the collective
+ *   acquire, renew, and release features of ACE_Token_Collection.
+ *
+ *
+ *  @author Tim Harrison
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "ace/Local_Tokens.h"

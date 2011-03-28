@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Octet_Test.cpp
-//
-// = DESCRIPTION
-//  Test all the member functions of the OCTET class. An Object
-//  representing an ASN.1 Integer64 SMI OCTET STRING SYNTAX.
-//
-// = AUTHOR
-//    Michael R. MacFaden <mrm@cisco.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Octet_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Test all the member functions of the OCTET class. An Object
+ *  representing an ASN.1 Integer64 SMI OCTET STRING SYNTAX.
+ *
+ *
+ *  @author Michael R. MacFaden <mrm@cisco.com>
+ */
+//=============================================================================
+
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Copyright 1997 Cisco Systems, Inc.

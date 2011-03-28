@@ -1,22 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//    trap.cpp
-//
-// = DESCRIPTION
-//  Sample application demonstrating synchronous Snmp::trap API
-//  to send to an SNMP Version 1 trap listener app.
-//
-// = AUTHOR
-//  Peter E. Mellquist original code
-//  Michael R MacFaden mrm@cisco.com rework OO, API/ACE integration
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    trap.cpp
+ *
+ *  $Id$
+ *
+ *  Sample application demonstrating synchronous Snmp::trap API
+ *  to send to an SNMP Version 1 trap listener app.
+ *
+ *
+ */
+//=============================================================================
+
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company

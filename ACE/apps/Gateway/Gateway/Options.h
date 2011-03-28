@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    gateway
-//
-// = FILENAME
-//    Options.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Options.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef OPTIONS_H
 #define OPTIONS_H
@@ -28,10 +25,13 @@
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Synch_Traits.h"
 
+/**
+ * @class Options
+ *
+ * @brief Singleton that consolidates all Options for a gatewayd.
+ */
 class ACE_Svc_Export Options
 {
-  // = TITLE
-  //     Singleton that consolidates all Options for a gatewayd.
 public:
   // = Options that can be enabled/disabled.
   enum
@@ -50,76 +50,84 @@ public:
     CONSUMER_CONNECTOR = 040
   };
 
+  /// Return Singleton.
   static Options *instance (void);
-  // Return Singleton.
 
+  /// Termination.
   ~Options (void);
-  // Termination.
 
+  /// Parse the arguments and set the options.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse the arguments and set the options.
 
+  /**
+   * Print the gateway supported parameters.
+   * = Accessor methods.
+   * Determine if an option is enabled.
+   */
   void print_usage(void);
-  // Print the gateway supported parameters.
-  // = Accessor methods.
   int enabled (int option) const;
-  // Determine if an option is enabled.
 
+  /**
+   * Gets the locking strategy used for serializing access to the
+   * reference count in <ACE_Message_Block>.  If it's 0, then there's
+   * no locking strategy and we're using a REACTIVE concurrency
+   * strategy.
+   */
   ACE_Lock_Adapter<ACE_SYNCH_MUTEX> *locking_strategy (void) const;
-  // Gets the locking strategy used for serializing access to the
-  // reference count in <ACE_Message_Block>.  If it's 0, then there's
-  // no locking strategy and we're using a REACTIVE concurrency
-  // strategy.
 
+  /// Set the locking strategy used for serializing access to the
+  /// reference count in <ACE_Message_Block>.
   void locking_strategy (ACE_Lock_Adapter<ACE_SYNCH_MUTEX> *);
-  // Set the locking strategy used for serializing access to the
-  // reference count in <ACE_Message_Block>.
 
+  /// Number of seconds after connection establishment to report
+  /// throughput.
   long performance_window (void) const;
-  // Number of seconds after connection establishment to report
-  // throughput.
 
+  /// 0 == blocking connects, ACE_NONBLOCK == non-blocking connects.
   int blocking_semantics (void) const;
-  // 0 == blocking connects, ACE_NONBLOCK == non-blocking connects.
 
+  /// Size of the socket queue (0 means "use default").
   int socket_queue_size (void) const;
-  // Size of the socket queue (0 means "use default").
 
+  /// i.e., REACTIVE, OUTPUT_MT, and/or INPUT_MT.
   u_long threading_strategy (void) const;
-  // i.e., REACTIVE, OUTPUT_MT, and/or INPUT_MT.
 
+  /**
+   * Our acceptor port number, i.e., the one that we passively listen
+   * on for connections to arrive from a gatewayd and create a
+   * Supplier.
+   */
   u_short supplier_acceptor_port (void) const;
-  // Our acceptor port number, i.e., the one that we passively listen
-  // on for connections to arrive from a gatewayd and create a
-  // Supplier.
 
+  /**
+   * Our acceptor port number, i.e., the one that we passively listen
+   * on for connections to arrive from a gatewayd and create a
+   * Consumer.
+   */
   u_short consumer_acceptor_port (void) const;
-  // Our acceptor port number, i.e., the one that we passively listen
-  // on for connections to arrive from a gatewayd and create a
-  // Consumer.
 
+  /// The connector port number, i.e., the one that we use to actively
+  /// establish connections with a gatewayd and create a Supplier.
   u_short supplier_connector_port (void) const;
-  // The connector port number, i.e., the one that we use to actively
-  // establish connections with a gatewayd and create a Supplier.
 
+  /// The connector port number, i.e., the one that we use to actively
+  /// establish connections with a gatewayd and create a Consumer.
   u_short consumer_connector_port (void) const;
-  // The connector port number, i.e., the one that we use to actively
-  // establish connections with a gatewayd and create a Consumer.
 
+  /// Name of the connection configuration file.
   const ACE_TCHAR *connection_config_file (void) const;
-  // Name of the connection configuration file.
 
+  /// Name of the consumer map configuration file.
   const ACE_TCHAR *consumer_config_file (void) const;
-  // Name of the consumer map configuration file.
 
+  /// The maximum retry timeout delay.
   long max_timeout (void) const;
-  // The maximum retry timeout delay.
 
+  /// The maximum size of the queue.
   long max_queue_size (void) const;
-  // The maximum size of the queue.
 
+  /// Returns a reference to the next available connection id;
   CONNECTION_ID &connection_id (void);
-  // Returns a reference to the next available connection id;
 
 private:
   enum
@@ -131,66 +139,72 @@ private:
     // The maximum timeout for trying to re-establish connections.
   };
 
+  /// Initialization.
   Options (void);
-  // Initialization.
 
+  /// Options Singleton instance.
   static Options *instance_;
-  // Options Singleton instance.
 
+  /**
+   * Points to the locking strategy used for serializing access to the
+   * reference count in <ACE_Message_Block>.  If it's 0, then there's
+   * no locking strategy and we're using a REACTIVE concurrency
+   * strategy.
+   */
   ACE_Lock_Adapter<ACE_SYNCH_MUTEX> *locking_strategy_;
-  // Points to the locking strategy used for serializing access to the
-  // reference count in <ACE_Message_Block>.  If it's 0, then there's
-  // no locking strategy and we're using a REACTIVE concurrency
-  // strategy.
 
+  /// Number of seconds after connection establishment to report
+  /// throughput.
   long performance_window_;
-  // Number of seconds after connection establishment to report
-  // throughput.
 
+  /// 0 == blocking connects, ACE_NONBLOCK == non-blocking connects.
   int blocking_semantics_;
-  // 0 == blocking connects, ACE_NONBLOCK == non-blocking connects.
 
+  /// Size of the socket queue (0 means "use default").
   int socket_queue_size_;
-  // Size of the socket queue (0 means "use default").
 
+  /// i.e., REACTIVE, OUTPUT_MT, and/or INPUT_MT.
   u_long threading_strategy_;
-  // i.e., REACTIVE, OUTPUT_MT, and/or INPUT_MT.
 
+  /// Flag to indicate if we want verbose diagnostics.
   u_long options_;
-  // Flag to indicate if we want verbose diagnostics.
 
+  /**
+   * The acceptor port number, i.e., the one that we passively listen
+   * on for connections to arrive from a gatewayd and create a
+   * Supplier.
+   */
   u_short supplier_acceptor_port_;
-  // The acceptor port number, i.e., the one that we passively listen
-  // on for connections to arrive from a gatewayd and create a
-  // Supplier.
 
+  /**
+   * The acceptor port number, i.e., the one that we passively listen
+   * on for connections to arrive from a gatewayd and create a
+   * Consumer.
+   */
   u_short consumer_acceptor_port_;
-  // The acceptor port number, i.e., the one that we passively listen
-  // on for connections to arrive from a gatewayd and create a
-  // Consumer.
 
+  /// The connector port number, i.e., the one that we use to actively
+  /// establish connections with a gatewayd and create a Supplier.
   u_short supplier_connector_port_;
-  // The connector port number, i.e., the one that we use to actively
-  // establish connections with a gatewayd and create a Supplier.
 
+  /// The connector port number, i.e., the one that we use to actively
+  /// establish connections with a gatewayd and create a Consumer.
   u_short consumer_connector_port_;
-  // The connector port number, i.e., the one that we use to actively
-  // establish connections with a gatewayd and create a Consumer.
 
+  /// The maximum retry timeout delay.
   long max_timeout_;
-  // The maximum retry timeout delay.
 
+  /// The maximum size of the queue.
   long max_queue_size_;
-  // The maximum size of the queue.
 
+  /// The next available connection id.
   CONNECTION_ID connection_id_;
-  // The next available connection id.
 
+  /// Name of the connection configuration file.
   ACE_TCHAR connection_config_file_[MAXPATHLEN + 1];
-  // Name of the connection configuration file.
 
+  /// Name of the consumer map configuration file.
   ACE_TCHAR consumer_config_file_[MAXPATHLEN + 1];
-  // Name of the consumer map configuration file.
 };
 
 #endif /* OPTIONS_H */

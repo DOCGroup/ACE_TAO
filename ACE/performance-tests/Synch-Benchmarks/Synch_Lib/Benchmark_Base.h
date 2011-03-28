@@ -20,7 +20,7 @@
 
 # if defined (ACE_HAS_THREADS)
 
-#   if defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_DCETHREADS) || defined (VXWORKS)
+#   if defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
 
 typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> MT_INT;
 
@@ -43,7 +43,7 @@ private:
   int thr_id_;
   static MT_INT thread_id_;
 };
-#   endif /* ACE_HAS_PTHREADS || ACE_HAS_DCETHREADS || VXWORKS */
+#   endif /* ACE_HAS_PTHREADS || VXWORKS */
 
 class SYNCHLIB_Export Benchmark_Base : public ACE_Service_Object
 {
@@ -76,10 +76,10 @@ protected:
   int benchmark_type_;
   // Store the RTTI info of this module.
 
-#   if defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_DCETHREADS) || defined (VXWORKS)
+#   if defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
   ACE_TSS <Thr_ID> id_;
   // Keeps track of our "virtual" thread id...
-#   endif /* ACE_HAS_PTHREADS || ACE_HAS_DCETHREADS || VXWORKS */
+#   endif /* ACE_HAS_PTHREADS || VXWORKS */
 };
 
 class SYNCHLIB_Export Benchmark_Method_Base : public Benchmark_Base

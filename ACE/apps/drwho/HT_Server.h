@@ -1,28 +1,28 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    drwho
-//
-// = FILENAME
-//    HT_Server.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    HT_Server.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _HT_SERVER_H
 #define _HT_SERVER_H
 
 #include "Hash_Table.h"
 
+/**
+ * @class HT_Server
+ *
+ * @brief Provides the server's hash table abstraction.
+ */
 class HT_Server : public Hash_Table
 {
-  // = TITLE
-  //   Provides the server's hash table abstraction.
 
 public:
   virtual Protocol_Record *insert (const char *key_name,
