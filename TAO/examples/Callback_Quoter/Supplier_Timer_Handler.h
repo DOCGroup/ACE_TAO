@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Consumer_Input_Handler.h
+ *  @file    Supplier_Timer_Handler.h
  *
  *  $Id$
  *

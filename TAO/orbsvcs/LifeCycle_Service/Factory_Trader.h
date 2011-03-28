@@ -1,16 +1,14 @@
 //=============================================================================
 /**
- *  @file   Factory_Trader.cpp
+ *  @file   Factory_Trader.h
  *
  *  $Id$
  *
  * Factory Trader for the Generic Factory.
  *
- *
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */
 //=============================================================================
-
 
 #ifndef FACTORY_TRADER_H
 #define FACTORY_TRADER_H
@@ -18,7 +16,6 @@
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Service_Type_Repository.h"
 #include "orbsvcs/CosLifeCycleC.h"
-
 
 class Factory_Trader
 {

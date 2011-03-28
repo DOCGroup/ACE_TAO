@@ -2,8 +2,6 @@
 
 #include "Consumer.h"
 
-
-
 Consumer::Consumer (void)
 {
 }

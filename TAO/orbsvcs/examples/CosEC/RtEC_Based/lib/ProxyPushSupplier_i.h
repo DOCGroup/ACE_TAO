@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file   ProxyPushSupplier_i
+ *  @file   ProxyPushSupplier_i.h
  *
  *  $Id$
  *
@@ -10,8 +10,6 @@
  *
  * This has the implementation of the
  * CosEventChannelAdmin::ProxyPushSupplier interface.
- *
- *
  */
 //=============================================================================
 
