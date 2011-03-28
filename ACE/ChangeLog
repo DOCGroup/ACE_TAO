@@ -1,3 +1,19 @@
+Mon Mar 28 07:50:45 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ASNMP/asnmp/vb.cpp:
+        * ASNMP/examples/get/get_async.cpp:
+        * ASNMP/tests/Gauge_Test.cpp:
+        * apps/Gateway/Gateway/gatewayd.cpp:
+        * apps/Gateway/Peer/peerd.cpp:
+        * apps/JAWS/clients/Blobby/blobby.cpp:
+        * apps/JAWS2/JAWS/IO_Handler.h:
+        * apps/JAWS2/JAWS/IO_Handler.cpp:
+        * apps/JAWS2/JAWS/Jaws_IO.h:
+        * apps/drwho/Hash_Table.h:
+        * protocols/tests/HTBP/Send_Recv_Tests/client.cpp:
+        * protocols/tests/HTBP/Send_Recv_Tests/server.cpp:
+          Fuzz fixes
+
 Mon Mar 28 07:41:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
