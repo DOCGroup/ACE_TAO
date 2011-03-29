@@ -19,19 +19,14 @@
 
 class be_visitor_context;
 
+/**
+ * This is a concrete visitor to generate
+ * the stencil of the implementation source for
+ * AMI4CCM reply handlers.
+ */
 class be_visitor_component_ami_rh_exs
   : public be_visitor_component_ami_rh_ex_base
 {
-  //
-  // = TITLE
-  //   be_visitor_component_ami_rh_exs
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate
-  //   the stencil of the implementation source for
-  //   AMI4CCM reply handers.
-  //
-  //
 public:
   be_visitor_component_ami_rh_exs (be_visitor_context *ctx);
   ~be_visitor_component_ami_rh_exs (void);

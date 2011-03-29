@@ -16,18 +16,13 @@
 #ifndef _BE_COMPONENT_EXECUTOR_EXH_H_
 #define _BE_COMPONENT_EXECUTOR_EXH_H_
 
+/**
+ * This is a concrete visitor to generate
+ * the executor implementation class declaration.
+ */
 class be_visitor_executor_exh
   : public be_visitor_component_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_executor_exh
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate
-  //   the executor implementation class declaration.
-  //
-  //
 public:
   be_visitor_executor_exh (be_visitor_context *ctx);
 

@@ -17,18 +17,13 @@
 #ifndef _BE_COMPONENT_COMPONENT_EXS_H_
 #define _BE_COMPONENT_COMPONENT_EXS_H_
 
+/**
+ * This is a concrete visitor to generate the exec
+ * impl for component.
+ */
 class be_visitor_component_exs
   : public be_visitor_component_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_component_exs
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate the exec
-  //   impl for component.
-  //
-  //
 public:
   be_visitor_component_exs (be_visitor_context *ctx);
 
