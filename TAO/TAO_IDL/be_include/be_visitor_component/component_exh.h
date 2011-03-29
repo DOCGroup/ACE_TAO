@@ -17,18 +17,13 @@
 #ifndef _BE_COMPONENT_COMPONENT_EXH_H_
 #define _BE_COMPONENT_COMPONENT_EXH_H_
 
+/**
+ * This is a concrete visitor to generate
+ * the executor implementation header for components.
+ */
 class be_visitor_component_exh
   : public be_visitor_component_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_component_exh
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate
-  //   the executor implementation header for components.
-  //
-  //
 public:
   be_visitor_component_exh (be_visitor_context *ctx);
 

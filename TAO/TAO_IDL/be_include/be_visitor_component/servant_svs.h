@@ -17,18 +17,13 @@
 #ifndef _BE_COMPONENT_SERVANT_SVS_H_
 #define _BE_COMPONENT_SERVANT_SVS_H_
 
+/**
+ * This is a concrete visitor to generate the servant class decl
+ * for a component.
+ */
 class be_visitor_servant_svs
   : public be_visitor_component_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_servant_svs
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate the servant class decl
-  //   for a component.
-  //
-  //
 public:
   be_visitor_servant_svs (be_visitor_context *ctx);
 
