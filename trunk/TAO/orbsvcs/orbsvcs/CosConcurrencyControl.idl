@@ -1,24 +1,21 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    cos
-//
-// = FILENAME
-//    CosTransaction.idl
-//
-// = DESCRIPTION
-//    Described in CORBAservices: Common Object Services
-//    Specification, chapter 7 The concurrency service description can
-//    be downloaded from
-//    ftp://www.omg.org/pub/docs/formal/97-11-02.idl
-//
-// = AUTHOR
-//    Torben Worm <tworm@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    CosTransaction.idl
+ *
+ *  $Id$
+ *
+ *  Described in CORBAservices: Common Object Services
+ *  Specification, chapter 7 The concurrency service description can
+ *  be downloaded from
+ *  ftp://www.omg.org/pub/docs/formal/97-11-02.idl
+ *
+ *
+ *  @author Torben Worm <tworm@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_CONCURRENCY_IDL
 #define TAO_CONCURRENCY_IDL

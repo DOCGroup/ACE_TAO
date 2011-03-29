@@ -1,24 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    valuetype.idl
-//
-// = DESCRIPTION
-//    This file contains examples of IDL code that has
-//    caused problems in the past for the TAO IDL
-//    compiler. This test is to make sure the problems
-//    stay fixed.
-//
-// = AUTHORS
-//    Gary Duzan <gduzan@bbn.com>
-//    Jeff Parsons <j.parsons@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    valuetype.idl
+ *
+ *  $Id$
+ *
+ *  This file contains examples of IDL code that has
+ *  caused problems in the past for the TAO IDL
+ *  compiler. This test is to make sure the problems
+ *  stay fixed.
+ *
+ *
+ *  @author Gary Duzan <gduzan@bbn.com> Jeff Parsons <j.parsons@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #ifndef IDL_TEST_VALUETYPE_IDL
 #define IDL_TEST_VALUETYPE_IDL

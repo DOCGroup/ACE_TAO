@@ -1,26 +1,25 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    cos
-//
-// = FILENAME
-//    CosLifeCycle.idl
-//
-// = DESCRIPTION
-//    Described in CORBAservices: Common Object Services Specification,
-//    chapter 6.
-//    The life cycle service description can be downloaded from:
-//      ftp://www.omg.org/pub/docs/formal/97-12-13.pdf
-//    The original IDL file can be downloaded from:
-//      ftp://www.omg.org/pub/docs/formal/97-11-02.idl
-//
-// = AUTHOR
-//    OMG, Torben Worm <tworm@cs.wustl.edu>, and Michael Kircher <mk1@cec.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    CosLifeCycle.idl
+ *
+ *  $Id$
+ *
+ *  Described in CORBAservices: Common Object Services Specification,
+ *  chapter 6.
+ *  The life cycle service description can be downloaded from:
+ *    ftp://www.omg.org/pub/docs/formal/97-12-13.pdf
+ *  The original IDL file can be downloaded from:
+ *    ftp://www.omg.org/pub/docs/formal/97-11-02.idl
+ *
+ *
+ *  @author OMG
+ *  @author Torben Worm <tworm@cs.wustl.edu>
+ *  @author and Michael Kircher <mk1@cec.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_LIFECYCLE_IDL
 #define TAO_LIFECYCLE_IDL

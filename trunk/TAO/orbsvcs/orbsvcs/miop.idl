@@ -1,20 +1,17 @@
-//
-// $Id$
-//
-// ================================================================
-//
-// = LIBRARY
-//   TAO_PortableGroup
-//
-// = FILENAME
-//   miop.pidl
-//
-// = DESCRIPTION
-//
-//   This file contains MIOP packet and profile information from
-//   the MIOP specification.
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file   miop.pidl
+ *
+ *  $Id$
+ *
+ *
+ * This file contains MIOP packet and profile information from
+ * the MIOP specification.
+ *
+ *
+ */
+//=============================================================================
+
 
 #ifndef MIOP_IDL
 #define MIOP_IDL

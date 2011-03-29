@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    params.idl
-//
-// = DESCRIPTION
-//    This IDL description is used to test all the parameter passing modes (in,
-//    inout, out, and return) for a number of IDL data types. The goal is to
-//    verify the correctness of the generated stubs and skeletons, and the
-//    the marshaling engine of TAO.
-//
-// = AUTHORS
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    params.idl
+ *
+ *  $Id$
+ *
+ *  This IDL description is used to test all the parameter passing modes (in,
+ *  inout, out, and return) for a number of IDL data types. The goal is to
+ *  verify the correctness of the generated stubs and skeletons, and the
+ *  the marshaling engine of TAO.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include <orb.idl>
 #include "tao/AnyTypeCode/AnySeq.pidl"

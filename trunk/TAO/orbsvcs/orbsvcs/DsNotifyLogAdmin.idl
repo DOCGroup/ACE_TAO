@@ -1,18 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    DsNotifyLogAdmin.idl
-//
-// = DESCRIPTION
-//    This module defines the NotifyLog and
-//    NotifyLogFactory interfaces.
-//
-// = AUTHOR
-//    David Hanvey (d.hanvey@qub.ac.uk)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    DsNotifyLogAdmin.idl
+ *
+ *  $Id$
+ *
+ *  This module defines the NotifyLog and
+ *  NotifyLogFactory interfaces.
+ *
+ *
+ *  @author David Hanvey (d.hanvey@qub.ac.uk)
+ */
+//=============================================================================
+
 
 #ifndef DS_NOTIFY_LOG_ADMIN_IDL
 #define DS_NOTIFY_LOG_ADMIN_IDL
