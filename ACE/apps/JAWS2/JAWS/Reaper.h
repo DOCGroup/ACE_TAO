@@ -19,18 +19,17 @@
 
 class JAWS_Concurrency_Base;
 
+/**
+ * Reap threads for the concurrency strategies
+ *
+ * The JAWS_Reaper uses the default Thread Manager (while each
+ * concurrency strategy uses their own).  The idea is that the
+ * reaper will spawn a thread to reap the threads of a concurrency
+ * strategy.  This allows the main thread to reap the threads of
+ * the reaper before exiting.
+ */
 class JAWS_Export JAWS_Reaper : public ACE_Task<ACE_SYNCH>
 {
-  // = TITLE
-  //   Reap threads for the concurrency strategies
-  //
-  // = DESCRIPTION
-  //   The JAWS_Reaper uses the default Thread Manager (while each
-  //   concurrency strategy uses their own).  The idea is that the
-  //   reaper will spawn a thread to reap the threads of a concurrency
-  //   strategy.  This allows the main thread to reap the threads of
-  //   the reaper before exiting.
-
 public:
   JAWS_Reaper (JAWS_Concurrency_Base *concurrency);
   virtual ~JAWS_Reaper (void);
