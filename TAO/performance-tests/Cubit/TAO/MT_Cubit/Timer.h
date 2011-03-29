@@ -4,7 +4,7 @@
 /**
  *  @file    Timer.h
  *
- *  $Id$ 
+ *  $Id$
  *
  *  @author Andy Gokhale
  *  @author Sumedh Mungee
