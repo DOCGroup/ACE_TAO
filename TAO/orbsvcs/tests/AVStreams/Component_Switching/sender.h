@@ -22,7 +22,7 @@
 
 /**
  * @class Signal_Handler
- * 
+ *
  * This class Handles the SIGINT signal through the Reactor.
  * Useful to gracefully release the process
  */
