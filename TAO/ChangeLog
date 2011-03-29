@@ -1,3 +1,8 @@
+Tue Mar 29 08:38:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.h:
+          Fixed compile problem
+
 Mon Mar 28 20:48:40 UTC 2011  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Bug_3068_Regression/Bug_3068_Regression.mpc:

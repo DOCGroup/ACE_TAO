@@ -22,7 +22,7 @@
 
 /**
  * @class Signal_Handler
- TITLE
+ * 
  * This class Handles the SIGINT signal through the Reactor.
  * Useful to gracefully release the process
  */
@@ -53,13 +53,13 @@ class Sender_Callback : public TAO_AV_Callback
 public:
 
   /**
-   */ Called when the sender has finished reading the file and wants
-   */ to close down the connection. Also called when the distributer
-   */ tears down the connection when it switches to a new sender.
+   * Called when the sender has finished reading the file and wants
+   * to close down the connection. Also called when the distributer
+   * tears down the connection when it switches to a new sender.
    */
   int handle_destroy (void);
 
-  //// Accessor methods for the flowname of the callback
+  /// Accessor methods for the flowname of the callback
   ACE_CString &flowname (void);
   void flowname (const ACE_CString &flowname);
 
