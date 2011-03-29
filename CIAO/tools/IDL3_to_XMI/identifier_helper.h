@@ -27,19 +27,14 @@
 
 class Identifier;
 
+/**
+ * 1) keeps escape (leading underscore character in generated identifier in IDL
+ * 2) removes the '_' escape character when the identifier is
+ * part of another identifier such as in provides_XXX
+ * 3) removes any '_cxx_' in generated IDL
+ */
 struct IdentifierHelper
 {
-  //
-  // = TITLE
-  //    IdentifierHelper.
-  //
-  // = DESCRIPTION
-  //    1) keeps escape (leading underscore character in generated
-  //       identifier in IDL
-  //    2) removes the '_' escape character when the identifier is
-  //       part of another identifier such as in provides_XXX
-  //    3) removes any '_cxx_' in generated IDL
-
   static Identifier *
   original_local_name (Identifier * local_name);
 

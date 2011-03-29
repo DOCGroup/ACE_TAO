@@ -27,17 +27,13 @@
 
 #include "TAO_IDL3_TO_IDL2_BE_Export.h"
 
+/**
+ * Checks for modules empty of anything except template
+ * module and porttype declarations.
+ */
 class TAO_IDL3_TO_IDL2_BE_Export idl3p_checking_visitor
   : public basic_visitor
 {
-  //
-  // = TITLE
-  //    idl3p_checking_visitor
-  //
-  // = DESCRIPTION
-  //    Checks for modules empty of anything except template
-  //    module and porttype declarations.
-  //
 public:
   idl3p_checking_visitor (void);
   virtual ~idl3p_checking_visitor (void);

@@ -1,3 +1,20 @@
+Tue Mar 29 12:14:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.cpp:
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Proxies/ReadWrite/Receiver/Proxy_RW_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.cpp:
+        * tools/IDL3_to_IDL2/basic_visitor.h:
+        * tools/IDL3_to_IDL2/be_global.h:
+        * tools/IDL3_to_IDL2/be_helper.h:
+        * tools/IDL3_to_IDL2/identifier_helper.h:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h:
+        * tools/IDL3_to_IDL2/idl3p_checking_visitor.h:
+        * tools/IDL3_to_XMI/be_global.h:
+        * tools/IDL3_to_XMI/be_helper.h:
+        * tools/IDL3_to_XMI/identifier_helper.h:
+          Doxygen changes
+
 Tue Mar 29 09:34:03 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:

@@ -26,18 +26,14 @@
 
 #include "TAO_IDL3_TO_IDL2_BE_Export.h"
 
+/**
+ * IDL3 to IDL2 conversion visitor. The methods are
+ * not pure virtual to facilitate the implementation of some
+ * derived visitors that override only a few.
+ */
 class TAO_IDL3_TO_IDL2_BE_Export idl3_to_idl2_visitor
   : public basic_visitor
 {
-  //
-  // = TITLE
-  //    idl3_to_idl2_visitor.
-  //
-  // = DESCRIPTION
-  //    IDL3 to IDL2 conversion visitor. The methods are
-  //    not pure virtual to facilitate the implementation of some
-  //    derived visitors that override only a few.
-  //
 public:
   idl3_to_idl2_visitor (void);
   virtual ~idl3_to_idl2_visitor (void);
