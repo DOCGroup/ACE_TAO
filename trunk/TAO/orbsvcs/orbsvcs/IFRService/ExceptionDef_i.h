@@ -50,44 +50,31 @@ public:
   virtual ~TAO_ExceptionDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ()
-;
+  virtual CORBA::DefinitionKind def_kind ();
 
   /// Remove the repository entry.
-  virtual void destroy ()
-;
+  virtual void destroy ();
 
   /// Remove the repository entry.
-  virtual void destroy_i ()
-;
+  virtual void destroy_i ();
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe ()
-;
+  virtual CORBA::Contained::Description *describe ();
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe_i ()
-;
+  virtual CORBA::Contained::Description *describe_i ();
 
-  virtual CORBA::TypeCode_ptr type ()
-;
+  virtual CORBA::TypeCode_ptr type ();
 
-  CORBA::TypeCode_ptr type_i ()
-;
+  CORBA::TypeCode_ptr type_i ();
 
-  virtual CORBA::StructMemberSeq *members ()
-;
+  virtual CORBA::StructMemberSeq *members ();
 
-  CORBA::StructMemberSeq *members_i ()
-;
+  CORBA::StructMemberSeq *members_i ();
 
-  virtual void members (
-      const CORBA::StructMemberSeq & members)
-;
+  virtual void members (const CORBA::StructMemberSeq & members);
 
-  void members_i (
-      const CORBA::StructMemberSeq & members)
-;
+  void members_i (const CORBA::StructMemberSeq & members);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
