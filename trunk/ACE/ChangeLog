@@ -1,3 +1,14 @@
+Tue Mar 29 12:37:49 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/doxygen-convert-h.pl:
+          Also convert idl files
+
+        * apps/JAWS2/JAWS/Policy.h:
+        * apps/JAWS2/JAWS/Reaper.h:
+        * tests/Message_Queue_Test_Ex.cpp:
+        * tests/Wild_Match_Test.cpp:
+          Doxygen changes
+
 Tue Mar 29 07:09:56 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/ClientRequestHandler.h:

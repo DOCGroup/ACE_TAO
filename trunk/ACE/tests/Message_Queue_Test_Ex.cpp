@@ -66,26 +66,25 @@ print_message (const ACE_TCHAR *message)
 #if defined (ACE_HAS_THREADS)
 typedef ACE_Message_Queue_Ex<User_Class, ACE_MT_SYNCH> SYNCH_QUEUE;
 
+/**
+ * Container for data passed to sender and receiver in
+ * performance test.
+ *
+ * For use in multithreaded performance test.
+ */
 struct Queue_Wrapper
 {
-  // = TITLE
-  //     Container for data passed to sender and receiver in
-  //     performance test.
-  //
-  // = DESCRIPTION
-  //     For use in multithreaded performance test.
-
+  /// The message queue.
   SYNCH_QUEUE *q_;
-  // The message queue.
 
+  /// Pointer to messages blocks for sender to send to reciever.
   User_Class **send_block_;
-  // Pointer to messages blocks for sender to send to reciever.
 
+  /// Default constructor.
   Queue_Wrapper (void)
     : q_ (0), send_block_ (0)
   {
   }
-  // Default constructor.
 };
 
 struct MQ_Ex_N_Tester_Wrapper
