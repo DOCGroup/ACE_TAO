@@ -1,3 +1,8 @@
+Tue Mar 29 12:249:14 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        Changed number of samples in get_many from 1 to max_samples .
+ 
 Wed Mar 23 17:49:14 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender.idl:
