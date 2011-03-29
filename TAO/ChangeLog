@@ -1,3 +1,15 @@
+Tue Mar 29 12:42:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Quoter/Quoter.idl:
+        * orbsvcs/orbsvcs/CosConcurrencyControl.idl:
+        * orbsvcs/orbsvcs/miop.idl:
+        * tests/IDL_Test/invalid_scoping1.idl:
+        * tests/IDL_Test/invalid_scoping2.idl:
+        * tests/IDL_Test/old_sequence.idl:
+        * tests/NestedUpcall/MT_Client_Test/MT_Client_Test.idl:
+        * tests/Param_Test/param_test.idl:
+          Fuzz fixes
+
 Tue Mar 29 12:34:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Converted to doxygen style
