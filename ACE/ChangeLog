@@ -1,3 +1,12 @@
+Tue Mar 29 07:09:56 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/ClientRequestHandler.h:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.h:
+        * protocols/ace/INet/URLBase.h:
+          Made explicit export defs on nested classes default for all MSVC
+          compilers as it turns out VC10 is troubled by this deficiency
+          as well.
+
 Mon Mar 28 09:58:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * netsvcs/clients/Tokens/deadlock/deadlock_detection_test.cpp:
