@@ -52,119 +52,88 @@ public:
   virtual ~TAO_HomeDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind (
-    );
+  virtual CORBA::DefinitionKind def_kind (void);
 
   /// Remove the repository entry.
-  virtual void destroy (
-    );
+  virtual void destroy (void);
 
-  virtual void destroy_i (
-    );
+  virtual void destroy_i (void);
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe (
-    );
+  virtual CORBA::Contained::Description *describe (void);
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe_i (
-    );
+  virtual CORBA::Contained::Description *describe_i (void);
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type (
-    );
+  virtual CORBA::TypeCode_ptr type (void);
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type_i (
-    );
+  virtual CORBA::TypeCode_ptr type_i (void);
 
-  virtual CORBA::ComponentIR::HomeDef_ptr base_home (
-    );
+  virtual CORBA::ComponentIR::HomeDef_ptr base_home (void);
 
-  CORBA::ComponentIR::HomeDef_ptr base_home_i (
-    );
+  CORBA::ComponentIR::HomeDef_ptr base_home_i (void);
 
-  virtual void base_home (
-      CORBA::ComponentIR::HomeDef_ptr base_home
-    );
+  virtual void base_home (CORBA::ComponentIR::HomeDef_ptr base_home);
 
-  void base_home_i (
-      CORBA::ComponentIR::HomeDef_ptr base_home
-    );
+  void base_home_i (CORBA::ComponentIR::HomeDef_ptr base_home);
 
-  virtual CORBA::InterfaceDefSeq *supported_interfaces (
-    );
+  virtual CORBA::InterfaceDefSeq *supported_interfaces (void);
 
-  CORBA::InterfaceDefSeq *supported_interfaces_i (
-    );
+  CORBA::InterfaceDefSeq *supported_interfaces_i (void);
 
   virtual void supported_interfaces (
-      const CORBA::InterfaceDefSeq &supported_interfaces
-    );
+      const CORBA::InterfaceDefSeq &supported_interfaces);
 
   void supported_interfaces_i (
-      const CORBA::InterfaceDefSeq &supported_interfaces
-    );
+      const CORBA::InterfaceDefSeq &supported_interfaces);
 
-  virtual CORBA::ComponentIR::ComponentDef_ptr managed_component (
-    );
+  virtual CORBA::ComponentIR::ComponentDef_ptr managed_component (void);
 
-  CORBA::ComponentIR::ComponentDef_ptr managed_component_i (
-    );
+  CORBA::ComponentIR::ComponentDef_ptr managed_component_i (void);
 
   virtual void managed_component (
-      CORBA::ComponentIR::ComponentDef_ptr managed_component
-    );
+      CORBA::ComponentIR::ComponentDef_ptr managed_component);
 
   void managed_component_i (
-      CORBA::ComponentIR::ComponentDef_ptr managed_component
-    );
+      CORBA::ComponentIR::ComponentDef_ptr managed_component);
 
-  virtual CORBA::ValueDef_ptr primary_key (
-    );
+  virtual CORBA::ValueDef_ptr primary_key (void);
 
-  CORBA::ValueDef_ptr primary_key_i (
-    );
+  CORBA::ValueDef_ptr primary_key_i (void);
 
-  virtual void primary_key (
-      CORBA::ValueDef_ptr primary_key
-    );
+  virtual void primary_key (CORBA::ValueDef_ptr primary_key);
 
-  void primary_key_i (
-      CORBA::ValueDef_ptr primary_key
-    );
+  void primary_key_i (CORBA::ValueDef_ptr primary_key);
 
   virtual CORBA::ComponentIR::FactoryDef_ptr create_factory (
       const char *id,
       const char *name,
       const char *version,
       const CORBA::ParDescriptionSeq &params,
-      const CORBA::ExceptionDefSeq &exceptions
-    );
+      const CORBA::ExceptionDefSeq &exceptions);
 
   CORBA::ComponentIR::FactoryDef_ptr create_factory_i (
       const char *id,
       const char *name,
       const char *version,
       const CORBA::ParDescriptionSeq &params,
-      const CORBA::ExceptionDefSeq &exceptions
-    );
+      const CORBA::ExceptionDefSeq &exceptions);
 
   virtual CORBA::ComponentIR::FinderDef_ptr create_finder (
       const char *id,
       const char *name,
       const char *version,
       const CORBA::ParDescriptionSeq &params,
-      const CORBA::ExceptionDefSeq &exceptions
-    );
+      const CORBA::ExceptionDefSeq &exceptions);
 
   CORBA::ComponentIR::FinderDef_ptr create_finder_i (
       const char *id,
       const char *name,
       const char *version,
       const CORBA::ParDescriptionSeq &params,
-      const CORBA::ExceptionDefSeq &exceptions
-    );
+      const CORBA::ExceptionDefSeq &exceptions);
 
 private:
   // Common code for create_factory_i and create_finder_i.
@@ -175,8 +144,7 @@ private:
       const char *version,
       const char *sub_section,
       const CORBA::ParDescriptionSeq &params,
-      const CORBA::ExceptionDefSeq &exceptions
-    );
+      const CORBA::ExceptionDefSeq &exceptions);
 
   void fill_op_desc_seq (ACE_Configuration_Section_Key &key,
                          CORBA::OpDescriptionSeq &ods,
