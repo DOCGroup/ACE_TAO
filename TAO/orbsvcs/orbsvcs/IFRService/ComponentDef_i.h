@@ -35,15 +35,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * Represents a component definition.
+ */
 class TAO_IFRService_Export TAO_ComponentDef_i
   : public virtual TAO_ExtInterfaceDef_i
 {
-  // = TITLE
-  //    TAO_ComponentDef_i
-  //
-  // = DESCRIPTION
-  //    Represents a component definition.
-  //
 public:
   /// Constructor
   TAO_ComponentDef_i (TAO_Repository_i *repo);

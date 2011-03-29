@@ -32,16 +32,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * Represents the definition of an event that is emitted
+ * by a component.
+ */
 class TAO_IFRService_Export TAO_EmitsDef_i
   : public virtual TAO_EventPortDef_i
 {
-  // = TITLE
-  //    TAO_EmitsDef_i
-  //
-  // = DESCRIPTION
-  //    Represents the definition of an event that is emitted
-  //    by a component.
-  //
 public:
   /// Constructor
     TAO_EmitsDef_i (TAO_Repository_i *repo);

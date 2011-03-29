@@ -32,15 +32,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * Represents an abstract interface definition.
+ */
 class TAO_IFRService_Export TAO_AbstractInterfaceDef_i
   : public virtual TAO_InterfaceDef_i
 {
-  // = TITLE
-  //    TAO_AbstractInterfaceDef_i
-  //
-  // = DESCRIPTION
-  //    Represents an abstract interface definition.
-  //
 public:
   /// Constructor
   TAO_AbstractInterfaceDef_i (TAO_Repository_i *repo);

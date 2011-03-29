@@ -1,3 +1,23 @@
+Tue Mar 29 12:15:06 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/AbstractInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/AliasDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentModuleDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h:
+        * orbsvcs/orbsvcs/IFRService/EmitsDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/EnumDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/EventPortDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExceptionDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/NativeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/PublishesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ValueBoxDef_i.h:
+          Doxygen changes
+
 Tue Mar 29 08:38:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/AVStreams/Component_Switching/sender.h:
