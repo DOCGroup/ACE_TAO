@@ -1,23 +1,17 @@
 //=============================================================================
 /**
- *  @file    Triangle_Test.idl
+ *  @file    MT_Client_Test.idl
  *
  *  $Id$
  *
  *  An example of how nested upcalls work/fail?
  *
- *
  *  @author Michael Kircher
  */
 //=============================================================================
 
-
-
-
 interface Object_A {
-
   long foo (in long time);
-
 };
 
 interface MT_Object;
