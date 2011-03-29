@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    params.idl
+ *  @file    param_test.idl
  *
  *  $Id$
  *
@@ -9,7 +9,6 @@
  *  inout, out, and return) for a number of IDL data types. The goal is to
  *  verify the correctness of the generated stubs and skeletons, and the
  *  the marshaling engine of TAO.
- *
  *
  *  @author Aniruddha Gokhale
  */

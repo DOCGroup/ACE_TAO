@@ -1,14 +1,11 @@
 //=============================================================================
 /**
- *  @file   miop.pidl
+ *  @file   miop.idl
  *
  *  $Id$
  *
- *
  * This file contains MIOP packet and profile information from
  * the MIOP specification.
- *
- *
  */
 //=============================================================================
 
