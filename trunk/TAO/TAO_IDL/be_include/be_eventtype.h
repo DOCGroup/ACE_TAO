@@ -19,15 +19,14 @@
 #include "be_valuetype.h"
 #include "ast_eventtype.h"
 
+/**
+ * Backend-class for eventtypes
+ *
+ * Extends be_valuetype.
+ */
 class be_eventtype : public virtual be_valuetype,
                      public virtual AST_EventType
 {
-  // = TITLE
-  //    Backend-class for eventtypes
-  //
-  // = DESCRIPTION
-  //    Extends be_valuetype.
-  //
 public:
   be_eventtype (UTL_ScopedName *n,
                 AST_Type **inherits,

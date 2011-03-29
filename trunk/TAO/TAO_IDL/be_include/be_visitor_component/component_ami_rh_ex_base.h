@@ -23,10 +23,6 @@ class be_visitor_context;
 class be_visitor_component_ami_rh_ex_base
   : public be_visitor_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_component_ami_rh_ex_base
-  //
   // = DESCRIPTION
   //   This is a base class visitor for the AMI4CCM reply
   //   handler implementation concrete visitors.

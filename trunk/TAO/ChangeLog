@@ -1,3 +1,24 @@
+Tue Mar 29 12:24:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be_include/be_component.h:
+        * TAO_IDL/be_include/be_eventtype.h:
+        * TAO_IDL/be_include/be_extended_port.h:
+        * TAO_IDL/be_include/be_helper.h:
+        * TAO_IDL/be_include/be_identifier_helper.h:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_mirror_port.h:
+        * TAO_IDL/be_include/be_porttype.h:
+        * TAO_IDL/be_include/be_root.h:
+        * TAO_IDL/be_include/be_template_module.h:
+        * TAO_IDL/be_include/be_valuetype.h:
+        * TAO_IDL/be_include/be_visitor_attribute/ccm_init.h:
+        * TAO_IDL/be_include/be_visitor_attribute/set_from_extracted.h:
+        * TAO_IDL/be_include/be_visitor_component/component_ami_rh_ex_base.h:
+        * TAO_IDL/be_include/be_visitor_operation/argument_marshal.h:
+        * TAO_IDL/include/ast_visitor_tmpl_module_ref.h:
+        * TAO_IDL/include/fe_private.h:
+          Doxygen changes
+
 Tue Mar 29 12:15:06 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/IFRService/AbstractInterfaceDef_i.h:
