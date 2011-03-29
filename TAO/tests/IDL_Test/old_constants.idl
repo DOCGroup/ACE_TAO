@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    old_constants.idl
-//
-// = DESCRIPTION
-//    Tests of const IDL constructs
-//
-// = AUTHORS
-//    Andy Gokhale <gokhale@dre.vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    old_constants.idl
+ *
+ *  $Id$
+ *
+ *  Tests of const IDL constructs
+ *
+ *
+ *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
 
 module OldConstants
 {

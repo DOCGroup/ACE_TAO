@@ -1,3 +1,129 @@
+Tue Mar 29 12:34:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Converted to doxygen style
+
+        * examples/Advanced/ch_12/CCS.idl:
+
+        * examples/Advanced/ch_18/CCS.idl:
+
+        * examples/Advanced/ch_21/CCS.idl:
+
+        * examples/Advanced/ch_3/time.idl:
+
+        * examples/Advanced/ch_8_and_10/CCS.idl:
+
+        * examples/Event_Comm/Event_Comm.idl:
+
+        * examples/Load_Balancing/Identity.idl:
+        * examples/Load_Balancing/Load_Balancer.idl:
+
+        * examples/Load_Balancing_persistent/Identity.idl:
+        * examples/Load_Balancing_persistent/Load_Balancer.idl:
+
+        * examples/Quoter/Quoter.idl:
+
+        * examples/TypeCode_Creation/test.idl:
+
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
+
+        * orbsvcs/orbsvcs/CosConcurrencyControl.idl:
+        * orbsvcs/orbsvcs/CosLifeCycle.idl:
+        * orbsvcs/orbsvcs/CosNaming.idl:
+        * orbsvcs/orbsvcs/CosTrading.idl:
+        * orbsvcs/orbsvcs/CosTradingDynamic.idl:
+        * orbsvcs/orbsvcs/CosTradingRepos.idl:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.idl:
+        * orbsvcs/orbsvcs/DsLogAdmin.idl:
+        * orbsvcs/orbsvcs/DsLogNotification.idl:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.idl:
+        * orbsvcs/orbsvcs/LifeCycleService.idl:
+        * orbsvcs/orbsvcs/RTEventLogAdmin.idl:
+        * orbsvcs/orbsvcs/miop.idl:
+
+        * orbsvcs/tests/HTIOP/AMI/ami_test.idl:
+
+        * orbsvcs/tests/Interoperable_Naming/Web_Server.idl:
+
+        * performance-tests/Anyop/test.idl:
+
+        * tests/AMI_Timeouts/timeout.idl:
+
+        * tests/Bug_1495_Regression/test.idl:
+
+        * tests/File_IO/File.idl:
+
+        * tests/IDL_Test/anonymous.idl:
+        * tests/IDL_Test/anyunion.idl:
+        * tests/IDL_Test/array.idl:
+        * tests/IDL_Test/array_anon_nested.idl:
+        * tests/IDL_Test/array_only.idl:
+        * tests/IDL_Test/constants.idl:
+        * tests/IDL_Test/dif2.idl:
+        * tests/IDL_Test/enum_in_struct.idl:
+        * tests/IDL_Test/full.idl:
+        * tests/IDL_Test/fwd.idl:
+        * tests/IDL_Test/generic_object.idl:
+        * tests/IDL_Test/gperf.idl:
+        * tests/IDL_Test/included.idl:
+        * tests/IDL_Test/including.idl:
+        * tests/IDL_Test/inherit.idl:
+        * tests/IDL_Test/interface.idl:
+        * tests/IDL_Test/invalid_scoping1.idl:
+        * tests/IDL_Test/invalid_scoping2.idl:
+        * tests/IDL_Test/keywords.idl:
+        * tests/IDL_Test/module.idl:
+        * tests/IDL_Test/nested_scope.idl:
+        * tests/IDL_Test/old_array.idl:
+        * tests/IDL_Test/old_constants.idl:
+        * tests/IDL_Test/old_sequence.idl:
+        * tests/IDL_Test/old_struct.idl:
+        * tests/IDL_Test/old_union.idl:
+        * tests/IDL_Test/old_union2.idl:
+        * tests/IDL_Test/params.idl:
+        * tests/IDL_Test/pragma.idl:
+        * tests/IDL_Test/primtypes.idl:
+        * tests/IDL_Test/reopen_include1.idl:
+        * tests/IDL_Test/reopen_include2.idl:
+        * tests/IDL_Test/reopened_modules.idl:
+        * tests/IDL_Test/repo_id_mod.idl:
+        * tests/IDL_Test/sequence.idl:
+        * tests/IDL_Test/simple.idl:
+        * tests/IDL_Test/simple2.idl:
+        * tests/IDL_Test/typecode.idl:
+        * tests/IDL_Test/typedef.idl:
+        * tests/IDL_Test/union.idl:
+        * tests/IDL_Test/valuetype.idl:
+
+        * tests/Multiple/Multiple.idl:
+
+        * tests/NestedUpcall/MT_Client_Test/MT_Client_Test.idl:
+
+        * tests/NestedUpcall/Simple/test.idl:
+
+        * tests/NestedUpcall/Triangle_Test/Triangle_Test.idl:
+
+        * tests/OBV/TC_Alignment/test.idl:
+
+        * tests/OctetSeq/test.idl:
+
+        * tests/POA/Default_Servant2/File.idl:
+
+        * tests/Param_Test/param_test.idl:
+
+        * tests/Portable_Interceptors/Benchmark/test.idl:
+
+        * tests/Portable_Interceptors/Bug_1559/test.idl:
+
+        * tests/Portable_Interceptors/Collocated/Dynamic/test.idl:
+
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/test.idl:
+
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/test.idl:
+
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/test.idl:
+
+        * tests/Portable_Interceptors/Service_Context_Manipulation/test.idl:
+
 Tue Mar 29 12:24:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be_include/be_component.h:

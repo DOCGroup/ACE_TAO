@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    old_array.idl
-//
-// = DESCRIPTION
-//    Tests of array IDL constructs
-//
-// = AUTHORS
-//    Andy Gokhale <gokhale@dre.vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    old_array.idl
+ *
+ *  $Id$
+ *
+ *  Tests of array IDL constructs
+ *
+ *
+ *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #include "simple.idl"
 

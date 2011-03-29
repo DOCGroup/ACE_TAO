@@ -1,22 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/AMI_Timeouts
-//
-// = FILENAME
-//    timeout.idl
-//
-// = DESCRIPTION
-//    Interface of the test CORBA object.
-//
-// = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    timeout.idl
+ *
+ *  $Id$
+ *
+ *  Interface of the test CORBA object.
+ *
+ *
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
 
 
 interface TimeoutObj {

@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    old_union.idl
-//
-// = DESCRIPTION
-//    Tests of union IDL constructs
-//
-// = AUTHORS
-//    Andy Gokhale <gokhale@dre.vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    old_union.idl
+ *
+ *  $Id$
+ *
+ *  Tests of union IDL constructs
+ *
+ *
+ *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
 
 module OldUnion
 {

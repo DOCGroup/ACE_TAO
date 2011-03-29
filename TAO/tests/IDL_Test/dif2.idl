@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    dif2.idl
-//
-// = DESCRIPTION
-//    Tests of interface operations and attributes in IDL constructs
-//
-// = AUTHORS
-//    Andy Gokhale <gokhale@dre.vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    dif2.idl
+ *
+ *  $Id$
+ *
+ *  Tests of interface operations and attributes in IDL constructs
+ *
+ *
+ *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
 
 module OldDif2
 {

@@ -1,19 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    Identity.idl
-//
-// = DESCRIPTION
-//    Interface for a toy CORBA service useful for
-//    testing/demonstrating functionality of the Load
-//    Balancing service defined in Load_Balancer.idl.
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//    with modifications by Bala Natarajan <bala@cs.wustl.edu>
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Identity.idl
+ *
+ *  $Id$
+ *
+ *  Interface for a toy CORBA service useful for
+ *  testing/demonstrating functionality of the Load
+ *  Balancing service defined in Load_Balancer.idl.
+ *
+ *
+ *  @author Marina Spivak <marina@cs.wustl.edu> with modifications by Bala Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 interface Identity
 {

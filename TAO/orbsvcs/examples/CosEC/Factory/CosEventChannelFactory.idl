@@ -1,14 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    CosEventChannelFactory.idl
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    CosEventChannelFactory.idl
+ *
+ *  $Id$
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_COSEVENTCHANNELFACTORY_IDL
 #define TAO_COSEVENTCHANNELFACTORY_IDL
