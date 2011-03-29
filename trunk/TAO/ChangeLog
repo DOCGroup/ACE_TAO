@@ -1,3 +1,21 @@
+Tue Mar 29 13:20:41 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be_include/be_visitor_component/component_ami_rh_exh.h:
+        * TAO_IDL/be_include/be_visitor_component/component_ami_rh_exs.h:
+        * TAO_IDL/be_include/be_visitor_component/component_exh.h:
+        * TAO_IDL/be_include/be_visitor_component/component_exs.h:
+        * TAO_IDL/be_include/be_visitor_component/context_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_component/executor_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_component/executor_exh.h:
+        * TAO_IDL/be_include/be_visitor_component/executor_exs.h:
+        * TAO_IDL/be_include/be_visitor_component/executor_exs_attr_init.h:
+        * TAO_IDL/be_include/be_visitor_component/executor_private_exh.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_exh.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_exs.h:
+        * TAO_IDL/be_include/be_visitor_component/servant_svs.h:
+          Converted to doxygen style
+
 Tue Mar 29 12:42:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Quoter/Quoter.idl:

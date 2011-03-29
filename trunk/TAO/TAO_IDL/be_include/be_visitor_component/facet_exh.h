@@ -15,18 +15,13 @@
 #ifndef _BE_COMPONENT_FACET_EXH_H_
 #define _BE_COMPONENT_FACET_EXH_H_
 
+/**
+ * This is a concrete visitor to generate
+ * the executor implementation header for facets.
+ */
 class be_visitor_facet_exh
   : public be_visitor_component_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_facet_exh
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate
-  //   the executor implementation header for facets.
-  //
-  //
 public:
   be_visitor_facet_exh (be_visitor_context *ctx);
 
