@@ -24,17 +24,13 @@
 
 class be_visitor;
 
+/**
+ * Extension of class AST_PortType for C++ code generation.
+ */
 class be_porttype : public virtual AST_PortType,
                     public virtual be_scope,
                     public virtual be_type
 {
-  //
-  // = TITLE
-  //   be_porttype
-  //
-  // = DESCRIPTION
-  //   Extension of class AST_PortType for C++ code generation.
-  //
 public:
   be_porttype (UTL_ScopedName *n);
 
