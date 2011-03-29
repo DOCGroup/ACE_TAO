@@ -28,15 +28,12 @@
 
 // Defines a class containing all back end global data.
 
+/**
+ * Storage of global data specific to the compiler back end
+ */
 class CIAO_IDL3_TO_XMI_Export BE_GlobalData
 {
 public:
-  // = TITLE
-  //    BE_GlobalData
-  //
-  // = DESCRIPTION
-  //    Storage of global data specific to the compiler back end
-  //
   /// Constructor.
   BE_GlobalData (void);
 

@@ -27,29 +27,27 @@ public:
   TAO_NL (void);
 };
 
+/**
+ * Operates like a manipulator, increasing the indentation level.
+ *
+ * Increase the indentation level, if the "do_now" parameter is
+ * not zero then the <indent> method is called on the stream.
+ */
 struct TAO_INDENT
 {
-  // = TITLE
-  //   Operates like a manipulator, increasing the indentation level.
-  //
-  // = DESCRIPTION
-  //   Increase the indentation level, if the "do_now" parameter is
-  //   not zero then the <indent> method is called on the stream.
-  //
   TAO_INDENT (int do_now = 0);
 
   const int do_now_;
 };
 
+/**
+ * Operates like a manipulator, decreasing the indentation level.
+ *
+ * Decrease the indentation level, if the "do_now" parameter is
+ * not zero then the <indent> method is called on the stream.
+ */
 struct TAO_UNINDENT
 {
-  // = TITLE
-  //   Operates like a manipulator, decreasing the indentation level.
-  //
-  // = DESCRIPTION
-  //   Decrease the indentation level, if the "do_now" parameter is
-  //   not zero then the <indent> method is called on the stream.
-  //
   TAO_UNINDENT (int do_now = 0);
 
   const int do_now_;

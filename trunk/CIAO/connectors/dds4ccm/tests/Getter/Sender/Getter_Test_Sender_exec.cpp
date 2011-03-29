@@ -204,7 +204,7 @@ namespace CIAO_Getter_Test_Sender_Impl
   void
   Sender_exec_i::start (void)
   {
-    //start can be called more than once...
+    // Start can be called more than once...
     if (!this->done_ && this->ccm_activated_)
       {
         this->done_ = true;

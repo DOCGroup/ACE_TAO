@@ -396,7 +396,7 @@ namespace CIAO_Proxy_RW_Test_Receiver_Impl
 
     if (!::CORBA::is_nil (idl_reader.in ()))
       {
-        //start to read
+        // Start to read
         ProxyReadWriteTestSeq data;
         ::DDS::SampleInfoSeq  info;
 
@@ -427,7 +427,7 @@ namespace CIAO_Proxy_RW_Test_Receiver_Impl
 
     if (!::CORBA::is_nil (idl_reader.in ()))
       {
-        //start to read
+        // Start to read
         ProxyReadWriteTestSeq data;
         ::DDS::SampleInfoSeq  info;
 
