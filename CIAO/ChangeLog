@@ -1,3 +1,9 @@
+Tue Mar 29 09:34:03 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+          Removed try/catch in ccm_activate which isn't needed anymore after
+          we removed caching of the receptacles
+
 Mon Mar 28 07:25:26 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:

@@ -330,21 +330,7 @@ namespace CIAO_Getter_Test_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    try
-      {
-        this->ccm_activated_ = true;
-      }
-    catch (const ::CORBA::Exception& ex)
-      {
-        ex._tao_print_exception ("Exception caught:");
-        ACE_ERROR ((LM_ERROR,
-          ACE_TEXT ("ERROR: Sender_exec_i::ccm_activate: Exception caught\n")));
-      }
-    catch (...)
-      {
-        ACE_ERROR ((LM_ERROR,
-          ACE_TEXT ("ERROR: Sender_exec_i::ccm_activate: Unknown exception caught\n")));
-      }
+    this->ccm_activated_ = true;
   }
 
   void
