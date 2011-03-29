@@ -1,30 +1,27 @@
-//$Id$
 
-/* ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Multiple
-//
-// = FILENAME
-//    Multiple.idl
-//
-// = DESCRIPTION
-//    IDL definition of a Diamond shaped hierarchy
-//    of IDL interfaces. This Diamond shaped hierarchy
-//    is used for testing the collocation.
-//    The hierarchy used is decipted in the following
-//    figure.
-//
-//                      Top
-//                     /   \
-//                 Left     Right
-//                     \   /
-//                     Bottom
-//
-// = AUTHOR
-//     Angelo Corsaro <corsaro@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Multiple.idl
+ *
+ *  $Id$
+ *
+ *  IDL definition of a Diamond shaped hierarchy
+ *  of IDL interfaces. This Diamond shaped hierarchy
+ *  is used for testing the collocation.
+ *  The hierarchy used is decipted in the following
+ *  figure.
+ *
+ *                    Top
+ *                   /   \
+ *               Left     Right
+ *                   \   /
+ *                   Bottom
+ *
+ *
+ *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
+ */
+//=============================================================================
+
 */
 
 

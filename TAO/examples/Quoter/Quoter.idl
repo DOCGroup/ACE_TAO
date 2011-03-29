@@ -1,19 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    quoter.idl
-//
-// = DESCRIPTION
-//    Quoter example that illustrate the use of the global POA and
-//    the CosLifeCycle service.
-//
-// = AUTHOR
-//    Darrell Brunsch (brunsch@cs.wustl.edu)
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    quoter.idl
+ *
+ *  $Id$
+ *
+ *  Quoter example that illustrate the use of the global POA and
+ *  the CosLifeCycle service.
+ *
+ *
+ *  @author Darrell Brunsch (brunsch@cs.wustl.edu) Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "orbsvcs/CosLifeCycle.idl"
 

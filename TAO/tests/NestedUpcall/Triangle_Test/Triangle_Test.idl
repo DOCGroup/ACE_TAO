@@ -1,20 +1,16 @@
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpcall/Triangle_Test
-//
-// = FILENAME
-//    Triangle_Test.idl
-//
-// = DESCRIPTION
-//    An example of how nested upcalls work/fail?
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Triangle_Test.idl
+ *
+ *  $Id$
+ *
+ *  An example of how nested upcalls work/fail?
+ *
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 
 interface Initiator {

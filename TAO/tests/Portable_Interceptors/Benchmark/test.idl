@@ -1,21 +1,17 @@
-// -*- IDL -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Portable_Interceptors
-//
-// = FILENAME
-//    test.idl
-//
-// = DESCRIPTION
-//   Simple IDL file to test portable interceptor support.
-//
-// = AUTHORS
-//   Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test.idl
+ *
+ *  $Id$
+ *
+ * Simple IDL file to test portable interceptor support.
+ *
+ *
+ *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 module Test_Interceptors
 {
