@@ -31,15 +31,13 @@ class be_visitor;
 
 class UTL_ExceptList;
 
+/**
+ * The back end extension of the AST_Interface class
+ */
 class be_interface : public virtual AST_Interface,
                      public virtual be_scope,
                      public virtual be_type
 {
-  // = TITLE
-  //   The back end extension of the AST_Interface class
-  //
-  // = DESCRIPTION
-  //
 public:
   // Used to pass functions to the template method.
   typedef int (*tao_code_emitter) (be_interface *,

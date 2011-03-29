@@ -23,15 +23,13 @@
 
 #include "ast_template_module.h"
 
+/**
+ * The back end extension of the AST_Template_Module class
+ */
 class be_template_module : public virtual AST_Template_Module,
                            public virtual be_scope,
                            public virtual be_decl
 {
-  // = TITLE
-  //   The back end extension of the AST_Template_Module class
-  //
-  // = DESCRIPTION
-  //
 public:
   be_template_module (
     UTL_ScopedName *n,
