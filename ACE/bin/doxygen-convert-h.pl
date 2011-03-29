@@ -49,7 +49,7 @@ sub recursive_find {
         }
         else {
           push(@rfiles, $full)
-          if ($f =~ /\.(h|hxx|hpp|hh|inl|cpp|cxx|cc|c|C)$/)
+          if ($f =~ /\.(h|hxx|hpp|hh|inl|idl|cpp|cxx|cc|c|C)$/)
           ;
         }
       }
