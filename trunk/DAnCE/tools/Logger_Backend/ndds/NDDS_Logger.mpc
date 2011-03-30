@@ -1,0 +1,34 @@
+project(DAnCE_NDDS_Logger) : nddslib_with_idl, taolib_with_idl, dance_output, install {
+
+  dynamicflags += DANCE_NDDS_LOG_BUILD_DLL
+
+  idlflags += -SS -Sci \
+              -Wb,stub_export_macro=DAnCE_NDDS_Log_Stub_Export \
+              -Wb,stub_export_include=DAnCE_NDDS_Log_stub_export.h
+
+  NDDSTypeSupport_Files {
+    Log_Record.idl
+  }
+
+  IDL_Files {
+    idlflags += -Gxhst
+    Log_Record.idl
+  }
+
+  Source_Files {
+   Log_Backend.cpp
+  }
+}
+
+project(DAnCE_NDDS_Log_Server) : nddsexe_with_idl, taoidldefaults, taoclient, dance_output, install {
+  after += DAnCE_NDDS_Logger
+  exename = dance_ndds_log_server
+
+  Source_Files  {
+    Log_Record.cxx
+    Log_RecordC.cpp
+    Log_RecordPlugin.cxx
+    Log_RecordSupport.cxx
+    Log_Server.cpp
+  }
+}
