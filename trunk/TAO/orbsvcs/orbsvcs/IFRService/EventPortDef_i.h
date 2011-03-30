@@ -34,16 +34,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * Represents an event port definition. EmitsDef_i, PublishesDef_i,
+ * and ConsumesDef_i inherit from this.
+ */
 class TAO_IFRService_Export TAO_EventPortDef_i
   : public virtual TAO_Contained_i
 {
-  // = TITLE
-  //    TAO_EventPortDef_i
-  //
-  // = DESCRIPTION
-  //    Represents an event port definition. EmitsDef_i, PublishesDef_i,
-  //    and ConsumesDef_i inherit from this.
-  //
 public:
   //// Constructor
   TAO_EventPortDef_i (TAO_Repository_i *repo);

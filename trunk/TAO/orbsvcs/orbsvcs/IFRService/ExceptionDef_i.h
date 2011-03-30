@@ -33,15 +33,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * Represents an exception definition.
+ */
 class TAO_IFRService_Export TAO_ExceptionDef_i : public virtual TAO_Contained_i,
                                                  public virtual TAO_Container_i
 {
-  // = TITLE
-  //    TAO_ExceptionDef_i
-  //
-  // = DESCRIPTION
-  //    Represents an exception definition.
-  //
 public:
   /// Constructor
   TAO_ExceptionDef_i (TAO_Repository_i *repo);

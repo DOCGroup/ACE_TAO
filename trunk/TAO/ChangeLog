@@ -1,3 +1,19 @@
+Wed Mar 30 07:19:24 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/ConsumesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/EventPortDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExceptionDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExtAbstractInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExtAttributeDef_i.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.h:
+        * orbsvcs/tests/Event/Basic/Random.h:
+        * tests/Bug_3531_Regression/client.cpp:
+        * tests/Bug_3531_Regression/test_i.h:
+          Doxygen changes
+
+        * tests/Multiple/Multiple.idl:
+          Fixed problem in this idl file
+
 Tue Mar 29 13:20:41 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be_include/be_visitor_component/component_ami_rh_exh.h:
