@@ -8,14 +8,13 @@
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int do_shutdown = 0;
 
+/**
+ * Simpler Server Client implementation
+ *
+ * Implements the Simple_Server interface in test.idl
+ */
 class Simple_Server_i : public POA_Simple_Server
 {
-  // = TITLE
-  //   Simpler Server Client implementation
-  //
-  // = DESCRIPTION
-  //   Implements the Simple_Server interface in test.idl
-  //
 public:
   Simple_Server_i (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
