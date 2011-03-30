@@ -1,0 +1,27 @@
+// $Id$
+
+/**
+ * @file Log_Record.idl
+ * @author William R. Otte
+ *
+ * Defines a data structure for DAnCE log records.
+ */
+
+module DAnCE
+{
+
+  struct Log_Record
+  {
+    /// The name of the node this originates from, if available
+    string node; //@key
+
+    /// The process ID of the node.
+    long pid; //@key
+
+    /// The log priority of the message
+    unsigned long priority;
+
+    /// The error diagnostic
+    string message;
+  };
+};
