@@ -1,3 +1,23 @@
+Wed Mar 30 03:38:36 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Logger_Backend:
+        * tools/Logger_Backend/ndds:
+        * tools/Logger_Backend/ndds/DAnCE_NDDS_Log_Export.h:
+        * tools/Logger_Backend/ndds/Log_Backend.h:
+        * tools/Logger_Backend/ndds/Log_Backend.cpp:
+        * tools/Logger_Backend/ndds/Log_Record.idl:
+        * tools/Logger_Backend/ndds/Log_RecordS.cpp:
+        * tools/Logger_Backend/ndds/Log_Server.cpp:
+        * tools/Logger_Backend/ndds/NDDS_Logger.mpc:
+
+          NDDS-based logging backend for DAnCE.  This serves as both a
+          useful error reporting tool, and as a case study in DDS for
+          myself.  As such, the implementation is rather simple now, and
+          possibly incorrect.  In the future it will be expanded to take
+          better advantage of DDS features.
+
+          It has not yet been integrated into the Logger_Service as yet.
+
 Thu Mar 24 20:13:28 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/DnC_Dump.cpp:
