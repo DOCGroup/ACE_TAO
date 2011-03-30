@@ -1,3 +1,9 @@
+Wed Mar 30 03:43:13 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Logger_Backend/ndds/Log_RecordS.cpp:
+
+          Removed this file.
+
 Wed Mar 30 03:38:36 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Logger_Backend:
