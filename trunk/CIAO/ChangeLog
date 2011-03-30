@@ -1,3 +1,11 @@
+Wed Mar 30 09:27:14 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        Changed number of samples in get_many from 1 to max_samples .
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+        Solved error initilizing array for get_many test.
+
+
 Tue Mar 29 12:14:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.cpp:
