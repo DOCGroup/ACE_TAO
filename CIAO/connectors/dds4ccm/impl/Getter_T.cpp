@@ -145,7 +145,7 @@ namespace CIAO
 
               ::DDS::ReturnCode_t const retcode = this->get (data,
                                                               sample_info,
-                                                              1);
+                                                              max_samples);
 
               if (retcode == ::DDS::RETCODE_OK && data.length () >= 1)
                 {
