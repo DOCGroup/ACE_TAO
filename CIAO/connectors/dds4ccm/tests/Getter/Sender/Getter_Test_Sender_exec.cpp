@@ -181,7 +181,7 @@ namespace CIAO_Getter_Test_Sender_Impl
         for (CORBA::UShort iter = 1; iter < this->iterations_ + 1; ++iter)
           {
             new_key.iteration = iter;
-            write_many[key + iter - 2] = new_key;
+            write_many[(iter -1) + ((key -1) * 10)] = new_key;
           }
       }
     try
