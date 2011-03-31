@@ -303,7 +303,7 @@ namespace CIAO
     #endif
 
       ::DDS::ReturnCode_t const retcode =
-         this->ws_.wait (active_conditions, time_out);
+        this->ws_.wait (active_conditions, time_out);
 
     #if !defined (DDS4CCM_NLOGGING)
       ACE_Time_Value const waited = ACE_OS::gettimeofday () - start;
