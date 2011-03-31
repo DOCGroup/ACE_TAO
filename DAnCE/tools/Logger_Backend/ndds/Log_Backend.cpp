@@ -11,7 +11,7 @@ namespace DAnCE
   NDDS_Log_Backend::NDDS_Log_Backend (void)
     : domain_ (0),
       participant_ (0),
-      topic_name_ (0),
+      topic_ (0),
       publisher_ (0),
       datawriter_ (0),
       log_record_writer_ (0)
@@ -58,17 +58,17 @@ namespace DAnCE
   int
   NDDS_Log_Backend::fini (void)
   {
-
+    return 0;
   }
 
   int
-  NDDS_Log_Backend::info (ACE_TCHAR **str, size_t len) const
+  NDDS_Log_Backend::info (ACE_TCHAR **, size_t) const
   {
-
+    return 0;
   }
 
   int
-  NDDS_Log_Backend::get_configuration (const ACE_TCHAR *logger_key)
+  NDDS_Log_Backend::get_configuration (const ACE_TCHAR *)
   {
     // for now, we ignore logger key until I figure out what to do with it.
     ACE_Env_Value<long> env_domain (ACE_TEXT("DANCE_LOG_NDDS_DOMAIN"), this->domain_);
@@ -148,6 +148,8 @@ namespace DAnCE
       }
 
     log_record_writer_ = Log_RecordDataWriter::narrow (this->datawriter_);
+    
+    return 0;
   }
 
   int
@@ -164,6 +166,8 @@ namespace DAnCE
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("NDDS_Log_Backend::open - unable to configure DDS entities\n")));
         return -1;
       }
+
+    return 0;
   }
 
   int
