@@ -34,7 +34,7 @@ namespace CIAO
 
       if (CORBA::is_nil (ctx))
         {
-          DANCE_ERROR (1, (LM_WARNING, DLINFO ACE_TEXT("Name_Utilities::bind_object - ")
+          CIAO_ERROR (1, (LM_WARNING, DLINFO ACE_TEXT("Name_Utilities::bind_object - ")
                         ACE_TEXT("Provided naming context is nil, component %C will not be registered."),
                         name));
           return false;
@@ -48,7 +48,7 @@ namespace CIAO
 
           if (nm.length () == 0)
             {
-              DANCE_ERROR (1, (LM_WARNING, DLINFO ACE_TEXT("Name_Utilities::bind_object - ")
+              CIAO_ERROR (1, (LM_WARNING, DLINFO ACE_TEXT("Name_Utilities::bind_object - ")
                             ACE_TEXT("build_name resulted in an invalid name for string %C\n"),
                             name));
               return false;
@@ -62,7 +62,7 @@ namespace CIAO
             }
           catch (const CosNaming::NamingContext::AlreadyBound &)
             {
-              DANCE_ERROR (1, (LM_WARNING, DLINFO ACE_TEXT("Name_Utilities::bind_object - ")
+              CIAO_ERROR (1, (LM_WARNING, DLINFO ACE_TEXT("Name_Utilities::bind_object - ")
                             ACE_TEXT("Name %C already bound, rebinding....\n"),
                             name));
               ctx->rebind (nm, obj);
@@ -70,14 +70,14 @@ namespace CIAO
         }
       catch (const CORBA::Exception &ex)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Name_Utilities::bind_object - ")
+          CIAO_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Name_Utilities::bind_object - ")
                         ACE_TEXT("Caught CORBA exception while attempting to bind name %C: %C\n"),
                         name, ex._info ().c_str ()));
           return false;
         }
       catch (...)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Name_Utilities::bind_object - ")
+          CIAO_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Name_Utilities::bind_object - ")
                         ACE_TEXT("Caught unknown C++ exception while attemptint to bind name %C\n"),
                         name));
           return false;
@@ -94,7 +94,7 @@ namespace CIAO
 
       if (CORBA::is_nil (ctx))
         {
-          DANCE_ERROR (1, (LM_WARNING, DLINFO ACE_TEXT("Name_Utilities::bind_context - ")
+          CIAO_ERROR (1, (LM_WARNING, DLINFO ACE_TEXT("Name_Utilities::bind_context - ")
                         ACE_TEXT("Provided naming context is nil, the naming context will not be bound.")));
         }
 
@@ -109,12 +109,12 @@ namespace CIAO
           try
             {
               ctx->bind_new_context (newname);
-              DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Name_Utilities::bind_context - ")
+              CIAO_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Name_Utilities::bind_context - ")
                             ACE_TEXT("Bound new context %C\n"), newname[i].id.in ()));
             }
           catch (CosNaming::NamingContext::AlreadyBound &)
             {
-              DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Name_Utilities::bind_context - ")
+              CIAO_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Name_Utilities::bind_context - ")
                             ACE_TEXT("Context %C already bound.\n"), newname[i].id.in ()));
             }
         }
@@ -128,7 +128,7 @@ namespace CIAO
 
       if (CORBA::is_nil (ctx))
         {
-          DANCE_ERROR (1, (LM_WARNING, DLINFO ACE_TEXT("Name_Utilities::unbind_object - ")
+          CIAO_ERROR (1, (LM_WARNING, DLINFO ACE_TEXT("Name_Utilities::unbind_object - ")
                         ACE_TEXT("Provided naming context is nil, instance %C will not be unbound\n"),
                         name));
         }
@@ -142,7 +142,7 @@ namespace CIAO
         }
       catch (CORBA::Exception &e)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Name_Utilities::unbind_object - ")
+          CIAO_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Name_Utilities::unbind_object - ")
                         ACE_TEXT("Caught CORBA exception whilst unbinding name %C: %C\n"),
                         name, e._info ().c_str ()));
           return false;
@@ -165,7 +165,7 @@ namespace CIAO
           CORBA::ULong const i = nm.length ();
           nm.length (i + 1);
 
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Name_Utilities::build_name - ")
+          CIAO_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Name_Utilities::build_name - ")
                         ACE_TEXT("Found name component %C\n"),
                         next));
 
