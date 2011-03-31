@@ -1,3 +1,10 @@
+Thu Mar 31 22:08:34 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Logger_Backend/ndds/Log_Record.idl:
+        * tools/Logger_Backend/ndds/NDDS_Logger.mpc:
+
+          Fuzz.
+
 Wed Mar 30 03:43:13 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Logger_Backend/ndds/Log_RecordS.cpp:
