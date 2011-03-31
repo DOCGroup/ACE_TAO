@@ -1,3 +1,16 @@
+Thu Mar 31 13:51:24 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/DAnCE/LocalityManager/CommandlinePassage/Component.cdp:
+          Renamed deployment plan.
+
+        * tests/DAnCE/Threading/Component1/Component1_exec.cpp:
+        * tests/DAnCE/Threading/Component2/Component2_exec.cpp:
+          Added some extra debug information.
+
+        * tests/DAnCE/Threading/descriptors/Plan.cdp:
+          Locality manager now accepts the command lines given in this
+          deployment plan.
+
 Thu Mar 31 13:03:30 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager.cpp:
