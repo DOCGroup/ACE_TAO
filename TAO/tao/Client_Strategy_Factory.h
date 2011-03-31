@@ -60,10 +60,10 @@ public:
   /// Return the size of the reply dispatcher table
   virtual int reply_dispatcher_table_size (void) const = 0;
 
-  /// Create the correct client <wait_for_reply> strategy.
+  /// Create the correct client wait_for_reply strategy.
   virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport) = 0;
 
-  /// Create the correct client <asynch_connect> strategy.
+  /// Create the correct client asynch_connect strategy.
   virtual TAO_Connect_Strategy *create_connect_strategy (TAO_ORB_Core *) = 0;
 
   enum Connect_Strategy

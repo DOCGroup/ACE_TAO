@@ -10,6 +10,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Transport;
+
 namespace TAO
 {
   /**
@@ -53,7 +54,6 @@ namespace TAO
     }
 
   private:
-
     Nested_Upcall_Guard (void)
     {
     }
@@ -63,11 +63,9 @@ namespace TAO
     Nested_Upcall_Guard &operator= (const Nested_Upcall_Guard&);
 
   private:
-
     /// Pointer to the transport that we plan to use.
     TAO_Transport *t_;
   };
-
 
   //=================================================================
 

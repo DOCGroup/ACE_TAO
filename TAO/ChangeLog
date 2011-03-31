@@ -1,3 +1,16 @@
+Thu Mar 31 11:34:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/tao_idl.mpc:
+        * TAO_IDL/tao_idl_be.mpc:
+          We can now build these projects with cross compilation
+
+        * tao/Client_Strategy_Factory.h:
+          Doxygen change
+
+        * tao/Wait_On_LF_No_Upcall.cpp:
+        * tao/default_client.cpp:
+          Layout changes
+
 Wed Mar 30 07:19:24 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/IFRService/ConsumesDef_i.h:
