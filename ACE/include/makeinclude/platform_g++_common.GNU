@@ -6,6 +6,7 @@ ifeq ($(insure),1)
   CXX = insure
 else
   ifneq ($(CROSS_COMPILE),)
+    CROSS-COMPILE = 1
     # Build using the cross-tools
     ifneq ($($CROSS_COMPILE_POSTFIX),)
       CC  = ${CROSS_COMPILE}gcc{$CROSS_COMPILE_POSTFIX}
