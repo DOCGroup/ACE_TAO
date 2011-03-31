@@ -194,8 +194,6 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                       "ignoring option <%s>\n",
                       argv[curarg]));
         }
-
-
     }
   return 0;
 }
