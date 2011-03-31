@@ -1,8 +1,18 @@
+Thu Mar 31 13:03:30 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager.cpp:
+          Layout changes
+
+        * tests/DAnCE/Threading/*:
+        * bin/ciao_tests.lst:
+          Added test which with one is able to tune the threading behaviour of
+          CORBA.
+
 Tue Mar 29 12:249:14 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/impl/Getter_T.cpp:
         Changed number of samples in get_many from 1 to max_samples .
- 
+
 Wed Mar 23 17:49:14 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender.idl:
