@@ -1,3 +1,5 @@
+// $Id$
+
 project(DAnCE_NDDS_Logger) : nddslib_with_idl, taolib_with_idl, dance_output, install {
 
   dynamicflags += DANCE_NDDS_LOG_BUILD_DLL
