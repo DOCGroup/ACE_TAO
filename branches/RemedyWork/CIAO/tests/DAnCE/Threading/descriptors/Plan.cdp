@@ -7,6 +7,23 @@
   <label>Threading_Depl_1</label>
   <UUID>Threading_Depl_1</UUID>
 
+  <implementation xmi:id="CompSvrImpl">
+    <name>CompSvr</name>
+    <source />
+    <artifact xmi:idref="CompSvrArt" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.DAnCE.LocalityManager</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
   <implementation xmi:id="Component1Implementation">
     <name>Component1Implementation</name>
     <source/>
@@ -109,11 +126,11 @@
     </execParameter>
   </implementation>
 
-  <instance xmi:id="Component1Instance">
-    <name>Component1</name>
+  <instance xmi:id="CompSvr1Inst">
+    <name>ComponentServer1Instance</name>
     <node>ComponentNode</node>
-    <source/>
-    <implementation xmi:idref="Component1Implementation" />
+    <source />
+    <implementation xmi:idref="CompSvrImpl" />
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.LocalityArguments</name>
       <value>
@@ -121,10 +138,36 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>-ORBSvcConfDirective "static Client_Strategy_Factory '-ORBWaitStrategy mt_noupcall'"</string>
+          <string>-ORBDebugLevel 1 -ORBSvcConfDirective "static Client_Strategy_Factory '-ORBWaitStrategy mt_noupcall'"</string>
         </value>
       </value>
     </configProperty>
+  </instance>
+
+  <instance xmi:id="CompSvr2Inst">
+    <name>ComponentServer2Instance</name>
+    <node>ComponentNode</node>
+    <source />
+    <implementation xmi:idref="CompSvrImpl" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.LocalityArguments</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>-ORBDebugLevel 1 -ORBSvcConfDirective "static Client_Strategy_Factory '-ORBWaitStrategy mt_noupcall'"</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+
+  <instance xmi:id="Component1Instance">
+    <name>Component1</name>
+    <node>ComponentNode</node>
+    <source/>
+    <implementation xmi:idref="Component1Implementation" />
   </instance>
 
   <instance xmi:id="Component2Instance">
@@ -132,17 +175,6 @@
     <node>ComponentNode</node>
     <source/>
     <implementation xmi:idref="Component2Implementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.LocalityArguments</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>-ORBSvcConfDirective "static Client_Strategy_Factory '-ORBWaitStrategy mt_noupcall'"</string>
-        </value>
-      </value>
-    </configProperty>
   </instance>
 
   <connection>
@@ -213,5 +245,24 @@
     <node/>
     <location>Component2_stub</location>
   </artifact>
+
+  <artifact xmi:id="CompSvrArt">
+    <name>CompoSvrArtifactName</name>
+    <source />
+    <node />
+    <location>dance_locality_manager</location>
+  </artifact>
+
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="CompSvr1Inst" />
+    <constrainedInstance xmi:idref="Component1Instance" />
+  </localityConstraint>
+
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="CompSvr2Inst" />
+    <constrainedInstance xmi:idref="Component2Instance" />
+  </localityConstraint>
 
 </Deployment:DeploymentPlan>

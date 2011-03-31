@@ -50,6 +50,9 @@ namespace CIAO_Threading_Component2_Impl
   void
   prov_interface_2_exec_i::invoke_on_interface_2 (void)
   {
+    ACE_DEBUG ((LM_DEBUG, "prov_interface_2_exec_i::invoke_on_interface_2 - "
+                          "Call received -> invoking 'invoke_on_interface_1' on Component1\n"));
+
     ::Threading::interface_1_var interface_1 =
       this->ciao_context_->get_connection_use_interface_1 ();
     interface_1->invoke_on_interface_1 ();
