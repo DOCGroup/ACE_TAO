@@ -1,3 +1,8 @@
+Thu Mar 31 12:59:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          If CROSS_COMPILE is set, set CROSS-COMPILE to 1
+
 Tue Mar 29 12:37:49 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/doxygen-convert-h.pl:
