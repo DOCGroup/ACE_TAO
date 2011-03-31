@@ -34,8 +34,8 @@ namespace TAO
 
       if (TAO_debug_level > 6)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Wait_On_LF_No_Upcall::wait "
-                    "disabling upcalls on thread %t\n"));
+                    "TAO (%P|%t) - Wait_On_LF_No_Upcall::wait, "
+                    "disabling upcalls\n"));
     }
 
     ~Nested_Upcall_Guard (void)
@@ -47,8 +47,8 @@ namespace TAO
       if (TAO_debug_level > 6)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Wait_On_LF_No_Upcall::wait "
-                      "re-enabling upcalls on thread %t\n"));
+                      "TAO (%P|%t) - Wait_On_LF_No_Upcall::wait, "
+                      "re-enabling upcalls\n"));
         }
     }
 
@@ -96,9 +96,11 @@ namespace TAO
       this->transport_->orb_core ()->get_tss_resources ();
 
     if ((this->transport_->opened_as () == TAO::TAO_CLIENT_ROLE) &&
-        (this->transport_->bidirectional_flag () == 0) &&
+        (this->transport_->bidirectional_flag () != -1) &&
         (tss->upcalls_temporarily_suspended_on_this_thread_))
-      return false;
+      {
+        return false;
+      }
 
     return true;
   }
