@@ -1,3 +1,9 @@
+Thu Mar 31 22:27:54 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Logger_Backend/ndds/Log_Backend.cpp:
+
+          Warnings.
+
 Thu Mar 31 22:08:34 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Logger_Backend/ndds/Log_Record.idl:
