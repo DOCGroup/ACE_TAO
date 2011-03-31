@@ -50,7 +50,7 @@ namespace CIAO_Threading_Component1_Impl
   void
   prov_interface_1_exec_i::invoke_on_interface_1 (void)
   {
-    /* Your code here. */
+    ACE_DEBUG ((LM_DEBUG, "prov_interface_1_exec_i::invoke_on_interface_1\n"));
   }
 
   /**
@@ -114,12 +114,7 @@ namespace CIAO_Threading_Component1_Impl
   {
     ::Threading::interface_2_var interface_2 =
       this->ciao_context_->get_connection_use_interface_2 ();
-
-    ACE_DEBUG ((LM_DEBUG, "prov_interface_1_exec_i::invoke_on_interface_1 - "
-                          "Invoking 'invoke_on_interface_2' on Component2\n"));
-
     interface_2->invoke_on_interface_2 ();
-
     ACE_DEBUG ((LM_DEBUG, "prov_interface_1_exec_i::invoke_on_interface_1 - "
                           "Is not blocking!!\n"));
   }
