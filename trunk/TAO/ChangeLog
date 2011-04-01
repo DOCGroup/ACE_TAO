@@ -1,3 +1,30 @@
+Fri Apr  1 15:10:04 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/Naming_Service/Naming_Service.h:
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+
+          Added support for multi-thread operation. In environments where
+          100s of clients are resolving references, the single-threaded
+          naming service becomes a real performance bottleneck. This patch
+          adds a -n <numthreads> command line option. Threading is
+          achieved by using an ACE_Task to call ORB::run() on multiple
+          threads. Default is single threaded behavior.
+        
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        
+          Added a try/catch to the naming service resolving function. It
+          is possible that and execption is thrown while trying to
+          connect, and that was causing the service to crash abrupty
+          messing up some administrative scripts. Now an error is logged
+          and shutdown happens gracefully.
+
+        * orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
+        
+          Silenced some compiler warnings that complained about an
+          infinite loop. The test added to break will never pass, so the
+          behavior is unchanged, but pedantic gcc compilers are now
+          satified.
+
 Thu Mar 31 11:34:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/tao_idl.mpc:
