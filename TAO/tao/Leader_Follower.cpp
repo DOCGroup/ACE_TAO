@@ -265,8 +265,6 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
             //
             // but only the first one has any effect, so the leader is
             // lost.
-            //
-
             TAO_LF_Follower_Auto_Adder auto_adder (*this, follower);
 
             if (max_wait_time == 0)
