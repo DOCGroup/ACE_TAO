@@ -1,3 +1,8 @@
+Fri Apr  1 15:02:17 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/LateBinding/README:
+          Added some more information regarding this tests.
+
 Thu Mar 31 14:03:40 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/DAnCE/Threading/README:
