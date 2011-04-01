@@ -1,3 +1,5 @@
+// $Id$
+
 #include "SharedIntf_i.h"
 #include "worker.h"
 #include "chatter.h"
@@ -6,7 +8,8 @@
 #include "ace/SString.h"
 #include "ace/streams.h"
 
-int main(int argc, char* argv[])
+int
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb_;
   int result = 0;
@@ -54,7 +57,7 @@ int main(int argc, char* argv[])
     ior_filestream << intfString_var.in() << endl;
     ior_filestream.close();
 
-    ACE_DEBUG((LM_INFO,"(%P|%t) server IOR to %s\n",
+    ACE_DEBUG((LM_INFO,"(%P|%t) server IOR to %C\n",
       ior_filename.c_str()));
 
     // Running ORB in separate thread
@@ -89,8 +92,8 @@ int main(int argc, char* argv[])
 
     orb_->destroy();
 
-    ACE_DEBUG((LM_INFO,"(%P|%t) Server Test %s\n",
-      (worker2.nrequests() == worker2.nreplies())?"succeded":"failed"));
+    ACE_DEBUG((LM_INFO,"(%P|%t) Server Test %C\n",
+      (worker2.nrequests() == worker2.nreplies())?"succeeded":"failed"));
     result = (worker2.nrequests() == worker2.nreplies())? 0 : -1;
   }
   catch (const CORBA::Exception& ex)
@@ -101,10 +104,4 @@ int main(int argc, char* argv[])
   ACE_OS::unlink ("server.ior");
   return result;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Condition<ACE_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate  ACE_Condition<ACE_Mutex>
-#endif
 

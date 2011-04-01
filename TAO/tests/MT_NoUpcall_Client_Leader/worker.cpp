@@ -1,6 +1,6 @@
-#include "worker.h"
+// $Id$
 
-ACE_RCSID(RT4332, worker, "$Id$")
+#include "worker.h"
 
 Worker::Worker (CORBA::ORB_ptr orb)
   :  orb_ (CORBA::ORB::_duplicate (orb))
