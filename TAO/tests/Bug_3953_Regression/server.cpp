@@ -1,8 +1,10 @@
 // $Id$
 
 #include "server_i.h"
+
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+#include "tao/Messaging/Messaging.h"
 
 static int quiet = 0;
 // The test is quiet...
@@ -33,6 +35,28 @@ Server_Task::svc (void)
 {
   try
     {
+      CORBA::Object_var object =
+        this->orb_->resolve_initial_references ("PolicyCurrent");
+
+      CORBA::PolicyCurrent_var policy_current =
+        CORBA::PolicyCurrent::_narrow (object.in ());
+
+      TimeBase::TimeT timeout_period = 100 * 100000;
+
+      CORBA::Any timeout_as_any;
+      timeout_as_any <<= timeout_period;
+
+      CORBA::PolicyList policy_list (1);
+      policy_list.length (1);
+      policy_list[0] =
+        this->orb_->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
+                                   timeout_as_any);
+
+      policy_current->set_policy_overrides (policy_list,
+                                            CORBA::ADD_OVERRIDE);
+
+      policy_list[0]->destroy();
+
       this->orb_->run ();
     }
   catch (const CORBA::Exception&)
@@ -110,11 +134,13 @@ parse_args (int argc,
 int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  int result = 0;
+  
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      int result = parse_args (argc, argv);
+      result = parse_args (argc, argv);
       if (result != 0)
         return result;
 
@@ -158,6 +184,9 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
         return result;
 
       root_poa->destroy (1, 1);
+
+      if (!server_servant.exception ())
+        ++result;
     }
   catch (const CORBA::Exception& ex)
     {
@@ -165,5 +194,5 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
       return -1;
     }
 
-  return 0;
+  return result;
 }
