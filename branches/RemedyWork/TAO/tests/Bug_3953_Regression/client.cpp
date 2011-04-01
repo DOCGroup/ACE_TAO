@@ -10,7 +10,7 @@ static const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 static int shutdown_server = 0;
 // Flag to tell server to shutdown.
 
-static CORBA::UShort call_count = 1;
+static CORBA::UShort call_count = 2;
 // # of nested calls to be made.
 
 static int quiet = 0;
