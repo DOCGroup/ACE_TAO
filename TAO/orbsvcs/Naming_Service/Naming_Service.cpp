@@ -5,16 +5,19 @@
 #include "orbsvcs/Daemon_Utilities.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
+#include "ace/Task.h"
 
 // Default Constructor.
 TAO_Naming_Service::TAO_Naming_Service (void)
-  : time_ (0)
+  : time_ (0),
+    num_threads_ (1)
 {
 }
 
 // Constructor taking command-line arguments.
 TAO_Naming_Service::TAO_Naming_Service (int argc, ACE_TCHAR* argv[])
-  : time_ (0)
+  : time_ (0),
+    num_threads_ (1)
 {
   this->init (argc, argv);
 }
@@ -59,7 +62,7 @@ TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
 int
 TAO_Naming_Service::parse_args (int &argc, ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("-t:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("-t:n:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -82,6 +85,23 @@ TAO_Naming_Service::parse_args (int &argc, ACE_TCHAR* argv[])
             argc = argc - 2;
             break;
           }
+        case 'n':
+          {
+            int const nt = ACE_OS::atoi (get_opts.opt_arg ());
+            if (nt >= 1)
+              this->num_threads_ = nt;
+
+            // Remove the option '-n' from argv []
+            // to avoid any confusion that might result.
+            for (int i = get_opts.opt_ind (); i != argc; ++i)
+              argv [i-2 ] = argv [i];
+
+            // Decrement the value of argc to reflect the removal
+            // of '-n' option.
+            argc = argc - 2;
+            break;
+          }
+
         case '?':
         default:
           // Don't do anything. The TAO_Naming_Server::parse_args ()
@@ -93,9 +113,17 @@ TAO_Naming_Service::parse_args (int &argc, ACE_TCHAR* argv[])
 }
 
 // Run the ORB event loop.
-int
-TAO_Naming_Service::run (void)
+
+class ORB_Runner : public ACE_Task_Base
 {
+public:
+  ORB_Runner (CORBA::ORB_ptr o, long t)
+    : orb_(CORBA::ORB::_duplicate (o)),
+      time_(t)
+  {}
+
+  int svc (void)
+  {
   if (!CORBA::is_nil (orb_.in ()))
     {
       if (time_ == 0)
@@ -109,6 +137,26 @@ TAO_Naming_Service::run (void)
         }
     }
 
+  return 0;
+  }
+
+private:
+  CORBA::ORB_var orb_;
+  long time_;
+};
+
+int
+TAO_Naming_Service::run (void)
+{
+  ORB_Runner runner (this->orb_.in(), time_);
+  if (this->num_threads_ == 1)
+    return runner.svc();
+  else
+    {
+      runner.activate ( THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
+                        this->num_threads_);
+      runner.wait();
+    }
   return 0;
 }
 

@@ -338,17 +338,31 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 int
 TAO_Notify_Service_Driver::resolve_naming_service (void)
 {
-  CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references ("NameService");
+  try
+    {
+      CORBA::Object_var naming_obj =
+        this->orb_->resolve_initial_references ("NameService");
 
-  // Need to check return value for errors.
-  if (CORBA::is_nil (naming_obj.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Unable to resolve the Naming Service.\n"),
-                      -1);
+      // Need to check return value for errors.
+      if (CORBA::is_nil (naming_obj.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to resolve the Naming Service.\n"),
+                          -1);
 
-  this->naming_ = CosNaming::NamingContextExt::_narrow (naming_obj.in ());
-
+      this->naming_ = CosNaming::NamingContextExt::_narrow (naming_obj.in ());
+    }
+  catch (CORBA::Exception &ex)
+    {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to resolve the Naming Service.\n"),
+                          -1);
+    }
+  catch (...)
+    {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to resolve the Naming Service.\n"),
+                          -1);
+    }
   return 0;
 }
 
