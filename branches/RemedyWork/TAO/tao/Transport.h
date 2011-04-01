@@ -159,7 +159,7 @@ namespace TAO
  * The transport object is created in the Service handler
  * constructor and deleted in the Service Handler's destructor!!
  *
- * The main responsability of a Transport object is to encapsulate a
+ * The main responsibility of a Transport object is to encapsulate a
  * connection, and provide a transport independent way to send and
  * receive data.  Since TAO is heavily based on the Reactor for all if
  * not all its I/O the Transport class is usually implemented with a
@@ -223,7 +223,7 @@ namespace TAO
  * - A queue of pending messages
  * - A message currently being transmitted
  * - A per-transport 'send strategy' to choose between blocking on
- *   write, blocking on the reactor or blockin on leader/follower.
+ *   write, blocking on the reactor or blocking on leader/follower.
  * - A per-message 'waiting object'
  * - A per-message timeout
  *
@@ -241,7 +241,7 @@ namespace TAO
  *    same time ie. the handle should not be shared between threads at
  *    any instant.
  *  - Reads on the handle could give one or more messages.
- *  - Minimise locking and copying overhead when trying to attack the
+ *  - Minimize locking and copying overhead when trying to attack the
  *    above.
  *
  * <H3> Parsing messages (GIOP) & processing the message:</H3>
@@ -254,7 +254,7 @@ namespace TAO
  * <H3> Design forces and Challenges </H3>
  *
  * To keep things as efficient as possible for medium sized requests,
- * it would be good to minimise data copying and locking along the
+ * it would be good to minimize data copying and locking along the
  * incoming path ie. from the time of reading the data from the handle
  * to the application. We achieve this by creating a buffer on stack
  * and reading the data from the handle into the buffer. We then pass
@@ -449,7 +449,7 @@ public:
   /// Add event handlers corresponding to transports that have RW wait
   /// strategy to the handlers set.
   /**
-   * Called by the cache when the ORB is shuting down.
+   * Called by the cache when the ORB is shutting down.
    *
    * @param handlers The TAO_Connection_Handler_Set into which the
    *        transport should place its handler if the transport has RW
