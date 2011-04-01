@@ -53,7 +53,6 @@ namespace TAO
     }
 
   private:
-
     Nested_Upcall_Guard (void)
     {
     }
@@ -63,7 +62,6 @@ namespace TAO
     Nested_Upcall_Guard &operator= (const Nested_Upcall_Guard&);
 
   private:
-
     /// Pointer to the transport that we plan to use.
     TAO_Transport *t_;
   };
@@ -96,10 +94,15 @@ namespace TAO
       this->transport_->orb_core ()->get_tss_resources ();
 
     if ((this->transport_->opened_as () == TAO::TAO_CLIENT_ROLE) &&
-        (this->transport_->bidirectional_flag () != -1) &&
-        (tss->upcalls_temporarily_suspended_on_this_thread_))
+        (this->transport_->bidirectional_flag () == -1))
       {
-        return false;
+        TAO_ORB_Core_TSS_Resources *tss =
+          this->transport_->orb_core ()->get_tss_resources ();
+
+        if (tss->upcalls_temporarily_suspended_on_this_thread_)
+          {
+            return false;
+          }
       }
 
     return true;
