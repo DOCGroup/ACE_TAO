@@ -1,5 +1,6 @@
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    Naming_Service.h
  *
@@ -10,7 +11,7 @@
  *
  *  @author Nagarajan Surendran (naga@cs.wustl.edu) Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
+//==========================================================================
 
 
 #ifndef TAO_NAMING_SERVICE_H
@@ -66,6 +67,9 @@ protected:
   /// After how long the server should stop listening to requests (in
   /// seconds).
   long time_;
+
+  /// Number of threads for running the ORB. Default is 1
+  int num_threads_;
 };
 
 #endif /* TAO_NAMING_SERVICE_H */

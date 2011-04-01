@@ -301,6 +301,8 @@ int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords)
         CORBA::String_var t(str.c_str ());
         record[0] <<= t.in ();
         basicLog_->write_records(record);
+        if (l == 0)
+          break; // silence an 'infinite loop' warning
     }
   }
   else
