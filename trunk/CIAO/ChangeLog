@@ -1,3 +1,10 @@
+Fri Apr  1 17:39:00 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+        * ciao/Deployment/Interceptors/Name_Utilities.cpp:
+
+          Fixes.
+
 Thu Mar 31 22:12:23 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
