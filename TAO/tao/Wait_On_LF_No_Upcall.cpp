@@ -90,7 +90,7 @@ namespace TAO
   bool
   Wait_On_LF_No_Upcall::can_process_upcalls (void) const
   {
-    if ((this->transport_->opened_as () == TAO::TAO_CLIENT_ROLE) &&
+    if ((this->transport_->opened_as () == TAO::TAO_SERVER_ROLE) &&
         (this->transport_->bidirectional_flag () == -1))
       {
         TAO_ORB_Core_TSS_Resources *tss =
