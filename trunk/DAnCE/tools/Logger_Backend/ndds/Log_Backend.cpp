@@ -148,7 +148,7 @@ namespace DAnCE
       }
 
     log_record_writer_ = Log_RecordDataWriter::narrow (this->datawriter_);
-    
+
     return 0;
   }
 
