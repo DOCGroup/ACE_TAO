@@ -13,7 +13,7 @@ class Chatter : public Worker
 public:
   Chatter (CORBA::ORB_ptr orb, const char *ior, ACE_Condition<ACE_Mutex>& cond);
   virtual int svc (void);
-  int farewell (ACE_ENV_SINGLE_ARG_DECL);
+  int farewell ();
   long nrequests (void);
   long nreplies (void);
 public:
