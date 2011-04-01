@@ -16,10 +16,8 @@ public virtual TAO_RefCountServantBase
       Test_Idl_SharedIntf_i (CORBA::ORB_ptr orb);
       virtual ~Test_Idl_SharedIntf_i (void);
 
-      virtual void ping ( ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-         ACE_THROW_SPEC (( CORBA::SystemException ));
-      virtual void farewell ( ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-         ACE_THROW_SPEC (( CORBA::SystemException));
+      virtual void ping ();
+      virtual void farewell ();
   private:
       CORBA::ORB_ptr orb_;
 };

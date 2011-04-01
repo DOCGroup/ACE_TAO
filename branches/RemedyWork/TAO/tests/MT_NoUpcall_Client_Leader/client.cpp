@@ -12,27 +12,21 @@ main(int argc, char* argv[])
   CORBA::ORB_var orb_;
   int result = 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
   {
-    orb_ = CORBA::ORB_init (argc, argv, "myorb-client" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    orb_ = CORBA::ORB_init (argc, argv, "myorb-client");
 
     CORBA::Object_var poa_object =
-      orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      orb_->resolve_initial_references ("RootPOA");
 
     PortableServer::POA_var root_poa =
-      PortableServer::POA::_narrow (poa_object.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      PortableServer::POA::_narrow (poa_object.in());
 
     PortableServer::POAManager_var poa_manager =
-      root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      root_poa->the_POAManager ();
     PortableServer::POA_var poa = root_poa;
 
-    poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    poa_manager->activate ();
 
     ACE_DEBUG((LM_INFO,"(%P|%t) START OF CLIENT TEST\n"));
 
@@ -42,22 +36,18 @@ main(int argc, char* argv[])
 
     PortableServer::ServantBase_var base_var = intf_i;
     PortableServer::ObjectId_var intfId_var =
-      poa->activate_object (base_var.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      poa->activate_object (base_var.in());
 
     CORBA::Object_var obj_var =
-      poa->id_to_reference (intfId_var.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      poa->id_to_reference (intfId_var.in());
 
     Test_Idl::SharedIntf_var intf_var =
-      Test_Idl::SharedIntf::_narrow (obj_var.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      Test_Idl::SharedIntf::_narrow (obj_var.in());
 
     // Creating stringified IOR of the servant and writing it to a file.
     //
     CORBA::String_var intfString_var =
-      orb_->object_to_string (intf_var.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      orb_->object_to_string (intf_var.in());
 
     ACE_CString ior_filename ("client.ior");
     ofstream ior_filestream (ior_filename.c_str());
@@ -94,12 +84,10 @@ main(int argc, char* argv[])
 
     // Kill the peer
     {
-      CORBA::Object_var rawObject = orb_->string_to_object( serverior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var rawObject = orb_->string_to_object( serverior);
 
       Test_Idl::SharedIntf_var intf_var =
-        Test_Idl::SharedIntf::_narrow(rawObject.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test_Idl::SharedIntf::_narrow(rawObject.in());
 
       if (CORBA::is_nil (intf_var.in ()))
         ACE_ERROR_RETURN ((LM_ERROR, "Nil reference <%s>\n", serverior), -1);
@@ -107,32 +95,27 @@ main(int argc, char* argv[])
       // make call on server
       ACE_DEBUG((LM_INFO,"(%P|%t) farewell START for %s\n", serverior));
 
-      intf_var->farewell(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      intf_var->farewell();
 
       ACE_DEBUG((LM_INFO,"(%P|%t) farewell COMPLETE for %s\n", serverior));
     }
 
     ACE_DEBUG((LM_INFO,"(%P|%t) END OF CLIENT TEST\n"));
     orb_.in()->shutdown ();
-    ACE_TRY_CHECK;
 
-    root_poa->destroy(1,1 ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    root_poa->destroy(1,1);
 
-    orb_->destroy( ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
+    orb_->destroy();
 
     ACE_DEBUG((LM_INFO,"(%P|%t) Client Test %s\n",
       (worker2.nrequests() == worker2.nreplies())?"succeded":"failed"));
 
     result = (worker2.nrequests_ == worker2.nreplies_)? 0 : -1;
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error: Exception caught:");
+    ex._tao_print_exception ("Error: Exception caught:");
   }
-  ACE_ENDTRY;
 
   ACE_OS::unlink ("client.ior");
   return result;
