@@ -1,12 +1,14 @@
+// $Id$
+
 #include "SharedIntf_i.h"
 #include "worker.h"
 #include "chatter.h"
 
 Chatter::Chatter (CORBA::ORB_ptr orb, const char *ior, ACE_Condition<ACE_Mutex>& cond)
-	: Worker (orb),
+ : Worker (orb),
         nrequests_ (0),
         nreplies_ (0),
-	ior_ (ior),
+        ior_ (ior),
         cond_ (cond)
 {
 }

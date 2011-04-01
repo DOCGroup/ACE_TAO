@@ -1,12 +1,12 @@
+// $Id$
+
 #if !defined( CHATTER_H)
 #define CHATTER_H
 
 #include "worker.h"
 
-#if 0
 #include "ace/Condition_T.h"
 #include "ace/Mutex.h"
-#endif
 
 class Chatter : public Worker
 {

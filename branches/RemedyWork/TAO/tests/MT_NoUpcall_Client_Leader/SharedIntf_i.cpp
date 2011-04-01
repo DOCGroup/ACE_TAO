@@ -1,3 +1,5 @@
+// $Id$
+
 #include "SharedIntf_i.h"
 #include "ace/Log_Priority.h"
 

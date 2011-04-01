@@ -1,3 +1,5 @@
+// $Id$
+
 #include "SharedIntf_i.h"
 #include "worker.h"
 #include "chatter.h"
@@ -7,7 +9,7 @@
 #include "ace/streams.h"
 
 int
-main(int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb_;
   int result = 0;
@@ -120,10 +122,4 @@ main(int argc, char* argv[])
   ACE_OS::unlink ("client.ior");
   return result;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Condition<ACE_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate  ACE_Condition<ACE_Mutex>
-#endif
 

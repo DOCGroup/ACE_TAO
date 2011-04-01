@@ -1,3 +1,5 @@
+// $Id$
+
 The test simulates a case when an incomming requests is being detected while a
 client-leader thread is waiting in the reactor event loop for its own reply.
 

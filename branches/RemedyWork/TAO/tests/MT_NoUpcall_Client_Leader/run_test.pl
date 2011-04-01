@@ -6,32 +6,43 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-$client_conf = PerlACE::LocalFile ("mt_noupcall$PerlACE::svcconf_ext");
-$server_conf = PerlACE::LocalFile ("mt_noupcall$PerlACE::svcconf_ext");
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-$debug_level = '';
+my $client_conf = $server->LocalFile ("mt_noupcall$PerlACE::svcconf_ext");
+my $server_conf = $server->LocalFile ("mt_noupcall$PerlACE::svcconf_ext");
+
+$debug_level = '0';
 
 foreach $i (@ARGV) {
     if ($i eq '-d') {
-        $debug_level = '-ORBdebuglevel 9';
+        $debug_level = '10';
     } 
 }
 
-$server_iorfile = PerlACE::LocalFile ("server.ior");
-$client_iorfile = PerlACE::LocalFile ("client.ior");
+my $server_iorbase = "server.ior";
+my $client_iorbase = "client.ior";
+my $server_iorfile = $server->LocalFile ($server_iorbase);
+my $client_iorfile = $client->LocalFile ($client_iorbase);
 
-unlink $server_iorfile;
-unlink $client_iorfile;
+$server->DeleteFile($server_iorbase);
+$client->DeleteFile($client_iorbase);
 
-$SV = new PerlACE::Process ("server", 
-                              "$debug_level "
-                            . "-ORBSvcConf $server_conf ");
+$SV = $server->CreateProcess ("server",
+                              "-ORBDebugLevel $debug_level -ORBSvcConf $server_conf " .
+                              "-o $server_iorfile");
 
-$SV->Spawn ();
+$server_status = $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($server_iorfile, 15) == -1) {
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
+}
+
+if ($server->WaitForFileTimed ($server_iorfile,
+                               $server->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server_iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
@@ -39,29 +50,37 @@ if (PerlACE::waitforfile_timed ($server_iorfile, 15) == -1) {
   
 $SV->TimedWait (2);
 
-$CL = new PerlACE::Process ("client", "$debug_level ");
+$CL = $client1->CreateProcess ("client", "-ORBDebugLevel $debug_level -k file://$client1_iorfile");
 
-$client = $CL->Spawn ();
+$client_status = $CL->Spawn ();
 
-if (PerlACE::waitforfile_timed ($client_iorfile, 15) == -1) {
-    print STDERR "ERROR: cannot find file <$client_iorfile>\n";
-    $CL->Kill (); $CL->TimedWait (1);
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
+    $SV->Kill (); $SV->TimedWait (1);
     exit 1;
-} 
+}
+
+if ($client->WaitForFileTimed ($client_iorfile,
+                               $client->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$client_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
 
 print "INFO: Awaiting server ...\n";
-$server = $SV->Wait ();
+$server_wait = $SV->Wait ();
 $SV->TimedWait (1);
 
 print "INFO: Awaiting client ...\n";
-$client = $CL->Wait ();
+$client_wait = $CL->Wait ();
 $CL->TimedWait (1);
 
 print "INFO: Clean up\n";
-unlink $server_iorfile;
-unlink $client_iorfile;
 
-if ($server != 0 || $client != 0) {
+$server->DeleteFile($server_iorfile);
+$client->DeleteFile($client_iorfile);
+
+if ($server_wait != 0 || $client_wait != 0) {
     print STDERR "ERROR: Test failed\n";
     exit 1;
 }

@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef SHAREDINTF_I_H_
 #define SHAREDINTF_I_H_
 
@@ -7,9 +9,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class  Test_Idl_SharedIntf_i :
-public virtual POA_Test_Idl::SharedIntf,
-public virtual TAO_RefCountServantBase
+class  Test_Idl_SharedIntf_i : public virtual POA_Test_Idl::SharedIntf
 {
    public:
 

@@ -1,9 +1,11 @@
+// $Id$
+
 #if !defined( WORKER_H)
 #define WORKER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/corba.h"
-#include <ace/Task.h>
+#include "ace/Task.h"
 
 class Worker : public ACE_Task_Base
 {
@@ -24,4 +26,7 @@ public:
   // The orb
   CORBA::ORB_var orb_;
 };
+
+#include /**/ "ace/post.h"
+
 #endif /* WORKER_H */
