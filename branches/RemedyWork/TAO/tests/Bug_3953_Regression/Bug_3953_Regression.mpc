@@ -8,7 +8,7 @@ project(*_Idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*_Server): taoserver {
+project(*_Server): taoserver, messaging {
   after += *_Idl
   Source_Files {
     testC.cpp

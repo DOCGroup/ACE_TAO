@@ -5,7 +5,8 @@
 server_i::server_i (int quiet,
                     CORBA::ORB_ptr orb)
   : quiet_ (quiet),
-    orb_ (CORBA::ORB::_duplicate (orb))
+    orb_ (CORBA::ORB::_duplicate (orb)),
+    exception_ (false)
 {
 }
 
@@ -17,6 +18,12 @@ server_i::start (client_ptr c,
   this->ping (time_to_live);
 }
 
+bool
+server_i::exception (void) const
+{
+  return this->exception_;
+}
+
 void
 server_i::ping (CORBA::UShort time_to_live)
 {
@@ -25,11 +32,20 @@ server_i::ping (CORBA::UShort time_to_live)
                 "(%t) server_i::ping -> time to live = %d\n",
                 time_to_live));
 
-  --time_to_live;
-
-  if (time_to_live > 0)
+  try
     {
-      this->client_->ping (time_to_live);
+      --time_to_live;
+
+      if (time_to_live > 0)
+        {
+          this->client_->ping (time_to_live);
+        }
+    }
+  catch (const CORBA::TIMEOUT& ex)
+    {
+      this->exception_ = true;
+      ACE_DEBUG ((LM_DEBUG,
+                  "server ping received an expected except.\n"));
     }
 }
 

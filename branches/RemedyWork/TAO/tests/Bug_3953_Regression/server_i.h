@@ -15,6 +15,7 @@ public:
 
   void shutdown (void);
 
+  bool exception (void) const;
 private:
   int quiet_;
   // Be quiet.
@@ -24,4 +25,6 @@ private:
 
   CORBA::ORB_var orb_;
   // Pointer to orb.
+
+  bool exception_;
 };

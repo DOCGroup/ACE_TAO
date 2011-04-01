@@ -23,6 +23,8 @@ public:
                server_ptr s);
   int svc (void);
 
+  bool exception (void) const;
+
 private:
   client_var client_;
   server_var server_;
@@ -110,11 +112,12 @@ int
 ACE_TMAIN (int argc,
       ACE_TCHAR **argv)
 {
+  int result = 0;
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      int result = parse_args (argc, argv);
+      result = parse_args (argc, argv);
       if (result != 0)
         return result;
 
@@ -160,5 +163,5 @@ ACE_TMAIN (int argc,
       ex._tao_print_exception ("client::main");
       return -1;
     }
-  return 0;
+  return result;
 }
