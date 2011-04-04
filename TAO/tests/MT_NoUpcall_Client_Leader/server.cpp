@@ -18,6 +18,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
   {
+    ACE_DEBUG((LM_INFO,"(%P|%t) START OF SERVER TEST\n"));
+
     orb_ = CORBA::ORB_init (argc, argv, "myorb-server");
 
     CORBA::Object_var poa_object =
@@ -32,7 +34,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     poa_manager->activate ();
 
-    ACE_DEBUG((LM_INFO,"(%P|%t) START OF SERVER TEST\n"));
     ACE_DEBUG((LM_INFO,"(%P|%t) ORB initialized\n"));
 
     // Creating the servant and activating it
@@ -69,7 +70,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Running ORB in separate thread
     Worker worker (orb_.in ());
-    //if (worker.activate (THR_NEW_LWP | THR_DETACHED, 1) != 0)
     if (worker.activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
       ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "Cannot activate server thread(s)"), -1);
 

@@ -18,6 +18,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
   {
+    ACE_DEBUG((LM_INFO,"(%P|%t) START OF CLIENT TEST\n"));
+
     orb_ = CORBA::ORB_init (argc, argv, "myorb-client");
 
     CORBA::Object_var poa_object =
@@ -31,8 +33,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     PortableServer::POA_var poa = root_poa;
 
     poa_manager->activate ();
-
-    ACE_DEBUG((LM_INFO,"(%P|%t) START OF CLIENT TEST\n"));
 
     // Creating the monitorable servant and activating it
     //
@@ -77,7 +77,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ACE_Mutex mutex;
     ACE_Condition<ACE_Mutex> stop_condition (mutex);
 
-    const char* serverior = "file://server.ior";
+    const ACE_TCHAR* serverior = ACE_TEXT("file://server.ior");
     Chatter worker2 (orb_.in (), serverior, stop_condition);
 
     if (worker2.activate (THR_NEW_LWP | THR_JOINABLE, 2) != 0)
@@ -117,8 +117,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     orb_->destroy();
 
-    ACE_DEBUG((LM_INFO,"(%P|%t) Client Test %s\n",
-      (worker2.nrequests() == worker2.nreplies())?"succeded":"failed"));
+    ACE_DEBUG((LM_INFO,"(%P|%t) Client Test %C\n",
+      (worker2.nrequests() == worker2.nreplies())?"succeeded":"failed"));
 
     result = (worker2.nrequests_ == worker2.nreplies_)? 0 : -1;
   }
