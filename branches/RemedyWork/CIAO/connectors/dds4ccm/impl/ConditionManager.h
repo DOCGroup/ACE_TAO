@@ -49,26 +49,24 @@ namespace CIAO
       ::DDS::QueryCondition_ptr get_querycondition_listener (void);
 
       /**
-        * @name check_handle
         *
         * Proxy method.
         * See WaitSet::check_handle in ndds/WaitSet.h
         * for more information on this.
         *
-        * If WaitSet::check_handle set 'error' to true, a 
+        * If WaitSet::check_handle set 'error' to true, a
         * ::CCM_DDS::InternalError exception is called.
         * Error will be ::DDS::RETCODE_ERROR
-        * 
+        *
         * If WaitSet::check_handle set 'non_existent' to true,
         * a ::CCM_DDS::NonExistent exception is thrown.
-        * 
+        *
         */
       ::DDS::InstanceHandle_t check_handle (
         const ::DDS::InstanceHandle_t & instance_handle,
         const ::DDS::InstanceHandle_t & lookup_handle);
 
       /**
-        * @name check_condition
         *
         * Proxy method.
         * See WaitSet::check_condition in ndds/WaitSet.h
@@ -78,18 +76,16 @@ namespace CIAO
       bool check_condition (::DDS::Condition_ptr condition);
 
       /**
-        * @name init_readcondition
         *
         * Getter functionality.
         * Creates a read_condition for the getter.
         * It'll also initialize the waitset and attaches the
         * read_condition to the waitset.
-        * 
+        *
         */
       void init_readcondition (void);
 
       /**
-        * @name wait
         *
         * Getter functionality
         * waits for the attached conditions. If a condition is
@@ -103,7 +99,6 @@ namespace CIAO
                  ::DDS::Duration_t & time_out);
 
       /**
-        * @name query
         *
         * Returns the internal filter. This is the
         * DDS4CCM QueryFilter (a representive of the
@@ -112,11 +107,11 @@ namespace CIAO
         * If the QueryFilter hasn't been initialized,
         * a ::CCM_DDS::InternalError exception with
         * error code ::DDS::RETCODE_ERROR is thrown.
+        *
         */
       ::CCM_DDS::QueryFilter * query (void);
 
       /**
-        * @name query
         *
         * Sets the DDS4CCM query filter.
         * The following rules apply when a filter is set:
@@ -143,20 +138,19 @@ namespace CIAO
         * conditions will be removed (the query condition for the getter will be
         * detached from the waitset first) and the initial read condition will
         * created (see init_readcondition).
+        *
         */
       void query (const ::CCM_DDS::QueryFilter & filter);
 
       /**
-        * @name set_dds_entity
         *
         * Sets the internal datareader.
         * Applies to Getter, Reader and Listener
-        * 
+        *
         */
       void set_dds_entity (::DDS::DataReader_ptr dr);
 
       /**
-        * @name get_dds_entity
         *
         * Retrieves the internal datareader.
         *
@@ -164,7 +158,6 @@ namespace CIAO
       ::DDS::DataReader_ptr get_dds_entity (void);
 
       /**
-        * @name passivate
         *
         * Detaches conditions from the waitset and
         * removes all conditions by calling
@@ -182,6 +175,7 @@ namespace CIAO
       /**
         * Different QueryConditions since the sample mask
         * differs for all entities.
+        *
         */
       ::DDS::QueryCondition_var qc_reader_;
       ::DDS::QueryCondition_var qc_getter_;
@@ -190,17 +184,15 @@ namespace CIAO
       ::DDS::ReadCondition_var rd_condition_;
 
       /**
-        * @name dds_entity
-        * 
+        *
         * Internal getter for the DataReader.
         * If the internal dds_entity is not set before this method
         * is called, a ::CORBA::BAD_INV_ORDER exception is thrown.
-        * 
+        *
         */
       ::DDS::DataReader_ptr dds_entity (void);
 
       /**
-        * @name remove_condition
         *
         * Removes the internal (read/query) condition by invoking
         * delete_condition on the DataReader.
@@ -210,7 +202,6 @@ namespace CIAO
                              const char * type);
 
       /**
-        * @name remove_conditions
         *
         * Calling 'remove_condition' for each query and read
         * condition.
@@ -222,7 +213,6 @@ namespace CIAO
       void remove_conditions (void);
 
       /**
-        * @name attach_querycondition
         *
         * Getter functionality.
         *
@@ -234,7 +224,6 @@ namespace CIAO
       void attach_querycondition (void);
 
       /**
-        * @name set_parameters
         *
         * Sets the parameters of the given filter on the given
         * query condition.
