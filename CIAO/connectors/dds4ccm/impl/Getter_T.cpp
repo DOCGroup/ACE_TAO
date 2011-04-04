@@ -330,7 +330,7 @@ namespace CIAO
                     {
                       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                             "Getter_T::get_one - "
-                            "No valid available in DDS.\n"));
+                            "No valid data available in DDS.\n"));
                     }
                   // Return the loan of each read.
                   ::DDS::ReturnCode_t const retval =

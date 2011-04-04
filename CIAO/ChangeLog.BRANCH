@@ -1,3 +1,11 @@
+Mon Apr  4 07:52:19 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+          Code layout
+
+        * connectors/dds4ccm/impl/ndds/WaitSet.h:
+          Added some documentation to this class.
+
 Fri Apr  1 15:02:17 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/LateBinding/README:
