@@ -45,7 +45,7 @@ public:
   /// Destructor
   virtual ~TAO_LF_Multi_Event (void);
 
-  /// propogate the follower to all the events in the collection.
+  /// Propagate the follower to all the events in the collection.
   virtual int bind (TAO_LF_Follower *follower);
 
   /// Unbind the follower from all the collected events.
@@ -69,7 +69,7 @@ public:
 
   /// Return 1 if an error was detected while waiting for the
   /// event - This iterates over the list of events and returns
-  /// 1 only if all of them return 1 from error_detected.
+  /// 1 only if all of them return 1 from error_detected().
   int error_detected (void) const;
 
   //@}

@@ -1,3 +1,17 @@
+Mon Apr  4 17:46:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.cpp:
+          Integrated some changes from 1.3a as start to get mt_noupcall working
+
+        * tao/LF_Event.h:
+        * tao/LF_Invocation_Event.h:
+        * tao/LF_Multi_Event.h:
+          Doxygen
+
+        * tao/tao.mpc:
+          Added new files
+
 Sun Feb 20 18:57:46 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/fe/lex.yy.cpp:
