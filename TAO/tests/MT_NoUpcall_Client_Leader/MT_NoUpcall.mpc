@@ -1,0 +1,49 @@
+// -*- MPC -*-
+// $Id$
+
+
+project(*idl): taoidldefaults {
+  idlflags += -Sp
+  IDL_Files {
+    SharedIntf.idl
+  }
+  custom_only = 1
+}
+
+
+project(*Server): messaging, taoserver {
+  exename = server
+  after += *idl
+  Source_Files {
+    SharedIntf_i.cpp
+    server.cpp
+    worker.cpp
+    chatter.cpp
+    police.cpp
+  }  
+  Source_Files {
+    SharedIntfC.cpp
+    SharedIntfS.cpp
+  }
+  IDL_Files {
+  }
+}
+ 
+project(*Client): messaging, taoserver {
+  exename = client
+  after += *idl
+  Source_Files {
+    SharedIntf_i.cpp
+    client.cpp
+    worker.cpp
+    chatter.cpp
+    police.cpp
+  }  
+  Source_Files {
+    SharedIntfC.cpp
+    SharedIntfS.cpp
+  }
+  IDL_Files {
+  }
+}
+
