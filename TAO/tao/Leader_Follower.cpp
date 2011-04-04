@@ -197,10 +197,10 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
   // Optmize the first iteration [no access to errno]
   int result = 1;
 
-  // For some cases the transport may dissappear like when waiting for
+  // For some cases the transport may disappear like when waiting for
   // connection to be initiated or closed. So cache the id.
   // @@ NOTE: This is not completely safe either. We will be fine for
-  // cases that dont access the id ie. when debug level is off but
+  // cases that don't access the id ie. when debug level is off but
   // with debugging level on we are on a sticky wicket. Hopefully none
   // of our users should run TAO with debugging enabled like they did
   // in PathFinder
@@ -471,7 +471,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
       /**
        * There should be no reason to reset the value of result
        * here. If there was an error in handle_events () that the
-       * leader saw, I (Bala) beleave it should be propogated to the
+       * leader saw, I (Bala) believe it should be propagated to the
        * clients.
        * result = 0;
        */
