@@ -238,12 +238,24 @@ threads ?= 1
 symlinks ?= relative
 link_groups ?= 0
 mcpp ?= 0
+root_is_symlink ?= 0
 
 SOVERSION ?=
 SONAME ?=
 
-ifeq ($(PWD),)
-  PWD=$(shell pwd)
+ifeq ($(root_is_symlink),1)
+  ifneq ($(symlinks),relative)
+    warn_output:=$(warning WARNING: You should really use relative library symlinks with symlinked root)
+  endif
+  use_pwd_call = 1
+  ### use 'real' pwd command from shell; internal make command resolves symlinks
+  ifeq ($(PWD),)
+    PWD=$(shell $(SHELL) -c pwd)
+  endif
+else
+  ifeq ($(PWD),)
+    PWD=$(shell pwd)
+  endif
 endif
 
 ifeq ($(ACE_MKDIR),)

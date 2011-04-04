@@ -41,7 +41,15 @@ ifdef TEMPLATE_REPOSITORY
 CLEANUP_DIRS += $(TEMPLATE_REPOSITORY)
 endif
 
-ifneq ($(mingw32),1)
+ifeq ($(use_pwd_call),)
+  ifneq ($(mingw32),1)
+    use_pwd_call := 0
+  else
+    use_pwd_call := 1
+  endif
+endif
+
+ifneq ($(use_pwd_call),1)
 makefile_name.local:
 	@echo
 	@echo GNUmakefile: $(shell pwd)/$(MAKEFILE) MAKEFLAGS=$(MAKEFLAGS)
@@ -256,7 +264,7 @@ endif # ! LN_S
 
 # Don't call shell/call directly below since we may need to
 # add the architecture specific suffix to the directory
-ifneq ($(mingw32),1)
+ifneq ($(use_pwd_call),1)
 ARCH_SOURCE_DIR := $(patsubst %/,%,$(shell pwd)/$(ARCH))
 else
 ARCH_SOURCE_DIR := $(patsubst %/,%,$(call PWD)/$(ARCH))

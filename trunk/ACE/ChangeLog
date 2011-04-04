@@ -1,3 +1,9 @@
+Mon Apr  4 09:42:27 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Added support to build from symlinked project root.
+
 Thu Mar 31 12:59:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_g++_common.GNU:
