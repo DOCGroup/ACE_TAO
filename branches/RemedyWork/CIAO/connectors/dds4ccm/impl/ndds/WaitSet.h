@@ -22,13 +22,13 @@ namespace CIAO
   namespace NDDS
   {
     /**
-    * @class WaitSet
-    *
-    * @brief Representative (proxy) class for the RTI waitset.
-    *
-    * Implementation of the RTI waitset functionality.
-    *
-    */
+      * @class WaitSet
+      *
+      * @brief Representative (proxy) class for the RTI waitset.
+      *
+      * Implementation of the RTI waitset functionality.
+      *
+      */
     class DDS4CCM_NDDS_Export DDS_WaitSet_i :
       public virtual ::DDS::WaitSet,
       public virtual ::CORBA::LocalObject
