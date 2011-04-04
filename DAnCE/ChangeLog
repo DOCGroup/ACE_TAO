@@ -1,7 +1,15 @@
+Mon Apr  4 01:03:22 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Logger_Backend/ndds/Log_Backend.cpp:
+        * tools/Logger_Backend/ndds/Log_Record.idl:
+        * tools/Logger_Backend/ndds/Log_Server.cpp:
+
+          Warnings.
+
 Fri Apr  1 15:19:41 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tools/Logger_Backend/ndds/Log_Backend.cpp:
-        
+
           more fuzz.
 
 Thu Mar 31 22:27:54 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>

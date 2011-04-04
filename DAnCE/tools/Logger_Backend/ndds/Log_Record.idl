@@ -13,10 +13,10 @@ module DAnCE
   struct Log_Record
   {
     /// The name of the node this originates from, if available
-    string node; //@key
+    string node;
 
     /// The process ID of the node.
-    long pid; //@key
+    long pid; 
 
     /// The log priority of the message
     unsigned long priority;
