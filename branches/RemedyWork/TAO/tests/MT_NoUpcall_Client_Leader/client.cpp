@@ -8,6 +8,8 @@
 #include "ace/SString.h"
 #include "ace/streams.h"
 
+const ACE_TCHAR *ior_output_file = ACE_TEXT ("client.ior");
+
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -51,11 +53,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     CORBA::String_var intfString_var =
       orb_->object_to_string (intf_var.in());
 
-    ACE_CString ior_filename ("client.ior");
-    ofstream ior_filestream (ior_filename.c_str());
-    ior_filestream << intfString_var.in () << endl;
-    ior_filestream.close ();
-    ACE_DEBUG ((LM_INFO,"(%P|%t) client IOR to %C\n", ior_filename.c_str()));
+    // Output the IOR to the <ior_output_file>
+    FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+    if (output_file == 0)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                          "Cannot open output file for writing IOR: %s\n",
+                          ior_output_file),
+                          1);
+    ACE_OS::fprintf (output_file, "%s", intfString_var.in ());
+    ACE_OS::fclose (output_file);
+
+    ACE_DEBUG ((LM_INFO,"(%P|%t) client IOR to %s\n", ior_output_file));
 
     // Running ORB in separate thread
     Worker worker (orb_.in ()); if (worker.activate (THR_NEW_LWP |
