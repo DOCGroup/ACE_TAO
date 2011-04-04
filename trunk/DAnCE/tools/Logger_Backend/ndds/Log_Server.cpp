@@ -10,6 +10,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 #include "ndds/ndds_cpp.h"
 #include "Log_Record.h"
 #include "Log_RecordSupport.h"
@@ -147,11 +148,15 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
           if (result == DDS_RETCODE_NO_DATA)
             {
+              std::cerr << "No data\n";
+              ACE_OS::sleep (1);
               // try again
               continue;
             }
           else
             {
+              std::cerr << "Got " << records.length () << " records\n";
+
               for (size_t i = 0; i < records.length (); ++i)
                 {
                   DDS_SampleInfo &info = recordInfos[i];
@@ -161,10 +166,9 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
                   std::cerr << records[i].node.in () << ':'
                             << records[i].pid << " - "
-                            << records[i].message.in () << std::cerr;
+                            << records[i].message.in () << std::endl;
                 }
             }
-
           log_record_reader_->return_loan (records, recordInfos);
         }
     }
