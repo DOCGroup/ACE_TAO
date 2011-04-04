@@ -105,7 +105,7 @@ public:
   /**
    * Virtual methods for this class hierarchy..
    */
-  /// Accessor to change the state. The state isnt changed unless
+  /// Accessor to change the state. The state isn't changed unless
   /// certain conditions are satisfied.
   void state_changed (int new_state, TAO_Leader_Follower &lf);
 

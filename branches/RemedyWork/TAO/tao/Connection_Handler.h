@@ -210,6 +210,15 @@ private:
   /// This is distinct from the leader-follower state so it cannot be reset.
   bool is_closed_;
 
+  /// When the thread pool is depleted (no follower is available to handle
+  /// requests), a client thread may become the leader while awaiting a
+  /// reply. While in this state it will periodically attempt to hand-off any
+  /// incoming messages to the next follower by notifying the reactor. By
+  /// increasing this delay in geometric progression, the waiting thread is
+  /// "backing off" each successive notification, thus reducing the "spinning"
+  /// that may occur if it is still the only available thread.
+  ACE_Time_Value spin_prevention_backoff_delay_;
+
   /*
    * Hook to add instance members from derived class
    * onto base Connection_Handler class. Any further
