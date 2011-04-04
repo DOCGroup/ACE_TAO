@@ -55,7 +55,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ofstream ior_filestream (ior_filename.c_str());
     ior_filestream << intfString_var.in () << endl;
     ior_filestream.close ();
-    ACE_DEBUG ((LM_INFO,"(%P|%t) client IOR to %s\n", ior_filename.c_str()));
+    ACE_DEBUG ((LM_INFO,"(%P|%t) client IOR to %C\n", ior_filename.c_str()));
 
     // Running ORB in separate thread
     Worker worker (orb_.in ()); if (worker.activate (THR_NEW_LWP |
