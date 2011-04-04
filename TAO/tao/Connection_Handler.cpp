@@ -169,8 +169,7 @@ TAO_Connection_Handler::transport (TAO_Transport* transport)
 
   // Enable reference counting on the event handler.
   this->transport_->event_handler_i ()->reference_counting_policy ().value (
-      ACE_Event_Handler::Reference_Counting_Policy::ENABLED
-    );
+      ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 }
 
 int
@@ -242,7 +241,7 @@ TAO_Connection_Handler::handle_input_internal (
   (void) this->transport ()->update_transport ();
 
   // Grab the transport id now and use the cached value for printing
-  // since the  transport could dissappear by the time the thread
+  // since the  transport could disappear by the time the thread
   // returns.
   size_t const t_id = this->transport ()->id ();
 
