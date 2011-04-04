@@ -41,14 +41,14 @@ if ($server_status != 0) {
     exit 1;
 }
 
-if ($server->WaitForFileTimed ($server_iorfile,
+if ($server->WaitForFileTimed ($server_iorbase,
                                $server->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server_iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
   
-$CL = $client1->CreateProcess ("client", "-ORBDebugLevel $debug_level -k file://$client1_iorfile");
+$CL = $client->CreateProcess ("client", "-ORBDebugLevel $debug_level -k file://$client1_iorfile");
 
 $client_status = $CL->Spawn ();
 
@@ -58,7 +58,7 @@ if ($client_status != 0) {
     exit 1;
 }
 
-if ($client->WaitForFileTimed ($client_iorfile,
+if ($client->WaitForFileTimed ($client_iorbase,
                                $client->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$client_iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
