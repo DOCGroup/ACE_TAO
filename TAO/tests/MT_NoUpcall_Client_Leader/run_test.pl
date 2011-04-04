@@ -48,7 +48,7 @@ if ($server->WaitForFileTimed ($server_iorbase,
     exit 1;
 }
   
-$CL = $client->CreateProcess ("client", "-ORBDebugLevel $debug_level -k file://$client1_iorfile");
+$CL = $client->CreateProcess ("client", "-k file://$client1_iorfile");
 
 $client_status = $CL->Spawn ();
 
