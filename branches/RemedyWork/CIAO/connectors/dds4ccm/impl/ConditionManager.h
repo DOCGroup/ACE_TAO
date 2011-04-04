@@ -225,8 +225,8 @@ namespace CIAO
 
       /**
         *
-        * Sets the parameters of the given filter on the given
-        * query condition.
+        * Generic method which sets the parameters of the given
+        * filter on the given query condition.
         *
         */
       void set_parameters (const ::CCM_DDS::QueryFilter & filter,
