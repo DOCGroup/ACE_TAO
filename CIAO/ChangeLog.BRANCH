@@ -1,3 +1,9 @@
+Mon Apr  4 09:35:06 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager.h:
+        * connectors/dds4ccm/impl/ndds/WaitSet.h:
+          Optimized doxygen documentation.
+
 Mon Apr  4 08:38:25 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager.h:
