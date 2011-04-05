@@ -4,8 +4,6 @@
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID(Event, EC_Event_Channel, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Event_Channel::

@@ -2,8 +2,6 @@
 
 #include "orbsvcs/Event/EC_Disjunction_Filter.h"
 
-ACE_RCSID(Event, EC_Disjunction_Filter, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Disjunction_Filter::

@@ -9,10 +9,6 @@
 #include "orbsvcs/Event_Utilities.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (orbsvcs,
-           Event_Utilities,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ConsumerQOS_Factory::

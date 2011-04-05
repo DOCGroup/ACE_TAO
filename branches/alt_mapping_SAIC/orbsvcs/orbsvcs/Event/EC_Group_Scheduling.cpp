@@ -8,8 +8,6 @@
 #include "orbsvcs/Event/EC_Group_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_Group_Scheduling, "$Id$")
-
 void
 TAO_EC_Group_Scheduling::add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *,

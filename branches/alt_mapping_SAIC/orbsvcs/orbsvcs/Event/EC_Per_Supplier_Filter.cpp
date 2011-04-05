@@ -15,8 +15,6 @@
 #include "orbsvcs/Event/EC_Per_Supplier_Filter.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_Per_Supplier_Filter, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Per_Supplier_Filter::

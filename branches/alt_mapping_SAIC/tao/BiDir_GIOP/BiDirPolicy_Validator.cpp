@@ -3,10 +3,6 @@
 #include "tao/Policy_Set.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (BiDir_GIOP,
-           BiDirPolicy_Validator,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_BiDirPolicy_Validator::TAO_BiDirPolicy_Validator (TAO_ORB_Core &orb_core)

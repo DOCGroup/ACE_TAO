@@ -4,9 +4,7 @@
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "orbsvcs/Event/EC_Supplier_Filter_Builder.h"
 #include "orbsvcs/Event/EC_Supplier_Filter.h"
-#include "ace/Synch_T.h"
-
-ACE_RCSID(Event, EC_Default_ProxyConsumer, "$Id$")
+#include "ace/Reverse_Lock_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

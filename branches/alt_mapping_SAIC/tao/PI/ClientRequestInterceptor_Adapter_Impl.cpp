@@ -13,10 +13,6 @@
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/PortableInterceptorC.h"
 
-ACE_RCSID (PI,
-           ClientRequestInterceptorAdapter_Impl,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

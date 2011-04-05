@@ -14,10 +14,6 @@
 #include "tao/ORB.h"
 #include "tao/debug.h"
 
-ACE_RCSID (CodecFactory,
-           CodecFactory,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Object_ptr

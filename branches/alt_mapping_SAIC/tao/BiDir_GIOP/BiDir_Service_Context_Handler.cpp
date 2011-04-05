@@ -2,10 +2,6 @@
 
 #include "tao/BiDir_GIOP/BiDir_Service_Context_Handler.h"
 
-ACE_RCSID (BiDir_GIOP,
-           BiDir_Service_Context_Handler,
-           "$Id$")
-
 #include "tao/CDR.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/Transport.h"

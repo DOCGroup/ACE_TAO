@@ -13,8 +13,6 @@
 #include "orbsvcs/Event/ECG_Mcast_EH.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, ECG_Mcast_EH, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_Dgram_Handler *recv,

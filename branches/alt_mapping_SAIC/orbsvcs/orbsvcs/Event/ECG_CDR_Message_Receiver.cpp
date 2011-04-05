@@ -13,10 +13,6 @@
 #include "orbsvcs/Event/ECG_CDR_Message_Receiver.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event,
-           ECG_CDR_Message_Receiver,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_CDR_Processor::~TAO_ECG_CDR_Processor (void)

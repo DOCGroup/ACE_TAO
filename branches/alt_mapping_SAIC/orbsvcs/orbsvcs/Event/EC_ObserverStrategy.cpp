@@ -13,8 +13,6 @@
 #include "orbsvcs/Event/EC_ObserverStrategy.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_ObserverStrategy, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_ObserverStrategy::~TAO_EC_ObserverStrategy (void)

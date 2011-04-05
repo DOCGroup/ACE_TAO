@@ -9,10 +9,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (tao,
-           PI_PolicyFactory,
-           "$Id$")
-
 CORBA::Policy_ptr
 TAO_PI_PolicyFactory::create_policy (
     CORBA::PolicyType type,

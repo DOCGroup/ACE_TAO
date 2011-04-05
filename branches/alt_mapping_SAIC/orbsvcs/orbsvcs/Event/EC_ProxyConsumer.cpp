@@ -11,10 +11,6 @@
 #include "orbsvcs/Event/EC_ProxyConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event,
-           EC_ProxyConsumer,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_EC_Unlock;

@@ -4,11 +4,6 @@
 #include "tao/PolicyC.h"
 #include "tao/SystemException.h"
 
-ACE_RCSID (PI,
-           PolicyFactory_Registry,
-           "$Id$")
-
-
 // ****************************************************************
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

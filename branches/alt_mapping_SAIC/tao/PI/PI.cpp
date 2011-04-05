@@ -8,10 +8,6 @@
 #include "tao/ORB_Constants.h"
 #include "ace/CORBA_macros.h"
 
-ACE_RCSID (PI,
-           PI,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 

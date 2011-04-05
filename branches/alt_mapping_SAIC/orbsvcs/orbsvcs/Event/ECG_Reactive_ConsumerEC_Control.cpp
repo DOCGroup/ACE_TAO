@@ -7,8 +7,6 @@
 
 #include "ace/Reactor.h"
 
-ACE_RCSID(Event, ECG_Reactive_ConsumerEventChannelControl, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_Reactive_ConsumerEC_Control::

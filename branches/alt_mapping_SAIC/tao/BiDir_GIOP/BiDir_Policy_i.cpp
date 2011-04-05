@@ -8,10 +8,6 @@
 
 #include "ace/CORBA_macros.h"
 
-ACE_RCSID (BiDir_GIOP,
-           BiDir_Policy_i,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (

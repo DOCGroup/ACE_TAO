@@ -4,10 +4,6 @@
 #include "orbsvcs/Runtime_Scheduler.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (orbsvcs,
-           Runtime_Scheduler,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor. Initialize the data from the POD_RT_Info array.

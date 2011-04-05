@@ -6,8 +6,6 @@
 # include "orbsvcs/Time_Utilities.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(orbsvcs, Time_Utilities, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Number of nanoseconds between CORBA and POSIX epochs.

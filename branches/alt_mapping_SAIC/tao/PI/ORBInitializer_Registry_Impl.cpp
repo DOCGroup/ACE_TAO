@@ -14,11 +14,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/CORBA_macros.h"
 
-ACE_RCSID (PI,
-           ORBInitializer_Registry,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::ORBInitializer_Registry::ORBInitializer_Registry (void)

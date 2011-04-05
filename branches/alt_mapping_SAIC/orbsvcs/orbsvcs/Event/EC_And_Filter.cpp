@@ -2,8 +2,6 @@
 
 #include "orbsvcs/Event/EC_And_Filter.h"
 
-ACE_RCSID(Event, EC_And_Filter, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_And_Filter::TAO_EC_And_Filter (TAO_EC_Filter* children[],

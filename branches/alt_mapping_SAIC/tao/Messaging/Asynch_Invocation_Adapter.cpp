@@ -15,12 +15,6 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/GIOP_Utils.h"
 
-
-ACE_RCSID (Messaging,
-           Asynch_Invocation_Adapter,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

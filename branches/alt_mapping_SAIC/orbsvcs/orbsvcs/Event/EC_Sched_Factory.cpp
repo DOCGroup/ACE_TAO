@@ -15,8 +15,6 @@
 #include "orbsvcs/Event/EC_Sched_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_Sched_Factory, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Sched_Factory::~TAO_EC_Sched_Factory (void)

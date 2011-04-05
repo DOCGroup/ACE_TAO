@@ -7,10 +7,6 @@
 
 #include "ace/CORBA_macros.h"
 
-ACE_RCSID (BiDir_GIOP,
-           BiDir_PolicyFactory,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Policy_ptr

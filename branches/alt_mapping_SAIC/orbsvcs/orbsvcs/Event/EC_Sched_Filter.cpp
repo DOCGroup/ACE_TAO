@@ -4,8 +4,6 @@
 #include "orbsvcs/Event/EC_QOS_Info.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(Event, EC_Sched_Filter, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Sched_Filter::
