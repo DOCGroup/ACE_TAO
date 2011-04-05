@@ -13,13 +13,13 @@ $tg_receiver = PerlACE::TestTarget::create_target (1) || die "Create target for 
 
 
 print "Start receiver\n";
-$R = $tg_receiver->CreateProcess ("./DDS_receiver", "");
+$R = $tg_receiver->CreateProcess ("./DDS_ObO_receiver", "");
 $R->Spawn();
 
 sleep (1);
 
 print "Start sender\n";
-$S = $tg_sender->CreateProcess ("./DDS_Sender", "");
+$S = $tg_sender->CreateProcess ("./DDS_ObO_Sender", "");
 $S->Spawn ();
 
 

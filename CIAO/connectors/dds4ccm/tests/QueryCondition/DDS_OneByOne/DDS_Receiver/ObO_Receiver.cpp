@@ -5,8 +5,8 @@
 
 using namespace std;
 
-#include "Base.h"
-#include "BaseSupport.h"
+#include "Base_ObO.h"
+#include "Base_ObOSupport.h"
 
 #define LIBRARY_NAME  "QueryCondition_Library"
 #define PROFILE_NAME  "QueryCondition_Profile"
@@ -17,7 +17,6 @@ long received_samples = 0;
 long expected_samples_run1 = 2 * 5;    //only samples between 2 and 5 should be received
 long expected_samples_run2 = 11 * 5;   //only samples between 22 and 34 should be received
 long expected_samples_run3 = (60 - 13) * 5;
-
 
 DDSWaitSet* ws_ = new DDSWaitSet ();
 DDS_Duration_t dur_ = {9, 0};
@@ -104,63 +103,74 @@ void read (DDSDataReader * dr,
               sleep_now (10);
               if (cond[i] == rc)
                 {
-                  received_samples = 0;
 
-                // *************** end read one by one
-                //  DDS_SampleStateMask sample = rc->get_sample_state_mask ();
-                //  DDS_ViewStateMask view = rc->get_view_state_mask ();
-                //  DDS_InstanceStateMask instance = rc->get_instance_state_mask ();
-                //  ::printf("************sample_state %ld, view_state %ld instance_state %ld\n",
-                //                               (long)sample, (long)view, (long)instance);
-                //  **************  read all in one
-                  typed_dr->read_w_condition (data,
-                                              info_seq,
-                                              DDS_LENGTH_UNLIMITED,
-                                              rc);
-                  for (DDS_Long y = 0; y < data.length (); ++y)
-                    {
-                      if (info_seq[y].valid_data)
-                        {
-                          check_iter (data[y], info_seq[y], run);
-                          received_samples ++;
-                        }
-                    }
+                // *************** read one by one : max_number of samples = 1 ************
+                  int loop = 0;
+                  DDS_ReturnCode_t retcode = typed_dr->read_w_condition (data,
+                            info_seq,
+                            1,
+                            rc);
+                  check_iter (data[0], info_seq[0], run);
                   typed_dr->return_loan (data, info_seq);
+                  loop ++;
+		              received_samples = 0;
+	                while (loop  < 300)
+                    {
+                      retcode = typed_dr->read_w_condition (data,
+                                                            info_seq,
+                                                            1,
+                                                            rc);
+                      loop ++;
+                      if (retcode == 0)
+                        {
+                          if (info_seq[0].valid_data)
+                            {
+                              check_iter (data[0], info_seq[0], run);
+                              received_samples ++;
+                            }
+                        }
+                      typed_dr->return_loan (data, info_seq);
+
+                    }
+                  // *************** end read one by one
                   if (received_samples !=  expected_samples_run3)
                     {
                       cerr << "ERROR: run  3 unexpected number of samples received : "
                            << "expected < "
                            <<  expected_samples_run3 << "> - received <"
                            << received_samples << ">" << endl;
-                    }
-
-                // end read all in one
-
+                    }    
+                  // check readcondition
+                  //DDS_SampleStateMask sample = rc->get_sample_state_mask ();
+                  //DDS_ViewStateMask view = rc->get_view_state_mask ();
+                  //DDS_InstanceStateMask instance = rc->get_instance_state_mask ();
+                  //::printf("************sample_state %ld, view_state %ld instance_state %ld\n",
+                  //                             (long)sample, (long)view, (long)instance);
                 }
               else
                 {
                   cerr << "ERROR: Should be woken up on ReadCondition" << endl;
                 }
             }
-          else
+          else   // run 1 and 2 
             {
               if (cond[i] == qc)
                 {
-                  received_samples = 0;
+		              received_samples = 0;
                   typed_dr->read_w_condition (data,
-                                               info_seq,
+                                              info_seq,
                                               DDS_LENGTH_UNLIMITED,
                                               qc);
+       
                   for (DDS_Long i = 0; i < data.length (); ++i)
-                     {
-                       if (info_seq[i].valid_data)
-                         {
-                           check_iter (data[i], info_seq[i], run);
-                           received_samples ++;
-                         }
-                     }
-                   typed_dr->return_loan (data, info_seq);
-
+                    {
+                      if (info_seq[i].valid_data)
+                        {
+                          check_iter (data[i], info_seq[i], run);
+                          received_samples ++;
+                        }
+                    }
+                  typed_dr->return_loan (data, info_seq);
                   if (run == 1)
                     {
                       if (received_samples !=  expected_samples_run1)
@@ -179,22 +189,19 @@ void read (DDSDataReader * dr,
                            << "expected < "
                            <<  expected_samples_run2 << "> - received <"
                            << received_samples << ">" << endl;
-                        }
-                    }
-                 }
+                        } 
+		    }
+                }
               else
                 {
                   cerr << "ERROR: Should be woken up on QueryCondition" << endl;
                 }
-             }
+            }
         }
-      if (run != 3)
-        {
-        }
-
     }
 
-  //check if all samples are still available.
+
+  //check after run 3 if all samples are still available.
   if (run == 3)
     {
       QueryConditionTestSeq data;

@@ -254,19 +254,17 @@ namespace CIAO_Getter_Test_Receiver_Impl
   {
     // this is very hard to test in a controlled environment.
     // When data arrives in DDS, the waiting ends and the
-    // Getter starts to read the data. The number of samples
-    // read wil (almost) always be one.
+    // Getter starts to read the data. In this test we expected
+    // herefoe more then one, and less then but not exactly max_delevered_data.
     // On the other hand, when the user want to have all the
     // samples in DDS, one shouldn't use the wait method.
     // Since the spec is not clear about this, the test will
     // pass when at least one sample is returned.
-    // Also, max_delivered_data cannot be tested since only
-    // one sample is returned.
-    ::Getter_Test::GetterTestConnector::Getter_var getter =
+     ::Getter_Test::GetterTestConnector::Getter_var getter =
       this->ciao_context_->get_connection_info_get_fresh_data ();
 
     DDS::Duration_t to;
-    to.sec = 10;
+    to.sec = 20;
     to.nanosec = 0;
     getter->time_out (to);
     getter->max_delivered_data (40);
@@ -282,6 +280,8 @@ namespace CIAO_Getter_Test_Receiver_Impl
     ::CCM_DDS::ReadInfoSeq readinfo;
     bool const result = getter->get_many (gettertest_seq, readinfo);
     if (result)
+         getter->get_many (gettertest_seq, readinfo);
+    if (result)
       {
         if (gettertest_seq.length () == 0)
           {
@@ -290,6 +290,20 @@ namespace CIAO_Getter_Test_Receiver_Impl
                                   "number of samples: "
                                   "expected at least one - received <0>\n"));
           }
+        if (gettertest_seq.length () == 1)
+          {
+            ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_many: "
+                                  "Not enough data returned. "
+                                  "number of samples: "
+                                  "expected at least two - received <1>\n"));
+          }
+        if (gettertest_seq.length () > 40)
+          {
+            ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_many: "
+                                  "To much data returned. "
+                                  "number of samples: "
+                                  "expected not more then 40 - received <1>\n"));
+           }
         for (CORBA::ULong i = 0; i < gettertest_seq.length (); ++i)
           {
             ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::get_many: "
@@ -580,7 +594,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
           this->ciao_context_->get_connection_info_get_fresh_data ();
 
         DDS::Duration_t to;
-        to.sec = 1;
+        to.sec = 3;
         to.nanosec = 0;
         getter->time_out (to);
         ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::timeout_get_many: "
