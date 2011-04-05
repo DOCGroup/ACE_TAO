@@ -147,8 +147,6 @@ namespace CIAO
           // Check whether this condition is the one we were waiting for.
           if (this->condition_manager_->check_condition (active_conditions[i].in ()))
             {
-              active_conditions[i]->get_trigger_value ();
-
               ::DDS::ReturnCode_t const retcode = this->get (data,
                                                               sample_info,
                                                               max_samples);
