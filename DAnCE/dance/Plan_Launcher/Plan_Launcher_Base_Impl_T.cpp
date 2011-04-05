@@ -73,7 +73,7 @@ namespace DAnCE
     }
 #endif /* GEN_OSTREAM_OPS */
 
-    AppManager_var app_manager;
+  typename Plan_Launcher_Base_Impl< Manager, AppManager, Application>::AppManager_var app_manager;
     try
       {
         app_manager = this->manager_->preparePlan (plan, 0);

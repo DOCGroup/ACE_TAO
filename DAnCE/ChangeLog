@@ -1,8 +1,14 @@
+Tue Apr  5 13:27:22 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+        
+          Attempt to fix error on windows.
+
 Tue Apr  5 13:18:32 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Logger_Backend/ndds/Log_Server.cpp:
 
-          Warnings. 
+          Warnings.
 
 Tue Apr  5 13:16:46 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
