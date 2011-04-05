@@ -54,8 +54,8 @@ bool parse_args (int argc, ACE_TCHAR **argv)
           return false;
         }
 
-      return true;
     }
+  return true;
 }
 
 int
@@ -157,7 +157,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
             {
               std::cerr << "Got " << records.length () << " records\n";
 
-              for (size_t i = 0; i < records.length (); ++i)
+              for (int i = 0; i < records.length (); ++i)
                 {
                   DDS_SampleInfo &info = recordInfos[i];
 
