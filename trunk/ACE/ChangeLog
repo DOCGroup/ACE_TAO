@@ -1,3 +1,24 @@
+Tue Apr  5 12:36:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Get_Opt.inl:
+        * ace/Guard_T.inl:
+        * ace/Guard_T.cpp:
+        * ace/Handle_Set.h:
+        * ace/Handle_Set.cpp:
+        * ace/Hash_Multi_Map_Manager_T.cpp:
+        * ace/Hashable.inl:
+        * ace/Hashable.cpp:
+        * ace/IO_SAP.inl:
+        * ace/IO_SAP.cpp:
+          Layout changes
+
+        * ace/Handle_Set.inl:
+          Removed some old includes, should not be a problem with the current
+          supported platforms
+
+        * bin/vx_repo_link.pl:
+          Removed this file, vxsim is not supported anymore
+
 Mon Apr  4 09:42:27 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/rules.local.GNU:

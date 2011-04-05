@@ -58,7 +58,6 @@ public:
     MAXSIZE = ACE_DEFAULT_SELECT_REACTOR_SIZE
   };
 
-  // = Initialization methods.
   /// Constructor, initializes the bitmask to all 0s.
   ACE_Handle_Set (void);
 
