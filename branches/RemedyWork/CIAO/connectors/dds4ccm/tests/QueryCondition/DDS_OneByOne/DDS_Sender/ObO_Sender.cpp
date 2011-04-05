@@ -5,8 +5,8 @@
 
 using namespace std;
 
-#include "Base.h"
-#include "BaseSupport.h"
+#include "Base_ObO.h"
+#include "Base_ObOSupport.h"
 
 #define LIBRARY_NAME  "QueryCondition_Library"
 #define PROFILE_NAME  "QueryCondition_Profile"
@@ -52,7 +52,7 @@ void write (DDSDataWriter * writer)
                   << ">"
                   << endl;
             }
-        }
+         }
       cout << "Written samples with symbol <"
             << key
             << "> and iteration <"
