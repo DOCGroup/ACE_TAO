@@ -4,7 +4,6 @@
 #define ACE_GUARD_T_CPP
 
 // FUZZ: disable check_for_ACE_Guard
-
 #include "ace/Guard_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
