@@ -6,10 +6,6 @@
 #include "tao/Reply_Dispatcher.h"
 #include "tao/CDR.h"
 
-ACE_RCSID (Messaging,
-           AMI_Arguments_Converter_Impl,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void

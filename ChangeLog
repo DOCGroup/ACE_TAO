@@ -1,3 +1,20 @@
+Tue Apr  5 17:46:38 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BiDir_GIOP/*.cpp:
+        * tao/CodecFactory/*.cpp:
+        * tao/Messaging/*.cpp:
+        * tao/PI/*.cpp:
+        * tao/ValueType/*.cpp:
+        * orbsvcs/orbsvcs/*.cpp:
+        * orbsvcs/orbsvcs/Event/*.cpp:
+        * orbsvcs/orbsvcs/Sched/*.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_RefCount_Guard.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Client.cpp:
+
+          - Removed ACE_RCSID macros from non-generated source files.
+          - Changed 'ACE_AUTO_PTR_RESET' to 'ACE_auto_ptr_reset' and modified signature
+          - Updated #includes to reflect ACE changes
+
 Tue Apr  5 16:50:23 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/*.cpp:
@@ -7,7 +24,8 @@ Tue Apr  5 16:50:23 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_array/array_ch.cpp:
         * TAO_IDL/util/utl_indenter.cpp:
 
-          Removed ACE_RCSID macros.
+          - Removed ACE_RCSID macros from non-generated source files.
+          - Changed 'ACE_AUTO_PTR_RESET' to 'ACE_auto_ptr_reset' and modified signature
 
         * TAO_IDL/be/be_codegen.cpp:
         * TAO_IDL/be/be_interface.cpp:

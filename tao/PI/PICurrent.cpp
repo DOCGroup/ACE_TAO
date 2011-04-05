@@ -2,10 +2,6 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-ACE_RCSID (tao,
-           PICurrent,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 # include "tao/PI/PICurrent.inl"
 #endif /* __ACE_INLINE__ */

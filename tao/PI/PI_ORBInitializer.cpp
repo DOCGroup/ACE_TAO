@@ -12,10 +12,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (tao,
-           PI_ORBInitializer,
-           "$Id$")
-
 void
 TAO_PI_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 {

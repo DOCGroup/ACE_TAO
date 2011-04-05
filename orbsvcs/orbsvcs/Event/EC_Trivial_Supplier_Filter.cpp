@@ -8,8 +8,6 @@
 #include "orbsvcs/Event/EC_Scheduling_Strategy.h"
 #include "orbsvcs/Event/EC_ProxyConsumer.h" // @@ MSVC 6 bug
 
-ACE_RCSID(Event, EC_Trivial_Supplier_Filter, "$Id$")
-
 // ****************************************************************
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

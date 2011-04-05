@@ -6,8 +6,6 @@
 #include "orbsvcs/Event/EC_TPC_ProxySupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_TPC_ProxySupplier, "$Id$")
-
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "orbsvcs/Event/EC_TPC_Dispatching.h"
 

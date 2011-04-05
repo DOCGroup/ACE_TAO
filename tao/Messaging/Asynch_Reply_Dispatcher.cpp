@@ -8,8 +8,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Transport.h"
 
-ACE_RCSID(Messaging, Asynch_Reply_Dispatcher, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor.

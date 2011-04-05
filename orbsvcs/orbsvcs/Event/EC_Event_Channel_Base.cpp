@@ -14,8 +14,6 @@
 #include "orbsvcs/Event/EC_Event_Channel_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_Event_Channel_Base, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Event_Channel_Base::

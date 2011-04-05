@@ -18,9 +18,6 @@
 
 #include "orbsvcs/Time_Utilities.h"
 
-
-ACE_RCSID (Sched, Reconfig_Sched_Utils, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ///////////////////////////

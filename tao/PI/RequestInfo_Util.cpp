@@ -13,10 +13,6 @@
 #include "tao/SystemException.h"
 #include "ace/CORBA_macros.h"
 
-ACE_RCSID (tao,
-           RequestInfo_Util,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Dynamic::ParameterList

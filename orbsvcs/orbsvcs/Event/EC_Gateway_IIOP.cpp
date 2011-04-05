@@ -10,10 +10,6 @@
 
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (Event,
-           EC_Gateway_IIOP,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP (void)

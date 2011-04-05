@@ -17,10 +17,6 @@
 #include "tao/ORB.h"
 #include "tao/debug.h"
 
-ACE_RCSID (PI,
-           PolicyFactory_Loader,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PolicyFactory_Registry_Adapter*

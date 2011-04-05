@@ -2,10 +2,6 @@
 #include "tao/Valuetype/ValueFactory.h"
 #include "tao/CORBA_String.h"
 
-ACE_RCSID (Valuetype,
-           ValueFactory_Map,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ValueFactory_Map::TAO_ValueFactory_Map (void)

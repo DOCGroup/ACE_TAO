@@ -12,10 +12,6 @@
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/Valuetype/ValueFactory.h"
 
-ACE_RCSID (Messaging,
-           Messaging_ORBInitializer,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void

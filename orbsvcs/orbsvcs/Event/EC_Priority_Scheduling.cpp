@@ -10,8 +10,6 @@
 #include "orbsvcs/Event/EC_Priority_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_Priority_Scheduling, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Priority_Scheduling::~TAO_EC_Priority_Scheduling (void)

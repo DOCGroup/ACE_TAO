@@ -8,11 +8,6 @@
 
 #include "tao/ORB_Core.h"
 
-
-ACE_RCSID (Valuetype,
-           Valuetype_Adapter_Impl,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Valuetype_Adapter_Impl::~TAO_Valuetype_Adapter_Impl (void)

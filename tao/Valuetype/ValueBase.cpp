@@ -20,10 +20,6 @@
 # include "tao/Valuetype/ValueBase.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (Valuetype,
-           ValueBase,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #define DEFAULT_INDIRECTION_MAP_SIZE 10

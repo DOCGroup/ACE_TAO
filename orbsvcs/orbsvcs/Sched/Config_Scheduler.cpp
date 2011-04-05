@@ -9,8 +9,6 @@
 
 #include "orbsvcs/Sched/Config_Scheduler.h"
 
-ACE_RCSID(Sched, Config_Scheduler, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Config_Scheduler::ACE_Config_Scheduler (void)

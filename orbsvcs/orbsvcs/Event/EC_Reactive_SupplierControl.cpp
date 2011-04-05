@@ -15,8 +15,6 @@
 #include "orbsvcs/Event/EC_Reactive_SupplierControl.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_Reactive_SupplierControl, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Reactive_SupplierControl::

@@ -11,10 +11,6 @@
 #include "ace/Codeset_Symbols.h"
 #include "ace/CORBA_macros.h"
 
-ACE_RCSID (CodecFactory_impl,
-           CodecFactory,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CodecFactory::TAO_CodecFactory (TAO_ORB_Core * orb_core)

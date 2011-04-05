@@ -14,10 +14,6 @@
 #include "tao/PI/PICurrent.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-ACE_RCSID (PI,
-           ORBInitInfo,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 #include "tao/PI/ORBInitInfo.inl"
 #endif /* defined INLINE */

@@ -3,10 +3,6 @@
 #include "orbsvcs/Event/EC_Reactive_Timeout_Generator.h"
 #include "ace/Reactor.h"
 
-ACE_RCSID (Event,
-           EC_Reactive_Timeout_Generator,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Reactive_Timeout_Generator::
