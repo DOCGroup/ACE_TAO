@@ -176,7 +176,7 @@ namespace ACE
                                                         std::istream* put_data = 0);
 */
 
-#if defined(_MSC_VER)
+#if (defined(_MSC_VER) || defined(__MINGW32__))
               class ACE_INET_Export HttpConnectionKey
 #else
               class HttpConnectionKey
