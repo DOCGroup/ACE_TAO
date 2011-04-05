@@ -1,3 +1,9 @@
+Tue Apr  5 13:16:46 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Logger_Backend/ndds/NDDS_Logger.mpc:
+
+          Linker fix for Windows.
+
 Mon Apr  4 01:03:22 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Logger_Backend/ndds/Log_Backend.cpp:
