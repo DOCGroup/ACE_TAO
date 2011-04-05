@@ -26,8 +26,7 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
   : orb_core_ (orb_core),
     transport_ (0),
     connection_pending_ (false),
-    is_closed_ (false),
-    spin_prevention_backoff_delay_ (ACE_Time_Value::zero)
+    is_closed_ (false)
 {
   // Put ourselves in the connection wait state as soon as we get
   // created
@@ -215,15 +214,7 @@ TAO_Connection_Handler::handle_input_eh (ACE_HANDLE h, ACE_Event_Handler *eh)
   // If we can't process upcalls just return
   if (!this->transport ()->wait_strategy ()->can_process_upcalls ())
     {
-      // This puts this thread to sleep for a short period of time, in order
-      // to avoid too much "spinning" in and out of the select() system call
-      // in the reactor. The "spinning" is possible when no follower thread is
-      // available, i.e. the thread pool has been depleted due to excessive
-      // message load and/or invocation processing time.
-      this->spin_prevention_backoff_delay_ += 1;
-      this->spin_prevention_backoff_delay_ *= 2;
-
-      // @@@ Is this the most effective way of doing t=2*t+1 ?
+      ACE_Time_Value suspend_delay (0, 2000);
 
       if (TAO_debug_level > 6)
         ACE_DEBUG ((LM_DEBUG,
@@ -237,7 +228,7 @@ TAO_Connection_Handler::handle_input_eh (ACE_HANDLE h, ACE_Event_Handler *eh)
                   "TAO (%P|%t) - Connection_Handler[%d]::handle_input_eh, "
                   "scheduled to resume in %#T sec\n",
                   eh->get_handle(),
-                  &this->spin_prevention_backoff_delay_));
+                  &suspend_delay));
 
       // Using the heap to create the timeout handler, since we do not know
       // which handle we will have to try to resume. The destructor, called from
@@ -250,15 +241,12 @@ TAO_Connection_Handler::handle_input_eh (ACE_HANDLE h, ACE_Event_Handler *eh)
 
       this->orb_core_->reactor()->schedule_timer (prhd,
                                                   0,
-                                                  this->spin_prevention_backoff_delay_);
+                                                  suspend_delay);
 
       // Returning 0 causes the wait strategy to exit and the leader thread
       // to enter the reactor's select() call.
       return 0;
     }
-
-  // No delay is necessary anymore
-  this->spin_prevention_backoff_delay_.msec(0);
 
   int const result = this->handle_input_internal (h, eh);
 
