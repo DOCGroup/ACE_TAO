@@ -130,7 +130,7 @@ namespace ACE
               ACE_CString path_;
 
             public:
-#if defined(_MSC_VER)
+#if (defined(_MSC_VER) || defined(__MINGW32__))
               class ACE_INET_Export Factory
 #else
               class Factory
