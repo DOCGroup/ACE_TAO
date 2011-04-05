@@ -66,23 +66,26 @@ if ($client->WaitForFileTimed ($client_iorbase,
 }
 
 print "INFO: Awaiting server ...\n";
-$server_wait = $SV->Wait ();
-$SV->TimedWait (1);
+
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 30);
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    $status = 1;
+}
 
 print "INFO: Awaiting client ...\n";
-$client_wait = $CL->Wait ();
-$CL->TimedWait (1);
 
-print "INFO: Clean up\n";
+$client_status = $CL->WaitKill ($client->ProcessStartWaitInterval());
+
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
+    $status = 1;
+}
 
 $server->DeleteFile($server_iorfile);
 $client->DeleteFile($client_iorfile);
 
-if ($server_wait != 0 || $client_wait != 0) {
-    print STDERR "ERROR: Test failed\n";
-    exit 1;
-}
- 
-print "INFO: Test succeded\n";
+print "INFO: Test succeeded\n";
 exit 0;
  
