@@ -2,10 +2,6 @@
 
 #include "tao/Protocol_Factory.h"
 
-ACE_RCSID (tao,
-           Protocol_Factory,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Protocol_Factory::TAO_Protocol_Factory (CORBA::ULong tag)

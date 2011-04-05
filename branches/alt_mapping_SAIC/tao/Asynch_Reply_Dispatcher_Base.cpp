@@ -10,10 +10,6 @@
 #include "tao/Asynch_Reply_Dispatcher_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Asynch_Reply_Dispatcher_Base,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor.

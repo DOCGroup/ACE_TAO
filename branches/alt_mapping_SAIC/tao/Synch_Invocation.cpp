@@ -29,12 +29,6 @@
 # include "tao/Synch_Invocation.inl"
 #endif /* __ACE_INLINE__ */
 
-
-ACE_RCSID (tao,
-           Synch_Invocation,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

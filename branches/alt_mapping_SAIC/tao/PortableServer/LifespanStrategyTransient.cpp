@@ -2,10 +2,6 @@
 
 #include "tao/PortableServer/LifespanStrategyTransient.h"
 
-ACE_RCSID (PortableServer,
-           Lifespan_Strategy,
-           "$Id$")
-
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_string.h"
 #include "tao/PortableServer/POAManager.h"

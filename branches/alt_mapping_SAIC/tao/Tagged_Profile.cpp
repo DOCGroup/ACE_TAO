@@ -13,10 +13,6 @@
 # include "tao/Tagged_Profile.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Tagged_Profile,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean

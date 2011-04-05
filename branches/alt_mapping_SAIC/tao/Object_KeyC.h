@@ -26,10 +26,10 @@
  **/
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:149
+// w:\tao\tao_idl\be\be_codegen.cpp:149
 
-#ifndef _TAO_PIDL_OBJECT_KEYC_GNYJHL_H_
-#define _TAO_PIDL_OBJECT_KEYC_GNYJHL_H_
+#ifndef _TAO_PIDL_OBJECT_KEYC_3VLM1R_H_
+#define _TAO_PIDL_OBJECT_KEYC_3VLM1R_H_
 
 #include /**/ "ace/pre.h"
 
@@ -64,23 +64,23 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_module/module_ch.cpp:41
+// w:\tao\tao_idl\be\be_visitor_module\module_ch.cpp:41
 
 namespace TAO
 {
   
   // TAO_IDL - Generated from
-  // w:\tao\tao_idl\be\be_visitor_typedef/typedef_ch.cpp:462
+  // w:\tao\tao_idl\be\be_visitor_typedef\typedef_ch.cpp:462
   
   typedef CORBA::OctetSeq ObjectKey;
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_module/module_ch.cpp:70
+// w:\tao\tao_idl\be\be_visitor_module\module_ch.cpp:70
 
 } // module TAO
 
 // TAO_IDL - Generated from
-// .\be\be_visitor_traits.cpp:60
+// w:\tao\tao_idl\be\be_visitor_traits.cpp:60
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -101,7 +101,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:1789
+// w:\tao\tao_idl\be\be_codegen.cpp:1789
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

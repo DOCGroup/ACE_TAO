@@ -4,10 +4,6 @@
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/POA_Cached_Policies.h"
 
-ACE_RCSID(PortableServer,
-          Network_Priority_Hook,
-          "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Network_Priority_Hook::~TAO_Network_Priority_Hook(void)

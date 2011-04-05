@@ -1,9 +1,5 @@
 #include "tao/GIOP_Message_Generator_Parser_11.h"
 
-ACE_RCSID (tao,
-           GIOP_Message_Generator_Parser_11,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Octet

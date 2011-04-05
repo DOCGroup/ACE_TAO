@@ -13,10 +13,6 @@
 # include "tao/Transport_Cache_Manager_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Transport_Cache_Manager_T,
-           "$Id$")
-
 // notes on debug level and LM_xxxx codes for transport cache
 // TAO_debug_level > 0: recoverable error condition (LM_ERROR)
 // TAO_debug_level > 4: normal transport cache operations (LM_INFO)

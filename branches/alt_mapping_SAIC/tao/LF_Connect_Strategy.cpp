@@ -7,11 +7,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/Synch_Options.h"
 
-ACE_RCSID(tao,
-          LF_Connect_Strategy,
-          "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LF_Connect_Strategy::TAO_LF_Connect_Strategy (

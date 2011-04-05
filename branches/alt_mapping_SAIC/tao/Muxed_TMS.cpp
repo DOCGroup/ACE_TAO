@@ -7,10 +7,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 
-ACE_RCSID (tao,
-           Muxed_TMS,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)

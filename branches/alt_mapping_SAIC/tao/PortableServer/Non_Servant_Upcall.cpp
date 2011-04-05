@@ -8,10 +8,6 @@
 # include "tao/PortableServer/Non_Servant_Upcall.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (PortableServer,
-           Non_Servant_Upcall,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

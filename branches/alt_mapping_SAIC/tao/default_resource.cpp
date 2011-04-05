@@ -27,10 +27,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (tao,
-           default_resource,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Codeset_Parameters::TAO_Codeset_Parameters (void)
@@ -1217,9 +1213,7 @@ TAO_Default_Resource_Factory::create_fragmentation_strategy (
         }
     }
 
-  ACE_AUTO_PTR_RESET (strategy,
-                      tmp,
-                      TAO_GIOP_Fragmentation_Strategy);
+  ACE_auto_ptr_reset (strategy, tmp);
 
   return strategy;
 }

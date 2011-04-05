@@ -3,10 +3,6 @@
 #include "tao/PortableServer/Local_Servant_Base.h"
 #include "tao/SystemException.h"
 
-ACE_RCSID (PortableServer,
-           Local_Servant_Base,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/Local_Servant_Base.inl"
 #endif /* ! __ACE_INLINE__ */

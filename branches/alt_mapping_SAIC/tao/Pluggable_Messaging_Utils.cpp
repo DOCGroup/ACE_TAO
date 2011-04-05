@@ -7,10 +7,6 @@
 #include "tao/Pluggable_Messaging_Utils.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Pluggable_Messaging_Utils,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Pluggable_Reply_Params::TAO_Pluggable_Reply_Params (TAO_Transport *t)

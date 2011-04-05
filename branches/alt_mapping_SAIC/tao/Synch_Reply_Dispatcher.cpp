@@ -5,11 +5,6 @@
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/debug.h"
 
-
-ACE_RCSID (tao,
-           Synch_Reply_Dispatcher,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor.

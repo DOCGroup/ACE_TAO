@@ -8,12 +8,6 @@
 # include "tao/AnyTypeCode/String_TypeCode_Static.inl"
 #endif  /* !__ACE_INLINE__ */
 
-
-ACE_RCSID (AnyTypeCode,
-           String_TypeCode_Static,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool

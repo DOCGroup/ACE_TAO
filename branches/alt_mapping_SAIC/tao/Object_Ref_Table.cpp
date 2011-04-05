@@ -8,11 +8,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 
-
-ACE_RCSID (tao,
-           Object_Ref_Table,
-           "$Id$")
-
 #ifndef __ACE_INLINE__
 # include "tao/Object_Ref_Table.inl"
 #endif  /* __ACE_INLINE__ */

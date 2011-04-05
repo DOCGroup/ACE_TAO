@@ -23,10 +23,6 @@
 #include "ace/Monitor_Size.h"
 #endif /* TAO_HAS_MONITOR_POINTS */
 
-ACE_RCSID (PortableServer,
-           ServantRetentionStrategyRetain,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

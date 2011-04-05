@@ -15,11 +15,6 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
 
-
-ACE_RCSID (tao,
-           CORBANAME_Parser,
-           "$Id$")
-
 static const char corbaname_prefix[] = "corbaname:";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

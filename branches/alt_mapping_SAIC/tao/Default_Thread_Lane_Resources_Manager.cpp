@@ -6,12 +6,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/Log_Msg.h"
 
-
-ACE_RCSID (tao,
-           Default_Thread_Lane_Resources_Manager,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Default_Thread_Lane_Resources_Manager::TAO_Default_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core)

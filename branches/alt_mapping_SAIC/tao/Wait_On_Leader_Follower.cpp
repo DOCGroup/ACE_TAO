@@ -7,10 +7,6 @@
 #include "tao/Synch_Reply_Dispatcher.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (tao,
-           Wait_On_Leader_Follower,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Wait_On_Leader_Follower::TAO_Wait_On_Leader_Follower

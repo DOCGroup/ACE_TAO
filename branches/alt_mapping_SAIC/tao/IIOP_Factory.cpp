@@ -7,11 +7,6 @@
 #include "tao/IOPC.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (tao,
-           IIOP_Factory,
-           "$Id$")
-
-
 static const char the_prefix[] = "iiop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

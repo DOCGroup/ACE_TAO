@@ -9,11 +9,6 @@
 
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (tao,
-           Remote_Object_Proxy_Broker,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

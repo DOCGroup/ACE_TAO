@@ -7,10 +7,6 @@
 # include "tao/Base_Transport_Property.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Base_Transport_Property,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Base_Transport_Property::~TAO_Base_Transport_Property (void)

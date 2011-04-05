@@ -2,10 +2,6 @@
 
 #include "tao/Thread_Lane_Resources.h"
 
-ACE_RCSID (tao,
-           Thread_Lane_Resources,
-           "$Id$")
-
 #include "tao/Acceptor_Registry.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"

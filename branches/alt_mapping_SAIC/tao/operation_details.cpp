@@ -15,10 +15,6 @@
 # include "tao/operation_details.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           operation_details,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Exception *

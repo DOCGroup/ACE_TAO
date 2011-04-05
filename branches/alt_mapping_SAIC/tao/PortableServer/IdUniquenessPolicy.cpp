@@ -1,10 +1,6 @@
 #include "tao/PortableServer/IdUniquenessPolicy.h"
 #include "tao/PortableServer/PortableServer.h"
 
-ACE_RCSID (PortableServer,
-           IdUniquenessPolicy,
-           "$Id$")
-
 #include "ace/CORBA_macros.h"
 
 #if !defined (CORBA_E_MICRO)

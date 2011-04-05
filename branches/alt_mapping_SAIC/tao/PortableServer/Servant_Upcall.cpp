@@ -19,10 +19,6 @@
 
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (PortableServer,
-           Servant_Upcall,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

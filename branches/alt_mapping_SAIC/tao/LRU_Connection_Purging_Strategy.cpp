@@ -3,10 +3,6 @@
 #include "tao/LRU_Connection_Purging_Strategy.h"
 #include "tao/Transport.h"
 
-ACE_RCSID (tao,
-           LRU_Connection_Purging_Strategy,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LRU_Connection_Purging_Strategy::TAO_LRU_Connection_Purging_Strategy (

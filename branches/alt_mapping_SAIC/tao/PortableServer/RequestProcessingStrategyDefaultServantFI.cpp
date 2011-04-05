@@ -2,10 +2,6 @@
 
 #include "tao/orbconf.h"
 
-ACE_RCSID (PortableServer,
-           RequestProcessingStrategyDefaultServantFI,
-           "$Id$")
-
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 #include "tao/PortableServer/RequestProcessingStrategyDefaultServantFI.h"

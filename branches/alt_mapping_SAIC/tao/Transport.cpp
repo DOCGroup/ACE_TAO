@@ -44,11 +44,6 @@
 # include "tao/Transport.inl"
 #endif /* __ACE_INLINE__ */
 
-
-ACE_RCSID (tao,
-           Transport,
-           "$Id$")
-
 /*
  * Static function in file scope
  */

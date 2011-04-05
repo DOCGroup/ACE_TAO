@@ -17,10 +17,6 @@
 
 #include "ace/OS_NS_sys_sendfile.h"
 
-ACE_RCSID (tao,
-           IIOP_Transport,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,

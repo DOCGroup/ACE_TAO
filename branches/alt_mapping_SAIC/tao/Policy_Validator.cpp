@@ -5,11 +5,6 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (tao,
-           Policy_Validator,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Policy_Validator::TAO_Policy_Validator (TAO_ORB_Core &orb_core)

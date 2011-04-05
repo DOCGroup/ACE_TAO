@@ -20,10 +20,6 @@
 # include "tao/AnyTypeCode/Any.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (AnyTypeCode,
-           Any,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 using namespace TAO;

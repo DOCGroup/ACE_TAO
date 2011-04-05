@@ -20,10 +20,6 @@
  */
 //@@ GIOP_MESSAGE_BASE_INCLUDE_ADD_HOOK
 
-ACE_RCSID (tao,
-           GIOP_Message_Base,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,

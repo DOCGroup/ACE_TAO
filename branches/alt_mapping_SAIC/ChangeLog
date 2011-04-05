@@ -1,3 +1,23 @@
+Tue Apr  5 16:50:23 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/*.cpp:
+        * tao/CodeSet/*.cpp:
+        * tao/AnyTypeCode/*.cpp:
+        * tao/PortableServer/*.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/util/utl_indenter.cpp:
+
+          Removed ACE_RCSID macros.
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+
+          Updated use syntax of random seed corresponding to changes in ACE.
+
+        * tao/QtResource.mpc:
+
+          Updated changed in base project name.
+
 Tue Sep 28 17:46:42 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Alt_Mapping/alt_mapping_i.cpp:

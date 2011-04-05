@@ -25,11 +25,6 @@
 
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (tao,
-           Exception,
-           "$Id$")
-
-
 // ****************************************************************
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

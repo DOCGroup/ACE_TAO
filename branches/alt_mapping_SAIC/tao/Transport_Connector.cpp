@@ -23,10 +23,6 @@
 # include "tao/Transport_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Connector,
-           "$Id$")
-
 namespace
 {
   class TransportCleanupGuard

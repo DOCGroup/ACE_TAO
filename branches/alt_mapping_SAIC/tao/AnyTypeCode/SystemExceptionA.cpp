@@ -12,11 +12,6 @@
 
 #include "tao/CORBA_String.h"
 
-ACE_RCSID (AnyTypeCode,
-           SystemExceptionA,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (THREAD_CANCELLED)

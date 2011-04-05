@@ -8,10 +8,6 @@
 #include "ace/Reactor.h"
 #include "ace/Countdown_Time.h"
 
-ACE_RCSID (tao,
-           Wait_On_Reactor,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Wait_On_Reactor::TAO_Wait_On_Reactor (TAO_Transport *transport)

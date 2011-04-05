@@ -6,11 +6,6 @@
 
 #include "ace/ACE.h"
 
-ACE_RCSID (tao,
-           Resource_Factory,
-           "$Id$")
-
-
 // ****************************************************************
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

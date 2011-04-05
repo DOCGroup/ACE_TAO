@@ -8,10 +8,6 @@
 # include "tao/Queued_Data.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Queued_Data,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /*!

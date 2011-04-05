@@ -10,10 +10,6 @@
 #include "ace/Malloc_Base.h"
 #include "ace/High_Res_Timer.h"
 
-ACE_RCSID (tao,
-           Asynch_Queued_Message,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (

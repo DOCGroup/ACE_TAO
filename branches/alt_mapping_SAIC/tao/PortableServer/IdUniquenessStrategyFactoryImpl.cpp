@@ -4,10 +4,6 @@
 #include "tao/PortableServer/IdUniquenessStrategy.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (PortableServer,
-           IdUniquenessStrategyFactoryImpl,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

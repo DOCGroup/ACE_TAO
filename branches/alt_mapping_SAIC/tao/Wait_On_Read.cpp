@@ -9,10 +9,6 @@
 #include "ace/Reactor.h"
 #include "ace/Countdown_Time.h"
 
-ACE_RCSID (tao,
-           Wait_On_Read,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor.

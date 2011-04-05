@@ -19,10 +19,6 @@
 #include "tao/Codeset/Codeset_Translator_Factory.h"
 #include "tao/CDR.h"
 
-ACE_RCSID (Codeset,
-           Codeset_Translator_Factory,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Codeset_Translator_Factory::TAO_Codeset_Translator_Factory ()

@@ -12,10 +12,6 @@
 #include "tao/debug.h"
 #include "tao/SystemException.h"
 
-ACE_RCSID (tao,
-           Remote_Invocation,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

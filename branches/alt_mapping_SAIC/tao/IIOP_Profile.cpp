@@ -11,10 +11,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (tao,
-           IIOP_Profile,
-           "$Id$")
-
 #include "ace/os_include/os_netdb.h"
 
 static const char the_prefix[] = "iiop";

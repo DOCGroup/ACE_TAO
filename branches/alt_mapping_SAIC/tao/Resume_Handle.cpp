@@ -8,11 +8,6 @@
 # include "tao/Resume_Handle.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Resume_Handle,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void

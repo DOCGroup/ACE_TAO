@@ -2,12 +2,7 @@
 #include "tao/Connection_Handler.h"
 #include "ace/OS_Memory.h"
 
-ACE_RCSID(tao,
-          LF_Multi_Event,
-          "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 TAO_LF_Multi_Event::TAO_LF_Multi_Event (void)
   : TAO_LF_Event (),

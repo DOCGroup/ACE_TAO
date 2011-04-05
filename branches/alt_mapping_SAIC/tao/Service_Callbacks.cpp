@@ -3,11 +3,6 @@
 #include "tao/SystemException.h"
 #include "tao/Invocation_Utils.h"
 
-ACE_RCSID (tao,
-           Service_Callbacks,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Service_Callbacks::~TAO_Service_Callbacks (void)

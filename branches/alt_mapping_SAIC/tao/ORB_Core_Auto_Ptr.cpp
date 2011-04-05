@@ -5,10 +5,6 @@
 # include "tao/ORB_Core_Auto_Ptr.inl"
 #endif  /* !__ACE_INLINE */
 
-ACE_RCSID (tao,
-           ORB_Core_Auto_Ptr,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ORB_Core_Auto_Ptr::~TAO_ORB_Core_Auto_Ptr (void)

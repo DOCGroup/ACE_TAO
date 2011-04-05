@@ -4,11 +4,6 @@
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/ORB_Constants.h"
 
-ACE_RCSID(PortableServer,
-          POA_Guard,
-          "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

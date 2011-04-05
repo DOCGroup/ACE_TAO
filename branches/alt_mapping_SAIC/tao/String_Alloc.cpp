@@ -7,10 +7,6 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID (tao,
-           String_Alloc,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 char *

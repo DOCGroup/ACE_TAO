@@ -24,11 +24,6 @@
 #include "tao/Acceptor_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Acceptor_Registry,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Acceptor_Registry::TAO_Acceptor_Registry (void)

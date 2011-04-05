@@ -6,10 +6,6 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (tao,
-           Cleanup_Func_Registry,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int

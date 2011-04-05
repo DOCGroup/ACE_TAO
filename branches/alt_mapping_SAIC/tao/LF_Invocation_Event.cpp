@@ -1,10 +1,6 @@
 // -*- C++ -*-
 #include "tao/LF_Invocation_Event.h"
 
-ACE_RCSID(tao,
-          LF_Invocation_Event,
-          "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LF_Invocation_Event::TAO_LF_Invocation_Event (void)
