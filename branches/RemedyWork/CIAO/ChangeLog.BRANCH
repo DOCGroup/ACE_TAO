@@ -1,3 +1,8 @@
+Tue Apr 05 09:32:14 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/test/Getter/Sender/Getter_Test_Sender_exec.cpp:
+        Changed initializing of array for writing many samplesd
+
 Mon Apr  4 12:07:17 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/README:
