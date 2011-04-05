@@ -1,3 +1,11 @@
+Tue Apr  5 13:01:08 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * include/makeinclude/platform_macosx_iphone.GNU:
+
+          Added new feature, iphone_codesign, to only use the iPhone codesign
+          utility if explicitly set.  Recent changes in behavior have make this 
+          problematic in automated builds. 
+
 Tue Apr  5 12:36:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Get_Opt.inl:
