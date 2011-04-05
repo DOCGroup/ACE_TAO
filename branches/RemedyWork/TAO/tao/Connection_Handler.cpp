@@ -234,8 +234,10 @@ TAO_Connection_Handler::handle_input_eh (ACE_HANDLE h, ACE_Event_Handler *eh)
 
       if (TAO_debug_level > 5)
         ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Connection_Handler[%d]::handle_input_eh, Scheduled to resume in %d micro sec\n",
-                  eh->get_handle(), (int)this->spin_prevention_backoff_delay_.msec()));
+                  "TAO (%P|%t) - Connection_Handler[%d]::handle_input_eh, "
+                  "scheduled to resume in %d micro sec\n",
+                  eh->get_handle(),
+                  (int)this->spin_prevention_backoff_delay_.msec()));
 
       // Using the heap to create the timeout handler, since we do not know
       // which handle we will have to try to resume. The destructor, called from
