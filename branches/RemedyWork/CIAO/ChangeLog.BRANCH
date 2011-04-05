@@ -1,3 +1,11 @@
+Tue Apr  5 18:18:23 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/DDS_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/DDS_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Receiver/DDS_ObO_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Sender/DDS_ObO_Sender.mpc:
+          We only need ndds_ts_defaults as base project, not full dds4ccm
+
 Tue Apr  5 14:16:26 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ChangeLog.BRANCH:
