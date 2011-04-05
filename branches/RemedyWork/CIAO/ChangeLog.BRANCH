@@ -1,11 +1,20 @@
-A       connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne
-A       connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/descriptors
-A       connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/descriptors/USER_QOS_PROFILES.xml
-A       connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/descriptors/DDS_ObO_Sender
-A       connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/descriptors/run_test.pl
-A       connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/descriptors/DDS_ObO_receiver
-A       connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/Base
-A       connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/Base/Base_ObO.h
+Tue Apr  5 14:16:26 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ChangeLog.BRANCH:
+          Removed some svn statements
+
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+          Removed call to get_trigger_value. This call is not neccessary.
+
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/README:
+          Added a description for this test.
+
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/descriptors/Plan.cdp:
+          Added a Reader which tests whether all samples are available in DDS.
+
 Tue Apr 05 15:03:14 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/Base/Base_ObO.idl:
@@ -21,9 +30,6 @@ Tue Apr 05 15:03:14 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/Receiver.cpp:
         add extra checks.
 
-
-
- 
 Tue Apr 05 09:32:14 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/test/Getter/Sender/Getter_Test_Sender_exec.cpp:
