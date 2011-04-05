@@ -1,3 +1,11 @@
+Tue Apr  5 08:11:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+        * TAO_IDL/be_include/be_global.h:
+          Don't use NONE as enum value, this is a macro on VxWorks
+
 Fri Apr  1 15:10:04 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/Naming_Service/Naming_Service.h:
@@ -9,9 +17,9 @@ Fri Apr  1 15:10:04 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
           adds a -n <numthreads> command line option. Threading is
           achieved by using an ACE_Task to call ORB::run() on multiple
           threads. Default is single threaded behavior.
-        
+
         * orbsvcs/Notify_Service/Notify_Service.cpp:
-        
+
           Added a try/catch to the naming service resolving function. It
           is possible that and execption is thrown while trying to
           connect, and that was causing the service to crash abrupty
@@ -19,7 +27,7 @@ Fri Apr  1 15:10:04 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
           and shutdown happens gracefully.
 
         * orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
-        
+
           Silenced some compiler warnings that complained about an
           infinite loop. The test added to break will never pass, so the
           behavior is unchanged, but pedantic gcc compilers are now
