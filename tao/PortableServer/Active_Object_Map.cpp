@@ -12,10 +12,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/CORBA_macros.h"
 
-ACE_RCSID(PortableServer,
-          Active_Object_Map,
-          "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /* static */

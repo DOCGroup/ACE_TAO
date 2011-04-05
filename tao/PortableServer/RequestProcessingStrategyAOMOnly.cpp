@@ -7,10 +7,6 @@
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/PortableServer/Root_POA.h"
 
-ACE_RCSID (PortableServer,
-           Request_Processing,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

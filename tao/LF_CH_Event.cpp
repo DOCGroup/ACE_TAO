@@ -4,10 +4,6 @@
 #include "tao/Connection_Handler.h"
 #include "tao/Transport.h"
 
-ACE_RCSID(tao,
-          LF_Invocation_Event,
-          "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LF_CH_Event::TAO_LF_CH_Event (void)

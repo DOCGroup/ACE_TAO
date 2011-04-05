@@ -8,11 +8,6 @@
 # include "tao/Transport_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Acceptor,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Acceptor::TAO_Acceptor (CORBA::ULong tag)

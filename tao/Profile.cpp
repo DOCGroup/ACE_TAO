@@ -21,11 +21,6 @@
 #include "tao/Profile.inl"
 #endif /* __ACE_INLINE__ */
 
-
-ACE_RCSID (tao,
-           Profile,
-           "$Id$")
-
 // ****************************************************************
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

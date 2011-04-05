@@ -9,11 +9,6 @@
 
 #include "ace/Guard_T.h"
 
-ACE_RCSID (AnyTypeCode,
-           Any_Impl,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::Any_Impl::Any_Impl (_tao_destructor destructor,

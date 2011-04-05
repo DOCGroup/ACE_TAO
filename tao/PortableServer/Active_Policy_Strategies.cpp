@@ -33,11 +33,6 @@
 # include "tao/PortableServer/Active_Policy_Strategies.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(PortableServer,
-          Active_Policy_Strategies,
-          "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

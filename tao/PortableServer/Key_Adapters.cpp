@@ -6,10 +6,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Map_T.h"
 
-ACE_RCSID (PortableServer,
-           Key_Adapters,
-           "$Id$")
-
 ///////////////////////////////////////////////////////////////////////////////
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

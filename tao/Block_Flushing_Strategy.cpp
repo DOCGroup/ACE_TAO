@@ -6,8 +6,6 @@
 #include "tao/Connection_Handler.h"
 #include "ace/Countdown_Time.h"
 
-ACE_RCSID(tao, Block_Flushing_Strategy, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int

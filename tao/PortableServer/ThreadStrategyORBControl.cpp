@@ -3,10 +3,6 @@
 #include "tao/PortableServer/ThreadStrategyORBControl.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (PortableServer,
-           ThreadStrategyORBControl,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

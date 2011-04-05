@@ -18,10 +18,6 @@
 #include "tao/Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Connection_Handler,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)

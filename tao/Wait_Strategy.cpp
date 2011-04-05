@@ -4,10 +4,6 @@
 
 //@@ WAIT_STRATEGY_SPL_COPY_HOOK_START
 
-ACE_RCSID (tao,
-           Wait_Strategy,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 # include "tao/Wait_Strategy.inl"
 #endif /* __ACE_INLINE__ */

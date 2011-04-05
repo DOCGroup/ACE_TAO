@@ -18,10 +18,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (tao,
-           IIOP_Endpoint,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */

@@ -10,10 +10,6 @@
 #include "tao/SystemException.h"
 #include "ace/Service_Config.h"
 
-ACE_RCSID (tao,
-           LocateRequest_Invocation_Adapter,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

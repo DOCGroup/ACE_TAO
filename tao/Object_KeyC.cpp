@@ -26,7 +26,7 @@
  **/
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:426
+// w:\tao\tao_idl\be\be_codegen.cpp:426
 
 
 #include "Object_KeyC.h"
@@ -38,7 +38,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
 // TAO_IDL - Generated from
-// .\be\be_visitor_arg_traits.cpp:68
+// w:\tao\tao_idl\be\be_visitor_arg_traits.cpp:68
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

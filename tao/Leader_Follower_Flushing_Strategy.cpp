@@ -8,11 +8,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 
-ACE_RCSID (tao,
-           Leader_Follower_Flushing_Strategy,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int

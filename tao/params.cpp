@@ -11,10 +11,6 @@
 #include "ace/Service_Config.h"
 #include "tao/Invocation_Utils.h"
 
-ACE_RCSID (tao,
-           params,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)

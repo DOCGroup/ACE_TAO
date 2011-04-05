@@ -4,11 +4,6 @@
 #include "tao/GUIResource_Factory.h"
 #include "tao/TAO_Singleton.h"
 
-ACE_RCSID (tao,
-           TSS_Resources,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_TSS_Resources::TAO_TSS_Resources (void)

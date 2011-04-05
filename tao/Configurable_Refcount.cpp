@@ -4,6 +4,3 @@
 # include "Configurable_Refcount.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Configurable_Refcount,
-           "$Id$")

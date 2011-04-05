@@ -11,10 +11,6 @@
 #include "tao/Object.h"
 #include "tao/SystemException.h"
 
-ACE_RCSID (PortableServer,
-           Direct_Collocation_Upcall_Wrapper,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void

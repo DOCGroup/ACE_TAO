@@ -8,10 +8,6 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (PortableServer,
-           RequestProcessingStrategyFactoryImpl,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

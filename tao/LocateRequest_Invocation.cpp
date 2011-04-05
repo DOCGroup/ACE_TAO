@@ -13,10 +13,6 @@
 
 #include "ace/Countdown_Time.h"
 
-ACE_RCSID (tao,
-           LocateRequest_Invocation,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

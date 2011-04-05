@@ -17,16 +17,11 @@
 # include "tao/Leader_Follower.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Leader_Follower,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Leader_Follower::~TAO_Leader_Follower (void)
 {
-  while (!this->follower_free_list_.empty ())
+  while (!this->follower_free_list_.is_empty ())
     {
       TAO_LF_Follower *follower = this->follower_free_list_.pop_front ();
       delete follower;
@@ -44,7 +39,7 @@ TAO_Leader_Follower::~TAO_Leader_Follower (void)
 TAO_LF_Follower *
 TAO_Leader_Follower::allocate_follower (void)
 {
-  if (!this->follower_free_list_.empty ())
+  if (!this->follower_free_list_.is_empty ())
     return this->follower_free_list_.pop_front ();
 
   TAO_LF_Follower* ptr = 0;

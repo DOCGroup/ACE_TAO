@@ -14,10 +14,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
 
-ACE_RCSID (tao,
-           LocalObject,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::LocalObject::~LocalObject (void)

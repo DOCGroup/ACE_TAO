@@ -15,11 +15,6 @@
 #include "tao/Connector_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
-
-ACE_RCSID (tao,
-           Connector_Registry,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Connector_Registry::TAO_Connector_Registry (void)

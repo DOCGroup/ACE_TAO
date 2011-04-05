@@ -19,10 +19,6 @@
 #include "ace/OS_NS_time.h"
 #include "ace/CORBA_macros.h"
 
-ACE_RCSID (tao,
-           IIOP_Connector,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Uncomment *one* of the the following defines if you want to explicitly induce

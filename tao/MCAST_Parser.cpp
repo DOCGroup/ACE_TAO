@@ -16,14 +16,7 @@
 #include "tao/MCAST_Parser.inl"
 #endif /* __ACE_INLINE__ */
 
-
-ACE_RCSID (tao,
-           MCAST_Parser,
-           "$Id$")
-
-
 static const char mcast_prefix[] = "mcast:";
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

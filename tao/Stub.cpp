@@ -27,10 +27,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/CORBA_macros.h"
 
-ACE_RCSID (tao,
-           TAO_Stub,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Stub::TAO_Stub (const char *repository_id,

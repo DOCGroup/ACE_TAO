@@ -21,10 +21,6 @@
 # include "tao/AnyTypeCode/Marshal.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (AnyTypeCode,
-           Marshal,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Marshal_Object::~TAO_Marshal_Object (void)

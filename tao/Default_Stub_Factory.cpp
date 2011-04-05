@@ -7,10 +7,6 @@
 #include "ace/CORBA_macros.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (tao,
-           TAO_Default_Stub_Factory,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Default_Stub_Factory::~TAO_Default_Stub_Factory (void)

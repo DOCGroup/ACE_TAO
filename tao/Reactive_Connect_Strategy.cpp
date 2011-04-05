@@ -7,11 +7,6 @@
 
 #include "ace/Synch_Options.h"
 
-ACE_RCSID(tao,
-          Reactive_Connect_Strategy,
-          "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Reactive_Connect_Strategy::TAO_Reactive_Connect_Strategy (

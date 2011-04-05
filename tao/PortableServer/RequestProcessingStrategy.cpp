@@ -10,11 +10,6 @@
 
 #include "tao/PortableServer/RequestProcessingStrategy.h"
 
-ACE_RCSID (PortableServer,
-           RequestProcessingStrategy,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

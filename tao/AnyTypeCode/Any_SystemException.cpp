@@ -13,11 +13,6 @@
 
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (AnyTypeCode,
-           Any_SystemException,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::Any_SystemException::Any_SystemException (_tao_destructor destructor,

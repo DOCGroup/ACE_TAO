@@ -3,10 +3,6 @@
 #include "tao/Connection_Handler.h"
 #include "tao/LF_Multi_Event.h"
 
-ACE_RCSID (tao,
-           Connect_Strategy,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Connect_Strategy::TAO_Connect_Strategy (TAO_ORB_Core *orb_core)

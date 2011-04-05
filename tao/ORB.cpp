@@ -2,10 +2,6 @@
 
 #include "tao/ORB.h"
 
-ACE_RCSID (tao,
-           ORB,
-           "$Id$")
-
 #include "tao/ORB_Table.h"
 #include "tao/Connector_Registry.h"
 #include "tao/IOR_Parser.h"

@@ -11,10 +11,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
 
-ACE_RCSID (PortableServer,
-           Collocated_Object_Proxy_Broker,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

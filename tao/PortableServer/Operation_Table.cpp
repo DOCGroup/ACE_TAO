@@ -3,10 +3,6 @@
 #include "tao/PortableServer/Operation_Table.h"
 #include "tao/ORB.h"
 
-ACE_RCSID(PortableServer,
-          Operation_Table,
-          "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // destructor

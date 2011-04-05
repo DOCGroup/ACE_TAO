@@ -11,10 +11,6 @@
 #include "ace/Guard_T.h"
 #include "ace/CORBA_macros.h"
 
-ACE_RCSID (tao,
-           MProfile,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 # include "tao/MProfile.inl"
 #endif /* __ACE_INLINE__ */

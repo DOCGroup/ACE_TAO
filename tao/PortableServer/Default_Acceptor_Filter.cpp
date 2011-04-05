@@ -5,11 +5,6 @@
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
 
-ACE_RCSID(PortableServer,
-          Default_Acceptor_Filter,
-          "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Default_Acceptor_Filter::TAO_Default_Acceptor_Filter (void)

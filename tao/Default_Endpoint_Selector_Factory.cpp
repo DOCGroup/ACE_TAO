@@ -5,12 +5,6 @@
 
 #include "ace/Log_Msg.h"
 
-
-ACE_RCSID (tao,
-           Default_Endpoint_Selector_Factory,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Default_Endpoint_Selector_Factory::TAO_Default_Endpoint_Selector_Factory (

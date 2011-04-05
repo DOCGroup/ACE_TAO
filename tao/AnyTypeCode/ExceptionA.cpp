@@ -14,11 +14,6 @@
 
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (AnyTypeCode,
-           Exception,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Specializations for CORBA::Exception Any operators.

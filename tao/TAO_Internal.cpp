@@ -32,10 +32,6 @@
 #include "ace/Static_Object_Lock.h"
 #include "ace/OS_NS_sys_stat.h"
 
-ACE_RCSID (tao,
-           TAO_Internal,
-           "$Id$")
-
 #ifndef TAO_DEFAULT_RESOURCE_FACTORY_ARGS
 #  define TAO_DEFAULT_RESOURCE_FACTORY_ARGS 0
 #endif  /* !TAO_DEFAULT_RESOURCE_FACTORY_ARGS */

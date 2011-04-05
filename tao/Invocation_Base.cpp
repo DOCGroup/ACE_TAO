@@ -15,10 +15,6 @@
 # include "tao/Invocation_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Invocation_Base,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace

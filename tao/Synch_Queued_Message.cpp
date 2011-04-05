@@ -7,10 +7,6 @@
 #include "ace/Malloc_T.h"
 #include "ace/Message_Block.h"
 
-ACE_RCSID (tao,
-           Synch_Queued_Message,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Synch_Queued_Message::TAO_Synch_Queued_Message (

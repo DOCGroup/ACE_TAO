@@ -20,10 +20,6 @@
 #include "tao/CORBALOC_Parser.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           CORBALOC_Parser,
-           "$Id$")
-
 static const char prefix[] = "corbaloc:";
 static const size_t prefix_len = sizeof prefix - 1;
 static const char rir_token[] = "rir:";

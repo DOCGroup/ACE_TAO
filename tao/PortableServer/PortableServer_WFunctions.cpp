@@ -1,9 +1,5 @@
 #include "tao/PortableServer/PortableServer_WFunctions.h"
 
-ACE_RCSID (PortableServer,
-           PortableServer_WFunctions,
-           "$Id$")
-
 #include "ace/OS_NS_string.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -6,10 +6,6 @@
 
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (tao,
-           Thread_Lane_Resources_Manager,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Thread_Lane_Resources_Manager::TAO_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core)

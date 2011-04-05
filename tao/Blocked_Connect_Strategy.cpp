@@ -3,10 +3,6 @@
 
 #include "ace/Synch_Options.h"
 
-ACE_RCSID(tao,
-          Blocked_Connect_Strategy,
-          "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Blocked_Connect_Strategy::TAO_Blocked_Connect_Strategy (

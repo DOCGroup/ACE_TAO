@@ -48,10 +48,6 @@
 #include "tao/PortableServer/RequestProcessingPolicy.h"
 #include "tao/PortableServer/ServantRetentionPolicy.h"
 
-ACE_RCSID (PortableServer,
-           Object_Adapter,
-           "$Id$")
-
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 namespace PortableServer
 {

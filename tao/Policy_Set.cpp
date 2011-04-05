@@ -9,10 +9,6 @@
 # include "tao/Policy_Set.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Policy_Set,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Policy_Set::TAO_Policy_Set (TAO_Policy_Scope scope)
