@@ -111,7 +111,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
     ACE_DEBUG((LM_INFO,"(%P|%t) END OF CLIENT TEST\n"));
+
     orb_.in()->shutdown ();
+
+    worker.thr_mgr()->wait ();
 
     root_poa->destroy(1,1);
 
