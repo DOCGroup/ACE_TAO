@@ -194,7 +194,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
   ACE_Countdown_Time countdown (max_wait_time);
 
-  // Optmize the first iteration [no access to errno]
+  // Optimize the first iteration [no access to errno]
   int result = 1;
 
   // For some cases the transport may disappear like when waiting for

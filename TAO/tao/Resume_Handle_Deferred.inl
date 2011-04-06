@@ -2,6 +2,7 @@
 
 #include "tao/Resume_Handle.h"
 #include "tao/debug.h"
+#include "ace/Log_Msg.h"
 
 ACE_INLINE int
 TAO_Resume_Handle_Deferred::handle_timeout_eh ()
