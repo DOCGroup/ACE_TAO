@@ -258,6 +258,8 @@ namespace CIAO_Getter_Test_Receiver_Impl
 
     void get_one_fixed (CORBA::Long fixed_key, CORBA::Long iteration);
     void get_one_variable (const char * key, CORBA::Long iteration);
+
+    void read_many (CORBA::Short keys , CORBA::Long iterations);
     //@}
 
     /// Get the ACE_Reactor

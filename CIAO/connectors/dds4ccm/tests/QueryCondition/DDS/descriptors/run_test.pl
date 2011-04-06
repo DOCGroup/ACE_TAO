@@ -11,7 +11,7 @@ use PerlACE::TestTarget;
 $tg_sender = PerlACE::TestTarget::create_target (1) || die "Create target for EM failed\n";
 $tg_receiver = PerlACE::TestTarget::create_target (1) || die "Create target for EM failed\n";
 
-$domain_id = "DDS4CCM_DEFAULT_DOMAIN_ID";
+$domain_id = "$ENV{'DDS4CCM_DEFAULT_DOMAIN_ID'}";
 
 print "Start receiver\n";
 $R = $tg_receiver->CreateProcess ("./DDS_receiver", "$domain_id");
