@@ -1,8 +1,18 @@
+Wed Apr  6 12:53:57 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Logger/Logger_Service.h:
+        * dance/Logger/Logger_Service.cpp:
+        * tools/Logger_Backend/ndds/Log_Backend.cpp:
+        * tools/Logger_Backend/ndds/Log_Record.idl:
+        * tools/Logger_Backend/ndds/USER_QOS_PROFILES.xml:
+
+         Deleted trailing whitespace.
+
 Wed Apr  6 01:17:10 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/dance_deployment_stub.mpb:
 
-          Link in the logger, as it's used by some files in this project. 
+          Link in the logger, as it's used by some files in this project.
 
         * dance/ExecutionManager/Execution_Manager.cpp:
         * dance/LocalityManager/Daemon/Locality_Manager_Task.cpp:
@@ -11,11 +21,11 @@ Wed Apr  6 01:17:10 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
           Initialize the ORB before the logger, so dynamic services from
           svc.conf are available to the logger.
-          
+
         * dance/Logger/Logger_Service.h:
         * dance/Logger/Logger_Service.cpp:
 
-          Log backends can now be loaded from dynamic services from svc.conf. 
+          Log backends can now be loaded from dynamic services from svc.conf.
           DANCE_LOG_BACKEND will specify the name of the dynamic service. See
           the below svc.conf file for an example.
 
@@ -24,7 +34,7 @@ Wed Apr  6 01:17:10 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/Logger_Backend/ndds/USER_QOS_PROFILES.xml:
         * tools/Logger_Backend/ndds/svc.conf:
 
-          Bugfixes, expanded capabilities.  
+          Bugfixes, expanded capabilities.
 
 Tue Apr  5 13:27:22 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
