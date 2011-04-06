@@ -248,6 +248,8 @@ namespace CIAO
                             ACE_TEXT ("DataReaderStateListener_T::on_data_available_i - ")
                             ACE_TEXT ("Error returning loan to DDS - <%C>\n"),
                             translate_retcode (retval)));
+              // No exception here since this the DDS vendor doesn't expect this.
+              // It will likely causes a crash in their implementation
             }
         }
       catch (const ::CORBA::Exception& ex)

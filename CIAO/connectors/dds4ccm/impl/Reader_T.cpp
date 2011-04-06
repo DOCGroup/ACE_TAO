@@ -113,7 +113,10 @@ namespace CIAO
                                             ::DDS::ALIVE_INSTANCE_STATE);
       if (retval != ::DDS::RETCODE_OK && retval != ::DDS::RETCODE_NO_DATA)
         {
-          this->return_loan (data, sample_info);
+          // Return the loan but don't throw an exception since an error returning
+          // the loan is less important than an error during the retrieval  of
+          // data from DDS.
+          this->return_loan (data, sample_info, false);
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         ACE_TEXT ("Reader_T::read_w_instance - ")
                         ACE_TEXT ("retval is %C\n"),
@@ -152,7 +155,10 @@ namespace CIAO
         }
       if (retval != ::DDS::RETCODE_OK && retval != ::DDS::RETCODE_NO_DATA)
         {
-          this->return_loan (data, sample_info);
+          // Return the loan but don't throw an exception since an error returning
+          // the loan is less important than an error during the retrieval  of
+          // data from DDS.
+          this->return_loan (data, sample_info, false);
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         ACE_TEXT ("Reader_T::read_wo_instance - ")
                         ACE_TEXT ("retval is %C\n"),
@@ -165,7 +171,8 @@ namespace CIAO
     void
     Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::return_loan (
       SEQ_VALUE_TYPE & data,
-      ::DDS::SampleInfoSeq  sample_info)
+      ::DDS::SampleInfoSeq sample_info,
+      bool throw_exception)
     {
       // Return the loan
       ::DDS::ReturnCode_t const retval =
@@ -176,8 +183,10 @@ namespace CIAO
                         "Reader_T::return_loan - "
                         "Error returning loan to DDS - <%C>\n",
                         translate_retcode (retval)));
-
-          throw ::CCM_DDS::InternalError (retval, 0);
+          if (throw_exception)
+            {
+              throw ::CCM_DDS::InternalError (retval, 0);
+            }
         }
     }
 
@@ -211,6 +220,7 @@ namespace CIAO
               ++ix;
             }
         }
+      this->return_loan (data, sample_info);
     }
 
     template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
@@ -266,6 +276,7 @@ namespace CIAO
               info <<= sample_info[sample-1];
             }
         }
+      this->return_loan (data, sample_info);
     }
 
     template <typename READER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>

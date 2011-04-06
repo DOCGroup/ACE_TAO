@@ -348,7 +348,7 @@ namespace CIAO
                             "Getter_T::get_one - "
                             "No valid data available in DDS.\n"));
                     }
-                    
+
                   // Return the loan of each read.
                   ::DDS::ReturnCode_t const retval =
                     this->dds_reader ()->return_loan (data, sample_info);
@@ -358,8 +358,8 @@ namespace CIAO
                         "Getter_T::get_one - "
                         "Error returning loan to DDS - <%C>\n",
                         translate_retcode (retval)));
-                      
-                        throw ::CCM_DDS::InternalError (retcode, 1);
+
+                      throw ::CCM_DDS::InternalError (retcode, 1);
                     }
                 }
             }
@@ -455,6 +455,7 @@ namespace CIAO
                         "Getter_T::get_one - "
                         "Error returning loan to DDS - <%C>\n",
                         translate_retcode (retval)));
+                      throw ::CCM_DDS::InternalError (retval, 0);
                     }
                 }
             }
