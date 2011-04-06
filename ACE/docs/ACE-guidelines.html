@@ -37,6 +37,10 @@ bgcolor="#ffffff">
 
         <pre>(setq-default nuke-trailing-whitespace-p t)</pre>
 
+        Newer versions of emacs will require the following instead:
+
+        <pre>(add-hook 'before-save-hook 'delete-trailing-whitespace)</pre>
+
         <strong>Note for Microsoft Visual Studio .NET Users:</strong>
         <p>There is a macro project <code>(ace_guidelines.vsmacros)</code>
         located in <code>$ACE_ROOT/docs</code> that replaces tabs with spaces
