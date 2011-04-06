@@ -2,6 +2,7 @@
 
 #include "SharedIntf_i.h"
 #include "ace/Log_Priority.h"
+#include "ace/OS_NS_unistd.h"
 
 Test_Idl_SharedIntf_i::Test_Idl_SharedIntf_i(CORBA::ORB_ptr orb)
   : orb_ (orb)
