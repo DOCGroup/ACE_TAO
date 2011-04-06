@@ -1,7 +1,17 @@
+Wed Apr  6 12:58:38 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * performance-tests/Sequence_Latency/Sequence_Operations_Time/README.txt:
+        * performance-tests/Sequence_Latency/Sequence_Operations_Time/Sequence_Ops_Time.mpc:
+        * performance-tests/Sequence_Latency/Sequence_Operations_Time/sequence.idl:
+        * performance-tests/Sequence_Latency/Sequence_Operations_Time/test.cpp:
+
+          A new test designed to highlight the amount of time spent by
+          dynamically growing sequences of varying element complexity.
+        
 Tue Apr  5 13:00:41 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
-        
+
           Scoreboard fix.
 
 Tue Apr  5 08:11:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
