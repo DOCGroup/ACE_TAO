@@ -139,7 +139,7 @@ void read (DDSDataReader * dr,
                            << "expected < "
                            <<  expected_samples_run3 << "> - received <"
                            << received_samples << ">" << endl;
-                    }    
+                    }
                   // check readcondition
                   //DDS_SampleStateMask sample = rc->get_sample_state_mask ();
                   //DDS_ViewStateMask view = rc->get_view_state_mask ();
@@ -152,7 +152,7 @@ void read (DDSDataReader * dr,
                   cerr << "ERROR: Should be woken up on ReadCondition" << endl;
                 }
             }
-          else   // run 1 and 2 
+          else   // run 1 and 2
             {
               if (cond[i] == qc)
                 {
@@ -161,7 +161,7 @@ void read (DDSDataReader * dr,
                                               info_seq,
                                               DDS_LENGTH_UNLIMITED,
                                               qc);
-       
+
                   for (DDS_Long i = 0; i < data.length (); ++i)
                     {
                       if (info_seq[i].valid_data)
@@ -189,7 +189,7 @@ void read (DDSDataReader * dr,
                            << "expected < "
                            <<  expected_samples_run2 << "> - received <"
                            << received_samples << ">" << endl;
-                        } 
+                        }
 		    }
                 }
               else
@@ -277,8 +277,20 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
 //     NDDSConfigLogger::get_instance()->set_verbosity (n_verbosity);
 
   /* Create the domain participant on domain ID 0 */
+  const char * env_domain_id = std::getenv ("DEFAULT_DOMAIN_ID");
+
+  if (!env_domain_id)
+    {
+      printf ("Environment variable DEFAULT_DOMAIN_ID not set "
+              "=> setting it to 2\n");
+      env_domain_id = "2";
+    }
+  else
+    printf ("Domain ID set to %s\n", env_domain_id);
+
+  const int domain_id = std::atoi (env_domain_id);
   DDSDomainParticipant *participant = DDSDomainParticipantFactory::get_instance()->
-      create_participant_with_profile (3,            /* Domain ID */
+      create_participant_with_profile (domain_id,    /* Domain ID */
                                        LIBRARY_NAME, /* QoS */
                                        PROFILE_NAME,
                                        0,            /* Listener */

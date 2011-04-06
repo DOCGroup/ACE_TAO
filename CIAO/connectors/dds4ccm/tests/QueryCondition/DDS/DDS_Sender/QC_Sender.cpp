@@ -78,9 +78,21 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
 //     NDDS_Config_LogVerbosity n_verbosity =
 //       static_cast <NDDS_Config_LogVerbosity> (3);
 //     NDDSConfigLogger::get_instance()->set_verbosity (n_verbosity);
+    const char * env_domain_id = std::getenv ("DEFAULT_DOMAIN_ID");
+
+    if (!env_domain_id)
+      {
+        printf ("Environment variable DEFAULT_DOMAIN_ID not set "
+                "=> setting it to 2\n");
+        env_domain_id = "2";
+      }
+    else
+      printf ("Domain ID set to %s\n", env_domain_id);
+
+    const int domain_id = std::atoi (env_domain_id);
 
     DDSDomainParticipant *participant = DDSDomainParticipantFactory::get_instance()->
-        create_participant_with_profile (3,            /* Domain ID */
+        create_participant_with_profile (domain_id,    /* Domain ID */
                                          LIBRARY_NAME, /* QoS */
                                          PROFILE_NAME,
                                          0,            /* Listener */

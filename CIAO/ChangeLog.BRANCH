@@ -1,3 +1,12 @@
+Wed Apr  6 07:54:17 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/QC_Sender.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Receiver/ObO_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Sender/ObO_Sender.cpp:
+          Test now reads the environment variable "DEFAULT_DOMAIN_ID" and uses this to
+          create the domain participant.
+
 Tue Apr  5 18:18:23 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/DDS_Receiver.mpc:
