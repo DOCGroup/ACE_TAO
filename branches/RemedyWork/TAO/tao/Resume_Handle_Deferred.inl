@@ -3,7 +3,7 @@
 #include "tao/Resume_Handle.h"
 #include "tao/debug.h"
 
-ACE_INLINE int 
+ACE_INLINE int
 TAO_Resume_Handle_Deferred::handle_timeout_eh ()
 {
   TAO_Resume_Handle resume_handle (this->orbc_, this->h_);
@@ -14,7 +14,7 @@ TAO_Resume_Handle_Deferred::handle_timeout_eh ()
   return 0;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 TAO_Resume_Handle_Deferred::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   if (TAO_debug_level > 5)
