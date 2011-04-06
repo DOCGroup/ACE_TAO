@@ -1,3 +1,11 @@
+Wed Apr  6 13:56:43 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * performance-tests/Sequence_Latency/Sequence_Operations_Time/run_test.pl:
+        * bin/tao_other_tests.lst:
+        
+          Added run_test.pl to new performance test and included it in the
+          other tests list for nightly running.        
+
 Wed Apr  6 12:58:38 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * performance-tests/Sequence_Latency/Sequence_Operations_Time/README.txt:
@@ -7,7 +15,7 @@ Wed Apr  6 12:58:38 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
           A new test designed to highlight the amount of time spent by
           dynamically growing sequences of varying element complexity.
-        
+
 Tue Apr  5 13:00:41 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
