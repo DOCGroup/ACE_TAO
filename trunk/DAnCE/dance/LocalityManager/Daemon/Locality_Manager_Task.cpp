@@ -29,6 +29,8 @@ namespace DAnCE
   {
     DANCE_TRACE ("DAnCE_LocalityManager_Task::DAnCE_LocalityManager_Task ()");
 
+    this->orb_ = CORBA::ORB_init (argc, argv);
+
     Logger_Service
       *dlf = ACE_Dynamic_Service<Logger_Service>::instance ("DAnCE_Logger");
 
@@ -36,13 +38,6 @@ namespace DAnCE
       {
         dlf->init (argc, argv);
       }
-
-    DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
-                 (LM_TRACE, DLINFO
-                  ACE_TEXT ("DAnCE_LocalityManager_Task::DAnCE_LocalityManager_Task - ")
-                  ACE_TEXT ("Creating ORB\n")));
-
-    this->orb_ = CORBA::ORB_init (argc, argv);
 
     this->parse_args (argc, argv);
 

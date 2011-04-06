@@ -16,6 +16,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+
+
       DAnCE::Logger_Service
         * dlf = ACE_Dynamic_Service<DAnCE::Logger_Service>::instance ("DAnCE_Logger");
 
@@ -23,12 +26,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           dlf->init (argc, argv);
         }
-
-      DANCE_TRACE_LOG (DANCE_LOG_TRACE,
-                       (LM_TRACE, DLINFO
-                        ACE_TEXT("NodeManager - initializing ORB\n")));
-
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       DANCE_TRACE_LOG (DANCE_LOG_TRACE,
                        (LM_TRACE, DLINFO

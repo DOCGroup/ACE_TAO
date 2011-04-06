@@ -28,14 +28,15 @@ namespace DAnCE
   int
   NDDS_Log_Backend::init (int argc, ACE_TCHAR **argv)
   {
-    std::cerr << "init\n";
-    ACE_Get_Opt opts (argc, argv, ACE_TEXT ("t:d:"), 1, 0,
+    ACE_Get_Opt opts (argc, argv, ACE_TEXT ("t:d:q:n:"), 0, 0,
                       ACE_Get_Opt::RETURN_IN_ORDER);
     opts.long_option (ACE_TEXT ("topic"), 't', ACE_Get_Opt::ARG_REQUIRED);
     opts.long_option (ACE_TEXT ("domain"), 'd', ACE_Get_Opt::ARG_REQUIRED);
-
+    opts.long_option (ACE_TEXT ("qos-file"), 'q', ACE_Get_Opt::ARG_REQUIRED);
+    opts.long_option (ACE_TEXT ("node-name"), 'n', ACE_Get_Opt::ARG_REQUIRED);
+    
     int c = 0;
-
+    
     while ((c = opts ()) != -1)
       {
         switch (c)
@@ -47,15 +48,23 @@ namespace DAnCE
           case 'd':
             this->domain_ = ACE_OS::atoi (opts.opt_arg ());
             break;
-
+            
+          case 'q':
+            this->qos_file_ = opts.opt_arg ();
+            break;
+            
+          case 'n':
+            this->node_ = opts.opt_arg ();
+            break;
+            
           default:
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unknown Option: %s\n"),
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unknown option for NDDS_Log_Backend: %s\n"),
                         opts.last_option ()));
-            return -1;
           }
 
       }
-    return 0;
+    
+    return this->open (ACE_TEXT (""));
   }
 
   int
@@ -91,8 +100,6 @@ namespace DAnCE
   int
   NDDS_Log_Backend::configure_dds (void)
   {
-    std::cerr << "configuring dds\n";
-
     this->participant_ = DDSDomainParticipantFactory::get_instance ()->
       create_participant (this->domain_,
                           DDS_PARTICIPANT_QOS_DEFAULT,
@@ -107,7 +114,6 @@ namespace DAnCE
 
     DDS_ReturnCode_t retval;
     
-    std::cerr << "participant\n";
     retval = Log_RecordTypeSupport::register_type (this->participant_,
                                                    Log_RecordTypeSupport::get_type_name ());
 
@@ -117,7 +123,6 @@ namespace DAnCE
         (void) this->close ();
         return -1;
       }
-    std::cerr << "type\n";
 
     this->topic_ = this->participant_->create_topic (this->topic_name_.c_str (),
                                                      Log_RecordTypeSupport::get_type_name (),
@@ -132,8 +137,6 @@ namespace DAnCE
         return -1;
       }
 
-    std::cerr << "topic\n";
-
     this->publisher_ = this->participant_->create_publisher (DDS_PUBLISHER_QOS_DEFAULT,
                                                              0,
                                                              DDS_STATUS_MASK_NONE);
@@ -144,7 +147,6 @@ namespace DAnCE
         this->close ();
         return -1;
       }
-    std::cerr << "publisher\n";
 
     this->datawriter_ = this->publisher_->create_datawriter (this->topic_,
                                                              DDS_DATAWRITER_QOS_DEFAULT,
@@ -157,7 +159,6 @@ namespace DAnCE
         return -1;
       }
 
-    std::cerr << "datawriter\n";
     log_record_writer_ = Log_RecordDataWriter::narrow (this->datawriter_);
 
     return 0;
@@ -171,15 +172,12 @@ namespace DAnCE
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("NDDS_Log_Backend::open - unable to get configuration\n")));
         return -1;
       }
-    std::cerr << "got configuration\n";
 
     if (this->configure_dds () != 0)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("NDDS_Log_Backend::open - unable to configure DDS entities\n")));
         return -1;
       }
-
-    std::cerr << "configured dds\n";
 
     return 0;
   }
@@ -193,7 +191,6 @@ namespace DAnCE
   int
   NDDS_Log_Backend::close (void)
   {
-    std::cerr << "closing\n";
     if (this->participant_ != 0)
       {
         DDS_ReturnCode_t retval =
@@ -224,7 +221,6 @@ namespace DAnCE
   ssize_t
   NDDS_Log_Backend::log (ACE_Log_Record  &log_record)
   {
-    std::cerr << "logging\n";
     Log_Record *instance (0);
 
     instance = Log_RecordTypeSupport::create_data_ex (DDS_BOOLEAN_FALSE);
