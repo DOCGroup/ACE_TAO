@@ -1,0 +1,110 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p SimpleCommon SimplePublisher"
+
+project(SimpleCommon_SimplePublisher_idl_gen) : componentidldefaults {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SIMPLEPUBLISHER_STUB_Export \
+              -Wb,stub_export_include=SimplePublisher_stub_export.h \
+              -Wb,skel_export_macro=SIMPLEPUBLISHER_SVNT_Export \
+              -Wb,skel_export_include=SimplePublisher_svnt_export.h \
+              -Wb,exec_export_macro=SIMPLEPUBLISHER_EXEC_Export \
+              -Wb,exec_export_include=SimplePublisher_exec_export.h \
+
+  IDL_Files {
+    SimplePublisher.idl
+  }
+}
+
+project(SimpleCommon_SimplePublisher_lem_gen) : ciaoidldefaults {
+  after += SimpleCommon_SimplePublisher_idl_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro=SIMPLEPUBLISHER_EXEC_Export \
+              -Wb,export_include=SimplePublisher_exec_export.h \
+              -SS
+
+  IDL_Files {
+    SimplePublisherE.idl
+  }
+}
+
+project(SimpleCommon_SimplePublisher_stub) : ccm_stub {
+  after += SimpleCommon_SimplePublisher_idl_gen SimpleCommon_stub
+  libs  += SimpleCommon_stub
+
+  sharedname = SimplePublisher_stub
+  dynamicflags += SIMPLEPUBLISHER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SimplePublisherC.cpp
+  }
+
+  Header_Files {
+    SimplePublisherC.h
+    SimplePublisher_stub_export.h
+  }
+
+  Inline_Files {
+    SimplePublisherC.inl
+  }
+}
+
+project(SimpleCommon_SimplePublisher_exec) : ciao_executor {
+  after   += SimpleCommon_SimplePublisher_lem_gen SimpleCommon_SimplePublisher_stub
+  sharedname = SimplePublisher_exec
+  libs += SimplePublisher_stub SimpleCommon_stub
+
+  dynamicflags += SIMPLEPUBLISHER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SimplePublisherEC.cpp
+    SimplePublisher_exec.cpp
+  }
+
+  Header_Files {
+    SimplePublisherEC.h
+    SimplePublisher_exec.h
+    SimplePublisher_exec_export.h
+  }
+
+  Inline_Files {
+    SimplePublisherEC.inl
+  }
+}
+
+
+project(SimpleCommon_SimplePublisher_svnt) : ciao_servant {
+  after      += SimpleCommon_skel SimpleCommon_SimplePublisher_exec
+  sharedname  = SimplePublisher_svnt
+  libs       += SimplePublisher_exec \
+                SimplePublisher_stub \
+                SimpleCommon_skel \
+                SimpleCommon_stub
+
+  dynamicflags += SIMPLEPUBLISHER_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SimplePublisherS.cpp
+    SimplePublisher_svnt.cpp
+  }
+
+  Header_Files {
+    SimplePublisherS.h
+    SimplePublisher_svnt.h
+    SimplePublisher_svnt_export.h
+  }
+
+  Inline_Files {
+    SimplePublisherS.inl
+  }
+}
+
+

@@ -1,0 +1,21 @@
+# -*- shell-script -*- #vim:syntax=sh
+# By default dpatch works with -p1 (patch level 1) which works
+# fine with one working directory, e.g. ACE_wrappers. While
+# two working directories exist the default -p1 makes thinks
+# complicate. Instaed of recreate patches we overwrite the
+# dpatch_patch and dpatch_unpatch functions with -p0.
+# See /usr/share/dpatch/dpatch.lib.sh for more implementation
+# details on this issue.
+#                        -- Raphael Bossek <bossekr@debian.org>
+
+DPATCH_LIB_NO_DEFAULT="no"
+
+dpatch_patch ()
+{
+  patch -p0 $*
+}
+
+dpatch_unpatch ()
+{
+  patch -p0 -R $*
+}
