@@ -138,7 +138,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>-ORBDebugLevel 10 -ORBSvcConfDirective "static Client_Strategy_Factory '-ORBWaitStrategy mt_noupcall'"</string>
+          <string>-ORBSvcConfDirective "static Client_Strategy_Factory '-ORBWaitStrategy mt_noupcall'"</string>
         </value>
       </value>
     </configProperty>
@@ -156,7 +156,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>-ORBDebugLevel 10 -ORBSvcConfDirective "static Client_Strategy_Factory '-ORBWaitStrategy mt_noupcall'"</string>
+          <string>-ORBSvcConfDirective "static Client_Strategy_Factory '-ORBWaitStrategy mt_noupcall'"</string>
         </value>
       </value>
     </configProperty>
