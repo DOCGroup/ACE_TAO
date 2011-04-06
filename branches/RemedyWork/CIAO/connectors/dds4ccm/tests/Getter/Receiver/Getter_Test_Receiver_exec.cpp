@@ -317,7 +317,62 @@ namespace CIAO_Getter_Test_Receiver_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: GET MANY: "
                               "Time out occurred\n"));
       }
+    this->read_many (keys, iterations);
   }
+
+  void
+  Receiver_exec_i::read_many (CORBA::Short keys , CORBA::Long iterations)
+  {
+     ::Getter_Test::GetterTestConnector::Reader_var reader =
+      this->ciao_context_->get_connection_info_get_data ();
+
+    GetterTestSeq gettertest_seq;
+    ::CCM_DDS::ReadInfoSeq readinfos;
+    reader->read_all (gettertest_seq, readinfos);
+
+    ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::read_many - "
+                "Start checking samples in DDS\n"));
+    reader->read_all (gettertest_seq, readinfos);
+    // we expect all samples written during the test for get one (KEY_1)
+    // AND all samples written during the test for get many (number of keys)
+    ::CORBA::ULong expected =
+      static_cast < ::CORBA::ULong > (iterations * (keys + 1));
+    if (gettertest_seq.length () != expected)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::read_many - "
+                              "Unexpected number of samples received: "
+                              "expected <%d> - received <%u>\n",
+                              expected, gettertest_seq.length ()));
+      }
+    for (::CORBA::ULong i = 0; i < gettertest_seq.length (); ++i)
+      {
+        ACE_DEBUG ((LM_DEBUG, "READ ALL : Receiver_exec_i::read_many - "
+                              "Sample received: key <%C> - iteration <%d> - "
+                              "sample_read_state <%d>\n",
+                              gettertest_seq[i].key.in (),
+                              gettertest_seq[i].iteration,
+                              readinfos[i].access_status));
+      }
+
+    for (::CORBA::Short key = 0; key < keys; ++key)
+      {
+        ::CORBA::Long iter = 0;
+        char str_key[8];
+        ACE_OS::sprintf (str_key, "KEY_%d", key + 1);
+        for (::CORBA::ULong i = 0; i < gettertest_seq.length (); ++i)
+          {
+            if (ACE_OS::strcmp (gettertest_seq[i].key.in (), str_key) == 0)
+              ++iter;
+            if (iter > iterations)
+              ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::read_many - "
+                          "Unexpected number of iterations received "
+                          "for key <%C>: <%d>\n",
+                          str_key,
+                          iter));
+          }
+      }
+  }
+
 
   void
   Receiver_exec_i::get_one_fixed (CORBA::Long fixed_key, CORBA::Long iteration)

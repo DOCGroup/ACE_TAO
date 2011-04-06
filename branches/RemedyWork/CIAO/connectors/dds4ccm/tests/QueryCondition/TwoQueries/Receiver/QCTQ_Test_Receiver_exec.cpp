@@ -351,13 +351,14 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::read_all - "
                 "Start checking samples in DDS\n"));
     reader->read_all (qf_info, readinfos);
-    if (qf_info.length () !=
-        static_cast < ::CORBA::ULong > (run * this->iterations_ * this->keys_))
+    ::CORBA::ULong expected =
+      static_cast < ::CORBA::ULong > (run * this->iterations_ * this->keys_);
+    if (qf_info.length () != expected)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::read_all - "
                               "Unexpected number of samples received: "
                               "expected <%d> - received <%u>\n",
-                              run * this->iterations_, qf_info.length ()));
+                               expected, qf_info.length ()));
       }
     for (::CORBA::ULong i = 0; i < qf_info.length (); ++i)
       {

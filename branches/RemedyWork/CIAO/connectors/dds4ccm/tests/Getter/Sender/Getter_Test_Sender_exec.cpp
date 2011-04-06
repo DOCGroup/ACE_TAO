@@ -173,7 +173,9 @@ namespace CIAO_Getter_Test_Sender_Impl
     //Prepare the samples.
     GetterTestSeq write_many (this->keys_ * this->iterations_);
     write_many.length (this->keys_ * this->iterations_);
-    for (CORBA::UShort key = 1; key < this->keys_ + 1; ++key)
+    // since the test for get_one already writes samples to DDS with
+    // key=KEY_1 we start with key = 2 when writing many samples.
+    for (CORBA::UShort key = 2; key < this->keys_ + 2; ++key)
       {
         GetterTest new_key;
         char tmp[7];
@@ -182,21 +184,21 @@ namespace CIAO_Getter_Test_Sender_Impl
         for (CORBA::UShort iter = 1; iter < this->iterations_ + 1; ++iter)
           {
             new_key.iteration = iter;
-            write_many[(iter -1) + ((key -1) * 10)] = new_key;
+            write_many[(iter - 1) + ((key - 2) * 10)] = new_key;
           }
       }
     try
       {
-        // Inform the receiver that the sender is about to write many
-        // samples to DDS.
-        invoker->start_get_many (this->keys_, this->iterations_);
-        // Wait a while before start writing
-        ACE_Time_Value tv (1, 0);
-        ACE_OS::sleep (tv);
-
         writer->write_many (write_many);
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("write_many : written <%u> samples\n"),
               write_many.length ()));
+        // Wait a while before informing the Receiver. The receiver should receive
+        // all samples straight away.
+        ACE_Time_Value tv (10, 0);
+        ACE_OS::sleep (tv);
+        // Inform the receiver that the sender has written many
+        // samples to DDS.
+        invoker->start_get_many (this->keys_, this->iterations_);
       }
     catch (const CCM_DDS::InternalError& ex)
       {
@@ -262,9 +264,10 @@ namespace CIAO_Getter_Test_Sender_Impl
     }
    else
     {
-      write_many ();
-      // Test is done. Stop the timer.
+      // Stop the timer at forehand.
       this->reactor ()->cancel_timer (this->ticker_);
+      // Perform the last test.
+      this->write_many ();
     }
   }
 

@@ -1,3 +1,19 @@
+Wed Apr  6 09:51:08 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Getter/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/Getter/descriptors/USER_QOS_PROFILES.xml:
+          Expanded test in order to log more info about the samples available in DDS.
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/descriptors/run_test.pl:
+          Using ENV to read the environment variagle.
+
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.cpp:
+          Improved logging.
+
 Wed Apr  6 10:44:39 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Sender/ObO_Sender.cpp:
@@ -7,7 +23,7 @@ Wed Apr  6 10:44:39 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         Decreased number of samples, added extra debug info.
         * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/descriptors/run_test.pl:
         * connectors/dds4ccm/tests/QueryCondition/DDS/descriptors/run_test.pl:
-        Decreased sleep time. 
+        Decreased sleep time.
 
 
 
