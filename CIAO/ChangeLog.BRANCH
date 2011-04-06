@@ -1,3 +1,8 @@
+Wed Apr  6 13:59:07 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+          Simplified some code
+
 Wed Apr  6 13:14:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
