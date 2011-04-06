@@ -46,16 +46,16 @@ namespace CIAO
       plan.instance[index];
 
     CIAO_DEBUG (9, (LM_TRACE, CLINFO
-                     ACE_TEXT ("CIAO_StoreReferences_i::post_install - ")
-                     ACE_TEXT ("Interceptor post install for instance %C\n"),
+                    "CIAO_StoreReferences_i::post_install - "
+                    "Interceptor post install for instance %C\n",
                      plan.instance[index].name.in ()));
 
     if (reference.type() == ::CORBA::_tc_null)
       {
         CIAO_ERROR (3, (LM_WARNING, CLINFO
-                         ACE_TEXT ("CIAO_StoreReferences_i::post_install - ")
-                         ACE_TEXT ("Got a nil reference, unable to store reference ")
-                         ACE_TEXT ("for instance <%C>\n"),
+                        "CIAO_StoreReferences_i::post_install - "
+                        "Got a nil reference, unable to store reference "
+                        "for instance <%C>\n",
                          inst.name.in ()));
         return;
       }
@@ -72,16 +72,16 @@ namespace CIAO
             if (!(reference >>= CORBA::Any::to_object (obj)))
               {
                 CIAO_ERROR (1, (LM_WARNING, CLINFO
-                                 ACE_TEXT ("CIAO_StoreReferences_i::post_install - ")
-                                 ACE_TEXT ("Unable to extract instance reference from Any\n")));
+                                "CIAO_StoreReferences_i::post_install - "
+                                "Unable to extract instance reference from Any\n"));
               }
 
             const char * name = 0;
             inst.configProperty[i].value >>= CORBA::Any::to_string (name, 0);
 
             CIAO_DEBUG (9, (LM_TRACE, CLINFO
-                             ACE_TEXT ("CIAO_StoreReferences_i::post_install - ")
-                             ACE_TEXT ("Registering name %C for instance %C\n"),
+                            "CIAO_StoreReferences_i::post_install - "
+                            "Registering name %C for instance %C\n",
                              name,
                              plan.instance[index].name.in ()));
 
