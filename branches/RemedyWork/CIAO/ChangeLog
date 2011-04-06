@@ -1,3 +1,50 @@
+Wed Apr  6 11:52:10 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ChangeLog:
+
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+
+Tue Apr  5 18:18:23 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ChangeLog:
+
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/DDS_Receiver.mpc:
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/DDS_Sender.mpc:
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Receiver/DDS_ObO_Receiver.mpc:
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Sender/DDS_ObO_Sender.mpc:
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/Plan.cdp:
+
+        * tests/DAnCE/LocalityManager/CommandlinePassage/Component.cdp:
+
+Sun Mar  6 09:35:03 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ChangeLog:
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl:
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/Plan.cdp:
+
+
+Sat Mar  5 09:31:39 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl:
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/Plan.cdp:
+
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.mpc:
+
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+
 Fri Feb 11 11:16:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.
