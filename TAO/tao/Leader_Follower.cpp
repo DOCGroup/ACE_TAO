@@ -62,7 +62,7 @@ TAO_Leader_Follower::elect_new_leader_i (void)
 
 #if defined (TAO_DEBUG_LEADER_FOLLOWER)
   ACE_DEBUG ((LM_DEBUG,
-              "TAO (%P|%t) LF::elect_new_leader_i - "
+              "TAO (%P|%t) - TAO_Leader_Follower::elect_new_leader_i - "
               "follower is %x\n",
               follower));
 #endif /* TAO_DEBUG_LEADER_FOLLOWER */
@@ -86,7 +86,7 @@ TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wai
           if (this->event_loop_threads_condition_.wait () == -1)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("TAO (%P|%t): TAO_Leader_Follower::")
+                          ACE_TEXT ("TAO (%P|%t) - TAO_Leader_Follower::")
                           ACE_TEXT ("wait_for_client_leader_to_complete - ")
                           ACE_TEXT ("Condition variable wait failed\n")));
 
@@ -102,7 +102,7 @@ TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wai
             {
               if (errno != ETIME)
                 ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("TAO (%P|%t): TAO_Leader_Follower::")
+                            ACE_TEXT ("TAO (%P|%t) - TAO_Leader_Follower::")
                             ACE_TEXT ("wait_for_client_leader_to_complete - ")
                             ACE_TEXT ("Condition variable wait failed\n")));
 
