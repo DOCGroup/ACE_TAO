@@ -1,3 +1,10 @@
+Wed Apr  6 18:28:45 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/corba-boolean.pl:
+        * bin/subst_env.pl:
+        * bin/tao_env.pl:
+          Removed these files, obsolete
+
 Mon Apr  4 17:46:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Connection_Handler.h:
