@@ -7,6 +7,11 @@ Wed Apr  6 18:28:45 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr  4 17:46:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * tests/Bug_3953_Regression:
+        * tests/Bug_3953_Regression:
+        * tests/MT_NoUpcall_Client_Leader:
+          New tests for Wait Strategy mt_noupcall
+
         * tao/Connection_Handler.h:
         * tao/Connection_Handler.cpp:
           Integrated some changes from 1.3a as start to get mt_noupcall working
