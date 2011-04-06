@@ -119,10 +119,13 @@ void read (DDSDataReader * dr,
                       loop ++;
                       if (retcode == 0)
                         {
-                          if (info_seq[0].valid_data)
+                          for (DDS_Long y = 0; y < data.length (); ++y)
                             {
-                              check_iter (data[0], info_seq[0], run);
-                              received_samples ++;
+                              if (info_seq[y].valid_data)
+                                {
+                                  check_iter (data[y], info_seq[y], run);
+                                  received_samples ++;
+                                }
                             }
                         }
                       typed_dr->return_loan (data, info_seq);
