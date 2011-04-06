@@ -317,6 +317,9 @@ namespace CIAO_Getter_Test_Receiver_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: GET MANY: "
                               "Time out occurred\n"));
       }
+    // Wait a while before reading.
+    ACE_Time_Value tv (3, 0);
+    ACE_OS::sleep (tv);
     this->read_many (keys, iterations);
   }
 

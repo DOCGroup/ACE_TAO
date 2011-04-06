@@ -189,16 +189,16 @@ namespace CIAO_Getter_Test_Sender_Impl
       }
     try
       {
-        writer->write_many (write_many);
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("write_many : written <%u> samples\n"),
-              write_many.length ()));
-        // Wait a while before informing the Receiver. The receiver should receive
-        // all samples straight away.
-        ACE_Time_Value tv (10, 0);
-        ACE_OS::sleep (tv);
         // Inform the receiver that the sender has written many
         // samples to DDS.
         invoker->start_get_many (this->keys_, this->iterations_);
+        // Wait a while before writing the samples.
+        ACE_Time_Value tv (2, 0);
+        ACE_OS::sleep (tv);
+        // Now start writing.
+        writer->write_many (write_many);
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("write_many : written <%u> samples\n"),
+              write_many.length ()));
       }
     catch (const CCM_DDS::InternalError& ex)
       {

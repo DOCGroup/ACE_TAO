@@ -1,3 +1,9 @@
+Wed Apr  6 10:13:35 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+          Optimized procedure for write_many/get_many.
+
 Wed Apr  6 09:51:08 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.h:
