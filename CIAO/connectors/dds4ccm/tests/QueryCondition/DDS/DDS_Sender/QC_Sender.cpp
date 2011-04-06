@@ -11,9 +11,9 @@ using namespace std;
 #define LIBRARY_NAME  "QueryCondition_Library"
 #define PROFILE_NAME  "QueryCondition_Profile"
 
-const int number_of_iterations_ = 20;
+const int number_of_iterations_ = 3;
 
-const int number_of_keys_ = 5;
+const int number_of_keys_ = 2;
 
 int last_iteration_ = 0;
 int run_ = 0;
@@ -53,7 +53,7 @@ void write (DDSDataWriter * writer)
                   << endl;
             }
         }
-      cout << "Written samples with symbol <"
+      cout << "Sender: Written samples with symbol <"
             << key
             << "> and iteration <"
             << last_iteration_ + 1
